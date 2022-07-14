@@ -15,22 +15,40 @@
 package com.liferay.segments.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
 
+import java.io.IOException;
+
+import java.util.Dictionary;
+
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Yurena Cabrera
@@ -44,10 +62,26 @@ public class BindSegmentsCompanyConfigurationMVCActionCommandTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		_configurationProvider.deleteCompanyConfiguration(
+			SegmentsCompanyConfiguration.class, _company.getCompanyId());
+	}
+
 	@Test
 	public void testProcessActionRoleSegmentationDisabled() throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
+			_getMockLiferayPortletActionRequest();
 
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
 			new MockLiferayPortletActionResponse();
@@ -58,19 +92,19 @@ public class BindSegmentsCompanyConfigurationMVCActionCommandTest {
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
 
-		SegmentsCompanyConfiguration segmentsCompanyConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				SegmentsCompanyConfiguration.class,
-				TestPropsValues.getCompanyId());
+		Configuration configuration = _getSegmentsCompanyConfiguration(
+			_company.getCompanyId());
+
+		Dictionary<String, Object> properties = configuration.getProperties();
 
 		Assert.assertFalse(
-			segmentsCompanyConfiguration.roleSegmentationEnabled());
+			GetterUtil.getBoolean(properties.get("roleSegmentationEnabled")));
 	}
 
 	@Test
 	public void testProcessActionRoleSegmentationEnabled() throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
+			_getMockLiferayPortletActionRequest();
 
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
 			new MockLiferayPortletActionResponse();
@@ -81,19 +115,19 @@ public class BindSegmentsCompanyConfigurationMVCActionCommandTest {
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
 
-		SegmentsCompanyConfiguration segmentsCompanyConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				SegmentsCompanyConfiguration.class,
-				TestPropsValues.getCompanyId());
+		Configuration configuration = _getSegmentsCompanyConfiguration(
+			_company.getCompanyId());
+
+		Dictionary<String, Object> properties = configuration.getProperties();
 
 		Assert.assertTrue(
-			segmentsCompanyConfiguration.roleSegmentationEnabled());
+			GetterUtil.getBoolean(properties.get("roleSegmentationEnabled")));
 	}
 
 	@Test
 	public void testProcessActionSegmentationDisabled() throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
+			_getMockLiferayPortletActionRequest();
 
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
 			new MockLiferayPortletActionResponse();
@@ -104,18 +138,19 @@ public class BindSegmentsCompanyConfigurationMVCActionCommandTest {
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
 
-		SegmentsCompanyConfiguration segmentsCompanyConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				SegmentsCompanyConfiguration.class,
-				TestPropsValues.getCompanyId());
+		Configuration configuration = _getSegmentsCompanyConfiguration(
+			_company.getCompanyId());
 
-		Assert.assertFalse(segmentsCompanyConfiguration.segmentationEnabled());
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		Assert.assertFalse(
+			GetterUtil.getBoolean(properties.get("segmentationEnabled")));
 	}
 
 	@Test
 	public void testProcessActionSegmentationEnabled() throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
+			_getMockLiferayPortletActionRequest();
 
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
 			new MockLiferayPortletActionResponse();
@@ -126,13 +161,57 @@ public class BindSegmentsCompanyConfigurationMVCActionCommandTest {
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
 
-		SegmentsCompanyConfiguration segmentsCompanyConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				SegmentsCompanyConfiguration.class,
-				TestPropsValues.getCompanyId());
+		Configuration configuration = _getSegmentsCompanyConfiguration(
+			_company.getCompanyId());
 
-		Assert.assertTrue(segmentsCompanyConfiguration.segmentationEnabled());
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		Assert.assertTrue(
+			GetterUtil.getBoolean(properties.get("segmentationEnabled")));
 	}
+
+	private MockLiferayPortletActionRequest
+		_getMockLiferayPortletActionRequest() {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.COMPANY_ID, _company.getCompanyId());
+
+		return mockLiferayPortletActionRequest;
+	}
+
+	private Configuration _getSegmentsCompanyConfiguration(long companyId)
+		throws Exception {
+
+		try {
+			String filterString = StringBundler.concat(
+				"(&(", ConfigurationAdmin.SERVICE_FACTORYPID, StringPool.EQUAL,
+				SegmentsCompanyConfiguration.class.getName(), ".scoped",
+				")(companyId=", companyId, "))");
+
+			Configuration[] configuration =
+				_configurationAdmin.listConfigurations(filterString);
+
+			if (configuration != null) {
+				return configuration[0];
+			}
+
+			return null;
+		}
+		catch (InvalidSyntaxException | IOException exception) {
+			throw new ConfigurationException(exception);
+		}
+	}
+
+	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private ConfigurationProvider _configurationProvider;

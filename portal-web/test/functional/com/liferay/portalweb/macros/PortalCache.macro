@@ -8,7 +8,7 @@ definition {
 
 			com.liferay.portal.kernel.security.auth.CompanyThreadLocal.setCompanyId(${companyId}L);
 
-			PortalCache<String, String> testCache = PortalCacheHelperUtil.getPortalCache(PortalCacheManagerNames.MULTI_VM, "test.cache");
+			PortalCache<String, String> testCache = PortalCacheHelperUtil.getPortalCache(PortalCacheManagerNames.MULTI_VM, "test.cache", false, true);
 
 			println testCache.get("test.key");
 		''';
@@ -30,7 +30,7 @@ definition {
 
 			com.liferay.portal.kernel.security.auth.CompanyThreadLocal.setCompanyId(${companyId}L);
 
-			PortalCache<String, String> testCache = PortalCacheHelperUtil.getPortalCache(PortalCacheManagerNames.MULTI_VM, "test.cache");
+			PortalCache<String, String> testCache = PortalCacheHelperUtil.getPortalCache(PortalCacheManagerNames.MULTI_VM, "test.cache", false, true);
 
 			testCache.put("test.key", "${cacheValue}");
 

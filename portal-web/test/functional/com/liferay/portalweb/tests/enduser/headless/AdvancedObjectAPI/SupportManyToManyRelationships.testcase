@@ -171,6 +171,55 @@ definition {
 	}
 
 	@priority = "5"
+	test CanGetFirstObjectEntiresRelatedToSecondObjectByManyToMany {
+		property portal.acceptance = "true";
+
+		task ("Given manyToMany relationship universitySubjects created") {
+			var relationshipName = ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "universitiesSubjects",
+				name = "universitiesSubjects",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
+				type = "manyToMany");
+		}
+
+		task ("Given university entry created") {
+			var universityId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Liferay University");
+		}
+
+		task ("Given subject entry created") {
+			var subjectId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "Liferay Foundations");
+		}
+
+		task ("And Given subject entry related to the university entry created") {
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = "${universityId}",
+				objectEntry2 = "${subjectId}",
+				relationshipName = "universitiesSubjects");
+		}
+
+		task ("When I call universities GET endpoint with {universityId}/universitySubjects") {
+			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelation(
+				en_US_plural_label = "universities",
+				objectId = "${universityId}",
+				relationshipName = "universitiesSubjects");
+		}
+
+		task ("Then I receive the correct information about the subjects related to it") {
+			ObjectDefinitionAPI.assertResponseHasCorrectDetailsRelatedToObjectEntry(
+				expectedValue = "Liferay Foundations",
+				objectEntryId = "${subjectId}",
+				responseToParse = "${responseToParse}");
+		}
+	}
+
+	@priority = "5"
 	test CanGetManyToManyRelationshipDetailsAsNestedFields_1 {
 		property portal.acceptance = "true";
 

@@ -24,8 +24,6 @@ definition {
 
 	@priority = "5"
 	test RunAllJSONMacros {
-		property portal.acceptance = "true";
-
 		JSONAssetlistTest.runSmoke(groupName = "Test Site Name");
 
 		JSONCategoryTest.runSmoke(groupName = "Test Site Name");

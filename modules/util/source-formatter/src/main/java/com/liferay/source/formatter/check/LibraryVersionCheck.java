@@ -225,14 +225,12 @@ public class LibraryVersionCheck extends BaseFileCheck {
 					"severity vulnerableVersionRange } pageInfo {endCursor " +
 						"hasNextPage } totalCount }";
 
-			String query = StringBundler.concat(
-				"{\"query\": \"{ securityVulnerabilities(", queryArguments,
-				") ", resultArguments, "}\" }");
-
-			StringEntity stringEntity = new StringEntity(
-				query, ContentType.APPLICATION_JSON);
-
-			httpPost.setEntity(stringEntity);
+			httpPost.setEntity(
+				new StringEntity(
+					StringBundler.concat(
+						"{\"query\": \"{ securityVulnerabilities(",
+						queryArguments, ") ", resultArguments, "}\" }"),
+					ContentType.APPLICATION_JSON));
 
 			CloseableHttpResponse closeableHttpResponse =
 				closeableHttpClient.execute(httpPost);
@@ -277,8 +275,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 						advisoryJSONObject.getString("summary"));
 
 					securityVulnerabilityNode.setVersionRange(
-						tmpJSONObject.getString("vulnerableVersionRange"));
-					securityVulnerabilityNode.setVulnerableVersionRange(
 						tmpJSONObject.getString("vulnerableVersionRange"));
 
 					securityVulnerabilityNodes.add(securityVulnerabilityNode);
@@ -546,14 +542,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 	private static class SecurityVulnerabilityNode {
 
-		public String getPackageEcosystem() {
-			return _packageEcosystem;
-		}
-
-		public String getPackageName() {
-			return _packageName;
-		}
-
 		public String getPermalink() {
 			return _permalink;
 		}
@@ -564,18 +552,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 		public VersionRange getVersionRange() {
 			return _versionRange;
-		}
-
-		public String getVulnerableVersionRange() {
-			return _vulnerableVersionRange;
-		}
-
-		public void setPackageEcosystem(String packageEcosystem) {
-			_packageEcosystem = packageEcosystem;
-		}
-
-		public void setPackageName(String packageName) {
-			_packageName = packageName;
 		}
 
 		public void setPermalink(String permalink) {
@@ -639,16 +615,9 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			}
 		}
 
-		public void setVulnerableVersionRange(String vulnerableVersionRange) {
-			_vulnerableVersionRange = vulnerableVersionRange;
-		}
-
-		private String _packageEcosystem;
-		private String _packageName;
 		private String _permalink;
 		private String _summary;
 		private VersionRange _versionRange;
-		private String _vulnerableVersionRange;
 
 	}
 

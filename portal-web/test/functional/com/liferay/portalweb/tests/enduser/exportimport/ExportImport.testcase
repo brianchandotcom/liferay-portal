@@ -245,9 +245,13 @@ definition {
 
 		var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
 
-		var editDocumentURL = StringUtil.extractFirst("${dmDocumentURL}", "jpg");
+		var editDocumentURL = StringUtil.replaceFirst("${dmDocumentURL}", "_1", "_10000");
+
+		echo("## * Edit Document URL: ${editDocumentURL}");
 
 		var entryExternalURL = StringUtil.replace("${editDocumentURL}", "http://", "");
+
+		echo("## * Entry External URL: ${entryExternalURL}");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 

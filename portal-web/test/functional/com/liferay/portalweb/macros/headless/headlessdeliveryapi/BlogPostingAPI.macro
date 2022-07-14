@@ -176,6 +176,30 @@ definition {
 		return "${headline}";
 	}
 
+	macro _updateOneBlogPostingBodyParameter {
+		Variables.assertDefined(parameterList = "${blogPostingId},${bodyParameterKey},${bodyParameterValue},${updateStrategy}");
+
+		var bodyKeyValuePair = '''"${bodyParameterKey}": "${bodyParameterValue}"''';
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/blog-postings/batch?updateStrategy=${updateStrategy} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+			-d
+				[
+					{
+					${bodyKeyValuePair},
+					"id": "${blogPostingId}"
+					}
+				]
+		''';
+
+		var response = JSONCurlUtil.put("${curl}");
+
+		return "${response}";
+	}
+
 	macro deleteAllBlogPostings {
 		var response = BlogPostingAPI._getBlogPostings();
 

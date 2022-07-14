@@ -964,6 +964,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBSCRIPTION_TOGGLE</td>
+	<td>//h4[contains(text(), '${key_subscriptionName}')]//following-sibling::span[contains(@class,'toggle-switch-handle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTION_FIELD_LABEL</td>
+	<td>//h4[contains(text(), '${key_subscriptionName}')]/..//label[contains(.,'${key_subscriptionFieldLabel}')]/..//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOGGLE_SWITCH_BUTTON</td>
+	<td>xpath=(//label[(contains(.,'${key_buttonName}')) or (contains(@for,'${key_buttonName}'))])[${key_indexNumber}]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SKU_DISCONTINUED_TOGGLE</td>
 	<td>//label[contains(.,'Mark the SKU as Discontinued')]//span[contains(@class,'toggle-switch-handle')]</td>
 	<td></td>

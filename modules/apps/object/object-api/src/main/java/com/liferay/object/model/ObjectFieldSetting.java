@@ -58,7 +58,11 @@ public interface ObjectFieldSetting
 
 			};
 
+	public java.util.List<ObjectFilter> getObjectFilters();
+
 	public ObjectStateFlow getObjectStateFlow();
+
+	public void setObjectFilters(java.util.List<ObjectFilter> objectFilters);
 
 	public void setObjectStateFlow(ObjectStateFlow objectStateFlow);
 

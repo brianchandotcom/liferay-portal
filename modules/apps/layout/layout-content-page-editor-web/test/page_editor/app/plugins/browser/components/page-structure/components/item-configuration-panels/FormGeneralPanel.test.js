@@ -170,7 +170,7 @@ describe('FormGeneralPanel', () => {
 			target: {value: 'url'},
 		});
 
-		const input = screen.queryByLabelText('url');
+		const input = screen.queryByLabelText('external-url');
 
 		userEvent.type(input, 'https://liferay.com', {
 			initialSelectionEnd: 100,
@@ -222,7 +222,7 @@ describe('FormGeneralPanel', () => {
 			renderComponent({item});
 		});
 
-		const input = screen.getByLabelText('url');
+		const input = screen.getByLabelText('external-url');
 
 		expect(input).toBeInTheDocument();
 		expect(input.value).toBe('https://liferay.com');

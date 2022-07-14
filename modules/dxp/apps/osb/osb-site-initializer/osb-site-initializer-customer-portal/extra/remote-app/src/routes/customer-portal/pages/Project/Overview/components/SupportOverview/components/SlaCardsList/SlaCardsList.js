@@ -24,7 +24,7 @@ const SlaCardsList = ({koroneikiAccount}) => {
 	return (
 		<div>
 			{!koroneikiAccount ? (
-				<div>
+				<div className="cp-sla-container position-absolute">
 					<Skeleton height={22} width={201} />
 
 					<Skeleton className="mt-3" height={80} width={201} />

@@ -358,6 +358,15 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		return getURLViewInContext(
+			themeDisplay, noSuchEntryRedirect, path, primaryKeyParameterName,
+			primaryKeyParameterValue);
+	}
+
+	protected String getURLViewInContext(
+		ThemeDisplay themeDisplay, String noSuchEntryRedirect, String path,
+		String primaryKeyParameterName, long primaryKeyParameterValue) {
+
 		return PortalUtil.addPreservedParameters(
 			themeDisplay,
 			StringBundler.concat(

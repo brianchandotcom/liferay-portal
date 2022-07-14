@@ -17,57 +17,42 @@
 <%@ include file="/admin/common/init.jsp" %>
 
 <%
-KBComment kbComment = KBCommentServiceUtil.getKBComment(ParamUtil.getLong(request, "kbCommentId"));
-
-String kbCommentTitle = StringUtil.shorten(kbComment.getContent(), 100);
+KBViewSuggestionDisplayContext kbViewSuggestionDisplayContext = new KBViewSuggestionDisplayContext(request, renderRequest, renderResponse, rootPortletId, templatePath);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(kbViewSuggestionDisplayContext.getRedirect());
 
-renderResponse.setTitle(kbCommentTitle);
+renderResponse.setTitle(kbViewSuggestionDisplayContext.getKBCommentTitle());
 %>
 
-<div class="card panel" id="<portlet:namespace /><%= kbComment.getKbCommentId() %>">
+<div class="card panel" id="<portlet:namespace /><%= kbViewSuggestionDisplayContext.getKBCommentId() %>">
 	<div class="panel-heading">
 		<div class="card-body">
 			<div class="card-col-field">
 				<div class="list-group-card-icon">
 					<liferay-ui:user-portrait
-						userId="<%= kbComment.getUserId() %>"
+						userId="<%= kbViewSuggestionDisplayContext.getKBCommentUserId() %>"
 					/>
 				</div>
 			</div>
 
 			<div class="card-col-content card-col-gutters">
-
-				<%
-				Date modifiedDate = kbComment.getModifiedDate();
-
-				String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-				%>
-
 				<h5 class="text-default">
-					<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbComment.getUserName()), modifiedDateDescription} %>" key="x-suggested-x-ago" />
+					<%= HtmlUtil.escape(kbViewSuggestionDisplayContext.getModifiedDateLabel()) %>
 				</h5>
 
 				<h4>
-					<%= HtmlUtil.escape(kbCommentTitle) %>
+					<%= HtmlUtil.escape(kbViewSuggestionDisplayContext.getKBCommentTitle()) %>
 				</h4>
 
 				<h5>
 					<span class="kb-comment-status text-default">
-						<liferay-ui:message key="<%= KBUtil.getStatusLabel(kbComment.getStatus()) %>" />
+						<liferay-ui:message key="<%= kbViewSuggestionDisplayContext.getKBCommentStatusLabel() %>" />
 					</span>
 
-					<%
-					KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(kbComment.getClassPK(), WorkflowConstants.STATUS_ANY);
-
-					KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
-
-					PortletURL viewKBArticleURL = kbArticleURLHelper.createViewWithRedirectURL(kbArticle, currentURL);
-					%>
-
-					<a href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(kbArticle.getTitle()) %></a>
+					<a href="<%= kbViewSuggestionDisplayContext.getKBArticleURL() %>">
+						<%= HtmlUtil.escape(kbViewSuggestionDisplayContext.getKBArticleTitle()) %>
+					</a>
 				</h5>
 			</div>
 		</div>
@@ -77,47 +62,23 @@ renderResponse.setTitle(kbCommentTitle);
 
 	<div class="panel-body">
 		<div class="card-body text-default">
-			<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(kbComment.getContent())) %>
+			<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(kbViewSuggestionDisplayContext.getKBCommentContent())) %>
 		</div>
 	</div>
 </div>
 
-<%
-int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
-int previousStatus = KBUtil.getPreviousStatus(kbComment.getStatus());
-%>
-
-<c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) || KBCommentPermission.contains(permissionChecker, kbComment, KBActionKeys.DELETE) %>">
+<c:if test="<%= kbViewSuggestionDisplayContext.isKBCommentActionsVisible() %>">
 	<aui:button-row>
-		<c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">
-			<c:if test="<%= previousStatus != KBCommentConstants.STATUS_NONE %>">
-				<liferay-portlet:actionURL name="/knowledge_base/update_kb_comment_status" varImpl="previousStatusURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
-					<portlet:param name="kbCommentStatus" value="<%= String.valueOf(previousStatus) %>" />
-				</liferay-portlet:actionURL>
-
-				<aui:button href="<%= previousStatusURL.toString() %>" name="previousStatusButton" type="submit" value="<%= KBUtil.getStatusTransitionLabel(previousStatus) %>" />
-			</c:if>
-
-			<c:if test="<%= nextStatus != KBCommentConstants.STATUS_NONE %>">
-				<liferay-portlet:actionURL name="/knowledge_base/update_kb_comment_status" varImpl="nextStatusURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
-					<portlet:param name="kbCommentStatus" value="<%= String.valueOf(nextStatus) %>" />
-				</liferay-portlet:actionURL>
-
-				<aui:button href="<%= nextStatusURL.toString() %>" name="nextStatusButton" type="submit" value="<%= KBUtil.getStatusTransitionLabel(nextStatus) %>" />
-			</c:if>
+		<c:if test="<%= kbViewSuggestionDisplayContext.canTransitionToPreviousStatus() %>">
+			<aui:button href="<%= kbViewSuggestionDisplayContext.getPreviousStatusTransitionURL() %>" name="previousStatusButton" type="submit" value="<%= kbViewSuggestionDisplayContext.getPreviousStatusTransitionLabel() %>" />
 		</c:if>
 
-		<c:if test="<%= KBCommentPermission.contains(permissionChecker, kbComment, KBActionKeys.DELETE) %>">
-			<liferay-portlet:actionURL name="/knowledge_base/delete_kb_comment" varImpl="deleteURL">
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
-			</liferay-portlet:actionURL>
+		<c:if test="<%= kbViewSuggestionDisplayContext.canTransitionToNextStatus() %>">
+			<aui:button href="<%= kbViewSuggestionDisplayContext.getNextStatusTransitionURL() %>" name="nextStatusButton" type="submit" value="<%= kbViewSuggestionDisplayContext.getNextStatusTransitionLabel() %>" />
+		</c:if>
 
-			<aui:button href="<%= deleteURL.toString() %>" name="deleteButton" value="<%= Constants.DELETE %>" />
+		<c:if test="<%= kbViewSuggestionDisplayContext.hasDeleteKBCommentPermission() %>">
+			<aui:button href="<%= kbViewSuggestionDisplayContext.getDeleteKBCommentURL() %>" name="deleteButton" value="<%= Constants.DELETE %>" />
 		</c:if>
 	</aui:button-row>
 </c:if>

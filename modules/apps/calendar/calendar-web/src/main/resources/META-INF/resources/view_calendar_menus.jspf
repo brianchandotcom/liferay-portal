@@ -530,11 +530,13 @@
 			'<%= calendarResourcesURL %>',
 			addOtherCalendarInput,
 			(event) => {
-				window.<portlet:namespace />otherCalendarList.add(event.result.raw);
+				if (window.event.keyCode === 13 || window.event.type === 'click') {
+					window.<portlet:namespace />otherCalendarList.add(event.result.raw);
 
-				<portlet:namespace />refreshVisibleCalendarRenderingRules();
+					<portlet:namespace />refreshVisibleCalendarRenderingRules();
 
-				addOtherCalendarInput.val('');
+					addOtherCalendarInput.val('');
+				}
 			}
 		);
 	</c:if>

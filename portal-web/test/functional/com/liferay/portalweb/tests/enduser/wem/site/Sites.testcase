@@ -154,7 +154,7 @@ definition {
 		}
 	}
 
-	@description = "Unable to add sanme site name."
+	@description = "Unable to add same site name."
 	@priority = "3"
 	test AddSiteWithInvalidDuplicateName {
 		task ("Add a site") {

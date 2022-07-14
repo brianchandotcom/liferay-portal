@@ -82,7 +82,7 @@ definition {
 				UploadDependencyFile.uploadFile(fileName = "Document_1.jpg");
 			}
 
-			task ("Assert upload is sucessful") {
+			task ("Assert upload is successful") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "TextInput#FILE_PRESENT",
 					value1 = "Document_1.jpg");

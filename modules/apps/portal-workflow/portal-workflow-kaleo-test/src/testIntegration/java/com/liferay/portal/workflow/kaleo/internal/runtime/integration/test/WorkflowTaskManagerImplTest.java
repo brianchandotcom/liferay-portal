@@ -1769,7 +1769,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			user, null, false, null, 0);
 
 		return _workflowTaskManager.hasAssignableUsers(
-			user.getCompanyId(), workflowTask.getWorkflowTaskId());
+			workflowTask.getWorkflowTaskId());
 	}
 
 	private String _read(String fileName) throws Exception {

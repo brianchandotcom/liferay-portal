@@ -26,6 +26,18 @@ definition {
 		MouseOver(locator1 = "RaylifeAP#MENU_SIDEBAR");
 	}
 
+	macro expandedSidebar {
+		MouseOver(
+			locator1 = "RaylifeAP#MENU_SIDEBAR",
+			key_menuSidebar = "${key_menuSidebar}");
+	}
+
+	macro assertVisibleSidebar {
+		AssertVisible(
+				locator1 = "RaylifeAP#MENU_SIDEBAR",
+				key_menuSidebar = "${key_menuSidebar}");
+	}
+
 	macro signIn {
 		if (isSet(emailAddress)) {
 			Type(

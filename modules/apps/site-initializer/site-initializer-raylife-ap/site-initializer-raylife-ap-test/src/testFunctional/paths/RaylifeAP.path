@@ -33,7 +33,7 @@
 
 <tr>
 	<td>MENU_SIDEBAR</td>
-	<td>//div[contains(@class, "sidebar-container")]//div[contains(@class, "${key_menu}")]</td>
+	<td>//div[contains(@class, "sidebar-container")]//div[contains(@class, "${key_menuSidebar}")]</td>
 	<td></td>
 </tr>
 

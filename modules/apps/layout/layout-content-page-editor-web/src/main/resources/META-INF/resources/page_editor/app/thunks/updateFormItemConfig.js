@@ -20,6 +20,7 @@ export default function updateFormItemConfig({itemConfig, itemId}) {
 	return (dispatch, getState) => {
 		dispatch(
 			updateItemLocalConfig({
+				disableUndo: true,
 				itemConfig: {
 					loading: true,
 				},

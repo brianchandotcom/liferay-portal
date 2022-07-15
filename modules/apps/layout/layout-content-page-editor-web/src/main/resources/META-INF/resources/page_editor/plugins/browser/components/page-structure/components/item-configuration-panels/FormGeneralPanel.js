@@ -148,6 +148,7 @@ function SuccessMessageOptions({item, onValueSelect}) {
 		return () => {
 			dispatch(
 				updateItemLocalConfig({
+					disableUndo: true,
 					itemConfig: {
 						showMessagePreview: false,
 					},
@@ -244,6 +245,7 @@ function SuccessMessageOptions({item, onValueSelect}) {
 
 							dispatch(
 								updateItemLocalConfig({
+									disableUndo: true,
 									itemConfig: {
 										showMessagePreview: checked,
 									},

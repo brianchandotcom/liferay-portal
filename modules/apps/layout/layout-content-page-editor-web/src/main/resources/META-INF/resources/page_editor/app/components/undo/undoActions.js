@@ -68,7 +68,9 @@ const UNDO_ACTIONS = {
 };
 
 export function canUndoAction(action) {
-	return Object.keys(UNDO_ACTIONS).includes(action.type);
+	return (
+		Object.keys(UNDO_ACTIONS).includes(action.type) && !action.disableUndo
+	);
 }
 
 export function getDerivedStateForUndo({action, state, type}) {

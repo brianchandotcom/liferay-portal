@@ -15,11 +15,13 @@
 import {UPDATE_ITEM_LOCAL_CONFIG} from './types';
 
 export default function updateItemLocalConfig({
+	disableUndo = false,
 	itemConfig,
 	itemId,
 	overridePreviousConfig = false,
 }) {
 	return {
+		disableUndo,
 		itemConfig,
 		itemId,
 		overridePreviousConfig,

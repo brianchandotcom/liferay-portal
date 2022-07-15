@@ -41,7 +41,11 @@ async function fetchOptions<T>(url: string) {
 function getLabel<T extends ObjectMap<any>>(item: T, key: keyof T) {
 	const value = item[key];
 
-	const label = typeof value === 'object' ? value[defaultLanguageId] : value;
+	if (typeof value !== 'object') {
+		return value ? String(value) : '';
+	}
+
+	const label = value[defaultLanguageId] ?? value['name'];
 
 	return label ? String(label) : '';
 }

@@ -102,13 +102,9 @@
 						HashMapBuilder.<String, Object>put(
 							"countrySelect", portletDisplay.getNamespace() + "addressCountryId" + addressesIndex
 						).put(
-							"countrySelectId", "countryId"
-						).put(
 							"countrySelectVal", ParamUtil.getLong(request, "addressCountryId" + addressesIndex, address.getCountryId())
 						).put(
 							"regionSelect", portletDisplay.getNamespace() + "addressRegionId" + addressesIndex
-						).put(
-							"regionSelectId", "regionId"
 						).put(
 							"regionSelectVal", ParamUtil.getLong(request, "addressRegionId" + addressesIndex, address.getRegionId())
 						).build()
@@ -145,10 +141,8 @@
 							CountryRegionDynamicSelect.default({
 								countrySelect:
 									'<portlet:namespace />addressCountryId' + guid,
-								countrySelectId: 'countryId',
 								countrySelectVal: '0',
 								regionSelect: '<portlet:namespace />addressRegionId' + guid,
-								regionSelectId: 'regionId',
 								regionSelectVal: '0',
 							});
 						},

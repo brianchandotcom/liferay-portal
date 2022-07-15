@@ -261,9 +261,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			new WorkflowTaskManagerProxyBean() {
 
 				@Override
-				public WorkflowTask fetchWorkflowTask(
-					long companyId, long workflowTaskId) {
-
+				public WorkflowTask fetchWorkflowTask(long workflowTaskId) {
 					if (workflowTaskId == _VALID_WORKFLOW_TASK_ID) {
 						return new DefaultWorkflowTask() {
 

@@ -79,12 +79,10 @@ public class WorkflowTaskManagerUtil {
 			workflowContext, waitForCompletion);
 	}
 
-	public static WorkflowTask fetchWorkflowTask(
-			long companyId, long workflowTaskId)
+	public static WorkflowTask fetchWorkflowTask(long workflowTaskId)
 		throws WorkflowException {
 
-		return _workflowTaskManager.fetchWorkflowTask(
-			companyId, workflowTaskId);
+		return _workflowTaskManager.fetchWorkflowTask(workflowTaskId);
 	}
 
 	public static List<User> getAssignableUsers(long workflowTaskId)

@@ -20,16 +20,17 @@ definition {
 		task ("Create a new Raylife AP Site") {
 			Site.openSitesAdmin();
 
-			// TeamExtranet.addSiteTemplateCP(
-			// 	siteName = "${testSiteName}",
-			// 	siteTemplateName = "Raylife AP");
+			//TeamExtranet.addSiteTemplateCP(
+			//	siteName = "${testSiteName}",
+			//	siteTemplateName = "Raylife AP");
+
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		// RaylifeAP.tearDownCP();
+		//RaylifeAP.tearDownCP();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -69,7 +70,6 @@ definition {
 		task ("Assert Applications section in Sidebar") {
 			RaylifeAP.assertVisibleSidebar(key_menuSidebar = "applications");
 		}
-	
 	}
 
 }

@@ -21,6 +21,7 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
+import com.liferay.oauth2.provider.rest.internal.configuration.OAuth2AuthorizationServerConfiguration;
 import com.liferay.oauth2.provider.rest.internal.endpoint.authorize.configuration.OAuth2AuthorizationFlowConfiguration;
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.nio.charset.StandardCharsets;
@@ -70,6 +73,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.apache.cxf.jaxrs.utils.HttpUtils;
+import org.apache.cxf.rs.security.jose.jwk.JwkUtils;
+import org.apache.cxf.rs.security.jose.jws.JwsUtils;
 import org.apache.cxf.rs.security.oauth2.common.AccessTokenRegistration;
 import org.apache.cxf.rs.security.oauth2.common.Client;
 import org.apache.cxf.rs.security.oauth2.common.OAuthPermission;
@@ -79,6 +84,7 @@ import org.apache.cxf.rs.security.oauth2.grants.code.AbstractAuthorizationCodeDa
 import org.apache.cxf.rs.security.oauth2.grants.code.AuthorizationCodeRegistration;
 import org.apache.cxf.rs.security.oauth2.grants.code.ServerAuthorizationCodeGrant;
 import org.apache.cxf.rs.security.oauth2.grants.jwt.Constants;
+import org.apache.cxf.rs.security.oauth2.provider.OAuthJoseJwtProducer;
 import org.apache.cxf.rs.security.oauth2.provider.OAuthServiceException;
 import org.apache.cxf.rs.security.oauth2.tokens.bearer.BearerAccessToken;
 import org.apache.cxf.rs.security.oauth2.tokens.refresh.RefreshToken;
@@ -98,6 +104,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	configurationPid = {
 		"com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration",
+		"com.liferay.oauth2.provider.rest.internal.configuration.OAuth2AuthorizationServerConfiguration",
 		"com.liferay.oauth2.provider.rest.internal.endpoint.authorize.configuration.OAuth2AuthorizationFlowConfiguration"
 	},
 	service = LiferayOAuthDataProvider.class
@@ -348,6 +355,12 @@ public class LiferayOAuthDataProvider
 
 		return _serverAuthorizationCodeGrantProvider.
 			getServerAuthorizationCodeGrants(client, subject);
+	}
+
+	public String getIssuer() {
+		MessageContext messageContext = getMessageContext();
+
+		return _portal.getHost(messageContext.getHttpServletRequest());
 	}
 
 	public OAuth2Authorization getOAuth2Authorization(
@@ -635,14 +648,29 @@ public class LiferayOAuthDataProvider
 	@Activate
 	@SuppressWarnings("unchecked")
 	protected void activate(Map<String, Object> properties) {
+		_oAuth2AuthorizationServerConfiguration =
+			ConfigurableUtil.createConfigurable(
+				OAuth2AuthorizationServerConfiguration.class, properties);
 		_oAuth2AuthorizationFlowConfiguration =
 			ConfigurableUtil.createConfigurable(
 				OAuth2AuthorizationFlowConfiguration.class, properties);
 		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
 			OAuth2ProviderConfiguration.class, properties);
 
-		setGrantLifetime(
-			_oAuth2AuthorizationFlowConfiguration.authorizationCodeGrantTTL());
+		_init();
+	}
+
+	protected ServerAccessToken createNewAccessToken(
+		Client client, UserSubject userSubject) {
+
+		ServerAccessToken serverAccessToken = super.createNewAccessToken(
+			client, userSubject);
+
+		if (getIssuer() != null) {
+			serverAccessToken.setIssuer(getIssuer());
+		}
+
+		return serverAccessToken;
 	}
 
 	@Override
@@ -651,6 +679,10 @@ public class LiferayOAuthDataProvider
 
 		ServerAccessToken serverAccessToken = super.doCreateAccessToken(
 			accessTokenRegistration);
+
+		if (isUseJwtFormatForAccessTokens()) {
+			return serverAccessToken;
+		}
 
 		BearerTokenProvider.AccessToken accessToken = fromCXFAccessToken(
 			serverAccessToken);
@@ -768,6 +800,10 @@ public class LiferayOAuthDataProvider
 		ServerAccessToken serverAccessToken = super.doRefreshAccessToken(
 			client, oldRefreshToken, restrictedScopes);
 
+		if (isUseJwtFormatForAccessTokens()) {
+			return serverAccessToken;
+		}
+
 		BearerTokenProvider.AccessToken accessToken = fromCXFAccessToken(
 			serverAccessToken);
 
@@ -854,6 +890,18 @@ public class LiferayOAuthDataProvider
 			oAuth2Authorization);
 	}
 
+	protected void setJwtAccessTokenProducer() {
+		OAuthJoseJwtProducer oAuthJoseJwtProducer = new OAuthJoseJwtProducer();
+
+		oAuthJoseJwtProducer.setSignatureProvider(
+			JwsUtils.getSignatureProvider(
+				JwkUtils.readJwkKey(
+					_oAuth2AuthorizationServerConfiguration.
+						jwtAccessTokenSigningJSONWebKey())));
+
+		super.setJwtAccessTokenProducer(oAuthJoseJwtProducer);
+	}
+
 	private Date _fromCXFTime(long issuedAt) {
 		return new Date(issuedAt * 1000);
 	}
@@ -935,6 +983,22 @@ public class LiferayOAuthDataProvider
 
 		return _userLocalService.getUser(
 			GetterUtil.getLong(userSubject.getId()));
+	}
+
+	private void _init() {
+		setAccessTokenLifetime(
+			_oAuth2AuthorizationServerConfiguration.accessTokenDuration());
+
+		setGrantLifetime(
+			_oAuth2AuthorizationFlowConfiguration.authorizationCodeGrantTTL());
+
+		setJwtAccessTokenProducer();
+
+		setRefreshTokenLifetime(
+			_oAuth2AuthorizationServerConfiguration.refreshTokenDuration());
+
+		setUseJwtFormatForAccessTokens(
+			_oAuth2AuthorizationServerConfiguration.issueJWTAccessToken());
 	}
 
 	private void _invokeTransactionally(Runnable runnable) throws Throwable {
@@ -1237,6 +1301,9 @@ public class LiferayOAuthDataProvider
 	private volatile BearerTokenProviderAccessor _bearerTokenProviderAccessor;
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
 	@Reference
@@ -1249,10 +1316,15 @@ public class LiferayOAuthDataProvider
 	@Reference
 	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
+	private OAuth2AuthorizationServerConfiguration
+		_oAuth2AuthorizationServerConfiguration;
 	private OAuth2ProviderConfiguration _oAuth2ProviderConfiguration;
 
 	@Reference
 	private OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private ScopeLocator _scopeLocator;

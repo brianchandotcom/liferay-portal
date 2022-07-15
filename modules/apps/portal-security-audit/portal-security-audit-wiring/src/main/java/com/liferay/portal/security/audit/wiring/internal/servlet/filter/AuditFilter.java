@@ -15,6 +15,7 @@
 package com.liferay.portal.security.audit.wiring.internal.servlet.filter;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.log.Log;
@@ -242,13 +243,11 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 							User user = _userLocalService.fetchUser(userId);
 
 							if (user != null) {
-								return DigesterUtil.digest(
-									_MESSAGE_DIGEST_ALGORITHM,
-									user.getEmailAddress());
+								return user.getEmailAddress();
 							}
 						}
 
-						return "";
+						return StringPool.BLANK;
 					}
 				).put(
 					"serverName", serverName

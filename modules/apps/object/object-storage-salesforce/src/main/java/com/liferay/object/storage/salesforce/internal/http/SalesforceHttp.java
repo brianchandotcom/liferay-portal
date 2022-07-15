@@ -14,6 +14,7 @@
 
 package com.liferay.object.storage.salesforce.internal.http;
 
+import com.liferay.object.rest.manager.exception.ObjectEntryManagerHttpException;
 import com.liferay.object.storage.salesforce.internal.configuration.SalesforceConfiguration;
 import com.liferay.object.storage.salesforce.internal.web.cache.SalesforceAccessTokenWebCacheItem;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -85,7 +86,15 @@ public class SalesforceHttp {
 	private JSONObject _getSalesforceAccessTokenJSONObject(
 		SalesforceConfiguration salesforceConfiguration) {
 
-		return SalesforceAccessTokenWebCacheItem.get(salesforceConfiguration);
+		JSONObject jSONObject = SalesforceAccessTokenWebCacheItem.get(
+			salesforceConfiguration);
+
+		if (jSONObject == null) {
+			throw new ObjectEntryManagerHttpException(
+				"Unable to authenticate with Salesforce");
+		}
+
+		return jSONObject;
 	}
 
 	private SalesforceConfiguration _getSalesforceConfiguration(

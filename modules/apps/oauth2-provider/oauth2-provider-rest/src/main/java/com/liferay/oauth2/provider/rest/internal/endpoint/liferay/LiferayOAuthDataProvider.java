@@ -75,6 +75,7 @@ import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.apache.cxf.jaxrs.utils.HttpUtils;
 import org.apache.cxf.rs.security.jose.jwk.JwkUtils;
 import org.apache.cxf.rs.security.jose.jws.JwsUtils;
+import org.apache.cxf.rs.security.jose.jwt.JwtClaims;
 import org.apache.cxf.rs.security.oauth2.common.AccessTokenRegistration;
 import org.apache.cxf.rs.security.oauth2.common.Client;
 import org.apache.cxf.rs.security.oauth2.common.OAuthPermission;
@@ -658,6 +659,26 @@ public class LiferayOAuthDataProvider
 			OAuth2ProviderConfiguration.class, properties);
 
 		_init();
+	}
+
+	@Override
+	protected JwtClaims createJwtAccessToken(
+		ServerAccessToken serverAccessToken) {
+
+		// Override this method to fix a bug in cxf.
+		// Scopes in JWT claim should be a string.
+
+		JwtClaims jwtClaims = super.createJwtAccessToken(serverAccessToken);
+
+		List<OAuthPermission> scopes = serverAccessToken.getScopes();
+
+		if (!scopes.isEmpty()) {
+			jwtClaims.setClaim(
+				OAuthConstants.SCOPE,
+				OAuthUtils.convertPermissionsToScope(scopes));
+		}
+
+		return jwtClaims;
 	}
 
 	protected ServerAccessToken createNewAccessToken(

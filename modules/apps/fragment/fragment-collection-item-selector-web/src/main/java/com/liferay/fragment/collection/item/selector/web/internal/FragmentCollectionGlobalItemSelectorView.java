@@ -19,7 +19,7 @@ import com.liferay.fragment.collection.item.selector.criterion.FragmentCollectio
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -63,7 +63,7 @@ public class FragmentCollectionGlobalItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return LanguageUtil.get(locale, "global");
+		return _language.get(locale, "global");
 	}
 
 	@Override
@@ -98,5 +98,8 @@ public class FragmentCollectionGlobalItemSelectorView
 	private ItemSelectorViewDescriptorRenderer
 		<FragmentCollectionItemSelectorCriterion>
 			_itemSelectorViewDescriptorRenderer;
+
+	@Reference
+	private Language _language;
 
 }

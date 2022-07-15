@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,6 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -129,24 +130,24 @@ public class AlloyEditorCreoleConfigContributor
 	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
 		return JSONUtil.putAll(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "normal"), "p", _CKEDITOR_STYLE_BLOCK),
+				_language.get(locale, "normal"), "p", _CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "1"), "h1",
+				_language.format(locale, "heading-x", "1"), "h1",
 				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "2"), "h2",
+				_language.format(locale, "heading-x", "2"), "h2",
 				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "3"), "h3",
+				_language.format(locale, "heading-x", "3"), "h3",
 				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "4"), "h4",
+				_language.format(locale, "heading-x", "4"), "h4",
 				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "5"), "h5",
+				_language.format(locale, "heading-x", "5"), "h5",
 				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "6"), "h6",
+				_language.format(locale, "heading-x", "6"), "h6",
 				_CKEDITOR_STYLE_BLOCK));
 	}
 
@@ -267,5 +268,8 @@ public class AlloyEditorCreoleConfigContributor
 	}
 
 	private static final int _CKEDITOR_STYLE_BLOCK = 1;
+
+	@Reference
+	private Language _language;
 
 }

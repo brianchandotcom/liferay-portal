@@ -18,7 +18,7 @@ import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrín Chaudhary
@@ -95,8 +96,11 @@ public class CKEditorBBCodeConfigContributor
 
 		return JSONUtil.put(
 			"code",
-			LanguageUtil.get(
+			_language.get(
 				getContentsLocale(inputEditorTaglibAttributes), "code"));
 	}
+
+	@Reference
+	private Language _language;
 
 }

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -69,7 +69,7 @@ public class ImportFragmentEntriesStrutsAction implements StrutsAction {
 		if (file == null) {
 			jsonObject.put(
 				"error",
-				LanguageUtil.get(
+				_language.get(
 					httpServletRequest,
 					"the-selected-file-is-not-a-valid-zip-file"));
 		}
@@ -152,6 +152,9 @@ public class ImportFragmentEntriesStrutsAction implements StrutsAction {
 
 	@Reference
 	private FragmentsImporter _fragmentsImporter;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;

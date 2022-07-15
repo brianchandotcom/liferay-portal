@@ -16,7 +16,7 @@ package com.liferay.google.places.web.internal.portal.settings.configuration.adm
 
 import com.liferay.google.places.constants.GooglePlacesWebKeys;
 import com.liferay.google.places.util.GooglePlacesUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
@@ -54,7 +54,7 @@ public class GooglePlacesPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "google-places");
+		return _language.get(locale, "google-places");
 	}
 
 	@Override
@@ -84,6 +84,9 @@ public class GooglePlacesPortalSettingsConfigurationScreenContributor
 			GooglePlacesUtil.getGooglePlacesAPIKey(
 				themeDisplay.getCompanyId()));
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.google.places.web)")
 	private ServletContext _servletContext;

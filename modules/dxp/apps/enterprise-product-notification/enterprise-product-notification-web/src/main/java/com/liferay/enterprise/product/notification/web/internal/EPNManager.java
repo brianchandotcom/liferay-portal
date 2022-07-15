@@ -14,7 +14,7 @@
 
 package com.liferay.enterprise.product.notification.web.internal;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -94,12 +94,12 @@ public class EPNManager {
 
 			sb.append("<div><h4>");
 			sb.append(
-				LanguageUtil.get(
+				_language.get(
 					locale,
 					"enterprise-product-notification-title[" + key + "]"));
 			sb.append("</h4><div>");
 			sb.append(
-				LanguageUtil.format(
+				_language.format(
 					locale, "enterprise-product-notification-body[" + key + "]",
 					new String[] {
 						String.format(
@@ -134,6 +134,9 @@ public class EPNManager {
 			"dxp/latest/en/using-search/liferay-enterprise-search" +
 				"/activating-liferay-enterprise-search.html")
 	};
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PortletPreferencesFactory _portletPreferencesFactory;

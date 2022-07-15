@@ -21,7 +21,7 @@ import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -72,7 +72,7 @@ public class CheckBoxFDSFilterContextContributor
 			jsonArray.put(
 				JSONUtil.put(
 					"label",
-					LanguageUtil.get(
+					_language.get(
 						resourceBundle, checkBoxFDSFilterItem.getLabel())
 				).put(
 					"value", checkBoxFDSFilterItem.getValue()
@@ -86,5 +86,8 @@ public class CheckBoxFDSFilterContextContributor
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 }

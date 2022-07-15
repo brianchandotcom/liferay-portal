@@ -22,7 +22,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -116,14 +116,14 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 			if (exception instanceof
 					LayoutPageTemplateEntryNameException.MustNotBeDuplicate) {
 
-				errorMessage = LanguageUtil.get(
+				errorMessage = _language.get(
 					themeDisplay.getLocale(),
 					"a-page-template-entry-with-that-name-already-exists");
 			}
 			else if (exception instanceof
 						LayoutPageTemplateEntryNameException.MustNotBeNull) {
 
-				errorMessage = LanguageUtil.get(
+				errorMessage = _language.get(
 					themeDisplay.getLocale(), "name-must-not-be-empty");
 			}
 			else if (exception instanceof
@@ -135,7 +135,7 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 						(LayoutPageTemplateEntryNameException.
 							MustNotContainInvalidCharacters)exception;
 
-				errorMessage = LanguageUtil.format(
+				errorMessage = _language.format(
 					themeDisplay.getLocale(),
 					"name-cannot-contain-the-following-invalid-character-x",
 					lptene.character);
@@ -147,14 +147,14 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 				int nameMaxLength = ModelHintsUtil.getMaxLength(
 					LayoutPageTemplateEntry.class.getName(), "name");
 
-				errorMessage = LanguageUtil.format(
+				errorMessage = _language.format(
 					themeDisplay.getLocale(),
 					"please-enter-a-name-with-fewer-than-x-characters",
 					nameMaxLength);
 			}
 
 			if (Validator.isNull(errorMessage)) {
-				errorMessage = LanguageUtil.get(
+				errorMessage = _language.get(
 					themeDisplay.getLocale(), "an-unexpected-error-occurred");
 			}
 
@@ -167,6 +167,9 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreateLayoutPageTemplateEntryMVCActionCommand.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

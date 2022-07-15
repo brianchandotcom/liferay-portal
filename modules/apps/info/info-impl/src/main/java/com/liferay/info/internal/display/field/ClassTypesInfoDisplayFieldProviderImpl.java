@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.field.ClassTypesInfoDisplayFieldProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class ClassTypesInfoDisplayFieldProviderImpl
 			classTypeInfoDisplayFields.add(
 				new InfoDisplayField(
 					classTypeField.getName(),
-					LanguageUtil.get(locale, classTypeField.getLabel()),
+					_language.get(locale, classTypeField.getLabel()),
 					classTypeField.getType()));
 		}
 
@@ -68,6 +68,9 @@ public class ClassTypesInfoDisplayFieldProviderImpl
 		return classTypeReader.getAvailableClassTypes(
 			_portal.getCurrentAndAncestorSiteGroupIds(groupId), locale);
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

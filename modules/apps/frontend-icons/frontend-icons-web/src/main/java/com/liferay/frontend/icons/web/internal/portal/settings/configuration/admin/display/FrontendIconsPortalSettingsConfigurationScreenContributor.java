@@ -16,7 +16,7 @@ package com.liferay.frontend.icons.web.internal.portal.settings.configuration.ad
 
 import com.liferay.frontend.icons.web.internal.display.context.FrontendIconsConfigurationDisplayContext;
 import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
@@ -55,7 +55,7 @@ public class FrontendIconsPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			locale, "frontend-icons-instance-configuration-name");
 	}
 
@@ -85,6 +85,9 @@ public class FrontendIconsPortalSettingsConfigurationScreenContributor
 	@Reference
 	private FrontendIconsResourcePackRepository
 		_frontendIconsResourcePackRepository;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.frontend.icons.web)",

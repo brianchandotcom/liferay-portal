@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,6 +37,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rubén Pulido
@@ -241,7 +242,7 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 
 	private String _getMessage(String message) {
 		return StringBundler.concat(
-			LanguageUtil.get(
+			_language.get(
 				LocaleUtil.getDefault(), "fragment-configuration-is-invalid"),
 			System.lineSeparator(), message);
 	}
@@ -254,5 +255,8 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 		new JSONValidator(
 			FragmentEntryValidatorImpl.class.getResourceAsStream(
 				"dependencies/type-options-json-schema.json"));
+
+	@Reference
+	private Language _language;
 
 }

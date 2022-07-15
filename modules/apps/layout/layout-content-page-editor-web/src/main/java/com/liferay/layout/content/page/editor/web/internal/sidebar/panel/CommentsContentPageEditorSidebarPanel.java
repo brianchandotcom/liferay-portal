@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -53,7 +53,7 @@ public class CommentsContentPageEditorSidebarPanel
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "comments");
+		return _language.get(resourceBundle, "comments");
 	}
 
 	@Override
@@ -78,6 +78,9 @@ public class CommentsContentPageEditorSidebarPanel
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommentsContentPageEditorSidebarPanel.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutPermission _layoutPermission;

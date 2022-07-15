@@ -16,7 +16,7 @@ package com.liferay.google.places.web.internal.site.settings.configuration.admin
 
 import com.liferay.google.places.constants.GooglePlacesWebKeys;
 import com.liferay.google.places.util.GooglePlacesUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -56,7 +56,7 @@ public class GooglePlacesSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "google-places");
+		return _language.get(locale, "google-places");
 	}
 
 	@Override
@@ -87,6 +87,9 @@ public class GooglePlacesSiteSettingsConfigurationScreenContributor
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.google.places.web)")
 	private ServletContext _servletContext;

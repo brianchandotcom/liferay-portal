@@ -25,7 +25,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
@@ -144,7 +144,7 @@ public class CopyContributedEntryMVCActionCommand extends BaseMVCActionCommand {
 			StringBundler.concat(
 				fragmentComposition.getName(), StringPool.SPACE,
 				StringPool.OPEN_PARENTHESIS,
-				LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "copy"),
+				_language.get(LocaleUtil.getMostRelevantLocale(), "copy"),
 				StringPool.CLOSE_PARENTHESIS),
 			null, fragmentComposition.getData(), previewFileEntryId,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
@@ -172,7 +172,7 @@ public class CopyContributedEntryMVCActionCommand extends BaseMVCActionCommand {
 			StringBundler.concat(
 				fragmentEntry.getName(), StringPool.SPACE,
 				StringPool.OPEN_PARENTHESIS,
-				LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "copy"),
+				_language.get(LocaleUtil.getMostRelevantLocale(), "copy"),
 				StringPool.CLOSE_PARENTHESIS),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
@@ -240,6 +240,9 @@ public class CopyContributedEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

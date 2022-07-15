@@ -17,7 +17,7 @@ package com.liferay.frontend.data.set.internal.filter;
 import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
@@ -25,6 +25,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -56,7 +57,7 @@ public class AutocompleteFDSFilterContextContributor
 			"entityFieldType", baseAutocompleteFDSFilter.getEntityFieldType()
 		).put(
 			"inputPlaceholder",
-			LanguageUtil.get(locale, baseAutocompleteFDSFilter.getPlaceholder())
+			_language.get(locale, baseAutocompleteFDSFilter.getPlaceholder())
 		).put(
 			"itemKey", baseAutocompleteFDSFilter.getItemKey()
 		).put(
@@ -72,5 +73,8 @@ public class AutocompleteFDSFilterContextContributor
 			}
 		).build();
 	}
+
+	@Reference
+	private Language _language;
 
 }

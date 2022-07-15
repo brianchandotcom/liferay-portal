@@ -22,7 +22,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -159,7 +159,7 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, actionResponse,
 					JSONUtil.put(
 						"error",
-						LanguageUtil.get(
+						_language.get(
 							themeDisplay.getRequest(),
 							"please-enter-a-valid-name")));
 			}
@@ -180,7 +180,7 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, actionResponse,
 					JSONUtil.put(
 						"error",
-						LanguageUtil.get(
+						_language.get(
 							themeDisplay.getRequest(),
 							"an-unexpected-error-occurred")));
 			}
@@ -193,6 +193,9 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutPageTemplateEntryExceptionRequestHandler

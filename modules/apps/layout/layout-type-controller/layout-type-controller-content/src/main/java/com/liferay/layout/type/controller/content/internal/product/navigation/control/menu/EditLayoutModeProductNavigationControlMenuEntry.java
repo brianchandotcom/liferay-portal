@@ -21,7 +21,7 @@ import com.liferay.layout.security.permission.resource.LayoutContentModelResourc
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -83,7 +83,7 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "edit");
+		return _language.get(locale, "edit");
 	}
 
 	@Override
@@ -238,6 +238,9 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditLayoutModeProductNavigationControlMenuEntry.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;

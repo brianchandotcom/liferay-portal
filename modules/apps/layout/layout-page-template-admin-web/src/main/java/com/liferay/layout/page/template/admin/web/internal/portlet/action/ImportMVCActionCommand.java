@@ -17,7 +17,7 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -58,7 +58,7 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 	protected void addSuccessMessage(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		String successMessage = LanguageUtil.get(
+		String successMessage = _language.get(
 			_portal.getHttpServletRequest(actionRequest),
 			"the-file-was-processed-correctly");
 
@@ -113,6 +113,9 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportMVCActionCommand.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;

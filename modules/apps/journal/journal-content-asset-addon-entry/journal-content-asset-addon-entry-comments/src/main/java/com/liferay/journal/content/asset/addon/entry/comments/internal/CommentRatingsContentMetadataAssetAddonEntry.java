@@ -15,12 +15,13 @@
 package com.liferay.journal.content.asset.addon.entry.comments.internal;
 
 import com.liferay.journal.content.asset.addon.entry.ContentMetadataAssetAddonEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseAssetAddonEntry;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -47,12 +48,15 @@ public class CommentRatingsContentMetadataAssetAddonEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "comment-ratings");
+		return _language.get(locale, "comment-ratings");
 	}
 
 	@Override
 	public Double getWeight() {
 		return 4.0;
 	}
+
+	@Reference
+	private Language _language;
 
 }

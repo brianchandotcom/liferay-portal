@@ -32,7 +32,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
@@ -426,14 +426,14 @@ public class FragmentEntryProcessorHelperImpl
 		JSONObject jsonObject, Locale locale) {
 
 		String value = jsonObject.getString(
-			LanguageUtil.getLanguageId(locale), null);
+			_language.getLanguageId(locale), null);
 
 		if (value != null) {
 			return value;
 		}
 
 		value = jsonObject.getString(
-			LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
+			_language.getLanguageId(LocaleUtil.getSiteDefault()));
 
 		if (Validator.isNull(value)) {
 			value = jsonObject.getString("defaultValue");
@@ -501,6 +501,9 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

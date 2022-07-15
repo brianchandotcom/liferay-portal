@@ -20,7 +20,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -72,7 +72,7 @@ public class FragmentCollectionSiteItemSelectorView
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		String title = LanguageUtil.get(locale, "site");
+		String title = _language.get(locale, "site");
 
 		if (serviceContext == null) {
 			return title;
@@ -131,5 +131,8 @@ public class FragmentCollectionSiteItemSelectorView
 	private ItemSelectorViewDescriptorRenderer
 		<FragmentCollectionItemSelectorCriterion>
 			_itemSelectorViewDescriptorRenderer;
+
+	@Reference
+	private Language _language;
 
 }

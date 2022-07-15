@@ -16,7 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -55,7 +55,7 @@ public class BrowserContentPageEditorSidebarPanel
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "browser");
+		return _language.get(resourceBundle, "browser");
 	}
 
 	@Override
@@ -82,6 +82,9 @@ public class BrowserContentPageEditorSidebarPanel
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BrowserContentPageEditorSidebarPanel.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutPermission _layoutPermission;

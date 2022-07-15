@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -430,7 +430,7 @@ public class FragmentEntryConfigurationParserImpl
 
 				fieldSetJSONObject.put(
 					"label",
-					LanguageUtil.get(
+					_language.get(
 						resourceBundle, fieldSetLabel, fieldSetLabel));
 
 				JSONArray fieldsJSONArray = fieldSetJSONObject.getJSONArray(
@@ -725,13 +725,12 @@ public class FragmentEntryConfigurationParserImpl
 
 		fieldJSONObject.put(
 			"description",
-			LanguageUtil.get(
-				resourceBundle, fieldDescription, fieldDescription));
+			_language.get(resourceBundle, fieldDescription, fieldDescription));
 
 		String fieldLabel = fieldJSONObject.getString("label");
 
 		fieldJSONObject.put(
-			"label", LanguageUtil.get(resourceBundle, fieldLabel, fieldLabel));
+			"label", _language.get(resourceBundle, fieldLabel, fieldLabel));
 
 		String type = fieldJSONObject.getString("type");
 
@@ -769,8 +768,7 @@ public class FragmentEntryConfigurationParserImpl
 						"label", value);
 
 					validValueJSONObject.put(
-						"label",
-						LanguageUtil.get(resourceBundle, label, label));
+						"label", _language.get(resourceBundle, label, label));
 				});
 		}
 		else {
@@ -785,8 +783,7 @@ public class FragmentEntryConfigurationParserImpl
 
 				validationJSONObject.put(
 					"errorMessage",
-					LanguageUtil.get(
-						resourceBundle, errorMessage, errorMessage));
+					_language.get(resourceBundle, errorMessage, errorMessage));
 			}
 		}
 	}
@@ -803,6 +800,9 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutListRetrieverTracker _layoutListRetrieverTracker;

@@ -17,7 +17,7 @@ package com.liferay.journal.content.asset.addon.entry.comments.internal;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.content.asset.addon.entry.ContentMetadataAssetAddonEntry;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -66,7 +66,7 @@ public class CommentsContentMetadataAssetAddonEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "comments");
+		return _language.get(locale, "comments");
 	}
 
 	@Override
@@ -141,5 +141,8 @@ public class CommentsContentMetadataAssetAddonEntry
 	private CommentRatingsContentMetadataAssetAddonEntry
 		_commentRatingsContentMetadataAssetAddonEntry;
 	private volatile JournalServiceConfiguration _journalServiceConfiguration;
+
+	@Reference
+	private Language _language;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.gogo.shell.web.internal.constants.GogoShellPortletKeys;
 import com.liferay.gogo.shell.web.internal.constants.GogoShellWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -184,7 +184,7 @@ public class GogoShellPortlet extends MVCPortlet {
 
 		if (matcher.find()) {
 			throw new Exception(
-				LanguageUtil.format(
+				_language.format(
 					themeDisplay.getLocale(), "the-command-x-is-not-supported",
 					command));
 		}
@@ -270,6 +270,9 @@ public class GogoShellPortlet extends MVCPortlet {
 
 	@Reference
 	private CommandProcessor _commandProcessor;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

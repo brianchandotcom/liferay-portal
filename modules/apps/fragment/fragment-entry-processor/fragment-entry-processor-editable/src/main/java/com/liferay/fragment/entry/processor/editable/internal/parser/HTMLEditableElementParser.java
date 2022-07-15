@@ -15,7 +15,7 @@
 package com.liferay.fragment.entry.processor.editable.internal.parser;
 
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -42,7 +43,7 @@ public class HTMLEditableElementParser extends TextEditableElementParser {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", getClass());
 
-			return LanguageUtil.get(resourceBundle, "example-html");
+			return _language.get(resourceBundle, "example-html");
 		}
 
 		return html;
@@ -52,5 +53,8 @@ public class HTMLEditableElementParser extends TextEditableElementParser {
 	protected String getEditableElementType() {
 		return "html";
 	}
+
+	@Reference
+	private Language _language;
 
 }

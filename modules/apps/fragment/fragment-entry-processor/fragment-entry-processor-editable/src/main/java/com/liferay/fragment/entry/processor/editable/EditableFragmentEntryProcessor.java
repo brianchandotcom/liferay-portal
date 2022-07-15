@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -500,7 +500,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			"content.Language", getClass());
 
 		throw new FragmentEntryContentException(
-			LanguageUtil.format(
+			_language.format(
 				resourceBundle,
 				"you-must-define-all-required-attributes-x-for-each-editable-" +
 					"element",
@@ -545,7 +545,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				"content.Language", getClass());
 
 			throw new FragmentEntryContentException(
-				LanguageUtil.get(
+				_language.get(
 					resourceBundle,
 					"you-must-define-a-unique-id-for-each-editable-element"));
 		}
@@ -585,7 +585,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				"content.Language", getClass());
 
 			throw new FragmentEntryContentException(
-				LanguageUtil.get(
+				_language.get(
 					resourceBundle,
 					"editable-fields-cannot-include-nested-editables-drop-" +
 						"zones-or-widgets-in-it"));
@@ -606,7 +606,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			"content.Language", getClass());
 
 		throw new FragmentEntryContentException(
-			LanguageUtil.get(
+			_language.get(
 				resourceBundle,
 				"you-must-define-a-valid-type-for-each-editable-element"));
 	}
@@ -620,6 +620,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

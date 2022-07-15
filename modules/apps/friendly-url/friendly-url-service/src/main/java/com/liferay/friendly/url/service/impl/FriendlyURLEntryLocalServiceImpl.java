@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -654,7 +654,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		Map<String, String> sortedUrlTitleMap = new LinkedHashMap<>();
 
-		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
+		for (Locale locale : _language.getAvailableLocales(groupId)) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			String value = urlTitleMap.get(languageId);
@@ -750,5 +750,8 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 }

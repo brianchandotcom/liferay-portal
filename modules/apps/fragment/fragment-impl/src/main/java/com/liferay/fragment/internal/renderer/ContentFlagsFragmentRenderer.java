@@ -23,7 +23,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -82,7 +83,7 @@ public class ContentFlagsFragmentRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "content-flags");
+		return _language.get(locale, "content-flags");
 	}
 
 	@Override
@@ -111,7 +112,7 @@ public class ContentFlagsFragmentRenderer
 
 		try {
 			flagsTag.setMessage(
-				LanguageUtil.get(
+				_language.get(
 					httpServletRequest,
 					GetterUtil.getString(
 						fragmentEntryConfigurationParser.getFieldValue(
@@ -146,5 +147,8 @@ public class ContentFlagsFragmentRenderer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentFlagsFragmentRenderer.class);
+
+	@Reference
+	private Language _language;
 
 }

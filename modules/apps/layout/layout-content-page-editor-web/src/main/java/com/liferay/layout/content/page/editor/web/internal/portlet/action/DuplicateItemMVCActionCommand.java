@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -113,7 +113,7 @@ public class DuplicateItemMVCActionCommand
 		String errorMessage = StringPool.BLANK;
 
 		if (exception instanceof NoSuchEntryLinkException) {
-			errorMessage = LanguageUtil.get(
+			errorMessage = _language.get(
 				themeDisplay.getRequest(),
 				"the-section-could-not-be-duplicated-because-it-has-been-" +
 					"deleted");
@@ -131,7 +131,7 @@ public class DuplicateItemMVCActionCommand
 
 			HttpSession httpSession = httpServletRequest.getSession();
 
-			errorMessage = LanguageUtil.format(
+			errorMessage = _language.format(
 				themeDisplay.getRequest(),
 				"the-layout-could-not-be-duplicated-because-it-contains-a-" +
 					"widget-x-that-can-only-appear-once-in-the-page",
@@ -140,7 +140,7 @@ public class DuplicateItemMVCActionCommand
 					themeDisplay.getLocale()));
 		}
 		else {
-			errorMessage = LanguageUtil.get(
+			errorMessage = _language.get(
 				themeDisplay.getRequest(), "an-unexpected-error-occurred");
 		}
 
@@ -383,6 +383,9 @@ public class DuplicateItemMVCActionCommand
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

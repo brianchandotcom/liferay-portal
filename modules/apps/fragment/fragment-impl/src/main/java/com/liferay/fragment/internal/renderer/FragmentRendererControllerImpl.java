@@ -31,7 +31,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
@@ -169,7 +169,7 @@ public class FragmentRendererControllerImpl
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String localizedErrorMessage = LanguageUtil.get(
+		String localizedErrorMessage = _language.get(
 			themeDisplay.getLocale(), errorMessage);
 
 		sb.append(localizedErrorMessage.replaceAll("\\n", "<br>"));
@@ -231,6 +231,9 @@ public class FragmentRendererControllerImpl
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutAdaptiveMediaProcessor _layoutAdaptiveMediaProcessor;

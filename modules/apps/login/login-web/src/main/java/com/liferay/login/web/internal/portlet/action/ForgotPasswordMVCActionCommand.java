@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.exception.UserActiveException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.UserReminderQueryException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -351,7 +351,7 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
 
-		String languageId = LanguageUtil.getLanguageId(actionRequest);
+		String languageId = _language.getLanguageId(actionRequest);
 
 		String emailFromName = portletPreferences.getValue(
 			"emailFromName", null);
@@ -385,6 +385,9 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

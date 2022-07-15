@@ -40,7 +40,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -170,7 +170,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 						fragmentCollection =
 							_fragmentCollectionService.addFragmentCollection(
 								groupId, _FRAGMENT_COLLECTION_KEY_DEFAULT,
-								LanguageUtil.get(
+								_language.get(
 									locale, _FRAGMENT_COLLECTION_KEY_DEFAULT),
 								StringPool.BLANK,
 								ServiceContextThreadLocal.getServiceContext());
@@ -1000,6 +1000,9 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	private FragmentEntryValidator _fragmentEntryValidator;
 
 	private List<FragmentsImporterResultEntry> _fragmentsImporterResultEntries;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -170,8 +170,8 @@ public class JournalServiceUpgradeStepRegistrator
 		registry.register(
 			"0.0.7", "0.0.8", new JournalArticleDatesUpgradeProcess(),
 			UpgradeProcessFactory.runSQL(
-				"update JournalArticle set treePath = '/' where folderId=0 " +
-					"and treePath='/0/'"));
+				"update JournalArticle set treePath = '/' where folderId = 0 " +
+					"and treePath = '/0/'"));
 
 		registry.register(
 			"0.0.8", "1.0.0",

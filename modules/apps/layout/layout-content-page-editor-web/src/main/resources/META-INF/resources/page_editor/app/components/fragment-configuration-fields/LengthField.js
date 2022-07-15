@@ -28,6 +28,7 @@ const REGEX = /[-(0-9).]+|[a-zA-Z]+|%/g;
 
 const UNITS = ['px', '%', 'em', 'rem', 'vw', 'vh'];
 
+const isNumber = (value) => !isNaN(parseFloat(value));
 export function LengthField({field, onValueSelect, value}) {
 	const inputId = useId();
 	const triggerId = useId();
@@ -44,12 +45,32 @@ export function LengthField({field, onValueSelect, value}) {
 		setActive(false);
 		setNextUnit(unit);
 
-		if (!isNaN(parseFloat(nextValue))) {
+		if (isNumber(nextValue)) {
 			const valueWithUnits = `${nextValue}${unit}`;
 
 			if (valueWithUnits !== value) {
 				onValueSelect(field.name, valueWithUnits);
 			}
+		}
+	};
+
+	const handleValueSelect = () => {
+		const valueWithUnits = isNumber(nextValue)
+			? `${nextValue}${nextUnit}`
+			: '';
+
+		if (valueWithUnits !== value) {
+			onValueSelect(field.name, valueWithUnits);
+		}
+	};
+
+	const handleKeyDown = (event) => {
+		if (KEYS_NOT_ALLOWED.includes(event.key)) {
+			event.preventDefault();
+		}
+
+		if (event.key === 'Enter') {
+			handleValueSelect();
 		}
 	};
 
@@ -63,22 +84,12 @@ export function LengthField({field, onValueSelect, value}) {
 						aria-label={field.label}
 						id={inputId}
 						onBlur={() => {
-							const valueWithUnits = !isNaN(parseFloat(nextValue))
-								? `${nextValue}${nextUnit}`
-								: '';
-
-							if (valueWithUnits !== value) {
-								onValueSelect(field.name, valueWithUnits);
-							}
+							handleValueSelect();
 						}}
 						onChange={(event) => {
 							setNextValue(event.target.value);
 						}}
-						onKeyDown={(event) => {
-							if (KEYS_NOT_ALLOWED.includes(event.key)) {
-								event.preventDefault();
-							}
-						}}
+						onKeyDown={handleKeyDown}
 						sizing="sm"
 						type="number"
 						value={nextValue}

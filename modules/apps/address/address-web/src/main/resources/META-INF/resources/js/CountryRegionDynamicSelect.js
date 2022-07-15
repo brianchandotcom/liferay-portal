@@ -16,9 +16,9 @@ import PropTypes from 'prop-types';
 
 function CountryRegionDynamicSelect({
 	countrySelect,
-	countrySelectVal,
+	countrySelectVal = 0,
 	regionSelect,
-	regionSelectVal,
+	regionSelectVal = 0,
 }) {
 	let japanCountryId;
 

@@ -933,4 +933,23 @@ definition {
 			userEmail = "${email}");
 	}
 
+	@summary = "Rename an existing Data Source"
+	macro renameDataSource {
+		Click(locator1 = "Icon#EDIT_PENCIL");
+
+		Click(locator1 = "TextInput#INPUT_ID", inputFieldId = "dataSourceName");
+
+		KeyPress(
+			locator1 = "TextInput#INPUT_ID",
+			inputFieldId = "dataSourceName",
+			value1 = "\BACK_SPACE");
+
+		Type(
+			locator1 = "TextInput#INPUT_ID",
+			inputFieldId = "dataSourceName",
+			value1 = "${dataSourceNewName}");
+
+		Button.clickSubmitButton();
+	}
+
 }

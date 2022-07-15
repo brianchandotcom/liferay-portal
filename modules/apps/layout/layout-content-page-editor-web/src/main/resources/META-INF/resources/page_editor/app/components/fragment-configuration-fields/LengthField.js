@@ -40,6 +40,19 @@ export function LengthField({field, onValueSelect, value}) {
 		value ? value.match(REGEX)[1] : UNITS[0]
 	);
 
+	const handleUnitSelect = (unit) => {
+		setActive(false);
+		setNextUnit(unit);
+
+		if (!isNaN(parseFloat(nextValue))) {
+			const valueWithUnits = `${nextValue}${unit}`;
+
+			if (valueWithUnits !== value) {
+				onValueSelect(field.name, valueWithUnits);
+			}
+		}
+	};
+
 	return (
 		<ClayForm.Group>
 			<label htmlFor={inputId}>{field.label}</label>
@@ -94,30 +107,10 @@ export function LengthField({field, onValueSelect, value}) {
 							</ClayButton>
 						}
 					>
-						<ClayDropDown.ItemList>
-							{UNITS.map((unit) => (
-								<ClayDropDown.Item
-									key={unit}
-									onClick={() => {
-										setActive(false);
-										setNextUnit(unit);
-
-										if (!isNaN(parseFloat(nextValue))) {
-											const valueWithUnits = `${nextValue}${unit}`;
-
-											if (valueWithUnits !== value) {
-												onValueSelect(
-													field.name,
-													valueWithUnits
-												);
-											}
-										}
-									}}
-								>
-									{unit.toUpperCase()}
-								</ClayDropDown.Item>
-							))}
-						</ClayDropDown.ItemList>
+						<DropDownList
+							field={field}
+							onClick={handleUnitSelect}
+						/>
 					</ClayDropDown>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
@@ -130,3 +123,17 @@ LengthField.propTypes = {
 	onValueSelect: PropTypes.func.isRequired,
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
+
+const DropDownList = ({onClick}) => (
+	<ClayDropDown.ItemList>
+		{UNITS.map((unit) => (
+			<ClayDropDown.Item
+				aria-label={unit}
+				key={unit}
+				onClick={() => onClick(unit)}
+			>
+				{unit.toUpperCase()}
+			</ClayDropDown.Item>
+		))}
+	</ClayDropDown.ItemList>
+);

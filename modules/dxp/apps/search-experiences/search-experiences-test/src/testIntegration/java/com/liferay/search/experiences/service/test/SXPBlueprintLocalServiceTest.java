@@ -92,9 +92,9 @@ public class SXPBlueprintLocalServiceTest {
 
 	@Test
 	public void testUpdateSXPBlueprint() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		Company company = CompanyTestUtil.addCompany();
 
-		User user = UserTestUtil.addCompanyAdminUser(_company);
+		User user = UserTestUtil.addCompanyAdminUser(company);
 
 		SXPBlueprint sxpBlueprint = _addSXPBlueprint(user.getUserId());
 
@@ -157,9 +157,6 @@ public class SXPBlueprintLocalServiceTest {
 
 		return sxpBlueprint;
 	}
-
-	@DeleteAfterTestRun
-	private Company _company;
 
 	@DeleteAfterTestRun
 	private Group _group;

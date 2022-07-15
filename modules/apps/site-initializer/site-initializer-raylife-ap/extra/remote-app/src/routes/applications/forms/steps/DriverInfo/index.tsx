@@ -71,12 +71,12 @@ const DriverInfo = () => {
 				))}
 
 				<ClayButton
-					className="ml-7"
+					className="ml-7 text-uppercase"
 					displayType="link"
 					onClick={() => handleAddDriverClick()}
 				>
 					<ClayIcon symbol="plus" />
-					&nbsp;ADD DRIVER
+					&nbsp;Add Driver
 				</ClayButton>
 			</ClayForm>
 		</div>

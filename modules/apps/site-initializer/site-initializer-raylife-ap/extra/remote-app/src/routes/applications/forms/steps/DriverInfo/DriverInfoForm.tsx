@@ -21,7 +21,7 @@ import ClayForm, {
 	ClaySelect,
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {
 	ACTIONS,
@@ -36,6 +36,8 @@ type FormDriverInfoTypes = {
 
 const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 	const [_state, dispatch] = useContext(NewApplicationAutoContext);
+
+	const [occupationValue, setOccupationValue] = useState<string>();
 
 	const handleChangeField = (
 		fieldName: string,
@@ -61,177 +63,189 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 	const relationToContactOptions = [
 		{
 			label: '',
-			value: '1',
+			value: '',
 		},
 		{
 			label: 'Choose an option',
-			value: '2',
+			value: 'chooseAnOption',
 		},
 		{
 			label: 'Self',
-			value: '3',
+			value: 'self',
 		},
 		{
 			label: 'Spouse',
-			value: '4',
+			value: 'spouse',
 		},
 		{
 			label: 'Dependent',
-			value: '5',
+			value: 'dependent',
 		},
 		{
 			label: 'Relative',
-			value: '6',
+			value: 'relative',
 		},
 	];
 
 	const genderOptions = [
 		{
 			label: '',
-			value: '1',
+			value: '',
 		},
 		{
 			label: 'Choose an option',
-			value: '2',
+			value: 'chooseAnOption',
 		},
 		{
 			label: 'Male',
-			value: '3',
+			value: 'male',
 		},
 		{
 			label: 'Female',
-			value: '4',
+			value: 'female',
 		},
 	];
 
 	const maritalStatusOptions = [
 		{
 			label: '',
-			value: '1',
+			value: '',
 		},
 		{
 			label: 'Choose an option',
-			value: '2',
+			value: 'chooseAnOption',
 		},
 		{
 			label: 'Married',
-			value: '3',
+			value: 'married',
 		},
 		{
 			label: 'Separated',
-			value: '4',
+			value: 'separated',
 		},
 		{
 			label: 'Single',
-			value: '5',
+			value: 'single',
 		},
 		{
 			label: 'Widowed',
-			value: '6',
+			value: 'widowed',
 		},
 	];
 
 	const occupationOptions = [
 		{
 			label: '',
-			value: '1',
+			value: '',
 		},
 		{
 			label: 'Choose an option',
-			value: '2',
+			value: 'chooseAnOption',
 		},
 		{
 			label: 'Accountant',
-			value: '3',
+			value: 'accountant',
 		},
 		{
 			label: 'Dentist',
-			value: '4',
+			value: 'dentist',
 		},
 		{
 			label: 'Engineer',
-			value: '5',
+			value: 'engineer',
 		},
 		{
 			label: 'Government',
-			value: '6',
+			value: 'government',
 		},
 		{
 			label: 'Other',
-			value: '7',
+			value: 'other',
 		},
 	];
 
 	const millitaryAffiliationOptions = [
 		{
 			label: '',
-			value: '1',
+			value: '',
 		},
 		{
 			label: 'Choose an option',
-			value: '2',
+			value: 'chooseAnOption',
 		},
 		{
 			label: 'None',
-			value: '3',
+			value: 'none',
 		},
 		{
 			label: 'US Air Force',
-			value: '4',
+			value: 'usAirForce',
 		},
 		{
 			label: 'US Coast Guard',
-			value: '5',
+			value: 'usCoastGuard',
 		},
 		{
 			label: 'US Marine Corps',
-			value: '6',
+			value: 'usMarineCorps',
 		},
 		{
 			label: 'US Military',
-			value: '7',
+			value: 'usMilitary',
 		},
 		{
 			label: 'US Navy',
-			value: '8',
+			value: 'usNavy',
 		},
 	];
 
 	const highestEducationOptions = [
 		{
 			label: '',
-			value: '1',
+			value: '',
 		},
 		{
 			label: 'Choose an option',
-			value: '2',
+			value: 'chooseAnOption',
 		},
 		{
 			label: 'Hign School',
-			value: '3',
+			value: 'hignSchool',
 		},
 		{
 			label: 'College',
-			value: '4',
+			value: 'college',
 		},
 		{
 			label: 'Masters',
-			value: '5',
+			value: 'masters',
 		},
 		{
 			label: 'PHD',
-			value: '6',
+			value: 'phd',
 		},
 	];
 
 	const governmentAffiliationOptions = [
 		{
 			label: '',
-			value: '1',
+			value: '',
 		},
 		{
 			label: 'Choose an option',
-			value: '2',
+			value: 'chooseAnOption',
+		},
+		{
+			label: 'ABC Sheriff Association',
+			value: 'abcSheriffAssociation',
+		},
+		{
+			label: 'FBI Academy Associates',
+			value: 'fbiAcademyAssociates',
+		},
+		{
+			label: 'State Firefighters Association',
+			value: 'stateFirefightersAssociation',
 		},
 	];
 
@@ -271,12 +285,12 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 					<div className="col filled form-condensed form-group">
 						<ClayInput
 							autoComplete="off"
-							className="bg-neutral-0 w-100 year"
+							className="bg-neutral-0 firstName w-100"
 							id="firstName"
 							name="firstName"
 							onChange={(event) => {
 								handleChangeField(
-									'year',
+									'firstName',
 									event.target.value,
 									id
 								);
@@ -286,7 +300,7 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 						/>
 
 						<label htmlFor="firstName">
-							Fisrt Name&nbsp;
+							First Name&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>
 					</div>
@@ -294,7 +308,7 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 					<div className="col filled form-condensed form-group">
 						<ClayInput
 							autoComplete="off"
-							className="bg-neutral-0 make w-100"
+							className="bg-neutral-0 lastName w-100"
 							id="lastName"
 							name="lastName"
 							onChange={(event) => {
@@ -318,6 +332,13 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 						<ClaySelect
 							aria-label="Select Label"
 							id="relationToContact"
+							onChange={(event) => {
+								handleChangeField(
+									'relationToContact',
+									event.target.value,
+									id
+								);
+							}}
 						>
 							{relationToContactOptions.map(
 								(relationToContactOption) => (
@@ -340,7 +361,17 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 
 				<div className="row">
 					<div className="col filled form-condensed form-group">
-						<ClaySelect aria-label="Select Label" id="gender">
+						<ClaySelect
+							aria-label="Select Label"
+							id="gender"
+							onChange={(event) => {
+								handleChangeField(
+									'gender',
+									event.target.value,
+									id
+								);
+							}}
+						>
 							{genderOptions.map((genderOption) => (
 								<ClaySelect.Option
 									className="text-uppercase"
@@ -361,6 +392,13 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 						<ClaySelect
 							aria-label="Select Label"
 							id="maritalStatusOptions"
+							onChange={(event) => {
+								handleChangeField(
+									'maritalStatusOptions',
+									event.target.value,
+									id
+								);
+							}}
 						>
 							{maritalStatusOptions.map((maritalStatusOption) => (
 								<ClaySelect.Option
@@ -404,7 +442,19 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 
 				<div className="row">
 					<div className="col filled form-condensed form-group">
-						<ClaySelect aria-label="Select Label" id="occupation">
+						<ClaySelect
+							aria-label="Select Label"
+							id="occupation"
+							onChange={(occupation) => {
+								setOccupationValue(occupation.target.value);
+
+								handleChangeField(
+									'occupation',
+									occupation.target.value,
+									id
+								);
+							}}
+						>
 							{occupationOptions.map((occupationOption) => (
 								<ClaySelect.Option
 									className="text-uppercase"
@@ -415,7 +465,7 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 							))}
 						</ClaySelect>
 
-						<label htmlFor="maritalStatusOptions">
+						<label htmlFor="occupation">
 							Ocuppation&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>
@@ -425,11 +475,12 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 						<ClayInput
 							autoComplete="off"
 							className="bg-neutral-0 otherOcupation w-100"
+							disabled={occupationValue !== 'other'}
 							id="otherOcupation"
 							name="otherOcupation"
 							onChange={(event) => {
 								handleChangeField(
-									'annualMileage',
+									'otherOcupation',
 									event.target.value,
 									id
 								);
@@ -438,16 +489,31 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 							type="text"
 						/>
 
-						<label htmlFor="otherOcupation">
-							Other Ocupation&nbsp;
-							<span className="text-danger-darken-1">*</span>
-						</label>
+						{occupationValue === 'other' && (
+							<label htmlFor="otherOcupation">
+								Other Ocupation
+								<span className="text-danger-darken-1">*</span>
+							</label>
+						)}
+
+						{occupationValue !== 'other' && (
+							<label htmlFor="otherOcupation">
+								Other Ocupation
+							</label>
+						)}
 					</div>
 
 					<div className="col filled form-condensed form-group">
 						<ClaySelect
 							aria-label="Select Label"
 							id="highestEducation"
+							onChange={(event) => {
+								handleChangeField(
+									'highestEducation',
+									event.target.value,
+									id
+								);
+							}}
 						>
 							{highestEducationOptions.map(
 								(highestEducationOption) => (
@@ -472,8 +538,15 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 					<div className="col filled form-condensed form-group">
 						<ClaySelect
 							aria-label="Select Label"
-							disabled
+							disabled={occupationValue !== 'government'}
 							id="governmentAffiliation"
+							onChange={(event) => {
+								handleChangeField(
+									'governmentAffiliation',
+									event.target.value,
+									id
+								);
+							}}
 						>
 							{governmentAffiliationOptions.map(
 								(governmentAffiliationOption) => (
@@ -491,22 +564,33 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 							)}
 						</ClaySelect>
 
-						<label htmlFor="governmentAffiliation">
-							Government Affiliation&nbsp;
-							<span className="text-danger-darken-1">*</span>
-						</label>
+						{occupationValue === 'government' && (
+							<label htmlFor="otherOcupation">
+								Government Affiliation&nbsp;
+								<span className="text-danger-darken-1">*</span>
+							</label>
+						)}
+
+						{occupationValue !== 'government' && (
+							<label htmlFor="otherOcupation">
+								Government Affiliation&nbsp;
+							</label>
+						)}
 					</div>
 
 					<div className="col filled form-condensed form-group millitaryAffiliation">
 						<ClayDropDownWithItems
 							items={millitaryAffiliationOptions}
-							searchable={true}
+							searchable
 							trigger={
-								<ClayInput
-									id="value"
-									name="value"
-									type="text"
-								/>
+								<ClayButton className="after bg-neutral-0 border-neutral-5 button-millitary-affiliation d-flex icon justify-content-end rounded text-neutral-10">
+									<span>
+										<ClayIcon
+											className="button-millitary-affiliation-icon"
+											symbol="caret-double-l"
+										/>
+									</span>
+								</ClayButton>
 							}
 						/>
 
@@ -523,7 +607,7 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 					</p>
 
 					<div className="mb-1 mt-2 text-neutral-9 text-paragraph-sm">
-						Accidents or CItations in the last 10 yeras?*
+						Accidents or Citations in the last 10 years?*
 					</div>
 
 					<ClayRadioGroup className="mb-2" inline>

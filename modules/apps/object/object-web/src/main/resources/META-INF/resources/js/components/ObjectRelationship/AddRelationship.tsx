@@ -110,8 +110,7 @@ function ModalAddObjectRelationship({
 						}}
 					/>
 
-					{Liferay.FeatureFlags['LPS-155537'] &&
-						parameterRequired &&
+					{parameterRequired &&
 						values.type === ObjectRelationshipType.ONE_TO_MANY && (
 							<SelectRelationship
 								error={errors.parameterObjectFieldId}

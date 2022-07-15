@@ -135,7 +135,7 @@ export function ObjectRelationshipFormBase({
 					(!currentObjectDefinition.system || !system) &&
 					(!Liferay.FeatureFlags['LPS-135430'] ||
 						storageType === 'default') &&
-					(!Liferay.FeatureFlags['LPS-155537'] || !parameterRequired)
+					!parameterRequired
 			);
 
 			setObjectDefinitions(objectDefinitions);

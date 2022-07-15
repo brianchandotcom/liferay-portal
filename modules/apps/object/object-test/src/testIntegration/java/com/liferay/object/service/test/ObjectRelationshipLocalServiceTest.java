@@ -42,10 +42,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.sql.Connection;
 
@@ -103,22 +101,12 @@ public class ObjectRelationshipLocalServiceTest {
 			new TestSystemObjectDefinitionMetadata(
 				_systemObjectDefinition1.getName()),
 			new HashMapDictionary<>());
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-155537", "true"
-			).build());
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_systemObjectDefinition1);
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-155537", "false"
-			).build());
 	}
 
 	@Before

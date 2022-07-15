@@ -133,8 +133,7 @@ export default function EditRelationship({
 				/>
 			</Card>
 
-			{Liferay.FeatureFlags['LPS-155537'] &&
-				parameterRequired &&
+			{parameterRequired &&
 				values.type === ObjectRelationshipType.ONE_TO_MANY && (
 					<Card title={Liferay.Language.get('parameters')}>
 						<Input

@@ -90,7 +90,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -666,10 +665,7 @@ public class ObjectEntryDisplayContext {
 			long parameterObjectFieldId =
 				objectRelationship.getParameterObjectFieldId();
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-155537")) &&
-				(parameterObjectFieldId > 0)) {
-
+			if (parameterObjectFieldId > 0) {
 				ObjectField parameterObjectField =
 					_objectFieldLocalService.getObjectField(
 						parameterObjectFieldId);

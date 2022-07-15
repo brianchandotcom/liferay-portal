@@ -46,16 +46,12 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
-
-import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -185,13 +181,6 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	private void _apply(
 		long companyId,
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
-
-		if (Objects.equals(
-				systemObjectDefinitionMetadata.getName(), "Address") &&
-			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-155537"))) {
-
-			return;
-		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

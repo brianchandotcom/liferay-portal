@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -587,12 +586,6 @@ public class ObjectRelationshipLocalServiceImpl
 			long objectDefinitionId1, long objectDefinitionId2,
 			long parameterObjectFieldId, String type)
 		throws PortalException {
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-155537")) &&
-			(parameterObjectFieldId > 0)) {
-
-			throw new UnsupportedOperationException();
-		}
 
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId1);

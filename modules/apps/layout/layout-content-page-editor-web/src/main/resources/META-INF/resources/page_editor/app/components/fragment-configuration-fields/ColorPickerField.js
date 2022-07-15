@@ -32,6 +32,7 @@ export function ColorPickerField({field, onValueSelect, value}) {
 			canDetachTokenValues={canDetachTokenValues}
 			field={field}
 			onValueSelect={onValueSelect}
+			showLabel={!Liferay.FeatureFlags['LPS-143206']}
 			tokenValues={tokenValues}
 			value={value}
 		/>

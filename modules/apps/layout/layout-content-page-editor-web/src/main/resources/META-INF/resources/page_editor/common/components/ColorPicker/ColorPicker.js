@@ -58,6 +58,7 @@ export function ColorPicker({
 	editedTokenValues,
 	field,
 	onValueSelect,
+	showLabel = true,
 	tokenValues,
 	value,
 }) {
@@ -250,7 +251,9 @@ export function ColorPicker({
 
 	return (
 		<ClayForm.Group small>
-			<label>{field.label}</label>
+			<label className={classNames({'sr-only': !showLabel})}>
+				{field.label}
+			</label>
 
 			<ClayInput.Group
 				className={classNames('page-editor__color-picker', {
@@ -266,6 +269,7 @@ export function ColorPicker({
 						<DropdownColorPicker
 							active={activeDropdownColorPicker}
 							colors={colors}
+							fieldLabel={showLabel ? null : field.label}
 							label={tokenLabel}
 							onSetActive={setActiveDropdownColorPicker}
 							onValueChange={({label, name, value}) =>
@@ -433,6 +437,7 @@ export function ColorPicker({
 								<DropdownColorPicker
 									active={activeDropdownColorPicker}
 									colors={colors}
+									fieldLabel={showLabel ? null : field.label}
 									onSetActive={setActiveDropdownColorPicker}
 									onValueChange={({label, name, value}) => {
 										onSetValue(value, label, name);

@@ -31,6 +31,7 @@ import SearchForm from '../../../common/components/SearchForm';
 export function DropdownColorPicker({
 	active,
 	colors,
+	fieldLabel = null,
 	label = null,
 	onValueChange = () => {},
 	onSetActive,
@@ -131,10 +132,12 @@ export function DropdownColorPicker({
 				>
 					<span className="c-inner" tabIndex="-1">
 						<span
-							className="page-editor__dropdown-color-picker__selector-splotch rounded-circle"
-							style={{
-								background: `${value}`,
-							}}
+							className={classNames(
+								'page-editor__dropdown-color-picker__selector-splotch rounded-circle',
+								{'lfr-portal-tooltip': fieldLabel}
+							)}
+							data-title={fieldLabel}
+							style={{background: `${value}`}}
 						/>
 
 						<span className="text-truncate">{label}</span>

@@ -619,6 +619,10 @@ public class DLStoreUtil {
 			inputStream);
 	}
 
+	public void setStore(DLStore store) {
+		_store = store;
+	}
+
 	private static volatile DLStore _store =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			DLStore.class, DLStoreUtil.class, "_store", true);

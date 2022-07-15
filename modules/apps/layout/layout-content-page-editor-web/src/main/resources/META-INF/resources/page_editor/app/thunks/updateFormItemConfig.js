@@ -33,14 +33,22 @@ export default function updateFormItemConfig({itemConfig, itemId}) {
 			itemId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: getState().segmentsExperienceId,
-		}).then((layoutData) => {
-			dispatch(
-				updateFormItemConfigAction({
-					itemId,
-					layoutData,
-					overridePreviousConfig: true,
-				})
-			);
-		});
+		}).then(
+			({
+				addedFragmentEntryLinks,
+				layoutData,
+				removedFragmentEntryLinkIds,
+			}) => {
+				dispatch(
+					updateFormItemConfigAction({
+						addedFragmentEntryLinks,
+						itemId,
+						layoutData,
+						overridePreviousConfig: true,
+						removedFragmentEntryLinkIds,
+					})
+				);
+			}
+		);
 	};
 }

@@ -1776,6 +1776,14 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 
 		AssertConsoleTextNotPresent(value1 = "Unable to render preview for file version: large_file_2.pdf");
+
+		AssertVisible(
+			key_text = "caret-top",
+			locator1 = "Icon#ANY_DISABLED");
+
+		AssertVisible(
+			key_text = "caret-bottom",
+			locator1 = "Icon#ANY_ENABLED");
 	}
 
 	@description = "This test covers LPS-146237. It validates that a PDF can be previewed from the Recycle Bin."

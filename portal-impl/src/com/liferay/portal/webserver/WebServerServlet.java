@@ -1198,8 +1198,7 @@ public class WebServerServlet extends HttpServlet {
 		ServletResponseUtil.sendFile(
 			null, httpServletResponse, fileEntry.getTitle(),
 			fileEntry.getContentStream(), fileEntry.getSize(),
-			fileEntry.getMimeType(),
-			HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+			fileEntry.getMimeType());
 	}
 
 	protected void sendGroups(

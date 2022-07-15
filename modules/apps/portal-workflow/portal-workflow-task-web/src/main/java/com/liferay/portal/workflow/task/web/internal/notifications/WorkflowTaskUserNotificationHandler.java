@@ -131,8 +131,7 @@ public class WorkflowTaskUserNotificationHandler
 		long workflowTaskId = jsonObject.getLong("workflowTaskId");
 
 		if (workflowTaskId > 0) {
-			WorkflowTask workflowTask = _fetchWorkflowTask(
-				workflowTaskId, serviceContext);
+			WorkflowTask workflowTask = _fetchWorkflowTask(workflowTaskId);
 
 			if (workflowTask == null) {
 				_userNotificationEventLocalService.deleteUserNotificationEvent(
@@ -187,24 +186,21 @@ public class WorkflowTaskUserNotificationHandler
 		_userNotificationEventLocalService = userNotificationEventLocalService;
 	}
 
-	private WorkflowTask _fetchWorkflowTask(
-			long workflowTaskId, ServiceContext serviceContext)
+	private WorkflowTask _fetchWorkflowTask(long workflowTaskId)
 		throws Exception {
 
 		if (workflowTaskId <= 0) {
 			return null;
 		}
 
-		return WorkflowTaskManagerUtil.fetchWorkflowTask(
-			serviceContext.getCompanyId(), workflowTaskId);
+		return WorkflowTaskManagerUtil.fetchWorkflowTask(workflowTaskId);
 	}
 
 	private boolean _hasPermission(
 			long workflowTaskId, ServiceContext serviceContext)
 		throws Exception {
 
-		WorkflowTask workflowTask = _fetchWorkflowTask(
-			workflowTaskId, serviceContext);
+		WorkflowTask workflowTask = _fetchWorkflowTask(workflowTaskId);
 
 		if (workflowTask == null) {
 			return false;

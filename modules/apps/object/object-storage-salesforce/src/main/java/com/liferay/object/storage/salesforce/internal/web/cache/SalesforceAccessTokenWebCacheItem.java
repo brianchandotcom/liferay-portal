@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 
+import java.net.HttpURLConnection;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -78,15 +80,29 @@ public class SalesforceAccessTokenWebCacheItem implements WebCacheItem {
 				_salesforceConfiguration.loginURL() + "/services/oauth2/token");
 			options.setPost(true);
 
-			return JSONFactoryUtil.createJSONObject(
-				HttpUtil.URLtoString(options));
+			String responseJSON = HttpUtil.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Response code ", response.getResponseCode(), ": ",
+							responseJSON));
+				}
+
+				return null;
+			}
+
+			return JSONFactoryUtil.createJSONObject(responseJSON);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
 
-			return JSONFactoryUtil.createJSONObject();
+			return null;
 		}
 	}
 

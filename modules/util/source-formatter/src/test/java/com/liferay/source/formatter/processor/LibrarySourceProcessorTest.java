@@ -28,65 +28,64 @@ public class LibrarySourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"dependencies.testproperties",
 			StringBundler.concat(
-				"Library 'org.apache.pdfbox:pdfbox' 2.0.14 contain ",
-				"vulnerabilities by 'Vulnerability that affects ",
-				"org.apache.pdfbox:pdfbox', look detail in ",
-				"https://github.com/advisories/GHSA-c9jj-3wvg-q65h"));
+				"Library 'org.apache.pdfbox:pdfbox:2.0.14' contains known ",
+				"vulnerabilities(Vulnerability that affects org.apache.",
+				"pdfbox:pdfbox, https://github.com/advisories/GHSA-c9jj-3wvg-",
+				"q65h)"));
 
 		test(
 			"ivy.testxml",
 			StringBundler.concat(
-				"Library 'org.springframework.security:spring-security-core' ",
-				"5.6.1 contain vulnerabilities by 'Authorization bypass in ",
-				"Spring Security', look detail in ",
-				"https://github.com/advisories/GHSA-hh32-7344-cg2f"));
+				"Library 'org.springframework.security:spring-security-core:",
+				"5.6.1' contains known vulnerabilities(Authorization bypass ",
+				"in Spring Security, https://github.com/advisories/GHSA-hh32-",
+				"7344-cg2f)"));
 
 		test(
 			"pom.testxml",
 			StringBundler.concat(
-				"Library 'org.springframework.security:spring-security-core' ",
-				"5.6 contain vulnerabilities by 'Authorization bypass in ",
-				"Spring Security', look detail in ",
-				"https://github.com/advisories/GHSA-hh32-7344-cg2f"));
+				"Library 'org.springframework.security:spring-security-core:",
+				"5.6.1' contains known vulnerabilities(Authorization bypass ",
+				"in Spring Security, https://github.com/advisories/GHSA-hh32-",
+				"7344-cg2f)"));
 
 		test(
 			"build.testgradle",
 			new String[] {
 				StringBundler.concat(
-					"Library 'com.erudika:para-core' 1.45.10 contain ",
-					"vulnerabilities by 'Cross-site Scripting in ",
-					"com.erudika:para-core', look detail in ",
-					"https://github.com/advisories/GHSA-phvw-r25p-8xv7"),
+					"Library 'org.springframework.security:spring-security-",
+					"core:5.6.2' contains known vulnerabilities(Authorization ",
+					"bypass in Spring Security, https://github.com/advisories",
+					"/GHSA-hh32-7344-cg2f)"),
 				StringBundler.concat(
-					"Library 'com.twelvemonkeys.imageio:imageio-metadata' ",
-					"3.7.0 contain vulnerabilities by 'External Entity ",
-					"Reference in TwelveMonkeys ImageIO', look detail in ",
-					"https://github.com/advisories/GHSA-pjch-4g28-fxx7"),
+					"Library 'com.erudika:para-core.security:para-core:",
+					"1.45.10' contains known vulnerabilities(cCross-site ",
+					"Scripting in com.erudika:para-core, https://github.com",
+					"/advisories/GHSA-phvw-r25p-8xv7)"),
 				StringBundler.concat(
-					"Library 'org.apache.jena:jena' 3.1.0 contain ",
-					"vulnerabilities by 'XML External Entity Reference in ",
-					"apache jena', look detail in ",
-					"https://github.com/advisories/GHSA-gchv-364h-r896"),
+					"Library 'com.twelvemonkeys.imageio:imageio-metadata:",
+					"3.7.0' contains known vulnerabilities(External Entity ",
+					"Reference in TwelveMonkeys ImageIO, https://github.com",
+					"/advisories/GHSA-pjch-4g28-fxx7)"),
 				StringBundler.concat(
-					"Library ",
-					"'org.springframework.security:spring-security-core' ",
-					"5.6.2 contain vulnerabilities by 'Authorization bypass ",
-					"in Spring Security', look detail in ",
-					"https://github.com/advisories/GHSA-hh32-7344-cg2f")
+					"Library 'org.apache.jena:jena:",
+					"3.1.0' contains known vulnerabilities(XML External ",
+					"Entity Reference in apache jena, https://github.com",
+					"/advisories/GHSA-gchv-364h-r896)")
 			});
 
 		test(
 			"package.testjson",
 			new String[] {
 				StringBundler.concat(
-					"Library 'eventsource' 2.0.1 contain vulnerabilities by ",
-					"'Exposure of Sensitive Information in eventsource', look ",
-					"detail in ",
-					"https://github.com/advisories/GHSA-6h5x-7c5m-7cr7"),
+					"Library 'eventsource:2.0.1' contains known ",
+					"vulnerabilities(Exposure of Sensitive Information in ",
+					"eventsource, https://github.com/advisories/GHSA-6h5x-",
+					"7c5m-7cr7)"),
 				StringBundler.concat(
-					"Library 'workspace-tools' 0.17 contain vulnerabilities ",
-					"by 'Command injection in workspace-tools', look detail ",
-					"in https://github.com/advisories/GHSA-5875-m6jq-vf78")
+					"Library 'workspace-tools:0.17' contains known ",
+					"vulnerabilities(Command injection in workspace-tools, ",
+					"https://github.com/advisories/GHSA-5875-m6jq-vf78)")
 			});
 	}
 

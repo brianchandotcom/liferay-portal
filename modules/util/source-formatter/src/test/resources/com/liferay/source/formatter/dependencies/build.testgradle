@@ -1,6 +1,10 @@
-dependencies {
-	classpath group: "org.springframework.security", name: "spring-security-core", version: "5.6.2"
+buildscript {
+	dependencies {
+		classpath group: "org.springframework.security", name: "spring-security-core", version: "5.6.2"
+	}
+}
 
+dependencies {
 	compile group: "com.erudika", name: "para-core", version: "1.45.10"
 
 	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-metadata", version: "3.7.0"

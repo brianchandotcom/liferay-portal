@@ -305,12 +305,12 @@ public class UpgradeProcess_6_2_0 extends Pre7UpgradeProcess {
 		upgrade(new UpgradeDynamicDataMapping());
 		upgrade(new UpgradeGroup());
 		upgrade(new UpgradeImageGallery());
-		upgrade(new UpgradeJournal());
+		/*upgrade(new UpgradeJournal());
 		upgrade(new UpgradeLayout());
 		upgrade(new UpgradeLayoutFriendlyURL());
 		upgrade(new UpgradeLayoutRevision());
 		upgrade(new UpgradeLayoutSet());
-		upgrade(new UpgradeLayoutSetBranch());
+		upgrade(new UpgradeLayoutSetBranch());*/
 		upgrade(new UpgradeMessageBoards());
 		upgrade(new UpgradeMessageBoardsAttachments());
 		upgrade(new UpgradePortletItem());

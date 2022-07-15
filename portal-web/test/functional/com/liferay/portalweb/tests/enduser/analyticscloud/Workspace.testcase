@@ -289,7 +289,7 @@ definition {
 			ACSettings.goToWorkspace();
 		}
 
-		task ("Change the timezone to Tokyo of Japan") {
+		task ("Change the timezone to Xinjiang of China") {
 			ACWorkspace.configureWorkspaceSettings(
 				timezone = "China",
 				timezoneId = "UTC+06:00 Xinjiang Time (Asia/Urumqi)");

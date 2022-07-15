@@ -12,35 +12,41 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
 import {useNavigate} from 'react-router-dom';
 
-import {DeleteSuite} from '../../../graphql/mutations';
 import {TestraySuite} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
+import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
+import {Security} from '../../../security';
+import {deleteResource} from '../../../services/rest';
+import {Action} from '../../../types';
 
 const useSuiteActions = () => {
-	const [onDeleteSuite] = useMutation(DeleteSuite);
 	const navigate = useNavigate();
+	const {removeItemFromList} = useMutate();
 
 	const formModal = useFormModal();
 	const modal = formModal.modal;
 
+	const actions: Action[] = [
+		{
+			action: ({id}: TestraySuite) => navigate(`${id}/update`),
+			name: i18n.translate('edit'),
+			permission: 'UPDATE',
+		},
+		{
+			action: ({id}: TestraySuite, mutate) =>
+				deleteResource(`/suites/${id}`)
+					.then(() => removeItemFromList(mutate, id))
+					.catch(modal.onError),
+			name: i18n.translate('delete'),
+			permission: 'DELETE',
+		},
+	];
+
 	return {
-		actions: [
-			{
-				action: ({id}: TestraySuite) => navigate(`${id}/update`),
-				name: i18n.translate('edit'),
-			},
-			{
-				action: ({id}: TestraySuite) =>
-					onDeleteSuite({variables: {id}})
-						.then(() => modal.onSave())
-						.catch(modal.onError),
-				name: i18n.translate('delete'),
-			},
-		],
+		actions: (row: any) => Security.filterActions(actions, row.actions),
 		formModal,
 	};
 };

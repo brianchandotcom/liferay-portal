@@ -26,9 +26,9 @@ type OnSubmitOptions = {
 	updateMutation: DocumentNode;
 };
 
-type OnSubmitOptionsRest = {
-	create: (data: any) => Promise<void>;
-	update: (id: number, data: any) => Promise<void>;
+type OnSubmitOptionsRest<T = any> = {
+	create: (data: any) => Promise<T>;
+	update: (id: number, data: any) => Promise<T>;
 };
 
 export type FormOptions = {
@@ -48,7 +48,10 @@ export type FormOptions = {
 		onSubmitOptions: OnSubmitOptions,
 		mutationOptions?: Omit<MutationOptions, 'mutation'>
 	) => Promise<void>;
-	onSubmitRest: (data: any, options: OnSubmitOptionsRest) => Promise<void>;
+	onSubmitRest: <T = any>(
+		data: any,
+		options: OnSubmitOptionsRest<T>
+	) => Promise<T>;
 	onSuccess: () => void;
 };
 
@@ -123,10 +126,10 @@ const useFormActions = (): Form => {
 		}
 	};
 
-	const onSubmitRest = async (
+	const onSubmitRest = async <T = any>(
 		data: any,
-		{create, update}: OnSubmitOptionsRest
-	) => {
+		{create, update}: OnSubmitOptionsRest<T>
+	): Promise<T> => {
 		const form = {...data};
 
 		delete form.id;

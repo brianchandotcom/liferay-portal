@@ -12,7 +12,6 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
@@ -22,14 +21,17 @@ import {useOutletContext, useParams} from 'react-router-dom';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
-import {CreateSuite, UpdateSuite} from '../../../graphql/mutations';
-import {CreateSuiteCaseBatch} from '../../../graphql/mutations/testraySuiteCase';
-import {TestrayCase, TestraySuite, getSuites} from '../../../graphql/queries';
+import {TestrayCase, TestraySuite} from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
 import useFormActions from '../../../hooks/useFormActions';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
+import {
+	createSuite,
+	createSuiteCaseBatch,
+	updateSuite,
+} from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
 import {CaseListView} from '../Cases';
 import SuiteSelectCasesModal from './modal';
@@ -44,10 +46,8 @@ type SuiteFormData = {
 
 const SuiteForm = () => {
 	const {
-		form: {onClose, onError, onSave, onSubmit},
+		form: {onClose, onError, onSave, onSubmitRest},
 	} = useFormActions();
-
-	const [createSuiteCaseBatch] = useMutation(CreateSuiteCaseBatch);
 
 	const {setTabs} = useHeader({shouldUpdate: false});
 	const [cases, setCases] = useState<number[]>([]);
@@ -80,28 +80,24 @@ const SuiteForm = () => {
 	const caseParameters = watch('caseParameters');
 
 	const _onSubmit = (form: SuiteFormData) => {
-		onSubmit(
+		onSubmitRest<TestraySuite>(
 			{...form, projectId},
 			{
-				createMutation: CreateSuite,
-				updateMutation: UpdateSuite,
-			},
-			{refetchQueries: [{query: getSuites}]}
+				create: createSuite,
+				update: updateSuite,
+			}
 		)
 			.then((response) => {
 				if (cases.length) {
 					const suiteId =
-						response.data?.createSuite?.id ||
-						context.testraySuite?.id;
+						response.id || (context.testraySuite?.id as number);
 
-					return createSuiteCaseBatch({
-						variables: {
-							data: cases.map((caseId) => ({
-								caseId,
-								suiteId,
-							})),
-						},
-					});
+					return createSuiteCaseBatch(
+						cases.map((caseId) => ({
+							caseId,
+							suiteId,
+						}))
+					);
 				}
 			})
 			.then(() => onSave())

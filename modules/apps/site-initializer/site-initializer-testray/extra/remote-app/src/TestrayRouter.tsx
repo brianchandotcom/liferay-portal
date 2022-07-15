@@ -85,10 +85,7 @@ const TestrayRoute = () => (
 
 							<Route element={<SuiteForm />} path="create" />
 
-							<Route
-								element={<SuiteOutlet />}
-								path=":testraySuiteId"
-							>
+							<Route element={<SuiteOutlet />} path=":suiteId">
 								<Route element={<Suite />} index />
 
 								<Route element={<SuiteForm />} path="update" />

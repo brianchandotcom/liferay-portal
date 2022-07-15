@@ -12,26 +12,20 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import {useEffect} from 'react';
 import {Outlet, useOutletContext, useParams} from 'react-router-dom';
 
-import {CType, TestraySuite, getSuite} from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
+import {useFetch} from '../../../hooks/useFetch';
 import i18n from '../../../i18n';
+import {TestraySuite} from '../../../services/rest';
 
 const SuiteOutlet = () => {
-	const {projectId, testraySuiteId} = useParams();
+	const {projectId, suiteId} = useParams();
 	const {testrayProject}: any = useOutletContext();
 	const {setHeading} = useHeader();
 
-	const {data} = useQuery<CType<'suite', TestraySuite>>(getSuite, {
-		variables: {
-			suiteId: testraySuiteId,
-		},
-	});
-
-	const testraySuite = data?.c.suite;
+	const {data: testraySuite} = useFetch<TestraySuite>(`/suites/${suiteId}`);
 
 	useEffect(() => {
 		if (testraySuite && testrayProject) {
@@ -49,11 +43,11 @@ const SuiteOutlet = () => {
 		}
 	}, [testraySuite, testrayProject, setHeading]);
 
-	if (testraySuite) {
-		return <Outlet context={{projectId, testraySuite}} />;
+	if (!testraySuite) {
+		return null;
 	}
 
-	return null;
+	return <Outlet context={{projectId, testraySuite}} />;
 };
 
 export default SuiteOutlet;

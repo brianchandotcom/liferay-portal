@@ -63,7 +63,7 @@ export default function GlobalJSCETsConfiguration({
 	const allGlobalJSCETs = useMemo(() => {
 		const globalJSCETsGroups = new Map<
 			IScriptLocationOptions,
-			Array<{globalJSCET: IGlobalJSCET; order: number}>
+			IGlobalJSCETGroup
 		>();
 
 		let order = 1;
@@ -73,17 +73,22 @@ export default function GlobalJSCETsConfiguration({
 				globalJSCET.scriptLocation || DEFAULT_SCRIPT_LOCATION_OPTION;
 
 			if (!globalJSCETsGroups.has(groupId)) {
-				globalJSCETsGroups.set(groupId, []);
+				globalJSCETsGroups.set(groupId, {
+					items: [],
+					scriptLocation: groupId,
+				});
 			}
 
-			const list = globalJSCETsGroups.get(groupId)!;
+			const group = globalJSCETsGroups.get(groupId)!;
 
-			list.push({globalJSCET, order});
+			group.items.push({globalJSCET, order});
 
 			order = order + 1;
 		});
 
-		return globalJSCETsGroups;
+		return SCRIPT_LOCATION_LABELS.map(({scriptLocation}) =>
+			globalJSCETsGroups.get(scriptLocation)
+		).filter((group) => group) as IGlobalJSCETGroup[];
 	}, [fixedGlobalJSCETs, globalJSCETs]);
 
 	const deleteGlobalJSCET = (deletedGlobalJSCET: IGlobalJSCET) => {
@@ -204,7 +209,7 @@ export default function GlobalJSCETsConfiguration({
 				portletNamespace={portletNamespace}
 			/>
 
-			{allGlobalJSCETs.size ? (
+			{allGlobalJSCETs.length ? (
 				<ClayTable>
 					<ClayTable.Head>
 						<ClayTable.Row>
@@ -250,49 +255,43 @@ export default function GlobalJSCETsConfiguration({
 					</ClayTable.Head>
 
 					<ClayTable.Body>
-						{[...allGlobalJSCETs.entries()].map(
-							([scriptLocation, globalJSCETs]) => {
-								return (
-									<React.Fragment key={scriptLocation}>
-										<ClayTable.Row>
-											<ClayTable.Cell
-												className="list-group-header-title py-2"
-												colSpan={5}
-											>
-												{scriptLocation === 'bottom'
-													? Liferay.Language.get(
-															'page-bottom-js-extensions'
-													  )
-													: Liferay.Language.get(
-															'page-head-js-extensions'
-													  )}
-											</ClayTable.Cell>
-										</ClayTable.Row>
+						{allGlobalJSCETs.map(({items, scriptLocation}) => {
+							return (
+								<React.Fragment key={scriptLocation}>
+									<ClayTable.Row>
+										<ClayTable.Cell
+											className="list-group-header-title py-2"
+											colSpan={5}
+										>
+											{scriptLocation === 'bottom'
+												? Liferay.Language.get(
+														'page-bottom-js-extensions'
+												  )
+												: Liferay.Language.get(
+														'page-head-js-extensions'
+												  )}
+										</ClayTable.Cell>
+									</ClayTable.Row>
 
-										{globalJSCETs.map(
-											({globalJSCET, order}) => (
-												<ExtensionRow
-													deleteGlobalJSCET={
-														deleteGlobalJSCET
-													}
-													globalJSCET={globalJSCET}
-													key={
-														globalJSCET.cetExternalReferenceCode
-													}
-													order={order}
-													portletNamespace={
-														portletNamespace
-													}
-													updateGlobalJSCET={
-														updateGlobalJSCET
-													}
-												/>
-											)
-										)}
-									</React.Fragment>
-								);
-							}
-						)}
+									{items.map(({globalJSCET, order}) => (
+										<ExtensionRow
+											deleteGlobalJSCET={
+												deleteGlobalJSCET
+											}
+											globalJSCET={globalJSCET}
+											key={
+												globalJSCET.cetExternalReferenceCode
+											}
+											order={order}
+											portletNamespace={portletNamespace}
+											updateGlobalJSCET={
+												updateGlobalJSCET
+											}
+										/>
+									))}
+								</React.Fragment>
+							);
+						})}
 					</ClayTable.Body>
 				</ClayTable>
 			) : (
@@ -429,6 +428,11 @@ interface IGlobalJSCET {
 	loadType?: ILoadTypeOptions;
 	name: string;
 	scriptLocation?: IScriptLocationOptions;
+}
+
+interface IGlobalJSCETGroup {
+	items: Array<{globalJSCET: IGlobalJSCET; order: number}>;
+	scriptLocation: IScriptLocationOptions;
 }
 
 interface IProps {

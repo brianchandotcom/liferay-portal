@@ -15,11 +15,13 @@
 package com.liferay.portal.search.web.internal.search.bar.portlet.action;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.search.bar.portlet.display.context.SearchBarPortletDisplayContext;
@@ -69,6 +71,14 @@ public class SearchBarConfigurationAction extends DefaultConfigurationAction {
 		searchBarPortletDisplayContext.setSearchBarPortletInstanceConfiguration(
 			searchBarPortletInstanceConfiguration);
 
+		SearchSuggestionsCompanyConfiguration
+			searchSuggestionsCompanyConfiguration =
+				_getSearchSuggestionsCompanyConfiguration(
+					themeDisplay.getCompanyId());
+
+		searchBarPortletDisplayContext.setSuggestionsEndpointEnabled(
+			searchSuggestionsCompanyConfiguration.enableSuggestionsEndpoint());
+
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, searchBarPortletDisplayContext);
 
@@ -85,6 +95,18 @@ public class SearchBarConfigurationAction extends DefaultConfigurationAction {
 		try {
 			return portletDisplay.getPortletInstanceConfiguration(
 				SearchBarPortletInstanceConfiguration.class);
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
+	}
+
+	private SearchSuggestionsCompanyConfiguration
+		_getSearchSuggestionsCompanyConfiguration(long companyId) {
+
+		try {
+			return ConfigurationProviderUtil.getCompanyConfiguration(
+				SearchSuggestionsCompanyConfiguration.class, companyId);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

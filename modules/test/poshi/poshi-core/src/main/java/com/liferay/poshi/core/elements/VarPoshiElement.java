@@ -205,7 +205,9 @@ public class VarPoshiElement extends PoshiElement {
 			return;
 		}
 
-		if (value.matches(_VAR_VALUE_INTEGER_REGEX)) {
+		if (value.matches(_VAR_VALUE_INTEGER_REGEX) ||
+			value.matches(_VAR_VALUE_VARIABLE_REGEX)) {
+
 			addAttribute("value", value);
 
 			return;
@@ -531,6 +533,8 @@ public class VarPoshiElement extends PoshiElement {
 
 	private static final String _VAR_VALUE_STRING_REGEX = "\".*\"";
 
+	private static final String _VAR_VALUE_VARIABLE_REGEX = "\\$\\{.+}";
+
 	private static final Map<String, String> _mathOperatorsMap =
 		new HashMap<String, String>() {
 			{
@@ -555,7 +559,7 @@ public class VarPoshiElement extends PoshiElement {
 		_VAR_VALUE_REGEX = StringUtil.combine(
 			"(", _VAR_VALUE_STRING_REGEX, "|", _VAR_VALUE_MATH_EXPRESSION_REGEX,
 			"|", _VAR_VALUE_INTEGER_REGEX, "|", _VAR_VALUE_MULTILINE_REGEX, "|",
-			_VAR_VALUE_OBJECT_REGEX, ")");
+			_VAR_VALUE_OBJECT_REGEX, "|", _VAR_VALUE_VARIABLE_REGEX, ")");
 
 		_statementPattern = Pattern.compile(
 			"^" + VAR_NAME_REGEX + ASSIGNMENT_REGEX + _VAR_VALUE_REGEX +

@@ -14,6 +14,7 @@
 
 import {ApolloProvider} from '@apollo/client';
 import {Root, createRoot} from 'react-dom/client';
+import {SWRConfig} from 'swr';
 
 import TestrayRouter from './TestrayRouter';
 import AccountContextProvider from './context/AccountContext';
@@ -21,6 +22,7 @@ import ClayIconProvider from './context/ClayIconProvider';
 import apolloClient from './graphql/apolloClient';
 
 import './styles/index.scss';
+import SWRCacheProvider from './services/SWRCacheProvider';
 
 class Testray extends HTMLElement {
 	private root: Root | undefined;
@@ -29,19 +31,20 @@ class Testray extends HTMLElement {
 		if (!this.root) {
 			this.root = createRoot(this);
 
-			const properties = {
-				skipRoleCheck: this.getAttribute('skiprolecheck') === 'true',
-			};
-
 			this.root.render(
 				<ApolloProvider client={apolloClient}>
-					<AccountContextProvider
-						skipRoleCheck={properties.skipRoleCheck}
+					<SWRConfig
+						value={{
+							provider: SWRCacheProvider,
+							revalidateOnFocus: false,
+						}}
 					>
-						<ClayIconProvider>
-							<TestrayRouter />
-						</ClayIconProvider>
-					</AccountContextProvider>
+						<AccountContextProvider>
+							<ClayIconProvider>
+								<TestrayRouter />
+							</ClayIconProvider>
+						</AccountContextProvider>
+					</SWRConfig>
 				</ApolloProvider>
 			);
 		}

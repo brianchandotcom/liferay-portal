@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -38,6 +40,8 @@ import com.liferay.search.experiences.service.SXPElementLocalService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.persistence.PersistenceException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -69,11 +73,11 @@ public class SXPElementLocalServiceTest {
 
 	@Test
 	public void testAddSXPElement() throws Exception {
-		Assert.assertEquals("1.0", _sxpElement.getVersion());
 		Assert.assertNotNull(_sxpElement.getExternalReferenceCode());
+		Assert.assertEquals("1.0", _sxpElement.getVersion());
 
 		SXPElement sxpElement = _addSXPElement(
-			true, RandomTestUtil.randomString(75), TestPropsValues.getUserId());
+			true, RandomTestUtil.randomString(), TestPropsValues.getUserId());
 
 		try {
 			_addSXPElement(
@@ -110,11 +114,34 @@ public class SXPElementLocalServiceTest {
 
 	@Test
 	public void testUpdateSXPElement() throws Exception {
+		SXPElement sxpElement = _addSXPElement(
+			false, RandomTestUtil.randomString(), TestPropsValues.getUserId());
+
+		sxpElement.setExternalReferenceCode(
+			_sxpElement.getExternalReferenceCode());
+
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"org.hibernate.engine.jdbc.batch.internal.BatchingBatch",
+				LoggerTestUtil.ERROR);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+				"org.hibernate.engine.jdbc.spi.SqlExceptionHelper",
+				LoggerTestUtil.ERROR)) {
+
+			try {
+				_sxpElementLocalService.updateSXPElement(sxpElement);
+
+				Assert.fail();
+			}
+			catch (PersistenceException persistenceException) {
+				Assert.assertNotNull(persistenceException);
+			}
+		}
+
 		Company company = CompanyTestUtil.addCompany();
 
 		User user = UserTestUtil.addCompanyAdminUser(company);
 
-		SXPElement sxpElement = _addSXPElement(
+		sxpElement = _addSXPElement(
 			false, RandomTestUtil.randomString(), user.getUserId());
 
 		sxpElement.setExternalReferenceCode(

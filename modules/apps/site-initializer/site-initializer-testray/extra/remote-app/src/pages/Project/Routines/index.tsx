@@ -15,9 +15,8 @@
 import {useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView/ListView';
+import ListViewRest from '../../../components/ListView/ListViewRest';
 import ProgressBar from '../../../components/ProgressBar';
-import {getRoutines} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';
 import {getTimeFromNow} from '../../../util/date';
@@ -33,14 +32,14 @@ const Routines = () => {
 
 	return (
 		<Container>
-			<ListView
+			<ListViewRest
 				forceRefetch={formModal.forceRefetch}
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
 					filterFields: filters.routines,
 					title: i18n.translate('routines'),
 				}}
-				query={getRoutines}
+				resource="/routines"
 				tableProps={{
 					actions,
 					columns: [
@@ -92,7 +91,6 @@ const Routines = () => {
 					],
 					navigateTo: ({id}) => id?.toString(),
 				}}
-				transformData={(data) => data?.c?.routines}
 				variables={{
 					filter: searchUtil.eq('projectId', projectId),
 				}}

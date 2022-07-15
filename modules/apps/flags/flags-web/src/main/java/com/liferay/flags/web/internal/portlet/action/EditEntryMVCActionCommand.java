@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -87,7 +87,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			jsonObject.put(
 				"error",
-				LanguageUtil.get(
+				_language.get(
 					themeDisplay.getRequest(),
 					_getCaptchaExceptionErrorMessageKey(captchaException)));
 		}
@@ -99,7 +99,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			jsonObject.put(
 				"error",
-				LanguageUtil.get(
+				_language.get(
 					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
 		}
 
@@ -126,5 +126,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		EditEntryMVCActionCommand.class);
 
 	private FlagsEntryService _flagsEntryService;
+
+	@Reference
+	private Language _language;
 
 }

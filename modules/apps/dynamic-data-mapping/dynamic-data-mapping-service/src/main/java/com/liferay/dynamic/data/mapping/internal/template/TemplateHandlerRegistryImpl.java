@@ -25,7 +25,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
@@ -180,6 +180,10 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
+
 	private Portal _portal;
 	private final Map<TemplateHandler, ServiceRegistration<?>>
 		_serviceRegistrations = new ConcurrentHashMap<>();
@@ -340,11 +344,11 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 			Map<Locale, String> map = new HashMap<>();
 
-			for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
+			for (Locale locale : _language.getAvailableLocales(groupId)) {
 				ResourceBundle resourceBundle =
 					resourceBundleLoader.loadResourceBundle(locale);
 
-				map.put(locale, LanguageUtil.get(resourceBundle, key));
+				map.put(locale, _language.get(resourceBundle, key));
 			}
 
 			return map;

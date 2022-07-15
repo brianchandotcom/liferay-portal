@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.form.web.internal.tab.item.DDMFormAdminD
 import com.liferay.dynamic.data.mapping.form.web.internal.tab.item.DDMFormAdminFieldSetTabItem;
 import com.liferay.dynamic.data.mapping.form.web.internal.tab.item.DDMFormAdminTabItem;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Arrays;
@@ -62,7 +62,7 @@ public class DDMFormDDMDataProviderDisplay implements DDMDataProviderDisplay {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "forms");
+		return _language.get(resourceBundle, "forms");
 	}
 
 	@Reference
@@ -73,5 +73,8 @@ public class DDMFormDDMDataProviderDisplay implements DDMDataProviderDisplay {
 
 	@Reference
 	private DDMFormAdminTabItem _ddmFormAdminTabItem;
+
+	@Reference
+	private Language _language;
 
 }

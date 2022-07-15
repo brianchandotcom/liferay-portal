@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -61,7 +61,7 @@ public class ShareFormInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 			JSONObject jsonObject = JSONUtil.put(
 				"successMessage",
-				LanguageUtil.get(
+				_language.get(
 					_portal.getHttpServletRequest(actionRequest),
 					"form-was-shared-via-email"));
 
@@ -80,7 +80,7 @@ public class ShareFormInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 			JSONObject jsonObject = JSONUtil.put(
 				"errorMessage",
-				LanguageUtil.get(
+				_language.get(
 					_portal.getHttpServletRequest(actionRequest),
 					"your-request-failed-to-complete"));
 
@@ -94,6 +94,9 @@ public class ShareFormInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

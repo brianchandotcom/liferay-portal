@@ -50,7 +50,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -864,7 +864,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 		DDMFormInstance formInstance = formInstanceRecord.getFormInstance();
 
-		String title = LanguageUtil.format(
+		String title = _language.format(
 			getResourceBundle(locale), "form-record-for-form-x",
 			formInstance.getName(locale), false);
 
@@ -1047,6 +1047,9 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

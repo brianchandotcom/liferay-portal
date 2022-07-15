@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -122,7 +122,7 @@ public class SearchLocationDDMFormFieldTemplateContextContributor
 		).forEach(
 			visibleField -> jsonObject.put(
 				visibleField,
-				LanguageUtil.get(
+				_language.get(
 					ResourceBundleUtil.getModuleAndPortalResourceBundle(
 						locale, getClass()),
 					visibleField))
@@ -161,5 +161,8 @@ public class SearchLocationDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 }

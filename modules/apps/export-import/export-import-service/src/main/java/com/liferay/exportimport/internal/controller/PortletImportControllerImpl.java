@@ -67,7 +67,7 @@ import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1243,7 +1243,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 			for (String sourceAvailableLanguageId :
 					sourceAvailableLanguageIds) {
 
-				if (!LanguageUtil.isAvailableLocale(
+				if (!_language.isAvailableLocale(
 						_portal.getSiteGroupId(groupId),
 						sourceAvailableLanguageId)) {
 
@@ -1253,7 +1253,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 					localeException.setSourceAvailableLanguageIds(
 						Arrays.asList(sourceAvailableLanguageIds));
 					localeException.setTargetAvailableLocales(
-						LanguageUtil.getAvailableLocales(
+						_language.getAvailableLocales(
 							_portal.getSiteGroupId(groupId)));
 
 					throw localeException;
@@ -1588,6 +1588,10 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
+
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference

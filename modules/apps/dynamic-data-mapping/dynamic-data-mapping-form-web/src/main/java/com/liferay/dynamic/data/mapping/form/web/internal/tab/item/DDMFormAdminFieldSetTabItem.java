@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.form.web.internal.tab.item;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
@@ -37,7 +36,7 @@ public class DDMFormAdminFieldSetTabItem extends DDMFormAdminTabItem {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		return LanguageUtil.get(
+		return language.get(
 			liferayPortletRequest.getHttpServletRequest(), "element-sets");
 	}
 

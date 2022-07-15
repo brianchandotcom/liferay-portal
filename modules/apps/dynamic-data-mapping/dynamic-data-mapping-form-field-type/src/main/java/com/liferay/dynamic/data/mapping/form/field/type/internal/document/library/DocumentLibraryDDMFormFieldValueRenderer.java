@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -66,7 +66,7 @@ public class DocumentLibraryDDMFormFieldValueRenderer
 				_log.debug(exception);
 			}
 
-			return LanguageUtil.format(
+			return _language.format(
 				locale, "is-temporarily-unavailable", "content");
 		}
 	}
@@ -80,5 +80,8 @@ public class DocumentLibraryDDMFormFieldValueRenderer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentLibraryDDMFormFieldValueRenderer.class);
+
+	@Reference
+	private Language _language;
 
 }

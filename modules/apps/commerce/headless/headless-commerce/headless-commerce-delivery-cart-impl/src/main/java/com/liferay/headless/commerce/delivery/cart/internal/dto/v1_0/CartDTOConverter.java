@@ -31,7 +31,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Status;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Summary;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -81,7 +81,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 			CommerceOrderConstants.getOrderStatusLabel(
 				commerceOrder.getOrderStatus());
 
-		String commerceOrderStatusLabelI18n = LanguageUtil.get(
+		String commerceOrderStatusLabelI18n = _language.get(
 			resourceBundle,
 			CommerceOrderConstants.getOrderStatusLabel(
 				commerceOrder.getOrderStatus()));
@@ -89,7 +89,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 		String commerceOrderWorkflowStatusLabel =
 			WorkflowConstants.getStatusLabel(commerceOrder.getStatus());
 
-		String commerceOrderWorkflowStatusLabelI18n = LanguageUtil.get(
+		String commerceOrderWorkflowStatusLabelI18n = _language.get(
 			resourceBundle,
 			WorkflowConstants.getStatusLabel(commerceOrder.getStatus()));
 
@@ -97,7 +97,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 			CommerceOrderConstants.getPaymentStatusLabel(
 				commerceOrder.getPaymentStatus());
 
-		String commerceOrderPaymentStatusLabelI18n = LanguageUtil.get(
+		String commerceOrderPaymentStatusLabelI18n = _language.get(
 			resourceBundle,
 			CommerceOrderConstants.getPaymentStatusLabel(
 				commerceOrder.getPaymentStatus()));
@@ -509,5 +509,8 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private Language _language;
 
 }

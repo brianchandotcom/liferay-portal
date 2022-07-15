@@ -47,7 +47,7 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -307,7 +307,7 @@ public class MappedProductDTOConverter
 							(cpInstance.getCPInstanceId() ==
 								csDiagramEntry.getCPInstanceId())) {
 
-							return LanguageUtil.format(
+							return _language.format(
 								mappedProductDTOConverterContext.getLocale(),
 								"x-has-been-replaced-by-x",
 								new String[] {
@@ -388,13 +388,12 @@ public class MappedProductDTOConverter
 						cpInstance.getSku()),
 					CommerceInventoryAvailabilityConstants.AVAILABLE)) {
 
-				availability.setLabel_i18n(
-					LanguageUtil.get(locale, "available"));
+				availability.setLabel_i18n(_language.get(locale, "available"));
 				availability.setLabel("available");
 			}
 			else {
 				availability.setLabel_i18n(
-					LanguageUtil.get(locale, "unavailable"));
+					_language.get(locale, "unavailable"));
 				availability.setLabel("unavailable");
 			}
 		}
@@ -587,6 +586,9 @@ public class MappedProductDTOConverter
 
 	@Reference
 	private JsonHelper _jsonHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ProductConfigurationDTOConverter _productConfigurationDTOConverter;

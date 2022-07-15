@@ -21,7 +21,7 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Attachment;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Validator;
@@ -79,7 +79,7 @@ public class AttachmentDTOConverter
 				priority = cpAttachmentFileEntry.getPriority();
 				src = portalURL + downloadURL;
 				title = cpAttachmentFileEntry.getTitle(
-					LanguageUtil.getLanguageId(
+					_language.getLanguageId(
 						attachmentDTOConverterContext.getLocale()));
 				type = cpAttachmentFileEntry.getType();
 			}
@@ -126,5 +126,8 @@ public class AttachmentDTOConverter
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 }

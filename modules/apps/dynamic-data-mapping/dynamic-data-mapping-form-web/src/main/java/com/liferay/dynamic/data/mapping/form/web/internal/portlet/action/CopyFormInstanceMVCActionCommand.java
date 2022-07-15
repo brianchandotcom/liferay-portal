@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -105,7 +105,7 @@ public class CopyFormInstanceMVCActionCommand
 
 		Map<Locale, String> nameMap = formInstance.getNameMap();
 
-		String name = LanguageUtil.format(
+		String name = _language.format(
 			getResourceBundle(defaultLocale), "copy-of-x",
 			nameMap.get(defaultLocale));
 
@@ -147,5 +147,8 @@ public class CopyFormInstanceMVCActionCommand
 			}
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 }

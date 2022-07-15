@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -249,7 +249,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		try {
 			return _dlAppService.addFolder(
 				repositoryId, parentFolderId, user.getScreenName(),
-				LanguageUtil.get(
+				_language.get(
 					getResourceBundle(user.getLocale()),
 					"this-folder-was-automatically-created-by-forms-to-store-" +
 						"all-your-uploaded-files"),
@@ -492,13 +492,13 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		FileEntry fileEntry = _getFileEntry(valueJSONObject);
 
 		if (fileEntry == null) {
-			return LanguageUtil.get(
+			return _language.get(
 				getResourceBundle(defaultLocale),
 				"the-selected-document-was-deleted");
 		}
 
 		if (fileEntry.isInTrash()) {
-			return LanguageUtil.get(
+			return _language.get(
 				getResourceBundle(defaultLocale),
 				"the-selected-document-was-moved-to-the-recycle-bin");
 		}
@@ -697,6 +697,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

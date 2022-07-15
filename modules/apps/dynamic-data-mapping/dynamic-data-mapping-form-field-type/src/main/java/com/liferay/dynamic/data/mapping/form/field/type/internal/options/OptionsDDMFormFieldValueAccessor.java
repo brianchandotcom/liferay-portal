@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,7 +57,7 @@ public class OptionsDDMFormFieldValueAccessor
 			JSONObject jsonObject = _jsonFactory.createJSONObject(valueString);
 
 			JSONArray jsonArray = jsonObject.getJSONArray(
-				LanguageUtil.getLanguageId(locale));
+				_language.getLanguageId(locale));
 
 			if ((jsonArray == null) || (jsonArray.length() == 0)) {
 				return true;
@@ -79,5 +79,8 @@ public class OptionsDDMFormFieldValueAccessor
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 }

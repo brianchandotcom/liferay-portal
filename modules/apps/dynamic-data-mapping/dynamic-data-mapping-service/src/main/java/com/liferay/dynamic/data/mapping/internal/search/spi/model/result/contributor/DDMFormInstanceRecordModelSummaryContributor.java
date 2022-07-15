@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.internal.search.spi.model.result.contri
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
@@ -82,7 +82,7 @@ public class DDMFormInstanceRecordModelSummaryContributor
 
 			String ddmFormInstanceName = ddmFormInstance.getName(locale);
 
-			return LanguageUtil.format(
+			return _language.format(
 				_getResourceBundle(locale), "form-record-for-form-x",
 				ddmFormInstanceName, false);
 		}
@@ -95,5 +95,8 @@ public class DDMFormInstanceRecordModelSummaryContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordModelSummaryContributor.class);
+
+	@Reference
+	private Language _language;
 
 }

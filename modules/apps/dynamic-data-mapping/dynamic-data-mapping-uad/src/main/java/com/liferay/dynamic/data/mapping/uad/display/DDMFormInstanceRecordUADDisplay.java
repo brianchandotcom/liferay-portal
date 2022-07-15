@@ -24,7 +24,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -113,7 +113,7 @@ public class DDMFormInstanceRecordUADDisplay
 				new String[] {
 					StringBundler.concat(
 						ddmFormInstanceRecord.getUserName(), " - ",
-						LanguageUtil.get(
+						_language.get(
 							httpServletRequest, "personal-data-erasure"))
 				}
 			).build());
@@ -145,7 +145,7 @@ public class DDMFormInstanceRecordUADDisplay
 			sb.append(DDMUADUtil.getFormattedName(ddmFormInstance));
 
 			sb.append(StringPool.SPACE);
-			sb.append(LanguageUtil.get(locale, "record"));
+			sb.append(_language.get(locale, "record"));
 			sb.append(StringPool.SPACE);
 			sb.append(StringPool.POUND);
 			sb.append(_getIndex(ddmFormInstanceRecord) + 1);
@@ -272,6 +272,9 @@ public class DDMFormInstanceRecordUADDisplay
 
 	@Reference
 	private DDMFormInstanceUADDisplay _ddmFormInstanceUADDisplay;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -18,7 +18,7 @@ import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -132,7 +132,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		Locale locale = LocaleUtil.getDefault();
 
 		if (reporterUser.isDefaultUser()) {
-			reporterUserName = LanguageUtil.get(locale, "anonymous");
+			reporterUserName = _language.get(locale, "anonymous");
 		}
 		else {
 			reporterUserName = reporterUser.getFullName();
@@ -165,7 +165,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		// Reason
 
-		String reason = LanguageUtil.get(locale, flagsRequest.getReason());
+		String reason = _language.get(locale, flagsRequest.getReason());
 
 		// Email
 
@@ -329,6 +329,9 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

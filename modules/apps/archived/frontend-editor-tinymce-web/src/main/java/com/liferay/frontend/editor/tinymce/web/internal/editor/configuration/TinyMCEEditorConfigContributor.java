@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -106,35 +106,34 @@ public class TinyMCEEditorConfigContributor
 	private JSONArray _getStyleFormatsJSONArray(Locale locale) {
 		return JSONUtil.putAll(
 			_getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "normal"), "inline", "p", null),
+				_language.get(locale, "normal"), "inline", "p", null),
 			_getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "1"), "block", "h1",
+				_language.format(locale, "heading-x", "1"), "block", "h1",
 				null),
 			_getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "2"), "block", "h2",
+				_language.format(locale, "heading-x", "2"), "block", "h2",
 				null),
 			_getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "3"), "block", "h3",
+				_language.format(locale, "heading-x", "3"), "block", "h3",
 				null),
 			_getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "4"), "block", "h4",
+				_language.format(locale, "heading-x", "4"), "block", "h4",
 				null),
 			_getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "preformatted-text"), "block", "pre",
+				_language.get(locale, "preformatted-text"), "block", "pre",
 				null),
 			_getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "cited-work"), "inline", "cite", null),
+				_language.get(locale, "cited-work"), "inline", "cite", null),
 			_getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "computer-code"), "inline", "code",
-				null),
+				_language.get(locale, "computer-code"), "inline", "code", null),
 			_getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "info-message"), "block", "div",
+				_language.get(locale, "info-message"), "block", "div",
 				"portlet-msg-info"),
 			_getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "alert-message"), "block", "div",
+				_language.get(locale, "alert-message"), "block", "div",
 				"portlet-msg-alert"),
 			_getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "error-message"), "block", "div",
+				_language.get(locale, "error-message"), "block", "div",
 				"portlet-msg-error"));
 	}
 
@@ -260,5 +259,8 @@ public class TinyMCEEditorConfigContributor
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private Language _language;
 
 }

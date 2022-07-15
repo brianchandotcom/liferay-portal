@@ -37,7 +37,7 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -121,13 +121,12 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						cpInstance.getSku()),
 					CommerceInventoryAvailabilityConstants.AVAILABLE)) {
 
-				availability.setLabel_i18n(
-					LanguageUtil.get(locale, "available"));
+				availability.setLabel_i18n(_language.get(locale, "available"));
 				availability.setLabel("available");
 			}
 			else {
 				availability.setLabel_i18n(
-					LanguageUtil.get(locale, "unavailable"));
+					_language.get(locale, "unavailable"));
 				availability.setLabel("unavailable");
 			}
 		}
@@ -287,5 +286,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 	@Reference
 	private JsonHelper _jsonHelper;
+
+	@Reference
+	private Language _language;
 
 }

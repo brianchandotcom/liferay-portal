@@ -33,7 +33,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLoca
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -118,8 +118,7 @@ public class AddFormInstanceRecordMVCActionCommand
 
 		_addFormInstanceMVCCommandHelper.updateNonevaluableDDMFormFields(
 			actionRequest, ddmForm, ddmFormValues,
-			LocaleUtil.fromLanguageId(
-				LanguageUtil.getLanguageId(actionRequest)));
+			LocaleUtil.fromLanguageId(_language.getLanguageId(actionRequest)));
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMFormInstanceRecord.class.getName(), actionRequest);
@@ -283,6 +282,9 @@ public class AddFormInstanceRecordMVCActionCommand
 
 	private DDMFormInstanceService _ddmFormInstanceService;
 	private DDMFormValuesFactory _ddmFormValuesFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -114,15 +113,12 @@ public class LocalizableTextDDMFormFieldTemplateContextContributor
 	protected JSONFactory jsonFactory;
 
 	@Reference
-	protected Language language;
-
-	@Reference
 	protected Portal portal;
 
 	private JSONArray _getAvailableLocalesJSONArray() {
 		JSONArray jsonArray = jsonFactory.createJSONArray();
 
-		Set<Locale> locales = language.getAvailableLocales();
+		Set<Locale> locales = _language.getAvailableLocales();
 
 		Stream<Locale> stream = locales.stream();
 
@@ -176,7 +172,7 @@ public class LocalizableTextDDMFormFieldTemplateContextContributor
 		JSONArray placeholdersSubmitLabelJSONArray =
 			jsonFactory.createJSONArray();
 
-		Set<Locale> availableLocales = language.getAvailableLocales();
+		Set<Locale> availableLocales = _language.getAvailableLocales();
 
 		Stream<Locale> stream = availableLocales.stream();
 
@@ -197,7 +193,7 @@ public class LocalizableTextDDMFormFieldTemplateContextContributor
 			"localeId", LocaleUtil.toLanguageId(locale)
 		).put(
 			"placeholderSubmitLabel",
-			LanguageUtil.get(getResourceBundle(locale), "submit-form")
+			_language.get(getResourceBundle(locale), "submit-form")
 		);
 	}
 
@@ -248,5 +244,8 @@ public class LocalizableTextDDMFormFieldTemplateContextContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LocalizableTextDDMFormFieldTemplateContextContributor.class);
+
+	@Reference
+	private Language _language;
 
 }

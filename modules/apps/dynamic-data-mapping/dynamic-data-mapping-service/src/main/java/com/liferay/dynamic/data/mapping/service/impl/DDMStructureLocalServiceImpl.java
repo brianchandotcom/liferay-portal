@@ -73,7 +73,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -2110,7 +2110,7 @@ public class DDMStructureLocalServiceImpl
 					contentDefaultLocale.getDisplayName());
 		}
 
-		if (!LanguageUtil.isAvailableLocale(contentDefaultLocale)) {
+		if (!_language.isAvailableLocale(contentDefaultLocale)) {
 			LocaleException localeException = new LocaleException(
 				LocaleException.TYPE_CONTENT,
 				StringBundler.concat(
@@ -2121,7 +2121,7 @@ public class DDMStructureLocalServiceImpl
 			localeException.setSourceAvailableLocales(
 				Collections.singleton(contentDefaultLocale));
 			localeException.setTargetAvailableLocales(
-				LanguageUtil.getAvailableLocales());
+				_language.getAvailableLocales());
 
 			throw localeException;
 		}
@@ -2238,6 +2238,9 @@ public class DDMStructureLocalServiceImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private MessageBus _messageBus;

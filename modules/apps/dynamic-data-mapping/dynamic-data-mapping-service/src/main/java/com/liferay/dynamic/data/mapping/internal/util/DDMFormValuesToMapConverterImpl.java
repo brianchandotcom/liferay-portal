@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,6 +46,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -171,13 +172,13 @@ public class DDMFormValuesToMapConverterImpl
 
 			return stream.collect(
 				Collectors.toMap(
-					LanguageUtil::getLanguageId,
+					_language::getLanguageId,
 					locale -> _toStringList(locale, localizedValue)));
 		}
 
 		return stream.collect(
 			Collectors.toMap(
-				LanguageUtil::getLanguageId,
+				_language::getLanguageId,
 				locale -> GetterUtil.getString(
 					localizedValue.getString(locale))));
 	}
@@ -201,5 +202,8 @@ public class DDMFormValuesToMapConverterImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormValuesToMapConverterImpl.class);
+
+	@Reference
+	private Language _language;
 
 }

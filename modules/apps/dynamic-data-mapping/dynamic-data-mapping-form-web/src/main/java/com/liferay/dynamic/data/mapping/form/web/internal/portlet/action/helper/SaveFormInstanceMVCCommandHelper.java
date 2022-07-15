@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.redirect.RedirectURLSettings;
@@ -95,8 +95,7 @@ public class SaveFormInstanceMVCCommandHelper {
 		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(defaultLocale))) {
 			nameMap.put(
 				defaultLocale,
-				LanguageUtil.get(
-					_getResourceBundle(defaultLocale), defaultName));
+				_language.get(_getResourceBundle(defaultLocale), defaultName));
 		}
 
 		return nameMap;
@@ -283,7 +282,7 @@ public class SaveFormInstanceMVCCommandHelper {
 	private String _getRedirectURLExceptionMessage(
 		HttpServletRequest httpServletRequest, String fieldName, String value) {
 
-		return LanguageUtil.format(
+		return _language.format(
 			httpServletRequest,
 			"the-external-redirect-url-x-is-not-allowed.-set-it-in-the-x-" +
 				"field-of-the-x-configuration-in-x-to-allow-it",
@@ -483,7 +482,7 @@ public class SaveFormInstanceMVCCommandHelper {
 			}
 
 			throw new FormInstanceSettingsRedirectURLException(
-				LanguageUtil.get(
+				_language.get(
 					httpServletRequest,
 					"the-specified-redirect-url-is-not-allowed"));
 		}
@@ -519,7 +518,7 @@ public class SaveFormInstanceMVCCommandHelper {
 
 		if (Validator.isNull(objectDefinitionId)) {
 			throw new FormInstanceSettingsStorageTypeException(
-				LanguageUtil.get(
+				_language.get(
 					httpServletRequest,
 					"you-must-define-an-object-for-the-selected-storage-type"));
 		}
@@ -527,6 +526,9 @@ public class SaveFormInstanceMVCCommandHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SaveFormInstanceMVCCommandHelper.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -36,6 +36,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -81,7 +82,7 @@ public class DateDDMFormFieldTemplateContextContributor
 			Stream.of(
 				CalendarUtil.DAYS_ABBREVIATION
 			).map(
-				day -> LanguageUtil.get(
+				day -> _language.get(
 					LocaleThreadLocal.getThemeDisplayLocale(), day)
 			).collect(
 				Collectors.toList()
@@ -115,5 +116,8 @@ public class DateDDMFormFieldTemplateContextContributor
 
 		return years;
 	}
+
+	@Reference
+	private Language _language;
 
 }

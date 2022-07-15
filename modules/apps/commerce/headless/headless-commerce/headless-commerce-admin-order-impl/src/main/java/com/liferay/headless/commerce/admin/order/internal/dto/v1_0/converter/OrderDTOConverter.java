@@ -31,7 +31,7 @@ import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Status;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -88,7 +88,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 		String commerceOrderWorkflowStatusLabel =
 			WorkflowConstants.getStatusLabel(commerceOrder.getStatus());
 
-		String commerceOrderWorkflowStatusLabelI18n = LanguageUtil.get(
+		String commerceOrderWorkflowStatusLabelI18n = _language.get(
 			resourceBundle,
 			WorkflowConstants.getStatusLabel(commerceOrder.getStatus()));
 
@@ -96,7 +96,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 			CommerceOrderConstants.getPaymentStatusLabel(
 				commerceOrder.getPaymentStatus());
 
-		String commerceOrderPaymentStatusLabelI18n = LanguageUtil.get(
+		String commerceOrderPaymentStatusLabelI18n = _language.get(
 			resourceBundle,
 			CommerceOrderConstants.getPaymentStatusLabel(
 				commerceOrder.getPaymentStatus()));
@@ -217,7 +217,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 	private String _getCommerceOrderStatusLabelI18n(
 		int orderStatus, Locale locale) {
 
-		String commerceOrderStatusLabelI18n = LanguageUtil.get(
+		String commerceOrderStatusLabelI18n = _language.get(
 			locale, CommerceOrderConstants.getOrderStatusLabel(orderStatus));
 
 		if (!Validator.isBlank(commerceOrderStatusLabelI18n)) {
@@ -529,5 +529,8 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private Language _language;
 
 }

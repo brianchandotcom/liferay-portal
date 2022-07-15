@@ -35,7 +35,7 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -246,7 +246,7 @@ public class DDMFormTemplateContextFactoryImpl
 
 		String cancelLabel = GetterUtil.getString(
 			ddmFormRenderingContext.getCancelLabel(),
-			LanguageUtil.get(resourceBundle, "cancel"));
+			_language.get(resourceBundle, "cancel"));
 
 		templateContext.put("cancelLabel", cancelLabel);
 
@@ -269,14 +269,14 @@ public class DDMFormTemplateContextFactoryImpl
 		else {
 			templateContext.put(
 				"defaultLanguageId",
-				LanguageUtil.getLanguageId(ddmForm.getDefaultLocale()));
+				_language.getLanguageId(ddmForm.getDefaultLocale()));
 		}
 
 		templateContext.put(
 			"defaultSiteLanguageId",
-			LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
+			_language.getLanguageId(LocaleUtil.getSiteDefault()));
 		templateContext.put(
-			"editingLanguageId", LanguageUtil.getLanguageId(locale));
+			"editingLanguageId", _language.getLanguageId(locale));
 		templateContext.put(
 			"evaluatorURL", _getDDMFormContextProviderServletURL());
 		templateContext.put("groupId", ddmFormRenderingContext.getGroupId());
@@ -338,7 +338,7 @@ public class DDMFormTemplateContextFactoryImpl
 
 		String submitLabel = GetterUtil.getString(
 			ddmFormRenderingContext.getSubmitLabel(),
-			LanguageUtil.get(resourceBundle, "submit-form"));
+			_language.get(resourceBundle, "submit-form"));
 
 		templateContext.put("submitLabel", submitLabel);
 
@@ -363,9 +363,9 @@ public class DDMFormTemplateContextFactoryImpl
 		ResourceBundle resourceBundle) {
 
 		return HashMapBuilder.put(
-			"next", LanguageUtil.get(resourceBundle, "next")
+			"next", _language.get(resourceBundle, "next")
 		).put(
-			"previous", LanguageUtil.get(resourceBundle, "previous")
+			"previous", _language.get(resourceBundle, "previous")
 		).build();
 	}
 
@@ -502,6 +502,9 @@ public class DDMFormTemplateContextFactoryImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFac
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
@@ -87,7 +87,7 @@ public class ExportImportUserNotificationHandler
 				_log.debug(portalException);
 			}
 
-			return LanguageUtil.get(
+			return _language.get(
 				locale,
 				"the-process-referenced-by-this-notification-does-not-exist");
 		}
@@ -119,7 +119,7 @@ public class ExportImportUserNotificationHandler
 		String processName = backgroundTaskDisplay.getDisplayName(
 			serviceContext.getRequest());
 
-		return LanguageUtil.format(locale, message, processName);
+		return _language.format(locale, message, processName);
 	}
 
 	@Override
@@ -166,6 +166,9 @@ public class ExportImportUserNotificationHandler
 	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

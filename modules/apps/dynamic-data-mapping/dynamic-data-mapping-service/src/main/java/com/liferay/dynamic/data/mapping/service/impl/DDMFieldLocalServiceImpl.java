@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -528,8 +528,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 				Map<Locale, String> values = value.getValues();
 
 				for (Map.Entry<Locale, String> entry : values.entrySet()) {
-					String languageId = LanguageUtil.getLanguageId(
-						entry.getKey());
+					String languageId = _language.getLanguageId(entry.getKey());
 
 					ddmFieldInfo._ddmFieldAttributeInfos.put(
 						languageId,
@@ -798,6 +797,9 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	private static class DDMFieldAttributeInfo {
 

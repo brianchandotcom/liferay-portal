@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -231,13 +231,13 @@ public class ImageDDMFormFieldTemplateContextContributor
 		FileEntry fileEntry = _getFileEntry(valueJSONObject);
 
 		if (fileEntry == null) {
-			return LanguageUtil.get(
+			return _language.get(
 				_getResourceBundle(defaultLocale),
 				"the-selected-image-was-deleted");
 		}
 
 		if (fileEntry.isInTrash()) {
-			return LanguageUtil.get(
+			return _language.get(
 				_getResourceBundle(defaultLocale),
 				"the-selected-image-was-moved-to-the-recycle-bin");
 		}
@@ -286,6 +286,9 @@ public class ImageDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

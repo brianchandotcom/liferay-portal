@@ -17,6 +17,7 @@ package com.liferay.fragment.internal.validator;
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -61,6 +62,9 @@ public class FragmentEntryValidatorImplTest {
 	@Before
 	public void setUp() {
 		_fragmentEntryValidatorImpl = new FragmentEntryValidatorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			_fragmentEntryValidatorImpl, "_language", new LanguageImpl());
 	}
 
 	@Test

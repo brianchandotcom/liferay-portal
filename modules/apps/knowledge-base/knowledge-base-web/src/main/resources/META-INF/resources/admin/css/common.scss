@@ -1,3 +1,4 @@
+@import 'admin';
 @import 'atlas-variables';
 
 // ---------- Configuration ----------
@@ -316,22 +317,6 @@
 
 	.list-group-item h3 {
 		margin-top: 5px;
-	}
-
-	&.knowledge-base-portlet-admin {
-		.kbVerticalBar .tbar-light {
-			background-color: $gray-200;
-		}
-
-		.kbAdminContent {
-			margin-left: 45px;
-
-			transition: all 0.5s ease-out;
-		}
-
-		.kbVerticalBar.expanded + .kbAdminContent {
-			margin-left: 360px;
-		}
 	}
 }
 

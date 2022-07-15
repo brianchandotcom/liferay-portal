@@ -1,0 +1,17 @@
+@import 'atlas-variables';
+
+.knowledge-base-portlet-admin {
+	.kbVerticalBar .tbar-light {
+		background-color: $gray-200;
+	}
+
+	.kbAdminContent {
+		margin-left: 45px;
+
+		transition: all 0.5s ease-out;
+	}
+
+	.kbVerticalBar.expanded + .kbAdminContent {
+		margin-left: 360px;
+	}
+}

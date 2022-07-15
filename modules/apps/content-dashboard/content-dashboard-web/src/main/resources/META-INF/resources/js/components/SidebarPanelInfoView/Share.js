@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fetch} from 'frontend-js-web';
+import {fetch, runScriptsInElement} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
 
@@ -27,6 +27,7 @@ const Share = ({fetchSharingButtonURL}) => {
 				.then((response) =>
 					response.text().then((html) => {
 						elRef.current.innerHTML = html;
+						runScriptsInElement(elRef.current);
 					})
 				)
 				.catch((error) => {

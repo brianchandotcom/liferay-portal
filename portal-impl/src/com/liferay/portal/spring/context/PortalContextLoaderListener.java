@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.context;
 
+import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.log4j.Log4JUtil;
@@ -55,6 +56,7 @@ import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.store.DLStoreImpl;
 
 import java.beans.PropertyDescriptor;
 
@@ -327,6 +329,17 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		dynamicProxyCreator.clear();
 
 		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+			try {
+				Field field = ReflectionUtil.getDeclaredField(
+					DLStoreUtil.class, "_store");
+
+				field.set(null, applicationContext.getBean(DLStoreImpl.class));
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to inject DLStoreImpl into DLStoreUtil", exception);
+			}
+
 			StartupHelperUtil.setUpgrading(true);
 
 			try {

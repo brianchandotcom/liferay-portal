@@ -732,7 +732,7 @@ definition {
 			siteTemplateActive = "Yes",
 			siteTemplateName = "Site Template Name");
 
-		var siteTemplateId = SiteTemplates.getSiteTemplateID(siteTemplateName = "Site Template Name");
+		var siteTemplateId = JSONSiteTemplate.getSiteTemplateIdByName(siteTemplateName = "Site Template Name");
 
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Page1 Name",
@@ -827,7 +827,7 @@ definition {
 			siteTemplateActive = "Yes",
 			siteTemplateName = "Site Template Name");
 
-		var siteTemplateId = SiteTemplates.getSiteTemplateID(siteTemplateName = "Site Template Name");
+		var siteTemplateId = JSONSiteTemplate.getSiteTemplateIdByName(siteTemplateName = "Site Template Name");
 
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			inheritChanges = "disable",

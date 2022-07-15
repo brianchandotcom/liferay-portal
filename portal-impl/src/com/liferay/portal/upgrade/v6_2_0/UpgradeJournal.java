@@ -1357,7 +1357,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			Map<String, Map<Long, Set<String>>> map1)
 		throws Exception {
 
-		Map<Long, Set<String>> map2 = map1.get(urlTitle);
+		/*Map<Long, Set<String>> map2 = map1.get(urlTitle);
 
 		if (map2 == null) {
 			return true;
@@ -1377,9 +1377,9 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			return false;
 		}
 
-		return true;
+		return true;*/
 
-		/*try (PreparedStatement preparedStatement = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(*) from JournalArticle where groupId = ? and " +
 					"articleId != ? and urlTitle = ?")) {
 
@@ -1398,7 +1398,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 				return true;
 			}
-		}*/
+		}
 	}
 
 	private void _runSQL(String sql) throws Exception {

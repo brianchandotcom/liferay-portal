@@ -96,11 +96,15 @@ public final class DLValidatorImpl implements DLValidator {
 	@Override
 	public boolean isValidName(String name) {
 		if (Validator.isNull(name)) {
+			System.out.println("isValidName 0: " + name);
+
 			return false;
 		}
 
 		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
 			if (name.contains(blacklistChar)) {
+				System.out.println("isValidName 1: " + blacklistChar);
+
 				return false;
 			}
 		}
@@ -112,6 +116,8 @@ public final class DLValidatorImpl implements DLValidator {
 			}
 
 			if (name.endsWith(blacklistLastChar)) {
+				System.out.println("isValidName 2: " + blacklistLastChar);
+
 				return false;
 			}
 		}
@@ -121,6 +127,8 @@ public final class DLValidatorImpl implements DLValidator {
 		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
 			if (StringUtil.equalsIgnoreCase(
 					nameWithoutExtension, blacklistName)) {
+
+				System.out.println("isValidName 3: " + blacklistName);
 
 				return false;
 			}

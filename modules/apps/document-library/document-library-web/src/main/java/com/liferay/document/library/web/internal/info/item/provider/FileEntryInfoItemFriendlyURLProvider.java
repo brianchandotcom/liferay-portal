@@ -20,6 +20,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.friendly.url.util.comparator.FriendlyURLEntryLocalizationComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -51,9 +52,9 @@ public class FileEntryInfoItemFriendlyURLProvider
 			return String.valueOf(fileEntry.getFileEntryId());
 		}
 
-		Long groupId = GroupThreadLocal.getGroupId();
+		long groupId = GroupThreadLocal.getGroupId();
 
-		if ((groupId != null) &&
+		if ((groupId != GroupConstants.DEFAULT_LIVE_GROUP_ID) &&
 			(groupId != mainFriendlyURLEntry.getGroupId())) {
 
 			return String.valueOf(fileEntry.getFileEntryId());

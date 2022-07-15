@@ -22,6 +22,8 @@ import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useId} from '../../utils/useId';
 
+const KEYS_NOT_ALLOWED = ['+', ',', 'e'];
+
 const REGEX = /[-(0-9).]+|[a-zA-Z]+|%/g;
 
 const UNITS = ['px', '%', 'em', 'rem', 'vw', 'vh'];
@@ -57,6 +59,11 @@ export function LengthField({field, onValueSelect, value}) {
 						}}
 						onChange={(event) => {
 							setNextValue(event.target.value);
+						}}
+						onKeyDown={(event) => {
+							if (KEYS_NOT_ALLOWED.includes(event.key)) {
+								event.preventDefault();
+							}
 						}}
 						sizing="sm"
 						type="number"

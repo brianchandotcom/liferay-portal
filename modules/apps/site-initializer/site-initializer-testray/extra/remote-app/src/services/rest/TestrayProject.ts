@@ -12,12 +12,29 @@
  * details.
  */
 
+import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
 
-const deleteResource = (resource: RequestInfo) => {
-	return fetcher.delete(resource);
+type TestrayProject = {
+	creator: {
+		name: string;
+	};
+	dateCreated: string;
+	description: string;
+	id: number;
+	name: string;
 };
 
-export {deleteResource};
+type Project = typeof yupSchema.project.__outputType;
 
-export * from './TestrayProject';
+const adapter = ({description, id, name}: Project) => ({description, id, name});
+
+const createProject = (project: Project) =>
+	fetcher.post('/projects', adapter(project));
+
+const updateProject = (id: number, project: Project) =>
+	fetcher.put(`/projects/${id}`, adapter(project));
+
+export type {TestrayProject};
+
+export {createProject, updateProject};

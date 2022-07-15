@@ -12,44 +12,32 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import {useCallback, useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 
 import EmptyState from '../../components/EmptyState';
-import {CType, CTypePagination} from '../../graphql/queries';
-import {
-	TestrayProject,
-	getProject,
-	getProjects,
-} from '../../graphql/queries/testrayProject';
+import {APIResponse} from '../../graphql/queries';
+import {useFetch} from '../../hooks/useFetch';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
+import {TestrayProject} from '../../services/rest';
 
 const ProjectOutlet = () => {
 	const {projectId, ...otherParams} = useParams();
 	const {pathname} = useLocation();
 	const {setActions, setDropdown, setHeading, setTabs} = useHeader();
 
-	const {data, error} = useQuery<CType<'project', TestrayProject>>(
-		getProject,
-		{
-			variables: {projectId},
-		}
+	const {data: testrayProject, error} = useFetch<TestrayProject>(
+		`/projects/${projectId}`
 	);
 
-	const {data: dataTestrayProjects} = useQuery<
-		CTypePagination<'projects', TestrayProject>
-	>(getProjects, {
-		variables: {
-			pageSize: 100,
-		},
-	});
+	const {data: dataTestrayProjects} = useFetch<APIResponse<TestrayProject>>(
+		'/projects?pageSize=100'
+	);
 
-	const testrayProjects = dataTestrayProjects?.c?.projects?.items;
+	const testrayProjects = dataTestrayProjects?.items;
 
 	const hasOtherParams = !!Object.values(otherParams).length;
-	const testrayProject = data?.c.project;
 
 	const getPath = useCallback(
 		(path: string) => {
@@ -123,13 +111,15 @@ const ProjectOutlet = () => {
 
 	useEffect(() => {
 		if (testrayProject) {
-			setHeading([
-				{
-					category: i18n.translate('project').toUpperCase(),
-					path: `/project/${testrayProject.id}/routines`,
-					title: testrayProject.name,
-				},
-			]);
+			setTimeout(() => {
+				setHeading([
+					{
+						category: i18n.translate('project').toUpperCase(),
+						path: `/project/${testrayProject.id}/routines`,
+						title: testrayProject.name,
+					},
+				]);
+			}, 10);
 		}
 	}, [setHeading, testrayProject, hasOtherParams]);
 

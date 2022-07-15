@@ -12,42 +12,38 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
-
-import {DeleteProject} from '../../graphql/mutations';
 import {TestrayProject} from '../../graphql/queries';
 import useFormModal from '../../hooks/useFormModal';
+import useMutate from '../../hooks/useMutate';
 import i18n from '../../i18n';
 import {Security} from '../../security';
-import {Action, PermissionCheck} from '../../types';
+import {deleteResource} from '../../services/rest';
+import {Action} from '../../types';
 
-const useProjectActions = (
-	security: Security,
-	permissions: PermissionCheck
-) => {
-	const [onDeleteProject] = useMutation(DeleteProject);
-
+const useProjectActions = () => {
 	const formModal = useFormModal();
+	const {removeItemFromList} = useMutate();
 	const modal = formModal.modal;
 
 	const actions: Action[] = [
 		{
 			action: (item: TestrayProject) => modal.open(item),
 			name: i18n.translate('edit'),
-			permission: permissions.UPDATE,
+			permission: 'UPDATE',
 		},
 		{
-			action: ({id}: TestrayProject) =>
-				onDeleteProject({variables: {id}})
-					.then(() => modal.onSave())
+			action: ({id}: TestrayProject, mutate) =>
+				deleteResource(`/projects/${id}`)
+					.then(() => removeItemFromList(mutate, id))
+					.then(modal.onSuccess)
 					.catch(modal.onError),
 			name: i18n.translate('delete'),
-			permission: permissions.DELETE,
+			permission: 'DELETE',
 		},
 	];
 
 	return {
-		actions: security.filterActions(actions, 'TestrayProject'),
+		actions: (row: any) => Security.filterActions(actions, row.actions),
 		formModal,
 	};
 };

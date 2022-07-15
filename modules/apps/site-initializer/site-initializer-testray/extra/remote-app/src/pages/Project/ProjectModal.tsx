@@ -16,23 +16,16 @@ import {useForm} from 'react-hook-form';
 
 import Form from '../../components/Form';
 import Modal from '../../components/Modal';
-import {
-	CreateProject,
-	UpdateProject,
-} from '../../graphql/mutations/testrayProject';
 import {withVisibleContent} from '../../hoc/withVisibleContent';
 import {FormModalComponent} from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 import yupSchema, {yupResolver} from '../../schema/yup';
+import {createProject, updateProject} from '../../services/rest';
 
-type ProjectForm = {
-	description: string;
-	id?: string;
-	name: string;
-};
+type ProjectForm = typeof yupSchema.project.__outputType;
 
 const ProjectModal: React.FC<FormModalComponent> = ({
-	modal: {modalState, observer, onClose, onSubmit},
+	modal: {modalState, observer, onClose, onError, onSave, onSubmitRest},
 }) => {
 	const {
 		formState: {errors},
@@ -44,13 +37,12 @@ const ProjectModal: React.FC<FormModalComponent> = ({
 	});
 
 	const _onSubmit = (form: ProjectForm) =>
-		onSubmit(
-			{description: form.description, id: form.id, name: form.name},
-			{
-				createMutation: CreateProject,
-				updateMutation: UpdateProject,
-			}
-		);
+		onSubmitRest(form, {
+			create: createProject,
+			update: updateProject,
+		})
+			.then(onSave)
+			.catch(onError);
 
 	const inputProps = {
 		errors,
@@ -74,16 +66,16 @@ const ProjectModal: React.FC<FormModalComponent> = ({
 			visible
 		>
 			<Form.Input
+				{...inputProps}
 				label={i18n.translate('name')}
 				name="name"
 				required
-				{...inputProps}
 			/>
 
 			<Form.Input
+				{...inputProps}
 				label={i18n.translate('description')}
 				name="description"
-				{...inputProps}
 			/>
 		</Modal>
 	);

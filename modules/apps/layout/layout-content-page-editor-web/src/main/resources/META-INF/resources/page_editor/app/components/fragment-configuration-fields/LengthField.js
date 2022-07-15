@@ -30,7 +30,7 @@ const UNITS = ['px', '%', 'em', 'rem', 'vw', 'vh'];
 
 export function LengthField({field, onValueSelect, value}) {
 	const inputId = useId();
-	const dropdownId = useId();
+	const triggerId = useId();
 
 	const [active, setActive] = useState(false);
 	const [nextValue, setNextValue] = useControlledState(
@@ -60,6 +60,7 @@ export function LengthField({field, onValueSelect, value}) {
 			<ClayInput.Group>
 				<ClayInput.GroupItem prepend>
 					<ClayInput
+						aria-label={field.label}
 						id={inputId}
 						onBlur={() => {
 							const valueWithUnits = !isNaN(parseFloat(nextValue))
@@ -88,7 +89,6 @@ export function LengthField({field, onValueSelect, value}) {
 					<ClayDropDown
 						active={active}
 						alignmentPosition={Align.BottomRight}
-						aria-labelledby={dropdownId}
 						menuElementAttrs={{
 							className: 'page-editor__length-field__dropdown',
 							containerProps: {
@@ -96,11 +96,18 @@ export function LengthField({field, onValueSelect, value}) {
 							},
 						}}
 						onActiveChange={setActive}
+						role="listbox"
 						trigger={
 							<ClayButton
+								aria-expanded={active}
+								aria-haspopup="true"
+								aria-label={Liferay.Util.sub(
+									Liferay.Language.get('select-a-unit'),
+									nextUnit
+								)}
 								className="p-1 page-editor__length-field__button"
 								displayType="secondary"
-								id={dropdownId}
+								id={triggerId}
 								small
 							>
 								{nextUnit.toUpperCase()}
@@ -108,6 +115,7 @@ export function LengthField({field, onValueSelect, value}) {
 						}
 					>
 						<DropDownList
+							aria-labelledby={triggerId}
 							field={field}
 							onClick={handleUnitSelect}
 						/>
@@ -124,8 +132,8 @@ LengthField.propTypes = {
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
-const DropDownList = ({onClick}) => (
-	<ClayDropDown.ItemList>
+const DropDownList = ({onClick, ...otherProps}) => (
+	<ClayDropDown.ItemList {...otherProps}>
 		{UNITS.map((unit) => (
 			<ClayDropDown.Item
 				aria-label={unit}

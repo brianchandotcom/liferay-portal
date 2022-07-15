@@ -107,6 +107,12 @@ public class InfoRequestFieldValuesProviderHelper {
 				(infoField.getInfoFieldType() instanceof FileInfoFieldType)) {
 
 				for (FileItem fileItem : multipartParameters) {
+					if ((fileItem.getSize() < 0) ||
+						Validator.isNull(fileItem.getFileName())) {
+
+						continue;
+					}
+
 					infoFieldValues.add(
 						_getFileInfoFieldValue(
 							fileItem, groupId, infoField, themeDisplay));

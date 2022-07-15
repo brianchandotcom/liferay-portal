@@ -393,9 +393,6 @@
 												"definition": {
 													"fragmentLink": {
 														"href": {
-															"defaultFragmentInlineValue": {
-																"value": "/documents/43817/43935/referral-program-guide.pdf/70d4beb9-e791-a8a2-b7c9-c468bac90fbd?version=1.0&t=1657827551222&download=true"
-															},
 															"mapping": {
 																"fieldKey": "FileEntry_downloadURL",
 																"itemReference": {
@@ -608,9 +605,6 @@
 												"definition": {
 													"fragmentLink": {
 														"href": {
-															"defaultFragmentInlineValue": {
-																"value": "/documents/43817/43935/reseller-program-guide.pdf/fa628fe5-6e19-0e0c-83dd-8e8dd7e16e04?version=1.0&t=1657827551250&download=true"
-															},
 															"mapping": {
 																"fieldKey": "FileEntry_downloadURL",
 																"itemReference": {
@@ -822,9 +816,6 @@
 												"definition": {
 													"fragmentLink": {
 														"href": {
-															"defaultFragmentInlineValue": {
-																"value": "/documents/43817/43935/program-rules-of-engagement.pdf/7c1a5195-6c0a-7e68-304a-d640ddf286b3?version=1.0&t=1657827551196&download=true"
-															},
 															"mapping": {
 																"fieldKey": "FileEntry_downloadURL",
 																"itemReference": {

@@ -23,6 +23,7 @@ import {
 	EDIT_FRAGMENT_ENTRY_LINK_COMMENT,
 	UPDATE_COLLECTION_DISPLAY_COLLECTION,
 	UPDATE_EDITABLE_VALUES,
+	UPDATE_FORM_ITEM_CONFIG,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
 	UPDATE_LAYOUT_DATA,
@@ -259,6 +260,28 @@ export default function fragmentEntryLinksReducer(
 					editableValues: action.editableValues,
 				},
 			};
+
+		case UPDATE_FORM_ITEM_CONFIG: {
+			const newFragmentEntryLinks = action.addedFragmentEntryLinks
+				? {...action.addedFragmentEntryLinks}
+				: {};
+
+			if (action.removedFragmentEntryLinkIds) {
+				action.removedFragmentEntryLinkIds.forEach(
+					(fragmentEntryLinkId) => {
+						newFragmentEntryLinks[fragmentEntryLinkId] = {
+							...fragmentEntryLinks[fragmentEntryLinkId],
+							removed: true,
+						};
+					}
+				);
+			}
+
+			return {
+				...fragmentEntryLinks,
+				...newFragmentEntryLinks,
+			};
+		}
 
 		case UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION:
 			return {

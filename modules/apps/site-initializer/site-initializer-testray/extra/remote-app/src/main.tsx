@@ -23,6 +23,7 @@ import apolloClient from './graphql/apolloClient';
 
 import './styles/index.scss';
 import SWRCacheProvider from './services/SWRCacheProvider';
+import fetcher from './services/fetcher';
 
 class Testray extends HTMLElement {
 	private root: Root | undefined;
@@ -35,6 +36,7 @@ class Testray extends HTMLElement {
 				<ApolloProvider client={apolloClient}>
 					<SWRConfig
 						value={{
+							fetcher,
 							provider: SWRCacheProvider,
 							revalidateOnFocus: false,
 						}}

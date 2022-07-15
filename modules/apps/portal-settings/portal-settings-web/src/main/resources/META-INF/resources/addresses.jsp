@@ -141,9 +141,7 @@
 							CountryRegionDynamicSelect.default({
 								countrySelect:
 									'<portlet:namespace />addressCountryId' + guid,
-								countrySelectVal: '0',
 								regionSelect: '<portlet:namespace />addressRegionId' + guid,
-								regionSelectVal: '0',
 							});
 						},
 					},

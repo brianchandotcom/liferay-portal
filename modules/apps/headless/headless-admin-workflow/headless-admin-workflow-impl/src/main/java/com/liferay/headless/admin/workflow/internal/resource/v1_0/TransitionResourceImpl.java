@@ -66,8 +66,7 @@ public class TransitionResourceImpl extends BaseTransitionResourceImpl {
 
 		List<String> nextTransitionNames =
 			_workflowTaskManager.getNextTransitionNames(
-				contextCompany.getCompanyId(), contextUser.getUserId(),
-				workflowTaskId);
+				contextUser.getUserId(), workflowTaskId);
 
 		return Page.of(
 			transform(

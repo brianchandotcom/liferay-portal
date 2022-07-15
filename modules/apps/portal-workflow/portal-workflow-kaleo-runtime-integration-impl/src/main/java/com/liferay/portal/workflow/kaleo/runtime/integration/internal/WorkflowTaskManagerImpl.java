@@ -289,8 +289,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	}
 
 	@Override
-	public List<String> getNextTransitionNames(
-			long companyId, long userId, long workflowTaskId)
+	public List<String> getNextTransitionNames(long userId, long workflowTaskId)
 		throws WorkflowException {
 
 		try {

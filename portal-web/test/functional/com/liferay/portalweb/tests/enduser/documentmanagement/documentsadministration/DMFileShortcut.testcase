@@ -95,6 +95,30 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_4.jpg");
 	}
 
+	@description = "This test covers LPS-155147. It ensures that a user downloading a shortcut will download the related document."
+	@priority = "4"
+	test CanDownloadFileThroughShortcut {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.txt",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		JSONDocument.addShortcut(
+			dmDocumentTitle = "Document_1.txt",
+			sourceGroupName = "Guest",
+			targetGroupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.downloadCP(dmDocumentTitle = "Document_1.txt");
+
+		DMDocument.assertDownloadedFileContent(
+			downloadedContent = "This is a *.txt document.",
+			fileName = "Document_1.txt");
+	}
+
 	@description = "This validates LPS-68795. It ensures that a shortcut can be moved into a folder."
 	@priority = "4"
 	test CanMoveShortcutIntoFolder {

@@ -263,6 +263,7 @@
 		}
 	],
 	"panelCategoryKey": "",
+	"parameterRequired": false,
 	"pluralLabel": {
 		"en_US": "Object Definitions"
 	},

@@ -60,7 +60,9 @@ definition {
 	macro getSiteTemplateIdByName {
 		Variables.assertDefined(parameterList = "${siteTemplateName}");
 
-		var siteTemplateID = JSONSiteTemplateAPI._getSiteTemplateIdByName(siteTemplateName = "${siteTemplateName}");
+		var layoutSetPrototypeId = JSONSiteTemplateAPI._getSiteTemplateIdByName(siteTemplateName = "${siteTemplateName}");
+
+		var siteTemplateID = "template-${layoutSetPrototypeId}";
 
 		echo("siteTemplateID: ${siteTemplateID}");
 

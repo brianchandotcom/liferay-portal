@@ -14,6 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLink from '@clayui/link';
 import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
@@ -87,6 +88,8 @@ const SidebarPanelInfoView = ({
 
 	const showClipboard = clipboard && Object.keys(clipboard).length !== 0;
 
+	const hasActions = preview?.downloadURL;
+
 	return (
 		<>
 			<Sidebar.Header title={title} />
@@ -149,11 +152,23 @@ const SidebarPanelInfoView = ({
 
 				{preview && preview.url && (
 					<Preview
-						downloadURL={preview.downloadURL}
 						imageURL={preview.imageURL}
 						title={title}
 						url={preview.url}
 					/>
+				)}
+
+				{hasActions && (
+					<div className="sidebar-section">
+						{preview?.downloadURL && (
+							<ClayLink
+								className="btn btn-primary"
+								href={preview?.downloadURL}
+							>
+								{Liferay.Language.get('download')}
+							</ClayLink>
+						)}
+					</div>
 				)}
 
 				{description && (

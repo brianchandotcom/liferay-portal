@@ -13,11 +13,10 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const Preview = ({downloadURL, imageURL, title, url}) => {
+const Preview = ({imageURL, title, url}) => {
 	return (
 		<div className="document-preview sidebar-section">
 			{imageURL && (
@@ -36,14 +35,6 @@ const Preview = ({downloadURL, imageURL, title, url}) => {
 					</a>
 				</figure>
 			)}
-
-			<div>
-				{downloadURL && (
-					<ClayLink className="btn btn-primary" href={downloadURL}>
-						{Liferay.Language.get('download')}
-					</ClayLink>
-				)}
-			</div>
 		</div>
 	);
 };
@@ -53,7 +44,6 @@ Preview.defaultProps = {
 };
 
 Preview.propTypes = {
-	downloadURL: PropTypes.string,
 	imageURL: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
 	viewURL: PropTypes.string,

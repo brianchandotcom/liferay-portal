@@ -185,7 +185,7 @@ public class WorkflowTaskManagerProxyBean
 	}
 
 	@Override
-	public boolean hasAssignableUsers(long companyId, long workflowTaskId) {
+	public boolean hasAssignableUsers(long workflowTaskId) {
 		throw new UnsupportedOperationException();
 	}
 

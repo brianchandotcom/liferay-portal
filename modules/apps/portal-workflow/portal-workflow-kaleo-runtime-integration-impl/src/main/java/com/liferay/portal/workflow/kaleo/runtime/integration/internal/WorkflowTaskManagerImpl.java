@@ -646,7 +646,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	}
 
 	@Override
-	public boolean hasAssignableUsers(long companyId, long workflowTaskId)
+	public boolean hasAssignableUsers(long workflowTaskId)
 		throws WorkflowException {
 
 		try {

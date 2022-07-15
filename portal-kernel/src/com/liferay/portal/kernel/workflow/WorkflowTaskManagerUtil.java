@@ -232,8 +232,7 @@ public class WorkflowTaskManagerUtil {
 			long companyId, long workflowTaskId)
 		throws WorkflowException {
 
-		return _workflowTaskManager.hasAssignableUsers(
-			companyId, workflowTaskId);
+		return _workflowTaskManager.hasAssignableUsers(workflowTaskId);
 	}
 
 	public static List<WorkflowTask> search(

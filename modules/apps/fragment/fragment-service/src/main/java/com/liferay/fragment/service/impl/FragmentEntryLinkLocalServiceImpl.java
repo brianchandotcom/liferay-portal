@@ -538,7 +538,10 @@ public class FragmentEntryLinkLocalServiceImpl
 			_fragmentEntryPersistence.findByPrimaryKey(
 				fragmentEntryLink.getFragmentEntryId());
 
-		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+		String html = _replaceResources(
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml());
+
+		fragmentEntryLink.setHtml(html);
 
 		// LPS-132154 Set configuration before processing the HTML
 

@@ -122,7 +122,7 @@ export default withRouter(
 		return (
 			<section className="questions-section questions-section-list">
 				<div className="c-p-5 questions-container row">
-					<div className="c-mt-3 c-mx-auto c-px-0 col-xl-10">
+					<div className="c-mt-3 c-mx-auto c-px-0 w-100">
 						<div className="d-flex flex-row">
 							<div className="c-mt-3">
 								<UserIcon

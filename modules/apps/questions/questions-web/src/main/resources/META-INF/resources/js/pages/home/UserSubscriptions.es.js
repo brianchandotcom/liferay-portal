@@ -144,7 +144,7 @@ export default withRouter(({history, location}) => {
 	return (
 		<section className="questions-section questions-section-list">
 			<div className="c-p-5 questions-container row">
-				<div>
+				<div className="c-mt-3 c-mx-auto c-px-0 w-100">
 					<h2 className="sheet-subtitle">
 						{Liferay.Language.get('tags')}
 					</h2>

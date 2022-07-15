@@ -83,8 +83,8 @@ definition {
 	macro _getSiteTemplateIdByName {
 		Variables.assertDefined(parameterList = "${siteTemplateName}");
 
-		var companyId = JSONCompany.getCompanyId();
 		var portalURL = JSONCompany.getPortalURL();
+		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
 			${portalURL}/api/jsonws/layoutsetprototype/get-layout-set-prototypes \

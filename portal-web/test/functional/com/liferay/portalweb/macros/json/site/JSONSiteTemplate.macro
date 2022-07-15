@@ -57,4 +57,14 @@ definition {
 		JSONSiteTemplateAPI._deleteSiteTemplateById(layoutSetPrototypeId = "${layoutSetPrototypeId}");
 	}
 
+	macro getSiteTemplateIdByName {
+		Variables.assertDefined(parameterList = "${siteTemplateName}");
+
+		var siteTemplateID = JSONSiteTemplateAPI._getSiteTemplateIdByName(siteTemplateName = "${siteTemplateName}");
+
+		echo("siteTemplateID: ${siteTemplateID}");
+
+		return "${siteTemplateID}";
+	}
+
 }

@@ -2027,7 +2027,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!commons-io.jar</file-name>
-				<version>2.8.0</version>
+				<version>2.11.0</version>
 				<project-name>Apache Commons IO</project-name>
 				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
 				<licenses>
@@ -2036,7 +2036,7 @@
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2020-09-06 06:54:55</current-version-publish-date>
+				<current-version-publish-date>2021-07-09 18:43:00</current-version-publish-date>
 				<latest-version-publish-date>2021-07-09 18:43:00</latest-version-publish-date>
 			</library>
 			<library>
@@ -4088,7 +4088,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!commons-io.jar</file-name>
-				<version>2.8.0</version>
+				<version>2.11.0</version>
 				<project-name>Apache Commons IO</project-name>
 				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
 				<licenses>
@@ -4097,7 +4097,7 @@
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2020-09-06 06:54:55</current-version-publish-date>
+				<current-version-publish-date>2021-07-09 18:43:00</current-version-publish-date>
 				<latest-version-publish-date>2021-07-09 18:43:00</latest-version-publish-date>
 			</library>
 			<library>

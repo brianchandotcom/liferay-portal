@@ -154,7 +154,7 @@ public interface WorkflowTaskManager {
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException;
 
-	public boolean hasAssignableUsers(long companyId, long workflowTaskId)
+	public boolean hasAssignableUsers(long workflowTaskId)
 		throws WorkflowException;
 
 	public default List<WorkflowTask> search(

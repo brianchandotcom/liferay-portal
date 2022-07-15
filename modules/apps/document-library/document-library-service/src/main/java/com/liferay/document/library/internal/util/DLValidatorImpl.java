@@ -94,6 +94,24 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	@Override
+	public Map<String, Long> getMimeTypeSizeLimit(long groupId) {
+		long companyId = _getCompanyId(groupId);
+
+		Map<String, Long> groupMimeTypeSizeLimit =
+			_dlSizeLimitManagedServiceFactory.getGroupMimeTypeSizeLimit(
+				groupId);
+		Map<String, Long> companyMimeTypeSizeLimit =
+			_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+				companyId);
+
+		companyMimeTypeSizeLimit.forEach(
+			(key, value) -> groupMimeTypeSizeLimit.merge(
+				key, value, (v1, v2) -> _min(v1, v2)));
+
+		return groupMimeTypeSizeLimit;
+	}
+
+	@Override
 	public boolean isValidName(String name) {
 		if (Validator.isNull(name)) {
 			return false;

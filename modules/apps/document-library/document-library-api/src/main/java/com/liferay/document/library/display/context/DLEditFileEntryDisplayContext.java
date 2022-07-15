@@ -19,11 +19,18 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Iván Zaera
  */
 public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
+
+	public default Map<String, Long> getAllMimeTypeSizeLimit()
+		throws PortalException {
+
+		return null;
+	}
 
 	public DDMFormValues getDDMFormValues(long classPK) throws PortalException;
 

@@ -49,6 +49,7 @@ import com.liferay.portal.util.RepositoryUtil;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -79,6 +80,12 @@ public class DefaultDLEditFileEntryDisplayContext
 		this(
 			httpServletRequest, (DLFileEntryType)null, dlValidator, fileEntry,
 			storageEngine);
+	}
+
+	@Override
+	public Map<String, Long> getAllMimeTypeSizeLimit() {
+		return _dlValidator.getMimeTypeSizeLimit(
+			_dlRequestHelper.getSiteGroupId());
 	}
 
 	@Override

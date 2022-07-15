@@ -15,8 +15,7 @@
 import {useNavigate, useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView/ListView';
-import {getSuites} from '../../../graphql/queries';
+import ListView from '../../../components/ListView/ListViewRest';
 import i18n from '../../../i18n';
 import {searchUtil} from '../../../util/search';
 import useSuiteActions from './useSuiteActions';
@@ -35,13 +34,14 @@ const Suites = () => {
 					addButton: () => navigate('create'),
 					title: i18n.translate('suites'),
 				}}
-				query={getSuites}
+				resource="/suites"
 				tableProps={{
 					actions,
 					columns: [
 						{
 							clickable: true,
 							key: 'name',
+							sorteable: true,
 							value: i18n.translate('suite-name'),
 						},
 						{
@@ -57,9 +57,9 @@ const Suites = () => {
 							value: i18n.translate('type'),
 						},
 					],
-					navigateTo: ({id}) => id?.toString(),
+					navigateTo: (suite) =>
+						`/project/${projectId}/suites/${suite.id}`,
 				}}
-				transformData={(data) => data?.c?.suites}
 				variables={{
 					filter: searchUtil.eq('projectId', projectId as string),
 				}}

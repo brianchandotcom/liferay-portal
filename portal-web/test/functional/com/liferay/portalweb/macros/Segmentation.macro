@@ -482,24 +482,6 @@ definition {
 		Segmentation.resetDefaultValues();
 	}
 
-	macro resetSegmentationAtSystemSettings {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Segments",
-			configurationName = "Segments Service",
-			configurationScope = "System Scope");
-
-		Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "Reset Default Values");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro selectTag {
 		Click(locator1 = "Segmentation#ADD_TAG_BUTTON");
 

@@ -85,6 +85,8 @@ definition {
 
 		AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
 
+		Refresh();
+
 		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
 	}
 

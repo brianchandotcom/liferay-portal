@@ -73,7 +73,7 @@ public interface WorkflowTaskManager {
 			workflowContext);
 	}
 
-	public WorkflowTask fetchWorkflowTask(long companyId, long workflowTaskId)
+	public WorkflowTask fetchWorkflowTask(long workflowTaskId)
 		throws WorkflowException;
 
 	public default List<User> getAssignableUsers(long workflowTaskId)

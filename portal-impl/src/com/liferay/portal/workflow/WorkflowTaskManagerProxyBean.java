@@ -66,7 +66,7 @@ public class WorkflowTaskManagerProxyBean
 	}
 
 	@Override
-	public WorkflowTask fetchWorkflowTask(long companyId, long workflowTaskId) {
+	public WorkflowTask fetchWorkflowTask(long workflowTaskId) {
 		throw new UnsupportedOperationException();
 	}
 

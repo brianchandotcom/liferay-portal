@@ -21,12 +21,12 @@ import ClayForm, {
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 
 import {
 	ACTIONS,
 	NewApplicationAutoContext,
-} from '../../context/NewApplicationAutoContextProvider';
+} from '../../../context/NewApplicationAutoContextProvider';
 
 const ContactInfo = () => {
 	const [state, dispatch] = useContext(NewApplicationAutoContext);
@@ -46,23 +46,23 @@ const ContactInfo = () => {
 	const stateOptions = [
 		{
 			label: '',
-			value: '1',
+			value: '',
 		},
 		{
 			label: 'CHOOSE AN OPTION',
-			value: '2',
+			value: 'CHOOSE AN OPTION',
 		},
 		{
 			label: 'CA',
-			value: '3',
+			value: 'CA',
 		},
 		{
 			label: 'NV',
-			value: '4',
+			value: 'NV',
 		},
 		{
 			label: 'NY',
-			value: '5',
+			value: 'NY',
 		},
 	];
 
@@ -117,6 +117,31 @@ const ContactInfo = () => {
 	const [hasError, setHasError] = useState(hasRequiredError);
 
 	const [hasValidation, setHasValidation] = useState(hasValidations);
+
+	const handleSaveChanges = (currentForm: any) => {
+		const isAbleToBeSave =
+			!hasValidation.firstName &&
+			!hasValidation.lastName &&
+			!hasValidation.email &&
+			!hasValidation.phone;
+
+		const hasAllRequiredFields =
+			currentForm.firstName !== '' &&
+			currentForm.lastName !== '' &&
+			currentForm.email !== '' &&
+			currentForm.phone !== '';
+
+		dispatch({
+			payload: isAbleToBeSave && hasAllRequiredFields,
+			type: ACTIONS.SET_IS_ABLE_TO_SAVE,
+		});
+	};
+
+	useEffect(() => {
+		handleSaveChanges(form);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [form]);
 
 	const ErrorMessage = ({text}: any) => (
 		<div className="form-feedback-group">
@@ -255,16 +280,20 @@ const ContactInfo = () => {
 						<ClayDatePicker
 							dateFormat="MM/dd/yyyy"
 							onBlur={(event) => {
-								const dateValue = event.target.value;
+								const dateValue = event;
+
 								setHasError({
 									...hasError,
 									dateOfBirth:
-										dateValue === '' ? true : false,
+										dateValue.toString() === ''
+											? true
+											: false,
 								});
 							}}
-							onExpandedChange={(event: any) => {
-								const dateValue = event.target.value;
-								handleChangeField(form.dateOfBirth, dateValue);
+							onChange={(event: any) => {
+								const dateValue = event;
+
+								handleChangeField('dateOfBirth', dateValue);
 
 								setHasError({
 									...hasError,
@@ -635,12 +664,13 @@ const ContactInfo = () => {
 					inline
 					onChange={(event: any) => {
 						const ownershipValue = event.target.value;
-						handleChangeField(form.ownership, ownershipValue);
+
+						handleChangeField('ownership', ownershipValue);
 					}}
 				>
-					<ClayRadio label="Rent" value="One" />
+					<ClayRadio label="Rent" value="Rent" />
 
-					<ClayRadio label="Own" value="Two" />
+					<ClayRadio label="Own" value="Own" />
 				</ClayRadioGroup>
 			</div>
 		</div>

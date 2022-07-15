@@ -15,8 +15,9 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayMultiStepNav from '@clayui/multi-step-nav';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
-import {ReactNode, useContext} from 'react';
+import {ReactNode, useContext, useState} from 'react';
 
 import ClayIconProvider from '../../../../../common/context/ClayIconProvider';
 import {createOrUpdateRaylifeApplication} from '../../../../../common/services';
@@ -32,6 +33,11 @@ type DriverInfoProps = {
 
 const NewApplicationAuto = ({children}: DriverInfoProps) => {
 	const [state, dispatch] = useContext(NewApplicationAutoContext);
+
+	const [saveChanges, setSaveChanges] = useState<boolean>(false);
+
+	const tooltipTitle =
+		'You must enter first name, last name, phone number and email address to save this quote.';
 
 	const steps = [
 		{
@@ -62,6 +68,8 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 	];
 
 	const handleNextClick = (event: any) => {
+		setSaveChanges(true);
+
 		event?.preventDefault();
 		dispatch({payload: false, type: ACTIONS.SET_HAS_FORM_CHANGE});
 
@@ -89,6 +97,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 	};
 
 	const handlePreviousClick = () => {
+		setSaveChanges(false);
 		dispatch({payload: false, type: ACTIONS.SET_HAS_FORM_CHANGE});
 		if (state.currentStep > 0) {
 			dispatch({
@@ -98,6 +107,28 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 		}
 	};
 
+	const handleSaveChanges = () => {
+		setSaveChanges(true);
+
+		dispatch({payload: false, type: ACTIONS.SET_HAS_FORM_CHANGE});
+
+		return saveChanges;
+	};
+
+	const ChangeStatusMessage = ({text}: any) => (
+		<div className="text-neutral-7 text-paragraph-sm">
+			<ClayIcon
+				className={classNames('', {
+					'text-accent-4': state.hasFormChanges,
+					'text-success': saveChanges && !state.hasFormChanges,
+				})}
+				symbol="simple-circle"
+			></ClayIcon>
+
+			<span>{text}</span>
+		</div>
+	);
+
 	return (
 		<ClayIconProvider>
 			<div className="container">
@@ -105,22 +136,17 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 					<div className="d-flex justify-content-between">
 						<h5>New Application</h5>
 
-						<div className="text-neutral-7 text-paragraph-sm">
-							<ClayIcon
-								className={classNames('', {
-									'text-accent-4': state.hasFormChanges,
-								})}
-								symbol="simple-circle"
-							></ClayIcon>
+						{state.hasFormChanges && (
+							<ChangeStatusMessage text="Unsave Changes" />
+						)}
 
-							{state.hasFormChanges && (
-								<span>Unsave Changes</span>
-							)}
+						{!state.hasFormChanges && !saveChanges && (
+							<ChangeStatusMessage text="No Changes Made" />
+						)}
 
-							{!state.hasFormChanges && (
-								<span>No Changes Made</span>
-							)}
-						</div>
+						{saveChanges && !state.hasFormChanges && (
+							<ChangeStatusMessage text="All Changes Saved" />
+						)}
 
 						<div>
 							<ClayButton
@@ -131,13 +157,19 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 								Exit
 							</ClayButton>
 
-							<ClayButton
-								className="text-uppercase"
-								displayType="secondary"
-								small={true}
-							>
-								Save
-							</ClayButton>
+							<ClayTooltipProvider>
+								<ClayButton
+									className="text-uppercase"
+									data-tooltip-align="top"
+									disabled={!state.isAbleToBeSave}
+									displayType="secondary"
+									onClick={() => handleSaveChanges()}
+									small={true}
+									title={tooltipTitle}
+								>
+									Save
+								</ClayButton>
+							</ClayTooltipProvider>
 						</div>
 					</div>
 

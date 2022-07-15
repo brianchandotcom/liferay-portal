@@ -109,7 +109,7 @@ public class WorkflowTaskManagerUtil {
 			long companyId, long workflowTaskId)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTask(companyId, workflowTaskId);
+		return _workflowTaskManager.getWorkflowTask(workflowTaskId);
 	}
 
 	public static int getWorkflowTaskCount(long companyId, Boolean completed)

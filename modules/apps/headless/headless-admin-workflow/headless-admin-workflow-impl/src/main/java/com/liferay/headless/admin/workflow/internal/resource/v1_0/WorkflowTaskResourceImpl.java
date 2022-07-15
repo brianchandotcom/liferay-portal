@@ -128,8 +128,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception {
 		try {
 			return _toWorkflowTask(
-				_workflowTaskManager.getWorkflowTask(
-					contextCompany.getCompanyId(), workflowTaskId));
+				_workflowTaskManager.getWorkflowTask(workflowTaskId));
 		}
 		catch (WorkflowException workflowException) {
 			Throwable throwable = workflowException.getCause();
@@ -475,8 +474,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 		throws Exception {
 
 		com.liferay.portal.kernel.workflow.WorkflowTask workflowTask =
-			_workflowTaskManager.getWorkflowTask(
-				contextCompany.getCompanyId(), workflowTaskId);
+			_workflowTaskManager.getWorkflowTask(workflowTaskId);
 
 		WorkflowInstance workflowInstance =
 			_workflowInstanceManager.getWorkflowInstance(

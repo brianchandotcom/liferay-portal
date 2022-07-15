@@ -91,7 +91,7 @@ public class CompleteTaskMVCActionCommand
 		throws Exception {
 
 		WorkflowTask workflowTask = workflowTaskManager.getWorkflowTask(
-			companyId, workflowTaskId);
+			workflowTaskId);
 
 		WorkflowInstance workflowInstance =
 			WorkflowInstanceManagerUtil.getWorkflowInstance(

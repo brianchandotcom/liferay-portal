@@ -49,7 +49,7 @@ export function LengthField({field, onValueSelect, value}) {
 					<ClayInput
 						id={inputId}
 						onBlur={() => {
-							const valueWithUnits = Number(nextValue)
+							const valueWithUnits = !isNaN(parseFloat(nextValue))
 								? `${nextValue}${nextUnit}`
 								: '';
 
@@ -102,7 +102,7 @@ export function LengthField({field, onValueSelect, value}) {
 										setActive(false);
 										setNextUnit(unit);
 
-										if (Number(nextValue)) {
+										if (!isNaN(parseFloat(nextValue))) {
 											const valueWithUnits = `${nextValue}${unit}`;
 
 											if (valueWithUnits !== value) {

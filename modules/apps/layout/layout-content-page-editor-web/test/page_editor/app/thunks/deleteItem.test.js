@@ -120,6 +120,7 @@ describe('deleteItem', () => {
 				portletIds: [
 					'com_liferay_microblogs_web_portlet_MicroblogsPortlet',
 					'com_liferay_blogs_web_portlet_BlogsPortlet',
+					'com_liferay_microblogs_web_portlet_AnotherPortlet_INSTANCE_2411',
 				],
 			})
 		);

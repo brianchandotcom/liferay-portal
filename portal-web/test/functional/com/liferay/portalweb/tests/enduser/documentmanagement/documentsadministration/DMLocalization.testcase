@@ -44,6 +44,10 @@ definition {
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
 		DMDocument.assertFileNameFromTempFolder(fileName = "これは文書です.txt");
+
+		DMDocument.assertFileExtensionFromTempFolder(
+			downloadedFile = "これは文書です.txt",
+			fileExtension = ".txt");
 	}
 
 	@description = "This test ensures that a Japanese file can be downloaded by file name."

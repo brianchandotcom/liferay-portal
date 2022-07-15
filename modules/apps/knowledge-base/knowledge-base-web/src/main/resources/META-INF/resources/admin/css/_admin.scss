@@ -6,9 +6,9 @@
 	}
 
 	.kbAdminContent {
-		margin-left: 45px;
+		margin-left: 40px;
 
-		transition: all 0.5s ease-out;
+		transition: margin-left 0.3s ease-in-out;
 	}
 
 	.kbVerticalBar.expanded + .kbAdminContent {

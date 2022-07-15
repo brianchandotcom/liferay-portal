@@ -53,7 +53,6 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 		_validateExternalReferenceCode(0, companyId, externalReferenceCode);
 
 		_validateQuantity(quantity);
-
 		_validateSku(sku);
 
 		long commerceInventoryReplenishmentItemId =

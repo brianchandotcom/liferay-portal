@@ -51,7 +51,6 @@ public class CommerceInventoryReplenishmentItemUpgradeProcess
 					String uuid = PortalUUIDUtil.generate();
 
 					preparedStatement2.setString(1, uuid);
-
 					preparedStatement2.setString(2, uuid);
 
 					preparedStatement2.setLong(3, resultSet.getLong(1));

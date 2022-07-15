@@ -92,13 +92,10 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 		long nodeId = ParamUtil.getLong(uploadPortletRequest, "nodeId");
 		String importer = ParamUtil.getString(uploadPortletRequest, "importer");
 
-		int filesCount = ParamUtil.getInteger(
-			uploadPortletRequest, "filesCount", 10);
-
-		InputStream[] inputStreams = new InputStream[filesCount];
+		InputStream[] inputStreams = new InputStream[_MAX_FILE_COUNT];
 
 		try {
-			for (int i = 0; i < filesCount; i++) {
+			for (int i = 0; i < _MAX_FILE_COUNT; i++) {
 				inputStreams[i] = uploadPortletRequest.getFileAsStream(
 					"file" + i);
 			}
@@ -124,6 +121,8 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 
 		progressTracker.finish(actionRequest);
 	}
+
+	private static final int _MAX_FILE_COUNT = 3;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportPagesMVCActionCommand.class);

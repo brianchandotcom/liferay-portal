@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
@@ -181,7 +183,15 @@ public class SearchBarPortletDisplayContextFactory {
 			searchBarPortletDisplayContext.setRenderNothing(true);
 		}
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152597"))) {
+		SearchSuggestionsCompanyConfiguration
+			searchSuggestionsCompanyConfiguration =
+				getSearchSuggestionsCompanyConfiguration(
+					themeDisplay.getCompanyId());
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152597")) ||
+			!searchSuggestionsCompanyConfiguration.
+				enableSuggestionsEndpoint()) {
+
 			searchBarPortletDisplayContext.setSuggestionsEnabled(false);
 		}
 		else {
@@ -202,6 +212,9 @@ public class SearchBarPortletDisplayContextFactory {
 			searchBarPortletDisplayContext.setSuggestionsURL(
 				"/o/portal-search-rest/v1.0/suggestions");
 		}
+
+		searchBarPortletDisplayContext.setSuggestionsEndpointEnabled(
+			searchSuggestionsCompanyConfiguration.enableSuggestionsEndpoint());
 
 		return searchBarPortletDisplayContext;
 	}
@@ -303,6 +316,18 @@ public class SearchBarPortletDisplayContextFactory {
 		}
 
 		return searchBarPortletPreferences.getSearchScopePreference();
+	}
+
+	protected SearchSuggestionsCompanyConfiguration
+		getSearchSuggestionsCompanyConfiguration(long companyId) {
+
+		try {
+			return ConfigurationProviderUtil.getCompanyConfiguration(
+				SearchSuggestionsCompanyConfiguration.class, companyId);
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
 	}
 
 	protected boolean isAvailableEverythingSearchScope() {

@@ -115,6 +115,10 @@ public class SearchBarPortletDisplayContext {
 		return _suggestionsEnabled;
 	}
 
+	public boolean isSuggestionsEndpointEnabled() {
+		return _suggestionsEndpointEnabled;
+	}
+
 	public void setAvailableEverythingSearchScope(
 		boolean availableEverythingSearchScope) {
 
@@ -231,6 +235,12 @@ public class SearchBarPortletDisplayContext {
 		_suggestionsEnabled = suggestionsEnabled;
 	}
 
+	public void setSuggestionsEndpointEnabled(
+		boolean suggestionsEndpointEnabled) {
+
+		_suggestionsEndpointEnabled = suggestionsEndpointEnabled;
+	}
+
 	public void setSuggestionsURL(String suggestionsURL) {
 		_suggestionsURL = suggestionsURL;
 	}
@@ -258,6 +268,7 @@ public class SearchBarPortletDisplayContext {
 	private String _suggestionsContributorConfiguration;
 	private int _suggestionsDisplayThreshold;
 	private boolean _suggestionsEnabled;
+	private boolean _suggestionsEndpointEnabled;
 	private String _suggestionsURL;
 
 }

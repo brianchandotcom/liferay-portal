@@ -24,6 +24,7 @@ dependencies {
 	testIntegrationCompile project(":apps:site:site-api")
 	testIntegrationCompile project(":apps:site-navigation:site-navigation-api")
 	testIntegrationCompile project(":apps:site-navigation:site-navigation-menu-item-api")
+	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	testIntegrationCompile project(":apps:style-book:style-book-api")
 	testIntegrationCompile project(":core:petra:petra-io")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

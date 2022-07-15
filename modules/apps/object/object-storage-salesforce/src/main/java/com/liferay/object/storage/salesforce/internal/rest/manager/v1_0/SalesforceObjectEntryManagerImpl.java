@@ -561,6 +561,8 @@ public class SalesforceObjectEntryManagerImpl
 		HashMapBuilder.put(
 			"createDate", "CreatedDate"
 		).put(
+			"externalReferenceCode", "Id"
+		).put(
 			"modified", "LastModifiedDate"
 		).put(
 			"userName", "OwnerId"

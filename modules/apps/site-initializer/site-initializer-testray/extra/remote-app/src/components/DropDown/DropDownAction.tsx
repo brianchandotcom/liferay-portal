@@ -13,22 +13,25 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
+import {KeyedMutator} from 'swr';
 
 const {Divider, Item} = ClayDropDown;
 
 type DropDownActionProps<T = any> = {
 	action: {
-		action?: (item: T) => void;
+		action?: (item: T, mutate: KeyedMutator<T>) => void;
 		disabled?: boolean;
 		name: ((item: T) => string) | string;
 	};
 	item: T;
+	mutate: KeyedMutator<T>;
 	setActive: (active: boolean) => void;
 };
 
 const DropDownAction: React.FC<DropDownActionProps> = ({
 	action: {action, disabled, name},
 	item,
+	mutate,
 	setActive,
 }) => {
 	if (name === 'divider') {
@@ -44,7 +47,7 @@ const DropDownAction: React.FC<DropDownActionProps> = ({
 				setActive(false);
 
 				if (action) {
-					action(item);
+					action(item, mutate);
 				}
 			}}
 		>

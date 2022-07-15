@@ -24,18 +24,23 @@ import ManagementToolbarResultsBar from './ManagementToolbarResultsBar';
 import ManagementToolbarRight, {IItem} from './ManagementToolbarRight';
 
 export type ManagementToolbarProps = {
+	actions: any;
 	addButton?: () => void;
 	buttons?: ReactNode;
 	display?: {
 		columns?: boolean;
 	};
 	filterFields?: RendererFields[];
-	tableProps: Omit<TableProps, 'items' | 'onSelectAllRows' | 'onSort'>;
+	tableProps: Omit<
+		TableProps,
+		'items' | 'mutate' | 'onSelectAllRows' | 'onSort'
+	>;
 	title?: string;
 	totalItems: number;
 };
 
 const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
+	actions,
 	addButton,
 	buttons,
 	display,
@@ -79,6 +84,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 				<ManagementToolbarLeft title={title} />
 
 				<ManagementToolbarRight
+					actions={actions}
 					addButton={addButton}
 					buttons={buttons}
 					columns={columns as IItem[]}

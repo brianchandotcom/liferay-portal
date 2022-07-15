@@ -46,6 +46,7 @@ export type IItem = {
 };
 
 type ManagementToolbarRightProps = {
+	actions: any;
 	addButton?: () => void;
 	buttons?: ReactNode;
 	columns: IItem[];
@@ -57,6 +58,7 @@ type ManagementToolbarRightProps = {
 };
 
 const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
+	actions,
 	addButton,
 	buttons,
 	display = {columns: true},
@@ -115,7 +117,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 
 			{buttons}
 
-			{addButton && (
+			{actions?.create && addButton && (
 				<ClayManagementToolbar.Item
 					className="ml-2"
 					onClick={addButton}

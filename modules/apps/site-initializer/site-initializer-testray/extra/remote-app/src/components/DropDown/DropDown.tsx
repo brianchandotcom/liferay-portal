@@ -15,6 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useState} from 'react';
+import {KeyedMutator} from 'swr';
 
 import DropDownAction from './DropDownAction';
 
@@ -23,10 +24,15 @@ const {ItemList} = ClayDropDown;
 type DropDownProps = {
 	actions: any[];
 	item: any;
+	mutate: KeyedMutator<any>;
 };
 
-const DropDown: React.FC<DropDownProps> = ({actions, item}) => {
+const DropDown: React.FC<DropDownProps> = ({actions, item, mutate}) => {
 	const [active, setActive] = useState(false);
+
+	if (!actions.length) {
+		return null;
+	}
 
 	return (
 		<ClayDropDown
@@ -48,6 +54,7 @@ const DropDown: React.FC<DropDownProps> = ({actions, item}) => {
 						action={action}
 						item={item}
 						key={index}
+						mutate={mutate}
 						setActive={setActive}
 					/>
 				))}

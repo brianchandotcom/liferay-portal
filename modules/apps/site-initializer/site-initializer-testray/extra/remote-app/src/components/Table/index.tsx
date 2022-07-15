@@ -18,6 +18,7 @@ import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import {Sort} from '../../context/ListViewContext';
 import {SortDirection, SortOption} from '../../types';
@@ -35,9 +36,10 @@ type Column<T = any> = {
 };
 
 export type TableProps<T = any> = {
-	actions?: any[];
+	actions?: (item: T) => any[] | any[];
 	columns: Column[];
 	items: T[];
+	mutate: KeyedMutator<T>;
 	navigateTo?: (item: T) => string;
 	onClickRow?: (item: T) => void;
 	onSelectAllRows: () => void;
@@ -52,10 +54,11 @@ const Table: React.FC<TableProps> = ({
 	actions,
 	columns,
 	items,
+	mutate,
 	navigateTo,
 	onClickRow,
-	onSelectRow,
 	onSelectAllRows,
+	onSelectRow,
 	onSort,
 	rowSelectable = false,
 	selectedRows = [],
@@ -199,7 +202,15 @@ const Table: React.FC<TableProps> = ({
 								className="py-0 table-action-column table-cell-expand"
 							>
 								{activeRow === rowIndex ? (
-									<DropDown actions={actions} item={item} />
+									<DropDown
+										actions={
+											typeof actions === 'function'
+												? actions(item)
+												: actions
+										}
+										item={item}
+										mutate={mutate}
+									/>
 								) : (
 									<div></div>
 								)}

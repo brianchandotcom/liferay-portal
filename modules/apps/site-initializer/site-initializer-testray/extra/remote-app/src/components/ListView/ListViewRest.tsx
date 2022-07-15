@@ -12,7 +12,6 @@
  * details.
  */
 
-import {TypedDocumentNode, useQuery} from '@apollo/client';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {
 	ReactNode,
@@ -22,6 +21,7 @@ import {
 	useEffect,
 	useMemo,
 } from 'react';
+import {KeyedMutator} from 'swr';
 
 import ListViewContextProvider, {
 	InitialState as ListViewContextState,
@@ -29,6 +29,8 @@ import ListViewContextProvider, {
 	ListViewContextProviderProps,
 	ListViewTypes,
 } from '../../context/ListViewContext';
+import {APIResponse} from '../../graphql/queries';
+import {useFetch} from '../../hooks/useFetch';
 import i18n from '../../i18n';
 import {SortDirection} from '../../types';
 import {PAGINATION} from '../../util/constants';
@@ -38,16 +40,8 @@ import Loading from '../Loading';
 import ManagementToolbar, {ManagementToolbarProps} from '../ManagementToolbar';
 import Table, {TableProps} from '../Table';
 
-type LiferayQueryResponse<T = any> = {
-	items: T[];
-	lastPage: number;
-	page: number;
-	pageSize: number;
-	totalCount: number;
-};
-
 export type ListViewProps<T = any> = {
-	children?: ({items}: {items: any[]}) => ReactNode;
+	children?: (response: APIResponse, mutate: KeyedMutator<any>) => ReactNode;
 	forceRefetch?: number;
 	managementToolbarProps?: {
 		visible?: boolean;
@@ -59,18 +53,20 @@ export type ListViewProps<T = any> = {
 		| 'onSelectAllRows'
 		| 'rowSelectable'
 	>;
-
 	onContextChange?: (context: ListViewContextState) => void;
 	pagination?: {
 		displayTop?: boolean;
 	};
-	query: TypedDocumentNode;
-	tableProps: Omit<TableProps, 'items' | 'onSelectAllRows' | 'onSort'>;
-	transformData: (data: T) => LiferayQueryResponse<T>;
+	resource: string;
+	tableProps: Omit<
+		TableProps,
+		'items' | 'mutate' | 'onSelectAllRows' | 'onSort'
+	>;
+	transformData?: (data: T) => APIResponse<T>;
 	variables?: any;
 };
 
-const ListView: React.FC<ListViewProps> = ({
+const ListViewRest: React.FC<ListViewProps> = ({
 	children,
 	forceRefetch,
 	managementToolbarProps: {
@@ -78,7 +74,7 @@ const ListView: React.FC<ListViewProps> = ({
 		...managementToolbarProps
 	} = {},
 	onContextChange,
-	query,
+	resource,
 	tableProps,
 	transformData,
 	variables: _variables,
@@ -93,25 +89,54 @@ const ListView: React.FC<ListViewProps> = ({
 		sort,
 	} = listViewContext;
 
-	const variables = useMemo(() => {
-		return {
-			..._variables,
-			filter:
+	const getURLSearchParams = useCallback(
+		(url: string) => {
+			const urlSearchParams = new URLSearchParams();
+
+			urlSearchParams.set(
+				'sort',
+				sort.key ? `${sort.key}:${sort.direction.toLowerCase()}` : ''
+			);
+			urlSearchParams.set('page', listViewContext.page.toString());
+			urlSearchParams.set(
+				'pageSize',
+				listViewContext.pageSize.toString()
+			);
+			urlSearchParams.set(
+				'filter',
 				SearchBuilder.createFilter(
 					filters.filter,
 					_variables?.filter
-				) || '',
-			sort: sort.key ? `${sort.key}:${sort.direction.toLowerCase()}` : '',
-		};
-	}, [_variables, sort, filters]);
+				) || ''
+			);
 
-	const {data, error, loading, refetch} = useQuery(query, {
-		variables,
-	});
+			if (forceRefetch) {
+				urlSearchParams.set('ts', forceRefetch.toString());
+			}
 
-	const {items = [], page, pageSize, totalCount} = transformData(data) || {};
+			const operator = url.includes('?') ? '&' : '?';
 
-	const deltas = PAGINATION.delta.map((label) => ({label}));
+			return `${url}${operator}${urlSearchParams.toString()}`;
+		},
+		[
+			forceRefetch,
+			_variables?.filter,
+			filters.filter,
+			listViewContext.page,
+			listViewContext.pageSize,
+			sort.direction,
+			sort.key,
+		]
+	);
+
+	const {data, error, loading, mutate} = useFetch(
+		getURLSearchParams(resource)
+	);
+
+	const response = transformData ? transformData(data) : data || {};
+
+	const {actions = {}, items = [], page, pageSize, totalCount} =
+		response || {};
 
 	const columns = useMemo(
 		() =>
@@ -125,13 +150,6 @@ const ListView: React.FC<ListViewProps> = ({
 				return columns[key];
 			}),
 		[columnsContext, tableProps.columns]
-	);
-
-	const onRefetch = useCallback(
-		(newVariables: any) => {
-			refetch({...variables, ...newVariables});
-		},
-		[refetch, variables]
 	);
 
 	const onSelectRow = useCallback(
@@ -161,12 +179,6 @@ const ListView: React.FC<ListViewProps> = ({
 		}
 	}, [listViewContext, onContextChange]);
 
-	useEffect(() => {
-		if (forceRefetch) {
-			onRefetch({});
-		}
-	}, [forceRefetch, onRefetch]);
-
 	if (error) {
 		return <span>{error.message}</span>;
 	}
@@ -179,7 +191,7 @@ const ListView: React.FC<ListViewProps> = ({
 		<ClayPaginationBarWithBasicItems
 			activeDelta={pageSize}
 			activePage={page}
-			deltas={deltas}
+			deltas={PAGINATION.delta.map((label) => ({label}))}
 			disableEllipsis={totalCount > 100}
 			ellipsisBuffer={PAGINATION.ellipsisBuffer}
 			labels={{
@@ -187,8 +199,12 @@ const ListView: React.FC<ListViewProps> = ({
 				perPageItems: i18n.translate('x-items'),
 				selectPerPageItems: i18n.translate('x-items'),
 			}}
-			onDeltaChange={(delta) => onRefetch({pageSize: delta})}
-			onPageChange={(page) => onRefetch({page})}
+			onDeltaChange={(delta) =>
+				dispatch({payload: delta, type: ListViewTypes.SET_PAGE_SIZE})
+			}
+			onPageChange={(page) =>
+				dispatch({payload: page, type: ListViewTypes.SET_PAGE})
+			}
 			totalItems={totalCount}
 		/>
 	);
@@ -197,8 +213,8 @@ const ListView: React.FC<ListViewProps> = ({
 		<>
 			{managementToolbarVisible && (
 				<ManagementToolbar
-					actions={{}}
 					{...managementToolbarProps}
+					actions={actions}
 					tableProps={tableProps}
 					totalItems={items.length}
 				/>
@@ -208,7 +224,7 @@ const ListView: React.FC<ListViewProps> = ({
 
 			{!!items.length && (
 				<>
-					{children && children({items})}
+					{children && children(response, mutate)}
 
 					{pagination?.displayTop && (
 						<div className="mt-4">{Pagination}</div>
@@ -218,6 +234,7 @@ const ListView: React.FC<ListViewProps> = ({
 						{...tableProps}
 						columns={columns}
 						items={items}
+						mutate={mutate}
 						onSelectAllRows={onSelectAllRows}
 						onSelectRow={onSelectRow}
 						onSort={onSort}
@@ -232,31 +249,16 @@ const ListView: React.FC<ListViewProps> = ({
 	);
 };
 
-const ListViewMemoized = memo(ListView);
+const ListViewMemoized = memo(ListViewRest);
 
 const ListViewWithContext: React.FC<
 	ListViewProps & {
 		initialContext?: ListViewContextProviderProps;
-		viewPermission?: boolean;
 	}
-> = ({initialContext, viewPermission = true, ...otherProps}) => {
-	if (viewPermission) {
-		return (
-			<ListViewContextProvider {...initialContext}>
-				<ListViewMemoized {...otherProps} />
-			</ListViewContextProvider>
-		);
-	}
-
-	return (
-		<EmptyState
-			description={i18n.translate(
-				'you-do-not-have-permissions-to-access-this-app-contact-the-app-administrator-to-request-the-access'
-			)}
-			title={i18n.translate('no-permissions')}
-			type="NO_ACCESS"
-		/>
-	);
-};
+> = ({initialContext, ...otherProps}) => (
+	<ListViewContextProvider {...initialContext}>
+		<ListViewMemoized {...otherProps} />
+	</ListViewContextProvider>
+);
 
 export default ListViewWithContext;

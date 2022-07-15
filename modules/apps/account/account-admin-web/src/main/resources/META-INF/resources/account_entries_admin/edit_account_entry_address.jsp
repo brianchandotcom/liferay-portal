@@ -147,13 +147,9 @@ renderResponse.setTitle((accountEntryAddressId == 0) ? LanguageUtil.get(request,
 		HashMapBuilder.<String, Object>put(
 			"countrySelect", portletDisplay.getNamespace() + "addressCountryId"
 		).put(
-			"countrySelectId", "countryId"
-		).put(
 			"countrySelectVal", (address == null) ? 0L : address.getCountryId()
 		).put(
 			"regionSelect", portletDisplay.getNamespace() + "addressRegionId"
-		).put(
-			"regionSelectId", "regionId"
 		).put(
 			"regionSelectVal", (address == null) ? 0L : address.getRegionId()
 		).build()

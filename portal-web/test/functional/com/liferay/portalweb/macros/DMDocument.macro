@@ -838,6 +838,19 @@ definition {
 		}
 	}
 
+	macro assertFileExtensionFromTempFolder {
+		var downloadedFile = TestCase.getDownloadedTempFileName(fileNamePattern = "${downloadedFile}");
+
+		echo("## downloadedFile: ${downloadedFile}");
+
+		if (contains("${downloadedFile}", "${fileExtension}")) {
+			echo("This is an expected file extension.");
+		}
+		else {
+			fail("FAIL!");
+		}
+	}
+
 	macro assertFileNameFromTempFolder {
 		var tempDir = PropsUtil.get("output.dir.name");
 

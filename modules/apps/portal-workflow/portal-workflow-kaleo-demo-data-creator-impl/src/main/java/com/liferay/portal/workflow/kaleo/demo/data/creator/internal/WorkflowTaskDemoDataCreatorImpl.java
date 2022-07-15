@@ -148,7 +148,7 @@ public class WorkflowTaskDemoDataCreatorImpl
 		throws PortalException {
 
 		WorkflowTask workflowTask = _workflowTaskManager.getWorkflowTask(
-			companyId, workflowTaskId);
+			workflowTaskId);
 
 		WorkflowInstance workflowInstance =
 			_workflowInstanceManager.getWorkflowInstance(

@@ -63,7 +63,7 @@ public class AssignTaskMVCResourceCommand extends BaseMVCResourceCommand {
 		String comment = ParamUtil.getString(resourceRequest, "comment");
 
 		WorkflowTask workflowTask = workflowTaskManager.getWorkflowTask(
-			themeDisplay.getCompanyId(), workflowTaskId);
+			workflowTaskId);
 
 		long groupId = MapUtil.getLong(
 			workflowTask.getOptionalAttributes(), "groupId",

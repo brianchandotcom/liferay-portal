@@ -65,7 +65,6 @@ public class WorkflowTaskTransitionsResourceImpl
 										contextUser.getUserId(),
 										workflowTaskId),
 									_workflowTaskManager.getWorkflowTask(
-										contextCompany.getCompanyId(),
 										workflowTaskId)));
 						}
 

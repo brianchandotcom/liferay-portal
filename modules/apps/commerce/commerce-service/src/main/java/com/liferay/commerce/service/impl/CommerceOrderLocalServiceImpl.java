@@ -561,7 +561,7 @@ public class CommerceOrderLocalServiceImpl
 		long companyId = commerceOrder.getCompanyId();
 
 		WorkflowTask workflowTask = _workflowTaskManager.getWorkflowTask(
-			companyId, workflowTaskId);
+			workflowTaskId);
 
 		if (!workflowTask.isAssignedToSingleUser()) {
 			workflowTask = _workflowTaskManager.assignWorkflowTaskToUser(

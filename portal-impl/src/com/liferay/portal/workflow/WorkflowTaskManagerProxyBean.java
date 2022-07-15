@@ -83,7 +83,7 @@ public class WorkflowTaskManagerProxyBean
 	}
 
 	@Override
-	public WorkflowTask getWorkflowTask(long companyId, long workflowTaskId) {
+	public WorkflowTask getWorkflowTask(long workflowTaskId) {
 		throw new UnsupportedOperationException();
 	}
 

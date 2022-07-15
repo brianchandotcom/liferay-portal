@@ -12,12 +12,9 @@
  * details.
  */
 
+import {KeyedMutator} from 'swr';
+
 import {Security} from '../security';
-import {
-	TestrayActions,
-	TestrayEntities,
-	TestrayRoles,
-} from '../security/RolePermission';
 
 export type ActionMap<M extends {[index: string]: any}> = {
 	[Key in keyof M]: M[Key] extends undefined
@@ -35,6 +32,14 @@ export enum DescriptionType {
 	PLAINTEXT = 'plaintext',
 }
 
+export enum TestrayActions {
+	'CREATE',
+	'DELETE',
+	'INDEX',
+	'PERMISSIONS',
+	'UPDATE',
+}
+
 export enum SortOption {
 	ASC = 'ASC',
 	DESC = 'DESC',
@@ -43,10 +48,14 @@ export enum SortOption {
 export type SortDirection = keyof typeof SortOption;
 
 export type Action<T = any> = {
-	action?: (item: T) => void;
+	action?: (item: T, mutate: KeyedMutator<any>) => void;
 	name: string;
 	permission?: keyof typeof TestrayActions | boolean;
 };
+
+export type ActionList<T = any> = (item: {
+	actions: any;
+}) => Action<T>[] | Action<T>[];
 
 export type SecurityPermissions = {
 	permissions: PermissionCheck;
@@ -54,8 +63,6 @@ export type SecurityPermissions = {
 };
 
 export type Actions = keyof typeof TestrayActions;
-export type Entity = keyof TestrayEntities;
-export type Roles = keyof typeof TestrayRoles;
 export type PermissionCheck = Partial<
 	{
 		[key in Actions]: boolean;

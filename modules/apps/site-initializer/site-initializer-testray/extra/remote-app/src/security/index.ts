@@ -12,68 +12,30 @@
  * details.
  */
 
-import {UserAccount} from '../graphql/queries';
-import {Action, Actions, Entity, PermissionCheck, Roles} from '../types';
-import {rolePermissions} from './RolePermission';
+import {Action} from '../types';
+
+type PermissionObj = {
+	href: string;
+	method: string;
+};
+
+type ObjectPermission = {
+	delete?: PermissionObj;
+	get?: PermissionObj;
+	update?: PermissionObj;
+};
 
 export class Security {
-	public ready: boolean = false;
-	public cache: Map<string, boolean> = new Map();
-	private skipRoleCheck: boolean;
-	private userAccount: UserAccount;
-
-	constructor(userAccount: UserAccount, skipRoleCheck: boolean) {
-		this.userAccount = userAccount;
-		this.skipRoleCheck = skipRoleCheck;
-		this.ready = skipRoleCheck ? true : !!userAccount.id;
-	}
-
-	checker(entity: Entity, permission: Actions): boolean {
-		if (this.skipRoleCheck) {
-			return true;
-		}
-
-		for (const role of this.userAccount.roleBriefs) {
-			const key = `${entity}/${permission}`;
-			const cachedValue = this.cache.get(key);
-
-			if (cachedValue) {
-				return cachedValue;
-			}
-
-			const userRole = role.name.replace(' ', '_').toUpperCase() as Roles;
-
-			const rolePermission =
-				rolePermissions[userRole] ||
-				rolePermissions.TESTRAY_ADMINISTRATOR;
-
-			const hasPermission = rolePermission[entity]?.includes(permission);
-
-			if (hasPermission) {
-				this.cache.set(key, true);
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	filterActions(actions: Action[], entity: Entity): Action[] {
+	static filterActions(
+		actions: Action[],
+		permissions: ObjectPermission = {}
+	) {
 		return actions.filter((action) =>
 			typeof action.permission === 'boolean'
 				? action.permission
-				: this.checker(entity, action.permission as Actions)
+				: action.permission
+				? !!(permissions as any)[action?.permission?.toLowerCase()]
+				: true
 		);
-	}
-
-	permissions(entity: Entity, permissions: Actions[]): PermissionCheck {
-		const permissionCheck: PermissionCheck = {};
-
-		for (const permission of permissions) {
-			permissionCheck[permission] = this.checker(entity, permission);
-		}
-
-		return permissionCheck;
 	}
 }

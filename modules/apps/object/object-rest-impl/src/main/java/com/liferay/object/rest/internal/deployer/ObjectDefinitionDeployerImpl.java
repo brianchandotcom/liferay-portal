@@ -19,6 +19,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.graphql.dto.v1_0.ObjectDefinitionGraphQLDTOContributor;
 import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionContextProvider;
+import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryManagerHttpExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryValuesExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectValidationRuleEngineExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectRelationshipExceptionMapper;
@@ -142,6 +143,19 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"osgi.jaxrs.name",
 						objectDefinition.getName() +
 							"ObjectDefinitionContextProvider"
+					).build()),
+				_bundleContext.registerService(
+					ExceptionMapper.class,
+					new ObjectEntryManagerHttpExceptionMapper(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"osgi.jaxrs.application.select",
+						"(osgi.jaxrs.name=" + objectDefinition.getName() + ")"
+					).put(
+						"osgi.jaxrs.extension", "true"
+					).put(
+						"osgi.jaxrs.name",
+						objectDefinition.getName() +
+							"ObjectEntryManagerHttpExceptionMapper"
 					).build()),
 				_bundleContext.registerService(
 					ExceptionMapper.class,

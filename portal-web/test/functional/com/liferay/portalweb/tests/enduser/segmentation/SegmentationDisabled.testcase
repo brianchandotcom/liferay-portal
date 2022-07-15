@@ -34,6 +34,7 @@ definition {
 	@description = "LPS-152541 Given the 'Assign Roles by Segments' is disabled at System Settings
     When user navigates to Segmentation at Instance Settings
     Then should see an alert informing that is disabled and how to re-enable it "
+	@ignore = "true"
 	@priority = "4"
 	test CheckAssignRolesDisabledAlertAtInstanceSettings {
 		task ("No alert when Assign Roles by Segments Enabled") {
@@ -90,6 +91,7 @@ definition {
 	@description = "LPS-152541 Given the 'Enable Segmentation' is disabled at System Settings
     When user navigates to Segmentation at Instance Settings
     Then should see an alert informing that is disabled and how to re-enable it"
+	@ignore = "true"
 	@priority = "4"
 	test CheckSegmentationDisabledAlertAtInstanceSettings {
 		task ("No alert when Segmentation Enabled") {

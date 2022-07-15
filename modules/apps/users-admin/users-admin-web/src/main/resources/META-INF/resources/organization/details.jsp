@@ -120,13 +120,9 @@ if (organization != null) {
 		HashMapBuilder.<String, Object>put(
 			"countrySelect", portletDisplay.getNamespace() + "countryId"
 		).put(
-			"countrySelectId", "countryId"
-		).put(
 			"countrySelectVal", countryId
 		).put(
 			"regionSelect", portletDisplay.getNamespace() + "regionId"
-		).put(
-			"regionSelectId", "regionId"
 		).put(
 			"regionSelectVal", regionId
 		).build()

@@ -126,13 +126,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 			HashMapBuilder.<String, Object>put(
 				"countrySelect", portletDisplay.getNamespace() + "addressCountryId"
 			).put(
-				"countrySelectId", "countryId"
-			).put(
 				"countrySelectVal", countryId
 			).put(
 				"regionSelect", portletDisplay.getNamespace() + "addressRegionId"
-			).put(
-				"regionSelectId", "regionId"
 			).put(
 				"regionSelectVal", regionId
 			).build()

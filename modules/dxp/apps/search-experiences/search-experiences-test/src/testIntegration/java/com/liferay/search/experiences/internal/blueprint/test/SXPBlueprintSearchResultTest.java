@@ -1887,30 +1887,14 @@ public class SXPBlueprintSearchResultTest {
 	@Test
 	public void testTextMatchOverMultipleFields_bestFields() throws Exception {
 		_journalArticleBuilder.setTitle(
-			"drink carbonated coca"
-		).setContent(
-			"carbonated cola"
+			"coca cola"
 		).build();
 
 		_journalArticleBuilder.setTitle(
-			"drink carbonated pepsi cola"
+			"coca coca"
 		).setContent(
-			"carbonated cola cola"
+			"cola cola"
 		).build();
-
-		_journalArticleBuilder.setTitle(
-			"fruit punch"
-		).setContent(
-			"non-carbonated cola"
-		).build();
-
-		_journalArticleBuilder.setTitle(
-			"sprite"
-		).setContent(
-			"carbonated cola cola"
-		).build();
-
-		_getTextMatchOverMultipleFields();
 
 		_updateElementInstancesJSON(
 			new Object[] {_getTextMatchOverMultipleFields()},
@@ -1918,35 +1902,7 @@ public class SXPBlueprintSearchResultTest {
 
 		_keywords = "coca cola";
 
-		_assertSearch(
-			"[drink carbonated coca, drink carbonated pepsi cola, sprite, " +
-				"fruit punch]");
-
-		_journalArticleBuilder.setTitle(
-			"lorem ipsum dolor"
-		).setContent(
-			"ipsum sit"
-		).build();
-
-		_journalArticleBuilder.setTitle(
-			"lorem ipsum sit"
-		).setContent(
-			"ipsum sit sit"
-		).build();
-
-		_journalArticleBuilder.setTitle(
-			"nunquis"
-		).setContent(
-			"non-lorem ipsum sit"
-		).build();
-
-		_updateElementInstancesJSON(
-			new Object[] {_getTextMatchOverMultipleFields()},
-			new String[] {"Text Match Over Multiple Fields"});
-
-		_keywords = "ipsum sit sit";
-
-		_assertSearch("[lorem ipsum sit, lorem ipsum dolor, nunquis]");
+		_assertSearch("[coca cola, coca coca]");
 	}
 
 	@Test

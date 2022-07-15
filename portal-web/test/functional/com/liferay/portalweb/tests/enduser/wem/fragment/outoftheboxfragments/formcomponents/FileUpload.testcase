@@ -108,6 +108,8 @@ definition {
 
 		task ("When uploading file from computer") {
 			task ("Publish page and go to view mode") {
+				PageEditor.publish();
+
 				ContentPagesNavigator.openViewContentPage(
 					pageName = "Test Page Name",
 					siteName = "Test Site Name");

@@ -87,7 +87,7 @@ public class UpdateTaskMVCResourceCommand extends BaseMVCResourceCommand {
 				WorkflowTaskDueDateException.class);
 
 			WorkflowTask workflowTask = workflowTaskManager.getWorkflowTask(
-				themeDisplay.getCompanyId(), workflowTaskId);
+				workflowTaskId);
 
 			Date createDate = workflowTask.getCreateDate();
 

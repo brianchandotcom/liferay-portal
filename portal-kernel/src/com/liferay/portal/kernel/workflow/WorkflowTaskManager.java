@@ -91,7 +91,7 @@ public interface WorkflowTaskManager {
 		throw new UnsupportedOperationException();
 	}
 
-	public WorkflowTask getWorkflowTask(long companyId, long workflowTaskId)
+	public WorkflowTask getWorkflowTask(long workflowTaskId)
 		throws WorkflowException;
 
 	public int getWorkflowTaskCount(long companyId, Boolean completed)

@@ -30,10 +30,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration;
@@ -188,8 +186,7 @@ public class SearchBarPortletDisplayContextFactory {
 				getSearchSuggestionsCompanyConfiguration(
 					themeDisplay.getCompanyId());
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152597")) ||
-			!searchSuggestionsCompanyConfiguration.
+		if (!searchSuggestionsCompanyConfiguration.
 				enableSuggestionsEndpoint()) {
 
 			searchBarPortletDisplayContext.setSuggestionsEnabled(false);

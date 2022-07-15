@@ -82,8 +82,7 @@ public interface WorkflowTaskManager {
 		throw new UnsupportedOperationException();
 	}
 
-	public List<String> getNextTransitionNames(
-			long companyId, long userId, long workflowTaskId)
+	public List<String> getNextTransitionNames(long userId, long workflowTaskId)
 		throws WorkflowException;
 
 	public default List<User> getNotifiableUsers(long workflowTaskId)

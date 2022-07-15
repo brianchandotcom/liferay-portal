@@ -93,6 +93,8 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -106,6 +108,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -149,10 +152,13 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.math.BigDecimal;
 
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -166,6 +172,9 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -244,6 +253,7 @@ public class BundleSiteInitializerTest {
 			_assertClientExtension(group);
 			_assertSAPEntries(group);
 			_assertSiteConfiguration(group.getGroupId());
+			_assertSiteSettings(group.getGroupId());
 			_assertSiteNavigationMenu(group);
 			_assertStyleBookEntry(group);
 			_assertUserGroups(group);
@@ -1371,6 +1381,20 @@ public class BundleSiteInitializerTest {
 			type.startsWith("com.liferay.object.model.ObjectDefinition#"));
 	}
 
+	private void _assertSiteSettings(Long groupId) throws Exception {
+		Configuration configuration = _getFactoryConfiguration(
+			"test.pid.scoped", ExtendedObjectClassDefinition.Scope.GROUP,
+			groupId);
+
+		Assert.assertNotNull(configuration);
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		Assert.assertNotNull(properties);
+		Assert.assertEquals("value1", properties.get("key1"));
+		Assert.assertEquals("value2", properties.get("key2"));
+	}
+
 	private void _assertStyleBookEntry(Group group) {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.fetchStyleBookEntry(
@@ -1525,6 +1549,32 @@ public class BundleSiteInitializerTest {
 			workflowDefinitionLink2.getWorkflowDefinitionName());
 	}
 
+	private Configuration _getFactoryConfiguration(
+			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
+			Serializable scopePK)
+		throws Exception {
+
+		try {
+			String filterString = StringBundler.concat(
+				"(&(service.factoryPid=", factoryPid, ")(",
+				scope.getPropertyKey(), "=", scopePK, "))");
+
+			Configuration[] configurations =
+				_configurationAdmin.listConfigurations(filterString);
+
+			if (configurations != null) {
+				return configurations[0];
+			}
+
+			return null;
+		}
+		catch (InvalidSyntaxException | IOException exception) {
+			throw new ConfigurationException(
+				"Unable to retrieve factory configuration " + factoryPid,
+				exception);
+		}
+	}
+
 	private Bundle _installBundle(BundleContext bundleContext, String location)
 		throws Exception {
 
@@ -1534,6 +1584,9 @@ public class BundleSiteInitializerTest {
 			return bundleContext.installBundle(location, inputStream);
 		}
 	}
+
+	@Inject
+	private static ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private AccountResource.Factory _accountResourceFactory;

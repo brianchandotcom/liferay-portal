@@ -27,9 +27,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration;
@@ -78,7 +76,6 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 
 		if (!_searchSuggestionsCompanyConfiguration.
 				enableSuggestionsEndpoint() ||
-			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152597")) ||
 			(suggestionsContributorConfigurations == null)) {
 
 			return Page.of(Collections.emptyList());

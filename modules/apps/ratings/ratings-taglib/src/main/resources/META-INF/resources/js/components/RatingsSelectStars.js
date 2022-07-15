@@ -84,7 +84,7 @@ export default function RatingsSelectStars({
 					}
 				>
 					<ClayDropDown.ItemList
-						aria-activeDescendant={focusId}
+						aria-activedescendant={focusId}
 						role="listbox"
 					>
 						{starScores.map(({label}, index) => {

@@ -141,6 +141,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_DISABLED_TEXT</td>
+	<td>//label[contains(.,"${key_fieldLabel}")]//..//input[@disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_SUBTITLE</td>
 	<td>//div[contains(@class,'form-group')][label[normalize-space(text())='${key_fieldLabel}']]/following-sibling::p[contains(@class,'text-secondary')][normalize-space(text())='${key_subtitle}']</td>
 	<td></td>

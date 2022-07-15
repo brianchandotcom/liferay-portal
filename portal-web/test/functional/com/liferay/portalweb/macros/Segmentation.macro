@@ -196,18 +196,8 @@ definition {
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX");
 	}
 
-	macro disableSegmentationAtInstanceSettings {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Segments",
-			configurationName = "Segments Service",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.disableCheckbox(fieldName = "Enable Segmentation");
+	macro disableCheckbox {
+		FormFields.disableCheckbox(fieldName = "${key_checkLabel}");
 
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			PortletEntry.update();
@@ -219,6 +209,34 @@ definition {
 		Alert.viewSuccessMessage();
 
 		Navigator.openURL();
+	}
+
+	macro disableConfigurationAtSystemSettings {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Segments",
+			configurationName = "Segments Service",
+			configurationScope = "System Scope");
+
+		if (!(isSet(checkLabel))) {
+			var checkLabel = "Enable Segmentation";
+		}
+
+		Segmentation.disableCheckbox(key_checkLabel = "${checkLabel}");
+	}
+
+	macro disableSegmentationAtInstanceSettings {
+		Segmentation.gotoSegmeentsService(key_portlet = "Instance Settings");
+
+		if (!(isSet(checkLabel))) {
+			var checkLabel = "Enable Segmentation";
+		}
+
+		Segmentation.disableCheckbox(key_checkLabel = "${checkLabel}");
 	}
 
 	macro disableSegmentationAtSystemSettings {
@@ -389,6 +407,31 @@ definition {
 			roleTitle = "${roleName}");
 	}
 
+	macro gotoSegmeentsService {
+		if ("${key_portlet}" == "Instance Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "Virtual Instance Scope");
+		}
+		else if ("${key_portlet}" == "System Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "System Scope");
+		}
+	}
+
 	macro gotoSidebar {
 		Click(
 			key_typeName = "${fieldType}",
@@ -415,24 +458,28 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_segments_web_internal_portlet_SegmentsPortlet");
 	}
 
-	macro resetSegmentationAtInstanceSettings {
-		Navigator.openURL();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Segments",
-			configurationName = "Segments Service",
-			configurationScope = "Virtual Instance Scope");
-
+	macro resetDefaultValues {
 		Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Reset Default Values");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro resetSegmentationAtInstanceSettings {
+		Navigator.openURL();
+
+		Segmentation.gotoSegmeentsService(key_portlet = "Instance Settings");
+
+		Segmentation.resetDefaultValues();
+	}
+
+	macro resetSegmentationAtSystemSettings {
+		Navigator.openURL();
+
+		Segmentation.gotoSegmeentsService(key_portlet = "System Settings");
+
+		Segmentation.resetDefaultValues();
 	}
 
 	macro resetSegmentationAtSystemSettings {

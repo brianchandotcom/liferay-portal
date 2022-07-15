@@ -215,8 +215,8 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 				 Objects.equals(fieldName, "id")) {
 
 			_addFDSTableSchemaField(
-				null, "actionLink", null, fdsTableSchemaBuilder, fieldName,
-				fieldLabel, true);
+				null, "actionLink", null, fdsTableSchemaBuilder,
+				"externalReferenceCode", fieldLabel, true);
 		}
 		else if (Objects.equals(fieldName, "status")) {
 			_addFDSTableSchemaField(

@@ -587,7 +587,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			}
 
 			_checkVulnerabilities(
-				fileName, absolutePath, dependency[1], dependency[2],
+				fileName, absolutePath,
+				dependency[0] + StringPool.COLON + dependency[1], dependency[2],
 				SecurityAdvisoryEcosystemEnum.MAVEN);
 		}
 	}

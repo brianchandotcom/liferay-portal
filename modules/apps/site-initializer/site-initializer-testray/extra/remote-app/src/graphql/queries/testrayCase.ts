@@ -30,6 +30,8 @@ export type TestrayCase = {
 	name: string;
 	originationKey: string;
 	priority: number;
+	r_caseTypeToCases_c_caseType?: TestrayCaseType;
+	r_componentToCases_c_component?: TestrayComponent;
 	steps: string;
 	stepsType: string;
 };

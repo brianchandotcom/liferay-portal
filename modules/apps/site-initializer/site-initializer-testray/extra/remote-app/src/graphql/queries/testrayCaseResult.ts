@@ -15,19 +15,30 @@
 import {gql} from '@apollo/client';
 
 import {UserAccount} from './liferayUserAccount';
+import {TestrayBuild} from './testrayBuild';
 import {TestrayCase} from './testrayCase';
+import {TestrayComponent} from './testrayComponent';
+import {TestrayRun} from './testrayRun';
 
 export type TestrayCaseResult = {
 	assignedUserId: string;
 	attachments: string;
-	case: TestrayCase;
+	build?: TestrayBuild;
+	case?: TestrayCase;
 	closedDate: string;
 	commentMBMessageId: string;
+	component: TestrayComponent;
 	dateCreated: string;
 	dateModified: string;
 	dueStatus: number;
 	errors: string;
 	id: number;
+	r_buildToCaseResult_c_build?: TestrayBuild;
+	r_caseToCaseResult_c_case?: TestrayCase;
+	r_componentToCaseResult_c_component?: TestrayComponent;
+	r_runToCaseResult_c_run?: TestrayRun;
+	r_userToCaseResults_user?: UserAccount;
+	run?: TestrayRun;
 	startDate: string;
 	user?: UserAccount;
 	warnings: number;

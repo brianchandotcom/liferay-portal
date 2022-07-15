@@ -12,7 +12,6 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import {useEffect} from 'react';
 import {
 	Outlet,
@@ -21,9 +20,14 @@ import {
 	useParams,
 } from 'react-router-dom';
 
-import {TestrayCase, getCase} from '../../../graphql/queries';
+import {TestrayCase} from '../../../graphql/queries';
+import {useFetch} from '../../../hooks/useFetch';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
+import {
+	getCaseQuery,
+	getCaseTransformData,
+} from '../../../services/rest/TestrayCase';
 import {isIncludingFormPage} from '../../../util';
 
 const CaseOutlet = () => {
@@ -35,13 +39,10 @@ const CaseOutlet = () => {
 
 	const {setHeading, setTabs} = useHeader();
 
-	const {data} = useQuery<{case: TestrayCase}>(getCase, {
-		variables: {
-			caseId,
-		},
-	});
-
-	const testrayCase = data?.case;
+	const {data: testrayCase, mutate: mutateCase} = useFetch<TestrayCase>(
+		getCaseQuery(caseId as string),
+		getCaseTransformData
+	);
 
 	useEffect(() => {
 		if (testrayCase && testrayProject) {
@@ -81,7 +82,7 @@ const CaseOutlet = () => {
 	}, [basePath, isFormPage, pathname, setTabs]);
 
 	if (testrayCase) {
-		return <Outlet context={{projectId, testrayCase}} />;
+		return <Outlet context={{mutateCase, projectId, testrayCase}} />;
 	}
 
 	return null;

@@ -24,6 +24,7 @@ export type TestrayComponent = {
 	id: number;
 	name: string;
 	originationKey: string;
+	r_teamToComponents_c_team?: TestrayTeam;
 	status: string;
 	team?: TestrayTeam;
 };

@@ -31,6 +31,8 @@ export type TestrayBuild = {
 	productVersion?: TestrayProductVersion;
 	project?: TestrayProject;
 	promoted: boolean;
+	r_productVersionToBuilds_c_productVersion?: TestrayProductVersion;
+	r_routineToBuilds_c_routine?: TestrayRoutine;
 	routine?: TestrayRoutine;
 };
 

@@ -17,11 +17,11 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
-import {CreateCase, UpdateCase} from '../../../graphql/mutations';
 import {
 	CTypePagination,
 	TestrayCase,
@@ -29,13 +29,13 @@ import {
 	TestrayComponent,
 	TestrayProject,
 	getCaseTypes,
-	getCases,
 	getComponents,
 } from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
 import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
+import {createCase, updateCase} from '../../../services/rest/TestrayCase';
 import {DescriptionType} from '../../../types';
 
 type CaseFormData = {
@@ -62,9 +62,11 @@ const descriptionTypes = Object.values(
 
 const CaseForm = () => {
 	const {
+		mutateCase,
 		testrayCase,
 		testrayProject,
 	}: {
+		mutateCase: KeyedMutator<any>;
 		testrayCase: TestrayCase;
 		testrayProject: TestrayProject;
 	} = useOutletContext();
@@ -93,7 +95,7 @@ const CaseForm = () => {
 	}, [setTabs, testrayProject]);
 
 	const {
-		form: {onClose, onSubmitAndSave},
+		form: {onClose, onSubmitRest},
 	} = useFormActions();
 
 	const {projectId} = useParams();
@@ -109,6 +111,7 @@ const CaseForm = () => {
 					...testrayCase,
 					caseTypeId: testrayCase.caseType?.id,
 					componentId: testrayCase.component?.id,
+					priority: priorities[0].value,
 			  }
 			: {
 					estimatedDuration: 0,
@@ -117,16 +120,13 @@ const CaseForm = () => {
 	});
 
 	const _onSubmit = (form: CaseFormData) => {
-		onSubmitAndSave(
+		onSubmitRest(
 			{...form, projectId},
 			{
-				createMutation: CreateCase,
-				updateMutation: UpdateCase,
-			},
-			{
-				refetchQueries: [{query: getCases}],
+				create: createCase,
+				update: updateCase,
 			}
-		);
+		).then(mutateCase);
 	};
 
 	const caseTypeId = watch('caseTypeId');
@@ -156,6 +156,7 @@ const CaseForm = () => {
 					<Form.Select
 						{...inputProps}
 						className="col-4"
+						defaultOption={false}
 						label="priority"
 						name="priority"
 						options={priorities}

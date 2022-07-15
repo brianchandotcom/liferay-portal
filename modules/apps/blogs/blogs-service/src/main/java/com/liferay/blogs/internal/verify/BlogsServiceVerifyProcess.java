@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -100,6 +101,11 @@ public class BlogsServiceVerifyProcess extends VerifyProcess {
 	}
 
 	private GroupLocalService _groupLocalService;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.service)(release.schema.version>=3.1.0))"
+	)
+	private Release _release;
 
 	@Reference
 	private Staging _staging;

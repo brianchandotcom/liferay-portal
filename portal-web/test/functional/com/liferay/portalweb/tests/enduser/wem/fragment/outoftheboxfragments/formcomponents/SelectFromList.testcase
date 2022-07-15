@@ -254,7 +254,7 @@ definition {
 	@description = "This is a test for LPS-154568. The page designer can map a Form Container to Object field with relationship on custom object."
 	@priority = "5"
 	test MapRelationshipWithCustomObject {
-		property test.name.skip.portal.instance = "TextInput#MapRelationshipWithCustomObject";
+		property test.name.skip.portal.instance = "SelectFromList#MapRelationshipWithCustomObject";
 
 		task ("Given a page designer has a mapped Form Container to an Object with relationship on custom object") {
 			task ("Add a second company Object with Text field") {
@@ -383,7 +383,7 @@ definition {
 	@description = "This is a test for LPS-154568. The page designer can map a Form Container to Object field with relationship on system object"
 	@priority = "4"
 	test MapRelationshipWithSystemObject {
-		property test.name.skip.portal.instance = "TextInput#MapRelationshipWithSystemObject";
+		property test.name.skip.portal.instance = "SelectFromList#MapRelationshipWithSystemObject";
 
 		task ("Given a page designer has a mapped Form Container to an Object with relationship on system object") {
 			task ("Add relationship with Account object") {

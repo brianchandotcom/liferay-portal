@@ -110,9 +110,9 @@ public class SXPElementLocalServiceTest {
 
 	@Test
 	public void testUpdateSXPElement() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		Company company = CompanyTestUtil.addCompany();
 
-		User user = UserTestUtil.addCompanyAdminUser(_company);
+		User user = UserTestUtil.addCompanyAdminUser(company);
 
 		SXPElement sxpElement = _addSXPElement(
 			false, RandomTestUtil.randomString(), user.getUserId());
@@ -174,9 +174,6 @@ public class SXPElementLocalServiceTest {
 
 		return sxpElement;
 	}
-
-	@DeleteAfterTestRun
-	private Company _company;
 
 	@DeleteAfterTestRun
 	private Group _group;

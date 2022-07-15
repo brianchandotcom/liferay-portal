@@ -2709,17 +2709,33 @@ public abstract class BaseBuild implements Build {
 		return "";
 	}
 
-	protected JSONArray getBuildsJSONArray(int page) throws IOException {
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(
-				JenkinsResultsParserUtil.combine(
-					getJobURL(), "/api/json?tree=allBuilds[actions[parameters",
-					"[name,type,value]],building,duration,number,result,url]{",
-					String.valueOf(page * 100), ",",
-					String.valueOf((page + 1) * 100), "}")),
-			false);
+	protected JSONArray getBuildsJSONArray(final int page) throws IOException {
+		Retryable<JSONArray> retryable = new Retryable<JSONArray>(
+			true, 2, 10, true) {
 
-		return jsonObject.getJSONArray("allBuilds");
+			@Override
+			public JSONArray execute() {
+				String url = JenkinsResultsParserUtil.getLocalURL(
+					JenkinsResultsParserUtil.combine(
+						getJobURL(), "/api/json?tree=allBuilds[actions[",
+						"parameters[name,type,value]],building,duration,",
+						"number,result,url]{", String.valueOf(page * 100), ",",
+						String.valueOf((page + 1) * 100), "}"));
+
+				try {
+					JSONObject jsonObject =
+						JenkinsResultsParserUtil.toJSONObject(url, false);
+
+					return jsonObject.getJSONArray("allBuilds");
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
+
+		};
+
+		return retryable.executeWithRetries();
 	}
 
 	protected Element getBuildTimeElement() {

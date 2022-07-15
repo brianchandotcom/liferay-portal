@@ -1,0 +1,81 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%@ include file="/init.jsp" %>
+
+<%
+long countryId = ParamUtil.getLong(request, "countryId");
+
+Country country = CountryLocalServiceUtil.fetchCountry(countryId);
+
+String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle((country == null) ? LanguageUtil.get(request, "add-country") : LanguageUtil.format(request, "edit-x", country.getName(locale), false));
+%>
+
+<portlet:actionURL name="/address/edit_country" var="editCountryURL" />
+
+<liferay-frontend:edit-form
+	action="<%= editCountryURL %>"
+>
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (country == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="countryId" type="hidden" value="<%= String.valueOf(countryId) %>" />
+
+	<liferay-ui:error exception="<%= CountryA2Exception.class %>" message="please-enter-a-valid-two-letter-iso-code" />
+	<liferay-ui:error exception="<%= CountryA3Exception.class %>" message="please-enter-a-valid-three-letter-iso-code" />
+	<liferay-ui:error exception="<%= CountryNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= DuplicateCountryException.class %>" message="the-two-letter-iso-code-is-already-used" />
+
+	<aui:model-context bean="<%= country %>" model="<%= Country.class %>" />
+
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<liferay-ui:input-localized
+				autoFocus="<%= true %>"
+				cssClass="form-group"
+				name="name"
+				xml="<%= (country == null) ? StringPool.BLANK : country.getTitleMapAsXML() %>"
+			/>
+
+			<aui:input checked="<%= (country == null) ? false : country.getBillingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="billingAllowed" type="toggle-switch" />
+
+			<aui:input checked="<%= (country == null) ? false : country.getShippingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="shippingAllowed" type="toggle-switch" />
+
+			<aui:input id="twoLettersISOCode" label="two-letter-iso-code" name="a2" />
+
+			<aui:input id="threeLettersISOCode" label="three-letter-iso-code" name="a3" />
+
+			<aui:input id="numericISOCode" name="number" />
+
+			<aui:input checked="<%= (country == null) ? false : country.getSubjectToVAT() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="subjectToVAT" type="toggle-switch" />
+
+			<aui:input id="priority" name="position" />
+
+			<aui:input checked="<%= (country == null) ? false : country.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<aui:button type="submit" />
+
+		<aui:button href="<%= backURL %>" type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

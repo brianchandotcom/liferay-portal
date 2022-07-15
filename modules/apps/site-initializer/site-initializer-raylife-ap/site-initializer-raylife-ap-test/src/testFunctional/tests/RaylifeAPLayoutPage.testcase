@@ -20,9 +20,9 @@ definition {
 		task ("Create a new Raylife AP Site") {
 			Site.openSitesAdmin();
 
-			//TeamExtranet.addSiteTemplateCP(
-			//	siteName = "${testSiteName}",
-			//	siteTemplateName = "Raylife AP");
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Raylife AP");
 
 		}
 	}
@@ -30,7 +30,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		//RaylifeAP.tearDownCP();
+		RaylifeAP.tearDownCP();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();

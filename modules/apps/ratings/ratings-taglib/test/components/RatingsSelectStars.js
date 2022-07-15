@@ -59,7 +59,9 @@ describe('RatingsSelectStars', () => {
 		});
 
 		it('has delete option disabled', () => {
-			expect(starsButtons[6]).toHaveProperty('disabled', true);
+			const starsOptions = renderComponent().getAllByRole('option');
+
+			expect(starsOptions[5]).toHaveProperty('disabled', true);
 		});
 	});
 
@@ -95,15 +97,18 @@ describe('RatingsSelectStars', () => {
 		describe('and the user votes 1/5 stars', () => {
 			let starsDropdownToggle;
 			let starsButtons;
+			let result;
 
 			beforeEach(() => {
-				starsButtons = renderComponent({
+				result = renderComponent({
 					userScore: 0.2,
-				}).getAllByRole('button');
-				starsDropdownToggle = starsButtons[0];
+				});
+
+				starsButtons = result.getAllByRole('option');
+				starsDropdownToggle = result.getAllByRole('button')[0];
 
 				act(() => {
-					fireEvent.click(starsButtons[1]);
+					fireEvent.click(starsButtons[0]);
 				});
 			});
 
@@ -118,13 +123,13 @@ describe('RatingsSelectStars', () => {
 			});
 
 			it('has delete option enabled', () => {
-				expect(starsButtons[6]).toHaveProperty('disabled', false);
+				expect(starsButtons[5]).toHaveProperty('disabled', false);
 			});
 
 			describe('later the user vote 5/5 stars', () => {
 				beforeEach(() => {
 					act(() => {
-						fireEvent.click(starsButtons[5]);
+						fireEvent.click(starsButtons[4]);
 					});
 				});
 
@@ -142,7 +147,7 @@ describe('RatingsSelectStars', () => {
 			describe('finally the user unvote', () => {
 				beforeEach(() => {
 					act(() => {
-						fireEvent.click(starsButtons[6]);
+						fireEvent.click(starsButtons[5]);
 					});
 				});
 
@@ -151,7 +156,7 @@ describe('RatingsSelectStars', () => {
 				});
 
 				it('has delete option disabled', () => {
-					expect(starsButtons[6]).toHaveProperty('disabled', true);
+					expect(starsButtons[5]).toHaveProperty('disabled', true);
 				});
 			});
 		});
@@ -159,12 +164,15 @@ describe('RatingsSelectStars', () => {
 		describe('when the user score is 5/5', () => {
 			let starsDropdownToggle;
 			let starsButtons;
+			let result;
 
 			beforeEach(() => {
-				starsButtons = renderComponent({
+				result = renderComponent({
 					userScore: 1,
-				}).getAllByRole('button');
-				starsDropdownToggle = starsButtons[0];
+				});
+
+				starsButtons = result.getAllByRole('option');
+				starsDropdownToggle = result.getAllByRole('button')[0];
 			});
 
 			it('shows the initial user score', () => {
@@ -174,7 +182,7 @@ describe('RatingsSelectStars', () => {
 			describe('and the user vote 2/5 stars', () => {
 				beforeEach(() => {
 					act(() => {
-						fireEvent.click(starsButtons[2]);
+						fireEvent.click(starsButtons[1]);
 					});
 				});
 
@@ -209,11 +217,11 @@ describe('RatingsSelectStars', () => {
 				result = renderComponent({
 					userScore: 0.4,
 				});
-				starsButtons = result.getAllByRole('button');
-				starsDropdownToggle = starsButtons[0];
+				starsButtons = result.getAllByRole('option');
+				starsDropdownToggle = result.getAllByRole('button')[0];
 
 				await act(async () => {
-					fireEvent.click(starsButtons[3]);
+					fireEvent.click(starsButtons[2]);
 				});
 			});
 
@@ -245,7 +253,7 @@ describe('RatingsSelectStars', () => {
 					);
 
 					await act(async () => {
-						fireEvent.click(starsButtons[5]);
+						fireEvent.click(starsButtons[4]);
 					});
 				});
 
@@ -269,7 +277,7 @@ describe('RatingsSelectStars', () => {
 					);
 
 					await act(async () => {
-						fireEvent.click(starsButtons[6]);
+						fireEvent.click(starsButtons[5]);
 					});
 				});
 
@@ -278,7 +286,7 @@ describe('RatingsSelectStars', () => {
 				});
 
 				it('has delete option disabled', () => {
-					expect(starsButtons[6]).toHaveProperty('disabled', true);
+					expect(starsButtons[5]).toHaveProperty('disabled', true);
 				});
 			});
 		});

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -74,6 +75,11 @@ public class CountrySearchContainerFactory {
 				AddressPortletKeys.COUNTRIES_MANAGEMENT_ADMIN, "order-by-type",
 				"asc"));
 
+		searchContainer.setOrderByComparator(
+			_getOrderByComparator(
+				searchContainer.getOrderByCol(),
+				searchContainer.getOrderByType()));
+
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords");
 
@@ -83,10 +89,7 @@ public class CountrySearchContainerFactory {
 					PortalUtil.getCompanyId(liferayPortletRequest), active,
 					keywords, searchContainer.getStart(),
 					searchContainer.getEnd(),
-					OrderByComparatorFactoryUtil.create(
-						"Country", searchContainer.getOrderByCol(),
-						Objects.equals(
-							searchContainer.getOrderByType(), "asc"))));
+					searchContainer.getOrderByComparator()));
 		}
 		else {
 			if (active == null) {
@@ -117,6 +120,20 @@ public class CountrySearchContainerFactory {
 			new EmptyOnClickRowChecker(liferayPortletResponse));
 
 		return searchContainer;
+	}
+
+	private static OrderByComparator<Country> _getOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean columnAscending = Objects.equals(orderByType, "asc");
+
+		if (Objects.equals("priority", orderByCol)) {
+			return OrderByComparatorFactoryUtil.create(
+				"Country", "position", columnAscending, "name", true);
+		}
+
+		return OrderByComparatorFactoryUtil.create(
+			"Country", orderByCol, columnAscending);
 	}
 
 }

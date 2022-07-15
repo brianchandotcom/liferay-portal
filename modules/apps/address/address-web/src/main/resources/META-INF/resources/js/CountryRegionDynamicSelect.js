@@ -32,7 +32,7 @@ function CountryRegionDynamicSelect({
 					'/country/get-company-countries',
 					{
 						active: true,
-						companyId: Liferay.ThemeDisplay.getCompanyId,
+						companyId: Liferay.ThemeDisplay.getCompanyId(),
 					},
 					(countries) => {
 						const countryJP = countries.find(

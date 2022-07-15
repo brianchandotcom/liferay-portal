@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React, {useCallback} from 'react';
 
@@ -75,6 +76,20 @@ function FormEmptyState({isMapped, item}) {
 			),
 		[dispatch, item.itemId]
 	);
+
+	if (item.config.loading) {
+		return (
+			<div className="bg-lighter page-editor__no-fragments-state">
+				<ClayLoadingIndicator />
+
+				<p className="m-0 page-editor__no-fragments-state__message">
+					{Liferay.Language.get(
+						'your-form-is-being-loaded.-this-may-take-some-time'
+					)}
+				</p>
+			</div>
+		);
+	}
 
 	if (isMapped) {
 		return (

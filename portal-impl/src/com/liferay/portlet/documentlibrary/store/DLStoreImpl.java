@@ -380,6 +380,8 @@ public class DLStoreImpl implements DLStore {
 		throws PortalException {
 
 		if (!DLValidatorUtil.isValidName(dirName)) {
+			System.out.prinltn("## HERE " + dirName);
+
 			throw new DirectoryNameException(dirName);
 		}
 

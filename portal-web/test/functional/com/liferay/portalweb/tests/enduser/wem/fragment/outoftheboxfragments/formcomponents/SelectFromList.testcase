@@ -251,7 +251,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-154568. The page designer can map a Form Container to Object field with relationship on custom object."
+	@description = "This is a test for LPS-154568 and LPS-155167. The page designer can map a Form Container to Object field with relationship on custom object. There is an input search when the mapped field has more than 10 items and the max number of precharged options is 10."
 	@priority = "5"
 	test MapRelationshipWithCustomObject {
 		property test.name.skip.portal.instance = "SelectFromList#MapRelationshipWithCustomObject";
@@ -335,7 +335,13 @@ definition {
 				label = "Select your lunch");
 		}
 
-		task ("Then the page designer can see 10 entries on select from list dropdown menu edit mode") {
+		task ("Then the page designer can only see 10 options on dropdown menu") {
+			AssertTextEquals(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list",
+				value1 = "Choose an Option");
+
 			Click(
 				index = "1",
 				locator1 = "Fragment#INPUT_TOGGLE",
@@ -344,17 +350,17 @@ definition {
 			MenuItem.viewOrder(menuItemList = "Choose an Option,Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta");
 
 			MenuItem.viewNotPresent(menuItem = "Rice");
+
+			PageEditor.publish();
 		}
 
-		task ("When the page designer navigates to published content page at view mode") {
-			PageEditor.publish();
-
+		task ("When the page designer navigates to content page at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 		}
 
-		task ("Then the page designer can see max numbers of items to be displayed are 10 on select from list fragment at view mode") {
+		task ("Then the page designer can only see 10 options on dropdown menu") {
 			Click(
 				index = "1",
 				locator1 = "Fragment#INPUT_TOGGLE",
@@ -365,16 +371,24 @@ definition {
 			MenuItem.viewNotPresent(menuItem = "Rice");
 		}
 
-		task ("When the page designer searches for 11º entry") {
-			MenuItem.viewNotPresent(menuItem = "Soup");
+		task ("When the page designer searches an non-existing option") {
+			Type(
+				locator1 = "MenuItem#SEARCH_FIELD",
+				value1 = "Non-Existing");
 		}
 
-		task ("Then the pages designer can see 11º entry on select from list dropdown menu") {
+		task ("Then the pages designer should see the no results found message") {
+			MenuItem.viewPresent(menuItem = "No results were found.");
+		}
+
+		task ("When the page designer searches for the 11th entry") {
 			Type(
 				locator1 = "MenuItem#SEARCH_FIELD",
 				value1 = "Rice");
+		}
 
-			MenuItem.viewOrder(menuItemList = "Choose an Option,Rice");
+		task ("Then the pages designer can see the 11th entry on select from list dropdown menu") {
+			MenuItem.viewPresent(menuItem = "Rice");
 
 			MenuItem.viewNotPresent(menuItem = "Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta");
 		}

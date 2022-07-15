@@ -17,11 +17,14 @@ import {useForm} from 'react-hook-form';
 
 import Form from '../../../components/Form';
 import Modal from '../../../components/Modal';
-import {CreateRoutine, UpdateRoutine} from '../../../graphql/mutations';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalComponent} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
+import {
+	createRoutine,
+	updateRoutine,
+} from '../../../services/rest/TestrayRoutine';
 
 type RoutineForm = {
 	autoanalyze: boolean;
@@ -30,7 +33,7 @@ type RoutineForm = {
 };
 
 const RoutineModal: React.FC<FormModalComponent & {projectId: number}> = ({
-	modal: {modalState, observer, onClose, onSubmit},
+	modal: {modalState, observer, onClose, onError, onSave, onSubmitRest},
 	projectId,
 }) => {
 	const {
@@ -47,16 +50,18 @@ const RoutineModal: React.FC<FormModalComponent & {projectId: number}> = ({
 	const autoanalyze = watch('autoanalyze');
 
 	const _onSubmit = (form: RoutineForm) => {
-		onSubmit(
+		onSubmitRest(
 			{
 				...form,
 				projectId,
 			},
 			{
-				createMutation: CreateRoutine,
-				updateMutation: UpdateRoutine,
+				create: createRoutine,
+				update: updateRoutine,
 			}
-		);
+		)
+			.then(onSave)
+			.catch(onError);
 	};
 
 	return (

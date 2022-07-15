@@ -12,7 +12,6 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import {useEffect} from 'react';
 import {
 	Outlet,
@@ -21,21 +20,18 @@ import {
 	useParams,
 } from 'react-router-dom';
 
-import {CType, TestrayRoutine, getRoutine} from '../../../graphql/queries';
+import {useFetch} from '../../../hooks/useFetch';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
+import {TestrayRoutine} from '../../../services/rest';
 
 const RoutineOutlet = () => {
 	const {pathname} = useLocation();
 	const {projectId, routineId, ...otherParams} = useParams();
 	const {testrayProject}: any = useOutletContext();
-	const {data} = useQuery<CType<'routine', TestrayRoutine>>(getRoutine, {
-		variables: {
-			routineId,
-		},
-	});
-
-	const testrayRoutine = data?.c?.routine;
+	const {data: testrayRoutine} = useFetch<TestrayRoutine>(
+		`/routines/${routineId}`
+	);
 
 	const basePath = `/project/${projectId}/routines/${routineId}`;
 

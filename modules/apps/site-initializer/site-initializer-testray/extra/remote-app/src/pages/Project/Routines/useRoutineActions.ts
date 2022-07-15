@@ -12,37 +12,43 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
-
-import {DeleteRoutine} from '../../../graphql/mutations';
 import {TestrayRoutine} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
+import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
+import {Security} from '../../../security';
+import {deleteResource} from '../../../services/rest';
+import {Action} from '../../../types';
 
 const useRoutineActions = () => {
 	const formModal = useFormModal();
-	const [onDeleteRoutine] = useMutation(DeleteRoutine);
+	const {removeItemFromList} = useMutate();
 
 	const modal = formModal.modal;
 
+	const actions: Action[] = [
+		{
+			action: (routine: TestrayRoutine) => modal.open(routine),
+			name: i18n.translate('edit'),
+			permission: 'UPDATE',
+		},
+		{
+			action: () => alert('Select Default Environment Factors'),
+			name: i18n.translate('select-default-environment-factors'),
+		},
+		{
+			action: ({id}: TestrayRoutine, mutate) =>
+				deleteResource(`/routines/${id}`)
+					.then(() => removeItemFromList(mutate, id))
+					.then(modal.onSuccess)
+					.catch(modal.onError),
+			name: i18n.translate('delete'),
+			permission: 'DELETE',
+		},
+	];
+
 	return {
-		actions: [
-			{
-				action: () => modal.open(),
-				name: i18n.translate('edit'),
-			},
-			{
-				action: () => alert('Select Default Environment Factors'),
-				name: i18n.translate('select-default-environment-factors'),
-			},
-			{
-				action: ({id}: TestrayRoutine) =>
-					onDeleteRoutine({variables: {id}})
-						.then(() => modal.onSave())
-						.catch(modal.onError),
-				name: i18n.translate('delete'),
-			},
-		],
+		actions: (row: any) => Security.filterActions(actions, row.actions),
 		formModal,
 	};
 };

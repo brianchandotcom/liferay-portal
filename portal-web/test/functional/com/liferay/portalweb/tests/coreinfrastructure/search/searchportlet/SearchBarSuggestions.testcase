@@ -1,7 +1,6 @@
 @component-name = "portal-search"
 definition {
 
-	property custom.properties = "feature.flag.LPS-152597=true";
 	property portal.release = "true";
 	property portal.suite.search.engine = "elasticsearch7";
 	property portal.upstream = "true";

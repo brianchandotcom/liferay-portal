@@ -181,11 +181,11 @@ public class DBUpgrader {
 
 		StartupHelperUtil.setUpgrading(true);
 
-		_upgradePortal();
+		_upgradePortal(applicationContext);
 
 		DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 
-		_upgradeModules(applicationContext);
+		_upgradeModules();
 
 		if (applicationContext == null) {
 			DependencyManagerSyncUtil.sync();
@@ -341,15 +341,8 @@ public class DBUpgrader {
 		}
 	}
 
-	private static void _upgradeModules(ApplicationContext applicationContext) {
+	private static void _upgradeModules() {
 		_registerModuleServiceLifecycle("database.initialized");
-
-		if (applicationContext == null) {
-			InitUtil.registerContext();
-		}
-		else {
-			ModuleFrameworkUtil.registerContext(applicationContext);
-		}
 
 		_registerModuleServiceLifecycle("portal.initialized");
 
@@ -357,7 +350,9 @@ public class DBUpgrader {
 			PortalCacheManagerNames.MULTI_VM);
 	}
 
-	private static void _upgradePortal() throws Exception {
+	private static void _upgradePortal(ApplicationContext applicationContext)
+		throws Exception {
+
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-157670"))) {
 			checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_0_12_BUILD_NUMBER);
 		}
@@ -391,6 +386,13 @@ public class DBUpgrader {
 
 		if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
 			TransactionsUtil.disableTransactions();
+		}
+
+		if (applicationContext == null) {
+			InitUtil.registerContext();
+		}
+		else {
+			ModuleFrameworkUtil.registerContext(applicationContext);
 		}
 
 		try {

@@ -31,6 +31,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-152541 Given the 'Assign Roles by Segments' is disabled at System Settings
+    When user navigates to Segmentation at Instance Settings
+    Then should see an alert informing that is disabled and how to re-enable it "
+	@priority = "4"
+	test CheckAssignRolesDisabledAlertAtInstanceSettings {
+		task ("No alert when Assign Roles by Segments Enabled") {
+			Segmentation.gotoSegmeentsService(key_portlet = "Instance Settings");
+
+			AssertElementNotPresent(locator1 = "Message#ERROR_3");
+		}
+
+		task ("Disable Assign Roles by Segments at Instance Settings") {
+			Segmentation.disableConfigurationAtSystemSettings(checkLabel = "Enable Assign Roles by Segment");
+		}
+
+		task ("Check alert when Assign Roles by Segments Disabled") {
+			Segmentation.gotoSegmeentsService(key_portlet = "Instance Settings");
+
+			Segmentation.checkSegmentationDisabledWarning(textValue = "Assign roles by segment is disabled in System Settings. To enable, go to System Settings.");
+
+			AssertElementPresent(
+				key_fieldLabel = "Enable Assign Roles by Segment",
+				locator1 = "FormFields#FIELD_DISABLED_TEXT");
+		}
+	}
+
 	@description = "LPS-153084 Given the 'Enable Assign Roles by Segment' is disable at Instance Settings And enabled at System Settings
     When user navigates to Regular Roles > Assignees > Segments
     Then the warning alert explains how to re-enable it"
@@ -58,6 +84,32 @@ definition {
 
 		task ("Reset System Settings configuration") {
 			Segmentation.resetSegmentationAtSystemSettings();
+		}
+	}
+
+	@description = "LPS-152541 Given the 'Enable Segmentation' is disabled at System Settings
+    When user navigates to Segmentation at Instance Settings
+    Then should see an alert informing that is disabled and how to re-enable it"
+	@priority = "4"
+	test CheckSegmentationDisabledAlertAtInstanceSettings {
+		task ("No alert when Segmentation Enabled") {
+			Segmentation.gotoSegmeentsService(key_portlet = "Instance Settings");
+
+			AssertElementNotPresent(locator1 = "Message#ERROR_3");
+		}
+
+		task ("Disable Segmentation at Instance Settings") {
+			Segmentation.disableConfigurationAtSystemSettings(checkLabel = "Enable Segmentation");
+		}
+
+		task ("Check alert when Segmentation Disabled") {
+			Segmentation.gotoSegmeentsService(key_portlet = "Instance Settings");
+
+			Segmentation.checkSegmentationDisabledWarning(textValue = "Segmentation is disabled in System Settings. To enable, go to System Settings.");
+
+			AssertElementPresent(
+				key_fieldLabel = "Enable Segmentation",
+				locator1 = "FormFields#FIELD_DISABLED_TEXT");
 		}
 	}
 

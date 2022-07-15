@@ -5,6 +5,8 @@ $treeNodeNameMappedColor: #954cff;
 html#{$cadmin-selector} {
 	.cadmin {
 		.page-editor__page-structure__tree-node {
+			--drag-over-color: #{$cadmin-primary-l1};
+
 			align-items: center;
 			display: flex;
 			font-size: 12px;
@@ -22,21 +24,25 @@ html#{$cadmin-selector} {
 			}
 
 			&.drag-over-bottom {
-				box-shadow: 0 1px 0 0 $cadmin-primary-l1;
+				box-shadow: 0 1px 0 0 var(--drag-over-color);
 			}
 
 			&.drag-over-top {
-				box-shadow: 0 -1px 0 0 $cadmin-primary-l1;
+				box-shadow: 0 -1px 0 0 var(--drag-over-color);
 			}
 
 			&.drag-over-middle {
 				background-color: $cadmin-primary-l3;
 				border-radius: 4px;
-				box-shadow: 0 0 0 1px $cadmin-primary-l1;
+				box-shadow: 0 0 0 1px var(--drag-over-color);
 			}
 
 			&.dragged {
 				opacity: 0.5;
+			}
+
+			&.not-droppable {
+				--drag-over-color: #{$cadmin-danger-l1};
 			}
 
 			&__mask {

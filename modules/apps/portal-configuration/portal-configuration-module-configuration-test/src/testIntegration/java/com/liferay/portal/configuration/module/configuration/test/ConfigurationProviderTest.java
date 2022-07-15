@@ -166,6 +166,18 @@ public class ConfigurationProviderTest {
 			_properties, _configuration.getProperties(),
 			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
 			groupId);
+
+		_properties.put("key3", "groupValue3");
+
+		_configurationProvider.saveGroupConfiguration(
+			groupId, _PID, _properties);
+
+		_configuration = _getFactoryConfiguration(_PID);
+
+		assertFactoryPropertyValues(
+			_properties, _configuration.getProperties(),
+			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+			groupId);
 	}
 
 	@Test

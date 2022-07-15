@@ -15,11 +15,9 @@
 import {useEffect} from 'react';
 
 import Container from '../../components/Layout/Container';
-import ListView from '../../components/ListView/ListView';
-import {getProjects} from '../../graphql/queries';
-import {useAccountContext, useHeader} from '../../hooks';
+import ListView from '../../components/ListView/ListViewRest';
+import {useHeader} from '../../hooks';
 import i18n from '../../i18n';
-import {SecurityPermissions} from '../../types';
 import ProjectModal from './ProjectModal';
 import useProjectActions from './useProjectActions';
 
@@ -28,13 +26,11 @@ type ProjectsProps = {
 	addHeading?: boolean;
 };
 
-const Projects: React.FC<ProjectsProps & SecurityPermissions> = ({
+const Projects: React.FC<ProjectsProps> = ({
 	addHeading = true,
 	PageContainer = Container,
-	security,
-	permissions,
 }) => {
-	const {actions, formModal} = useProjectActions(security, permissions);
+	const {actions, formModal} = useProjectActions();
 
 	const {setDropdown, setDropdownIcon, setHeading} = useHeader({
 		shouldUpdate: true,
@@ -57,66 +53,36 @@ const Projects: React.FC<ProjectsProps & SecurityPermissions> = ({
 	}, [addHeading, setHeading]);
 
 	return (
-		<>
-			<PageContainer>
-				<ListView
-					forceRefetch={formModal.forceRefetch}
-					managementToolbarProps={{
-						addButton: permissions.CREATE
-							? () => formModal.modal.open()
-							: undefined,
-						display: {columns: false},
-						title: i18n.translate('projects'),
-					}}
-					query={getProjects}
-					tableProps={{
-						actions,
-						columns: [
-							{
-								clickable: true,
-								key: 'name',
-								sorteable: true,
-								value: i18n.translate('project'),
-							},
-							{
-								key: 'description',
-								value: i18n.translate('description'),
-							},
-						],
-						navigateTo: (project) =>
-							`/project/${project.id}/routines`,
-					}}
-					transformData={(data) => data?.c?.projects}
-					viewPermission={permissions.INDEX}
-				/>
-			</PageContainer>
+		<PageContainer>
+			<ListView
+				forceRefetch={formModal.forceRefetch}
+				managementToolbarProps={{
+					addButton: () => formModal.modal.open(),
+					display: {columns: false},
+					title: i18n.translate('projects'),
+				}}
+				resource="/projects"
+				tableProps={{
+					actions,
+					columns: [
+						{
+							clickable: true,
+							key: 'name',
+							sorteable: true,
+							value: i18n.translate('project'),
+						},
+						{
+							key: 'description',
+							value: i18n.translate('description'),
+						},
+					],
+					navigateTo: (project) => `/project/${project.id}/routines`,
+				}}
+			/>
 
 			<ProjectModal modal={formModal.modal} />
-		</>
+		</PageContainer>
 	);
 };
 
-const ProjectPermissions: React.FC<ProjectsProps> = (props) => {
-	const {security} = useAccountContext();
-
-	const permissions = security.permissions('TestrayProject', [
-		'INDEX',
-		'CREATE',
-		'UPDATE',
-		'DELETE',
-	]);
-
-	if (permissions) {
-		return (
-			<Projects
-				{...props}
-				permissions={permissions}
-				security={security}
-			/>
-		);
-	}
-
-	return null;
-};
-
-export default ProjectPermissions;
+export default Projects;

@@ -861,6 +861,27 @@ definition {
 		Click(locator1 = "ACDataControlAndPrivacy#REQUEST_SUPPRESSED_OPTIONS");
 	}
 
+	@summary = "Rename an existing Data Source"
+	macro renameDataSource {
+		Click(locator1 = "Icon#EDIT_PENCIL");
+
+		Click(
+			inputFieldId = "dataSourceName",
+			locator1 = "TextInput#INPUT_ID");
+
+		KeyPress(
+			inputFieldId = "dataSourceName",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "\BACK_SPACE");
+
+		Type(
+			inputFieldId = "dataSourceName",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "${dataSourceNewName}");
+
+		Button.clickSubmitButton();
+	}
+
 	@summary = "Takes the token from Analytics Clouds to use on during the DXP connection process"
 	macro takeTokenFromAnalyticsCloud {
 		ACSettings.goToDataSources();
@@ -931,25 +952,6 @@ definition {
 		AssertElementPresent(
 			locator1 = "ACSettings#USER_UNSELECTABLE",
 			userEmail = "${email}");
-	}
-
-	@summary = "Rename an existing Data Source"
-	macro renameDataSource {
-		Click(locator1 = "Icon#EDIT_PENCIL");
-
-		Click(locator1 = "TextInput#INPUT_ID", inputFieldId = "dataSourceName");
-
-		KeyPress(
-			locator1 = "TextInput#INPUT_ID",
-			inputFieldId = "dataSourceName",
-			value1 = "\BACK_SPACE");
-
-		Type(
-			locator1 = "TextInput#INPUT_ID",
-			inputFieldId = "dataSourceName",
-			value1 = "${dataSourceNewName}");
-
-		Button.clickSubmitButton();
 	}
 
 }

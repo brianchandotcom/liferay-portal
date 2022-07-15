@@ -428,6 +428,84 @@ definition {
 		ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
+	@description = "Bug: LRAC-10629 | Automation ID: LRAC-11443 | Test Summary: Sites and Contacts connection status is not changing when renaming the data source"
+	@priority = "3"
+	test ConnectionStatusNotChangeWhenRenameDataSource {
+		task ("Launch AC then go to Data Sources and open the created data source") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+			var dataSource = StringUtil.replace("${assignedPropertyName}", " Combined Property", "");
+
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDataSources();
+
+			ACUtils.searchBar(searchItem = "${dataSource}");
+
+			ACNavigation.openItem(itemName = "${dataSource}");
+		}
+
+		task ("See that the status of sites and contacts are 'configured'") {
+			ACUtils.viewGenericTextInOrder(
+				index = "1",
+				textValueList = "Configured");
+
+			ACUtils.viewGenericTextInOrder(
+				index = "2",
+				textValueList = "Configured");
+		}
+
+		task ("Rename the data source and see that the status of sites and contacts are still 'configured'") {
+			ACSettings.renameDataSource(dataSourceNewName = "New Data Source Name");
+
+			ACUtils.viewGenericTextInOrder(
+				index = "1",
+				textValueList = "Configured");
+
+			ACUtils.viewGenericTextInOrder(
+				index = "2",
+				textValueList = "Configured");
+		}
+
+		task ("Refresh the page and check the status again") {
+			Refresh();
+
+			ACUtils.viewGenericTextInOrder(
+				index = "1",
+				textValueList = "Configured");
+
+			ACUtils.viewGenericTextInOrder(
+				index = "2",
+				textValueList = "Configured");
+		}
+
+		task ("Disconnect the data source and see that the status is 'disconnected'") {
+			ACSettings.disconnectDataSource();
+
+			ACSettings.assertDataSourceStatus(
+				section = "Current Status",
+				status = "Disconnected");
+		}
+
+		task ("Rename the data source and see that the status is still 'disconnected'") {
+			ACSettings.renameDataSource(dataSourceNewName = "New Data Source Name 2");
+
+			ACSettings.assertDataSourceStatus(
+				section = "Current Status",
+				status = "Disconnected");
+		}
+
+		task ("Refresh the page and see that the data source status is still 'disconnected'") {
+			Refresh();
+
+			ACSettings.assertDataSourceStatus(
+				section = "Current Status",
+				status = "Disconnected");
+		}
+	}
+
 	@description = "Automation ID: LRAC-8821 | Test Summary: Data Source list is searchable"
 	@priority = "5"
 	test DataSourceListIsSearchable {

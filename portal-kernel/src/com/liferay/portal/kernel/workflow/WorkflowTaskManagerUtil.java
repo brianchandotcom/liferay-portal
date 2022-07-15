@@ -96,7 +96,7 @@ public class WorkflowTaskManagerUtil {
 		throws WorkflowException {
 
 		return _workflowTaskManager.getNextTransitionNames(
-			companyId, userId, workflowTaskId);
+			userId, workflowTaskId);
 	}
 
 	public static List<User> getNotifiableUsers(long workflowTaskId)

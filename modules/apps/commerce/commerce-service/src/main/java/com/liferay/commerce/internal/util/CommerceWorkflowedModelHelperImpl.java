@@ -75,7 +75,7 @@ public class CommerceWorkflowedModelHelperImpl
 
 			List<String> transitionNames =
 				_workflowTaskManager.getNextTransitionNames(
-					companyId, userId, workflowTaskId);
+					userId, workflowTaskId);
 
 			for (String transitionName : transitionNames) {
 				transitionOVPs.add(

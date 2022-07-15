@@ -77,7 +77,7 @@ public class WorkflowTaskManagerProxyBean
 
 	@Override
 	public List<String> getNextTransitionNames(
-		long companyId, long userId, long workflowTaskId) {
+		long userId, long workflowTaskId) {
 
 		throw new UnsupportedOperationException();
 	}

@@ -998,13 +998,10 @@ definition {
 	}
 
 	@description = "Documents visitor behavior card shows expected amount of views"
-	@ignore = "true"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfPreviewsInDM {
 		property portal.acceptance = "true";
 		property portal.release = "true";
-
-		// AC Bug ticket: LRAC-11466
 
 		var documentNameList = "DM AC Title,DM AC Title";
 

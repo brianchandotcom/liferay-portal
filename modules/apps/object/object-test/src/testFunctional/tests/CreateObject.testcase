@@ -7565,7 +7565,7 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry B");
 
-		CreateObject.chooseEntryOnRelationshipField(entryOption = "Entry A");
+		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
 
 		Button.clickSave();
 
@@ -7642,7 +7642,7 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry B");
 
-		CreateObject.chooseEntryOnRelationshipField(entryOption = "Entry A");
+		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
 
 		Button.clickSave();
 

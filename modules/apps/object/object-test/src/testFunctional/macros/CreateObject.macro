@@ -294,18 +294,6 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro chooseEntryOnRelationshipField {
-		Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
-
-		KeyPress(
-			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
-			value1 = "\BACK_SPACE");
-
-		Click(
-			key_picklistOption = "${entryOption}",
-			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
-	}
-
 	macro deleteEntryInRelationshipTab {
 		ObjectAdmin.gotoRelationshipsTab();
 

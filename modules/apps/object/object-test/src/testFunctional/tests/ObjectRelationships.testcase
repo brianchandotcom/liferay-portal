@@ -75,7 +75,7 @@ definition {
 
 			ObjectPortlet.viewEntryDetails(entry = "Entry ${fieldEntry}");
 
-			CreateObject.chooseEntryOnRelationshipField(entryOption = "userfn");
+			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "userfn");
 
 			Button.clickSave();
 

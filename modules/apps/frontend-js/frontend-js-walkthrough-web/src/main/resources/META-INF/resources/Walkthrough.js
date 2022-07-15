@@ -271,8 +271,8 @@ const Step = ({
 					);
 				}
 
-				if (!isVisibleInViewport(popoverRef?.current, boundingRect)) {
-					popoverRef?.current?.scrollIntoView();
+				if (!isVisibleInViewport(popoverRef.current, boundingRect)) {
+					popoverRef.current.scrollIntoView();
 				}
 			}
 		},

@@ -462,7 +462,7 @@ definition {
 			expected = "${expectedValue}");
 	}
 
-	macro assertResponseHasCorrectDetailsRelatedToObjectEntry {
+	macro assertResponseHasCorrectObjectEntryName {
 		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.items[?(@.id==${objectEntryId})].name");
 
 		TestUtils.assertEquals(

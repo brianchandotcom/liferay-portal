@@ -120,6 +120,15 @@ function isVisibleInViewport(element, maybeRect) {
 }
 
 /**
+ * Removes search params on a given url
+ * @param {String} url
+ * @returns {String} url without the search params
+ */
+function stripSearchParams(url) {
+	return url.split('?')[0];
+}
+
+/**
  * Given a `layoutRelativeURL,` this function will match the paths
  * of the pages contained in it and return the longest path.
  * @param {String} currentLayoutRelativeURL
@@ -128,7 +137,9 @@ function isVisibleInViewport(element, maybeRect) {
  */
 function findLongestMatch(currentLayoutRelativeURL, pagesArray) {
 	return pagesArray
-		.filter((pagePath) => currentLayoutRelativeURL.includes(pagePath))
+		.filter((pagePath) =>
+			stripSearchParams(currentLayoutRelativeURL).endsWith(pagePath)
+		)
 		.sort((a, b) => (a.length > b.length ? -1 : 1))[0];
 }
 
@@ -299,7 +310,7 @@ const Step = ({
 
 	useObserveRect(align, popoverRef?.current);
 
-	const currentLayoutRelativeURL = `${themeDisplay.getLayoutRelativeURL()}/`;
+	const currentLayoutRelativeURL = themeDisplay.getLayoutRelativeURL();
 
 	const currentPage = useMemo(
 		() => findLongestMatch(currentLayoutRelativeURL, Object.keys(pages)),

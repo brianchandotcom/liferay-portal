@@ -15,11 +15,15 @@
 import {useOutletContext, useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView/ListView';
+import ListView from '../../../components/ListView/ListViewRest';
 import StatusBadge from '../../../components/StatusBadge';
 import QATable from '../../../components/Table/QATable';
-import {TestrayCase, getCaseResults} from '../../../graphql/queries';
+import {TestrayCase} from '../../../graphql/queries';
 import i18n from '../../../i18n';
+import {
+	caseResultResource,
+	getCaseResultTransformData,
+} from '../../../services/rest/TestrayCaseResult';
 import {getStatusLabel} from '../../../util/constants';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
@@ -93,7 +97,7 @@ const Case = () => {
 						title: i18n.translate('test-history'),
 						visible: true,
 					}}
-					query={getCaseResults}
+					resource={caseResultResource}
 					tableProps={{
 						actions,
 						columns: [
@@ -155,7 +159,7 @@ const Case = () => {
 						navigateTo: ({build, id}) =>
 							`/project/${projectId}/routines/${build?.routine?.id}/build/${build?.id}/case-result/${id}`,
 					}}
-					transformData={(data) => data?.caseResults}
+					transformData={getCaseResultTransformData}
 					variables={{
 						filter: searchUtil.eq('caseId', caseId as string),
 					}}

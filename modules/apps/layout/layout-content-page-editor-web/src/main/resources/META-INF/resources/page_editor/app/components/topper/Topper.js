@@ -45,6 +45,7 @@ import {
 	useDragItem,
 	useDropContainerId,
 	useDropTarget,
+	useIsDroppable,
 } from '../../utils/drag-and-drop/useDragAndDrop';
 import {useId} from '../../utils/useId';
 import TopperItemActions from './TopperItemActions';
@@ -95,14 +96,15 @@ function TopperContent({
 	const topperLabelId = useId();
 
 	const dropContainerId = useDropContainerId();
+	const isDroppable = useIsDroppable();
 
 	const isDropContainer = dropContainerId === item.itemId;
 
 	const isHighlighted =
-		item.type === LAYOUT_DATA_ITEM_TYPES.row ||
+		(item.type === LAYOUT_DATA_ITEM_TYPES.row ||
 		item.type === LAYOUT_DATA_ITEM_TYPES.collection
 			? item.children.includes(dropContainerId)
-			: isDropContainer;
+			: isDropContainer) && isDroppable;
 
 	const canBeDragged = canUpdatePageStructure && !editableProcessorUniqueId;
 
@@ -162,6 +164,7 @@ function TopperContent({
 				'drop-container': isDropContainer,
 				'highlighted': isHighlighted,
 				'hovered': isHovered,
+				'not-droppable': !isDroppable,
 			})}
 			onClick={(event) => {
 				event.stopPropagation();

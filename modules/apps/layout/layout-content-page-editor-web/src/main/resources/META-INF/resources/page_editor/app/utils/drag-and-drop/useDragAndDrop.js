@@ -109,6 +109,10 @@ export function useDropContainerId() {
 	return useContext(DragAndDropContext).state.dropContainerId;
 }
 
+export function useIsDroppable() {
+	return useContext(DragAndDropContext).state.droppable;
+}
+
 export function useSetCanDrag() {
 	return useContext(DragAndDropContext).setCanDrag;
 }

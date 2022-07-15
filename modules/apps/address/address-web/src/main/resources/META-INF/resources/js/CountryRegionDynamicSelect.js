@@ -16,10 +16,8 @@ import PropTypes from 'prop-types';
 
 function CountryRegionDynamicSelect({
 	countrySelect,
-	countrySelectId,
 	countrySelectVal,
 	regionSelect,
-	regionSelectId,
 	regionSelectVal,
 }) {
 	let japanCountryId;
@@ -46,7 +44,7 @@ function CountryRegionDynamicSelect({
 				);
 			},
 			selectDesc: 'nameCurrentValue',
-			selectId: countrySelectId,
+			selectId: 'countryId',
 			selectSort: true,
 			selectVal: countrySelectVal,
 		},
@@ -89,7 +87,7 @@ function CountryRegionDynamicSelect({
 			},
 			selectDesc: 'title',
 			selectDisableOnEmpty: true,
-			selectId: regionSelectId,
+			selectId: 'regionId',
 			selectVal: regionSelectVal,
 		},
 	]);

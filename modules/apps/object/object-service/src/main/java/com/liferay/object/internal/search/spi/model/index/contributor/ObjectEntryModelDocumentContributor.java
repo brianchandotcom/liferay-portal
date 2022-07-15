@@ -114,6 +114,11 @@ public class ObjectEntryModelDocumentContributor
 				Field.getSortableFieldName(Field.ENTRY_CLASS_PK),
 				document.get(Field.ENTRY_CLASS_PK)));
 
+		document.add(
+			new Field(
+				Field.getSortableFieldName("externalReferenceCode"),
+				objectEntry.getExternalReferenceCode()));
+
 		FieldArray fieldArray = (FieldArray)document.getField(
 			"nestedFieldArray");
 

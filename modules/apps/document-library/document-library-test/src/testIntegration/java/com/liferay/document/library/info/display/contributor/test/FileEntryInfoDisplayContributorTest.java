@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -273,21 +274,30 @@ public class FileEntryInfoDisplayContributorTest {
 			UnsafeConsumer<FileEntry, Exception> testFunction)
 		throws Exception {
 
-		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
+		Long groupId = GroupThreadLocal.getGroupId();
 
-		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
-			dlFolder.getFolderId());
+		try {
+			GroupThreadLocal.setGroupId(_group.getGroupId());
 
-		testFunction.accept(
-			_dlAppLocalService.getFileEntry(dlFileEntry.getFileEntryId()));
+			DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
-		dlFileEntry = DLTestUtil.addDLFileEntry(dlFolder.getFolderId());
+			DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
+				dlFolder.getFolderId());
 
-		AssetEntryLocalServiceUtil.deleteEntry(
-			FileEntry.class.getName(), dlFileEntry.getFileEntryId());
+			testFunction.accept(
+				_dlAppLocalService.getFileEntry(dlFileEntry.getFileEntryId()));
 
-		testFunction.accept(
-			_dlAppLocalService.getFileEntry(dlFileEntry.getFileEntryId()));
+			dlFileEntry = DLTestUtil.addDLFileEntry(dlFolder.getFolderId());
+
+			AssetEntryLocalServiceUtil.deleteEntry(
+				FileEntry.class.getName(), dlFileEntry.getFileEntryId());
+
+			testFunction.accept(
+				_dlAppLocalService.getFileEntry(dlFileEntry.getFileEntryId()));
+		}
+		finally {
+			GroupThreadLocal.setGroupId(groupId);
+		}
 	}
 
 	@Inject

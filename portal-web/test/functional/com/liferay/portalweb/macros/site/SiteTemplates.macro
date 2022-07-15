@@ -358,24 +358,6 @@ definition {
 		return "${modifiedDate}";
 	}
 
-	macro getSiteTemplateID {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Manage",
-			rowEntry = "${siteTemplateName}");
-
-		WaitForElementPresent(locator1 = "ControlMenu#HEADING");
-
-		var currentURL = Navigator.getCurrentURL();
-
-		var siteTemplateURL = StringUtil.extractFirst("${currentURL}", "/~/");
-
-		var siteTemplateId = StringUtil.extractLast("${siteTemplateURL}", "/");
-
-		echo("siteTemplateID: ${siteTemplateId}");
-
-		return "${siteTemplateId}";
-	}
-
 	macro gotoSettingsCP {
 		var key_siteTemplateName = "${siteTemplateName}";
 
@@ -413,7 +395,7 @@ definition {
 	}
 
 	macro openSiteTemplateInEditMode {
-		var templateId = SiteTemplates.getSiteTemplateID(siteTemplateName = "${siteTemplateName}");
+		var templateId = JSONSiteTemplate.getSiteTemplateIdByName(siteTemplateName = "${siteTemplateName}");
 
 		if (isSet(widgetPage)) {
 			Navigator.openWithAppendToBaseURL(urlAppend = "group/${templateId}");

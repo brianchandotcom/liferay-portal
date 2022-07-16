@@ -140,6 +140,9 @@ public interface ClientExtensionEntryRelLocalService
 	public void deleteClientExtensionEntryRels(
 		long classNameId, long classPK, String type);
 
+	public void deleteClientExtensionEntryRels(
+		long companyId, String cetExternalReferenceCode);
+
 	/**
 	 * @throws PortalException
 	 */

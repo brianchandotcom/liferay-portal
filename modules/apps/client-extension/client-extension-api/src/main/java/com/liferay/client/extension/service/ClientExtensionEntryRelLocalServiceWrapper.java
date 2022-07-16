@@ -149,6 +149,14 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 			classNameId, classPK, type);
 	}
 
+	@Override
+	public void deleteClientExtensionEntryRels(
+		long companyId, String cetExternalReferenceCode) {
+
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			companyId, cetExternalReferenceCode);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

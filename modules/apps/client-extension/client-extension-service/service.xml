@@ -64,6 +64,10 @@
 
 		<!-- Finder methods -->
 
+		<finder name="C_CETERC" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="cetExternalReferenceCode" />
+		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />

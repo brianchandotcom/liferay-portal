@@ -63,9 +63,9 @@ SchedulerResponseDisplayContext schedulerResponseDisplayContext = (SchedulerResp
 					TriggerState triggerState = schedulerResponseDisplayContext.getTriggerState(schedulerResponse);
 					%>
 
-					<h6 class="<%= (triggerState == TriggerState.NORMAL) ? "text-success" : "text-info" %>">
+					<span class="<%= (triggerState == TriggerState.NORMAL) ? "label label-success" : "label label-info" %>">
 						<liferay-ui:message key="<%= triggerState.toString() %>" />
-					</h6>
+					</span>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-jsp

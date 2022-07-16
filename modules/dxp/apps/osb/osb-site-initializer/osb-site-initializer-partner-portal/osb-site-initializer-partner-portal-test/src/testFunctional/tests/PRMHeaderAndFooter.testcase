@@ -69,5 +69,31 @@ definition {
         }
     }
 
+    @description = "This is a test for LPS-158387. It ensures that PRM Marketing Page can be acessed."
+	@priority = "5"
+	test CanNavigateToMarketingPage {
+        task ("Go to Marketing Tab") {
+            PRMNavigator.goToNavItem(navItem = "Marketing");
+        }
+
+        task ("Verify if page title is 'Marketing'") {
+            PRMUtils.assertPageTitle(pageTitle = "Marketing");   
+        }
+
+        task ("Verify if the current active breadcrumb is 'Marketing'") {
+            PRMNavigator.assertActiveBreadcrumb(activeItem = "Marketing");
+        }
+
+        task ("Verify if page title is 'Marketing - Partner Portal Name - Liferay DXP") {
+            PRMUtils.assertTabTitle(
+                pageName = "Marketing",
+                siteName = "${testSiteName}");
+        }
+
+        task ("Verify if current URL contains 'partner-portal-name/marketing") {
+            AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/marketing");
+        }
+    }
+
 
 }

@@ -95,5 +95,31 @@ definition {
         }
     }
 
+    @description = "This is a test for LPS-158388. It ensures that PRM Enablement Page can be acessed."
+	@priority = "5"
+	test CanNavigateToEnablementPage {
+        task ("Go to Enablement Tab") {
+            PRMNavigator.goToNavItem(navItem = "Enablement");
+        }
+
+        task ("Verify if page title is 'Enablement'") {
+            PRMUtils.assertPageTitle(pageTitle = "Enablement");   
+        }
+
+        task ("Verify if the current active breadcrumb is 'Enablement'") {
+            PRMNavigator.assertActiveBreadcrumb(activeItem = "Enablement");
+        }
+
+        task ("Verify if page title is 'Enablement - Partner Portal Name - Liferay DXP") {
+            PRMUtils.assertTabTitle(
+                pageName = "Enablement",
+                siteName = "${testSiteName}");
+        }
+
+        task ("Verify if current URL contains 'partner-portal-name/enablement") {
+            AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/enablement");
+        }
+    }
+
 
 }

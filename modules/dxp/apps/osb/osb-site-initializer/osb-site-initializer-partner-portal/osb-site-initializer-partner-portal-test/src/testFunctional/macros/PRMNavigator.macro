@@ -1,0 +1,13 @@
+definition {
+    macro goToNavItem {
+        Click(
+            locator1 = "PRMNavigation#NAV_LINK",
+            key_navItem = "${navItem}");
+    }
+
+    macro assertActiveBreadcrumb {
+        AssertElementPresent(
+            locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
+            value1 = "${activeItem}");
+    }
+}

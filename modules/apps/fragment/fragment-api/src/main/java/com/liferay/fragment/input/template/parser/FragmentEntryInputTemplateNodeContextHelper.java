@@ -109,11 +109,18 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 					LanguageUtil.get(locale, "add-your-help-text-here"), true,
 					"text"),
 				locale));
+
+		String defaultInputLabel = _defaultInputLabel;
+
+		if (infoField != null) {
+			defaultInputLabel = infoField.getLabel(locale);
+		}
+
 		String inputLabel = GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
 				fragmentEntryLink.getEditableValues(),
 				new FragmentConfigurationField(
-					"inputLabel", "string", _defaultInputLabel, true, "text"),
+					"inputLabel", "string", defaultInputLabel, true, "text"),
 				locale));
 
 		String name = "name";

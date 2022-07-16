@@ -52,11 +52,6 @@ PortletURL portletURL = PortletURLBuilder.create(
 					keyProperty="dispatchTriggerId"
 					modelVar="dispatchTrigger"
 				>
-					<liferay-ui:search-container-column-jsp
-						cssClass="entry-action-column"
-						path="/dispatch_trigger_action.jsp"
-					/>
-
 					<liferay-ui:search-container-column-text
 						cssClass="font-weight-bold important table-cell-expand"
 						href='<%=
@@ -134,6 +129,11 @@ PortletURL portletURL = PortletURLBuilder.create(
 							</liferay-ui:search-container-column-text>
 						</c:otherwise>
 					</c:choose>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="entry-action-column"
+						path="/dispatch_trigger_action.jsp"
+					/>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator

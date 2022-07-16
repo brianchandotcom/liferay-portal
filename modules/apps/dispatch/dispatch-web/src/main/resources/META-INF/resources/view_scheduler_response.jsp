@@ -34,11 +34,6 @@ SchedulerResponseDisplayContext schedulerResponseDisplayContext = (SchedulerResp
 				className="com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse"
 				modelVar="schedulerResponse"
 			>
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/scheduler_response_action.jsp"
-				/>
-
 				<liferay-ui:search-container-column-text
 					cssClass="font-weight-bold important table-cell-expand"
 					name="name"
@@ -75,6 +70,11 @@ SchedulerResponseDisplayContext schedulerResponseDisplayContext = (SchedulerResp
 				<liferay-ui:search-container-column-jsp
 					cssClass="table-cell-ws-nowrap"
 					path="/scheduler_response_buttons.jsp"
+				/>
+
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action-column"
+					path="/scheduler_response_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

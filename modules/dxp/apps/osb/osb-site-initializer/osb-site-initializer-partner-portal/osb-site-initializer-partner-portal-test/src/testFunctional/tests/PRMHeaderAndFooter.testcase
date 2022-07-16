@@ -1,0 +1,73 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property osgi.modules.includes = "osb-site-initializer-partner-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Partner Portal";
+
+	var testSiteName = "Partner Portal Name";
+	var testSiteURL = "partner-portal-name";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+        task ("Create a new Partner Portal Site") {
+			Site.openSitesAdmin();
+
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Liferay OSB Site Initializer Partner Portal");
+		}
+
+        task ("Go to Partner Portal") {
+            ApplicationsMenu.gotoSite(site = "Partner Portal Name");
+        }
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+    @description = "This is a test for LPS-158386. It ensures that PRM Home Page can be acessed."
+	@priority = "5"
+	test CanNavigateToHomePage {
+        
+        task ("Go to Home Tab") {
+            PRMNavigator.goToNavItem(navItem = "Home");
+        }
+
+        task ("Verify if page title is 'Home'") {
+            PRMUtils.assertPageTitle(pageTitle = "Home");   
+        }
+
+        task ("Verify if the current active breadcrumb is 'Home'") {
+            PRMNavigator.assertActiveBreadcrumb(activeItem = "Home");
+        }
+
+        task ("Verify if page title is 'Home - Partner Portal Name - Liferay DXP") {
+            PRMUtils.assertTabTitle(
+                pageName = "Home",
+                siteName = "${testSiteName}");
+        }
+
+        task ("Verify if current URL contains 'partner-portal-name/home") {
+            AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/home");
+        }
+    }
+
+
+}

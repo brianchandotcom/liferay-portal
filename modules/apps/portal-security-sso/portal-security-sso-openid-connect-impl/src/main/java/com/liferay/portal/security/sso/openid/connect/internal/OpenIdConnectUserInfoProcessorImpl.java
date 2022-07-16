@@ -140,7 +140,7 @@ public class OpenIdConnectUserInfoProcessorImpl
 
 	private long[] _getRoleIds(long companyId, String issuer) {
 		if (Validator.isNull(issuer) ||
-			Objects.equals(
+			!Objects.equals(
 				issuer,
 				_props.get(
 					"open.id.connect.user.info.processor.impl.issuer"))) {

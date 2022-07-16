@@ -46,7 +46,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 		super(portalCacheManager);
 
-		this.ehcache = ehcache;
+		_ehcache = ehcache;
 
 		RegisteredEventListeners registeredEventListeners =
 			ehcache.getCacheEventNotificationService();
@@ -59,27 +59,27 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	public Ehcache getEhcache() {
-		return ehcache;
+		return _ehcache;
 	}
 
 	@Override
 	public List<K> getKeys() {
-		return ehcache.getKeys();
+		return _ehcache.getKeys();
 	}
 
 	@Override
 	public String getPortalCacheName() {
-		return ehcache.getName();
+		return _ehcache.getName();
 	}
 
 	@Override
 	public void removeAll() {
-		ehcache.removeAll();
+		_ehcache.removeAll();
 	}
 
 	@Override
 	protected V doGet(K key) {
-		Element element = ehcache.get(key);
+		Element element = _ehcache.get(key);
 
 		if (element == null) {
 			return null;
@@ -96,7 +96,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 			element.setTimeToLive(timeToLive);
 		}
 
-		ehcache.put(element);
+		_ehcache.put(element);
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 			element.setTimeToLive(timeToLive);
 		}
 
-		Element oldElement = ehcache.putIfAbsent(element);
+		Element oldElement = _ehcache.putIfAbsent(element);
 
 		if (oldElement == null) {
 			return null;
@@ -118,14 +118,14 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected void doRemove(K key) {
-		ehcache.remove(key);
+		_ehcache.remove(key);
 	}
 
 	@Override
 	protected boolean doRemove(K key, V value) {
 		Element element = new Element(key, value);
 
-		return ehcache.removeElement(element);
+		return _ehcache.removeElement(element);
 	}
 
 	@Override
@@ -136,7 +136,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 			element.setTimeToLive(timeToLive);
 		}
 
-		Element oldElement = ehcache.replace(element);
+		Element oldElement = _ehcache.replace(element);
 
 		if (oldElement == null) {
 			return null;
@@ -155,7 +155,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 			newElement.setTimeToLive(timeToLive);
 		}
 
-		return ehcache.replace(oldElement, newElement);
+		return _ehcache.replace(oldElement, newElement);
 	}
 
 	protected Map<PortalCacheListener<K, V>, PortalCacheListenerScope>
@@ -174,9 +174,9 @@ public class EhcachePortalCache<K extends Serializable, V>
 				aggregatedPortalCacheListener, this),
 			NotificationScope.ALL);
 
-		Ehcache oldEhcache = this.ehcache;
+		Ehcache oldEhcache = _ehcache;
 
-		this.ehcache = ehcache;
+		_ehcache = ehcache;
 
 		registeredEventListeners =
 			oldEhcache.getCacheEventNotificationService();
@@ -189,6 +189,6 @@ public class EhcachePortalCache<K extends Serializable, V>
 		}
 	}
 
-	protected volatile Ehcache ehcache;
+	private volatile Ehcache _ehcache;
 
 }

@@ -18,7 +18,7 @@ definition {
 			User.firstLoginPG();
 		}
 
-        task ("Create a new Partner Portal Site") {
+		task ("Create a new Partner Portal Site") {
 			Site.openSitesAdmin();
 
 			TeamExtranet.addSiteTemplateCP(
@@ -26,9 +26,9 @@ definition {
 				siteTemplateName = "Liferay OSB Site Initializer Partner Portal");
 		}
 
-        task ("Go to Partner Portal") {
-            ApplicationsMenu.gotoSite(site = "Partner Portal Name");
-        }
+		task ("Go to Partner Portal") {
+			ApplicationsMenu.gotoSite(site = "Partner Portal Name");
+		}
 	}
 
 	tearDown {
@@ -42,109 +42,108 @@ definition {
 		}
 	}
 
-    @description = "This is a test for LPS-158386. It ensures that PRM Home Page can be acessed."
-	@priority = "5"
-	test CanNavigateToHomePage {
-        
-        task ("Go to Home Tab") {
-            PRMNavigator.goToNavItem(navItem = "Home");
-        }
-
-        task ("Verify if page title is 'Home'") {
-            PRMUtils.assertPageTitle(pageTitle = "Home");   
-        }
-
-        task ("Verify if the current active breadcrumb is 'Home'") {
-            PRMNavigator.assertActiveBreadcrumb(activeItem = "Home");
-        }
-
-        task ("Verify if page title is 'Home - Partner Portal Name - Liferay DXP") {
-            PRMUtils.assertTabTitle(
-                pageName = "Home",
-                siteName = "${testSiteName}");
-        }
-
-        task ("Verify if current URL contains 'partner-portal-name/home") {
-            AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/home");
-        }
-    }
-
-    @description = "This is a test for LPS-158387. It ensures that PRM Marketing Page can be acessed."
-	@priority = "5"
-	test CanNavigateToMarketingPage {
-        task ("Go to Marketing Tab") {
-            PRMNavigator.goToNavItem(navItem = "Marketing");
-        }
-
-        task ("Verify if page title is 'Marketing'") {
-            PRMUtils.assertPageTitle(pageTitle = "Marketing");   
-        }
-
-        task ("Verify if the current active breadcrumb is 'Marketing'") {
-            PRMNavigator.assertActiveBreadcrumb(activeItem = "Marketing");
-        }
-
-        task ("Verify if page title is 'Marketing - Partner Portal Name - Liferay DXP") {
-            PRMUtils.assertTabTitle(
-                pageName = "Marketing",
-                siteName = "${testSiteName}");
-        }
-
-        task ("Verify if current URL contains 'partner-portal-name/marketing") {
-            AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/marketing");
-        }
-    }
-
-    @description = "This is a test for LPS-158388. It ensures that PRM Enablement Page can be acessed."
+	@description = "This is a test for LPS-158388. It ensures that PRM Enablement Page can be acessed."
 	@priority = "5"
 	test CanNavigateToEnablementPage {
-        task ("Go to Enablement Tab") {
-            PRMNavigator.goToNavItem(navItem = "Enablement");
-        }
+		task ("Go to Enablement Tab") {
+			PRMNavigator.goToNavItem(navItem = "Enablement");
+		}
 
-        task ("Verify if page title is 'Enablement'") {
-            PRMUtils.assertPageTitle(pageTitle = "Enablement");   
-        }
+		task ("Verify if page title is 'Enablement'") {
+			PRMUtils.assertPageTitle(pageTitle = "Enablement");
+		}
 
-        task ("Verify if the current active breadcrumb is 'Enablement'") {
-            PRMNavigator.assertActiveBreadcrumb(activeItem = "Enablement");
-        }
+		task ("Verify if the current active breadcrumb is 'Enablement'") {
+			PRMNavigator.assertActiveBreadcrumb(activeItem = "Enablement");
+		}
 
-        task ("Verify if page title is 'Enablement - Partner Portal Name - Liferay DXP") {
-            PRMUtils.assertTabTitle(
-                pageName = "Enablement",
-                siteName = "${testSiteName}");
-        }
+		task ("Verify if page title is 'Enablement - Partner Portal Name - Liferay DXP") {
+			PRMUtils.assertTabTitle(
+				pageName = "Enablement",
+				siteName = "${testSiteName}");
+		}
 
-        task ("Verify if current URL contains 'partner-portal-name/enablement") {
-            AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/enablement");
-        }
-    }
+		task ("Verify if current URL contains 'partner-portal-name/enablement") {
+			AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/enablement");
+		}
+	}
 
-    @description = "This is a test for LPS-158389. It ensures that PRM Sales Page can be acessed."
+	@description = "This is a test for LPS-158386. It ensures that PRM Home Page can be acessed."
+	@priority = "5"
+	test CanNavigateToHomePage {
+		task ("Go to Home Tab") {
+			PRMNavigator.goToNavItem(navItem = "Home");
+		}
+
+		task ("Verify if page title is 'Home'") {
+			PRMUtils.assertPageTitle(pageTitle = "Home");
+		}
+
+		task ("Verify if the current active breadcrumb is 'Home'") {
+			PRMNavigator.assertActiveBreadcrumb(activeItem = "Home");
+		}
+
+		task ("Verify if page title is 'Home - Partner Portal Name - Liferay DXP") {
+			PRMUtils.assertTabTitle(
+				pageName = "Home",
+				siteName = "${testSiteName}");
+		}
+
+		task ("Verify if current URL contains 'partner-portal-name/home") {
+			AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/home");
+		}
+	}
+
+	@description = "This is a test for LPS-158387. It ensures that PRM Marketing Page can be acessed."
+	@priority = "5"
+	test CanNavigateToMarketingPage {
+		task ("Go to Marketing Tab") {
+			PRMNavigator.goToNavItem(navItem = "Marketing");
+		}
+
+		task ("Verify if page title is 'Marketing'") {
+			PRMUtils.assertPageTitle(pageTitle = "Marketing");
+		}
+
+		task ("Verify if the current active breadcrumb is 'Marketing'") {
+			PRMNavigator.assertActiveBreadcrumb(activeItem = "Marketing");
+		}
+
+		task ("Verify if page title is 'Marketing - Partner Portal Name - Liferay DXP") {
+			PRMUtils.assertTabTitle(
+				pageName = "Marketing",
+				siteName = "${testSiteName}");
+		}
+
+		task ("Verify if current URL contains 'partner-portal-name/marketing") {
+			AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/marketing");
+		}
+	}
+
+	@description = "This is a test for LPS-158389. It ensures that PRM Sales Page can be acessed."
 	@priority = "5"
 	test CanNavigateToSalesPage {
-        task ("Go to Sales Tab") {
-            PRMNavigator.goToNavItem(navItem = "Sales");
-        }
+		task ("Go to Sales Tab") {
+			PRMNavigator.goToNavItem(navItem = "Sales");
+		}
 
-        task ("Verify if page title is 'Sales'") {
-            PRMUtils.assertPageTitle(pageTitle = "Sales");   
-        }
+		task ("Verify if page title is 'Sales'") {
+			PRMUtils.assertPageTitle(pageTitle = "Sales");
+		}
 
-        task ("Verify if the current active breadcrumb is 'Sales'") {
-            PRMNavigator.assertActiveBreadcrumb(activeItem = "Sales");
-        }
+		task ("Verify if the current active breadcrumb is 'Sales'") {
+			PRMNavigator.assertActiveBreadcrumb(activeItem = "Sales");
+		}
 
-        task ("Verify if page title is 'Sales - Partner Portal Name - Liferay DXP") {
-            PRMUtils.assertTabTitle(
-                pageName = "Sales",
-                siteName = "${testSiteName}");
-        }
+		task ("Verify if page title is 'Sales - Partner Portal Name - Liferay DXP") {
+			PRMUtils.assertTabTitle(
+				pageName = "Sales",
+				siteName = "${testSiteName}");
+		}
 
-        task ("Verify if current URL contains 'partner-portal-name/sales") {
-            AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/sales");
-        }
-    }
+		task ("Verify if current URL contains 'partner-portal-name/sales") {
+			AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/sales");
+		}
+	}
 
 }

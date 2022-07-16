@@ -1,14 +1,15 @@
 definition {
 
-    macro assertPageTitle {
-        AssertElementPresent(
-            locator1 = "Header#H1_TITLE",
-            key_title = "${pageTitle}");
-    }
+	macro assertPageTitle {
+		AssertElementPresent(
+			key_title = "${pageTitle}",
+			locator1 = "Header#H1_TITLE");
+	}
 
-    macro assertTabTitle {
-        AssertElementPresent(
-            locator1 = "PRMUtils#TAB_TITLE",
-            key_tabTitle = "${pageName} - ${siteName} - Liferay DXP");
-    }
+	macro assertTabTitle {
+		AssertElementPresent(
+			key_tabTitle = "${pageName} - ${siteName} - Liferay DXP",
+			locator1 = "PRMUtils#TAB_TITLE");
+	}
+
 }

@@ -121,5 +121,30 @@ definition {
         }
     }
 
+    @description = "This is a test for LPS-158389. It ensures that PRM Sales Page can be acessed."
+	@priority = "5"
+	test CanNavigateToSalesPage {
+        task ("Go to Sales Tab") {
+            PRMNavigator.goToNavItem(navItem = "Sales");
+        }
+
+        task ("Verify if page title is 'Sales'") {
+            PRMUtils.assertPageTitle(pageTitle = "Sales");   
+        }
+
+        task ("Verify if the current active breadcrumb is 'Sales'") {
+            PRMNavigator.assertActiveBreadcrumb(activeItem = "Sales");
+        }
+
+        task ("Verify if page title is 'Sales - Partner Portal Name - Liferay DXP") {
+            PRMUtils.assertTabTitle(
+                pageName = "Sales",
+                siteName = "${testSiteName}");
+        }
+
+        task ("Verify if current URL contains 'partner-portal-name/sales") {
+            AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/sales");
+        }
+    }
 
 }

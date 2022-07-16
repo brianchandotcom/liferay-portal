@@ -41,7 +41,6 @@ PortletURL portletURL = PortletURLBuilder.create(
 		<aui:form action="<%= portletURL %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-			<aui:input name="deleteDispatchTriggerIds" type="hidden" />
 
 			<liferay-ui:search-container
 				id="dispatchTriggers"

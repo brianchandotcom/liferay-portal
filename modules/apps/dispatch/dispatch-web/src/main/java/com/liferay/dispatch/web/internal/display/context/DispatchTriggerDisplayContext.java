@@ -20,16 +20,22 @@ import com.liferay.dispatch.metadata.DispatchTriggerMetadata;
 import com.liferay.dispatch.metadata.DispatchTriggerMetadataProvider;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -55,6 +61,47 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 		_dispatchTaskExecutorRegistry = dispatchTaskExecutorRegistry;
 		_dispatchTriggerLocalService = dispatchTriggerLocalService;
 		_dispatchTriggerMetadataProvider = dispatchTriggerMetadataProvider;
+	}
+
+	public List<DropdownItem> getActionDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteEntries");
+				dropdownItem.setIcon("times");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						dispatchRequestHelper.getLocale(), "delete"));
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
+	}
+
+	public CreationMenu getCreationMenu() {
+		CreationMenu creationMenu = new CreationMenu();
+
+		for (String dispatchTaskExecutorType : getDispatchTaskExecutorTypes()) {
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						PortletURLBuilder.createRenderURL(
+							dispatchRequestHelper.getLiferayPortletResponse()
+						).setMVCRenderCommandName(
+							"/dispatch/edit_dispatch_trigger"
+						).setCMD(
+							Constants.ADD
+						).setRedirect(
+							dispatchRequestHelper.getCurrentURL()
+						).setParameter(
+							"dispatchTaskExecutorType", dispatchTaskExecutorType
+						).buildRenderURL());
+					dropdownItem.setLabel(
+						getDispatchTaskExecutorName(
+							dispatchTaskExecutorType,
+							dispatchRequestHelper.getLocale()));
+				});
+		}
+
+		return creationMenu;
 	}
 
 	public String getDispatchTaskExecutorName(
@@ -114,7 +161,7 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 		return _orderByType;
 	}
 
-	public PortletURL getPortletURL() throws PortalException {
+	public PortletURL getPortletURL() {
 		LiferayPortletResponse liferayPortletResponse =
 			dispatchRequestHelper.getLiferayPortletResponse();
 
@@ -146,9 +193,7 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 		return _rowChecker;
 	}
 
-	public SearchContainer<DispatchTrigger> getSearchContainer()
-		throws PortalException {
-
+	public SearchContainer<DispatchTrigger> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -170,6 +215,14 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 		_searchContainer.setRowChecker(getRowChecker());
 
 		return _searchContainer;
+	}
+
+	public ViewTypeItemList getViewTypeItems() {
+		return new ViewTypeItemList(getPortletURL(), "list") {
+			{
+				addTableViewTypeItem();
+			}
+		};
 	}
 
 	public boolean isClusterModeSingle(String type) {

@@ -132,8 +132,7 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			deleteDispatchTriggerIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteDispatchTriggerIds"),
-				0L);
+				ParamUtil.getString(actionRequest, "rowIds"), 0L);
 		}
 
 		for (long deleteDispatchTriggerId : deleteDispatchTriggerIds) {

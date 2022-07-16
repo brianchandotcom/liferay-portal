@@ -49,6 +49,7 @@ SchedulerResponseDisplayContext schedulerResponseDisplayContext = (SchedulerResp
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-ws-nowrap"
 					name="next-fire-date"
 					value="<%= schedulerResponseDisplayContext.getNextFireDateString(schedulerResponse) %>"
 				/>

@@ -171,76 +171,93 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 						</c:if>
 
 						<div class="task-content-actions">
-							<liferay-ui:icon-list>
-								<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
-									<portlet:renderURL var="viewFullContentURL">
-										<portlet:param name="mvcPath" value="/view_content.jsp" />
+							<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
+								<portlet:renderURL var="viewFullContentURL">
+									<portlet:param name="mvcPath" value="/view_content.jsp" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="languageId" value="<%= languageId %>" />
+
+									<c:if test="<%= assetEntry != null %>">
+										<portlet:param name="assetEntryId" value="<%= String.valueOf(assetEntry.getEntryId()) %>" />
+										<portlet:param name="assetEntryClassPK" value="<%= String.valueOf(assetEntry.getClassPK()) %>" />
+									</c:if>
+
+									<c:if test="<%= assetRendererFactory != null %>">
+										<portlet:param name="type" value="<%= assetRendererFactory.getType() %>" />
+									</c:if>
+
+									<portlet:param name="showEditURL" value="<%= String.valueOf(workflowTaskDisplayContext.isShowEditURL(workflowTask)) %>" />
+									<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
+								</portlet:renderURL>
+
+								<liferay-ui:icon
+									icon="view"
+									label="<%= false %>"
+									linkCssClass="btn btn-monospaced btn-outline-secondary"
+									markupView="lexicon"
+									message="view[action]"
+									toolTip="<%= true %>"
+									url="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>"
+								/>
+
+								<c:if test="<%= workflowTaskDisplayContext.hasViewDiffsPortletURL(workflowTask) %>">
+									<liferay-ui:icon
+										icon="paste"
+										label="<%= false %>"
+										linkCssClass="btn btn-monospaced btn-outline-secondary"
+										markupView="lexicon"
+										message="diffs"
+										toolTip="<%= true %>"
+										url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>"
+									/>
+								</c:if>
+
+								<c:if test="<%= assetEntry != null %>">
+									<portlet:renderURL var="viewLayoutClassedModelUsagesURL">
+										<portlet:param name="mvcPath" value="/view_layout_classed_model_usages.jsp" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />
-										<portlet:param name="languageId" value="<%= languageId %>" />
-
-										<c:if test="<%= assetEntry != null %>">
-											<portlet:param name="assetEntryId" value="<%= String.valueOf(assetEntry.getEntryId()) %>" />
-											<portlet:param name="assetEntryClassPK" value="<%= String.valueOf(assetEntry.getClassPK()) %>" />
-										</c:if>
-
-										<c:if test="<%= assetRendererFactory != null %>">
-											<portlet:param name="type" value="<%= assetRendererFactory.getType() %>" />
-										</c:if>
-
-										<portlet:param name="showEditURL" value="<%= String.valueOf(workflowTaskDisplayContext.isShowEditURL(workflowTask)) %>" />
+										<portlet:param name="className" value="<%= assetEntry.getClassName() %>" />
+										<portlet:param name="classPK" value="<%= String.valueOf(assetEntry.getClassPK()) %>" />
 										<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 									</portlet:renderURL>
 
-									<liferay-frontend:management-bar-button
-										href="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>"
-										icon="view"
-										label="view[action]"
+									<liferay-ui:icon
+										icon="list"
+										label="<%= false %>"
+										linkCssClass="btn btn-monospaced btn-outline-secondary"
+										markupView="lexicon"
+										message="view-usages"
+										toolTip="<%= true %>"
+										url="<%= viewLayoutClassedModelUsagesURL %>"
 									/>
-
-									<c:if test="<%= workflowTaskDisplayContext.hasViewDiffsPortletURL(workflowTask) %>">
-										<liferay-frontend:management-bar-button
-											href="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>"
-											icon="paste"
-											label="diffs"
-										/>
-									</c:if>
-
-									<c:if test="<%= assetEntry != null %>">
-										<portlet:renderURL var="viewLayoutClassedModelUsagesURL">
-											<portlet:param name="mvcPath" value="/view_layout_classed_model_usages.jsp" />
-											<portlet:param name="redirect" value="<%= currentURL %>" />
-											<portlet:param name="className" value="<%= assetEntry.getClassName() %>" />
-											<portlet:param name="classPK" value="<%= String.valueOf(assetEntry.getClassPK()) %>" />
-											<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-										</portlet:renderURL>
-
-										<liferay-frontend:management-bar-button
-											href="<%= viewLayoutClassedModelUsagesURL %>"
-											icon="list"
-											label="view-usages"
-										/>
-									</c:if>
 								</c:if>
+							</c:if>
 
-								<c:if test="<%= workflowTaskDisplayContext.hasEditPortletURL(workflowTask) %>">
-									<c:choose>
-										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && workflowTaskDisplayContext.isShowEditURL(workflowTask) %>">
-											<liferay-frontend:management-bar-button
-												href="<%= workflowTaskDisplayContext.getTaglibEditURL(workflowTask) %>"
-												icon="pencil"
-												label="edit"
-											/>
-										</c:when>
-										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && !workflowTaskDisplayContext.isShowEditURL(workflowTask) && !workflowTask.isCompleted() %>">
-											<liferay-frontend:management-bar-button
-												href=""
-												icon="question-circle-full"
-												label="please-assign-the-task-to-yourself-to-be-able-to-edit-the-content"
-											/>
-										</c:when>
-									</c:choose>
-								</c:if>
-							</liferay-ui:icon-list>
+							<c:if test="<%= workflowTaskDisplayContext.hasEditPortletURL(workflowTask) %>">
+								<c:choose>
+									<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && workflowTaskDisplayContext.isShowEditURL(workflowTask) %>">
+										<liferay-ui:icon
+											icon="pencil"
+											label="<%= false %>"
+											linkCssClass="btn btn-monospaced btn-outline-secondary"
+											markupView="lexicon"
+											message="edit"
+											toolTip="<%= true %>"
+											url="<%= workflowTaskDisplayContext.getTaglibEditURL(workflowTask) %>"
+										/>
+									</c:when>
+									<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && !workflowTaskDisplayContext.isShowEditURL(workflowTask) && !workflowTask.isCompleted() %>">
+										<liferay-ui:icon
+											icon="question-circle-full"
+											iconCssClass="btn btn-monospaced btn-outline-secondary"
+											label="<%= false %>"
+											markupView="lexicon"
+											message="please-assign-the-task-to-yourself-to-be-able-to-edit-the-content"
+											toolTip="<%= true %>"
+										/>
+									</c:when>
+								</c:choose>
+							</c:if>
 						</div>
 
 						<h3 class="task-content-title">

@@ -77,6 +77,14 @@ public class ClientExtensionEntryRelLocalServiceImpl
 	}
 
 	@Override
+	public void deleteClientExtensionEntryRels(
+		long companyId, String cetExternalReferenceCode) {
+
+		clientExtensionEntryRelPersistence.removeByC_CETERC(
+			companyId, cetExternalReferenceCode);
+	}
+
+	@Override
 	public ClientExtensionEntryRel fetchClientExtensionEntryRel(
 		long classNameId, long classPK, String type) {
 

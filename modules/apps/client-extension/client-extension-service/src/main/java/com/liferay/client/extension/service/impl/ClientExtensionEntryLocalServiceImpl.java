@@ -16,6 +16,7 @@ package com.liferay.client.extension.service.impl;
 
 import com.liferay.client.extension.exception.DuplicateClientExtensionEntryExternalReferenceCodeException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.service.base.ClientExtensionEntryLocalServiceBaseImpl;
 import com.liferay.client.extension.type.deployer.CETDeployer;
 import com.liferay.client.extension.type.factory.CETFactory;
@@ -153,7 +154,14 @@ public class ClientExtensionEntryLocalServiceImpl
 			ClientExtensionEntry clientExtensionEntry)
 		throws PortalException {
 
+		// Client Extension Entry
+
 		clientExtensionEntryPersistence.remove(clientExtensionEntry);
+
+		clientExtensionEntryLocalService.undeployClientExtensionEntry(
+			clientExtensionEntry);
+
+		// Resources
 
 		_resourceLocalService.deleteResource(
 			clientExtensionEntry.getCompanyId(),
@@ -161,8 +169,11 @@ public class ClientExtensionEntryLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			clientExtensionEntry.getClientExtensionEntryId());
 
-		clientExtensionEntryLocalService.undeployClientExtensionEntry(
-			clientExtensionEntry);
+		// Client Extension Entry Rels
+
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			clientExtensionEntry.getCompanyId(),
+			clientExtensionEntry.getExternalReferenceCode());
 
 		return clientExtensionEntry;
 	}
@@ -510,6 +521,10 @@ public class ClientExtensionEntryLocalServiceImpl
 
 	@Reference
 	private CETFactory _cetFactory;
+
+	@Reference
+	private ClientExtensionEntryRelLocalService
+		_clientExtensionEntryRelLocalService;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

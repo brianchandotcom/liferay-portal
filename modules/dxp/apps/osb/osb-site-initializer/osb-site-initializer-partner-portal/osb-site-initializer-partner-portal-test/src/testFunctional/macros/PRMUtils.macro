@@ -1,0 +1,14 @@
+definition {
+
+    macro assertPageTitle {
+        AssertElementPresent(
+            locator1 = "Header#H1_TITLE",
+            key_title = "${pageTitle}");
+    }
+
+    macro assertTabTitle {
+        AssertElementPresent(
+            locator1 = "PRMUtils#TAB_TITLE",
+            key_tabTitle = "${pageName} - ${siteName} - Liferay DXP");
+    }
+}

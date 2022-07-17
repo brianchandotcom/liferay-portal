@@ -22,6 +22,7 @@ export {deleteResource};
 
 export * from './TestrayBuild';
 export * from './TestrayCase';
+export * from './testrayFactorCategory';
 export * from './TestrayProject';
 export * from './TestrayRoutine';
 export * from './TestraySuite';

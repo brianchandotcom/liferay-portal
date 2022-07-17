@@ -16,22 +16,19 @@ import {useForm} from 'react-hook-form';
 
 import Form from '../../../components/Form';
 import Modal from '../../../components/Modal';
-import {
-	CreateFactorCategory,
-	UpdateFactorCategory,
-} from '../../../graphql/mutations/testrayFactorCategory';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalComponent} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
+import {
+	createFactorCategory,
+	updateFactorCategory,
+} from '../../../services/rest';
 
-type FactorCategoryForm = {
-	id?: number;
-	name: string;
-};
+type FactorCategoryForm = typeof yupSchema.factorCategory.__outputType;
 
 const FactorCategoryFormModal: React.FC<FormModalComponent> = ({
-	modal: {modalState, observer, onClose, onSubmit},
+	modal: {modalState, observer, onClose, onError, onSave, onSubmitRest},
 }) => {
 	const {
 		formState: {errors},
@@ -43,19 +40,12 @@ const FactorCategoryFormModal: React.FC<FormModalComponent> = ({
 	});
 
 	const _onSubmit = (form: FactorCategoryForm) =>
-		onSubmit(
-			{id: form.id, name: form.name},
-			{
-				createMutation: CreateFactorCategory,
-				updateMutation: UpdateFactorCategory,
-			}
-		);
-
-	const inputProps = {
-		errors,
-		register,
-		required: true,
-	};
+		onSubmitRest(form, {
+			create: createFactorCategory,
+			update: updateFactorCategory,
+		})
+			.then(onSave)
+			.catch(onError);
 
 	return (
 		<Modal
@@ -73,9 +63,11 @@ const FactorCategoryFormModal: React.FC<FormModalComponent> = ({
 			visible
 		>
 			<Form.Input
+				errors={errors}
 				label={i18n.translate('name')}
 				name="name"
-				{...inputProps}
+				register={register}
+				required
 			/>
 		</Modal>
 	);

@@ -12,80 +12,62 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
 import {useNavigate} from 'react-router-dom';
 
-import {DeleteBuild, UpdateBuild} from '../../../../graphql/mutations';
 import {TestrayBuild} from '../../../../graphql/queries';
 import useFormModal from '../../../../hooks/useFormModal';
+import useMutate from '../../../../hooks/useMutate';
 import i18n from '../../../../i18n';
+import {Security} from '../../../../security';
+import {deleteResource} from '../../../../services/rest';
+import {updateBuild} from '../../../../services/rest/TestrayBuild';
+import {Action} from '../../../../types';
 
 const useBuildActions = () => {
 	const formModal = useFormModal();
-	const [onUpdateBuild] = useMutation(UpdateBuild);
-	const [onDeleteBuild] = useMutation(DeleteBuild);
+	const {removeItemFromList, updateItemFromList} = useMutate();
 	const navigate = useNavigate();
 
 	const modal = formModal.modal;
 
-	return {
-		actions: [
-			{
-				action: () => alert('Archive'),
-				name: i18n.translate('archive'),
-			},
-			{
-				action: (testrayBuild: TestrayBuild) =>
-					navigate(`build/${testrayBuild.id}/update`),
-				name: i18n.translate('edit'),
-			},
-			{
-				action: (testrayBuild: TestrayBuild) =>
-					onUpdateBuild({
-						update(cache, {data: {updateBuild}}) {
-							cache.modify({
-								fields: {
-									builds(buildCache) {
-										return {
-											...buildCache,
-											items: buildCache.items.map(
-												(build: TestrayBuild) => {
-													if (
-														build.id ===
-														testrayBuild.id
-													) {
-														return {
-															...build,
-															promoted:
-																updateBuild.promoted,
-														};
-													}
+	const actions: Action[] = [
+		{
+			action: () => alert('Archive'),
+			name: i18n.translate('archive'),
+		},
+		{
+			action: (testrayBuild: TestrayBuild) =>
+				navigate(`build/${testrayBuild.id}/update`),
+			name: i18n.translate('edit'),
+			permission: 'UPDATE',
+		},
+		{
+			action: ({id, promoted}: TestrayBuild, mutate) =>
+				updateBuild(id, {
+					promoted: !promoted,
+				})
+					.then(() =>
+						updateItemFromList(mutate, id, {
+							promoted: !promoted,
+						})
+					)
+					.then(modal.onSuccess),
+			name: i18n.translate('promote'),
+			permission: 'UPDATE',
+		},
+		{
+			action: ({id}: TestrayBuild, mutate) =>
+				deleteResource(`/builds/${id}`)
+					.then(() => removeItemFromList(mutate, id))
+					.then(modal.onSave)
+					.catch(modal.onError),
+			name: i18n.translate('delete'),
+			permission: 'DELETE',
+		},
+	];
 
-													return build;
-												}
-											),
-										};
-									},
-								},
-							});
-						},
-						variables: {
-							data: {
-								promoted: !testrayBuild.promoted,
-							},
-							id: testrayBuild.id,
-						},
-					}).then(() => modal.onSave(null, {forceRefetch: false})),
-				name: i18n.translate('promote'),
-			},
-			{
-				action: ({id}: any) =>
-					onDeleteBuild({variables: {id}})
-						.then(() => modal.onSave())
-						.catch(modal.onError),
-				name: i18n.translate('delete'),
-			},
-		],
+	return {
+		actions: (row: any) => Security.filterActions(actions, row.actions),
 		formModal,
 	};
 };

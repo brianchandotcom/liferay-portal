@@ -18,12 +18,16 @@ import Avatar from '../../../../components/Avatar';
 import AssignToMe from '../../../../components/Avatar/AssigneToMe';
 import Code from '../../../../components/Code';
 import Container from '../../../../components/Layout/Container';
-import ListView from '../../../../components/ListView/ListView';
+import ListViewRest from '../../../../components/ListView/ListViewRest';
 import StatusBadge from '../../../../components/StatusBadge';
-import {TestrayCaseResult, getCaseResults} from '../../../../graphql/queries';
+import {TestrayCaseResult} from '../../../../graphql/queries';
 import useAssignCaseResult from '../../../../hooks/useAssignCaseResult';
 import i18n from '../../../../i18n';
 import {filters} from '../../../../schema/filter';
+import {
+	caseResultResource,
+	getCaseResultTransformData,
+} from '../../../../services/rest';
 import {getStatusLabel} from '../../../../util/constants';
 import {searchUtil} from '../../../../util/search';
 
@@ -33,12 +37,12 @@ const Build = () => {
 
 	return (
 		<Container className="mt-4">
-			<ListView
+			<ListViewRest
 				managementToolbarProps={{
 					filterFields: filters.build.results as any,
 					title: i18n.translate('tests'),
 				}}
-				query={getCaseResults}
+				resource={caseResultResource}
 				tableProps={{
 					columns: [
 						{
@@ -109,7 +113,7 @@ const Build = () => {
 					],
 					navigateTo: ({id}) => `case-result/${id}`,
 				}}
-				transformData={(data) => data?.caseResults}
+				transformData={getCaseResultTransformData}
 				variables={{
 					filter: searchUtil.eq('buildId', buildId as string),
 				}}

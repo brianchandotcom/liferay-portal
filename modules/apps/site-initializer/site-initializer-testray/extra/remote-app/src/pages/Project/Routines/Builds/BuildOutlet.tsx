@@ -12,7 +12,6 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import {useEffect} from 'react';
 import {
 	Outlet,
@@ -21,14 +20,14 @@ import {
 	useParams,
 } from 'react-router-dom';
 
-import {
-	TestrayBuild,
-	TypePagination,
-	getBuild,
-} from '../../../../graphql/queries';
-import {TestrayTask, getTasks} from '../../../../graphql/queries/testrayTask';
+import {useFetch} from '../../../../hooks/useFetch';
 import useHeader from '../../../../hooks/useHeader';
 import i18n from '../../../../i18n';
+import {getTasksTransformData, tasksResource} from '../../../../services/rest';
+import {
+	getBuildQuery,
+	getBuildTransformData,
+} from '../../../../services/rest/TestrayBuild';
 import BuildAlertBar from './BuildAlertBar';
 import BuildOverview from './BuildOverview';
 
@@ -40,18 +39,19 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 	const {pathname} = useLocation();
 	const {buildId, projectId, routineId} = useParams();
 	const {testrayProject, testrayRoutine}: any = useOutletContext();
-	const {data} = useQuery<{build: TestrayBuild}>(getBuild, {
-		variables: {
-			buildId,
-		},
-	});
 
-	const {data: testrayTasksData} = useQuery<
-		TypePagination<'tasks', TestrayTask>
-	>(getTasks);
+	const {data: testrayBuild, mutate: mutateBuild} = useFetch(
+		getBuildQuery(buildId as string),
+		getBuildTransformData
+	);
 
-	const testrayBuild = data?.build;
-	const testrayTasks = testrayTasksData?.tasks.items || [];
+	const {data: testrayTasksData} = useFetch(
+		tasksResource,
+		getTasksTransformData
+	);
+
+	const testrayTasks = testrayTasksData?.items || [];
+
 	const testrayTask = testrayTasks.find(
 		(testrayTask) => testrayTask?.build?.id === Number(buildId)
 	);
@@ -64,8 +64,10 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 
 	const {setHeading, setTabs} = useHeader({shouldUpdate: false});
 
+	const buildName = testrayBuild?.name;
+
 	useEffect(() => {
-		if (testrayBuild) {
+		if (buildName) {
 			setTimeout(() => {
 				setHeading([
 					{
@@ -81,12 +83,12 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 					{
 						category: i18n.translate('build').toUpperCase(),
 						path: basePath,
-						title: testrayBuild.name,
+						title: buildName,
 					},
 				]);
-			});
+			}, 0);
 		}
-	}, [basePath, setHeading, testrayBuild, testrayProject, testrayRoutine]);
+	}, [basePath, setHeading, buildName, testrayProject, testrayRoutine]);
 
 	useEffect(() => {
 		if (!isCurrentPathIgnored) {
@@ -138,7 +140,7 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 					</>
 				)}
 
-				<Outlet context={{testrayBuild}} />
+				<Outlet context={{mutateBuild, testrayBuild}} />
 			</>
 		);
 	}

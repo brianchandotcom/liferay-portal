@@ -17,12 +17,15 @@ import ClayIcon from '@clayui/icon';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView/ListView';
+import ListView from '../../../components/ListView/ListViewRest';
 import ProgressBar from '../../../components/ProgressBar';
 import useBuildHistory from '../../../data/useBuildHistory';
-import {getBuilds} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';
+import {
+	buildsResource,
+	getBuildsTransformData,
+} from '../../../services/rest/TestrayBuild';
 import {BUILD_STATUS} from '../../../util/constants';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
@@ -51,7 +54,7 @@ const Routine = () => {
 					filterFields: filters.build.index as any,
 					title: i18n.translate('build-history'),
 				}}
-				query={getBuilds}
+				resource={buildsResource}
 				tableProps={{
 					actions,
 					columns: [
@@ -182,7 +185,7 @@ const Routine = () => {
 					],
 					navigateTo: ({id}) => `build/${id}`,
 				}}
-				transformData={(data) => data?.builds}
+				transformData={getBuildsTransformData}
 				variables={{
 					filter: searchUtil.eq('routineId', routineId as string),
 				}}

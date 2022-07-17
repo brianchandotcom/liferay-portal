@@ -18,12 +18,12 @@ import {useOutletContext} from 'react-router-dom';
 
 import Avatar from '../../components/Avatar';
 import Container from '../../components/Layout/Container';
-import ListView from '../../components/ListView/ListView';
-import ProgressBar from '../../components/ProgressBar/';
+import ListView from '../../components/ListView/ListViewRest';
+import ProgressBar from '../../components/ProgressBar';
 import StatusBadge from '../../components/StatusBadge';
-import {getTasks} from '../../graphql/queries';
 import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
+import {getTasksTransformData, tasksResource} from '../../services/rest';
 import {SUBTASK_STATUS} from '../../util/constants';
 import {getTimeFromNow} from '../../util/date';
 import {routines} from '../../util/mock';
@@ -41,10 +41,10 @@ const TestFlow = () => {
 		<Container>
 			<ListView
 				managementToolbarProps={{
-					addButton: modal.open,
+					addButton: () => modal.open(),
 					title: i18n.translate('tasks'),
 				}}
-				query={getTasks}
+				resource={tasksResource}
 				tableProps={{
 					columns: [
 						{
@@ -63,10 +63,10 @@ const TestFlow = () => {
 						},
 						{
 							clickable: true,
-							key: 'dueDate',
+							key: 'dateCreated',
 							render: (_, task) =>
-								task?.build?.dueDate &&
-								getTimeFromNow(task?.build?.dueDate),
+								task?.build?.dateCreated &&
+								getTimeFromNow(task?.build?.dateCreated),
 							value: i18n.translate('start-date'),
 						},
 						{
@@ -124,7 +124,7 @@ const TestFlow = () => {
 					],
 					navigateTo: (item) => `/testflow/${item.id}`,
 				}}
-				transformData={(data) => data?.tasks}
+				transformData={getTasksTransformData}
 			/>
 
 			<TestflowModal modal={modal} />

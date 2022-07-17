@@ -22,9 +22,11 @@ export {deleteResource};
 
 export * from './TestrayBuild';
 export * from './TestrayCase';
-export * from './testrayFactorCategory';
+export * from './TestrayCaseResult';
+export * from './TestrayFactorCategory';
 export * from './TestrayProject';
 export * from './TestrayRequirement';
 export * from './TestrayRoutine';
 export * from './TestraySuite';
 export * from './TestraySuiteCases';
+export * from './TestrayTask';

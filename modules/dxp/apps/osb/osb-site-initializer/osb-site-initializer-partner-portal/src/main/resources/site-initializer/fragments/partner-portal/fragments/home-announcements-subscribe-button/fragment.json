@@ -1,9 +1,0 @@
-{
-	"configurationPath": "index.json",
-	"jsPath": "index.js",
-	"htmlPath": "index.html",
-	"cssPath": "index.css",
-	"icon": "code",
-	"name": "Home Announcements Subscribe Button",
-	"type": "component"
-}

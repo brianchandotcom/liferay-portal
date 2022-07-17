@@ -5,8 +5,33 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
+						"marginBottom": "9",
+						"paddingLeft": "6",
+						"paddingRight": "6",
 						"textAlign": ""
 					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "4",
+								"paddingRight": "4"
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"hidden": false
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "5",
+								"paddingRight": "5"
+							},
+							"id": "tablet"
+						}
+					],
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -15,8 +40,8 @@
 						"marginRight": 0,
 						"marginTop": 0,
 						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
+						"paddingLeft": 6,
+						"paddingRight": 6,
 						"paddingTop": 0,
 						"widthType": "Fluid"
 					}
@@ -24,23 +49,202 @@
 				"pageElements": [
 					{
 						"definition": {
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "marketing-welcome-banner"
+									},
+									"fragmentConfig": {
+										"secondaryButtonLink": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]"
+									},
+									"fragmentFields": [
+										{
+											"id": "first-banner-primary-button-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"en_US": "Watch a Video Tour",
+														"ar_SA": "Watch a Video Tour",
+														"ca_ES": "Watch a Video Tour",
+														"de_DE": "Watch a Video Tour",
+														"es_ES": "Watch a Video Tour",
+														"fi_FI": "Watch a Video Tour",
+														"fr_FR": "Watch a Video Tour",
+														"hu_HU": "Watch a Video Tour",
+														"ja_JP": "Watch a Video Tour",
+														"nl_NL": "Watch a Video Tour",
+														"pt_BR": "Watch a Video Tour",
+														"sv_SE": "Watch a Video Tour",
+														"zh_CN": "Watch a Video Tour"
+													}
+												}
+											}
+										},
+										{
+											"id": "second-banner-primary-button-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"en_US": "Watch a Video Tour",
+														"ar_SA": "Watch a Video Tour",
+														"ca_ES": "Watch a Video Tour",
+														"de_DE": "Watch a Video Tour",
+														"es_ES": "Watch a Video Tour",
+														"fi_FI": "Watch a Video Tour",
+														"fr_FR": "Watch a Video Tour",
+														"hu_HU": "Watch a Video Tour",
+														"ja_JP": "Watch a Video Tour",
+														"nl_NL": "Watch a Video Tour",
+														"pt_BR": "Watch a Video Tour",
+														"sv_SE": "Watch a Video Tour",
+														"zh_CN": "Watch a Video Tour"
+													}
+												}
+											}
+										},
+										{
+											"id": "second-banner-secondary-button-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"en_US": "Partner Marketing Guide",
+														"ar_SA": "Partner Marketing Guide",
+														"ca_ES": "Partner Marketing Guide",
+														"de_DE": "Partner Marketing Guide",
+														"es_ES": "Partner Marketing Guide",
+														"fi_FI": "Partner Marketing Guide",
+														"fr_FR": "Partner Marketing Guide",
+														"hu_HU": "Partner Marketing Guide",
+														"ja_JP": "Partner Marketing Guide",
+														"nl_NL": "Partner Marketing Guide",
+														"pt_BR": "Partner Marketing Guide",
+														"sv_SE": "Partner Marketing Guide",
+														"zh_CN": "Partner Marketing Guide"
+													}
+												}
+											}
+										},
+										{
+											"id": "first-welcome-banner-title",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"en_US": "Welcome to Partner Marketing",
+														"ar_SA": "Welcome to Partner Marketing",
+														"ca_ES": "Welcome to Partner Marketing",
+														"de_DE": "Welcome to Partner Marketing",
+														"es_ES": "Welcome to Partner Marketing",
+														"fi_FI": "Welcome to Partner Marketing",
+														"fr_FR": "Welcome to Partner Marketing",
+														"hu_HU": "Welcome to Partner Marketing",
+														"ja_JP": "Welcome to Partner Marketing",
+														"nl_NL": "Welcome to Partner Marketing",
+														"pt_BR": "Welcome to Partner Marketing",
+														"sv_SE": "Welcome to Partner Marketing",
+														"zh_CN": "Welcome to Partner Marketing"
+													}
+												}
+											}
+										},
+										{
+											"id": "first-banner-secondary-button-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"en_US": "Get Your Partner Marketing Guide",
+														"ar_SA": "Get Your Partner Marketing Guide",
+														"ca_ES": "Get Your Partner Marketing Guide",
+														"de_DE": "Get Your Partner Marketing Guide",
+														"es_ES": "Get Your Partner Marketing Guide",
+														"fi_FI": "Get Your Partner Marketing Guide",
+														"fr_FR": "Get Your Partner Marketing Guide",
+														"hu_HU": "Get Your Partner Marketing Guide",
+														"ja_JP": "Get Your Partner Marketing Guide",
+														"nl_NL": "Get Your Partner Marketing Guide",
+														"pt_BR": "Get Your Partner Marketing Guide",
+														"sv_SE": "Get Your Partner Marketing Guide",
+														"zh_CN": "Get Your Partner Marketing Guide"
+													}
+												}
+											}
+										},
+										{
+											"id": "first-welcome-banner-description",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"en_US": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+														"ar_SA": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+														"ca_ES": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+														"de_DE": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+														"es_ES": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+														"fi_FI": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+														"fr_FR": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+														"hu_HU": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+														"ja_JP": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+														"nl_NL": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+														"pt_BR": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+														"sv_SE": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+														"zh_CN": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline."
+													}
+												}
+											}
+										},
+										{
+											"id": "second-welcome-banner-title",
+											"value": {
+												"fragmentLink": {}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "5"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
 							"fragmentStyle": {
 								"borderWidth": "0",
-								"marginBottom": "9",
 								"textAlign": ""
 							},
 							"fragmentViewports": [
 								{
-									"fragmentViewportStyle": {
-										"hidden": true
-									},
-									"id": "landscapeMobile"
-								},
-								{
-									"fragmentViewportStyle": {
-										"hidden": true
-									},
-									"id": "portraitMobile"
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {},
+										"text": {
+											"value_i18n": {
+												"en_US": "Marketing"
+											}
+										}
+									}
 								}
 							],
 							"indexed": true,
@@ -70,23 +274,22 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-												},
+												"fragmentLink": {},
 												"text": {
 													"value_i18n": {
-														"ar_SA": "Quick Links",
+														"sv_SE": "Quick Links",
+														"pt_BR": "Quick Links",
+														"fr_FR": "Quick Links",
+														"ja_JP": "Quick Links",
 														"ca_ES": "Quick Links",
 														"de_DE": "Quick Links",
+														"hu_HU": "Quick Links",
+														"ar_SA": "Quick Links",
+														"fi_FI": "Quick Links",
 														"en_US": "Quick Links",
 														"es_ES": "Quick Links",
-														"fi_FI": "Quick Links",
-														"fr_FR": "Quick Links",
-														"hu_HU": "Quick Links",
-														"ja_JP": "Quick Links",
-														"nl_NL": "Quick Links",
-														"pt_BR": "Quick Links",
-														"sv_SE": "Quick Links",
-														"zh_CN": "Quick Links"
+														"zh_CN": "Quick Links",
+														"nl_NL": "Quick Links"
 													}
 												}
 											}
@@ -108,7 +311,7 @@
 									"fragmentStyle": {
 										"textAlign": ""
 									},
-									"gutters": false,
+									"gutters": true,
 									"indexed": true,
 									"modulesPerRow": 2,
 									"numberOfColumns": 4,
@@ -122,8 +325,7 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										},
 										{
 											"id": "tablet",
@@ -145,8 +347,7 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
@@ -166,7 +367,6 @@
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1",
 														"marginBottom": "4",
-														"marginRight": "4",
 														"paddingBottom": "4",
 														"paddingLeft": "4",
 														"paddingRight": "4",
@@ -180,7 +380,7 @@
 														"contentDisplay": "FlexRow",
 														"marginBottom": 2,
 														"marginLeft": 0,
-														"marginRight": 2,
+														"marginRight": 0,
 														"marginTop": 0,
 														"paddingBottom": 2,
 														"paddingLeft": 2,
@@ -213,8 +413,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -265,23 +464,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Marketing Development Funds (MDF)",
+																						"sv_SE": "Marketing Development Funds (MDF)",
+																						"pt_BR": "Marketing Development Funds (MDF)",
+																						"fr_FR": "Marketing Development Funds (MDF)",
+																						"ja_JP": "Marketing Development Funds (MDF)",
 																						"ca_ES": "Marketing Development Funds (MDF)",
 																						"de_DE": "Marketing Development Funds (MDF)",
+																						"hu_HU": "Marketing Development Funds (MDF)",
+																						"ar_SA": "Marketing Development Funds (MDF)",
+																						"fi_FI": "Marketing Development Funds (MDF)",
 																						"en_US": "Marketing Development Funds (MDF)",
 																						"es_ES": "Marketing Development Funds (MDF)",
-																						"fi_FI": "Marketing Development Funds (MDF)",
-																						"fr_FR": "Marketing Development Funds (MDF)",
-																						"hu_HU": "Marketing Development Funds (MDF)",
-																						"ja_JP": "Marketing Development Funds (MDF)",
-																						"nl_NL": "Marketing Development Funds (MDF)",
-																						"pt_BR": "Marketing Development Funds (MDF)",
-																						"sv_SE": "Marketing Development Funds (MDF)",
-																						"zh_CN": "Marketing Development Funds (MDF)"
+																						"zh_CN": "Marketing Development Funds (MDF)",
+																						"nl_NL": "Marketing Development Funds (MDF)"
 																					}
 																				}
 																			}
@@ -318,23 +516,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"sv_SE": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"pt_BR": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"fr_FR": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"ja_JP": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
 																						"ca_ES": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
 																						"de_DE": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"hu_HU": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"ar_SA": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"fi_FI": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
 																						"en_US": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
 																						"es_ES": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"fi_FI": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"fr_FR": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"hu_HU": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"ja_JP": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"nl_NL": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"pt_BR": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"sv_SE": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"zh_CN": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"
+																						"zh_CN": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"nl_NL": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"
 																					}
 																				}
 																			}
@@ -355,7 +552,8 @@
 																"definition": {
 																	"fragmentStyle": {
 																		"borderWidth": "0",
-																		"textAlign": ""
+																		"textAlign": "",
+																		"width": "fit-content"
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -376,7 +574,8 @@
 																	{
 																		"definition": {
 																			"fragmentStyle": {
-																				"borderWidth": "0"
+																				"borderWidth": "0",
+																				"textAlign": ""
 																			},
 																			"indexed": true,
 																			"layout": {
@@ -409,26 +608,38 @@
 																									"value": {
 																										"href": {
 																											"value_i18n": {
-																												"en_US": "https://www.liferay.com/"
+																												"en_US": "https://www.liferay.com/",
+																												"ar_SA": "https://www.liferay.com/",
+																												"ca_ES": "https://www.liferay.com/",
+																												"de_DE": "https://www.liferay.com/",
+																												"es_ES": "https://www.liferay.com/",
+																												"fi_FI": "https://www.liferay.com/",
+																												"fr_FR": "https://www.liferay.com/",
+																												"hu_HU": "https://www.liferay.com/",
+																												"ja_JP": "https://www.liferay.com/",
+																												"nl_NL": "https://www.liferay.com/",
+																												"pt_BR": "https://www.liferay.com/",
+																												"sv_SE": "https://www.liferay.com/",
+																												"zh_CN": "https://www.liferay.com/"
 																											}
 																										}
 																									}
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"ar_SA": "Apply for Funds",
+																										"sv_SE": "Apply for Funds",
+																										"pt_BR": "Apply for Funds",
+																										"fr_FR": "Apply for Funds",
+																										"ja_JP": "Apply for Funds",
 																										"ca_ES": "Apply for Funds",
 																										"de_DE": "Apply for Funds",
+																										"hu_HU": "Apply for Funds",
+																										"ar_SA": "Apply for Funds",
+																										"fi_FI": "Apply for Funds",
 																										"en_US": "Apply for Funds",
 																										"es_ES": "Apply for Funds",
-																										"fi_FI": "Apply for Funds",
-																										"fr_FR": "Apply for Funds",
-																										"hu_HU": "Apply for Funds",
-																										"ja_JP": "Apply for Funds",
-																										"nl_NL": "Apply for Funds",
-																										"pt_BR": "Apply for Funds",
-																										"sv_SE": "Apply for Funds",
-																										"zh_CN": "Apply for Funds"
+																										"zh_CN": "Apply for Funds",
+																										"nl_NL": "Apply for Funds"
 																									}
 																								}
 																							}
@@ -454,11 +665,10 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
-																				"iconLink": "",
+																				"iconLink": "https://www.liferay.com/",
 																				"iconName": "order-arrow-right"
 																			},
-																			"fragmentFields": [
-																			],
+																			"fragmentFields": [],
 																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorActionPrimaryDefault"
@@ -489,8 +699,7 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
@@ -510,7 +719,6 @@
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1",
 														"marginBottom": "4",
-														"marginRight": "4",
 														"paddingBottom": "4",
 														"paddingLeft": "4",
 														"paddingRight": "4",
@@ -524,7 +732,7 @@
 														"contentDisplay": "FlexRow",
 														"marginBottom": 2,
 														"marginLeft": 0,
-														"marginRight": 2,
+														"marginRight": 0,
 														"marginTop": 0,
 														"paddingBottom": 2,
 														"paddingLeft": 2,
@@ -557,8 +765,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -609,23 +816,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Marketing Resources",
+																						"sv_SE": "Marketing Resources",
+																						"pt_BR": "Marketing Resources",
+																						"fr_FR": "Marketing Resources",
+																						"ja_JP": "Marketing Resources",
 																						"ca_ES": "Marketing Resources",
 																						"de_DE": "Marketing Resources",
+																						"hu_HU": "Marketing Resources",
+																						"ar_SA": "Marketing Resources",
+																						"fi_FI": "Marketing Resources",
 																						"en_US": "Marketing Resources",
 																						"es_ES": "Marketing Resources",
-																						"fi_FI": "Marketing Resources",
-																						"fr_FR": "Marketing Resources",
-																						"hu_HU": "Marketing Resources",
-																						"ja_JP": "Marketing Resources",
-																						"nl_NL": "Marketing Resources",
-																						"pt_BR": "Marketing Resources",
-																						"sv_SE": "Marketing Resources",
-																						"zh_CN": "Marketing Resources"
+																						"zh_CN": "Marketing Resources",
+																						"nl_NL": "Marketing Resources"
 																					}
 																				}
 																			}
@@ -660,23 +866,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"sv_SE": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"pt_BR": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"fr_FR": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"ja_JP": "Explore all of the marketing tools and assets you need as available digital resources.",
 																						"ca_ES": "Explore all of the marketing tools and assets you need as available digital resources.",
 																						"de_DE": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"en_US": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"es_ES": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"fi_FI": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"fr_FR": "Explore all of the marketing tools and assets you need as available digital resources.",
 																						"hu_HU": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"ja_JP": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"nl_NL": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"pt_BR": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"sv_SE": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"zh_CN": "Explore all of the marketing tools and assets you need as available digital resources."
+																						"ar_SA": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"fi_FI": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"en_US": "Explore all of the marketing tools and assets you need as available digital resources.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;",
+																						"es_ES": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"zh_CN": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"nl_NL": "Explore all of the marketing tools and assets you need as available digital resources."
 																					}
 																				}
 																			}
@@ -696,7 +901,8 @@
 																"definition": {
 																	"fragmentStyle": {
 																		"borderWidth": "0",
-																		"textAlign": ""
+																		"textAlign": "",
+																		"width": "fit-content"
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -717,7 +923,8 @@
 																	{
 																		"definition": {
 																			"fragmentStyle": {
-																				"borderWidth": "0"
+																				"borderWidth": "0",
+																				"textAlign": ""
 																			},
 																			"indexed": true,
 																			"layout": {
@@ -750,26 +957,38 @@
 																									"value": {
 																										"href": {
 																											"value_i18n": {
-																												"en_US": "https://www.liferay.com/"
+																												"en_US": "https://www.liferay.com/",
+																												"ar_SA": "https://www.liferay.com/",
+																												"ca_ES": "https://www.liferay.com/",
+																												"de_DE": "https://www.liferay.com/",
+																												"es_ES": "https://www.liferay.com/",
+																												"fi_FI": "https://www.liferay.com/",
+																												"fr_FR": "https://www.liferay.com/",
+																												"hu_HU": "https://www.liferay.com/",
+																												"ja_JP": "https://www.liferay.com/",
+																												"nl_NL": "https://www.liferay.com/",
+																												"pt_BR": "https://www.liferay.com/",
+																												"sv_SE": "https://www.liferay.com/",
+																												"zh_CN": "https://www.liferay.com/"
 																											}
 																										}
 																									}
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"ar_SA": "View Marketing Resources",
+																										"sv_SE": "View Marketing Resources",
+																										"pt_BR": "View Marketing Resources",
+																										"fr_FR": "View Marketing Resources",
+																										"ja_JP": "View Marketing Resources",
 																										"ca_ES": "View Marketing Resources",
 																										"de_DE": "View Marketing Resources",
+																										"hu_HU": "View Marketing Resources",
+																										"ar_SA": "View Marketing Resources",
+																										"fi_FI": "View Marketing Resources",
 																										"en_US": "View Marketing Resources",
 																										"es_ES": "View Marketing Resources",
-																										"fi_FI": "View Marketing Resources",
-																										"fr_FR": "View Marketing Resources",
-																										"hu_HU": "View Marketing Resources",
-																										"ja_JP": "View Marketing Resources",
-																										"nl_NL": "View Marketing Resources",
-																										"pt_BR": "View Marketing Resources",
-																										"sv_SE": "View Marketing Resources",
-																										"zh_CN": "View Marketing Resources"
+																										"zh_CN": "View Marketing Resources",
+																										"nl_NL": "View Marketing Resources"
 																									}
 																								}
 																							}
@@ -795,11 +1014,10 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
-																				"iconLink": "",
+																				"iconLink": "https://www.liferay.com/",
 																				"iconName": "order-arrow-right"
 																			},
-																			"fragmentFields": [
-																			],
+																			"fragmentFields": [],
 																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorActionPrimaryDefault"
@@ -830,8 +1048,7 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
@@ -850,7 +1067,7 @@
 														"borderColor": "colorNeutral3",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1",
-														"marginRight": "4",
+														"marginBottom": "4",
 														"paddingBottom": "4",
 														"paddingLeft": "4",
 														"paddingRight": "4",
@@ -870,9 +1087,9 @@
 														"borderColor": "colorNeutral3",
 														"borderWidth": 1,
 														"contentDisplay": "FlexRow",
-														"marginBottom": 0,
+														"marginBottom": 2,
 														"marginLeft": 0,
-														"marginRight": 2,
+														"marginRight": 0,
 														"marginTop": 0,
 														"paddingBottom": 2,
 														"paddingLeft": 2,
@@ -905,8 +1122,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -957,23 +1173,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Partner Program Resources",
+																						"sv_SE": "Partner Program Resources",
+																						"pt_BR": "Partner Program Resources",
+																						"fr_FR": "Partner Program Resources",
+																						"ja_JP": "Partner Program Resources",
 																						"ca_ES": "Partner Program Resources",
 																						"de_DE": "Partner Program Resources",
+																						"hu_HU": "Partner Program Resources",
+																						"ar_SA": "Partner Program Resources",
+																						"fi_FI": "Partner Program Resources",
 																						"en_US": "Partner Program Resources",
 																						"es_ES": "Partner Program Resources",
-																						"fi_FI": "Partner Program Resources",
-																						"fr_FR": "Partner Program Resources",
-																						"hu_HU": "Partner Program Resources",
-																						"ja_JP": "Partner Program Resources",
-																						"nl_NL": "Partner Program Resources",
-																						"pt_BR": "Partner Program Resources",
-																						"sv_SE": "Partner Program Resources",
-																						"zh_CN": "Partner Program Resources"
+																						"zh_CN": "Partner Program Resources",
+																						"nl_NL": "Partner Program Resources"
 																					}
 																				}
 																			}
@@ -1008,23 +1223,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"sv_SE": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"pt_BR": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"fr_FR": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"ja_JP": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
 																						"ca_ES": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
 																						"de_DE": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"hu_HU": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"ar_SA": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"fi_FI": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
 																						"en_US": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
 																						"es_ES": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"fi_FI": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"fr_FR": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"hu_HU": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"ja_JP": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"nl_NL": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"pt_BR": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"sv_SE": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"zh_CN": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;"
+																						"zh_CN": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"nl_NL": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;"
 																					}
 																				}
 																			}
@@ -1043,7 +1257,9 @@
 															{
 																"definition": {
 																	"fragmentStyle": {
-																		"borderWidth": "0"
+																		"borderWidth": "0",
+																		"textAlign": "",
+																		"width": "fit-content"
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -1077,26 +1293,38 @@
 																							"value": {
 																								"href": {
 																									"value_i18n": {
-																										"en_US": "https://www.liferay.com/"
+																										"en_US": "https://www.liferay.com/",
+																										"ar_SA": "https://www.liferay.com/",
+																										"ca_ES": "https://www.liferay.com/",
+																										"de_DE": "https://www.liferay.com/",
+																										"es_ES": "https://www.liferay.com/",
+																										"fi_FI": "https://www.liferay.com/",
+																										"fr_FR": "https://www.liferay.com/",
+																										"hu_HU": "https://www.liferay.com/",
+																										"ja_JP": "https://www.liferay.com/",
+																										"nl_NL": "https://www.liferay.com/",
+																										"pt_BR": "https://www.liferay.com/",
+																										"sv_SE": "https://www.liferay.com/",
+																										"zh_CN": "https://www.liferay.com/"
 																									}
 																								}
 																							}
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"ar_SA": "View Partner Resources",
+																								"sv_SE": "View Partner Resources",
+																								"pt_BR": "View Partner Resources",
+																								"fr_FR": "View Partner Resources",
+																								"ja_JP": "View Partner Resources",
 																								"ca_ES": "View Partner Resources",
 																								"de_DE": "View Partner Resources",
+																								"hu_HU": "View Partner Resources",
+																								"ar_SA": "View Partner Resources",
+																								"fi_FI": "View Partner Resources",
 																								"en_US": "View Partner Resources",
 																								"es_ES": "View Partner Resources",
-																								"fi_FI": "View Partner Resources",
-																								"fr_FR": "View Partner Resources",
-																								"hu_HU": "View Partner Resources",
-																								"ja_JP": "View Partner Resources",
-																								"nl_NL": "View Partner Resources",
-																								"pt_BR": "View Partner Resources",
-																								"sv_SE": "View Partner Resources",
-																								"zh_CN": "View Partner Resources"
+																								"zh_CN": "View Partner Resources",
+																								"nl_NL": "View Partner Resources"
 																							}
 																						}
 																					}
@@ -1119,11 +1347,10 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
-																				"iconLink": "",
+																				"iconLink": "https://www.liferay.com/",
 																				"iconName": "order-arrow-right"
 																			},
-																			"fragmentFields": [
-																			],
+																			"fragmentFields": [],
 																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorActionPrimaryDefault"
@@ -1154,8 +1381,7 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
@@ -1174,7 +1400,7 @@
 														"borderColor": "colorNeutral3",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1",
-														"marginRight": "4",
+														"marginBottom": "4",
 														"paddingBottom": "4",
 														"paddingLeft": "4",
 														"paddingRight": "4",
@@ -1186,9 +1412,9 @@
 														"borderColor": "colorNeutral3",
 														"borderWidth": 1,
 														"contentDisplay": "FlexRow",
-														"marginBottom": 0,
+														"marginBottom": 2,
 														"marginLeft": 0,
-														"marginRight": 2,
+														"marginRight": 0,
 														"marginTop": 0,
 														"paddingBottom": 2,
 														"paddingLeft": 2,
@@ -1221,8 +1447,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -1273,23 +1498,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Events",
+																						"sv_SE": "Events",
+																						"pt_BR": "Events",
+																						"fr_FR": "Events",
+																						"ja_JP": "Events",
 																						"ca_ES": "Events",
 																						"de_DE": "Events",
+																						"hu_HU": "Events",
+																						"ar_SA": "Events",
+																						"fi_FI": "Events",
 																						"en_US": "Events",
 																						"es_ES": "Events",
-																						"fi_FI": "Events",
-																						"fr_FR": "Events",
-																						"hu_HU": "Events",
-																						"ja_JP": "Events",
-																						"nl_NL": "Events",
-																						"pt_BR": "Events",
-																						"sv_SE": "Events",
-																						"zh_CN": "Events"
+																						"zh_CN": "Events",
+																						"nl_NL": "Events"
 																					}
 																				}
 																			}
@@ -1324,23 +1548,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"sv_SE": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"pt_BR": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"fr_FR": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"ja_JP": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
 																						"ca_ES": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
 																						"de_DE": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"en_US": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"es_ES": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"fi_FI": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"fr_FR": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
 																						"hu_HU": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"ja_JP": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"nl_NL": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"pt_BR": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"sv_SE": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"zh_CN": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in."
+																						"ar_SA": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"fi_FI": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"en_US": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;",
+																						"es_ES": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"zh_CN": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"nl_NL": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in."
 																					}
 																				}
 																			}
@@ -1360,7 +1583,8 @@
 																"definition": {
 																	"fragmentStyle": {
 																		"borderWidth": "0",
-																		"textAlign": ""
+																		"textAlign": "",
+																		"width": "fit-content"
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -1394,26 +1618,38 @@
 																							"value": {
 																								"href": {
 																									"value_i18n": {
-																										"en_US": "https://www.liferay.com/"
+																										"en_US": "https://www.liferay.com/",
+																										"ar_SA": "https://www.liferay.com/",
+																										"ca_ES": "https://www.liferay.com/",
+																										"de_DE": "https://www.liferay.com/",
+																										"es_ES": "https://www.liferay.com/",
+																										"fi_FI": "https://www.liferay.com/",
+																										"fr_FR": "https://www.liferay.com/",
+																										"hu_HU": "https://www.liferay.com/",
+																										"ja_JP": "https://www.liferay.com/",
+																										"nl_NL": "https://www.liferay.com/",
+																										"pt_BR": "https://www.liferay.com/",
+																										"sv_SE": "https://www.liferay.com/",
+																										"zh_CN": "https://www.liferay.com/"
 																									}
 																								}
 																							}
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"ar_SA": "View Liferay Events",
+																								"sv_SE": "View Liferay Events",
+																								"pt_BR": "View Liferay Events",
+																								"fr_FR": "View Liferay Events",
+																								"ja_JP": "View Liferay Events",
 																								"ca_ES": "View Liferay Events",
 																								"de_DE": "View Liferay Events",
+																								"hu_HU": "View Liferay Events",
+																								"ar_SA": "View Liferay Events",
+																								"fi_FI": "View Liferay Events",
 																								"en_US": "View Liferay Events",
 																								"es_ES": "View Liferay Events",
-																								"fi_FI": "View Liferay Events",
-																								"fr_FR": "View Liferay Events",
-																								"hu_HU": "View Liferay Events",
-																								"ja_JP": "View Liferay Events",
-																								"nl_NL": "View Liferay Events",
-																								"pt_BR": "View Liferay Events",
-																								"sv_SE": "View Liferay Events",
-																								"zh_CN": "View Liferay Events"
+																								"zh_CN": "View Liferay Events",
+																								"nl_NL": "View Liferay Events"
 																							}
 																						}
 																					}
@@ -1436,11 +1672,10 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
-																				"iconLink": "",
+																				"iconLink": "https://www.liferay.com/",
 																				"iconName": "order-arrow-right"
 																			},
-																			"fragmentFields": [
-																			],
+																			"fragmentFields": [],
 																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorActionPrimaryDefault"
@@ -1483,7 +1718,7 @@
 								},
 								{
 									"fragmentViewportStyle": {
-										"marginBottom": "9"
+										"marginBottom": "0"
 									},
 									"id": "portraitMobile"
 								}
@@ -1518,23 +1753,22 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-												},
+												"fragmentLink": {},
 												"text": {
 													"value_i18n": {
-														"ar_SA": "Quick Links",
+														"sv_SE": "Quick Links",
+														"pt_BR": "Quick Links",
+														"fr_FR": "Quick Links",
+														"ja_JP": "Quick Links",
 														"ca_ES": "Quick Links",
 														"de_DE": "Quick Links",
+														"hu_HU": "Quick Links",
+														"ar_SA": "Quick Links",
+														"fi_FI": "Quick Links",
 														"en_US": "Quick Links",
 														"es_ES": "Quick Links",
-														"fi_FI": "Quick Links",
-														"fr_FR": "Quick Links",
-														"hu_HU": "Quick Links",
-														"ja_JP": "Quick Links",
-														"nl_NL": "Quick Links",
-														"pt_BR": "Quick Links",
-														"sv_SE": "Quick Links",
-														"zh_CN": "Quick Links"
+														"zh_CN": "Quick Links",
+														"nl_NL": "Quick Links"
 													}
 												}
 											}
@@ -1564,6 +1798,14 @@
 										"marginRight": "4",
 										"textAlign": ""
 									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"marginRight": "0"
+											},
+											"id": "landscapeMobile"
+										}
+									],
 									"gutters": false,
 									"indexed": true,
 									"modulesPerRow": 2,
@@ -1578,8 +1820,7 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										},
 										{
 											"id": "tablet",
@@ -1601,8 +1842,7 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
@@ -1632,7 +1872,15 @@
 													"fragmentViewports": [
 														{
 															"fragmentViewportStyle": {
-																"marginRight": "4",
+																"marginBottom": "4",
+																"marginRight": "0"
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "4",
+																"marginRight": "0",
 																"paddingBottom": "4",
 																"paddingLeft": "4",
 																"paddingRight": "4",
@@ -1682,8 +1930,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -1754,23 +2001,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Marketing Development Funds (MDF)",
+																						"sv_SE": "Marketing Development Funds (MDF)",
+																						"pt_BR": "Marketing Development Funds (MDF)",
+																						"fr_FR": "Marketing Development Funds (MDF)",
+																						"ja_JP": "Marketing Development Funds (MDF)",
 																						"ca_ES": "Marketing Development Funds (MDF)",
 																						"de_DE": "Marketing Development Funds (MDF)",
+																						"hu_HU": "Marketing Development Funds (MDF)",
+																						"ar_SA": "Marketing Development Funds (MDF)",
+																						"fi_FI": "Marketing Development Funds (MDF)",
 																						"en_US": "Marketing Development Funds (MDF)",
 																						"es_ES": "Marketing Development Funds (MDF)",
-																						"fi_FI": "Marketing Development Funds (MDF)",
-																						"fr_FR": "Marketing Development Funds (MDF)",
-																						"hu_HU": "Marketing Development Funds (MDF)",
-																						"ja_JP": "Marketing Development Funds (MDF)",
-																						"nl_NL": "Marketing Development Funds (MDF)",
-																						"pt_BR": "Marketing Development Funds (MDF)",
-																						"sv_SE": "Marketing Development Funds (MDF)",
-																						"zh_CN": "Marketing Development Funds (MDF)"
+																						"zh_CN": "Marketing Development Funds (MDF)",
+																						"nl_NL": "Marketing Development Funds (MDF)"
 																					}
 																				}
 																			}
@@ -1784,8 +2030,6 @@
 																	"fragmentViewports": [
 																		{
 																			"fragmentViewportStyle": {
-																				"maxHeight": "",
-																				"minHeight": "",
 																				"textAlign": "left"
 																			},
 																			"id": "portraitMobile"
@@ -1807,23 +2051,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"sv_SE": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"pt_BR": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"fr_FR": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"ja_JP": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
 																						"ca_ES": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
 																						"de_DE": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"hu_HU": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"ar_SA": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"fi_FI": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
 																						"en_US": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
 																						"es_ES": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"fi_FI": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"fr_FR": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"hu_HU": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"ja_JP": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"nl_NL": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"pt_BR": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"sv_SE": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"zh_CN": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"
+																						"zh_CN": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
+																						"nl_NL": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"
 																					}
 																				}
 																			}
@@ -1838,7 +2081,6 @@
 																	"fragmentViewports": [
 																		{
 																			"fragmentViewportStyle": {
-																				"height": "",
 																				"marginBottom": "0",
 																				"marginTop": "0",
 																				"paddingBottom": "2",
@@ -1855,10 +2097,12 @@
 																"definition": {
 																	"fragmentStyle": {
 																		"borderWidth": "0",
-																		"textAlign": ""
+																		"textAlign": "",
+																		"width": "fit-content"
 																	},
 																	"indexed": true,
 																	"layout": {
+																		"align": "Center",
 																		"borderWidth": 0,
 																		"contentDisplay": "FlexRow",
 																		"marginBottom": 0,
@@ -1889,26 +2133,38 @@
 																							"value": {
 																								"href": {
 																									"value_i18n": {
-																										"en_US": "https://www.liferay.com/"
+																										"en_US": "https://www.liferay.com/",
+																										"ar_SA": "https://www.liferay.com/",
+																										"ca_ES": "https://www.liferay.com/",
+																										"de_DE": "https://www.liferay.com/",
+																										"es_ES": "https://www.liferay.com/",
+																										"fi_FI": "https://www.liferay.com/",
+																										"fr_FR": "https://www.liferay.com/",
+																										"hu_HU": "https://www.liferay.com/",
+																										"ja_JP": "https://www.liferay.com/",
+																										"nl_NL": "https://www.liferay.com/",
+																										"pt_BR": "https://www.liferay.com/",
+																										"sv_SE": "https://www.liferay.com/",
+																										"zh_CN": "https://www.liferay.com/"
 																									}
 																								}
 																							}
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"ar_SA": "Apply for Funds",
+																								"sv_SE": "Apply for Funds",
+																								"pt_BR": "Apply for Funds",
+																								"fr_FR": "Apply for Funds",
+																								"ja_JP": "Apply for Funds",
 																								"ca_ES": "Apply for Funds",
 																								"de_DE": "Apply for Funds",
+																								"hu_HU": "Apply for Funds",
+																								"ar_SA": "Apply for Funds",
+																								"fi_FI": "Apply for Funds",
 																								"en_US": "Apply for Funds",
 																								"es_ES": "Apply for Funds",
-																								"fi_FI": "Apply for Funds",
-																								"fr_FR": "Apply for Funds",
-																								"hu_HU": "Apply for Funds",
-																								"ja_JP": "Apply for Funds",
-																								"nl_NL": "Apply for Funds",
-																								"pt_BR": "Apply for Funds",
-																								"sv_SE": "Apply for Funds",
-																								"zh_CN": "Apply for Funds"
+																								"zh_CN": "Apply for Funds",
+																								"nl_NL": "Apply for Funds"
 																							}
 																						}
 																					}
@@ -1928,6 +2184,24 @@
 																					"id": "portraitMobile"
 																				}
 																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "clay-icon-link"
+																			},
+																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/",
+																				"iconName": "order-arrow-right"
+																			},
+																			"fragmentFields": [],
+																			"fragmentStyle": {
+																				"textAlign": "",
+																				"textColor": "colorActionPrimaryDefault"
+																			},
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -1954,8 +2228,7 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
@@ -1982,6 +2255,21 @@
 														"paddingTop": "4",
 														"textAlign": ""
 													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "4",
+																"marginRight": "0"
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "4"
+															},
+															"id": "portraitMobile"
+														}
+													],
 													"indexed": true,
 													"layout": {
 														"align": "Center",
@@ -2023,8 +2311,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -2087,23 +2374,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Marketing Resources",
+																						"sv_SE": "Marketing Resources",
+																						"pt_BR": "Marketing Resources",
+																						"fr_FR": "Marketing Resources",
+																						"ja_JP": "Marketing Resources",
 																						"ca_ES": "Marketing Resources",
 																						"de_DE": "Marketing Resources",
+																						"hu_HU": "Marketing Resources",
+																						"ar_SA": "Marketing Resources",
+																						"fi_FI": "Marketing Resources",
 																						"en_US": "Marketing Resources",
 																						"es_ES": "Marketing Resources",
-																						"fi_FI": "Marketing Resources",
-																						"fr_FR": "Marketing Resources",
-																						"hu_HU": "Marketing Resources",
-																						"ja_JP": "Marketing Resources",
-																						"nl_NL": "Marketing Resources",
-																						"pt_BR": "Marketing Resources",
-																						"sv_SE": "Marketing Resources",
-																						"zh_CN": "Marketing Resources"
+																						"zh_CN": "Marketing Resources",
+																						"nl_NL": "Marketing Resources"
 																					}
 																				}
 																			}
@@ -2138,23 +2424,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"sv_SE": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"pt_BR": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"fr_FR": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"ja_JP": "Explore all of the marketing tools and assets you need as available digital resources.",
 																						"ca_ES": "Explore all of the marketing tools and assets you need as available digital resources.",
 																						"de_DE": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"hu_HU": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"ar_SA": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"fi_FI": "Explore all of the marketing tools and assets you need as available digital resources.",
 																						"en_US": "Explore all of the marketing tools and assets you need as available digital resources.",
 																						"es_ES": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"fi_FI": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"fr_FR": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"hu_HU": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"ja_JP": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"nl_NL": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"pt_BR": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"sv_SE": "Explore all of the marketing tools and assets you need as available digital resources.",
-																						"zh_CN": "Explore all of the marketing tools and assets you need as available digital resources."
+																						"zh_CN": "Explore all of the marketing tools and assets you need as available digital resources.",
+																						"nl_NL": "Explore all of the marketing tools and assets you need as available digital resources."
 																					}
 																				}
 																			}
@@ -2174,10 +2459,12 @@
 																"definition": {
 																	"fragmentStyle": {
 																		"borderWidth": "0",
-																		"textAlign": ""
+																		"textAlign": "",
+																		"width": "fit-content"
 																	},
 																	"indexed": true,
 																	"layout": {
+																		"align": "Center",
 																		"borderWidth": 0,
 																		"contentDisplay": "FlexRow",
 																		"marginBottom": 0,
@@ -2208,26 +2495,38 @@
 																							"value": {
 																								"href": {
 																									"value_i18n": {
-																										"en_US": "https://www.liferay.com/"
+																										"en_US": "https://www.liferay.com/",
+																										"ar_SA": "https://www.liferay.com/",
+																										"ca_ES": "https://www.liferay.com/",
+																										"de_DE": "https://www.liferay.com/",
+																										"es_ES": "https://www.liferay.com/",
+																										"fi_FI": "https://www.liferay.com/",
+																										"fr_FR": "https://www.liferay.com/",
+																										"hu_HU": "https://www.liferay.com/",
+																										"ja_JP": "https://www.liferay.com/",
+																										"nl_NL": "https://www.liferay.com/",
+																										"pt_BR": "https://www.liferay.com/",
+																										"sv_SE": "https://www.liferay.com/",
+																										"zh_CN": "https://www.liferay.com/"
 																									}
 																								}
 																							}
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"ar_SA": "View Marketing Resources",
+																								"sv_SE": "View Marketing Resources",
+																								"pt_BR": "View Marketing Resources",
+																								"fr_FR": "View Marketing Resources",
+																								"ja_JP": "View Marketing Resources",
 																								"ca_ES": "View Marketing Resources",
 																								"de_DE": "View Marketing Resources",
+																								"hu_HU": "View Marketing Resources",
+																								"ar_SA": "View Marketing Resources",
+																								"fi_FI": "View Marketing Resources",
 																								"en_US": "View Marketing Resources",
 																								"es_ES": "View Marketing Resources",
-																								"fi_FI": "View Marketing Resources",
-																								"fr_FR": "View Marketing Resources",
-																								"hu_HU": "View Marketing Resources",
-																								"ja_JP": "View Marketing Resources",
-																								"nl_NL": "View Marketing Resources",
-																								"pt_BR": "View Marketing Resources",
-																								"sv_SE": "View Marketing Resources",
-																								"zh_CN": "View Marketing Resources"
+																								"zh_CN": "View Marketing Resources",
+																								"nl_NL": "View Marketing Resources"
 																							}
 																						}
 																					}
@@ -2236,6 +2535,24 @@
 																			"fragmentStyle": {
 																				"fontWeight": "fontWeightBold",
 																				"paddingRight": "1",
+																				"textAlign": "",
+																				"textColor": "colorActionPrimaryDefault"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "clay-icon-link"
+																			},
+																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/",
+																				"iconName": "order-arrow-right"
+																			},
+																			"fragmentFields": [],
+																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorActionPrimaryDefault"
 																			},
@@ -2265,8 +2582,7 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
@@ -2293,6 +2609,19 @@
 														"textAlign": ""
 													},
 													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "4",
+																"marginRight": "0"
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "4"
+															},
+															"id": "portraitMobile"
+														},
 														{
 															"fragmentViewportStyle": {
 																"marginBottom": "4"
@@ -2341,8 +2670,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -2405,23 +2733,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Partner Program Resources",
+																						"sv_SE": "Partner Program Resources",
+																						"pt_BR": "Partner Program Resources",
+																						"fr_FR": "Partner Program Resources",
+																						"ja_JP": "Partner Program Resources",
 																						"ca_ES": "Partner Program Resources",
 																						"de_DE": "Partner Program Resources",
+																						"hu_HU": "Partner Program Resources",
+																						"ar_SA": "Partner Program Resources",
+																						"fi_FI": "Partner Program Resources",
 																						"en_US": "Partner Program Resources",
 																						"es_ES": "Partner Program Resources",
-																						"fi_FI": "Partner Program Resources",
-																						"fr_FR": "Partner Program Resources",
-																						"hu_HU": "Partner Program Resources",
-																						"ja_JP": "Partner Program Resources",
-																						"nl_NL": "Partner Program Resources",
-																						"pt_BR": "Partner Program Resources",
-																						"sv_SE": "Partner Program Resources",
-																						"zh_CN": "Partner Program Resources"
+																						"zh_CN": "Partner Program Resources",
+																						"nl_NL": "Partner Program Resources"
 																					}
 																				}
 																			}
@@ -2456,23 +2783,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"sv_SE": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"pt_BR": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"fr_FR": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"ja_JP": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
 																						"ca_ES": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
 																						"de_DE": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"hu_HU": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"ar_SA": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"fi_FI": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
 																						"en_US": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
 																						"es_ES": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"fi_FI": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"fr_FR": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"hu_HU": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"ja_JP": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"nl_NL": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"pt_BR": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"sv_SE": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"zh_CN": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;"
+																						"zh_CN": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
+																						"nl_NL": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;"
 																					}
 																				}
 																			}
@@ -2492,10 +2818,12 @@
 																"definition": {
 																	"fragmentStyle": {
 																		"borderWidth": "0",
-																		"textAlign": ""
+																		"textAlign": "",
+																		"width": "fit-content"
 																	},
 																	"indexed": true,
 																	"layout": {
+																		"align": "Center",
 																		"borderWidth": 0,
 																		"contentDisplay": "FlexRow",
 																		"marginBottom": 0,
@@ -2526,26 +2854,38 @@
 																							"value": {
 																								"href": {
 																									"value_i18n": {
-																										"en_US": "https://www.liferay.com/"
+																										"en_US": "https://www.liferay.com/",
+																										"ar_SA": "https://www.liferay.com/",
+																										"ca_ES": "https://www.liferay.com/",
+																										"de_DE": "https://www.liferay.com/",
+																										"es_ES": "https://www.liferay.com/",
+																										"fi_FI": "https://www.liferay.com/",
+																										"fr_FR": "https://www.liferay.com/",
+																										"hu_HU": "https://www.liferay.com/",
+																										"ja_JP": "https://www.liferay.com/",
+																										"nl_NL": "https://www.liferay.com/",
+																										"pt_BR": "https://www.liferay.com/",
+																										"sv_SE": "https://www.liferay.com/",
+																										"zh_CN": "https://www.liferay.com/"
 																									}
 																								}
 																							}
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"ar_SA": "View Partner Resources",
+																								"sv_SE": "View Partner Resources",
+																								"pt_BR": "View Partner Resources",
+																								"fr_FR": "View Partner Resources",
+																								"ja_JP": "View Partner Resources",
 																								"ca_ES": "View Partner Resources",
 																								"de_DE": "View Partner Resources",
+																								"hu_HU": "View Partner Resources",
+																								"ar_SA": "View Partner Resources",
+																								"fi_FI": "View Partner Resources",
 																								"en_US": "View Partner Resources",
 																								"es_ES": "View Partner Resources",
-																								"fi_FI": "View Partner Resources",
-																								"fr_FR": "View Partner Resources",
-																								"hu_HU": "View Partner Resources",
-																								"ja_JP": "View Partner Resources",
-																								"nl_NL": "View Partner Resources",
-																								"pt_BR": "View Partner Resources",
-																								"sv_SE": "View Partner Resources",
-																								"zh_CN": "View Partner Resources"
+																								"zh_CN": "View Partner Resources",
+																								"nl_NL": "View Partner Resources"
 																							}
 																						}
 																					}
@@ -2554,6 +2894,24 @@
 																			"fragmentStyle": {
 																				"fontWeight": "fontWeightBold",
 																				"paddingRight": "1",
+																				"textAlign": "",
+																				"textColor": "colorActionPrimaryDefault"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "clay-icon-link"
+																			},
+																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/",
+																				"iconName": "order-arrow-right"
+																			},
+																			"fragmentFields": [],
+																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorActionPrimaryDefault"
 																			},
@@ -2583,8 +2941,7 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
@@ -2600,7 +2957,7 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderColor": "ColorNeutral3",
+														"borderColor": "colorNeutral3",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1",
 														"marginRight": "4",
@@ -2610,10 +2967,25 @@
 														"paddingTop": "4",
 														"textAlign": ""
 													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "4",
+																"marginRight": "0"
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "4"
+															},
+															"id": "portraitMobile"
+														}
+													],
 													"indexed": true,
 													"layout": {
 														"align": "Center",
-														"borderColor": "ColorNeutral3",
+														"borderColor": "colorNeutral3",
 														"borderWidth": 1,
 														"contentDisplay": "FlexRow",
 														"marginBottom": 0,
@@ -2651,8 +3023,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -2715,23 +3086,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Events",
+																						"sv_SE": "Events",
+																						"pt_BR": "Events",
+																						"fr_FR": "Events",
+																						"ja_JP": "Events",
 																						"ca_ES": "Events",
 																						"de_DE": "Events",
+																						"hu_HU": "Events",
+																						"ar_SA": "Events",
+																						"fi_FI": "Events",
 																						"en_US": "Events",
 																						"es_ES": "Events",
-																						"fi_FI": "Events",
-																						"fr_FR": "Events",
-																						"hu_HU": "Events",
-																						"ja_JP": "Events",
-																						"nl_NL": "Events",
-																						"pt_BR": "Events",
-																						"sv_SE": "Events",
-																						"zh_CN": "Events"
+																						"zh_CN": "Events",
+																						"nl_NL": "Events"
 																					}
 																				}
 																			}
@@ -2766,23 +3136,22 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"sv_SE": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"pt_BR": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"fr_FR": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"ja_JP": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
 																						"ca_ES": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
 																						"de_DE": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"hu_HU": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"ar_SA": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"fi_FI": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
 																						"en_US": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
 																						"es_ES": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"fi_FI": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"fr_FR": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"hu_HU": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"ja_JP": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"nl_NL": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"pt_BR": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"sv_SE": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"zh_CN": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in."
+																						"zh_CN": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
+																						"nl_NL": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in."
 																					}
 																				}
 																			}
@@ -2802,10 +3171,12 @@
 																"definition": {
 																	"fragmentStyle": {
 																		"borderWidth": "0",
-																		"textAlign": ""
+																		"textAlign": "",
+																		"width": "fit-content"
 																	},
 																	"indexed": true,
 																	"layout": {
+																		"align": "Center",
 																		"borderWidth": 0,
 																		"contentDisplay": "FlexRow",
 																		"marginBottom": 0,
@@ -2836,26 +3207,38 @@
 																							"value": {
 																								"href": {
 																									"value_i18n": {
-																										"en_US": "https://www.liferay.com/"
+																										"en_US": "https://www.liferay.com/",
+																										"ar_SA": "https://www.liferay.com/",
+																										"ca_ES": "https://www.liferay.com/",
+																										"de_DE": "https://www.liferay.com/",
+																										"es_ES": "https://www.liferay.com/",
+																										"fi_FI": "https://www.liferay.com/",
+																										"fr_FR": "https://www.liferay.com/",
+																										"hu_HU": "https://www.liferay.com/",
+																										"ja_JP": "https://www.liferay.com/",
+																										"nl_NL": "https://www.liferay.com/",
+																										"pt_BR": "https://www.liferay.com/",
+																										"sv_SE": "https://www.liferay.com/",
+																										"zh_CN": "https://www.liferay.com/"
 																									}
 																								}
 																							}
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"ar_SA": "View Liferay Events",
+																								"sv_SE": "View Liferay Events",
+																								"pt_BR": "View Liferay Events",
+																								"fr_FR": "View Liferay Events",
+																								"ja_JP": "View Liferay Events",
 																								"ca_ES": "View Liferay Events",
 																								"de_DE": "View Liferay Events",
+																								"hu_HU": "View Liferay Events",
+																								"ar_SA": "View Liferay Events",
+																								"fi_FI": "View Liferay Events",
 																								"en_US": "View Liferay Events",
 																								"es_ES": "View Liferay Events",
-																								"fi_FI": "View Liferay Events",
-																								"fr_FR": "View Liferay Events",
-																								"hu_HU": "View Liferay Events",
-																								"ja_JP": "View Liferay Events",
-																								"nl_NL": "View Liferay Events",
-																								"pt_BR": "View Liferay Events",
-																								"sv_SE": "View Liferay Events",
-																								"zh_CN": "View Liferay Events"
+																								"zh_CN": "View Liferay Events",
+																								"nl_NL": "View Liferay Events"
 																							}
 																						}
 																					}
@@ -2864,6 +3247,24 @@
 																			"fragmentStyle": {
 																				"fontWeight": "fontWeightBold",
 																				"paddingRight": "1",
+																				"textAlign": "",
+																				"textColor": "colorActionPrimaryDefault"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "clay-icon-link"
+																			},
+																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/",
+																				"iconName": "order-arrow-right"
+																			},
+																			"fragmentFields": [],
+																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorActionPrimaryDefault"
 																			},

@@ -26,6 +26,7 @@ export type TestrayRequirement = {
 	key: string;
 	linkTitle: string;
 	linkURL: string;
+	r_componentToRequirements_c_component?: TestrayComponent;
 	summary: string;
 };
 

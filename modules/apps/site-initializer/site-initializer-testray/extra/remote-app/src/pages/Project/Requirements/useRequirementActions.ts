@@ -12,39 +12,39 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
-
-import {DeleteRequirement} from '../../../graphql/mutations';
-import {TestrayRequirement} from '../../../graphql/queries';
+import {TestrayProject} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
+import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
+import {Security} from '../../../security';
+import {deleteResource} from '../../../services/rest';
+import {Action} from '../../../types';
 
 const useRequirementActions = () => {
-	const [onDeleteRequirement] = useMutation(DeleteRequirement);
+	const {removeItemFromList} = useMutate();
 
 	const formModal = useFormModal();
 	const modal = formModal.modal;
 
+	const actions: Action[] = [
+		{
+			action: (item: TestrayProject) => modal.open(item),
+			name: i18n.translate('edit'),
+			permission: 'UPDATE',
+		},
+		{
+			action: ({id}: TestrayProject, mutate) =>
+				deleteResource(`/projects/${id}`)
+					.then(() => removeItemFromList(mutate, id))
+					.then(modal.onSuccess)
+					.catch(modal.onError),
+			name: i18n.translate('delete'),
+			permission: 'DELETE',
+		},
+	];
+
 	return {
-		actions: [
-			{
-				action: (requirement: TestrayRequirement) =>
-					modal.open({
-						...requirement,
-						componentId: requirement.component?.id,
-					}),
-				name: i18n.translate('edit'),
-			},
-			{
-				action: ({id}: TestrayRequirement) =>
-					onDeleteRequirement({
-						variables: {id},
-					})
-						.then(() => modal.onSave())
-						.catch(modal.onError),
-				name: i18n.translate('delete'),
-			},
-		],
+		actions: (row: any) => Security.filterActions(actions, row.actions),
 		formModal,
 	};
 };

@@ -50,23 +50,9 @@ const adapter = ({
 
 const createSuite = (suite: Suite) => fetcher.post('/suites', adapter(suite));
 
-const createSuiteCaseBatch = (suites: {caseId: number; suiteId: number}[]) =>
-	fetcher.post(
-		'suitescaseses/batch',
-		suites.map(
-			({
-				caseId: r_caseToSuitesCases_c_caseId,
-				suiteId: r_suiteToSuitesCases_c_suiteId,
-			}: any) => ({
-				r_caseToSuitesCases_c_caseId,
-				r_suiteToSuitesCases_c_suiteId,
-			})
-		)
-	);
-
 const updateSuite = (id: number, suite: Suite) =>
 	fetcher.put(`/suites/${id}`, adapter(suite));
 
 export type {TestraySuite};
 
-export {createSuite, createSuiteCaseBatch, updateSuite};
+export {createSuite, updateSuite};

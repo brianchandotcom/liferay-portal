@@ -29,17 +29,19 @@ const SuiteOutlet = () => {
 
 	useEffect(() => {
 		if (testraySuite && testrayProject) {
-			setHeading([
-				{
-					category: i18n.translate('project').toUpperCase(),
-					path: `/project/${testrayProject.id}/suites`,
-					title: testrayProject.name,
-				},
-				{
-					category: i18n.translate('suite').toUpperCase(),
-					title: testraySuite.name,
-				},
-			]);
+			setTimeout(() => {
+				setHeading([
+					{
+						category: i18n.translate('project').toUpperCase(),
+						path: `/project/${testrayProject.id}/suites`,
+						title: testrayProject.name,
+					},
+					{
+						category: i18n.translate('suite').toUpperCase(),
+						title: testraySuite.name,
+					},
+				]);
+			});
 		}
 	}, [testraySuite, testrayProject, setHeading]);
 

@@ -188,7 +188,7 @@ const SuiteForm = () => {
 										),
 									name: i18n.translate('delete'),
 								},
-							],
+							] as any,
 							columns: [
 								{
 									key: 'priority',

@@ -21,10 +21,12 @@ const yupSchema = {
 	build: yup.object({
 		description: yup.string(),
 		gitHash: yup.string(),
+		id: yup.string(),
 		name: yup.string().required(),
 		productVersionId: yup.string().required(),
+		promoted: yup.boolean(),
 		routineId: yup.string().required(),
-		template: yup.string(),
+		template: yup.boolean(),
 	}),
 	case: yup.object({
 		addAnother: yup.boolean(),
@@ -47,6 +49,7 @@ const yupSchema = {
 		name: yup.string().required(),
 	}),
 	factorCategory: yup.object({
+		id: yup.string(),
 		name: yup.string().required(),
 	}),
 	factorOption: yup.object({
@@ -81,6 +84,8 @@ const yupSchema = {
 		componentId: yup.string().required(),
 		description: yup.string().required(),
 		descriptionType: yup.string().required(),
+		id: yup.string(),
+		key: yup.string(),
 		linkTitle: yup.string().required(),
 		linkURL: yup.string().required(),
 		summary: yup.string().required(),

@@ -12,7 +12,6 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useEffect, useState} from 'react';
@@ -21,47 +20,51 @@ import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 
 import Form from '../../../../components/Form';
 import Container from '../../../../components/Layout/Container';
-import {CreateBuild, UpdateBuild} from '../../../../graphql/mutations';
 import {
-	CTypePagination,
+	APIResponse,
 	TestrayBuild,
 	TestrayCase,
 	TestrayRoutine,
-	getRoutines,
 } from '../../../../graphql/queries';
-import {
-	TestrayProductVersion,
-	getProductVersions,
-} from '../../../../graphql/queries/testrayProductVersion';
 import {useHeader} from '../../../../hooks';
+import {useFetch} from '../../../../hooks/useFetch';
 import useFormActions from '../../../../hooks/useFormActions';
 import useFormModal from '../../../../hooks/useFormModal';
 import i18n from '../../../../i18n';
 import yupSchema, {yupResolver} from '../../../../schema/yup';
+import {createBuild, updateBuild} from '../../../../services/rest/TestrayBuild';
 import {searchUtil} from '../../../../util/search';
 import {CaseListView} from '../../Cases';
 import SuiteFormSelectModal from '../../Suites/modal';
 import BuildOptionModal from './BuildOptionModal';
 import BuildSelectOptionsModal from './BuildSelectOptionsModal';
 
-type RoutineBuildData = {
-	description: string;
-	gitHash: string;
-	id?: number;
-	name: string;
-	productVersionId: string;
-	routineId: string;
-	template: boolean;
-};
+import type {KeyedMutator} from 'swr';
+
+type RoutineBuildData = typeof yupSchema.build.__outputType;
 
 const RoutineBuildForm = () => {
-	const [cases, setCases] = useState<number[]>([]);
-
-	const {projectId, routineId} = useParams();
-
-	const {testrayBuild}: {testrayBuild?: TestrayBuild} = useOutletContext();
-
+	const {modal: optionModal} = useFormModal();
+	const {modal: optionSelectModal} = useFormModal();
 	const navigate = useNavigate();
+	const [cases, setCases] = useState<number[]>([]);
+	const {projectId, routineId} = useParams();
+	const {
+		mutateBuild,
+		testrayBuild,
+	}: {
+		mutateBuild: KeyedMutator<any>;
+		testrayBuild?: TestrayBuild;
+	} = useOutletContext();
+
+	const {
+		form: {onClose, onSubmitRest},
+	} = useFormActions();
+
+	const {modal} = useFormModal({
+		onSave: (newCases) =>
+			setCases((prevCases) => [...new Set([...prevCases, ...newCases])]),
+	});
 
 	const {
 		formState: {errors},
@@ -77,6 +80,7 @@ const RoutineBuildForm = () => {
 					name: testrayBuild.name,
 					productVersionId: String(testrayBuild.productVersion?.id),
 					routineId: String(testrayBuild.routine?.id || routineId),
+					template: testrayBuild.template,
 			  }
 			: {
 					routineId,
@@ -85,47 +89,30 @@ const RoutineBuildForm = () => {
 		resolver: yupResolver(yupSchema.build),
 	});
 
-	const {
-		form: {onClose, onSubmit},
-	} = useFormActions();
-
-	const {modal} = useFormModal({
-		onSave: (newCases) =>
-			setCases((prevCases) => [...new Set([...prevCases, ...newCases])]),
-	});
-
-	const {modal: optionModal} = useFormModal();
-	const {modal: optionSelectModal} = useFormModal();
-
 	const {setTabs} = useHeader({
 		shouldUpdate: false,
-		timeout: 50,
+		timeout: 150,
 		title: i18n.translate('new-build'),
 	});
 
-	const {data: routinesData} = useQuery<
-		CTypePagination<'routines', TestrayRoutine>
-	>(getRoutines, {
-		variables: {
-			filter: searchUtil.eq('projectId', projectId as string),
-		},
-	});
+	const {data: routinesData} = useFetch<APIResponse<TestrayRoutine>>(
+		`/routines?fields=id,name&filter=${searchUtil.eq(
+			'projectId',
+			projectId as string
+		)}`
+	);
 
-	const {data: productVersionsData} = useQuery<
-		CTypePagination<'productVersions', TestrayProductVersion>
-	>(getProductVersions, {
-		onCompleted: (data) =>
-			setValue(
-				'productVersionId',
-				data?.c?.productVersions?.items[0]?.id?.toString()
-			),
-		variables: {
-			filter: searchUtil.eq('projectId', projectId as string),
-		},
-	});
+	const {data: productVersionsData} = useFetch<APIResponse<TestrayRoutine>>(
+		`/productversions?fields=id,name&filter=${searchUtil.eq(
+			'projectId',
+			projectId as string
+		)}`
+	);
 
-	const routines = routinesData?.c.routines.items || [];
-	const productVersions = productVersionsData?.c.productVersions.items || [];
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const productVersions = productVersionsData?.items || [];
+
+	const routines = routinesData?.items || [];
 
 	const template = watch('template');
 
@@ -136,49 +123,26 @@ const RoutineBuildForm = () => {
 
 	const _onSubmit = async (data: RoutineBuildData) => {
 		if (testrayBuild) {
-			data.id = testrayBuild.id;
+			data.id = testrayBuild.id.toString();
 		}
 
-		await onSubmit(
-			data,
-			{
-				createMutation: CreateBuild,
-				updateMutation: UpdateBuild,
-			},
-			{
-				update(cache, {data: {createBuild, updateBuild}}) {
-					cache.modify({
-						fields: {
-							builds(buildCache) {
-								return {
-									...buildCache,
-									items: createBuild
-										? [...buildCache.items, createBuild]
-										: buildCache.items.map(
-												(build: TestrayBuild) => {
-													if (
-														build.id ===
-														updateBuild.id
-													) {
-														return {
-															...build,
-															...updateBuild,
-														};
-													}
+		const response = await onSubmitRest(data, {
+			create: createBuild,
+			update: updateBuild,
+		});
 
-													return build;
-												}
-										  ),
-								};
-							},
-						},
-					});
-				},
-			}
-		);
+		if (testrayBuild) {
+			mutateBuild(response);
+		}
 
 		navigate(-1);
 	};
+
+	useEffect(() => {
+		if (productVersions.length) {
+			setValue('productVersionId', productVersions[0].id.toString());
+		}
+	}, [productVersions, setValue]);
 
 	useEffect(() => {
 		setTabs([]);
@@ -188,7 +152,7 @@ const RoutineBuildForm = () => {
 		<Container className="container">
 			<ClayForm className="container pt-2">
 				<ClayCheckbox
-					checked={template}
+					checked={template as boolean}
 					label={i18n.translate('template')}
 					onChange={() => setValue('template', !template)}
 				/>
@@ -303,7 +267,7 @@ const RoutineBuildForm = () => {
 											),
 										name: i18n.translate('delete'),
 									},
-								],
+								] as any,
 								columns: [
 									{
 										key: 'priority',
@@ -342,4 +306,5 @@ const RoutineBuildForm = () => {
 		</Container>
 	);
 };
+
 export default RoutineBuildForm;

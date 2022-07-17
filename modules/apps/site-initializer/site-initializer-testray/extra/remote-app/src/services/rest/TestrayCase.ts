@@ -12,7 +12,7 @@
  * details.
  */
 
-import {TestrayCase} from '../../graphql/queries';
+import {APIResponse, TestrayCase} from '../../graphql/queries';
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
 
@@ -42,18 +42,45 @@ const adapter = ({
 	stepsType,
 });
 
+const nestedFieldsParam =
+	'nestedFields=build.project,build.routine&nestedFieldsDepth=2';
+
+const casesResource = `/cases?${nestedFieldsParam}`;
+
 const getCaseQuery = (caseId: number | string) =>
-	`/cases/${caseId}?nestedFields=component.team,caseType&nestedFieldsDepth=2`;
+	`/cases/${caseId}?${nestedFieldsParam}`;
 
 const getCaseTransformData = (testrayCase: TestrayCase): TestrayCase => ({
 	...testrayCase,
 	caseType: testrayCase.r_caseTypeToCases_c_caseType,
-	component: testrayCase.r_componentToCases_c_component,
+	component: testrayCase.r_componentToCases_c_component
+		? {
+				...testrayCase.r_componentToCases_c_component,
+				team:
+					testrayCase.r_componentToCases_c_component
+						.r_teamToComponents_c_team,
+		  }
+		: undefined,
 });
 
-const createCase = (Case: Case) => fetcher.post('/cases', adapter(Case));
+const getCasesTransformData = (response: APIResponse<TestrayCase>) => ({
+	...response,
+	items: response?.items?.map(getCaseTransformData),
+});
 
-const updateCase = (id: number, Case: Case) =>
-	fetcher.put(`/cases/${id}`, adapter(Case));
+const createCase = (testrayCase: Case) =>
+	fetcher.post('/cases', adapter(testrayCase));
 
-export {createCase, getCaseQuery, getCaseTransformData, updateCase};
+const updateCase = (id: number, testrayCase: Case) =>
+	fetcher.put(`/cases/${id}`, adapter(testrayCase));
+
+export type {TestrayCase};
+
+export {
+	casesResource,
+	createCase,
+	getCaseQuery,
+	getCasesTransformData,
+	getCaseTransformData,
+	updateCase,
+};

@@ -22,6 +22,7 @@ export type TestrayTask = {
 	dueStatus: number;
 	id: number;
 	name: string;
+	r_buildToTasks_c_build?: TestrayBuild;
 };
 
 export const getTasks = gql`

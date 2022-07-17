@@ -18,9 +18,11 @@ import {TestrayCase} from './testrayCase';
 import {TestraySuite} from './testraySuite';
 
 export type TestraySuiteCase = {
-	case: TestrayCase;
+	case?: TestrayCase;
 	id: number;
-	suite: TestraySuite;
+	r_caseToSuitesCases_c_case?: TestrayCase;
+	r_suiteToSuitesCases_c_suite?: TestraySuite;
+	suite?: TestraySuite;
 };
 
 export const getSuiteCases = gql`

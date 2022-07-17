@@ -19,6 +19,8 @@ import {DeleteSuiteCase} from '../../../graphql/mutations';
 import {TestraySuiteCase} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
+import {Security} from '../../../security';
+import {Action} from '../../../types';
 
 const useSuiteCasesActions = ({isSmartSuite}: {isSmartSuite: boolean}) => {
 	const [onDeleteSuiteCase] = useMutation(DeleteSuiteCase);
@@ -28,24 +30,28 @@ const useSuiteCasesActions = ({isSmartSuite}: {isSmartSuite: boolean}) => {
 
 	const modal = formModal.modal;
 
+	const actions: Action[] = [
+		{
+			action: (suiteCase: TestraySuiteCase) =>
+				navigate(
+					`/project/${projectId}/cases/${suiteCase?.case?.id}/update`
+				),
+			name: i18n.translate('edit'),
+			permission: 'UPDATE',
+		},
+		{
+			action: (suiteCase: TestraySuiteCase) =>
+				onDeleteSuiteCase({variables: {id: suiteCase.id}})
+					.then(() => modal.onSave())
+					.catch(modal.onError),
+			disabled: isSmartSuite,
+			name: i18n.translate('delete'),
+			permission: 'DELETE',
+		},
+	];
+
 	return {
-		actions: [
-			{
-				action: (suiteCase: TestraySuiteCase) =>
-					navigate(
-						`/project/${projectId}/cases/${suiteCase.case.id}/update`
-					),
-				name: i18n.translate('edit'),
-			},
-			{
-				action: (suiteCase: TestraySuiteCase) =>
-					onDeleteSuiteCase({variables: {id: suiteCase.id}})
-						.then(() => modal.onSave())
-						.catch(modal.onError),
-				disabled: isSmartSuite,
-				name: i18n.translate('delete'),
-			},
-		],
+		actions: (row: any) => Security.filterActions(actions, row.actions),
 		formModal,
 	};
 };

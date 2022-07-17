@@ -86,16 +86,6 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 		long suffixId = ParamUtil.getLong(actionRequest, "suffixId");
 		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
 
-		byte[] portraitBytes = null;
-
-		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
-
-		if (fileEntryId > 0) {
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
-
-			portraitBytes = FileUtil.getBytes(fileEntry.getContentStream());
-		}
-
 		try {
 			AccountEntryUserRel accountEntryUserRel = null;
 
@@ -128,6 +118,17 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 						ServiceContextFactory.getInstance(
 							AccountEntryUserRel.class.getName(),
 							actionRequest));
+			}
+
+			byte[] portraitBytes = null;
+
+			long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+			if (fileEntryId > 0) {
+				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+					fileEntryId);
+
+				portraitBytes = FileUtil.getBytes(fileEntry.getContentStream());
 			}
 
 			if (portraitBytes != null) {
@@ -182,17 +183,13 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
 	@Reference
 	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private AccountEntryUserRelService _accountEntryUserRelService;
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference

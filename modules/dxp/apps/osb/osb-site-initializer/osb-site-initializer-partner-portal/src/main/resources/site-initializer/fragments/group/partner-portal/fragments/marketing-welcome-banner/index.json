@@ -1,0 +1,15 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "https://www.liferay.com/pt/home",
+					"label": "PRM Welcome Banner Secondary Button Link",
+					"name": "secondaryButtonLink",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

@@ -49,6 +49,7 @@ export type SortDirection = keyof typeof SortOption;
 
 export type Action<T = any> = {
 	action?: (item: T, mutate: KeyedMutator<any>) => void;
+	disabled?: boolean;
 	name: string;
 	permission?: keyof typeof TestrayActions | boolean;
 };

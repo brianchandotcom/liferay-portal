@@ -32,7 +32,7 @@ const ProjectOutlet = () => {
 	);
 
 	const {data: dataTestrayProjects} = useFetch<APIResponse<TestrayProject>>(
-		'/projects?pageSize=100'
+		'/projects?pageSize=100&fields=id,name'
 	);
 
 	const testrayProjects = dataTestrayProjects?.items;
@@ -119,7 +119,7 @@ const ProjectOutlet = () => {
 						title: testrayProject.name,
 					},
 				]);
-			}, 10);
+			}, 0);
 		}
 	}, [setHeading, testrayProject, hasOtherParams]);
 

@@ -32,6 +32,7 @@ const useMutate = () => {
 				options
 			);
 		},
+
 		removeItemFromList: (
 			mutate: KeyedMutator<any>,
 			id: number,
@@ -42,6 +43,30 @@ const useMutate = () => {
 					...response,
 					items: response.items.filter((item) => item.id !== id),
 					totalCount: response.totalCount - 1,
+				}),
+				{revalidate: false, ...options}
+			),
+		updateItemFromList: (
+			mutate: KeyedMutator<any>,
+			id: number,
+			data: any,
+			options?: MutatorOptions
+		) =>
+			mutate(
+				(response: APIResponse<any>) => ({
+					...response,
+					items: response.items.map((item) => {
+						if (item.id === id) {
+							return {
+								...item,
+								...(typeof data === 'function'
+									? data(item)
+									: data),
+							};
+						}
+
+						return item;
+					}),
 				}),
 				{revalidate: false, ...options}
 			),

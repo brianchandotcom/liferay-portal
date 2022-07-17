@@ -86,14 +86,10 @@ const useFormActions = (): Form => {
 		navigate(-1);
 	};
 
-	const onSave = (state?: any) => {
+	const onSave = () => {
 		onSuccess();
 
 		setForceRefetch(new Date().getTime());
-
-		if (state) {
-			onSave(state);
-		}
 
 		navigate(-1);
 	};

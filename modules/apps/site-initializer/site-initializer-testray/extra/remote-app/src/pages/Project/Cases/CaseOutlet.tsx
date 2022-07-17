@@ -24,10 +24,7 @@ import {TestrayCase} from '../../../graphql/queries';
 import {useFetch} from '../../../hooks/useFetch';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
-import {
-	getCaseQuery,
-	getCaseTransformData,
-} from '../../../services/rest/TestrayCase';
+import {getCaseQuery, getCaseTransformData} from '../../../services/rest';
 import {isIncludingFormPage} from '../../../util';
 
 const CaseOutlet = () => {

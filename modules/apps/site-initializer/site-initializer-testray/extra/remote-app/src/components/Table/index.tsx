@@ -21,7 +21,7 @@ import {useNavigate} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
 import {Sort} from '../../context/ListViewContext';
-import {SortDirection, SortOption} from '../../types';
+import {ActionList, SortDirection, SortOption} from '../../types';
 import DropDown from '../DropDown/DropDown';
 
 const {Body, Cell, Head, Row} = ClayTable;
@@ -36,7 +36,7 @@ type Column<T = any> = {
 };
 
 export type TableProps<T = any> = {
-	actions?: (item: T) => any[] | any[];
+	actions?: ActionList;
 	columns: Column[];
 	items: T[];
 	mutate: KeyedMutator<T>;

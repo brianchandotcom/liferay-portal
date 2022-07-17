@@ -35,7 +35,7 @@ import {useHeader} from '../../../hooks';
 import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
-import {createCase, updateCase} from '../../../services/rest/TestrayCase';
+import {createCase, updateCase} from '../../../services/rest';
 import {DescriptionType} from '../../../types';
 
 type CaseFormData = {

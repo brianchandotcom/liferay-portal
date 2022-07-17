@@ -22,13 +22,15 @@ import {TableProps} from '../../../components/Table';
 import {FormModal} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';
+import {casesResource, getCasesTransformData} from '../../../services/rest';
+import {ActionList} from '../../../types';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
 import CaseModal from './CaseModal';
 import useCaseActions from './useCaseActions';
 
 type CaseListViewProps = {
-	actions?: (item: any) => any[] | any[];
+	actions?: ActionList;
 	formModal?: FormModal;
 	projectId?: number | string;
 	variables?: any;
@@ -55,7 +57,7 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 				filterFields: filters.case as any,
 				title: i18n.translate('cases'),
 			}}
-			resource="/cases"
+			resource={casesResource}
 			tableProps={{
 				actions,
 				columns: [
@@ -103,6 +105,7 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 				navigateTo: ({id}) => id?.toString(),
 				...tableProps,
 			}}
+			transformData={getCasesTransformData}
 			variables={variables}
 			{...listViewProps}
 		/>

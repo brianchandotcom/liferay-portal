@@ -70,6 +70,7 @@ PortletURL portletURL = PortletURLBuilder.create(
 					<liferay-ui:search-container-column-text
 						name="task-executor-type"
 						property="dispatchTaskExecutorType"
+						translate="<%= true %>"
 					/>
 
 					<liferay-ui:search-container-column-text

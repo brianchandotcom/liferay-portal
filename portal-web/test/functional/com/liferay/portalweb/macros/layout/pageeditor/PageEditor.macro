@@ -2364,20 +2364,20 @@ definition {
 
 				PageEditor.waitForAutoSave();
 			}
-			else if ("${successMessage}" == "URL") {
+			else if ("${successMessage}" == "External URL") {
 				Select(
 					key_fieldLabel = "Success Message",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "URL");
+					value1 = "External URL");
 
 				AssertSelectedLabel(
 					key_fieldLabel = "Success Message",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "URL");
+					value1 = "External URL");
 
 				if (isSet(url)) {
 					Type(
-						key_text = "URL",
+						key_text = "External URL",
 						locator1 = "TextInput#ANY",
 						value1 = "${url}");
 

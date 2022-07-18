@@ -1,12 +1,6 @@
-<#if searchContainer.getTotal() == 1>
-	<div class="search-total-label">
-		${languageUtil.format(locale, "x-result-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
-	</div>
-<#else>
-	<div class="search-total-label">
-		${languageUtil.format(locale, "x-results-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
-	</div>
-</#if>
+<div class="search-total-label">
+	${languageUtil.format(locale, (searchContainer.getTotal()==1)?then("x-result-for-x", "x-results-for-x"), [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
+</div>
 
 <div class="display-list">
 	<ul class="list-group" id="search-results-display-list">

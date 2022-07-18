@@ -1,5 +1,5 @@
 <div class="search-total-label">
-	${languageUtil.format(locale, "x-results-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
+	${languageUtil.format(locale, (searchContainer.getTotal()==1)?then("x-result-for-x", "x-results-for-x"), [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
 </div>
 
 <div class="display-compact">

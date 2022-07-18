@@ -691,6 +691,13 @@ definition {
 		}
 	}
 
+	macro clickButtonWithName {
+		Click.javaScriptClick(
+			key_buttonName = "${buttonName}",
+			key_text = "${text}",
+			locator1 = "CommerceEntry#BUTTON_WITH_NAME");
+	}
+
 	macro clickEntryDropdownMenuItem {
 		Click(
 			key_value = "${entryName}",

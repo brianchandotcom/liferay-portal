@@ -1,5 +1,88 @@
 definition {
 
+	macro _addDiscount {
+		Variables.assertDefined(parameterList = "${active},${level},${target},${title},${usePercentage}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(limitationType))) {
+			var limitationType = "unlimited";
+		}
+
+		if (!(isSet(maximumDiscountAmount))) {
+			var maximumDiscountAmount = "0";
+		}
+
+		if (!(isSet(percentageLevel1))) {
+			var percentageLevel1 = "0";
+		}
+
+		if (!(isSet(percentageLevel2))) {
+			var percentageLevel2 = "0";
+		}
+
+		if (!(isSet(percentageLevel3))) {
+			var percentageLevel3 = "0";
+		}
+
+		if (!(isSet(percentageLevel4))) {
+			var percentageLevel4 = "0";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+			-H 'Content-Type: application/json' \
+  			-d '{
+				"active": ${active},
+				"level": "${level}",
+				"limitationType": "${limitationType}",
+				"maximumDiscountAmount": ${maximumDiscountAmount},
+				"neverExpire": true,
+				"percentageLevel1": ${percentageLevel1},
+				"percentageLevel2": ${percentageLevel2},
+				"percentageLevel3": ${percentageLevel3},
+				"percentageLevel4": ${percentageLevel4},
+				"target": "${target}",
+				"title": "${title}",
+				"usePercentage": ${usePercentage}
+			}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro _addDiscountProduct {
+		Variables.assertDefined(parameterList = "${discountTitle},${productName}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = "${discountTitle}");
+		var productId = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId}/discount-products \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+			-H 'Content-Type: application/json' \
+  			-d '{
+				"discountId": ${discountId},
+				"productId": ${productId}
+			}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _deleteAllCommerceDiscounts {
 		var baseURL = "${baseURL}";
 
@@ -72,6 +155,33 @@ definition {
 		echo("The Commerce discounts count is: ${discountsCount}");
 
 		return "${discountsCount}";
+	}
+
+	macro _getDiscountId {
+		Variables.assertDefined(parameterList = "${discountTitle}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(discountCount)) {
+			var discountCount = "${discountCount}";
+		}
+		else {
+			var discountCount = "100";
+		}
+
+		var curl = '''
+				${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts?pageSize=${discountCount} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+			''';
+
+		var discountId = JSONCurlUtil.get("${curl}", "$.items[?(@['title'] == '${discountTitle}')].['id']");
+
+		return "${discountId}";
 	}
 
 }

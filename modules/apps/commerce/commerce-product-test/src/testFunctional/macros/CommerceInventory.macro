@@ -1,0 +1,37 @@
+definition {
+
+	macro addIncomingQuantity {
+		Variables.assertDefined(parameterList = "${expectedDeliveryDate},${quantity}");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			key_fieldLabel = "Quantity",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${quantity}");
+
+		if (isSet(destination)) {
+			Select(
+				key_selectFieldLabel = "Destination",
+				locator1 = "CommerceEntry#ANY_SELECT",
+				value1 = "${destination}");
+		}
+
+		Click(locator1 = "CommerceEntry#INVENTORY_EXPECTED_INCOMING_DELIVERY_DATE");
+
+		Type(
+			locator1 = "CommerceEntry#INVENTORY_EXPECTED_INCOMING_DELIVERY_DATE",
+			value1 = "${expectedDeliveryDate}");
+
+		Button.clickSubmitButton();
+	}
+
+	macro openInventoryAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet");
+	}
+
+}

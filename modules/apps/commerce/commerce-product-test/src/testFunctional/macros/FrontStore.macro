@@ -319,6 +319,32 @@ definition {
 		return "${quantityConfigurationText}";
 	}
 
+	macro viewGroupedProductEntries {
+		Variables.assertDefined(parameterList = "${productNames}");
+
+		for (var productName : list "${productNames}") {
+			var productImage = CommerceJSONProductsAPI._getCommerceProductImageIds(productName = "${productName}");
+
+			AssertElementPresent(
+				key_productName = "${productName}",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_GROUPED_PRODUCT_NAME");
+
+			AssertElementPresent(
+				key_productName = "${productName}",
+				key_productShortDescription = "${productName} Short Description",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_GROUPED_PRODUCT_SHORT_DESCRIPTION");
+
+			if ("${productImage}" == "") {
+				var productImage = "default";
+			}
+
+			AssertElementPresent(
+				key_productImage = "${productImage}",
+				key_productName = "${productName}",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_GROUPED_PRODUCT_IMAGE");
+		}
+	}
+
 	macro viewMiniCart {
 		FrontStore.viewMiniCartItems(
 			cartItemNames = "${cartItemNames}",
@@ -411,6 +437,27 @@ definition {
 			var cartItemQuantities = StringUtil.replaceFirst("${cartItemQuantities}", "${cartItemQuantity},", "");
 			var cartItemSkUs = StringUtil.replaceFirst("${cartItemSkUs}", "${cartItemSku},", "");
 		}
+	}
+
+	macro viewProductAttachment {
+		Variables.assertDefined(parameterList = "${attachmentName}");
+
+		Click(
+			key_text = "Attachments",
+			locator1 = "Button#ANY");
+
+		AssertElementPresent(
+			key_entryName = "${attachmentName}",
+			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_ATTACHMENTS_NAME");
+
+		AssertElementPresent(
+			key_entryName = "${attachmentName}",
+			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_ATTACHMENTS_ICON_DEFAULT");
+
+		AssertElementPresent(
+			key_button = "Download",
+			key_entryName = "${attachmentName}",
+			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_ATTACHMENTS_BUTTON");
 	}
 
 	macro viewProductDetail {

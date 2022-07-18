@@ -48,4 +48,35 @@ definition {
 		Refresh();
 	}
 
+	macro editSkuPricing {
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		if (isSet(basePrice)) {
+			Type(
+				key_text = "Base Price",
+				locator1 = "TextInput#ANY",
+				value1 = "${basePrice}");
+		}
+
+		if (isSet(salePrice)) {
+			Type(
+				key_text = "Sale Price",
+				locator1 = "TextInput#ANY",
+				value1 = "${salePrice}");
+		}
+
+		if (isSet(cost)) {
+			Type(
+				key_text = "Cost",
+				locator1 = "TextInput#ANY",
+				value1 = "${cost}");
+		}
+
+		Button.clickPublish();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrame.selectFrameTop();
+	}
+
 }

@@ -34,7 +34,7 @@ const HEADERS = [
 	{
 		clickable: true,
 		greyColor: true,
-		key: 'dateCreated',
+		key: 'applicationCreateDate',
 		type: 'link',
 		value: 'Date',
 	},
@@ -60,12 +60,12 @@ const HEADERS = [
 const STATUS_DISABLED = ['Bound', 'Quoted'];
 
 const PARAMETERS = {
-	sort: 'dateCreated:desc',
+	sort: 'applicationCreateDate:desc',
 };
 
 type RecentApplication = {
+	applicationCreateDate: Date;
 	applicationStatus: {name: string};
-	dateCreated: Date;
 	externalReferenceCode: string;
 	productName: string;
 };
@@ -124,13 +124,15 @@ const RecentApplications = () => {
 			const applicationsList: TableContent[] = [];
 			results?.data?.items.forEach(
 				({
+					applicationCreateDate,
 					applicationStatus: {name},
-					dateCreated,
 					externalReferenceCode,
 					productName,
 				}: RecentApplication) =>
 					applicationsList.push({
-						dateCreated: formatDate(new Date(dateCreated)),
+						applicationCreateDate: formatDate(
+							new Date(applicationCreateDate)
+						),
 						externalReferenceCode,
 						key: externalReferenceCode,
 						name,

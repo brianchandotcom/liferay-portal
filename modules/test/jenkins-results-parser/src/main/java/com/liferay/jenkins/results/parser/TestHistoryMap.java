@@ -103,6 +103,9 @@ public class TestHistoryMap {
 				testJSONObject.put(
 					"averageDuration", testClassHistory.getAverageDuration());
 				testJSONObject.put(
+					"averageOverheadDuration",
+					testClassHistory.getAverageOverheadDuration());
+				testJSONObject.put(
 					"statusChanges", testClassHistory.getStatusChanges());
 				testJSONObject.put(
 					"testName", testClassHistory.getTestClassName());
@@ -505,7 +508,7 @@ public class TestHistoryMap {
 				}
 
 				count++;
-				totalDuration = totalDuration + duration;
+				totalDuration += duration;
 			}
 
 			if (count == 0) {
@@ -513,6 +516,28 @@ public class TestHistoryMap {
 			}
 
 			return totalDuration / count;
+		}
+
+		public long getAverageOverheadDuration() {
+			long count = 0;
+			long totalOverheadDuration = 0;
+
+			for (TestClassReport testClassReport : _testClassReports) {
+				long overheadDuration = testClassReport.getOverheadDuration();
+
+				if (overheadDuration > _MAXIMUM_TEST_DURATION) {
+					continue;
+				}
+
+				count++;
+				totalOverheadDuration += overheadDuration;
+			}
+
+			if (count == 0) {
+				return 0;
+			}
+
+			return totalOverheadDuration / count;
 		}
 
 		public int getStatusChanges() {

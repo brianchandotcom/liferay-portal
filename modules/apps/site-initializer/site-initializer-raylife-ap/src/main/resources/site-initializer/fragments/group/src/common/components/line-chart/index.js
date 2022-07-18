@@ -111,8 +111,12 @@ const LineChart = ({
 						{percentual < 0 && <ClayIcon symbol="caret-bottom" />}
 
 						{getPeriod === 1
-							? `${percentual}% MoM`
-							: `${percentual}% YoY`}
+							? `${
+									percentual === Infinity ? `NaN` : percentual
+							  }% MoM`
+							: `${
+									percentual === Infinity ? `NaN` : percentual
+							  }% YoY`}
 					</div>
 				</div>
 			</div>

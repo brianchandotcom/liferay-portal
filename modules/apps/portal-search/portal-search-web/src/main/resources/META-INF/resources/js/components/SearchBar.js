@@ -167,6 +167,7 @@ export default function SearchBar({
 							aria-label={Liferay.Language.get('submit')}
 							displayType="unstyled"
 							onClick={_handleSubmit}
+							type="submit"
 						>
 							<ClayIcon symbol="search" />
 						</ClayButton>
@@ -206,10 +207,16 @@ export default function SearchBar({
 				</ClayInput.GroupItem>
 
 				<ClayInput.GroupItem prepend shrink>
-					<ClaySelect onChange={_handleChangeScope} value={scope}>
+					<ClaySelect
+						aria-label={Liferay.Language.get('scope')}
+						name={scopeParameterName}
+						onChange={_handleChangeScope}
+						title={Liferay.Language.get('scope')}
+						value={scope}
+					>
 						<ClaySelect.Option
 							key={scopeParameterStringCurrentSite}
-							label={Liferay.Language.get('current-site')}
+							label={Liferay.Language.get('this-site')}
 							value={scopeParameterStringCurrentSite}
 						/>
 
@@ -226,6 +233,7 @@ export default function SearchBar({
 						aria-label={Liferay.Language.get('submit')}
 						displayType="secondary"
 						onClick={_handleSubmit}
+						type="submit"
 					>
 						<ClayIcon symbol="search" />
 					</ClayButton>

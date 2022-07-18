@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.object.service.test;
+package com.liferay.object.service.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.object.service.test.BaseObjectStateFlowLocalServiceTest;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,11 +31,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Selton Guedes
+ * @author Feliphe Marinho
  */
 @RunWith(Arquillian.class)
-public class ObjectStateLocalServiceTest
-	extends BaseObjectStateLocalServiceTest {
+public class ListTypeEntryModelListenerTest
+	extends BaseObjectStateFlowLocalServiceTest {
 
 	@ClassRule
 	@Rule

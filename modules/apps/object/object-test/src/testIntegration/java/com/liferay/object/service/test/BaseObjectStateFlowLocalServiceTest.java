@@ -53,7 +53,7 @@ import org.junit.BeforeClass;
 /**
  * @author Feliphe Marinho
  */
-public class BaseObjectStateLocalServiceTest {
+public class BaseObjectStateFlowLocalServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() {

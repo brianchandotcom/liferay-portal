@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
@@ -371,8 +372,12 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 	private void _setDDMFormFieldReference(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
-		ddmFormField.setFieldReference(
-			dynamicElementElement.attributeValue("fieldReference"));
+		String fieldReference = dynamicElementElement.attributeValue(
+			"fieldReference");
+
+		if (Validator.isNotNull(fieldReference)) {
+			ddmFormField.setFieldReference(fieldReference);
+		}
 	}
 
 	private void _setDDMFormFieldRepeatable(

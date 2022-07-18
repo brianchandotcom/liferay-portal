@@ -294,15 +294,22 @@ public class DDMFormFieldDeserializerUtil {
 
 		String settingName = ddmFormFieldTypeSetting.getName();
 
-		if (jsonObject.has(settingName)) {
-			Object deserializedDDMFormFieldProperty =
-				_deserializeDDMFormFieldProperty(
-					ddmFormFieldTypeSetting, jsonFactory,
-					jsonObject.getString(settingName));
-
-			ddmFormField.setProperty(
-				settingName, deserializedDDMFormFieldProperty);
+		if (!jsonObject.has(settingName)) {
+			return;
 		}
+
+		String settingValue = jsonObject.getString(settingName);
+
+		if (Objects.equals(settingName, "fieldReference") &&
+			Validator.isNull(settingValue)) {
+
+			return;
+		}
+
+		ddmFormField.setProperty(
+			settingName,
+			_deserializeDDMFormFieldProperty(
+				ddmFormFieldTypeSetting, jsonFactory, settingValue));
 	}
 
 	private static void _setNestedDDMFormField(

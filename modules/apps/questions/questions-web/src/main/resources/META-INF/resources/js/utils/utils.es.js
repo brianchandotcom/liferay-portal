@@ -29,11 +29,8 @@ export function dateToInternationalHuman(
 		hour: '2-digit',
 		minute: '2-digit',
 		month: 'short',
+		year: 'numeric',
 	};
-
-	if (date.getFullYear() !== new Date().getFullYear()) {
-		options.year = 'numeric';
-	}
 
 	const intl = new Intl.DateTimeFormat(localeKey, options);
 
@@ -83,28 +80,23 @@ export function timeDifference(previous, current = new Date()) {
 		return lang.sub(Liferay.Language.get('asked-x-seconds-ago-by'), [
 			Math.round(elapsed / 1000),
 		]);
-	}
-	else if (elapsed < msPerHour) {
+	} else if (elapsed < msPerHour) {
 		return lang.sub(Liferay.Language.get('asked-x-minutes-ago-by'), [
 			Math.round(elapsed / msPerMinute),
 		]);
-	}
-	else if (elapsed < msPerDay) {
+	} else if (elapsed < msPerDay) {
 		return lang.sub(Liferay.Language.get('asked-x-hours-ago-by'), [
 			Math.round(elapsed / msPerHour),
 		]);
-	}
-	else if (elapsed < msPerMonth) {
+	} else if (elapsed < msPerMonth) {
 		return lang.sub(Liferay.Language.get('asked-x-days-ago-by'), [
 			Math.round(elapsed / msPerDay),
 		]);
-	}
-	else if (elapsed < msPerYear) {
+	} else if (elapsed < msPerYear) {
 		return lang.sub(Liferay.Language.get('asked-x-months-ago-by'), [
 			Math.round(elapsed / msPerMonth),
 		]);
-	}
-	else {
+	} else {
 		return lang.sub(Liferay.Language.get('asked-x-years-ago-by'), [
 			Math.round(elapsed / msPerYear),
 		]);
@@ -221,8 +213,7 @@ export function getBasePathWithHistoryRouter(friendlyURLPath) {
 
 	if (!href.includes(friendlyURLPath)) {
 		return normalizeUrl(href) + friendlyURLPath + appPath;
-	}
-	else if (!href.includes(appPath)) {
+	} else if (!href.includes(appPath)) {
 		return normalizeUrl(href) + appPath;
 	}
 
@@ -242,8 +233,7 @@ export function getContextLink(url) {
 
 	if (link.indexOf('#') !== -1) {
 		link = `${getFullPath()}?redirectTo=/%23/questions/${url}/`;
-	}
-	else {
+	} else {
 		link = `${getFullPath('questions')}questions/${url}/`;
 	}
 

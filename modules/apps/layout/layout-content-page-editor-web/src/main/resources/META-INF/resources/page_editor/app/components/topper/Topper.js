@@ -113,6 +113,20 @@ function TopperContent({
 		[item]
 	);
 
+	const fragmentEntryType = useSelectorCallback(
+		(state) => {
+			if (!item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+				return null;
+			}
+
+			const fragmentEntryLink =
+				state.fragmentEntryLinks[item.config?.fragmentEntryLinkId];
+
+			return fragmentEntryLink?.fragmentEntryType ?? null;
+		},
+		[item]
+	);
+
 	const onDragEnd = (parentItemId, position) => {
 		dispatch(
 			moveItem({
@@ -127,7 +141,7 @@ function TopperContent({
 	const {
 		handlerRef: itemHandlerRef,
 		isDraggingSource: itemIsDraggingSource,
-	} = useDragItem({...item, name}, onDragEnd, () => {
+	} = useDragItem({...item, fragmentEntryType, name}, onDragEnd, () => {
 		if (!isActive) {
 			selectItem(item.itemId);
 		}
@@ -136,7 +150,7 @@ function TopperContent({
 	const {
 		handlerRef: topperHandlerRef,
 		isDraggingSource: topperIsDraggingSource,
-	} = useDragItem({...item, name}, onDragEnd, () => {
+	} = useDragItem({...item, fragmentEntryType, name}, onDragEnd, () => {
 		if (!isActive) {
 			selectItem(item.itemId);
 		}

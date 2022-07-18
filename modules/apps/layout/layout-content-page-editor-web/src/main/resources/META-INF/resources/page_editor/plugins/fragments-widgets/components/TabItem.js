@@ -32,6 +32,7 @@ export default function TabItem({displayStyle, item}) {
 
 	const {isDraggingSource, sourceRef} = useDragSymbol(
 		{
+			fragmentEntryType: item.data.type,
 			icon: item.icon,
 			label: item.label,
 			type: item.type,

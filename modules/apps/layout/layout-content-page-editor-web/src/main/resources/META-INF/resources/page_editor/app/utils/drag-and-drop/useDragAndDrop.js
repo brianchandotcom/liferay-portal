@@ -179,12 +179,22 @@ export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 	};
 }
 
-export function useDragSymbol({icon, label, type}, onDragEnd) {
+export function useDragSymbol(
+	{fragmentEntryType, icon, label, type},
+	onDragEnd
+) {
 	const selectItem = useSelectItem();
 
 	const sourceItem = useMemo(
-		() => ({icon, isSymbol: true, itemId: label, name: label, type}),
-		[icon, label, type]
+		() => ({
+			fragmentEntryType,
+			icon,
+			isSymbol: true,
+			itemId: label,
+			name: label,
+			type,
+		}),
+		[fragmentEntryType, icon, label, type]
 	);
 
 	const {handlerRef, isDraggingSource, sourceRef} = useDragItem(

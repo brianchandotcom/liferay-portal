@@ -34,6 +34,7 @@ import {
 import {
 	useDispatch,
 	useSelector,
+	useSelectorCallback,
 	useSelectorRef,
 } from '../../../../../app/contexts/StoreContext';
 import selectCanUpdatePageStructure from '../../../../../app/selectors/selectCanUpdatePageStructure';
@@ -209,13 +210,29 @@ function StructureTreeNodeContent({
 		[layoutDataRef, node]
 	);
 
+	const fragmentEntryType = useSelectorCallback(
+		(state) => {
+			if (!node.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+				return null;
+			}
+
+			const fragmentEntryLink =
+				state.fragmentEntryLinks[item.config?.fragmentEntryLinkId];
+
+			return fragmentEntryLink?.fragmentEntryType ?? null;
+		},
+		[item]
+	);
+
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(
 		item,
 		computeHover
 	);
 
+	const isDroppable = useIsDroppable();
+
 	const {handlerRef, isDraggingSource} = useDragItem(
-		item,
+		{...item, fragmentEntryType},
 		(parentItemId, position) =>
 			dispatch(
 				moveItem({

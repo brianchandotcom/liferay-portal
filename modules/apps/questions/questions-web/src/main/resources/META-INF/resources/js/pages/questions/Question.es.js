@@ -55,7 +55,7 @@ import {
 import {ALL_SECTIONS_ID} from '../../utils/contants.es';
 import lang from '../../utils/lang.es';
 import {
-	dateToBriefInternationalHuman,
+	dateToInternationalHuman,
 	deleteCacheKey,
 	getContextLink,
 	getErrorObject,
@@ -127,8 +127,7 @@ export default withRouter(
 							);
 							setError(errorObject);
 							setLoading(false);
-						}
-						else {
+						} else {
 							setQuestion(messageBoardThreadByFriendlyUrlPath);
 							setLoading(false);
 						}
@@ -218,8 +217,7 @@ export default withRouter(
 				await onSubscription();
 
 				fetchMessages();
-			}
-			catch (error) {}
+			} catch (error) {}
 		};
 
 		const deleteAnswer = useCallback(
@@ -380,11 +378,11 @@ export default withRouter(
 										<p className="c-mb-0 small text-secondary">
 											{`${Liferay.Language.get(
 												'asked'
-											)} ${dateToBriefInternationalHuman(
+											)} - ${dateToInternationalHuman(
 												question.dateCreated
-											)} - ${Liferay.Language.get(
+											)} / ${Liferay.Language.get(
 												'active'
-											)} ${dateToBriefInternationalHuman(
+											)} - ${dateToInternationalHuman(
 												question.dateModified
 											)} - ${lang.sub(
 												Liferay.Language.get(

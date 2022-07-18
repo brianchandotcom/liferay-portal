@@ -38,6 +38,7 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 
 		for (TestClass testClass : getTestClasses()) {
 			averageDuration += testClass.getAverageDuration();
+			averageDuration += testClass.getAverageOverheadDuration();
 		}
 
 		return averageDuration;

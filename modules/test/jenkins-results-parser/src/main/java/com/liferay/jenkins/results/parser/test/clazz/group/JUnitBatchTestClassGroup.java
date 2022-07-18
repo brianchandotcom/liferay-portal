@@ -487,7 +487,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 					long estimatedAxisDuration =
 						axisTestClassGroup.getAverageDuration() +
-							testClass.getAverageDuration();
+							testClass.getAverageDuration() +
+								testClass.getAverageOverheadDuration();
 
 					if (estimatedAxisDuration < targetAxisDuration) {
 						axisTestClassGroup.addTestClass(testClass);

@@ -93,6 +93,19 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return _getDefaultTestDuration();
 	}
 
+	public long getAverageTestOverheadDuration(String testName) {
+		Job job = getJob();
+
+		Long averageOverheadDuration = job.getAverageTestOverheadDuration(
+			getBatchName(), testName);
+
+		if (averageOverheadDuration != null) {
+			return averageOverheadDuration;
+		}
+
+		return 0L;
+	}
+
 	public int getAxisCount() {
 		JobProperty jobProperty = getJobProperty("test.batch.axis.count");
 

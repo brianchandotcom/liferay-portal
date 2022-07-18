@@ -62,9 +62,9 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST sListDetailAST = detailAST.findFirstToken(TokenTypes.SLIST);
+		DetailAST slistDetailAST = detailAST.findFirstToken(TokenTypes.SLIST);
 
-		firstChildDetailAST = sListDetailAST.getFirstChild();
+		firstChildDetailAST = slistDetailAST.getFirstChild();
 
 		if (firstChildDetailAST.getType() != TokenTypes.EXPR) {
 			return;
@@ -88,7 +88,7 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 			return;
 		}
 
-		firstChildDetailAST = sListDetailAST.getFirstChild();
+		firstChildDetailAST = slistDetailAST.getFirstChild();
 
 		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
@@ -116,7 +116,7 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 
 				log(
 					startLine, _MSG_REDUNDANT_LOG, startLine,
-					getEndLineNumber(sListDetailAST));
+					getEndLineNumber(slistDetailAST));
 			}
 
 			return;

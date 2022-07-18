@@ -55,15 +55,8 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST dotDetailAST = firstChildDetailAST.getFirstChild();
-
-		if (dotDetailAST == null) {
-			return;
-		}
-
-		FullIdent fullIdent = FullIdent.createFullIdent(dotDetailAST);
-
-		Matcher matcher = _logLevelPattern.matcher(fullIdent.getText());
+		Matcher matcher = _logLevelPattern.matcher(
+			_getMethodCallFullIdent(firstChildDetailAST));
 
 		if (!matcher.find()) {
 			return;
@@ -103,15 +96,7 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 			return;
 		}
 
-		dotDetailAST = firstChildDetailAST.getFirstChild();
-
-		if (dotDetailAST == null) {
-			return;
-		}
-
-		fullIdent = FullIdent.createFullIdent(dotDetailAST);
-
-		String fullIdentText = fullIdent.getText();
+		String fullIdentText = _getMethodCallFullIdent(firstChildDetailAST);
 
 		if (!fullIdentText.matches(
 				"_log\\." + StringUtil.lowerCase(matcher.group(1)))) {
@@ -203,6 +188,18 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 
 			return false;
 		}
+	}
+
+	private String _getMethodCallFullIdent(DetailAST detailAST) {
+		DetailAST dotDetailAST = detailAST.findFirstToken(TokenTypes.DOT);
+
+		if (dotDetailAST == null) {
+			return getName(dotDetailAST);
+		}
+
+		FullIdent fullIdent = FullIdent.createFullIdent(dotDetailAST);
+
+		return fullIdent.getText();
 	}
 
 	private static final String _MSG_REDUNDANT_LOG = "redundant.log.branching";

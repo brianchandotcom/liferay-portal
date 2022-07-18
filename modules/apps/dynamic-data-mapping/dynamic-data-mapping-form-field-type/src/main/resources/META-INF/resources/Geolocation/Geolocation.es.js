@@ -13,8 +13,8 @@
  */
 
 import 'leaflet/dist/leaflet.css';
-import React from 'react';
 import ClayIcon from '@clayui/icon';
+import React from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {MAP_PROVIDER, useGeolocation} from './useGeolocation.es';

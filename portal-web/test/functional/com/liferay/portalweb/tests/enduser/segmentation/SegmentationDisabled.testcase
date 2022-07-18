@@ -31,400 +31,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user navigates to Segments Admin
-	Then alert is shown including breadcrumb link to segments service"
-	@priority = "4"
-	test ViewReEnableAlertLinkAtSegmentsList {
-
-		task ("Open the Segments List and check if warning with link appears") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
-			Segmentation.checkSegmentationReEnableWarningLink();
-		}
-
-	}
-
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user navigates to Experiences menu
-	Then alert is shown including breadcrumb link to segments service"
-	@priority = "3"
-	test ViewReEnabledAlertLinkAtExperiencesMenu {
-		task ("Open the Experience menu and check if warning with link appears") {
-			Navigator.openURL();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.openExperienceMenu();
-
-			Segmentation.checkSegmentationReEnableWarningLink();
-		}
-	}
-
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user navigates to Manual Collection editor
-	Then alert is shown including breadcrumb link to segments service"
-	@priority = "3"
-	test ViewReEnableAlertLinkAtManualCollectionEditor {
-		task ("Create a Collection via JSONWS") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
-		task ("Navigate to Manual Collection Editor") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-		}
-
-		task ("Check if warning with link appears") {
-			Segmentation.checkSegmentationReEnableWarningLink();
-		}
-	}
-
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user navigates to Dynamic Collection editor
-	Then alert is shown including breadcrumb link to segments service"
-	@priority = "3"
-	test ViewReEnableAlertLinkAtDynamicCollectionEditor {
-		task ("Create a Collection via JSONWS") {
-			JSONAssetlist.addDynamicAssetListEntry(
-				groupName = "Test Site Name",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Navigate to Collection Admin") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-		}
-
-		task ("Check if warning appears") {
-			Segmentation.checkSegmentationReEnableWarningLink();
-		}
-	}
-
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user clicks at breadcrumb's link at Segments Admin
-	Then should be forwarded to Segments Service at Instance Settings "
-	@priority = "4"
-	test ClickToReEnableAlertLinkAtSegmentsList {
-
-		task ("Open the Segments List, click at warning with link and confirm Instance Settings is open") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
-			Segmentation.clickToReEnableSegmentsWarningLink();
-		}
-
-	}
-
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user navigates to Experiences menu
-	Then alert is shown including breadcrumb link to segments service"
-	@priority = "3"
-	test ClickToReEnableAlertLinkAtAtExperiencesMenu {
-		task ("Open the Experience menu") {
-			Navigator.openURL();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.openExperienceMenu();
-		}
-
-		task ("Click at warning with link and confirm Instance Settings is open") {
-
-			Segmentation.clickToReEnableSegmentsWarningLink();
-		}
-	}
-
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user clicks at breadcrumb's link at Manual Collection editor
-	Then should be forwarded to Segments Service at Instance Settings "
-	@priority = "3"
-	test ClickToReEnableAlertLinkAtManualCollectionEditor {
-		task ("Create a Collection via JSONWS") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
-		task ("Navigate to Manual Collection Editor") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-		}
-
-		task ("Click at warning with link and confirm Instance Settings is open") {
-
-			Segmentation.clickToReEnableSegmentsWarningLink();
-		}
-	}
-
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user clicks at breadcrumb's link at Dynamic Collection editor
-	Then should be forwarded to Segments Service at Instance Settings "
-	@priority = "3"
-	test ClickToReEnableAlertLinkAtDynamicCollectionEditor {
-		task ("Create a Collection via JSONWS") {
-			JSONAssetlist.addDynamicAssetListEntry(
-				groupName = "Test Site Name",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Navigate to Collection Admin") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-		}
-
-		task ("Click at warning with link and confirm Instance Settings is open") {
-
-			Segmentation.clickToReEnableSegmentsWarningLink();
-		}
-	}
-
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user does not have permissions to Instance Settings
-	When user navigates to Segments Admin
-	Then alert is shown informing to contact system administrator"
-	@priority = "3"
-	test ViewSegmentationDisabledWarningUserWithoutPermissionAtSegmentsList {
-
-
-		task ("Add user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add role and assign it to the user") {
-			JSONRole.addRegularRole(
-                roleKey = "Segmentation Permissions",
-                roleTitle = "Segmentation Permissions");
-
-            Permissions.definePermissionViaJSONAPI(
-                resourceAction = "VIEW",
-                resourceName = "com.liferay.segments",
-                roleTitle = "Segmentation Permissions");
-
-			Permissions.definePermissionViaJSONAPI(
-                resourceAction = "VIEW_SITE_ADMINISTRATION",
-                resourceName = "com.liferay.portal.kernel.model.Group",
-                roleTitle = "Segmentation Permissions");
-
-			Permissions.definePermissionViaJSONAPI(
-                resourceAction = "ACCESS_IN_CONTROL_PANEL",
-                resourceName = "com_liferay_segments_web_internal_portlet_SegmentsPortlet",
-                roleTitle = "Segmentation Permissions");
-
-			Permissions.definePermissionViaJSONAPI(
-                resourceAction = "VIEW_SITE_ADMINISTRATION",
-                resourceName = "com.liferay.depot.model.DepotEntry",
-                roleTitle = "Segmentation Permissions");
-
-            JSONRole.assignRoleToUser(
-                roleTitle = "Segmentation Permissions",
-                userEmailAddress = "userea@liferay.com"); 
-		}
-
-		task ("Login with the new user") {
-			Navigator.openURL();
-
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("Open the Segments List and check if warning is shown informing to contact system administrator appears") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
-			Segmentation.checkSegmentationDisabledWarningUserWithoutPermission();
-		}
-
-		task ("Login with the user admin") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-		}
-
-	}
-
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user does not have permissions to Instance Settings
-	When user navigates to Experiences menu
-	Then alert is shown informing to contact system administrator"
-	@priority = "3"
-	test ViewSegmentationDisabledWarningUserWithoutPermissionAtExperienceMenu {
-
-
-		task ("Create an User") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create a Role and Set permissions for this role") {
-			JSONRole.addRegularRole(
-				roleKey = "Experiences Test Role",
-				roleTitle = "Experiences Test Role");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Experiences Test Role");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "MANAGE_SEGMENTS_ENTRIES",
-				resourceName = "com.liferay.segments",
-				roleTitle = "Experiences Test Role");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Experiences Test Role",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Login with user created") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("Open the Experiences menu and check if warning is shown informing to contact system administrator appears") {
-
-			Navigator.openURL();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.openExperienceMenu();
-
-			Segmentation.checkSegmentationDisabledWarningUserWithoutPermission();
-		}
-
-		task ("Login with the user admin") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-		}
-
-
-
-	}
-
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user does not have permissions to Instance Settings
-	When user navigates to Manual Collection editor
-	Then alert is shown informing to contact system administrator"
-	@priority = "3"
-	test ViewSegmentationDisabledWarningUserWithoutPermissionAtManualCollectionEditor {
-
-
-		task ("Create an User") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create a Role and Set permissions for this role") {
-			JSONRole.addRegularRole(
-				roleKey = "Manual Collection Test Role",
-				roleTitle = "Manual Collection Test Role");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ACCESS_IN_CONTROL_PANEL",
-				resourceName = "com_liferay_asset_list_web_portlet_AssetListPortlet",
-				roleTitle = "Manual Collection Test Role");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.depot.model.DepotEntry",
-				roleTitle = "Manual Collection Test Role");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Manual Collection Test Role");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.asset.list.model.AssetListEntry",
-				roleTitle = "Manual Collection Test Role");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Manual Collection Test Role",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Login with user created") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("Create a Collection via JSONWS") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
-		task ("Navigate to Manual Collection Editor") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-		}
-
-		task ("Czheck if warning is shown informing to contact system administrator appears") {
-
-			Segmentation.checkSegmentationDisabledWarningUserWithoutPermission();
-		}
-
-		task ("Login with the user admin") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-		}
-
-
-
-	}
-
-	
-
 	@description = "LPS-152541 Given the 'Assign Roles by Segments' is disabled at System Settings
     When user navigates to Segmentation at Instance Settings
     Then should see an alert informing that is disabled and how to re-enable it "
@@ -506,6 +112,86 @@ definition {
 			AssertElementPresent(
 				key_fieldLabel = "Enable Segmentation",
 				locator1 = "FormFields#FIELD_DISABLED_TEXT");
+		}
+	}
+
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user has permissions to Instance Settings
+	When user navigates to Experiences menu
+	Then alert is shown including breadcrumb link to segments service"
+	@priority = "3"
+	test ClickToReEnableAlertLinkAtAtExperiencesMenu {
+		task ("Open the Experience menu") {
+			Navigator.openURL();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openExperienceMenu();
+		}
+
+		task ("Click at warning with link and confirm Instance Settings is open") {
+			Segmentation.clickToReEnableSegmentsWarningLink();
+		}
+	}
+
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user has permissions to Instance Settings
+	When user clicks at breadcrumb's link at Dynamic Collection editor
+	Then should be forwarded to Segments Service at Instance Settings "
+	@priority = "3"
+	test ClickToReEnableAlertLinkAtDynamicCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Click at warning with link and confirm Instance Settings is open") {
+			Segmentation.clickToReEnableSegmentsWarningLink();
+		}
+	}
+
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user has permissions to Instance Settings
+	When user clicks at breadcrumb's link at Manual Collection editor
+	Then should be forwarded to Segments Service at Instance Settings "
+	@priority = "3"
+	test ClickToReEnableAlertLinkAtManualCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to Manual Collection Editor") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Click at warning with link and confirm Instance Settings is open") {
+			Segmentation.clickToReEnableSegmentsWarningLink();
+		}
+	}
+
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user has permissions to Instance Settings
+	When user clicks at breadcrumb's link at Segments Admin
+	Then should be forwarded to Segments Service at Instance Settings "
+	@priority = "4"
+	test ClickToReEnableAlertLinkAtSegmentsList {
+		task ("Open the Segments List, click at warning with link and confirm Instance Settings is open") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			Segmentation.clickToReEnableSegmentsWarningLink();
 		}
 	}
 
@@ -1096,6 +782,67 @@ definition {
 		}
 	}
 
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user has permissions to Instance Settings
+	When user navigates to Dynamic Collection editor
+	Then alert is shown including breadcrumb link to segments service"
+	@priority = "3"
+	test ViewReEnableAlertLinkAtDynamicCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Check if warning appears") {
+			Segmentation.checkSegmentationReEnableWarningLink();
+		}
+	}
+
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user has permissions to Instance Settings
+	When user navigates to Manual Collection editor
+	Then alert is shown including breadcrumb link to segments service"
+	@priority = "3"
+	test ViewReEnableAlertLinkAtManualCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to Manual Collection Editor") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Check if warning with link appears") {
+			Segmentation.checkSegmentationReEnableWarningLink();
+		}
+	}
+
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user has permissions to Instance Settings
+	When user navigates to Segments Admin
+	Then alert is shown including breadcrumb link to segments service"
+	@priority = "4"
+	test ViewReEnableAlertLinkAtSegmentsList {
+		task ("Open the Segments List and check if warning with link appears") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			Segmentation.checkSegmentationReEnableWarningLink();
+		}
+	}
+
 	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
 	When user navigates to Experience simulation sidepanel
 	Then the warning alert explains how to re-enable it"
@@ -1145,6 +892,313 @@ definition {
 			PageEditor.openExperienceMenu();
 
 			Segmentation.checkSegmentationReEnableWarning();
+		}
+	}
+
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user has permissions to Instance Settings
+	When user navigates to Experiences menu
+	Then alert is shown including breadcrumb link to segments service"
+	@priority = "3"
+	test ViewReEnabledAlertLinkAtExperiencesMenu {
+		task ("Open the Experience menu and check if warning with link appears") {
+			Navigator.openURL();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openExperienceMenu();
+
+			Segmentation.checkSegmentationReEnableWarningLink();
+		}
+	}
+
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user does not have permissions to Instance Settings
+	When user navigates to Dynamic Collection editor
+	Then alert is shown informing to contact system administrator"
+	@priority = "3"
+	test ViewSegmentationDisabledWarningUserWithoutPermissionAtDynamicCollectionEditor {
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create a Role and Set permissions for this role") {
+			JSONRole.addRegularRole(
+				roleKey = "Dynamic Collection Test Role",
+				roleTitle = "Dynamic Collection Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_asset_list_web_portlet_AssetListPortlet",
+				roleTitle = "Dynamic Collection Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.depot.model.DepotEntry",
+				roleTitle = "Dynamic Collection Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Dynamic Collection Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.asset.list.model.AssetListEntry",
+				roleTitle = "Dynamic Collection Test Role");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Dynamic Collection Test Role",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Login with user created") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Czheck if warning is shown informing to contact system administrator appears") {
+			Segmentation.checkSegmentationDisabledWarningUserWithoutPermission();
+		}
+
+		task ("Login with the user admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+	}
+
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user does not have permissions to Instance Settings
+	When user navigates to Experiences menu
+	Then alert is shown informing to contact system administrator"
+	@priority = "3"
+	test ViewSegmentationDisabledWarningUserWithoutPermissionAtExperienceMenu {
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create a Role and Set permissions for this role") {
+			JSONRole.addRegularRole(
+				roleKey = "Experiences Test Role",
+				roleTitle = "Experiences Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Experiences Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_SEGMENTS_ENTRIES",
+				resourceName = "com.liferay.segments",
+				roleTitle = "Experiences Test Role");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Experiences Test Role",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Login with user created") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Open the Experiences menu and check if warning is shown informing to contact system administrator appears") {
+			Navigator.openURL();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openExperienceMenu();
+
+			Segmentation.checkSegmentationDisabledWarningUserWithoutPermission();
+		}
+
+		task ("Login with the user admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+	}
+
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user does not have permissions to Instance Settings
+	When user navigates to Manual Collection editor
+	Then alert is shown informing to contact system administrator"
+	@priority = "3"
+	test ViewSegmentationDisabledWarningUserWithoutPermissionAtManualCollectionEditor {
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create a Role and Set permissions for this role") {
+			JSONRole.addRegularRole(
+				roleKey = "Manual Collection Test Role",
+				roleTitle = "Manual Collection Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_asset_list_web_portlet_AssetListPortlet",
+				roleTitle = "Manual Collection Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.depot.model.DepotEntry",
+				roleTitle = "Manual Collection Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Manual Collection Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.asset.list.model.AssetListEntry",
+				roleTitle = "Manual Collection Test Role");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Manual Collection Test Role",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Login with user created") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to Manual Collection Editor") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Czheck if warning is shown informing to contact system administrator appears") {
+			Segmentation.checkSegmentationDisabledWarningUserWithoutPermission();
+		}
+
+		task ("Login with the user admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+	}
+
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user does not have permissions to Instance Settings
+	When user navigates to Segments Admin
+	Then alert is shown informing to contact system administrator"
+	@priority = "3"
+	test ViewSegmentationDisabledWarningUserWithoutPermissionAtSegmentsList {
+		task ("Add user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add role and assign it to the user") {
+			JSONRole.addRegularRole(
+				roleKey = "Segmentation Permissions",
+				roleTitle = "Segmentation Permissions");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.segments",
+				roleTitle = "Segmentation Permissions");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Segmentation Permissions");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_segments_web_internal_portlet_SegmentsPortlet",
+				roleTitle = "Segmentation Permissions");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.depot.model.DepotEntry",
+				roleTitle = "Segmentation Permissions");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Segmentation Permissions",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Login with the new user") {
+			Navigator.openURL();
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Open the Segments List and check if warning is shown informing to contact system administrator appears") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			Segmentation.checkSegmentationDisabledWarningUserWithoutPermission();
+		}
+
+		task ("Login with the user admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
 		}
 	}
 

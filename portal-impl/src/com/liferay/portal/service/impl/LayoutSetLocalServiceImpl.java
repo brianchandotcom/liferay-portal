@@ -17,7 +17,10 @@ package com.liferay.portal.service.impl;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.LayoutSetVirtualHostException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
@@ -500,6 +503,28 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
 			groupId, privateLayout);
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_virtualHostLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property layoutSetIdProperty = PropertyFactoryUtil.forName(
+					"layoutSetId");
+
+				dynamicQuery.add(
+					layoutSetIdProperty.ne(layoutSet.getLayoutSetId()));
+
+				Property hostnameProperty = PropertyFactoryUtil.forName(
+					"hostname");
+
+				dynamicQuery.add(
+					hostnameProperty.in(virtualHostnames.keySet()));
+			});
+
+		if (actionableDynamicQuery.performCount() > 0) {
+			throw new LayoutSetVirtualHostException();
+		}
 
 		if (!virtualHostnames.isEmpty()) {
 			_virtualHostLocalService.updateVirtualHosts(

@@ -8000,7 +8000,7 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.assertNoResultsWereFound();
+		ObjectAdmin.assertObjectFieldNotPresent(fieldLabel = "Relationship");
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field is displayed again when the parent object is reactivated (One to Many)"

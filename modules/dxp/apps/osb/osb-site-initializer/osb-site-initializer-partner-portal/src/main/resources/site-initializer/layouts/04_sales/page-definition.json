@@ -55,6 +55,9 @@
 				"pageElements": [
 					{
 						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -73,16 +76,180 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "first-time-welcome-banner"
+										"key": "sales-welcome-banner"
 									},
 									"fragmentConfig": {
-										"descriptionText": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
-										"firstTitleText": "Welcome to Partner Sales",
-										"primaryButtonText": "Watch a Video Tour",
-										"secondTitleText": "Partner Sales",
-										"secondaryButtonText": "Register a New Deal"
+										"secondaryButtonLink": "https://www.liferay.com/pt/home"
 									},
 									"fragmentFields": [
+										{
+											"id": "first-banner-primary-button-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Watch a Video Tour",
+														"ca_ES": "Watch a Video Tour",
+														"de_DE": "Watch a Video Tour",
+														"en_US": "Watch a Video Tour",
+														"es_ES": "Watch a Video Tour",
+														"fi_FI": "Watch a Video Tour",
+														"fr_FR": "Watch a Video Tour",
+														"hu_HU": "Watch a Video Tour",
+														"ja_JP": "Watch a Video Tour",
+														"nl_NL": "Watch a Video Tour",
+														"pt_BR": "Watch a Video Tour",
+														"sv_SE": "Watch a Video Tour",
+														"zh_CN": "Watch a Video Tour"
+													}
+												}
+											}
+										},
+										{
+											"id": "second-banner-primary-button-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Watch a Video Tour",
+														"ca_ES": "Watch a Video Tour",
+														"de_DE": "Watch a Video Tour",
+														"en_US": "Watch a Video Tour",
+														"es_ES": "Watch a Video Tour",
+														"fi_FI": "Watch a Video Tour",
+														"fr_FR": "Watch a Video Tour",
+														"hu_HU": "Watch a Video Tour",
+														"ja_JP": "Watch a Video Tour",
+														"nl_NL": "Watch a Video Tour",
+														"pt_BR": "Watch a Video Tour",
+														"sv_SE": "Watch a Video Tour",
+														"zh_CN": "Watch a Video Tour"
+													}
+												}
+											}
+										},
+										{
+											"id": "second-banner-secondary-button-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Register New Deal",
+														"ca_ES": "Register New Deal",
+														"de_DE": "Register New Deal",
+														"en_US": "Register New Deal",
+														"es_ES": "Register New Deal",
+														"fi_FI": "Register New Deal",
+														"fr_FR": "Register New Deal",
+														"hu_HU": "Register New Deal",
+														"ja_JP": "Register New Deal",
+														"nl_NL": "Register New Deal",
+														"pt_BR": "Register New Deal",
+														"sv_SE": "Register New Deal",
+														"zh_CN": "Register New Deal"
+													}
+												}
+											}
+										},
+										{
+											"id": "first-welcome-banner-title",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Welcome to Partner Sales",
+														"ca_ES": "Welcome to Partner Sales",
+														"de_DE": "Welcome to Partner Sales",
+														"en_US": "Welcome to Partner Sales",
+														"es_ES": "Welcome to Partner Sales",
+														"fi_FI": "Welcome to Partner Sales",
+														"fr_FR": "Welcome to Partner Sales",
+														"hu_HU": "Welcome to Partner Sales",
+														"ja_JP": "Welcome to Partner Sales",
+														"nl_NL": "Welcome to Partner Sales",
+														"pt_BR": "Welcome to Partner Sales",
+														"sv_SE": "Welcome to Partner Sales",
+														"zh_CN": "Welcome to Partner Sales"
+													}
+												}
+											}
+										},
+										{
+											"id": "first-banner-secondary-button-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Register a New Deal",
+														"ca_ES": "Register a New Deal",
+														"de_DE": "Register a New Deal",
+														"en_US": "Register a New Deal",
+														"es_ES": "Register a New Deal",
+														"fi_FI": "Register a New Deal",
+														"fr_FR": "Register a New Deal",
+														"hu_HU": "Register a New Deal",
+														"ja_JP": "Register a New Deal",
+														"nl_NL": "Register a New Deal",
+														"pt_BR": "Register a New Deal",
+														"sv_SE": "Register a New Deal",
+														"zh_CN": "Register a New Deal"
+													}
+												}
+											}
+										},
+										{
+											"id": "first-welcome-banner-description",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+														"ca_ES": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+														"de_DE": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+														"en_US": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+														"es_ES": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+														"fi_FI": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+														"fr_FR": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+														"hu_HU": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+														"ja_JP": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+														"nl_NL": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+														"pt_BR": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+														"sv_SE": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+														"zh_CN": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager."
+													}
+												}
+											}
+										},
+										{
+											"id": "second-welcome-banner-title",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Partner Sales",
+														"ca_ES": "Partner Sales",
+														"de_DE": "Partner Sales",
+														"en_US": "Partner Sales",
+														"es_ES": "Partner Sales",
+														"fi_FI": "Partner Sales",
+														"fr_FR": "Partner Sales",
+														"hu_HU": "Partner Sales",
+														"ja_JP": "Partner Sales",
+														"nl_NL": "Partner Sales",
+														"pt_BR": "Partner Sales",
+														"sv_SE": "Partner Sales",
+														"zh_CN": "Partner Sales"
+													}
+												}
+											}
+										}
 									],
 									"indexed": true
 								},
@@ -94,7 +261,9 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"marginTop": "5"
+								"borderWidth": "0",
+								"marginTop": "5",
+								"textAlign": ""
 							},
 							"indexed": true,
 							"layout": {
@@ -127,19 +296,19 @@
 												},
 												"text": {
 													"value_i18n": {
-														"ar_SA": "Quick Links",
-														"ca_ES": "Quick Links",
-														"de_DE": "Quick Links",
-														"en_US": "Quick Links",
-														"es_ES": "Quick Links",
-														"fi_FI": "Quick Links",
-														"fr_FR": "Quick Links",
-														"hu_HU": "Quick Links",
-														"ja_JP": "Quick Links",
-														"nl_NL": "Quick Links",
-														"pt_BR": "Quick Links",
-														"sv_SE": "Quick Links",
-														"zh_CN": "Quick Links"
+														"ar_SA": "Resources",
+														"ca_ES": "Resources",
+														"de_DE": "Resources",
+														"en_US": "Resources",
+														"es_ES": "Resources",
+														"fi_FI": "Resources",
+														"fr_FR": "Resources",
+														"hu_HU": "Resources",
+														"ja_JP": "Resources",
+														"nl_NL": "Resources",
+														"pt_BR": "Resources",
+														"sv_SE": "Resources",
+														"zh_CN": "Resources"
 													}
 												}
 											}
@@ -158,7 +327,8 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"marginTop": "4"
+										"marginTop": "4",
+										"textAlign": ""
 									},
 									"fragmentViewports": [
 										{
@@ -224,7 +394,7 @@
 													"fragmentLink": {
 														"href": {
 															"defaultFragmentInlineValue": {
-																"value": "/documents/42835/42953/referral-program-guide.pdf/d7b6496f-ba0b-fe5f-e219-8b18e0853f1a?version=1.0&t=1657571078565&download=true"
+																"value": "/documents/43817/43935/referral-program-guide.pdf/70d4beb9-e791-a8a2-b7c9-c468bac90fbd?version=1.0&t=1657827551222&download=true"
 															},
 															"mapping": {
 																"fieldKey": "FileEntry_downloadURL",
@@ -398,7 +568,7 @@
 															"fragmentStyle": {
 																"fontWeight": "fontWeightBold",
 																"textAlign": "",
-																"textColor": "linkColor"
+																"textColor": "colorBrandPrimary"
 															},
 															"indexed": true
 														},
@@ -439,7 +609,7 @@
 													"fragmentLink": {
 														"href": {
 															"defaultFragmentInlineValue": {
-																"value": "/documents/42835/42953/reseller-program-guide.pdf/56dd2ff7-15cf-acde-353c-831aa779c1d1?version=1.0&t=1657571078608&download=true"
+																"value": "/documents/43817/43935/reseller-program-guide.pdf/fa628fe5-6e19-0e0c-83dd-8e8dd7e16e04?version=1.0&t=1657827551250&download=true"
 															},
 															"mapping": {
 																"fieldKey": "FileEntry_downloadURL",
@@ -612,7 +782,7 @@
 															"fragmentStyle": {
 																"fontWeight": "fontWeightBold",
 																"textAlign": "",
-																"textColor": "linkColor"
+																"textColor": "colorBrandPrimary"
 															},
 															"indexed": true
 														},
@@ -653,7 +823,7 @@
 													"fragmentLink": {
 														"href": {
 															"defaultFragmentInlineValue": {
-																"value": "/documents/42835/42953/program-rules-of-engagement.pdf/4f3df08b-2e88-f2fa-9444-03a4609d5262?version=1.0&t=1657571078527&download=true"
+																"value": "/documents/43817/43935/program-rules-of-engagement.pdf/7c1a5195-6c0a-7e68-304a-d640ddf286b3?version=1.0&t=1657827551196&download=true"
 															},
 															"mapping": {
 																"fieldKey": "FileEntry_downloadURL",
@@ -826,7 +996,7 @@
 															"fragmentStyle": {
 																"fontWeight": "fontWeightBold",
 																"textAlign": "",
-																"textColor": "linkColor"
+																"textColor": "colorBrandPrimary"
 															},
 															"indexed": true
 														},
@@ -1251,7 +1421,8 @@
 																		}
 																	},
 																	"fragmentStyle": {
-																		"borderWidth": "0"
+																		"borderWidth": "0",
+																		"textAlign": ""
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -1308,7 +1479,7 @@
 																				"height": "24px",
 																				"paddingRight": "1",
 																				"textAlign": "",
-																				"textColor": "linkColor"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"fragmentViewports": [
 																				{
@@ -1335,7 +1506,7 @@
 																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
-																				"textColor": "linkColor"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"indexed": true
 																		},
@@ -1619,7 +1790,8 @@
 																		}
 																	},
 																	"fragmentStyle": {
-																		"borderWidth": "0"
+																		"borderWidth": "0",
+																		"textAlign": ""
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -1683,7 +1855,7 @@
 																				"height": "24px",
 																				"paddingRight": "1",
 																				"textAlign": "",
-																				"textColor": "linkColor"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"fragmentViewports": [
 																				{
@@ -2062,7 +2234,7 @@
 																				"height": "24px",
 																				"paddingRight": "1",
 																				"textAlign": "",
-																				"textColor": "linkColor"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"fragmentViewports": [
 																				{
@@ -2089,7 +2261,7 @@
 																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
-																				"textColor": "linkColor"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"indexed": true
 																		},
@@ -2413,7 +2585,7 @@
 																				"height": "24px",
 																				"paddingRight": "1",
 																				"textAlign": "",
-																				"textColor": "linkColor"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"fragmentViewports": [
 																				{
@@ -2440,7 +2612,7 @@
 																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
-																				"textColor": "linkColor"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"indexed": true
 																		},
@@ -2803,7 +2975,7 @@
 																				"height": "24px",
 																				"paddingRight": "1",
 																				"textAlign": "",
-																				"textColor": "linkColor"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"fragmentViewports": [
 																				{
@@ -2830,7 +3002,7 @@
 																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
-																				"textColor": "linkColor"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"indexed": true
 																		},
@@ -3162,7 +3334,7 @@
 																				"height": "24px",
 																				"paddingRight": "1",
 																				"textAlign": "",
-																				"textColor": "linkColor"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"fragmentViewports": [
 																				{
@@ -3189,7 +3361,7 @@
 																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
-																				"textColor": "linkColor"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"indexed": true
 																		},
@@ -3650,7 +3822,8 @@
 															{
 																"definition": {
 																	"fragmentStyle": {
-																		"borderWidth": "0"
+																		"borderWidth": "0",
+																		"textAlign": ""
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -5003,7 +5176,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/video-green.png$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/video-blue.png$]"
 																					}
 																				}
 																			}
@@ -5378,7 +5551,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/calendar-blue.png$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/calendar-green.png$]"
 																					}
 																				}
 																			}

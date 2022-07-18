@@ -59,7 +59,7 @@ ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoade
 	</liferay-frontend:management-bar>
 </c:if>
 
-<div class="container-fluid container-fluid-max-xl">
+<clay:container-fluid>
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-devices"
 		iteratorURL="<%= portletURL %>"
@@ -112,4 +112,4 @@ ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoade
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</div>
+</clay:container-fluid>

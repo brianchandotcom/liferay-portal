@@ -47,13 +47,11 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 	%>'
 />
 
-<clay:container-fluid>
-	<c:choose>
-		<c:when test='<%= tabs1.equals("test") %>'>
-			<%@ include file="/test.jspf" %>
-		</c:when>
-		<c:otherwise>
-			<%@ include file="/devices.jspf" %>
-		</c:otherwise>
-	</c:choose>
-</clay:container-fluid>
+<c:choose>
+	<c:when test='<%= tabs1.equals("test") %>'>
+		<%@ include file="/test.jspf" %>
+	</c:when>
+	<c:otherwise>
+		<%@ include file="/devices.jspf" %>
+	</c:otherwise>
+</c:choose>

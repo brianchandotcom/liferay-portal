@@ -126,6 +126,26 @@ definition {
 
 	}
 
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user has permissions to Instance Settings
+	When user navigates to Experiences menu
+	Then alert is shown including breadcrumb link to segments service"
+	@priority = "3"
+	test ClickToReEnableAlertLinkAtAtExperiencesMenu {
+		task ("Open the Experience menu") {
+			Navigator.openURL();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openExperienceMenu();
+		}
+
+		task ("Click at warning with link and confirm Instance Settings is open") {
+
+			Segmentation.clickToReEnableSegmentsWarningLink();
+		}
+	}
+
 	
 
 	@description = "LPS-152541 Given the 'Assign Roles by Segments' is disabled at System Settings

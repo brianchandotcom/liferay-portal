@@ -61,7 +61,7 @@ public abstract class BaseTestClassReport implements TestClassReport {
 		}
 
 		StopWatchRecord stopWatchRecord = stopWatchRecordsGroup.get(
-			"test-execution-duration");
+			"test.execution.duration");
 
 		if (stopWatchRecord == null) {
 			return 0L;

@@ -101,7 +101,7 @@ public abstract class BaseDownstreamBuildReport
 
 		if (stopWatchRecordsGroup != null) {
 			StopWatchRecord stopWatchRecord = stopWatchRecordsGroup.get(
-				"test-execution-duration");
+				"test.execution.duration");
 
 			if (stopWatchRecord != null) {
 				long duration = stopWatchRecord.getDuration();

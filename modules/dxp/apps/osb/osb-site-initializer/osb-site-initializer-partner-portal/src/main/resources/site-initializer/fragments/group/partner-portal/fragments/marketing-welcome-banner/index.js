@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -30,9 +31,9 @@ if (layoutMode !== 'edit') {
 	for (const videoButton of videoButtons) {
 		videoButton.onclick = () =>
 			Liferay.Util.openModal({
-				size: 'lg',
 				bodyHTML:
 					'<iframe width="100%" height="500" src="https://www.youtube.com/embed/bZeAh7dpskw" title="Liferay: One Platform for Endless Solutions" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+				size: 'lg',
 			});
 	}
 }

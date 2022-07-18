@@ -106,7 +106,7 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 					serviceReference);
 
 			String entityClassName = (String)serviceReference.getProperty(
-				"batch.engine.entity.class.name");
+				"entity.class.name");
 
 			_batchPlannerExportEnabledMap.put(
 				entityClassName,
@@ -142,7 +142,7 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 				vulcanBatchEngineTaskItemDelegate) {
 
 			String entityClassName = (String)serviceReference.getProperty(
-				"batch.engine.entity.class.name");
+				"entity.class.name");
 
 			_batchPlannerExportEnabledMap.remove(entityClassName);
 

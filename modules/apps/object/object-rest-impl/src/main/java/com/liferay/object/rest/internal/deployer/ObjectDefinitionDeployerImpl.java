@@ -120,6 +120,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						).put(
 							"batch.planner.import.enabled", "true"
 						).put(
+							"entity.class.name",
+							ObjectEntry.class.getName() + "#" +
+								objectDefinition.getName()
+						).put(
 							"osgi.jaxrs.application.select",
 							"(osgi.jaxrs.name=" + objectDefinition.getName() +
 								")"

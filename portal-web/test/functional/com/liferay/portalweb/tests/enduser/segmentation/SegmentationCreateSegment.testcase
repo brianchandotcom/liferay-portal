@@ -2169,6 +2169,71 @@ definition {
 		}
 	}
 
+	@description = "LPS-153512 - Test Automation for LPS-94855: I can edit only the first created segment"
+	@priority = "4"
+	test CanEditSecondSegmentCreated {
+		task ("Create first segmentation") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Guest",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+		}
+
+		task ("Edit first segmentation") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			Segmentation.editSegment(entry = "First Segment");
+
+			Segmentation.fillProperty(propertyField = "User");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Checks if the first segmentation is edited correctly") {
+			Segmentation.editSegment(entry = "First Segment");
+
+			Segmentation.viewSegment(propertyField = "User");
+		}
+
+		task ("Create second segmentation") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "Last Name");
+
+			Segmentation.fillProperty(propertyField = "Test");
+
+			Segmentation.fillTitle(titleField = "Second Segment");
+
+			Segmentation.viewMembers(memberName = "Test Test");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Edit second segmentation") {
+			Segmentation.editSegment(entry = "Second Segment");
+
+			Segmentation.fillProperty(propertyField = "User");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Checks if the second segmentation is edited correctly") {
+			Segmentation.editSegment(entry = "Second Segment");
+
+			Segmentation.viewSegment(propertyField = "User");
+		}
+	}
+
 	@description = "LPS-135495 Validate if, The criteria default language must be tagged as such in the language selection dropdown."
 	@priority = "3"
 	test CheckDefaultLanguageTag {

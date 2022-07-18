@@ -49,13 +49,13 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 
 		DetailAST exprDetailAST = detailAST.findFirstToken(TokenTypes.EXPR);
 
-		DetailAST exprFirstChildDetailAST = exprDetailAST.getFirstChild();
+		DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
 
-		if (exprFirstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
+		if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
 			return;
 		}
 
-		DetailAST dotDetailAST = exprFirstChildDetailAST.getFirstChild();
+		DetailAST dotDetailAST = firstChildDetailAST.getFirstChild();
 
 		if (dotDetailAST == null) {
 			return;
@@ -71,7 +71,7 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 
 		DetailAST sListDetailAST = detailAST.findFirstToken(TokenTypes.SLIST);
 
-		DetailAST firstChildDetailAST = sListDetailAST.getFirstChild();
+		firstChildDetailAST = sListDetailAST.getFirstChild();
 
 		if (firstChildDetailAST.getType() != TokenTypes.EXPR) {
 			return;

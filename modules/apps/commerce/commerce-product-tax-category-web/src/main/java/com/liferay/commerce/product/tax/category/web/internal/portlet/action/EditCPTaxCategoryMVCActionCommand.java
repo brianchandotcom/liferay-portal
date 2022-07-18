@@ -110,8 +110,7 @@ public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			deleteCPTaxCategoryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCPTaxCategoryIds"),
-				0L);
+				ParamUtil.getString(actionRequest, "rowIds"), 0L);
 		}
 
 		for (long deleteCPTaxCategoryId : deleteCPTaxCategoryIds) {

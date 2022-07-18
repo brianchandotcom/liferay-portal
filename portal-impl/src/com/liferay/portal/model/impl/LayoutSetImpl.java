@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -290,31 +289,6 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	/**
-	 * Returns the name of the layout set's default virtual host.
-	 *
-	 * <p>
-	 * When accessing a layout set that has a virtual host, the URL elements
-	 * "/web/sitename" or "/group/sitename" can be omitted.
-	 * </p>
-	 *
-	 * @return     the layout set's default virtual host name, or an empty
-	 *             string if the layout set has no virtual hosts configured
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getVirtualHostnames()}
-	 */
-	@Deprecated
-	@Override
-	public String getVirtualHostname() {
-		TreeMap<String, String> virtualHostnames = getVirtualHostnames();
-
-		if (virtualHostnames.isEmpty()) {
-			return StringPool.BLANK;
-		}
-
-		return virtualHostnames.firstKey();
-	}
-
-	/**
 	 * Returns the names of the layout set's virtual hosts.
 	 *
 	 * <p>
@@ -397,22 +371,6 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		_settingsUnicodeProperties = settingsUnicodeProperties;
 
 		super.setSettings(_settingsUnicodeProperties.toString());
-	}
-
-	/**
-	 * Sets the name of the layout set's virtual host.
-	 *
-	 * @param      virtualHostname the name of the layout set's virtual host
-	 * @see        #getVirtualHostname()
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #setVirtualHostnames(TreeMap)}
-	 */
-	@Deprecated
-	@Override
-	public void setVirtualHostname(String virtualHostname) {
-		_virtualHostnames = TreeMapBuilder.put(
-			virtualHostname, StringPool.BLANK
-		).build();
 	}
 
 	/**

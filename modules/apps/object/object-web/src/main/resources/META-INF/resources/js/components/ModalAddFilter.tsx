@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import {
 	AutoComplete,
+	DatePicker,
 	FormCustomSelect,
 	Input,
 	invalidateRequired,
@@ -67,6 +68,9 @@ export function ModalAddFilter({
 	const [errors, setErrors] = useState<TErrors>({});
 
 	const [query, setQuery] = useState<string>('');
+
+	const [filterStartDate, setFilterStartDate] = useState('');
+	const [filterEndtDate, setFilterEndDate] = useState('');
 
 	const filteredAvailableFields = useMemo(() => {
 		return objectFields.filter(({label}: ObjectField) => {
@@ -430,10 +434,10 @@ export function ModalAddFilter({
 				{selectedFilterBy?.businessType === 'Date' && (
 					<div className="row">
 						<div className="col-lg-6">
-							<Input
+							<DatePicker
 								error={errors.startDate}
 								label={Liferay.Language.get('start')}
-								onChange={({target: {value}}) => {
+								onChange={(value) => {
 									setItems([
 										...items.filter(
 											(item) => item.value !== 'ge'
@@ -443,17 +447,19 @@ export function ModalAddFilter({
 											value: 'ge',
 										},
 									]);
+
+									setFilterStartDate(value);
 								}}
 								required
-								type="date"
+								value={filterStartDate}
 							/>
 						</div>
 
 						<div className="col-lg-6">
-							<Input
+							<DatePicker
 								error={errors.endDate}
 								label={Liferay.Language.get('end')}
-								onChange={({target: {value}}) => {
+								onChange={(value) => {
 									setItems([
 										...items.filter(
 											(item) => item.value !== 'le'
@@ -463,9 +469,11 @@ export function ModalAddFilter({
 											value: 'le',
 										},
 									]);
+
+									setFilterEndDate(value);
 								}}
 								required
-								type="date"
+								value={filterEndtDate}
 							/>
 						</div>
 					</div>

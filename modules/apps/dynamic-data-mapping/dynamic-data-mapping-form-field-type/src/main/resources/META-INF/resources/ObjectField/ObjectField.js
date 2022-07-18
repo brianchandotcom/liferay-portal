@@ -80,15 +80,15 @@ const ObjectField = ({
 					return false;
 				}
 				else if (
-					focusedFieldType === 'document_library' &&
-					type === 'Long'
+					(focusedFieldType === 'rich_text' ||
+						focusedFieldType === 'text') &&
+					type === 'Clob'
 				) {
 					return true;
 				}
 				else if (
-					(focusedFieldType === 'rich_text' ||
-						focusedFieldType === 'text') &&
-					type === 'Clob'
+					focusedFieldType === 'document_library' &&
+					type === 'Long'
 				) {
 					return true;
 				}

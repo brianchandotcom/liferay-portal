@@ -70,25 +70,17 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 			return;
 		}
 
-		int count = 0;
+		DetailAST nextSiblingDetailAST = firstChildDetailAST.getNextSibling();
 
-		while (firstChildDetailAST != null) {
-			int tokenType = firstChildDetailAST.getType();
+		while (nextSiblingDetailAST != null) {
+			if ((nextSiblingDetailAST.getType() != TokenTypes.RCURLY) &&
+				(nextSiblingDetailAST.getType() != TokenTypes.SEMI)) {
 
-			if ((tokenType != TokenTypes.SEMI) &&
-				(tokenType != TokenTypes.RCURLY)) {
-
-				count++;
+				return;
 			}
 
-			firstChildDetailAST = firstChildDetailAST.getNextSibling();
+			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
 		}
-
-		if (count > 1) {
-			return;
-		}
-
-		firstChildDetailAST = slistDetailAST.getFirstChild();
 
 		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 

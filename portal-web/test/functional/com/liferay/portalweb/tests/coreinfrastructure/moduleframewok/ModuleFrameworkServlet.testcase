@@ -23,6 +23,7 @@ definition {
 	@priority = "3"
 	test ServletMultipartConfigInShieldedContainer {
 		property configure.servlet.multipart = "true";
+		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "ModuleFrameworkServlet#ServletMultipartConfigInShieldedContainer";
 
 		var portalURL = JSONCompany.getPortalURL();

@@ -41,9 +41,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Joshua Cords
@@ -58,8 +56,6 @@ public class SearchBarPrecedenceHelperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		Layout layout = _createLayout(_portlets);
 
 		_layout = layout;
@@ -329,13 +325,10 @@ public class SearchBarPrecedenceHelperTest {
 	private static final String _DESTINATION = RandomTestUtil.randomString();
 
 	private Layout _layout;
-
-	@Mock
-	private PortletLocalService _portletLocalService;
-
-	@Mock
-	private PortletPreferencesLookup _portletPreferencesLookup;
-
+	private final PortletLocalService _portletLocalService = Mockito.mock(
+		PortletLocalService.class);
+	private final PortletPreferencesLookup _portletPreferencesLookup =
+		Mockito.mock(PortletPreferencesLookup.class);
 	private final List<Portlet> _portlets = new ArrayList<>();
 	private SearchBarPrecedenceHelper _searchBarPrecedenceHelper;
 	private ThemeDisplay _themeDisplay;

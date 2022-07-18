@@ -29,7 +29,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -164,7 +163,7 @@ public class AssetEntriesSearchFacetTest {
 
 		Mockito.when(
 			_assetRendererFactoryRegistry.getAssetRendererFactories(
-				Matchers.anyLong())
+				Mockito.anyLong())
 		).thenReturn(
 			Arrays.asList(assetRendererFactories)
 		);

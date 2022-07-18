@@ -32,9 +32,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Tibor Lipusz
@@ -47,8 +45,6 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-
-		MockitoAnnotations.initMocks(this);
 
 		Mockito.doReturn(
 			Arrays.asList(INACTIVE_GROUP_ID1, INACTIVE_GROUP_ID2)
@@ -187,7 +183,7 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 
 	protected static final long INACTIVE_GROUP_ID2 = 5L;
 
-	@Mock
-	protected GroupLocalService groupLocalService;
+	protected GroupLocalService groupLocalService = Mockito.mock(
+		GroupLocalService.class);
 
 }

@@ -49,7 +49,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import org.mockito.AdditionalMatchers;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -455,17 +454,17 @@ public abstract class BasePermissionFilteredPaginationTestCase
 
 		Mockito.when(
 			indexer.hasPermission(
-				Matchers.any(PermissionChecker.class), Matchers.anyString(),
-				Matchers.anyLong(), Matchers.anyString())
+				Mockito.any(PermissionChecker.class), Mockito.anyString(),
+				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			true
 		);
 
 		Mockito.when(
 			indexer.hasPermission(
-				Matchers.any(PermissionChecker.class), Matchers.anyString(),
+				Mockito.any(PermissionChecker.class), Mockito.anyString(),
 				AdditionalMatchers.geq(_FILTERED_ENTRY_IDENTIFIER),
-				Matchers.anyString())
+				Mockito.anyString())
 		).thenReturn(
 			false
 		);
@@ -477,7 +476,7 @@ public abstract class BasePermissionFilteredPaginationTestCase
 		);
 
 		Mockito.when(
-			indexerRegistry.getIndexer(Matchers.anyString())
+			indexerRegistry.getIndexer(Mockito.anyString())
 		).thenReturn(
 			indexer
 		);

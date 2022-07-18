@@ -42,17 +42,12 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author André de Oliveira
  */
-@RunWith(MockitoJUnitRunner.class)
 public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 	@ClassRule
@@ -80,19 +75,19 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 	@Test
 	public void testSummaryFromAssetRenderer() throws Exception {
 		Mockito.when(
-			_assetRenderer.getSearchSummary(Matchers.any())
+			_assetRenderer.getSearchSummary(Mockito.any())
 		).thenReturn(
 			SearchTestUtil.SUMMARY_CONTENT
 		);
 
 		Mockito.when(
-			_assetRenderer.getTitle(Matchers.any())
+			_assetRenderer.getTitle(Mockito.any())
 		).thenReturn(
 			SearchTestUtil.SUMMARY_TITLE
 		);
 
 		Mockito.when(
-			_assetRendererFactory.getAssetRenderer(Matchers.anyLong())
+			_assetRendererFactory.getAssetRenderer(Mockito.anyLong())
 		).thenReturn(
 			_assetRenderer
 		);
@@ -129,9 +124,9 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 		Mockito.when(
 			_indexer.getSummary(
-				Matchers.any(), Matchers.anyString(),
-				(PortletRequest)Matchers.isNull(),
-				(PortletResponse)Matchers.isNull())
+				Mockito.any(), Mockito.anyString(),
+				(PortletRequest)Mockito.isNull(),
+				(PortletResponse)Mockito.isNull())
 		).thenReturn(
 			summary
 		);
@@ -206,21 +201,15 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		return summaryFactoryImpl;
 	}
 
-	@Mock
 	@SuppressWarnings("rawtypes")
-	private AssetRenderer _assetRenderer;
+	private AssetRenderer _assetRenderer = Mockito.mock(AssetRenderer.class);
 
-	@Mock
-	private AssetRendererFactory<?> _assetRendererFactory;
-
-	@Mock
-	private Indexer<Object> _indexer;
-
-	@Mock
-	private IndexerRegistry _indexerRegistry;
-
-	@Mock
-	private ServiceTrackerMap<String, AssetRendererFactory<?>>
-		_serviceTrackerMap;
+	private final AssetRendererFactory<?> _assetRendererFactory = Mockito.mock(
+		AssetRendererFactory.class);
+	private final Indexer<Object> _indexer = Mockito.mock(Indexer.class);
+	private final IndexerRegistry _indexerRegistry = Mockito.mock(
+		IndexerRegistry.class);
+	private final ServiceTrackerMap<String, AssetRendererFactory<?>>
+		_serviceTrackerMap = Mockito.mock(ServiceTrackerMap.class);
 
 }

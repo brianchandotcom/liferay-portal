@@ -37,7 +37,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -124,7 +123,7 @@ public class FolderTitleLookupTest {
 		FolderSearcher folderSearcher = Mockito.mock(FolderSearcher.class);
 
 		Mockito.when(
-			folderSearcher.search(Matchers.any())
+			folderSearcher.search(Mockito.any())
 		).thenReturn(
 			hits
 		);

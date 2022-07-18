@@ -44,9 +44,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Wade Cao
@@ -61,8 +59,6 @@ public class SearchResultContentDisplayContextBuilderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_setUpAssetEntry();
 		setUpAssetRenderer();
 		_setUpAssetRendererFactory();
@@ -80,7 +76,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 		).when(
 			_assetRenderer
 		).getTitle(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		String editPortletURLString = RandomTestUtil.randomString();
@@ -108,7 +104,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 		).when(
 			_assetRenderer
 		).hasEditPermission(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		SearchResultContentDisplayContext searchResultContentDisplayContext =
@@ -153,7 +149,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 		).when(
 			_assetRenderer
 		).hasViewPermission(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		SearchResultContentDisplayContext searchResultContentDisplayContext =
@@ -168,7 +164,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 		).when(
 			_assetRenderer
 		).getURLEdit(
-			Mockito.anyObject(), Mockito.anyObject()
+			Mockito.any(), Mockito.any()
 		);
 
 		Mockito.doReturn(
@@ -176,7 +172,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 		).when(
 			_assetRenderer
 		).hasEditPermission(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		Mockito.doReturn(
@@ -184,7 +180,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 		).when(
 			_assetRenderer
 		).hasViewPermission(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 	}
 
@@ -286,7 +282,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 		).when(
 			_portal
 		).getLiferayPortletRequest(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		Mockito.doReturn(
@@ -294,7 +290,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 		).when(
 			_portal
 		).getLiferayPortletResponse(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 	}
 
@@ -324,35 +320,24 @@ public class SearchResultContentDisplayContextBuilderTest {
 		);
 	}
 
-	@Mock
-	private AssetEntry _assetEntry;
+	private final AssetEntry _assetEntry = Mockito.mock(AssetEntry.class);
+	private final AssetRenderer<?> _assetRenderer = Mockito.mock(
+		AssetRenderer.class);
 
-	@Mock
-	private AssetRenderer<?> _assetRenderer;
-
-	@Mock
 	@SuppressWarnings("rawtypes")
-	private AssetRendererFactory _assetRendererFactory;
+	private AssetRendererFactory _assetRendererFactory = Mockito.mock(
+		AssetRendererFactory.class);
 
-	@Mock
-	private AssetRendererFactoryLookup _assetRendererFactoryLookup;
-
-	@Mock
-	private PortletURL _editPortletURL;
-
-	@Mock
-	private PermissionChecker _permissionChecker;
-
-	@Mock
-	private Portal _portal;
-
-	@Mock
-	private PortletURL _renderPortletURL;
-
-	@Mock
-	private RenderRequest _renderRequest;
-
-	@Mock
-	private RenderResponse _renderResponse;
+	private final AssetRendererFactoryLookup _assetRendererFactoryLookup =
+		Mockito.mock(AssetRendererFactoryLookup.class);
+	private final PortletURL _editPortletURL = Mockito.mock(PortletURL.class);
+	private final PermissionChecker _permissionChecker = Mockito.mock(
+		PermissionChecker.class);
+	private final Portal _portal = Mockito.mock(Portal.class);
+	private final PortletURL _renderPortletURL = Mockito.mock(PortletURL.class);
+	private final RenderRequest _renderRequest = Mockito.mock(
+		RenderRequest.class);
+	private final RenderResponse _renderResponse = Mockito.mock(
+		RenderResponse.class);
 
 }

@@ -42,10 +42,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Lino Alves
@@ -59,8 +56,6 @@ public class FolderSearchFacetDisplayContextTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		Mockito.doReturn(
 			_facetCollector
 		).when(
@@ -335,7 +330,7 @@ public class FolderSearchFacetDisplayContextTest {
 		).when(
 			portletDisplay
 		).getPortletInstanceConfiguration(
-			Matchers.any()
+			Mockito.any()
 		);
 
 		return portletDisplay;
@@ -467,13 +462,10 @@ public class FolderSearchFacetDisplayContextTest {
 		).getTermCollectors();
 	}
 
-	@Mock
-	private Facet _facet;
-
-	@Mock
-	private FacetCollector _facetCollector;
-
-	@Mock
-	private FolderTitleLookup _folderTitleLookup;
+	private final Facet _facet = Mockito.mock(Facet.class);
+	private final FacetCollector _facetCollector = Mockito.mock(
+		FacetCollector.class);
+	private final FolderTitleLookup _folderTitleLookup = Mockito.mock(
+		FolderTitleLookup.class);
 
 }

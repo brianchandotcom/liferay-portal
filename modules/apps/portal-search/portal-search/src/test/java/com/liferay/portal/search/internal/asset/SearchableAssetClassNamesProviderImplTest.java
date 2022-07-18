@@ -27,10 +27,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Adam Brandizzi
@@ -44,8 +41,6 @@ public class SearchableAssetClassNamesProviderImplTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		searchableAssetClassNamesProviderImpl =
 			new SearchableAssetClassNamesProviderImpl() {
 				{
@@ -131,12 +126,10 @@ public class SearchableAssetClassNamesProviderImplTest {
 
 	protected static final String CLASS_NAME_2 = "com.liferay.model.Model2";
 
-	@Mock
-	protected AssetRendererFactory<?> assetRendererFactory1;
-
-	@Mock
-	protected AssetRendererFactory<?> assetRendererFactory2;
-
+	protected AssetRendererFactory<?> assetRendererFactory1 = Mockito.mock(
+		AssetRendererFactory.class);
+	protected AssetRendererFactory<?> assetRendererFactory2 = Mockito.mock(
+		AssetRendererFactory.class);
 	protected SearchableAssetClassNamesProviderImpl
 		searchableAssetClassNamesProviderImpl;
 
@@ -165,7 +158,7 @@ public class SearchableAssetClassNamesProviderImplTest {
 
 		Mockito.when(
 			_assetRendererFactoryRegistry.getAssetRendererFactories(
-				Matchers.anyLong())
+				Mockito.anyLong())
 		).thenReturn(
 			Arrays.asList(assetRendererFactories)
 		);
@@ -181,10 +174,9 @@ public class SearchableAssetClassNamesProviderImplTest {
 		);
 	}
 
-	@Mock
-	private AssetRendererFactoryRegistry _assetRendererFactoryRegistry;
-
-	@Mock
-	private SearchEngineHelper _searchEngineHelper;
+	private final AssetRendererFactoryRegistry _assetRendererFactoryRegistry =
+		Mockito.mock(AssetRendererFactoryRegistry.class);
+	private final SearchEngineHelper _searchEngineHelper = Mockito.mock(
+		SearchEngineHelper.class);
 
 }

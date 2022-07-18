@@ -31,10 +31,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Adam Brandizzi
@@ -48,8 +45,6 @@ public class TypeFacetPortletPreferencesImplTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		typeFacetPortletPreferencesImpl = new TypeFacetPortletPreferencesImpl(
 			_objectDefinitionLocalService, Optional.empty(),
 			new SearchableAssetClassNamesProviderImpl() {
@@ -136,12 +131,10 @@ public class TypeFacetPortletPreferencesImplTest {
 
 	protected static final String CLASS_NAME_2 = "com.liferay.model.Model2";
 
-	@Mock
-	protected AssetRendererFactory<?> assetRendererFactory1;
-
-	@Mock
-	protected AssetRendererFactory<?> assetRendererFactory2;
-
+	protected AssetRendererFactory<?> assetRendererFactory1 = Mockito.mock(
+		AssetRendererFactory.class);
+	protected AssetRendererFactory<?> assetRendererFactory2 = Mockito.mock(
+		AssetRendererFactory.class);
 	protected TypeFacetPortletPreferencesImpl typeFacetPortletPreferencesImpl;
 
 	private void _mockAssetRendererFactoryGetClassName(
@@ -169,7 +162,7 @@ public class TypeFacetPortletPreferencesImplTest {
 
 		Mockito.when(
 			_assetRendererFactoryRegistry.getAssetRendererFactories(
-				Matchers.anyLong())
+				Mockito.anyLong())
 		).thenReturn(
 			Arrays.asList(assetRendererFactories)
 		);
@@ -185,13 +178,11 @@ public class TypeFacetPortletPreferencesImplTest {
 		);
 	}
 
-	@Mock
-	private AssetRendererFactoryRegistry _assetRendererFactoryRegistry;
-
-	@Mock
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Mock
-	private SearchEngineHelper _searchEngineHelper;
+	private final AssetRendererFactoryRegistry _assetRendererFactoryRegistry =
+		Mockito.mock(AssetRendererFactoryRegistry.class);
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService =
+		Mockito.mock(ObjectDefinitionLocalService.class);
+	private final SearchEngineHelper _searchEngineHelper = Mockito.mock(
+		SearchEngineHelper.class);
 
 }

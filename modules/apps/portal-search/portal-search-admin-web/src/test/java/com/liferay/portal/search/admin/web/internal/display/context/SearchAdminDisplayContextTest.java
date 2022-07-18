@@ -34,7 +34,6 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -208,7 +207,7 @@ public class SearchAdminDisplayContextTest {
 		);
 
 		Mockito.when(
-			indexInformation.getCompanyIndexName(Matchers.anyLong())
+			indexInformation.getCompanyIndexName(Mockito.anyLong())
 		).thenAnswer(
 			invocation -> "index" + invocation.getArguments()[0]
 		);
@@ -219,7 +218,7 @@ public class SearchAdminDisplayContextTest {
 
 		Mockito.doAnswer(
 			invocation -> new String[] {
-				invocation.getArgumentAt(0, String.class), StringPool.BLANK
+				invocation.getArgument(0, String.class), StringPool.BLANK
 			}
 		).when(
 			_portal

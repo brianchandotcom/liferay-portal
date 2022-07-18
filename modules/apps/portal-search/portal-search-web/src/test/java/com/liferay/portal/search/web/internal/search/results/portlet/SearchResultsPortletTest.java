@@ -62,10 +62,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.ArgumentCaptor;
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author André de Oliveira
@@ -79,8 +76,6 @@ public class SearchResultsPortletTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_setUpPortletSharedSearchResponse();
 		_setUpPropsUtil();
 		_setUpSearchSettings();
@@ -318,7 +313,7 @@ public class SearchResultsPortletTest {
 		Mockito.verify(
 			_renderRequest
 		).setAttribute(
-			Matchers.eq(WebKeys.PORTLET_DISPLAY_CONTEXT),
+			Mockito.eq(WebKeys.PORTLET_DISPLAY_CONTEXT),
 			argumentCaptor.capture()
 		);
 
@@ -389,30 +384,21 @@ public class SearchResultsPortletTest {
 		);
 	}
 
-	@Mock
-	private IndexerRegistry _indexerRegistry;
-
-	@Mock
-	private PortletSharedSearchResponse _portletSharedSearchResponse;
-
+	private final IndexerRegistry _indexerRegistry = Mockito.mock(
+		IndexerRegistry.class);
+	private final PortletSharedSearchResponse _portletSharedSearchResponse =
+		Mockito.mock(PortletSharedSearchResponse.class);
 	private PortletURLFactory _portletURLFactory;
 	private RenderRequest _renderRequest;
-
-	@Mock
-	private RenderResponse _renderResponse;
-
-	@Mock
-	private SearchContext _searchContext;
-
-	@Mock
-	private SearchRequest _searchRequest;
-
-	@Mock
-	private SearchResponse _searchResponse;
-
+	private RenderResponse _renderResponse = Mockito.mock(RenderResponse.class);
+	private final SearchContext _searchContext = Mockito.mock(
+		SearchContext.class);
+	private final SearchRequest _searchRequest = Mockito.mock(
+		SearchRequest.class);
+	private final SearchResponse _searchResponse = Mockito.mock(
+		SearchResponse.class);
 	private SearchResultsPortlet _searchResultsPortlet;
-
-	@Mock
-	private SearchSettings _searchSettings;
+	private final SearchSettings _searchSettings = Mockito.mock(
+		SearchSettings.class);
 
 }

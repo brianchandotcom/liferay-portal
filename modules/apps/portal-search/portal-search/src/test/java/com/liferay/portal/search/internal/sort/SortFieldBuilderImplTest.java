@@ -31,9 +31,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Michael C. Han
@@ -47,8 +45,6 @@ public class SortFieldBuilderImplTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_sortFieldBuilderImpl = new SortFieldBuilderImpl();
 
 		Mockito.when(
@@ -73,7 +69,7 @@ public class SortFieldBuilderImplTest {
 		Mockito.when(
 			_indexer.getSortField(Mockito.anyString())
 		).thenAnswer(
-			invocation -> invocation.getArgumentAt(0, String.class)
+			invocation -> invocation.getArgument(0, String.class)
 		);
 
 		String sortFieldName = _sortFieldBuilderImpl.getSortField(
@@ -121,7 +117,7 @@ public class SortFieldBuilderImplTest {
 			sortFieldNameTranslator.getSortFieldName(Mockito.anyString())
 		).then(
 			invocation -> {
-				String orderByCol = invocation.getArgumentAt(0, String.class);
+				String orderByCol = invocation.getArgument(0, String.class);
 
 				return StringUtil.upperCaseFirstLetter(orderByCol);
 			}
@@ -137,7 +133,7 @@ public class SortFieldBuilderImplTest {
 		Mockito.when(
 			_indexer.getSortField(Mockito.anyString())
 		).thenAnswer(
-			invocation -> invocation.getArgumentAt(0, String.class)
+			invocation -> invocation.getArgument(0, String.class)
 		);
 
 		String sortFieldName = _sortFieldBuilderImpl.getSortField(
@@ -175,12 +171,9 @@ public class SortFieldBuilderImplTest {
 			Field.getSortableFieldName("testField"), sortFieldName);
 	}
 
-	@Mock
-	private Indexer<?> _indexer;
-
-	@Mock
-	private IndexerRegistry _indexerRegistry;
-
+	private final Indexer<?> _indexer = Mockito.mock(Indexer.class);
+	private final IndexerRegistry _indexerRegistry = Mockito.mock(
+		IndexerRegistry.class);
 	private SortFieldBuilderImpl _sortFieldBuilderImpl;
 
 }

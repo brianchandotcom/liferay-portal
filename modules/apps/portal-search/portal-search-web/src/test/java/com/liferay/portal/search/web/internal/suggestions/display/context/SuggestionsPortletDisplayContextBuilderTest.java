@@ -38,9 +38,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.AdditionalAnswers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Adam Brandizzi
@@ -55,8 +53,6 @@ public class SuggestionsPortletDisplayContextBuilderTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_setUpHtml();
 
 		_setUpPortalUtil();
@@ -352,11 +348,8 @@ public class SuggestionsPortletDisplayContextBuilderTest {
 		return displayContext.getSpellCheckSuggestion();
 	}
 
-	@Mock
-	protected Html html;
-
-	@Mock
-	protected Portal portal;
+	protected Html html = Mockito.mock(Html.class);
+	protected Portal portal = Mockito.mock(Portal.class);
 
 	private void _assertSuggestion(
 		String expected, SuggestionDisplayContext suggestionDisplayContext) {
@@ -413,7 +406,7 @@ public class SuggestionsPortletDisplayContextBuilderTest {
 	private void _setUpPortalUtil() {
 		Mockito.doAnswer(
 			invocation -> new String[] {
-				invocation.getArgumentAt(0, String.class), StringPool.BLANK
+				invocation.getArgument(0, String.class), StringPool.BLANK
 			}
 		).when(
 			portal

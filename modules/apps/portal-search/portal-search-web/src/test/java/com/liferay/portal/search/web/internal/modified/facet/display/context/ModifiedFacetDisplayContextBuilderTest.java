@@ -53,10 +53,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Adam Brandizzi
@@ -70,8 +67,6 @@ public class ModifiedFacetDisplayContextBuilderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_calendarFactory = new CalendarFactoryImpl();
 
 		_dateFormatFactory = new DateFormatFactoryImpl();
@@ -332,14 +327,13 @@ public class ModifiedFacetDisplayContextBuilderTest {
 		).when(
 			portletDisplay
 		).getPortletInstanceConfiguration(
-			Matchers.any()
+			Mockito.any()
 		);
 
 		return portletDisplay;
 	}
 
-	@Mock
-	protected Portal portal;
+	protected Portal portal = Mockito.mock(Portal.class);
 
 	private void _addRangeJSONObject(
 		JSONArray jsonArray, String label, String range) {
@@ -495,7 +489,7 @@ public class ModifiedFacetDisplayContextBuilderTest {
 	private void _setUpPortalUtil() {
 		Mockito.doAnswer(
 			invocation -> new String[] {
-				invocation.getArgumentAt(0, String.class), StringPool.BLANK
+				invocation.getArgument(0, String.class), StringPool.BLANK
 			}
 		).when(
 			portal
@@ -511,13 +505,9 @@ public class ModifiedFacetDisplayContextBuilderTest {
 	private CalendarFactory _calendarFactory;
 	private DateFormatFactory _dateFormatFactory;
 	private DateRangeFactory _dateRangeFactory;
-
-	@Mock
-	private Facet _facet;
-
-	@Mock
-	private FacetCollector _facetCollector;
-
+	private final Facet _facet = Mockito.mock(Facet.class);
+	private final FacetCollector _facetCollector = Mockito.mock(
+		FacetCollector.class);
 	private JSONFactoryImpl _jsonFactoryImpl;
 
 }

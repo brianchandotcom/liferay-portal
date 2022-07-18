@@ -28,9 +28,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author André de Oliveira
@@ -44,8 +42,6 @@ public class ReindexWhenIndexerIsDisabledTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_reindex = createReindex();
 	}
 
@@ -85,7 +81,7 @@ public class ReindexWhenIndexerIsDisabledTest {
 			Mockito.anyString(), Mockito.anyLong()
 		);
 
-		Mockito.verifyZeroInteractions(bulkReindexer);
+		Mockito.verifyNoInteractions(bulkReindexer);
 	}
 
 	@Test
@@ -157,11 +153,8 @@ public class ReindexWhenIndexerIsDisabledTest {
 		return reindex;
 	}
 
-	@Mock
-	protected BulkReindexer bulkReindexer;
-
-	@Mock
-	protected Indexer<?> indexer;
+	protected BulkReindexer bulkReindexer = Mockito.mock(BulkReindexer.class);
+	protected Indexer<?> indexer = Mockito.mock(Indexer.class);
 
 	private static final String _CLASS_NAME = RandomTestUtil.randomString();
 

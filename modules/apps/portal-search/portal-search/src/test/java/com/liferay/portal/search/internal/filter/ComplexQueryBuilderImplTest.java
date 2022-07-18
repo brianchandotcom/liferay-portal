@@ -33,13 +33,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
 
 /**
  * @author Wade Cao
@@ -50,11 +48,6 @@ public class ComplexQueryBuilderImplTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-	}
 
 	@Test
 	public void testFilterDateRangeTermQuery() {
@@ -207,8 +200,6 @@ public class ComplexQueryBuilderImplTest {
 		_complexQueryPartBuilderFactory =
 			new ComplexQueryPartBuilderFactoryImpl();
 	private final Queries _queries = new QueriesImpl();
-
-	@Mock
-	private Scripts _scripts;
+	private final Scripts _scripts = Mockito.mock(Scripts.class);
 
 }

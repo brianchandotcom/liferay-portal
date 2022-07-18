@@ -25,10 +25,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
 /**
  * @author Adam Brandizzi
@@ -42,8 +39,6 @@ public class DictionaryReindexerTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		Mockito.when(
 			_portalInstancesLocalService.getCompanyIds()
 		).thenReturn(
@@ -93,11 +88,9 @@ public class DictionaryReindexerTest {
 
 	private static final long[] _COMPANY_IDS = {1001L, 2002L};
 
-	@Spy
 	private final IndexWriterHelper _indexWriterHelper = Mockito.mock(
 		IndexWriterHelper.class);
-
-	@Mock
-	private PortalInstancesLocalService _portalInstancesLocalService;
+	private final PortalInstancesLocalService _portalInstancesLocalService =
+		Mockito.mock(PortalInstancesLocalService.class);
 
 }

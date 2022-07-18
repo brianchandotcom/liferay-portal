@@ -22,15 +22,11 @@ import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Adam Brandizzi
@@ -41,11 +37,6 @@ public class ModelIndexerWriterDocumentHelperTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-	}
 
 	@Test
 	public void testException() throws PortalException {
@@ -58,15 +49,13 @@ public class ModelIndexerWriterDocumentHelperTest {
 		modelIndexerWriterDocumentHelper.getDocument(baseModel);
 	}
 
-	@Mock
-	protected BaseModel<?> baseModel;
-
-	@Mock
-	protected IndexerDocumentBuilder indexDocumentBuilder;
+	protected BaseModel<?> baseModel = Mockito.mock(BaseModel.class);
+	protected IndexerDocumentBuilder indexDocumentBuilder = Mockito.mock(
+		IndexerDocumentBuilder.class);
 
 	private void _throwIndexNameBuilderException(Exception exception) {
 		Mockito.when(
-			indexDocumentBuilder.getDocument(Matchers.any())
+			indexDocumentBuilder.getDocument(Mockito.any())
 		).thenThrow(
 			exception
 		);

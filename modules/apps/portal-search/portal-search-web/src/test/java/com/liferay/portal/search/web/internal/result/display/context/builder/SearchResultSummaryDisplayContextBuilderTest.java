@@ -60,10 +60,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Lino Alves
@@ -78,8 +75,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		setUpAssetRenderer();
 		_setUpGroupLocalService();
 		_setUpLocaleThreadLocal();
@@ -315,7 +310,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		).when(
 			assetRenderer
 		).getSearchSummary(
-			(Locale)Matchers.any()
+			Mockito.nullable(Locale.class)
 		);
 
 		Mockito.doReturn(
@@ -323,52 +318,35 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		).when(
 			assetRenderer
 		).getTitle(
-			(Locale)Matchers.any()
+			Mockito.nullable(Locale.class)
 		);
 	}
 
-	@Mock
-	protected AssetEntryLocalService assetEntryLocalService;
-
-	@Mock
-	protected AssetRenderer<?> assetRenderer;
-
-	@Mock
-	protected AssetRendererFactory<?> assetRendererFactory;
-
-	@Mock
-	protected AssetRendererFactoryLookup assetRendererFactoryLookup;
-
+	protected AssetEntryLocalService assetEntryLocalService = Mockito.mock(
+		AssetEntryLocalService.class);
+	protected AssetRenderer<?> assetRenderer = Mockito.mock(
+		AssetRenderer.class);
+	protected AssetRendererFactory<?> assetRendererFactory = Mockito.mock(
+		AssetRendererFactory.class);
+	protected AssetRendererFactoryLookup assetRendererFactoryLookup =
+		Mockito.mock(AssetRendererFactoryLookup.class);
 	protected FastDateFormatFactory fastDateFormatFactory =
 		new FastDateFormatFactoryImpl();
-
-	@Mock
-	protected Group group;
-
-	@Mock
-	protected GroupLocalService groupLocalService;
-
-	@Mock
-	protected IndexerRegistry indexerRegistry;
-
-	@Mock
-	protected Language language;
-
+	protected Group group = Mockito.mock(Group.class);
+	protected GroupLocalService groupLocalService = Mockito.mock(
+		GroupLocalService.class);
+	protected IndexerRegistry indexerRegistry = Mockito.mock(
+		IndexerRegistry.class);
+	protected Language language = Mockito.mock(Language.class);
 	protected Locale locale = LocaleUtil.US;
-
-	@Mock
-	protected PermissionChecker permissionChecker;
-
-	@Mock
-	protected PortletURLFactory portletURLFactory;
-
+	protected PermissionChecker permissionChecker = Mockito.mock(
+		PermissionChecker.class);
+	protected PortletURLFactory portletURLFactory = Mockito.mock(
+		PortletURLFactory.class);
 	protected ThemeDisplay themeDisplay;
-
-	@Mock
-	protected User user;
-
-	@Mock
-	protected UserLocalService userLocalService;
+	protected User user = Mockito.mock(User.class);
+	protected UserLocalService userLocalService = Mockito.mock(
+		UserLocalService.class);
 
 	private void _assertAssetRendererURLDownloadVisible(
 		String urlDownload,
@@ -681,7 +659,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		).when(
 			language
 		).get(
-			Mockito.any(HttpServletRequest.class), Mockito.anyString()
+			Mockito.nullable(HttpServletRequest.class), Mockito.anyString()
 		);
 	}
 

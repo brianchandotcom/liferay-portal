@@ -34,9 +34,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author André de Oliveira
@@ -50,14 +48,12 @@ public class SearchPermissionCheckerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		Mockito.doReturn(
 			_indexer
 		).when(
 			_indexerRegistry
 		).getIndexer(
-			Mockito.anyString()
+			Mockito.nullable(String.class)
 		);
 
 		_searchPermissionChecker = _createSearchPermissionChecker();
@@ -135,34 +131,23 @@ public class SearchPermissionCheckerImplTest {
 		).getUserId();
 	}
 
-	@Mock
-	private Indexer<?> _indexer;
-
-	@Mock
-	private IndexerRegistry _indexerRegistry;
-
-	@Mock
-	private PermissionChecker _permissionChecker;
-
-	@Mock
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Mock
-	private RoleLocalService _roleLocalService;
-
+	private final Indexer<?> _indexer = Mockito.mock(Indexer.class);
+	private final IndexerRegistry _indexerRegistry = Mockito.mock(
+		IndexerRegistry.class);
+	private final PermissionChecker _permissionChecker = Mockito.mock(
+		PermissionChecker.class);
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService = Mockito.mock(
+			ResourcePermissionLocalService.class);
+	private final RoleLocalService _roleLocalService = Mockito.mock(
+		RoleLocalService.class);
 	private SearchPermissionChecker _searchPermissionChecker;
-
-	@Mock
-	private SearchPermissionCheckerConfiguration
-		_searchPermissionCheckerConfiguration;
-
-	@Mock
-	private User _user;
-
-	@Mock
-	private UserBag _userBag;
-
-	@Mock
-	private UserLocalService _userLocalService;
+	private final SearchPermissionCheckerConfiguration
+		_searchPermissionCheckerConfiguration = Mockito.mock(
+			SearchPermissionCheckerConfiguration.class);
+	private final User _user = Mockito.mock(User.class);
+	private final UserBag _userBag = Mockito.mock(UserBag.class);
+	private final UserLocalService _userLocalService = Mockito.mock(
+		UserLocalService.class);
 
 }

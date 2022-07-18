@@ -474,7 +474,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 
 		Mockito.when(
 			portletSharedSearchResponse.getParameter(
-				Mockito.eq(scopeParameterName), Mockito.anyObject())
+				Mockito.eq(scopeParameterName), Mockito.any())
 		).thenReturn(
 			Optional.ofNullable(scopeParameterValue)
 		);
@@ -483,7 +483,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 
 		Mockito.when(
 			portletSharedSearchResponse.getFederatedSearchResponse(
-				Mockito.anyObject())
+				Mockito.any())
 		).thenReturn(
 			searchResponse
 		);
@@ -515,7 +515,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		).when(
 			_portal
 		).getLiferayPortletRequest(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 	}
 

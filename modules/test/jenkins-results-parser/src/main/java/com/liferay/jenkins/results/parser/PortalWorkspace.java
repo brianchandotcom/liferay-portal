@@ -82,6 +82,10 @@ public class PortalWorkspace extends BaseWorkspace {
 		_commitOSBAsahModule = commitOSBAsahModule;
 	}
 
+	public void setCommitOSBFaroModule(boolean commitOSBFaroModule) {
+		_commitOSBFaroModule = commitOSBFaroModule;
+	}
+
 	public void setOSBAsahGitHubURL(String osbAsahGitHubURL) {
 		_osbAsahGitHubURL = osbAsahGitHubURL;
 	}
@@ -124,6 +128,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		portalWorkspaceGitRepository.setUpTCKHome();
 
 		updateOSBAsahModule();
+		updateOSBFaroModule();
 	}
 
 	protected PortalWorkspace(JSONObject jsonObject) {
@@ -239,6 +244,102 @@ public class PortalWorkspace extends BaseWorkspace {
 				" for testing on CI"));
 	}
 
+	protected void copyOSBFaroRepositoryToModule() {
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			getPortalWorkspaceGitRepository();
+
+		File modulesDir = new File(
+			portalWorkspaceGitRepository.getDirectory(),
+			"modules/dxp/apps/osb/osb-faro");
+
+		if (!modulesDir.exists()) {
+			return;
+		}
+
+		WorkspaceGitRepository workspaceGitRepository =
+			getWorkspaceGitRepository("com-liferay-osb-faro-private");
+
+		if (workspaceGitRepository == null) {
+			return;
+		}
+
+		List<PathMatcher> deleteExcludePathMatchers =
+			JenkinsResultsParserUtil.toPathMatchers(
+				JenkinsResultsParserUtil.combine(
+					JenkinsResultsParserUtil.getCanonicalPath(modulesDir),
+					File.separator),
+				".gradle/", ".gitrepo", "ci-merge", "gradle/");
+
+		try {
+			JenkinsResultsParserUtil.delete(
+				modulesDir, null, deleteExcludePathMatchers);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		List<PathMatcher> copyExcludePathMatchers =
+			JenkinsResultsParserUtil.toPathMatchers(
+				JenkinsResultsParserUtil.combine(
+					JenkinsResultsParserUtil.getCanonicalPath(
+						workspaceGitRepository.getDirectory()),
+					File.separator),
+				".git/", ".gradle/", "gradle/", "settings.gradle");
+
+		try {
+			JenkinsResultsParserUtil.copy(
+				workspaceGitRepository.getDirectory(), modulesDir, null,
+				copyExcludePathMatchers);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		try {
+			Map<String, String> parameters = new HashMap<>();
+
+			parameters.put("module.dir", "dxp/apps/osb/osb-faro");
+			parameters.put(
+				"portal.dir",
+				JenkinsResultsParserUtil.getCanonicalPath(
+					portalWorkspaceGitRepository.getDirectory()));
+
+			AntUtil.callTarget(
+				portalWorkspaceGitRepository.getDirectory(), "build-test.xml",
+				"clean-version-override", parameters);
+		}
+		catch (AntException antException) {
+			throw new RuntimeException(antException);
+		}
+
+		List<File> versionOverrideFiles = JenkinsResultsParserUtil.findFiles(
+			modulesDir,
+			JenkinsResultsParserUtil.combine(
+				".version-override-", modulesDir.getName(), ".properties"));
+
+		for (File versionOverrideFile : versionOverrideFiles) {
+			JenkinsResultsParserUtil.delete(versionOverrideFile);
+		}
+
+		GitWorkingDirectory gitWorkingDirectory =
+			portalWorkspaceGitRepository.getGitWorkingDirectory();
+
+		String gitStatus = gitWorkingDirectory.status();
+
+		System.out.println(gitStatus);
+
+		if (!_commitOSBFaroModule || gitStatus.contains("nothing to commit")) {
+			return;
+		}
+
+		gitWorkingDirectory.commitFileToCurrentBranch(
+			"modules/dxp/apps/osb/osb-faro",
+			JenkinsResultsParserUtil.combine(
+				"Committing changes from ", workspaceGitRepository.getName(),
+				" at ", workspaceGitRepository.getSenderBranchSHA(),
+				" for testing on CI"));
+	}
+
 	protected WorkspaceGitRepository getOSBAsahWorkspaceGitRepository() {
 		return getWorkspaceGitRepository("com-liferay-osb-asah-private");
 	}
@@ -260,6 +361,21 @@ public class PortalWorkspace extends BaseWorkspace {
 		}
 
 		copyOSBAsahRepositoryToModule();
+	}
+
+	protected void updateOSBFaroModule() {
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			getPortalWorkspaceGitRepository();
+
+		File ciMergeFile = new File(
+			portalWorkspaceGitRepository.getDirectory(),
+			"modules/dxp/apps/osb/osb-faro/ci-merge");
+
+		if (!ciMergeFile.exists()) {
+			return;
+		}
+
+		copyOSBFaroRepositoryToModule();
 	}
 
 	private void _configureBladeSamplesWorkspaceGitRepository() {
@@ -511,6 +627,7 @@ public class PortalWorkspace extends BaseWorkspace {
 	}
 
 	private boolean _commitOSBAsahModule;
+	private boolean _commitOSBFaroModule;
 	private String _osbAsahGitHubURL;
 	private String _osbFaroGitHubURL;
 	private String _portalPrivateGitHubURL;

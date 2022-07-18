@@ -86,6 +86,18 @@ public class SubrepositoryWorkspace extends PortalWorkspace {
 		}
 	}
 
+	@Override
+	protected void updateOSBFaroModule() {
+		WorkspaceGitRepository primaryWorkspaceGitRepository =
+			getPrimaryWorkspaceGitRepository();
+
+		String repositoryName = primaryWorkspaceGitRepository.getName();
+
+		if (repositoryName.equals("com-liferay-osb-faro-private")) {
+			copyOSBFaroRepositoryToModule();
+		}
+	}
+
 	private String _portalUpstreamBranchName;
 
 }

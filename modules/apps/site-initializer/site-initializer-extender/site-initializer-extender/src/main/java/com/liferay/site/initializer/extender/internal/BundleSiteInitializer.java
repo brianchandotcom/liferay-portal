@@ -704,17 +704,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		int index = 0;
+		long journalArticleId = _portal.getClassNameId(JournalArticle.class);
 
 		for (String resourcePath : resourcePaths) {
 			_defaultDDMStructureHelper.addDDMStructures(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(JournalArticle.class), _classLoader,
-				resourcePath, serviceContext);
+				journalArticleId, _classLoader, resourcePath, serviceContext);
 
 			List<DDMStructure> ddmStructures =
 				_ddmStructureLocalService.getStructures(
-					serviceContext.getScopeGroupId(),
-					_portal.getClassNameId(JournalArticle.class));
+					serviceContext.getScopeGroupId(), journalArticleId);
 
 			DDMStructure ddmStructure = ddmStructures.get(index);
 
@@ -726,8 +725,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		ddmStructureEntryIdsStringUtilReplaceValues.put(
-			"DDM_STRUCTURE_CLASS_NAME_ID",
-			String.valueOf(_portal.getClassNameId(JournalArticle.class)));
+			"DDM_STRUCTURE_CLASS_NAME_ID", String.valueOf(journalArticleId));
 
 		return ddmStructureEntryIdsStringUtilReplaceValues;
 	}

@@ -191,10 +191,10 @@ public class UpdateLanguageAction implements Action {
 			layoutURL = layoutURL.substring(0, friendlyURLSeparatorIndex);
 		}
 
+		Locale currentLocale = themeDisplay.getLocale();
+
 		if (themeDisplay.isI18n()) {
 			String i18nPath = themeDisplay.getI18nPath();
-
-			Locale currentLocale = themeDisplay.getLocale();
 
 			String currentLocalePath =
 				StringPool.SLASH + currentLocale.toLanguageTag();
@@ -219,7 +219,7 @@ public class UpdateLanguageAction implements Action {
 		}
 		else if (layoutURL.equals(StringPool.SLASH) ||
 				 isGroupFriendlyURL(
-					 layout.getGroup(), layout, layoutURL, locale)) {
+					 layout.getGroup(), layout, layoutURL, currentLocale)) {
 
 			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
 				redirect = layoutURL;

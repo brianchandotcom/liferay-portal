@@ -1579,6 +1579,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).putAll(
 				clientExtensionEntryIdsStringUtilReplaceValues
 			).putAll(
+				ddmStructureEntryIdsStringUtilReplaceValues
+			).putAll(
 				documentsStringUtilReplaceValues
 			).putAll(
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues
@@ -1586,8 +1588,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				releaseInfoStringUtilReplaceValues
 			).putAll(
 				taxonomyCategoryIdsStringUtilReplaceValues
-			).putAll(
-				ddmStructureEntryIdsStringUtilReplaceValues
 			).build());
 
 		JSONObject pageDefinitionJSONObject = JSONFactoryUtil.createJSONObject(

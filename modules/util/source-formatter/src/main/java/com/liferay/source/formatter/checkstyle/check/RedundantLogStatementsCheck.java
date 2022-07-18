@@ -97,15 +97,15 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST expressDetailAST = firstChildDetailAST.findFirstToken(
+		DetailAST elistDetailAST = firstChildDetailAST.findFirstToken(
 			TokenTypes.ELIST);
 
-		DetailAST elseDetailAST = detailAST.findFirstToken(
+		DetailAST literalElseDetailAST = detailAST.findFirstToken(
 			TokenTypes.LITERAL_ELSE);
 
-		if (elseDetailAST == null) {
+		if (literalElseDetailAST == null) {
 			if (_compareDetailASTIgnoreLine(
-					expressDetailAST, preStatementDetailAST)) {
+					elistDetailAST, preStatementDetailAST)) {
 
 				log(
 					startLine, _MSG_REDUNDANT_LOG, startLine,
@@ -115,15 +115,15 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST elseIfDetailAST = elseDetailAST.getFirstChild();
+		firstChildDetailAST = literalElseDetailAST.getFirstChild();
 
-		if ((elseIfDetailAST == null) ||
-			(elseIfDetailAST.getType() != TokenTypes.LITERAL_IF)) {
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.LITERAL_IF)) {
 
 			return;
 		}
 
-		_checkExpression(elseIfDetailAST, expressDetailAST, startLine);
+		_checkExpression(firstChildDetailAST, elistDetailAST, startLine);
 	}
 
 	private boolean _compareDetailASTIgnoreLine(

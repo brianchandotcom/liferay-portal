@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ButtonGroupField} from './ButtonGroupField';
 import CSSClassSelectorField from './CSSClassSelectorField';
 import {CategoryTreeNodeSelectorField} from './CategoryTreeNodeSelectorField';
 import {CheckboxField} from './CheckboxField';
@@ -29,6 +30,9 @@ import {TextField} from './TextField';
 import {VideoSelectorField} from './VideoSelectorField';
 
 export const FRAGMENT_CONFIGURATION_FIELDS = {
+	buttonGroup: Liferay.FeatureFlags['LPS-143206']
+		? ButtonGroupField
+		: SelectField,
 	categoryTreeNodeSelector: CategoryTreeNodeSelectorField,
 	checkbox: CheckboxField,
 	collectionSelector: CollectionSelectorField,

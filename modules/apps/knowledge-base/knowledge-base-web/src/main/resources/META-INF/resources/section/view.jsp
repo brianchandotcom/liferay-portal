@@ -26,7 +26,7 @@ String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDi
 <c:choose>
 	<c:when test="<%= ArrayUtil.isNotEmpty(kbSectionPortletInstanceConfiguration.adminKBArticleSections()) %>">
 		<liferay-portlet:renderURL varImpl="iteratorURL">
-			<portlet:param name="mvcPath" value="/section/view.jsp" />
+			<portlet:param name="mvcRenderCommandName" value="/knowledge_base/view" />
 		</liferay-portlet:renderURL>
 
 		<%

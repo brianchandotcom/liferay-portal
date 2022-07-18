@@ -4,7 +4,7 @@
 <routes>
 	<route>
 		<pattern></pattern>
-		<implicit-parameter name="mvcPath">/section/view.jsp</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/knowledge_base/view</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{userIdAndInstanceId}/rss</pattern>

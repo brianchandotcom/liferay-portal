@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.always-send-redirect=true",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/article/",
-		"javax.portlet.init-param.view-template=/article/view.jsp",
+		"javax.portlet.init-param.view-template=/knowledge_base/view",
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ARTICLE,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",

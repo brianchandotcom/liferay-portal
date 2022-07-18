@@ -4,7 +4,7 @@
 <routes>
 	<route>
 		<pattern></pattern>
-		<implicit-parameter name="mvcPath">/admin/view.jsp</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/knowledge_base/view</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>

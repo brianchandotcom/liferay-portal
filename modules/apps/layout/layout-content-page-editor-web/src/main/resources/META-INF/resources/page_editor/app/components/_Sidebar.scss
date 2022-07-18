@@ -104,8 +104,10 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 
 html#{$cadmin-selector} body {
 	--toolbar-height: #{$toolbarHeight};
-	--change-tracking-bar-height: 0;
-	--control-menu-height: 0;
+	/* stylelint-disable */
+	--change-tracking-bar-height: 0px;
+	--control-menu-height: 0px;
+	/* stylelint-enable */
 
 	&.has-control-menu {
 		--control-menu-height: #{$controlMenuHeight};

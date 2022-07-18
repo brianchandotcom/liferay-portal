@@ -1,5 +1,35 @@
 definition {
 
+	macro _addWarehouseItem {
+		Variables.assertDefined(parameterList = "${warehouseItemSku},${warehouseItemQuantity},${warehouseName}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(warehouseItemReservedQuantity))) {
+			var warehouseItemReservedQuantity = "0";
+		}
+
+		var warehouseId = CommerceJSONWarehousesAndInventoriesAPI._getWarehouseId(warehouseName = "${warehouseName}");
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId}/warehouseItems \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+			-H 'Content-Type: application/json' \
+  			-d '{
+				"quantity": ${warehouseItemQuantity},
+				"reservedQuantity": ${warehouseItemReservedQuantity},
+				"sku": "${warehouseItemSku}"
+			}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _deleteAllWarehouseItems {
 		var emptyCount = "0";
 		var baseURL = "${baseURL}";
@@ -103,6 +133,35 @@ definition {
 		echo("The Commerce warehouses count is: ${warehousesCount}");
 
 		return "${warehousesCount}";
+	}
+
+	macro _getWarehouseId {
+		Variables.assertDefined(parameterList = "${warehouseName}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(warehouseCount)) {
+			var warehousesCount = "${warehouseCount}";
+		}
+		else {
+			var warehousesCount = "100";
+		}
+
+		var curl = '''
+				${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses?pageSize=${warehousesCount} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+			''';
+
+		if (isSet(warehouseName)) {
+			var warehouseId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${warehouseName}')].['id']");
+		}
+
+		return "${warehouseId}";
 	}
 
 }

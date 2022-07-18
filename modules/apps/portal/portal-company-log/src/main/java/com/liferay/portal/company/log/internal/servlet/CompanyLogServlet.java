@@ -42,12 +42,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.log4j.Log4JUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -166,7 +166,7 @@ public class CompanyLogServlet extends HttpServlet {
 		if (Validator.isNull(startIndex) && Validator.isNull(endIndex)) {
 			ServletResponseUtil.sendFile(
 				httpServletRequest, httpServletResponse, fileName,
-				new FileInputStream(logFile), logFile.length(),
+				Files.newInputStream(logFile.toPath()), logFile.length(),
 				_mimeTypes.getContentType(fileName),
 				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 		}

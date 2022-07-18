@@ -81,11 +81,13 @@ ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoade
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-title"
 				name="full-name"
 				value="<%= deviceUser.getFullName() %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
 				property="token"
 			/>
 
@@ -96,12 +98,12 @@ ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoade
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
 				name="platform"
 				value="<%= LanguageUtil.get(platformResourceBundle, pushNotificationsDevice.getPlatform()) %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="autofit-col"
 				path="/push_notifications_device_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

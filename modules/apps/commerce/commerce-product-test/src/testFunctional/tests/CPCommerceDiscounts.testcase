@@ -282,7 +282,7 @@ definition {
 		}
 
 		task ("And a coupon code entry widget added to the checkout page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/checkout");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/checkout");
 
 			CommerceAcceleratorsInitializer.addPortlet(portletName = "Coupon Code Entry");
 		}

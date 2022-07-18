@@ -3091,7 +3091,7 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				shippingMethod = "Standard");
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 		}
 
 		task ("Then the buyer user should be able to view and print the order") {

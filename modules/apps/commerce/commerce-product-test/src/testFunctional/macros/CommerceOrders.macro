@@ -699,9 +699,9 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${portalURL}",
-			urlAppend = "group/minium/placed-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=%2Fcommerce_order_content%2Fexport_commerce_order_report&p_p_cacheability=cacheLevelPage&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_commerceOrderId=${orderID}");
+			urlAppend = "web/minium/placed-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=%2Fcommerce_order_content%2Fexport_commerce_order_report&p_p_cacheability=cacheLevelPage&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_commerceOrderId=${orderID}");
 
-		AssertLocation(value1 = "${portalURL}/group/minium/placed-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=%2Fcommerce_order_content%2Fexport_commerce_order_report&p_p_cacheability=cacheLevelPage&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_commerceOrderId=${orderID}");
+		AssertLocation(value1 = "${portalURL}/web/minium/placed-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=%2Fcommerce_order_content%2Fexport_commerce_order_report&p_p_cacheability=cacheLevelPage&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_commerceOrderId=${orderID}");
 	}
 
 	macro viewOrderAddress {

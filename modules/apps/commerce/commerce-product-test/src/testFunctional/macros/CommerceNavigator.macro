@@ -119,7 +119,7 @@ definition {
 	}
 
 	macro gotoProductDetails {
-		var productName = StringUtil.lowerCase("${productName}");
+		var productName = CommerceUtilities.convertStringToKey(string = "${productName}");
 
 		Click(
 			key_productName = "${productName}",

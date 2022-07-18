@@ -15,12 +15,12 @@
 
 <tr>
 	<td>ACTIONS_TABLE_DESCRIPTION</td>
-	<td>//div[@id='adminServerAdministrationActionsPanelContainer']//li[contains(.,'${key_actionsDescription}')]</td>
+	<td>//div[contains(@id,'com_liferay_server_admin_web_portlet_ServerAdminPortlet')]//li[contains(.,'${key_actionsDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_TABLE_EXECUTE</td>
-	<td>//div[@id='adminServerAdministrationActionsPanelContainer']//li[contains(.,'${key_actionsDescription}')]//button[contains(.,'Execute')]</td>
+	<td>//div[contains(@id,'com_liferay_server_admin_web_portlet_ServerAdminPortlet')]//li[contains(.,'${key_actionsDescription}')]//button[contains(.,'Execute')]</td>
 	<td></td>
 </tr>
 </tbody>

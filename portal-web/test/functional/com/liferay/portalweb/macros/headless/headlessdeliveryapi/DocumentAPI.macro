@@ -86,4 +86,15 @@ definition {
 			expected = "${expectedDocumentTotalCount}");
 	}
 
+	macro getIdOfCreatedDocument {
+		var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
+			assetLibraryId = "${assetLibraryId}",
+			externalReferenceCode = "${externalReferenceCode}",
+			filePath = "${filePath}");
+
+		var documentId = JSONUtil.getWithJSONPath("${response}", "$.['id']");
+
+		return "${documentId}";
+	}
+
 }

@@ -86,6 +86,44 @@ definition {
 		}
 	}
 
+	@description = "Document is created in an asset library with previous document id as erc"
+	@priority = "5"
+	test DocumentIsCreatedInAssetLibraryWithDocumentIdAsErc {
+		property portal.acceptance = "true";
+
+		task ("Given a document with a custom erc is created with a POST request in asset library") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			var documentId = DocumentAPI.getIdOfCreatedDocument(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				filePath = "${filePath}");
+		}
+
+		task ("When with POST request I create a document with a custom erc equals to the internal id of the previously created document") {
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_2.txt");
+
+			var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "${documentId}",
+				filePath = "${filePath}");
+		}
+
+		task ("Then I can see erc equals to the id in the body response") {
+			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "${documentId}",
+				responseToParse = "${response}");
+		}
+
+		task ("And Then the document is created properly") {
+			DocumentAPI.assertProperDocumentTotalCount(
+				assetLibraryId = "${assetLibraryId}",
+				expectedDocumentTotalCount = "1",
+				filtervalue = "title%20eq%20%27Document_2.txt%27");
+		}
+	}
+
 	@description = "Document is created in an asset library with erc by default"
 	@priority = "5"
 	test DocumentIsCreatedInAssetLibraryWithErcByDefault {

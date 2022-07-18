@@ -72,6 +72,8 @@ public interface AssetHelper {
 
 	public List<AssetEntry> getAssetEntries(Hits hits);
 
+	public List<AssetEntry> getAssetEntries(SearchHits searchHits);
+
 	public String getAssetKeywords(String className, long classPK);
 
 	public List<AssetPublisherAddItemHolder> getAssetPublisherAddItemHolders(

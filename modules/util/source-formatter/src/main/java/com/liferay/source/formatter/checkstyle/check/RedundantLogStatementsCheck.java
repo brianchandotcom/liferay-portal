@@ -41,11 +41,12 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 			return;
 		}
 
-		_checkExpression(detailAST, null, getStartLineNumber(detailAST));
+		_checkRedundantLog(detailAST, null, detailAST.getLineNo());
 	}
 
-	private void _checkExpression(
-		DetailAST detailAST, DetailAST preStatementDetailAST, int startLine) {
+	private void _checkRedundantLog(
+		DetailAST detailAST, DetailAST previousElistDetailAST,
+		int startLineNumber) {
 
 		DetailAST exprDetailAST = detailAST.findFirstToken(TokenTypes.EXPR);
 
@@ -105,10 +106,10 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 
 		if (literalElseDetailAST == null) {
 			if (_compareDetailASTIgnoreLine(
-					elistDetailAST, preStatementDetailAST)) {
+					elistDetailAST, previousElistDetailAST)) {
 
 				log(
-					startLine, _MSG_REDUNDANT_LOG, startLine,
+					startLineNumber, _MSG_REDUNDANT_LOG, startLineNumber,
 					getEndLineNumber(slistDetailAST));
 			}
 
@@ -123,7 +124,8 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 			return;
 		}
 
-		_checkExpression(firstChildDetailAST, elistDetailAST, startLine);
+		_checkRedundantLog(
+			firstChildDetailAST, elistDetailAST, startLineNumber);
 	}
 
 	private boolean _compareDetailASTIgnoreLine(

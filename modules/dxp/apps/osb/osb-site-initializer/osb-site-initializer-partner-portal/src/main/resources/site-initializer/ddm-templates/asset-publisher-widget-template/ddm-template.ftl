@@ -25,6 +25,7 @@
 		display: contents;
 	}
 </style>
+
 <div>
 	<div class="align-items-baseline d-flex justify-content-between">
 		<h4 class="mb-4">
@@ -39,20 +40,24 @@
 					<h6 class="font-weight-bold mb-1 text-neutral-10">
 						${curEntry.getTitle(locale)}
 					</h6>
+
 					<div class="partner-portal-announcements text-neutral-8 text-paragraph-sm">
 						<@liferay_asset["asset-display"] assetEntry=curEntry />
 					</div>
 				</div>
+
 				<div class="col-auto d-flex mx-n2">
 					<@liferay_ui["user-portrait"]
 						size="sm"
 						userId=curEntry.getUserId()
 						userName=curEntry.getUserName()
 					/>
+
 					<div class="flex-wrap ml-3 mt-n1">
 						<div class="font-weight-semi-bold text-neutral-10 text-paragraph-xs">
 							${curEntry.getUserName()}
 						</div>
+
 						<div class="text-neutral-8 text-paragraph-xxs">
 							${dateUtil.getDate(curEntry.getPublishDate(), "MMM dd, yyyy", locale)}
 						</div>
@@ -61,7 +66,7 @@
 			</div>
 		</#list>
 	</#if>
-	
+
 	<div class="text-center">
 		<a href="https://www.liferay.com" target="_blank">
 			View All Announcements

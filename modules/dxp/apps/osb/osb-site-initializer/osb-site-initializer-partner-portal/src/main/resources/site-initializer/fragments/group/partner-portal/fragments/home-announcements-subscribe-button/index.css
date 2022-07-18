@@ -1,7 +1,7 @@
 .fragment_1201 .subscribe-action {
-	margin-bottom: -34px !important;
-	justify-content: right;
 	display: flex;
+	justify-content: right;
+	margin-bottom: -34px !important;
 }
 
 .fragment_1201 .btn-secondary {

@@ -70,6 +70,8 @@ definition {
 	@refactordone
 	@uitest
 	test CanAddAnnouncementsEntryFutureDate {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",
 			siteURLKey = "guest",

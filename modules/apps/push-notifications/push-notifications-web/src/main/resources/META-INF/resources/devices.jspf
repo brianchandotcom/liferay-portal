@@ -29,37 +29,9 @@ pushNotificationsDeviceSearchContainer.setResultsAndTotal(() -> PushNotification
 ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(PushNotificationsWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
 %>
 
-<c:if test="<%= pushNotificationsDevicesCount > 0 %>">
-	<liferay-frontend:management-bar>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= renderResponse.createRenderURL() %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= renderResponse.createRenderURL() %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns='<%= new String[] {"platform"} %>'
-				portletURL='<%=
-					PortletURLBuilder.createRenderURL(
-						renderResponse
-					).setParameter(
-						"displayStyle", displayStyle
-					).buildPortletURL()
-				%>'
-			/>
-		</liferay-frontend:management-bar-filters>
-	</liferay-frontend:management-bar>
-</c:if>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new PushNotificationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, pushNotificationsDeviceSearchContainer) %>"
+/>
 
 <clay:container-fluid>
 	<liferay-ui:search-container

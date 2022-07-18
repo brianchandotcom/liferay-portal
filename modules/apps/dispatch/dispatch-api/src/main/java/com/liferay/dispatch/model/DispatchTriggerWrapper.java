@@ -304,6 +304,11 @@ public class DispatchTriggerWrapper
 		return model.getEndDate();
 	}
 
+	@Override
+	public Date getEndDateWithOffset() {
+		return model.getEndDateWithOffset();
+	}
+
 	/**
 	 * Returns the external reference code of this dispatch trigger.
 	 *
@@ -377,6 +382,11 @@ public class DispatchTriggerWrapper
 	@Override
 	public Date getStartDate() {
 		return model.getStartDate();
+	}
+
+	@Override
+	public Date getStartDateWithOffset() {
+		return model.getStartDateWithOffset();
 	}
 
 	/**

@@ -1194,13 +1194,17 @@ public class LayoutReferencesExportImportContentProcessor
 				}
 			}
 
-			if ((uri != null) &&
-				InetAddressUtil.isLocalInetAddress(
-					InetAddress.getByName(uri.getHost()))) {
+			if (uri != null) {
+				InetAddress inetAddress = InetAddressUtil.getInetAddressByName(
+					uri.getHost());
 
-				return StringBundler.concat(
-					uri.getScheme(), "://", uri.getHost(), StringPool.COLON,
-					uri.getPort());
+				if ((inetAddress != null) &&
+					InetAddressUtil.isLocalInetAddress(inetAddress)) {
+
+					return StringBundler.concat(
+						uri.getScheme(), "://", uri.getHost(), StringPool.COLON,
+						uri.getPort());
+				}
 			}
 		}
 		catch (UnknownHostException unknownHostException) {

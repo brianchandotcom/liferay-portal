@@ -64,7 +64,15 @@ public abstract class BaseJob implements Job {
 
 	@Override
 	public Long getAverageTestDuration(String batchName, String testName) {
-		return _getAverageTestDuration(batchName, testName);
+		return _getAverageTestDuration(batchName, testName, "averageDuration");
+	}
+
+	@Override
+	public Long getAverageTestOverheadDuration(
+		String batchName, String testName) {
+
+		return _getAverageTestDuration(
+			batchName, testName, "averageOverheadDuration");
 	}
 
 	@Override
@@ -961,7 +969,9 @@ public abstract class BaseJob implements Job {
 		return _averageDurationJSONObject;
 	}
 
-	private Long _getAverageTestDuration(String batchName, String testName) {
+	private Long _getAverageTestDuration(
+		String batchName, String testName, String durationKey) {
+
 		JSONObject averageDurationsJSONObject = _getAverageDurationJSONObject();
 
 		JSONArray batchesJSONArray = averageDurationsJSONObject.optJSONArray(
@@ -987,12 +997,13 @@ public abstract class BaseJob implements Job {
 				JSONObject testJSONObject = testsJSONArray.getJSONObject(j);
 
 				if (!Objects.equals(
-						testName, testJSONObject.getString("testName"))) {
+						testName, testJSONObject.getString("testName")) ||
+					testJSONObject.has(durationKey)) {
 
 					continue;
 				}
 
-				return testJSONObject.getLong("averageDuration");
+				return testJSONObject.getLong(durationKey);
 			}
 		}
 

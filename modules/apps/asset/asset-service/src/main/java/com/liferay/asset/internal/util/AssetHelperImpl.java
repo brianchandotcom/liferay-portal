@@ -489,49 +489,7 @@ public class AssetHelperImpl implements AssetHelper {
 			List<AssetEntryQuery> assetEntryQueries, int start, int end)
 		throws Exception {
 
-		for (AssetEntryQuery assetEntryQuery : assetEntryQueries) {
-			SearchContext assetEntryQuerySearchContext = new SearchContext();
-
-			_prepareSearchContext(
-				assetEntryQuerySearchContext, assetEntryQuery, start, end);
-
-			long[] groupIds = searchContext.getGroupIds();
-
-			if (ArrayUtil.isEmpty(groupIds)) {
-				groupIds = new long[0];
-			}
-
-			searchContext.setGroupIds(
-				ArrayUtil.append(
-					groupIds, assetEntryQuerySearchContext.getGroupIds()));
-
-			AssetSearcher assetSearcher = _getAssetSearcher(assetEntryQuery);
-
-			BooleanQuery booleanQuery = assetSearcher.getFullQuery(
-				assetEntryQuerySearchContext);
-
-			BooleanClause<Query>[] booleanClauses =
-				searchContext.getBooleanClauses();
-
-			if (booleanClauses == null) {
-				searchContext.setBooleanClauses(
-					new BooleanClause[] {
-						BooleanClauseFactoryUtil.create(
-							booleanQuery, BooleanClauseOccur.SHOULD.getName())
-					});
-			}
-			else {
-				searchContext.setBooleanClauses(
-					ArrayUtil.append(
-						booleanClauses,
-						BooleanClauseFactoryUtil.create(
-							booleanQuery,
-							BooleanClauseOccur.SHOULD.getName())));
-			}
-
-			searchContext.setEnd(assetEntryQuerySearchContext.getEnd());
-			searchContext.setStart(assetEntryQuerySearchContext.getStart());
-		}
+		_prepareSearchContext(assetEntryQueries, end, searchContext, start);
 
 		SearchResponse searchResponse = _searcher.search(
 			_searchRequestBuilderFactory.builder(
@@ -606,6 +564,29 @@ public class AssetHelperImpl implements AssetHelper {
 		AssetSearcher assetSearcher = _getAssetSearcher(assetEntryQuery);
 
 		return assetSearcher.searchCount(searchContext);
+	}
+
+	@Override
+	public long searchCount(
+			SearchContext searchContext,
+			List<AssetEntryQuery> assetEntryQueries, int start, int end)
+		throws Exception {
+
+		_prepareSearchContext(assetEntryQueries, end, searchContext, start);
+
+		SearchResponse searchResponse = _searcher.search(
+			_searchRequestBuilderFactory.builder(
+				searchContext
+			).emptySearchEnabled(
+				true
+			).highlightEnabled(
+				false
+			).sorts(
+				_getSearchSorts(
+					assetEntryQueries.get(0), searchContext.getLocale())
+			).build());
+
+		return searchResponse.getCount();
 	}
 
 	private AssetSearcher _getAssetSearcher(AssetEntryQuery assetEntryQuery) {
@@ -692,6 +673,53 @@ public class AssetHelperImpl implements AssetHelper {
 		}
 
 		return sortType;
+	}
+
+	private void _prepareSearchContext(
+			List<AssetEntryQuery> assetEntryQueries, int end,
+			SearchContext searchContext, int start)
+		throws Exception {
+
+		for (AssetEntryQuery assetEntryQuery : assetEntryQueries) {
+			SearchContext assetEntryQuerySearchContext = new SearchContext();
+
+			_prepareSearchContext(
+				assetEntryQuerySearchContext, assetEntryQuery, start, end);
+
+			long[] groupIds = searchContext.getGroupIds();
+
+			if (ArrayUtil.isEmpty(groupIds)) {
+				groupIds = new long[0];
+			}
+
+			searchContext.setGroupIds(
+				ArrayUtil.append(
+					groupIds, assetEntryQuerySearchContext.getGroupIds()));
+
+			AssetSearcher assetSearcher = _getAssetSearcher(assetEntryQuery);
+
+			BooleanQuery booleanQuery = assetSearcher.getFullQuery(
+				assetEntryQuerySearchContext);
+
+			BooleanClause<Query>[] booleanClauses =
+				searchContext.getBooleanClauses();
+
+			if (booleanClauses == null) {
+				searchContext.setBooleanClauses(
+					new BooleanClause[] {
+						BooleanClauseFactoryUtil.create(
+							booleanQuery, BooleanClauseOccur.SHOULD.getName())
+					});
+			}
+			else {
+				searchContext.setBooleanClauses(
+					ArrayUtil.append(
+						booleanClauses,
+						BooleanClauseFactoryUtil.create(
+							booleanQuery,
+							BooleanClauseOccur.SHOULD.getName())));
+			}
+		}
 	}
 
 	private void _prepareSearchContext(

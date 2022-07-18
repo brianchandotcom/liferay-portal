@@ -1,4 +1,8 @@
-.lfr-layout-structure-item-container {
+.lfr-layout-structure-item-row {
+	overflow: hidden;
+}
+
+.lfr-layout-structure-item-z896587a-c659-43f5-9e22 {
 	margin-bottom: var(--spacer-3,1rem) !important;
 	margin-left: var(--spacer-3,1rem) !important;
 	margin-right: var(--spacer-3,1rem) !important;
@@ -6,7 +10,7 @@
 }
 
 @media screen and (max-width: 991px) {
-	.lfr-layout-structure-item-container {
+	.lfr-layout-structure-item-z896587a-c659-43f5-9e22 {
 		margin-bottom: var(--spacer-4,1.5rem) !important;
 		margin-left: var(--spacer-4,1.5rem) !important;
 		margin-right: var(--spacer-4,1.5rem) !important;
@@ -15,7 +19,7 @@
 }
 
 @media screen and (max-width: 767px) {
-	.lfr-layout-structure-item-container {
+	.lfr-layout-structure-item-z896587a-c659-43f5-9e22 {
 		margin-bottom: var(--spacer-1,0.25rem) !important;
 		margin-left: var(--spacer-1,0.25rem) !important;
 		margin-right: var(--spacer-1,0.25rem) !important;
@@ -24,7 +28,7 @@
 }
 
 @media screen and (max-width: 575px) {
-	.lfr-layout-structure-item-container {
+	.lfr-layout-structure-item-z896587a-c659-43f5-9e22 {
 		margin-bottom: var(--spacer-2,0.5rem) !important;
 		margin-left: var(--spacer-2,0.5rem) !important;
 		margin-right: var(--spacer-2,0.5rem) !important;

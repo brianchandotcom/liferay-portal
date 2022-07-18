@@ -2,7 +2,15 @@
 	"deletedItems": [
 	],
 	"items": {
-		"container": {
+		"root": {
+			"children": [
+				"z896587a-c659-43f5-9e22"
+			],
+			"itemId": "root",
+			"parentId": "",
+			"type": "root"
+		},
+		"z896587a-c659-43f5-9e22": {
 			"children": [
 			],
 			"config": {
@@ -18,17 +26,9 @@
 				},
 				"widthType": "fluid"
 			},
-			"itemId": "container",
+			"itemId": "z896587a-c659-43f5-9e22",
 			"parentId": "root",
 			"type": "container"
-		},
-		"root": {
-			"children": [
-				"container"
-			],
-			"itemId": "root",
-			"parentId": "",
-			"type": "root"
 		}
 	},
 	"rootItems": {

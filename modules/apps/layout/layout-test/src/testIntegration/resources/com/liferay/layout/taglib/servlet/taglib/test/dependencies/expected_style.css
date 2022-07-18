@@ -1,4 +1,8 @@
-.lfr-layout-structure-item-container {
+.lfr-layout-structure-item-row {
+	overflow: hidden;
+}
+
+.lfr-layout-structure-item-z896587a-c659-43f5-9e22 {
 	background-color: var(--warning) !important;
 	border-color: var(--info) !important;
 	border-radius: var(--border-radius-sm) !important;

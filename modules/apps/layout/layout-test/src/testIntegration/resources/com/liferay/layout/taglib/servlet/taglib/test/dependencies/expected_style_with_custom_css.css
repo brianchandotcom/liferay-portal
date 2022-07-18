@@ -1,21 +1,25 @@
-.lfr-layout-structure-item-container {
+.lfr-layout-structure-item-row {
+	overflow: hidden;
+}
+
+.lfr-layout-structure-item-z896587a-c659-43f5-9e22 {
 	color: blue;
 }
 
 @media screen and (max-width: 991px) {
-	.lfr-layout-structure-item-container {
+	.lfr-layout-structure-item-z896587a-c659-43f5-9e22 {
 		color: yellow;
 	}
 }
 
 @media screen and (max-width: 767px) {
-	.lfr-layout-structure-item-container {
+	.lfr-layout-structure-item-z896587a-c659-43f5-9e22 {
 		color: red;
 	}
 }
 
 @media screen and (max-width: 575px) {
-	.lfr-layout-structure-item-container {
+	.lfr-layout-structure-item-z896587a-c659-43f5-9e22 {
 		color: pink;
 	}
 }

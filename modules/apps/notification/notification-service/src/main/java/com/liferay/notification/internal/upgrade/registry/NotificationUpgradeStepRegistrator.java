@@ -16,8 +16,8 @@ package com.liferay.notification.internal.upgrade.registry;
 
 import com.liferay.notification.internal.upgrade.v1_1_0.util.NotificationQueueEntryAttachmentTable;
 import com.liferay.notification.internal.upgrade.v1_1_0.util.NotificationTemplateAttachmentTable;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,7 +33,7 @@ public class NotificationUpgradeStepRegistrator
 		registry.register(
 			"1.0.0", "1.1.0", NotificationQueueEntryAttachmentTable.create(),
 			NotificationTemplateAttachmentTable.create(),
-			UpgradeStepFactory.addColumns(
+			UpgradeProcessFactory.addColumns(
 				"NotificationTemplate", "objectDefinitionId LONG"));
 	}
 

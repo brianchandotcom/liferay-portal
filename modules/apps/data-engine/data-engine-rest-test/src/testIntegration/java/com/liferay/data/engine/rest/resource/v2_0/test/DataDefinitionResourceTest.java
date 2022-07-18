@@ -286,7 +286,7 @@ public class DataDefinitionResourceTest
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals("text2", problem.getDetail());
+			Assert.assertNull(problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals("MustNotDuplicateFieldName", problem.getType());
 		}
@@ -324,7 +324,7 @@ public class DataDefinitionResourceTest
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals("es_ES", problem.getDetail());
+			Assert.assertNull(problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
 				"MustSetDefaultLocaleAsAvailableLocale", problem.getType());
@@ -372,7 +372,7 @@ public class DataDefinitionResourceTest
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals("text1", problem.getDetail());
+			Assert.assertNull(problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals("MustSetFieldType", problem.getType());
 		}
@@ -392,7 +392,7 @@ public class DataDefinitionResourceTest
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals("select1", problem.getDetail());
+			Assert.assertNull(problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals("MustSetOptionsForField", problem.getType());
 		}
@@ -412,7 +412,7 @@ public class DataDefinitionResourceTest
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals("#name*", problem.getDetail());
+			Assert.assertNull(problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
 				"MustSetValidCharactersForFieldName", problem.getType());
@@ -433,7 +433,7 @@ public class DataDefinitionResourceTest
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals("text$#", problem.getDetail());
+			Assert.assertNull(problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
 				"MustSetValidCharactersForFieldType", problem.getType());
@@ -452,7 +452,7 @@ public class DataDefinitionResourceTest
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals("INVALID", problem.getDetail());
+			Assert.assertNull(problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals("MustSetValidContentType", problem.getType());
 		}
@@ -489,9 +489,9 @@ public class DataDefinitionResourceTest
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
+			Assert.assertNull(problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals("MustSetValidType", problem.getType());
-			Assert.assertEquals("string", problem.getDetail());
 		}
 
 		// Provide default layout name when none is informed

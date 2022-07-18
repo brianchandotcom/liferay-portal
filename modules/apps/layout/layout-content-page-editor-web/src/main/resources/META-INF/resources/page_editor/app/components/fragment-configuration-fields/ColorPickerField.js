@@ -13,23 +13,71 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
-import {ColorPicker} from '../../../common/components/ColorPicker/ColorPicker';
+import {
+	ColorPicker,
+	DEFAULT_TOKEN_LABEL,
+} from '../../../common/components/ColorPicker/ColorPicker';
 import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+import {useActiveItemId} from '../../contexts/ControlsContext';
+import {useGlobalContext} from '../../contexts/GlobalContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
+import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {ColorPaletteField} from './ColorPaletteField';
 
 export function ColorPickerField({field, onValueSelect, value}) {
+	const activeItemId = useActiveItemId();
+	const canDetachTokenValues = useSelector(selectCanDetachTokenValues);
+	const globalContext = useGlobalContext();
 	const {tokenValues} = useStyleBook();
 
-	const canDetachTokenValues = useSelector(selectCanDetachTokenValues);
+	const [defaultTokenLabel, setDefaultTokenLabel] = useState(
+		DEFAULT_TOKEN_LABEL
+	);
+
+	useEffect(() => {
+		if (!field.cssProperty) {
+			setDefaultTokenLabel(DEFAULT_TOKEN_LABEL);
+
+			return;
+		}
+
+		if (value) {
+			setDefaultTokenLabel(DEFAULT_TOKEN_LABEL);
+
+			return;
+		}
+
+		const element = globalContext.document.querySelector(
+			`.${getLayoutDataItemUniqueClassName(activeItemId)}`
+		);
+
+		if (!element) {
+			setDefaultTokenLabel(DEFAULT_TOKEN_LABEL);
+
+			return;
+		}
+
+		const computedValue = globalContext.window
+			.getComputedStyle(element)
+			.getPropertyValue(field.cssProperty);
+
+		if (!computedValue) {
+			setDefaultTokenLabel(DEFAULT_TOKEN_LABEL);
+
+			return;
+		}
+
+		setDefaultTokenLabel(`${DEFAULT_TOKEN_LABEL} · ${computedValue}`);
+	}, [activeItemId, field.cssProperty, globalContext, value]);
 
 	return Object.keys(tokenValues).length ? (
 		<ColorPicker
 			canDetachTokenValues={canDetachTokenValues}
+			defaultTokenLabel={defaultTokenLabel}
 			field={field}
 			onValueSelect={onValueSelect}
 			showLabel={!Liferay.FeatureFlags['LPS-143206']}

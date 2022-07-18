@@ -36,6 +36,10 @@ import {parseColorValue} from './parseColorValue';
 
 import './ColorPicker.scss';
 
+export const DEFAULT_TOKEN_LABEL = Liferay.FeatureFlags['LPS-143206']
+	? Liferay.Language.get('inherited')
+	: Liferay.Language.get('default');
+
 const debouncedOnValueSelect = debounce(
 	(onValueSelect, fieldName, value) => onValueSelect(fieldName, value),
 	300
@@ -55,6 +59,7 @@ function usePropsFirst(value, {forceProp = false}) {
 
 export function ColorPicker({
 	canDetachTokenValues = true,
+	defaultTokenLabel = DEFAULT_TOKEN_LABEL,
 	editedTokenValues,
 	field,
 	onValueSelect,
@@ -89,7 +94,7 @@ export function ColorPicker({
 	const inputRef = useRef(null);
 	const listboxRef = useRef(null);
 	const [tokenLabel, setTokenLabel] = usePropsFirst(
-		value ? tokenValues[value]?.label : Liferay.Language.get('default'),
+		value ? tokenValues[value]?.label : defaultTokenLabel,
 		{forceProp: clearedValue}
 	);
 
@@ -478,7 +483,7 @@ export function ColorPicker({
 										field.defaultValue ?? null,
 										field.defaultValue
 											? null
-											: Liferay.Language.get('default')
+											: defaultTokenLabel
 									);
 								}}
 								small

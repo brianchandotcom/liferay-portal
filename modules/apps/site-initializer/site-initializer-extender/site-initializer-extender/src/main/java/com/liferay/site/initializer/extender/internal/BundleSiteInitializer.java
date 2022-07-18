@@ -725,6 +725,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			index++;
 		}
 
+		ddmStructureEntryIdsStringUtilReplaceValues.put(
+			"DDM_STRUCTURE_CLASS_NAME_ID",
+			String.valueOf(_portal.getClassNameId(JournalArticle.class)));
+
 		return ddmStructureEntryIdsStringUtilReplaceValues;
 	}
 

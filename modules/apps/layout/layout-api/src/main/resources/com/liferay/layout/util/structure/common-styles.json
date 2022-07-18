@@ -703,21 +703,25 @@
 				"name": "textAlign",
 				"responsive": true,
 				"responsiveTemplate": "text{viewport}{value}",
-				"type": "select",
+				"type": "buttonGroup",
 				"validValues": [
 					{
+						"icon": "align-left",
 						"label": "left",
 						"value": "left"
 					},
 					{
+						"icon": "align-center",
 						"label": "center",
 						"value": "center"
 					},
 					{
+						"icon": "align-right",
 						"label": "right",
 						"value": "right"
 					},
 					{
+						"icon": "align-justify",
 						"label": "justify",
 						"value": "justify"
 					}

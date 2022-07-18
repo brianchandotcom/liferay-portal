@@ -25,7 +25,7 @@ public class InfoFormInvalidLayoutModeException extends InfoFormException {
 
 	public String getLocalizedMessage(Locale locale) {
 		return LanguageUtil.get(
-			locale, "you-cannot-submit-the-form-using-this-view-mode");
+			locale, "the-form-cannot-be-submitted-from-this-view-mode");
 	}
 
 }

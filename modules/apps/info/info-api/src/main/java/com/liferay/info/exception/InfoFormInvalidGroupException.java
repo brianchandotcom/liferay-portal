@@ -25,7 +25,7 @@ public class InfoFormInvalidGroupException extends InfoFormException {
 
 	public String getLocalizedMessage(Locale locale) {
 		return LanguageUtil.get(
-			locale, "you-cannot-submit-the-form-from-this-site");
+			locale, "the-form-cannot-be-submitted-from-a-staged-page");
 	}
 
 }

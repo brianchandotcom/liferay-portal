@@ -33,7 +33,6 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@

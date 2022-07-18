@@ -15,14 +15,16 @@
 --%>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-
 String orderByCol = ParamUtil.getString(request, "orderByCol", "platform");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-OrderByComparator<PushNotificationsDevice> orderByComparator = PushNotificationsUtil.getPushNotificationsDeviceOrderByComparator(orderByCol, orderByType);
+SearchContainer<PushNotificationsDevice> pushNotificationsDeviceSearchContainer = new SearchContainer<>(renderRequest, portletURL, null, "there-are-no-devices");
 
-int pushNotificationsDevicesCount = PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevicesCount();
+pushNotificationsDeviceSearchContainer.setOrderByCol(orderByCol);
+pushNotificationsDeviceSearchContainer.setOrderByComparator(PushNotificationsUtil.getPushNotificationsDeviceOrderByComparator(orderByCol, orderByType));
+pushNotificationsDeviceSearchContainer.setOrderByType(orderByType);
+
+pushNotificationsDeviceSearchContainer.setResultsAndTotal(() -> PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevices(pushNotificationsDeviceSearchContainer.getStart(), pushNotificationsDeviceSearchContainer.getEnd(), pushNotificationsDeviceSearchContainer.getOrderByComparator()), PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevicesCount());
 
 ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(PushNotificationsWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
 %>
@@ -61,14 +63,8 @@ ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoade
 
 <clay:container-fluid>
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-devices"
-		iteratorURL="<%= portletURL %>"
-		total="<%= pushNotificationsDevicesCount %>"
+		searchContainer="<%= pushNotificationsDeviceSearchContainer %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevices(searchContainer.getStart(), searchContainer.getEnd(), orderByComparator) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.push.notifications.model.PushNotificationsDevice"
 			escapedModel="<%= true %>"

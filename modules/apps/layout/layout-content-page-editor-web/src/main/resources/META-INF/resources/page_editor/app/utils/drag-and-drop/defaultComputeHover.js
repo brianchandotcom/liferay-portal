@@ -14,6 +14,7 @@
 
 import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplayOptions';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {formIsMapped} from '../formIsMapped';
 import isItemEmpty from '../isItemEmpty';
 import checkAllowedChild from './checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
@@ -76,6 +77,9 @@ export default function defaultComputeHover({
 		const targetIsContainerFlex = itemIsContainerFlex(targetItem);
 		const targetIsFragment =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.fragment;
+		const targetIsFormNotMapped =
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
+			!formIsMapped(targetItem);
 		const targetIsEmpty = isItemEmpty(
 			layoutDataRef.current.items[targetItem.itemId],
 			layoutDataRef.current
@@ -84,7 +88,8 @@ export default function defaultComputeHover({
 		return (
 			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
 			(targetIsEmpty || targetIsColumn || targetIsContainerFlex) &&
-			!targetIsFragment
+			!targetIsFragment &&
+			!targetIsFormNotMapped
 		);
 	})();
 

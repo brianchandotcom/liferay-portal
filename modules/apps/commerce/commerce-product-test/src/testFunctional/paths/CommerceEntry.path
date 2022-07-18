@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_SELECT</td>
+	<td>//div[not(contains(@class,'hide'))]//div[contains(@class,'input-select-wrapper')][label[contains(.,'${key_selectFieldLabel}')]]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION_PANEL_COLLAPSED</td>
 	<td>//a[@aria-expanded='false' and contains(@aria-controls,'')][contains(.,'${key_panel}')]</td>
 	<td></td>
@@ -148,6 +153,11 @@
 <tr>
 	<td>DISPLAY_DATE_TIME_FIELD</td>
 	<td>//span/input[contains(@id,'displayDateTime') and (@placeholder='h:mm am/pm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVENTORY_EXPECTED_INCOMING_DELIVERY_DATE</td>
+	<td>//span[contains(@id,'displayDate')]/input[@placeholder=@placeholder='h:mm am/pm']</td>
 	<td></td>
 </tr>
 <tr>
@@ -923,6 +933,11 @@
 <tr>
 	<td>SELECT_ASSERT_SELECTED_VALUE</td>
 	<td>//label[contains(.,'${key_fieldLabel}')]/../select/option[@selected and contains(.,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_WITH_NAME</td>
+	<td>//*[not(self::div)][contains(@class,'btn')][normalize-space()='${key_text}'][contains(@name,'${key_buttonName}')][not(contains(@class,'navbar'))]</td>
 	<td></td>
 </tr>
 

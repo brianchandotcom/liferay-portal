@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -2218,6 +2219,14 @@ public class SXPBlueprintSearchResultTest {
 
 		SearchResponse searchResponse = _getSearchResponseSearchPage(
 			searchRequestBuilderConsumer);
+		List<SearchHit> hits = _getSearchResponseSearchPage()
+			.getSearchHits()
+			.getSearchHits();
+		for (SearchHit h : hits){
+			System.out.println(
+				"Title:  "+h.getDocument().getFields().get("title_en_US") +
+				" Score:  "+ h.getScore());
+		}
 
 		DocumentsAssert.assertValues(
 			searchResponse.getRequestString(),

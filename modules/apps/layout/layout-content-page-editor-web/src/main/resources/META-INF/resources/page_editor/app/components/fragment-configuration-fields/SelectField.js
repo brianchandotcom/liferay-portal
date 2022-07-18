@@ -312,7 +312,7 @@ const SingleSelectWithIcon = ({
 	return (
 		<div className="btn btn-unstyled p-0 page-editor__single-select-with-icon">
 			<label
-				className="mb-0 page-editor__single-select-with-icon__label-icon px-1 py-2"
+				className="mb-0 page-editor__single-select-with-icon__label-icon px-1 py-2 text-center"
 				htmlFor={inputId}
 			>
 				<ClayIcon

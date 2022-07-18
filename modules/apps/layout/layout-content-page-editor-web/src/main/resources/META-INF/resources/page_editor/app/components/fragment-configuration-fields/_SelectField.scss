@@ -5,7 +5,8 @@ $prefix: '.page-editor__single-select-with-icon';
 html#{$cadmin-selector} .cadmin {
 	#{$prefix} {
 		display: grid;
-		grid-template-columns: 2em auto;
+		gap: 4px;
+		grid-template-columns: 32px auto;
 		place-items: stretch;
 	}
 

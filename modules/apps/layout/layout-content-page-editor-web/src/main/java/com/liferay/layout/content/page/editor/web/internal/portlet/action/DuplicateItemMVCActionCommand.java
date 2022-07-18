@@ -317,7 +317,10 @@ public class DuplicateItemMVCActionCommand
 					FragmentEntryProcessorConstants.
 						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
-			freemarkerFragmentEntryProcessorJSONObject.remove("inputFieldId");
+			if (freemarkerFragmentEntryProcessorJSONObject != null) {
+				freemarkerFragmentEntryProcessorJSONObject.remove(
+					"inputFieldId");
+			}
 		}
 
 		FragmentEntryLink duplicatedFragmentEntryLink =

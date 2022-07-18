@@ -49,6 +49,41 @@ public abstract class BaseTestClassReport implements TestClassReport {
 	}
 
 	@Override
+	public long getOverheadDuration() {
+		DownstreamBuildReport downstreamBuildReport =
+			getDownstreamBuildReport();
+
+		StopWatchRecordsGroup stopWatchRecordsGroup =
+			downstreamBuildReport.getStopWatchRecordsGroup();
+
+		if (stopWatchRecordsGroup == null) {
+			return 0L;
+		}
+
+		StopWatchRecord stopWatchRecord = stopWatchRecordsGroup.get(
+			"test-execution-duration");
+
+		if (stopWatchRecord == null) {
+			return 0L;
+		}
+
+		long testExecutionDuration = stopWatchRecord.getDuration();
+
+		if (testExecutionDuration <= 0L) {
+			return 0L;
+		}
+
+		List<TestClassReport> testClassReports =
+			downstreamBuildReport.getTestClassReports();
+
+		if (testClassReports.isEmpty()) {
+			return 0L;
+		}
+
+		return testExecutionDuration / testClassReports.size();
+	}
+
+	@Override
 	public String getStatus() {
 		for (TestReport testReport : getTestReports()) {
 			String status = testReport.getStatus();

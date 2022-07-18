@@ -27,6 +27,8 @@ public interface TestClassReport {
 
 	public long getDuration();
 
+	public long getOverheadDuration();
+
 	public String getStatus();
 
 	public String getTestClassName();

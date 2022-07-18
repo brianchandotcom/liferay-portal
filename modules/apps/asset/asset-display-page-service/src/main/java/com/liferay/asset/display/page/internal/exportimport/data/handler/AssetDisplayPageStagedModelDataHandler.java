@@ -128,6 +128,13 @@ public class AssetDisplayPageStagedModelDataHandler
 				importedAssetDisplayPageEntry.getClassNameId(),
 				existingClassPK);
 
+		if (existingAssetDisplayPageEntry == null) {
+			existingAssetDisplayPageEntry =
+				_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+					assetDisplayPageEntry.getUuid(),
+					portletDataContext.getScopeGroupId());
+		}
+
 		if ((existingAssetDisplayPageEntry == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
 

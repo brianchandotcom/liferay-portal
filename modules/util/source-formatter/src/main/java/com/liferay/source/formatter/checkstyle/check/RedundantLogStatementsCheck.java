@@ -88,9 +88,10 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 			return;
 		}
 
-		String fullIdentText = _getMethodCallFullIdent(firstChildDetailAST);
+		String methodCallFullIdent = _getMethodCallFullIdent(
+			firstChildDetailAST);
 
-		if (!fullIdentText.matches(
+		if (!methodCallFullIdent.matches(
 				"_log\\." + StringUtil.lowerCase(matcher.group(1)))) {
 
 			return;

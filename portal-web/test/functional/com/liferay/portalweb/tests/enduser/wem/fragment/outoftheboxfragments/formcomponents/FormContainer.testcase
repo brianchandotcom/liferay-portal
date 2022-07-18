@@ -370,6 +370,75 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-155529. The page designer can submit a Form Container with External URL success message."
+	@priority = "4"
+	test SubmitFormContainerWithExternalURLSuccessMessage {
+		property test.name.skip.portal.instance = "FormContainer#SubmitFormContainerWithExternalURLSuccessMessage";
+
+		task ("Given a page designer has mapped Form Container with URL as success message") {
+			task ("Add Form Container to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Add External URL on success message") {
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General",
+					successMessage = "External URL",
+					url = "https://www.liferay.com");
+			}
+
+			task ("Add Text Input and Submit Button inside Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Text Input");
+
+				PageEditor.editInput(
+					field = "Region",
+					fragmentName = "Text Input");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "Text Input");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the page designer navigates to content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer is redirected to URL after submit Form Container") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Type(
+				key_text = "Region",
+				locator1 = "TextInput#ANY",
+				value1 = "Spain");
+
+			Button.clickSubmitButton();
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+		}
+	}
+
 	@description = "This is a test for LPS-155529. The page designer can submit a Form Container with page success message."
 	@priority = "4"
 	test SubmitFormContainerWithPageSuccessMessage {
@@ -664,75 +733,6 @@ definition {
 			Button.clickSubmitButton();
 
 			AssertTextPresent(value1 = "Merci. Vos informations ont bien été reçues.");
-		}
-	}
-
-	@description = "This is a test for LPS-155529. The page designer can submit a Form Container with URL success message."
-	@priority = "4"
-	test SubmitFormContainerWithURLSuccessMessage {
-		property test.name.skip.portal.instance = "FormContainer#SubmitFormContainerWithURLSuccessMessage";
-
-		task ("Given a page designer has mapped Form Container with URL as success message") {
-			task ("Add Form Container to content page") {
-				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Test Page Name",
-					type = "content");
-
-				ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Page Name",
-					siteName = "Test Site Name");
-
-				PageEditor.addFragment(
-					collectionName = "Form Components",
-					fragmentName = "Form Container");
-			}
-
-			task ("Add URL on success message") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General",
-					successMessage = "URL",
-					url = "https://www.liferay.com");
-			}
-
-			task ("Add Text Input and Submit Button inside Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Text Input");
-
-				PageEditor.editInput(
-					field = "Region",
-					fragmentName = "Text Input");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Submit Button",
-					targetFragmentName = "Text Input");
-
-				PageEditor.publish();
-			}
-		}
-
-		task ("When the page designer navigates to content page at view mode") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Then the page designer is redirected to URL after submit Form Container") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			Type(
-				key_text = "Region",
-				locator1 = "TextInput#ANY",
-				value1 = "Spain");
-
-			Button.clickSubmitButton();
-
-			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 		}
 	}
 

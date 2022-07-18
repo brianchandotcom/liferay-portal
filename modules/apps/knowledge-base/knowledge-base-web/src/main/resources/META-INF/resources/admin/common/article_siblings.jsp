@@ -38,7 +38,7 @@ if (resourceClassNameId != kbFolderClassNameId) {
 	}
 }
 
-KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
+KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse);
 %>
 
 <div class="kb-article-siblings">

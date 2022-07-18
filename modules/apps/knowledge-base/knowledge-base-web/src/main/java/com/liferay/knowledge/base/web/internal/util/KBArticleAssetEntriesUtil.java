@@ -172,8 +172,8 @@ public class KBArticleAssetEntriesUtil {
 					httpServletRequest,
 					KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE,
 					PortletRequest.RENDER_PHASE)
-			).setMVCPath(
-				"/article/view_article.jsp"
+			).setMVCRenderCommandName(
+				"/knowledge_base/view_article"
 			).setParameter(
 				"resourcePrimKey", classPK
 			).buildPortletURL();

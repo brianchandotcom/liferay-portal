@@ -34,12 +34,10 @@ import javax.portlet.RenderResponse;
 public class KBArticleURLHelper {
 
 	public KBArticleURLHelper(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		String templatePath) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_templatePath = templatePath;
 	}
 
 	public PortletURL createViewURL(KBArticle kbArticle)
@@ -88,8 +86,8 @@ public class KBArticleURLHelper {
 	private PortletURL _createKBAdminViewURL(KBArticle kbArticle) {
 		return PortletURLBuilder.create(
 			_renderResponse.createRenderURL()
-		).setMVCPath(
-			_templatePath + "view_article.jsp"
+		).setMVCRenderCommandName(
+			"/knowledge_base/view_article"
 		).setParameter(
 			"resourceClassNameId", kbArticle.getClassNameId()
 		).setParameter(
@@ -128,8 +126,8 @@ public class KBArticleURLHelper {
 
 		return PortletURLBuilder.create(
 			_renderResponse.createRenderURL()
-		).setMVCPath(
-			_templatePath + "view_article.jsp"
+		).setMVCRenderCommandName(
+			"/knowledge_base/view_article"
 		).setParameter(
 			"urlTitle", kbArticle.getUrlTitle()
 		).setParameter(
@@ -154,6 +152,5 @@ public class KBArticleURLHelper {
 
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final String _templatePath;
 
 }

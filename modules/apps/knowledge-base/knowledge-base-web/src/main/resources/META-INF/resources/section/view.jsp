@@ -17,7 +17,7 @@
 <%@ include file="/section/init.jsp" %>
 
 <%
-KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
+KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse);
 
 String[] kbArticlesSections = kbSectionPortletInstanceConfiguration.kbArticlesSections();
 String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDisplayStyle();

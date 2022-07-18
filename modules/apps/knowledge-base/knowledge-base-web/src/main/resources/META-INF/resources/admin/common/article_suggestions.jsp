@@ -25,7 +25,7 @@ if (AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.VIEW_
 	showAdminSuggestionView = true;
 }
 
-KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
+KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse);
 
 int kbCommentsCount = 0;
 int pendingKBCommentsCount = 0;

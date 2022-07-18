@@ -361,26 +361,11 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		String mvcPath = null;
-
-		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
-
-		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
-			mvcPath = "/admin/view_article.jsp";
-		}
-		else if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
-			mvcPath = "/article/view_article.jsp";
-		}
-		else if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
-			mvcPath = "/section/view_article.jsp";
-		}
-
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
-		if (mvcPath != null) {
-			portletURL.setParameter("mvcPath", mvcPath);
-		}
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/knowledge_base/view_article");
 
 		if ((kbArticle == null) || Validator.isNull(kbArticle.getUrlTitle())) {
 			long resourcePrimKey = ParamUtil.getLong(
@@ -406,6 +391,8 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 		portletURL.setPortletMode(PortletMode.VIEW);
 
 		portletURL.setWindowState(LiferayWindowState.NORMAL);
+
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
 			portletURL.setWindowState(LiferayWindowState.MAXIMIZED);

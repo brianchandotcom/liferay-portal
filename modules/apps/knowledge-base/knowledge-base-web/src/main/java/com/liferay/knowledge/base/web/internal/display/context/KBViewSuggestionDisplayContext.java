@@ -118,7 +118,7 @@ public class KBViewSuggestionDisplayContext {
 		KBArticle kbArticle = _getKBArticle();
 
 		KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(
-			_renderRequest, _renderResponse, _templatePath);
+			_renderRequest, _renderResponse);
 
 		PortletURL viewKBArticleURL =
 			kbArticleURLHelper.createViewWithRedirectURL(

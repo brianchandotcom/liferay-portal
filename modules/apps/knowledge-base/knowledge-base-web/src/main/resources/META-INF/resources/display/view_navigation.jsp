@@ -27,7 +27,7 @@ if (Validator.isNotNull(pageTitle)) {
 	PortalUtil.setPageTitle(pageTitle, request);
 }
 
-KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
+KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse);
 %>
 
 <div class="kbarticle-navigation">

@@ -142,8 +142,11 @@ public class DisplayPortlet extends BaseKBPortlet {
 
 			String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
 
+			String mvcRenderCommandName = ParamUtil.getString(
+				renderRequest, "mvcRenderCommandName");
+
 			if ((mvcPath.equals("") ||
-				 mvcPath.equals("/display/view_article.jsp")) &&
+				 mvcRenderCommandName.equals("/knowledge_base/view_article")) &&
 				!kbArticleSelection.isExactMatch()) {
 
 				HttpServletResponse httpServletResponse =

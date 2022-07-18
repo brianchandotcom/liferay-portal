@@ -269,6 +269,74 @@ definition {
 
 	}
 
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user does not have permissions to Instance Settings
+	When user navigates to Experiences menu
+	Then alert is shown informing to contact system administrator"
+	@priority = "3"
+	test ViewSegmentationDisabledWarningUserWithoutPermissionAtExperienceMenu {
+
+
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create a Role and Set permissions for this role") {
+			JSONRole.addRegularRole(
+				roleKey = "Experiences Test Role",
+				roleTitle = "Experiences Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Experiences Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_SEGMENTS_ENTRIES",
+				resourceName = "com.liferay.segments",
+				roleTitle = "Experiences Test Role");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Experiences Test Role",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Login with user created") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Open the Experiences menu and check if warning is shown informing to contact system administrator appears") {
+
+			Navigator.openURL();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openExperienceMenu();
+
+			Segmentation.checkSegmentationDisabledWarningUserWithoutPermission();
+		}
+
+		task ("Login with the user admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+
+
+	}
+
 	
 
 	@description = "LPS-152541 Given the 'Assign Roles by Segments' is disabled at System Settings

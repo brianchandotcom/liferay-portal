@@ -8,4 +8,70 @@ definition {
 		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 	}
 
+	macro convertStringToKey {
+		var string = StringUtil.lowerCase("${string}");
+
+		var string = StringUtil.replace("${string}", " ", "-");
+
+		return "${string}";
+	}
+
+	macro getFutureDate {
+		if (isSet(monthFormat)) {
+			var dateMonth = DateUtil.getFormattedCurrentDate("${monthFormat}");
+		}
+		else {
+			var dateMonth = DateUtil.getCurrentMonth();
+		}
+
+		if (isSet(dayFormat)) {
+			var dateDay = DateUtil.getFormattedCurrentDate("${dayFormat}");
+		}
+		else {
+			var dateDay = DateUtil.getCurrentDate();
+		}
+
+		if (isSet(yearFormat)) {
+			var dateYear = DateUtil.getFormattedCurrentDate("${yearFormat}");
+		}
+		else {
+			var dateYear = DateUtil.getCurrentYear();
+		}
+
+		if (isSet(increaseMonths)) {
+			var dateMonth = ${dateMonth} + ${increaseMonths};
+		}
+
+		if (isSet(increaseDays)) {
+			var dateDay = ${dateDay} + ${increaseDays};
+		}
+
+		if (isSet(increaseYears)) {
+			var dateYear = ${dateYear} + ${increaseYears};
+		}
+
+		var futureDate = "${dateMonth}/${dateDay}/${dateYear}";
+
+		return "${futureDate}";
+	}
+
+	macro uploadSingleFile {
+		Variables.assertDefined(parameterList = "${uploadFileName}");
+
+		if (isSet(selectButtonName)) {
+			CommerceEntry.clickButtonWithName(
+				buttonName = "${selectButtonName}",
+				text = "Select");
+		}
+		else {
+			Button.clickSelect();
+		}
+
+		SelectFrameTop();
+
+		CommerceItemSelector.uploadSingleFile(uploadFileName = "${uploadFileName}");
+
+		SelectFrameTop();
+	}
+
 }

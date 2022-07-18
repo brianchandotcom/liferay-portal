@@ -21,6 +21,24 @@ definition {
 			publishProduct = "${publishProduct}");
 	}
 
+	macro addGroupedProductEntries {
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		for (var productName : list "${productNames}") {
+			Check.checkToggleSwitch(
+				locator1 = "CommerceAccelerators#SELECT_PRODUCT_RELATIONS",
+				productName = "${productName}");
+		}
+
+		SelectFrame(value1 = "relative=top");
+
+		Button.clickAdd();
+
+		SelectFrameTop();
+	}
+
 	macro addProductWithStatusViaAPI {
 		if ("${productStatusCode}" == "0") {
 			var productName = "Approved Product";
@@ -591,6 +609,105 @@ definition {
 			value1 = "${replacementSKU}");
 
 		Button.clickPublish();
+	}
+
+	macro updateProductInventoryConfiguration {
+		if (isSet(displayAvailability)) {
+			if ("${displayAvailability}" == "true") {
+				Check.checkToggleSwitch(
+					key_toggleSwitchLabel = "Display Availability",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+			else {
+				Uncheck.uncheckToggleSwitch(
+					key_toggleSwitchLabel = "Display Availability",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+
+		if (isSet(allowBackOrders)) {
+			if ("${allowBackOrders}" == "true") {
+				Check.checkToggleSwitch(
+					key_toggleSwitchLabel = "Allow Back Order",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+			else {
+				Uncheck.uncheckToggleSwitch(
+					key_toggleSwitchLabel = "Allow Back Orders",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+
+		if (isSet(displayStockQuantity)) {
+			if ("${displayStockQuantity}" == "true") {
+				Check.checkToggleSwitch(
+					key_toggleSwitchLabel = "Display Stock Quantity",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+			else {
+				Uncheck.uncheckToggleSwitch(
+					key_toggleSwitchLabel = "Display Stock Quantity",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+
+		if (isSet(minOrderQuantity)) {
+			Type(
+				key_labelName = "Minimum Order Quantity",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = "${minOrderQuantity}");
+		}
+
+		Button.clickPublish();
+	}
+
+	macro updateProductVirtualConfiguration {
+		if (IsElementPresent(key_accordionTitle = "details", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
+			Click(
+				key_accordionTitle = "details",
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
+		}
+
+		if (isSet(virtualProductFile)) {
+			CommerceUtilities.uploadSingleFile(uploadFileName = "${virtualProductFile}");
+		}
+
+		if (isSet(enableSample) && isSet(sampleFileName)) {
+			CommerceProducts.uploadVirtualProductSample(
+				enableSample = "${enableSample}",
+				sampleFileName = "${sampleFileName}");
+		}
+
+		Button.clickSave();
+	}
+
+	macro uploadVirtualProductSample {
+		Variables.assertDefined(parameterList = "${enableSample},${sampleFileName}");
+
+		if (IsElementPresent(key_accordionTitle = "sample", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
+			Click(
+				key_accordionTitle = "sample",
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
+		}
+
+		if ("${enableSample}" == "true") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Enable Sample",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			CommerceUtilities.uploadSingleFile(
+				selectButtonName = "selectSampleFile",
+				uploadFileName = "${sampleFileName}");
+		}
+		else {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Enable Sample",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		if (isSet(publish) && ("${publish}" == "true")) {
+			Button.clickSave();
+		}
 	}
 
 }

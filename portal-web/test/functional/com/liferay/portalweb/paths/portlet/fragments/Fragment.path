@@ -134,12 +134,12 @@
 </tr>
 <tr>
 	<td>DROP_ZONE_NO_FRAGMENTS_MESSAGE</td>
-	<td>xpath=(//*[contains(@class,'fragment-${key_fragmentClass}')]//lfr-drop-zone//div[contains(@class,'no-fragments-message__title') and contains(.,'${key_content}')])[${key_position}]</td>
+	<td>xpath=(//*[contains(@class,'fragment-${key_fragmentClass}')]//lfr-drop-zone//p[contains(@class,'no-fragments-state__message') and contains(.,'${key_content}')])[${key_position}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NO_FRAGMENTS_MESSAGE</td>
-	<td>xpath=(//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__no-fragments-message')][normalize-space()='${key_messageInfo}'])[${key_position}]</td>
+	<td>xpath=(//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__no-fragments-state')][normalize-space()='${key_messageInfo}'])[${key_position}]</td>
 	<td></td>
 </tr>
 

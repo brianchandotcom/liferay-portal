@@ -111,6 +111,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_SEGMENTS_INSTANCE_SETTINGS</td>
+	<td>//div[@role='alert']//a[text()='To enable, go to Instance Settings.']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MEMBERS_MATCHED</td>
 	<td>//b[contains(@class,'ml-2 text-dark')]</td>
 	<td></td>

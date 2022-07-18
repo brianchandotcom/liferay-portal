@@ -1482,6 +1482,8 @@ definition {
 
 		Click(locator1 = "Button#SUBMIT");
 
+		SelectFrameTop();
+
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Button.clickSave();

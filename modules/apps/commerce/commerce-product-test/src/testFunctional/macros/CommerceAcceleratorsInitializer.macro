@@ -190,11 +190,11 @@ definition {
 
 			Button.click(button = "Add Order");
 
+			SelectFrame.selectFrameTop();
+
 			WaitForElementPresent(
 				key_orderType = "${orderType}",
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
-
-			SelectFrame.selectFrameTop();
 		}
 	}
 

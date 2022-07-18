@@ -458,6 +458,8 @@ definition {
 
 		Button.click(button = "Submit");
 
+		SelectFrameTop();
+
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Button.clickSave();
@@ -1740,6 +1742,8 @@ definition {
 			key_nodeName = "Login",
 			locator1 = "Treeview#NODE_ITEM");
 
+		SelectFrameTop();
+
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Button.clickSave();
@@ -2253,6 +2257,8 @@ definition {
 
 		Button.click(button = "Submit");
 
+		SelectFrameTop();
+
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Button.clickSave();
@@ -2319,6 +2325,8 @@ definition {
 			value1 = "1");
 
 		Button.click(button = "Submit");
+
+		SelectFrameTop();
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 

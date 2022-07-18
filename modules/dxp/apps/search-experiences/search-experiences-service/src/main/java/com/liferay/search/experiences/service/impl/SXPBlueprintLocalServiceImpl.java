@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.search.experiences.exception.DuplicateSXPBlueprintExternalReferenceCodeException;
 import com.liferay.search.experiences.exception.SXPBlueprintConfigurationJSONException;
 import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
 import com.liferay.search.experiences.model.SXPBlueprint;
@@ -69,6 +70,10 @@ public class SXPBlueprintLocalServiceImpl
 			counterLocalService.increment());
 
 		User user = _userLocalService.getUser(userId);
+
+		_validateExternalReferenceCode(
+			sxpBlueprint.getSXPBlueprintId(), user.getCompanyId(),
+			sxpBlueprint.getExternalReferenceCode());
 
 		sxpBlueprint.setCompanyId(user.getCompanyId());
 		sxpBlueprint.setUserId(user.getUserId());
@@ -222,6 +227,20 @@ public class SXPBlueprintLocalServiceImpl
 		}
 
 		_sxpBlueprintValidator.validate(configurationJSON, titleMap);
+	}
+
+	private void _validateExternalReferenceCode(
+			long sxpBlueprintId, long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		SXPBlueprint sxpBlueprint = fetchSXPBlueprintByExternalReferenceCode(
+			companyId, externalReferenceCode);
+
+		if ((sxpBlueprint != null) &&
+			(sxpBlueprint.getSXPBlueprintId() != sxpBlueprintId)) {
+
+			throw new DuplicateSXPBlueprintExternalReferenceCodeException();
+		}
 	}
 
 	@Reference

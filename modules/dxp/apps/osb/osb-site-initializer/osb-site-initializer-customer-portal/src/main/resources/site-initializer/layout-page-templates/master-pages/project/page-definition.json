@@ -348,7 +348,7 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "© 2018 Liferay Inc. All Rights Reserved&nbsp; &nbsp; &nbsp; |"
+																						"en_US": "© 2022 Liferay Inc. All Rights Reserved&nbsp; &nbsp; &nbsp; |"
 																					}
 																				}
 																			}
@@ -402,24 +402,26 @@
 																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
-																					"href": {
-																						"mapping": {
-																							"itemReference": {
-																								"className": "com.liferay.portal.kernel.model.Layout",
-																								"fields": [
-																									{
-																										"fieldName": "friendlyURL",
-																										"fieldValue": "£{FRIENDLY_URL}"
-																									},
-																									{
-																										"fieldName": "privatePage",
-																										"fieldValue": "false"
-																									},
-																									{
-																										"fieldName": "siteKey",
-																										"fieldValue": "£{SITE_KEY}"
-																									}
-																								]
+																					"value": {
+																						"href": {
+																							"mapping": {
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.model.Layout",
+																									"fields": [
+																										{
+																											"fieldName": "friendlyURL",
+																											"fieldValue": "/cookie-policy"
+																										},
+																										{
+																											"fieldName": "privatePage",
+																											"fieldValue": "true"
+																										},
+																										{
+																											"fieldName": "siteKey",
+																											"fieldValue": "[$GROUP_KEY$]"
+																										}
+																									]
+																								}
 																							}
 																						}
 																					}

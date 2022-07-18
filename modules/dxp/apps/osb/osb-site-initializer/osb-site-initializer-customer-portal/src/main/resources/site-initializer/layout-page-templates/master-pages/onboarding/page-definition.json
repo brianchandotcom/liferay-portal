@@ -298,7 +298,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "© 2018 Liferay Inc. All Rights Reserved&nbsp; &nbsp; &nbsp; |"
+																		"en_US": "© 2022 Liferay Inc. All Rights Reserved&nbsp; &nbsp; &nbsp; |"
 																	}
 																}
 															}
@@ -352,6 +352,29 @@
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/cookie-policy"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "true"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
 																},
 																"text": {
 																	"value_i18n": {

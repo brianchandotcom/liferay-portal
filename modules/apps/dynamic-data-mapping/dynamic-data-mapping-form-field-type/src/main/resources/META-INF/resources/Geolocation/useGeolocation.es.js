@@ -16,7 +16,7 @@ import MapGoogleMaps from '@liferay/map-google-maps/js/MapGoogleMaps.es';
 import MapOpenStreetMap from '@liferay/map-openstreetmap/js/MapOpenStreetMap.es';
 import {parseName} from 'data-engine-js-components-web';
 import Leaflet from 'leaflet';
-import {useCallback, useEffect, useRef} from 'react';
+import {useEffect, useRef} from 'react';
 
 export const MAP_PROVIDER = {
 	googleMaps: 'GoogleMaps',
@@ -107,22 +107,6 @@ export function useGeolocation({
 	value,
 	viewMode,
 }) {
-	const eventHandlerPositionChanged = useCallback(
-		(event) => {
-			const {
-				newVal: {address, location},
-			} = event;
-
-			const locationNode = document.getElementById(
-				`address_label_${instanceId}`
-			);
-			locationNode.innerHTML = address;
-
-			onChange(JSON.stringify(location));
-		},
-		[instanceId, onChange]
-	);
-
 	const mapRef = useRef(null);
 
 	useEffect(() => {
@@ -179,9 +163,9 @@ export function useGeolocation({
 		if (mapRef.current) {
 			mapRef.current.removeAllListeners('positionChange');
 
-			mapRef.current.on('positionChange', eventHandlerPositionChanged);
+			mapRef.current.on('positionChange', onChange);
 		}
-	}, [eventHandlerPositionChanged]);
+	}, [onChange]);
 
 	useEffect(() => {
 		if (value && mapRef.current) {

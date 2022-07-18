@@ -14,7 +14,7 @@
 
 import 'leaflet/dist/leaflet.css';
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {MAP_PROVIDER, useGeolocation} from './useGeolocation.es';
@@ -43,13 +43,21 @@ const Geolocation = ({
 	viewMode,
 	...otherProps
 }) => {
+
+	const [address, setAddress] = useState();
+
+	const handleChange = useCallback(({newVal: {address, location}}) => {
+		setAddress(address);
+		onChange(JSON.stringify(location));
+	}, [onChange, setAddress]);
+
 	useGeolocation({
 		disabled,
 		googleMapsAPIKey,
 		instanceId,
 		mapProviderKey,
 		name,
-		onChange,
+		onChange: handleChange,
 		value,
 		viewMode,
 	});
@@ -60,8 +68,7 @@ const Geolocation = ({
 				<div>
 					<div>
 						<ClayIcon symbol="geolocation" />
-
-						<span id={`address_label_${instanceId}`}></span>
+						{address}
 					</div>
 
 					<dl>

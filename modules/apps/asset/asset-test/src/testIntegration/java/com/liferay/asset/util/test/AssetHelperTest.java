@@ -22,12 +22,14 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -36,12 +38,14 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -155,6 +159,127 @@ public class AssetHelperTest {
 			1, assetEntryQuery, assetCategoryIds, assetTagNames, null,
 			_group.getCompanyId(), StringPool.BLANK, null, null,
 			_group.getGroupId(), null, _group.getCreatorUserId());
+	}
+
+	@Test
+	public void testSearchWithMultipleAssetQueryByGroupId() throws Exception {
+		Group group1 = GroupTestUtil.addGroup();
+		Group group2 = GroupTestUtil.addGroup();
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, StringPool.BLANK,
+				RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true,
+				null, StringPool.BLANK, null, null, serviceContext);
+
+			serviceContext = ServiceContextTestUtil.getServiceContext(
+				group1.getGroupId());
+
+			BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, StringPool.BLANK,
+				RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true,
+				null, StringPool.BLANK, null, null, serviceContext);
+
+			serviceContext = ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId());
+
+			BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, StringPool.BLANK,
+				RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true,
+				null, StringPool.BLANK, null, null, serviceContext);
+
+			AssetEntryQuery assetEntryQuery1 = new AssetEntryQuery();
+
+			assetEntryQuery1.setGroupIds(new long[] {_group.getGroupId()});
+
+			AssetEntryQuery assetEntryQuery2 = new AssetEntryQuery();
+
+			assetEntryQuery2.setGroupIds(new long[] {_group.getGroupId()});
+
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setCompanyId(_group.getCompanyId());
+
+			SearchHits searchHits = _assetHelper.search(
+				searchContext,
+				Arrays.asList(assetEntryQuery1, assetEntryQuery2),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			Assert.assertEquals(
+				searchHits.toString(), 2, searchHits.getTotalHits());
+		}
+		finally {
+			GroupTestUtil.deleteGroup(group1);
+			GroupTestUtil.deleteGroup(group2);
+		}
+	}
+
+	@Test
+	public void testSearchWithMultipleAssetQueryByTags() throws Exception {
+		AssetTag assetTag1 = AssetTestUtil.addTag(
+			_group.getGroupId(), "asset tag1");
+		AssetTag assetTag2 = AssetTestUtil.addTag(
+			_group.getGroupId(), "asset tag2");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAssetTagNames(new String[] {assetTag1.getName()});
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
+			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
+			serviceContext);
+
+		serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		serviceContext.setAssetTagNames(new String[] {assetTag2.getName()});
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
+			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
+			serviceContext);
+
+		serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
+			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
+			serviceContext);
+
+		AssetEntryQuery assetEntryQuery1 = new AssetEntryQuery();
+
+		assetEntryQuery1.setGroupIds(new long[] {_group.getGroupId()});
+		assetEntryQuery1.setAllTagIds(new long[] {assetTag1.getTagId()});
+		assetEntryQuery1.setClassName(BlogsEntry.class.getName());
+
+		AssetEntryQuery assetEntryQuery2 = new AssetEntryQuery();
+
+		assetEntryQuery2.setGroupIds(new long[] {_group.getGroupId()});
+		assetEntryQuery2.setAllTagIds(new long[] {assetTag2.getTagId()});
+		assetEntryQuery2.setClassName(BlogsEntry.class.getName());
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(_group.getCompanyId());
+
+		SearchHits searchHits = _assetHelper.search(
+			searchContext, Arrays.asList(assetEntryQuery1, assetEntryQuery2),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			searchHits.toString(), 2, searchHits.getTotalHits());
 	}
 
 	@Rule

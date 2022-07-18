@@ -23,6 +23,7 @@ import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBArticlePermission;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -57,6 +58,7 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -361,44 +363,42 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, portletId, plid,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/knowledge_base/view_article"
+		).setParameter(
+			"resourcePrimKey",
+			_getResourcePrimKey(
+				ParamUtil.getLong(httpServletRequest, "resourcePrimKey"),
+				kbArticle),
+			false
+		).setParameter(
+			"urlTitle", _getUrlTitle(kbArticle), false
+		).setParameter(
+			"kbFolderUrlTitle", _getKBFolderUrlTitle(kbArticle), false
+		).setPortletMode(
+			PortletMode.VIEW
+		).setWindowState(
+			_getWindowState(portletId)
+		).buildRenderURL();
+	}
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/knowledge_base/view_article");
+	private String _getKBFolderUrlTitle(KBArticle kbArticle) throws Exception {
+		if ((kbArticle != null) &&
+			Validator.isNotNull(kbArticle.getUrlTitle()) &&
+			(kbArticle.getKbFolderId() !=
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-		if ((kbArticle == null) || Validator.isNull(kbArticle.getUrlTitle())) {
-			long resourcePrimKey = ParamUtil.getLong(
-				httpServletRequest, "resourcePrimKey");
+			KBFolder kbFolder = _kbFolderLocalService.getKBFolder(
+				kbArticle.getKbFolderId());
 
-			portletURL.setParameter(
-				"resourcePrimKey", String.valueOf(resourcePrimKey));
-		}
-		else {
-			portletURL.setParameter("urlTitle", kbArticle.getUrlTitle());
-
-			if (kbArticle.getKbFolderId() !=
-					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-				KBFolder kbFolder = _kbFolderLocalService.getKBFolder(
-					kbArticle.getKbFolderId());
-
-				portletURL.setParameter(
-					"kbFolderUrlTitle", String.valueOf(kbFolder.getUrlTitle()));
-			}
-		}
-
-		portletURL.setPortletMode(PortletMode.VIEW);
-
-		portletURL.setWindowState(LiferayWindowState.NORMAL);
-
-		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
-
-		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
-			portletURL.setWindowState(LiferayWindowState.MAXIMIZED);
+			return kbFolder.getUrlTitle();
 		}
 
-		return portletURL;
+		return null;
 	}
 
 	private String _getPortletId(long plid) throws Exception {
@@ -416,6 +416,36 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 		}
 
 		return KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE;
+	}
+
+	private Long _getResourcePrimKey(
+		long resourcePrimKey, KBArticle kbArticle) {
+
+		if ((kbArticle == null) || Validator.isNull(kbArticle.getUrlTitle())) {
+			return resourcePrimKey;
+		}
+
+		return null;
+	}
+
+	private String _getUrlTitle(KBArticle kbArticle) {
+		if ((kbArticle != null) &&
+			Validator.isNotNull(kbArticle.getUrlTitle())) {
+
+			return kbArticle.getUrlTitle();
+		}
+
+		return null;
+	}
+
+	private WindowState _getWindowState(String portletId) {
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
+
+		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
+			return LiferayWindowState.MAXIMIZED;
+		}
+
+		return LiferayWindowState.NORMAL;
 	}
 
 	private boolean _isParentFolder(long resourcePrimKey, long kbFolderId)

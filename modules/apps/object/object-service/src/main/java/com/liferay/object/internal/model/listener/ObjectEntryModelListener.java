@@ -82,7 +82,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws ModelListenerException {
 
 		try {
-			_objectValidationRuleLocalService.validate(objectEntry);
+			_objectValidationRuleLocalService.validate(
+				objectEntry, objectEntry.getObjectDefinitionId(),
+				objectEntry.getModelAttributes());
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -95,7 +97,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws ModelListenerException {
 
 		try {
-			_objectValidationRuleLocalService.validate(objectEntry);
+			_objectValidationRuleLocalService.validate(
+				objectEntry, objectEntry.getObjectDefinitionId(),
+				objectEntry.getModelAttributes());
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);

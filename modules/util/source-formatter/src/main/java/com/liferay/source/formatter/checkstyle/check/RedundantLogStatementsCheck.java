@@ -69,8 +69,6 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 			return;
 		}
 
-		String level = StringUtil.lowerCase(matcher.group(1));
-
 		DetailAST sListDetailAST = detailAST.findFirstToken(TokenTypes.SLIST);
 
 		int count = 0;
@@ -114,7 +112,9 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 
 		String fullIdentText = fullIdent.getText();
 
-		if (!fullIdentText.matches("_log\\." + level)) {
+		if (!fullIdentText.matches(
+				"_log\\." + StringUtil.lowerCase(matcher.group(1)))) {
+
 			return;
 		}
 

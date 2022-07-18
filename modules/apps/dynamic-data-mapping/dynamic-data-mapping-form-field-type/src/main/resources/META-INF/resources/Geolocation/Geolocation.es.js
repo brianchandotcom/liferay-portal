@@ -56,30 +56,32 @@ const Geolocation = ({
 
 	return (
 		<div {...otherProps} className="ddm-geolocation field-labels-inline">
-			<div>
-				<ClayIcon symbol="geolocation" />
-
-				<span id={`address_label_${instanceId}`}></span>
-			</div>
-
 			{!disabled || viewMode ? (
-				<dl>
-					<dt className="text-capitalize"></dt>
+				<div>
+					<div>
+						<ClayIcon symbol="geolocation" />
 
-					<dd>
-						<NoRender
-							className="lfr-map"
-							id={`map_${instanceId}`}
-							style={{height: '280px'}}
-						/>
+						<span id={`address_label_${instanceId}`}></span>
+					</div>
 
-						<input
-							id={`input_value_${instanceId}`}
-							name={name}
-							type="hidden"
-						/>
-					</dd>
-				</dl>
+					<dl>
+						<dt className="text-capitalize"></dt>
+
+						<dd>
+							<NoRender
+								className="lfr-map"
+								id={`map_${instanceId}`}
+								style={{height: '280px'}}
+							/>
+
+							<input
+								id={`input_value_${instanceId}`}
+								name={name}
+								type="hidden"
+							/>
+						</dd>
+					</dl>
+				</div>
 			) : (
 				<img
 					alt={Liferay.Language.get('geolocation')}

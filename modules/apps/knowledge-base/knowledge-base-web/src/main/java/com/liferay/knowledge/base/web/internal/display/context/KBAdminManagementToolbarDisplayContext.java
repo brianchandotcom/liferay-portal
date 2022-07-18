@@ -282,8 +282,8 @@ public class KBAdminManagementToolbarDisplayContext {
 	public PortletURL getSearchURL() {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
-		).setMVCPath(
-			"/admin/search.jsp"
+		).setMVCRenderCommandName(
+			"/knowledge_base/search"
 		).setRedirect(
 			_getRedirect()
 		).buildPortletURL();

@@ -21,7 +21,7 @@
 </div>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
-	<portlet:param name="mvcPath" value="/search/search.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/knowledge_base/search" />
 	<portlet:param name="keywords" value='<%= ParamUtil.getString(request, "keywords") %>' />
 </liferay-portlet:renderURL>
 

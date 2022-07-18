@@ -609,20 +609,20 @@ definition {
 	@description = "LPS-151765 - Verify if is possible to view the Relationship by Account on Custom Object Entries with Custom View"
 	@priority = "4"
 	test CanViewRelationshipOnCustomObjectEntriesWithCustomView {
-		task("Create new Account (via APO"){	
+		task ("Create new Account (via APO") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account Name",
 				accountEntryType = "Business");
 		}
 
-		task("Create a Custom Object (via API)"){	
+		task ("Create a Custom Object (via API)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 153530",
 				objectName = "CustomObject153530",
 				pluralLabelName = "Custom Objects 153530");
 		}
 
-		task("Go to Account, select title field by Name, and Create relationship with Custom Object (via UI)"){	
+		task ("Go to Account, select title field by Name, and Create relationship with Custom Object (via UI)") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectSystemObject(label = "Account");
@@ -639,11 +639,11 @@ definition {
 				type = "One to Many");
 		}
 
-		task("Publish the Custom Object (via API)"){	
+		task ("Publish the Custom Object (via API)") {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153530");
 		}
 
-		task("Go to Custom Object, and add Custom View with relationship"){	
+		task ("Go to Custom Object, and add Custom View with relationship") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 153530");
@@ -663,7 +663,7 @@ definition {
 			Button.clickSave();
 		}
 
-		task("Go to Custom Objects entries, and add relationship by Account"){
+		task ("Go to Custom Objects entries, and add relationship by Account") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject153530");
 
 			LexiconEntry.gotoAdd();
@@ -673,7 +673,7 @@ definition {
 			Button.clickSave();
 		}
 
-		task("Assert that Account is present on entries table"){	
+		task ("Assert that Account is present on entries table") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject153530");
 
 			ObjectPortlet.viewEntry(entry = "Account Name");

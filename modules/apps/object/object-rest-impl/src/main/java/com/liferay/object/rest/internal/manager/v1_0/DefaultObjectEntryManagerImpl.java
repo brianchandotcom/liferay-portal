@@ -83,7 +83,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
-import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -484,12 +483,6 @@ public class DefaultObjectEntryManagerImpl
 				relatedObjectDefinition.getClassName(),
 				objectRelationship.getType());
 
-		if (relatedObjectDefinition.isSystem()) {
-			return _getRelatedSystemObjectEntries(
-				objectEntryId, objectRelatedModelsProvider, objectRelationship,
-				pagination);
-		}
-
 		if (objectDefinition.isSystem()) {
 			return _getSystemObjectRelatedObjectEntries(
 				objectDefinition, objectEntryId, objectRelatedModelsProvider,
@@ -508,6 +501,41 @@ public class DefaultObjectEntryManagerImpl
 				objectRelationship.getObjectRelationshipId(),
 				objectEntry.getPrimaryKey(), pagination.getStartPosition(),
 				pagination.getEndPosition()));
+	}
+
+	@Override
+	public Page<Object> getRelatedSystemObjectEntries(
+			ObjectDefinition objectDefinition, Long objectEntryId,
+			String objectRelationshipName, Pagination pagination)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipService.getObjectRelationship(
+				objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName);
+
+		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
+			objectRelationship, objectDefinition);
+
+		ObjectRelatedModelsProvider objectRelatedModelsProvider =
+			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
+				relatedObjectDefinition.getClassName(),
+				objectRelationship.getType());
+
+		com.liferay.object.model.ObjectEntry objectEntry =
+			_objectEntryService.getObjectEntry(objectEntryId);
+
+		return Page.of(
+			TransformUtil.transform(
+				(List<BaseModel<?>>)
+					objectRelatedModelsProvider.getRelatedModels(
+						objectEntry.getGroupId(),
+						objectRelationship.getObjectRelationshipId(),
+						objectEntry.getPrimaryKey(),
+						pagination.getStartPosition(),
+						pagination.getEndPosition()),
+				relatedModel -> _getSystemObjectDTO(
+					relatedModel, objectEntry)));
 	}
 
 	@Override
@@ -595,42 +623,6 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private ObjectEntry _getObjectEntry(
-			BaseModel<?> baseModel,
-			com.liferay.object.model.ObjectEntry objectEntry)
-		throws Exception {
-
-		DTOConverter<BaseModel<?>, ?> dtoConverter =
-			(DTOConverter<BaseModel<?>, ?>)
-				_dtoConverterRegistry.getDTOConverter(
-					baseModel.getModelClassName());
-
-		if (dtoConverter == null) {
-			throw new InternalServerErrorException("No DTO converter found");
-		}
-
-		User user = _userLocalService.getUser(objectEntry.getUserId());
-
-		DefaultDTOConverterContext defaultDTOConverterContext =
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), _dtoConverterRegistry,
-				baseModel.getPrimaryKeyObj(), user.getLocale(), null, user);
-
-		Object relatedDTOModel = dtoConverter.toDTO(
-			defaultDTOConverterContext, baseModel);
-
-		Map<String, Object> relatedObjectProperties =
-			ObjectMapperUtil.readValue(Map.class, relatedDTOModel.toString());
-
-		return new ObjectEntry() {
-			{
-				actions = Collections.emptyMap();
-				id = (Long)baseModel.getPrimaryKeyObj();
-				properties = relatedObjectProperties;
-			}
-		};
-	}
-
-	private ObjectEntry _getObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, Map<String, Serializable> values)
 		throws Exception {
@@ -670,25 +662,28 @@ public class DefaultObjectEntryManagerImpl
 			objectRelationship.getObjectDefinitionId2());
 	}
 
-	private Page<ObjectEntry> _getRelatedSystemObjectEntries(
-			long currentObjectEntryId,
-			ObjectRelatedModelsProvider objectRelatedModelsProvider,
-			ObjectRelationship objectRelationship, Pagination pagination)
+	private Object _getSystemObjectDTO(
+			BaseModel<?> baseModel,
+			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
-		com.liferay.object.model.ObjectEntry objectEntry =
-			_objectEntryService.getObjectEntry(currentObjectEntryId);
+		DTOConverter<BaseModel<?>, ?> dtoConverter =
+			(DTOConverter<BaseModel<?>, ?>)
+				_dtoConverterRegistry.getDTOConverter(
+					baseModel.getModelClassName());
 
-		return Page.of(
-			TransformUtil.transform(
-				(List<BaseModel<?>>)
-					objectRelatedModelsProvider.getRelatedModels(
-						objectEntry.getGroupId(),
-						objectRelationship.getObjectRelationshipId(),
-						objectEntry.getPrimaryKey(),
-						pagination.getStartPosition(),
-						pagination.getEndPosition()),
-				relatedModel -> _getObjectEntry(relatedModel, objectEntry)));
+		if (dtoConverter == null) {
+			throw new InternalServerErrorException("No DTO converter found");
+		}
+
+		User user = _userLocalService.getUser(objectEntry.getUserId());
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), _dtoConverterRegistry,
+				baseModel.getPrimaryKeyObj(), user.getLocale(), null, user);
+
+		return dtoConverter.toDTO(defaultDTOConverterContext, baseModel);
 	}
 
 	private Page<ObjectEntry> _getSystemObjectRelatedObjectEntries(

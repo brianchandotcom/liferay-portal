@@ -61,6 +61,7 @@ const renderContainer = ({
 			<ControlsProvider>
 				<StoreAPIContextProvider
 					getState={() => ({
+						fragmentEntryLinks: {},
 						permissions: {
 							LOCKED_SEGMENTS_EXPERIMENT: lockedExperience,
 							UPDATE: hasUpdatePermissions,

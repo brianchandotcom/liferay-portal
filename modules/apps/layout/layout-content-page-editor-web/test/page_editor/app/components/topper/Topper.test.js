@@ -47,6 +47,7 @@ const renderTopper = ({
 			<ControlsProvider>
 				<StoreAPIContextProvider
 					getState={() => ({
+						fragmentEntryLinks: {},
 						layoutData,
 						permissions: {
 							LOCKED_SEGMENTS_EXPERIMENT: lockedExperience,

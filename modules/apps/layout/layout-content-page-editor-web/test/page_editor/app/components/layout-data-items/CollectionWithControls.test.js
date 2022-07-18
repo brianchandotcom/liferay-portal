@@ -63,6 +63,7 @@ const renderCollection = ({
 				<StoreAPIContextProvider
 					dispatch={() => {}}
 					getState={() => ({
+						fragmentEntryLinks: {},
 						permissions: {
 							LOCKED_SEGMENTS_EXPERIMENT: lockedSegment,
 							UPDATE: hasUpdatePermission,

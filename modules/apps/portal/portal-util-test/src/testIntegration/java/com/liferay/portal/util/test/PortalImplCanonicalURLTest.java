@@ -232,7 +232,10 @@ public class PortalImplCanonicalURLTest {
 
 		LayoutSet layoutSet = _layout4.getLayoutSet();
 
-		layoutSet.setVirtualHostname("test.com");
+		layoutSet.setVirtualHostnames(
+			TreeMapBuilder.put(
+				"test.com", StringPool.BLANK
+			).build());
 
 		themeDisplay.setLayoutSet(layoutSet);
 

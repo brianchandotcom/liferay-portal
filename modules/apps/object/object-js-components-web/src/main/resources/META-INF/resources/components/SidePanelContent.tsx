@@ -27,10 +27,11 @@ export function closeSidePanel() {
 export function saveAndReload() {
 	const parentWindow = Liferay.Util.getOpener();
 
+	closeSidePanel();
+
 	setTimeout(() => {
-		closeSidePanel();
 		parentWindow.location.reload();
-	}, 1500);
+	}, 300);
 }
 
 export function openToast(options: {

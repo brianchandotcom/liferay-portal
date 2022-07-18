@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 /**
  * @author Qi Zhang
  */
-public class RedundantLogStatementsCheck extends BaseCheck {
+public class RedundantLogCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

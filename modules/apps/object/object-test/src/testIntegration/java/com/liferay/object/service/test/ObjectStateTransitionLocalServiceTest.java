@@ -18,12 +18,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectState;
 import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.model.ObjectStateTransition;
-import com.liferay.object.service.persistence.ObjectStatePersistence;
 import com.liferay.object.service.persistence.ObjectStateTransitionPersistence;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -54,61 +51,6 @@ public class ObjectStateTransitionLocalServiceTest
 			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(
 				Propagation.REQUIRED, "com.liferay.object.service"));
-
-	@Test
-	public void testAddObjectStateTransition() throws PortalException {
-		long objectStateFlowId = RandomTestUtil.randomLong();
-		long sourceObjectStateId = RandomTestUtil.randomLong();
-		long targetObjectStateId = RandomTestUtil.randomLong();
-
-		ObjectStateTransition objectStateTransition =
-			objectStateTransitionLocalService.addObjectStateTransition(
-				TestPropsValues.getUserId(), objectStateFlowId,
-				sourceObjectStateId, targetObjectStateId);
-
-		Assert.assertEquals(
-			TestPropsValues.getUserId(), objectStateTransition.getUserId());
-		Assert.assertEquals(
-			TestPropsValues.getCompanyId(),
-			objectStateTransition.getCompanyId());
-		Assert.assertEquals(
-			objectStateFlowId, objectStateTransition.getObjectStateFlowId());
-		Assert.assertEquals(
-			sourceObjectStateId,
-			objectStateTransition.getSourceObjectStateId());
-		Assert.assertEquals(
-			targetObjectStateId,
-			objectStateTransition.getTargetObjectStateId());
-	}
-
-	@Test
-	public void testDeleteObjectStateObjectStateTransitions() {
-		ObjectState objectState =
-			_objectStatePersistence.fetchByObjectStateFlowId_First(
-				objectStateFlow.getObjectStateFlowId(), null);
-
-		List<ObjectStateTransition> objectStateTransitions =
-			_objectStateTransitionPersistence.findBySourceObjectStateId(
-				objectState.getObjectStateId());
-
-		Assert.assertEquals(
-			objectStateTransitions.toString(), 2,
-			objectStateTransitions.size());
-
-		objectStateTransitionLocalService.
-			deleteObjectStateObjectStateTransitions(
-				objectState.getObjectStateId());
-
-		Assert.assertEquals(
-			Collections.emptyList(),
-			_objectStateTransitionPersistence.findBySourceObjectStateId(
-				objectState.getObjectStateId()));
-
-		Assert.assertEquals(
-			Collections.emptyList(),
-			_objectStateTransitionPersistence.findByTargetObjectStateId(
-				objectState.getObjectStateId()));
-	}
 
 	@Test
 	public void testUpdateObjectStateTransitions() throws PortalException {
@@ -188,9 +130,6 @@ public class ObjectStateTransitionLocalServiceTest
 			}
 		}
 	}
-
-	@Inject
-	private ObjectStatePersistence _objectStatePersistence;
 
 	@Inject
 	private ObjectStateTransitionPersistence _objectStateTransitionPersistence;

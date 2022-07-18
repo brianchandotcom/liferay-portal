@@ -44,7 +44,7 @@ definition {
 		task ("Then I should be redirected to the product detail page") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Product Detail");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/p/u-joint");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/p/u-joint");
 
 			FrontStore.assertProductDetails(
 				productListPrice = "24.00",

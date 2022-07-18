@@ -22,11 +22,11 @@ definition {
 		}
 
 		task ("And given a Private Category Navigation page") {
-			JSONLayout.addPrivateLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation");
 
-			JSONLayout.addWidgetToPrivateLayout(
+			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation",
 				widgetName = "Commerce Categories Navigation");
@@ -41,7 +41,7 @@ definition {
 
 			CommerceNavigator.changeVocabulary(newVocabularyName = "Minium");
 
-			JSONLayout.addWidgetToPrivateLayout(
+			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation",
 				widgetName = "Category Content");
@@ -56,7 +56,7 @@ definition {
 		task ("Then the user should be redirected to the Categories Navigation Widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Categories Navigation");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/engine");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/engine");
 
 			Portlet.viewBody(
 				portletBody = "Engine",
@@ -72,11 +72,11 @@ definition {
 		}
 
 		task ("And given the Minium site has a Categories Navigation page with a Commerce Categories Navigation widget") {
-			JSONLayout.addPrivateLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation");
 
-			JSONLayout.addWidgetToPrivateLayout(
+			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation",
 				widgetName = "Commerce Categories Navigation");
@@ -154,11 +154,11 @@ definition {
 		}
 
 		task ("And given the Minium site has a Categories Navigation page with a Commerce Categories Navigation widget") {
-			JSONLayout.addPrivateLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation");
 
-			JSONLayout.addWidgetToPrivateLayout(
+			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation",
 				widgetName = "Commerce Categories Navigation");
@@ -249,14 +249,13 @@ definition {
 		}
 
 		task ("And given the Minium site has a private Categories Navigation page with a Commerce Categories Navigation widget") {
-			JSONLayout.addPrivateLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Categories Navigation",
-				privateLayout = "true",
 				siteName = "Minium");
 
 			PageEditor.addWidget(portletName = "Commerce Categories Navigation");
@@ -397,7 +396,7 @@ definition {
 		task ("Then I should be redirected to the Test Public Content Page with the category shown on the Category Content widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Content Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/suspension");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/suspension");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#CATEGORY_CONTENT_TITLE",
@@ -415,7 +414,7 @@ definition {
 		task ("Then I should be redirected to the Test Public Widget Page with the category shown on the Category Content widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Widget Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/engine");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/engine");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#CATEGORY_CONTENT_TITLE",
@@ -433,7 +432,7 @@ definition {
 		task ("Then I should be redirected to the Test Private Content Page with the category shown on the Category Content widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Content Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/transmission");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/transmission");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#CATEGORY_CONTENT_TITLE",
@@ -449,14 +448,13 @@ definition {
 		}
 
 		task ("And given the Minium site has a private Categories Navigation page with a Commerce Categories Navigation widget") {
-			JSONLayout.addPrivateLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Categories Navigation",
-				privateLayout = "true",
 				siteName = "Minium");
 
 			PageEditor.addWidget(portletName = "Commerce Categories Navigation");
@@ -537,7 +535,7 @@ definition {
 		task ("Then I should be redirected to the private content page with the category shown on the Category Content Widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Content Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/suspension");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/suspension");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#CATEGORY_CONTENT_TITLE",
@@ -555,7 +553,7 @@ definition {
 		task ("Then I should be redirected to the private widget page with the category shown on the Category Content widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Widget Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/engine");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/engine");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#CATEGORY_CONTENT_TITLE",
@@ -571,14 +569,13 @@ definition {
 		}
 
 		task ("And given the Minium site has a private Categories Navigation page with a Commerce Categories Navigation widget") {
-			JSONLayout.addPrivateLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Categories Navigation",
-				privateLayout = "true",
 				siteName = "Minium");
 
 			PageEditor.addWidget(portletName = "Commerce Categories Navigation");
@@ -663,7 +660,7 @@ definition {
 		task ("Then I should be redirected to the private content page with the category shown on the Category Content Widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Content Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/suspension");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/suspension");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#CATEGORY_CONTENT_TITLE",
@@ -681,7 +678,7 @@ definition {
 		task ("Then I should be redirected to the public content page with the category shown on the Category Content widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Content Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/engine");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/engine");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#CATEGORY_CONTENT_TITLE",
@@ -697,14 +694,13 @@ definition {
 		}
 
 		task ("And given the Minium site has a private Categories Navigation page with a Commerce Categories Navigation widget") {
-			JSONLayout.addPrivateLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Categories Navigation",
-				privateLayout = "true",
 				siteName = "Minium");
 
 			PageEditor.addWidget(portletName = "Commerce Categories Navigation");
@@ -789,7 +785,7 @@ definition {
 		task ("Then I should be redirected to the public content page with the category shown on the Category Content Widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Content Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/suspension");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/suspension");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#CATEGORY_CONTENT_TITLE",
@@ -807,7 +803,7 @@ definition {
 		task ("Then I should be redirected to the private content page with the category shown on the Category Content widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Content Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/engine");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/engine");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#CATEGORY_CONTENT_TITLE",
@@ -823,14 +819,13 @@ definition {
 		}
 
 		task ("And given the Minium site has a private Categories Navigation page with a Commerce Categories Navigation widget") {
-			JSONLayout.addPrivateLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Categories Navigation",
-				privateLayout = "true",
 				siteName = "Minium");
 
 			PageEditor.addWidget(portletName = "Commerce Categories Navigation");
@@ -910,7 +905,7 @@ definition {
 		task ("Then I should be redirected to the public content page with the category shown on the Category Content Widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Content Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/suspension");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/suspension");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#CATEGORY_CONTENT_TITLE",
@@ -928,7 +923,7 @@ definition {
 		task ("Then I should be redirected to the public widget page with the category shown on the Category Content widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Widget Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/engine");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/engine");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#CATEGORY_CONTENT_TITLE",
@@ -944,14 +939,13 @@ definition {
 		}
 
 		task ("And given the Minium site has a private Categories Navigation page with a Commerce Categories Navigation widget") {
-			JSONLayout.addPrivateLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Categories Navigation",
-				privateLayout = "true",
 				siteName = "Minium");
 
 			PageEditor.addWidget(portletName = "Commerce Categories Navigation");
@@ -1003,7 +997,7 @@ definition {
 		task ("Then I should be redirected to the private widget page with the category shown on the Category Content Widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Widget Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/transmission");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/transmission");
 
 			Portlet.viewBody(
 				portletBody = "Transmission",
@@ -1053,7 +1047,7 @@ definition {
 		task ("Then I should be redirected to the private content page with the category shown on the Category Content widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Content Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/brake-system");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/brake-system");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#CATEGORY_CONTENT_TITLE",
@@ -1069,14 +1063,13 @@ definition {
 		}
 
 		task ("And given the Minium site has a private Categories Navigation page with a Commerce Categories Navigation widget") {
-			JSONLayout.addPrivateLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Minium",
 				layoutName = "Categories Navigation",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Categories Navigation",
-				privateLayout = "true",
 				siteName = "Minium");
 
 			PageEditor.addWidget(portletName = "Commerce Categories Navigation");
@@ -1128,7 +1121,7 @@ definition {
 		task ("Then I should be redirected to the public widget page with the category shown on the Category Content Widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Widget Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/engine");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/engine");
 
 			Portlet.viewBody(
 				portletBody = "Engine",
@@ -1177,7 +1170,7 @@ definition {
 		task ("Then I should be redirected to the public content page with the category shown on the Category Content widget") {
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Content Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/g/suspension");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/g/suspension");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#CATEGORY_CONTENT_TITLE",

@@ -95,7 +95,7 @@ definition {
 	}
 
 	macro assertProductComparisonTable {
-		AssertLocation.assertPartialLocation(value1 = "group/minium/compare");
+		AssertLocation.assertPartialLocation(value1 = "web/minium/compare");
 
 		var columNumber = "1";
 

@@ -64,7 +64,7 @@ definition {
 			key_localizationName = "heart-full",
 			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
 
 		AssertElementPresent(
 			key_formViewName = "U-Joint",
@@ -501,7 +501,7 @@ definition {
 			key_localizationName = "heart-full",
 			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
 
 		AssertElementPresent(
 			key_formViewName = "U-Joint",
@@ -521,7 +521,7 @@ definition {
 			key_localizationName = "heart",
 			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
 
 		AssertElementNotPresent(
 			key_formViewName = "U-Joint",

@@ -84,7 +84,7 @@ definition {
 		task ("Then the modal is closed and the buyer stays on the same page") {
 			AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/pending-orders");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/pending-orders");
 		}
 
 		task ("When the buyer is importing a new order from orders") {
@@ -102,7 +102,7 @@ definition {
 		task ("Then the modal is closed and the buyer stays on the same page") {
 			AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/pending-orders");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/pending-orders");
 		}
 
 		task ("When the buyer is importing a new order from Wish List") {
@@ -120,7 +120,7 @@ definition {
 		task ("Then the modal is closed and the buyer stays on the same page") {
 			AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/pending-orders");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/pending-orders");
 		}
 	}
 
@@ -175,7 +175,7 @@ definition {
 		task ("Then the modal is closed and the buyer stays on the same page") {
 			AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/pending-orders");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/pending-orders");
 		}
 
 		task ("Given the buyer starts the import again and arrives at the import preview") {
@@ -193,7 +193,7 @@ definition {
 		task ("Then the modal is closed and the buyer stays on the same page") {
 			AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/pending-orders");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/pending-orders");
 		}
 	}
 

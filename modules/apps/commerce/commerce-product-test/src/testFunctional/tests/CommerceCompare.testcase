@@ -105,7 +105,7 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/compare");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/compare");
 
 			FrontStore.setMaxComparisonItems(maxItems = "3");
 		}
@@ -143,7 +143,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given the admin changes the Products Limit in the MiniCompare widget to 3") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
 
 			WaitForPageLoad();
 

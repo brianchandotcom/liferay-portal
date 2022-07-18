@@ -65,14 +65,11 @@ public class RedundantLogStatementsCheck extends BaseCheck {
 
 		Matcher matcher = _logLevelPattern.matcher(fullIdent.getText());
 
-		String level = null;
-
-		if (matcher.find()) {
-			level = StringUtil.lowerCase(matcher.group(1));
-		}
-		else {
+		if (!matcher.find()) {
 			return;
 		}
+
+		String level = StringUtil.lowerCase(matcher.group(1));
 
 		DetailAST sListDetailAST = detailAST.findFirstToken(TokenTypes.SLIST);
 

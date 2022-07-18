@@ -14,7 +14,6 @@
 
 package com.liferay.layout.taglib.internal.display.context;
 
-import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -1016,12 +1015,6 @@ public class RenderLayoutStructureDisplayContext {
 
 		Object value = infoFieldValue.getValue(
 			LocaleUtil.fromLanguageId(_themeDisplay.getLanguageId()));
-
-		if (value instanceof ContentAccessor) {
-			ContentAccessor contentAccessor = (ContentAccessor)infoFieldValue;
-
-			return contentAccessor.getContent();
-		}
 
 		if (value instanceof String) {
 			return (String)value;

@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -138,12 +137,6 @@ public class GetInfoItemFieldValueMVCResourceCommand
 
 			value = infoFieldValue.getValue(
 				LocaleUtil.fromLanguageId(languageId));
-		}
-
-		if (value instanceof ContentAccessor) {
-			ContentAccessor contentAccessor = (ContentAccessor)value;
-
-			value = contentAccessor.getContent();
 		}
 
 		if (value instanceof WebImage) {

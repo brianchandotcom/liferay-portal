@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.internal.util;
 
-import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.info.field.InfoFieldValue;
@@ -370,12 +369,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		Object value = infoFieldValue.getValue(locale);
 
-		if (value instanceof ContentAccessor) {
-			ContentAccessor contentAccessor = (ContentAccessor)infoFieldValue;
-
-			value = contentAccessor.getContent();
-		}
-		else if (value instanceof WebImage) {
+		if (value instanceof WebImage) {
 			WebImage webImage = (WebImage)value;
 
 			return webImage.toJSONObject();

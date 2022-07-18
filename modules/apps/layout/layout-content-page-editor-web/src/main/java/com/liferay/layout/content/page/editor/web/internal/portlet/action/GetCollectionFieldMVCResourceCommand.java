@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -420,12 +419,6 @@ public class GetCollectionFieldMVCResourceCommand
 				infoItemFieldValues.getInfoFieldValues()) {
 
 			Object value = infoFieldValue.getValue(locale);
-
-			if (value instanceof ContentAccessor) {
-				ContentAccessor contentAccessor = (ContentAccessor)value;
-
-				value = contentAccessor.getContent();
-			}
 
 			if (value instanceof WebImage) {
 				WebImage webImage = (WebImage)value;

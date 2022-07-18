@@ -246,6 +246,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_DETAILS_PROMO_PRICE_INACTIVE</td>
+	<td>//div[contains(@class,'price')]//span[contains(@class,'price-value-promo price-value-inactive')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_DETAILS_NET_PRICE</td>
 	<td>//div[contains(@class,'price')]//span[contains(@class,'price-value-final')]</td>
 	<td></td>
@@ -258,6 +263,11 @@
 <tr>
 	<td>PRODUCT_DETAILS_ADD_TO_WISH_LIST</td>
 	<td>//div[contains(@class,'product-detail')]//div[contains(@class,'add-to-wish-list')]//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_DETAILS_SUBSCRIPTION_INFO</td>
+	<td>//h4[contains(@class,'commerce-subscription-info')]/div/div[contains(.,'${key_subscriptionName} Subscription')]/..//span</td>
 	<td></td>
 </tr>
 <tr>

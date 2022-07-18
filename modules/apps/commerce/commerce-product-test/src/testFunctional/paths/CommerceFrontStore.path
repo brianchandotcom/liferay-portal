@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FS_PRODUCT_FULL_DESCRIPTION</td>
+	<td>//div[contains(@id,'navDescription')]/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FS_PRODUCT_SPECIFICATIONS</td>
 	<td>//tr/td[contains(@class, 'specification-term')][contains(text(),'${key_specification}')]/following-sibling::td</td>
 	<td></td>
@@ -91,6 +96,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FS_PRODUCT_DETAIL_INCOMING_DATE_QUANTITY</td>
+	<td>//p[contains(.,"Incoming Date/Quantity: ${key_incomingDate} - ${key_incomingQuantity} Items")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FS_PRODUCT_OPTION</td>
 	<td>//div[contains(@class,'dropdown-menu')]/ul//li/button[(normalize-space(text())='${key_optionValue}')]</td>
 	<td></td>
@@ -103,6 +113,46 @@
 <tr>
 	<td>MAX_QUANTITY_SELECTOR_PRODUCT_DETAILS</td>
 	<td>//div[contains(@class,"product-detail")]//div[contains(@class,"add-to-cart")]//input[contains(@max, '${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_DETAILS_ATTACHMENTS_BUTTON</td>
+	<td>//li[contains(@class,'list-group-item')]//h5[text()='${key_entryName}']/../..//a[contains(@class,'btn') and contains(.,'${key_button}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_DETAILS_ATTACHMENTS_ICON_DEFAULT</td>
+	<td>//h5[text()='${key_entryName}']/../..//*[name()='svg'][contains(@class,'icon-document-default')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_DETAILS_ATTACHMENTS_NAME</td>
+	<td>//li[contains(@class,'list-group-item')]//h5[text()='${key_entryName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_DETAILS_DOWNLOAD_SAMPLE_FILE_BUTTON</td>
+	<td>//a[normalize-space(text())='Download Sample File'][contains(@href,'${key_sampleFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_DETAILS_GROUPED_PRODUCT_NAME</td>
+	<td>//div[contains(@class,'grouped-products-container')]//h5[normalize-space(text())='${key_productName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_DETAILS_GROUPED_PRODUCT_IMAGE</td>
+	<td>//div[contains(@class,'grouped-products-container')]//h5[normalize-space(text())='${key_productName}']/../..//img[contains(@src,'${key_productImage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_DETAILS_GROUPED_PRODUCT_SHORT_DESCRIPTION</td>
+	<td>//div[contains(@class,'grouped-products-container')]//h5[normalize-space(text())='${key_productName}']/following::p[normalize-space(text())='${key_productShortDescription}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_DETAILS_MIN_QUANTITY_PER_ORDER</td>
+	<td>//span[(@class='min-quantity-per-order') and contains(.,'Minimum quantity per order: ${key_minQuantity}')]</td>
 	<td></td>
 </tr>
 <tr>

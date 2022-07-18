@@ -176,9 +176,7 @@ public class InputTag extends IncludeTag {
 
 	private String _getFallbackValue() {
 		try {
-			if (Objects.equals(
-					_getActualClassName(), FileEntry.class.getName())) {
-
+			if (Objects.equals(getClassName(), FileEntry.class.getName())) {
 				return StringPool.BLANK;
 			}
 
@@ -186,15 +184,15 @@ public class InputTag extends IncludeTag {
 				Layout layout = LayoutLocalServiceUtil.fetchLayout(
 					getClassPK());
 
-				if (layout != null) {
-					if (isLocalizable()) {
-						return layout.getFriendlyURLsXML();
-					}
-
-					return layout.getFriendlyURL();
+				if (layout == null) {
+					return StringPool.BLANK;
 				}
 
-				return StringPool.BLANK;
+				if (isLocalizable()) {
+					return layout.getFriendlyURLsXML();
+				}
+
+				return layout.getFriendlyURL();
 			}
 
 			String urlTitle = BeanPropertiesUtil.getString(

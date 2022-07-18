@@ -287,6 +287,33 @@ public class AssetHelperImpl implements AssetHelper {
 		return assetEntries;
 	}
 
+	public List<AssetEntry> getAssetEntries(SearchHits searchHits) {
+		if (searchHits.getTotalHits() <= 0) {
+			return Collections.emptyList();
+		}
+
+		List<AssetEntry> assetEntries = new ArrayList<>();
+
+		for (SearchHit searchHit : searchHits.getSearchHits()) {
+			com.liferay.portal.search.document.Document document =
+				searchHit.getDocument();
+
+			String className = GetterUtil.getString(
+				document.getString(Field.ENTRY_CLASS_NAME));
+			long classPK = GetterUtil.getLong(
+				document.getString(Field.ENTRY_CLASS_PK));
+
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				className, classPK);
+
+			if (assetEntry != null) {
+				assetEntries.add(assetEntry);
+			}
+		}
+
+		return assetEntries;
+	}
+
 	@Override
 	public String getAssetKeywords(String className, long classPK) {
 		String[] tagNames = _assetTagLocalService.getTagNames(

@@ -29,6 +29,8 @@ public interface DownstreamBuildReport extends BuildReport {
 
 	public List<TestClassReport> getTestClassReports();
 
+	public long getTestExecutionDuration();
+
 	public List<TestReport> getTestReports();
 
 	public TopLevelBuildReport getTopLevelBuildReport();

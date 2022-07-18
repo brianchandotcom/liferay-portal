@@ -31,22 +31,19 @@ import {ColorPaletteField} from './ColorPaletteField';
 export function ColorPickerField({field, onValueSelect, value}) {
 	const activeItemId = useActiveItemId();
 	const canDetachTokenValues = useSelector(selectCanDetachTokenValues);
+	const [computedValue, setComputedValue] = useState(null);
 	const globalContext = useGlobalContext();
 	const {tokenValues} = useStyleBook();
 
-	const [defaultTokenLabel, setDefaultTokenLabel] = useState(
-		DEFAULT_TOKEN_LABEL
-	);
-
 	useEffect(() => {
 		if (!field.cssProperty) {
-			setDefaultTokenLabel(DEFAULT_TOKEN_LABEL);
+			setComputedValue(null);
 
 			return;
 		}
 
 		if (value) {
-			setDefaultTokenLabel(DEFAULT_TOKEN_LABEL);
+			setComputedValue(null);
 
 			return;
 		}
@@ -56,28 +53,27 @@ export function ColorPickerField({field, onValueSelect, value}) {
 		);
 
 		if (!element) {
-			setDefaultTokenLabel(DEFAULT_TOKEN_LABEL);
+			setComputedValue(null);
 
 			return;
 		}
 
-		const computedValue = globalContext.window
-			.getComputedStyle(element)
-			.getPropertyValue(field.cssProperty);
-
-		if (!computedValue) {
-			setDefaultTokenLabel(DEFAULT_TOKEN_LABEL);
-
-			return;
-		}
-
-		setDefaultTokenLabel(`${DEFAULT_TOKEN_LABEL} · ${computedValue}`);
+		setComputedValue(
+			globalContext.window
+				.getComputedStyle(element)
+				.getPropertyValue(field.cssProperty) || null
+		);
 	}, [activeItemId, field.cssProperty, globalContext, value]);
 
 	return Object.keys(tokenValues).length ? (
 		<ColorPicker
 			canDetachTokenValues={canDetachTokenValues}
-			defaultTokenLabel={defaultTokenLabel}
+			defaultTokenLabel={
+				computedValue && Liferay.FeatureFlags['LPS-143206']
+					? `${DEFAULT_TOKEN_LABEL} · ${computedValue}`
+					: DEFAULT_TOKEN_LABEL
+			}
+			defaultTokenValue={computedValue}
 			field={field}
 			onValueSelect={onValueSelect}
 			showLabel={!Liferay.FeatureFlags['LPS-143206']}

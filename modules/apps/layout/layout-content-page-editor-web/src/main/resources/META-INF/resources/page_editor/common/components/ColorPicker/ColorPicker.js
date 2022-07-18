@@ -60,6 +60,7 @@ function usePropsFirst(value, {forceProp = false}) {
 export function ColorPicker({
 	canDetachTokenValues = true,
 	defaultTokenLabel = DEFAULT_TOKEN_LABEL,
+	defaultTokenValue = undefined,
 	editedTokenValues,
 	field,
 	onValueSelect,
@@ -281,7 +282,7 @@ export function ColorPicker({
 								onSetValue(value, label, name)
 							}
 							small
-							value={color}
+							value={color || defaultTokenValue}
 						/>
 					</ClayInput.GroupItem>
 				) : (

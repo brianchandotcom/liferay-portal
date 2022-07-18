@@ -12,7 +12,7 @@
  * details.
  */
 
-import {throttle} from 'frontend-js-web';
+import {openToast, throttle} from 'frontend-js-web';
 import React, {
 	useCallback,
 	useContext,
@@ -25,6 +25,7 @@ import React, {
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
+import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {
 	useCollectionItemIndex,
@@ -340,7 +341,26 @@ export function DragAndDropContextProvider({children}) {
 }
 
 function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
-	if (state.droppable && state.dropItem && state.dropTargetItem) {
+	if (!state.droppable) {
+		if (state.dropItem.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input) {
+			openToast({
+				message: Liferay.Language.get(
+					'Error: Form components can only be placed inside a mapped Form Container.'
+				),
+				type: 'danger',
+			});
+		}
+		else {
+			openToast({
+				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				type: 'danger',
+			});
+		}
+
+		return;
+	}
+
+	if (state.dropItem && state.dropTargetItem) {
 		if (state.elevate) {
 			const parentItem =
 				layoutDataRef.current.items[state.dropTargetItem.parentId];

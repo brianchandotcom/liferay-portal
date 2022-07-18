@@ -12,6 +12,7 @@
  * details.
  */
 
+import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {formIsMapped} from '../formIsMapped';
 
@@ -83,6 +84,29 @@ const LAYOUT_DATA_CHECK_ALLOWED_CHILDREN = {
  * @param {{current: object}} layoutDataRef
  * @return {boolean}
  */
-export default function checkAllowedChild(child, parent) {
+export default function checkAllowedChild(child, parent, layoutDataRef) {
+	if (child.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+		if (
+			child.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input &&
+			!hasFormParent(parent, layoutDataRef)
+		) {
+			return false;
+		}
+	}
+
 	return LAYOUT_DATA_CHECK_ALLOWED_CHILDREN[parent.type](child, parent);
+}
+
+function hasFormParent(item, layoutDataRef) {
+	if (item.type === LAYOUT_DATA_ITEM_TYPES.form) {
+		return true;
+	}
+
+	const parent = layoutDataRef.current?.items?.[item.parentId];
+
+	if (!parent) {
+		return false;
+	}
+
+	return hasFormParent(parent, layoutDataRef);
 }

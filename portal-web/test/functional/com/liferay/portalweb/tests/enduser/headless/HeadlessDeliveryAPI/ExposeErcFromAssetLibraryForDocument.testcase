@@ -26,6 +26,44 @@ definition {
 		}
 	}
 
+	@description = "Document is not able to create with an existing erc in asset library"
+	@priority = "5"
+	test CannotCreateDocumentInAssetLibraryWithExistingErc {
+		property portal.acceptance = "true";
+
+		task ("Given a document with a custom erc is created with a POST request in asset library") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			DocumentAPI.addDocumentInAssetLibraryByUploadFile(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				filePath = "${filePath}");
+		}
+
+		task ("When with POST I create another document with an existing erc") {
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_2.txt");
+
+			var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				filePath = "${filePath}");
+		}
+
+		task ("Then I receive duplicate external reference code response") {
+			TestUtils.assertPartialEquals(
+				actual = "${response}",
+				expected = "Duplicate file entry external reference code erc");
+		}
+
+		task ("And Then another document with same erc is not being created") {
+			DocumentAPI.assertProperDocumentTotalCount(
+				assetLibraryId = "${assetLibraryId}",
+				expectedDocumentTotalCount = "0",
+				filtervalue = "title%20eq%20%27Document_2.txt%27");
+		}
+	}
+
 	@description = "Document is created in an asset library with custom erc"
 	@priority = "5"
 	test DocumentIsCreatedInAssetLibraryWithCustomErc {

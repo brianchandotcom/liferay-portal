@@ -29,6 +29,22 @@ definition {
 		return "${curl}";
 	}
 
+	macro _filterDocumentInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${filtervalue}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/documents?filter=${filtervalue} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
 	macro addDocumentInAssetLibraryByUploadFile {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${filePath}");
 
@@ -54,6 +70,20 @@ definition {
 		TestUtils.assertEquals(
 			actual = "${actualExternalReferenceCodeValue}",
 			expected = "${expectedExternalReferenceCodeValue}");
+	}
+
+	macro assertProperDocumentTotalCount {
+		Variables.assertDefined(parameterList = "${expectedDocumentTotalCount}");
+
+		var response = DocumentAPI._filterDocumentInAssetLibrary(
+			assetLibraryId = "${assetLibraryId}",
+			filtervalue = "${filtervalue}");
+
+		var actualDocumentTotalCount = JSONUtil.getWithJSONPath("${response}", "$..['totalCount']");
+
+		TestUtils.assertEquals(
+			actual = "${actualDocumentTotalCount}",
+			expected = "${expectedDocumentTotalCount}");
 	}
 
 }

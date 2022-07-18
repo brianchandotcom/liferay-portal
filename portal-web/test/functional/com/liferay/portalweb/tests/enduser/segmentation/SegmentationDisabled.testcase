@@ -146,6 +146,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user has permissions to Instance Settings
+	When user clicks at breadcrumb's link at Manual Collection editor
+	Then should be forwarded to Segments Service at Instance Settings "
+	@priority = "3"
+	test ClickToReEnableAlertLinkAtManualCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to Manual Collection Editor") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Click at warning with link and confirm Instance Settings is open") {
+
+			Segmentation.clickToReEnableSegmentsWarningLink();
+		}
+	}
+
 	
 
 	@description = "LPS-152541 Given the 'Assign Roles by Segments' is disabled at System Settings

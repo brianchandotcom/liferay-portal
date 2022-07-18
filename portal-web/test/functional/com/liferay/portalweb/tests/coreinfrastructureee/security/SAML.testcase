@@ -2391,6 +2391,7 @@ definition {
 				samlEntityId = "samlidp1",
 				userEmailAddress = "test@liferay.com");
 
+			SAML.setupIDP(
 				idpURL = "http://www.baker.com:8080",
 				samlEntityId = "samlidp2",
 				userEmailAddress = "test@www.baker.com");

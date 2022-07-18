@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.search.hits.SearchHits;
 
 import java.io.Serializable;
 
@@ -93,6 +94,11 @@ public interface AssetHelper {
 	public Hits search(
 			SearchContext searchContext, AssetEntryQuery assetEntryQuery,
 			int start, int end)
+		throws Exception;
+
+	public SearchHits search(
+			SearchContext searchContext,
+			List<AssetEntryQuery> assetEntryQueries, int start, int end)
 		throws Exception;
 
 	public BaseModelSearchResult<AssetEntry> searchAssetEntries(

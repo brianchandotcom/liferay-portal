@@ -174,7 +174,7 @@ const BuilderListItem: React.FC<IProps> = ({
 				expand
 			>
 				<ClayList.ItemText>
-					{typeof thirdColumnValues !== 'string'
+					{Array.isArray(thirdColumnValues)
 						? thirdColumnValues?.map((value, index) => {
 								return index !== thirdColumnValues.length - 1
 									? `${value.label}, `

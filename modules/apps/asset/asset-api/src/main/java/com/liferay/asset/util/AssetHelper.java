@@ -125,4 +125,9 @@ public interface AssetHelper {
 			SearchContext searchContext, AssetEntryQuery assetEntryQuery)
 		throws Exception;
 
+	public long searchCount(
+			SearchContext searchContext,
+			List<AssetEntryQuery> assetEntryQueries, int start, int end)
+		throws Exception;
+
 }

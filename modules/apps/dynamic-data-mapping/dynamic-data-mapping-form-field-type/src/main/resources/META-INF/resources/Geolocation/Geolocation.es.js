@@ -14,6 +14,7 @@
 
 import 'leaflet/dist/leaflet.css';
 import React from 'react';
+import ClayIcon from '@clayui/icon';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {MAP_PROVIDER, useGeolocation} from './useGeolocation.es';
@@ -55,11 +56,12 @@ const Geolocation = ({
 
 	return (
 		<div {...otherProps} className="ddm-geolocation field-labels-inline">
+			<div>
+				<ClayIcon symbol="geolocation" />
 
-			<div className="glyphicon glyphicon-map-marker">
-			<span id={`address_label_${instanceId}`}></span>
+				<span id={`address_label_${instanceId}`}></span>
 			</div>
-			
+
 			{!disabled || viewMode ? (
 				<dl>
 					<dt className="text-capitalize"></dt>

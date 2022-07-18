@@ -57,7 +57,7 @@ definition {
 		}
 
 		task ("Then those products should shown up on their wish list") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
 
 			CommerceWishList.assertWishListProduct(
 				productName = "U-Joint,Transmission Cooler Line Assembly,Mount",
@@ -704,7 +704,7 @@ definition {
 		}
 
 		task ("Then the buyer is redirected to the product details page for that product") {
-			AssertLocation.assertPartialLocation(value1 = "group/minium/p/u-joint");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/p/u-joint");
 
 			FrontStore.assertProductDetails(
 				productImage = "Minium_ProductImage_64.png",
@@ -1377,7 +1377,7 @@ definition {
 				key_productName = "Mount",
 				locator1 = "CommerceEntry#PRODUCT_CARD_ADD_TO_WISH_LIST_BUTTON");
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
 
 			CommerceWishList.assertWishListProduct(
 				productName = "U-Joint,Transmission Cooler Line Assembly,Mount",
@@ -1393,7 +1393,7 @@ definition {
 		}
 
 		task ("Then the product is removed from the wishlist") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
 
 			AssertElementNotPresent(
 				key_userName = "U-Joint",

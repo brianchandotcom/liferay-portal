@@ -73,7 +73,7 @@ definition {
 	}
 
 	macro gotoMiniumAccountOrderDefaults {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/account-management");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/account-management");
 
 		CommerceNavigator.gotoEntry(entryName = "${accountName}");
 
@@ -155,7 +155,7 @@ definition {
 	}
 
 	macro goToWishLists {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
 	}
 
 	macro searchCatalog {

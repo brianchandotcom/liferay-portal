@@ -24,7 +24,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given the Show Order Creation Time toggle is checked in the Placed Orders widget by default") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 
 			Portlet.gotoPortletOptions(
 				portletName = "Placed Orders",
@@ -38,7 +38,7 @@ definition {
 		}
 
 		task ("And given a placed order") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/catalog");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
@@ -59,7 +59,7 @@ definition {
 		}
 
 		task ("When the user views the order from the Placed Orders page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 		}
 
 		task ("Then the order date and time is shown") {
@@ -88,7 +88,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given the Show Order Creation Time toggle is unchecked in the Placed Orders widget") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 
 			Portlet.gotoPortletOptions(
 				portletName = "Placed Orders",
@@ -106,7 +106,7 @@ definition {
 		}
 
 		task ("And given a placed order") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/catalog");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
@@ -127,7 +127,7 @@ definition {
 		}
 
 		task ("When the user views the order from the Placed Orders page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 		}
 
 		task ("Then the order date is shown without the time") {
@@ -283,7 +283,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("When the user goes to the Placed Orders Page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 		}
 
 		task ("And goes to the configuration segment of the Placed Orders widget") {
@@ -479,7 +479,7 @@ definition {
 		}
 
 		task ("When the buyer goes to the Placed Orders page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 		}
 
 		task ("Then the Order Type field is present in the Placed Orders list and populated with Test Order Type 2") {
@@ -750,7 +750,7 @@ definition {
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 
 			Button.click(button = "View");
 		}
@@ -786,7 +786,7 @@ definition {
 		}
 
 		task ("And given a Language Selector widget is added to the Catalog page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/catalog");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 
 			Portlet.addPGCmd(portletName = "Language Selector");
 		}
@@ -826,7 +826,7 @@ definition {
 		}
 
 		task ("When the buyer views the order from the Placed Orders page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 		}
 
 		task ("Then the order date is shown in yyyy.MM.dd. format") {
@@ -857,7 +857,7 @@ definition {
 		}
 
 		task ("When the buyer views the order from the Placed Orders page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 		}
 
 		task ("Then the order date is shown in dd.MM.yyyy format") {
@@ -888,7 +888,7 @@ definition {
 		}
 
 		task ("When the buyer views the order from the Placed Orders page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 		}
 
 		task ("Then the order date is shown in MMM d, yyyy format") {

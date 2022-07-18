@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -121,7 +121,7 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		if (!elements.isEmpty() && (elements.size() > 1)) {
 			throw new FragmentEntryContentException(
-				LanguageUtil.get(
+				_language.get(
 					_portal.getResourceBundle(LocaleUtil.getDefault()),
 					"the-data-lfr-styles-attribute-can-be-used-only-once-on-" +
 						"the-same-fragment"));
@@ -169,6 +169,9 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
 				fragmentEntryLink.getFragmentEntryLinkId());
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

@@ -35,7 +35,7 @@ import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryN
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -134,6 +134,9 @@ public class LayoutPageTemplateEntryItemSelectorView
 	private ItemSelectorViewDescriptorRenderer
 		<LayoutPageTemplateEntryItemSelectorCriterion>
 			_itemSelectorViewDescriptorRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
@@ -275,7 +278,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 						LayoutPageTemplateEntryTypeConstants.
 							TYPE_MASTER_LAYOUT)) {
 
-				return LanguageUtil.format(
+				return _language.format(
 					_httpServletRequest, "x-usages",
 					_layoutLocalService.getMasterLayoutsCount(
 						_layoutPageTemplateEntry.getGroupId(),

@@ -36,7 +36,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
@@ -377,7 +377,7 @@ public class JournalRSSHelper {
 			feed = _journalFeedLocalService.getFeed(groupId, feedId);
 		}
 
-		String languageId = LanguageUtil.getLanguageId(resourceRequest);
+		String languageId = _language.getLanguageId(resourceRequest);
 
 		long plid = _portal.getPlidFromFriendlyURL(
 			themeDisplay.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
@@ -709,6 +709,9 @@ public class JournalRSSHelper {
 
 	@Reference
 	private JournalFeedLocalService _journalFeedLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

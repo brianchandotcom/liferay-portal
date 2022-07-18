@@ -15,7 +15,7 @@
 package com.liferay.journal.content.asset.addon.entry.print.internal;
 
 import com.liferay.journal.content.asset.addon.entry.UserToolAssetAddonEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 
 import java.util.Locale;
@@ -49,7 +49,7 @@ public class PrintUserToolAssetAddonEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "print");
+		return _language.get(locale, "print");
 	}
 
 	@Override
@@ -65,5 +65,8 @@ public class PrintUserToolAssetAddonEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private Language _language;
 
 }

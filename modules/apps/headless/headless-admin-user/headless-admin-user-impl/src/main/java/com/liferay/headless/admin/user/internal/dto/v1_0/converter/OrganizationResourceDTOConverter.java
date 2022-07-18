@@ -31,7 +31,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.OrgLabor;
@@ -154,7 +154,7 @@ public class OrganizationResourceDTOConverter
 								}
 
 								Set<Locale> locales =
-									LanguageUtil.getCompanyAvailableLocales(
+									_language.getCompanyAvailableLocales(
 										organization.getCompanyId());
 
 								Stream<Locale> localesStream = locales.stream();
@@ -317,6 +317,9 @@ public class OrganizationResourceDTOConverter
 
 	@Reference
 	private EmailAddressService _emailAddressService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

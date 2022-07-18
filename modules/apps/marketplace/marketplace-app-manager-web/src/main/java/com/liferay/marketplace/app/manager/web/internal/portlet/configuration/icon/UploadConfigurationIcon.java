@@ -15,7 +15,7 @@
 package com.liferay.marketplace.app.manager.web.internal.portlet.configuration.icon;
 
 import com.liferay.marketplace.app.manager.web.internal.constants.MarketplaceAppManagerPortletKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -47,7 +47,7 @@ public class UploadConfigurationIcon extends BaseJSPPortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(getLocale(portletRequest)), "upload");
 	}
 
@@ -90,5 +90,8 @@ public class UploadConfigurationIcon extends BaseJSPPortletConfigurationIcon {
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private Language _language;
 
 }

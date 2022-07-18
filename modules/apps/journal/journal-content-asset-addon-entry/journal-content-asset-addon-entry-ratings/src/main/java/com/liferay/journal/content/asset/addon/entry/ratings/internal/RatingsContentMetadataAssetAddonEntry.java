@@ -15,7 +15,7 @@
 package com.liferay.journal.content.asset.addon.entry.ratings.internal;
 
 import com.liferay.journal.content.asset.addon.entry.ContentMetadataAssetAddonEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 
 import java.util.Locale;
@@ -49,7 +49,7 @@ public class RatingsContentMetadataAssetAddonEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "ratings");
+		return _language.get(locale, "ratings");
 	}
 
 	@Override
@@ -65,5 +65,8 @@ public class RatingsContentMetadataAssetAddonEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private Language _language;
 
 }

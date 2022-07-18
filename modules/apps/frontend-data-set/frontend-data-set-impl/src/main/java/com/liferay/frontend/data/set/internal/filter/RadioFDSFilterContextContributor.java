@@ -21,7 +21,7 @@ import com.liferay.frontend.data.set.filter.RadioFDSFilterItem;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -70,8 +70,7 @@ public class RadioFDSFilterContextContributor
 			jsonArray.put(
 				JSONUtil.put(
 					"label",
-					LanguageUtil.get(
-						resourceBundle, radioFDSFilterItem.getLabel())
+					_language.get(resourceBundle, radioFDSFilterItem.getLabel())
 				).put(
 					"value", radioFDSFilterItem.getValue()
 				));
@@ -84,5 +83,8 @@ public class RadioFDSFilterContextContributor
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 }

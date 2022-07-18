@@ -16,7 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -58,7 +58,7 @@ public class MappingContentPageEditorSidebarPanel
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "mapping");
+		return _language.get(resourceBundle, "mapping");
 	}
 
 	@Override
@@ -96,6 +96,9 @@ public class MappingContentPageEditorSidebarPanel
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MappingContentPageEditorSidebarPanel.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

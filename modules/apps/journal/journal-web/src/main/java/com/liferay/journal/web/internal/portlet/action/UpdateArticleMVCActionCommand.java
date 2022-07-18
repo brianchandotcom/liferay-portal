@@ -39,7 +39,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -477,7 +477,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 				!currentFriendlyURL.equals(normalizedOriginalFriendlyURL)) {
 
 				messages.add(
-					LanguageUtil.format(
+					_language.format(
 						httpServletRequest, "for-locale-x-x-was-changed-to-x",
 						new Object[] {
 							"<strong>" + locale.getLanguage() + "</strong>",
@@ -491,7 +491,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		if (!messages.isEmpty()) {
 			messages.add(
 				0,
-				LanguageUtil.get(
+				_language.get(
 					httpServletRequest,
 					"the-following-friendly-urls-were-changed-to-ensure-" +
 						"uniqueness"));
@@ -678,6 +678,9 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutClassedModelUsageLocalService

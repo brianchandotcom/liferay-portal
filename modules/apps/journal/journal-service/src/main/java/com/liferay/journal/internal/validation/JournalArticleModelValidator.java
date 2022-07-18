@@ -53,7 +53,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
@@ -110,9 +110,7 @@ public class JournalArticleModelValidator
 			LocalizationUtil.getDefaultLanguageId(content));
 
 		if (!ExportImportThreadLocal.isImportInProcess()) {
-			if (!LanguageUtil.isAvailableLocale(
-					groupId, articleDefaultLocale)) {
-
+			if (!_language.isAvailableLocale(groupId, articleDefaultLocale)) {
 				LocaleException localeException = new LocaleException(
 					LocaleException.TYPE_CONTENT,
 					StringBundler.concat(
@@ -122,7 +120,7 @@ public class JournalArticleModelValidator
 				localeException.setSourceAvailableLocales(
 					Collections.singleton(articleDefaultLocale));
 				localeException.setTargetAvailableLocales(
-					LanguageUtil.getAvailableLocales(groupId));
+					_language.getAvailableLocales(groupId));
 
 				throw localeException;
 			}
@@ -550,6 +548,9 @@ public class JournalArticleModelValidator
 
 	@Reference
 	private JournalHelper _journalHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

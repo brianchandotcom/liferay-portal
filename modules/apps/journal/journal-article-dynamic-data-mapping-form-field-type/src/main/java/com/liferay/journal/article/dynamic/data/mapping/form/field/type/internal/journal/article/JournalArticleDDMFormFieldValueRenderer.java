@@ -23,7 +23,7 @@ import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constant
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,7 +73,7 @@ public class JournalArticleDDMFormFieldValueRenderer
 				_log.debug(exception);
 			}
 
-			return LanguageUtil.format(
+			return _language.format(
 				locale, "is-temporarily-unavailable", "content");
 		}
 	}
@@ -86,5 +86,8 @@ public class JournalArticleDDMFormFieldValueRenderer
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 }

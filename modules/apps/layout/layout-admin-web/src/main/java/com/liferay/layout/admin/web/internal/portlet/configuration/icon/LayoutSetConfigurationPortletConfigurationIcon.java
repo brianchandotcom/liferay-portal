@@ -16,7 +16,7 @@ package com.liferay.layout.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -57,7 +57,7 @@ public class LayoutSetConfigurationPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(getLocale(portletRequest)), "configuration");
 	}
 
@@ -121,6 +121,9 @@ public class LayoutSetConfigurationPortletConfigurationIcon
 	public boolean isToolTip() {
 		return false;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

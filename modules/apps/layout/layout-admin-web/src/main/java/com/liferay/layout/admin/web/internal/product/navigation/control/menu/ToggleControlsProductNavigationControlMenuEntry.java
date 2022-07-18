@@ -15,7 +15,7 @@
 package com.liferay.layout.admin.web.internal.product.navigation.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -40,6 +40,7 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -90,7 +91,7 @@ public class ToggleControlsProductNavigationControlMenuEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "toggle-controls");
+		return _language.get(resourceBundle, "toggle-controls");
 	}
 
 	@Override
@@ -180,5 +181,8 @@ public class ToggleControlsProductNavigationControlMenuEntry
 
 	private static final Map<String, Object> _data =
 		Collections.<String, Object>singletonMap("qa-id", "showControls");
+
+	@Reference
+	private Language _language;
 
 }

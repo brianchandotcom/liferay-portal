@@ -26,7 +26,7 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.util.LayoutClassedModelUsageActionMenuContributor;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -88,7 +88,7 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 									InfoItemIdentifier.VERSION_LATEST_APPROVED,
 									httpServletRequest));
 							dropdownItem.setLabel(
-								LanguageUtil.get(
+								_language.get(
 									themeDisplay.getLocale(), "view-in-page"));
 						});
 				}
@@ -110,7 +110,7 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 								key = "preview-scheduled-in-page";
 							}
 
-							String label = LanguageUtil.get(
+							String label = _language.get(
 								themeDisplay.getLocale(), key);
 
 							add(
@@ -195,6 +195,9 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

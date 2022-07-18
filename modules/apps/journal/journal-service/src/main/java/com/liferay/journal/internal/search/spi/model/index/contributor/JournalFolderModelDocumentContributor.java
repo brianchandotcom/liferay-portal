@@ -16,7 +16,7 @@ package com.liferay.journal.internal.search.spi.model.index.contributor;
 
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -55,7 +55,7 @@ public class JournalFolderModelDocumentContributor
 		}
 
 		for (Locale locale :
-				LanguageUtil.getAvailableLocales(journalFolder.getGroupId())) {
+				_language.getAvailableLocales(journalFolder.getGroupId())) {
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -68,6 +68,9 @@ public class JournalFolderModelDocumentContributor
 				title);
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private TrashHelper _trashHelper;

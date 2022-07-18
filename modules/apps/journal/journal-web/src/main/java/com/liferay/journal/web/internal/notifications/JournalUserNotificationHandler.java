@@ -21,7 +21,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.asset.model.JournalArticleAssetRenderer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
@@ -72,14 +72,14 @@ public class JournalUserNotificationHandler
 		if (notificationType ==
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
 
-			title = LanguageUtil.format(
+			title = _language.format(
 				serviceContext.getLocale(), "x-added-a-new-web-content-article",
 				userFullName);
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
-			title = LanguageUtil.format(
+			title = _language.format(
 				serviceContext.getLocale(), "x-updated-a-web-content-article",
 				userFullName);
 		}
@@ -87,7 +87,7 @@ public class JournalUserNotificationHandler
 					JournalArticleConstants.
 						NOTIFICATION_TYPE_MOVE_ENTRY_FROM_FOLDER) {
 
-			title = LanguageUtil.format(
+			title = _language.format(
 				serviceContext.getLocale(),
 				"x-moved-a-web-content-from-a-folder", userFullName);
 		}
@@ -95,7 +95,7 @@ public class JournalUserNotificationHandler
 					JournalArticleConstants.
 						NOTIFICATION_TYPE_MOVE_ENTRY_FROM_TRASH) {
 
-			title = LanguageUtil.format(
+			title = _language.format(
 				serviceContext.getLocale(),
 				"x-restored-a-web-content-from-the-recycle-bin", userFullName);
 		}
@@ -103,7 +103,7 @@ public class JournalUserNotificationHandler
 					JournalArticleConstants.
 						NOTIFICATION_TYPE_MOVE_ENTRY_TO_FOLDER) {
 
-			title = LanguageUtil.format(
+			title = _language.format(
 				serviceContext.getLocale(), "x-moved-a-web-content-to-a-folder",
 				userFullName);
 		}
@@ -111,13 +111,16 @@ public class JournalUserNotificationHandler
 					JournalArticleConstants.
 						NOTIFICATION_TYPE_MOVE_ENTRY_TO_TRASH) {
 
-			title = LanguageUtil.format(
+			title = _language.format(
 				serviceContext.getLocale(),
 				"x-moved-a-web-content-to-the-recycle-bin", userFullName);
 		}
 
 		return title;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

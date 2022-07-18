@@ -16,7 +16,7 @@ package com.liferay.journal.web.internal.portlet.configuration.icon;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
@@ -57,7 +57,7 @@ public class ViewSourcePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(getLocale(portletRequest)), "view-source");
 	}
 
@@ -122,5 +122,8 @@ public class ViewSourcePortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewSourcePortletConfigurationIcon.class);
+
+	@Reference
+	private Language _language;
 
 }

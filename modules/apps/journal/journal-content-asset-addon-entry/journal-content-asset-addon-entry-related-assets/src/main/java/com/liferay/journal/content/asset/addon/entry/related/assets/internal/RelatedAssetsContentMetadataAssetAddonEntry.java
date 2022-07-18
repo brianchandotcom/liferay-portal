@@ -15,7 +15,7 @@
 package com.liferay.journal.content.asset.addon.entry.related.assets.internal;
 
 import com.liferay.journal.content.asset.addon.entry.ContentMetadataAssetAddonEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 
 import java.util.Locale;
@@ -49,7 +49,7 @@ public class RelatedAssetsContentMetadataAssetAddonEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "related-assets");
+		return _language.get(locale, "related-assets");
 	}
 
 	@Override
@@ -65,5 +65,8 @@ public class RelatedAssetsContentMetadataAssetAddonEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private Language _language;
 
 }

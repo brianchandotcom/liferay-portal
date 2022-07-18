@@ -20,7 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 import java.util.Set;
@@ -65,7 +65,7 @@ public class PortalCacheFragmentEntryLinkListener
 	}
 
 	private void _clearCache(FragmentEntryLink fragmentEntryLink) {
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+		Set<Locale> availableLocales = _language.getAvailableLocales(
 			fragmentEntryLink.getGroupId());
 
 		for (Locale locale : availableLocales) {
@@ -76,6 +76,9 @@ public class PortalCacheFragmentEntryLinkListener
 					fragmentEntryLink.getSegmentsExperienceId()));
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private MultiVMPool _multiVMPool;

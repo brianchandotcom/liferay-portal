@@ -35,7 +35,7 @@ import com.liferay.journal.web.internal.info.item.JournalArticleInfoItemFields;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
@@ -171,7 +171,7 @@ public class JournalArticleInfoItemFormProvider
 			String formVariationKey, InfoFieldSet assetEntryInfoFieldSet)
 		throws NoSuchFormVariationException {
 
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+		Set<Locale> availableLocales = _language.getAvailableLocales();
 
 		InfoLocalizedValue.Builder infoLocalizedValueBuilder =
 			InfoLocalizedValue.builder();
@@ -259,7 +259,7 @@ public class JournalArticleInfoItemFormProvider
 
 			nameMap.replaceAll(
 				(locale, name) -> StringBundler.concat(
-					LanguageUtil.get(locale, "content"), StringPool.SPACE,
+					_language.get(locale, "content"), StringPool.SPACE,
 					StringPool.OPEN_PARENTHESIS, name,
 					StringPool.CLOSE_PARENTHESIS));
 
@@ -300,6 +300,9 @@ public class JournalArticleInfoItemFormProvider
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

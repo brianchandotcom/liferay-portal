@@ -18,7 +18,7 @@ import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminP
 import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutPrototype;
@@ -109,7 +109,7 @@ public class UpdateLayoutPrototypeMVCActionCommand
 								(ThemeDisplay)actionRequest.getAttribute(
 									WebKeys.THEME_DISPLAY);
 
-							return LanguageUtil.get(
+							return _language.get(
 								themeDisplay.getRequest(),
 								"an-unexpected-error-occurred");
 						}));
@@ -119,6 +119,9 @@ public class UpdateLayoutPrototypeMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateLayoutPrototypeMVCActionCommand.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutPageTemplateEntryExceptionRequestHandler

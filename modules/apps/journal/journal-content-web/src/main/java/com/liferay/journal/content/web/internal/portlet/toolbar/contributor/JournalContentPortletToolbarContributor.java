@@ -23,7 +23,7 @@ import com.liferay.journal.content.web.internal.configuration.JournalContentPort
 import com.liferay.journal.service.JournalFolderService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -163,7 +163,7 @@ public class JournalContentPortletToolbarContributor
 				).put(
 					"title",
 					HtmlUtil.escape(
-						LanguageUtil.format(
+						_language.format(
 							themeDisplay.getLocale(), "new-x",
 							ddmStructure.getName(themeDisplay.getLocale())))
 				).build());
@@ -215,6 +215,9 @@ public class JournalContentPortletToolbarContributor
 
 	@Reference
 	private JournalFolderService _journalFolderService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

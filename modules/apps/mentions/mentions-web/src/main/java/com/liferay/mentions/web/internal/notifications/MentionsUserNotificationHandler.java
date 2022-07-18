@@ -22,7 +22,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -85,7 +85,7 @@ public class MentionsUserNotificationHandler
 			"content.Language", serviceContext.getLocale(), getClass());
 
 		if ((mbMessage != null) && mbMessage.isDiscussion()) {
-			return LanguageUtil.format(
+			return _language.format(
 				resourceBundle, "x-mentioned-you-in-a-comment-in-a-x",
 				new String[] {
 					HtmlUtil.escape(
@@ -96,7 +96,7 @@ public class MentionsUserNotificationHandler
 				false);
 		}
 
-		return LanguageUtil.format(
+		return _language.format(
 			resourceBundle, "x-mentioned-you-in-a-x",
 			new String[] {
 				HtmlUtil.escape(
@@ -113,6 +113,9 @@ public class MentionsUserNotificationHandler
 
 		_mbMessageLocalService = mbMessageLocalService;
 	}
+
+	@Reference
+	private Language _language;
 
 	private MBMessageLocalService _mbMessageLocalService;
 

@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -276,7 +276,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-file-size-no-" +
 							"larger-than-x",
-						LanguageUtil.formatStorageSize(
+						_language.formatStorageSize(
 							maxFileSize, themeDisplay.getLocale()));
 				}
 				else if ((exception instanceof ImageTypeException) ||
@@ -298,7 +298,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 
 					errorMessage = themeDisplay.translate(
 						"request-is-larger-than-x-and-could-not-be-processed",
-						LanguageUtil.formatStorageSize(
+						_language.formatStorageSize(
 							_uploadServletRequestConfigurationHelper.
 								getMaxSize(),
 							themeDisplay.getLocale()));
@@ -412,6 +412,9 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private ImageTool _imageTool;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

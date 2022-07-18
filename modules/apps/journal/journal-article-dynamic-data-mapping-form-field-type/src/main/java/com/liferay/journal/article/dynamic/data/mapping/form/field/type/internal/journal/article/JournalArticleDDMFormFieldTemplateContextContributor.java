@@ -28,7 +28,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -142,7 +142,7 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 
 			if (article != null) {
 				if (article.isInTrash()) {
-					return LanguageUtil.get(
+					return _language.get(
 						defaultLocale,
 						"the-selected-web-content-was-moved-to-the-recycle-" +
 							"bin");
@@ -155,7 +155,7 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 				_log.warn("Unable to get article for  " + classPK);
 			}
 
-			return LanguageUtil.get(
+			return _language.get(
 				defaultLocale, "the-selected-web-content-was-deleted");
 		}
 		catch (JSONException jsonException) {
@@ -221,6 +221,9 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -17,7 +17,7 @@ package com.liferay.journal.web.internal.helper;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -32,6 +32,7 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -101,22 +102,21 @@ public class JournalDDMTemplateHelper {
 			sb.append("<p>");
 			sb.append(
 				HtmlUtil.escape(
-					LanguageUtil.get(
-						httpServletRequest, resourceBundle, help)));
+					_language.get(httpServletRequest, resourceBundle, help)));
 			sb.append("</p>");
 		}
 
 		if (templateVariableDefinition.isCollection()) {
 			sb.append("<p><i>*");
 			sb.append(
-				LanguageUtil.get(
+				_language.get(
 					httpServletRequest, "this-is-a-collection-of-fields"));
 			sb.append("</i></p>");
 		}
 		else if (templateVariableDefinition.isRepeatable()) {
 			sb.append("<p><i>*");
 			sb.append(
-				LanguageUtil.get(
+				_language.get(
 					httpServletRequest, "this-is-a-repeatable-field"));
 			sb.append("</i></p>");
 		}
@@ -124,7 +124,7 @@ public class JournalDDMTemplateHelper {
 		if (!Objects.equals(
 				templateVariableDefinition.getDataType(), "service-locator")) {
 
-			sb.append(LanguageUtil.get(httpServletRequest, "variable"));
+			sb.append(_language.get(httpServletRequest, "variable"));
 			sb.append(StringPool.COLON);
 			sb.append(StringPool.NBSP);
 			sb.append(HtmlUtil.escape(templateVariableDefinition.getName()));
@@ -170,7 +170,7 @@ public class JournalDDMTemplateHelper {
 		String className = clazz.getName();
 
 		sb.append("<br />");
-		sb.append(LanguageUtil.get(httpServletRequest, label));
+		sb.append(_language.get(httpServletRequest, label));
 		sb.append(StringPool.COLON);
 		sb.append(StringPool.NBSP);
 
@@ -219,5 +219,8 @@ public class JournalDDMTemplateHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalDDMTemplateHelper.class);
+
+	@Reference
+	private Language _language;
 
 }

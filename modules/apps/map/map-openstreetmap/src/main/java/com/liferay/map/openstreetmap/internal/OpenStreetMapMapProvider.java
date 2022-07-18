@@ -17,7 +17,7 @@ package com.liferay.map.openstreetmap.internal;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.map.BaseJSPMapProvider;
 import com.liferay.map.MapProvider;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -60,7 +60,7 @@ public class OpenStreetMapMapProvider extends BaseJSPMapProvider {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "openstreetmap");
+		return _language.get(resourceBundle, "openstreetmap");
 	}
 
 	@Override
@@ -81,6 +81,9 @@ public class OpenStreetMapMapProvider extends BaseJSPMapProvider {
 			"liferay-map:map:bootstrapRequire",
 			resolvedModuleName + " as MapOpenStreetMap");
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private NPMResolver _npmResolver;

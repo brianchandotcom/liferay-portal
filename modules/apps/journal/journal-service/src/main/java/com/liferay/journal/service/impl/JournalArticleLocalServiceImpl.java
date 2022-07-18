@@ -123,7 +123,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -1109,7 +1109,7 @@ public class JournalArticleLocalServiceImpl
 
 			String urlTitle = StringBundler.concat(
 				entry.getValue(), StringPool.SPACE,
-				LanguageUtil.get(locale, "duplicate"), StringPool.SPACE,
+				_language.get(locale, "duplicate"), StringPool.SPACE,
 				uniqueUrlTitleCount);
 
 			newTitleMap.put(locale, urlTitle);
@@ -6175,7 +6175,7 @@ public class JournalArticleLocalServiceImpl
 				groupId,
 				_classNameLocalService.getClassNameId(JournalArticle.class),
 				article.getResourcePrimKey(), title,
-				LanguageUtil.getLanguageId(entry.getKey()));
+				_language.getLanguageId(entry.getKey()));
 
 			friendlyURLMap.put(entry.getKey(), urlTitle);
 		}
@@ -8199,12 +8199,12 @@ public class JournalArticleLocalServiceImpl
 		else if (article.getFolderId() ==
 					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			folderName = LanguageUtil.get(LocaleUtil.getSiteDefault(), "home");
+			folderName = _language.get(LocaleUtil.getSiteDefault(), "home");
 		}
 
 		subscriptionSender.setContextAttributes(
 			"[$FOLDER_NAME$]", folderName, "[$ARTICLE_STATUS$]",
-			LanguageUtil.get(
+			_language.get(
 				LocaleUtil.getSiteDefault(),
 				WorkflowConstants.getStatusLabel(article.getStatus())));
 		subscriptionSender.setCurrentUserId(userId);
@@ -9176,13 +9176,12 @@ public class JournalArticleLocalServiceImpl
 
 			if (Validator.isNull(friendlyURL)) {
 				urlTitleMap.put(
-					LanguageUtil.getLanguageId(entry.getKey()),
-					StringPool.BLANK);
+					_language.getLanguageId(entry.getKey()), StringPool.BLANK);
 
 				continue;
 			}
 
-			String languageId = LanguageUtil.getLanguageId(entry.getKey());
+			String languageId = _language.getLanguageId(entry.getKey());
 
 			String urlTitle = friendlyURLEntryLocalService.getUniqueUrlTitle(
 				groupId,
@@ -9412,6 +9411,9 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private JournalHelper _journalHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;

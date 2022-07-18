@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -42,7 +42,7 @@ public class JournalArticleAbstractInfoItemRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "default-template-shorten");
+		return _language.get(locale, "default-template-shorten");
 	}
 
 	@Override
@@ -85,6 +85,9 @@ public class JournalArticleAbstractInfoItemRenderer
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
+
+	@Reference
+	private Language _language;
 
 	private ServletContext _servletContext;
 

@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -53,7 +53,7 @@ public class PageDesignOptionsSidebarPanel
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "page-design-options");
+		return _language.get(resourceBundle, "page-design-options");
 	}
 
 	@Override
@@ -80,6 +80,9 @@ public class PageDesignOptionsSidebarPanel
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageDesignOptionsSidebarPanel.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutPermission _layoutPermission;

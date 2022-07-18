@@ -21,7 +21,7 @@ import com.liferay.layout.internal.search.util.LayoutPageTemplateStructureRender
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -103,7 +103,7 @@ public class LayoutModelDocumentContributor
 			return;
 		}
 
-		Set<Locale> locales = LanguageUtil.getAvailableLocales(
+		Set<Locale> locales = _language.getAvailableLocales(
 			layout.getGroupId());
 
 		for (Locale locale : locales) {
@@ -199,6 +199,9 @@ public class LayoutModelDocumentContributor
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutCrawler _layoutCrawler;

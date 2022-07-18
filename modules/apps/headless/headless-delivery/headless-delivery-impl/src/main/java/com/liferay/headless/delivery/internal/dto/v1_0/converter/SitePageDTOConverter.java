@@ -33,7 +33,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -189,7 +189,7 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 							LayoutTypeControllerTracker.getLayoutTypeController(
 								layout.getType());
 
-						return LanguageUtil.get(
+						return _language.get(
 							dtoConverterContext.getHttpServletRequest(),
 							ResourceBundleUtil.getBundle(
 								"content.Language",
@@ -215,6 +215,9 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 	@Reference
 	private ExperienceDTOConverter _experienceDTOConverter;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

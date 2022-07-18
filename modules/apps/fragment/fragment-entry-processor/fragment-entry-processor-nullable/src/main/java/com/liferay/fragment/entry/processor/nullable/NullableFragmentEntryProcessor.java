@@ -19,13 +19,14 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -53,11 +54,14 @@ public class NullableFragmentEntryProcessor implements FragmentEntryProcessor {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", getClass());
 
-			String message = LanguageUtil.get(
+			String message = _language.get(
 				resourceBundle, "html-content-must-not-be-empty");
 
 			throw new FragmentEntryContentException(message);
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 }

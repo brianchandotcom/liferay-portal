@@ -21,7 +21,7 @@ import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstan
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -61,7 +61,7 @@ public class LayoutGeneralScreenNavigationEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(_getResourceBundle(locale), getEntryKey());
+		return _language.get(_getResourceBundle(locale), getEntryKey());
 	}
 
 	@Override
@@ -113,6 +113,9 @@ public class LayoutGeneralScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

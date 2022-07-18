@@ -16,11 +16,12 @@ package com.liferay.layout.admin.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -44,7 +45,10 @@ public class LayoutLookAndFeelFormNavigatorCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "look-and-feel");
+		return _language.get(locale, "look-and-feel");
 	}
+
+	@Reference
+	private Language _language;
 
 }

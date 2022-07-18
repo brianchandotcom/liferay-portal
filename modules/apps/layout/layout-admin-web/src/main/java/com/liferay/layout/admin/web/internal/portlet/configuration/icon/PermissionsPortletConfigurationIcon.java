@@ -17,7 +17,7 @@ package com.liferay.layout.admin.web.internal.portlet.configuration.icon;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -57,7 +57,7 @@ public class PermissionsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(getLocale(portletRequest), "permissions");
+		return _language.get(getLocale(portletRequest), "permissions");
 	}
 
 	@Override
@@ -144,6 +144,9 @@ public class PermissionsPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionsPortletConfigurationIcon.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

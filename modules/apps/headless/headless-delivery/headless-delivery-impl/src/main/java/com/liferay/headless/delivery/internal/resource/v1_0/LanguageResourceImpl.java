@@ -16,7 +16,6 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.Language;
 import com.liferay.headless.delivery.resource.v1_0.LanguageResource;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -53,7 +52,7 @@ public class LanguageResourceImpl extends BaseLanguageResourceImpl {
 
 	@Override
 	public Page<Language> getSiteLanguagesPage(Long siteId) throws Exception {
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(siteId);
+		Set<Locale> availableLocales = _language.getAvailableLocales(siteId);
 		Locale defaultLocale = _getDefaultLocale(siteId);
 
 		return Page.of(
@@ -123,5 +122,8 @@ public class LanguageResourceImpl extends BaseLanguageResourceImpl {
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private com.liferay.portal.kernel.language.Language _language;
 
 }

@@ -16,7 +16,7 @@ package com.liferay.journal.web.internal.info.item.renderer;
 
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -40,7 +40,7 @@ public class JournalArticleTitleInfoItemRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "title");
+		return _language.get(locale, "title");
 	}
 
 	@Override
@@ -74,6 +74,9 @@ public class JournalArticleTitleInfoItemRenderer
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
+
+	@Reference
+	private Language _language;
 
 	private ServletContext _servletContext;
 

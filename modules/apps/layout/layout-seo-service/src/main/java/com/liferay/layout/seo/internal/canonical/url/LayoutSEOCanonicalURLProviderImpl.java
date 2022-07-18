@@ -22,7 +22,7 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -82,7 +82,7 @@ public class LayoutSEOCanonicalURLProviderImpl
 				_portal.getLayoutFullURL(layout, themeDisplay), themeDisplay,
 				layout, false, false),
 			themeDisplay, layout,
-			LanguageUtil.getAvailableLocales(layout.getGroupId()));
+			_language.getAvailableLocales(layout.getGroupId()));
 
 		LayoutSEOEntry layoutSEOEntry =
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
@@ -190,6 +190,9 @@ public class LayoutSEOCanonicalURLProviderImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;

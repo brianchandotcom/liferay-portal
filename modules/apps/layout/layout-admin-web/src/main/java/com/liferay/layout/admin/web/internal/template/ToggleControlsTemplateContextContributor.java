@@ -14,7 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.template;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -30,6 +30,7 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -84,10 +85,13 @@ public class ToggleControlsTemplateContextContributor
 
 			contextObjects.put(
 				"toggle_controls_text",
-				LanguageUtil.get(resourceBundle, "toggle-controls"));
+				_language.get(resourceBundle, "toggle-controls"));
 
 			contextObjects.put("toggle_controls_url", "javascript:void(0);");
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 }

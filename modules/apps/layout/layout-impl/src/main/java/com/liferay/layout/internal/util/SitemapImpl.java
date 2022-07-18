@@ -21,7 +21,7 @@ import com.liferay.layout.admin.kernel.util.SitemapURLProviderRegistryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -284,7 +284,7 @@ public class SitemapImpl implements Sitemap {
 		String name = element.getName();
 
 		if (name.equals("url")) {
-			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+			Set<Locale> availableLocales = _language.getAvailableLocales();
 
 			int availableLocalesSize = availableLocales.size();
 
@@ -437,6 +437,9 @@ public class SitemapImpl implements Sitemap {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SitemapImpl.class.getName());
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

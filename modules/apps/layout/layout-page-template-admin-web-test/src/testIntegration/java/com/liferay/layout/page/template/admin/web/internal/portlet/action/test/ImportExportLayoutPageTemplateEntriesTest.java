@@ -291,6 +291,23 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryContainerContentVisibility()
+		throws Exception {
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-147895", Boolean.TRUE.toString())) {
+
+			File expectedFile = _generateZipFile(
+				"container/content_visibility/expected", null, null);
+			File inputFile = _generateZipFile(
+				"container/content_visibility/input", null, null);
+
+			_validateImportExport(expectedFile, inputFile);
+		}
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryContainerCssClasses()
 		throws Exception {
 

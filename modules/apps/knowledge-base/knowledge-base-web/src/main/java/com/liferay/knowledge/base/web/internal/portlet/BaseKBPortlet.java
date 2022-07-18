@@ -34,7 +34,6 @@ import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -52,15 +51,11 @@ import java.io.IOException;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -177,31 +172,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	protected abstract void doRender(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException;
-
-	@Override
-	protected void include(
-			String path, PortletRequest portletRequest,
-			PortletResponse portletResponse, String lifecycle)
-		throws IOException, PortletException {
-
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		PortletContext portletContext =
-			(PortletContext)httpServletRequest.getAttribute(
-				MVCRenderConstants.
-					PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX +
-						path);
-
-		if (portletContext == null) {
-			portletContext = getPortletContext();
-		}
-
-		PortletRequestDispatcher portletRequestDispatcher =
-			portletContext.getRequestDispatcher(path);
-
-		portletRequestDispatcher.include(portletRequest, portletResponse);
-	}
 
 	@Override
 	protected boolean isSessionErrorException(Throwable throwable) {

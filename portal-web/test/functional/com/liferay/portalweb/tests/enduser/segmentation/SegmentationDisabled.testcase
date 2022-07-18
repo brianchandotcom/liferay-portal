@@ -196,6 +196,79 @@ definition {
 		}
 	}
 
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user does not have permissions to Instance Settings
+	When user navigates to Segments Admin
+	Then alert is shown informing to contact system administrator"
+	@priority = "3"
+	test ViewSegmentationDisabledWarningUserWithoutPermissionAtSegmentsList {
+
+
+		task ("Add user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add role and assign it to the user") {
+			JSONRole.addRegularRole(
+                roleKey = "Segmentation Permissions",
+                roleTitle = "Segmentation Permissions");
+
+            Permissions.definePermissionViaJSONAPI(
+                resourceAction = "VIEW",
+                resourceName = "com.liferay.segments",
+                roleTitle = "Segmentation Permissions");
+
+			Permissions.definePermissionViaJSONAPI(
+                resourceAction = "VIEW_SITE_ADMINISTRATION",
+                resourceName = "com.liferay.portal.kernel.model.Group",
+                roleTitle = "Segmentation Permissions");
+
+			Permissions.definePermissionViaJSONAPI(
+                resourceAction = "ACCESS_IN_CONTROL_PANEL",
+                resourceName = "com_liferay_segments_web_internal_portlet_SegmentsPortlet",
+                roleTitle = "Segmentation Permissions");
+
+			Permissions.definePermissionViaJSONAPI(
+                resourceAction = "VIEW_SITE_ADMINISTRATION",
+                resourceName = "com.liferay.depot.model.DepotEntry",
+                roleTitle = "Segmentation Permissions");
+
+            JSONRole.assignRoleToUser(
+                roleTitle = "Segmentation Permissions",
+                userEmailAddress = "userea@liferay.com"); 
+		}
+
+		task ("Login with the new user") {
+			Navigator.openURL();
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Open the Segments List and check if warning is shown informing to contact system administrator appears") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			Segmentation.checkSegmentationDisabledWarningUserWithoutPermission();
+		}
+
+		task ("Login with the user admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+	}
+
 	
 
 	@description = "LPS-152541 Given the 'Assign Roles by Segments' is disabled at System Settings

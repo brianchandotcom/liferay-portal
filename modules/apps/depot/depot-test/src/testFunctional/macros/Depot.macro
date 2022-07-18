@@ -393,8 +393,6 @@ definition {
 		for (var siteName : list "${siteList}") {
 			Button.clickAdd();
 
-			SelectFrame(locator1 = "IFrame#SELECT_SITES");
-
 			Navigator.gotoNavItem(navItem = "All Sites");
 
 			if (isSet(parentSiteName)) {

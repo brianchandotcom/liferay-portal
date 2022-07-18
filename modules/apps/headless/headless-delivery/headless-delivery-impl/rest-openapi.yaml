@@ -5265,7 +5265,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '4.0.32'."
+        'com.liferay.headless.delivery.client', and version '4.0.34'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -5869,6 +5869,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -6136,6 +6144,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -6368,6 +6384,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -6490,6 +6514,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -6529,6 +6561,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -6721,6 +6761,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -6853,6 +6901,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -6889,6 +6945,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -7082,6 +7146,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -7237,6 +7309,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -7613,6 +7693,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -7813,6 +7901,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -7946,6 +8042,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -7982,6 +8086,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -8152,6 +8264,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -8428,6 +8548,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -8467,6 +8595,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -8785,6 +8921,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -8824,6 +8968,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -8994,6 +9146,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -9269,6 +9429,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -9690,6 +9858,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -9953,6 +10129,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -10129,6 +10313,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -10458,6 +10650,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -10548,6 +10748,14 @@ paths:
                 - in: path
                   name: externalReferenceCode
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -10723,6 +10931,14 @@ paths:
                 - in: path
                   name: externalReferenceCode
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -11116,6 +11332,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -11424,6 +11648,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -11514,6 +11746,14 @@ paths:
                 - in: path
                   name: externalReferenceCode
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -11751,6 +11991,14 @@ paths:
                 - in: path
                   name: externalReferenceCode
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -11994,6 +12242,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -12232,6 +12488,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -12291,6 +12555,14 @@ paths:
                 - in: path
                   name: friendlyUrlPath
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
                   schema:
                       type: string
                 - in: header
@@ -12610,6 +12882,14 @@ paths:
                 - in: path
                   name: friendlyUrlPath
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
                   schema:
                       type: string
                 - in: header
@@ -13206,6 +13486,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -13442,6 +13730,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -13540,6 +13836,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -13608,6 +13912,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
                 - in: header
                   name: Accept-Language
                   schema:
@@ -13637,6 +13949,14 @@ paths:
                 - in: path
                   name: uuid
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
                   schema:
                       type: string
                 - in: header
@@ -13833,6 +14153,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -13964,6 +14292,14 @@ paths:
                 - in: path
                   name: externalReferenceCode
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -14181,6 +14517,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -14416,6 +14760,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
                 - in: header
                   name: Accept-Language
                   schema:
@@ -14619,6 +14971,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -14752,6 +15112,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -14775,6 +15143,14 @@ paths:
                 - in: path
                   name: contentTemplateId
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -14846,6 +15222,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -15087,6 +15471,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -15193,6 +15585,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

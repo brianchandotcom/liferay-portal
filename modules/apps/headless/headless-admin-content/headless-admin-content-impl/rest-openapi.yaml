@@ -263,6 +263,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
                 - in: header
                   name: Accept-Language
                   schema:
@@ -453,6 +461,14 @@ paths:
                   schema:
                       format: double
                       type: number
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

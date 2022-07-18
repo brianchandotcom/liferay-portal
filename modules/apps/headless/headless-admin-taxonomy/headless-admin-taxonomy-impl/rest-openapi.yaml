@@ -363,7 +363,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.taxonomy.client', and version '4.0.15'."
+        'com.liferay.headless.admin.taxonomy.client', and version '4.0.16'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -637,6 +637,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -806,6 +814,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -1152,6 +1168,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -1407,6 +1431,14 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -1548,6 +1580,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -1796,6 +1836,14 @@ paths:
                 - in: path
                   name: externalReferenceCode
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
                   schema:
                       type: string
             responses:

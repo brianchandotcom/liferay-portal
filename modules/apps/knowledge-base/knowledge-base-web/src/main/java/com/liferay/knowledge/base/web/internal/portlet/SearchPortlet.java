@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
@@ -72,29 +71,14 @@ public class SearchPortlet extends BaseKBPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String mvcPath = ParamUtil.getString(
-			renderRequest, "mvcPath", viewTemplate);
-
-		long assetCategoryId = ParamUtil.getLong(renderRequest, "categoryId");
-		String assetTagName = ParamUtil.getString(renderRequest, "tag");
-
-		if ((mvcPath.equals(viewTemplate) && (assetCategoryId > 0)) ||
-			(mvcPath.equals(viewTemplate) &&
-			 Validator.isNotNull(assetTagName))) {
-
-			String path = templatePath + "view_prp_articles.jsp";
-
-			include(path, renderRequest, renderResponse);
-		}
-		else if (SessionErrors.contains(
-					renderRequest, NoSuchArticleException.class.getName()) ||
-				 SessionErrors.contains(
-					 renderRequest, NoSuchCommentException.class.getName()) ||
-				 SessionErrors.contains(
-					 renderRequest,
-					 NoSuchSubscriptionException.class.getName()) ||
-				 SessionErrors.contains(
-					 renderRequest, PrincipalException.getNestedClasses())) {
+		if (SessionErrors.contains(
+				renderRequest, NoSuchArticleException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, NoSuchCommentException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, NoSuchSubscriptionException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include("/admin/common/error.jsp", renderRequest, renderResponse);
 		}

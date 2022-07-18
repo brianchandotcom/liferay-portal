@@ -160,25 +160,9 @@ public class SalesforceObjectEntryManagerImpl
 			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
 
-		JSONObject responseJSONObject = _salesforceHttp.get(
-			companyId, getGroupId(objectDefinition, scopeKey),
-			_getLocation(objectDefinition, pagination, search, sorts));
-
-		if ((responseJSONObject == null) ||
-			(responseJSONObject.length() == 0)) {
-
-			return Page.of(Collections.emptyList());
-		}
-
-		JSONArray jsonArray = Validator.isNotNull(search) ?
-			responseJSONObject.getJSONArray("searchRecords") :
-				responseJSONObject.getJSONArray("records");
-
-		return Page.of(
-			_toObjectEntries(
-				companyId, dtoConverterContext, jsonArray, objectDefinition),
-			pagination,
-			_getTotalCount(companyId, objectDefinition, scopeKey, search));
+		return _getObjectEntries(
+			companyId, objectDefinition, scopeKey, dtoConverterContext,
+			pagination, search, sorts);
 	}
 
 	@Override
@@ -189,7 +173,9 @@ public class SalesforceObjectEntryManagerImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return null;
+		return _getObjectEntries(
+			companyId, objectDefinition, scopeKey, dtoConverterContext,
+			pagination, search, sorts);
 	}
 
 	@Override
@@ -280,6 +266,33 @@ public class SalesforceObjectEntryManagerImpl
 				_getSalesforceObjectName(objectDefinition.getName()),
 				_getSorts(objectDefinition.getObjectDefinitionId(), sorts),
 				_getSalesforcePagination(pagination)));
+	}
+
+	private Page<ObjectEntry> _getObjectEntries(
+			long companyId, ObjectDefinition objectDefinition, String scopeKey,
+			DTOConverterContext dtoConverterContext, Pagination pagination,
+			String search, Sort[] sorts)
+		throws Exception {
+
+		JSONObject responseJSONObject = _salesforceHttp.get(
+			companyId, getGroupId(objectDefinition, scopeKey),
+			_getLocation(objectDefinition, pagination, search, sorts));
+
+		if ((responseJSONObject == null) ||
+			(responseJSONObject.length() == 0)) {
+
+			return Page.of(Collections.emptyList());
+		}
+
+		JSONArray jsonArray = Validator.isNotNull(search) ?
+			responseJSONObject.getJSONArray("searchRecords") :
+				responseJSONObject.getJSONArray("records");
+
+		return Page.of(
+			_toObjectEntries(
+				companyId, dtoConverterContext, jsonArray, objectDefinition),
+			pagination,
+			_getTotalCount(companyId, objectDefinition, scopeKey, search));
 	}
 
 	private ObjectField _getObjectFieldByExternalReferenceCode(

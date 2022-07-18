@@ -31,6 +31,21 @@ definition {
 		}
 	}
 
+	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
+	And user has permissions to Instance Settings
+	When user navigates to Segments Admin
+	Then alert is shown including breadcrumb link to segments service"
+	@priority = "4"
+	test ViewReEnableAlertLinkAtSegmentsList {
+
+		task ("Open the Segments List and check if warning with link appears") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			Segmentation.checkSegmentationReEnableWarningLink();
+		}
+
+	}
+
 	@description = "LPS-152541 Given the 'Assign Roles by Segments' is disabled at System Settings
     When user navigates to Segmentation at Instance Settings
     Then should see an alert informing that is disabled and how to re-enable it "

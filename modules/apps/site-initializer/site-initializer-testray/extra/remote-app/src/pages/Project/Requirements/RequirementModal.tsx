@@ -22,7 +22,6 @@ import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
 import Modal from '../../../components/Modal';
-import {CreateRequirement, UpdateRequirement} from '../../../graphql/mutations';
 import {
 	CTypePagination,
 	TestrayComponent,
@@ -30,6 +29,7 @@ import {
 } from '../../../graphql/queries';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
+import {createRequirement, updateRequirement} from '../../../services/rest';
 
 const requirementFormDefault = {
 	componentId: '',
@@ -179,7 +179,16 @@ type RequirementsModalProps = {
 };
 
 const RequirementsModal: React.FC<RequirementsModalProps> = ({
-	modal: {modalState, observer, onChange, onClose, onSubmit, visible},
+	modal: {
+		modalState,
+		observer,
+		onChange,
+		onClose,
+		onError,
+		onSave,
+		onSubmitRest,
+		visible,
+	},
 	projectId,
 }) => {
 	const [form, setForm] = useState<RequirementsForm>(requirementFormDefault);
@@ -191,7 +200,7 @@ const RequirementsModal: React.FC<RequirementsModalProps> = ({
 	}, [visible, modalState]);
 
 	const _onSubmit = () =>
-		onSubmit(
+		onSubmitRest(
 			{
 				componentId: Number(form.componentId),
 				description: form.description,
@@ -204,10 +213,12 @@ const RequirementsModal: React.FC<RequirementsModalProps> = ({
 				summary: form.summary,
 			},
 			{
-				createMutation: CreateRequirement,
-				updateMutation: UpdateRequirement,
+				create: createRequirement,
+				update: updateRequirement,
 			}
-		).then(() => setForm(requirementFormDefault));
+		)
+			.then(onSave)
+			.catch(onError);
 
 	return (
 		<Modal

@@ -608,6 +608,23 @@ definition {
 			value1 = "${pageNumber}");
 	}
 
+	macro viewAutocompleteSuggestions {
+		Type(
+			locator1 = "ACSegments#TEXT_INPUT",
+			value1 = "${textInput}");
+
+		AssertTextEquals.assertPartialText(
+			index = "1",
+			locator1 = "ACSegments#SEGMENT_AUTOCOMPLETE_DROPDOWN",
+			value1 = "${autocompleteText}");
+
+		if (isSet(notPresent)) {
+			AssertTextNotEquals.assertNotPartialText(
+				locator1 = "ACSegments#SEGMENT_AUTOCOMPLETE_DROPDOWN",
+				value1 = "${notPresent}");
+		}
+	}
+
 	macro viewBreakdownChartsEntry {
 		AssertTextEquals.assertPartialText(
 			locator1 = "ACSegments#BREAKDOWN_CHART",

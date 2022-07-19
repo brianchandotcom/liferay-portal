@@ -21,83 +21,13 @@ CommerceInventoryWarehousesDisplayContext commerceInventoryWarehousesDisplayCont
 %>
 
 <c:if test="<%= commerceInventoryWarehousesDisplayContext.hasManageCommerceInventoryWarehousePermission() %>">
-
-	<%
-	String countryTwoLettersIsoCode = commerceInventoryWarehousesDisplayContext.getCountryTwoLettersIsoCode();
-	List<ManagementBarFilterItem> managementBarFilterItems = commerceInventoryWarehousesDisplayContext.getManagementBarFilterItems();
-
-	String managementBarFilterValue = null;
-
-	if (Validator.isNotNull(countryTwoLettersIsoCode)) {
-		Country country = commerceInventoryWarehousesDisplayContext.getCountry(countryTwoLettersIsoCode);
-
-		for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems) {
-			if (country.getCountryId() == Long.valueOf(managementBarFilterItem.getId())) {
-				managementBarFilterValue = managementBarFilterItem.getLabel();
-
-				break;
-			}
-		}
-	}
-	%>
-
 	<liferay-ui:error exception="<%= CommerceGeocoderException.class %>">
 		<liferay-ui:message arguments="<%= HtmlUtil.escape(errorException.toString()) %>" key="an-unexpected-error-occurred-while-invoking-the-geolocation-service-x" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
-	<liferay-frontend:management-bar
-		searchContainerId="commerceInventoryWarehouses"
-	>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all", "active", "inactive"} %>'
-				portletURL="<%= commerceInventoryWarehousesDisplayContext.getPortletURL() %>"
-			/>
-
-			<liferay-frontend:management-bar-filter
-				label="country"
-				managementBarFilterItems="<%= managementBarFilterItems %>"
-				value="<%= managementBarFilterValue %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= commerceInventoryWarehousesDisplayContext.getOrderByCol() %>"
-				orderByType="<%= commerceInventoryWarehousesDisplayContext.getOrderByType() %>"
-				orderColumns='<%= new String[] {"city", "name"} %>'
-				portletURL="<%= commerceInventoryWarehousesDisplayContext.getPortletURL() %>"
-			/>
-
-			<li>
-				<liferay-commerce:search-input
-					actionURL="<%= commerceInventoryWarehousesDisplayContext.getPortletURL() %>"
-					formName="searchFm"
-				/>
-			</li>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= commerceInventoryWarehousesDisplayContext.getPortletURL() %>"
-				selectedDisplayStyle="list"
-			/>
-
-			<portlet:renderURL var="addCommerceInventoryWarehouseURL">
-				<portlet:param name="mvcRenderCommandName" value="/commerce_inventory_warehouse/edit_commerce_inventory_warehouse" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="countryId" value="<%= String.valueOf(countryTwoLettersIsoCode) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-warehouse") %>'
-					url="<%= addCommerceInventoryWarehouseURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</liferay-frontend:management-bar-buttons>
-	</liferay-frontend:management-bar>
+	<clay:management-toolbar
+		managementToolbarDisplayContext="<%= new CommerceInventoryWarehousesManagementToolbarDisplayContext(commerceInventoryWarehousesDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
+	/>
 
 	<div class="container-fluid container-fluid-max-xl">
 		<liferay-ui:search-container

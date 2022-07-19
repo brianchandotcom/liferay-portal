@@ -24,26 +24,21 @@ import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.util.CommerceUtil;
-import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -118,6 +113,13 @@ public class CommerceInventoryWarehousesDisplayContext {
 		return _commerceInventoryWarehouse;
 	}
 
+	public List<Country> getCountries() {
+		List<Country> countries = _commerceCountryManager.getWarehouseCountries(
+			_cpRequestHelper.getCompanyId(), true);
+
+		return ListUtil.unique(countries);
+	}
+
 	public Country getCountry(long countryId) throws PortalException {
 		return _countryService.getCountry(countryId);
 	}
@@ -133,29 +135,6 @@ public class CommerceInventoryWarehousesDisplayContext {
 		return ParamUtil.getString(
 			_cpRequestHelper.getRenderRequest(), "countryTwoLettersISOCode",
 			null);
-	}
-
-	public List<ManagementBarFilterItem> getManagementBarFilterItems()
-		throws PortalException, PortletException {
-
-		List<Country> countries = _commerceCountryManager.getWarehouseCountries(
-			_cpRequestHelper.getCompanyId(), true);
-
-		countries = ListUtil.unique(countries);
-
-		List<ManagementBarFilterItem> managementBarFilterItems =
-			new ArrayList<>(countries.size() + 1);
-
-		managementBarFilterItems.add(_getManagementBarFilterItem(-1, "all"));
-
-		for (Country country : countries) {
-			managementBarFilterItems.add(
-				_getManagementBarFilterItem(
-					country.getCountryId(),
-					country.getName(_cpRequestHelper.getLocale())));
-		}
-
-		return managementBarFilterItems;
 	}
 
 	public String getOrderByCol() {
@@ -292,37 +271,6 @@ public class CommerceInventoryWarehousesDisplayContext {
 			_cpRequestHelper.getRenderRequest(), "keywords");
 
 		return _keywords;
-	}
-
-	private ManagementBarFilterItem _getManagementBarFilterItem(
-			long countryId, String label)
-		throws PortalException, PortletException {
-
-		boolean active = false;
-
-		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), _cpRequestHelper.getRenderResponse());
-
-		if (countryId > 0) {
-			String countryTwoLettersIsoCode = getCountryTwoLettersIsoCode();
-			Country country = getCountry(countryId);
-
-			if (Validator.isNotNull(countryTwoLettersIsoCode) &&
-				countryTwoLettersIsoCode.equals(country.getA2())) {
-
-				active = true;
-			}
-
-			portletURL.setParameter(
-				"countryTwoLettersISOCode", country.getA2());
-		}
-		else {
-			portletURL.setParameter(
-				"countryTwoLettersISOCode", StringPool.BLANK);
-		}
-
-		return new ManagementBarFilterItem(
-			active, String.valueOf(countryId), label, portletURL.toString());
 	}
 
 	private String _getNavigation() {

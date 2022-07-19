@@ -66,8 +66,6 @@ export default function GlobalJSCETsConfiguration({
 			IGlobalJSCETGroup
 		>();
 
-		let order = 1;
-
 		[...fixedGlobalJSCETs, ...globalJSCETs].forEach((globalJSCET) => {
 			const groupId =
 				globalJSCET.scriptLocation || DEFAULT_SCRIPT_LOCATION_OPTION;
@@ -81,14 +79,26 @@ export default function GlobalJSCETsConfiguration({
 
 			const group = globalJSCETsGroups.get(groupId)!;
 
-			group.items.push({globalJSCET, order});
-
-			order = order + 1;
+			group.items.push({globalJSCET, order: 0});
 		});
 
-		return SCRIPT_LOCATION_LABELS.map(({scriptLocation}) =>
-			globalJSCETsGroups.get(scriptLocation)
-		).filter((group) => group) as IGlobalJSCETGroup[];
+		let order = 1;
+		const sortedGroups: IGlobalJSCETGroup[] = [];
+
+		SCRIPT_LOCATION_LABELS.forEach(({scriptLocation}) => {
+			const group = globalJSCETsGroups.get(scriptLocation);
+
+			if (!group || !group.items.length) {
+				return;
+			}
+
+			sortedGroups.push({
+				items: group.items.map((item) => ({...item, order: order++})),
+				scriptLocation,
+			});
+		});
+
+		return sortedGroups;
 	}, [fixedGlobalJSCETs, globalJSCETs]);
 
 	const deleteGlobalJSCET = (deletedGlobalJSCET: IGlobalJSCET) => {

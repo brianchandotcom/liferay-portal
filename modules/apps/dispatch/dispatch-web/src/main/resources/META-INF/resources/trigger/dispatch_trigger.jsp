@@ -19,13 +19,13 @@
 <%
 DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(DispatchWebKeys.DISPATCH_TRIGGER);
 
-Date endDate = (dispatchTrigger.getEndDate() == null) ? new Date() : dispatchTrigger.getEndDate();
+Date timeZoneEndDate = (dispatchTrigger.getTimeZoneEndDate() == null) ? new Date() : dispatchTrigger.getTimeZoneEndDate();
 
-Date startDate = (dispatchTrigger.getStartDate() == null) ? new Date() : dispatchTrigger.getStartDate();
+Date timeZoneStartDate = (dispatchTrigger.getTimeZoneStartDate() == null) ? new Date() : dispatchTrigger.getTimeZoneStartDate();
 
-Calendar endDateCalendar = CalendarFactoryUtil.getCalendar(endDate.getTime());
+Calendar endDateCalendar = CalendarFactoryUtil.getCalendar(timeZoneEndDate.getTime());
 
-Calendar startDateCalendar = CalendarFactoryUtil.getCalendar(startDate.getTime());
+Calendar startDateCalendar = CalendarFactoryUtil.getCalendar(timeZoneStartDate.getTime());
 
 int endDateAmPm = endDateCalendar.get(Calendar.AM_PM);
 int endDateDay = endDateCalendar.get(Calendar.DATE);

@@ -107,6 +107,13 @@ public interface DLFolderLocalService
 			boolean hidden, ServiceContext serviceContext)
 		throws PortalException;
 
+	public DLFolder addFolder(
+			String externalReferenceCode, long userId, long groupId,
+			long repositoryId, boolean mountPoint, long parentFolderId,
+			String name, String description, boolean hidden,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void clearDLFileEntryTypeDLFolders(long fileEntryTypeId);
 
 	/**

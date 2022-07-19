@@ -283,6 +283,18 @@ public class DLAppServiceWrapper
 			repositoryId, parentFolderId, name, description, serviceContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder addFolder(
+			String externalReferenceCode, long repositoryId,
+			long parentFolderId, String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppService.addFolder(
+			externalReferenceCode, repositoryId, parentFolderId, name,
+			description, serviceContext);
+	}
+
 	/**
 	 * Adds a temporary file entry.
 	 *
@@ -1083,6 +1095,16 @@ public class DLAppServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlAppService.getFolder(repositoryId, parentFolderId, name);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder
+			getFolderByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppService.getFolderByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	/**

@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE_RESOURCE_NOT_FOUND</td>
-	<td>//div[@class='portlet-content']</td>
+	<td>//div[@id='wrapper']/section[@id='content']</td>
 	<td></td>
 </tr>
 <tr>

@@ -32,12 +32,40 @@ definition {
 	}
 
 	@description = "If company.log.enabled=false, there should not be additional logging files created for each company and the UI access point should be unavailable"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CompanyLoggingDisabled {
+		property custom.properties = "company.log.enabled=false";
 
-		// TODO LRQA-75853
+		task ("When the user tries navigating to the company logging UI access point with company logs disabled") {
+			var baseURL = PropsUtil.get("portal.url");
 
+			Open.openNoError(locator1 = "${baseURL}/o/company-log");
+		}
+
+		task ("Then the page cannot be accessed") {
+			AssertElementNotPresent(
+				key_virtualHost = "liferay.com",
+				locator1 = "CompanyLogging#COMPANY_LOG_TITLE");
+
+			AssertLocation.assertPartialLocation(value1 = "web/guest");
+		}
+
+		task ("When the user adds a virtual instance") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+		}
+
+		task ("Then additional company logging files should not be created") {
+			var homeDir = PropsUtil.get("liferay.home.dir.name");
+
+			var companiesFolderExists = FileUtil.exists("${homeDir}/logs/companies");
+
+			if ("${companiesFolderExists}" == "true") {
+				fail("logs/companies folder exists");
+			}
+		}
 	}
 
 	@description = "An Omniadmin can get log names from all companies and download logs from all companies though the UI"

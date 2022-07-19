@@ -40,14 +40,15 @@ public class DLFolderServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFolderServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static DLFolder addFolder(
-			long groupId, long repositoryId, boolean mountPoint,
-			long parentFolderId, String name, String description,
+			String externalReferenceCode, long groupId, long repositoryId,
+			boolean mountPoint, long parentFolderId, String name,
+			String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFolder(
-			groupId, repositoryId, mountPoint, parentFolderId, name,
-			description, serviceContext);
+			externalReferenceCode, groupId, repositoryId, mountPoint,
+			parentFolderId, name, description, serviceContext);
 	}
 
 	public static void deleteFolder(long folderId) throws PortalException {
@@ -66,6 +67,14 @@ public class DLFolderServiceUtil {
 		throws PortalException {
 
 		getService().deleteFolder(groupId, parentFolderId, name);
+	}
+
+	public static DLFolder getDLFolderByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getDLFolderByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	public static List<Object> getFileEntriesAndFileShortcuts(

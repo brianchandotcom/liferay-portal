@@ -274,13 +274,14 @@ public class DLAppServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addFolder(
-			long repositoryId, long parentFolderId, String name,
-			String description,
+			String externalReferenceCode, long repositoryId,
+			long parentFolderId, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlAppService.addFolder(
-			repositoryId, parentFolderId, name, description, serviceContext);
+			externalReferenceCode, repositoryId, parentFolderId, name,
+			description, serviceContext);
 	}
 
 	/**
@@ -1083,6 +1084,16 @@ public class DLAppServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlAppService.getFolder(repositoryId, parentFolderId, name);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder
+			getFolderByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppService.getFolderByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

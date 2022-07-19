@@ -140,16 +140,9 @@ public class RedundantLogCheck extends BaseCheck {
 		while (true) {
 			if ((detailAST1.getType() != detailAST2.getType()) ||
 				!StringUtil.equals(
-					detailAST1.getText(), detailAST2.getText())) {
-
-				return false;
-			}
-
-			DetailAST firstChildDetailAST1 = detailAST1.getFirstChild();
-			DetailAST firstChildDetailAST2 = detailAST2.getFirstChild();
-
-			if (!_compareDetailAST(
-					firstChildDetailAST1, firstChildDetailAST2)) {
+					detailAST1.getText(), detailAST2.getText()) ||
+				!_compareDetailAST(
+					detailAST1.getFirstChild(), detailAST2.getFirstChild())) {
 
 				return false;
 			}

@@ -165,19 +165,19 @@ public class RedundantLogCheck extends BaseCheck {
 				return false;
 			}
 
-			DetailAST nextDetailAST1 =
+			DetailAST nextSiblingDetailAST1 =
 				detailAST1ChildDetailAST.getNextSibling();
-			DetailAST nextDetailAST2 =
+			DetailAST nextSiblingDetailAST2 =
 				detailAST2ChildDetailAST.getNextSibling();
 
-			if ((nextDetailAST1 != null) && (nextDetailAST2 != null)) {
-				detailAST1ChildDetailAST = nextDetailAST1;
-				detailAST2ChildDetailAST = nextDetailAST2;
+			if ((nextSiblingDetailAST1 != null) && (nextSiblingDetailAST2 != null)) {
+				detailAST1ChildDetailAST = nextSiblingDetailAST1;
+				detailAST2ChildDetailAST = nextSiblingDetailAST2;
 
 				continue;
 			}
 
-			if (nextDetailAST1 == nextDetailAST2) {
+			if (nextSiblingDetailAST1 == nextSiblingDetailAST2) {
 				return true;
 			}
 

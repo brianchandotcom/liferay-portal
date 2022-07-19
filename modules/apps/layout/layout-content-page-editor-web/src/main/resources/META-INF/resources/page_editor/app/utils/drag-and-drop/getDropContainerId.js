@@ -20,11 +20,7 @@ export default function getDropContainerId(
 	targetItem,
 	targetPosition
 ) {
-	if (
-		targetPosition === TARGET_POSITIONS.MIDDLE &&
-		(targetItem.type === LAYOUT_DATA_ITEM_TYPES.container ||
-			targetItem.type === LAYOUT_DATA_ITEM_TYPES.form)
-	) {
+	if (targetPosition === TARGET_POSITIONS.MIDDLE) {
 		return targetItem.itemId;
 	}
 
@@ -34,11 +30,7 @@ export default function getDropContainerId(
 		return null;
 	}
 
-	if (
-		targetParent.type === LAYOUT_DATA_ITEM_TYPES.column ||
-		targetParent.type === LAYOUT_DATA_ITEM_TYPES.collectionItem ||
-		targetParent.type === LAYOUT_DATA_ITEM_TYPES.dropZone
-	) {
+	if (targetParent.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
 		return layoutData.items[targetParent.parentId].itemId;
 	}
 

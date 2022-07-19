@@ -15,8 +15,9 @@ html#{$cadmin-selector} {
 				transition: opacity 0.2s;
 			}
 
-			.highlighted .page-editor__fragment-content,
-			.highlighted .empty {
+			.drop-container .page-editor__fragment-content,
+			.drop-container .empty,
+			.drop-container.empty {
 				opacity: 1;
 			}
 		}

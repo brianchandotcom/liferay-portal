@@ -77,7 +77,7 @@ public class DLFileEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		DLFolder folder = DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
@@ -86,7 +86,7 @@ public class DLFileEntryServiceTest {
 		DLFileEntry dlFileEntry = addDLFileEntry(folder.getFolderId(), true);
 
 		DLFolder destFolder = DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
@@ -106,7 +106,7 @@ public class DLFileEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		DLFolder folder = DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
@@ -131,7 +131,7 @@ public class DLFileEntryServiceTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, true);
 
 		DLFolder destFolder = DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
@@ -151,7 +151,7 @@ public class DLFileEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		DLFolder folder = DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
@@ -160,7 +160,7 @@ public class DLFileEntryServiceTest {
 		DLFileEntry dlFileEntry = addDLFileEntry(folder.getFolderId(), false);
 
 		DLFolder destFolder = DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
@@ -180,7 +180,7 @@ public class DLFileEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		DLFolder folder = DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
@@ -205,7 +205,7 @@ public class DLFileEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		DLFolder destFolder = DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,

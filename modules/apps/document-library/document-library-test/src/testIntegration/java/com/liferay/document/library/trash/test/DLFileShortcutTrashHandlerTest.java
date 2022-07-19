@@ -234,8 +234,9 @@ public class DLFileShortcutTrashHandlerTest
 		throws Exception {
 
 		Folder folder = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), group.getGroupId(), parentBaseModelId,
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			parentBaseModelId, RandomTestUtil.randomString(), StringPool.BLANK,
+			serviceContext);
 
 		return (BaseModel<?>)folder.getModel();
 	}

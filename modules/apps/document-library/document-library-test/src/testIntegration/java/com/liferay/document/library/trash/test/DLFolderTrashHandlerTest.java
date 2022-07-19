@@ -196,7 +196,7 @@ public class DLFolderTrashHandlerTest
 				groupId, TestPropsValues.getUserId());
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			groupId, folderId, getSearchKeywords(),
+			null, groupId, folderId, getSearchKeywords(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		return (DLFolder)folder.getModel();
@@ -249,7 +249,7 @@ public class DLFolderTrashHandlerTest
 		throws Exception {
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentBaseModelId,
+			null, group.getGroupId(), parentBaseModelId,
 			RandomTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
 			RandomTestUtil.randomString(), serviceContext);
 

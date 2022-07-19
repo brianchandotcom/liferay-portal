@@ -120,7 +120,7 @@ public class RepositoryTest {
 		repositoryIds[0] = repository.getRepositoryId();
 
 		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
-			_group.getGroupId(), _group.getGroupId(), false,
+			null, _group.getGroupId(), _group.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new ServiceContext());

@@ -81,7 +81,7 @@ public class DLFileRankTrashHandlerTest {
 		throws Exception {
 
 		return DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentBaseModelId,
+			null, group.getGroupId(), parentBaseModelId,
 			RandomTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
 			RandomTestUtil.randomString(), serviceContext);
 	}

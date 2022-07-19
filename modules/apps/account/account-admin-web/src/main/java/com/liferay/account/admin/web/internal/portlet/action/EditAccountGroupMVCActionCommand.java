@@ -15,11 +15,17 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.exception.DuplicateAccountGroupExternalReferenceCodeException;
 import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -28,6 +34,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,9 +48,19 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_GROUPS_ADMIN,
 		"mvc.command.name=/account_admin/edit_account_group"
 	},
-	service = MVCActionCommand.class
+	service = AopService.class
 )
-public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
+public class EditAccountGroupMVCActionCommand
+	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		return super.processAction(actionRequest, actionResponse);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -52,21 +69,47 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		try {
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		if (cmd.equals(Constants.ADD)) {
-			AccountGroup accountGroup = _addAccountGroup(actionRequest);
+			if (cmd.equals(Constants.ADD)) {
+				AccountGroup accountGroup = _addAccountGroup(actionRequest);
 
-			redirect = HttpComponentsUtil.setParameter(
-				redirect, actionResponse.getNamespace() + "accountGroupId",
-				accountGroup.getAccountGroupId());
+				redirect = HttpComponentsUtil.setParameter(
+					redirect, actionResponse.getNamespace() + "accountGroupId",
+					accountGroup.getAccountGroupId());
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				_updateAccountGroup(actionRequest);
+			}
+
+			if (Validator.isNotNull(redirect)) {
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
 		}
-		else if (cmd.equals(Constants.UPDATE)) {
-			_updateAccountGroup(actionRequest);
-		}
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
-		if (Validator.isNotNull(redirect)) {
-			sendRedirect(actionRequest, actionResponse, redirect);
+				actionResponse.setRenderParameter(
+					"mvcPath", "/account_groups_admin/error.jsp");
+			}
+			else if (exception instanceof
+						DuplicateAccountGroupExternalReferenceCodeException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				hideDefaultErrorMessage(actionRequest);
+
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName",
+					"/account_admin/edit_account_group");
+			}
+
+			throw exception;
+		}
+		catch (Throwable throwable) {
+			throw new Exception(throwable);
 		}
 	}
 
@@ -79,8 +122,12 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description");
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		return _accountGroupService.addAccountGroup(
+		AccountGroup accountGroup = _accountGroupService.addAccountGroup(
 			themeDisplay.getUserId(), description, name);
+
+		return _accountGroupLocalService.updateExternalReferenceCode(
+			accountGroup.getAccountGroupId(),
+			ParamUtil.getString(actionRequest, "externalReferenceCode"));
 	}
 
 	private void _updateAccountGroup(ActionRequest actionRequest)
@@ -92,9 +139,16 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description");
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		_accountGroupService.updateAccountGroup(
+		AccountGroup accountGroup = _accountGroupService.updateAccountGroup(
 			accountGroupId, description, name);
+
+		_accountGroupService.updateExternalReferenceCode(
+			accountGroup.getAccountGroupId(),
+			ParamUtil.getString(actionRequest, "externalReferenceCode"));
 	}
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private AccountGroupService _accountGroupService;

@@ -9,6 +9,10 @@ $controlMenuHeight: 56px;
 			height: 100%;
 		}
 
+		nav {
+			border-right: 1px solid $gray-300;
+		}
+
 		.tbar-light {
 			background-color: $gray-200;
 		}

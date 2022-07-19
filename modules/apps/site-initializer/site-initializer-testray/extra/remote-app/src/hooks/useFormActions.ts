@@ -115,7 +115,8 @@ const useFormActions = (): Form => {
 				variables,
 				...options,
 			});
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 
 			throw error;
@@ -138,7 +139,8 @@ const useFormActions = (): Form => {
 			const response = await fn();
 
 			return response;
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 
 			throw error;

@@ -649,7 +649,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.RedundantBranchingStatementCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds unnecessary branching (`break`, `continue` or `return`) statements." />
-			<message key="branching.statement.redundant" value="Redundant log statement" />
+			<message key="branching.statement.redundant" value="Redundant ''{0}'' statement" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.RedundantLogCheck">
 			<property name="category" value="Performance" />

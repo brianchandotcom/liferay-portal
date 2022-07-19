@@ -134,6 +134,18 @@ definition {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
 	}
 
+	macro deleteByTrashTopSidebar {
+		Click(
+			key_propertyName = "${sidebarPropertyName}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_TOP_RIGHT_SIDEBAR");
+
+		AssertElementPresent(
+			key_modalMessage = "${modalMessage}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#MODAL_MESSAGE");
+
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
+	}
+
 	macro deleteLanguage {
 		Click(
 			key_language = "${translationOption}",
@@ -600,9 +612,9 @@ definition {
 				}
 
 				if (isSet(newSection)) {
-				Click(
-					key_buttonName = "${newSection}",
-					locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
+					Click(
+						key_buttonName = "${newSection}",
+						locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
 				}
 			}
 		}
@@ -627,8 +639,8 @@ definition {
 
 				if (isSet(templateLanguageOption)) {
 					Select(
-						key_selectorField = "Template Language",
 						key_sectionOption = "${sectionOption}",
+						key_selectorField = "Template Language",
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
 						value1 = "${templateLanguageOption}");
 				}
@@ -646,22 +658,22 @@ definition {
 						locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_TYPE_DROPDOWN_BY_POSITION");
 
 					Check.checkNotVisible(
-						locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_TYPE_OPTIONS_BY_POSITION",
-						key_checkboxValue = "${notificationTypeOption}");
-				}	
-				
+						key_checkboxValue = "${notificationTypeOption}",
+						locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_TYPE_OPTIONS_BY_POSITION");
+				}
+
 				if (isSet(executionTypeOption)) {
 					Select(
-						key_selectorField = "Execution Type",
 						key_sectionOption = "${sectionOption}",
+						key_selectorField = "Execution Type",
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
 						value1 = "${executionTypeOption}");
 				}
 
 				if (isSet(recipientTypeOption)) {
 					Select(
-						key_selectorField = "Recipient Type",
 						key_sectionOption = "${sectionOption}",
+						key_selectorField = "Recipient Type",
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
 						value1 = "${recipientTypeOption}");
 
@@ -709,8 +721,7 @@ definition {
 						key_buttonName = "${newSection}",
 						key_sectionOption = "${sectionOption}",
 						locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC_BY_POSITION");
-
-				}	
+				}
 			}
 		}
 	}
@@ -1102,6 +1113,67 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#MANAGE_TRANSLATIONS_MODAL");
 	}
 
+	macro viewMultipleNotificationPresent {
+		for (var sectionOption : list "${sectionOptionList}") {
+			if (isSet(name)) {
+				AssertTextEquals(
+					key_inputOption = "Name",
+					key_sectionOption = "${sectionOption}",
+					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
+					value1 = "${name} ${sectionOption}");
+			}
+
+			if (isSet(description)) {
+				AssertTextEquals(
+					key_inputOption = "Description",
+					key_sectionOption = "${sectionOption}",
+					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
+					value1 = "${description} ${sectionOption}");
+			}
+
+			if (isSet(templateLanguageOption)) {
+				AssertTextEquals(
+					key_sectionOption = "${sectionOption}",
+					key_selectorField = "Template Language",
+					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
+					value1 = "${templateLanguageOption} ${sectionOption}");
+			}
+
+			if (isSet(notificationTemplateValue)) {
+				AssertTextEquals(
+					key_sectionOption = "${sectionOption}",
+					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA_BY_POSITION",
+					value1 = "${notificationTemplateValue} ${sectionOption}");
+			}
+
+			if (isSet(notificationTypeOption)) {
+				Click(
+					key_sectionOption = "${sectionOption}",
+					locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_TYPE_DROPDOWN_BY_POSITION");
+
+				AssertElementPresent(
+					key_checkboxValue = "${notificationTypeOption}",
+					locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_TYPE_OPTIONS_BY_POSITION");
+			}
+
+			if (isSet(executionTypeOption)) {
+				AssertTextEquals(
+					key_sectionOption = "${sectionOption}",
+					key_selectorField = "Execution Type",
+					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
+					value1 = "${executionTypeOption}");
+			}
+
+			if (isSet(recipientTypeOption)) {
+				AssertTextEquals(
+					key_sectionOption = "${sectionOption}",
+					key_selectorField = "Recipient Type",
+					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
+					value1 = "${recipientTypeOption}");
+			}
+		}
+	}
+
 	macro viewNodeInfo {
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "${nodeType}");
 
@@ -1254,6 +1326,12 @@ definition {
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
 				value1 = "${notificationRecipientType}");
 		}
+	}
+
+	macro viewNotificationNotPresent {
+		AssertElementNotPresent(
+			key_nodeNotificationName = "${notificationName}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_VALUE_NODE_SIDEBAR");
 	}
 
 	macro viewNotificationPresent {
@@ -1533,84 +1611,4 @@ definition {
 			value1 = "${coordinateY}");
 	}
 
-	macro deleteByTrashTopSidebar {
-		Click(
-			key_propertyName = "${sidebarPropertyName}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_TOP_RIGHT_SIDEBAR");
-
-		AssertElementPresent(
-			key_modalMessage = "${modalMessage}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#MODAL_MESSAGE");
-
-		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
-
-
-	}
-
-	macro viewMultipleNotificationPresent {
-		for (var sectionOption : list "${sectionOptionList}") {
-			if (isSet(name)) {
-				AssertTextEquals(
-					key_inputOption = "Name",
-					key_sectionOption = "${sectionOption}",
-					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
-					value1 = "${name} ${sectionOption}");
-			}
-
-			if (isSet(description)) {
-				AssertTextEquals(
-					key_inputOption = "Description",
-					key_sectionOption = "${sectionOption}",
-					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
-					value1 = "${description} ${sectionOption}");
-			}
-
-			if (isSet(templateLanguageOption)) {
-				AssertTextEquals(
-					key_selectorField = "Template Language",
-					key_sectionOption = "${sectionOption}",
-					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
-					value1 = "${templateLanguageOption} ${sectionOption}");
-			}
-
-			if (isSet(notificationTemplateValue)) {
-				AssertTextEquals(
-					key_sectionOption = "${sectionOption}",
-					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA_BY_POSITION",
-					value1 = "${notificationTemplateValue} ${sectionOption}");
-			}
-
-			if (isSet(notificationTypeOption)) {
-				Click(
-					key_sectionOption = "${sectionOption}",
-					locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_TYPE_DROPDOWN_BY_POSITION");
-
-				AssertElementPresent(
-					locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_TYPE_OPTIONS_BY_POSITION",
-					key_checkboxValue = "${notificationTypeOption}");
-			}	
-			
-			if (isSet(executionTypeOption)) {
-				AssertTextEquals(
-					key_selectorField = "Execution Type",
-					key_sectionOption = "${sectionOption}",
-					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
-					value1 = "${executionTypeOption}");
-			}
-
-			if (isSet(recipientTypeOption)) {
-				AssertTextEquals(
-					key_selectorField = "Recipient Type",
-					key_sectionOption = "${sectionOption}",
-					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
-					value1 = "${recipientTypeOption}");
-			}
-		}
-	}
-
-	macro viewNotificationNotPresent {
-		AssertElementNotPresent(
-			key_nodeNotificationName = "${notificationName}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_VALUE_NODE_SIDEBAR");
-	}
 }

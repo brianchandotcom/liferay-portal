@@ -818,15 +818,15 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
 			name = "Liferay Notification",
 			newNotification = "true",
-			notificationTemplateValue = "Liferay Template",
-			notificationTypeOption = "email",
 			newSection = "New Notification",
-			sectionOptionList = "1,2,");
-		
-		ProcessBuilderKaleoDesignerReact.viewMultipleNotificationPresent(
-			notificationTypeOption = "email",
 			notificationTemplateValue = "Liferay Template",
+			notificationTypeOption = "email",
+			sectionOptionList = "1,2,");
+
+		ProcessBuilderKaleoDesignerReact.viewMultipleNotificationPresent(
 			name = "Liferay Notification",
+			notificationTemplateValue = "Liferay Template",
+			notificationTypeOption = "email",
 			sectionOptionList = "1,2");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -842,7 +842,6 @@ definition {
 			sidebarPropertyName = "Notification");
 
 		ProcessBuilderKaleoDesignerReact.viewNotificationNotPresent(notificationName = "Liferay Notification 1,Liferay Notification 2");
-
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to delete a node using the Delete key"

@@ -25,6 +25,7 @@ const AnalyticsCloud = () => {
 	useEffect(() => {
 		const getAnalyticsCloudData = async () => {
 			const {data} = await client.query({
+				fetchPolicy: 'network-only',
 				query: getAnalyticsCloudWorkspace,
 				variables: {
 					filter: `accountKey eq '${project.accountKey}'`,

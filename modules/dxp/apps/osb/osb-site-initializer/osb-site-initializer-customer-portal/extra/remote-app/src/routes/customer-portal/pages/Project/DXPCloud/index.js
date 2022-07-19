@@ -36,6 +36,7 @@ const DXPCloud = () => {
 	useEffect(() => {
 		const getDxpCloudEnvironmentData = async () => {
 			const {data} = await client.query({
+				fetchPolicy: 'network-only',
 				query: getDXPCloudEnvironment,
 				variables: {
 					filter: `accountKey eq '${project.accountKey}'`,

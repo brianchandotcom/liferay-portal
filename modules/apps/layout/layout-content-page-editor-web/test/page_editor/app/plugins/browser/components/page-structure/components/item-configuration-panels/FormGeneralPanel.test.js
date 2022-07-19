@@ -46,6 +46,11 @@ jest.mock(
 			commonStyles: [],
 			formTypes: [
 				{
+					label: 'None',
+					subtypes: [],
+					value: '0',
+				},
+				{
 					label: 'Type',
 					subtypes: [],
 					value: 'classNameId',
@@ -68,7 +73,7 @@ const MAPPED_FORM_ITEM = {
 
 const UNMAPPED_FORM_ITEM = {
 	children: [],
-	config: {},
+	config: {classNameId: '0'},
 	itemId: 'form-item',
 	parentId: '',
 	type: LAYOUT_DATA_ITEM_TYPES.form,

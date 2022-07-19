@@ -6553,12 +6553,16 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<attribute default="" name="testable.portal.started.marker.file" />
 
 		<sequential>
+			<lstopwatch action="start" name="start.app.server.@{app.server.bundle.index}" />
+
 			<start-app-server-cmd
 				app.server.bundle.index="@{app.server.bundle.index}"
 				delete.liferay.home="@{delete.liferay.home}"
 				test.docker.environment="${test.docker.environment}"
 				testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
 			/>
+
+			<lstopwatch action="total" name="start.app.server.@{app.server.bundle.index}" />
 		</sequential>
 	</macrodef>
 
@@ -6959,6 +6963,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<attribute default="0" name="app.server.explicit.stop.count" />
 
 		<sequential>
+			<lstopwatch action="start" name="stop.app.server.@{app.server.bundle.index}" />
+
 			<if>
 				<istrue value="${test.docker.environment}" />
 				<then>
@@ -6974,6 +6980,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					/>
 				</else>
 			</if>
+
+			<lstopwatch action="total" name="stop.app.server.@{app.server.bundle.index}" />
 		</sequential>
 	</macrodef>
 

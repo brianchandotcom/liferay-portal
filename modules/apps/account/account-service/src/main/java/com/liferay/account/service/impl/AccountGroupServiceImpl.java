@@ -101,6 +101,18 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 			accountGroupId, description, name);
 	}
 
+	@Override
+	public AccountGroup updateExternalReferenceCode(
+			long accountGroupId, String externalReferenceCode)
+		throws PortalException {
+
+		_accountGroupModelResourcePermission.check(
+			getPermissionChecker(), accountGroupId, ActionKeys.UPDATE);
+
+		return accountGroupLocalService.updateExternalReferenceCode(
+			accountGroupId, externalReferenceCode);
+	}
+
 	@Reference(
 		target = "(model.class.name=com.liferay.account.model.AccountGroup)"
 	)

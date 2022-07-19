@@ -108,6 +108,19 @@ public class RepositoryProxyBean
 	}
 
 	@Override
+	public Folder addFolder(
+			String externalReferenceCode, long userId, long parentFolderId,
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException {
+
+		Folder folder = _repository.addFolder(
+			externalReferenceCode, userId, parentFolderId, name, description,
+			serviceContext);
+
+		return newFolderProxyBean(folder);
+	}
+
+	@Override
 	public FileVersion cancelCheckOut(long fileEntryId) throws PortalException {
 		FileVersion fileVersion = _repository.cancelCheckOut(fileEntryId);
 

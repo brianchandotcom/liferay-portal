@@ -77,11 +77,21 @@ public abstract class BaseRepositoryImpl
 		}
 	}
 
-	@Override
 	public abstract Folder addFolder(
 			long userId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException;
+
+	@Override
+	public Folder addFolder(
+			String externalReferenceCode, long userId, long parentFolderId,
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFolder(
+			externalReferenceCode, userId, parentFolderId, name, description,
+			serviceContext);
+	}
 
 	@Override
 	public abstract void checkInFileEntry(

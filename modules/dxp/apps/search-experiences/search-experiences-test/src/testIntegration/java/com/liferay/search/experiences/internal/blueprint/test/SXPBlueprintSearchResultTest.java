@@ -2021,54 +2021,34 @@ public class SXPBlueprintSearchResultTest {
 	@Test
 	public void testTextMatchOverMultipleFields_mostFields() throws Exception {
 		_journalArticleBuilder.setTitle(
-			"amet"
-		).setContent(
-			"ipsum sit sit"
+			"coca cola most fields"
 		).build();
 
 		_journalArticleBuilder.setTitle(
-			"lorem ipsum dolor"
-		).setContent(
-			"ipsum sit"
+			"coca cola"
 		).build();
 
-		_journalArticleBuilder.setTitle(
-			"lorem ipsum sit"
-		).setContent(
-			"ipsum sit sit"
-		).build();
-
-		_journalArticleBuilder.setTitle(
-			"nunquis"
-		).setContent(
-			"non-lorem ipsum sit"
-		).build();
+		JournalTestUtil.updateArticle(
+			_journalArticles.get(0), "coca cola most fields");
 
 		Map<String, Object> textMatchOverMultipleFields =
 			_getTextMatchOverMultipleFields();
 
-		textMatchOverMultipleFields.replace("fuzziness", "0");
-		textMatchOverMultipleFields.replace("operator", "and");
+		String[] fields = {
+			"localized_title_en_US^1", "localized_title_de_DE^1",
+			"localized_title_es_ES^1"
+		};
+
 		textMatchOverMultipleFields.replace("type", "most_fields");
+		textMatchOverMultipleFields.replace("fields", fields);
 
 		_updateElementInstancesJSON(
 			new Object[] {textMatchOverMultipleFields},
 			new String[] {"Text Match Over Multiple Fields"});
 
-		_keywords = "sit lorem";
+		_keywords = "coca cola";
 
-		_assertSearch("[lorem ipsum sit, nunquis]");
-
-		textMatchOverMultipleFields.replace("operator", "or");
-
-		_updateElementInstancesJSON(
-			new Object[] {textMatchOverMultipleFields},
-			new String[] {"Text Match Over Multiple Fields"});
-
-		_keywords = "ipsum sit sit";
-
-		_assertSearchIgnoreRelevance(
-			"[amet, lorem ipsum dolor, lorem ipsum sit, nunquis]");
+		_assertSearch("[coca cola most fields, coca cola]");
 	}
 
 	@Test

@@ -27,7 +27,7 @@ KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNav
 			module="admin/js/components/VerticalBar"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
-					"items", kbAdminNavigationDisplayContext.getVerticalNavigationItems()
+					"items", kbAdminNavigationDisplayContext.getVerticalNavigationJSONObjects()
 				).put(
 					"parentContainerId", liferayPortletResponse.getNamespace() + "verticalBarId"
 				).build()

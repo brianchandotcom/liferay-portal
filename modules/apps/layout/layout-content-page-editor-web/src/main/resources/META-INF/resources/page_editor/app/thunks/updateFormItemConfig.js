@@ -46,6 +46,7 @@ export default function updateFormItemConfig({itemConfig, itemId}) {
 				dispatch(
 					updateFormItemConfigAction({
 						addedFragmentEntryLinks,
+						isMapping,
 						itemId,
 						layoutData,
 						overridePreviousConfig: true,

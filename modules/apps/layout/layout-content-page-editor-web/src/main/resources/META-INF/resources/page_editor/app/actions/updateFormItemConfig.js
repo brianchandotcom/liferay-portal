@@ -15,18 +15,24 @@
 import {UPDATE_FORM_ITEM_CONFIG} from './types';
 
 export default function updateFormItemConfig({
-	addedFragmentEntryLinks,
+	addedFragmentEntryLinks = null,
+	deletedItems = [],
+	isMapping,
 	itemId,
 	layoutData,
 	overridePreviousConfig = false,
-	removedFragmentEntryLinkIds,
+	removedFragmentEntryLinkIds = [],
+	restoredFragmentEntryLinkIds = [],
 }) {
 	return {
 		addedFragmentEntryLinks,
+		deletedItems,
+		isMapping,
 		itemId,
 		layoutData,
 		overridePreviousConfig,
 		removedFragmentEntryLinkIds,
+		restoredFragmentEntryLinkIds,
 		type: UPDATE_FORM_ITEM_CONFIG,
 	};
 }

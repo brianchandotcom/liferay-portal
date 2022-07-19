@@ -277,6 +277,17 @@ export default function fragmentEntryLinksReducer(
 				);
 			}
 
+			if (action.restoredFragmentEntryLinkIds) {
+				action.restoredFragmentEntryLinkIds.forEach(
+					(fragmentEntryLinkId) => {
+						newFragmentEntryLinks[fragmentEntryLinkId] = {
+							...fragmentEntryLinks[fragmentEntryLinkId],
+							removed: false,
+						};
+					}
+				);
+			}
+
 			return {
 				...fragmentEntryLinks,
 				...newFragmentEntryLinks,

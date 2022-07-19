@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>CUSTOM_ELEMENT_MODULE_SCRIPT</td>
+	<td>xpath=(//head//script[@type='module'])</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME</td>
 	<td>//input[@id='_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_name']</td>
 	<td></td>
@@ -28,6 +33,11 @@
 <tr>
 	<td>URL_ROW_INDEX</td>
 	<td>//*[contains(@class,'form-row')][${key_index}]//input[(contains(@id,'${key_id}'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USE_ES_MODULES</td>
+	<td>//input[contains(@id,'useESM')]</td>
 	<td></td>
 </tr>
 <tr>

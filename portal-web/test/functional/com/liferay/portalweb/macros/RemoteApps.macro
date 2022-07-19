@@ -39,6 +39,8 @@ definition {
 			entryProperties = "${entryProperties}",
 			entryURL = "${entryURL}");
 
+		Click(locator1 = "RemoteAppsEntry#USE_ES_MODULES");
+
 		Click(locator1 = "RemoteAppsEntry#REMOTE_APPS_INSTANCEABLE");
 
 		PortletEntry.publish();

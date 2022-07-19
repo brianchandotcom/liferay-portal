@@ -27,12 +27,12 @@ definition {
 
 				JSONLayout.deletePublicLayout(
 					groupName = "Guest",
-					layoutName = "Test Page");
+					layoutName = "${layoutName}");
 
 				Navigator.gotoPage(pageName = "Home");
-			}
 
-			PortalInstances.tearDownCP();
+				PortalInstances.tearDownCP();
+			}
 		}
 	}
 
@@ -133,6 +133,70 @@ definition {
 				entryName = "Vanilla Counter",
 				entryProperties = "test-data-user=QAuser",
 				entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+		}
+	}
+
+	@description = "LPS-158083 Remote App using non-root portal context"
+	@priority = "4"
+	test CustomElementCanBeCreatedInNonRootContext {
+		property app.server.types = "tomcat";
+		property database.types = "mysql";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+		property portal.context = "liferay";
+		property skip.clean-app-server-deploy-dir = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "RemoteApps#CustomElementCanBeCreatedInNonRootContext";
+		property testray.component.names = "Frontend Dataset,Remote Apps";
+
+		task ("Given a non-root portal context") {
+			var portalURL = JSONCompany.getPortalURL();
+
+			var portalContextIsCorrect = StringUtil.extractLast("${portalURL}", "/");
+
+			TestUtils.assertEquals(
+				actual = "${portalContextIsCorrect}",
+				expected = "liferay");
+		}
+
+		task ("Given a Custom Element with relative path URLs") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addCustomElementAllFields(
+				entryCssurl = "es-element/main.css",
+				entryHtmlName = "es-element",
+				entryName = "ES Element",
+				entryProperties = "test-data-user=QAuser",
+				entryURL = "es-element/index.js");
+
+			RemoteApps.viewTableEntries(
+				entryName = "ES Element",
+				entryType = "Custom Element");
+		}
+
+		task ("When ES Element is added to widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "My Widget Page");
+
+			Navigator.gotoPage(pageName = "My Widget Page");
+
+			Click(locator1 = "ControlMenu#ADD");
+
+			Type(
+				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
+				value1 = "ES Element");
+
+			Portlet._clickAddPortlet(portletName = "ES Element");
+
+			Refresh();
+		}
+
+		task ("Then remote app src is rendered with non-root context") {
+			AssertAttributeValue(
+				attribute1 = "src",
+				locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_MODULE_SCRIPT",
+				value1 = "${portalURL}/es-element/index.js");
 		}
 	}
 

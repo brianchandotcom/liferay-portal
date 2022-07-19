@@ -41,7 +41,7 @@ export function declineAllCookies(
 }
 
 export function getCookie(name) {
-	return Liferay.Util.Cookie.get(name);
+	return Liferay.Util.Cookie.get(name, Liferay.Util.Cookie.TYPES.NECESSARY);
 }
 
 export function setCookie(name, value) {

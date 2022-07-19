@@ -35,7 +35,8 @@ public interface ContentDashboardItemAction {
 
 	public enum Type {
 
-		DELETE, DOWNLOAD, EDIT, PREVIEW, PREVIEW_IMAGE, VIEW, VIEW_IN_PANEL
+		DELETE, DOWNLOAD, EDIT, PREVIEW, PREVIEW_IMAGE, SHARING_BUTTON, VIEW,
+		VIEW_IN_PANEL
 
 	}
 

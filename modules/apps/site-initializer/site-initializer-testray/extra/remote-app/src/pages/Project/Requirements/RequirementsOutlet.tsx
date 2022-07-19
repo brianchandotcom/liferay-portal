@@ -12,8 +12,7 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
-import {useEffect} from 'react';
+import {useEffect, useMemo} from 'react';
 import {
 	Outlet,
 	useLocation,
@@ -22,13 +21,14 @@ import {
 } from 'react-router-dom';
 
 import Loading from '../../../components/Loading';
-import {
-	TestrayProject,
-	TestrayRequirement,
-	getRequirement,
-} from '../../../graphql/queries';
+import {TestrayProject} from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
+import {useFetch} from '../../../hooks/useFetch';
 import i18n from '../../../i18n';
+import {
+	getRequirementQuery,
+	getRequirementTransformData,
+} from '../../../services/rest';
 
 const RequirementsOutlet = () => {
 	const {
@@ -38,16 +38,12 @@ const RequirementsOutlet = () => {
 	const {pathname} = useLocation();
 	const basePath = `/project/${projectId}/cases/${caseId}`;
 
-	const {data, loading} = useQuery<{requirement: TestrayRequirement}>(
-		getRequirement,
-		{
-			variables: {
-				requirementId,
-			},
-		}
-	);
+	const {data, loading} = useFetch(getRequirementQuery(requirementId));
 
-	const testrayRequirement = data?.requirement;
+	const testrayRequirement = useMemo(
+		() => getRequirementTransformData(data),
+		[data]
+	);
 
 	const {setHeading, setTabs} = useHeader({
 		shouldUpdate: false,

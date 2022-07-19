@@ -1724,6 +1724,12 @@ definition {
 		SearchResultPortlet.viewSearchResultNotPresent(
 			searchAssetTitle = "Potato Blog",
 			searchAssetType = "Blogs Entry");
+
+		SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Alert.viewInfoMessageSpecific(infoMessage = "For disabled fields, the page header Search Bar configuration takes precedence.");
 	}
 
 	@priority = "5"

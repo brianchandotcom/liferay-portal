@@ -408,14 +408,16 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 */
 	@Override
 	public Folder addFolder(
-			long userId, long repositoryId, long parentFolderId, String name,
-			String description, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long repositoryId,
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		Folder folder = localRepository.addFolder(
-			userId, parentFolderId, name, description, serviceContext);
+			externalReferenceCode, userId, parentFolderId, name, description,
+			serviceContext);
 
 		_dlAppHelperLocalService.addFolder(userId, folder, serviceContext);
 
@@ -572,6 +574,17 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getLocalRepository(groupId);
 
 		return localRepository.fetchFileEntryByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
+	@Override
+	public Folder fetchFolderByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		LocalRepository localRepository = getLocalRepository(groupId);
+
+		return localRepository.fetchFolderByExternalReferenceCode(
 			externalReferenceCode);
 	}
 
@@ -782,6 +795,17 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		return localRepository.getFolder(parentFolderId, name);
+	}
+
+	@Override
+	public Folder getFolderByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		LocalRepository localRepository = getLocalRepository(groupId);
+
+		return localRepository.getFolderByExternalReferenceCode(
+			externalReferenceCode);
 	}
 
 	/**
@@ -1363,7 +1387,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			Folder folder = fromLocalRepository.getFolder(folderId);
 
 			newFolder = toLocalRepository.addFolder(
-				userId, parentFolderId, folder.getName(),
+				null, userId, parentFolderId, folder.getName(),
 				folder.getDescription(), serviceContext);
 
 			_dlAppHelperLocalService.addFolder(
@@ -1416,7 +1440,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				Folder currentFolder = (Folder)repositoryEntry;
 
 				Folder newFolder = toLocalRepository.addFolder(
-					userId, destinationFolder.getFolderId(),
+					null, userId, destinationFolder.getFolderId(),
 					currentFolder.getName(), currentFolder.getDescription(),
 					serviceContext);
 

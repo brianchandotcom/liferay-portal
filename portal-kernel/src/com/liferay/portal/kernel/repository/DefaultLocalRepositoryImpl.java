@@ -83,8 +83,8 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 
 	@Override
 	public Folder addFolder(
-		long userId, long parentFolderId, String name, String description,
-		ServiceContext serviceContext) {
+		String externalReferenceCode, long userId, long parentFolderId,
+		String name, String description, ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
 	}

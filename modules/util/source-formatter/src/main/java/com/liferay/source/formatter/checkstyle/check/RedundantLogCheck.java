@@ -93,7 +93,8 @@ public class RedundantLogCheck extends BaseCheck {
 			firstChildDetailAST);
 
 		if (!methodCallFullIdent.matches(
-				"_log\\." + StringUtil.lowerCase(matcher.group(1)))) {
+				"_log\\." +
+					StringUtil.lowerCaseFirstLetter(matcher.group(1)))) {
 
 			return;
 		}

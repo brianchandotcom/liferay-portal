@@ -124,7 +124,7 @@ definition {
 			panel = "Applications",
 			portlet = "Publications");
 
-		Publications.deletePublication(publicationName = "Publication Name");
+		Publications.deletePublication(publicationName = "Publication Name 2");
 
 		User.logoutPG();
 
@@ -516,6 +516,42 @@ definition {
 		AssertTextEquals(
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON",
 			value1 = "Publication Name");
+	}
+
+	@description = "This is use case for LPS-157264.Changing permissions on a publication shouldn't go into the publication"
+	@priority = "3"
+	test ChangePermissionsOnApublicationShouldGoIntoProduction {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		PublicationsNavigator._gotoPublicationEllipsisItem(
+			menuItem = "Permissions",
+			publicationName = "Publication Name");
+
+		IFrame.selectPermissionsFrame();
+
+		Check(
+			key_roleTitle = "publications-user",
+			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+
+		Publications.workOnProduction();
+
+		PublicationsNavigator._gotoPublicationEllipsisItem(
+			menuItem = "Permissions",
+			publicationName = "Publication Name");
+
+		IFrame.selectPermissionsFrame();
+
+		AssertChecked(
+			key_roleTitle = "publications-user",
+			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 	}
 
 	@priority = "4"

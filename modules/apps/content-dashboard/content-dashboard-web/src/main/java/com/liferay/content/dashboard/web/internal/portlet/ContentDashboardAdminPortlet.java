@@ -23,6 +23,7 @@ import com.liferay.content.dashboard.web.internal.dao.search.ContentDashboardIte
 import com.liferay.content.dashboard.web.internal.data.provider.ContentDashboardDataProvider;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminDisplayContext;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminManagementToolbarDisplayContext;
+import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminSharingDisplayContext;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactoryTracker;
@@ -46,6 +47,8 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.sharing.configuration.SharingConfigurationFactory;
+import com.liferay.sharing.security.permission.SharingPermission;
 
 import java.io.IOException;
 
@@ -163,6 +166,14 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 				CONTENT_DASHBOARD_ADMIN_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT,
 			contentDashboardAdminManagementToolbarDisplayContext);
 
+		renderRequest.setAttribute(
+			ContentDashboardWebKeys.
+				CONTENT_DASHBOARD_ADMIN_SHARING_DISPLAY_CONTEXT,
+			new ContentDashboardAdminSharingDisplayContext(
+				_contentDashboardItemFactoryTracker,
+				_contentDashboardItemSearchClassMapperTracker,
+				_portal.getHttpServletRequest(liferayPortletRequest)));
+
 		super.render(renderRequest, renderResponse);
 	}
 
@@ -211,6 +222,12 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private Searcher _searcher;
+
+	@Reference
+	private SharingConfigurationFactory _sharingConfigurationFactory;
+
+	@Reference
+	private SharingPermission _sharingPermission;
 
 	@Reference
 	private UserLocalService _userLocalService;

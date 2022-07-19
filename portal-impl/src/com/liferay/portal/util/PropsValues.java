@@ -369,6 +369,12 @@ public class PropsValues {
 	public static String COMPANY_DEFAULT_TIME_ZONE = PropsUtil.get(
 		PropsKeys.COMPANY_DEFAULT_TIME_ZONE);
 
+	public static String COMPANY_DEFAULT_VIRTUAL_HOST_MAIL_DOMAIN =
+		PropsUtil.get(PropsKeys.COMPANY_DEFAULT_VIRTUAL_HOST_MAIL_DOMAIN);
+
+	public static String COMPANY_DEFAULT_VIRTUAL_HOST_NAME = PropsUtil.get(
+		PropsKeys.COMPANY_DEFAULT_VIRTUAL_HOST_NAME);
+
 	public static String COMPANY_DEFAULT_WEB_ID = PropsUtil.get(
 		PropsKeys.COMPANY_DEFAULT_WEB_ID);
 

@@ -439,6 +439,12 @@ public interface PropsKeys {
 	public static final String COMPANY_DEFAULT_TIME_ZONE =
 		"company.default.time.zone";
 
+	public static final String COMPANY_DEFAULT_VIRTUAL_HOST_MAIL_DOMAIN =
+		"company.default.virtual.host.mail.domain";
+
+	public static final String COMPANY_DEFAULT_VIRTUAL_HOST_NAME =
+		"company.default.virtual.host.name";
+
 	public static final String COMPANY_DEFAULT_WEB_ID =
 		"company.default.web.id";
 

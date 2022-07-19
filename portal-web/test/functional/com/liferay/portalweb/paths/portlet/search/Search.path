@@ -68,7 +68,7 @@
 </tr>
 <tr>
 	<td>EMBEDDED_SEARCH_BAR_SCOPE_SELECT</td>
-	<td>//header[@id='banner']//div/select[@title='Scope']</td>
+	<td>//header[@id='banner']//div/select[@name='scope']</td>
 	<td></td>
 </tr>
 <tr>
@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>SEARCH_BAR_WIDGET_SCOPE_SELECT</td>
-	<td>//div[not(ancestor::header[@id='banner'])]/select[@title='Scope']</td>
+	<td>//div[not(ancestor::header[@id='banner'])]/select[@name='scope']</td>
 	<td></td>
 </tr>
 <tr>

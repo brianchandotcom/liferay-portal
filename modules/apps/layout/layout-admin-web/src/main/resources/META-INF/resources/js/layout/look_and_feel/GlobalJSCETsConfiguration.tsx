@@ -136,8 +136,10 @@ export default function GlobalJSCETsConfiguration({
 				setGlobalJSCETs((previousGlobalJSCETs) => {
 					const duplicatedGlobalJSCETs: IGlobalJSCET[] = [];
 
-					const nextGlobalJSCETs = selectedItems.value
-						.map((selectedItem) => ({
+					const nextGlobalJSCETs: IGlobalJSCET[] = [];
+
+					selectedItems.value.forEach((selectedItem) => {
+						const nextGlobalJSCET: IGlobalJSCET = {
 							inherited: false,
 							inheritedLabel: '-',
 							scriptLocation,
@@ -145,24 +147,23 @@ export default function GlobalJSCETsConfiguration({
 								cetExternalReferenceCode: string;
 								name: string;
 							}),
-						}))
-						.filter((nextGlobalJSCET) => {
-							const isDuplicated = previousGlobalJSCETs.some(
-								(previousGlobalJSCET) =>
-									nextGlobalJSCET.cetExternalReferenceCode ===
-										previousGlobalJSCET.cetExternalReferenceCode &&
-									nextGlobalJSCET.scriptLocation ===
-										previousGlobalJSCET.scriptLocation
-							);
+						};
 
-							if (isDuplicated) {
-								duplicatedGlobalJSCETs.push(nextGlobalJSCET);
+						const isDuplicated = previousGlobalJSCETs.some(
+							(previousGlobalJSCET) =>
+								nextGlobalJSCET.cetExternalReferenceCode ===
+									previousGlobalJSCET.cetExternalReferenceCode &&
+								nextGlobalJSCET.scriptLocation ===
+									previousGlobalJSCET.scriptLocation
+						);
 
-								return false;
-							}
-
-							return true;
-						});
+						if (isDuplicated) {
+							duplicatedGlobalJSCETs.push(nextGlobalJSCET);
+						}
+						else {
+							nextGlobalJSCETs.push(nextGlobalJSCET);
+						}
+					});
 
 					if (duplicatedGlobalJSCETs.length) {
 						openToast({

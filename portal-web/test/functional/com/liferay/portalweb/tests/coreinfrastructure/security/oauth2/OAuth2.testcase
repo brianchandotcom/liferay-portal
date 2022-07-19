@@ -1485,8 +1485,8 @@ definition {
 
 		task ("Get access token") {
 			var accessToken = OAuth2.getAccessToken(
-				clientId = "${generatedClientId}",
-				clientSecret = "${generatedClientSecret}",
+				client_id = "${generatedClientId}",
+				client_secret = "${generatedClientSecret}",
 				grantFlow = "clientCredentials");
 		}
 

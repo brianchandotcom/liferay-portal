@@ -150,9 +150,7 @@ public class RedundantLogCheck extends BaseCheck {
 			DetailAST firstChildDetailAST1 = detailAST1.getFirstChild();
 			DetailAST firstChildDetailAST2 = detailAST2.getFirstChild();
 
-			if ((firstChildDetailAST1 != null) &&
-				(firstChildDetailAST2 != null) &&
-				!_compareDetailASTIgnoreLine(
+			if (!_compareDetailASTIgnoreLine(
 					firstChildDetailAST1, firstChildDetailAST2)) {
 
 				return false;

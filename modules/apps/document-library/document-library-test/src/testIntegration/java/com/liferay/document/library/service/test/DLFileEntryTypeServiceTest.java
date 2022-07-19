@@ -85,13 +85,13 @@ public class DLFileEntryTypeServiceTest {
 		_group = GroupTestUtil.addGroup();
 
 		_folder = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
 			StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_subfolder = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_folder.getFolderId(), "SubFolder AA", StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

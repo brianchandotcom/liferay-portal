@@ -118,7 +118,7 @@ public class FolderStagedModelDataHandlerTest
 			dependentStagedModelsMap, DLFileEntryType.class, dlFileEntryType);
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			stagingGroup.getGroupId(),
+			null, stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
@@ -152,7 +152,8 @@ public class FolderStagedModelDataHandlerTest
 			dependentStagedModelsMap, DLFileEntryType.class, dlFileEntryType);
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
@@ -205,7 +206,7 @@ public class FolderStagedModelDataHandlerTest
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), folder.getFolderId(),
+			null, group.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
@@ -367,6 +368,10 @@ public class FolderStagedModelDataHandlerTest
 
 		Folder folder = (Folder)stagedModel;
 		Folder importedFolder = (Folder)importedStagedModel;
+
+		Assert.assertEquals(
+			folder.getExternalReferenceCode(),
+			importedFolder.getExternalReferenceCode());
 
 		Assert.assertEquals(folder.getName(), importedFolder.getName());
 		Assert.assertEquals(

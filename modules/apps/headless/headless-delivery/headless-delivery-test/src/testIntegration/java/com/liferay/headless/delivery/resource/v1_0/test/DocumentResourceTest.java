@@ -179,6 +179,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		serviceContext.setAddGuestPermissions(true);
 
 		Folder folder = DLAppLocalServiceUtil.addFolder(
+			null,
 			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId(), 0, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);

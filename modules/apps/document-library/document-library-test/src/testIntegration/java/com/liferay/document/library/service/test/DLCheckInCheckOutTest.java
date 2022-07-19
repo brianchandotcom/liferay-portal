@@ -535,7 +535,7 @@ public class DLCheckInCheckOutTest {
 		long repositoryId = _group.getGroupId();
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			folderName, StringPool.BLANK, _serviceContext);
 
 		Assert.assertNotNull(folder);

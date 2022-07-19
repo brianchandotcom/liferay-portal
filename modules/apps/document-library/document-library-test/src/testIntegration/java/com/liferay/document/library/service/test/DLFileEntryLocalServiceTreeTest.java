@@ -73,11 +73,12 @@ public class DLFileEntryLocalServiceTreeTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		Folder folderA = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Folder A", RandomTestUtil.randomString(), serviceContext);
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
+			RandomTestUtil.randomString(), serviceContext);
 
 		Folder folderAA = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), folderA.getFolderId(), "Folder AA",
+			null, _group.getGroupId(), folderA.getFolderId(), "Folder AA",
 			RandomTestUtil.randomString(), serviceContext);
 
 		FileEntry fileEntry = addFileEntry(folderAA.getFolderId(), "Entry.txt");
@@ -137,8 +138,9 @@ public class DLFileEntryLocalServiceTreeTest {
 		fileEntries.add(fileEntryA);
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Folder A", RandomTestUtil.randomString(),
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
+			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 

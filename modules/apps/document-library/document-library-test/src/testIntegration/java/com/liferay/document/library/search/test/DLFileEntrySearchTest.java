@@ -261,7 +261,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		Folder folder = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
@@ -447,7 +447,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			serviceContext.getScopeGroupId(),
+			null, serviceContext.getScopeGroupId(),
 			(Long)parentBaseModel.getPrimaryKeyObj(),
 			RandomTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
 			RandomTestUtil.randomString(), serviceContext);
@@ -461,7 +461,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			serviceContext.getScopeGroupId(),
+			null, serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
 			RandomTestUtil.randomString(), serviceContext);

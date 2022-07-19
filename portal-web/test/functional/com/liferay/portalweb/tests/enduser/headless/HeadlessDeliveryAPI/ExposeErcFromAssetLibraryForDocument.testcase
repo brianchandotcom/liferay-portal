@@ -86,6 +86,26 @@ definition {
 		}
 	}
 
+	@description = "Unable to get document by nonexistent erc"
+	@priority = "4"
+	test CanReturnErrorWithGetDocumentInAssetLibraryByNonexistentErc {
+		property portal.acceptance = "true";
+
+		task ("When I make a GET request by assetLibraryID and non-existent erc") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = DocumentAPI.getDocumentsByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "nonexistent-erc");
+		}
+
+		task ("Then I receive error message in response") {
+			TestUtils.assertPartialEquals(
+				actual = "${response}",
+				expected = "No DLFileEntry exists with the key");
+		}
+	}
+
 	@description = "Document is created in an asset library with custom erc"
 	@priority = "5"
 	test DocumentIsCreatedInAssetLibraryWithCustomErc {

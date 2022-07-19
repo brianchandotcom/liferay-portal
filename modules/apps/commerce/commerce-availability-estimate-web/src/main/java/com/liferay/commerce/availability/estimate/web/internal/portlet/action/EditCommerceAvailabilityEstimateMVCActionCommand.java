@@ -100,9 +100,7 @@ public class EditCommerceAvailabilityEstimateMVCActionCommand
 		}
 		else {
 			deleteCommerceAvailabilityEstimateIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCommerceAvailabilityEstimateIds"),
-				0L);
+				ParamUtil.getString(actionRequest, "rowIds"), 0L);
 		}
 
 		for (long deleteCommerceAvailabilityEstimateId :

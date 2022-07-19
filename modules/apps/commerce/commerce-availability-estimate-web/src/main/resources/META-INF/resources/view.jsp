@@ -21,54 +21,10 @@ CommerceAvailabilityEstimateDisplayContext commerceAvailabilityEstimateDisplayCo
 %>
 
 <c:if test="<%= commerceAvailabilityEstimateDisplayContext.hasManageCommerceAvailabilityEstimatesPermission() %>">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-		searchContainerId="commerceAvailabilityEstimates"
-	>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= commerceAvailabilityEstimateDisplayContext.getPortletURL() %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= commerceAvailabilityEstimateDisplayContext.getOrderByCol() %>"
-				orderByType="<%= commerceAvailabilityEstimateDisplayContext.getOrderByType() %>"
-				orderColumns='<%= new String[] {"priority"} %>'
-				portletURL="<%= commerceAvailabilityEstimateDisplayContext.getPortletURL() %>"
-			/>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= commerceAvailabilityEstimateDisplayContext.getPortletURL() %>"
-				selectedDisplayStyle="list"
-			/>
-
-			<portlet:renderURL var="addCommerceAvailabilityEstimateURL">
-				<portlet:param name="mvcRenderCommandName" value="/commerce_availability_estimate/edit_commerce_availability_estimate" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-availability-estimate") %>'
-					url="<%= addCommerceAvailabilityEstimateURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceAvailabilityEstimates();" %>'
-				icon="trash"
-				label="delete"
-			/>
-		</liferay-frontend:management-bar-action-buttons>
-	</liferay-frontend:management-bar>
+	<clay:management-toolbar
+		managementToolbarDisplayContext="<%= new CommerceAvailabilityEstimateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, commerceAvailabilityEstimateDisplayContext.getSearchContainer()) %>"
+		propsTransformer="js/CommerceAvailabilityEstimateManagementToolbarPropsTransformer"
+	/>
 
 	<div class="container-fluid container-fluid-max-xl">
 		<portlet:actionURL name="/commerce_availability_estimate/edit_commerce_availability_estimate" var="editCommerceAvailabilityEstimateActionURL" />
@@ -127,25 +83,4 @@ CommerceAvailabilityEstimateDisplayContext commerceAvailabilityEstimateDisplayCo
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>
-
-	<aui:script>
-		function <portlet:namespace />deleteCommerceAvailabilityEstimates() {
-			if (
-				confirm(
-					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-availability-estimates" />'
-				)
-			) {
-				var form = window.document['<portlet:namespace />fm'];
-
-				form[
-					'<portlet:namespace />deleteCommerceAvailabilityEstimateIds'
-				].value = Liferay.Util.getCheckedCheckboxes(
-					form,
-					'<portlet:namespace />allRowIds'
-				);
-
-				submitForm(form);
-			}
-		}
-	</aui:script>
 </c:if>

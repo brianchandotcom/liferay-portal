@@ -69,12 +69,54 @@ definition {
 	}
 
 	@description = "An Omniadmin can get log names from all companies and download logs from all companies though the UI"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test GetAllCompanyLogs {
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "CompanyLogging#GetAllCompanyLogs";
 
-		// TODO LRQA-75854
+		task ("Given all company logs output unique logs") {
+			ServerAdministration.openServerAdmin();
 
+			ServerAdministration.addCategoryLogLevels(
+				categoryLevel = "INFO",
+				categoryName = "com.liferay.portal.background.task.internal.messaging.RemoveOnCompletionBackgroundTaskStatusMessageListener");
+		}
+
+		task ("And given two new virtual instances are created") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.baker.com",
+				portalInstanceId = "www.baker.com",
+				virtualHost = "www.baker.com");
+		}
+
+		task ("When the Omniadmin navigates to the company logging UI access point") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "o/company-log");
+		}
+
+		task ("Then log files are present for all companies") {
+			var companyTitles = JSONCompany.getAllCompanyNames();
+
+			for (var companyTitle : list "${companyTitles}") {
+				AssertElementPresent(
+					key_virtualHost = "${companyTitle}",
+					locator1 = "CompanyLogging#COMPANY_LOG_TITLE");
+			}
+		}
+
+		task ("And the log files can be downloaded and viewed for each company") {
+			for (var companyTitle : list "${companyTitles}") {
+				var logContent = CompanyLogging.downloadCompanyLog(portalInstanceName = "${companyTitle}");
+
+				CompanyLogging.assertCompanyLogContent(
+					logContent = "${logContent}",
+					portalInstanceName = "${companyTitle}");
+			}
+		}
 	}
 
 	@description = "A company admin should only be able to see the logs from the company they are an admin of"

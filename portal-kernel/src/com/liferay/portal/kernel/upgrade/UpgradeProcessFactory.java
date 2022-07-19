@@ -30,7 +30,7 @@ public class UpgradeProcessFactory {
 		return new UpgradeProcess(
 			_getUpgradeInfo(
 				tableName,
-				"Adding the columns " + Arrays.toString(columnDefinitions))) {
+				"add the columns " + Arrays.toString(columnDefinitions))) {
 
 			@Override
 			protected void doUpgrade() throws Exception {
@@ -54,7 +54,7 @@ public class UpgradeProcessFactory {
 			_getUpgradeInfo(
 				tableName,
 				StringBundler.concat(
-					"Altering the name of the column ", oldColumnName, " to ",
+					"alter the name of the column ", oldColumnName, " to ",
 					newColumnDefinition))) {
 
 			@Override
@@ -72,7 +72,7 @@ public class UpgradeProcessFactory {
 			_getUpgradeInfo(
 				tableName,
 				StringBundler.concat(
-					"Altering the type of the column ", columnName, " to ",
+					"alter the type of the column ", columnName, " to ",
 					newColumnType))) {
 
 			@Override
@@ -94,7 +94,7 @@ public class UpgradeProcessFactory {
 			_getUpgradeInfo(
 				tableName,
 				StringBundler.concat(
-					"Altering the type of the columns ",
+					"alter the type of the columns ",
 					Arrays.toString(columnNames), " to ", newType))) {
 
 			@Override
@@ -113,7 +113,7 @@ public class UpgradeProcessFactory {
 		return new UpgradeProcess(
 			_getUpgradeInfo(
 				tableName,
-				"Dropping the columns " + Arrays.toString(columnNames))) {
+				"drop the columns " + Arrays.toString(columnNames))) {
 
 			@Override
 			protected void doUpgrade() throws Exception {

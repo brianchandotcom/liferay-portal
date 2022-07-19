@@ -259,7 +259,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 				_cacheManager.addCache(ehcache);
 
-				PortalCache<K, V> portalCache = portalCaches.get(
+				PortalCache<K, V> portalCache = fetchPortalCache(
 					portalCacheName);
 
 				if (portalCache != null) {

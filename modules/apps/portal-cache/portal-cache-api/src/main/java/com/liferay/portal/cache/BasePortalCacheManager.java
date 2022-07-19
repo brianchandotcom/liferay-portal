@@ -49,14 +49,14 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void destroy() {
-		portalCaches.clear();
+		_portalCaches.clear();
 
 		doDestroy();
 	}
 
 	@Override
 	public PortalCache<K, V> fetchPortalCache(String portalCacheName) {
-		return portalCaches.get(portalCacheName);
+		return _portalCaches.get(portalCacheName);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			String portalCacheName, boolean mvcc)
 		throws PortalCacheException {
 
-		PortalCache<K, V> portalCache = portalCaches.get(portalCacheName);
+		PortalCache<K, V> portalCache = _portalCaches.get(portalCacheName);
 
 		if (portalCache != null) {
 			_verifyPortalCache(portalCache, mvcc);
@@ -107,7 +107,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			portalCache = new TransactionalPortalCache<>(portalCache, mvcc);
 		}
 
-		PortalCache<K, V> previousPortalCache = portalCaches.putIfAbsent(
+		PortalCache<K, V> previousPortalCache = _portalCaches.putIfAbsent(
 			portalCacheName, portalCache);
 
 		if (previousPortalCache != null) {
@@ -153,7 +153,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void removePortalCache(String portalCacheName) {
-		portalCaches.remove(portalCacheName);
+		_portalCaches.remove(portalCacheName);
 
 		doRemovePortalCache(portalCacheName);
 	}
@@ -262,7 +262,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			_portalCacheManagerConfiguration.putPortalCacheConfiguration(
 				portalCacheName, portalCacheConfiguration);
 
-			PortalCache<K, V> portalCache = portalCaches.get(portalCacheName);
+			PortalCache<K, V> portalCache = _portalCaches.get(portalCacheName);
 
 			if (portalCache == null) {
 				continue;
@@ -283,8 +283,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	protected PortalCacheListenerFactory portalCacheListenerFactory;
 	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
 		portalCacheManagerListenerFactory;
-	protected final ConcurrentMap<String, PortalCache<K, V>> portalCaches =
-		new ConcurrentHashMap<>();
 
 	private void _initPortalCacheListeners(
 		PortalCache<K, V> portalCache,
@@ -359,6 +357,8 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	private PortalCacheConfiguration _defaultPortalCacheConfiguration;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
 	private String _portalCacheManagerName;
+	private final ConcurrentMap<String, PortalCache<K, V>> _portalCaches =
+		new ConcurrentHashMap<>();
 	private boolean _transactionalPortalCacheEnabled;
 	private String[] _transactionalPortalCacheNames = StringPool.EMPTY_ARRAY;
 

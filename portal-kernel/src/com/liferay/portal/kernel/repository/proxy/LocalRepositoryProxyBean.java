@@ -104,6 +104,19 @@ public class LocalRepositoryProxyBean
 	}
 
 	@Override
+	public Folder addFolder(
+			String externalReferenceCode, long userId, long parentFolderId,
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException {
+
+		Folder folder = _localRepository.addFolder(
+			externalReferenceCode, userId, parentFolderId, name, description,
+			serviceContext);
+
+		return newFolderProxyBean(folder);
+	}
+
+	@Override
 	public void checkInFileEntry(
 			long userId, long fileEntryId,
 			DLVersionNumberIncrease dlVersionNumberIncrease, String changeLog,

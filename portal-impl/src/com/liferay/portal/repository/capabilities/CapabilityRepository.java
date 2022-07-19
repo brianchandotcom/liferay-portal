@@ -133,6 +133,24 @@ public class CapabilityRepository
 	}
 
 	@Override
+	public Folder addFolder(
+			String externalReferenceCode, long userId, long parentFolderId,
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException {
+
+		Repository repository = getRepository();
+
+		Folder folder = repository.addFolder(
+			externalReferenceCode, userId, parentFolderId, name, description,
+			serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Add.class, Folder.class, folder);
+
+		return folder;
+	}
+
+	@Override
 	public FileVersion cancelCheckOut(long fileEntryId) throws PortalException {
 		Repository repository = getRepository();
 
@@ -520,6 +538,14 @@ public class CapabilityRepository
 		throws PortalException {
 
 		return getRepository().getFolder(parentFolderId, name);
+	}
+
+	@Override
+	public Folder getFolderByExternalReferenceCode(String externalReferenceCode)
+		throws PortalException {
+
+		return getRepository().getFolderByExternalReferenceCode(
+			externalReferenceCode);
 	}
 
 	@Override

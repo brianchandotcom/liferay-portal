@@ -11,6 +11,8 @@ definition {
 
 	setUp {
 		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
 	}
 
 	tearDown {

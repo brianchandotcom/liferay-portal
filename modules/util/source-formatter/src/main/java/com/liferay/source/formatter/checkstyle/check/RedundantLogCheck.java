@@ -139,23 +139,20 @@ public class RedundantLogCheck extends BaseCheck {
 			return false;
 		}
 
-		DetailAST detailAST1ChildDetailAST = detailAST1;
-		DetailAST detailAST2ChildDetailAST = detailAST2;
-
 		while (true) {
-			if ((detailAST1ChildDetailAST.getType() !=
-					detailAST2ChildDetailAST.getType()) ||
+			if ((detailAST1.getType() !=
+					detailAST2.getType()) ||
 				!StringUtil.equals(
-					detailAST1ChildDetailAST.getText(),
-					detailAST2ChildDetailAST.getText())) {
+						detailAST1.getText(),
+						detailAST2.getText())) {
 
 				return false;
 			}
 
 			DetailAST firstChildDetailAST1 =
-				detailAST1ChildDetailAST.getFirstChild();
+					detailAST1.getFirstChild();
 			DetailAST firstChildDetailAST2 =
-				detailAST2ChildDetailAST.getFirstChild();
+					detailAST2.getFirstChild();
 
 			if ((firstChildDetailAST1 != null) &&
 				(firstChildDetailAST2 != null) &&
@@ -166,13 +163,13 @@ public class RedundantLogCheck extends BaseCheck {
 			}
 
 			DetailAST nextSiblingDetailAST1 =
-				detailAST1ChildDetailAST.getNextSibling();
+					detailAST1.getNextSibling();
 			DetailAST nextSiblingDetailAST2 =
-				detailAST2ChildDetailAST.getNextSibling();
+					detailAST2.getNextSibling();
 
 			if ((nextSiblingDetailAST1 != null) && (nextSiblingDetailAST2 != null)) {
-				detailAST1ChildDetailAST = nextSiblingDetailAST1;
-				detailAST2ChildDetailAST = nextSiblingDetailAST2;
+				detailAST1 = nextSiblingDetailAST1;
+				detailAST2 = nextSiblingDetailAST2;
 
 				continue;
 			}

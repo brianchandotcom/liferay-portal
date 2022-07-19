@@ -24,7 +24,6 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {ChangeEventHandler, useState} from 'react';
 
-import useMetadata from '../../hooks/useMetadata';
 import {defaultLanguageId} from '../../utils/locale';
 import {ObjectValidationErrors} from '../ObjectValidationFormBase';
 
@@ -99,8 +98,6 @@ function Conditions({
 		}
 	);
 
-	const sidebarElements = useMetadata(objectValidationRuleElements);
-
 	const engine = values.engine;
 	const ddmTooltip = {
 		content: Liferay.Language.get(
@@ -137,7 +134,7 @@ function Conditions({
 					onChange={(script?: string) => setValues({script})}
 					placeholder={placeholder}
 					readOnly={disabled}
-					sidebarElements={sidebarElements}
+					sidebarElements={objectValidationRuleElements}
 					value={values.script ?? ''}
 				/>
 			</Card>

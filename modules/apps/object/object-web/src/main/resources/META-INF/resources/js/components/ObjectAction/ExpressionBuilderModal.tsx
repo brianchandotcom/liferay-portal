@@ -18,12 +18,8 @@ import {
 } from '@liferay/object-js-components-web';
 import React from 'react';
 
-import useMetadata from '../../hooks/useMetadata';
-
 export default function ExpressionBuilderModal({sidebarElements}: IProps) {
-	const elements = useMetadata(sidebarElements);
-
-	return <Modal sidebarElements={elements} />;
+	return <Modal sidebarElements={sidebarElements} />;
 }
 
 interface IProps {

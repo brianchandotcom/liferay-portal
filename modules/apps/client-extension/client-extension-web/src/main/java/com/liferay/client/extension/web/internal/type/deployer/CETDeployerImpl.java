@@ -176,7 +176,7 @@ public class CETDeployerImpl implements CETDeployer {
 
 			if (Validator.isNotNull(cssURLs)) {
 				dictionary.put(
-					"com.liferay.portlet.footer-portal-css",
+					"com.liferay.portlet.header-portal-css",
 					cssURLs.split(StringPool.NEW_LINE));
 			}
 
@@ -191,7 +191,7 @@ public class CETDeployerImpl implements CETDeployer {
 			}
 
 			dictionary.put(
-				"com.liferay.portlet.header-portlet-javascript", urlsArray);
+				"com.liferay.portlet.header-portal-javascript", urlsArray);
 		}
 		else if (iFrameCET != null) {
 			dictionary.put(

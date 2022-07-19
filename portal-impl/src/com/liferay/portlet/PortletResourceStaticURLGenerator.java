@@ -54,6 +54,14 @@ public class PortletResourceStaticURLGenerator {
 				portlet);
 
 			for (String portletResource : portletResources) {
+				boolean module = false;
+
+				if (portletResource.startsWith("module:")) {
+					module = true;
+
+					portletResource = portletResource.substring(7);
+				}
+
 				if (!HttpComponentsUtil.hasProtocol(portletResource)) {
 					Portlet rootPortlet = portlet.getRootPortlet();
 
@@ -69,7 +77,12 @@ public class PortletResourceStaticURLGenerator {
 				}
 
 				if (!_visitedURLs.contains(portletResource)) {
-					urls.add(portletResource);
+					if (module) {
+						urls.add("module:" + portletResource);
+					}
+					else {
+						urls.add(portletResource);
+					}
 
 					_visitedURLs.add(portletResource);
 				}

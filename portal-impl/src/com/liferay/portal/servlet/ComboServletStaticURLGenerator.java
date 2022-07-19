@@ -69,7 +69,9 @@ public class ComboServletStaticURLGenerator {
 						continue;
 					}
 
-					if (HttpComponentsUtil.hasProtocol(portletResource)) {
+					if (HttpComponentsUtil.hasProtocol(portletResource) ||
+						portletResource.startsWith("module:")) {
+
 						urls.add(portletResource);
 					}
 					else {

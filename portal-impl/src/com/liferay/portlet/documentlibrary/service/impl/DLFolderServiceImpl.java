@@ -43,9 +43,9 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	@Override
 	public DLFolder addFolder(
-			long groupId, long repositoryId, boolean mountPoint,
-			long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long groupId, long repositoryId,
+			boolean mountPoint, long parentFolderId, String name,
+			String description, ServiceContext serviceContext)
 		throws PortalException {
 
 		ModelResourcePermissionUtil.check(
@@ -53,8 +53,9 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			parentFolderId, ActionKeys.ADD_FOLDER);
 
 		return dlFolderLocalService.addFolder(
-			getUserId(), groupId, repositoryId, mountPoint, parentFolderId,
-			name, description, false, serviceContext);
+			externalReferenceCode, getUserId(), groupId, repositoryId,
+			mountPoint, parentFolderId, name, description, false,
+			serviceContext);
 	}
 
 	@Override
@@ -82,6 +83,21 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		DLFolder dlFolder = getFolder(groupId, parentFolderId, name);
 
 		deleteFolder(dlFolder.getFolderId());
+	}
+
+	@Override
+	public DLFolder getDLFolderByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		DLFolder dlFolder =
+			dlFolderLocalService.getDLFolderByExternalReferenceCode(
+				externalReferenceCode, groupId);
+
+		_dlFolderModelResourcePermission.check(
+			getPermissionChecker(), dlFolder, ActionKeys.VIEW);
+
+		return dlFolder;
 	}
 
 	@Override

@@ -165,15 +165,15 @@ public class LiferayLocalRepository
 
 	@Override
 	public Folder addFolder(
-			long userId, long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long parentFolderId,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean mountPoint = ParamUtil.getBoolean(serviceContext, "mountPoint");
 
 		DLFolder dlFolder = dlFolderLocalService.addFolder(
-			userId, getGroupId(), getRepositoryId(), mountPoint,
-			toFolderId(parentFolderId), name, description, false,
+			externalReferenceCode, userId, getGroupId(), getRepositoryId(),
+			mountPoint, toFolderId(parentFolderId), name, description, false,
 			serviceContext);
 
 		return new LiferayFolder(dlFolder);
@@ -270,6 +270,21 @@ public class LiferayLocalRepository
 
 		if (dlFileEntry != null) {
 			return new LiferayFileEntry(dlFileEntry);
+		}
+
+		return null;
+	}
+
+	@Override
+	public Folder fetchFolderByExternalReferenceCode(
+		String externalReferenceCode) {
+
+		DLFolder dlFolder =
+			dlFolderLocalService.fetchDLFolderByExternalReferenceCode(
+				externalReferenceCode, getGroupId());
+
+		if (dlFolder != null) {
+			return new LiferayFolder(dlFolder);
 		}
 
 		return null;

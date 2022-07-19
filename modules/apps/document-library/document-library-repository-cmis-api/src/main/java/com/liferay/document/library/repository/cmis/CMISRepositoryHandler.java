@@ -78,12 +78,13 @@ public abstract class CMISRepositoryHandler
 
 	@Override
 	public Folder addFolder(
-			long userId, long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long parentFolderId,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException {
 
 		return _baseCmisRepository.addFolder(
-			userId, parentFolderId, name, description, serviceContext);
+			externalReferenceCode, userId, parentFolderId, name, description,
+			serviceContext);
 	}
 
 	@Override

@@ -117,14 +117,15 @@ public class CapabilityRepository
 
 	@Override
 	public Folder addFolder(
-			long userId, long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long parentFolderId,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException {
 
 		Repository repository = getRepository();
 
 		Folder folder = repository.addFolder(
-			userId, parentFolderId, name, description, serviceContext);
+			externalReferenceCode, userId, parentFolderId, name, description,
+			serviceContext);
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Add.class, Folder.class, folder);
@@ -520,6 +521,14 @@ public class CapabilityRepository
 		throws PortalException {
 
 		return getRepository().getFolder(parentFolderId, name);
+	}
+
+	@Override
+	public Folder getFolderByExternalReferenceCode(String externalReferenceCode)
+		throws PortalException {
+
+		return getRepository().getFolderByExternalReferenceCode(
+			externalReferenceCode);
 	}
 
 	@Override

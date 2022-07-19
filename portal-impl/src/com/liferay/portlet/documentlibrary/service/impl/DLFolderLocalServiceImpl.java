@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
+import com.liferay.document.library.kernel.exception.DuplicateFolderExternalReferenceCodeException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.FolderNameException;
 import com.liferay.document.library.kernel.exception.InvalidFolderException;
@@ -110,9 +111,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@Override
 	public DLFolder addFolder(
-			long userId, long groupId, long repositoryId, boolean mountPoint,
-			long parentFolderId, String name, String description,
-			boolean hidden, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long repositoryId, boolean mountPoint, long parentFolderId,
+			String name, String description, boolean hidden,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Folder
@@ -126,11 +128,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		long folderId = counterLocalService.increment();
 
+		_validateExternalReferenceCode(externalReferenceCode, groupId);
+
 		DLFolder dlFolder = dlFolderPersistence.create(folderId);
 
 		dlFolder.setUuid(serviceContext.getUuid());
 		dlFolder.setGroupId(groupId);
 		dlFolder.setCompanyId(user.getCompanyId());
+		dlFolder.setExternalReferenceCode(externalReferenceCode);
 		dlFolder.setUserId(user.getUserId());
 		dlFolder.setUserName(user.getFullName());
 		dlFolder.setRepositoryId(repositoryId);
@@ -1420,6 +1425,25 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				StringBundler.concat(
 					"Folder name ", folderName,
 					" is invalid because it contains a /"));
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		DLFolder dlFolder = dlFolderPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+
+		if (dlFolder != null) {
+			throw new DuplicateFolderExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate folder external reference code ",
+					externalReferenceCode, " in group ", groupId));
 		}
 	}
 

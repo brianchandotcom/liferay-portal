@@ -179,7 +179,7 @@ public class RedundantLogCheck extends BaseCheck {
 		return fullIdent.getText();
 	}
 
-	private static final String _MSG_REDUNDANT_LOG = "redundant.log.branching";
+	private static final String _MSG_REDUNDANT_LOG = "log.redundant";
 
 	private static final Pattern _logLevelPattern = Pattern.compile(
 		"_log.is(Debug|Error|Info|Trace|Warn)Enabled");

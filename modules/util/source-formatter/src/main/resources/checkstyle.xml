@@ -654,7 +654,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.RedundantLogCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds unnecessary logs." />
-			<message key="redundant.log.branching" value="Redundant log statement between line ''{0}'' and line ''{1}''." />
+			<message key="log.redundant" value="Redundant log between line ''{0}'' and line ''{1}''." />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ReferenceAnnotationCheck">
 			<property name="category" value="Bug Prevention" />

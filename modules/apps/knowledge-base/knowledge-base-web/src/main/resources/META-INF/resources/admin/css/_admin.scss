@@ -1,8 +1,17 @@
 @import 'atlas-variables';
 
+$controlMenuHeight: 56px;
+
 .knowledge-base-portlet-admin {
-	.kbVerticalBar .tbar-light {
-		background-color: $gray-200;
+	.kbVerticalBar {
+		> div {
+			min-height: calc(100vh - #{$controlMenuHeight});
+			height: 100%;
+		}
+
+		.tbar-light {
+			background-color: $gray-200;
+		}
 	}
 
 	.kbAdminContent {

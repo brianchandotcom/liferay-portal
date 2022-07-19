@@ -16,14 +16,13 @@ package com.liferay.commerce.product.internal.upgrade.registry;
 
 import com.liferay.account.settings.AccountEntryGroupSettings;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.commerce.pricing.constants.CommercePricingConstants;
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.internal.upgrade.v1_10_1.CommerceSiteTypeUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_11_0.CPAttachmentFileEntryGroupUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_11_1.CPDisplayLayoutUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.CPDefinitionLinkUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.CPDefinitionOptionRelUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.CPFriendlyURLEntryUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v1_3_0.CPInstanceUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.CProductUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.util.CProductTable;
 import com.liferay.commerce.product.internal.upgrade.v1_4_0.CPDefinitionSpecificationOptionValueUpgradeProcess;
@@ -33,10 +32,11 @@ import com.liferay.commerce.product.internal.upgrade.v1_6_0.CommerceCatalogUpgra
 import com.liferay.commerce.product.internal.upgrade.v1_6_0.util.CommerceCatalogTable;
 import com.liferay.commerce.product.internal.upgrade.v1_6_0.util.CommerceChannelRelTable;
 import com.liferay.commerce.product.internal.upgrade.v1_6_0.util.CommerceChannelTable;
+import com.liferay.commerce.product.internal.upgrade.v1_7_0.CPDefinitionFiltersUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v2_0_0.CPInstanceOptionValueRelUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v2_0_0.util.CPInstanceOptionValueRelTable;
-import com.liferay.commerce.product.internal.upgrade.v2_2_0.util.CPDefinitionOptionRelTable;
-import com.liferay.commerce.product.internal.upgrade.v2_2_0.util.CPDefinitionOptionValueRelTable;
+import com.liferay.commerce.product.internal.upgrade.v2_2_0.CPDefinitionOptionValueRelUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v2_3_0.CommerceChannelUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v2_5_0.FriendlyURLEntryUpgradeProcess;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -102,8 +102,7 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			new CPFriendlyURLEntryUpgradeProcess(_classNameLocalService),
 			UpgradeProcessFactory.addColumns(
 				"CPInstance", "CPInstanceUuid VARCHAR(75)"),
-			UpgradeProcessFactory.runSQL(
-				"update CPInstance set CPInstanceUuid = uuid_"));
+			new CPInstanceUpgradeProcess());
 
 		registry.register(
 			"1.3.0", "1.4.0",
@@ -125,8 +124,7 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"CPDefinition", "accountGroupFilterEnabled BOOLEAN",
 				"channelFilterEnabled BOOLEAN"),
-			UpgradeProcessFactory.runSQL(
-				"update CPDefinition set channelFilterEnabled = [$TRUE$]"));
+			new CPDefinitionFiltersUpgradeProcess());
 
 		registry.register(
 			"1.7.0", "1.8.0",
@@ -194,15 +192,7 @@ public class CommerceProductServiceUpgradeStepRegistrator
 				"CProductId LONG", "quantity INTEGER", "price DECIMAL(30, 16)"),
 			UpgradeProcessFactory.addColumns(
 				"CPDefinitionOptionRel", "priceType VARCHAR(75)"),
-			UpgradeProcessFactory.runSQL(
-				String.format(
-					"update %s set priceType = '%s'",
-					CPDefinitionOptionRelTable.TABLE_NAME,
-					CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)),
-			UpgradeProcessFactory.runSQL(
-				String.format(
-					"update %s set price = 0",
-					CPDefinitionOptionValueRelTable.TABLE_NAME)));
+			new CPDefinitionOptionValueRelUpgradeProcess());
 
 		registry.register(
 			"2.2.0", "2.2.1",
@@ -216,12 +206,7 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"CommerceChannel", "priceDisplayType VARCHAR(75)",
 				"discountsTargetNetPrice BOOLEAN"),
-			UpgradeProcessFactory.runSQL(
-				"update CommerceChannel set priceDisplayType = '" +
-					CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE + "'"),
-			UpgradeProcessFactory.runSQL(
-				"update CommerceChannel set discountsTargetNetPrice = " +
-					"[$TRUE$]"));
+			new CommerceChannelUpgradeProcess());
 
 		registry.register(
 			"2.3.0", "2.4.0",

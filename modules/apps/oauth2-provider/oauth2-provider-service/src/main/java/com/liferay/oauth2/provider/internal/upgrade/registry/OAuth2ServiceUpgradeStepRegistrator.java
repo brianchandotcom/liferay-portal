@@ -15,7 +15,9 @@
 package com.liferay.oauth2.provider.internal.upgrade.registry;
 
 import com.liferay.oauth2.provider.internal.upgrade.v2_0_0.OAuth2ApplicationScopeAliasesUpgradeProcess;
+import com.liferay.oauth2.provider.internal.upgrade.v3_0_0.OAuth2ApplicationClientCredentialUserUpgradeUser;
 import com.liferay.oauth2.provider.internal.upgrade.v3_2_0.OAuth2ApplicationFeatureUpgradeProcess;
+import com.liferay.oauth2.provider.internal.upgrade.v4_1_0.OAuth2ApplicationClientAuthenticationMethodUpgradeProcess;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
@@ -65,9 +67,7 @@ public class OAuth2ServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"OAuth2Application",
 				"clientCredentialUserName VARCHAR(75) null"),
-			UpgradeProcessFactory.runSQL(
-				"update OAuth2Application set clientCredentialUserId = " +
-					"userId, clientCredentialUserName = userName"));
+			new OAuth2ApplicationClientCredentialUserUpgradeUser());
 
 		registry.register(
 			"3.0.0", "3.1.0",
@@ -92,14 +92,7 @@ public class OAuth2ServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"OAuth2Application",
 				"clientAuthenticationMethod VARCHAR(75) null"),
-			UpgradeProcessFactory.runSQL(
-				"update OAuth2Application set clientAuthenticationMethod = " +
-				"'client_secret_post' where (clientAuthenticationMethod " +
-				"is null or clientAuthenticationMethod = '');"),
-			UpgradeProcessFactory.runSQL(
-				"update OAuth2Application set clientAuthenticationMethod = " +
-				"'none' where (clientSecret is null OR clientSecret = " +
-				"'');"),
+			new OAuth2ApplicationClientAuthenticationMethodUpgradeProcess(),
 			UpgradeProcessFactory.addColumns(
 				"OAuth2Application", "jwks VARCHAR(3999) null"));
 

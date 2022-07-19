@@ -56,9 +56,8 @@ public class DispatchServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.1.0", "3.1.1",
-			UpgradeProcessFactory.runSQL(
-				"delete from ResourceAction where name = '90' and actionId = " +
-					"'ADD_DISPATCH_TRIGGER'"));
+			new com.liferay.dispatch.internal.upgrade.v3_1_1.
+				DispatchTriggerModelResourcePermissionUpgradeProcess());
 
 		registry.register(
 			"3.1.1", "4.0.0",

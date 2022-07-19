@@ -61,12 +61,10 @@ public class DDLServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.0.2", "1.1.0",
-			UpgradeProcessFactory.runSQL(
-				"update DDLRecord set recordSetVersion = '" +
-					"DDLRecordSetConstants.VERSION_DEFAULT'"),
-			UpgradeProcessFactory.runSQL(
-				"update DDLRecordSet set version = '" +
-					"DDLRecordSetConstants.VERSION_DEFAULT'"),
+			new com.liferay.dynamic.data.lists.internal.upgrade.v1_1_0.
+				DDLRecordUpgradeProcess(),
+			new com.liferay.dynamic.data.lists.internal.upgrade.v1_1_0.
+				DDLRecordSetUpgradeProcess(),
 			new com.liferay.dynamic.data.lists.internal.upgrade.v1_1_0.
 				DDLRecordSetVersionUpgradeProcess(_counterLocalService));
 

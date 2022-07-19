@@ -14,7 +14,6 @@
 
 package com.liferay.knowledge.base.internal.upgrade.registry;
 
-import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.internal.upgrade.v2_0_2.KBArticleUpgradeProcess;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBArticleTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBCommentTable;
@@ -126,10 +125,8 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 			new com.liferay.knowledge.base.internal.upgrade.v2_0_0.
 				UpgradeClassNames(),
 			UpgradeProcessFactory.addColumns("KBComment", "status INTEGER"),
-			UpgradeProcessFactory.runSQL(
-				"update KBComment set status = " +
-					KBCommentConstants.STATUS_COMPLETED +
-						" where status is NULL"),
+			new com.liferay.knowledge.base.internal.upgrade.v2_0_0.
+				KBCommentUpgradeProcess(),
 			new com.liferay.knowledge.base.internal.upgrade.v2_0_0.
 				UpgradeRepository());
 

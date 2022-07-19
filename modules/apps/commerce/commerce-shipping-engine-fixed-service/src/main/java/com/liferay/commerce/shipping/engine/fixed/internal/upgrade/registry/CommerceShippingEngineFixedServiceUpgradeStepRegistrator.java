@@ -15,13 +15,12 @@
 package com.liferay.commerce.shipping.engine.fixed.internal.upgrade.registry;
 
 import com.liferay.commerce.shipping.engine.fixed.internal.upgrade.v2_2_0.util.CommerceShippingFixedOptionQualifierTable;
+import com.liferay.commerce.shipping.engine.fixed.internal.upgrade.v2_3_0.CommerceShippingFixedOptionUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -79,11 +78,7 @@ public class CommerceShippingEngineFixedServiceUpgradeStepRegistrator
 			"2.2.0", "2.3.0",
 			UpgradeProcessFactory.addColumns(
 				"CommerceShippingFixedOption", "key_ VARCHAR(75)"),
-			UpgradeProcessFactory.runSQL(
-				StringBundler.concat(
-					"update CommerceShippingFixedOption set key_ = CONCAT('",
-					StringUtil.randomString(3),
-					"', CAST_TEXT(commerceShippingFixedOptionId))")));
+			new CommerceShippingFixedOptionUpgradeProcess());
 
 		registry.register("2.3.0", "2.4.0", new DummyUpgradeStep());
 

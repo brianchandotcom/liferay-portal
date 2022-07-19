@@ -18,6 +18,7 @@ import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.document.library.internal.upgrade.v1_0_0.DocumentLibraryUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v1_0_1.DLConfigurationUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v1_0_1.DLFileEntryConfigurationUpgradeProcess;
+import com.liferay.document.library.internal.upgrade.v1_0_2.DLFileShortcutUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v1_1_0.SchemaUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v1_1_2.DLFileEntryTypeUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v2_0_0.UpgradeCompanyId;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
@@ -54,11 +54,7 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			"0.0.1", "1.0.0",
 			new DocumentLibraryUpgradeProcess(_storeFactory.getStore()));
 
-		registry.register(
-			"1.0.0", "1.0.1",
-			UpgradeProcessFactory.runSQL(
-				"update DLFileShortcut set repositoryId = groupId where " +
-					"repositoryId = 0"));
+		registry.register("1.0.0", "1.0.1", new DLFileShortcutUpgradeProcess());
 
 		registry.register(
 			"1.0.1", "1.0.2",

@@ -65,10 +65,8 @@ public class MarketplaceServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.0.1", "2.0.2",
-			UpgradeProcessFactory.runSQL(
-				"delete from Marketplace_App where appId is not null"),
-			UpgradeProcessFactory.runSQL(
-				"delete from Marketplace_Module where moduleId is not null"));
+			new com.liferay.marketplace.internal.upgrade.v2_0_2.
+				AppUpgradeProcess());
 
 		registry.register(
 			"2.0.2", "2.0.3",

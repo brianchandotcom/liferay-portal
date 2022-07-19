@@ -15,10 +15,9 @@
 package com.liferay.portal.settings.web.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
-import com.liferay.portal.settings.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.settings.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.settings.web.internal.upgrade.v1_0_1.UpgradeInstanceSettingsPortletId;
+import com.liferay.portal.settings.web.internal.upgrade.v1_0_2.ResourceActionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,11 +38,7 @@ public class PortalSettingWebUpgradeStepRegistrator
 		registry.register(
 			"1.0.0", "1.0.1", new UpgradeInstanceSettingsPortletId());
 
-		registry.register(
-			"1.0.1", "1.0.2",
-			UpgradeProcessFactory.runSQL(
-				"delete from ResourceAction where name = '" +
-					PortalSettingsPortletKeys.PORTAL_SETTINGS + "'"));
+		registry.register("1.0.1", "1.0.2", new ResourceActionUpgradeProcess());
 	}
 
 }

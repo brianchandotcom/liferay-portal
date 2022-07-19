@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.internal.upgrade.registry;
 
+import com.liferay.calendar.internal.upgrade.v1_0_1.CalendarBookingUpgradeProcess;
 import com.liferay.calendar.internal.upgrade.v1_0_2.CalendarUpgradeProcess;
 import com.liferay.calendar.internal.upgrade.v1_0_4.UpgradeClassNames;
 import com.liferay.calendar.internal.upgrade.v1_0_5.CalendarResourceUpgradeProcess;
@@ -73,9 +74,7 @@ public class CalendarServiceUpgradeStepRegistrator
 			"1.0.0", "1.0.1",
 			UpgradeProcessFactory.addColumns(
 				"CalendarBooking", "vEventUid STRING null"),
-			UpgradeProcessFactory.runSQL(
-				"update CalendarBooking set vEventUid = uuid_ where " +
-					"vEventUid is null or vEventUid = ''"));
+			new CalendarBookingUpgradeProcess());
 
 		registry.register("1.0.1", "1.0.2", new CalendarUpgradeProcess());
 

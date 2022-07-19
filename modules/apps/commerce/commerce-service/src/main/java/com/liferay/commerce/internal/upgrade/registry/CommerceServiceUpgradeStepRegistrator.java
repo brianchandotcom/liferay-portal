@@ -17,13 +17,14 @@ package com.liferay.commerce.internal.upgrade.registry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalService;
-import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.internal.upgrade.v1_2_0.CommerceSubscriptionUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v2_0_0.CommercePaymentMethodUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v2_1_0.CPDAvailabilityEstimateUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v2_1_0.CommerceSubscriptionEntryUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v4_1_0.CommerceAddressUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v4_3_0.CommerceOrderDateUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v4_5_1.CommerceShippingMethodUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v4_8_1.CommerceOrderStatusesUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v5_0_1.CommercePermissionUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v7_2_0.util.CommerceOrderTypeRelTable;
 import com.liferay.commerce.internal.upgrade.v7_2_0.util.CommerceOrderTypeTable;
@@ -150,9 +151,8 @@ public class CommerceServiceUpgradeStepRegistrator
 			new CommerceAddressUpgradeProcess(_classNameLocalService),
 			UpgradeProcessFactory.addColumns(
 				"CommerceOrderItem", "promoPrice DECIMAL(30,16)"),
-			UpgradeProcessFactory.runSQL(
-				"update CommerceOrderItem set promoPrice = finalPrice + " +
-					"discountAmount"),
+			new com.liferay.commerce.internal.upgrade.v4_1_0.
+				CommerceOrderItemUpgradeProcess(),
 			new com.liferay.commerce.internal.upgrade.v4_1_0.
 				CommerceCountryUpgradeProcess());
 
@@ -179,10 +179,7 @@ public class CommerceServiceUpgradeStepRegistrator
 		registry.register(
 			"4.2.1", "4.3.0",
 			UpgradeProcessFactory.addColumns("CommerceOrder", "orderDate DATE"),
-			UpgradeProcessFactory.runSQL(
-				"update CommerceOrder set orderDate = createDate where " +
-					"orderStatus <> " +
-						CommerceOrderConstants.ORDER_STATUS_OPEN));
+			new CommerceOrderDateUpgradeProcess());
 
 		registry.register(
 			"4.3.0", "4.4.0",
@@ -218,13 +215,7 @@ public class CommerceServiceUpgradeStepRegistrator
 		registry.register("4.6.0", "4.7.0", new DummyUpgradeProcess());
 
 		registry.register(
-			"4.7.0", "4.8.1",
-			UpgradeProcessFactory.runSQL(
-				"update CommerceOrder set orderStatus = 1 where orderStatus " +
-					"= 11"),
-			UpgradeProcessFactory.runSQL(
-				"update CommerceOrder set orderStatus = 10 where orderStatus " +
-					"= 12"));
+			"4.7.0", "4.8.1", new CommerceOrderStatusesUpgradeProcess());
 
 		registry.register(
 			"4.8.1", "4.9.0",
@@ -261,9 +252,8 @@ public class CommerceServiceUpgradeStepRegistrator
 
 		registry.register(
 			"4.9.0", "4.9.1",
-			UpgradeProcessFactory.runSQL(
-				"update CommerceOrder set orderDate = createDate where " +
-					"orderDate is NULL"));
+			new com.liferay.commerce.internal.upgrade.v4_9_1.
+				CommerceOrderUpgradeProcess());
 
 		registry.register(
 			"4.9.1", "4.10.0",
@@ -303,9 +293,8 @@ public class CommerceServiceUpgradeStepRegistrator
 			"7.0.0", "7.1.0",
 			UpgradeProcessFactory.addColumns(
 				"CommerceOrder", "commerceOrderTypeId LONG"),
-			UpgradeProcessFactory.runSQL(
-				"update CommerceOrder set commerceOrderTypeId = 0 where " +
-					"commerceOrderTypeId is NULL"));
+			new com.liferay.commerce.internal.upgrade.v7_1_0.
+				CommerceOrderUpgradeProcess());
 
 		registry.register(
 			"7.1.0", "7.2.0", CommerceOrderTypeTable.create(),

@@ -27,6 +27,7 @@ import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBThreadFlagTable
 import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBThreadTable;
 import com.liferay.message.boards.internal.upgrade.v3_0_0.MBMessageTreePathUpgradeProcess;
 import com.liferay.message.boards.internal.upgrade.v3_1_0.UrlSubjectUpgradeProcess;
+import com.liferay.message.boards.internal.upgrade.v6_0_0.MBStatsUserUpgradeProcess;
 import com.liferay.message.boards.internal.upgrade.v6_3_0.util.MBSuspiciousActivityTable;
 import com.liferay.message.boards.internal.upgrade.v6_4_0.MBSuspiciousActivityUpgradeProcess;
 import com.liferay.message.boards.model.MBThread;
@@ -110,9 +111,7 @@ public class MBServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 		registry.register("5.1.0", "5.2.0", new DummyUpgradeStep());
 
-		registry.register(
-			"5.2.0", "6.0.0",
-			UpgradeProcessFactory.runSQL("drop table MBStatsUser"));
+		registry.register("5.2.0", "6.0.0", new MBStatsUserUpgradeProcess());
 
 		registry.register(
 			"6.0.0", "6.1.0",

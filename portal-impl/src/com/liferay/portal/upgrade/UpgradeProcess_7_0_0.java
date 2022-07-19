@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade;
 
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAsset;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeAssetTagsResourcePermission;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeCompanyId;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibrary;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibraryPortletId;
@@ -104,11 +104,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(
 			UpgradeProcessFactory.alterColumnType("Address", "typeId", "LONG"));
 		upgrade(new UpgradeAsset());
-		upgrade(
-			UpgradeProcessFactory.runSQL(
-				"delete from ResourcePermission where name = " +
-					"'com.liferay.portlet.asset.model.AssetTag' and scope = " +
-						ResourceConstants.SCOPE_INDIVIDUAL));
+		upgrade(new UpgradeAssetTagsResourcePermission());
 		upgrade(new UpgradeCompanyId());
 		upgrade(new UpgradeDocumentLibrary());
 		upgrade(new UpgradeDocumentLibraryPortletId());

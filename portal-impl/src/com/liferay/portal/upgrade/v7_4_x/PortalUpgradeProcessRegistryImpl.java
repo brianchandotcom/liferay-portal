@@ -71,11 +71,7 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(12, 0, 0), new UpgradePortalPreferences());
 
 		upgradeProcesses.put(
-			new Version(12, 0, 1),
-			UpgradeProcessFactory.runSQL(
-				"update ResourceAction set actionId = 'MANAGE_COUNTRIES' " +
-					"where name='90' and actionId = " +
-						"'MANAGE_COMMERCE_COUNTRIES'"));
+			new Version(12, 0, 1), new UpgradeResourceAction());
 
 		upgradeProcesses.put(
 			new Version(12, 0, 2), new UpgradeDLFileEntryType());
@@ -111,12 +107,7 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(13, 3, 0),
 			new CTModelUpgradeProcess("Repository", "RepositoryEntry"));
 
-		upgradeProcesses.put(
-			new Version(13, 3, 1),
-			UpgradeProcessFactory.runSQL(
-				"update Repository set portletId = name where (portletId is " +
-					"null or portletId = '') and name = " +
-						"'com.liferay.portal.kernel.util.TempFileEntryUtil'"));
+		upgradeProcesses.put(new Version(13, 3, 1), new UpgradeRepository());
 
 		upgradeProcesses.put(new Version(13, 3, 2), new UpgradeMappingTables());
 

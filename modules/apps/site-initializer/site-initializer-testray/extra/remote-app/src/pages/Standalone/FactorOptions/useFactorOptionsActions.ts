@@ -12,37 +12,38 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
-
-import {DeleteFactorOption} from '../../../graphql/mutations';
 import {TestrayFactorOptions} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
+import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
+import {Security} from '../../../security';
+import {deleteResource} from '../../../services/rest';
+import {Action} from '../../../types';
 
 const useFactorOptionsActions = () => {
-	const [onDeleteFactorOption] = useMutation(DeleteFactorOption);
-
+	const {removeItemFromList} = useMutate();
 	const formModal = useFormModal();
 	const modal = formModal.modal;
 
+	const actions: Action[] = [
+		{
+			action: (item: TestrayFactorOptions) => modal.open(item),
+			name: i18n.translate('edit'),
+			permission: 'UPDATE',
+		},
+		{
+			action: ({id}: TestrayFactorOptions, mutate) =>
+				deleteResource(`/factoroptions/${id}`)
+					.then(() => removeItemFromList(mutate, id))
+					.then(modal.onSave)
+					.catch(modal.onError),
+			name: i18n.translate('delete'),
+			permission: 'DELETE',
+		},
+	];
+
 	return {
-		actions: [
-			{
-				action: (item: TestrayFactorOptions) =>
-					modal.open({
-						...item,
-						factorCategoryId: item.factorCategory?.id,
-					}),
-				name: i18n.translate('edit'),
-			},
-			{
-				action: ({id}: TestrayFactorOptions) =>
-					onDeleteFactorOption({variables: {id}})
-						.then(() => modal.onSave())
-						.catch(modal.onError),
-				name: i18n.translate('delete'),
-			},
-		],
+		actions: (row: any) => Security.filterActions(actions, row.actions),
 		formModal,
 	};
 };

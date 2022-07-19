@@ -31,3 +31,4 @@ export * from './TestraySuite';
 export * from './TestraySuiteCases';
 export * from './TestrayTask';
 export * from './TestrayUserAccounts';
+export * from './TestrayFactorOptions';

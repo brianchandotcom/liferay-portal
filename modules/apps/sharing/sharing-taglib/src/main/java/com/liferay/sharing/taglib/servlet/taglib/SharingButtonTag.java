@@ -17,9 +17,14 @@ package com.liferay.sharing.taglib.servlet.taglib;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
+import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.sharing.taglib.internal.servlet.SharingJavaScriptFactoryUtil;
+import com.liferay.sharing.taglib.internal.servlet.SharingPermissionUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -70,6 +75,16 @@ public class SharingButtonTag extends BaseSharingTag {
 		SharingJavaScriptFactory sharingJavaScriptFactory =
 			SharingJavaScriptFactoryUtil.getSharingJavaScriptFactory();
 
+		long classNameId = PortalUtil.getClassNameId(getClassName());
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (_canShare(classNameId, getClassPK(), themeDisplay)) {
+			sharingJavaScriptFactory.requestSharingJavascript();
+		}
+
 		try {
 			httpServletRequest.setAttribute(
 				"liferay-sharing:button:onClick",
@@ -78,6 +93,24 @@ public class SharingButtonTag extends BaseSharingTag {
 		}
 		catch (PortalException portalException) {
 			_log.error("Unable to set onclick method", portalException);
+		}
+	}
+
+	private boolean _canShare(
+		long classNameId, long classPK, ThemeDisplay themeDisplay) {
+
+		SharingPermission sharingPermission =
+			SharingPermissionUtil.getSharingPermission();
+
+		try {
+			return sharingPermission.containsSharePermission(
+				themeDisplay.getPermissionChecker(), classNameId, classPK,
+				themeDisplay.getScopeGroupId());
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return false;
 		}
 	}
 

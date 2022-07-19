@@ -1568,6 +1568,78 @@ definition {
 			value1 = "DYNAMIC SEGMENT");
 	}
 
+	@description = "Bug: LRAC-10972 | Automation ID: LRAC-11506 | Test Summary: Check Autocomplete Suggestions For All Criteria Types"
+	@priority = "3"
+	test CheckAutocompleteSuggestionsForAllCriteriaTypes {
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Go to AC Page DXP") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Get URL") {
+			var myURL = Navigator.getCurrentURL();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
+		}
+
+		task ("Check URL autocomplete from Session Attributes") {
+			ACSegments.goToSidebarAttributes(criterion = "Session Attributes");
+
+			ACSegments.addSegmentField(segmentField = "URL");
+
+			ACSegments.viewAutocompleteSuggestions(
+				autocompleteText = "${myUrl}",
+				notPresent = "home",
+				textInput = "ac-page");
+		}
+
+		task ("Cancel the creation") {
+			ACSegments.cancelSegment();
+
+			Button.click(button = "Leave Page");
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
+		}
+
+		task ("Check URL autocomplete from Session Attributes") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "givenName");
+
+			ACSegments.viewAutocompleteSuggestions(
+				autocompleteText = "userfn",
+				notPresent = "Abram",
+				textInput = "user");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8484 | Test Summary: Segment Form Validation"
 	@priority = "5"
 	test ViewSegmentFormValidation {

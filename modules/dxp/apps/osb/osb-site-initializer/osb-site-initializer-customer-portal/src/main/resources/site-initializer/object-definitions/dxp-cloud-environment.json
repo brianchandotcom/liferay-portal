@@ -12,7 +12,7 @@
 				"en-US": "Account Key"
 			},
 			"name": "accountKey",
-			"required": true
+			"required": false
 		},
 		{
 			"DBType": "String",
@@ -22,7 +22,7 @@
 				"en-US": "Data Center Region"
 			},
 			"name": "dataCenterRegion",
-			"required": true
+			"required": false
 		},
 		{
 			"DBType": "String",
@@ -32,7 +32,7 @@
 				"en-US": "Project ID"
 			},
 			"name": "projectId",
-			"required": true
+			"required": false
 		},
 		{
 			"DBType": "String",

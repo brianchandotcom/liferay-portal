@@ -12,7 +12,7 @@
 				"en-US": "Account Key"
 			},
 			"name": "accountKey",
-			"required": true
+			"required": false
 		},
 		{
 			"DBType": "String",
@@ -22,7 +22,7 @@
 				"en-US": "Owner Email Address"
 			},
 			"name": "ownerEmailAddress",
-			"required": true
+			"required": false
 		},
 		{
 			"DBType": "String",
@@ -32,7 +32,7 @@
 				"en-US": "Workspace Name"
 			},
 			"name": "workspaceName",
-			"required": true
+			"required": false
 		},
 		{
 			"DBType": "String",
@@ -42,7 +42,7 @@
 				"en-US": "Data Center Location"
 			},
 			"name": "dataCenterLocation",
-			"required": true
+			"required": false
 		},
 		{
 			"DBType": "String",

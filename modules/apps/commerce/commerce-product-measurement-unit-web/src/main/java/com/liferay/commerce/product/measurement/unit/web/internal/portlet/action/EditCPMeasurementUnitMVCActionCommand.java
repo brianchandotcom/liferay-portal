@@ -111,9 +111,7 @@ public class EditCPMeasurementUnitMVCActionCommand
 		}
 		else {
 			deleteCPMeasurementUnitIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCPMeasurementUnitIds"),
-				0L);
+				ParamUtil.getString(actionRequest, "rowIds"), 0L);
 		}
 
 		for (long deleteCPMeasurementUnitId : deleteCPMeasurementUnitIds) {

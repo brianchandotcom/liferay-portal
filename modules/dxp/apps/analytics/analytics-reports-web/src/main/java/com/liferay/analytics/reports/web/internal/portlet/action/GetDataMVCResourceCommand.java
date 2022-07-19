@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -75,6 +76,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
@@ -249,7 +252,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private JSONObject _getEndpointsJSONObject(
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
-		String canonicalURL, Locale locale, ResourceResponse resourceResponse) {
+		String canonicalURL, Locale locale, ResourceRequest resourceRequest,
+		ResourceResponse resourceResponse) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -264,7 +268,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			objectValuePair -> jsonObject.put(
 				objectValuePair.getKey(),
 				_getResourceURL(
-					canonicalURL, locale, resourceResponse,
+					canonicalURL, locale, resourceRequest, resourceResponse,
 					objectValuePair.getValue()))
 		);
 
@@ -313,7 +317,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			"endpoints",
 			_getEndpointsJSONObject(
 				analyticsReportsInfoItem, canonicalURL, urlLocale,
-				resourceResponse)
+				resourceRequest, resourceResponse)
 		).put(
 			"hideAnalyticsReportsPanelURL",
 			PortletURLBuilder.createActionURL(
@@ -365,7 +369,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			"viewURLs",
 			_getViewURLsJSONArray(
 				analyticsReportsInfoItem, infoItemReference, locale, object,
-				resourceResponse, urlLocale)
+				resourceRequest, resourceResponse, urlLocale)
 		);
 	}
 
@@ -378,12 +382,23 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private ResourceURL _getResourceURL(
 		InfoItemReference infoItemReference, Locale locale,
-		ResourceResponse resourceResponse, String resourceID) {
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+		String resourceID) {
 
-		ResourceURL resourceURL = resourceResponse.createResourceURL();
+		LiferayPortletRequest liferayPortletRequest =
+			_portal.getLiferayPortletRequest(resourceRequest);
 
-		resourceURL.setParameter("languageId", LocaleUtil.toLanguageId(locale));
-		resourceURL.setParameter("className", infoItemReference.getClassName());
+		ResourceURL resourceURL =
+			(ResourceURL)PortletURLBuilder.createLiferayPortletURL(
+				_portal.getLiferayPortletResponse(resourceResponse),
+				liferayPortletRequest.getPlid(),
+				liferayPortletRequest.getPortletName(),
+				PortletRequest.RESOURCE_PHASE, MimeResponse.Copy.PUBLIC
+			).setParameter(
+				"className", infoItemReference.getClassName()
+			).setParameter(
+				"languageId", LocaleUtil.toLanguageId(locale)
+			).buildPortletURL();
 
 		if (infoItemReference.getInfoItemIdentifier() instanceof
 				ClassNameClassPKInfoItemIdentifier) {
@@ -419,13 +434,24 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private ResourceURL _getResourceURL(
-		String canonicalURL, Locale locale, ResourceResponse resourceResponse,
-		String resourceID) {
+		String canonicalURL, Locale locale, ResourceRequest resourceRequest,
+		ResourceResponse resourceResponse, String resourceID) {
 
-		ResourceURL resourceURL = resourceResponse.createResourceURL();
+		LiferayPortletRequest liferayPortletRequest =
+			_portal.getLiferayPortletRequest(resourceRequest);
 
-		resourceURL.setParameter("languageId", LocaleUtil.toLanguageId(locale));
-		resourceURL.setParameter("canonicalURL", canonicalURL);
+		ResourceURL resourceURL =
+			(ResourceURL)PortletURLBuilder.createLiferayPortletURL(
+				_portal.getLiferayPortletResponse(resourceResponse),
+				liferayPortletRequest.getPlid(),
+				liferayPortletRequest.getPortletName(),
+				PortletRequest.RESOURCE_PHASE, MimeResponse.Copy.PUBLIC
+			).setParameter(
+				"canonicalURL", canonicalURL
+			).setParameter(
+				"languageId", LocaleUtil.toLanguageId(locale)
+			).buildPortletURL();
+
 		resourceURL.setResourceID(resourceID);
 
 		return resourceURL;
@@ -478,7 +504,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 	private JSONArray _getViewURLsJSONArray(
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
 		InfoItemReference infoItemReference, Locale locale, Object object,
-		ResourceResponse resourceResponse, Locale urlLocale) {
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+		Locale urlLocale) {
 
 		List<Locale> locales = analyticsReportsInfoItem.getAvailableLocales(
 			object);
@@ -532,8 +559,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"viewURL",
 					_getResourceURL(
-						infoItemReference, currentLocale, resourceResponse,
-						"/analytics_reports/get_data")
+						infoItemReference, currentLocale, resourceRequest,
+						resourceResponse, "/analytics_reports/get_data")
 				)
 			).toArray());
 	}

@@ -125,18 +125,6 @@ public class UpgradeProcessFactory {
 		};
 	}
 
-	public static UpgradeProcess runSQL(String sql) {
-		return new UpgradeProcess(
-			_getUpgradeInfo(null, "Running the query " + sql)) {
-
-			@Override
-			protected void doUpgrade() throws Exception {
-				runSQL(sql);
-			}
-
-		};
-	}
-
 	private static String _getUpgradeInfo(String tableName, String message) {
 		Thread thread = Thread.currentThread();
 

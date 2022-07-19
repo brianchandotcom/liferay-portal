@@ -354,7 +354,7 @@
 			<finder-column name="version" />
 		</finder>
 	</entity>
-	<entity human-name="document library folder" local-service="true" name="DLFolder" remote-service="true" trash-enabled="true" uad-dir-path="../modules/apps/document-library/document-library-uad/src/main/java" uad-package-path="com.liferay.document.library" uuid="true">
+	<entity external-reference-code="group" human-name="document library folder" local-service="true" name="DLFolder" remote-service="true" trash-enabled="true" uad-dir-path="../modules/apps/document-library/document-library-uad/src/main/java" uad-package-path="com.liferay.document.library" uuid="true">
 
 		<!-- PK fields -->
 
@@ -493,6 +493,7 @@
 		<exception>DuplicateFileEntry</exception>
 		<exception>DuplicateFileEntryExternalReferenceCode</exception>
 		<exception>DuplicateFileEntryType</exception>
+		<exception>DuplicateFolderExternalReferenceCode</exception>
 		<exception>DuplicateFolderName</exception>
 		<exception>DuplicateRepositoryName</exception>
 		<exception>FileEntryExpired</exception>

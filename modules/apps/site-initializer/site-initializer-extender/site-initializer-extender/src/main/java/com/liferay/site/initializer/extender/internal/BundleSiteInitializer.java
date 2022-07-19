@@ -718,7 +718,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			DDMStructure ddmStructure = ddmStructures.get(index);
 
 			ddmStructureEntryIdsStringUtilReplaceValues.put(
-				"DDM_STRUCTURE_FILE_ENTRY_ID:" + resourcePath,
+				"DDM_STRUCTURE_ENTRY_ID:" + resourcePath,
 				String.valueOf(ddmStructure.getStructureId()));
 
 			index++;

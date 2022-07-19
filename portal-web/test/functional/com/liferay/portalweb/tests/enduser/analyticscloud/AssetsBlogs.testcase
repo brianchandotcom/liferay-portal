@@ -13,7 +13,7 @@ definition {
 
 		ACSettings.takeTokenFromAnalyticsCloud();
 
-		TestCase.setUpPortalInstance();
+		// TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
 
@@ -587,6 +587,70 @@ definition {
 
 			// Is not possible to assert the blog because this test needs data from the past.
 
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-11508 | Test Summary: Check Blog Rating show expected value"
+	@priority = "4"
+	test CheckBlogRatingShowExpectedValue {
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Change blog rating type to star") {
+			Ratings.configureRatingType(
+				applications = "Blogs",
+				portlet = "Ratings",
+				ratingType = "Stars",
+				siteName = "Site Name");
+		}
+
+		task ("View the blog page") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Choose a rating star for the blog") {
+			Ratings.rateStar(ratingStarCount = "4");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to blog assets list") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Blogs");
+		}
+
+		task ("Change the time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check blog rating") {
+			ACUtils.viewTableInformation(
+				nameList = "Blogs AC Title",
+				numberValueList = "8.00/10");
+		}
+
+		task ("Check blog rating in visitor behavior") {
+			ACNavigation.openItem(itemName = "Blogs AC Title");
+
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Rating",
+				metricValue = "8.00/10");
 		}
 	}
 

@@ -15166,8 +15166,8 @@ url=${short.hostname}:8080</echo>
 	<target name="update-service-builder-spring-sample-to-ds">
 		<replaceregexp
 			file="${project.dir}/modules/util/portal-tools-service-builder-spring-sample-service/service.xml"
-			match="(auto-namespace-tables=&quot;false&quot;)"
-			replace="\1 dependency-injector=&quot;ds&quot;"
+			match="dependency-injector=&quot;spring&quot;"
+			replace="dependency-injector=&quot;ds&quot;"
 		/>
 
 		<replaceregexp

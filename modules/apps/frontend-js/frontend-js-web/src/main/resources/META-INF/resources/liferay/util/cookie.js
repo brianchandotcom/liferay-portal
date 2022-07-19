@@ -12,12 +12,7 @@
  * details.
  */
 
-export const COOKIE_TYPES = {
-	FUNCTIONAL: 'CONSENT_TYPE_FUNCTIONAL',
-	NECESSARY: 'CONSENT_TYPE_NECESSARY',
-	PERFORMANCE: 'CONSENT_TYPE_PERFORMANCE',
-	PERSONALIZATION: 'CONSENT_TYPE_PERSONALIZATION',
-};
+import {CONSENT_TYPES, checkConsent} from './consent';
 
 const generateCookie = (name, value, options = {}) => {
 	let cookie = `${name}=${value}`;
@@ -42,25 +37,17 @@ const generateCookie = (name, value, options = {}) => {
 };
 
 /**
- * Checks whether the user has consented to a specific type of cookie by looking at the config cookie value.
- * - If it's 'true', the user has consented.
- * - If it's 'false', the user has rejected that specific cookie type.
- * - If it doesn't exist, cookie consent doesn't apply and cookie can be set.
- *
- * @param {string} type Type of consent, from {@link COOKIE_TYPES}
- * @returns {boolean} Boolean representing whether we are allowed to set the cookie
- */
-function checkConsent(type) {
-	return type === COOKIE_TYPES.NECESSARY || getCookie(type) !== 'false';
-}
-
-/**
  * Gets the current value for a specific cookie
  *
  * @param {string} name
+ * @param {string} type Type of consent the cookie requires, from {@link COOKIE_TYPES}
  * @returns {(string|undefined)} Cookie value as a string, undefined if not present
  */
-export function getCookie(name) {
+export function getCookie(name, type) {
+	if (!checkConsent(type)) {
+		return undefined;
+	}
+
 	return document.cookie
 		.split('; ')
 		.find((v) => v.startsWith(`${name}=`))
@@ -107,7 +94,7 @@ export function setCookie(name, value, type, options) {
 }
 
 export default {
-	TYPES: COOKIE_TYPES,
+	TYPES: CONSENT_TYPES,
 	get: getCookie,
 	remove: removeCookie,
 	set: setCookie,

@@ -12,64 +12,40 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
-import {useState} from 'react';
-
-import {
-	CreateRequirementCaseBatch,
-	DeleteRequirementCase,
-} from '../../../graphql/mutations';
-import {
-	TestrayRequirement,
-	TestrayRequirementCase,
-} from '../../../graphql/queries';
+import {TestrayProject} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
+import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
+import {Security} from '../../../security';
+import {deleteResource} from '../../../services/rest';
 import {Action} from '../../../types';
-import {State} from './RequirementCaseLinkModal';
 
-const useRequirementCaseActions = (testrayRequirement: TestrayRequirement) => {
-	const [onDeleteRequirementCase] = useMutation(DeleteRequirementCase);
-	const [onCreateRequirementCase] = useMutation(CreateRequirementCaseBatch);
-	const [forceRefetch, setForceRefetch] = useState(0);
+const useRequirementCaseActions = () => {
+	const {removeItemFromList} = useMutate();
 
-	const {forceRefetch: modalForceRefetch, modal} = useFormModal({
-		onSave: (cases: State) => {
-			if (cases.length) {
-				onCreateRequirementCase({
-					variables: {
-						data: cases.map((caseId) => ({
-							caseId,
-							requirementId: testrayRequirement.id,
-						})),
-					},
-				})
-					.then(() => {
-						setTimeout(() => {
-							setForceRefetch(new Date().getTime());
-						}, 1000);
-					})
-					.catch(console.error);
-			}
-		},
-	});
+	const formModal = useFormModal();
+	const modal = formModal.modal;
 
 	const actions: Action[] = [
 		{
-			action: ({id}: TestrayRequirementCase) =>
-				onDeleteRequirementCase({variables: {id}})
-					.then(() => modal.onSave())
+			action: (item: TestrayProject) => modal.open(item),
+			name: i18n.translate('edit'),
+			permission: 'UPDATE',
+		},
+		{
+			action: ({id}: TestrayProject, mutate) =>
+				deleteResource(`/requirements/${id}`)
+					.then(() => removeItemFromList(mutate, id))
+					.then(modal.onSuccess)
 					.catch(modal.onError),
 			name: i18n.translate('delete'),
+			permission: 'DELETE',
 		},
 	];
 
 	return {
-		actions,
-		formModal: {
-			...modal,
-			forceRefetch: modalForceRefetch || forceRefetch,
-		},
+		actions: (row: any) => Security.filterActions(actions, row.actions),
+		formModal,
 	};
 };
 

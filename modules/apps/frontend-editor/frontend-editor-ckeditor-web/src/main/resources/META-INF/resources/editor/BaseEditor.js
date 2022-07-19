@@ -65,17 +65,11 @@ const BaseEditor = forwardRef(
 				return;
 			}
 
-			const editor = editorRef.current.editor;
-
-			if (editor.checkDirty()) {
-				if (onChangeMethodName) {
-					window[onChangeMethodName](getHTML());
-				}
-				else {
-					onChange(getHTML());
-				}
-
-				editor.resetDirty();
+			if (onChangeMethodName) {
+				window[onChangeMethodName](getHTML());
+			}
+			else {
+				onChange(getHTML());
 			}
 		};
 

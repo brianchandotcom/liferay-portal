@@ -91,7 +91,7 @@ function FormEmptyState({isMapped, item}) {
 	}
 
 	return (
-		<div className="align-items-center bg-lighter d-flex flex-column page-editor__no-fragments-state">
+		<div className="align-items-center bg-lighter d-flex flex-column page-editor__form-unmapped-state page-editor__no-fragments-state">
 			<p className="page-editor__no-fragments-state__title">
 				{Liferay.Language.get('map-your-form')}
 			</p>

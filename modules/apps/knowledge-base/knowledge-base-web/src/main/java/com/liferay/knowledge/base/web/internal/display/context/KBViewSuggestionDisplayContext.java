@@ -51,14 +51,12 @@ public class KBViewSuggestionDisplayContext {
 
 	public KBViewSuggestionDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse, String rootPortletId,
-		String templatePath) {
+		RenderResponse renderResponse, String rootPortletId) {
 
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_rootPortletId = rootPortletId;
-		_templatePath = templatePath;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -286,7 +284,6 @@ public class KBViewSuggestionDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final String _rootPortletId;
-	private final String _templatePath;
 	private final ThemeDisplay _themeDisplay;
 
 }

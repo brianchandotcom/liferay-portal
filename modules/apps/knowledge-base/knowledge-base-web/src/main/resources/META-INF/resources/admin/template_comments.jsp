@@ -86,7 +86,7 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 				</c:if>
 
 				<liferay-portlet:renderURL varImpl="iteratorURL">
-					<portlet:param name="mvcPath" value='<%= templatePath + "view_template.jsp" %>' />
+					<portlet:param name="mvcPath" value="/admin/common/view_template.jsp" />
 					<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
 				</liferay-portlet:renderURL>
 
@@ -140,7 +140,7 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 
 				submitForm(
 					form,
-					'<liferay-portlet:actionURL name="deleteKBComment"><portlet:param name="mvcPath" value='<%= templatePath + "view_template.jsp" %>' /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" /></liferay-portlet:actionURL>'
+					'<liferay-portlet:actionURL name="deleteKBComment"><portlet:param name="mvcPath" value="/admin/common/view_template.jsp" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" /></liferay-portlet:actionURL>'
 				);
 			}
 		}
@@ -156,7 +156,7 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 
 				submitForm(
 					form,
-					'<liferay-portlet:actionURL name="/knowledge_base/update_kb_comment"><portlet:param name="mvcPath" value='<%= templatePath + "view_template.jsp" %>' /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" /></liferay-portlet:actionURL>'
+					'<liferay-portlet:actionURL name="/knowledge_base/update_kb_comment"><portlet:param name="mvcPath" value="/admin/common/view_template.jsp" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" /></liferay-portlet:actionURL>'
 				);
 			}
 		}

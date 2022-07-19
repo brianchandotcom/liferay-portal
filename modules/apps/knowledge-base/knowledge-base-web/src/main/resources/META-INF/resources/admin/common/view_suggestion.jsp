@@ -17,7 +17,7 @@
 <%@ include file="/admin/common/init.jsp" %>
 
 <%
-KBViewSuggestionDisplayContext kbViewSuggestionDisplayContext = new KBViewSuggestionDisplayContext(request, renderRequest, renderResponse, rootPortletId, templatePath);
+KBViewSuggestionDisplayContext kbViewSuggestionDisplayContext = new KBViewSuggestionDisplayContext(request, renderRequest, renderResponse, rootPortletId);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(kbViewSuggestionDisplayContext.getRedirect());

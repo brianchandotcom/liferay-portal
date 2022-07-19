@@ -17,7 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayContext = new KBTemplatesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, templatePath);
+KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayContext = new KBTemplatesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <c:choose>
@@ -103,7 +103,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 						</span>
 
 						<liferay-portlet:renderURL var="editURL">
-							<portlet:param name="mvcPath" value='<%= templatePath + "edit_template.jsp" %>' />
+							<portlet:param name="mvcPath" value="/admin/common/edit_template.jsp" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
 						</liferay-portlet:renderURL>

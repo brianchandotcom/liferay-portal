@@ -60,7 +60,7 @@ else {
 	<c:if test="<%= kbFolder != null %>">
 		<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.UPDATE) %>">
 			<liferay-portlet:renderURL var="editURL">
-				<portlet:param name="mvcPath" value='<%= templatePath + "common/edit_folder.jsp" %>' />
+				<portlet:param name="mvcPath" value="/admin/common/edit_folder.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="kbFolderId" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
 			</liferay-portlet:renderURL>

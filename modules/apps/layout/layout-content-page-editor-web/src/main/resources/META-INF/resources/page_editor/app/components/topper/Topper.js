@@ -96,7 +96,13 @@ function TopperContent({
 
 	const dropContainerId = useDropContainerId();
 
-	const isHighlighted = dropContainerId === item.itemId;
+	const isDropContainer = dropContainerId === item.itemId;
+
+	const isHighlighted =
+		item.type === LAYOUT_DATA_ITEM_TYPES.row ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.collection
+			? item.children.includes(dropContainerId)
+			: isDropContainer;
 
 	const canBeDragged = canUpdatePageStructure && !editableProcessorUniqueId;
 
@@ -153,6 +159,7 @@ function TopperContent({
 				'drag-over-top':
 					isOverTarget && targetPosition === TARGET_POSITIONS.TOP,
 				'dragged': isDraggingSource,
+				'drop-container': isDropContainer,
 				'highlighted': isHighlighted,
 				'hovered': isHovered,
 			})}

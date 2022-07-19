@@ -122,4 +122,29 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-11436 | Automation ID: LRAC-11501 | Test Summary: Create a CSV data source"
+	@priority = "5"
+    test CreateCSVDataSource {
+		task ("Launch AC and go to settings") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+		}
+		
+		task ("Create a new CSV data source and see that it's on the data source list") {
+			ACSettings.addCSVDataSource(
+				sourceFileName = "jobTitle.csv", 
+				dataSourceName = "CSV Job Title");
+			
+			ACSettings.goToDataSources();
+			
+			ACUtils.searchBar(searchItem = "CSV Job Title");
+			
+			ACUtils.assertDataSourceName(dataSourceName = "CSV Job Title");
+
+			AssertElementPresent(
+				key_listStatus = "Active",
+				locator1 = "ACSettings#DATA_SOURCE_LIST_STATUS");
+		}
+	}
 }

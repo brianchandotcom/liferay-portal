@@ -96,15 +96,6 @@ definition {
 			uploadFileName = "Document_4");
 	}
 
-	@description = "This test covers LPS-154474."
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanPublishImageInMGAfterUpgradeFrom72104Archive {
-
-		// TODO LPS-154474
-
-	}
-
 	@description = "This test covers LPS-154473."
 	@ignore = "Test Stub"
 	@priority = "4"

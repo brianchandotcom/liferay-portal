@@ -44,7 +44,7 @@ import org.dom4j.Element;
 /**
  * @author Kevin Lee
  */
-public class GradleUpgradeReleaseDXPCheck extends BaseFileCheck {
+public class GradleUpgradeReleaseDxpCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
@@ -208,7 +208,7 @@ public class GradleUpgradeReleaseDXPCheck extends BaseFileCheck {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GradleUpgradeReleaseDXPCheck.class);
+		GradleUpgradeReleaseDxpCheck.class);
 
 	private Map<String, Set<String>> _releaseDXPDependencies;
 	private String _upgradeToVersion;

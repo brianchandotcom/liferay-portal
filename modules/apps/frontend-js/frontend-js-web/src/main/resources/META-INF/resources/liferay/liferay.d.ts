@@ -254,7 +254,10 @@ declare module Liferay {
 				| 'CONSENT_TYPE_PERSONALIZATION';
 
 			/* Returns the stored value of a cookie, undefined if not present */
-			export function get(name: string): string | undefined;
+			export function get(
+				name: string,
+				type: TYPE_VALUES
+			): string | undefined;
 
 			/* Sets a cookie of a specific type if user has consented */
 			export function set(

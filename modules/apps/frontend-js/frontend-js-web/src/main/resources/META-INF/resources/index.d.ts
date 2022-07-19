@@ -796,7 +796,7 @@ export function sub(
 ): string;
 
 /* Returns the stored value of a cookie, undefined if not present */
-export function getCookie(name: string): string | undefined;
+export function getCookie(name: string, type: TYPE_VALUES): string | undefined;
 
 /* Sets a cookie of a specific type if user has consented */
 export function setCookie(

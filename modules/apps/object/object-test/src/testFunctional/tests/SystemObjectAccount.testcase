@@ -483,27 +483,23 @@ definition {
 	@description = "LPS-151765 - Verify if is possible to choose by Description Field on entries, when Title Field is Description"
 	@priority = "4"
 	test CanViewDescriptionOnFieldEntry {
-		Accounts.openAccountsAdmin();
-
-		Accounts.addBusinessAccount(
-			accountDescription = "Accounts Name Description for Test",
-			accountName = "Accounts Name for Test");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryDescription = "Test Business Account Description",
+			accountEntryName = "Test Business Account",
+			accountEntryType = "Business",
+			externalReferenceCode = "02");
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153528",
 			objectName = "CustomObject153528",
 			pluralLabelName = "Custom Objects 153528");
 
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectSystemObject(label = "Account");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Relationship",
-			object = "CustomObject153528",
-			type = "One to Many");
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "AccountEntry",
+			objectName_2 = "CustomObject153528",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153528");
 
@@ -517,11 +513,15 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153528");
 
-		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Accounts Name Description for Test");
+		LexiconEntry.gotoAdd();
+
+		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Test Business Account Description");
+
+		Button.clickSave();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153528");
 
-		ObjectPortlet.viewEntry(entry = "Accounts Name Description for Test");
+		ObjectPortlet.viewEntry(entry = "Test Business Account Description");
 	}
 
 	@description = "LPS-151765 - Verify if there are the fields Name, Description and Type as default on System Object Account"
@@ -565,27 +565,23 @@ definition {
 	@description = "LPS-151765 - Verify if is possible to choose by Name Field on entries, when Title Field is Name"
 	@priority = "4"
 	test CanViewNameOnFieldEntry {
-		Accounts.openAccountsAdmin();
-
-		Accounts.addBusinessAccount(
-			accountDescription = "Accounts Name Description for Test",
-			accountName = "Accounts Name for Test");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryDescription = "Test Business Account Description",
+			accountEntryName = "Test Business Account",
+			accountEntryType = "Business",
+			externalReferenceCode = "01");
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153527",
 			objectName = "CustomObject153527",
 			pluralLabelName = "Custom Objects 153527");
 
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectSystemObject(label = "Account");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Relationship",
-			object = "CustomObject153527",
-			type = "One to Many");
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "AccountEntry",
+			objectName_2 = "CustomObject153527",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153527");
 
@@ -599,11 +595,15 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153527");
 
-		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Accounts Name for Test");
+		LexiconEntry.gotoAdd();
+
+		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Test Business Account");
+
+		Button.clickSave();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153527");
 
-		ObjectPortlet.viewEntry(entry = "Accounts Name for Test");
+		ObjectPortlet.viewEntry(entry = "Test Business Account");
 	}
 
 	@description = "LPS-151765 - Verify if is possible to view the Relationship by Account on Custom Object Entries with Custom View"
@@ -683,27 +683,23 @@ definition {
 	@description = "LPS-151765 - Verify if is possible to choose by Type Field on entries, when Title Field is Type"
 	@priority = "4"
 	test CanViewTypeOnFieldEntry {
-		Accounts.openAccountsAdmin();
-
-		Accounts.addBusinessAccount(
-			accountDescription = "Accounts Name Description for Test",
-			accountName = "Accounts Name for Test");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryDescription = "Test Business Account Description",
+			accountEntryName = "Test Business Account",
+			accountEntryType = "Business",
+			externalReferenceCode = "03");
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153526",
 			objectName = "CustomObject153526",
 			pluralLabelName = "Custom Objects 153526");
 
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectSystemObject(label = "Account");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Relationship",
-			object = "CustomObject153526",
-			type = "One to Many");
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "AccountEntry",
+			objectName_2 = "CustomObject153526",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153526");
 
@@ -717,7 +713,11 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153526");
 
-		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "business");
+		LexiconEntry.gotoAdd();
+
+		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "business");
+
+		Button.clickSave();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153526");
 

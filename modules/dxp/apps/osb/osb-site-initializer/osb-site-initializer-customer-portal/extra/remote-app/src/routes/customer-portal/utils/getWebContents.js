@@ -47,10 +47,33 @@ export function getWebContents(dxpVersion, slaCurrent, subscriptionGroups) {
 		Object.fromEntries(initialSubscriptions)
 	);
 
+	const hasAnalyticsCloudNotActive = subscriptionGroups.find(
+		(subscriptionGroup) =>
+			subscriptionGroup.name === 'Analytics Cloud' &&
+			(subscriptionGroup.activationStatus === 'In-Progress' ||
+				subscriptionGroup.activationStatus === 'Not-Activated' ||
+				!subscriptionGroup.activationStatus)
+	);
+
+	const hasPortalOrPartnershipNotActive = subscriptionGroups.find(
+		(subscriptionGroup) =>
+			subscriptionGroup.name === 'Portal' ||
+			(subscriptionGroup.name === 'Partnership' &&
+				(subscriptionGroup.activationStatus === 'In-Progress' ||
+					subscriptionGroup.activationStatus === 'Not-Activated' ||
+					!subscriptionGroup.activationStatus))
+	);
+	const hasDXPOrDXPCloudActive = subscriptionGroups.find(
+		(subscriptionGroup) =>
+			subscriptionGroup.name === 'DXP' ||
+			(subscriptionGroup.name === 'DXP Cloud' &&
+				subscriptionGroup.activationStatus === 'Active')
+	);
+
 	const hasAccessToActivateAnalyticsCloudContent =
-		hasSubscriptionGroup.analyticsCloud &&
-		(hasSubscriptionGroup.portal || hasSubscriptionGroup.partnership) &&
-		(hasSubscriptionGroup.dxp || hasSubscriptionGroup.dxpCloud);
+		(hasAnalyticsCloudNotActive && hasPortalOrPartnershipNotActive) ||
+		(hasAnalyticsCloudNotActive && hasDXPOrDXPCloudActive) ||
+		hasAnalyticsCloudNotActive;
 
 	const hasAccessToSourceCodeContent =
 		hasSubscriptionGroup.partnership ||

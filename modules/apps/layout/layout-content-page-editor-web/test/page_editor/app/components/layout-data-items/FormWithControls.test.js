@@ -35,6 +35,10 @@ jest.mock(
 		config: {
 			formTypes: [
 				{
+					label: 'None',
+					value: '0',
+				},
+				{
 					label: 'Type',
 					subtypes: [
 						{
@@ -49,6 +53,8 @@ jest.mock(
 	})
 );
 
+const DEFAULT_CONFIG = {classNameId: '0'};
+
 describe('FormWithControls', () => {
 	it('renders a container inside a form', () => {
 		const {container} = render(
@@ -56,7 +62,7 @@ describe('FormWithControls', () => {
 				<FormWithControls
 					item={{
 						children: [],
-						config: {},
+						config: DEFAULT_CONFIG,
 						itemId: 'form',
 						type: LAYOUT_DATA_ITEM_TYPES.form,
 					}}
@@ -74,7 +80,7 @@ describe('FormWithControls', () => {
 				<FormWithControls
 					item={{
 						children: [],
-						config: {},
+						config: DEFAULT_CONFIG,
 						itemId: 'form',
 						type: LAYOUT_DATA_ITEM_TYPES.form,
 					}}
@@ -135,7 +141,7 @@ describe('FormWithControls', () => {
 				<FormWithControls
 					item={{
 						children: ['child'],
-						config: {},
+						config: DEFAULT_CONFIG,
 						itemId: 'form',
 						type: LAYOUT_DATA_ITEM_TYPES.form,
 					}}

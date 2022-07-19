@@ -19,26 +19,26 @@ import {useOutletContext, useParams} from 'react-router-dom';
 
 import Button from '../../../components/Button';
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView/ListView';
+import ListView from '../../../components/ListView/ListViewRest';
 import MarkdownPreview from '../../../components/Markdown';
 import QATable from '../../../components/Table/QATable';
 import {
 	TestrayRequirement,
 	TestrayRequirementCase,
-	getRequirementCases,
 } from '../../../graphql/queries';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';
+import {getRequirementQuery} from '../../../services/rest';
 import {DescriptionType} from '../../../types';
 import {searchUtil} from '../../../util/search';
 import RequirementCaseLinkModal from './RequirementCaseLinkModal';
 import useRequirementCaseActions from './useRequirementCaseActions';
 
 const Requirement = () => {
-	const {projectId} = useParams();
+	const {projectId, requirementId} = useParams();
 	const testrayRequirement: TestrayRequirement = useOutletContext();
-	const {actions, formModal} = useRequirementCaseActions(testrayRequirement);
+	const {actions, formModal} = useRequirementCaseActions();
 
 	const {context, setHeading, setTabs} = useHeader({shouldUpdate: false});
 
@@ -59,7 +59,7 @@ const Requirement = () => {
 	return (
 		<>
 			<RequirementCaseLinkModal
-				modal={formModal}
+				modal={formModal.modal}
 				projectId={projectId as string}
 			/>
 
@@ -132,7 +132,7 @@ const Requirement = () => {
 							<ClayManagementToolbar.Item>
 								<Button
 									displayType="secondary"
-									onClick={() => formModal.open()}
+									onClick={() => formModal.modal.open()}
 									symbol="list-ul"
 								>
 									{i18n.translate('link-cases')}
@@ -142,7 +142,7 @@ const Requirement = () => {
 						filterFields: filters.requirementCase as any,
 						title: i18n.translate('cases'),
 					}}
-					query={getRequirementCases}
+					resource={getRequirementQuery(requirementId)}
 					tableProps={{
 						actions,
 						columns: [
@@ -177,7 +177,6 @@ const Requirement = () => {
 						navigateTo: ({case: Case}: TestrayRequirementCase) =>
 							`/project/${projectId}/cases/${Case.id}`,
 					}}
-					transformData={(data) => data?.requirementscaseses}
 					variables={{
 						filter: searchUtil.eq(
 							'requirementId',

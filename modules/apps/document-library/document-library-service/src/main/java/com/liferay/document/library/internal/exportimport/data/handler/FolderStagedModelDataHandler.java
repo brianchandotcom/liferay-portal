@@ -283,8 +283,9 @@ public class FolderStagedModelDataHandler
 					folder.getName(), 2);
 
 				importedFolder = _dlAppLocalService.addFolder(
-					userId, repositoryId, parentFolderId, name,
-					folder.getDescription(), serviceContext);
+					folder.getExternalReferenceCode(), userId, repositoryId,
+					parentFolderId, name, folder.getDescription(),
+					serviceContext);
 			}
 			else {
 				String name = _dlFolderLocalService.getUniqueFolderName(

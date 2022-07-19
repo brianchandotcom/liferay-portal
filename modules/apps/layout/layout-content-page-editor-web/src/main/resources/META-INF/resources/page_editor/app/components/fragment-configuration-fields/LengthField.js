@@ -29,11 +29,34 @@ const REGEX = /[-(0-9).]+|[a-zA-Z]+|%/g;
 const UNITS = ['px', '%', 'em', 'rem', 'vw', 'vh'];
 
 const isNumber = (value) => !isNaN(parseFloat(value));
+
 export function LengthField({field, onValueSelect, value}) {
 	const inputId = useId();
+
+	return (
+		<ClayForm.Group>
+			<label htmlFor={inputId}>{field.label}</label>
+
+			<Field
+				field={field}
+				id={inputId}
+				onValueSelect={onValueSelect}
+				value={value}
+			/>
+		</ClayForm.Group>
+	);
+}
+
+LengthField.propTypes = {
+	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
+	onValueSelect: PropTypes.func.isRequired,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
+
+const Field = ({field, id, onValueSelect, value}) => {
+	const [active, setActive] = useState(false);
 	const triggerId = useId();
 
-	const [active, setActive] = useState(false);
 	const [nextValue, setNextValue] = useControlledState(
 		value ? value.match(REGEX)[0] : ''
 	);
@@ -84,72 +107,62 @@ export function LengthField({field, onValueSelect, value}) {
 	}, [value]);
 
 	return (
-		<ClayForm.Group>
-			<label htmlFor={inputId}>{field.label}</label>
+		<ClayInput.Group>
+			<ClayInput.GroupItem prepend>
+				<ClayInput
+					aria-label={field.label}
+					id={id}
+					onBlur={() => {
+						handleValueSelect();
+					}}
+					onChange={(event) => {
+						setNextValue(event.target.value);
+					}}
+					onKeyDown={handleKeyDown}
+					sizing="sm"
+					type="number"
+					value={nextValue}
+				/>
+			</ClayInput.GroupItem>
 
-			<ClayInput.Group>
-				<ClayInput.GroupItem prepend>
-					<ClayInput
-						aria-label={field.label}
-						id={inputId}
-						onBlur={() => {
-							handleValueSelect();
-						}}
-						onChange={(event) => {
-							setNextValue(event.target.value);
-						}}
-						onKeyDown={handleKeyDown}
-						sizing="sm"
-						type="number"
-						value={nextValue}
+			<ClayInput.GroupItem append shrink>
+				<ClayDropDown
+					active={active}
+					alignmentPosition={Align.BottomRight}
+					menuElementAttrs={{
+						className: 'page-editor__length-field__dropdown',
+						containerProps: {
+							className: 'cadmin',
+						},
+					}}
+					onActiveChange={setActive}
+					role="listbox"
+					trigger={
+						<ClayButton
+							aria-expanded={active}
+							aria-haspopup="true"
+							aria-label={Liferay.Util.sub(
+								Liferay.Language.get('select-a-unit'),
+								nextUnit
+							)}
+							className="p-1 page-editor__length-field__button"
+							displayType="secondary"
+							id={triggerId}
+							small
+						>
+							{nextUnit.toUpperCase()}
+						</ClayButton>
+					}
+				>
+					<DropDownList
+						aria-labelledby={triggerId}
+						field={field}
+						onClick={handleUnitSelect}
 					/>
-				</ClayInput.GroupItem>
-
-				<ClayInput.GroupItem append shrink>
-					<ClayDropDown
-						active={active}
-						alignmentPosition={Align.BottomRight}
-						menuElementAttrs={{
-							className: 'page-editor__length-field__dropdown',
-							containerProps: {
-								className: 'cadmin',
-							},
-						}}
-						onActiveChange={setActive}
-						role="listbox"
-						trigger={
-							<ClayButton
-								aria-expanded={active}
-								aria-haspopup="true"
-								aria-label={Liferay.Util.sub(
-									Liferay.Language.get('select-a-unit'),
-									nextUnit
-								)}
-								className="p-1 page-editor__length-field__button"
-								displayType="secondary"
-								id={triggerId}
-								small
-							>
-								{nextUnit.toUpperCase()}
-							</ClayButton>
-						}
-					>
-						<DropDownList
-							aria-labelledby={triggerId}
-							field={field}
-							onClick={handleUnitSelect}
-						/>
-					</ClayDropDown>
-				</ClayInput.GroupItem>
-			</ClayInput.Group>
-		</ClayForm.Group>
+				</ClayDropDown>
+			</ClayInput.GroupItem>
+		</ClayInput.Group>
 	);
-}
-
-LengthField.propTypes = {
-	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
-	onValueSelect: PropTypes.func.isRequired,
-	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 const DropDownList = ({onClick, ...otherProps}) => (

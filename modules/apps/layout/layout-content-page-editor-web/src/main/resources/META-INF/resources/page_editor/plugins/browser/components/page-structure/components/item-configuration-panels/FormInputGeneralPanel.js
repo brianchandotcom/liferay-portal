@@ -275,13 +275,19 @@ export function FormInputGeneralPanel({item}) {
 			keyPath.push(languageId);
 		}
 
+		let editableValues = fragmentEntryLinkRef.current.editableValues;
+
+		if (key === FIELD_ID_CONFIGURATION_KEY) {
+			editableValues = setIn(
+				fragmentEntryLinkRef.current.editableValues,
+				[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR],
+				DEFAULT_CONFIGURATION_VALUES
+			);
+		}
+
 		dispatch(
 			updateEditableValues({
-				editableValues: setIn(
-					fragmentEntryLinkRef.current.editableValues,
-					keyPath,
-					value
-				),
+				editableValues: setIn(editableValues, keyPath, value),
 				fragmentEntryLinkId:
 					fragmentEntryLinkRef.current.fragmentEntryLinkId,
 				languageId,

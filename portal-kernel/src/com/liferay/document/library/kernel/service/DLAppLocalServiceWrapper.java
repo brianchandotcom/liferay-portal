@@ -292,14 +292,14 @@ public class DLAppLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addFolder(
-			long userId, long repositoryId, long parentFolderId, String name,
-			String description,
+			String externalReferenceCode, long userId, long repositoryId,
+			long parentFolderId, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlAppLocalService.addFolder(
-			userId, repositoryId, parentFolderId, name, description,
-			serviceContext);
+			externalReferenceCode, userId, repositoryId, parentFolderId, name,
+			description, serviceContext);
 	}
 
 	/**
@@ -423,6 +423,16 @@ public class DLAppLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder
+			fetchFolderByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppLocalService.fetchFolderByExternalReferenceCode(
 			groupId, externalReferenceCode);
 	}
 
@@ -571,6 +581,16 @@ public class DLAppLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlAppLocalService.getFolder(repositoryId, parentFolderId, name);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder
+			getFolderByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppLocalService.getFolderByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	/**

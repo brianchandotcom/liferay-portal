@@ -45,6 +45,22 @@ definition {
 		return "${curl}";
 	}
 
+	macro _getDocumentsByErcInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/documents/by-external-reference-code/${externalReferenceCode} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
 	macro addDocumentInAssetLibraryByUploadFile {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${filePath}");
 
@@ -84,6 +100,14 @@ definition {
 		TestUtils.assertEquals(
 			actual = "${actualDocumentTotalCount}",
 			expected = "${expectedDocumentTotalCount}");
+	}
+
+	macro getDocumentsByErcInAssetLibrary {
+		var response = DocumentAPI._getDocumentsByErcInAssetLibrary(
+			assetLibraryId = "${assetLibraryId}",
+			externalReferenceCode = "${externalReferenceCode}");
+
+		return "${response}";
 	}
 
 	macro getIdOfCreatedDocument {

@@ -64,6 +64,28 @@ definition {
 		}
 	}
 
+	@description = "Unable to get document by nonexistent assetLibraryId"
+	@priority = "4"
+	test CanReturnErrorWithGetDocumentInAssetLibraryByNonexistentAssetLibraryId {
+		property portal.acceptance = "true";
+
+		task ("When I make a GET request by non-existent assetLibraryID and a erc") {
+			var response = DocumentAPI.getDocumentsByErcInAssetLibrary(
+				assetLibraryId = "nonexistentId",
+				externalReferenceCode = "erc");
+		}
+
+		task ("Then I receive not found error response") {
+			TestUtils.assertPartialEquals(
+				actual = "${response}",
+				expected = "NOT_FOUND");
+		}
+
+		task ("And Then I receive error message in server console") {
+			AssertConsoleTextPresent(value1 = "Unable to get a valid asset library with ID nonexistentId");
+		}
+	}
+
 	@description = "Document is created in an asset library with custom erc"
 	@priority = "5"
 	test DocumentIsCreatedInAssetLibraryWithCustomErc {

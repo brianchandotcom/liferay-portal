@@ -327,6 +327,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEGMENT_AUTOCOMPLETE_DROPDOWN</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEGMENT_CRITERION_ITEM</td>
 	<td>//div[@class='sidebar-collapse']//li[text()='${key_segmentField}']</td>
 	<td></td>

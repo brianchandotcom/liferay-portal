@@ -131,10 +131,10 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			return super.getRelevantIncludesJobProperties();
 		}
 
-		Set<File> modifiedModuleDirsList = new HashSet<>();
+		Set<File> modifiedModuleDirsSet = new HashSet<>();
 
 		try {
-			modifiedModuleDirsList.addAll(
+			modifiedModuleDirsSet.addAll(
 				portalGitWorkingDirectory.getModifiedModuleDirsList());
 		}
 		catch (IOException ioException) {
@@ -149,9 +149,9 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		}
 
 		if (testRelevantChanges) {
-			modifiedModuleDirsList.addAll(
+			modifiedModuleDirsSet.addAll(
 				getRequiredModuleDirs(
-					Lists.newArrayList(modifiedModuleDirsList)));
+					Lists.newArrayList(modifiedModuleDirsSet)));
 		}
 
 		Set<JobProperty> includesJobProperties = new HashSet<>();
@@ -164,7 +164,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			moduleName = matcher.group("moduleName");
 		}
 
-		for (File modifiedModuleDir : modifiedModuleDirsList) {
+		for (File modifiedModuleDir : modifiedModuleDirsSet) {
 			String modifiedModuleAbsolutePath =
 				JenkinsResultsParserUtil.getCanonicalPath(modifiedModuleDir);
 

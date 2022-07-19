@@ -144,7 +144,7 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 	}
 
 	protected String getNavigation() {
-		return ParamUtil.getString(renderRequest, "navigation", "active");
+		return ParamUtil.getString(renderRequest, "navigation", "all");
 	}
 
 	protected final ActionHelper actionHelper;

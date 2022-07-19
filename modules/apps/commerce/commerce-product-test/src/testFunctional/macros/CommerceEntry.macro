@@ -429,6 +429,10 @@ definition {
 	}
 
 	macro addOptionValue {
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = "${valueName}");
@@ -436,6 +440,8 @@ definition {
 		Type(
 			locator1 = "CommerceEntry#PRIORITY_FIELD",
 			value1 = "${valuePosition}");
+
+		Button.click(button = "Submit");
 	}
 
 	macro addPricingEntry {

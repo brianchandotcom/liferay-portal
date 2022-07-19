@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
@@ -37,7 +37,7 @@ export function LengthField({field, onValueSelect, value}) {
 	const [nextValue, setNextValue] = useControlledState(
 		value ? value.match(REGEX)[0] : ''
 	);
-	const [nextUnit, setNextUnit] = useControlledState(
+	const [nextUnit, setNextUnit] = useState(
 		value ? value.match(REGEX)[1] : UNITS[0]
 	);
 
@@ -73,6 +73,15 @@ export function LengthField({field, onValueSelect, value}) {
 			handleValueSelect();
 		}
 	};
+
+	useEffect(() => {
+		if (!value) {
+			return;
+		}
+		else {
+			setNextUnit(value.match(REGEX)[1]);
+		}
+	}, [value]);
 
 	return (
 		<ClayForm.Group>

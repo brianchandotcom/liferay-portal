@@ -96,8 +96,9 @@ public class DLFolderPermissionCheckerTest extends BasePermissionTestCase {
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		_folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			name, RandomTestUtil.randomString(), serviceContext);
+			null, group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name,
+			RandomTestUtil.randomString(), serviceContext);
 
 		name = RandomTestUtil.randomString();
 
@@ -112,7 +113,7 @@ public class DLFolderPermissionCheckerTest extends BasePermissionTestCase {
 		}
 
 		_subfolder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), _folder.getFolderId(), name,
+			null, group.getGroupId(), _folder.getFolderId(), name,
 			RandomTestUtil.randomString(), serviceContext);
 	}
 

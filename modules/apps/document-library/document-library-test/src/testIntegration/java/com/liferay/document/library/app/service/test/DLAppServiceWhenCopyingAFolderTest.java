@@ -60,7 +60,7 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			Folder folder = DLAppServiceUtil.addFolder(
-				group.getGroupId(), parentFolder.getFolderId(),
+				null, group.getGroupId(), parentFolder.getFolderId(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				serviceContext);
 
@@ -94,11 +94,11 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
+			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		DLAppServiceUtil.addFolder(
-			group.getGroupId(), folder.getFolderId(),
+			null, group.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		DLAppServiceUtil.copyFolder(

@@ -52,7 +52,7 @@ public class DLAppLocalServiceWhenDeletingAFolderTest {
 		_group = GroupTestUtil.addGroup();
 
 		_folder = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

@@ -196,7 +196,8 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		throws Exception {
 
 		Folder parentFolder = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
@@ -220,12 +221,13 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		Folder grandparentFolder = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		Folder parentFolder = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), grandparentFolder.getFolderId(),
+			null, _group.getGroupId(), grandparentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
@@ -274,7 +276,8 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		Folder parentFolder = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
@@ -303,12 +306,13 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		Folder grandparentFolder = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		Folder parentFolder = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), grandparentFolder.getFolderId(),
+			null, _group.getGroupId(), grandparentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
@@ -329,12 +333,13 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		Folder parentFolder = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), parentFolder.getFolderId(),
+			null, _group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
@@ -355,17 +360,18 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		Folder grandparentFolder = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		Folder parentFolder = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), grandparentFolder.getFolderId(),
+			null, _group.getGroupId(), grandparentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		DLAppServiceUtil.addFolder(
-			_group.getGroupId(), parentFolder.getFolderId(),
+			null, _group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 

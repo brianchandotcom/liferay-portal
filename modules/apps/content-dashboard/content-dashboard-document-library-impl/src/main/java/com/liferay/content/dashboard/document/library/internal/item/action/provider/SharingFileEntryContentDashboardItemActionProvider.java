@@ -17,6 +17,7 @@ package com.liferay.content.dashboard.document.library.internal.item.action.prov
 import com.liferay.content.dashboard.document.library.internal.item.action.SharingFileEntryContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -79,7 +80,7 @@ public class SharingFileEntryContentDashboardItemActionProvider
 				_sharingPermission.containsSharePermission(
 					themeDisplay.getPermissionChecker(),
 					_classNameLocalService.getClassNameId(
-						FileEntry.class.getName()),
+						DLFileEntry.class.getName()),
 					fileEntry.getFileEntryId(),
 					themeDisplay.getScopeGroupId())) {
 

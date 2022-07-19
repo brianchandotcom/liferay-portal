@@ -20,10 +20,6 @@ definition {
 
 			ACUtils.launchDXP();
 		}
-
-		task ("Add a new site and page") {
-			ACUtils.addSiteAndPage();
-		}
 	}
 
 	tearDown {
@@ -50,6 +46,10 @@ definition {
 
 		// AC Quarantine reason: CSV data source takes too long to update individual details
 		// AC Quarantine: Maybe it is possible to validate in personas
+
+		task ("Add site and page") {
+			ACUtils.addSiteAndPage();
+		}
 
 		task ("Add user") {
 			JSONUser.addUser(
@@ -124,22 +124,22 @@ definition {
 
 	@description = "Bug: LRAC-11436 | Automation ID: LRAC-11501 | Test Summary: Create a CSV data source"
 	@priority = "5"
-    test CreateCSVDataSource {
+	test CreateCSVDataSource {
 		task ("Launch AC and go to settings") {
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
 		}
-		
+
 		task ("Create a new CSV data source and see that it's on the data source list") {
 			ACSettings.addCSVDataSource(
-				sourceFileName = "jobTitle.csv", 
-				dataSourceName = "CSV Job Title");
-			
+				dataSourceName = "CSV Job Title",
+				sourceFileName = "jobTitle.csv");
+
 			ACSettings.goToDataSources();
-			
+
 			ACUtils.searchBar(searchItem = "CSV Job Title");
-			
+
 			ACUtils.assertDataSourceName(dataSourceName = "CSV Job Title");
 
 			AssertElementPresent(
@@ -147,4 +147,5 @@ definition {
 				locator1 = "ACSettings#DATA_SOURCE_LIST_STATUS");
 		}
 	}
+
 }

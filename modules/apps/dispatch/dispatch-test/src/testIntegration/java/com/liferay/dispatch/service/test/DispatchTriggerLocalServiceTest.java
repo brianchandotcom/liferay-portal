@@ -20,6 +20,7 @@ import com.liferay.dispatch.exception.DispatchTriggerSchedulerException;
 import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
+import com.liferay.dispatch.internal.messaging.TestDispatchTaskExecutor;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
@@ -37,15 +38,21 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.text.SimpleDateFormat;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -102,6 +109,49 @@ public class DispatchTriggerLocalServiceTest {
 		Assert.assertEquals(
 			"Add dispatch trigger with no name",
 			DispatchTriggerNameException.class, exceptionClass);
+	}
+
+	@Test
+	public void testAddDispatchTriggerWithCustomTimeZone() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		User user = UserTestUtil.addUser(company);
+
+		DispatchTrigger dispatchTrigger =
+			_dispatchTriggerLocalService.addDispatchTrigger(
+				null, user.getUserId(),
+				TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST, null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomBoolean());
+
+		String dateString = "7/20/22 02:00:00 AM";
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"M/d/yy hh:mm:ss a");
+
+		Date date = simpleDateFormat.parse(dateString);
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(date.getTime());
+
+		String timeZoneId = "Europe/Paris";
+
+		dispatchTrigger = _dispatchTriggerLocalService.updateDispatchTrigger(
+			dispatchTrigger.getDispatchTriggerId(), true, "0 0 * * * ? *",
+			DispatchTaskClusterMode.valueOf(
+				dispatchTrigger.getDispatchTaskClusterMode()),
+			0, 0, 0, 0, 0, true, false, calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DATE), calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
+			timeZoneId);
+
+		Date startDate = dispatchTrigger.getStartDate();
+
+		TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
+
+		Assert.assertEquals(
+			startDate,
+			new Date(date.getTime() - timeZone.getOffset(date.getTime())));
+
+		Assert.assertEquals(dispatchTrigger.getTimeZoneStartDate(), date);
 	}
 
 	@Test

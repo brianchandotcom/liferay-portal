@@ -44,7 +44,7 @@ const nestedFieldsParam = 'nestedFields=component,team&nestedFieldsDepth=2';
 
 const requirementsResource = `/requirements?${nestedFieldsParam}`;
 
-const getRequirementQuery = (requirementId: number | string) =>
+const getRequirementQuery = (requirementId: number | string | undefined) =>
 	`/requirements/${requirementId}?${nestedFieldsParam}`;
 
 const getRequirementTransformData = (

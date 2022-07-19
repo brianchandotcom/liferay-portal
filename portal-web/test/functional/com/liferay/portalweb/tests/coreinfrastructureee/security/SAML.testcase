@@ -1240,7 +1240,7 @@ definition {
 		}
 
 		task ("Disable sign auth and requests on SP") {
-			SAML.goToSAMLAdmin(baseURL = "www.able.com:9080");
+			SAML.goToSAMLAdmin(baseURL = "http://www.able.com:9080");
 
 			SAMLNavigation.gotoServiceProvider();
 
@@ -2382,7 +2382,7 @@ definition {
 
 			takeScreenshot();
 
-			User.logoutPG(specificURL = "www.baker.com:8080");
+			User.logoutPG(specificURL = "http://www.baker.com:8080");
 		}
 
 		task ("When: User configure localhost and baker.com as IdP") {
@@ -3120,7 +3120,7 @@ definition {
 				idpEntityId = "samlidp",
 				idpMetadataURL = "http://localhost:8080/c/portal/saml/metadata",
 				metadata = "true",
-				spURL = "www.able.com:8080",
+				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
 
@@ -3189,7 +3189,7 @@ definition {
 				changeToXML = "true",
 				idpEntityId = "samlidp",
 				metadata = "true",
-				spURL = "www.able.com:8080",
+				spURL = "http://www.able.com:8080",
 				uploadMetadataXML = "idp-metadata.xml",
 				userEmailAddress = "test@www.able.com",
 				viewMetadata = "true");
@@ -3289,10 +3289,10 @@ definition {
 				idpAttributeMappingNew = "emailAddress,screenName,firstName,UUID",
 				idpAttributeMappingOld = "emailAddress,screenName,firstName,lastName,UUID",
 				idpEntityId = "${identityProviderEntityId}",
-				spURL = "www.able.com:8080",
+				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
-			User.logoutPG(specificURL = "www.able.com:8080");
+			User.logoutPG(specificURL = "http://www.able.com:8080");
 		}
 
 		task ("Update user and execute Sp initiated SSO") {
@@ -3310,7 +3310,7 @@ definition {
 		}
 
 		task ("View user information at able.com:8080") {
-			MyAccount.openMyAccountAdmin(baseURL = "www.able.com:8080");
+			MyAccount.openMyAccountAdmin(baseURL = "http://www.able.com:8080");
 
 			User.viewUserInfomation(
 				userEmailAddress = "user1@liferay.com",
@@ -3425,7 +3425,7 @@ definition {
 		}
 
 		task ("View user information") {
-			MyAccount.openMyAccountAdmin(baseURL = "www.able.com:8080");
+			MyAccount.openMyAccountAdmin(baseURL = "http://www.able.com:8080");
 
 			User.viewUserInfomation(
 				userEmailAddress = "user1@liferay.com",
@@ -3542,7 +3542,7 @@ definition {
 		}
 
 		task ("View user information") {
-			MyAccount.openMyAccountAdmin(baseURL = "www.able.com:8080");
+			MyAccount.openMyAccountAdmin(baseURL = "http://www.able.com:8080");
 
 			User.viewUserInfomation(
 				userEmailAddress = "user1changed@liferay.com",
@@ -3677,7 +3677,7 @@ definition {
 		}
 
 		task ("Assert user information") {
-			MyAccount.openMyAccountAdmin(baseURL = "www.able.com:8080");
+			MyAccount.openMyAccountAdmin(baseURL = "http://www.able.com:8080");
 
 			User.viewUserInfomation(
 				userEmailAddress = "user1@liferay.com",
@@ -3708,7 +3708,7 @@ definition {
 		}
 
 		task ("Assert user information") {
-			MyAccount.openMyAccountAdmin(baseURL = "www.baker.com:8080");
+			MyAccount.openMyAccountAdmin(baseURL = "http://www.baker.com:8080");
 
 			User.viewUserInfomation(
 				userEmailAddress = "user1@liferay.com",

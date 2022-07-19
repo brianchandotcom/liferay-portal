@@ -11,6 +11,13 @@
 	.modal-body.inline-scroller {
 		max-height: 400px;
 	}
+
+	.modal-footer {
+		bottom: 0;
+		position: absolute;
+		right: 0;
+		width: 100%;
+	}
 }
 
 .sharing-autocomplete-sticker {

@@ -805,11 +805,43 @@ definition {
 	}
 
 	@description = "Verify that the user can delete all notifications configurations"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteMultipleNotifications {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteMultipleNotifications";
 
-		// TODO CanDeleteMultipleNotifications pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "Liferay Notification",
+			newNotification = "true",
+			notificationTemplateValue = "Liferay Template",
+			notificationTypeOption = "email",
+			newSection = "New Notification",
+			sectionOptionList = "1,2,");
+		
+		ProcessBuilderKaleoDesignerReact.viewMultipleNotificationPresent(
+			notificationTypeOption = "email",
+			notificationTemplateValue = "Liferay Template",
+			name = "Liferay Notification",
+			sectionOptionList = "1,2");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
+			propertyName = "Notification",
+			propertyValue = "Liferay Notification 1,Liferay Notification 2");
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Liferay Notification 1,Liferay Notification 2");
+
+		ProcessBuilderKaleoDesignerReact.deleteByTrashTopSidebar(
+			modalMessage = "Are you sure you want to delete all notifications and their settings?",
+			sidebarPropertyName = "Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationNotPresent(notificationName = "Liferay Notification 1,Liferay Notification 2");
 
 	}
 

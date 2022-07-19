@@ -20,12 +20,10 @@ import com.liferay.commerce.product.internal.upgrade.v1_10_1.CommerceSiteTypeUpg
 import com.liferay.commerce.product.internal.upgrade.v1_11_0.CPAttachmentFileEntryGroupUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_11_1.CPDisplayLayoutUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.CPDefinitionLinkUpgradeProcess;
-import com.liferay.commerce.product.internal.upgrade.v1_3_0.CPDefinitionOptionRelUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.CPFriendlyURLEntryUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.CPInstanceUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.CProductUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.util.CProductTable;
-import com.liferay.commerce.product.internal.upgrade.v1_4_0.CPDefinitionSpecificationOptionValueUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_5_0.CProductExternalReferenceCodeUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_6_0.CPDefinitionTrashEntriesUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_6_0.CommerceCatalogUpgradeProcess;
@@ -91,11 +89,8 @@ public class CommerceProductServiceUpgradeStepRegistrator
 				"maxSubscriptionCycles LONG"));
 
 		registry.register(
-			"1.2.0", "1.3.0",
-			new com.liferay.commerce.product.internal.upgrade.v1_3_0.
-				CPAttachmentFileEntryUpgradeProcess(),
-			new CPDefinitionLinkUpgradeProcess(),
-			new CPDefinitionOptionRelUpgradeProcess(),
+			"1.2.0", "1.3.0", new DummyUpgradeProcess(),
+			new CPDefinitionLinkUpgradeProcess(), new DummyUpgradeProcess(),
 			UpgradeProcessFactory.addColumns(
 				"CPDefinition", "CProductId LONG", "version INTEGER"),
 			CProductTable.create(), new CProductUpgradeProcess(),
@@ -104,9 +99,7 @@ public class CommerceProductServiceUpgradeStepRegistrator
 				"CPInstance", "CPInstanceUuid VARCHAR(75)"),
 			new CPInstanceUpgradeProcess());
 
-		registry.register(
-			"1.3.0", "1.4.0",
-			new CPDefinitionSpecificationOptionValueUpgradeProcess());
+		registry.register("1.3.0", "1.4.0", new DummyUpgradeProcess());
 
 		registry.register(
 			"1.4.0", "1.5.0",

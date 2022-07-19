@@ -306,6 +306,17 @@ public class DLAppLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.Folder addFolder(
+			String externalReferenceCode, long userId, long repositoryId,
+			long parentFolderId, String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addFolder(
+			externalReferenceCode, userId, repositoryId, parentFolderId, name,
+			description, serviceContext);
+	}
+
 	/**
 	 * Delete all data associated to the given repository. This method is only
 	 * supported by the Liferay repository.
@@ -414,6 +425,15 @@ public class DLAppLocalServiceUtil {
 		throws PortalException {
 
 		return getService().fetchFileEntryByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.Folder
+			fetchFolderByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().fetchFolderByExternalReferenceCode(
 			groupId, externalReferenceCode);
 	}
 
@@ -552,6 +572,15 @@ public class DLAppLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getFolder(repositoryId, parentFolderId, name);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.Folder
+			getFolderByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getFolderByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	/**

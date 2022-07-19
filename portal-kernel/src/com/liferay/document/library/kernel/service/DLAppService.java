@@ -275,6 +275,12 @@ public interface DLAppService extends BaseService {
 			String description, ServiceContext serviceContext)
 		throws PortalException;
 
+	public Folder addFolder(
+			String externalReferenceCode, long repositoryId,
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Adds a temporary file entry.
 	 *
@@ -884,6 +890,11 @@ public interface DLAppService extends BaseService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Folder getFolder(long repositoryId, long parentFolderId, String name)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Folder getFolderByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
 		throws PortalException;
 
 	/**

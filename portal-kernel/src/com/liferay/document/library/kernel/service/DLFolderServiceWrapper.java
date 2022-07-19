@@ -48,6 +48,19 @@ public class DLFolderServiceWrapper
 	}
 
 	@Override
+	public DLFolder addFolder(
+			String externalReferenceCode, long groupId, long repositoryId,
+			boolean mountPoint, long parentFolderId, String name,
+			String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFolderService.addFolder(
+			externalReferenceCode, groupId, repositoryId, mountPoint,
+			parentFolderId, name, description, serviceContext);
+	}
+
+	@Override
 	public void deleteFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -66,6 +79,15 @@ public class DLFolderServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_dlFolderService.deleteFolder(groupId, parentFolderId, name);
+	}
+
+	@Override
+	public DLFolder getDLFolderByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFolderService.getDLFolderByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	@Override

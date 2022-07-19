@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -71,6 +72,19 @@ public class JournalTransformerTest {
 	}
 
 	@Test
+	public void testIncludeBackwardsCompatibilityTemplateNodesParentStructureWithFieldSet() {
+		JournalTransformer journalTransformer = new JournalTransformer();
+
+		List<TemplateNode> includeBackwardsCompatibilityTemplateNodes =
+			journalTransformer.includeBackwardsCompatibilityTemplateNodes(
+				_getInitTemplateNodesParentStructureWithFieldSet(), 0);
+
+		Assert.assertEquals(
+			_getExpectedParentStructureWithFieldSetTemplateNodes(),
+			includeBackwardsCompatibilityTemplateNodes);
+	}
+
+	@Test
 	public void testIncludeBackwardsCompatibilityTemplateNodesWithSiblings() {
 		JournalTransformer journalTransformer = new JournalTransformer();
 
@@ -107,6 +121,20 @@ public class JournalTransformerTest {
 
 		return new TemplateNode(
 			null, name, value, type, Collections.emptyMap());
+	}
+
+	private List<TemplateNode>
+		_getExpectedParentStructureWithFieldSetTemplateNodes() {
+
+		TemplateNode textTemplateNode1 = _createTemplateNode(
+			"TextField1", DDMFormFieldTypeConstants.TEXT, "TextField1");
+
+		TemplateNode textTemplateNode2 = _createTemplateNode(
+			"TextField2", DDMFormFieldTypeConstants.TEXT, "TextField2");
+
+		textTemplateNode1.appendChild(textTemplateNode2);
+
+		return Arrays.asList(textTemplateNode1);
 	}
 
 	private List<TemplateNode> _getExpectedSiblingsTemplateNodes() {
@@ -364,6 +392,31 @@ public class JournalTransformerTest {
 		textFieldSetTemplateNode2.appendChild(textTemplateNode2);
 
 		return ListUtil.fromArray(textFieldSetTemplateNode1);
+	}
+
+	private List<TemplateNode>
+		_getInitTemplateNodesParentStructureWithFieldSet() {
+
+		TemplateNode parentStructureFieldSetTemplateNode = _createTemplateNode(
+			"parentStructureFieldSet", DDMFormFieldTypeConstants.FIELDSET);
+
+		TemplateNode parentFieldSetTemplateNode = _createTemplateNode(
+			_TEXT_FIELD_SET_NAME, DDMFormFieldTypeConstants.FIELDSET);
+
+		parentStructureFieldSetTemplateNode.appendChild(
+			parentFieldSetTemplateNode);
+
+		TemplateNode textTemplateNode1 = _createTemplateNode(
+			"TextField1", DDMFormFieldTypeConstants.TEXT, "TextField1");
+
+		parentFieldSetTemplateNode.appendChild(textTemplateNode1);
+
+		TemplateNode textTemplateNode2 = _createTemplateNode(
+			"TextField2", DDMFormFieldTypeConstants.TEXT, "TextField2");
+
+		parentFieldSetTemplateNode.appendChild(textTemplateNode2);
+
+		return ListUtil.fromArray(parentStructureFieldSetTemplateNode);
 	}
 
 	private List<TemplateNode> _getInitTemplateNodesWithSiblings() {

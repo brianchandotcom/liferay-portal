@@ -17,6 +17,7 @@ package com.liferay.expando.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.expando.kernel.exception.MustInformDefaultLocaleException;
 import com.liferay.expando.kernel.exception.ValueDataException;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
@@ -150,6 +151,27 @@ public class ExpandoValueLocalServiceTest {
 
 		Assert.assertEquals("Test", stringMap.get(_enLocale));
 		Assert.assertEquals("Teste", stringMap.get(_ptLocale));
+	}
+
+	@Test
+	public void testAddNondefaultLocalizedStringValue() throws Exception {
+		try {
+			ExpandoTestUtil.addColumn(
+				_expandoTable, "Test Column",
+				ExpandoColumnConstants.STRING_LOCALIZED,
+				HashMapBuilder.put(
+					_ptLocale, "Teste"
+				).build());
+
+			Assert.fail();
+		}
+		catch (MustInformDefaultLocaleException
+					mustInformDefaultLocaleException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(mustInformDefaultLocaleException);
+			}
+		}
 	}
 
 	@Test

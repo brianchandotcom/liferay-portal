@@ -96,6 +96,17 @@ public class RepositoryWrapper implements Repository {
 	}
 
 	@Override
+	public Folder addFolder(
+			String externalReferenceCode, long userId, long parentFolderId,
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException {
+
+		return _repository.addFolder(
+			externalReferenceCode, userId, parentFolderId, name, description,
+			serviceContext);
+	}
+
+	@Override
 	public FileVersion cancelCheckOut(long fileEntryId) throws PortalException {
 		return _repository.cancelCheckOut(fileEntryId);
 	}
@@ -380,6 +391,14 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		return _repository.getFolder(parentFolderId, name);
+	}
+
+	@Override
+	public Folder getFolderByExternalReferenceCode(String externalReferenceCode)
+		throws PortalException {
+
+		return _repository.getFolderByExternalReferenceCode(
+			externalReferenceCode);
 	}
 
 	@Override

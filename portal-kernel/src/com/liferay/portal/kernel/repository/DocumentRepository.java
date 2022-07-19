@@ -63,6 +63,11 @@ public interface DocumentRepository extends CapabilityProvider {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public Folder addFolder(
+			String externalReferenceCode, long userId, long parentFolderId,
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException;
+
 	public void checkInFileEntry(
 			long userId, long fileEntryId,
 			DLVersionNumberIncrease dlVersionNumberIncrease, String changeLog,
@@ -98,6 +103,12 @@ public interface DocumentRepository extends CapabilityProvider {
 	}
 
 	public default FileEntry fetchFileEntryByExternalReferenceCode(
+		String externalReferenceCode) {
+
+		return null;
+	}
+
+	public default Folder fetchFolderByExternalReferenceCode(
 		String externalReferenceCode) {
 
 		return null;
@@ -180,6 +191,13 @@ public interface DocumentRepository extends CapabilityProvider {
 
 	public Folder getFolder(long parentFolderId, String name)
 		throws PortalException;
+
+	public default Folder getFolderByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		return null;
+	}
 
 	public List<Folder> getFolders(
 			long parentFolderId, boolean includeMountFolders, int start,

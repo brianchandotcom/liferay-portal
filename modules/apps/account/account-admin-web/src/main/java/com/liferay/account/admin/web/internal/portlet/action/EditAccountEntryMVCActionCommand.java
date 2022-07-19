@@ -22,6 +22,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -31,9 +32,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -46,6 +45,7 @@ import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,9 +60,19 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT,
 		"mvc.command.name=/account_admin/edit_account_entry"
 	},
-	service = MVCActionCommand.class
+	service = AopService.class
 )
-public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
+public class EditAccountEntryMVCActionCommand
+	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		return super.processAction(actionRequest, actionResponse);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -72,31 +82,22 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					String redirect = ParamUtil.getString(
-						actionRequest, "redirect");
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-					if (cmd.equals(Constants.ADD)) {
-						AccountEntry accountEntry = _addAccountEntry(
-							actionRequest);
+			if (cmd.equals(Constants.ADD)) {
+				AccountEntry accountEntry = _addAccountEntry(actionRequest);
 
-						redirect = HttpComponentsUtil.setParameter(
-							redirect,
-							actionResponse.getNamespace() + "accountEntryId",
-							accountEntry.getAccountEntryId());
-					}
-					else if (cmd.equals(Constants.UPDATE)) {
-						updateAccountEntry(actionRequest);
-					}
+				redirect = HttpComponentsUtil.setParameter(
+					redirect, actionResponse.getNamespace() + "accountEntryId",
+					accountEntry.getAccountEntryId());
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				updateAccountEntry(actionRequest);
+			}
 
-					if (Validator.isNotNull(redirect)) {
-						sendRedirect(actionRequest, actionResponse, redirect);
-					}
-
-					return null;
-				});
+			if (Validator.isNotNull(redirect)) {
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
 		}
 		catch (Exception exception) {
 			if (exception instanceof PrincipalException) {
@@ -117,9 +118,8 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 					"mvcRenderCommandName",
 					"/account_admin/edit_account_entry");
 			}
-			else {
-				throw exception;
-			}
+
+			throw exception;
 		}
 		catch (Throwable throwable) {
 			throw new Exception(throwable);
@@ -234,10 +234,6 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditAccountEntryMVCActionCommand.class);
-
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private AccountEntryService _accountEntryService;

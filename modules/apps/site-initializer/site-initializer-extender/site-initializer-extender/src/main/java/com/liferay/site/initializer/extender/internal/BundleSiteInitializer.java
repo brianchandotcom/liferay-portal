@@ -388,8 +388,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(() -> _addAccounts(serviceContext));
 
+			Map<String, Long> classNameIdsStringUtilReplaceValues =
+				new HashMap<>();
+
 			Map<String, String> ddmStructureEntryIdsStringUtilReplaceValues =
-				_invoke(() -> _addDDMStructures(serviceContext));
+				_invoke(
+					() -> _addDDMStructures(
+						classNameIdsStringUtilReplaceValues, serviceContext));
 
 			_invoke(() -> _addExpandoColumns(serviceContext));
 
@@ -690,7 +695,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext, _servletContext);
 	}
 
-	private Map<String, String> _addDDMStructures(ServiceContext serviceContext)
+	private Map<String, String> _addDDMStructures(
+			Map<String, Long> classNameIdsStringUtilReplaceValues,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -703,29 +710,25 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return ddmStructureEntryIdsStringUtilReplaceValues;
 		}
 
-		int index = 0;
-		long journalArticleId = _portal.getClassNameId(JournalArticle.class);
-
 		for (String resourcePath : resourcePaths) {
 			_defaultDDMStructureHelper.addDDMStructures(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				journalArticleId, _classLoader, resourcePath, serviceContext);
-
-			List<DDMStructure> ddmStructures =
-				_ddmStructureLocalService.getStructures(
-					serviceContext.getScopeGroupId(), journalArticleId);
-
-			DDMStructure ddmStructure = ddmStructures.get(index);
-
-			ddmStructureEntryIdsStringUtilReplaceValues.put(
-				"DDM_STRUCTURE_ENTRY_ID:" + resourcePath,
-				String.valueOf(ddmStructure.getStructureId()));
-
-			index++;
+				_getClassNameId(
+					JournalArticle.class.getName(),
+					classNameIdsStringUtilReplaceValues),
+				_classLoader, resourcePath, serviceContext);
 		}
 
-		ddmStructureEntryIdsStringUtilReplaceValues.put(
-			"DDM_STRUCTURE_CLASS_NAME_ID", String.valueOf(journalArticleId));
+		List<DDMStructure> ddmStructures =
+			_ddmStructureLocalService.getStructures(0, 0);
+
+		if (ListUtil.isNotEmpty(ddmStructures)) {
+			for (DDMStructure ddmStructure : ddmStructures) {
+				ddmStructureEntryIdsStringUtilReplaceValues.put(
+					"DDM_STRUCTURE_ENTRY_ID:" + ddmStructure.getStructureKey(),
+					String.valueOf(ddmStructure.getStructureId()));
+			}
+		}
 
 		return ddmStructureEntryIdsStringUtilReplaceValues;
 	}
@@ -3523,6 +3526,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return ArrayUtil.toLongArray(assetCategoryIds);
+	}
+
+	private long _getClassNameId(
+		String className,
+		Map<String, Long> classNameIdsStringUtilReplaceValues) {
+
+		long classNameId = _portal.getClassNameId(className);
+
+		classNameIdsStringUtilReplaceValues.put(
+			"CLASS_NAME_ID:" + className, classNameId);
+
+		return classNameId;
 	}
 
 	private Map<String, String> _getReleaseInfoStringUtilReplaceValues() {

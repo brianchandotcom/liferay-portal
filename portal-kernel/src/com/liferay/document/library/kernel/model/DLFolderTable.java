@@ -38,6 +38,10 @@ public class DLFolderTable extends BaseTable<DLFolderTable> {
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DLFolderTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<DLFolderTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<DLFolderTable, Long> folderId = createColumn(
 		"folderId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DLFolderTable, Long> groupId = createColumn(

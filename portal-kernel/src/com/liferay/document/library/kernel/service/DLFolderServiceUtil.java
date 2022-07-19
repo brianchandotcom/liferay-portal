@@ -50,6 +50,18 @@ public class DLFolderServiceUtil {
 			description, serviceContext);
 	}
 
+	public static DLFolder addFolder(
+			String externalReferenceCode, long groupId, long repositoryId,
+			boolean mountPoint, long parentFolderId, String name,
+			String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addFolder(
+			externalReferenceCode, groupId, repositoryId, mountPoint,
+			parentFolderId, name, description, serviceContext);
+	}
+
 	public static void deleteFolder(long folderId) throws PortalException {
 		getService().deleteFolder(folderId);
 	}
@@ -66,6 +78,14 @@ public class DLFolderServiceUtil {
 		throws PortalException {
 
 		getService().deleteFolder(groupId, parentFolderId, name);
+	}
+
+	public static DLFolder getDLFolderByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getDLFolderByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	public static List<Object> getFileEntriesAndFileShortcuts(

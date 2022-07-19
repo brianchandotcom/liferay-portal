@@ -274,6 +274,12 @@ public interface DLAppLocalService extends BaseLocalService {
 			String description, ServiceContext serviceContext)
 		throws PortalException;
 
+	public Folder addFolder(
+			String externalReferenceCode, long userId, long repositoryId,
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Delete all data associated to the given repository. This method is only
 	 * supported by the Liferay repository.
@@ -349,6 +355,11 @@ public interface DLAppLocalService extends BaseLocalService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FileEntry fetchFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Folder fetchFolderByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws PortalException;
 
@@ -458,6 +469,11 @@ public interface DLAppLocalService extends BaseLocalService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Folder getFolder(long repositoryId, long parentFolderId, String name)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Folder getFolderByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
 		throws PortalException;
 
 	/**

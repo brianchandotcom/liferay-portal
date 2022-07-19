@@ -289,6 +289,17 @@ public class DLAppServiceUtil {
 			repositoryId, parentFolderId, name, description, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.Folder addFolder(
+			String externalReferenceCode, long repositoryId,
+			long parentFolderId, String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addFolder(
+			externalReferenceCode, repositoryId, parentFolderId, name,
+			description, serviceContext);
+	}
+
 	/**
 	 * Adds a temporary file entry.
 	 *
@@ -1045,6 +1056,15 @@ public class DLAppServiceUtil {
 		throws PortalException {
 
 		return getService().getFolder(repositoryId, parentFolderId, name);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.Folder
+			getFolderByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getFolderByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	/**

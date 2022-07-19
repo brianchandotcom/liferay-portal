@@ -172,6 +172,7 @@ create unique index IX_350F5CAE on DLFileVersion (uuid_[$COLUMN_LENGTH:75$], gro
 create index IX_67A46FAA on DLFolder (companyId, ctCollectionId);
 create index IX_F1EC1690 on DLFolder (companyId, status, ctCollectionId);
 create index IX_9D91952C on DLFolder (groupId, ctCollectionId);
+create unique index IX_A1EB230D on DLFolder (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_4B18B17E on DLFolder (groupId, mountPoint, parentFolderId, ctCollectionId);
 create index IX_45D93323 on DLFolder (groupId, mountPoint, parentFolderId, hidden_, ctCollectionId);
 create index IX_91065109 on DLFolder (groupId, mountPoint, parentFolderId, hidden_, status, ctCollectionId);

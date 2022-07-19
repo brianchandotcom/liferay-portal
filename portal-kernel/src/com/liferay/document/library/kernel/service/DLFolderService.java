@@ -63,12 +63,23 @@ public interface DLFolderService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public DLFolder addFolder(
+			String externalReferenceCode, long groupId, long repositoryId,
+			boolean mountPoint, long parentFolderId, String name,
+			String description, ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteFolder(long folderId) throws PortalException;
 
 	public void deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws PortalException;
 
 	public void deleteFolder(long groupId, long parentFolderId, String name)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFolder getDLFolderByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

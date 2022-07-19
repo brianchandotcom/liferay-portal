@@ -117,6 +117,21 @@ public interface DLFolderModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this document library folder.
+	 *
+	 * @return the external reference code of this document library folder
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this document library folder.
+	 *
+	 * @param externalReferenceCode the external reference code of this document library folder
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the folder ID of this document library folder.
 	 *
 	 * @return the folder ID of this document library folder

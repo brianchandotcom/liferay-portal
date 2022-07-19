@@ -43,13 +43,15 @@ const Geolocation = ({
 	viewMode,
 	...otherProps
 }) => {
-
 	const [address, setAddress] = useState();
 
-	const handleChange = useCallback(({newVal: {address, location}}) => {
-		setAddress(address);
-		onChange(JSON.stringify(location));
-	}, [onChange, setAddress]);
+	const handleChange = useCallback(
+		({newVal: {address, location}}) => {
+			setAddress(address);
+			onChange(JSON.stringify(location));
+		},
+		[onChange, setAddress]
+	);
 
 	useGeolocation({
 		disabled,
@@ -68,6 +70,7 @@ const Geolocation = ({
 				<div>
 					<div>
 						<ClayIcon symbol="geolocation" />
+
 						{address}
 					</div>
 

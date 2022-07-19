@@ -111,7 +111,7 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			deleteRegionIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteRegionIds"), 0L);
+				ParamUtil.getString(actionRequest, "rowIds"), 0L);
 		}
 
 		for (long deleteRegionId : deleteRegionIds) {

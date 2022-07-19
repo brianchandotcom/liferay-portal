@@ -153,7 +153,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			deleteCountryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCountryIds"), 0L);
+				ParamUtil.getString(actionRequest, "rowIds"), 0L);
 		}
 
 		for (long deleteCountryId : deleteCountryIds) {

@@ -3,7 +3,7 @@
 		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-file-upload">${input.label}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
 		<div class="align-items-center d-flex">
-			<label class="btn btn-secondary" for="${fragmentEntryLinkNamespace}-file-upload">[@clay["icon"] symbol="upload" /] ${languageUtil.get(locale, "select-file")}</label>
+			<label class="btn btn-secondary" for="${fragmentEntryLinkNamespace}-file-upload">[@clay["icon"] symbol="upload" /] ${configuration.buttonText}</label>
 
 			<small class="inline-item inline-item-after">
 				<strong class="forms-file-upload-file-name">

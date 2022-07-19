@@ -15,6 +15,7 @@
 package com.liferay.document.library.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -95,6 +96,35 @@ public class DLFolderServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_alternativeGroup = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testAddDLFolderWithExternalReferenceCode() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		Folder folder = addFolder(externalReferenceCode);
+
+		Assert.assertEquals(
+			externalReferenceCode, folder.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testAddDLFolderWithoutExternalReferenceCode() throws Exception {
+		Folder folder = addFolder(null);
+
+		Assert.assertEquals(
+			folder.getExternalReferenceCode(), folder.getUuid());
+	}
+
+	@Test(expected = DuplicateFolderNameException.class)
+	public void testDLFolderWithExistingExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		addFolder(externalReferenceCode);
+
+		addFolder(externalReferenceCode);
 	}
 
 	@Test
@@ -453,6 +483,15 @@ public class DLFolderServiceTest {
 				expectedFileEntry.getFileEntryId(),
 				actualDLFileEntry.getFileEntryId());
 		}
+	}
+
+	protected Folder addFolder(String externalReferenceCode) throws Exception {
+		return _dlAppService.addFolder(
+			externalReferenceCode, _group.getGroupId(),
+			_parentFolder.getFolderId(), "Test Folder",
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Inject

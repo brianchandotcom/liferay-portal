@@ -90,7 +90,7 @@ public class DLTestUtil {
 		}
 
 		return DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), groupId, groupId, false,
+			null, TestPropsValues.getUserId(), groupId, groupId, false,
 			parentFolderId, name, StringPool.BLANK, false, serviceContext);
 	}
 

@@ -51,7 +51,7 @@ public class DLAppServiceWhenAddingAFolderTest extends BaseDLAppTestCase {
 	@Test
 	public void testShouldAddAssetEntry() throws PortalException {
 		Folder folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
+			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
@@ -68,7 +68,7 @@ public class DLAppServiceWhenAddingAFolderTest extends BaseDLAppTestCase {
 				DLSyncConstants.EVENT_ADD);
 
 		DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
+			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 

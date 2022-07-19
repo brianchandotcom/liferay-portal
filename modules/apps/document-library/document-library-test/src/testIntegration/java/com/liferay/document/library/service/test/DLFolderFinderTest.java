@@ -85,17 +85,17 @@ public class DLFolderFinderTest {
 			new UnicodeProperties(), false, serviceContext);
 
 		_folder = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
 			StringPool.BLANK, serviceContext);
 
 		DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_folder.getFolderId(), "Folder B", StringPool.BLANK,
 			serviceContext);
 
 		Folder folder = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_folder.getFolderId(), "Folder C", StringPool.BLANK,
 			serviceContext);
 

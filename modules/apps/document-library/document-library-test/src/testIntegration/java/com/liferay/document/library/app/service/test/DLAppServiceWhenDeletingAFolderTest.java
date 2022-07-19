@@ -56,12 +56,12 @@ public class DLAppServiceWhenDeletingAFolderTest extends BaseDLAppTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
+			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		DLAppServiceUtil.addFolder(
-			group.getGroupId(), folder.getFolderId(),
+			null, group.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
@@ -82,7 +82,7 @@ public class DLAppServiceWhenDeletingAFolderTest extends BaseDLAppTestCase {
 				DLSyncConstants.EVENT_DELETE);
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
+			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
@@ -97,12 +97,12 @@ public class DLAppServiceWhenDeletingAFolderTest extends BaseDLAppTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
+			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		Folder subfolder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), folder.getFolderId(),
+			null, group.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 

@@ -14,8 +14,9 @@
 
 package com.liferay.asset.list.internal.upgrade.registry;
 
-import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.list.internal.upgrade.v1_3_0.AssetListEntryUpgradeProcess;
 import com.liferay.asset.list.internal.upgrade.v1_4_0.AssetListEntryUsageUpgradeProcess;
+import com.liferay.asset.list.internal.upgrade.v1_5_0.AssetListEntrySegmentsEntryRelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -57,9 +58,7 @@ public class AssetListServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"AssetListEntry", "assetEntrySubtype VARCHAR(255) null",
 				"assetEntryType VARCHAR(255) null"),
-			UpgradeProcessFactory.runSQL(
-				"update AssetListEntry set assetEntryType = '" +
-					AssetEntry.class.getName() + "'"));
+			new AssetListEntryUpgradeProcess());
 
 		registry.register(
 			"1.3.0", "1.4.0", new AssetListEntryUsageUpgradeProcess());
@@ -69,9 +68,7 @@ public class AssetListServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"AssetListEntrySegmentsEntryRel",
 				"priority INTEGER default 0 not null"),
-			UpgradeProcessFactory.runSQL(
-				"update AssetListEntrySegmentsEntryRel set priority = 1 " +
-					"where segmentsEntryId = 0"));
+			new AssetListEntrySegmentsEntryRelUpgradeProcess());
 	}
 
 }

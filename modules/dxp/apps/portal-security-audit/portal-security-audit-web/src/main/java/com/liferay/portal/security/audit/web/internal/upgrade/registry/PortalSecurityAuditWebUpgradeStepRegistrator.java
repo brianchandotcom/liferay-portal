@@ -15,7 +15,7 @@
 package com.liferay.portal.security.audit.web.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.security.audit.web.internal.upgrade.v1_0_0.ResourceActionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,11 +31,7 @@ public class PortalSecurityAuditWebUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
-		registry.register(
-			"0.0.1", "1.0.0",
-			UpgradeProcessFactory.runSQL(
-				"delete from ResourceAction where name = " +
-					"'com_liferay_audit_web_portlet_AuditPortlet'"));
+		registry.register("0.0.1", "1.0.0", new ResourceActionUpgradeProcess());
 	}
 
 }

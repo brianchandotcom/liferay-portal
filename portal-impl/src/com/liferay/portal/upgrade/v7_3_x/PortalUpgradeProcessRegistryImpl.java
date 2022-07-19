@@ -100,10 +100,7 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(8, 9, 0), new UpgradeRatingsMVCCVersion());
 
 		upgradeProcesses.put(
-			new Version(8, 10, 0),
-			UpgradeProcessFactory.runSQL(
-				"delete from ResourceAction where name in ('136', '150', " +
-					"'151', '152', '153', '157', '158')"));
+			new Version(8, 10, 0), new UpgradeResourceAction());
 
 		upgradeProcesses.put(
 			new Version(8, 11, 0),

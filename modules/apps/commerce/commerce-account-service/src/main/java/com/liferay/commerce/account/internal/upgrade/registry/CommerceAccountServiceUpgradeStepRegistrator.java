@@ -125,10 +125,8 @@ public class CommerceAccountServiceUpgradeStepRegistrator
 
 		registry.register(
 			"7.0.0", "8.0.0",
-			UpgradeProcessFactory.runSQL("drop table CommerceAccount"),
-			UpgradeProcessFactory.runSQL(
-				"drop table CommerceAccountOrganizationRel"),
-			UpgradeProcessFactory.runSQL("drop table CommerceAccountUserRel"));
+			new com.liferay.commerce.account.internal.upgrade.v8_0_0.
+				CommerceAccountUpgradeProcess());
 
 		registry.register(
 			"8.0.0", "9.0.0",

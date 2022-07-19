@@ -115,12 +115,14 @@ public class GradleUpgradeReleaseDxpCheck extends BaseFileCheck {
 
 		if (hasCompile) {
 			buildFile.insertDependency(
-				"compileOnly", "com.liferay.portal", "release.dxp.api");
+				"compileOnly", "com.liferay.portal", "release.dxp.api",
+				upgradeToVersion);
 		}
 
 		if (hasTest) {
 			buildFile.insertDependency(
-				"testCompile", "com.liferay.portal", "release.dxp.api");
+				"testCompile", "com.liferay.portal", "release.dxp.api",
+				upgradeToVersion);
 		}
 
 		return buildFile.getSource();

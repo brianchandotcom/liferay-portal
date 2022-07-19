@@ -239,6 +239,11 @@ html#{$cadmin-selector} {
 			border: $dashedBorderWidth dashed $cadmin-primary-l2;
 			padding: 15vh 5vw;
 
+			&.page-editor__form-unmapped-state {
+				border: none;
+				box-shadow: inset 0 0 0 1px $cadmin-primary-l2;
+			}
+
 			&__message,
 			&__title {
 				font-family: $cadmin-font-family-base;

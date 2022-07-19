@@ -34,7 +34,7 @@ const useRequirementActions = () => {
 		},
 		{
 			action: ({id}: TestrayProject, mutate) =>
-				deleteResource(`/projects/${id}`)
+				deleteResource(`/requirements/${id}`)
 					.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSuccess)
 					.catch(modal.onError),

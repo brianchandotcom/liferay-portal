@@ -1038,6 +1038,18 @@ public class AssetPublisherDisplayContext {
 				"categoryId", String.valueOf(getAssetCategoryId()));
 		}
 
+		if (!isPaginationTypeNone()) {
+			String redirect = ParamUtil.getString(_portletRequest, "redirect");
+
+			if (Validator.isNull(redirect)) {
+				redirect = PortalUtil.getCurrentURL(_portletRequest);
+			}
+
+			if (Validator.isNotNull(redirect)) {
+				portletURL.setParameter("redirect", redirect);
+			}
+		}
+
 		return portletURL;
 	}
 

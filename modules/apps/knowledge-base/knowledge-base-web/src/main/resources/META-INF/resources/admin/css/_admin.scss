@@ -5,8 +5,8 @@ $controlMenuHeight: 56px;
 .knowledge-base-portlet-admin {
 	.kbVerticalBar {
 		> div {
-			min-height: calc(100vh - #{$controlMenuHeight});
 			height: 100%;
+			min-height: calc(100vh - #{$controlMenuHeight});
 		}
 
 		nav {

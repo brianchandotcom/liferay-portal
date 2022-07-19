@@ -26,7 +26,7 @@ export default function FormMappingOptions({
 	const formTypes = [
 		{
 			label: Liferay.Language.get('none'),
-			value: '',
+			value: '0',
 		},
 		...config.formTypes,
 	];
@@ -35,7 +35,7 @@ export default function FormMappingOptions({
 
 	const selectedType = formTypes.find(({value}) => value === classNameId);
 
-	const selectedSubtype = selectedType?.subtypes.find(
+	const selectedSubtype = selectedType?.subtypes?.find(
 		({value}) => value === classTypeId
 	);
 
@@ -61,7 +61,7 @@ export default function FormMappingOptions({
 						formConfig: FORM_MAPPING_SOURCES.otherContentType,
 					});
 				}}
-				value={selectedType ? classNameId : ''}
+				value={selectedType.value}
 			/>
 
 			{selectedType?.subtypes?.length > 0 && (

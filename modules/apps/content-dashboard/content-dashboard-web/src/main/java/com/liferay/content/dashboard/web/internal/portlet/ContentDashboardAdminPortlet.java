@@ -49,6 +49,7 @@ import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
+import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 import com.liferay.sharing.security.permission.SharingPermission;
 
 import java.io.IOException;
@@ -175,6 +176,8 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 				_contentDashboardItemSearchClassMapperTracker,
 				_portal.getHttpServletRequest(liferayPortletRequest)));
 
+		_sharingJavaScriptFactory.requestSharingJavascript();
+
 		super.render(renderRequest, renderResponse);
 	}
 
@@ -229,6 +232,9 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private SharingConfigurationFactory _sharingConfigurationFactory;
+
+	@Reference
+	private SharingJavaScriptFactory _sharingJavaScriptFactory;
 
 	@Reference
 	private SharingPermission _sharingPermission;

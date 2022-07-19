@@ -40,6 +40,7 @@ export declare function useObjectFieldForm({
 		ObjectField & {
 			function: any;
 			maxLength: any;
+			filters: any;
 			acceptedFileExtensions: any;
 			fileSource: any;
 			maximumFileSize: any;
@@ -48,7 +49,6 @@ export declare function useObjectFieldForm({
 			storageDLFolderPath: any;
 			relationship: any;
 			summarizeField: any;
-			filters: any;
 			stateFlow: any;
 		}
 	>;

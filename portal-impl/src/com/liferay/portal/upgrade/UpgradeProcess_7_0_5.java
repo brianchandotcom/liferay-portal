@@ -15,12 +15,17 @@
 package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v7_0_5.UpgradeBookmarks;
+import com.liferay.portal.upgrade.v7_0_5.UpgradeCompany;
+import com.liferay.portal.upgrade.v7_0_5.UpgradeContact;
+import com.liferay.portal.upgrade.v7_0_5.UpgradeEmailAddress;
 import com.liferay.portal.upgrade.v7_0_5.UpgradeExpando;
 import com.liferay.portal.upgrade.v7_0_5.UpgradeGroup;
+import com.liferay.portal.upgrade.v7_0_5.UpgradeMBMailingList;
 import com.liferay.portal.upgrade.v7_0_5.UpgradePortalPreferences;
+import com.liferay.portal.upgrade.v7_0_5.UpgradeUser;
+import com.liferay.portal.upgrade.v7_0_5.UpgradeVirtualHost;
 
 /**
  * @author Roberto Díaz
@@ -36,30 +41,15 @@ public class UpgradeProcess_7_0_5 extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgrade(new UpgradeBookmarks());
-		upgrade(
-			UpgradeProcessFactory.alterColumnType(
-				"Company", "mx", "VARCHAR(200) null"));
-		upgrade(
-			UpgradeProcessFactory.alterColumnType(
-				"Contact_", "emailAddress", "VARCHAR(254) null"));
+		upgrade(new UpgradeCompany());
+		upgrade(new UpgradeContact());
 		upgrade(new UpgradeGroup());
-		upgrade(
-			UpgradeProcessFactory.alterColumnType(
-				"EmailAddress", "address", "VARCHAR(254) null"));
+		upgrade(new UpgradeEmailAddress());
 		upgrade(new UpgradeExpando());
-		upgrade(
-			UpgradeProcessFactory.alterColumnType(
-				"MBMailingList", "emailAddress", "VARCHAR(254) null"));
-		upgrade(
-			UpgradeProcessFactory.alterColumnType(
-				"MBMailingList", "outEmailAddress", "VARCHAR(254) null"));
+		upgrade(new UpgradeMBMailingList());
 		upgrade(new UpgradePortalPreferences());
-		upgrade(
-			UpgradeProcessFactory.alterColumnType(
-				"User_", "emailAddress", "VARCHAR(254) null"));
-		upgrade(
-			UpgradeProcessFactory.alterColumnType(
-				"VirtualHost", "hostname", "VARCHAR(200) null"));
+		upgrade(new UpgradeUser());
+		upgrade(new UpgradeVirtualHost());
 
 		clearIndexesCache();
 	}

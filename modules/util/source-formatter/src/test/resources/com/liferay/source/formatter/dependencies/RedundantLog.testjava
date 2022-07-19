@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 /**
  * @author Qi Zhang
  */
-public class RedundantLogStatements {
+public class RedundantLog {
 
 	public void testMethod() {
 		if (_log.isDebugEnabled()) {
@@ -38,7 +38,6 @@ public class RedundantLogStatements {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		RedundantLogStatementsCheck.class);
+	private static final Log _log = LogFactoryUtil.getLog(RedundantLog.class);
 
 }

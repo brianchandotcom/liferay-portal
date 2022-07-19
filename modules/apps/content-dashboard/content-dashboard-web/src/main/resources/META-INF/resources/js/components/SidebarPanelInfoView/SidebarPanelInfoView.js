@@ -152,6 +152,7 @@ const SidebarPanelInfoView = ({
 
 				{preview && preview.url && (
 					<Preview
+						compressed={hasActions}
 						imageURL={preview.imageURL}
 						title={title}
 						url={preview.url}

@@ -21,17 +21,24 @@ const Share = ({fetchSharingButtonURL}) => {
 
 	useEffect(() => {
 		if (elRef.current) {
-			fetch(fetchSharingButtonURL, {
-				method: 'GET',
-			})
-				.then((response) =>
-					response.text().then((html) => {
-						elRef.current.innerHTML = html;
-						runScriptsInElement(elRef.current);
-					})
-				)
+			fetch(fetchSharingButtonURL)
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error(
+							`Failed to fetch ${fetchSharingButtonURL}`
+						);
+					}
+
+					return response.text();
+				})
+				.then((html) => {
+					elRef.current.innerHTML = html;
+					runScriptsInElement(elRef.current);
+				})
 				.catch((error) => {
-					console.log('Failed to fetch share button: ', error);
+					if (process.env.NODE_ENV === 'development') {
+						console.error('Failed to fetch share button: ', error);
+					}
 				});
 		}
 	}, [fetchSharingButtonURL]);

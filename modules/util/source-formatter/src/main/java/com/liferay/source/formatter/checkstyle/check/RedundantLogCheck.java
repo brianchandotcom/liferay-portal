@@ -105,9 +105,7 @@ public class RedundantLogCheck extends BaseCheck {
 			TokenTypes.LITERAL_ELSE);
 
 		if (literalElseDetailAST == null) {
-			if (_compareDetailASTIgnoreLine(
-					elistDetailAST, previousElistDetailAST)) {
-
+			if (_compareDetailAST(elistDetailAST, previousElistDetailAST)) {
 				log(
 					startLineNumber, _MSG_REDUNDANT_LOG, startLineNumber,
 					getEndLineNumber(slistDetailAST));
@@ -128,7 +126,7 @@ public class RedundantLogCheck extends BaseCheck {
 			firstChildDetailAST, elistDetailAST, startLineNumber);
 	}
 
-	private boolean _compareDetailASTIgnoreLine(
+	private boolean _compareDetailAST(
 		DetailAST detailAST1, DetailAST detailAST2) {
 
 		if ((detailAST1 == null) || (detailAST2 == null)) {
@@ -150,7 +148,7 @@ public class RedundantLogCheck extends BaseCheck {
 			DetailAST firstChildDetailAST1 = detailAST1.getFirstChild();
 			DetailAST firstChildDetailAST2 = detailAST2.getFirstChild();
 
-			if (!_compareDetailASTIgnoreLine(
+			if (!_compareDetailAST(
 					firstChildDetailAST1, firstChildDetailAST2)) {
 
 				return false;

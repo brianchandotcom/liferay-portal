@@ -998,7 +998,7 @@ public abstract class BaseJob implements Job {
 
 				if (!Objects.equals(
 						testName, testJSONObject.getString("testName")) ||
-					testJSONObject.has(durationKey)) {
+					!testJSONObject.has(durationKey)) {
 
 					continue;
 				}

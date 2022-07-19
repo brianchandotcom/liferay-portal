@@ -253,6 +253,48 @@ public class AccountGroupServiceHttp {
 		}
 	}
 
+	public static com.liferay.account.model.AccountGroup
+			updateExternalReferenceCode(
+				HttpPrincipal httpPrincipal, long accountGroupId,
+				String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountGroupServiceUtil.class, "updateExternalReferenceCode",
+				_updateExternalReferenceCodeParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountGroupId, externalReferenceCode);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.account.model.AccountGroup)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		AccountGroupServiceHttp.class);
 
@@ -269,5 +311,9 @@ public class AccountGroupServiceHttp {
 		};
 	private static final Class<?>[] _updateAccountGroupParameterTypes4 =
 		new Class[] {long.class, String.class, String.class};
+	private static final Class<?>[]
+		_updateExternalReferenceCodeParameterTypes5 = new Class[] {
+			long.class, String.class
+		};
 
 }

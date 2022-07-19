@@ -507,6 +507,25 @@ public class AccountGroupLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountGroup updateExternalReferenceCode(
+			com.liferay.account.model.AccountGroup accountGroup,
+			String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupLocalService.updateExternalReferenceCode(
+			accountGroup, externalReferenceCode);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountGroup updateExternalReferenceCode(
+			long accountGroupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupLocalService.updateExternalReferenceCode(
+			accountGroupId, externalReferenceCode);
+	}
+
+	@Override
 	public AccountGroupLocalService getWrappedService() {
 		return _accountGroupLocalService;
 	}

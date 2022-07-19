@@ -78,4 +78,8 @@ public interface AccountGroupService extends BaseService {
 			long accountGroupId, String description, String name)
 		throws PortalException;
 
+	public AccountGroup updateExternalReferenceCode(
+			long accountGroupId, String externalReferenceCode)
+		throws PortalException;
+
 }

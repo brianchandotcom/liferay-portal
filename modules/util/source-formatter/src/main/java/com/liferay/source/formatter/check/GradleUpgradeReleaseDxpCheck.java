@@ -51,10 +51,6 @@ public class GradleUpgradeReleaseDxpCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!fileName.endsWith("build.gradle")) {
-			return content;
-		}
-
 		String upgradeToVersion = getAttributeValue(
 			SourceFormatterUtil.UPGRADE_TO_VERSION, absolutePath);
 

@@ -13,7 +13,7 @@ definition {
 
 		ACSettings.takeTokenFromAnalyticsCloud();
 
-		// TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
 

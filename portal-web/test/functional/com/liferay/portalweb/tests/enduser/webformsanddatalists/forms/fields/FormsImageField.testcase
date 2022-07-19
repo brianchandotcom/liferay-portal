@@ -507,7 +507,7 @@ definition {
 		FormsAdminNavigator.gotoEditField(fieldName = "Image");
 
 		AssertElementPresent(
-			key_imageName = "Document_1.jpg",
+			key_imageName = "document_1-jpg",
 			locator1 = "Form#SIDEBAR_ADVANCED_PREDEFINED_VALUE");
 
 		Form.publishForm();

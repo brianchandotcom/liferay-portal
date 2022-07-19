@@ -1030,6 +1030,12 @@ definition {
 			navTab = "Documents and Media",
 			uploadFileName = "${uploadFileName}");
 
+		SelectFrame(locator1 = "Form#BUILDER_SIDEBAR_PANEL");
+
+		var uploadFileName = StringUtil.lowerCase("${uploadFileName}");
+
+		var uploadFileName = StringUtil.replace("${uploadFileName}", ".", "-");
+
 		AssertElementPresent(
 			key_imageName = "${uploadFileName}",
 			locator1 = "Form#SIDEBAR_ADVANCED_PREDEFINED_VALUE");

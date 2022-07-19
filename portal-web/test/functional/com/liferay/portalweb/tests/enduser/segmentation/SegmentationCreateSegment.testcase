@@ -2107,6 +2107,36 @@ definition {
 		}
 	}
 
+	@description = "Test Automation for LPS-92366: Segment names with script tags cause them to no longer be accessible"
+	@priority = "3"
+	test CanCreateSegmentNameWithScriptTags {
+		task ("Add segment with script tag name") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "First Name");
+
+			Segmentation.fillTitle(titleField = "</script>");
+
+			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
+			Segmentation.fillProperty(propertyField = "</script>");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the name and property remain with script tag after saving") {
+			Segmentation.editSegment(entry = "</script>");
+
+			Segmentation.viewSegment(
+				criterionInputOption = "contains",
+				propertyField = "</script>");
+		}
+	}
+
 	@description = "Test Automation for LPS-106196: Conjunction selector works as a switch"
 	@priority = "3"
 	test CanEditConjunctionInConditionsSegments {

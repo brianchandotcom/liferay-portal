@@ -75,7 +75,8 @@ public class RepositoryModelUtilTest {
 			_group.getGroupId(), TestPropsValues.getUserId());
 
 		_folder = DLAppServiceUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			_serviceContext);
 	}

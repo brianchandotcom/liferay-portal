@@ -58,7 +58,7 @@ public class UniqueFileEntryTitleProviderTest {
 		_group = GroupTestUtil.addGroup();
 
 		_folder = _dlAppLocalService.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

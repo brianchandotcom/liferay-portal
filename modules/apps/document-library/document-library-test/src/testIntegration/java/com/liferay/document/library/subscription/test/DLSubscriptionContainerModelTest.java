@@ -78,7 +78,7 @@ public class DLSubscriptionContainerModelTest
 				group.getGroupId(), userId);
 
 		Folder folder = DLAppLocalServiceUtil.addFolder(
-			userId, group.getGroupId(), containerModelId,
+			null, userId, group.getGroupId(), containerModelId,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 

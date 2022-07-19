@@ -197,11 +197,12 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		Folder parentFolder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"parent", RandomTestUtil.randomString(), serviceContext);
+			null, group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "parent",
+			RandomTestUtil.randomString(), serviceContext);
 
 		Folder childFolder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(), "child",
+			null, group.getGroupId(), parentFolder.getFolderId(), "child",
 			RandomTestUtil.randomString(), serviceContext);
 
 		DLTrashServiceUtil.moveFolderToTrash(childFolder.getFolderId());
@@ -293,7 +294,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		Group stagingGroup = this.stagingGroup.getStagingGroup();
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			stagingGroup.getGroupId(),
+			null, stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new ServiceContext());
@@ -349,7 +350,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		Group stagingGroup = this.stagingGroup.getStagingGroup();
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			stagingGroup.getGroupId(),
+			null, stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new ServiceContext());
@@ -480,7 +481,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				stagingGroup.getGroupId(), TestPropsValues.getUserId());
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			repository.getRepositoryId(),
+			null, repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
@@ -501,7 +502,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				stagingGroup.getGroupId(), TestPropsValues.getUserId());
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			stagingGroup.getGroupId(),
+			null, stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);

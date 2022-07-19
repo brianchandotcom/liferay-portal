@@ -15,7 +15,6 @@
 package com.liferay.portal.verify;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -26,9 +25,6 @@ import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan

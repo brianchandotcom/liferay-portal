@@ -82,12 +82,13 @@ public class LocalRepositoryWrapper implements LocalRepository {
 
 	@Override
 	public Folder addFolder(
-			long userId, long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long parentFolderId,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException {
 
 		return _localRepository.addFolder(
-			userId, parentFolderId, name, description, serviceContext);
+			externalReferenceCode, userId, parentFolderId, name, description,
+			serviceContext);
 	}
 
 	@Override
@@ -164,6 +165,14 @@ public class LocalRepositoryWrapper implements LocalRepository {
 		String externalReferenceCode) {
 
 		return _localRepository.fetchFileEntryByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
+	@Override
+	public Folder fetchFolderByExternalReferenceCode(
+		String externalReferenceCode) {
+
+		return _localRepository.fetchFolderByExternalReferenceCode(
 			externalReferenceCode);
 	}
 
@@ -297,6 +306,14 @@ public class LocalRepositoryWrapper implements LocalRepository {
 		throws PortalException {
 
 		return _localRepository.getFolder(parentFolderId, name);
+	}
+
+	@Override
+	public Folder getFolderByExternalReferenceCode(String externalReferenceCode)
+		throws PortalException {
+
+		return _localRepository.getFolderByExternalReferenceCode(
+			externalReferenceCode);
 	}
 
 	@Override

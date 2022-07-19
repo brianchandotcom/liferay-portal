@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.xml.Element;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -379,6 +380,17 @@ public class JournalTransformer {
 			}
 
 			TemplateNode firstChildTemplateNode = childTemplateNodes.get(0);
+
+			if (Objects.equals(
+					firstChildTemplateNode.getType(),
+					DDMFormFieldTypeConstants.FIELDSET)) {
+
+				backwardsCompatibilityTemplateNodes.addAll(
+					includeBackwardsCompatibilityTemplateNodes(
+						Arrays.asList(firstChildTemplateNode), parentOffset));
+
+				continue;
+			}
 
 			firstChildTemplateNode =
 				(TemplateNode)firstChildTemplateNode.clone();

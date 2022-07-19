@@ -108,13 +108,17 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 							count = parseInt(responseData, 10);
 
 							if (count > 0) {
-								if (
-									confirm(
-										'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-									)
-								) {
-									<portlet:namespace />doDeleteUserGroups(ids);
-								}
+								Liferay.Util.openConfirmModal({
+									message:
+										'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>',
+									onConfirm: (isConfirmed) => {
+										if (isConfirmed) {
+											<portlet:namespace />doDeleteUserGroups(
+												ids
+											);
+										}
+									},
+								});
 							}
 							else {
 								var message;
@@ -128,19 +132,30 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 										'<%= UnicodeLanguageUtil.get(request, "the-selected-user-group-is-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-user-group-by-automatically-unassociating-the-deactivated-users") %>';
 								}
 
-								if (confirm(message)) {
-									<portlet:namespace />doDeleteUserGroups(ids);
-								}
+								Liferay.Util.openConfirmModal({
+									message: message,
+									onConfirm: (isConfirmed) => {
+										if (isConfirmed) {
+											<portlet:namespace />doDeleteUserGroups(
+												ids
+											);
+										}
+									},
+								});
 							}
 						}
 					);
 				}
-				else if (
-					confirm(
-						'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-					)
-				) {
-					<portlet:namespace />doDeleteUserGroups(ids);
+				else {
+					Liferay.Util.openConfirmModal({
+						message:
+							'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>',
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								<portlet:namespace />doDeleteUserGroups(ids);
+							}
+						},
+					});
 				}
 			}
 		);

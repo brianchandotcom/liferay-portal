@@ -39,11 +39,13 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 </portlet:actionURL>
 
 <aui:script>
-	if (
-		confirm(
-			'<%= UnicodeLanguageUtil.get(request, "all-personal-data-associated-with-this-users-applications-has-been-deleted-or-anonymized") %>'
-		)
-	) {
-		Liferay.Util.navigate('<%= deleteUserURL.toString() %>');
-	}
+	Liferay.Util.openConfirmModal({
+		message:
+			'<%= UnicodeLanguageUtil.get(request, "all-personal-data-associated-with-this-users-applications-has-been-deleted-or-anonymized") %>',
+		onConfirm: (isConfirmed) => {
+			if (isConfirmed) {
+				Liferay.Util.navigate('<%= deleteUserURL.toString() %>');
+			}
+		},
+	});
 </aui:script>

@@ -270,13 +270,14 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 		var submit = true;
 
 		if (<portlet:namespace />documentTypesChanged) {
-			if (!confirm(message)) {
-				submit = false;
-			}
-		}
-
-		if (submit) {
-			submitForm(document.<portlet:namespace />fm);
+			Liferay.Util.openConfirmModal({
+				message: message,
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						submitForm(document.<portlet:namespace />fm);
+					}
+				},
+			});
 		}
 	};
 

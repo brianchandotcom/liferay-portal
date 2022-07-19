@@ -94,13 +94,15 @@ renderResponse.setTitle(kbViewSuggestionDisplayContext.getKBCommentTitle());
 
 	if (deleteButtonElement) {
 		deleteButtonElement.addEventListener('click', (event) => {
-			if (
-				!confirm(
-					'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
-				)
-			) {
-				event.preventDefault();
-			}
+			Liferay.Util.openConfirmModal({
+				message:
+					'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />',
+				onConfirm: (isConfirmed) => {
+					if (!isConfirmed) {
+						event.preventDefault();
+					}
+				},
+			});
 		});
 	}
 </script>

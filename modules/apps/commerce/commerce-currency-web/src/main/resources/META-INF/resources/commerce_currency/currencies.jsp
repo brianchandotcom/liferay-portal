@@ -117,4 +117,52 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
+
+	<aui:script>
+		function <portlet:namespace />deleteCommerceCurrencies() {
+			Liferay.Util.openConfirmModal({
+				message:
+					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-currencies" />',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						const form = window.document['<portlet:namespace />fm'];
+
+						form['<portlet:namespace /><%= Constants.CMD %>'].value =
+							'<%= Constants.DELETE %>';
+						form[
+							'<portlet:namespace />deleteCommerceCurrencyIds'
+						].value = Liferay.Util.getCheckedCheckboxes(
+							form,
+							'<portlet:namespace />allRowIds'
+						);
+
+						submitForm(form);
+					}
+				},
+			});
+		}
+
+		function <portlet:namespace />updateExchangeRates() {
+			Liferay.Util.openConfirmModal({
+				message:
+					'<liferay-ui:message key="are-you-sure-you-want-to-update-the-exchange-rate-of-the-selected-currencies" />',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						const form = window.document['<portlet:namespace />fm'];
+
+						form['<portlet:namespace /><%= Constants.CMD %>'].value =
+							'updateExchangeRates';
+						form[
+							'<portlet:namespace />updateCommerceCurrencyExchangeRateIds'
+						].value = Liferay.Util.getCheckedCheckboxes(
+							form,
+							'<portlet:namespace />allRowIds'
+						);
+
+						submitForm(form);
+					}
+				},
+			});
+		}
+	</aui:script>
 </c:if>

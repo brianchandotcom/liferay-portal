@@ -160,20 +160,28 @@ MicroblogsDisplayContext microblogsDisplayContext = new MicroblogsDisplayContext
 		function (event) {
 			event.preventDefault();
 
-			if (confirm('Are you sure you want to delete this post?')) {
-				Liferay.Util.fetch(event.currentTarget.getAttribute('href'), {
-					method: 'POST',
-				}).then(function () {
-					var updateContainer = A.one(
-						'#p_p_id<portlet:namespace /> .portlet-body'
-					);
+			Liferay.Util.openConfirmModal({
+				message: 'Are you sure you want to delete this post?',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						Liferay.Util.fetch(
+							event.currentTarget.getAttribute('href'),
+							{
+								method: 'POST',
+							}
+						).then(function () {
+							var updateContainer = A.one(
+								'#p_p_id<portlet:namespace /> .portlet-body'
+							);
 
-					Liferay.Microblogs.updateMicroblogsList(
-						'<%= microblogsDisplayContext.getMicroblogsEntriesURL() %>',
-						updateContainer
-					);
-				});
-			}
+							Liferay.Microblogs.updateMicroblogsList(
+								'<%= microblogsDisplayContext.getMicroblogsEntriesURL() %>',
+								updateContainer
+							);
+						});
+					}
+				},
+			});
 		},
 		'.microblogs-entry .delete a'
 	);

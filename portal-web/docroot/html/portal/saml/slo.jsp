@@ -94,10 +94,6 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 </noscript>
 
 <aui:script use="aui-base,aui-io-request-deprecated,aui-template-deprecated">
-	var confirmLogout = function() {
-		return confirm('<liferay-ui:message key="leaving-this-window-might-leave-logout-unfinished" />');
-	};
-
 	var eventHandlers = [];
 
 	var detachHandlers = function() {
@@ -118,12 +114,16 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 			Liferay.on(
 				'beforeNavigate',
 				function(event) {
-					if (!confirmLogout()) {
-						event.originalEvent.preventDefault();
-					}
-					else {
-						SAML.SLO.clearFinishTimeout();
-					}
+					Liferay.Util.openConfirmModal({
+						message: '<liferay-ui:message key="leaving-this-window-might-leave-logout-unfinished" />',
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								SAML.SLO.clearFinishTimeout();
+							} else {
+								event.originalEvent.preventDefault();
+							}
+						}
+					});
 				}
 			)
 		);

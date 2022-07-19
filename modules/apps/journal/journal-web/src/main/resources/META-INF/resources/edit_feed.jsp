@@ -356,27 +356,29 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 						.<portlet:namespace />ddmStructureKey.value !=
 					itemValue.ddmstructurekey
 				) {
-					if (
-						confirm(
-							'<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-changes-the-available-templates-and-available-feed-item-content") %>'
-						)
-					) {
-						document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value =
-							itemValue.ddmstructurekey;
-						document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value =
-							'';
-						document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value =
-							'';
-						document.<portlet:namespace />fm.<portlet:namespace />contentField.value =
-							'<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>';
+					Liferay.Util.openConfirmModal({
+						message:
+							'<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-changes-the-available-templates-and-available-feed-item-content") %>',
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value =
+									itemValue.ddmstructurekey;
+								document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value =
+									'';
+								document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value =
+									'';
+								document.<portlet:namespace />fm.<portlet:namespace />contentField.value =
+									'<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>';
 
-						submitForm(
-							document.<portlet:namespace />fm,
-							null,
-							false,
-							false
-						);
-					}
+								submitForm(
+									document.<portlet:namespace />fm,
+									null,
+									false,
+									false
+								);
+							}
+						},
+					});
 				}
 			},
 			selectEventName: '<portlet:namespace />selectDDMStructure',

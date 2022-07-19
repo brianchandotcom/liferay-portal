@@ -239,15 +239,17 @@ else {
 	}
 
 	function <portlet:namespace />deleteDefinition() {
-		if (
-			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-			)
-		) {
-			submitForm(
-				document.<portlet:namespace />fm,
-				'<portlet:actionURL name="/reports_admin/delete_definition"><portlet:param name="redirect" value="<%= definitionsURL %>" /></portlet:actionURL>'
-			);
-		}
+		Liferay.Util.openConfirmModal({
+			message:
+				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>',
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(
+						document.<portlet:namespace />fm,
+						'<portlet:actionURL name="/reports_admin/delete_definition"><portlet:param name="redirect" value="<%= definitionsURL %>" /></portlet:actionURL>'
+					);
+				}
+			},
+		});
 	}
 </aui:script>

@@ -78,24 +78,38 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 									var confirmMessage =
 										'<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-delete-x-from-your-contacts", entry.getFullName(), false) %>';
 
-									if (confirm(confirmMessage)) {
-										var data = new URLSearchParams();
-										data.append('<portlet:namespace />entryId', <%= entryId %>);
+									Liferay.Util.openConfirmModal({
+										message: confirmMessage,
+										onConfirm: (isConfirmed) => {
+											if (isConfirmed) {
+												var data = new URLSearchParams();
+												data.append(
+													'<portlet:namespace />entryId',
+													<%= entryId %>
+												);
 
-										Liferay.Util.fetch('<portlet:actionURL name="deleteEntry" />', {
-											body: data,
-											method: 'POST',
-										})
-											.then((response) => {
-												return response.text();
-											})
-											.then((data) => {
-												location.href = '<%= HtmlUtil.escape(redirect) %>';
-											})
-											.catch(() => {
-												Liferay.component('contactsCenter').showMessage(false);
-											});
-									}
+												Liferay.Util.fetch(
+													'<portlet:actionURL name="deleteEntry" />',
+													{
+														body: data,
+														method: 'POST',
+													}
+												)
+													.then((response) => {
+														return response.text();
+													})
+													.then((data) => {
+														location.href =
+															'<%= HtmlUtil.escape(redirect) %>';
+													})
+													.catch(() => {
+														Liferay.component('contactsCenter').showMessage(
+															false
+														);
+													});
+											}
+										},
+									});
 								},
 							},
 							icon: 'icon-remove',

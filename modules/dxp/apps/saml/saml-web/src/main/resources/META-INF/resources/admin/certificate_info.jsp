@@ -70,14 +70,27 @@ String introKey = StringPool.BLANK;
 
 		<aui:form action="<%= deleteCertificateURL %>">
 			<aui:button-row>
-				<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "showCertificateDialog('" + replaceCertificateURL + "');" %>' value="replace-certificate" />
+				<aui:button id="" onClick='<%= liferayPortletResponse.getNamespace() + "showCertificateDialog('" + replaceCertificateURL + "');" %>' value="replace-certificate" />
 				<aui:button href="<%= downloadCertificateURL %>" value="download-certificate" />
 
 				<c:if test="<%= certificateUsage == LocalEntityManager.CertificateUsage.ENCRYPTION %>">
-					<aui:button onClick='<%= "return confirm('" + deleteCertificatePrompt + "')" %>' type="submit" value="delete-certificate" />
+					<aui:button onClick="handleDeleteCertificatePrompt" type="submit" value="delete-certificate" />
 				</c:if>
 			</aui:button-row>
 		</aui:form>
+
+		<aui:script>
+			function handleDeleteCertificatePrompt(event) {
+				Liferay.Util.openConfirmModal({
+					message: '<%= deleteCertificatePrompt %>',
+					onConfirm: (isConfirmed) => {
+						if (!isConfirmed) {
+							event.preventDefault();
+						}
+					},
+				});
+			}
+		</aui:script>
 	</c:when>
 	<c:when test="<%= (x509Certificate == null) && Validator.isNull(samlProviderConfiguration.entityId()) %>">
 		<div class="portlet-msg-info">
@@ -102,7 +115,20 @@ String introKey = StringPool.BLANK;
 				<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "showCertificateDialog('" + replaceCertificateURL + "');" %>' value="replace-certificate" />
 
 				<c:if test="<%= certificateUsage == LocalEntityManager.CertificateUsage.ENCRYPTION %>">
-					<aui:button onClick='<%= "return confirm('" + deleteCertificatePrompt + "')" %>' type="submit" value="delete-certificate" />
+					<aui:button onClick="handleDeleteCertificatePrompt" type="submit" value="delete-certificate" />
+
+					<aui:script>
+						function handleDeleteCertificatePrompt(event) {
+							Liferay.Util.openConfirmModal({
+								message: '<%= deleteCertificatePrompt %>',
+								onConfirm: (isConfirmed) => {
+									if (!isConfirmed) {
+										event.preventDefault();
+									}
+								},
+							});
+						}
+					</aui:script>
 				</c:if>
 			</aui:button-row>
 		</aui:form>

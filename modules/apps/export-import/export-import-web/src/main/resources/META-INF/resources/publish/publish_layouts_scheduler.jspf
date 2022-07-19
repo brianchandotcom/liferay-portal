@@ -103,18 +103,23 @@
 	}
 
 	function <portlet:namespace />unschedulePublishEvent(jobName) {
-		if (
-			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-scheduled-event") %>'
-			)
-		) {
-			Liferay.Util.postForm(document.<portlet:namespace />exportPagesFm, {
-				data: {
-					<%= Constants.CMD %>: '<%= unscheduleCMD %>',
-					jobName: jobName,
-					redirect: '<%= scheduledEventsURL %>',
-				},
-			});
-		}
+		Liferay.Util.openConfirmModal({
+			message:
+				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-scheduled-event") %>',
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					Liferay.Util.postForm(
+						document.<portlet:namespace />exportPagesFm,
+						{
+							data: {
+								<%= Constants.CMD %>: '<%= unscheduleCMD %>',
+								jobName: jobName,
+								redirect: '<%= scheduledEventsURL %>',
+							},
+						}
+					);
+				}
+			},
+		});
 	}
 </script>

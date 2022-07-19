@@ -340,36 +340,43 @@
 
 					var activeCalendar = calendarList.activeItem;
 
-					if (
-						confirm(
-							'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
-						)
-					) {
-						var remoteServices = Liferay.component(
-							'<portlet:namespace />remoteServices'
-						);
+					Liferay.Util.openConfirmModal({
+						message:
+							'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />',
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								var remoteServices = Liferay.component(
+									'<portlet:namespace />remoteServices'
+								);
 
-						remoteServices.deleteCalendar(
-							activeCalendar.get('calendarId'),
-							() => {
-								remoteServices.getResourceCalendars(
-									activeCalendar.get('calendarResourceId'),
-									(calendars) => {
-										calendarList.set('calendars', calendars);
+								remoteServices.deleteCalendar(
+									activeCalendar.get('calendarId'),
+									() => {
+										remoteServices.getResourceCalendars(
+											activeCalendar.get(
+												'calendarResourceId'
+											),
+											(calendars) => {
+												calendarList.set(
+													'calendars',
+													calendars
+												);
 
-										<portlet:namespace />syncCalendarsMap();
+												<portlet:namespace />syncCalendarsMap();
 
-										<portlet:namespace />scheduler.load();
+												<portlet:namespace />scheduler.load();
 
-										Liferay.CalendarMessageUtil.showAlert(
-											'<portlet:namespace />alert',
-											'<liferay-ui:message key="the-calendar-was-deleted-successfully" />'
+												Liferay.CalendarMessageUtil.showAlert(
+													'<portlet:namespace />alert',
+													'<liferay-ui:message key="the-calendar-was-deleted-successfully" />'
+												);
+											}
 										);
 									}
 								);
 							}
-						);
-					}
+						},
+					});
 				},
 				id: 'delete',
 			},

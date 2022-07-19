@@ -144,18 +144,21 @@ if (!GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(
 
 					var dateChecker = exportImport.getDateRangeChecker();
 
-					if (
-						dateChecker.validRange &&
-						confirm(
-							'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-copy-from-live-and-update-the-existing-staging-widget-information") %>'
-						)
-					) {
-						document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value =
-							'copy_from_live';
+					if (dateChecker.validRange) {
+						Liferay.Util.openConfirmModal({
+							message:
+								'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-copy-from-live-and-update-the-existing-staging-widget-information") %>',
+							onConfirm: (isConfirmed) => {
+								if (isConfirmed) {
+									document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value =
+										'copy_from_live';
 
-						submitForm(document.<portlet:namespace />fm1);
+									submitForm(document.<portlet:namespace />fm1);
+								}
+							},
+						});
 					}
-					else if (!dateChecker.validRange) {
+					else {
 						exportImport.showNotification(dateChecker);
 					}
 				}
@@ -167,15 +170,18 @@ if (!GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(
 
 					var dateChecker = exportImport.getDateRangeChecker();
 
-					if (
-						dateChecker.validRange &&
-						confirm(
-							'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-publish-to-live-and-update-the-existing-application-data") %>'
-						)
-					) {
-						submitForm(document.<portlet:namespace />fm1);
+					if (dateChecker.validRange) {
+						Liferay.Util.openConfirmModal({
+							message:
+								'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-publish-to-live-and-update-the-existing-application-data") %>',
+							onConfirm: (isConfirmed) => {
+								if (isConfirmed) {
+									submitForm(document.<portlet:namespace />fm1);
+								}
+							},
+						});
 					}
-					else if (!dateChecker.validRange) {
+					else {
 						exportImport.showNotification(dateChecker);
 					}
 				}

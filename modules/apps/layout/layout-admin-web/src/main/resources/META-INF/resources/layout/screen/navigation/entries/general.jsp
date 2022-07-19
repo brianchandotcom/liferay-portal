@@ -260,16 +260,19 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 			'<portlet:namespace />applyLayoutPrototype'
 		);
 
-		if (
-			!applyLayoutPrototype ||
-			applyLayoutPrototype.value === 'false' ||
-			(applyLayoutPrototype &&
-				applyLayoutPrototype.value === 'true' &&
-				confirm(
-					'<%= UnicodeLanguageUtil.get(request, "reactivating-inherited-changes-may-update-the-page-with-the-possible-changes-that-could-have-been-made-in-the-original-template") %>'
-				))
-		) {
+		if (!applyLayoutPrototype || applyLayoutPrototype.value === 'false') {
 			submitForm(form);
+		}
+		else if (applyLayoutPrototype && applyLayoutPrototype.value === 'true') {
+			Liferay.Util.openConfirmModal({
+				message:
+					'<%= UnicodeLanguageUtil.get(request, "reactivating-inherited-changes-may-update-the-page-with-the-possible-changes-that-could-have-been-made-in-the-original-template") %>',
+				onConfirm: (isConfirm) => {
+					if (isConfirm) {
+						submitForm(form);
+					}
+				},
+			});
 		}
 	});
 </aui:script>

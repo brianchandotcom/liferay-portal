@@ -56,14 +56,26 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</portlet:actionURL>
 
-						<%
-						String taglibOnClick = "if (confirm('" + request.getAttribute(PortalSettingsWebKeys.DELETE_CONFIRMATION_TEXT) + "')) {submitForm(document.hrefFm, '" + resetValuesURL.toString() + "');}";
-						%>
+						<aui:script>
+							function handleResetValues(event) {
+								event.preventDefault();
+
+								Liferay.Util.openConfirmModal({
+									message:
+										'<%= request.getAttribute(PortalSettingsWebKeys.DELETE_CONFIRMATION_TEXT) %>',
+									onConfirm: (isConfirmed) => {
+										if (isConfirmed) {
+											submitForm(document.hrefFm, '<%= resetValuesURL.toString() %>');
+										}
+									},
+								});
+							}
+						</aui:script>
 
 						<liferay-ui:icon
 							message="reset-values"
 							method="post"
-							onClick="<%= taglibOnClick %>"
+							onClick="handleResetValues"
 							url="javascript:void(0);"
 						/>
 					</c:if>

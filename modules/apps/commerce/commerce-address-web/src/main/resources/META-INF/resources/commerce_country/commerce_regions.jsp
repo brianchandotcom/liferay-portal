@@ -106,4 +106,27 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>
+
+	<aui:script>
+		function <portlet:namespace />deleteCommerceRegions() {
+			Liferay.Util.openConfirmModal({
+				message:
+					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-regions" />',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						var form = window.document['<portlet:namespace />fm'];
+
+						form[
+							'<portlet:namespace />deleteRegionIds'
+						].value = Liferay.Util.getCheckedCheckboxes(
+							form,
+							'<portlet:namespace />allRowIds'
+						);
+
+						submitForm(form);
+					}
+				},
+			});
+		}
+	</aui:script>
 </c:if>

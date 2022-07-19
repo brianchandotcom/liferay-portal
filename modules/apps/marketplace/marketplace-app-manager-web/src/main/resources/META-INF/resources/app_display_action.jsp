@@ -51,13 +51,29 @@ String bundleIds = _getBundleIds(appDisplay);
 					<portlet:param name="bundleIds" value="<%= bundleIds %>" />
 				</portlet:actionURL>
 
-				<%
-				String taglibDeactivateBundlesURL = "javascript:if (confirm(\'" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-this") + "\')) {submitForm(document.hrefFm, \'" + HtmlUtil.unescape(deactivateBundlesURL.toString()) + "\');};";
-				%>
+				<aui:script>
+					function handleDeactivateIcon(event) {
+						event.preventDefault();
+
+						Liferay.Util.openConfirmModal({
+							message:
+								'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-this") %>',
+							onConfirm: (isConfirmed) => {
+								if (isConfirmed) {
+									submitForm(
+										document.hrefFm,
+										'<%= HtmlUtil.unescape(deactivateBundlesURL.toString()) %>'
+									);
+								}
+							},
+						});
+					}
+				</aui:script>
 
 				<liferay-ui:icon
 					message="deactivate"
-					url="<%= taglibDeactivateBundlesURL %>"
+					onClick="handleDeactivateIcon"
+					url="javascript:void(0)"
 				/>
 			</c:if>
 		</c:when>

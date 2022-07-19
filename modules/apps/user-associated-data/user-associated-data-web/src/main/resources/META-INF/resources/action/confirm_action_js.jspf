@@ -16,12 +16,19 @@
 
 <aui:script>
 	function <portlet:namespace />confirmAction(formId, actionURL, message) {
-		if (confirm(message)) {
-			var form = document.getElementById('<portlet:namespace />' + formId);
+		Liferay.Util.openConfirmModal({
+			message: message,
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					var form = document.getElementById(
+						'<portlet:namespace />' + formId
+					);
 
-			if (form) {
-				submitForm(form, actionURL);
-			}
-		}
+					if (form) {
+						submitForm(form, actionURL);
+					}
+				}
+			},
+		});
 	}
 </aui:script>

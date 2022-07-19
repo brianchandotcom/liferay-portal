@@ -149,9 +149,15 @@
 				deletePortletDataBeforeImportingCheckbox &&
 				deletePortletDataBeforeImportingCheckbox.checked
 			) {
-				confirm(
-					'<%= UnicodeLanguageUtil.get(request, "delete-application-data-before-importing-confirmation") %>'
-				) && submitForm(form);
+				Liferay.Util.openConfirmModal({
+					message:
+						'<%= UnicodeLanguageUtil.get(request, "delete-application-data-before-importing-confirmation") %>',
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							submitForm(form);
+						}
+					},
+				});
 			}
 			else {
 				submitForm(form);

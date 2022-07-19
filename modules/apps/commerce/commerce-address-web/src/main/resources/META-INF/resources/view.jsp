@@ -147,4 +147,27 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>
+
+	<aui:script>
+		function <portlet:namespace />deleteCommerceCountries() {
+			Liferay.Util.openConfirm({
+				message:
+					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-countries" />',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						var form = window.document['<portlet:namespace />fm'];
+
+						form[
+							'<portlet:namespace />deleteCountryIds'
+						].value = Liferay.Util.getCheckedCheckboxes(
+							form,
+							'<portlet:namespace />allRowIds'
+						);
+
+						submitForm(form);
+					}
+				},
+			});
+		}
+	</aui:script>
 </c:if>

@@ -127,19 +127,21 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 
 <aui:script>
 	function <portlet:namespace />revokeOAuth2Authorization(oAuth2AuthorizationId) {
-		if (
-			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-revoke-the-authorization") %>'
-			)
-		) {
-			var form = document.<portlet:namespace />fm;
+		Liferay.Util.openConfirmModal({
+			message:
+				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-revoke-the-authorization") %>',
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					var form = document.<portlet:namespace />fm;
 
-			Liferay.Util.postForm(form, {
-				data: {
-					oAuth2AuthorizationIds: oAuth2AuthorizationId,
-				},
-				url: '<%= revokeOAuth2AuthorizationsURL %>',
-			});
-		}
+					Liferay.Util.postForm(form, {
+						data: {
+							oAuth2AuthorizationIds: oAuth2AuthorizationId,
+						},
+						url: '<%= revokeOAuth2AuthorizationsURL %>',
+					});
+				}
+			},
+		});
 	}
 </aui:script>

@@ -121,32 +121,48 @@ else {
 		);
 	}
 
-	function <portlet:namespace />deleteUsers(cmd) {
-		if (
-			(cmd === '<%= Constants.DEACTIVATE %>' &&
-				confirm(
-					'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-selected-users") %>'
-				)) ||
-			(cmd === '<%= Constants.DELETE %>' &&
-				confirm(
-					'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>'
-				)) ||
-			cmd === '<%= Constants.RESTORE %>'
-		) {
-			var form = document.<portlet:namespace />fm;
+	function doDeleteUsers(cmd) {
+		var form = document.<portlet:namespace />fm;
 
-			Liferay.Util.postForm(form, {
-				data: {
-					deleteUserIds: Liferay.Util.getCheckedCheckboxes(
-						form,
-						'<portlet:namespace />allRowIds',
-						'<portlet:namespace />rowIdsUser'
-					),
-					redirect: '<%= currentURL %>',
-					<%= Constants.CMD %>: cmd,
+		Liferay.Util.postForm(form, {
+			data: {
+				deleteUserIds: Liferay.Util.getCheckedCheckboxes(
+					form,
+					'<portlet:namespace />allRowIds',
+					'<portlet:namespace />rowIdsUser'
+				),
+				redirect: '<%= currentURL %>',
+				<%= Constants.CMD %>: cmd,
+			},
+			url: '<portlet:actionURL name="/users_admin/edit_user" />',
+		});
+	}
+
+	function <portlet:namespace />deleteUsers(cmd) {
+		if (cmd === '<%= Constants.DEACTIVATE %>') {
+			Liferay.Util.openConfirmModal({
+				message:
+					'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-selected-users") %>',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						doDeleteUsers(cmd);
+					}
 				},
-				url: '<portlet:actionURL name="/users_admin/edit_user" />',
 			});
+		}
+		else if (cmd === '<%= Constants.DELETE %>') {
+			Liferay.Util.openConfirmModal({
+				message:
+					'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						doDeleteUsers(cmd);
+					}
+				},
+			});
+		}
+		else if (cmd === '<%= Constants.RESTORE %>') {
+			doDeleteUsers(cmd);
 		}
 	}
 
@@ -175,16 +191,18 @@ else {
 							count = parseInt(responseData, 10);
 
 							if (count > 0) {
-								if (
-									confirm(
-										'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-									)
-								) {
-									<portlet:namespace />doDeleteOrganizations(
-										ids,
-										organizationsRedirect
-									);
-								}
+								Liferay.Util.openConfirmModal({
+									message:
+										'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>',
+									onConfirm: (isConfirmed) => {
+										if (isConfirmed) {
+											<portlet:namespace />doDeleteOrganizations(
+												ids,
+												organizationsRedirect
+											);
+										}
+									},
+								});
 							}
 							else {
 								var message;
@@ -198,25 +216,34 @@ else {
 										'<%= UnicodeLanguageUtil.get(request, "the-selected-organization-is-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-organization-by-automatically-unassociating-the-deactivated-users") %>';
 								}
 
-								if (confirm(message)) {
-									<portlet:namespace />doDeleteOrganizations(
-										ids,
-										organizationsRedirect
-									);
-								}
+								Liferay.Util.openConfirmModal({
+									message: message,
+									onConfirm: (isConfirmed) => {
+										if (isConfirmed) {
+											<portlet:namespace />doDeleteOrganizations(
+												ids,
+												organizationsRedirect
+											);
+										}
+									},
+								});
 							}
 						}
 					);
 				}
-				else if (
-					confirm(
-						'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-					)
-				) {
-					<portlet:namespace />doDeleteOrganizations(
-						ids,
-						organizationsRedirect
-					);
+				else {
+					Liferay.Util.openConfirmModal({
+						message:
+							'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>',
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								<portlet:namespace />doDeleteOrganizations(
+									ids,
+									organizationsRedirect
+								);
+							}
+						},
+					});
 				}
 			}
 		);

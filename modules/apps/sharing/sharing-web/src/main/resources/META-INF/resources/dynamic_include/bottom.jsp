@@ -35,7 +35,7 @@ PortletURL sharingURL = PortletURLBuilder.create(
 		Liferay.Util.openModal({
 			id: 'sharingDialog',
 			iframeBodyCssClass: 'sharing-dialog',
-			height: 475,
+			height: '475px',
 			size: 'md',
 			title: title,
 			url: uri,

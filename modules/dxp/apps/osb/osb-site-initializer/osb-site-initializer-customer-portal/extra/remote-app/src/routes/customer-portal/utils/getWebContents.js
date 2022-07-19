@@ -51,7 +51,6 @@ export function getWebContents(dxpVersion, slaCurrent, subscriptionGroups) {
 		(subscriptionGroup) =>
 			subscriptionGroup.name === 'Analytics Cloud' &&
 			(subscriptionGroup.activationStatus === 'In-Progress' ||
-				subscriptionGroup.activationStatus === 'Not-Activated' ||
 				!subscriptionGroup.activationStatus)
 	);
 
@@ -60,7 +59,6 @@ export function getWebContents(dxpVersion, slaCurrent, subscriptionGroups) {
 			subscriptionGroup.name === 'Portal' ||
 			(subscriptionGroup.name === 'Partnership' &&
 				(subscriptionGroup.activationStatus === 'In-Progress' ||
-					subscriptionGroup.activationStatus === 'Not-Activated' ||
 					!subscriptionGroup.activationStatus))
 	);
 	const hasDXPOrDXPCloudActive = subscriptionGroups.find(

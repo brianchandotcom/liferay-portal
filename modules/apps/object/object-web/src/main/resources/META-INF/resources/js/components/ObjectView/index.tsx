@@ -68,7 +68,7 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				objectViewColumns,
 				objectViewFilterColumns,
 				objectViewSortColumns,
-			} = await fetchJSON(
+			} = await fetchJSON<TObjectView>(
 				`/o/object-admin/v1.0/object-views/${objectViewId}`
 			);
 

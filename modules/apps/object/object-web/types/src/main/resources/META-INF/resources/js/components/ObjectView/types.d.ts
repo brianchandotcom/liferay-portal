@@ -65,6 +65,7 @@ export declare type TObjectViewFilterColumn = {
 export declare type TObjectView = {
 	defaultObjectView: boolean;
 	name: TName;
+	objectDefinitionId: number;
 	objectViewColumns: TObjectViewColumn[];
 	objectViewFilterColumns: TObjectViewFilterColumn[];
 	objectViewSortColumns: TObjectViewSortColumn[];

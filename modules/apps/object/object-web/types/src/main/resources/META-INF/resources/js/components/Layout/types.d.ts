@@ -19,6 +19,7 @@ export declare type TName = {
 export declare type TObjectLayout = {
 	defaultObjectLayout: boolean;
 	name: TName;
+	objectDefinitionId: number;
 	objectLayoutTabs: TObjectLayoutTab[];
 };
 export declare type TObjectLayoutTab = {

@@ -123,7 +123,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				name,
 				objectDefinitionId,
 				objectLayoutTabs,
-			} = await fetchJSON(
+			} = await fetchJSON<TObjectLayout>(
 				`/o/object-admin/v1.0/object-layouts/${objectLayoutId}`
 			);
 
@@ -136,6 +136,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			const objectLayout = {
 				defaultObjectLayout,
 				name,
+				objectDefinitionId,
 				objectLayoutTabs,
 			};
 

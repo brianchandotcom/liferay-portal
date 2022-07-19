@@ -21,6 +21,7 @@ export type TName = {
 export type TObjectLayout = {
 	defaultObjectLayout: boolean;
 	name: TName;
+	objectDefinitionId: number;
 	objectLayoutTabs: TObjectLayoutTab[];
 };
 

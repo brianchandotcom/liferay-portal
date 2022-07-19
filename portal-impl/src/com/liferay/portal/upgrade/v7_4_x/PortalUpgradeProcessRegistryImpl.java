@@ -121,6 +121,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(new Version(15, 0, 0), new UpgradeOrgGroupRole());
 
 		upgradeProcesses.put(new Version(16, 0, 0), new DummyUpgradeProcess());
+
+		upgradeProcesses.put(new Version(16, 1, 0), new UpgradeDLFolder());
 	}
 
 }

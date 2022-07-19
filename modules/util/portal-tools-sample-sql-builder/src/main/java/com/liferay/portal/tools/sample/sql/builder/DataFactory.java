@@ -6390,6 +6390,10 @@ public class DataFactory {
 
 		dlFolderModel.setGroupId(groupId);
 
+		// External reference code
+
+		dlFolderModel.setExternalReferenceCode(dlFolderModel.getUuid());
+
 		// Audit fields
 
 		dlFolderModel.setCompanyId(_companyId);

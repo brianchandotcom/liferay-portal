@@ -97,6 +97,19 @@ public abstract class InitializedDocumentRepository
 	}
 
 	@Override
+	public Folder addFolder(
+			String externalReferenceCode, long userId, long parentFolderId,
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException {
+
+		checkDocumentRepository();
+
+		return documentRepository.addFolder(
+			externalReferenceCode, userId, parentFolderId, name, description,
+			serviceContext);
+	}
+
+	@Override
 	public void checkInFileEntry(
 			long userId, long fileEntryId,
 			DLVersionNumberIncrease dlVersionNumberIncrease, String changeLog,

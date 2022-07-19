@@ -144,7 +144,7 @@ public class KBAdminNavigationDisplayContext {
 		).build();
 	}
 
-	public List<JSONObject> getVerticalNavigationItems()
+	public List<JSONObject> getVerticalNavigationJSONObjects()
 		throws PortalException {
 
 		List<JSONObject> verticalNavigationItems = new ArrayList<>();

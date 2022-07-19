@@ -15,10 +15,11 @@
 package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeUserNotificationEvent;
 import com.liferay.portal.upgrade.v7_0_1.UpgradeDocumentLibrary;
+import com.liferay.portal.upgrade.v7_0_1.UpgradeLayoutBranch;
 import com.liferay.portal.upgrade.v7_0_1.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v7_0_1.UpgradeSchema;
 
@@ -37,17 +38,12 @@ public class UpgradeProcess_7_0_1 extends UpgradeProcess {
 		upgrade(new UpgradeSchema());
 
 		upgrade(new UpgradeDocumentLibrary());
-		upgrade(
-			UpgradeProcessFactory.alterColumnName(
-				"LayoutBranch", "LayoutBranchId",
-				"layoutBranchId LONG not null"));
+		upgrade(new UpgradeLayoutBranch());
 		upgrade(new UpgradeMessageBoards());
 		upgrade(
 			UpgradeModulesFactory.create(
 				_BUNDLE_SYMBOLIC_NAMES, _CONVERTED_LEGACY_MODULES));
-		upgrade(
-			UpgradeProcessFactory.alterColumnType(
-				"UserNotificationEvent", "type_", "VARCHAR(200) null"));
+		upgrade(new UpgradeUserNotificationEvent());
 
 		clearIndexesCache();
 	}

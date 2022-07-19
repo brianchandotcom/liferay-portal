@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
@@ -27,9 +26,7 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		_deleteLegacyResourcePermission();
 
-		upgrade(
-			UpgradeProcessFactory.alterColumnType(
-				"UserNotificationEvent", "type_", "VARCHAR(200) null"));
+		upgrade(new UpgradeUserNotificationEvent());
 
 		super.doUpgrade();
 	}

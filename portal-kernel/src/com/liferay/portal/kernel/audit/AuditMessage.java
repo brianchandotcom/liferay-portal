@@ -68,6 +68,7 @@ public class AuditMessage implements Serializable {
 		_timestamp = GetterUtil.getDate(
 			jsonObject.getString(_TIMESTAMP), _getDateFormat());
 		_userId = jsonObject.getLong(_USER_ID);
+		_userLogin = jsonObject.getString(_USER_LOGIN);
 		_userName = jsonObject.getString(_USER_NAME);
 	}
 
@@ -120,6 +121,15 @@ public class AuditMessage implements Serializable {
 		_sessionID = auditRequestThreadLocal.getSessionID();
 
 		_timestamp = timestamp;
+
+		long realUserId = auditRequestThreadLocal.getRealUserId();
+
+		if ((realUserId == 0) || (userId != realUserId)) {
+			throw new IllegalStateException(
+				"AuditRequestThreadLocal not initialized");
+		}
+
+		_userLogin = auditRequestThreadLocal.getRealUserLogin();
 
 		if (_timestamp == null) {
 			_timestamp = new Date();
@@ -194,6 +204,10 @@ public class AuditMessage implements Serializable {
 		return _userId;
 	}
 
+	public String getUserLogin() {
+		return _userLogin;
+	}
+
 	public String getUserName() {
 		return _userName;
 	}
@@ -254,6 +268,10 @@ public class AuditMessage implements Serializable {
 		_userId = userId;
 	}
 
+	public void setUserLogin(String userLogin) {
+		_userLogin = userLogin;
+	}
+
 	public void setUserName(String userName) {
 		_userName = userName;
 	}
@@ -285,6 +303,8 @@ public class AuditMessage implements Serializable {
 			_TIMESTAMP, _getDateFormat().format(new Date())
 		).put(
 			_USER_ID, _userId
+		).put(
+			_USER_LOGIN, _userLogin
 		).put(
 			_USER_NAME, _userName
 		);
@@ -322,6 +342,8 @@ public class AuditMessage implements Serializable {
 
 	private static final String _USER_ID = "userId";
 
+	private static final String _USER_LOGIN = "userLogin";
+
 	private static final String _USER_NAME = "userName";
 
 	private JSONObject _additionalInfoJSONObject;
@@ -337,6 +359,7 @@ public class AuditMessage implements Serializable {
 	private String _sessionID;
 	private Date _timestamp;
 	private long _userId = -1;
+	private String _userLogin;
 	private String _userName;
 
 }

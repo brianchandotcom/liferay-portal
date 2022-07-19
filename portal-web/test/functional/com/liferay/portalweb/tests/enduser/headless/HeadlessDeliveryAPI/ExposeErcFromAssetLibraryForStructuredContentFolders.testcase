@@ -53,6 +53,34 @@ definition {
 		}
 	}
 
+	@description = "Get structured content folder in asset library by existing uuid as erc"
+	@priority = "5"
+	test CanGetStructuredContentFolderInAssetLibraryByExistingDefaultErc {
+		property portal.acceptance = "true";
+
+		task ("Given a structured content folder without a custom erc is created with a POST request") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				name = "Test Folder");
+		}
+
+		task ("WWhen I make a GET request by erc and set erc value to the uuid of previous created structured content folder") {
+			var structuredContentId = HeadlessWebcontentFolderAPI.getUuidOfCreatedStructuredContentFolder(responseToParse = "${response}");
+
+			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "${structuredContentId}");
+		}
+
+		task ("Then I receive a correct body response") {
+			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "${structuredContentId}",
+				responseToParse = "${response}");
+		}
+	}
+
 	@description = "Structured content folder is not able to create with existing erc in asset library"
 	@priority = "5"
 	test CannotCreateStructuredContentFolderInAssetLibraryWithExistingErc {

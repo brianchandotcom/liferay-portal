@@ -18,10 +18,6 @@ import {useForm} from 'react-hook-form';
 import Form from '../../../components/Form';
 import Modal from '../../../components/Modal';
 import {
-	CreateFactorOption,
-	UpdateFactorOption,
-} from '../../../graphql/mutations';
-import {
 	CTypePagination,
 	TestrayFactorCategory,
 	getFactorCategories,
@@ -30,6 +26,10 @@ import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
+import {
+	createFactorOption,
+	updateFactorOption,
+} from '../../../services/rest/TestrayFactorOptions';
 
 type FactorOptionsForm = {
 	factorCategoryId: string;
@@ -42,7 +42,7 @@ type FactorOptionsProps = {
 };
 
 const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
-	modal: {modalState, observer, onClose, onSubmit},
+	modal: {modalState, observer, onClose, onError, onSave, onSubmitRest},
 }) => {
 	const {
 		formState: {errors},
@@ -60,13 +60,15 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 	const factorCategories = data?.c.factorCategories.items || [];
 
 	const _onSubmit = (form: FactorOptionsForm) => {
-		onSubmit(
+		onSubmitRest(
 			{id: form.id, name: form.name},
 			{
-				createMutation: CreateFactorOption,
-				updateMutation: UpdateFactorOption,
+				create: createFactorOption,
+				update: updateFactorOption,
 			}
-		);
+		)
+			.then(onSave)
+			.catch(onError);
 	};
 
 	const inputProps = {

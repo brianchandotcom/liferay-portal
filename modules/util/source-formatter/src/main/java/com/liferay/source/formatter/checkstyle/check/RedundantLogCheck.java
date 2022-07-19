@@ -186,7 +186,7 @@ public class RedundantLogCheck extends BaseCheck {
 		DetailAST dotDetailAST = detailAST.findFirstToken(TokenTypes.DOT);
 
 		if (dotDetailAST == null) {
-			return getName(dotDetailAST);
+			return getName(detailAST);
 		}
 
 		FullIdent fullIdent = FullIdent.createFullIdent(dotDetailAST);

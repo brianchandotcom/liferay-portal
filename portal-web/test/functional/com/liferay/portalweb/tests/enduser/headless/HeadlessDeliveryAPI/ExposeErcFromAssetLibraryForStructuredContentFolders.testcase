@@ -26,6 +26,42 @@ definition {
 		}
 	}
 
+	@description = "Get structured content folder with erc of parent folder in an asset library"
+	@priority = "5"
+	test CanGetParentStructuredContentFolderInAssetLibraryByErc {
+		property portal.acceptance = "true";
+
+		task ("Given a structured content folder with a custom erc is created with a POST request") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				name = "Test Folder");
+		}
+
+		task ("Given a subfolder with another custom erc is create with a POST request") {
+			var folderId = HeadlessWebcontentFolderAPI.getIdOfCreatedStructuredContentFolder(responseToParse = "${response}");
+
+			HeadlessWebcontentFolderAPI.createSubfolderInStructuredContentFolder(
+				externalReferenceCode = "subfolder-erc",
+				name = "Sub Folder",
+				parentStructuredContentFolderId = "${folderId}");
+		}
+
+		task ("When I make a GET request by the erc of the parent structured content folder") {
+			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc");
+		}
+
+		task ("Then I receive a correct body response with numberOfStructuredContentFolders is 1") {
+			HeadlessWebcontentFolderAPI.assetProperNumberOfStructuredContentFolders(
+				expectedNumbers = "1",
+				responseToParse = "${response}");
+		}
+	}
+
 	@description = "Get structured content folder in asset library by existing custom erc"
 	@priority = "5"
 	test CanGetStructuredContentFolderInAssetLibraryByExistingCustomErc {
@@ -240,7 +276,6 @@ definition {
 	@description = "Sub folder is created with erc equals to uuid by default in structured content folder in asset library"
 	@priority = "5"
 	test SubfolderIsCreatedInStructuredContentInAssetLibraryWithErcByDefault {
-		property database.types = "mysql";
 		property portal.acceptance = "true";
 
 		task ("Given a structured content folder with a custom erc is created with POST request") {

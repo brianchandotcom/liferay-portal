@@ -25,7 +25,7 @@ export function formIsMapped(item) {
 		return false;
 	}
 
-	const subtype = type.subtypes.find(({value}) => value === classTypeId);
+	const subtype = type.subtypes?.find(({value}) => value === classTypeId);
 
 	if (subtype || classTypeId === '0') {
 		return true;

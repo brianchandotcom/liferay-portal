@@ -440,7 +440,7 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-11509 | Test Summary: Check Document Rating show expected value"
+	@description = "Bug: LRAC-11450 | Automation ID: LRAC-11509 | Test Summary: The number of documents and media rating show the expected value"
 	@priority = "4"
 	test CheckDocumentsAndMediaRatingShowExpectedValue {
 		task ("Connect the DXP to AC") {
@@ -456,7 +456,7 @@ definition {
 		}
 
 		task ("Choose a rating star for the DM") {
-			Click(locator1 = "Icon#INFO");
+			DMDocument.expandInfo();
 
 			Ratings.rateStar(ratingStarCount = "4");
 		}
@@ -519,7 +519,7 @@ definition {
 		}
 
 		task ("Choose a rating star for the DM") {
-			Click(locator1 = "Icon#INFO");
+			DMDocument.expandInfo();
 
 			Ratings.rateStar(ratingStarCount = "4");
 		}

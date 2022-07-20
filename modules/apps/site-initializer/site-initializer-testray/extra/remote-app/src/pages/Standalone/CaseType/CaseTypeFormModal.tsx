@@ -16,11 +16,11 @@ import {useForm} from 'react-hook-form';
 
 import Form from '../../../components/Form';
 import Modal from '../../../components/Modal';
-import {CreateCaseType, UpdateCaseType} from '../../../graphql/mutations';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
+import {createCaseTypes, updateCaseTypes} from '../../../services/rest';
 
 type CaseTypeForm = {
 	id?: number;
@@ -32,7 +32,7 @@ type CaseTypeProps = {
 };
 
 const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
-	modal: {modalState, observer, onClose, onSubmit},
+	modal: {modalState, observer, onClose, onError, onSave, onSubmitRest},
 }) => {
 	const {
 		formState: {errors},
@@ -44,13 +44,15 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 	});
 
 	const _onSubmit = (form: CaseTypeForm) =>
-		onSubmit(
+		onSubmitRest(
 			{id: form.id, name: form.name},
 			{
-				createMutation: CreateCaseType,
-				updateMutation: UpdateCaseType,
+				create: createCaseTypes,
+				update: updateCaseTypes,
 			}
-		);
+		)
+			.then(onSave)
+			.catch(onError);
 
 	const inputProps = {
 		errors,

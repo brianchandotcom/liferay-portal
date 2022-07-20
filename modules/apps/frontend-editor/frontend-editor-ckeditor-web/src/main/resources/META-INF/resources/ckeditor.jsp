@@ -276,21 +276,6 @@ name = HtmlUtil.escapeJS(name);
 			},
 		</c:if>
 
-		<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
-			onChangeCallback: function () {
-				var ckEditor = CKEDITOR.instances['<%= name %>'];
-				var dirty = ckEditor.checkDirty();
-
-				if (dirty) {
-					window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](
-						window['<%= name %>'].getHTML()
-					);
-
-					ckEditor.resetDirty();
-				}
-			},
-		</c:if>
-
 		<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
 			onFocusCallback: function () {
 				window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'](
@@ -558,25 +543,6 @@ name = HtmlUtil.escapeJS(name);
 				);
 			</c:if>
 
-			<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
-				var contentChangeHandle = setInterval(() => {
-					try {
-						window['<%= name %>'].onChangeCallback();
-					}
-					catch (e) {}
-				}, 300);
-
-				var clearContentChangeHandle = function (event) {
-					if (event.portletId === '<%= portletId %>') {
-						clearInterval(contentChangeHandle);
-
-						Liferay.detach('destroyPortlet', clearContentChangeHandle);
-					}
-				};
-
-				Liferay.on('destroyPortlet', clearContentChangeHandle);
-			</c:if>
-
 			<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
 				CKEDITOR.instances['<%= name %>'].on(
 					'focus',
@@ -623,6 +589,14 @@ name = HtmlUtil.escapeJS(name);
 				);
 			</c:if>
 		});
+
+		<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
+			ckEditor.on('change', (event) => {
+				window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](
+					window['<%= name %>'].getHTML()
+				);
+			});
+		</c:if>
 
 		ckEditor.on('dataReady', (event) => {
 			if (instancePendingData !== null) {

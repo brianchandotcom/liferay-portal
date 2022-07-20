@@ -294,16 +294,6 @@ public class ReleaseManagerImpl implements ReleaseManager {
 			UpgradeStep upgradeStep = _bundleContext.getService(
 				serviceReference);
 
-			if (upgradeStep == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Skipping service " + serviceReference +
-							" because it does not implement UpgradeStep");
-				}
-
-				return null;
-			}
-
 			int buildNumber = 0;
 
 			if (buildNumberObject == null) {

@@ -14,13 +14,20 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.resource.v1_0.NavigationMenuResource;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -33,6 +40,10 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.jaxrs.JaxRsResourceRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
@@ -60,6 +71,9 @@ import java.util.stream.Stream;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
+import org.osgi.service.jaxrs.runtime.JaxrsServiceRuntime;
+import org.osgi.service.jaxrs.runtime.dto.ApplicationDTO;
+import org.osgi.service.jaxrs.runtime.dto.RuntimeDTO;
 
 /**
  * @author Javier Gamarra
@@ -211,6 +225,66 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		}
 	}
 
+	private String _getApplicationName(String type, long classPK)
+		throws Exception {
+
+		Object propertyValue = _jaxRsResourceRegistry.getPropertyValueByDTO(
+			_getExternalModelClassName(_getDTOObject(type, classPK)),
+			"osgi.jaxrs.application.select");
+
+		return StringUtil.removeSubstrings(
+			propertyValue.toString(), "(osgi.jaxrs.name=", ")");
+	}
+
+	private String _getApplicationPath(String applicationName) {
+		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
+
+		for (ApplicationDTO applicationDTO : runtimeDTO.applicationDTOs) {
+			if (StringUtil.equals(applicationDTO.name, applicationName)) {
+				return StringUtil.removeSubstrings(applicationDTO.base, "/");
+			}
+		}
+
+		return null;
+	}
+
+	private Class<?> _getClassNameContent(String type, long classPK)
+		throws Exception {
+
+		Object propertyValue = _jaxRsResourceRegistry.getPropertyValueByDTO(
+			_getExternalModelClassName(_getDTOObject(type, classPK)),
+			"component.name");
+
+		Class<?> resourceImplClass = Class.forName(propertyValue.toString());
+
+		return resourceImplClass.getSuperclass();
+	}
+
+	private Object _getDTOObject(String type, long classPK) throws Exception {
+		DTOConverter<?, ?> dtoConverter = _dtoConverterRegistry.getDTOConverter(
+			type);
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				_dtoConverterRegistry, classPK,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser);
+
+		return dtoConverter.toDTO(defaultDTOConverterContext);
+	}
+
+	private String _getExternalModelClassName(Object dtoObject) {
+		Class<?> dtoConverterModelClass = dtoObject.getClass();
+
+		Class<?> internalModelClass = dtoConverterModelClass.getSuperclass();
+
+		return internalModelClass.getName();
+	}
+
+	private long _getItemId(UnicodeProperties unicodeProperties) {
+		return GetterUtil.getLong(unicodeProperties.getProperty("classPK"));
+	}
+
 	private Layout _getLayout(SiteNavigationMenuItem siteNavigationMenuItem) {
 		UnicodeProperties unicodeProperties = _getUnicodeProperties(
 			siteNavigationMenuItem);
@@ -260,15 +334,41 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		);
 	}
 
-	private String _getName(UnicodeProperties unicodeProperties) {
-		String preferredLanguageId =
-			contextAcceptLanguage.getPreferredLanguageId();
+	private String _getMethodName(String type, long classPK) throws Exception {
+		Object dtoObject = _getDTOObject(type, classPK);
+
+		Class<?> dtoConverterModel = dtoObject.getClass();
+
+		Class<?> internalModelClass = dtoConverterModel.getSuperclass();
+
+		return "get" + internalModelClass.getSimpleName();
+	}
+
+	private String _getName(
+			String type, UnicodeProperties unicodeProperties,
+			boolean useCustomName)
+		throws JSONException {
+
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getDefault());
 
-		return unicodeProperties.getProperty(
-			"name_" + preferredLanguageId,
-			unicodeProperties.getProperty("name_" + defaultLanguageId));
+		if (useCustomName) {
+			JSONObject customNameJSONObject = JSONFactoryUtil.createJSONObject(
+				unicodeProperties.getProperty("localizedNames"));
+
+			return customNameJSONObject.getString(defaultLanguageId);
+		}
+
+		if (StringUtil.equals(type, "url")) {
+			String preferredLanguageId =
+				contextAcceptLanguage.getPreferredLanguageId();
+
+			return unicodeProperties.getProperty(
+				"name_" + preferredLanguageId,
+				unicodeProperties.getProperty("name_" + defaultLanguageId));
+		}
+
+		return unicodeProperties.getProperty("title");
 	}
 
 	private Map<Long, List<SiteNavigationMenuItem>>
@@ -492,6 +592,9 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				type = _toType(siteNavigationMenuItem.getType());
 				url = unicodeProperties.getProperty("url");
 
+				useCustomName = Boolean.valueOf(
+					unicodeProperties.getProperty("useCustomName"));
+
 				setAvailableLanguages(
 					() -> {
 						Set<Locale> locales = localizedMap.keySet();
@@ -535,7 +638,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 					});
 				setName(
 					() -> {
-						String name = _getName(unicodeProperties);
+						String name = _getName(
+							type, unicodeProperties, useCustomName);
 
 						if ((name == null) && (layout != null)) {
 							return layout.getName(
@@ -580,15 +684,40 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 							"getSiteSitePage", contextUriInfo,
 							arguments.toArray(new Object[0]));
 					});
-				setUseCustomName(
+
+				setContentURL(
 					() -> {
-						if (layout == null) {
+						if ((layout != null) ||
+							StringUtil.equals(type, "url") ||
+							type.contains("asset") ||
+							StringUtil.equals(type, "navigationMenu")) {
+
 							return null;
 						}
 
-						return Boolean.valueOf(
-							unicodeProperties.getProperty(
-								"useCustomName", "false"));
+						if (Objects.equals(type, FileEntry.class.getName())) {
+							type = DLFileEntry.class.getName();
+						}
+
+						Long classPK = GetterUtil.getLong(
+							unicodeProperties.getProperty("classPK"));
+
+						List<Object> arguments = new ArrayList<>();
+
+						String applicationPath = _getApplicationPath(
+							_getApplicationName(type, classPK));
+
+						Class<?> clazz = _getClassNameContent(type, classPK);
+
+						String methodName = _getMethodName(type, classPK);
+
+						Long contentId = _getItemId(unicodeProperties);
+
+						arguments.add(contentId);
+
+						return JaxRsLinkUtil.getJaxRsLink(
+							applicationPath, clazz, methodName, contextUriInfo,
+							arguments.toArray(new Object[0]));
 					});
 			}
 		};
@@ -667,6 +796,21 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				siteNavigationMenuItem.getSiteNavigationMenuItemId());
 		}
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private JaxRsResourceRegistry _jaxRsResourceRegistry;
+
+	@Reference
+	private JaxrsServiceRuntime _jaxrsServiceRuntime;
 
 	@Reference
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;

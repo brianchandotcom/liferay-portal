@@ -357,6 +357,8 @@ function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 			});
 		}
 
+		dispatch(initialDragDrop.state);
+
 		return;
 	}
 

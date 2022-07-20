@@ -15,23 +15,52 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useId} from '../../utils/useId';
 
+const CUSTOM = 'custom';
+
 const KEYS_NOT_ALLOWED = ['+', ',', 'e'];
 
 const REGEX = /[-(0-9).]+|[a-zA-Z]+|%/g;
 
-const UNITS = ['px', '%', 'em', 'rem', 'vw', 'vh'];
+const UNITS = ['px', '%', 'em', 'rem', 'vw', 'vh', CUSTOM];
 
 const isNumber = (value) => !isNaN(parseFloat(value));
 
+const isCustom = (value) => {
+	const matchedValue = value.match(REGEX);
+
+	if (matchedValue) {
+		return !isNumber(matchedValue[0]) || !UNITS.includes(matchedValue[1]);
+	}
+
+	return false;
+};
+
 export function LengthField({field, onValueSelect, value}) {
 	const inputId = useId();
+	const isCustomRef = useRef(false);
+
+	const initialValue = useMemo(() => {
+		if (!value) {
+			return {unit: UNITS[0], value: ''};
+		}
+
+		if (isCustomRef.current || isCustom(value)) {
+			return {unit: CUSTOM, value};
+		}
+
+		return {
+			unit: value.match(REGEX)[1],
+			value: value.match(REGEX)[0],
+		};
+	}, [value]);
 
 	return (
 		<ClayForm.Group>
@@ -40,6 +69,9 @@ export function LengthField({field, onValueSelect, value}) {
 			<Field
 				field={field}
 				id={inputId}
+				initialUnit={initialValue.unit}
+				initialValue={initialValue.value}
+				isCustomRef={isCustomRef}
 				onValueSelect={onValueSelect}
 				value={value}
 			/>
@@ -53,33 +85,58 @@ LengthField.propTypes = {
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
-const Field = ({field, id, onValueSelect, value}) => {
+const Field = ({
+	field,
+	id,
+	initialUnit,
+	initialValue,
+	isCustomRef,
+	onValueSelect,
+	value,
+}) => {
 	const [active, setActive] = useState(false);
+	const [nextValue, setNextValue] = useControlledState(initialValue);
+	const [nextUnit, setNextUnit] = useState(initialUnit);
 	const triggerId = useId();
-
-	const [nextValue, setNextValue] = useControlledState(
-		value ? value.match(REGEX)[0] : ''
-	);
-	const [nextUnit, setNextUnit] = useState(
-		value ? value.match(REGEX)[1] : UNITS[0]
-	);
 
 	const handleUnitSelect = (unit) => {
 		setActive(false);
 		setNextUnit(unit);
 
-		if (isNumber(nextValue)) {
-			const valueWithUnits = `${nextValue}${unit}`;
+		isCustomRef.current = unit === CUSTOM;
 
-			if (valueWithUnits !== value) {
-				onValueSelect(field.name, valueWithUnits);
-			}
+		if (!nextValue) {
+			return;
+		}
+
+		if (unit === CUSTOM) {
+			onValueSelect(field.name, nextValue);
+
+			return;
+		}
+
+		if (unit !== CUSTOM && isNaN(nextValue)) {
+			onValueSelect(field.name, '');
+
+			return;
+		}
+
+		const valueWithUnits = `${parseFloat(nextValue)}${unit}`;
+
+		if (valueWithUnits !== value) {
+			onValueSelect(field.name, valueWithUnits);
 		}
 	};
 
 	const handleValueSelect = () => {
+		if (nextUnit === CUSTOM) {
+			onValueSelect(field.name, nextValue);
+
+			return;
+		}
+
 		const valueWithUnits = isNumber(nextValue)
-			? `${nextValue}${nextUnit}`
+			? `${parseFloat(nextValue)}${nextUnit}`
 			: '';
 
 		if (valueWithUnits !== value) {
@@ -101,10 +158,13 @@ const Field = ({field, id, onValueSelect, value}) => {
 		if (!value) {
 			return;
 		}
-		else {
-			setNextUnit(value.match(REGEX)[1]);
-		}
-	}, [value]);
+
+		setNextUnit(
+			!isCustomRef.current && UNITS.includes(value.match(REGEX)[1])
+				? value.match(REGEX)[1]
+				: 'custom'
+		);
+	}, [value, isCustomRef]);
 
 	return (
 		<ClayInput.Group>
@@ -120,7 +180,7 @@ const Field = ({field, id, onValueSelect, value}) => {
 					}}
 					onKeyDown={handleKeyDown}
 					sizing="sm"
-					type="number"
+					type={nextUnit === CUSTOM ? 'text' : 'number'}
 					value={nextValue}
 				/>
 			</ClayInput.GroupItem>
@@ -150,7 +210,11 @@ const Field = ({field, id, onValueSelect, value}) => {
 							id={triggerId}
 							small
 						>
-							{nextUnit.toUpperCase()}
+							{nextUnit === CUSTOM ? (
+								<ClayIcon symbol="code" />
+							) : (
+								nextUnit.toUpperCase()
+							)}
 						</ClayButton>
 					}
 				>

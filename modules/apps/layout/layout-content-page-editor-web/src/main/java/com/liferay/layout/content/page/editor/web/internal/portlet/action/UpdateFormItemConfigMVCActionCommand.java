@@ -52,17 +52,18 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, _updateItemConfig(actionRequest));
+			actionRequest, actionResponse,
+			_updateFormItemConfig(actionRequest));
 	}
 
-	private JSONObject _updateItemConfig(ActionRequest actionRequest) {
+	private JSONObject _updateFormItemConfig(ActionRequest actionRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
 		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
-		String itemId = ParamUtil.getString(actionRequest, "itemId");
+		String formItemId = ParamUtil.getString(actionRequest, "itemId");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -71,7 +72,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getScopeGroupId(), segmentsExperienceId,
 				themeDisplay.getPlid(),
 				layoutStructure -> layoutStructure.updateItemConfig(
-					JSONFactoryUtil.createJSONObject(itemConfig), itemId));
+					JSONFactoryUtil.createJSONObject(itemConfig), formItemId));
 		}
 		catch (Exception exception) {
 			_log.error(exception);

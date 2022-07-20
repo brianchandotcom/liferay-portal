@@ -67,7 +67,7 @@ public class PreviewImageFileEntryContentDashboardItemAction
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
 
 		return Optional.ofNullable(
-			infoItemFieldValues.getInfoFieldValue("previewURL")
+			infoItemFieldValues.getInfoFieldValue("previewImage")
 		).map(
 			InfoFieldValue::getValue
 		).orElse(

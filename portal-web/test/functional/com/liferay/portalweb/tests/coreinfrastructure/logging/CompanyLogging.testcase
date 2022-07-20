@@ -335,12 +335,24 @@ definition {
 	}
 
 	@description = "If a user tries to download a logging file or company that doesn’t exist it should fail and throw a suitable error message"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test GetInvalidCompanyLogs {
+		task ("When the user tries to download a log via an http request where the log name is invalid") {
+			var companyId = JSONCompany.getCompanyId();
+			var baseURL = PropsUtil.get("portal.url");
 
-		// TODO LRQA-75860
+			Open.openNoError(locator1 = "${baseURL}/o/company-log/${companyId}/invalidLog.log");
+		}
 
+		task ("Then an error message is shown which indicates the log was not found and no log is downloaded") {
+			AssertTextPresent(
+				locator1 = "//body",
+				value1 = "No webpage was found for the web address");
+
+			AssertConsoleTextPresent(value1 = "java.io.FileNotFoundException: Unable to find log file invalidLog.log for company ${companyId}");
+
+			CompanyLogging.assertNoLogDownloaded(logName = "invalidLog.log");
+		}
 	}
 
 }

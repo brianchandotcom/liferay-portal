@@ -190,8 +190,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 	protected Map<PortalCacheListener<K, V>, PortalCacheListenerScope>
 		getPortalCacheListeners() {
 
-		return Collections.unmodifiableMap(
-			aggregatedPortalCacheListener.getPortalCacheListeners());
+		return aggregatedPortalCacheListener.getPortalCacheListeners();
 	}
 
 	protected void resetEhcache() {

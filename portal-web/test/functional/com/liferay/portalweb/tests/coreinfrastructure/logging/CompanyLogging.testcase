@@ -23,12 +23,38 @@ definition {
 	}
 
 	@description = "Any logs that would appear in specifically company A should never appear in the logs of company B"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test AssertCompanyLogsIsolated {
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "CompanyLogging#AssertCompanyLogsIsolated";
 
-		// TODO LRQA-75859
+		task ("Given all company logs output unique logs") {
+			ServerAdministration.openServerAdmin();
 
+			ServerAdministration.addCategoryLogLevels(
+				categoryLevel = "INFO",
+				categoryName = "com.liferay.portal.background.task.internal.messaging.RemoveOnCompletionBackgroundTaskStatusMessageListener");
+		}
+
+		task ("When two new virtual instances are created") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.baker.com",
+				portalInstanceId = "www.baker.com",
+				virtualHost = "www.baker.com");
+		}
+
+		task ("Then the logs of one company should not appear in the logs of the other") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "o/company-log");
+
+			CompanyLogging.assertCompanyLogIsolated(portalInstanceName = "www.able.com");
+
+			CompanyLogging.assertCompanyLogIsolated(portalInstanceName = "www.baker.com");
+		}
 	}
 
 	@description = "If company.log.enabled=false, there should not be additional logging files created for each company and the UI access point should be unavailable"

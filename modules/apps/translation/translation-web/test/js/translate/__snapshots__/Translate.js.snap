@@ -55,6 +55,9 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                   class="dropdown"
                 >
                   <button
+                    aria-controls="clay-dropdown-menu-21"
+                    aria-expanded="false"
+                    aria-haspopup="menu"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
                     style=""
                     type="button"
@@ -91,6 +94,9 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                   class="dropdown"
                 >
                   <button
+                    aria-controls="clay-dropdown-menu-22"
+                    aria-expanded="false"
+                    aria-haspopup="menu"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
                     style=""
                     type="button"
@@ -623,6 +629,9 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                   class="dropdown"
                 >
                   <button
+                    aria-controls="clay-dropdown-menu-1"
+                    aria-expanded="false"
+                    aria-haspopup="menu"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
                     style=""
                     type="button"
@@ -659,6 +668,9 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                   class="dropdown"
                 >
                   <button
+                    aria-controls="clay-dropdown-menu-2"
+                    aria-expanded="false"
+                    aria-haspopup="menu"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
                     style=""
                     type="button"
@@ -1435,6 +1447,9 @@ exports[`Translate renders with experiences selector 1`] = `
                   class="dropdown"
                 >
                   <button
+                    aria-controls="clay-dropdown-menu-3"
+                    aria-expanded="false"
+                    aria-haspopup="menu"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
                     style=""
                     type="button"
@@ -1471,6 +1486,9 @@ exports[`Translate renders with experiences selector 1`] = `
                   class="dropdown"
                 >
                   <button
+                    aria-controls="clay-dropdown-menu-4"
+                    aria-expanded="false"
+                    aria-haspopup="menu"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
                     style=""
                     type="button"

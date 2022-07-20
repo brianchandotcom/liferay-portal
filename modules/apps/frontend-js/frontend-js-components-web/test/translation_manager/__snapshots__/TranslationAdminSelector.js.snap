@@ -3,14 +3,20 @@
 exports[`TranslationAdminSelector is used as a controlled component 1`] = `
 <div
   class="dropdown-menu show"
+  id="clay-dropdown-menu-7"
+  role="presentation"
   style="left: -999px; top: -995px;"
 >
   <ul
     class="list-unstyled"
+    role="menu"
   >
-    <li>
+    <li
+      role="none"
+    >
       <button
         class="dropdown-item"
+        role="menuitem"
       >
         <span
           class="autofit-row"
@@ -52,9 +58,12 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
         </span>
       </button>
     </li>
-    <li>
+    <li
+      role="none"
+    >
       <button
         class="dropdown-item"
+        role="menuitem"
       >
         <span
           class="autofit-row"
@@ -96,9 +105,12 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
         </span>
       </button>
     </li>
-    <li>
+    <li
+      role="none"
+    >
       <button
         class="dropdown-item"
+        role="menuitem"
       >
         <span
           class="autofit-row"
@@ -150,6 +162,9 @@ exports[`TranslationAdminSelector renders a dropdown trigger with the selected l
     class="dropdown"
   >
     <button
+      aria-controls="clay-dropdown-menu-1"
+      aria-expanded="false"
+      aria-haspopup="menu"
       class="dropdown-toggle btn btn-monospaced btn-secondary"
       style=""
       title="select-translation-language"
@@ -192,14 +207,20 @@ exports[`TranslationAdminSelector renders a modal when click on Manage Translati
 exports[`TranslationAdminSelector renders an open dropdown with the list of active languages 1`] = `
 <div
   class="dropdown-menu show"
+  id="clay-dropdown-menu-2"
+  role="presentation"
   style="left: -999px; top: -995px;"
 >
   <ul
     class="list-unstyled"
+    role="menu"
   >
-    <li>
+    <li
+      role="none"
+    >
       <button
         class="dropdown-item"
+        role="menuitem"
       >
         <span
           class="autofit-row"
@@ -241,9 +262,12 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
         </span>
       </button>
     </li>
-    <li>
+    <li
+      role="none"
+    >
       <button
         class="dropdown-item"
+        role="menuitem"
       >
         <span
           class="autofit-row"
@@ -292,14 +316,20 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
 exports[`TranslationAdminSelector renders an open dropdown with the list of active languages and manage translation option 1`] = `
 <div
   class="dropdown-menu show"
+  id="clay-dropdown-menu-3"
+  role="presentation"
   style="left: -999px; top: -995px;"
 >
   <ul
     class="list-unstyled"
+    role="menu"
   >
-    <li>
+    <li
+      role="none"
+    >
       <button
         class="dropdown-item"
+        role="menuitem"
       >
         <span
           class="autofit-row"
@@ -341,9 +371,12 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
         </span>
       </button>
     </li>
-    <li>
+    <li
+      role="none"
+    >
       <button
         class="dropdown-item"
+        role="menuitem"
       >
         <span
           class="autofit-row"
@@ -390,10 +423,13 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
       class="dropdown-divider"
       role="presentation"
     />
-    <li>
+    <li
+      role="none"
+    >
       <button
         class="dropdown-item"
         data-testid="translation-modal-trigger"
+        role="menuitem"
       >
         <span
           class="autofit-row"
@@ -425,14 +461,20 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
 exports[`TranslationAdminSelector renders an open dropdown with updated active locales when added from the Manage Translations Modal 1`] = `
 <div
   class="dropdown-menu"
+  id="clay-dropdown-menu-5"
+  role="presentation"
   style="left: -999px; top: -995px;"
 >
   <ul
     class="list-unstyled"
+    role="menu"
   >
-    <li>
+    <li
+      role="none"
+    >
       <button
         class="dropdown-item"
+        role="menuitem"
       >
         <span
           class="autofit-row"
@@ -474,9 +516,12 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
         </span>
       </button>
     </li>
-    <li>
+    <li
+      role="none"
+    >
       <button
         class="dropdown-item"
+        role="menuitem"
       >
         <span
           class="autofit-row"
@@ -518,9 +563,12 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
         </span>
       </button>
     </li>
-    <li>
+    <li
+      role="none"
+    >
       <button
         class="dropdown-item"
+        role="menuitem"
       >
         <span
           class="autofit-row"
@@ -567,10 +615,13 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
       class="dropdown-divider"
       role="presentation"
     />
-    <li>
+    <li
+      role="none"
+    >
       <button
         class="dropdown-item"
         data-testid="translation-modal-trigger"
+        role="menuitem"
       >
         <span
           class="autofit-row"
@@ -605,6 +656,9 @@ exports[`TranslationAdminSelector selects the default locale if the current sele
     class="dropdown"
   >
     <button
+      aria-controls="clay-dropdown-menu-8"
+      aria-expanded="true"
+      aria-haspopup="menu"
       class="dropdown-toggle btn btn-monospaced btn-secondary"
       style=""
       title="select-translation-language"

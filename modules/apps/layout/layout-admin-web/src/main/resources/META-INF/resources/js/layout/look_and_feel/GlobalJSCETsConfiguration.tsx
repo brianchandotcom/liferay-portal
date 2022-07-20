@@ -323,17 +323,13 @@ function AddExtensionButton({
 			items={SCRIPT_LOCATION_LABELS.map(({label, scriptLocation}) => ({
 				label,
 				onClick: () => addGlobalJSCET(scriptLocation),
-				role: 'menuitem',
 			}))}
 			menuElementAttrs={{
 				'aria-labelledby': dropdownTriggerId,
-				'role': 'menu',
 			}}
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton
-					aria-expanded={active}
-					aria-haspopup="true"
 					className="mb-3"
 					displayType="secondary"
 					small

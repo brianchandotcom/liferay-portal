@@ -25,18 +25,13 @@ export function GlobalCETOptionsDropDown({
 	return (
 		<ClayDropDownWithItems
 			active={active}
-			items={[
-				...dropdownItems.map((item) => ({...item, role: 'menuitem'})),
-			]}
+			items={dropdownItems}
 			menuElementAttrs={{
 				'aria-labelledby': dropdownTriggerId,
-				'role': 'menu',
 			}}
 			onActiveChange={setActive}
 			trigger={
 				<ClayButtonWithIcon
-					aria-expanded={active}
-					aria-haspopup="true"
 					aria-label={Liferay.Language.get('show-options')}
 					displayType="unstyled"
 					id={dropdownTriggerId}

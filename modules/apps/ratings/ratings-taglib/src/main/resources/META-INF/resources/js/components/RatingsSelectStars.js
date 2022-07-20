@@ -110,7 +110,7 @@ export default function RatingsSelectStars({
 									onFocus={() => {
 										setFocusId(`${ID_PREFIX}index`);
 									}}
-									role="option"
+									roleItem="option"
 								>
 									{label}
 
@@ -135,7 +135,7 @@ export default function RatingsSelectStars({
 									)}`
 								);
 							}}
-							role="option"
+							roleItem="option"
 						>
 							{Liferay.Language.get('delete')}
 						</ClayDropDown.Item>

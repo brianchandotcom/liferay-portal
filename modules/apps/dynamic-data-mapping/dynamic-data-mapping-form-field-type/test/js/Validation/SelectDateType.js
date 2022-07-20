@@ -127,7 +127,7 @@ describe('SelectDateType', () => {
 			/>
 		);
 
-		const [responseDate, dateField] = [...getAllByRole('button')];
+		const [responseDate, dateField] = [...getAllByRole('menuitem')];
 
 		expect(responseDate).toHaveValue('responseDate');
 		expect(dateField).toHaveValue('Date12345678');

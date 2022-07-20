@@ -202,7 +202,7 @@ describe('GlobalCSSCETsConfiguration', () => {
 		);
 
 		const item = await findByRole(
-			await screen.findByRole('menu', {name: 'show-options'}),
+			await screen.findByRole('presentation', {name: 'show-options'}),
 			'menuitem',
 			{name: 'delete'}
 		);

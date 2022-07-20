@@ -163,7 +163,7 @@ describe('ListView', () => {
 			return document.querySelector('span.loading-animation');
 		});
 
-		let buttons = getAllByRole('button');
+		let buttons = getAllByRole('menuitem');
 		const refreshButton = buttons[buttons.length - 2];
 
 		await act(async () => {
@@ -172,7 +172,7 @@ describe('ListView', () => {
 
 		expect(refreshAction.mock.calls.length).toBe(1);
 
-		buttons = getAllByRole('button');
+		buttons = getAllByRole('menuitem');
 		const nonRefreshButton = buttons[buttons.length - 1];
 		fireEvent.click(nonRefreshButton);
 

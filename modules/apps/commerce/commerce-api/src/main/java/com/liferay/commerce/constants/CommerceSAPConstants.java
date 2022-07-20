@@ -35,6 +35,10 @@ public class CommerceSAPConstants {
 		"com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0." +
 			"CartResourceImpl";
 
+	public static final String CLASS_NAME_COMMERCE_HEADLESS_CHANNEL_RESOURCE =
+		"com.liferay.headless.commerce.delivery.catalog.internal.resource." +
+			"v1_0.ChannelResourceImpl";
+
 	public static final String
 		CLASS_NAME_COMMERCE_HEADLESS_MAPPED_PRODUCT_RESOURCE =
 			"com.liferay.headless.commerce.delivery.catalog.internal." +
@@ -79,6 +83,8 @@ public class CommerceSAPConstants {
 				CLASS_NAME_COMMERCE_HEADLESS_CART_RESOURCE, "#patchCart\n",
 				CLASS_NAME_COMMERCE_HEADLESS_CART_RESOURCE,
 				"#postChannelCart\n",
+				CLASS_NAME_COMMERCE_HEADLESS_CHANNEL_RESOURCE,
+				"#getChannelsPage\n",
 				CLASS_NAME_COMMERCE_HEADLESS_MAPPED_PRODUCT_RESOURCE,
 				"#getChannelProductMappedProductsPage\n",
 				CLASS_NAME_COMMERCE_HEADLESS_PIN_RESOURCE,

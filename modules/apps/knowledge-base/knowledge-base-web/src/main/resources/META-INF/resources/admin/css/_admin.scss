@@ -3,7 +3,7 @@
 $controlMenuHeight: 56px;
 
 .knowledge-base-portlet-admin {
-	.kbVerticalBar {
+	.knowledge-base-vertical-bar {
 		> div {
 			height: 100%;
 			min-height: calc(100vh - #{$controlMenuHeight});
@@ -18,13 +18,13 @@ $controlMenuHeight: 56px;
 		}
 	}
 
-	.kbAdminContent {
+	.knowledge-base-admin-content {
 		margin-left: 40px;
 
 		transition: margin-left 0.3s ease-in-out;
 	}
 
-	.kbVerticalBar.expanded + .kbAdminContent {
+	.knowledge-base-vertical-bar.expanded + .knowledge-base-admin-content {
 		margin-left: 360px;
 	}
 }

@@ -21,7 +21,7 @@
 		<c:if test="<%= redirect.equals(currentURL) %>">
 			<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
 
-			<div class="kbAdminContent">
+			<div class="knowledge-base-admin-content">
 		</c:if>
 
 		<liferay-util:include page="/admin/common/view_article.jsp" servletContext="<%= application %>" />

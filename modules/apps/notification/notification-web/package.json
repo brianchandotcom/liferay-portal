@@ -1,9 +1,4 @@
 {
-	"dependencies": {
-		"@types/codemirror": "^5.60.5",
-		"codemirror": "^5.59.0",
-		"text-mask-core": "^5.1.2"
-	},
 	"name": "@liferay/notification-web",
 	"private": true,
 	"scripts": {

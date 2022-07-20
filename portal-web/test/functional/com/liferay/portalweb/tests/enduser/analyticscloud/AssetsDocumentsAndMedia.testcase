@@ -440,6 +440,64 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-11509 | Test Summary: Check Document Rating show expected value"
+	@priority = "4"
+	test CheckDocumentsAndMediaRatingShowExpectedValue {
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("View the documents and media page") {
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Choose a rating star for the DM") {
+			Click(locator1 = "Icon#INFO");
+
+			Ratings.rateStar(ratingStarCount = "4");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to documents and media assets list") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Documents and Media");
+		}
+
+		task ("Change the time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check DM rating") {
+			ACUtils.viewTableInformation(
+				nameList = "DM AC Title",
+				numberValueList = "8.00/10");
+		}
+
+		task ("Check DM rating in visitor behavior") {
+			ACNavigation.openItem(itemName = "DM AC Title");
+
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Rating",
+				metricValue = "8.00/10");
+		}
+	}
+
 	@description = "Bug: LRAC-7848 | Automation ID: LRAC-10590 | Test Summary: Number of Documents and Media ratings is not getting negative when we delete a vote"
 	@priority = "3"
 	test DocumentsAndMediaRatingsNotGettingNegativeWhenDeleteVote {

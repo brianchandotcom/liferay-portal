@@ -286,12 +286,26 @@ definition {
 	}
 
 	@description = "If there are no logs available for a company, there should be some kind of message to notify the user when they try to check the available log names"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test GetEmptyCompanyLogs {
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "CompanyLogging#GetEmptyCompanyLogs";
 
-		// TODO LRQA-75858
+		task ("Given all company logs are deleted") {
+			var homeDir = PropsUtil.get("liferay.home.dir.name");
 
+			FileUtil.delete("${homeDir}/logs/companies");
+		}
+
+		task ("When the user navigates to the company logging UI access point") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "o/company-log");
+		}
+
+		task ("Then a message is shown that indicates no logs are available") {
+			AssertTextPresent(
+				locator1 = "//body",
+				value1 = "No log is available");
+		}
 	}
 
 	@description = "If a user tries to download a logging file or company that doesn’t exist it should fail and throw a suitable error message"

@@ -22,6 +22,7 @@ import {TARGET_POSITIONS} from '../../utils/drag-and-drop/constants/targetPositi
 import {
 	useDropContainerId,
 	useDropTarget,
+	useIsDroppable,
 } from '../../utils/drag-and-drop/useDragAndDrop';
 
 export default function ({children, ...props}) {
@@ -43,6 +44,7 @@ function TopperEmpty({children, item}) {
 	const realChildren = isFragment ? children.props.children : children;
 
 	const dropContainerId = useDropContainerId();
+	const isDroppable = useIsDroppable();
 
 	return React.Children.map(realChildren, (child) => {
 		if (!child) {
@@ -64,6 +66,7 @@ function TopperEmpty({children, item}) {
 							isOverTarget &&
 							targetPosition === TARGET_POSITIONS.TOP,
 						'drop-container': dropContainerId === item.itemId,
+						'not-droppable': !isDroppable,
 						'page-editor__topper': true,
 					}),
 					ref: (node) => {

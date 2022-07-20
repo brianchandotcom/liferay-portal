@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -570,7 +571,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 					PropsUtil.get("feature.flag.LPS-87806"))) {
 
 				roleIdsToActionIds = _getRoleIdsToActionIdsResourcePrimKey(
-					themeDisplay.getCompanyId(), resourcePrimKey, roleIds,
+					themeDisplay.getCompanyId(), resourcePrimKey,
 					roleIdsToActionIds, selResource, actionRequest);
 			}
 
@@ -1005,37 +1006,39 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	}
 
 	private Map<Long, String[]> _getRoleIdsToActionIdsResourcePrimKey(
-			long companyId, String resourcePrimKey, long[] roleIds,
+			long companyId, String resourcePrimKey,
 			Map<Long, String[]> roleIdsToActionIds, String selResource,
 			ActionRequest actionRequest)
 		throws Exception {
 
-		Map<Long, String[]> roleIdsToActionIdsWithIntermediateState =
-			new HashMap<>(roleIdsToActionIds);
+		Map<Long, String[]> allRoleIdsToActionIds = new HashMap<>(
+			roleIdsToActionIds);
 
-		for (long roleId : roleIds) {
-			List<String> availableResourcePermissionActionIds =
+		for (Map.Entry<Long, String[]> entry : roleIdsToActionIds.entrySet()) {
+			Long roleId = entry.getKey();
+
+			List<String> indeterminateActionIds =
+				_getIndeterminateStateActionIds(actionRequest, roleId);
+
+			if (ListUtil.isEmpty(indeterminateActionIds)) {
+				continue;
+			}
+
+			List<String> availableActionIds =
 				_resourcePermissionLocalService.
 					getAvailableResourcePermissionActionIds(
 						companyId, selResource,
 						ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey,
-						roleId,
-						_getIndeterminateStateActionIds(actionRequest, roleId));
+						roleId, indeterminateActionIds);
 
-			for (String actionId : availableResourcePermissionActionIds) {
-				String[] actionIds =
-					roleIdsToActionIdsWithIntermediateState.computeIfAbsent(
-						roleId, key -> new String[] {actionId});
-
-				if (!ArrayUtil.contains(actionIds, actionId)) {
-					actionIds = ArrayUtil.append(actionIds, actionId);
-				}
-
-				roleIdsToActionIdsWithIntermediateState.put(roleId, actionIds);
-			}
+			allRoleIdsToActionIds.replace(
+				roleId,
+				ArrayUtil.append(
+					entry.getValue(),
+					ArrayUtil.toStringArray(availableActionIds)));
 		}
 
-		return roleIdsToActionIdsWithIntermediateState;
+		return allRoleIdsToActionIds;
 	}
 
 	private void _handleException(

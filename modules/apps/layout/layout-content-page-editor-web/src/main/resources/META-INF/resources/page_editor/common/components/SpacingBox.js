@@ -179,6 +179,7 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 				`${DROPDOWN_CLASSNAME} ${DROPDOWN_CLASSNAME}--${type} ${DROPDOWN_CLASSNAME}--${type}-${position} align-items-stretch d-flex text-center`,
 				{disabled}
 			)}
+			menuElementAttrs={{className: 'cadmin'}}
 			onActiveChange={setActive}
 			renderMenuOnClick
 			trigger={

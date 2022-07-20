@@ -17,16 +17,20 @@ import updateItemLocalConfig from '../actions/updateItemLocalConfig';
 import FormService from '../services/FormService';
 
 export default function updateFormItemConfig({itemConfig, itemId}) {
+	const isMapping = Boolean(itemConfig.classNameId);
+
 	return (dispatch, getState) => {
-		dispatch(
-			updateItemLocalConfig({
-				disableUndo: true,
-				itemConfig: {
-					loading: true,
-				},
-				itemId,
-			})
-		);
+		if (isMapping) {
+			dispatch(
+				updateItemLocalConfig({
+					disableUndo: true,
+					itemConfig: {
+						loading: true,
+					},
+					itemId,
+				})
+			);
+		}
 
 		return FormService.updateFormItemConfig({
 			itemConfig,

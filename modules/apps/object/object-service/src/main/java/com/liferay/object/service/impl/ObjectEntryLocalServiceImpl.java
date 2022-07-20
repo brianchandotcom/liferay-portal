@@ -58,6 +58,7 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.expression.ScalarDSLQueryAlias;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
@@ -1627,15 +1628,33 @@ public class ObjectEntryLocalServiceImpl
 		Map<String, Serializable> values = new HashMap<>();
 
 		for (int i = 0; i < selectExpressions.length; i++) {
-			Column<?, ?> column = (Column<?, ?>)selectExpressions[i];
 
-			String columnName = column.getName();
+			Expression<?> selectExpression = selectExpressions[i];
+
+			String columnName = null;
+			Class<?> javaType = null;
+
+			if(selectExpression instanceof Column) {
+				Column<?, ?> column =
+					(Column<?, ?>)selectExpressions[i];
+
+				columnName = column.getName();
+				javaType = column.getJavaType();
+			}
+			else if(selectExpression instanceof ScalarDSLQueryAlias) {
+
+				ScalarDSLQueryAlias scalar =
+					(ScalarDSLQueryAlias)selectExpressions[i];
+
+				columnName = scalar.getName();
+				javaType = scalar.getJavaType();
+			}
 
 			if (columnName.endsWith(StringPool.UNDERLINE)) {
 				columnName = columnName.substring(0, columnName.length() - 1);
 			}
 
-			_putValue(column, columnName, objects[i], values);
+			_putValue(javaType, columnName, objects[i], values);
 		}
 
 		return values;
@@ -1771,13 +1790,31 @@ public class ObjectEntryLocalServiceImpl
 					Object[] result = new Object[selectExpressions.length];
 
 					for (int i = 0; i < selectExpressions.length; i++) {
-						Column<?, ?> column =
-							(Column<?, ?>)selectExpressions[i];
 
-						String columnName = column.getName();
+						Expression<?> selectExpression = selectExpressions[i];
 
-						result[i] = _getValue(
-							resultSet, columnName, column.getSQLType());
+						if(selectExpression instanceof Column) {
+							Column<?, ?> column =
+								(Column<?, ?>)selectExpressions[i];
+
+							String columnName = column.getName();
+
+							result[i] = _getValue(
+								resultSet, columnName, column.getSQLType());
+						}
+						else if(selectExpression instanceof ScalarDSLQueryAlias) {
+
+							ScalarDSLQueryAlias scalar =
+								(ScalarDSLQueryAlias)selectExpressions[i];
+
+							String columnName = scalar.getName();
+
+							result[i] = _getValue(
+								resultSet, columnName, scalar.getSQLType());
+
+						}
+
+
 					}
 
 					results.add(result);
@@ -1794,7 +1831,7 @@ public class ObjectEntryLocalServiceImpl
 		Session session = objectEntryPersistence.openSession();
 
 		try {
-			session.apply(
+  			session.apply(
 				connection -> _list(
 					connection, dslQuery, results, selectExpressions));
 		}
@@ -1806,15 +1843,13 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _putValue(
-		Column<?, ?> column, String name, Object object,
+		Class<?> javaTypeClazz, String name, Object object,
 		Map<String, Serializable> values) {
 
-		Class<?> clazz = column.getJavaType();
-
-		if (clazz == BigDecimal.class) {
+		if (javaTypeClazz == BigDecimal.class) {
 			values.put(name, (BigDecimal)object);
 		}
-		else if (clazz == Blob.class) {
+		else if (javaTypeClazz == Blob.class) {
 			byte[] bytes = null;
 
 			if (object != null) {
@@ -1850,7 +1885,7 @@ public class ObjectEntryLocalServiceImpl
 
 			values.put(name, bytes);
 		}
-		else if (clazz == Boolean.class) {
+		else if (javaTypeClazz == Boolean.class) {
 			if (object == null) {
 				object = Boolean.FALSE;
 			}
@@ -1868,7 +1903,7 @@ public class ObjectEntryLocalServiceImpl
 
 			values.put(name, (Boolean)object);
 		}
-		else if (clazz == Clob.class) {
+		else if (javaTypeClazz == Clob.class) {
 			if (object == null) {
 				values.put(name, StringPool.BLANK);
 			}
@@ -1896,10 +1931,10 @@ public class ObjectEntryLocalServiceImpl
 				}
 			}
 		}
-		else if (clazz == Date.class) {
+		else if (javaTypeClazz == Date.class) {
 			values.put(name, (Date)object);
 		}
-		else if (clazz == Double.class) {
+		else if (javaTypeClazz == Double.class) {
 			Number number = (Number)object;
 
 			if (number == null) {
@@ -1911,7 +1946,7 @@ public class ObjectEntryLocalServiceImpl
 
 			values.put(name, number);
 		}
-		else if (clazz == Integer.class) {
+		else if (javaTypeClazz == Integer.class) {
 			Number number = (Number)object;
 
 			if (number == null) {
@@ -1923,7 +1958,7 @@ public class ObjectEntryLocalServiceImpl
 
 			values.put(name, number);
 		}
-		else if (clazz == Long.class) {
+		else if (javaTypeClazz == Long.class) {
 			Number number = (Number)object;
 
 			if (number == null) {
@@ -1935,12 +1970,12 @@ public class ObjectEntryLocalServiceImpl
 
 			values.put(name, number);
 		}
-		else if (clazz == String.class) {
+		else if (javaTypeClazz == String.class) {
 			values.put(name, (String)object);
 		}
 		else {
 			throw new IllegalArgumentException(
-				"Unable to put value with class " + clazz.getName());
+				"Unable to put value with class " + javaTypeClazz.getName());
 		}
 	}
 

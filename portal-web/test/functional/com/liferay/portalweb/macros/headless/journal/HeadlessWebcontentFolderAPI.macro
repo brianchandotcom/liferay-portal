@@ -73,6 +73,29 @@ definition {
 		return "${response}";
 	}
 
+	macro _filterStructuredContentFolders {
+		Variables.assertDefined(parameterList = "${filterValue}");
+
+		if (isSet(assetLibraryId)) {
+			var api = "asset-libraries/${assetLibraryId}/structured-content-folders";
+		}
+		else {
+			var api = "sites/${siteId}/structured-contents";
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+            ${portalURL}/o/headless-delivery/v1.0/${api}?filter=${filterValue} \
+            -u test@liferay.com:test \
+            -H Content-Type: application/json
+        ''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _getStructuredContentFoldersByErcInAssetLibrary {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
 
@@ -107,6 +130,20 @@ definition {
 		TestUtils.assertEquals(
 			actual = "${actualExternalReferenceCodeValue}",
 			expected = "${expectedExternalReferenceCodeValue}");
+	}
+
+	macro assertProperTotalCountOfStructuredContentFoldersInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${expectedStructuredContentFolderTotalCount}");
+
+		var response = HeadlessWebcontentFolderAPI._filterStructuredContentFolders(
+			assetLibraryId = "${assetLibraryId}",
+			filterValue = "${filterValue}");
+
+		var actualTotalCount = JSONUtil.getWithJSONPath("${response}", "$..['totalCount']");
+
+		TestUtils.assertEquals(
+			actual = "${actualTotalCount}",
+			expected = "${expectedStructuredContentFolderTotalCount}");
 	}
 
 	macro assetProperNumberOfStructuredContentFolders {

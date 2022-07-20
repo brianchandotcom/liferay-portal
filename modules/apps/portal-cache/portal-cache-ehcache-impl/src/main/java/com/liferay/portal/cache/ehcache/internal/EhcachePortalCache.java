@@ -79,13 +79,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected V doGet(K key) {
-		Element element = _ehcache.get(key);
-
-		if (element == null) {
-			return null;
-		}
-
-		return (V)element.getObjectValue();
+		return _getValue(_ehcache.get(key));
 	}
 
 	@Override
@@ -107,13 +101,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 			element.setTimeToLive(timeToLive);
 		}
 
-		Element oldElement = _ehcache.putIfAbsent(element);
-
-		if (oldElement == null) {
-			return null;
-		}
-
-		return (V)oldElement.getObjectValue();
+		return _getValue(_ehcache.putIfAbsent(element));
 	}
 
 	@Override
@@ -136,13 +124,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 			element.setTimeToLive(timeToLive);
 		}
 
-		Element oldElement = _ehcache.replace(element);
-
-		if (oldElement == null) {
-			return null;
-		}
-
-		return (V)oldElement.getObjectValue();
+		return _getValue(_ehcache.replace(element));
 	}
 
 	@Override
@@ -187,6 +169,14 @@ public class EhcachePortalCache<K extends Serializable, V>
 		for (CacheEventListener cacheEventListener : cacheEventListeners) {
 			registeredEventListeners.unregisterListener(cacheEventListener);
 		}
+	}
+
+	private V _getValue(Element element) {
+		if (element == null) {
+			return null;
+		}
+
+		return (V)element.getObjectValue();
 	}
 
 	private volatile Ehcache _ehcache;

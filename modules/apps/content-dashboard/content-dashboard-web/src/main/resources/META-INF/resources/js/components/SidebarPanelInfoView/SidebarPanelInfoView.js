@@ -27,6 +27,7 @@ import CollapsibleSection from './CollapsibleSection';
 import FileUrlCopyButton from './FileUrlCopyButton';
 import ItemLanguages from './ItemLanguages';
 import ItemVocabularies from './ItemVocabularies';
+import ManageCollaborators from './ManageCollaborators';
 import Preview from './Preview';
 import Share from './Share';
 import {
@@ -63,6 +64,7 @@ const SidebarPanelInfoView = ({
 	type,
 	preview,
 	fetchSharingButtonURL,
+	fetchSharingContactsButtonURL,
 	user,
 	versions = [],
 	viewURLs = [],
@@ -155,26 +157,36 @@ const SidebarPanelInfoView = ({
 					</div>
 
 					<div className="sidebar-dl sidebar-section">
-						<ClaySticker
-							className={classnames('sticker-user-icon', {
-								[`user-icon-color-${stickerColor}`]: !user.url,
-							})}
-							shape="circle"
-						>
-							{user.url ? (
-								<img
-									alt={`${user.name}.`}
-									className="sticker-img"
-									src={user.url}
-								/>
-							) : (
-								<ClayIcon symbol="user" />
-							)}
-						</ClaySticker>
+						{fetchSharingContactsButtonURL ? (
+							<ManageCollaborators
+								fetchSharingContactsButtonURL={
+									fetchSharingContactsButtonURL
+								}
+							/>
+						) : (
+							<>
+								<ClaySticker
+									className={classnames('sticker-user-icon', {
+										[`user-icon-color-${stickerColor}`]: !user.url,
+									})}
+									shape="circle"
+								>
+									{user.url ? (
+										<img
+											alt={`${user.name}.`}
+											className="sticker-img"
+											src={user.url}
+										/>
+									) : (
+										<ClayIcon symbol="user" />
+									)}
+								</ClaySticker>
 
-						<span className="c-ml-2 text-secondary">
-							{user.name}
-						</span>
+								<span className="c-ml-2 text-secondary">
+									{user.name}
+								</span>
+							</>
+						)}
 					</div>
 
 					{preview && preview.url && (
@@ -361,6 +373,7 @@ SidebarPanelInfoView.propTypes = {
 	createDate: PropTypes.string.isRequired,
 	description: PropTypes.string,
 	fetchSharingButtonURL: PropTypes.string,
+	fetchSharingContactsButtonURL: PropTypes.string,
 	modifiedDate: PropTypes.string.isRequired,
 	preview: PropTypes.object,
 	specificFields: PropTypes.object.isRequired,

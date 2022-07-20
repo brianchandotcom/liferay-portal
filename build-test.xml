@@ -2667,11 +2667,23 @@ server.detector.server.id=tomcat</echo>
 				<elseif>
 					<equals arg1="${app.server.type}" arg2="weblogic" />
 					<then>
-						<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
-extra.lib.dirs=wlserver/modules
-global.lib.dir=domains/liferay/lib
-portal.dir=domains/liferay/autodeploy/ROOT
-server.detector.server.id=weblogic</echo>
+						<if>
+							<equals arg1="${app.server.weblogic.version}" arg2="12.2.1" />
+							<then>
+								<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
+	extra.lib.dirs=wlserver/modules
+	global.lib.dir=domains/liferay/lib
+	portal.dir=domains/liferay/autodeploy/ROOT
+	server.detector.server.id=weblogic</echo>
+							</then>
+							<else>
+								<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.weblogic.dir}
+	extra.lib.dirs=oracle/wlserver/modules
+	global.lib.dir=domains/liferay/lib
+	portal.dir=/domains/liferay/autodeploy/ROOT
+	server.detector.server.id=weblogic</echo>
+							</else>
+						</if>
 					</then>
 				</elseif>
 				<elseif>

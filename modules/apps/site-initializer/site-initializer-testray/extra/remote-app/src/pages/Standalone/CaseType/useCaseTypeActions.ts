@@ -12,33 +12,39 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
-
-import {DeleteCaseType} from '../../../graphql/mutations';
 import {TestrayCaseType} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
+import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
+import {Security} from '../../../security';
+import {deleteResource} from '../../../services/rest';
+import {Action} from '../../../types';
 
 const useCaseTypeActions = () => {
-	const [onDeleteCaseType] = useMutation(DeleteCaseType);
+	const {removeItemFromList} = useMutate();
 
 	const formModal = useFormModal();
 	const modal = formModal.modal;
 
+	const actions: Action[] = [
+		{
+			action: (item: TestrayCaseType) => modal.open(item),
+			name: i18n.translate('edit'),
+			permission: 'UPDATE',
+		},
+		{
+			action: ({id}: TestrayCaseType, mutate) =>
+				deleteResource(`/casetypes/${id}`)
+					.then(() => removeItemFromList(mutate, id))
+					.then(modal.onSave)
+					.catch(modal.onError),
+			name: i18n.translate('delete'),
+			permission: 'DELETE',
+		},
+	];
+
 	return {
-		actions: [
-			{
-				action: (item: TestrayCaseType) => modal.open(item),
-				name: i18n.translate('edit'),
-			},
-			{
-				action: ({id}: TestrayCaseType) =>
-					onDeleteCaseType({variables: {id}})
-						.then(() => modal.onSave())
-						.catch(modal.onError),
-				name: i18n.translate('delete'),
-			},
-		],
+		actions: (row: any) => Security.filterActions(actions, row.actions),
 		formModal,
 	};
 };

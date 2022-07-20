@@ -12,24 +12,28 @@
  * details.
  */
 
+import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
 
-const deleteResource = (resource: RequestInfo) => {
-	return fetcher.delete(resource);
+export type TestrayCaseType = {
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	status: string;
 };
 
-export {deleteResource};
+type CaseType = typeof yupSchema.caseType.__outputType;
 
-export * from './TestrayBuild';
-export * from './TestrayCase';
-export * from './TestrayCaseResult';
-export * from './TestrayCaseTypes';
-export * from './TestrayFactorCategory';
-export * from './TestrayProject';
-export * from './TestrayRequirement';
-export * from './TestrayRoutine';
-export * from './TestraySuite';
-export * from './TestraySuiteCases';
-export * from './TestrayTask';
-export * from './TestrayUserAccounts';
-export * from './TestrayFactorOptions';
+const adapter = ({name}: CaseType) => ({
+	name,
+});
+
+const createCaseTypes = (casetype: CaseType) =>
+	fetcher.post('/casetypes', adapter(casetype));
+
+const updateCaseTypes = (id: number, casetype: CaseType) =>
+	fetcher.put(`/casetypes/${id}`, adapter(casetype));
+
+export {createCaseTypes, updateCaseTypes};

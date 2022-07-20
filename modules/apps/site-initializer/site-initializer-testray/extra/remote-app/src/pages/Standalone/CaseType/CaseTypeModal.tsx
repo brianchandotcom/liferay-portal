@@ -12,8 +12,7 @@
  * details.
  */
 
-import ListView from '../../../components/ListView/ListView';
-import {getCaseTypes} from '../../../graphql/queries';
+import ListView from '../../../components/ListView/ListViewRest';
 import i18n from '../../../i18n';
 import CaseTypeFormModal from './CaseTypeFormModal';
 import useCaseTypeActions from './useCaseTypeActions';
@@ -28,7 +27,7 @@ const CaseTypeModal = () => {
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
 				}}
-				query={getCaseTypes}
+				resource="/casetypes"
 				tableProps={{
 					actions,
 					columns: [
@@ -39,7 +38,6 @@ const CaseTypeModal = () => {
 						},
 					],
 				}}
-				transformData={(data) => data?.c?.caseTypes}
 			/>
 
 			<CaseTypeFormModal modal={formModal.modal} />

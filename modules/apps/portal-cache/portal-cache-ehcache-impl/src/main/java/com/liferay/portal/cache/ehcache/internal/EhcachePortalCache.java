@@ -120,6 +120,10 @@ public class EhcachePortalCache<K extends Serializable, V>
 		ehcache.removeAll();
 	}
 
+	protected void dispose() {
+		_cacheManager.removeCache(_portalCacheName);
+	}
+
 	@Override
 	protected V doGet(K key) {
 		Ehcache ehcache = getEhcache();

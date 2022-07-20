@@ -137,9 +137,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void removePortalCache(String portalCacheName) {
-		_portalCaches.remove(portalCacheName);
-
-		doRemovePortalCache(portalCacheName);
+		doRemovePortalCache(_portalCaches.remove(portalCacheName));
 	}
 
 	public void setClusterAware(boolean clusterAware) {
@@ -182,7 +180,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 	protected abstract void doDestroy();
 
-	protected abstract void doRemovePortalCache(String portalCacheName);
+	protected abstract void doRemovePortalCache(PortalCache<K, V> portalCache);
 
 	protected abstract PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration();

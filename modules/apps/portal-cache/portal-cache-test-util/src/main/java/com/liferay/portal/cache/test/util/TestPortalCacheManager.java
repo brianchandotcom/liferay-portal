@@ -103,14 +103,18 @@ public class TestPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected void doRemovePortalCache(String portalCacheName) {
+	protected void doRemovePortalCache(PortalCache<K, V> portalCache) {
+		if (portalCache == null) {
+			return;
+		}
+
 		TestPortalCache<K, V> testPortalCache = _testPortalCaches.remove(
-			portalCacheName);
+			portalCache.getPortalCacheName());
 
 		testPortalCache.removeAll();
 
 		aggregatedPortalCacheManagerListener.notifyPortalCacheRemoved(
-			portalCacheName);
+			portalCache.getPortalCacheName());
 	}
 
 	@Override

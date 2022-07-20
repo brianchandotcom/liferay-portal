@@ -86,7 +86,7 @@ public class EhcachePortalCacheTest {
 				_PORTAL_CACHE_NAME);
 
 		_ehcachePortalCache = new EhcachePortalCache<>(
-			portalCacheManager, _ehcache);
+			portalCacheManager, _ehcache, false);
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
 
@@ -350,7 +350,7 @@ public class EhcachePortalCacheTest {
 
 	@Test
 	public void testReconfigEhcache() {
-		Assert.assertSame(_ehcache, _ehcachePortalCache.ehcache);
+		Assert.assertSame(_ehcache, _ehcachePortalCache.getEhcache());
 
 		Map<PortalCacheListener<String, String>, PortalCacheListenerScope>
 			oldPortalCacheListeners =
@@ -362,7 +362,7 @@ public class EhcachePortalCacheTest {
 
 		_ehcachePortalCache.reconfigEhcache(ehcache2);
 
-		Assert.assertSame(ehcache2, _ehcachePortalCache.ehcache);
+		Assert.assertSame(ehcache2, _ehcachePortalCache.getEhcache());
 
 		Assert.assertEquals(
 			oldPortalCacheListeners,
@@ -558,13 +558,52 @@ public class EhcachePortalCacheTest {
 	}
 
 	@Test
+	public void testSerializable() {
+		_cacheManager.addCache("SerializablePortalCache");
+
+		EhcachePortalCache<String, Object> ehcachePortalCache =
+			new EhcachePortalCache<>(
+				TestPortalCacheManager.createTestPortalCacheManager(
+					"SerializablePortalCache"),
+				_cacheManager.getCache("SerializablePortalCache"), true);
+
+		Assert.assertTrue(ehcachePortalCache.isSerializable());
+
+		List<String> keys = ehcachePortalCache.getKeys();
+
+		Assert.assertTrue(keys.toString(), keys.isEmpty());
+
+		Assert.assertNull(ehcachePortalCache.get(_KEY_1));
+
+		ehcachePortalCache.put(_KEY_1, _VALUE_1);
+
+		Assert.assertEquals(_VALUE_1, ehcachePortalCache.get(_KEY_1));
+
+		Object nonserializableValue = new Object();
+
+		ehcachePortalCache.put(_KEY_2, nonserializableValue);
+
+		Assert.assertSame(nonserializableValue, ehcachePortalCache.get(_KEY_2));
+
+		keys = ehcachePortalCache.getKeys();
+
+		Assert.assertEquals(keys.toString(), 2, keys.size());
+		Assert.assertEquals(_KEY_1, keys.get(0));
+		Assert.assertEquals(_KEY_2, keys.get(1));
+
+		ehcachePortalCache.remove(_KEY_1);
+
+		Assert.assertNull(ehcachePortalCache.get(_KEY_1));
+	}
+
+	@Test
 	public void testTimeToLive() {
 		Assert.assertEquals(_VALUE_1, _ehcachePortalCache.get(_KEY_1));
 		Assert.assertNull(_ehcachePortalCache.get(_KEY_2));
 
 		int timeToLive = 600;
 
-		Ehcache ehcache = _ehcachePortalCache.ehcache;
+		Ehcache ehcache = _ehcachePortalCache.getEhcache();
 
 		// Put
 

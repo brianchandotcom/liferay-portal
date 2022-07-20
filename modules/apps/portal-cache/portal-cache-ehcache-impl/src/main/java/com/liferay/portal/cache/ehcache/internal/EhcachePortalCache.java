@@ -84,24 +84,13 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected void doPut(K key, V value, int timeToLive) {
-		Element element = new Element(key, value);
-
-		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
-			element.setTimeToLive(timeToLive);
-		}
-
-		_ehcache.put(element);
+		_ehcache.put(_createElement(key, value, timeToLive));
 	}
 
 	@Override
 	protected V doPutIfAbsent(K key, V value, int timeToLive) {
-		Element element = new Element(key, value);
-
-		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
-			element.setTimeToLive(timeToLive);
-		}
-
-		return _getValue(_ehcache.putIfAbsent(element));
+		return _getValue(
+			_ehcache.putIfAbsent(_createElement(key, value, timeToLive)));
 	}
 
 	@Override
@@ -111,33 +100,21 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected boolean doRemove(K key, V value) {
-		Element element = new Element(key, value);
-
-		return _ehcache.removeElement(element);
+		return _ehcache.removeElement(
+			_createElement(key, value, DEFAULT_TIME_TO_LIVE));
 	}
 
 	@Override
 	protected V doReplace(K key, V value, int timeToLive) {
-		Element element = new Element(key, value);
-
-		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
-			element.setTimeToLive(timeToLive);
-		}
-
-		return _getValue(_ehcache.replace(element));
+		return _getValue(
+			_ehcache.replace(_createElement(key, value, timeToLive)));
 	}
 
 	@Override
 	protected boolean doReplace(K key, V oldValue, V newValue, int timeToLive) {
-		Element oldElement = new Element(key, oldValue);
-
-		Element newElement = new Element(key, newValue);
-
-		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
-			newElement.setTimeToLive(timeToLive);
-		}
-
-		return _ehcache.replace(oldElement, newElement);
+		return _ehcache.replace(
+			_createElement(key, oldValue, DEFAULT_TIME_TO_LIVE),
+			_createElement(key, newValue, timeToLive));
 	}
 
 	protected Map<PortalCacheListener<K, V>, PortalCacheListenerScope>
@@ -169,6 +146,16 @@ public class EhcachePortalCache<K extends Serializable, V>
 		for (CacheEventListener cacheEventListener : cacheEventListeners) {
 			registeredEventListeners.unregisterListener(cacheEventListener);
 		}
+	}
+
+	private Element _createElement(K key, V value, int timeToLive) {
+		Element element = new Element(key, value);
+
+		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
+			element.setTimeToLive(timeToLive);
+		}
+
+		return element;
 	}
 
 	private V _getValue(Element element) {

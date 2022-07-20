@@ -61,6 +61,28 @@ definition {
 		}
 	}
 
+	@description = "Unable to get structured content folder by nonexistent assetLibraryId"
+	@priority = "4"
+	test CanReturnErrorWithGetStructuredContentFolderInAssetLibraryByNonexistentAssetLibraryId {
+		property portal.acceptance = "true";
+
+		task ("When I make a GET request by non-existent assetLibraryID and a erc") {
+			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
+				assetLibraryId = "nonexistentId",
+				externalReferenceCode = "erc");
+		}
+
+		task ("Then I receive not found error response") {
+			TestUtils.assertPartialEquals(
+				actual = "${response}",
+				expected = "NOT_FOUND");
+		}
+
+		task ("And Then I receive error message in server console") {
+			AssertConsoleTextPresent(value1 = "Unable to get a valid asset library with ID nonexistentId");
+		}
+	}
+
 	@description = "Structured content folder is created with custom erc in an asset library"
 	@priority = "5"
 	test StructuredContentFolderIsCreatedInAssetLibraryWithCustomErc {

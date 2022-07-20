@@ -27,16 +27,36 @@
 <link class="lfr-css-file" data-senna-track="temporary" href="<%= HtmlUtil.escapeAttribute(themeDisplay.getClayCSSURL()) %>" id="liferayAUICSS" rel="stylesheet" type="text/css" />
 
 <%
-List<Portlet> portlets = null;
+Set<Portlet> portlets = null;
 
 if (layoutTypePortlet != null) {
-	portlets = layoutTypePortlet.getAllPortlets();
+	portlets = new HashSet<>(layoutTypePortlet.getAllPortlets());
 }
 
 if (layout != null) {
 	String ppid = ParamUtil.getString(request, "p_p_id");
 
-	if ((layout.isTypeEmbedded() || layout.isTypePortlet()) && (themeDisplay.isStateMaximized() || themeDisplay.isStatePopUp() || (layout.isSystem() && Objects.equals(layout.getFriendlyURL(), PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)))) {
+	if((layout.isTypeAssetDisplay() || layout.isTypeContent())) {
+		List<com.liferay.portal.kernel.model.PortletPreferences> portletPreferencesList =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
+
+		for (com.liferay.portal.kernel.model.PortletPreferences portletPreferences : portletPreferencesList) {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				company.getCompanyId(),
+				portletPreferences.getPortletId());
+
+			if ((portlet == null) || !portlet.isActive() ||
+				portlet.isUndeployedPortlet()) {
+
+				continue;
+			}
+
+			portlets.add(portlet);
+		}
+	}
+	else if ((layout.isTypeEmbedded() || layout.isTypePortlet()) && (themeDisplay.isStateMaximized() || themeDisplay.isStatePopUp() || (layout.isSystem() && Objects.equals(layout.getFriendlyURL(), PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)))) {
 		if (Validator.isNotNull(ppid)) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), ppid);
 
@@ -46,7 +66,7 @@ if (layout != null) {
 		}
 	}
 	else if (layout.isTypeControlPanel() || layout.isTypePanel()) {
-		portlets = new ArrayList<Portlet>();
+		portlets = new HashSet<>();
 
 		portlets.addAll(layout.getEmbeddedPortlets());
 

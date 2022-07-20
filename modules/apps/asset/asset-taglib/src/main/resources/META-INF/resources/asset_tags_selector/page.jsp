@@ -36,7 +36,7 @@ List<Map<String, String>> selectedItems = (List<Map<String, String>>)data.get("s
 		%>
 
 		<div class="form-group">
-			<label>
+			<label for="namespace_assetTagsSelector_MultiSelect">
 				<liferay-ui:message key="tags" />
 			</label>
 
@@ -57,7 +57,7 @@ List<Map<String, String>> selectedItems = (List<Map<String, String>>)data.get("s
 						}
 						%>
 
-						<input class="form-control-inset" type="text" value="" />
+						<input class="form-control-inset" id="namespace_assetTagsSelector_MultiSelect" type="text" value="" />
 					</div>
 				</div>
 			</div>

@@ -19,9 +19,11 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
-import useControlledState from '../../../core/hooks/useControlledState';
-import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
-import {useId} from '../../utils/useId';
+import {useId} from '../../app/utils/useId';
+import useControlledState from '../../core/hooks/useControlledState';
+import {ConfigurationFieldPropTypes} from '../../prop-types/index';
+
+import './LengthField.scss';
 
 const CUSTOM = 'custom';
 

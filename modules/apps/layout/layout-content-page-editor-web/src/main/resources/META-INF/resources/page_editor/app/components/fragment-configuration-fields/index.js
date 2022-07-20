@@ -12,6 +12,7 @@
  * details.
  */
 
+import {LengthField} from '../../../common/components/LengthField';
 import {ButtonGroupField} from './ButtonGroupField';
 import CSSClassSelectorField from './CSSClassSelectorField';
 import {CategoryTreeNodeSelectorField} from './CategoryTreeNodeSelectorField';
@@ -23,7 +24,6 @@ import CustomCSSField from './CustomCSSField';
 import {HideFragmentField} from './HideFragmentField';
 import {ImageSelectorField} from './ImageSelectorField';
 import {ItemSelectorField} from './ItemSelectorField';
-import {LengthField} from './LengthField';
 import {NavigationMenuSelectorField} from './NavigationMenuSelectorField';
 import {SelectField} from './SelectField';
 import {SpacingBoxField} from './SpacingBoxField';

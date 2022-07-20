@@ -13,6 +13,7 @@
  */
 
 export {ColorPicker} from '../page_editor/common/components/ColorPicker/ColorPicker';
+export {LengthField} from '../page_editor/common/components/LengthField';
 export {default as useControlledState} from '../page_editor/core/hooks/useControlledState';
 export {StyleErrorsModal} from '../page_editor/app/components/StyleErrorsModal';
 export {convertRGBtoHex} from '../page_editor/app/utils/convertRGBtoHex';

@@ -24,7 +24,7 @@ export default function LengthFrontendToken({
 	return (
 		<LengthField
 			field={frontendToken}
-			onValueSelect={onValueSelect}
+			onValueSelect={(_, value) => onValueSelect(value)}
 			value={value}
 		/>
 	);

@@ -27,7 +27,7 @@ export default function ColorFrontendToken({
 		<ColorPicker
 			editedTokenValues={frontendTokensValues}
 			field={frontendToken}
-			onValueSelect={onValueSelect}
+			onValueSelect={(_, value) => onValueSelect(value)}
 			tokenValues={tokenValues}
 			value={value}
 		/>

@@ -66,25 +66,17 @@ export default function FrontendTokenSet({
 					frontendToken
 				);
 
-				let props = {
+				const props = {
 					frontendToken,
+					frontendTokensValues,
 					onValueSelect: (value) =>
 						updateFrontendTokensValues(frontendToken, value),
+					tokenValues,
 					value:
 						frontendTokensValues[frontendToken.name]?.name ||
 						frontendTokensValues[frontendToken.name]?.value ||
 						frontendToken.defaultValue,
 				};
-
-				if (frontendToken.editorType === 'ColorPicker') {
-					props = {
-						...props,
-						frontendTokensValues,
-						onValueSelect: (name, value) =>
-							updateFrontendTokensValues(frontendToken, value),
-						tokenValues,
-					};
-				}
 
 				return (
 					<FrontendTokenComponent

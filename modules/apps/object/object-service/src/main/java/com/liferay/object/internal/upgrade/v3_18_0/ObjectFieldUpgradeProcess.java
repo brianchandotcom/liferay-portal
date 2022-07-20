@@ -50,21 +50,14 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 			"ObjectDefinition.userId, ObjectDefinition.system_ from ",
 			"ObjectDefinition where ObjectDefinition.objectDefinitionId not ",
 			"in (select distinct ObjectField.objectDefinitionId from ",
-			"ObjectField where (ObjectField.name = ? or ObjectField.name = ? ",
-			"or ObjectField.name = ? or ObjectField.name = ? or ",
-			"ObjectField.name = ?) and ObjectField.system_ = ?)");
+			"ObjectField where (ObjectField.name = 'creator' or ",
+			"ObjectField.name = 'createDate' or ObjectField.name = 'id' or ",
+			"ObjectField.name = 'modifiedDate' or ObjectField.name = 'status' ",
+			"and ObjectField.system_ = [$TRUE$])");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				selectSQL)) {
-
-			preparedStatement1.setString(1, "creator");
-			preparedStatement1.setString(2, "createDate");
-			preparedStatement1.setString(3, "id");
-			preparedStatement1.setString(4, "modifiedDate");
-			preparedStatement1.setString(5, "status");
-			preparedStatement1.setBoolean(6, true);
-
-			ResultSet resultSet = preparedStatement1.executeQuery();
+				selectSQL);
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			String insertSQL = StringBundler.concat(
 				"insert into ObjectField (mvccVersion, uuid_, objectFieldId, ",

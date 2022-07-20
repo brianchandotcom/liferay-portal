@@ -16,12 +16,14 @@ package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.portal.cache.BasePortalCache;
 import com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener;
+import com.liferay.portal.cache.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -42,11 +44,13 @@ public class EhcachePortalCache<K extends Serializable, V>
 	extends BasePortalCache<K, V> implements EhcacheWrapper {
 
 	public EhcachePortalCache(
-		PortalCacheManager<K, V> portalCacheManager, Ehcache ehcache) {
+		PortalCacheManager<K, V> portalCacheManager, Ehcache ehcache,
+		boolean serializable) {
 
 		super(portalCacheManager);
 
 		_ehcache = ehcache;
+		_serializable = serializable;
 
 		RegisteredEventListeners registeredEventListeners =
 			ehcache.getCacheEventNotificationService();
@@ -64,12 +68,32 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	public List<K> getKeys() {
-		return _ehcache.getKeys();
+		List<?> rawKeys = _ehcache.getKeys();
+
+		if (!_serializable) {
+			return (List<K>)rawKeys;
+		}
+
+		if (rawKeys.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<K> keys = new ArrayList<>(rawKeys.size());
+
+		for (Object object : rawKeys) {
+			keys.add(SerializableObjectWrapper.<K>unwrap(object));
+		}
+
+		return keys;
 	}
 
 	@Override
 	public String getPortalCacheName() {
 		return _ehcache.getName();
+	}
+
+	public boolean isSerializable() {
+		return _serializable;
 	}
 
 	@Override
@@ -79,6 +103,10 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected V doGet(K key) {
+		if (_serializable) {
+			return _getValue(_ehcache.get(new SerializableObjectWrapper(key)));
+		}
+
 		return _getValue(_ehcache.get(key));
 	}
 
@@ -95,7 +123,12 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected void doRemove(K key) {
-		_ehcache.remove(key);
+		if (_serializable) {
+			_ehcache.remove(new SerializableObjectWrapper(key));
+		}
+		else {
+			_ehcache.remove(key);
+		}
 	}
 
 	@Override
@@ -149,7 +182,22 @@ public class EhcachePortalCache<K extends Serializable, V>
 	}
 
 	private Element _createElement(K key, V value, int timeToLive) {
-		Element element = new Element(key, value);
+		Element element = null;
+
+		if (_serializable) {
+			Object objectValue = value;
+
+			if (value instanceof Serializable) {
+				objectValue = new SerializableObjectWrapper(
+					(Serializable)value);
+			}
+
+			element = new Element(
+				new SerializableObjectWrapper(key), objectValue);
+		}
+		else {
+			element = new Element(key, value);
+		}
 
 		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
 			element.setTimeToLive(timeToLive);
@@ -163,9 +211,14 @@ public class EhcachePortalCache<K extends Serializable, V>
 			return null;
 		}
 
+		if (_serializable) {
+			return SerializableObjectWrapper.unwrap(element.getObjectValue());
+		}
+
 		return (V)element.getObjectValue();
 	}
 
 	private volatile Ehcache _ehcache;
+	private final boolean _serializable;
 
 }

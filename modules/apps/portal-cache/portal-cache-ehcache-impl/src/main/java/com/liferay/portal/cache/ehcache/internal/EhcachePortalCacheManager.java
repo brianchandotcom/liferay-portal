@@ -107,11 +107,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		EhcachePortalCacheConfiguration ehcachePortalCacheConfiguration =
 			(EhcachePortalCacheConfiguration)portalCacheConfiguration;
 
-		if (ehcachePortalCacheConfiguration.isRequireSerialization()) {
-			return new SerializableEhcachePortalCache<>(this, cache);
-		}
-
-		return new EhcachePortalCache<>(this, cache);
+		return new EhcachePortalCache<>(
+			this, cache,
+			ehcachePortalCacheConfiguration.isRequireSerialization());
 	}
 
 	@Override

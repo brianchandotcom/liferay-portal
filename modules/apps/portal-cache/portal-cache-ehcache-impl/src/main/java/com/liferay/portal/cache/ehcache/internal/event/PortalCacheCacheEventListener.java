@@ -17,7 +17,7 @@ package com.liferay.portal.cache.ehcache.internal.event;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.AggregatedPortalCacheListener;
-import com.liferay.portal.cache.ehcache.internal.SerializableEhcachePortalCache;
+import com.liferay.portal.cache.ehcache.internal.EhcachePortalCache;
 import com.liferay.portal.cache.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
@@ -47,8 +47,11 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 		boolean requireSerialization = false;
 
-		if (_portalCache instanceof SerializableEhcachePortalCache) {
-			requireSerialization = true;
+		if (_portalCache instanceof EhcachePortalCache) {
+			EhcachePortalCache ehcachePortalCache =
+				(EhcachePortalCache)_portalCache;
+
+			requireSerialization = ehcachePortalCache.isSerializable();
 		}
 
 		_requireSerialization = requireSerialization;

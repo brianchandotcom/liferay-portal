@@ -65,6 +65,14 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 								</clay:col>
 							</clay:row>
 
+							<clay:row>
+								<clay:col>
+									<react:component
+										module="js/components/Scope"
+									/>
+								</clay:col>
+							</clay:row>
+
 							<clay:alert
 								cssClass="hide"
 								displayType="info"

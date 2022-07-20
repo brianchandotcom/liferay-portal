@@ -73,7 +73,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 							md="6"
 						>
 							<react:component
-								module="js/export/Scope"
+								module="js/components/Scope"
 							/>
 						</clay:col>
 					</clay:row>

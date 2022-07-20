@@ -241,4 +241,46 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
+	@priority = "3"
+	test ReIndexingWithAWSS3Store {
+		property aws.store.enabled = "true";
+		property test.name.skip.portal.instance = "DocumentLibraryStore#ReIndexingWithAWSS3Store";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		for (var fileNum : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title ${fileNum}",
+				groupName = "Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${fileNum}.jpg");
+		}
+
+		var tempDir = PropsUtil.get("app.server.temp.dir");
+		var displayDateHour = DateUtil.getFormattedCurrentDate("HH", "UTC");
+		var displayDateDay = DateUtil.getFormattedCurrentDate("dd");
+		var displayDateMonth = DateUtil.getFormattedCurrentDate("MM");
+		var displayDateYear = DateUtil.getFormattedCurrentDate("yyyy");
+
+		var folderBeforeReIndex = FileUtil.listFiles("${tempDir}/liferay/s3/${displayDateYear}/${displayDateMonth}/${displayDateDay}/${displayDateHour}");
+
+		echo("Temp Folder before Reindex: ${folderBeforeReIndex}");
+
+		AssertConsoleTextNotPresent(value1 = "Temp Folder before Reindex: \[\]");
+
+		SearchAdministration.executeReindex();
+
+		var folderAfterReIndex = FileUtil.listFiles("${tempDir}/liferay/s3/${displayDateYear}/${displayDateMonth}/${displayDateDay}/${displayDateHour}");
+
+		echo("Temp Folder after Reindex: ${folderAfterReIndex}");
+
+		if ("${folderBeforeReIndex}" == "${folderAfterReIndex}") {
+			echo("The s3 folder still unchanged");
+		}
+		else {
+			fail("FAIL. The s3 folder changed after re-indexing");
+		}
+	}
+
 }

@@ -98,7 +98,9 @@ const ImportMappingItem = ({
 				</ClayForm.Group>
 			</ClayTable.Cell>
 
-			<ClayTable.Cell>{previewValue}</ClayTable.Cell>
+			<ClayTable.Cell truncate="true">
+				{JSON.stringify(previewValue)}
+			</ClayTable.Cell>
 		</ClayTable.Row>
 	);
 };
@@ -113,7 +115,7 @@ ImportMappingItem.propTypes = {
 	),
 	formEvaluated: PropTypes.bool.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
-	previewValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	previewValue: PropTypes.any,
 	required: PropTypes.bool.isRequired,
 	selectedFileField: PropTypes.string.isRequired,
 	updateFieldMapping: PropTypes.func.isRequired,

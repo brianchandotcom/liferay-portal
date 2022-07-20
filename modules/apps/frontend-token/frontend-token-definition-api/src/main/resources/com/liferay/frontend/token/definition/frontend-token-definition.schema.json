@@ -12,7 +12,8 @@
 				},
 				"editorType": {
 					"enum": [
-						"ColorPicker"
+						"ColorPicker",
+						"Length"
 					],
 					"title": "The Editor Type Used to Edit the Frontend Token",
 					"type": "string"

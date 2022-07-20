@@ -574,20 +574,19 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 					roleIdsToActionIds, selResource, actionRequest);
 			}
 
+			long ctCollectionId = 0;
+
 			if (_serviceTrackerMap.containsKey(selResource)) {
+				ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+			}
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollectionId)) {
+
 				_resourcePermissionService.setIndividualResourcePermissions(
 					resourceGroupId, themeDisplay.getCompanyId(), selResource,
 					resourcePrimKey, roleIdsToActionIds);
-			}
-			else {
-				try (SafeCloseable safeCloseable =
-						CTCollectionThreadLocal.
-							setProductionModeWithSafeCloseable()) {
-
-					_resourcePermissionService.setIndividualResourcePermissions(
-						resourceGroupId, themeDisplay.getCompanyId(),
-						selResource, resourcePrimKey, roleIdsToActionIds);
-				}
 			}
 
 			if (permissionPropagator != null) {

@@ -2970,6 +2970,139 @@ include-and-override=portal-liferay-online-limit.properties</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-read-writer-database-configuration-properties">
+		<sequential>
+			<get-database-property property.name="database.driver" />
+			<get-database-property property.name="database.host" />
+			<get-database-property property.name="database.password" />
+			<get-database-property property.name="database.url" />
+			<get-database-property property.name="database.username" />
+
+			<set-app-server-properties />
+
+			<if>
+				<equals arg1="${configure.read-writer.database}" arg2="jdbc" />
+				<then>
+					<replace
+						file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+					>
+						<replacetoken>jdbc.default</replacetoken>
+						<replacevalue>jdbc.write</replacevalue>
+					</replace>
+
+					<replace
+						file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+					>
+						<replacetoken>lportal</replacetoken>
+						<replacevalue>lportal1</replacevalue>
+					</replace>
+
+					<echo append="true" file="${test.app.server.classes.portal.dir}/portal-ext.properties">
+jdbc.read.driverClassName=${database.driver}
+jdbc.read.url=${database.url}
+jdbc.read.username=${database.username}
+jdbc.read.password=${database.password}</echo>
+				</then>
+				<elseif>
+					<equals arg1="${configure.read-writer.database}" arg2="jndi" />
+					<then>
+						<prepare-database-jndi />
+
+						<replace
+							file="${app.server.dir}/conf/context.xml"
+						>
+							<replacetoken><![CDATA[<Context>]]></replacetoken>
+							<replacevalue>
+								<![CDATA[
+									<Context>
+										<ResourceLink name="jdbc/LiferayWritePool" global="jdbc/LiferayWritePool" type="javax.sql.DataSource" />
+								]]>
+							</replacevalue>
+						</replace>
+
+						<replace
+							file="${app.server.dir}/conf/server.xml"
+						>
+							<replacetoken><![CDATA[<GlobalNamingResources>]]></replacetoken>
+							<replacevalue expandproperties="true">
+								<![CDATA[
+									<GlobalNamingResources>
+										<Resource
+											auth="Container"
+											description="Global Address Database"
+											driverClassName="${database.driver}"
+											maxActive="40"
+											maxIdle="20"
+											maxWait="1000"
+											name="jdbc/LiferayWritePool"
+											password="${database.password}"
+											type="javax.sql.DataSource"
+											url="jdbc:mysql://${database.host}/lportal1?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false&amp;serverTimezone=GMT&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true"
+											username="${database.username}"
+										/>
+								]]>
+							</replacevalue>
+						</replace>
+
+						<replace
+							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+						>
+							<replacetoken>jdbc.default.jndi.name=</replacetoken>
+							<replacevalue>jdbc.read.jndi.name=jdbc/LiferayPool</replacevalue>
+						</replace>
+
+						<echo append="true" file="${test.app.server.classes.portal.dir}/portal-ext.properties">
+jdbc.write.jndi.name=jdbc/LiferayWritePool</echo>
+					</then>
+				</elseif>
+			</if>
+
+			<echo append="true" file="${test.app.server.classes.portal.dir}/portal-ext.properties">
+				<![CDATA[
+counter.jdbc.prefix=jdbc.write.
+spring.configs=\
+    /META-INF/base-spring.xml,\
+    \
+    /META-INF/util-spring.xml,\
+    \
+    /META-INF/executor-spring.xml,\
+    \
+    /META-INF/messaging-core-spring.xml,\
+    /META-INF/messaging-misc-spring.xml,\
+    \
+    /META-INF/security-spring.xml,\
+    \
+    /META-INF/document-library-spring.xml,\
+    /META-INF/dynamic-data-source-spring.xml,\
+    /META-INF/layout-spring.xml,\
+    /META-INF/model-listener-spring.xml,\
+    /META-INF/notifications-spring.xml,\
+    /META-INF/poller-spring.xml,\
+    /META-INF/prefs-spring.xml,\
+    /META-INF/repository-spring.xml,\
+    /META-INF/search-spring.xml,\
+    /META-INF/social-spring.xml,\
+    /META-INF/workflow-spring.xml,\
+    \
+    /META-INF/counter-spring.xml,\
+    /META-INF/mail-spring.xml,\
+    /META-INF/portal-spring.xml,\
+    /META-INF/portlet-container-spring.xml,\
+    /META-INF/staging-spring.xml,\
+    /META-INF/virtual-layouts-spring.xml,\
+    \
+    classpath*:META-INF/ext-spring*.xml
+spring.infrastructure.configs=\
+    /META-INF/infrastructure-spring.xml,\
+    \
+    /META-INF/counter-infrastructure-spring.xml,\
+    /META-INF/dynamic-data-source-infrastructure-spring.xml,\
+    /META-INF/hibernate-spring.xml
+				]]>
+			</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-safari-driver">
 		<sequential>
 			<if>
@@ -14417,6 +14550,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			<equals arg1="${cluster.enabled}" arg2="true" />
 			<then>
 				<prepare-test-cluster-properties />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="configure.read-writer.database" />
+
+		<if>
+			<isset property="configure.read-writer.database" />
+			<then>
+				<prepare-read-writer-database-configuration-properties />
 			</then>
 		</if>
 

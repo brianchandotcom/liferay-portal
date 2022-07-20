@@ -96,6 +96,34 @@ definition {
 		Smoke.runSmoke();
 	}
 
+	@priority = "3"
+	test SmokeWithReadWriterDatabaseConfigurationJDBC {
+		property configure.read-writer.database = "jdbc";
+		property databases.size = "1";
+		property portal.smoke = "false";
+		property test.assert.warning.exceptions = "true";
+
+		SignIn.signInTestSetup();
+
+		Smoke.viewWelcomeContentPage();
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "3"
+	test SmokeWithReadWriterDatabaseConfigurationJNDI {
+		property configure.read-writer.database = "jndi";
+		property databases.size = "1";
+		property portal.smoke = "false";
+		property test.assert.warning.exceptions = "true";
+
+		SignIn.signInTestSetup();
+
+		Smoke.viewWelcomeContentPage();
+
+		Smoke.runSmoke();
+	}
+
 	@priority = "5"
 	test SmokeWithRuntimeJSPCompile {
 		property delete.precompiled.jsps = "true";

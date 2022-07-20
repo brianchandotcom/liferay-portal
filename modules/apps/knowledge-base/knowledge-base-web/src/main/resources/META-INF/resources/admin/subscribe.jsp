@@ -23,7 +23,7 @@ KBArticle kbArticle = (KBArticle)request.getAttribute("info_panel.jsp-kbArticle"
 <c:if test="<%= (kbArticle.isApproved() || !kbArticle.isFirstVersion()) && KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.SUBSCRIBE) %>">
 	<c:choose>
 		<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), KBArticle.class.getName(), kbArticle.getResourcePrimKey()) %>">
-			<liferay-portlet:actionURL name="unsubscribeKBArticle" var="unsubscribeKBArticleURL">
+			<liferay-portlet:actionURL name="/knowledge_base/unsubscribe_kb_article" var="unsubscribeKBArticleURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 			</liferay-portlet:actionURL>
@@ -37,7 +37,7 @@ KBArticle kbArticle = (KBArticle)request.getAttribute("info_panel.jsp-kbArticle"
 			/>
 		</c:when>
 		<c:otherwise>
-			<liferay-portlet:actionURL name="subscribeKBArticle" var="subscribeKBArticleURL">
+			<liferay-portlet:actionURL name="/knowledge_base/subscribe_kb_article" var="subscribeKBArticleURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 			</liferay-portlet:actionURL>

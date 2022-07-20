@@ -64,7 +64,7 @@ public class DeleteKBTemplatePortletConfigurationIcon
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
-			"deleteKBTemplate"
+			"/knowledge_base/delete_kb_template"
 		).setMVCPath(
 			"/admin/view_template.jsp"
 		).setRedirect(

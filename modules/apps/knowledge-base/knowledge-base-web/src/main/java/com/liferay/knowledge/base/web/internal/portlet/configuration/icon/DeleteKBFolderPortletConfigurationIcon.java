@@ -64,7 +64,7 @@ public class DeleteKBFolderPortletConfigurationIcon
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
-			"deleteKBFolder"
+			"/knowledge_base/delete_kb_folder"
 		).setMVCPath(
 			"/admin/view_folders.jsp"
 		).setRedirect(

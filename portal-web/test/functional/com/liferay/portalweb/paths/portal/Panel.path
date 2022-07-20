@@ -60,7 +60,7 @@
 
 <tr>
 	<td>MENU_ITEM</td>
-	<td>//div[contains(@class,'toggler-content-expanded')]//a[contains(.,'${key_portletName}')]</td>
+	<td>//div[contains(@class,'panel-collapse')]//a[contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>

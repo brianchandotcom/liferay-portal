@@ -544,11 +544,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			selResource = modelResource;
 		}
 
-		String[] resourcePrimKeys = ParamUtil.getStringValues(
-			actionRequest, "resourcePrimKey");
-
 		long resourceGroupId = ParamUtil.getLong(
 			actionRequest, "resourceGroupId", themeDisplay.getScopeGroupId());
+		String[] resourcePrimKeys = ParamUtil.getStringValues(
+			actionRequest, "resourcePrimKey");
 
 		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 

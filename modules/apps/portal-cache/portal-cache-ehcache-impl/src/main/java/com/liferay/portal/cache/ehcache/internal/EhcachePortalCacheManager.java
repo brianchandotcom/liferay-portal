@@ -43,7 +43,6 @@ import javax.management.MBeanServer;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
 import net.sf.ehcache.event.CacheManagerEventListenerRegistry;
@@ -238,31 +237,29 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 							"Overriding existing cache " + portalCacheName);
 					}
 
+					PortalCache<K, V> portalCache = fetchPortalCache(
+						portalCacheName);
+
+					if (portalCache != null) {
+						EhcachePortalCache<K, V> ehcachePortalCache =
+							(EhcachePortalCache<K, V>)
+								EhcacheUnwrapUtil.getWrappedPortalCache(
+									portalCache);
+
+						if (ehcachePortalCache != null) {
+							ehcachePortalCache.resetEhcache();
+						}
+						else {
+							_log.error(
+								"Unable to reconfigure cache with name " +
+									portalCacheName);
+						}
+					}
+
 					_cacheManager.removeCache(portalCacheName);
 				}
 
-				Ehcache ehcache = new Cache(cacheConfiguration);
-
-				_cacheManager.addCache(ehcache);
-
-				PortalCache<K, V> portalCache = fetchPortalCache(
-					portalCacheName);
-
-				if (portalCache != null) {
-					EhcachePortalCache<K, V> ehcachePortalCache =
-						(EhcachePortalCache<K, V>)
-							EhcacheUnwrapUtil.getWrappedPortalCache(
-								portalCache);
-
-					if (ehcachePortalCache != null) {
-						ehcachePortalCache.reconfigEhcache(ehcache);
-					}
-					else {
-						_log.error(
-							"Unable to reconfigure cache with name " +
-								portalCacheName);
-					}
-				}
+				_cacheManager.addCache(new Cache(cacheConfiguration));
 			}
 		}
 	}

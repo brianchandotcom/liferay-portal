@@ -190,16 +190,8 @@ public class EhcachePortalCache<K extends Serializable, V>
 			aggregatedPortalCacheListener.getPortalCacheListeners());
 	}
 
-	protected void reconfigEhcache(Ehcache ehcache) {
-		RegisteredEventListeners registeredEventListeners =
-			ehcache.getCacheEventNotificationService();
-
-		registeredEventListeners.registerListener(
-			new PortalCacheCacheEventListener<>(
-				aggregatedPortalCacheListener, this),
-			NotificationScope.ALL);
-
-		_ehcache = ehcache;
+	protected void resetEhcache() {
+		_ehcache = null;
 	}
 
 	private Element _createElement(K key, V value, int timeToLive) {

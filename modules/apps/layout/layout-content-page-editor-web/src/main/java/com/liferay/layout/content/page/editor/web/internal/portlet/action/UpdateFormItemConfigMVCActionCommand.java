@@ -15,7 +15,10 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,6 +35,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
@@ -68,11 +72,27 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			jsonObject = LayoutStructureUtil.updateLayoutPageTemplateData(
-				themeDisplay.getScopeGroupId(), segmentsExperienceId,
-				themeDisplay.getPlid(),
-				layoutStructure -> layoutStructure.updateItemConfig(
-					JSONFactoryUtil.createJSONObject(itemConfig), formItemId));
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					fetchLayoutPageTemplateStructure(
+						themeDisplay.getScopeGroupId(), themeDisplay.getPlid());
+
+			LayoutStructure layoutStructure = LayoutStructure.of(
+				layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+			layoutStructure.updateItemConfig(
+				JSONFactoryUtil.createJSONObject(itemConfig), formItemId);
+
+			layoutPageTemplateStructure =
+				_layoutPageTemplateStructureService.
+					updateLayoutPageTemplateStructureData(
+						themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+						segmentsExperienceId, layoutStructure.toString());
+
+			LayoutStructure updatedLayoutStructure = LayoutStructure.of(
+				layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+			jsonObject.put("layoutData", updatedLayoutStructure.toJSONObject());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -90,5 +110,13 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateFormItemConfigMVCActionCommand.class);
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureService
+		_layoutPageTemplateStructureService;
 
 }

@@ -122,9 +122,15 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		if (openAPISchemaFilter != null) {
 			SpecFilter specFilter = new SpecFilter();
 
+			Map<String, List<String>> queryParameters = null;
+
+			if (uriInfo != null) {
+				queryParameters = uriInfo.getQueryParameters();
+			}
+
 			openAPI = specFilter.filter(
 				openAPI, _toOpenAPISpecFilter(openAPISchemaFilter),
-				uriInfo.getQueryParameters(), null, null);
+				queryParameters, null, null);
 		}
 
 		if (openAPI == null) {
@@ -136,7 +142,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		if (uriInfo != null) {
 			Server server = new Server();
 
-			server.setUrl(UriInfoUtil.getBasePath(uriInfo));
+			server.setUrl(_getBasePath(uriInfo));
 
 			openAPI.setServers(Collections.singletonList(server));
 		}
@@ -178,11 +184,21 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 		if (SetUtil.isNotEmpty(dtoClassNames)) {
 			openAPISchemaFilter = _getOpenAPISchemaFilter(
-				UriInfoUtil.getBasePath(uriInfo), dtoClassNames,
+				_getBasePath(uriInfo), dtoClassNames,
 				_extensionProviderRegistry);
 		}
 
 		return getOpenAPI(openAPISchemaFilter, resourceClasses, type, uriInfo);
+	}
+
+	private String _getBasePath(UriInfo uriInfo) {
+		String basePath = null;
+
+		if (uriInfo != null) {
+			basePath = UriInfoUtil.getBasePath(uriInfo);
+		}
+
+		return basePath;
 	}
 
 	private Set<String> _getDTOClassNames(Set<Class<?>> resourceClasses) {

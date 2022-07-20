@@ -66,7 +66,7 @@ else {
 					</p>
 				</c:if>
 
-				<div class="portrait-icons">
+				<div class="my-3 portrait-icons">
 					<div class="btn-group button-holder">
 						<aui:button cssClass="btn btn-secondary edit-logo modify-link" value="change" />
 

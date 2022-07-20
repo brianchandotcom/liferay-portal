@@ -52,14 +52,22 @@ public class PortalCacheManagerConfiguration {
 		}
 	}
 
-	public PortalCacheConfiguration getDefaultPortalCacheConfiguration() {
-		return _defaultPortalCacheConfiguration;
-	}
-
 	public PortalCacheConfiguration getPortalCacheConfiguration(
 		String portalCacheName) {
 
-		return _portalCacheConfigurations.get(portalCacheName);
+		PortalCacheConfiguration portalCacheConfiguration =
+			_portalCacheConfigurations.get(portalCacheName);
+
+		if (portalCacheConfiguration == null) {
+			portalCacheConfiguration =
+				_defaultPortalCacheConfiguration.newPortalCacheConfiguration(
+					portalCacheName);
+
+			_portalCacheConfigurations.put(
+				portalCacheName, portalCacheConfiguration);
+		}
+
+		return portalCacheConfiguration;
 	}
 
 	public Set<Properties> getPortalCacheManagerListenerPropertiesSet() {

@@ -78,35 +78,20 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 			return;
 		}
 
-		PortalCacheConfiguration defaultPortalCacheConfiguration =
-			portalCacheManagerConfiguration.
-				getDefaultPortalCacheConfiguration();
-
 		Map<String, ObjectValuePair<Properties, Properties>>
 			mergedPropertiesMap = _getMergedPropertiesMap();
 
 		for (Map.Entry<String, ObjectValuePair<Properties, Properties>> entry :
 				mergedPropertiesMap.entrySet()) {
 
-			String portalCacheName = entry.getKey();
-
-			PortalCacheConfiguration portalCacheConfiguration =
-				portalCacheManagerConfiguration.getPortalCacheConfiguration(
-					portalCacheName);
-
-			if (portalCacheConfiguration == null) {
-				portalCacheConfiguration =
-					defaultPortalCacheConfiguration.newPortalCacheConfiguration(
-						portalCacheName);
-
-				portalCacheManagerConfiguration.putPortalCacheConfiguration(
-					portalCacheName, portalCacheConfiguration);
-			}
-
 			ObjectValuePair<Properties, Properties> propertiesPair =
 				entry.getValue();
 
 			if (propertiesPair.getValue() != null) {
+				PortalCacheConfiguration portalCacheConfiguration =
+					portalCacheManagerConfiguration.getPortalCacheConfiguration(
+						entry.getKey());
+
 				Set<Properties> portalCacheListenerPropertiesSet =
 					portalCacheConfiguration.
 						getPortalCacheListenerPropertiesSet();

@@ -83,15 +83,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			_portalCacheManagerConfiguration.getPortalCacheConfiguration(
 				portalCacheName);
 
-		if (portalCacheConfiguration == null) {
-			portalCacheConfiguration =
-				_defaultPortalCacheConfiguration.newPortalCacheConfiguration(
-					portalCacheName);
-
-			_portalCacheManagerConfiguration.putPortalCacheConfiguration(
-				portalCacheName, portalCacheConfiguration);
-		}
-
 		portalCache = createPortalCache(portalCacheConfiguration);
 
 		_initPortalCacheListeners(portalCache, portalCacheConfiguration);
@@ -216,10 +207,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		initPortalCacheManager();
 
 		_portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
-
-		_defaultPortalCacheConfiguration =
-			_portalCacheManagerConfiguration.
-				getDefaultPortalCacheConfiguration();
 
 		for (Properties properties :
 				_portalCacheManagerConfiguration.
@@ -354,7 +341,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	}
 
 	private boolean _clusterAware;
-	private PortalCacheConfiguration _defaultPortalCacheConfiguration;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
 	private String _portalCacheManagerName;
 	private final ConcurrentMap<String, PortalCache<K, V>> _portalCaches =

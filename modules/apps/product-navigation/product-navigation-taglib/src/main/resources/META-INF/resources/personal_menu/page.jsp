@@ -64,7 +64,7 @@ if (size != null) {
 			<button aria-expanded="true" aria-haspopup="true" class="btn btn-unstyled dropdown-toggle" id="<%= namespace %>personal_menu_dropdown_toggle" ref="triggerButton" type="button">
 				<span class="<%= userStickerCssClasses %>">
 					<liferay-ui:user-portrait
-						cssClass="sticker-user-icon"
+						cssClass="bg-white sticker-user-icon"
 						size="<%= size %>"
 						user="<%= user2 %>"
 					/>

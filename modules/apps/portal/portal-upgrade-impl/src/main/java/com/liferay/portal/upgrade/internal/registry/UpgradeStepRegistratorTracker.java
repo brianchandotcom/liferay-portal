@@ -242,8 +242,6 @@ public class UpgradeStepRegistratorTracker {
 								"upgrade.bundle.symbolic.name",
 								bundleSymbolicName
 							).put(
-								"upgrade.db.type", "any"
-							).put(
 								"upgrade.from.schema.version",
 								upgradeInfo.getFromSchemaVersionString()
 							).put(

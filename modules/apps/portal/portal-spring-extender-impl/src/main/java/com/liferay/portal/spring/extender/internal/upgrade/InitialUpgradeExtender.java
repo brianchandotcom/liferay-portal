@@ -159,7 +159,6 @@ public class InitialUpgradeExtender
 
 			properties.put(
 				"upgrade.bundle.symbolic.name", _bundle.getSymbolicName());
-			properties.put("upgrade.db.type", "any");
 			properties.put("upgrade.from.schema.version", "0.0.0");
 
 			Dictionary<String, String> headers = _bundle.getHeaders(

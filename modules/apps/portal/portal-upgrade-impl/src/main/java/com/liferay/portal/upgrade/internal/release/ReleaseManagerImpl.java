@@ -21,8 +21,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -146,13 +144,9 @@ public class ReleaseManagerImpl implements ReleaseManager {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		DB db = DBManagerUtil.getDB();
-
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, UpgradeStep.class,
-			StringBundler.concat(
-				"(&(upgrade.bundle.symbolic.name=*)(|(upgrade.db.type=any)",
-				"(upgrade.db.type=", db.getDBType(), ")))"),
+			StringBundler.concat("(upgrade.bundle.symbolic.name=*)"),
 			new PropertyServiceReferenceMapper<String, UpgradeStep>(
 				"upgrade.bundle.symbolic.name"),
 			new ReleaseManagerImpl.UpgradeServiceTrackerCustomizer(

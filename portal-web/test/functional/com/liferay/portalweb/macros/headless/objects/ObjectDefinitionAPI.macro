@@ -192,6 +192,22 @@ definition {
 		return "${response}";
 	}
 
+	macro _deleteRelationship {
+		Variables.assertDefined(parameterList = "${relationshipId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-relationships/${relationshipId} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+		''';
+
+		var response = JSONCurlUtil.delete("${curl}");
+
+		return "${response}";
+	}
+
 	macro _getEmployeeFirstnameById {
 		Variables.assertDefined(parameterList = "${employeeId}");
 
@@ -486,6 +502,14 @@ definition {
 			expected = "${managerId2}");
 	}
 
+	macro assertResponseIncludesErrorMessage {
+		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.title");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${expectedValue}");
+	}
+
 	macro assertResponseMessageAfterDeletingObjectEntry {
 		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.status");
 
@@ -608,6 +632,12 @@ definition {
 		ObjectDefinitionAPI._deleteObjectEntry(
 			en_US_plural_label = "${en_US_plural_label}",
 			objectEntryId = "${objectEntryId}");
+	}
+
+	macro deleteRelationship {
+		var relationshipId = ObjectDefinitionAPI._getRelationshipId(objectDefinitionId = "${objectDefinitionId}");
+
+		ObjectDefinitionAPI._deleteRelationship(relationshipId = "${relationshipId}");
 	}
 
 	macro getObjectEntryRelation {

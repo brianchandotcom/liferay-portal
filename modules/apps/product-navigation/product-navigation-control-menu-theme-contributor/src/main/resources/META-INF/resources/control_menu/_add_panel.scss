@@ -23,12 +23,18 @@ html#{$cadmin-selector} {
 
 		&.lfr-admin-panel {
 			&.sidenav-menu-slider {
-				top: $has-control-menu-margin-top-desktop;
+				/* stylelint-disable */
+				top: calc(
+					#{$has-control-menu-margin-top-desktop} + var(--change-tracking-indicator-height, 0px)
+				);
 				z-index: $admin-panel-zindex;
 
-				@include media-breakpoint-down(sm, $cadmin-grid-breakpoints) {
-					top: $has-control-menu-margin-top-mobile;
+				@include media-breakpoint-down(xs, $cadmin-grid-breakpoints) {
+					top: calc(
+						#{$has-control-menu-margin-top-mobile} + var(--change-tracking-indicator-height, 0px)
+					);
 				}
+				/* stylelint-enable */
 
 				.product-menu {
 					width: $admin-panel-width;

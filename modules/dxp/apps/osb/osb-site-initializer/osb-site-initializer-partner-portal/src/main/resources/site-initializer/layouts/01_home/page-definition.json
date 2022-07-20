@@ -3,11 +3,29 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"marginLeft": "6"
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginLeft": "4"
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"marginLeft": "5"
+							},
+							"id": "tablet"
+						}
+					],
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,
-						"marginLeft": 0,
+						"marginLeft": 6,
 						"marginRight": 0,
 						"marginTop": 0,
 						"paddingBottom": 0,
@@ -20,21 +38,162 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {
-								"key": "BASIC_COMPONENT-heading"
+							"fragmentStyle": {
+								"borderWidth": "0",
+								"marginTop": "4",
+								"textAlign": ""
 							},
-							"fragmentConfig": {
-								"headingLevel": "h1"
-							},
-							"fragmentFields": [
+							"fragmentViewports": [
 								{
-									"id": "element-text",
-									"value": {
-										"fragmentLink": {
+									"fragmentViewportStyle": {
+										"paddingTop": "0"
+									},
+									"id": "landscapeMobile"
+								},
+								{
+									"fragmentViewportStyle": {
+										"marginLeft": "0",
+										"marginTop": "3",
+										"paddingLeft": "0",
+										"paddingTop": "0"
+									},
+									"id": "portraitMobile"
+								},
+								{
+									"fragmentViewportStyle": {
+										"marginLeft": "0",
+										"paddingLeft": "0"
+									},
+									"id": "tablet"
+								}
+							],
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 2,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "home-welcome-banner"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"textAlign": ""
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"textAlign": "left"
+											},
+											"id": "portraitMobile"
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0",
+								"marginBottom": "8",
+								"marginRight": "6",
+								"marginTop": "4",
+								"paddingTop": "3",
+								"textAlign": ""
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"marginBottom": "5",
+										"marginRight": "4"
+									},
+									"id": "landscapeMobile"
+								},
+								{
+									"fragmentViewportStyle": {
+										"marginBottom": "5",
+										"marginLeft": "0",
+										"marginRight": "4",
+										"paddingLeft": "0",
+										"paddingRight": "0",
+										"textAlign": "center"
+									},
+									"id": "portraitMobile"
+								},
+								{
+									"fragmentViewportStyle": {
+										"marginBottom": "5",
+										"marginLeft": "0",
+										"marginRight": "5",
+										"paddingLeft": "0",
+										"paddingRight": "0"
+									},
+									"id": "tablet"
+								}
+							],
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 10,
+								"marginLeft": 0,
+								"marginRight": 6,
+								"marginTop": 2,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 1,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"textAlign": "center"
+											},
+											"id": "portraitMobile"
+										}
+									],
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 1,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
 										},
-										"text": {
-											"value_i18n": {
-												"en_US": "Home"
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
 											}
 										}
 									],
@@ -1927,11 +2086,11 @@
 										],
 										"type": "Column"
 									}
-								}
-							],
-							"indexed": true
-						},
-						"type": "Fragment"
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
 					}
 				],
 				"type": "Section"

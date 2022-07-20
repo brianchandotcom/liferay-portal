@@ -95,6 +95,7 @@ const Field = ({
 	value,
 }) => {
 	const [active, setActive] = useState(false);
+	const inputRef = useRef();
 	const [nextValue, setNextValue] = useControlledState(initialValue);
 	const [nextUnit, setNextUnit] = useState(initialUnit);
 	const triggerId = useId();
@@ -145,7 +146,10 @@ const Field = ({
 	};
 
 	const handleKeyDown = (event) => {
-		if (KEYS_NOT_ALLOWED.includes(event.key)) {
+		if (
+			inputRef.current.type === 'number' &&
+			KEYS_NOT_ALLOWED.includes(event.key)
+		) {
 			event.preventDefault();
 		}
 
@@ -179,6 +183,7 @@ const Field = ({
 						setNextValue(event.target.value);
 					}}
 					onKeyDown={handleKeyDown}
+					ref={inputRef}
 					sizing="sm"
 					type={nextUnit === CUSTOM ? 'text' : 'number'}
 					value={nextValue}

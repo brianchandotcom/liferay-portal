@@ -19,7 +19,6 @@ import com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventList
 import com.liferay.portal.cache.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
-import com.liferay.portal.kernel.cache.PortalCacheManager;
 
 import java.io.Serializable;
 
@@ -29,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.event.CacheEventListener;
@@ -44,16 +44,28 @@ public class EhcachePortalCache<K extends Serializable, V>
 	extends BasePortalCache<K, V> implements EhcacheWrapper {
 
 	public EhcachePortalCache(
-		PortalCacheManager<K, V> portalCacheManager, Ehcache ehcache,
-		boolean serializable) {
+		EhcachePortalCacheManager<K, V> ehcachePortalCacheManager,
+		EhcachePortalCacheConfiguration ehcachePortalCacheConfiguration) {
 
-		super(portalCacheManager);
+		super(ehcachePortalCacheManager);
 
-		_ehcache = ehcache;
-		_serializable = serializable;
+		_portalCacheName = ehcachePortalCacheConfiguration.getPortalCacheName();
+		_serializable =
+			ehcachePortalCacheConfiguration.isRequireSerialization();
+
+		CacheManager cacheManager =
+			ehcachePortalCacheManager.getEhcacheManager();
+
+		synchronized (cacheManager) {
+			if (!cacheManager.cacheExists(_portalCacheName)) {
+				cacheManager.addCache(_portalCacheName);
+			}
+		}
+
+		_ehcache = cacheManager.getCache(_portalCacheName);
 
 		RegisteredEventListeners registeredEventListeners =
-			ehcache.getCacheEventNotificationService();
+			_ehcache.getCacheEventNotificationService();
 
 		registeredEventListeners.registerListener(
 			new PortalCacheCacheEventListener<>(
@@ -89,7 +101,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	public String getPortalCacheName() {
-		return _ehcache.getName();
+		return _portalCacheName;
 	}
 
 	public boolean isSerializable() {
@@ -219,6 +231,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 	}
 
 	private volatile Ehcache _ehcache;
+	private final String _portalCacheName;
 	private final boolean _serializable;
 
 }

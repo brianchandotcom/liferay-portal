@@ -1608,6 +1608,8 @@ definition {
 
 			ACSegments.addSegmentField(segmentField = "URL");
 
+			ACSegments.editTextCriterion(skip = "true");
+
 			ACSegments.viewAutocompleteSuggestions(
 				autocompleteText = "${myUrl}",
 				notPresent = "home",
@@ -1633,7 +1635,7 @@ definition {
 
 			ACSegments.addSegmentField(segmentField = "givenName");
 
-			ACSegments.editTextCriterion(skip = "true")
+			ACSegments.editTextCriterion(skip = "true");
 			
 			ACSegments.viewAutocompleteSuggestions(
 				autocompleteText = "userfn",

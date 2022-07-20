@@ -1637,9 +1637,9 @@ definition {
 			ACSegments.addSegmentField(segmentField = "givenName");
 
 			ACSegments.editTextCriterion(
-				skip = "true", 
+				skip = "true",
 				textInput = "user");
-			
+
 			ACSegments.viewAutocompleteSuggestions(
 				autocompleteText = "userfn",
 				notPresent = "Abram");

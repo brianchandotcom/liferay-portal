@@ -14,15 +14,29 @@
 
 package com.liferay.object.internal.petra.sql.dsl;
 
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.math.BigDecimal;
@@ -35,6 +49,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Marco Leo
@@ -87,21 +104,120 @@ public class DynamicObjectDefinitionTable
 
 		_primaryKeyColumnName = objectDefinition.getPKObjectFieldDBColumnName();
 
-		createColumn(
-			_primaryKeyColumnName, Long.class, Types.BIGINT,
-			Column.FLAG_PRIMARY);
-
-		for (ObjectField objectField : objectFields) {
-			createColumn(
-				objectField.getDBColumnName(),
-				_javaClasses.get(objectField.getDBType()),
-				_sqlTypes.get(objectField.getDBType()), Column.FLAG_DEFAULT);
-		}
-
 		List<Expression<?>> selectExpressions = new ArrayList<>();
 
-		for (Column<DynamicObjectDefinitionTable, ?> column : getColumns()) {
-			selectExpressions.add(column);
+		selectExpressions.add(
+			createColumn(
+				_primaryKeyColumnName, Long.class, Types.BIGINT,
+				Column.FLAG_PRIMARY));
+
+		//TODO Use a factory class DynamicObjectDefinitionTableFactory that get the definitionId and inizialize everything
+		
+		for (ObjectField objectField : objectFields) {
+
+			if(Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+
+				List<ObjectFieldSetting> objectFieldSettings =
+					ObjectFieldSettingLocalServiceUtil.
+						getObjectFieldObjectFieldSettings(
+							objectField.getObjectFieldId());
+
+				Stream<ObjectFieldSetting> stream =
+					objectFieldSettings.stream();
+
+				Map<String, String> objectFieldSettingsValuesMap =
+					stream.collect(
+						Collectors.toMap(
+							ObjectFieldSetting::getName,
+							ObjectFieldSetting::getValue));
+
+				String function = GetterUtil.getString(
+					objectFieldSettingsValuesMap.get("function"));
+
+				String summarizeField = GetterUtil.getString(
+					objectFieldSettingsValuesMap.get("summarizeField"));
+
+				String relationshipName = GetterUtil.getString(
+					objectFieldSettingsValuesMap.get("relationship"));
+
+
+
+				Expression column = null;
+
+				Expression relatedColumn = null;
+
+				DynamicObjectDefinitionTable relatedTable = null;
+
+				try {
+
+					ObjectRelationship relationship =
+						ObjectRelationshipLocalServiceUtil.getObjectRelationship(
+							objectDefinition.getObjectDefinitionId(), relationshipName);
+
+					ObjectDefinition objectDefinition2 =
+						ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+							relationship.getObjectDefinitionId2());
+
+					ObjectField summarizeObjectField =
+						ObjectFieldLocalServiceUtil.fetchObjectField(
+							objectDefinition2.getObjectDefinitionId(),
+							summarizeField);
+
+					relatedTable =
+						new DynamicObjectDefinitionTable(
+							objectDefinition2,
+							ObjectFieldLocalServiceUtil.getObjectFields(
+								objectDefinition2.getObjectDefinitionId()),
+							summarizeObjectField.getDBTableName());
+
+					ObjectField relatedField =
+						ObjectFieldLocalServiceUtil.getObjectField(
+							relationship.getObjectFieldId2());
+
+					relatedColumn = relatedTable.getColumn(relatedField.getDBColumnName());
+
+					column = relatedTable.getColumn(summarizeObjectField.getDBColumnName());
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				Expression<?> expression = null;
+
+				if (function.equals("SUM")) {
+					expression = DSLFunctionFactoryUtil.sum(column);
+				}
+				else if (function.equals("COUNT")) {
+					expression = DSLFunctionFactoryUtil.count(column);
+				}
+				else if (function.equals("AVERAGE")) {
+					expression = DSLFunctionFactoryUtil.avg(column);
+				}
+				else if (function.equals("MAX")) {
+					expression = DSLFunctionFactoryUtil.max(column);
+				}
+				else if (function.equals("MIN")) {
+					expression = DSLFunctionFactoryUtil.min(column);
+				}
+
+				selectExpressions.add(DSLQueryFactoryUtil.scalarSubDSLQuery(
+
+					DSLQueryFactoryUtil.select(expression).from(relatedTable).where(relatedColumn.eq(getPrimaryKeyColumn())),
+
+					_javaClasses.get(objectField.getDBType()),
+					objectField.getName(),
+					_sqlTypes.get(objectField.getDBType())));
+			}
+			else {
+				selectExpressions.add(
+					createColumn(
+						objectField.getDBColumnName(),
+						_javaClasses.get(objectField.getDBType()),
+						_sqlTypes.get(objectField.getDBType()),
+						Column.FLAG_DEFAULT));
+			}
 		}
 
 		_selectExpressions = selectExpressions.toArray(new Expression<?>[0]);
@@ -121,6 +237,12 @@ public class DynamicObjectDefinitionTable
 		sb.append(" LONG not null primary key");
 
 		for (ObjectField objectField : _objectFields) {
+			if(Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+				continue;
+			}
+
 			sb.append(", ");
 			sb.append(objectField.getDBColumnName());
 			sb.append(" ");

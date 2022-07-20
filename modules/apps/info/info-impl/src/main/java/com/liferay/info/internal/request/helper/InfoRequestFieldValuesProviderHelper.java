@@ -22,6 +22,7 @@ import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
@@ -265,6 +266,7 @@ public class InfoRequestFieldValuesProviderHelper {
 		}
 
 		if (infoField.getInfoFieldType() instanceof FileInfoFieldType ||
+			infoField.getInfoFieldType() instanceof RelationshipInfoFieldType ||
 			infoField.getInfoFieldType() instanceof SelectInfoFieldType ||
 			infoField.getInfoFieldType() instanceof TextInfoFieldType) {
 

@@ -243,12 +243,46 @@ definition {
 	}
 
 	@description = "A non-administrative user should get a permissions denied error when trying to access the UI to get company logging information"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test GetCompanyLogsAsGuest {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property test.assert.warning.exceptions = "true";
 
-		// TODO LRQA-75857
+		task ("Given a non-administrative company user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("When the user tries accessing the company logging UI to download a specific company log") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			var companyId = JSONCompany.getCompanyId();
+			var logName = CompanyLogging.getCompanyLogName(portalInstanceName = "liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "o/company-log/${companyId}/${logName}?download=true");
+		}
+
+		task ("Then a permissions error is shown and no log is downloaded") {
+			AssertTextPresent(
+				locator1 = "//body",
+				value1 = "You don't have authorization to view this page.");
+
+			AssertTextPresent(
+				locator1 = "//body",
+				value1 = "HTTP ERROR 403");
+
+			CompanyLogging.assertNoLogDownloaded(logName = "${logName}");
+		}
 	}
 
 	@description = "If there are no logs available for a company, there should be some kind of message to notify the user when they try to check the available log names"

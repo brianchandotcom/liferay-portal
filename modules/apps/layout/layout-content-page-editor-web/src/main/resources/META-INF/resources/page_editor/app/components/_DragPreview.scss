@@ -1,6 +1,6 @@
 @import 'atlas-variables';
 
-.page-editor__drag-preview {
+html#{$cadmin-selector} .cadmin .page-editor__drag-preview {
 	cursor: grabbing;
 	height: 100%;
 	left: 0;

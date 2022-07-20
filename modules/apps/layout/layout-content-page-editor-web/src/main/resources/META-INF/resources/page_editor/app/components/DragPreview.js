@@ -109,29 +109,41 @@ export default function DragPreview() {
 	}
 
 	return (
-		<div className="page-editor__drag-preview">
-			<div
-				className={classNames('page-editor__drag-preview__content', {
-					'page-editor__drag-preview__content__treeview':
-						item?.origin === ITEM_ACTIVATION_ORIGINS.sidebar,
-				})}
-				dir={Liferay.Language.direction[themeDisplay?.getLanguageId()]}
-				ref={ref}
-				style={getItemStyles(
-					currentOffset,
-					ref,
-					Liferay.Language.direction[languageId] === 'rtl'
-				)}
-			>
-				{icon && (
-					<div className="align-items-center d-flex h-100">
-						<ClayIcon className="mt-0" symbol={icon} />
-					</div>
-				)}
+		<div className="cadmin">
+			<div className="page-editor__drag-preview">
+				<div
+					className={classNames(
+						'page-editor__drag-preview__content',
+						{
+							'page-editor__drag-preview__content__treeview':
+								item?.origin ===
+								ITEM_ACTIVATION_ORIGINS.sidebar,
+						}
+					)}
+					dir={
+						Liferay.Language.direction[
+							themeDisplay?.getLanguageId()
+						]
+					}
+					ref={ref}
+					style={getItemStyles(
+						currentOffset,
+						ref,
+						Liferay.Language.direction[languageId] === 'rtl'
+					)}
+				>
+					{icon && (
+						<div className="align-items-center d-flex h-100">
+							<ClayIcon className="mt-0" symbol={icon} />
+						</div>
+					)}
 
-				<span className="ml-3 text-truncate">
-					{item?.name ? item.name : Liferay.Language.get('element')}
-				</span>
+					<span className="ml-3 text-truncate">
+						{item?.name
+							? item.name
+							: Liferay.Language.get('element')}
+					</span>
+				</div>
 			</div>
 		</div>
 	);

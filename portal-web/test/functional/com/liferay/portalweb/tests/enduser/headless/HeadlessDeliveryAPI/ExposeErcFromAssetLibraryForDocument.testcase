@@ -26,6 +26,36 @@ definition {
 		}
 	}
 
+	@description = "Document is deleted in an asset library by default erc"
+	@priority = "4"
+	test CanDeleteDocumentInAssetLibraryByAssetLibraryIdAndDefaultErc {
+		property portal.acceptance = "true";
+
+		task ("Given a document without custom erc is created with a POST request in asset library") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
+				assetLibraryId = "${assetLibraryId}",
+				filePath = "${filePath}");
+		}
+
+		task ("When I make a DELETE request by assetLibraryId and UUID as the erc") {
+			var documentUuid = DocumentAPI.getUuidOfCreatedDocument(responseToParse = "${response}");
+
+			DocumentAPI.deleteDocumentInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				responseToParse = "${response}");
+		}
+
+		task ("Then the document is correctly deleted") {
+			DocumentAPI.assertProperDocumentTotalCount(
+				assetLibraryId = "${assetLibraryId}",
+				expectedDocumentTotalCount = "0",
+				filtervalue = "title%20eq%20%27Document_1.txt%27");
+		}
+	}
+
 	@description = "Get document in asset library by existing custom erc"
 	@priority = "5"
 	test CanGetDocumentInAssetLibraryByExistingCustomErc {

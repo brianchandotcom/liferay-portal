@@ -29,6 +29,29 @@ definition {
 		return "${curl}";
 	}
 
+	macro _deleteDocumentsByErcInAssetLibrary {
+		Variables.assertDefined(parameterList = "${externalReferenceCode}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(assetLibraryId)) {
+			var api = "asset-libraries/${assetLibraryId}/documents/by-external-reference-code/${externalReferenceCode}";
+		}
+		else {
+			var api = "sites/${siteId}/documents/by-external-reference-code/${externalReferenceCode}";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/${api} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+		''';
+
+		var curl = JSONCurlUtil.delete("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _filterDocumentInAssetLibrary {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${filtervalue}");
 
@@ -96,6 +119,20 @@ definition {
 		TestUtils.assertEquals(
 			actual = "${actualDocumentTotalCount}",
 			expected = "${expectedDocumentTotalCount}");
+	}
+
+	macro deleteDocumentInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId}");
+
+		if (!(isSet(externalReferenceCode))) {
+			Variables.assertDefined(parameterList = "${responseToParse}");
+
+			var externalReferenceCode = DocumentAPI.getUuidOfCreatedDocument(responseToParse = "${responseToParse}");
+		}
+
+		DocumentAPI._deleteDocumentsByErcInAssetLibrary(
+			assetLibraryId = "${assetLibraryId}",
+			externalReferenceCode = "${externalReferenceCode}");
 	}
 
 	macro getDocumentsByErcInAssetLibrary {

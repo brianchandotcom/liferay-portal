@@ -1344,6 +1344,10 @@
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />
 		</check>
+		<check name="PropertiesUpgradeLiferayPluginPackageFileCheck">
+			<category name="Upgrade" />
+			<description name="Performs several upgrade checks in `liferay-plugin-package.properties` file." />
+		</check>
 		<check name="PropertiesWhitespaceCheck">
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary whitespace in `.properties` files." />

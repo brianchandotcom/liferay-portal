@@ -275,9 +275,9 @@ public class ObjectEntryItemSelectorView
 			try {
 				Page<com.liferay.object.rest.dto.v1_0.ObjectEntry>
 					objectEntriesPage = _objectEntryManager.getObjectEntries(
-						_themeDisplay.getCompanyId(), _objectDefinition, null,
-						null, _getDTOConverterContext(), _getFilterString(),
-						null, null, null);
+						_themeDisplay.getCompanyId(), _objectDefinition,
+						StringPool.BLANK, null, _getDTOConverterContext(),
+						_getFilterString(), null, null, null);
 
 				List<ObjectEntry> objectEntries = TransformUtil.transform(
 					objectEntriesPage.getItems(),

@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.delivery.catalog.internal.graphql.query.v1
 
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Category;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Channel;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Pin;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
@@ -25,6 +26,7 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.RelatedProduct;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.CategoryResource;
+import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.PinResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductOptionResource;
@@ -77,6 +79,14 @@ public class Query {
 
 		_categoryResourceComponentServiceObjects =
 			categoryResourceComponentServiceObjects;
+	}
+
+	public static void setChannelResourceComponentServiceObjects(
+		ComponentServiceObjects<ChannelResource>
+			channelResourceComponentServiceObjects) {
+
+		_channelResourceComponentServiceObjects =
+			channelResourceComponentServiceObjects;
 	}
 
 	public static void setMappedProductResourceComponentServiceObjects(
@@ -200,6 +210,31 @@ public class Query {
 			categoryResource -> new CategoryPage(
 				categoryResource.getChannelProductCategoriesPage(
 					channelId, productId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channels(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ChannelPage channels(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_channelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			channelResource -> new ChannelPage(
+				channelResource.getChannelsPage(
+					search,
+					_filterBiFunction.apply(channelResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(channelResource, sortsString))));
 	}
 
 	/**
@@ -438,6 +473,39 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Category> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ChannelPage")
+	public class ChannelPage {
+
+		public ChannelPage(Page channelPage) {
+			actions = channelPage.getActions();
+
+			items = channelPage.getItems();
+			lastPage = channelPage.getLastPage();
+			page = channelPage.getPage();
+			pageSize = channelPage.getPageSize();
+			totalCount = channelPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Channel> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -729,6 +797,19 @@ public class Query {
 		categoryResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(ChannelResource channelResource)
+		throws Exception {
+
+		channelResource.setContextAcceptLanguage(_acceptLanguage);
+		channelResource.setContextCompany(_company);
+		channelResource.setContextHttpServletRequest(_httpServletRequest);
+		channelResource.setContextHttpServletResponse(_httpServletResponse);
+		channelResource.setContextUriInfo(_uriInfo);
+		channelResource.setContextUser(_user);
+		channelResource.setGroupLocalService(_groupLocalService);
+		channelResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(
 			MappedProductResource mappedProductResource)
 		throws Exception {
@@ -834,6 +915,8 @@ public class Query {
 		_attachmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CategoryResource>
 		_categoryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ChannelResource>
+		_channelResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MappedProductResource>
 		_mappedProductResourceComponentServiceObjects;
 	private static ComponentServiceObjects<PinResource>

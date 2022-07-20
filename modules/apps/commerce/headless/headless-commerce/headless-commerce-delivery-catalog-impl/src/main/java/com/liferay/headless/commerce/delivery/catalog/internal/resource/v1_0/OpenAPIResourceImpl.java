@@ -85,6 +85,8 @@ public class OpenAPIResourceImpl {
 
 			add(CategoryResourceImpl.class);
 
+			add(ChannelResourceImpl.class);
+
 			add(MappedProductResourceImpl.class);
 
 			add(PinResourceImpl.class);

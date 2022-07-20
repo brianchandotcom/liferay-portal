@@ -1092,4 +1092,58 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test RelationshipEnpointGetsDeletedWhenObjectDefinitionDeleted {
+		property portal.acceptance = "true";
+
+		task ("Given manyToMany relationship universitySubjects created") {
+			var relationshipName = ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "universitiesSubjects",
+				name = "universitiesSubjects",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
+				type = "manyToMany");
+		}
+
+		task ("Given university entry created") {
+			var universityId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Liferay University");
+		}
+
+		task ("Given subject entry created") {
+			var subjectId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "Liferay Foundations");
+		}
+
+		task ("Given subject entry related to university entry through universities PUT endpoint") {
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = "${universityId}",
+				objectEntry2 = "${subjectId}",
+				relationshipName = "universitiesSubjects");
+		}
+
+		task ("Given I delete the subject object definition") {
+			ObjectDefinitionAPI.deleteRelationship(objectDefinitionId = "${staticObjectId1}");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "Subject");
+		}
+
+		task ("When I call universities GET endpoint with {universityId}/universitySubjects") {
+			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelation(
+				en_US_plural_label = "universities",
+				objectId = "${universityId}",
+				relationshipName = "universitiesSubjects");
+		}
+
+		task ("Then I receive an error message of relationship not present") {
+			ObjectDefinitionAPI.assertResponseIncludesErrorMessage(
+				expectedValue = "No ObjectRelationship exists with the key {objectDefinitionId1=${staticObjectId1}, name=${relationshipName}}",
+				responseToParse = "${responseToParse}");
+		}
+	}
+
 }

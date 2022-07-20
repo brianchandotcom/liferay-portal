@@ -1,7 +1,7 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.56.0",
-		"@clayui/charts": "3.56.0",
+		"@clayui/button": "3.65.0",
+		"@clayui/charts": "3.65.0",
 		"@clayui/icon": "3.56.0",
 		"@clayui/table": "3.56.0",
 		"react": "16.12.0",

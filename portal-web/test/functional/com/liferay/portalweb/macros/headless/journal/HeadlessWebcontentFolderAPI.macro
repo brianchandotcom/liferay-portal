@@ -176,10 +176,12 @@ definition {
 		return "${response}";
 	}
 
-	macro getIdOfCreateStructuredContentFolder {
-		var folderId = JSONUtil.getWithJSONPath("${responseToParse}", "$.id");
+	macro getElementOfCreatedStructuredContentFolder {
+		Variables.assertDefined(parameterList = "${responseToParse},${element}");
 
-		return "${folderId}";
+		var elementValue = JSONUtil.getWithJSONPath("${responseToParse}", "${element}");
+
+		return "${elementValue}";
 	}
 
 	macro getStructuredContentFoldersByErcInAssetLibrary {

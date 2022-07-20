@@ -24,10 +24,10 @@ const CSS_EXPANDED = 'expanded';
 const VerticalNavigationBar = ({items, parentContainerId}) => {
 	const parentContainer = document.getElementById(parentContainerId);
 
-	const activeItem = items.find((item) => item.active);
+	const currentItem = items.find((item) => item.active);
 
 	const onIconClick = (item) => {
-		if (item.key !== activeItem.key) {
+		if (item.key !== currentItem.key) {
 			parentContainer.classList.add(CSS_EXPANDED);
 
 			navigate(item.href);
@@ -44,7 +44,7 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 	};
 
 	return (
-		<VerticalBar absolute defaultActive={activeItem?.key} position="left">
+		<VerticalBar absolute position="left">
 			<VerticalBar.Bar displayType="light" items={items}>
 				{(item) => (
 					<VerticalBar.Item key={item.key}>

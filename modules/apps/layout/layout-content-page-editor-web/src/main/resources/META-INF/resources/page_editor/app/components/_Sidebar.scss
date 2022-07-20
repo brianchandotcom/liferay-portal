@@ -10,19 +10,21 @@ $zIndexContent: 0;
 
 html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 	display: flex;
+	/* stylelint-disable */
 	height: calc(
 		100vh -
 			(
 				var(--control-menu-height) + var(--toolbar-height) +
-					var(--change-tracking-bar-height)
+					var(--change-tracking-indicator-height, 0px)
 			)
 	);
 	position: fixed;
 	right: 0;
 	top: calc(
 		var(--control-menu-height) + var(--toolbar-height) +
-			var(--change-tracking-bar-height)
+			var(--change-tracking-indicator-height, 0px)
 	);
+	/* stylelint-enable */
 	z-index: $sidebarZIndex;
 
 	&__buttons {
@@ -81,13 +83,15 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		border-left: 1px solid $cadmin-secondary-l3;
 		display: flex;
 		flex-direction: column;
+		/* stylelint-disable */
 		height: calc(
 			100vh -
 				(
 					var(--control-menu-height) + var(--toolbar-height) +
-						var(--change-tracking-bar-height)
+						var(--change-tracking-indicator-height, 0px)
 				)
 		);
+		/* stylelint-enable */
 		overflow-x: hidden;
 		position: fixed;
 		right: $sidebarButtonWidth;
@@ -105,7 +109,6 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 html#{$cadmin-selector} body {
 	--toolbar-height: #{$toolbarHeight};
 	/* stylelint-disable */
-	--change-tracking-bar-height: 0px;
 	--control-menu-height: 0px;
 	/* stylelint-enable */
 
@@ -115,10 +118,6 @@ html#{$cadmin-selector} body {
 		@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
 			--control-menu-height: #{$desktopControlMenuHeight};
 		}
-	}
-
-	&.change-tracking-enabled {
-		--change-tracking-bar-height: #{$changeTrackingBarHeight};
 	}
 
 	@include media-breakpoint-up(xl, $cadmin-grid-breakpoints) {

@@ -120,12 +120,64 @@ definition {
 	}
 
 	@description = "A company admin should only be able to see the logs from the company they are an admin of"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test GetCompanyAdminLogs {
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "CompanyLogging#GetCompanyAdminLogs";
 
-		// TODO LRQA-75855
+		task ("Given a new instance is created") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+		}
 
+		task ("And given a company admin user is added for that virtual instance") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			JSONUser.addUser(
+				creatorEmailAddress = "test@www.able.com",
+				creatorPassword = "test",
+				portalInstanceName = "www.able.com",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "userea@www.able.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
+
+			User.assignRegularRoleCP(
+				roleTitle = "Administrator",
+				userScreenName = "usersn");
+
+			User.editPassword(newPassword = "test");
+		}
+
+		task ("And given the company admin logs in to the virtual instance") {
+			User.logoutPG();
+
+			SignIn._signIn(
+				userEmailAddress = "userea@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+		}
+
+		task ("When the company admin navigates to the company logging UI access point") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080/o/company-log");
+		}
+
+		task ("Then only logs for that instance are shown") {
+			AssertElementPresent(
+				key_virtualHost = "www.able.com",
+				locator1 = "CompanyLogging#COMPANY_LOG_TITLE");
+
+			AssertElementNotPresent(
+				key_virtualHost = "liferay.com",
+				locator1 = "CompanyLogging#COMPANY_LOG_TITLE");
+		}
 	}
 
 	@description = "A company admin that tries to directly download the logs of a company they do not have access to should get a permissions error"

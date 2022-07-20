@@ -53,34 +53,41 @@ public class EhcachePortalCache<K extends Serializable, V>
 		_serializable =
 			ehcachePortalCacheConfiguration.isRequireSerialization();
 
-		CacheManager cacheManager =
-			ehcachePortalCacheManager.getEhcacheManager();
-
-		synchronized (cacheManager) {
-			if (!cacheManager.cacheExists(_portalCacheName)) {
-				cacheManager.addCache(_portalCacheName);
-			}
-		}
-
-		_ehcache = cacheManager.getCache(_portalCacheName);
-
-		RegisteredEventListeners registeredEventListeners =
-			_ehcache.getCacheEventNotificationService();
-
-		registeredEventListeners.registerListener(
-			new PortalCacheCacheEventListener<>(
-				aggregatedPortalCacheListener, this),
-			NotificationScope.ALL);
+		_cacheManager = ehcachePortalCacheManager.getEhcacheManager();
 	}
 
 	@Override
 	public Ehcache getEhcache() {
+		if (_ehcache == null) {
+			synchronized (this) {
+				if (_ehcache == null) {
+					synchronized (_cacheManager) {
+						if (!_cacheManager.cacheExists(_portalCacheName)) {
+							_cacheManager.addCache(_portalCacheName);
+						}
+					}
+
+					_ehcache = _cacheManager.getCache(_portalCacheName);
+
+					RegisteredEventListeners registeredEventListeners =
+						_ehcache.getCacheEventNotificationService();
+
+					registeredEventListeners.registerListener(
+						new PortalCacheCacheEventListener<>(
+							aggregatedPortalCacheListener, this),
+						NotificationScope.ALL);
+				}
+			}
+		}
+
 		return _ehcache;
 	}
 
 	@Override
 	public List<K> getKeys() {
-		List<?> rawKeys = _ehcache.getKeys();
+		Ehcache ehcache = getEhcache();
+
+		List<?> rawKeys = ehcache.getKeys();
 
 		if (!_serializable) {
 			return (List<K>)rawKeys;
@@ -110,54 +117,70 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	public void removeAll() {
-		_ehcache.removeAll();
+		Ehcache ehcache = getEhcache();
+
+		ehcache.removeAll();
 	}
 
 	@Override
 	protected V doGet(K key) {
+		Ehcache ehcache = getEhcache();
+
 		if (_serializable) {
-			return _getValue(_ehcache.get(new SerializableObjectWrapper(key)));
+			return _getValue(ehcache.get(new SerializableObjectWrapper(key)));
 		}
 
-		return _getValue(_ehcache.get(key));
+		return _getValue(ehcache.get(key));
 	}
 
 	@Override
 	protected void doPut(K key, V value, int timeToLive) {
-		_ehcache.put(_createElement(key, value, timeToLive));
+		Ehcache ehcache = getEhcache();
+
+		ehcache.put(_createElement(key, value, timeToLive));
 	}
 
 	@Override
 	protected V doPutIfAbsent(K key, V value, int timeToLive) {
+		Ehcache ehcache = getEhcache();
+
 		return _getValue(
-			_ehcache.putIfAbsent(_createElement(key, value, timeToLive)));
+			ehcache.putIfAbsent(_createElement(key, value, timeToLive)));
 	}
 
 	@Override
 	protected void doRemove(K key) {
+		Ehcache ehcache = getEhcache();
+
 		if (_serializable) {
-			_ehcache.remove(new SerializableObjectWrapper(key));
+			ehcache.remove(new SerializableObjectWrapper(key));
 		}
 		else {
-			_ehcache.remove(key);
+			ehcache.remove(key);
 		}
 	}
 
 	@Override
 	protected boolean doRemove(K key, V value) {
-		return _ehcache.removeElement(
+		Ehcache ehcache = getEhcache();
+
+		return ehcache.removeElement(
 			_createElement(key, value, DEFAULT_TIME_TO_LIVE));
 	}
 
 	@Override
 	protected V doReplace(K key, V value, int timeToLive) {
+		Ehcache ehcache = getEhcache();
+
 		return _getValue(
-			_ehcache.replace(_createElement(key, value, timeToLive)));
+			ehcache.replace(_createElement(key, value, timeToLive)));
 	}
 
 	@Override
 	protected boolean doReplace(K key, V oldValue, V newValue, int timeToLive) {
-		return _ehcache.replace(
+		Ehcache ehcache = getEhcache();
+
+		return ehcache.replace(
 			_createElement(key, oldValue, DEFAULT_TIME_TO_LIVE),
 			_createElement(key, newValue, timeToLive));
 	}
@@ -230,6 +253,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 		return (V)element.getObjectValue();
 	}
 
+	private final CacheManager _cacheManager;
 	private volatile Ehcache _ehcache;
 	private final String _portalCacheName;
 	private final boolean _serializable;

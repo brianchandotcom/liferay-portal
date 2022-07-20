@@ -135,7 +135,7 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 	}
 
 	public boolean isReachable() {
-		return JenkinsResultsParserUtil.isReachable(getName());
+		return JenkinsResultsParserUtil.isServerPortReachable(getName(), 22);
 	}
 
 	public void takeSlavesOffline(String offlineReason) {

@@ -112,11 +112,13 @@ public class PortalImplLocaleTest {
 
 	@Test
 	public void testInvalidResourceWithLocale() throws Exception {
-		MockHttpServletResponse httpServletResponse = _testLocaleForLanguageId(
-			"/en", "/WEB-INF/web.xml;.js", LocaleUtil.GERMANY);
+		MockHttpServletResponse mockHttpServletResponse =
+			_testLocaleForLanguageId(
+				"/en", "/WEB-INF/web.xml;.js", LocaleUtil.GERMANY);
 
 		Assert.assertEquals(
-			HttpServletResponse.SC_NOT_FOUND, httpServletResponse.getStatus());
+			HttpServletResponse.SC_NOT_FOUND,
+			mockHttpServletResponse.getStatus());
 	}
 
 	@Test

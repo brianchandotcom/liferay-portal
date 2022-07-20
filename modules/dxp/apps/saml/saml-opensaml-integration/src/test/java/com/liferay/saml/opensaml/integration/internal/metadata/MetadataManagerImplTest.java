@@ -44,33 +44,38 @@ public class MetadataManagerImplTest extends BaseSamlTestCase {
 
 	@Test
 	public void testGetRequestPath() {
-		MockHttpServletRequest request = new MockHttpServletRequest(
-			HttpMethods.GET,
-			"/c/portal/login;jsessionid=ACD311312312323BF.worker1");
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(
+				HttpMethods.GET,
+				"/c/portal/login;jsessionid=ACD311312312323BF.worker1");
 
 		Assert.assertEquals(
-			"/c/portal/login", metadataManagerImpl.getRequestPath(request));
+			"/c/portal/login",
+			metadataManagerImpl.getRequestPath(mockHttpServletRequest));
 	}
 
 	@Test
 	public void testGetRequestPathWithContext() {
-		MockHttpServletRequest request = new MockHttpServletRequest(
-			HttpMethods.GET,
-			"/portal/c/portal/login;jsessionid=ACD311312312323BF.worker1");
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(
+				HttpMethods.GET,
+				"/portal/c/portal/login;jsessionid=ACD311312312323BF.worker1");
 
-		request.setContextPath("/portal");
+		mockHttpServletRequest.setContextPath("/portal");
 
 		Assert.assertEquals(
-			"/c/portal/login", metadataManagerImpl.getRequestPath(request));
+			"/c/portal/login",
+			metadataManagerImpl.getRequestPath(mockHttpServletRequest));
 	}
 
 	@Test
 	public void testGetRequestPathWithoutJsessionId() {
-		MockHttpServletRequest request = new MockHttpServletRequest(
-			HttpMethods.GET, "/c/portal/login");
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(HttpMethods.GET, "/c/portal/login");
 
 		Assert.assertEquals(
-			"/c/portal/login", metadataManagerImpl.getRequestPath(request));
+			"/c/portal/login",
+			metadataManagerImpl.getRequestPath(mockHttpServletRequest));
 	}
 
 }

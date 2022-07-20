@@ -123,21 +123,22 @@ public class LayoutAdaptiveMediaProcessorTest {
 		RenderFragmentLayoutTag renderFragmentLayoutTag =
 			new RenderFragmentLayoutTag();
 
-		MockHttpServletRequest httpServletRequest =
+		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		httpServletRequest.setAttribute(
-			WebKeys.CTX, httpServletRequest.getServletContext());
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
-		httpServletRequest.setMethod(HttpMethods.GET);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CTX, mockHttpServletRequest.getServletContext());
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
+		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
-		_themeDisplay.setRequest(httpServletRequest);
+		_themeDisplay.setRequest(mockHttpServletRequest);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
 		renderFragmentLayoutTag.doTag(
-			httpServletRequest, mockHttpServletResponse);
+			mockHttpServletRequest, mockHttpServletResponse);
 
 		String content = mockHttpServletResponse.getContentAsString();
 
@@ -187,21 +188,22 @@ public class LayoutAdaptiveMediaProcessorTest {
 		RenderFragmentLayoutTag renderFragmentLayoutTag =
 			new RenderFragmentLayoutTag();
 
-		MockHttpServletRequest httpServletRequest =
+		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		httpServletRequest.setAttribute(
-			WebKeys.CTX, httpServletRequest.getServletContext());
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
-		httpServletRequest.setMethod(HttpMethods.GET);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CTX, mockHttpServletRequest.getServletContext());
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
+		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
-		_themeDisplay.setRequest(httpServletRequest);
+		_themeDisplay.setRequest(mockHttpServletRequest);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
 		renderFragmentLayoutTag.doTag(
-			httpServletRequest, mockHttpServletResponse);
+			mockHttpServletRequest, mockHttpServletResponse);
 
 		String content = mockHttpServletResponse.getContentAsString();
 

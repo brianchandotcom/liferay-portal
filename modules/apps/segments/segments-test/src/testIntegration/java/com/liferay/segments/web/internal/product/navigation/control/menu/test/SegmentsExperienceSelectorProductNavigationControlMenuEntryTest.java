@@ -79,15 +79,15 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntryTest {
 
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(
-				_getHttpServletRequest(layout)));
+				_getMockHttpServletRequest(layout)));
 	}
 
 	@Test
 	public void testIsShowInEditMode() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		MockHttpServletRequest mockHttpServletRequest = _getHttpServletRequest(
-			layout);
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layout);
 
 		mockHttpServletRequest.addParameter("p_l_mode", Constants.EDIT);
 
@@ -108,7 +108,7 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntryTest {
 
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(
-				_getHttpServletRequest(layout)));
+				_getMockHttpServletRequest(layout)));
 	}
 
 	@Test
@@ -123,7 +123,7 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntryTest {
 
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(
-				_getHttpServletRequest(layout)));
+				_getMockHttpServletRequest(layout)));
 	}
 
 	@Test
@@ -134,8 +134,8 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntryTest {
 			_group.getGroupId(), _portal.getClassNameId(Layout.class),
 			layout.getPlid());
 
-		MockHttpServletRequest mockHttpServletRequest = _getHttpServletRequest(
-			layout);
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layout);
 
 		mockHttpServletRequest.setAttribute(
 			ContentPageEditorWebKeys.CLASS_NAME,
@@ -151,7 +151,7 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntryTest {
 
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(
-				_getHttpServletRequest(layout)));
+				_getMockHttpServletRequest(layout)));
 	}
 
 	@Test
@@ -160,10 +160,10 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntryTest {
 
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(
-				_getHttpServletRequest(layout)));
+				_getMockHttpServletRequest(layout)));
 	}
 
-	private MockHttpServletRequest _getHttpServletRequest(Layout layout)
+	private MockHttpServletRequest _getMockHttpServletRequest(Layout layout)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =

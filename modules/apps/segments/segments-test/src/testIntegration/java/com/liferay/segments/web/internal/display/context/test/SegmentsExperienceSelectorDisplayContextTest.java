@@ -160,7 +160,9 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 			segmentsExperiencesJSONObject3.getLong("segmentsExperienceId"));
 	}
 
-	private MockHttpServletRequest _getHttpServletRequest() throws Exception {
+	private MockHttpServletRequest _getMockHttpServletRequest()
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -174,7 +176,7 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 
 	private JSONArray _getSegmentsExperiencesJSONArray() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
-			_getHttpServletRequest();
+			_getMockHttpServletRequest();
 
 		_productNavigationControlMenuEntry.includeIcon(
 			mockHttpServletRequest, new MockHttpServletResponse());

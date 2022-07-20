@@ -78,9 +78,10 @@ public class ServicePreActionTest {
 		LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), "Page not visible", false, null, false, true);
 
-		_request.setRequestURI(_portal.getPathMain() + "/portal/login");
+		_mockHttpServletRequest.setRequestURI(
+			_portal.getPathMain() + "/portal/login");
 
-		_request.setAttribute(
+		_mockHttpServletRequest.setAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET, _group.getPublicLayoutSet());
 	}
 
@@ -88,13 +89,13 @@ public class ServicePreActionTest {
 	public void testHiddenLayoutsVirtualHostLayoutCompositeWithNonexistentLayout()
 		throws Exception {
 
-		_request.setRequestURI("/nonexistent_page");
+		_mockHttpServletRequest.setRequestURI("/nonexistent_page");
 
 		long plid = _getThemeDisplayPlid(true, false);
 
 		Object defaultLayoutComposite = ReflectionTestUtil.invoke(
 			_servicePreAction, "_getDefaultVirtualHostLayoutComposite",
-			new Class<?>[] {HttpServletRequest.class}, _request);
+			new Class<?>[] {HttpServletRequest.class}, _mockHttpServletRequest);
 
 		Object viewableLayoutComposite = ReflectionTestUtil.invoke(
 			_servicePreAction, "_getViewableLayoutComposite",
@@ -102,7 +103,8 @@ public class ServicePreActionTest {
 				HttpServletRequest.class, User.class, PermissionChecker.class,
 				Layout.class, List.class, boolean.class
 			},
-			_request, _user, _permissionCheckerFactory.create(_user),
+			_mockHttpServletRequest, _user,
+			_permissionCheckerFactory.create(_user),
 			_getLayout(defaultLayoutComposite),
 			_getLayouts(defaultLayoutComposite), false);
 
@@ -124,14 +126,16 @@ public class ServicePreActionTest {
 		Assert.assertNotEquals(
 			_group.getGroupId(), serviceContext.getScopeGroupId());
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_mockHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Assert.assertNull(themeDisplay);
 
-		_servicePreAction.servicePre(_request, _response, false);
+		_servicePreAction.servicePre(
+			_mockHttpServletRequest, _mockHttpServletResponse, false);
 
-		themeDisplay = (ThemeDisplay)_request.getAttribute(
+		themeDisplay = (ThemeDisplay)_mockHttpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Assert.assertNotNull(themeDisplay);
@@ -224,7 +228,8 @@ public class ServicePreActionTest {
 		Layout layout = _getLayout(
 			ReflectionTestUtil.invoke(
 				_servicePreAction, "_getDefaultVirtualHostLayoutComposite",
-				new Class<?>[] {HttpServletRequest.class}, _request));
+				new Class<?>[] {HttpServletRequest.class},
+				_mockHttpServletRequest));
 
 		Assert.assertEquals(layout.getPlid(), plid);
 	}
@@ -258,12 +263,13 @@ public class ServicePreActionTest {
 				_user = UserTestUtil.addUser();
 			}
 			else {
-				_user = _portal.initUser(_request);
+				_user = _portal.initUser(_mockHttpServletRequest);
 			}
 
-			_request.setAttribute(WebKeys.USER, _user);
+			_mockHttpServletRequest.setAttribute(WebKeys.USER, _user);
 
-			_servicePreAction.run(_request, _response);
+			_servicePreAction.run(
+				_mockHttpServletRequest, _mockHttpServletResponse);
 		}
 		finally {
 			if (!hasGuestViewPermission) {
@@ -278,8 +284,9 @@ public class ServicePreActionTest {
 			}
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_mockHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getPlid();
 	}
@@ -287,23 +294,22 @@ public class ServicePreActionTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private final MockHttpServletRequest _mockHttpServletRequest =
+		new MockHttpServletRequest();
+	private final MockHttpServletResponse _mockHttpServletResponse =
+		new MockHttpServletResponse();
+
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Inject
 	private Portal _portal;
 
-	private final MockHttpServletRequest _request =
-		new MockHttpServletRequest();
-
 	@Inject
 	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	private final MockHttpServletResponse _response =
-		new MockHttpServletResponse();
 
 	@Inject
 	private RoleLocalService _roleLocalService;

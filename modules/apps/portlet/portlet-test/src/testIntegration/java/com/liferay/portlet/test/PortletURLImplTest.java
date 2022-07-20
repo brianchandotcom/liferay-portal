@@ -72,18 +72,19 @@ public class PortletURLImplTest {
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
-		MockHttpServletRequest mockServletRequest =
+		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		RenderParametersPool.put(
-			mockServletRequest, themeDisplay.getPlid(), PortletKeys.LOGIN,
+			mockHttpServletRequest, themeDisplay.getPlid(), PortletKeys.LOGIN,
 			Collections.singletonMap(
 				"name", new String[] {"value1", "value2"}));
 
 		LiferayPortletURL liferayPortletURL = _portletURLFactory.create(
-			mockServletRequest, PortletKeys.LOGIN, themeDisplay.getPlid(),
+			mockHttpServletRequest, PortletKeys.LOGIN, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		liferayPortletURL.setCopyCurrentRenderParameters(true);

@@ -116,21 +116,21 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 	private void _processLayoutTemplate(String templateContent)
 		throws Exception {
 
-		MockHttpServletRequest httpServletRequest =
+		MockHttpServletRequest mockHttpServletRequest =
 			(MockHttpServletRequest)
 				PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		httpServletRequest.setAttribute(
+		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());
-		httpServletRequest.setAttribute(
-			WebKeys.CTX, httpServletRequest.getServletContext());
-		httpServletRequest.setAttribute(
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CTX, mockHttpServletRequest.getServletContext());
+		mockHttpServletRequest.setAttribute(
 			WebKeys.CURRENT_URL, RandomTestUtil.randomString());
-		httpServletRequest.setMethod(HttpMethods.GET);
+		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
+			(ThemeDisplay)mockHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setLayoutTypePortlet(
@@ -146,7 +146,7 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 
 		RuntimePageUtil.processTemplate(
-			httpServletRequest, new MockHttpServletResponse(), null,
+			mockHttpServletRequest, new MockHttpServletResponse(), null,
 			new StringTemplateResource(_TEMPLATE_ID, templateContent),
 			TemplateConstants.LANG_TYPE_FTL);
 	}

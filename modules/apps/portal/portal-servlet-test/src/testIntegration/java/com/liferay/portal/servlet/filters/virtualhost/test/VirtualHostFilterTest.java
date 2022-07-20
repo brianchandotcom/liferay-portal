@@ -167,7 +167,8 @@ public class VirtualHostFilterTest {
 	}
 
 	private String _getLastPath(
-		MockHttpServletRequest request, MockHttpServletResponse response,
+		MockHttpServletRequest mockHttpServletRequest,
+		MockHttpServletResponse mockHttpServletResponse,
 		MockFilterChain filterChain) {
 
 		_virtualHostFilter.init(_mockFilterConfig);
@@ -178,9 +179,10 @@ public class VirtualHostFilterTest {
 				HttpServletRequest.class, HttpServletResponse.class,
 				FilterChain.class
 			},
-			request, response, filterChain);
+			mockHttpServletRequest, mockHttpServletResponse, filterChain);
 
-		LastPath lastPath = (LastPath)request.getAttribute(WebKeys.LAST_PATH);
+		LastPath lastPath = (LastPath)mockHttpServletRequest.getAttribute(
+			WebKeys.LAST_PATH);
 
 		if (lastPath != null) {
 			return lastPath.getPath();

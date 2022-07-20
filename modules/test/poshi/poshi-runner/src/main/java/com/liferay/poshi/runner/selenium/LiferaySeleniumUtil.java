@@ -424,6 +424,14 @@ public class LiferaySeleniumUtil {
 				baseDirNames, PropsValues.TEST_INCLUDE_DIR_NAMES);
 		}
 
+		if (Validator.isNotNull(PropsValues.TEST_DIRS)) {
+			Collections.addAll(baseDirNames, PropsValues.TEST_DIRS);
+		}
+
+		if (Validator.isNotNull(PropsValues.TEST_SUPPORT_DIRS)) {
+			Collections.addAll(baseDirNames, PropsValues.TEST_SUBREPO_DIRS);
+		}
+
 		if (Validator.isNotNull(PropsValues.TEST_SUBREPO_DIRS)) {
 			Collections.addAll(baseDirNames, PropsValues.TEST_SUBREPO_DIRS);
 		}

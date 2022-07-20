@@ -23,6 +23,7 @@ import {
 } from './contexts/StyleBookEditorContext';
 import BooleanFrontendToken from './frontend_tokens/BooleanFrontendToken';
 import ColorFrontendToken from './frontend_tokens/ColorFrontendToken';
+import LengthFrontendToken from './frontend_tokens/LengthFrontendToken';
 import SelectFrontendToken from './frontend_tokens/SelectFrontendToken';
 import TextFrontendToken from './frontend_tokens/TextFrontendToken';
 
@@ -99,6 +100,13 @@ export default function FrontendTokenSet({
 function getFrontendTokenComponent(frontendToken) {
 	if (frontendToken.editorType === 'ColorPicker') {
 		return ColorFrontendToken;
+	}
+
+	if (
+		Liferay.FeatureFlags['LPS-143206'] &&
+		frontendToken.editorType === 'Length'
+	) {
+		return LengthFrontendToken;
 	}
 
 	if (frontendToken.validValues) {

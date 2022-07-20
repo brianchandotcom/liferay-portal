@@ -1519,7 +1519,11 @@ definition {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 		}
 
+		WaitForPageLoad();
+
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+
+		WaitForPageLoad();
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -1532,7 +1536,11 @@ definition {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 		}
 
+		WaitForPageLoad();
+
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+
+		WaitForPageLoad();
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -1556,6 +1564,8 @@ definition {
 		else {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 		}
+
+		WaitForPageLoad();
 
 		WebContent.moveToRecycleBinCP(webContentTitle = "${webContentTitle}");
 	}

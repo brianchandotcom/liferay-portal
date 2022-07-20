@@ -19,6 +19,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
 
 import java.util.Objects;
@@ -39,14 +40,16 @@ public abstract class BaseObjectEntryManager {
 
 		if (objectScopeProvider.isGroupAware()) {
 			if (Objects.equals("site", objectDefinition.getScope())) {
-				return GroupUtil.getGroupId(
-					objectDefinition.getCompanyId(), scopeKey,
-					groupLocalService);
+				return GetterUtil.getLong(
+					GroupUtil.getGroupId(
+						objectDefinition.getCompanyId(), scopeKey,
+						groupLocalService));
 			}
 
-			return GroupUtil.getDepotGroupId(
-				scopeKey, objectDefinition.getCompanyId(),
-				depotEntryLocalService, groupLocalService);
+			return GetterUtil.getLong(
+				GroupUtil.getDepotGroupId(
+					scopeKey, objectDefinition.getCompanyId(),
+					depotEntryLocalService, groupLocalService));
 		}
 
 		return 0;

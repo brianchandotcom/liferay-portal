@@ -21,8 +21,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -50,7 +48,6 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -288,43 +285,12 @@ public class ReleaseManagerImpl implements ReleaseManager {
 					"upgrade.from.schema.version");
 			String toSchemaVersionString = (String)serviceReference.getProperty(
 				"upgrade.to.schema.version");
-			Object buildNumberObject = serviceReference.getProperty(
-				"build.number");
-
-			UpgradeStep upgradeStep = _bundleContext.getService(
-				serviceReference);
-
-			int buildNumber = 0;
-
-			if (buildNumberObject == null) {
-				try {
-					Class<? extends UpgradeStep> clazz = upgradeStep.getClass();
-
-					Configuration configuration =
-						ConfigurationFactoryUtil.getConfiguration(
-							clazz.getClassLoader(), "service");
-
-					Properties properties = configuration.getProperties();
-
-					buildNumber = GetterUtil.getInteger(
-						properties.getProperty("build.number"));
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to read service.properties for " +
-								serviceReference,
-							exception);
-					}
-				}
-			}
-			else {
-				buildNumber = GetterUtil.getInteger(buildNumberObject);
-			}
+			int buildNumber = GetterUtil.getInteger(
+				serviceReference.getProperty("build.number"));
 
 			return new UpgradeInfo(
 				fromSchemaVersionString, toSchemaVersionString, buildNumber,
-				upgradeStep);
+				_bundleContext.getService(serviceReference));
 		}
 
 		@Override

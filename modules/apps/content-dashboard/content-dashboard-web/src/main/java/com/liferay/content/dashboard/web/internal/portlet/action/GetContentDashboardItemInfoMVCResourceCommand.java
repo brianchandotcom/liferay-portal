@@ -143,6 +143,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					_getFetchSharingButtonURL(
 						contentDashboardItem, httpServletRequest)
 				).put(
+					"fetchSharingContactsURL",
+					_getFetchSharingContactsURL(
+						contentDashboardItem, httpServletRequest)
+				).put(
 					"languageTag", locale.toLanguageTag()
 				).put(
 					"modifiedDate",
@@ -320,6 +324,29 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			contentDashboardItem.getContentDashboardItemActions(
 				httpServletRequest,
 				ContentDashboardItemAction.Type.SHARING_BUTTON);
+
+		if (ListUtil.isNotEmpty(contentDashboardItemActions)) {
+			ContentDashboardItemAction contentDashboardItemAction =
+				contentDashboardItemActions.get(0);
+
+			return contentDashboardItemAction.getURL();
+		}
+
+		return null;
+	}
+
+	private String _getFetchSharingContactsURL(
+		ContentDashboardItem contentDashboardItem,
+		HttpServletRequest httpServletRequest) {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153687"))) {
+			return null;
+		}
+
+		List<ContentDashboardItemAction> contentDashboardItemActions =
+			contentDashboardItem.getContentDashboardItemActions(
+				httpServletRequest,
+				ContentDashboardItemAction.Type.SHARING_COLLABORATORS);
 
 		if (ListUtil.isNotEmpty(contentDashboardItemActions)) {
 			ContentDashboardItemAction contentDashboardItemAction =

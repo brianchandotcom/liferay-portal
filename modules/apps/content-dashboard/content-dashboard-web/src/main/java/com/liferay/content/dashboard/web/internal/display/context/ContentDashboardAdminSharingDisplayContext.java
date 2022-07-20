@@ -83,8 +83,51 @@ public class ContentDashboardAdminSharingDisplayContext {
 		return false;
 	}
 
+	public boolean isSharingCollaboratorsVisible() throws PortalException {
+		ContentDashboardItemFactory<?> contentDashboardItemFactory =
+			_contentDashboardItemFactoryTracker.getContentDashboardItemFactory(
+				_getClassName());
+
+		if (contentDashboardItemFactory == null) {
+			return false;
+		}
+
+		ContentDashboardItem<?> contentDashboardItem = _toContentDashboardItem(
+			contentDashboardItemFactory, getClassPK());
+
+		if (contentDashboardItem == null) {
+			return false;
+		}
+
+		ContentDashboardItemAction contentDashboardItemAction =
+			_getSharingCollaboratorsContentDashboardItemAction(
+				contentDashboardItem);
+
+		if (contentDashboardItemAction.getURL() != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _getClassName() {
 		return ParamUtil.getString(_httpServletRequest, "className");
+	}
+
+	private ContentDashboardItemAction
+		_getSharingCollaboratorsContentDashboardItemAction(
+			ContentDashboardItem<?> contentDashboardItem) {
+
+		List<ContentDashboardItemAction> contentDashboardItemActions =
+			contentDashboardItem.getContentDashboardItemActions(
+				_httpServletRequest,
+				ContentDashboardItemAction.Type.SHARING_COLLABORATORS);
+
+		if (!ListUtil.isEmpty(contentDashboardItemActions)) {
+			return contentDashboardItemActions.get(0);
+		}
+
+		return null;
 	}
 
 	private ContentDashboardItemAction _getSharingContentDashboardItemAction(

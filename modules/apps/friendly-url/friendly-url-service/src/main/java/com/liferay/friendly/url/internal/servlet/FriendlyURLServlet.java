@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -171,6 +172,12 @@ public class FriendlyURLServlet extends HttpServlet {
 		Map<String, Object> requestContext = HashMapBuilder.<String, Object>put(
 			"request", httpServletRequest
 		).build();
+
+		if (GroupThreadLocal.getGroupId() ==
+				GroupConstants.DEFAULT_LIVE_GROUP_ID) {
+
+			GroupThreadLocal.setGroupId(group.getGroupId());
+		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

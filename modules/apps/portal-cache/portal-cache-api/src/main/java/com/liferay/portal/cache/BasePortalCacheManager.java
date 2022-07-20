@@ -71,43 +71,36 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			String portalCacheName, boolean mvcc)
 		throws PortalCacheException {
 
-		PortalCache<K, V> portalCache = _portalCaches.get(portalCacheName);
+		return _portalCaches.compute(
+			portalCacheName,
+			(key, value) -> {
+				if (value != null) {
+					_verifyPortalCache(value, mvcc);
 
-		if (portalCache != null) {
-			_verifyPortalCache(portalCache, mvcc);
+					return value;
+				}
 
-			return portalCache;
-		}
+				PortalCacheConfiguration portalCacheConfiguration =
+					_portalCacheManagerConfiguration.
+						getPortalCacheConfiguration(portalCacheName);
 
-		PortalCacheConfiguration portalCacheConfiguration =
-			_portalCacheManagerConfiguration.getPortalCacheConfiguration(
-				portalCacheName);
+				value = createPortalCache(portalCacheConfiguration);
 
-		portalCache = createPortalCache(portalCacheConfiguration);
+				_initPortalCacheListeners(value, portalCacheConfiguration);
 
-		_initPortalCacheListeners(portalCache, portalCacheConfiguration);
+				if (mvcc) {
+					value = (PortalCache<K, V>)new MVCCPortalCache<>(
+						(LowLevelCache<K, MVCCModel>)value);
+				}
 
-		if (mvcc) {
-			portalCache = (PortalCache<K, V>)new MVCCPortalCache<>(
-				(LowLevelCache<K, MVCCModel>)portalCache);
-		}
+				if (isTransactionalPortalCacheEnabled() &&
+					isTransactionalPortalCache(portalCacheName)) {
 
-		if (isTransactionalPortalCacheEnabled() &&
-			isTransactionalPortalCache(portalCacheName)) {
+					value = new TransactionalPortalCache<>(value, mvcc);
+				}
 
-			portalCache = new TransactionalPortalCache<>(portalCache, mvcc);
-		}
-
-		PortalCache<K, V> previousPortalCache = _portalCaches.putIfAbsent(
-			portalCacheName, portalCache);
-
-		if (previousPortalCache != null) {
-			_verifyPortalCache(portalCache, mvcc);
-
-			portalCache = previousPortalCache;
-		}
-
-		return portalCache;
+				return value;
+			});
 	}
 
 	@Override

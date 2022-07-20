@@ -33,6 +33,7 @@ import com.liferay.poshi.runner.util.AntCommands;
 import com.liferay.poshi.runner.util.ArchiveUtil;
 import com.liferay.poshi.runner.util.EmailCommands;
 import com.liferay.poshi.runner.util.HtmlUtil;
+import com.liferay.poshi.runner.util.TableUtil;
 
 import com.testautomationguru.ocular.Ocular;
 import com.testautomationguru.ocular.OcularConfiguration;
@@ -701,6 +702,41 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		selectedLabelCondition.assertTrue();
 	}
 
+	public void assertTableContents(String locator, String tableString)
+		throws Exception {
+
+		List<List<String>> parsedTable = getParsedTable(locator);
+
+		List<List<String>> parsedUserTable = TableUtil.getRawDataListFromString(
+			tableString);
+
+		if (parsedTable.size() != parsedUserTable.size()) {
+			throw new Exception("Table row numbers do not match");
+		}
+
+		for (int i = 0; i < parsedTable.size(); i++) {
+			List<String> rowContent = parsedTable.get(i);
+
+			List<String> rowUserContent = parsedUserTable.get(i);
+
+			if (rowContent.size() != rowUserContent.size()) {
+				throw new Exception("Table entry numbers do not match");
+			}
+
+			for (int j = 0; j < rowContent.size(); j++) {
+				String entry = rowContent.get(j);
+
+				String userEntry = rowUserContent.get(j);
+
+				if (!entry.equals(userEntry)) {
+					throw new Exception(
+						"Expected text: " + userEntry + "\nActual Text: " +
+							entry);
+				}
+			}
+		}
+	}
+
 	@Override
 	public void assertText(String locator, String pattern) throws Exception {
 		assertElementPresent(locator);
@@ -1330,6 +1366,30 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public String getPageSource() {
 		return _webDriver.getPageSource();
+	}
+
+	public List<List<String>> getParsedTable(String locator) {
+		List<List<String>> parsedTable = new ArrayList<>();
+
+		List<WebElement> rowsList = findElements(By.xpath(locator + "//tr"));
+		List<WebElement> columnsList;
+
+		for (int i = 2; i <= rowsList.size(); i++) {
+			List<String> rowContent = new ArrayList<>();
+			columnsList = findElements(
+				By.xpath(locator + "//tr[" + i + "]//td"));
+
+			for (int j = 1; j <= columnsList.size(); j++) {
+				WebElement entryContent = findElement(
+					By.xpath(locator + "//tr[" + i + "]//td[" + j + "]"));
+
+				rowContent.add(entryContent.getText());
+			}
+
+			parsedTable.add(rowContent);
+		}
+
+		return parsedTable;
 	}
 
 	@Override

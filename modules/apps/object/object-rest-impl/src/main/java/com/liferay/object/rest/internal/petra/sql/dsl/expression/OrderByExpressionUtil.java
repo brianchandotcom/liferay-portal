@@ -38,11 +38,17 @@ public class OrderByExpressionUtil {
 		return TransformUtil.transform(
 			sorts,
 			sort -> {
-				String[] parts = StringUtil.split(
-					sort.getFieldName(), CharPool.POUND);
+				String fieldName = sort.getFieldName();
+
+				if (fieldName.startsWith("nestedFieldArray.")) {
+					String[] parts = StringUtil.split(
+						sort.getFieldName(), CharPool.POUND);
+
+					fieldName = parts[1];
+				}
 
 				Column<?, ?> column = objectFieldLocalService.getColumn(
-					objectDefinitionId, parts[1]);
+					objectDefinitionId, fieldName);
 
 				if (sort.isReverse()) {
 					return column.descending();

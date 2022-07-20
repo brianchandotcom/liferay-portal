@@ -679,9 +679,17 @@ public class ObjectEntryLocalServiceImpl
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
 
+		Expression<?>[] objectEntrySelectExpressions = {
+			ObjectEntryTable.INSTANCE.objectEntryId,
+			ObjectEntryTable.INSTANCE.createDate,
+			ObjectEntryTable.INSTANCE.modifiedDate,
+			ObjectEntryTable.INSTANCE.status, ObjectEntryTable.INSTANCE.userName
+		};
+
 		Expression<?>[] selectExpressions = ArrayUtil.append(
 			dynamicObjectDefinitionTable.getSelectExpressions(),
-			extensionDynamicObjectDefinitionTable.getSelectExpressions());
+			extensionDynamicObjectDefinitionTable.getSelectExpressions(),
+			objectEntrySelectExpressions);
 
 		List<Object[]> rows = _list(
 			DSLQueryFactoryUtil.selectDistinct(
@@ -1579,7 +1587,7 @@ public class ObjectEntryLocalServiceImpl
 
 			return resultSet.getClob(name);
 		}
-		else if (sqlType == Types.DATE) {
+		else if ((sqlType == Types.DATE) || (sqlType == Types.TIMESTAMP)) {
 			return resultSet.getTimestamp(name);
 		}
 		else if (sqlType == Types.DECIMAL) {

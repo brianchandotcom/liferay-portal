@@ -72,7 +72,10 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.document.Field;
 import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -2219,26 +2222,37 @@ public class SXPBlueprintSearchResultTest {
 
 		SearchResponse searchResponse = _getSearchResponseSearchPage(
 			searchRequestBuilderConsumer);
-		List<SearchHit> hits = _getSearchResponseSearchPage()
-			.getSearchHits()
-			.getSearchHits();
-		for (SearchHit h : hits){
-			System.out.println(
-				"Title:  "+h.getDocument().getFields().get("title_en_US") +
-				" Score:  "+ h.getScore());
-		}
 
-		DocumentsAssert.assertValues(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), "title_en_US", expected);
+		try {
+			DocumentsAssert.assertValues(
+				searchResponse.getRequestString(),
+				searchResponse.getDocumentsStream(), "title_en_US", expected);
+		}
+		catch (AssertionError assertionError) {
+			String message = _getScore(searchResponse);
+
+			message = message + assertionError.getMessage();
+
+			throw new AssertionError(message);
+		}
 
 		if (!Objects.equals("{}", _sxpBlueprint.getElementInstancesJSON())) {
 			searchResponse = _getSearchResponsePreview(
 				searchRequestBuilderConsumer);
 
-			DocumentsAssert.assertValues(
-				searchResponse.getRequestString(),
-				searchResponse.getDocumentsStream(), "title_en_US", expected);
+			try {
+				DocumentsAssert.assertValues(
+					searchResponse.getRequestString(),
+					searchResponse.getDocumentsStream(), "title_en_US",
+					expected);
+			}
+			catch (AssertionError assertionError) {
+				String message = _getScore(searchResponse);
+
+				message = message + assertionError.getMessage();
+
+				throw new AssertionError(message);
+			}
 		}
 	}
 
@@ -2292,6 +2306,26 @@ public class SXPBlueprintSearchResultTest {
 			).put(
 				"enabled", enabled
 			).build());
+	}
+
+	private String _getScore(SearchResponse searchResponse) {
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		List<SearchHit> searchHitsList = searchHits.getSearchHits();
+
+		String message = StringPool.NEW_LINE;
+
+		for (SearchHit searchHit : searchHitsList) {
+			Document document = searchHit.getDocument();
+
+			Map<String, Field> fields = document.getFields();
+
+			message =
+				message + "Title: " + fields.get("title_en_US") + " Score: " +
+					searchHit.getScore() + StringPool.NEW_LINE;
+		}
+
+		return message;
 	}
 
 	private SearchResponse _getSearchResponsePreview(

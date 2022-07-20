@@ -26,12 +26,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
-import net.sf.ehcache.event.CacheEventListener;
 import net.sf.ehcache.event.NotificationScope;
 import net.sf.ehcache.event.RegisteredEventListeners;
 
@@ -201,19 +199,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 				aggregatedPortalCacheListener, this),
 			NotificationScope.ALL);
 
-		Ehcache oldEhcache = _ehcache;
-
 		_ehcache = ehcache;
-
-		registeredEventListeners =
-			oldEhcache.getCacheEventNotificationService();
-
-		Set<CacheEventListener> cacheEventListeners =
-			registeredEventListeners.getCacheEventListeners();
-
-		for (CacheEventListener cacheEventListener : cacheEventListeners) {
-			registeredEventListeners.unregisterListener(cacheEventListener);
-		}
 	}
 
 	private Element _createElement(K key, V value, int timeToLive) {

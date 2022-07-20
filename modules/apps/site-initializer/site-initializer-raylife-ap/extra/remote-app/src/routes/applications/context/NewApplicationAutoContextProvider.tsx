@@ -72,6 +72,7 @@ export type InitialStateTypes = {
 	currentStep: number;
 	hasFormChanges: boolean;
 	isAbleToBeSave: boolean;
+	isAbleToNextStep: boolean;
 	steps: {
 		contactInfo: {
 			form: ContactInfoFormTypes;
@@ -105,6 +106,7 @@ const initialState: InitialStateTypes = {
 	currentStep: 0,
 	hasFormChanges: false,
 	isAbleToBeSave: false,
+	isAbleToNextStep: false,
 	steps: {
 		contactInfo: {
 			form: {
@@ -188,6 +190,7 @@ export enum ACTIONS {
 	SET_COVERAGE_FORM = 'SET_COVERAGE_FORM',
 	SET_DRIVER_INFO_FORM = 'SET_DRIVER_INFO_FORM',
 	SET_HAS_FORM_CHANGE = 'SET_HAS_FORM_CHANGE',
+	SET_IS_ABLE_TO_NEXT = 'SET_IS_ABLE_TO_NEXT',
 	SET_IS_ABLE_TO_SAVE = 'SET_IS_ABLE_TO_SAVE',
 	SET_NEW_VEHICLE = 'SET_NEW_VEHICLE',
 	SET_NEW_DRIVER = 'SET_NEW_DRIVER',
@@ -206,6 +209,7 @@ type ActionsPayload = {
 		value: string;
 	};
 	[ACTIONS.SET_HAS_FORM_CHANGE]: boolean;
+	[ACTIONS.SET_IS_ABLE_TO_NEXT]: boolean;
 	[ACTIONS.SET_IS_ABLE_TO_SAVE]: boolean;
 	[ACTIONS.SET_NEW_DRIVER]: DriverInfoFormTypes;
 	[ACTIONS.SET_NEW_VEHICLE]: VehicleInfoFormTypes;
@@ -246,6 +250,12 @@ const reducer = (state: InitialStateTypes, action: ApplicationActions) => {
 			return {
 				...state,
 				hasFormChanges: action.payload,
+			};
+		}
+		case ACTIONS.SET_IS_ABLE_TO_NEXT: {
+			return {
+				...state,
+				isAbleToNextStep: action.payload,
 			};
 		}
 

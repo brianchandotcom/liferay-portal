@@ -27,9 +27,39 @@ import {
 	ACTIONS,
 	NewApplicationAutoContext,
 } from '../../../context/NewApplicationAutoContextProvider';
+import {useLocation} from './useLocation';
 
 const ContactInfo = () => {
 	const [state, dispatch] = useContext(NewApplicationAutoContext);
+
+	const {setAutoComplete} = useLocation();
+
+	const addressElement = document.querySelector(
+		'#streetAddress'
+	) as HTMLInputElement;
+
+	const updateFormWithGoogleAddress = (address: any) => {
+		// We need to put shouldValidate at least in one Field
+		// to force validation to others
+
+		// eslint-disable-next-line no-console
+		console.log('test', address);
+
+		// setValue(setFormPath('city'), address.city, {shouldValidate: true});
+		// setValue(setFormPath('state'), address.state);
+		// setValue(setFormPath('zip'), address.zip);
+		// setValue(
+		// 	setFormPath('address'),
+		// 	`${address.streetNumber} ${address.street}`
+		// );
+	};
+
+	useEffect(() => {
+		if (addressElement) {
+			setAutoComplete(addressElement, updateFormWithGoogleAddress);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [addressElement]);
 
 	const {form} = state?.steps?.contactInfo;
 
@@ -38,6 +68,9 @@ const ContactInfo = () => {
 			...form,
 			[fieldName]: fieldValue,
 		};
+
+		// eslint-disable-next-line no-console
+		console.log(payload);
 
 		dispatch({payload, type: ACTIONS.SET_CONTACT_INFO_FORM});
 		dispatch({payload: true, type: ACTIONS.SET_HAS_FORM_CHANGE});
@@ -125,15 +158,36 @@ const ContactInfo = () => {
 			!hasValidation.email &&
 			!hasValidation.phone;
 
-		const hasAllRequiredFields =
+		const hasAllRequiredFieldsToSave =
 			currentForm.firstName !== '' &&
 			currentForm.lastName !== '' &&
 			currentForm.email !== '' &&
 			currentForm.phone !== '';
 
+		const isAbleToNextStep =
+			isAbleToBeSave &&
+			!hasValidation.city &&
+			!hasValidation.dateOfBirth &&
+			!hasValidation.state &&
+			!hasValidation.streetAddress &&
+			!hasValidation.zipCode;
+
+		const hasAllRequiredFieldsToNextStep =
+			hasAllRequiredFieldsToSave &&
+			currentForm.city &&
+			currentForm.dateOfBirth &&
+			currentForm.state &&
+			currentForm.streetAddress &&
+			currentForm.zipCode &&
+			currentForm.ownership;
+
 		dispatch({
-			payload: isAbleToBeSave && hasAllRequiredFields,
+			payload: isAbleToBeSave && hasAllRequiredFieldsToSave,
 			type: ACTIONS.SET_IS_ABLE_TO_SAVE,
+		});
+		dispatch({
+			payload: isAbleToNextStep && hasAllRequiredFieldsToNextStep,
+			type: ACTIONS.SET_IS_ABLE_TO_NEXT,
 		});
 	};
 
@@ -563,7 +617,8 @@ const ContactInfo = () => {
 								setHasError({
 									...hasError,
 									state:
-										stateValue === '1' || stateValue === '2'
+										stateValue === '' ||
+										stateValue === 'CHOOSE AN OPTION'
 											? true
 											: false,
 								});
@@ -575,7 +630,8 @@ const ContactInfo = () => {
 								setHasError({
 									...hasError,
 									state:
-										stateValue === '1' || stateValue === '2'
+										stateValue === '' ||
+										stateValue === 'CHOOSE AN OPTION'
 											? true
 											: false,
 								});
@@ -659,18 +715,18 @@ const ContactInfo = () => {
 					<span className="text-danger-darken-1">*</span>
 				</div>
 
-				<ClayRadioGroup
-					className="ml-3"
-					inline
-					onChange={(event: any) => {
-						const ownershipValue = event.target.value;
+				<ClayRadioGroup className="ml-3" inline>
+					<ClayRadio
+						label="Rent"
+						onClick={() => handleChangeField('ownership', 'rent')}
+						value="rent"
+					/>
 
-						handleChangeField('ownership', ownershipValue);
-					}}
-				>
-					<ClayRadio label="Rent" value="Rent" />
-
-					<ClayRadio label="Own" value="Own" />
+					<ClayRadio
+						label="Own"
+						onClick={() => handleChangeField('ownership', 'own')}
+						value="own"
+					/>
 				</ClayRadioGroup>
 			</div>
 		</div>

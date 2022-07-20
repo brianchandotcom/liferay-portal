@@ -15,7 +15,7 @@
 import {useContext} from 'react';
 
 import {NewApplicationAutoContext} from '../../context/NewApplicationAutoContextProvider';
-import ContactInfo from '../../forms/steps/ContactInfo/ContactInfo';
+import ContactInfo from '../../forms/steps/ContactInfo';
 import DriverInfo from '../../forms/steps/DriverInfo';
 import VehicleInfo from '../../forms/steps/VehicleInfo';
 import NewApplicationAuto from './NewApplicationAuto';

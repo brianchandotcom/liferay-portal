@@ -226,6 +226,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 
 						<ClayButton
 							className="text-uppercase"
+							disabled={!state.isAbleToNextStep}
 							displayType="primary"
 							onClick={(event) => handleNextClick(event)}
 							small={true}

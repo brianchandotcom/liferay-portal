@@ -570,49 +570,24 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			if (GetterUtil.getBoolean(
 					PropsUtil.get("feature.flag.LPS-87806"))) {
 
-				if (_serviceTrackerMap.containsKey(selResource)) {
-					_resourcePermissionService.setIndividualResourcePermissions(
-						resourceGroupId, themeDisplay.getCompanyId(),
-						selResource, resourcePrimKey,
-						_getRoleIdsToActionIdsResourcePrimKey(
-							themeDisplay.getCompanyId(), resourcePrimKey,
-							roleIds, roleIdsToActionIds, selResource,
-							actionRequest));
-				}
-				else {
-					try (SafeCloseable safeCloseable =
-							CTCollectionThreadLocal.
-								setProductionModeWithSafeCloseable()) {
+				roleIdsToActionIds = _getRoleIdsToActionIdsResourcePrimKey(
+					themeDisplay.getCompanyId(), resourcePrimKey, roleIds,
+					roleIdsToActionIds, selResource, actionRequest);
+			}
 
-						_resourcePermissionService.
-							setIndividualResourcePermissions(
-								resourceGroupId, themeDisplay.getCompanyId(),
-								selResource, resourcePrimKey,
-								_getRoleIdsToActionIdsResourcePrimKey(
-									themeDisplay.getCompanyId(),
-									resourcePrimKey, roleIds,
-									roleIdsToActionIds, selResource,
-									actionRequest));
-					}
-				}
+			if (_serviceTrackerMap.containsKey(selResource)) {
+				_resourcePermissionService.setIndividualResourcePermissions(
+					resourceGroupId, themeDisplay.getCompanyId(), selResource,
+					resourcePrimKey, roleIdsToActionIds);
 			}
 			else {
-				if (_serviceTrackerMap.containsKey(selResource)) {
+				try (SafeCloseable safeCloseable =
+						CTCollectionThreadLocal.
+							setProductionModeWithSafeCloseable()) {
+
 					_resourcePermissionService.setIndividualResourcePermissions(
 						resourceGroupId, themeDisplay.getCompanyId(),
 						selResource, resourcePrimKey, roleIdsToActionIds);
-				}
-				else {
-					try (SafeCloseable safeCloseable =
-							CTCollectionThreadLocal.
-								setProductionModeWithSafeCloseable()) {
-
-						_resourcePermissionService.
-							setIndividualResourcePermissions(
-								resourceGroupId, themeDisplay.getCompanyId(),
-								selResource, resourcePrimKey,
-								roleIdsToActionIds);
-					}
 				}
 			}
 

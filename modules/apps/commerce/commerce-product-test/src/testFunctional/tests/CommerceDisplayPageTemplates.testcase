@@ -387,6 +387,132 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-9696. Verify user can see DPT mapping categories of selected vocabularies fields into the product details"
+	@priority = "3"
+	test CanMapCategoriesOfRespectiveVocabulariesFields {
+		property portal.acceptance = "false";
+
+		task ("Given a new vocabulary is added with some categories added inside of it (from the Global site administration panel)") {
+			Category.openCategoriesAdmin(siteURLKey = "global");
+
+			Vocabulary.addCP(
+				vocabularyDescription = "Test Vocabulary Description",
+				vocabularyName = "Test Vocabulary");
+
+			for (var categoryNum : list "1,2,3") {
+				Click(locator1 = "Button#PLUS");
+
+				Type(
+					locator1 = "Categories#CATEGORY_NAME_FIELD",
+					value1 = "Category ${categoryNum}");
+
+				Type(
+					locator1 = "CommerceEntry#DESCRIPTION_FIELD",
+					value1 = "Description ${categoryNum}");
+
+				Button.clickSave();
+			}
+		}
+
+		task ("And a category is added to Topic vocabulary") {
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Topic Category",
+				vocabularyName = "Topic");
+		}
+
+		task ("And some categories of the new vocabulary are selected inside a product (e.g. ABS Sensor)") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			Click(
+				key_entryName = "ABS Sensor",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+			Click(
+				key_fieldName = "Test Vocabulary",
+				locator1 = "Button#SELECT_BUTTON");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Click.clickAtNotVisible(
+				key_nodeName = "Category 1",
+				locator1 = "Treeview#NODE_CHECKBOX");
+
+			SelectFrame(value1 = "relative=top");
+
+			Click(locator1 = "Button#DONE");
+		}
+
+		task ("And the category related to Topic is also selected inside the product") {
+			Click(
+				key_fieldName = "Topic",
+				locator1 = "Button#SELECT_BUTTON");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Click.clickAtNotVisible(
+				key_nodeName = "Topic Category",
+				locator1 = "Treeview#NODE_CHECKBOX");
+
+			SelectFrame(value1 = "relative=top");
+
+			Click(locator1 = "Button#DONE");
+
+			Button.clickPublish();
+		}
+
+		task ("And a new Commerce Product type Display Page Template is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("When the Heading fragments are deployed on the page and the fields are mapped") {
+			CommerceDisplayPageTemplates.mapFragmentsToFields(
+				displayPageName = "Test Commerce Product Display Page Template",
+				fieldsList = "Minium,Topic,Test Vocabulary",
+				fragmentName = "Heading",
+				siteURLKey = "minium");
+		}
+
+		task ("And the template is published and Marked as Default") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the buyer logs in") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceLogin.miniumLogoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then in the product details, the buyer can see mapped all selected categories related to these 3 vocabularies") {
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			Click(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+			for (var categoryName : list "Category 1,Topic Category,Brake System") {
+				AssertElementPresent(
+					key_fragmentText = "${categoryName}",
+					key_id = "element-text",
+					locator1 = "CommerceEntry#ASSERT_FRAGMENTS_TEXT_IN_SF");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7277 Verify mapped Delivery Subscription related fields to fragments are visible in Store Fronts"
 	@priority = "3"
 	test CanMapDeliverySubscriptionFieldsToFragments {

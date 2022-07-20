@@ -1608,12 +1608,13 @@ definition {
 
 			ACSegments.addSegmentField(segmentField = "URL");
 
-			ACSegments.editTextCriterion(skip = "true");
+			ACSegments.editTextCriterion(
+				skip = "true",
+				textInput = "ac-page");
 
 			ACSegments.viewAutocompleteSuggestions(
 				autocompleteText = "${myUrl}",
-				notPresent = "home",
-				textInput = "ac-page");
+				notPresent = "home");
 		}
 
 		task ("Cancel the creation") {
@@ -1635,12 +1636,13 @@ definition {
 
 			ACSegments.addSegmentField(segmentField = "givenName");
 
-			ACSegments.editTextCriterion(skip = "true");
+			ACSegments.editTextCriterion(
+				skip = "true", 
+				textInput = "user");
 			
 			ACSegments.viewAutocompleteSuggestions(
 				autocompleteText = "userfn",
-				notPresent = "Abram",
-				textInput = "user");
+				notPresent = "Abram");
 		}
 	}
 

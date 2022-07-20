@@ -331,7 +331,9 @@ definition {
 			locator1 = "ACSegments#TEXT_INPUT",
 			value1 = "${textInput}");
 
-		Click(locator1 = "ACSegments#TOTAL_MEMBERS");
+		if (!(isSet(skip))) {
+			Click(locator1 = "ACSegments#TOTAL_MEMBERS");
+		}
 	}
 
 	macro editWebBehaviorCriterion {
@@ -609,12 +611,7 @@ definition {
 	}
 
 	macro viewAutocompleteSuggestions {
-		Type(
-			locator1 = "ACSegments#TEXT_INPUT",
-			value1 = "${textInput}");
-
 		AssertTextEquals.assertPartialText(
-			index = "1",
 			locator1 = "ACSegments#SEGMENT_AUTOCOMPLETE_DROPDOWN",
 			value1 = "${autocompleteText}");
 

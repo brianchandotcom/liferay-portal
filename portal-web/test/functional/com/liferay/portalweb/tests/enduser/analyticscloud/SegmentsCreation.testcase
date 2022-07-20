@@ -1592,7 +1592,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Add a new dynamic segment") {
@@ -1633,6 +1633,8 @@ definition {
 
 			ACSegments.addSegmentField(segmentField = "givenName");
 
+			ACSegments.editTextCriterion(skip = "true")
+			
 			ACSegments.viewAutocompleteSuggestions(
 				autocompleteText = "userfn",
 				notPresent = "Abram",

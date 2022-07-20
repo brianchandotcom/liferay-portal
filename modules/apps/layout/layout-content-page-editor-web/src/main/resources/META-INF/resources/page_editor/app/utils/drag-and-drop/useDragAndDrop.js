@@ -345,7 +345,7 @@ function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 		if (state.dropItem.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input) {
 			openToast({
 				message: Liferay.Language.get(
-					'Error: Form components can only be placed inside a mapped Form Container.'
+					'form-components-can-only-be-placed-inside-a-mapped-form-container'
 				),
 				type: 'danger',
 			});

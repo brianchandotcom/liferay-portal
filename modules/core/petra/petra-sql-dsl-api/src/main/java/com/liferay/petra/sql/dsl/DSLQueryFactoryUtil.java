@@ -16,6 +16,7 @@ package com.liferay.petra.sql.dsl;
 
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.factory.DSLQueryFactory;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 
 import java.util.Iterator;
@@ -52,6 +53,10 @@ public class DSLQueryFactoryUtil {
 
 	public static <T extends Table<T>> FromStep selectDistinct(Table<T> table) {
 		return _DSL_QUERY_FACTORY.selectDistinct(table);
+	}
+
+	public static <T> Expression<T> scalarSubDSLQuery(DSLQuery dslQuery,  Class<T> javaType, String name, int sqlType) {
+		return _DSL_QUERY_FACTORY.scalarSubDSLQuery(dslQuery, javaType, name, sqlType);
 	}
 
 	private static final DSLQueryFactory _DSL_QUERY_FACTORY;

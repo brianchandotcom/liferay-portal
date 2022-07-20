@@ -17,9 +17,11 @@ package com.liferay.petra.sql.dsl.spi.factory;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.factory.DSLQueryFactory;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultAlias;
+import com.liferay.petra.sql.dsl.spi.expression.DefaultScalarDSLQueryAlias;
 import com.liferay.petra.sql.dsl.spi.expression.TableStar;
 import com.liferay.petra.sql.dsl.spi.query.Select;
 
@@ -69,6 +71,11 @@ public class DefaultDSLQueryFactory implements DSLQueryFactory {
 	@Override
 	public <T extends Table<T>> FromStep selectDistinct(Table<T> table) {
 		return new Select(true, Collections.singleton(new TableStar(table)));
+	}
+
+	@Override
+	public <T> Expression<T> scalarSubDSLQuery(DSLQuery dslQuery, Class<T> javaType, String name, int sqlType){
+		return new DefaultScalarDSLQueryAlias<>(dslQuery, javaType, name, sqlType);
 	}
 
 	private static final FromStep _SELECT_COUNT_STAR_COUNT_VALUE = new Select(

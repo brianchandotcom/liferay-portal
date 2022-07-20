@@ -119,6 +119,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -701,11 +702,16 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
-			modelAttributes.put(
-				objectField.getName(),
-				GetterUtil.getObject(
-					baseModelAttributes.get(objectField.getDBColumnName()),
-					primaryKey));
+			Object value = GetterUtil.getObject(
+				baseModelAttributes.get(objectField.getDBColumnName()),
+				primaryKey);
+
+			if (value instanceof String) {
+				value = LocalizationUtil.getLocalization(
+					(String)value, null, true);
+			}
+
+			modelAttributes.put(objectField.getName(), value);
 		}
 
 		modelAttributes.putAll(

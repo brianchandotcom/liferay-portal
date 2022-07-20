@@ -217,7 +217,7 @@ export default function EditNotificationTemplate({
 			<div className="lfr__notification-template-container">
 				<div className="lfr__notification-template-cards">
 					<div className="row">
-						<div className="col-lg-6">
+						<div className="col-lg-6 lfr__notification-template-card">
 							<Card title={Liferay.Language.get('basic-info')}>
 								<Input
 									error={errors.name}
@@ -256,7 +256,7 @@ export default function EditNotificationTemplate({
 							</Card>
 						</div>
 
-						<div className="col-lg-6">
+						<div className="col-lg-6 lfr__notification-template-card">
 							<Card title={Liferay.Language.get('settings')}>
 								<InputLocalized
 									defaultLanguageId={defaultLanguageId}

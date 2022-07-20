@@ -192,6 +192,113 @@ describe('GlobalJSCETsConfiguration', () => {
 		await screen.findByDisplayValue('someNiceId_default_bottom');
 	});
 
+	it('computes order when moving items', async () => {
+		openSelectionModalMock.mockImplementation(() => () => {});
+
+		render(
+			<GlobalJSCETsConfiguration
+				globalJSCETSelectorURL=""
+				globalJSCETs={[
+					{
+						cetExternalReferenceCode: 'a',
+						inherited: false,
+						inheritedLabel: '',
+						name: 'A',
+						scriptLocation: 'head',
+					},
+					{
+						cetExternalReferenceCode: 'b',
+						inherited: false,
+						inheritedLabel: '',
+						name: 'B',
+						scriptLocation: 'head',
+					},
+					{
+						cetExternalReferenceCode: 'c',
+						inherited: false,
+						inheritedLabel: '',
+						name: 'C',
+						scriptLocation: 'bottom',
+					},
+					{
+						cetExternalReferenceCode: 'd',
+						inherited: false,
+						inheritedLabel: '',
+						name: 'D',
+						scriptLocation: 'bottom',
+					},
+				]}
+				portletNamespace=""
+				selectGlobalJSCETsEventName=""
+			/>
+		);
+
+		expect(
+			(await screen.findByText('1')).nextElementSibling
+		).toHaveTextContent('A');
+
+		expect(
+			(await screen.findByText('2')).nextElementSibling
+		).toHaveTextContent('B');
+
+		expect(
+			(await screen.findByText('3')).nextElementSibling
+		).toHaveTextContent('C');
+
+		expect(
+			(await screen.findByText('4')).nextElementSibling
+		).toHaveTextContent('D');
+
+		fireEvent.click(
+			await screen.findByRole('button', {
+				name: 'add-javascript-extensions',
+			})
+		);
+
+		const item = await screen.findByRole('menuitem', {
+			name: 'in-page-head',
+		});
+
+		fireEvent.click(item.firstChild!);
+
+		expect(openSelectionModal).toHaveBeenCalledTimes(1);
+
+		expect(openSelectionModal).toHaveBeenCalledWith(
+			expect.objectContaining({
+				onSelect: expect.any(Function),
+			})
+		);
+
+		const [[{onSelect}]] = openSelectionModalMock.mock.calls;
+
+		act(() => {
+			onSelect({
+				value: [
+					JSON.stringify({
+						cetExternalReferenceCode: 'd',
+						name: 'D',
+					}),
+				],
+			});
+		});
+
+		expect(
+			(await screen.findByText('1')).nextElementSibling
+		).toHaveTextContent('A');
+
+		expect(
+			(await screen.findByText('2')).nextElementSibling
+		).toHaveTextContent('B');
+
+		expect(
+			(await screen.findByText('3')).nextElementSibling
+		).toHaveTextContent('D');
+
+		expect(
+			(await screen.findByText('4')).nextElementSibling
+		).toHaveTextContent('C');
+	});
+
 	it('allows removing extensions by pressing dropdown "remove" button', async () => {
 		render(
 			<GlobalJSCETsConfiguration

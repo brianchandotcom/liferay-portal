@@ -115,6 +115,7 @@ export default function LayoutViewport() {
 				'page-editor__layout-viewport',
 				`page-editor__layout-viewport--size-${selectedViewportSize}`,
 				{
+					'cadmin': selectedViewportSize !== VIEWPORT_SIZES.desktop,
 					'page-editor__layout-viewport__resizing': resizing,
 					'page-editor__layout-viewport--with-sidebar-open': sidebarOpen,
 				}

@@ -38,6 +38,11 @@ public class BuildReportFactory {
 			return null;
 		}
 
+		if (batchName.startsWith("functional-")) {
+			return new FunctionalDownstreamBuildReport(
+				batchName, buildReportJSONObject, topLevelBuildReport);
+		}
+
 		return new DefaultDownstreamBuildReport(
 			batchName, buildReportJSONObject, topLevelBuildReport);
 	}

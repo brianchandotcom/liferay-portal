@@ -19,7 +19,7 @@ const nestedFieldsParam =
 
 const tasksResource = `/tasks?${nestedFieldsParam}`;
 
-const getTaskQuery = (taskId: number | string) =>
+const getTaskQuery = (taskId: number | string | undefined) =>
 	`/tasks/${taskId}?${nestedFieldsParam}`;
 
 const getTaskTransformData = (testrayTask: TestrayTask): TestrayTask => ({
@@ -51,3 +51,4 @@ export {
 	getTaskTransformData,
 	getTasksTransformData,
 };
+export type {TestrayTask};

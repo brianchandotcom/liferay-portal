@@ -12,7 +12,6 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import ClayIcon from '@clayui/icon';
 import {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
@@ -20,16 +19,16 @@ import {Link, useParams} from 'react-router-dom';
 import Avatar from '../../components/Avatar';
 import Code from '../../components/Code';
 import Container from '../../components/Layout/Container';
-import ListView from '../../components/ListView/ListView';
+import ListView from '../../components/ListView/ListViewRest';
 import Loading from '../../components/Loading';
 import TaskbarProgress from '../../components/ProgressBar/TaskbarProgress';
 import StatusBadge from '../../components/StatusBadge';
 import QATable from '../../components/Table/QATable';
 import useCaseResultGroupBy from '../../data/useCaseResultGroupBy';
-import {getSubTasks} from '../../graphql/queries/testraySubTask';
-import {TestrayTask, getTask} from '../../graphql/queries/testrayTask';
+import {useFetch} from '../../hooks/useFetch';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
+import {getTaskQuery} from '../../services/rest/TestrayTask';
 import {
 	SUBTASK_STATUS,
 	StatusesProgressScore,
@@ -62,11 +61,8 @@ const ShortcutIcon = () => (
 const TestFlowTasks = () => {
 	const {testrayTaskId} = useParams();
 
-	const {data, loading} = useQuery<{task: TestrayTask}>(getTask, {
-		variables: {taskId: testrayTaskId},
-	});
-
-	const testrayTask = data?.task;
+	const {data, loading} = useFetch(getTaskQuery(testrayTaskId));
+	const testrayTask = data;
 
 	const {
 		donut: {columns},
@@ -215,7 +211,7 @@ const TestFlowTasks = () => {
 			<Container className="mt-3">
 				<ListView
 					managementToolbarProps={{title: i18n.translate('subtasks')}}
-					query={getSubTasks}
+					resource="/subtasks"
 					tableProps={{
 						columns: [
 							{
@@ -273,7 +269,6 @@ const TestFlowTasks = () => {
 						],
 						navigateTo: () => '/testflow/subtasks',
 					}}
-					transformData={(data) => data?.c?.subtasks}
 				/>
 			</Container>
 		</>

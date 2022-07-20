@@ -1017,3 +1017,26 @@ If you want to maintain the old sort behavior, you will have to customize the El
 If you need to retrieve data from these fields, you can get the same information from the _source field of Elasticsearch https://www.elastic.co/guide/en/elasticsearch/reference/7.17/mapping-source-field.html or you can also remove the `icu_collation_keyword` as it is explained in the previous paragraph.
 
 ---------------------------------------
+
+## Upgraded MySQL Connector to 8.0.29 and Forced to Use Protocol TLSv1.2 for MySQL
+
+- **Date:** 2022-Jul-20
+- **JIRA Ticket:** [LPS-157036](https://issues.liferay.com/browse/LPS-157036)
+
+### What changed?
+
+- MySQL connector has been upgraded to version 8.0.29. It is forced to use protocol TLSv1.2 for MySQL because the new default MySQL connector after version 8.0.28 drops the old SSL connection protocols, which include TLSv1 and TLSv1.1. (FYI, https://dev.mysql.com/doc/refman/8.0/en/encrypted-connection-protocols-ciphers.html)
+
+### Who is affected?
+
+- For the clients who use MySQL with version less than 5.7.28 (FYI, https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_tls_version) locally, if they use the auto-downloaded MySQL connector on DXP U37 or higher, or they manually have installed MySQL connector 8.0.28 or higher, then they will be affected.
+
+### How should I update my code?
+
+1. Clients can use newer versions of MySQL with version >= 5.7.28.
+
+1. If clients still want to use MySQL with version < 5.7.28, they may need to set the protocol to TLSv1.2 manually, because older MySQL with version < 5.7.28 do not set TLSv1.2 by default.
+   - Here is the documentation for setting up TLS version: https://dev.mysql.com/doc/refman/5.7/en/encrypted-connection-protocols-ciphers.html#encrypted-connection-supported-protocols
+
+### Why was this change made?
+- Use of library MySQL Connector/J has known vulnerability in version 8.0.21, and we need to upgrade it to version 8.0.28 and above. However, MySQL Connector/J with version 8.0.28 and above removes TLSv1 and TLSv1.1 SSL connection protocols, and TLSv1.2 or TLSv1.3 are required for SSL connection to MySQL. Therefore, we may need to set up TLSv1.2 or TLSv1.3 manually, if they are not set up by default in older MySQL versions.

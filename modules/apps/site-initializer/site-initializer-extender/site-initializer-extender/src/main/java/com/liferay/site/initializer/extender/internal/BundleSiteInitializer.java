@@ -90,7 +90,6 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -728,7 +727,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		List<DDMStructure> ddmStructures =
 			_ddmStructureLocalService.getStructures(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				serviceContext.getScopeGroupId());
 
 		if (ListUtil.isNotEmpty(ddmStructures)) {
 			for (DDMStructure ddmStructure : ddmStructures) {

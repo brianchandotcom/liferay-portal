@@ -196,7 +196,7 @@ CalendarResource calendarResource = (CalendarResource)request.getAttribute(Calen
 				var buttonClose = [
 					{
 						cssClass: 'close',
-						label: '\u00D7',
+						labelHTML: '<span aria-label="close">&times;</span>',
 						on: {
 							click: function () {
 								<portlet:namespace />importDialog.hide();

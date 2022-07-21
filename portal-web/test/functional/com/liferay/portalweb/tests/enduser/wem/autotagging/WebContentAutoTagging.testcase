@@ -193,7 +193,6 @@ definition {
 	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating a web content."
 	@priority = "4"
 	test NoTagUpdatesAfterDisablingUpdateAutoTags {
-		property custom.properties = "feature.flag.LPS-150762=true";
 		property test.name.skip.portal.instance = "WebContentAutoTagging#NoTagUpdatesAfterDisablingUpdateAutoTags";
 
 		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "Instance Settings");
@@ -233,7 +232,6 @@ definition {
 	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating a web content."
 	@priority = "4"
 	test TagUpdatesAfterEnablingUpdateAutoTags {
-		property custom.properties = "feature.flag.LPS-150762=true";
 		property test.name.skip.portal.instance = "WebContentAutoTagging#TagUpdatesAfterEnablingUpdateAutoTags";
 
 		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "System Settings");

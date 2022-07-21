@@ -271,7 +271,6 @@ definition {
 	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating an image."
 	@priority = "5"
 	test NoTagUpdatesForImageAfterDisablingUpdateAutoTags {
-		property custom.properties = "feature.flag.LPS-150762=true";
 		property test.name.skip.portal.instance = "DMAutoTagging#NoTagUpdatesForImageAfterDisablingUpdateAutoTags";
 
 		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "System Settings");
@@ -306,7 +305,6 @@ definition {
 	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating a text document."
 	@priority = "5"
 	test NoTagUpdatesForTextDMAfterDisablingUpdateAutoTags {
-		property custom.properties = "feature.flag.LPS-150762=true";
 		property test.name.skip.portal.instance = "DMAutoTagging#NoTagUpdatesForTextDMAfterDisablingUpdateAutoTags";
 
 		AutoTagging.enableOpenNLP(
@@ -353,7 +351,6 @@ definition {
 	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating an image."
 	@priority = "5"
 	test TagUpdatesForImageAfterEnablingUpdateAutoTags {
-		property custom.properties = "feature.flag.LPS-150762=true";
 		property test.name.skip.portal.instance = "DMAutoTagging#TagUpdatesForImageAfterEnablingUpdateAutoTags";
 
 		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "System Settings");
@@ -392,7 +389,6 @@ definition {
 	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating a text document."
 	@priority = "5"
 	test TagUpdatesForTextDMAfterEnablingUpdateAutoTags {
-		property custom.properties = "feature.flag.LPS-150762=true";
 		property test.name.skip.portal.instance = "DMAutoTagging#TagUpdatesForTextDMAfterEnablingUpdateAutoTags";
 
 		AutoTagging.enableOpenNLP(

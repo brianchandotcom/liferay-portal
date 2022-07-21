@@ -506,8 +506,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PIWIK</td>
-	<td>//textarea[contains(@id,'piwik')]</td>
+	<td>MATOMO</td>
+	<td>//textarea[contains(@id,'matomo')]</td>
 	<td></td>
 </tr>
 <tr>

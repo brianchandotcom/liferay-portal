@@ -812,14 +812,14 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro editPiwikCP {
+	macro editMatomoCP {
 		Click(
 			key_itemName = "Analytics",
 			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Type(
-			locator1 = "TextInput#PIWIK",
-			value1 = "${piwik}");
+			locator1 = "TextInput#MATOMO",
+			value1 = "${matomo}");
 
 		Button.click(button = "Save");
 

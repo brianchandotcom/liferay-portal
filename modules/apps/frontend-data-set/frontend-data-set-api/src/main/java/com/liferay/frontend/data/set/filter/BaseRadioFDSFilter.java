@@ -25,10 +25,6 @@ import java.util.ResourceBundle;
  */
 public abstract class BaseRadioFDSFilter implements FDSFilter {
 
-	public String getOperator() {
-		return "eq";
-	}
-
 	public abstract List<RadioFDSFilterItem> getRadioFDSFilterItems(
 		Locale locale);
 

@@ -28,10 +28,6 @@ public abstract class BaseCheckBoxFDSFilter implements FDSFilter {
 	public abstract List<CheckBoxFDSFilterItem> getCheckBoxFDSFilterItems(
 		Locale locale);
 
-	public String getOperator() {
-		return "eq";
-	}
-
 	public ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());

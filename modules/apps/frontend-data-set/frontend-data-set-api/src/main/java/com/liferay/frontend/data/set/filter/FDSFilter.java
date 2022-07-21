@@ -21,6 +21,10 @@ import java.util.Map;
  */
 public interface FDSFilter {
 
+	public default String getEntityFieldType() {
+		return null;
+	}
+
 	public String getId();
 
 	public String getLabel();

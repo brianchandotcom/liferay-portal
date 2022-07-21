@@ -62,6 +62,8 @@ public class FDSFilterSerializerImpl implements FDSFilterSerializer {
 
 		for (FDSFilter fdsFilter : fdsFilters) {
 			JSONObject jsonObject = JSONUtil.put(
+				"entityFieldType", fdsFilter.getEntityFieldType()
+			).put(
 				"id", fdsFilter.getId()
 			).put(
 				"label", LanguageUtil.get(resourceBundle, fdsFilter.getLabel())

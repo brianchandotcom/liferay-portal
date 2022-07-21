@@ -26,6 +26,7 @@ public abstract class BaseAutocompleteFDSFilter implements FDSFilter {
 
 	public abstract String getAPIURL();
 
+	@Override
 	public String getEntityFieldType() {
 		return "collection";
 	}

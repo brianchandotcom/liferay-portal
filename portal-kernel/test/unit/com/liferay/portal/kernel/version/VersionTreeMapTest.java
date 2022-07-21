@@ -30,7 +30,7 @@ import org.junit.Test;
 public class VersionTreeMapTest {
 
 	@Test
-	public void testInsertMultipleUpgradeProcesses() {
+	public void testPutMultipleUpgradeProcesses() {
 		VersionTreeMap treeMap = new VersionTreeMap();
 
 		UpgradeProcess[] upgradeProcesses = {
@@ -44,7 +44,7 @@ public class VersionTreeMapTest {
 	}
 
 	@Test
-	public void testInsertSingleUpgradeProcess() {
+	public void testPutSingleUpgradeProcess() {
 		VersionTreeMap treeMap = new VersionTreeMap();
 
 		UpgradeProcess upgradeProcess = new DummyUpgradeProcess();

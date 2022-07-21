@@ -31,12 +31,12 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -116,8 +116,7 @@ public class EditCountryMVCActionCommand extends BaseMVCActionCommand {
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		boolean billingAllowed = ParamUtil.getBoolean(
 			actionRequest, "billingAllowed");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "name");
+		String name = ParamUtil.getString(actionRequest, "name");
 		String number = ParamUtil.getString(actionRequest, "number");
 		double position = ParamUtil.getDouble(actionRequest, "position");
 		boolean shippingAllowed = ParamUtil.getBoolean(
@@ -126,17 +125,14 @@ public class EditCountryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "subjectToVAT");
 
 		Country country = _countryService.addCountry(
-			a2, a3, active, billingAllowed, null,
-			nameMap.get(LocaleUtil.getDefault()), number, position,
+			a2, a3, active, billingAllowed, null, name, number, position,
 			shippingAllowed, subjectToVAT, false,
 			ServiceContextFactory.getInstance(
 				Country.class.getName(), actionRequest));
 
-		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
-			_countryLocalService.updateCountryLocalization(
-				country, _language.getLanguageId(entry.getKey()),
-				entry.getValue());
-		}
+		_updateCountryLocalizations(
+			country,
+			LocalizationUtil.getLocalizationMap(actionRequest, "title"));
 
 		return country;
 	}
@@ -151,8 +147,7 @@ public class EditCountryMVCActionCommand extends BaseMVCActionCommand {
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		boolean billingAllowed = ParamUtil.getBoolean(
 			actionRequest, "billingAllowed");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "name");
+		String name = ParamUtil.getString(actionRequest, "name");
 		String number = ParamUtil.getString(actionRequest, "number");
 		double position = ParamUtil.getDouble(actionRequest, "position");
 		boolean shippingAllowed = ParamUtil.getBoolean(
@@ -163,16 +158,27 @@ public class EditCountryMVCActionCommand extends BaseMVCActionCommand {
 		Country country = _countryService.getCountry(countryId);
 
 		country = _countryService.updateCountry(
-			countryId, a2, a3, active, billingAllowed, country.getIdd(),
-			country.getName(), number, position, shippingAllowed, subjectToVAT);
+			countryId, a2, a3, active, billingAllowed, country.getIdd(), name,
+			number, position, shippingAllowed, subjectToVAT);
 
-		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
-			_countryLocalService.updateCountryLocalization(
-				country, _language.getLanguageId(entry.getKey()),
-				entry.getValue());
-		}
+		_updateCountryLocalizations(
+			country,
+			LocalizationUtil.getLocalizationMap(actionRequest, "title"));
 
 		return country;
+	}
+
+	private void _updateCountryLocalizations(
+			Country country, Map<Locale, String> localizationMap)
+		throws Exception {
+
+		Map<String, String> map = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : localizationMap.entrySet()) {
+			map.put(_language.getLanguageId(entry.getKey()), entry.getValue());
+		}
+
+		_countryLocalService.updateCountryLocalizations(country, map);
 	}
 
 	@Reference

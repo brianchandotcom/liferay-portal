@@ -14,10 +14,9 @@
 
 package com.liferay.portal.kernel.version;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.petra.string.StringPool;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -25,17 +24,11 @@ import org.junit.Test;
  */
 public class VersionTest {
 
-	@Before
-	public void setUp() throws Exception {
-		_lastStepSuffix = ReflectionTestUtil.getFieldValue(
-			Version.class, "_LAST_STEP");
-	}
-
 	@Test
 	public void testCompareEqualVersions() {
 		Version version1 = Version.parseVersion("1.2.3");
 
-		Version version2 = Version.parseVersion("1.2.3." + _lastStepSuffix);
+		Version version2 = Version.parseVersion("1.2.3.");
 
 		Assert.assertEquals(0, version1.compareTo(version2));
 	}
@@ -51,7 +44,7 @@ public class VersionTest {
 
 	@Test
 	public void testCompareStepWithUpdatedVersions() {
-		Version version1 = Version.parseVersion("1.2.3." + _lastStepSuffix);
+		Version version1 = Version.parseVersion("1.2.3");
 
 		Version version2 = Version.parseVersion("1.2.3.Step-2");
 
@@ -62,7 +55,7 @@ public class VersionTest {
 	public void testEqualVersions() {
 		Version version1 = Version.parseVersion("1.2.3");
 
-		Version version2 = Version.parseVersion("1.2.3." + _lastStepSuffix);
+		Version version2 = Version.parseVersion("1.2.3.");
 
 		Assert.assertTrue(version1.equals(version2));
 	}
@@ -83,7 +76,7 @@ public class VersionTest {
 		Assert.assertEquals(0, version.getMajor());
 		Assert.assertEquals(0, version.getMinor());
 		Assert.assertEquals(0, version.getMicro());
-		Assert.assertEquals(_lastStepSuffix, version.getQualifier());
+		Assert.assertEquals(StringPool.BLANK, version.getQualifier());
 	}
 
 	@Test
@@ -93,7 +86,7 @@ public class VersionTest {
 		Assert.assertEquals(0, version.getMajor());
 		Assert.assertEquals(0, version.getMinor());
 		Assert.assertEquals(0, version.getMicro());
-		Assert.assertEquals(_lastStepSuffix, version.getQualifier());
+		Assert.assertEquals(StringPool.BLANK, version.getQualifier());
 	}
 
 	@Test
@@ -113,7 +106,7 @@ public class VersionTest {
 		Assert.assertEquals(1, version.getMajor());
 		Assert.assertEquals(2, version.getMinor());
 		Assert.assertEquals(3, version.getMicro());
-		Assert.assertEquals(_lastStepSuffix, version.getQualifier());
+		Assert.assertEquals(StringPool.BLANK, version.getQualifier());
 	}
 
 	@Test
@@ -123,7 +116,7 @@ public class VersionTest {
 		Assert.assertEquals(0, version.getMajor());
 		Assert.assertEquals(0, version.getMinor());
 		Assert.assertEquals(0, version.getMicro());
-		Assert.assertEquals(_lastStepSuffix, version.getQualifier());
+		Assert.assertEquals(StringPool.BLANK, version.getQualifier());
 	}
 
 	@Test
@@ -135,11 +128,9 @@ public class VersionTest {
 
 	@Test
 	public void testToStringUpdatedVersion() {
-		Version version = Version.parseVersion("1.2.3." + _lastStepSuffix);
+		Version version = Version.parseVersion("1.2.3.");
 
 		Assert.assertEquals("1.2.3", version.toString());
 	}
-
-	private static String _lastStepSuffix;
 
 }

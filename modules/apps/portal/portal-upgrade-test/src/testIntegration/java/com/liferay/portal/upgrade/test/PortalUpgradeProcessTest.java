@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
@@ -181,11 +182,8 @@ public class PortalUpgradeProcessTest {
 			Assert.assertEquals(4, requiredSchemaVersion.getMinor());
 			Assert.assertEquals(0, requiredSchemaVersion.getMicro());
 
-			String lastStepSuffix = ReflectionTestUtil.getFieldValue(
-				Version.class, "_LAST_STEP");
-
 			Assert.assertEquals(
-				lastStepSuffix, requiredSchemaVersion.getQualifier());
+				StringPool.BLANK, requiredSchemaVersion.getQualifier());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

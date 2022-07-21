@@ -289,6 +289,35 @@ definition {
 		}
 	}
 
+	@description = "Document is created by nonexistent erc in asset with put request"
+	@priority = "5"
+	test DocumentIsCreatedInAssetLibraryByPutNonexistentErc {
+		property portal.acceptance = "true";
+
+		task ("When I make a PUT request by assetLibraryId and a non-existent erc") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			var response = DocumentAPI.updateDocumentByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "nonexistent-erc",
+				filePath = "${filePath}");
+		}
+
+		task ("Then its erc matches the inserted one") {
+			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "nonexistent-erc",
+				responseToParse = "${response}");
+		}
+
+		task ("And Then a document is being created") {
+			DocumentAPI.assertProperDocumentTotalCount(
+				assetLibraryId = "${assetLibraryId}",
+				expectedDocumentTotalCount = "1",
+				filtervalue = "title%20eq%20%27Document_1.txt%27");
+		}
+	}
+
 	@description = "Document is created in an asset library with custom erc"
 	@priority = "5"
 	test DocumentIsCreatedInAssetLibraryWithCustomErc {

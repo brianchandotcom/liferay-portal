@@ -72,10 +72,6 @@ String itemSelectedEventName = commercePriceListItemSelectorViewDisplayContext.g
 			markupView="lexicon"
 			searchContainer="<%= commercePriceListItemSelectorViewDisplayContext.getSearchContainer() %>"
 		/>
-
-		<liferay-ui:search-paginator
-			searchContainer="<%= commercePriceListItemSelectorViewDisplayContext.getSearchContainer() %>"
-		/>
 	</liferay-ui:search-container>
 </div>
 

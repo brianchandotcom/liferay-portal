@@ -273,6 +273,7 @@ export default withRouter(({history, location}) => {
 								(data) => (
 									<div key={data.id}>
 										<QuestionRow
+											context={context}
 											currentSection={
 												context.useTopicNamesInURL
 													? data.graphQLNode

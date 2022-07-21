@@ -197,6 +197,7 @@ export default withRouter(
 						>
 							{(question) => (
 								<QuestionRow
+									context={context}
 									currentSection={
 										context.useTopicNamesInURL
 											? question.messageBoardThread

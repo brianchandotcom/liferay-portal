@@ -20,7 +20,7 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import {act} from 'react-dom/test-utils';
 
-import FileUrlCopyButton from '../../../src/main/resources/META-INF/resources/js/components/SidebarPanelInfoView/FileUrlCopyButton';
+import FileUrlCopyButton from '../../../../src/main/resources/META-INF/resources/js/components/SidebarPanelInfoView/FileUrlCopyButton';
 
 const demoFileUrl = 'http://localhost:8080/documents/my-demo-url.txt';
 

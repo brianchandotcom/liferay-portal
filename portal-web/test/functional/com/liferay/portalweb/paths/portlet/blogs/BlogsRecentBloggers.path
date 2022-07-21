@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>USER_NAME_LINK</td>
-	<td>//div[contains(@id,'recent_bloggers')]//a[contains(@href,'/c/blogs/find_entry')]//span[contains(.,'${key_userName}')]</td>
+	<td>//div[contains(@id,'recent_bloggers')]//a[contains(@href,'/c/blogs/find_entry') and contains(.,'${key_userName}')]</td>
 	<td></td>
 </tr>
 <tr>

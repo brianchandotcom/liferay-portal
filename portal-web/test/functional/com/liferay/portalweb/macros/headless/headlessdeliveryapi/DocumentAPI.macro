@@ -84,6 +84,61 @@ definition {
 		return "${curl}";
 	}
 
+	macro _updateDocumentByErc {
+		Variables.assertDefined(parameterList = "${externalReferenceCode}");
+
+		if (!(isSet(filePath) || isSet(title) || isSet(updateExternalReferenceCode))) {
+			TestUtils.fail(message = "Please set at least one property to update the document.");
+		}
+
+		if (isSet(assetLibraryId)) {
+			var api = "asset-libraries/${assetLibraryId}/documents/by-external-reference-code/${externalReferenceCode}";
+		}
+		else {
+			var api = "asset-libraries/${siteId}/documents/by-external-reference-code/${externalReferenceCode}";
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/${api} \
+			-u test@liferay.com:test \
+			''';
+		var delimiter = " ";
+
+		if (isSet(filePath)) {
+			var fileBody = "-F file=@&quot;${filePath}&quot;";
+
+			var curl = StringUtil.add("${curl}", "${fileBody}", "${delimiter}");
+		}
+
+		if (isSet(title) && isSet(updateExternalReferenceCode)) {
+			var documentBody = '''
+				-F document={"externalReferenceCode": "${updateExternalReferenceCode}", "title": "${title}"}
+			''';
+
+			var curl = StringUtil.add("${curl}", "${documentBody}", "${delimiter}");
+		}
+		else {
+			if (isSet(title)) {
+				var documentBody = '''
+					-F document={"title": "${title}"}
+				 ''';
+			}
+			else if (isSet(updateExternalReferenceCode)) {
+				var documentBody = '''
+					-F document={"externalReferenceCode": "${updateExternalReferenceCode}"}
+				''';
+			}
+
+			var curl = StringUtil.add("${curl}", "${documentBody}", "${delimiter}");
+		}
+
+		var curl = JSONCurlUtil.put("${curl}");
+
+		return "${curl}";
+	}
+
 	macro addDocumentInAssetLibraryByUploadFile {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${filePath}");
 
@@ -154,6 +209,12 @@ definition {
 		return "${documentId}";
 	}
 
+	macro getTitleOfDocument {
+		var documentTitle = JSONUtil.getWithJSONPath("${responseToParse}", "$.['title']");
+
+		return "${documentTitle}";
+	}
+
 	macro getUuidOfCreatedDocument {
 		Variables.assertDefined(parameterList = "${responseToParse}");
 
@@ -164,6 +225,19 @@ definition {
 		var documentUuid = StringUtil.extractLast("${contentURLSubString}", "/");
 
 		return "${documentUuid}";
+	}
+
+	macro updateDocumentByErcInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId}");
+
+		var response = DocumentAPI._updateDocumentByErc(
+			assetLibraryId = "${assetLibraryId}",
+			externalReferenceCode = "${externalReferenceCode}",
+			filePath = "${filePath}",
+			title = "${title}",
+			updateExternalReferenceCode = "${updateExternalReferenceCode}");
+
+		return "${response}";
 	}
 
 }

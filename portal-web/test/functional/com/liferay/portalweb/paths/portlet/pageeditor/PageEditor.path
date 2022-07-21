@@ -779,6 +779,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DRAFT_SAVING_MESSAGE</td>
+	<td>//div[contains(@class,'management-bar')]//span[contains(@class,'text-info')][normalize-space(text())='Saving']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEVICE_TYPE</td>
 	<td>//button[contains(@class,'btn')][@aria-label='${key_deviceType}']</td>
 	<td></td>

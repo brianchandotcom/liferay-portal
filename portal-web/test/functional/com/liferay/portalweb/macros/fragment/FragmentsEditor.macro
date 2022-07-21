@@ -92,11 +92,9 @@ definition {
 	}
 
 	macro waitForAutoSave {
-		Pause(locator1 = "1000");
+		WaitForElementNotPresent(locator1 = "FragmentEditor#SAVING_CHANGES_MESSAGE");
 
-		AssertTextEquals(
-			locator1 = "FragmentEditor#AUTOSAVE_MESSAGE",
-			value1 = "Changes Saved");
+		WaitForVisible(locator1 = "FragmentEditor#CHANGES_SAVED_MESSAGE");
 	}
 
 }

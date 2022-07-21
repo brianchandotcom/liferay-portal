@@ -30,8 +30,6 @@ definition {
 
 		DropdownMenuItem.click(menuItem = "Export");
 
-		Pause(locator1 = "3000");
-
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 	}
 
@@ -44,8 +42,6 @@ definition {
 		}
 
 		DropdownMenuItem.click(menuItem = "Import");
-
-		Pause(locator1 = "3000");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 	}

@@ -63,9 +63,9 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		Pause(locator1 = "3000");
-
 		AssertVisible(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
+
+		WaitForEditable(locator1 = "TextInput#FILE");
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
@@ -123,8 +123,6 @@ definition {
 			Check(
 				key_tableEntry = "${collectionName}",
 				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
-
-			Pause(locator1 = "3000");
 		}
 
 		SelectFrameTop();

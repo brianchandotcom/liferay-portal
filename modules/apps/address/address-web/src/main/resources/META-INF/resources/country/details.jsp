@@ -89,3 +89,30 @@ renderResponse.setTitle((country == null) ? LanguageUtil.get(request, "add-count
 		<aui:button href="<%= backURL %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
+
+<c:if test="<%= country == null %>">
+	<aui:script require="frontend-js-web/liferay/debounce/debounce.es as debounceModule">
+		var form = document.getElementById('<portlet:namespace />fm');
+
+		if (form) {
+			var nameInput = form.querySelector('#<portlet:namespace />name');
+			var titleInput = form.querySelector('#<portlet:namespace />title');
+
+			if (nameInput && titleInput) {
+				var debounce = debounceModule.default;
+
+				var handleOnTitleInput = function (event) {
+					var value = event.target.value;
+
+					if (nameInput.hasAttribute('maxLength')) {
+						value = value.substring(0, nameInput.getAttribute('maxLength'));
+					}
+
+					nameInput.value = value;
+				};
+
+				titleInput.addEventListener('input', debounce(handleOnTitleInput, 200));
+			}
+		}
+	</aui:script>
+</c:if>

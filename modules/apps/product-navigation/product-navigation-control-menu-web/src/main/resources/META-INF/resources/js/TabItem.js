@@ -42,6 +42,7 @@ const TabItem = ({item}) => {
 	const {plid, setWidgets, widgets} = useContext(AddPanelContext);
 
 	const isContent = item.type === LAYOUT_DATA_ITEM_TYPES.content;
+	const title = `${Liferay.Language.get('add')} ${item.label}`;
 
 	const {sourceRef} = useDragSymbol({
 		data: item.data,
@@ -83,11 +84,11 @@ const TabItem = ({item}) => {
 					displayType="unstyled"
 					onClick={() => addItem({item, plid, setWidgets, widgets})}
 					small
-					title={item.label}
+					title={title}
 				>
 					<ClayIcon symbol="plus" />
 
-					<span className="sr-only">{item.label}</span>
+					<span className="sr-only">{title}</span>
 				</ClayButton>
 			)}
 		</li>

@@ -12,10 +12,13 @@
  * details.
  */
 
-import {fetch, openToast, runScriptsInElement} from 'frontend-js-web';
+import {fetch, runScriptsInElement} from 'frontend-js-web';
 import React, {useEffect, useRef} from 'react';
 
-const ManageCollaborators = ({fetchSharingContactsButtonURL}: IProps) => {
+const ManageCollaborators = ({
+	fetchSharingContactsButtonURL,
+	onError,
+}: IProps) => {
 	const elementRef = useRef<HTMLDivElement>(document.createElement('div'));
 
 	useEffect(() => {
@@ -35,17 +38,12 @@ const ManageCollaborators = ({fetchSharingContactsButtonURL}: IProps) => {
 				runScriptsInElement(elementRef.current);
 			}
 			catch (error: unknown) {
-				openToast({
-					message: `${Liferay.Language.get(
-						'unexpected-error'
-					)}: ${error}`,
-					type: 'danger',
-				});
+				onError();
 			}
 		};
 
 		fetchButton();
-	}, [fetchSharingContactsButtonURL]);
+	}, [fetchSharingContactsButtonURL, onError]);
 
 	return <div className="manage-collaborators mt-4" ref={elementRef} />;
 };
@@ -53,6 +51,7 @@ const ManageCollaborators = ({fetchSharingContactsButtonURL}: IProps) => {
 interface IProps {
 	children?: React.ReactNode;
 	fetchSharingContactsButtonURL: RequestInfo;
+	onError: Function;
 }
 
 export default ManageCollaborators;

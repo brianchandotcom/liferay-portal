@@ -162,6 +162,7 @@ const SidebarPanelInfoView = ({
 								fetchSharingContactsButtonURL={
 									fetchSharingContactsButtonURL
 								}
+								onError={handleError}
 							/>
 						) : (
 							<>

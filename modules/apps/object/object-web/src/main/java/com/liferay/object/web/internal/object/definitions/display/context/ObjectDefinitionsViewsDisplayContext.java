@@ -20,15 +20,13 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -73,91 +71,6 @@ public class ObjectDefinitionsViewsDisplayContext
 				"/o/object-admin/v1.0/object-views/{id}", "trash", "delete",
 				LanguageUtil.get(objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "async"));
-	}
-
-	public JSONArray getWorkflowStatusJSONArray() {
-		return JSONUtil.putAll(
-			JSONUtil.put(
-				"label",
-				LanguageUtil.get(
-					_objectRequestHelper.getRequest(),
-					WorkflowConstants.LABEL_APPROVED)
-			).put(
-				"value", WorkflowConstants.STATUS_APPROVED
-			)
-		).put(
-			JSONUtil.put(
-				"label",
-				LanguageUtil.get(
-					_objectRequestHelper.getRequest(),
-					WorkflowConstants.LABEL_DENIED)
-			).put(
-				"value", WorkflowConstants.STATUS_DENIED
-			)
-		).put(
-			JSONUtil.put(
-				"label",
-				LanguageUtil.get(
-					_objectRequestHelper.getRequest(),
-					WorkflowConstants.LABEL_DRAFT)
-			).put(
-				"value", WorkflowConstants.STATUS_DRAFT
-			)
-		).put(
-			JSONUtil.put(
-				"label",
-				LanguageUtil.get(
-					_objectRequestHelper.getRequest(),
-					WorkflowConstants.LABEL_EXPIRED)
-			).put(
-				"value", WorkflowConstants.STATUS_EXPIRED
-			)
-		).put(
-			JSONUtil.put(
-				"label",
-				LanguageUtil.get(
-					_objectRequestHelper.getRequest(),
-					WorkflowConstants.LABEL_INACTIVE)
-			).put(
-				"value", WorkflowConstants.STATUS_INACTIVE
-			)
-		).put(
-			JSONUtil.put(
-				"label",
-				LanguageUtil.get(
-					_objectRequestHelper.getRequest(),
-					WorkflowConstants.LABEL_INCOMPLETE)
-			).put(
-				"value", WorkflowConstants.STATUS_INCOMPLETE
-			)
-		).put(
-			JSONUtil.put(
-				"label",
-				LanguageUtil.get(
-					_objectRequestHelper.getRequest(),
-					WorkflowConstants.LABEL_IN_TRASH)
-			).put(
-				"value", WorkflowConstants.STATUS_IN_TRASH
-			)
-		).put(
-			JSONUtil.put(
-				"label",
-				LanguageUtil.get(
-					_objectRequestHelper.getRequest(),
-					WorkflowConstants.LABEL_PENDING)
-			).put(
-				"value", WorkflowConstants.STATUS_PENDING
-			)
-		).put(
-			JSONUtil.put(
-				"label",
-				LanguageUtil.get(
-					_objectRequestHelper.getRequest(),
-					WorkflowConstants.LABEL_SCHEDULED)
-			).put(
-				"value", WorkflowConstants.STATUS_SCHEDULED
-			)
-		);
 	}
 
 	@Override

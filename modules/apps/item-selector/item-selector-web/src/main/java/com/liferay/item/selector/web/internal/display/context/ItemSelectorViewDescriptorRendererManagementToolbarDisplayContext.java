@@ -70,6 +70,11 @@ public class ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getSearchContainerId() {
+		return "entries";
+	}
+
+	@Override
 	public Boolean isSelectable() {
 		return _itemSelectorViewDescriptorRendererDisplayContext.
 			isMultipleSelection();

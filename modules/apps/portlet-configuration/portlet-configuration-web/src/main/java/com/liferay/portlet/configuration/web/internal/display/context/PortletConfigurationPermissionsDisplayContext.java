@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.ResourcePermissionUtil;
 import com.liferay.portlet.configuration.web.internal.configuration.RoleVisibilityConfiguration;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationPortletKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
@@ -311,18 +310,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 			_httpServletRequest, "modelResourceDescription");
 
 		return _modelResourceDescription;
-	}
-
-	public String getResourceName() throws PortalException {
-		List<Resource> resources = getResources();
-
-		if (ListUtil.isEmpty(resources)) {
-			return StringPool.BLANK;
-		}
-
-		Resource resource = resources.get(0);
-
-		return resource.getName();
 	}
 
 	public String getResourcePrimKey() throws ResourcePrimKeyException {
@@ -711,89 +698,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 		).buildPortletURL();
 	}
 
-	public boolean isChecked(
-		String action, List<String> currentIndividualActions,
-		List<String> currentGroupActions,
-		List<String> currentGroupTemplateActions,
-		List<String> currentCompanyActions,
-		Map<String, List<String>> resourceActionsMap) {
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
-			List<String> resourceActions = resourceActionsMap.get(action);
-
-			if (ListUtil.isNull(resourceActions) ||
-				(resourceActions.size() < _resources.size())) {
-
-				return false;
-			}
-
-			return true;
-		}
-
-		if (currentIndividualActions.contains(action) ||
-			currentGroupActions.contains(action) ||
-			currentGroupTemplateActions.contains(action) ||
-			currentCompanyActions.contains(action)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isIndeterminate(
-		String action, boolean checked,
-		Map<String, List<String>> resourceActionsMap) {
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
-			List<String> resourceActions = resourceActionsMap.get(action);
-
-			if (ListUtil.isNull(resourceActions)) {
-				return false;
-			}
-
-			if ((_resources.size() > 1) && !checked) {
-				return true;
-			}
-
-			return false;
-		}
-
-		return false;
-	}
-
-	public Map<String, List<String>> populateResourcePermissionActionIds(
-			long groupId, Role role, List<Resource> resources,
-			List<String> individualActions, List<String> groupActions,
-			List<String> groupTemplateActions, List<String> companyActions)
-		throws PortalException {
-
-		Map<String, List<String>> resourceActionsMap = new HashMap<>();
-
-		for (Resource resource : resources) {
-			ResourcePermissionUtil.populateResourcePermissionActionIds(
-				groupId, role, resource, getActions(), individualActions,
-				groupActions, groupTemplateActions, companyActions);
-
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-87806"))) {
-
-				List<String> availableResourcePermissionActionIds =
-					ResourcePermissionLocalServiceUtil.
-						getAvailableResourcePermissionActionIds(
-							resource.getCompanyId(), resource.getName(),
-							resource.getScope(), resource.getPrimKey(),
-							role.getRoleId(), getActions());
-
-				_populateResourceActionsMap(
-					availableResourcePermissionActionIds, resourceActionsMap,
-					resource.getPrimKey());
-			}
-		}
-
-		return resourceActionsMap;
-	}
-
 	private int[] _getGroupRoleTypes(Group group, int[] defaultRoleTypes) {
 		if (group == null) {
 			return defaultRoleTypes;
@@ -859,22 +763,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 		_roleTypesParam = ParamUtil.getString(_httpServletRequest, "roleTypes");
 
 		return _roleTypesParam;
-	}
-
-	private void _populateResourceActionsMap(
-		List<String> actionIds, Map<String, List<String>> resourceActionsMap,
-		String resourcePrimKey) {
-
-		for (String actionId : actionIds) {
-			List<String> resourceActions = resourceActionsMap.computeIfAbsent(
-				actionId, key -> new ArrayList<>());
-
-			if (!resourceActions.contains(resourcePrimKey)) {
-				resourceActions.add(resourcePrimKey);
-			}
-
-			resourceActionsMap.put(actionId, resourceActions);
-		}
 	}
 
 	private static final int[] _TYPES_DEPOT_AND_REGULAR = {

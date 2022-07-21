@@ -48,12 +48,22 @@ renderResponse.setTitle((country == null) ? LanguageUtil.get(request, "add-count
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<liferay-ui:input-localized
-				autoFocus="<%= true %>"
-				cssClass="form-group"
-				name="name"
-				xml="<%= (country == null) ? StringPool.BLANK : country.getTitleMapAsXML() %>"
-			/>
+			<div class="form-group">
+				<label>
+					<liferay-ui:message key="name" />
+
+					<liferay-ui:icon-help message="country-name-field-help" />
+				</label>
+
+				<liferay-ui:input-localized
+					autoFocus="<%= true %>"
+					cssClass="form-group"
+					name="title"
+					xml="<%= (country == null) ? StringPool.BLANK : country.getTitleMapAsXML() %>"
+				/>
+			</div>
+
+			<aui:input helpMessage="country-key-field-help" label="key" name="name" />
 
 			<aui:input checked="<%= (country == null) ? false : country.getBillingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="billingAllowed" type="toggle-switch" />
 

@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.processor.SourceProcessor;
+import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.StringReader;
 
@@ -181,24 +181,19 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		String githubToken = sourceFormatterArgs.getGithubToken();
 
 		if (Validator.isNull(githubToken)) {
-			File file = new File(
-				getPortalDir() + "/portal-impl/src/portal-ext.properties");
+			File file = new File(_GITHUB_TOKEN_FILE_PATH);
 
 			if (!file.exists()) {
 				throw new FileNotFoundException(
-					"'portal-impl/src/portal-ext.properties' does not exist");
+					_GITHUB_TOKEN_FILE_PATH + " does not exist");
 			}
 
-			Properties properties = new Properties();
-
-			properties.load(new FileInputStream(file));
-
-			githubToken = properties.getProperty("github.token");
+			githubToken = FileUtil.read(file);
 
 			if (Validator.isNull(githubToken)) {
 				throw new RuntimeException(
-					"No github token found, place 'github.token' in " +
-						"'portal-impl/src/portal-ext.properties'");
+					"No github token found, place the github token in " +
+						_GITHUB_TOKEN_FILE_PATH);
 			}
 		}
 
@@ -592,6 +587,9 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				SecurityAdvisoryEcosystemEnum.MAVEN);
 		}
 	}
+
+	private static final String _GITHUB_TOKEN_FILE_PATH =
+		System.getProperty("user.home") + "/github.token";
 
 	private static final String _SEVERITIES = "severities";
 

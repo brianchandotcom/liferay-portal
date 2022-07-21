@@ -17,6 +17,10 @@ definition {
 	static var userPassword = "password";
 	var userScreenName = "joeblogs";
 	static var integer = ${endYear} - ${numberOfYears};
+	var newInteger = 13;
+	var testRef = "test";
+
+	var reference = ${testRef};
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -91,18 +95,18 @@ definition {
 		echo("This is a message.");
 
 		for (var breadcrumbName : list "${breadcrumbListVisible}") {
-			var key_breadcrumbName = "${breadcrumbName}";
+			var key_breadcrumbName = ${breadcrumbName};
 			var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
 			var historyVersion = selenium.getText("Staging#HISTORY_VERSION");
 
 			AssertTextEquals(
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "${breadcrumbNameUppercase}");
+				value1 = ${breadcrumbNameUppercase});
 
 			for (var breadcrumbName : list "${breadcrumbListVisible}") {
 				AssertTextEquals(
 					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-					value1 = "${breadcrumbNameUppercase}");
+					value1 = ${breadcrumbNameUppercase});
 			}
 
 			AssertTextEquals(
@@ -134,20 +138,20 @@ definition {
 		for (var breadcrumbName : list "Breadcrumb: 1, Breadcrumb: 2") {
 			AssertTextEquals(
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "${breadcrumbNameUppercase}");
+				value1 = ${breadcrumbNameUppercase});
 		}
 
 		User.addCP(
-			userEmailAddress = "${userEmailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}",
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName},
 			userScreenName = "");
 	}
 
 	@ignore = "true"
 	test GotoLinkToPageChildPages {
-		var key_pageName = "${parentPage}";
+		var key_pageName = ${parentPage};
 
 		if (!(("true" == "true") || ("true" == "false"))) {
 			fail("Allowed values are 'true' or 'false'.");
@@ -225,7 +229,7 @@ definition {
 			fail("${failMessage}");
 		}
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var testCDATA = ''''alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>''';
 		var testNestedCDATA1 = '''<root available-locales="en_US" default-locale="en_US">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[${content}]]>%0A%09%09</dynamic-content>%0A</root>''';
 		var testNestedCDATA2 = '''<![CDATA[Test Script]]>''';
@@ -243,7 +247,7 @@ definition {
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<name>Timer Name</name>''',
-			line = "21");
+			line = 21);
 
 		User.editDetailsViaMyAccount(
 			userFirstNameEdit = ''''alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>''',
@@ -271,7 +275,7 @@ definition {
 		Type(
 			key_fieldName = "Integer",
 			locator1 = "DDMField#INTEGER",
-			value1 = "5");
+			value1 = 5);
 
 		Click(locator1 = "Home#PAGE");
 

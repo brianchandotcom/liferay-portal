@@ -57,8 +57,7 @@ public class Version implements Comparable<Version> {
 		_major = major;
 		_minor = minor;
 		_micro = micro;
-
-		_step = _LAST_STEP;
+		_qualifier = _LAST_STEP;
 	}
 
 	@Override
@@ -81,7 +80,7 @@ public class Version implements Comparable<Version> {
 			return result;
 		}
 
-		return _step.compareTo(version._step);
+		return _qualifier.compareTo(version._qualifier);
 	}
 
 	@Override
@@ -97,7 +96,7 @@ public class Version implements Comparable<Version> {
 		Version version = (Version)object;
 
 		if ((_major == version._major) && (_minor == version._minor) &&
-			(_micro == version._micro) && _step.equals(version._step)) {
+			(_micro == version._micro) && _qualifier.equals(version._qualifier)) {
 
 			return true;
 		}
@@ -117,8 +116,8 @@ public class Version implements Comparable<Version> {
 		return _minor;
 	}
 
-	public String getStep() {
-		return _step;
+	public String getQualifier() {
+		return _qualifier;
 	}
 
 	@Override
@@ -129,26 +128,26 @@ public class Version implements Comparable<Version> {
 
 		hash = HashUtil.hash(hash, _micro);
 
-		return HashUtil.hash(hash, _step);
+		return HashUtil.hash(hash, _qualifier);
 	}
 
 	@Override
 	public String toString() {
-		if (getStep().equals(_LAST_STEP)) {
+		if (getQualifier().equals(_LAST_STEP)) {
 			return StringBundler.concat(
 				_major, StringPool.PERIOD, _minor, StringPool.PERIOD, _micro);
 		}
 
 		return StringBundler.concat(
 			_major, StringPool.PERIOD, _minor, StringPool.PERIOD, _micro,
-			StringPool.PERIOD, _step);
+			StringPool.PERIOD, _qualifier);
 	}
 
-	protected Version(int major, int minor, int micro, String step) {
+	protected Version(int major, int minor, int micro, String qualifier) {
 		_major = major;
 		_minor = minor;
 		_micro = micro;
-		_step = step;
+		_qualifier = qualifier;
 	}
 
 	private static final String _LAST_STEP = "updated";
@@ -160,6 +159,6 @@ public class Version implements Comparable<Version> {
 	private final int _major;
 	private final int _micro;
 	private final int _minor;
-	private final String _step;
+	private final String _qualifier;
 
 }

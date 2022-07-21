@@ -2970,7 +2970,7 @@ include-and-override=portal-liferay-online-limit.properties</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-read-writer-database-configuration-properties">
+	<macrodef name="prepare-read-write-database-configuration-properties">
 		<sequential>
 			<get-database-property property.name="database.driver" />
 			<get-database-property property.name="database.host" />
@@ -2981,7 +2981,7 @@ include-and-override=portal-liferay-online-limit.properties</echo>
 			<set-app-server-properties />
 
 			<if>
-				<equals arg1="${configure.read-writer.database}" arg2="jdbc" />
+				<equals arg1="${configure.read.write.database}" arg2="jdbc" />
 				<then>
 					<replace
 						file="${test.app.server.classes.portal.dir}/portal-ext.properties"
@@ -3004,7 +3004,7 @@ jdbc.read.username=${database.username}
 jdbc.read.password=${database.password}</echo>
 				</then>
 				<elseif>
-					<equals arg1="${configure.read-writer.database}" arg2="jndi" />
+					<equals arg1="${configure.read.write.database}" arg2="jndi" />
 					<then>
 						<prepare-database-jndi />
 
@@ -14553,12 +14553,12 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-		<get-testcase-property property.name="configure.read-writer.database" />
+		<get-testcase-property property.name="configure.read.write.database" />
 
 		<if>
-			<isset property="configure.read-writer.database" />
+			<isset property="configure.read.write.database" />
 			<then>
-				<prepare-read-writer-database-configuration-properties />
+				<prepare-read-write-database-configuration-properties />
 			</then>
 		</if>
 

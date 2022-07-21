@@ -15,9 +15,11 @@
 import React from 'react';
 declare const ManageCollaborators: ({
 	fetchSharingContactsButtonURL,
+	onError,
 }: IProps) => JSX.Element;
 interface IProps {
 	children?: React.ReactNode;
 	fetchSharingContactsButtonURL: RequestInfo;
+	onError: Function;
 }
 export default ManageCollaborators;

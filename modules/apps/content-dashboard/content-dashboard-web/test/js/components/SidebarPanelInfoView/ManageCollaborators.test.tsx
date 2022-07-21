@@ -37,6 +37,7 @@ const _getComponent = () => {
 	return (
 		<ManageCollaborators
 			fetchSharingContactsButtonURL={fetchSharingContactsButtonURL}
+			onError={() => {}}
 		/>
 	);
 };
@@ -56,5 +57,18 @@ describe('Manage collaborators component', () => {
 			expect(getByText('Manage Collaborators')).toBeInTheDocument();
 			expect(runScriptsInElement).toHaveBeenCalled();
 		});
+	});
+
+	it('handles the API error', async () => {
+		(fetch as jest.Mock).mockImplementation(() => {
+			return {
+				ok: false,
+				text: null,
+			};
+		});
+
+		const {queryByText} = render(_getComponent());
+
+		expect(queryByText('Manage Collaborators')).not.toBeInTheDocument();
 	});
 });

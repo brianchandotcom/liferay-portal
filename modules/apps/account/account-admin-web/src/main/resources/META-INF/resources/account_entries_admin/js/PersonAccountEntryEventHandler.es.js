@@ -40,29 +40,13 @@ class PersonAccountEntryEventHandler extends PortletBase {
 		this.container = this._setElement(props.container);
 		this.removeUserIconMarkup = props.removeUserIconMarkup;
 		this.removeUserLinkSelector = props.removeUserLinkSelector;
-
-		/**
-		 * Weird hack to get around a race condition where
-		 * Liferay.SearchContainer doesn't exist yet. This will be mitigated
-		 * once we migrate that component away from AUI.
-		 */
-		if (!Liferay.SearchContainer) {
-			const interval = setInterval(() => {
-				if (Liferay.SearchContainer) {
-					this.searchContainer = this._setSearchContainer(
-						props.searchContainer
-					);
-
-					clearInterval(interval);
-				}
-			}, 60);
-		}
-
+		this.searchContainerId = props.searchContainer;
 		this.selectUserButton = this._setElement(props.selectUserButton);
 		this.selectUserEventName = props.selectUserEventName;
 		this.selectUserURL = props.selectUserURL;
 		this.userIdInput = this._setElement(props.userIdInput);
 
+		this._handleOnSelect = this._handleOnSelect.bind(this);
 		this._handleSelectUserButtonClicked = this._handleSelectUserButtonClicked.bind(
 			this
 		);
@@ -87,13 +71,19 @@ class PersonAccountEntryEventHandler extends PortletBase {
 	}
 
 	_handleRemoveUserButtonClicked() {
-		this.searchContainer.deleteRow(1, this.searchContainer.getData());
+		const searchContainer = this._getSearchContainer();
+
+		searchContainer.deleteRow(1, searchContainer.getData());
 
 		this.userIdInput.value = null;
 	}
 
 	_handleSelectUserButtonClicked() {
 		this._selectAccountUser();
+	}
+
+	_getSearchContainer() {
+		return Liferay.SearchContainer.get(this.ns(this.searchContainerId));
 	}
 
 	_selectAccountUser() {
@@ -103,7 +93,7 @@ class PersonAccountEntryEventHandler extends PortletBase {
 			},
 			id: this.ns(this.selectUserEventName),
 			iframeBodyCssClass: '',
-			onSelect: this._handleOnSelect.bind(this),
+			onSelect: this._handleOnSelect,
 			selectEventName: this.ns(this.selectUserEventName),
 			selectedData: [this.userIdInput.value],
 			title: Liferay.Language.get('assign-user'),
@@ -119,16 +109,14 @@ class PersonAccountEntryEventHandler extends PortletBase {
 	}) {
 		this.userIdInput.value = userId;
 
-		this.searchContainer.deleteRow(1, this.searchContainer.getData());
-		this.searchContainer.addRow(
+		const searchContainer = this._getSearchContainer();
+
+		searchContainer.deleteRow(1, searchContainer.getData());
+		searchContainer.addRow(
 			[userName, emailAddress, jobTitle, this.removeUserIconMarkup],
 			userId
 		);
-		this.searchContainer.updateDataStore([userId]);
-	}
-
-	_setSearchContainer(searchContainerId) {
-		return Liferay.SearchContainer.get(this.ns(searchContainerId));
+		searchContainer.updateDataStore([userId]);
 	}
 
 	_setElement(selector) {

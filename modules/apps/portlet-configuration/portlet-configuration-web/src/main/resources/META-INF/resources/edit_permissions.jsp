@@ -150,6 +150,8 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 						}
 
 						String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;
+
+						String inputName = StringBundler.concat(liferayPortletResponse.getNamespace(), role.getRoleId(), actionSeparator, action);
 					%>
 
 						<liferay-ui:search-container-column-text
@@ -157,7 +159,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 							name="<%= _getActionLabel(request, resourceName, action) %>"
 						>
 							<c:if test="<%= disabled && checked %>">
-								<input name="<%= liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" type="hidden" value="<%= true %>" />
+								<input name="<%= inputName %>" type="hidden" value="<%= true %>" />
 							</c:if>
 
 							<c:choose>
@@ -185,7 +187,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 													<%= disabled ? "disabled" : StringPool.BLANK %>
 													<%= indeterminate ? "value=\"indeterminate\"" : StringPool.BLANK %>
 													class="custom-control-input"
-													name="<%= liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>"
+													name="<%= inputName %>"
 													type="checkbox"
 												/><span class="custom-control-label"></span
 											>
@@ -202,7 +204,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 												).put(
 													"indeterminate", indeterminate
 												).put(
-													"name", liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action
+													"name", inputName
 												).put(
 													"title", dataMessage
 												).build()
@@ -211,7 +213,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 									</div>
 								</c:when>
 								<c:otherwise>
-									<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= Validator.isNotNull(preselectedMsg) ? "lfr-checkbox-preselected lfr-portal-tooltip" : StringPool.BLANK %>" title="<%= dataMessage %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= FriendlyURLNormalizerUtil.normalize(role.getName()) + actionSeparator + action %>" name="<%= liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" onclick="<%= Validator.isNotNull(preselectedMsg) ? "return false;" : StringPool.BLANK %>" type="checkbox" />
+									<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= Validator.isNotNull(preselectedMsg) ? "lfr-checkbox-preselected lfr-portal-tooltip" : StringPool.BLANK %>" title="<%= dataMessage %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= FriendlyURLNormalizerUtil.normalize(role.getName()) + actionSeparator + action %>" name="<%= inputName %>" onclick="<%= Validator.isNotNull(preselectedMsg) ? "return false;" : StringPool.BLANK %>" type="checkbox" />
 								</c:otherwise>
 							</c:choose>
 						</liferay-ui:search-container-column-text>

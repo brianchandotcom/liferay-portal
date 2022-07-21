@@ -23,14 +23,16 @@ PortletConfigurationPermissionsDisplayContext portletConfigurationPermissionsDis
 
 List<Resource> resources = portletConfigurationPermissionsDisplayContext.getResources();
 
+Resource resource = resources.get(0);
+
+String resourceName = resource.getName();
+
 SearchContainer<Role> roleSearchContainer = portletConfigurationPermissionsDisplayContext.getRoleSearchContainer();
 
 if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelResource())) {
 	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.unescape(portletConfigurationPermissionsDisplayContext.getSelResourceDescription()), null);
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "permissions"), currentURL);
 }
-
-String resourceName = portletConfigurationPermissionsDisplayContext.getResourceName();
 %>
 
 <div class="edit-permissions portlet-configuration-edit-permissions">

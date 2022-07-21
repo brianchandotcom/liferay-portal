@@ -50,7 +50,8 @@ public class EntityExtensionHandler {
 
 		for (ExtensionProvider extensionProvider : _extensionProviders) {
 			extendedProperties.putAll(
-				extensionProvider.getExtendedProperties(companyId, entity));
+				extensionProvider.getExtendedProperties(
+					companyId, _className, entity));
 		}
 
 		return extendedProperties;
@@ -104,7 +105,8 @@ public class EntityExtensionHandler {
 			}
 
 			extensionProvider.setExtendedProperties(
-				companyId, entity, extensionProviderExtendedProperties);
+				companyId, _className, entity,
+				extensionProviderExtendedProperties);
 		}
 	}
 

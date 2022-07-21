@@ -232,7 +232,7 @@ public class EntityExtensionTest {
 
 		@Override
 		public Map<String, Serializable> getExtendedProperties(
-			long companyId, Object entity) {
+			long companyId, String className, Object entity) {
 
 			return HashMapBuilder.<String, Serializable>put(
 				_propertyName, RandomTestUtil.randomString()
@@ -269,7 +269,7 @@ public class EntityExtensionTest {
 
 		@Override
 		public void setExtendedProperties(
-				long companyId, Object entity,
+				long companyId, String className, Object entity,
 				Map<String, Serializable> extendedProperties)
 			throws Exception {
 

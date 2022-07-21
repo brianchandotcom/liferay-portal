@@ -1,11 +1,13 @@
-html#{$cadmin-selector} .page-editor__layout-viewport {
+$selector: '.page-editor__layout-viewport';
+
+html#{$cadmin-selector} #{$selector} {
 	align-items: stretch;
 	background-color: $cadmin-gray-400;
 	display: flex;
 	justify-content: center;
 	position: relative;
 
-	&__resizer {
+	#{$selector}__resizer {
 		background-color: var(--body-bg);
 	}
 
@@ -23,12 +25,12 @@ html#{$cadmin-selector} .page-editor__layout-viewport {
 			will-change: padding-left, padding-right;
 			z-index: 1;
 
-			&.page-editor__layout-viewport--with-sidebar {
+			&#{$selector}--with-sidebar {
 				padding-right: $sidebarButtonWidth;
 			}
 
-			&.page-editor__layout-viewport--with-sidebar-open {
-				.page-editor__layout-viewport__label-width {
+			&#{$selector}--with-sidebar-open {
+				#{$selector}__label-width {
 					right: $sidebarButtonWidth + $sidebarContentWidth;
 				}
 
@@ -38,30 +40,30 @@ html#{$cadmin-selector} .page-editor__layout-viewport {
 			}
 		}
 
-		&-desktop .page-editor__layout-viewport__resizer {
+		&-desktop #{$selector}__resizer {
 			flex-grow: 1;
 		}
 
-		&-tablet .page-editor__layout-viewport__resizer {
+		&-tablet #{$selector}__resizer {
 			max-width: minmax(991px, 100%);
 			min-width: minmax(768px, 100%);
 			width: 768px;
 		}
 
-		&-landscapeMobile .page-editor__layout-viewport__resizer {
+		&-landscapeMobile #{$selector}__resizer {
 			max-width: minmax(767px, 100%);
 			min-width: minmax(576px, 100%);
 			width: 576px;
 		}
 
-		&-portraitMobile .page-editor__layout-viewport__resizer {
+		&-portraitMobile #{$selector}__resizer {
 			max-width: minmax(575px, 100%);
 			min-width: minmax(240px, 100%);
 			width: 360px;
 		}
 	}
 
-	&__label-width {
+	#{$selector}__label-width {
 		margin-top: 12px;
 		position: absolute;
 		right: $sidebarButtonWidth;
@@ -78,7 +80,7 @@ html#{$cadmin-selector} .page-editor__layout-viewport {
 		}
 	}
 
-	&__handle {
+	#{$selector}__handle {
 		background-color: $cadmin-gray-400;
 		cursor: col-resize;
 		position: relative;
@@ -112,7 +114,7 @@ html#{$cadmin-selector} .page-editor__layout-viewport {
 	&__resizing {
 		cursor: col-resize;
 
-		.page-editor__layout-viewport__resizer {
+		#{$selector}__resizer {
 			pointer-events: none;
 		}
 	}

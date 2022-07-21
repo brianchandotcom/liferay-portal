@@ -31,6 +31,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Priority;
+
+import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ContainerResponseContext;
@@ -41,6 +44,7 @@ import javax.ws.rs.ext.Provider;
 /**
  * @author Javier Gamarra
  */
+@Priority(Priorities.USER - 10)
 @Provider
 @Transactional(rollbackFor = Exception.class)
 public class TransactionContainerRequestFilter

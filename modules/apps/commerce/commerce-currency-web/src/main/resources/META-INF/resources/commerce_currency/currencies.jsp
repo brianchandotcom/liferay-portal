@@ -21,68 +21,16 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 %>
 
 <c:if test="<%= commerceCurrenciesDisplayContext.hasManageCommerceCurrencyPermission() %>">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-		searchContainerId="commerceCurrencies"
-	>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all", "active", "inactive"} %>'
-				portletURL="<%= commerceCurrenciesDisplayContext.getPortletURL() %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= commerceCurrenciesDisplayContext.getOrderByCol() %>"
-				orderByType="<%= commerceCurrenciesDisplayContext.getOrderByType() %>"
-				orderColumns='<%= new String[] {"priority"} %>'
-				portletURL="<%= commerceCurrenciesDisplayContext.getPortletURL() %>"
-			/>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= commerceCurrenciesDisplayContext.getPortletURL() %>"
-				selectedDisplayStyle="list"
-			/>
-
-			<portlet:renderURL var="addCommerceCurrencyURL">
-				<portlet:param name="mvcRenderCommandName" value="/commerce_currency/edit_commerce_currency" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-currency") %>'
-					url="<%= addCommerceCurrencyURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button
-				cssClass="btn-update-exchange-rates"
-				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "updateExchangeRates();" %>'
-				label="update-exchange-rates"
-			/>
-
-			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceCurrencies();" %>'
-				icon="times"
-				label="delete"
-			/>
-		</liferay-frontend:management-bar-action-buttons>
-	</liferay-frontend:management-bar>
+	<clay:management-toolbar
+		managementToolbarDisplayContext="<%= new CommerceCurrenciesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, commerceCurrenciesDisplayContext.getSearchContainer()) %>"
+		propsTransformer="js/CommerceCurrenciesManagementToolbarPropsTransformer"
+	/>
 
 	<portlet:actionURL name="/commerce_currency/edit_commerce_currency" var="editCommerceCurrencyActionURL" />
 
 	<aui:form action="<%= editCommerceCurrencyActionURL %>" cssClass="container" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="deleteCommerceCurrencyIds" type="hidden" />
-		<aui:input name="updateCommerceCurrencyExchangeRateIds" type="hidden" />
 
 		<liferay-ui:search-container
 			id="commerceCurrencies"
@@ -169,48 +117,4 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-
-	<aui:script>
-		function <portlet:namespace />deleteCommerceCurrencies() {
-			if (
-				confirm(
-					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-currencies" />'
-				)
-			) {
-				var form = window.document['<portlet:namespace />fm'];
-
-				form['<portlet:namespace /><%= Constants.CMD %>'].value =
-					'<%= Constants.DELETE %>';
-				form[
-					'<portlet:namespace />deleteCommerceCurrencyIds'
-				].value = Liferay.Util.getCheckedCheckboxes(
-					form,
-					'<portlet:namespace />allRowIds'
-				);
-
-				submitForm(form);
-			}
-		}
-
-		function <portlet:namespace />updateExchangeRates() {
-			if (
-				confirm(
-					'<liferay-ui:message key="are-you-sure-you-want-to-update-the-exchange-rate-of-the-selected-currencies" />'
-				)
-			) {
-				var form = window.document['<portlet:namespace />fm'];
-
-				form['<portlet:namespace /><%= Constants.CMD %>'].value =
-					'updateExchangeRates';
-				form[
-					'<portlet:namespace />updateCommerceCurrencyExchangeRateIds'
-				].value = Liferay.Util.getCheckedCheckboxes(
-					form,
-					'<portlet:namespace />allRowIds'
-				);
-
-				submitForm(form);
-			}
-		}
-	</aui:script>
 </c:if>

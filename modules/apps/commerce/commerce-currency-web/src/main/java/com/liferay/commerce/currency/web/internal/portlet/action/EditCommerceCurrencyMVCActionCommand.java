@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
 
@@ -130,10 +129,8 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 			};
 		}
 		else {
-			updateCommerceCurrencyExchangeRateIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "updateCommerceCurrencyExchangeRateIds"),
-				0L);
+			updateCommerceCurrencyExchangeRateIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -169,9 +166,8 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 			deleteCommerceCurrencyIds = new long[] {commerceCurrencyId};
 		}
 		else {
-			deleteCommerceCurrencyIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCommerceCurrencyIds"),
-				0L);
+			deleteCommerceCurrencyIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
 		for (long deleteCommerceCurrencyId : deleteCommerceCurrencyIds) {

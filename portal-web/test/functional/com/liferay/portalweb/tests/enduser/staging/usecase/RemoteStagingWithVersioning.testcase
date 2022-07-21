@@ -43,95 +43,109 @@ definition {
 	test AssertContentNotBePublishedByDefault {
 		property test.name.skip.portal.instance = "RemoteStagingWithVersioning#AssertContentNotBePublishedByDefault";
 
-		APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");
+		task ("Given: Keep 'Enable Dynamic Export' checkbox unchecked") {
+			APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");
 
-		AssertNotChecked.assertNotCheckedNotVisible(
-			key_settingFieldName = "Enable Dynamic Export",
-			locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_settingFieldName = "Enable Dynamic Export",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		task ("When: Add a web content entry and place an asset publisher widget to page") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		WebContentNavigator.gotoAddCP();
+			WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
 
-		Navigator.openSiteURL(siteName = "Site Name");
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Asset Publisher");
+			Portlet.addPG(portletName = "Asset Publisher");
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		task ("And: Publish to remote live site without web content entry") {
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		Staging.gotoPublishToLive();
+			Staging.gotoPublishToLive();
 
-		Staging.configurePublishToLive(uncheckContentNameList = "Web Content");
+			Staging.configurePublishToLive(uncheckContentNameList = "Web Content");
 
-		Staging.publishToLive(remoteStaging = "true");
+			Staging.publishToLive(remoteStaging = "true");
+		}
 
-		User.logoutPG();
+		task ("Then: Verify the page is published to remote live and web content is not published") {
+			User.logoutPG();
 
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:9080",
+				userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoSitePage(
-			baseURL = "http://localhost:9080",
-			pageName = "Staging Test Page",
-			siteName = "Remote Site");
+			Navigator.gotoSitePage(
+				baseURL = "http://localhost:9080",
+				pageName = "Staging Test Page",
+				siteName = "Remote Site");
 
-		AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
+			AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
 
-		Refresh();
+			Refresh();
 
-		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+		}
 	}
 
 	@priority = "3"
 	test PublishWCViaRemoteStaging {
 		property test.name.skip.portal.instance = "RemoteStagingWithVersioning#PublishWCViaRemoteStaging";
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Staging Test Page",
-			widgetName = "Web Content Display");
+		task ("Given: Add web content display on page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Staging Test Page",
+				widgetName = "Web Content Display");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
+		task ("When: Add a web content entry to web content display and publish to remote live") {
+			Navigator.gotoSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
 
-		WebContentDisplayPortlet.add(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+			WebContentDisplayPortlet.add(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
 
-		Staging.gotoPublishToLive();
+			Staging.gotoPublishToLive();
 
-		Staging.publishToLive(remoteStaging = "true");
+			Staging.publishToLive(remoteStaging = "true");
+		}
 
-		User.logoutPG();
+		task ("Then: Verify web content entry is published to remote live and user cannot edit web content entry on remote site") {
+			User.logoutPG();
 
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:9080",
+				userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoSitePage(
-			baseURL = "http://localhost:9080",
-			pageName = "Staging Test Page",
-			siteName = "Remote Site");
+			Navigator.gotoSitePage(
+				baseURL = "http://localhost:9080",
+				pageName = "Staging Test Page",
+				siteName = "Remote Site");
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
 
-		WebContentDisplayPortlet.viewCannotEditWC(webContentTitle = "Web Content Title");
+			WebContentDisplayPortlet.viewCannotEditWC(webContentTitle = "Web Content Title");
+		}
 	}
 
 }

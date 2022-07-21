@@ -157,6 +157,11 @@ public class DynamicPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	public void removePortalCaches(long companyId) {
+		_portalCacheManager.removePortalCaches(companyId);
+	}
+
+	@Override
 	public boolean unregisterPortalCacheManagerListener(
 		PortalCacheManagerListener portalCacheManagerListener) {
 

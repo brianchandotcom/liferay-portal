@@ -96,15 +96,6 @@ definition {
 			uploadFileName = "Document_4");
 	}
 
-	@description = "This test covers LPS-154473."
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanPublishImageInMGAfterUpgradeFrom73101Archive {
-
-		// TODO LPS-154473
-
-	}
-
 	@description = "This test covers LPS-154471. It ensures that a blogs small image can be published and rendered correctly after an upgrade from 7.1.10.5."
 	@priority = "4"
 	test CanPublishSmallImageAfterUpgradeFrom71105Archive {

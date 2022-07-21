@@ -170,6 +170,8 @@ html#{$cadmin-selector} {
 				top: 1rem;
 			}
 		}
+
+		@import './manage-collaborators';
 	}
 
 	.has-control-menu {

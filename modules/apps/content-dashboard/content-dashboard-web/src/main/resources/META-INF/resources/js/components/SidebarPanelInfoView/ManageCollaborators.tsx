@@ -16,7 +16,7 @@ import {fetch, openToast, runScriptsInElement} from 'frontend-js-web';
 import React, {useEffect, useRef} from 'react';
 
 const ManageCollaborators = ({fetchSharingContactsButtonURL}: IProps) => {
-	const elementRef = useRef<HTMLSpanElement>(document.createElement('span'));
+	const elementRef = useRef<HTMLDivElement>(document.createElement('div'));
 
 	useEffect(() => {
 		const fetchButton = async () => {
@@ -47,7 +47,7 @@ const ManageCollaborators = ({fetchSharingContactsButtonURL}: IProps) => {
 		fetchButton();
 	}, [fetchSharingContactsButtonURL]);
 
-	return <span ref={elementRef} />;
+	return <div className="manage-collaborators mt-4" ref={elementRef} />;
 };
 
 interface IProps {

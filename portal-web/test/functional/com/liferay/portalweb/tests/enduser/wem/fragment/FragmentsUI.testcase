@@ -189,7 +189,7 @@ definition {
 		task ("Assert the actions order of collections menu") {
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
-			MenuItem.viewOrder(menuItemList = "Export,Import,-,Delete");
+			MenuItem.viewOrder(menuItemList = "Export,Import,Delete");
 
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 		}
@@ -197,7 +197,7 @@ definition {
 		task ("Assert the actions order of a collection") {
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
-			MenuItem.viewOrder(menuItemList = "Edit,-,Export,Import,-,Delete");
+			MenuItem.viewOrder(menuItemList = "Edit,Export,Import,Delete");
 
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 		}
@@ -205,7 +205,7 @@ definition {
 		task ("Assert the actions order of a draft fragment") {
 			LexiconEntry.openEntryMenu(rowEntry = "Draft Fragment Example");
 
-			MenuItem.viewOrder(menuItemList = "Edit,-,Change Thumbnail,Discard Draft,Rename,-,Export,Make a Copy,Move,-,Delete");
+			MenuItem.viewOrder(menuItemList = "Edit,Change Thumbnail,Discard Draft,Rename,Export,Make a Copy,Move,Delete");
 
 			LexiconEntry.openEntryMenu(rowEntry = "Draft Fragment Example");
 		}
@@ -213,7 +213,7 @@ definition {
 		task ("Assert the actions order of a published fragment") {
 			LexiconEntry.openEntryMenu(rowEntry = "Approved Fragment Example");
 
-			MenuItem.viewOrder(menuItemList = "Edit,-,Change Thumbnail,Rename,View Usages,-,Export,Make a Copy,Move,-,Delete");
+			MenuItem.viewOrder(menuItemList = "Edit,Change Thumbnail,Rename,View Usages,Export,Make a Copy,Move,Delete");
 
 			LexiconEntry.openEntryMenu(rowEntry = "Approved Fragment Example");
 		}

@@ -1049,17 +1049,17 @@ definition {
 				value1 = "Translate");
 
 			AssertTextEquals(
-				index = "7",
+				index = "6",
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM_SPECIFIC",
 				value1 = "View History");
 
 			AssertTextEquals(
-				index = "11",
+				index = "9",
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM_SPECIFIC",
 				value1 = "Export for Translation");
 
 			AssertTextEquals(
-				index = "12",
+				index = "10",
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM_SPECIFIC",
 				value1 = "Import Translation");
 		}

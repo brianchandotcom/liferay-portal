@@ -14,8 +14,6 @@ import {Root, createRoot} from 'react-dom/client';
 
 import App from './App';
 
-import './index.css';
-
 class PartnerPortalRemoteAppComponent extends HTMLElement {
 	private root: Root | undefined;
 

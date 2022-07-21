@@ -46,6 +46,7 @@ const REQUIRED_MSG = Liferay.Language.get('required');
 
 export function ModalAddFilter({
 	currentFilters,
+	disableDateValues,
 	editingFilter,
 	editingObjectFieldName,
 	header,
@@ -261,11 +262,7 @@ export function ModalAddFilter({
 		if (!selectedFilterBy) {
 			currentErrors.selectedFilterBy = REQUIRED_MSG;
 		}
-		if (
-			selectedFilterBy?.name !== 'createDate' &&
-			selectedFilterBy?.name !== 'modifiedDate' &&
-			!selectedFilterType
-		) {
+		if (!selectedFilterType && !disableDateValues) {
 			currentErrors.selectedFilterType = REQUIRED_MSG;
 		}
 		if (
@@ -277,7 +274,8 @@ export function ModalAddFilter({
 		}
 		if (
 			selectedFilterBy?.businessType === 'Date' &&
-			selectedFilterType?.value === 'range'
+			selectedFilterType?.value === 'range' &&
+			!disableDateValues
 		) {
 			const startDate = items.find((date) => date.value === 'ge');
 			const endDate = items.find((date) => date.value === 'le');
@@ -379,22 +377,33 @@ export function ModalAddFilter({
 					</AutoComplete>
 				)}
 
-				{selectedFilterBy?.name !== 'createDate' &&
-					selectedFilterBy?.name !== 'modifiedDate' && (
+				{selectedFilterBy?.businessType !== 'Date' && (
+					<FormCustomSelect
+						error={errors.selectedFilterType}
+						label={Liferay.Language.get('filter-type')}
+						onChange={(target: LabelValueObject) =>
+							setSelectedFilterType(target)
+						}
+						options={
+							selectedFilterBy?.businessType === 'Integer' ||
+							selectedFilterBy?.businessType === 'LongInteger'
+								? NUMERIC_OPERATORS
+								: PICKLIST_OPERATORS
+						}
+						required
+						value={selectedFilterType?.label ?? ''}
+					/>
+				)}
+
+				{selectedFilterBy?.businessType === 'Date' &&
+					!disableDateValues && (
 						<FormCustomSelect
 							error={errors.selectedFilterType}
 							label={Liferay.Language.get('filter-type')}
 							onChange={(target: LabelValueObject) =>
 								setSelectedFilterType(target)
 							}
-							options={
-								selectedFilterBy?.businessType === 'Integer' ||
-								selectedFilterBy?.businessType === 'LongInteger'
-									? NUMERIC_OPERATORS
-									: selectedFilterBy?.businessType === 'Date'
-									? DATE_OPERATORS
-									: PICKLIST_OPERATORS
-							}
+							options={DATE_OPERATORS}
 							required
 							value={selectedFilterType?.label ?? ''}
 						/>
@@ -428,9 +437,7 @@ export function ModalAddFilter({
 				)}
 
 				{selectedFilterBy?.businessType === 'Date' &&
-					selectedFilterBy.name !== 'createDate' &&
-					selectedFilterBy.name !== 'modifiedDate' &&
-					!selectedFilterBy.system && (
+					!disableDateValues && (
 						<div className="row">
 							<div className="col-lg-6">
 								<DatePicker
@@ -504,6 +511,7 @@ export function ModalAddFilter({
 
 interface IProps {
 	currentFilters: TCurrentFilter[];
+	disableDateValues?: boolean;
 	editingFilter: boolean;
 	editingObjectFieldName: string;
 	header: string;

@@ -91,10 +91,8 @@ export function FilterScreen() {
 				objectColumns={
 					objectViewFilterColumns.map((filterColumn) => {
 						if (
-							filterColumn.objectFieldBusinessType ===
-								'Modified Date' ||
-							filterColumn.objectFieldBusinessType ===
-								'Creation Date'
+							filterColumn.objectFieldName === 'createDate' ||
+							filterColumn.objectFieldName === 'modifiedDate'
 						) {
 							return {
 								...filterColumn,
@@ -119,6 +117,7 @@ export function FilterScreen() {
 			{visibleModal && (
 				<ModalAddFilter
 					currentFilters={objectViewFilterColumns}
+					disableDateValues
 					editingFilter={editingFilter}
 					editingObjectFieldName={editingObjectFieldName}
 					header={Liferay.Language.get('new-filter')}

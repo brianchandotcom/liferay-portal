@@ -17,6 +17,7 @@
 import './ModalAddFilter.scss';
 export declare function ModalAddFilter({
 	currentFilters,
+	disableDateValues,
 	editingFilter,
 	editingObjectFieldName,
 	header,
@@ -28,6 +29,7 @@ export declare function ModalAddFilter({
 }: IProps): JSX.Element;
 interface IProps {
 	currentFilters: TCurrentFilter[];
+	disableDateValues?: boolean;
 	editingFilter: boolean;
 	editingObjectFieldName: string;
 	header: string;

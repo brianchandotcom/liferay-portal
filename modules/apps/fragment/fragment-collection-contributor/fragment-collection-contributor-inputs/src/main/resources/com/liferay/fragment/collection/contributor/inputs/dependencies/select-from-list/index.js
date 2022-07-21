@@ -12,6 +12,9 @@ const defaultOptionLabel = document.getElementById(
 ).textContent;
 const dropdown = wrapper.querySelector('.dropdown-menu');
 const inputElement = wrapper.querySelector('input');
+const labelInputElement = wrapper.querySelector(
+	`input[name="${input.name}-label"]`
+);
 const listbox = wrapper.querySelector('.list-unstyled');
 const loadingResultsMessage = wrapper.querySelector(
 	'.forms-select-from-list-loading-results'
@@ -143,6 +146,7 @@ function setActiveDescendant(element) {
 
 		listbox.setAttribute('aria-activedescendant', element.id);
 		inputElement.value = element.dataset.optionValue;
+		labelInputElement.value = element.textContent;
 
 		element.classList.add('active');
 		element.setAttribute('aria-selected', 'true');

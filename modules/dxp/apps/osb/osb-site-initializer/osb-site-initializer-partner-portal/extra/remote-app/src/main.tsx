@@ -16,7 +16,7 @@ import App from './App';
 
 import './index.css';
 
-class Testray extends HTMLElement {
+class PartnerPortalRemoteAppComponent extends HTMLElement {
 	private root: Root | undefined;
 
 	connectedCallback() {
@@ -35,5 +35,5 @@ class Testray extends HTMLElement {
 const ELEMENT_NAME = 'liferay-remote-app-partner-portal';
 
 if (!customElements.get(ELEMENT_NAME)) {
-	customElements.define(ELEMENT_NAME, Testray);
+	customElements.define(ELEMENT_NAME, PartnerPortalRemoteAppComponent);
 }

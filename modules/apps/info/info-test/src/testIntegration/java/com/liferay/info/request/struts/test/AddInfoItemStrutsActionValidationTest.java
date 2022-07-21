@@ -31,6 +31,7 @@ import com.liferay.info.test.util.model.MockObject;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -159,6 +160,47 @@ public class AddInfoItemStrutsActionValidationTest {
 
 			Assert.assertFalse(
 				SessionMessages.contains(mockHttpServletRequest, formItemId));
+		}
+	}
+
+	@Test
+	public void testAddInfoItemStrutsActionFromDraftLayout() throws Exception {
+		InfoField<TextInfoFieldType> infoField = _getInfoField();
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField)
+						).build(),
+						_editPageInfoItemCapability)) {
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
+				layout,
+				String.valueOf(
+					_portal.getClassNameId(MockObject.class.getName())),
+				"0",
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(layout.getPlid()),
+				false, infoField);
+
+			String formItemId = jsonObject.getString("addedItemId");
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(
+					layout, formItemId, Constants.PREVIEW);
+
+			_addInfoItemStrutsAction.execute(
+				mockHttpServletRequest, new MockHttpServletResponse());
+
+			Assert.assertTrue(
+				SessionErrors.contains(mockHttpServletRequest, formItemId));
+			Assert.assertTrue(
+				SessionErrors.get(mockHttpServletRequest, formItemId) instanceof
+					InfoFormInvalidLayoutModeException);
 		}
 	}
 

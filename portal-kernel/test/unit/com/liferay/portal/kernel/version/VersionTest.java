@@ -83,7 +83,7 @@ public class VersionTest {
 		Assert.assertEquals(0, version.getMajor());
 		Assert.assertEquals(0, version.getMinor());
 		Assert.assertEquals(0, version.getMicro());
-		Assert.assertEquals(_lastStepSuffix, version.getStep());
+		Assert.assertEquals(_lastStepSuffix, version.getQualifier());
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class VersionTest {
 		Assert.assertEquals(0, version.getMajor());
 		Assert.assertEquals(0, version.getMinor());
 		Assert.assertEquals(0, version.getMicro());
-		Assert.assertEquals(_lastStepSuffix, version.getStep());
+		Assert.assertEquals(_lastStepSuffix, version.getQualifier());
 	}
 
 	@Test
@@ -103,7 +103,7 @@ public class VersionTest {
 		Assert.assertEquals(1, version.getMajor());
 		Assert.assertEquals(2, version.getMinor());
 		Assert.assertEquals(3, version.getMicro());
-		Assert.assertEquals("Step-4", version.getStep());
+		Assert.assertEquals("Step-4", version.getQualifier());
 	}
 
 	@Test
@@ -113,7 +113,7 @@ public class VersionTest {
 		Assert.assertEquals(1, version.getMajor());
 		Assert.assertEquals(2, version.getMinor());
 		Assert.assertEquals(3, version.getMicro());
-		Assert.assertEquals(_lastStepSuffix, version.getStep());
+		Assert.assertEquals(_lastStepSuffix, version.getQualifier());
 	}
 
 	@Test
@@ -123,7 +123,7 @@ public class VersionTest {
 		Assert.assertEquals(0, version.getMajor());
 		Assert.assertEquals(0, version.getMinor());
 		Assert.assertEquals(0, version.getMicro());
-		Assert.assertEquals(_lastStepSuffix, version.getStep());
+		Assert.assertEquals(_lastStepSuffix, version.getQualifier());
 	}
 
 	@Test

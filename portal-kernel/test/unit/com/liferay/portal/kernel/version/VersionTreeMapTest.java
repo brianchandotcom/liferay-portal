@@ -81,7 +81,7 @@ public class VersionTreeMapTest {
 
 			Assert.assertEquals(upgradeProcesses[i], upgradeProcess);
 
-			String step = version.getStep();
+			String step = version.getQualifier();
 
 			if (iterator.hasNext()) {
 				Assert.assertTrue(step.equals("Step-" + (i + 1)));

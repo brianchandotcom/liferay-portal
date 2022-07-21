@@ -147,6 +147,11 @@
 		<td>//input[@name='showFilesInDocumentsAndMedia' and not(@disabled)]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_COUNT_CHARACTERS_ON_ENTRIES</td>
+		<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[contains(@class,'form-text') and contains(text(),'${key_viewCountCharacters}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

@@ -720,8 +720,6 @@ definition {
 	@description = "LPS-146889 - Verify that 'Set the Maximum Number of Characters' toggle is available for Text and Long Text fields"
 	@priority = "5"
 	test CanViewSetMaximumCharactersOption {
-		property portal.acceptance = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151569",
 			objectName = "CustomObject151569",
@@ -743,7 +741,7 @@ definition {
 			isRequired = "false",
 			objectName = "CustomObject151569");
 
-		Navigator.openURL();
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject151569");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -753,19 +751,39 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field Text");
 
-		AssertElementPresent(
-			key_labelName = "Limit Characters",
-			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
+		ObjectField.checkLimitCharacters();
 
-		ObjectField.closeModal();
+		ObjectField.assertHelpText(helpText = "Set the maximum number of characters accepted. This value cannot be less than 1 or greater than 280");
 
-		SelectFrame(locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
+		ObjectField.assertValueOnLimitCharacters(maxValue = "280");
+
+		ObjectField.save();
+
+		Refresh();
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field Long Text");
 
-		AssertElementPresent(
-			key_labelName = "Limit Characters",
-			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
+		ObjectField.checkLimitCharacters();
+
+		ObjectField.assertHelpText(helpText = "Set the maximum number of characters accepted. This value cannot be less than 1 or greater than 65,000");
+
+		ObjectField.assertValueOnLimitCharacters(maxValue = "65000");
+
+		ObjectField.save();
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject151569");
+
+		LexiconEntry.gotoAdd();
+
+		ObjectField.viewCountCharactersOnEntries(
+			fieldName = "customObjectFieldText",
+			viewCountCharacters = "0/280 Characters");
+
+		ObjectField.viewCountCharactersOnEntries(
+			fieldName = "customObjectFieldLongText",
+			viewCountCharacters = "0/65000 Characters");
 	}
 
 	@description = "LPS-143065 - Verify if a side panel containing the Field name, Typem Request Files, Accepted File Extensions, and Maximum File Size fields"

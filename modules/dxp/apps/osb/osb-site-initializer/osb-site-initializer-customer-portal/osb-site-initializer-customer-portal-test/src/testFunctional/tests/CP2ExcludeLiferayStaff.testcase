@@ -1,0 +1,62 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
+			CustomerPortal.customerPortalApisTearDown();
+		}
+	}
+
+    @description = "Automation ID: LPS-147722 | Test Summary: Verify if when user is Liferay Staff and not administrator of a project, he wont pass through the onboarding"
+    @priority = "5"
+    test IfStaffNotAdmWontPassOnboarding {
+
+    }
+
+    @description = "Automation ID: LPS-147725 | Test Summary: Verify if when the user is Liferay Staff and it's administrator of the project, he will pass through the onboarding"
+    @priority = "5"
+    test IfStaffIsAdmWillPassOnboarding {
+        
+    }
+
+    @description = "Automation ID: LPS-147731 | Test Summary: Verify if when the user isn't Liferay Staff and it's a administrator of a Project, he will pass through the onboarding"
+    @priority = "5"
+    test NotASatffButIsAdmWillPassOnboarding {
+        
+    }
+
+    @description = "Automation ID: LPS-147791 | Test Summary: Verify if the Liferay Staff user can view a project for which he is not a member/worker/does not participate/does not have a role in it"
+    @priority = "4"
+    test IfStaffCanSeeProjectHeIsNotRelated {
+        
+    }
+}

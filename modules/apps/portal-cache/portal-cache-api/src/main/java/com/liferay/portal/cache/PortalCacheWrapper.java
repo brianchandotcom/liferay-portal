@@ -63,6 +63,11 @@ public class PortalCacheWrapper<K extends Serializable, V>
 	}
 
 	@Override
+	public boolean isSharded() {
+		return portalCache.isSharded();
+	}
+
+	@Override
 	public void put(K key, V value) {
 		portalCache.put(key, value);
 	}

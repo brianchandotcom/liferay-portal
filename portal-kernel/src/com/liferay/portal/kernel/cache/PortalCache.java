@@ -40,6 +40,8 @@ public interface PortalCache<K extends Serializable, V> {
 
 	public boolean isMVCC();
 
+	public boolean isSharded();
+
 	public void put(K key, V value);
 
 	public void put(K key, V value, int timeToLive);

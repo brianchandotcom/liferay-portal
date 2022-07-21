@@ -51,6 +51,18 @@ public class PortalCacheHelperUtil {
 			portalCacheName, mvcc);
 	}
 
+	public static <K extends Serializable, V> PortalCache<K, V> getPortalCache(
+		String portalCacheManagerName, String portalCacheName, boolean mvcc,
+		boolean sharded) {
+
+		PortalCacheManager<?, ?> portalCacheManager =
+			PortalCacheManagerProvider.getPortalCacheManager(
+				portalCacheManagerName);
+
+		return (PortalCache<K, V>)portalCacheManager.getPortalCache(
+			portalCacheName, mvcc, sharded);
+	}
+
 	public static <K extends Serializable, V> void putWithoutReplicator(
 		PortalCache<K, V> portalCache, K key, V value) {
 

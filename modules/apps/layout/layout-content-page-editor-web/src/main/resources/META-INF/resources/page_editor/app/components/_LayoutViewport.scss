@@ -1,122 +1,119 @@
-html#{$cadmin-selector} {
-	.page-editor__layout-viewport {
-		align-items: stretch;
-		background-color: $cadmin-gray-400;
-		display: flex;
-		justify-content: center;
-		position: relative;
+html#{$cadmin-selector} .page-editor__layout-viewport {
+	align-items: stretch;
+	background-color: $cadmin-gray-400;
+	display: flex;
+	justify-content: center;
+	position: relative;
 
-		&__resizer {
-			background-color: var(--body-bg);
-		}
+	&__resizer {
+		background-color: var(--body-bg);
+	}
 
-		&--size {
-			&-tablet,
-			&-landscapeMobile,
-			&-portraitMobile {
-				height: 100%;
-				left: 0;
-				position: absolute;
-				top: 0;
-				transition: padding-left ease $defaultTransitionDuration,
-					padding-right ease $defaultTransitionDuration;
-				width: 100%;
-				will-change: padding-left, padding-right;
-				z-index: 1;
-
-				&.page-editor__layout-viewport--with-sidebar {
-					padding-right: $sidebarButtonWidth;
-				}
-
-				&.page-editor__layout-viewport--with-sidebar-open {
-					.page-editor__layout-viewport__label-width {
-						right: $sidebarButtonWidth + $sidebarContentWidth;
-					}
-
-					@include media-breakpoint-up(sm) {
-						padding-right: $sidebarButtonWidth +
-							$sidebarContentWidth;
-					}
-				}
-			}
-
-			&-desktop .page-editor__layout-viewport__resizer {
-				flex-grow: 1;
-			}
-
-			&-tablet .page-editor__layout-viewport__resizer {
-				max-width: minmax(991px, 100%);
-				min-width: minmax(768px, 100%);
-				width: 768px;
-			}
-
-			&-landscapeMobile .page-editor__layout-viewport__resizer {
-				max-width: minmax(767px, 100%);
-				min-width: minmax(576px, 100%);
-				width: 576px;
-			}
-
-			&-portraitMobile .page-editor__layout-viewport__resizer {
-				max-width: minmax(575px, 100%);
-				min-width: minmax(240px, 100%);
-				width: 360px;
-			}
-		}
-
-		&__label-width {
-			margin-top: 12px;
+	&--size {
+		&-tablet,
+		&-landscapeMobile,
+		&-portraitMobile {
+			height: 100%;
+			left: 0;
 			position: absolute;
-			right: $sidebarButtonWidth;
+			top: 0;
+			transition: padding-left ease $defaultTransitionDuration,
+				padding-right ease $defaultTransitionDuration;
+			width: 100%;
+			will-change: padding-left, padding-right;
 			z-index: 1;
 
-			span {
-				background-color: $cadmin-gray-800;
-				border-radius: 4px;
-				color: $cadmin-light-l2;
-				font-size: 14px;
-				font-weight: 600;
-				margin-right: 16px;
-				padding: 6px 12px;
+			&.page-editor__layout-viewport--with-sidebar {
+				padding-right: $sidebarButtonWidth;
+			}
+
+			&.page-editor__layout-viewport--with-sidebar-open {
+				.page-editor__layout-viewport__label-width {
+					right: $sidebarButtonWidth + $sidebarContentWidth;
+				}
+
+				@include media-breakpoint-up(sm) {
+					padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+				}
 			}
 		}
 
-		&__handle {
-			background-color: $cadmin-gray-400;
-			cursor: col-resize;
-			position: relative;
-			width: 16px;
-
-			&:active,
-			&:hover {
-				background-color: $cadmin-gray-500;
-			}
-
-			&:before,
-			&:after {
-				border: 1px solid $cadmin-secondary;
-				border-radius: 2px;
-				content: '';
-				height: 20px;
-				position: absolute;
-				top: 50%;
-				transform: translateY(-50%);
-			}
-
-			&:before {
-				left: calc(50% - 3px);
-			}
-
-			&:after {
-				left: calc(50% + 1px);
-			}
+		&-desktop .page-editor__layout-viewport__resizer {
+			flex-grow: 1;
 		}
 
-		&__resizing {
-			cursor: col-resize;
+		&-tablet .page-editor__layout-viewport__resizer {
+			max-width: minmax(991px, 100%);
+			min-width: minmax(768px, 100%);
+			width: 768px;
+		}
 
-			.page-editor__layout-viewport__resizer {
-				pointer-events: none;
-			}
+		&-landscapeMobile .page-editor__layout-viewport__resizer {
+			max-width: minmax(767px, 100%);
+			min-width: minmax(576px, 100%);
+			width: 576px;
+		}
+
+		&-portraitMobile .page-editor__layout-viewport__resizer {
+			max-width: minmax(575px, 100%);
+			min-width: minmax(240px, 100%);
+			width: 360px;
+		}
+	}
+
+	&__label-width {
+		margin-top: 12px;
+		position: absolute;
+		right: $sidebarButtonWidth;
+		z-index: 1;
+
+		span {
+			background-color: $cadmin-gray-800;
+			border-radius: 4px;
+			color: $cadmin-light-l2;
+			font-size: 14px;
+			font-weight: 600;
+			margin-right: 16px;
+			padding: 6px 12px;
+		}
+	}
+
+	&__handle {
+		background-color: $cadmin-gray-400;
+		cursor: col-resize;
+		position: relative;
+		width: 16px;
+
+		&:active,
+		&:hover {
+			background-color: $cadmin-gray-500;
+		}
+
+		&:before,
+		&:after {
+			border: 1px solid $cadmin-secondary;
+			border-radius: 2px;
+			content: '';
+			height: 20px;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		&:before {
+			left: calc(50% - 3px);
+		}
+
+		&:after {
+			left: calc(50% + 1px);
+		}
+	}
+
+	&__resizing {
+		cursor: col-resize;
+
+		.page-editor__layout-viewport__resizer {
+			pointer-events: none;
 		}
 	}
 }

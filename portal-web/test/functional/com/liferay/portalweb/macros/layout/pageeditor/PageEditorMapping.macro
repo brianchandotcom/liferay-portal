@@ -75,11 +75,11 @@ definition {
 		if (isSet(uploadFileName)) {
 			AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
 
+			WaitForEditable(locator1 = "TextInput#FILE");
+
 			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
 				value1 = "${uploadFileName}");
-
-			Pause(locator1 = "5000");
 
 			AssertElementPresent.pauseAssertVisible(
 				locator1 = "ItemSelector#ADD_BUTTON",
@@ -106,8 +106,6 @@ definition {
 			key_fieldLabel = "Item",
 			locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
 			value1 = "${entryTitle}");
-
-		Pause(locator1 = "3000");
 	}
 
 	macro mapEditableFieldToCollectionItems {
@@ -174,14 +172,14 @@ definition {
 				value1 = "${source}");
 		}
 
-		Pause(locator1 = "3000");
+		WaitForEditable(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD");
 
 		Select(
 			key_fieldLabel = "Field",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${field}");
-
-		Pause(locator1 = "3000");
 
 		PageEditor.waitForAutoSave();
 	}

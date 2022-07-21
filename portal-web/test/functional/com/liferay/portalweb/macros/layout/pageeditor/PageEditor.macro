@@ -2466,11 +2466,11 @@ definition {
 
 			AssertElementPresent.assertVisible(locator1 = "Button#SELECT_FILE");
 
+			WaitForEditable(locator1 = "TextInput#FILE");
+
 			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
 				value1 = "${fileName}");
-
-			Pause(locator1 = "3000");
 
 			Button.clickAdd();
 		}
@@ -2734,7 +2734,9 @@ definition {
 								value1 = "${source}");
 						}
 
-						Pause(locator1 = "3000");
+						WaitForEditable(
+							key_fieldLabel = "Field",
+							locator1 = "Select#GENERIC_SELECT_FIELD");
 
 						Select(
 							key_fieldLabel = "Field",
@@ -3055,7 +3057,9 @@ definition {
 								value1 = "${source}");
 						}
 
-						Pause(locator1 = "3000");
+						WaitForEditable(
+							key_fieldLabel = "Field",
+							locator1 = "Select#GENERIC_SELECT_FIELD");
 
 						Select(
 							key_fieldLabel = "Field",
@@ -3918,7 +3922,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			locator1 = "PageEditor#CONFIGURATION_PANEL_HANDLE",
 			value1 = "${position}");
 
-		Pause(locator1 = "3000");
+		WaitForElementNotPresent(locator1 = "PageEditor#ACTIVE_CONFIGURATION_PANEL_HANDLE");
 
 		var updatedHeight = selenium.getElementHeight("PageEditor#CONFIGURATION_PANEL_CONFIGURATION");
 
@@ -5039,6 +5043,8 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	macro waitForAutoSave {
+		WaitForElementNotPresent(locator1 = "PageEditor#DRAFT_SAVING_MESSAGE");
+
 		WaitForVisible(locator1 = "PageEditor#AUTOSAVE_MESSAGE");
 	}
 

@@ -27,11 +27,11 @@ definition {
 		Click(
 			key_card = "${entryTitle}",
 			locator1 = "Card#CARD_TITLE");
-
-		Pause(locator1 = "3000");
 	}
 
 	macro _selectField {
+		WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
 		Select(
 			locator1 = "PageEditorEditableLink#FIELD",
 			value1 = "${field}");
@@ -107,6 +107,10 @@ definition {
 		}
 
 		if (isSet(source)) {
+			WaitForEditable(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
 			Select(
 				key_fieldLabel = "Source",
 				locator1 = "Select#GENERIC_SELECT_FIELD",

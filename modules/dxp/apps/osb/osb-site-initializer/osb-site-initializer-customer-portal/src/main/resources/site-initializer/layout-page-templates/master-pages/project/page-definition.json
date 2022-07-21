@@ -3,6 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -45,10 +48,8 @@
 									"fragment": {
 										"key": "side-bar"
 									},
-									"fragmentConfig": {
-									},
-									"fragmentFields": [
-									],
+									"fragmentConfig": {},
+									"fragmentFields": [],
 									"indexed": true
 								},
 								"type": "Fragment"
@@ -56,6 +57,8 @@
 							{
 								"definition": {
 									"fragmentStyle": {
+										"borderWidth": "0",
+										"textAlign": "",
 										"width": "100%"
 									},
 									"indexed": true,
@@ -126,10 +129,8 @@
 															"fragment": {
 																"key": "project-breadcrumbs"
 															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															],
+															"fragmentConfig": {},
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -139,10 +140,8 @@
 															"fragment": {
 																"key": "select-user"
 															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															],
+															"fragmentConfig": {},
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -175,8 +174,7 @@
 													{
 														"definition": {
 															"fragmentSettings": {
-																"unallowedFragments": [
-																]
+																"unallowedFragments": []
 															}
 														},
 														"type": "DropZone"
@@ -189,9 +187,18 @@
 									},
 									{
 										"definition": {
+											"fragmentStyle": {
+												"borderColor": "colorNeutral2",
+												"borderWidth": "1",
+												"shadow": "boxShadow"
+											},
 											"indexed": true,
 											"layout": {
-												"borderWidth": 0,
+												"align": "Center",
+												"borderColor": "colorNeutral2",
+												"borderWidth": 1,
+												"contentDisplay": "FlexRow",
+												"justify": "SpaceBetween",
 												"marginBottom": 0,
 												"marginLeft": 0,
 												"marginRight": 0,
@@ -207,17 +214,14 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderColor": "colorNeutral1",
-														"borderWidth": "1",
+														"borderWidth": "0",
 														"height": "82px",
-														"shadow": "boxShadow",
 														"textAlign": ""
 													},
 													"indexed": true,
 													"layout": {
 														"align": "Center",
-														"borderColor": "colorNeutral1",
-														"borderWidth": 1,
+														"borderWidth": 0,
 														"contentDisplay": "FlexRow",
 														"marginBottom": 0,
 														"marginLeft": 0,
@@ -286,10 +290,7 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {
-																					"value_i18n": {
-																					}
-																				}
+																				"fragmentLink": {}
 																			}
 																		}
 																	],
@@ -344,8 +345,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "© 2022 Liferay Inc. All Rights Reserved&nbsp; &nbsp; &nbsp; |"
@@ -443,6 +443,46 @@
 													}
 												],
 												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"height": "50px",
+														"marginRight": "6",
+														"textAlign": ""
+													},
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"borderWidth": 0,
+														"contentDisplay": "FlexRow",
+														"flexWrap": "Wrap",
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 6,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																	"languageIds": "en_US,ja_JP,pt_BR,es_ES"
+																},
+																"widgetName": "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "Section"
 											}
 										],
 										"type": "Section"
@@ -467,10 +507,10 @@
 		},
 		"themeName": "Dialect",
 		"themeSettings": {
-			"lfr-theme:regular:show-footer": "false",
 			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false",
 			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:wrap-widget-page-content": "false"
+			"lfr-theme:regular:show-footer": "false"
 		}
 	},
 	"version": 1.1

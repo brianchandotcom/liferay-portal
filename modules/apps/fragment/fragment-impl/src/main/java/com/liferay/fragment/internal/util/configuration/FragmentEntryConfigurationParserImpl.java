@@ -739,6 +739,14 @@ public class FragmentEntryConfigurationParserImpl
 			return;
 		}
 
+		if (fieldJSONObject.getBoolean("localizable")) {
+			String defaultValue = fieldJSONObject.getString("defaultValue");
+
+			fieldJSONObject.put(
+				"defaultValue",
+				LanguageUtil.get(resourceBundle, defaultValue, defaultValue));
+		}
+
 		JSONObject typeOptionsJSONObject = fieldJSONObject.getJSONObject(
 			"typeOptions");
 

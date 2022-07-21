@@ -24,13 +24,17 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -81,19 +85,21 @@ public class FragmentConfigurationField {
 	}
 
 	public String getDefaultValue() {
-		if (Validator.isNotNull(_defaultValue) &&
-			!Objects.equals("itemSelector", _type)) {
-
-			return _defaultValue;
-		}
-		else if (Objects.equals("colorPalette", _type)) {
+		if (Objects.equals("colorPalette", _type)) {
 			return _getColorPaletteDefaultValue();
 		}
 		else if (Objects.equals("itemSelector", _type)) {
 			return _getItemSelectorDefaultValue();
 		}
+		else if (Objects.equals("text", _type) && isLocalizable()) {
+			return _getTextDefaultValue();
+		}
 
-		return StringPool.BLANK;
+		return Optional.ofNullable(
+			_defaultValue
+		).orElse(
+			StringPool.BLANK
+		);
 	}
 
 	public FragmentConfigurationFieldDataType
@@ -134,6 +140,10 @@ public class FragmentConfigurationField {
 	}
 
 	private String _getColorPaletteDefaultValue() {
+		if (Validator.isNotNull(_defaultValue)) {
+			return _defaultValue;
+		}
+
 		return JSONUtil.put(
 			"cssClass", StringPool.BLANK
 		).put(
@@ -193,6 +203,17 @@ public class FragmentConfigurationField {
 		}
 
 		return _defaultValue;
+	}
+
+	private String _getTextDefaultValue() {
+		if (Validator.isNull(_defaultValue)) {
+			return _defaultValue;
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			LocaleUtil.getMostRelevantLocale(), getClass());
+
+		return LanguageUtil.get(resourceBundle, _defaultValue, _defaultValue);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

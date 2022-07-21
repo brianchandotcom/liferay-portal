@@ -34,12 +34,10 @@ public class VersionTreeMap extends TreeMap<Version, UpgradeProcess> {
 			put(stepVersion, upgradeProcess);
 		}
 
-		UpgradeProcess upgradeProcess = values[values.length - 1];
-
-		Version stepVersion = new Version(
+		Version finalVersion = new Version(
 			key.getMajor(), key.getMinor(), key.getMicro());
 
-		put(stepVersion, upgradeProcess);
+		put(finalVersion, values[values.length - 1]);
 	}
 
 }

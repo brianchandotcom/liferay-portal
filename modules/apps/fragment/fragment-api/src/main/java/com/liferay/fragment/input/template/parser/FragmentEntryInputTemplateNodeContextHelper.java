@@ -176,13 +176,13 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		String label = StringPool.BLANK;
 		String value = StringPool.BLANK;
 
-		Map<String, String> formParameterMap =
+		Map<String, String> infoFormParameterMap =
 			(Map<String, String>)SessionMessages.get(
 				httpServletRequest, "infoFormParameterMap");
 
-		if (formParameterMap != null) {
-			label = formParameterMap.get(infoField.getName() + "-label");
-			value = formParameterMap.get(infoField.getName());
+		if (infoFormParameterMap != null) {
+			label = infoFormParameterMap.get(infoField.getName() + "-label");
+			value = infoFormParameterMap.get(infoField.getName());
 		}
 
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(

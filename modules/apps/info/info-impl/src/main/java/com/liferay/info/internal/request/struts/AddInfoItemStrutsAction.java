@@ -216,12 +216,12 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 		}
 
 		if (!success && (infoFieldValues != null)) {
-			Map<String, String> formParameterMap = new HashMap<>();
+			Map<String, String> infoFormParameterMap = new HashMap<>();
 
 			for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
 				InfoField<?> infoField = infoFieldValue.getInfoField();
 
-				formParameterMap.put(
+				infoFormParameterMap.put(
 					infoField.getName(), _getValue(infoFieldValue));
 
 				if (infoField.getInfoFieldType() ==
@@ -235,13 +235,13 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 					String label = ParamUtil.getString(
 						uploadServletRequest, labelParameterName);
 
-					formParameterMap.put(labelParameterName, label);
+					infoFormParameterMap.put(labelParameterName, label);
 				}
 			}
 
 			SessionMessages.add(
 				httpServletRequest, "infoFormParameterMap" + formItemId,
-				formParameterMap);
+				infoFormParameterMap);
 		}
 
 		if (Validator.isNull(redirect)) {

@@ -552,10 +552,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		String[] resourcePrimKeys = ParamUtil.getStringValues(
 			actionRequest, "resourcePrimKey");
 
-		Map<Long, String[]> roleIdActionIdsMap = new HashMap<>();
+		Map<Long, String[]> roleIdCheckedActionIdsMap = new HashMap<>();
 
 		for (long roleId : roleIds) {
-			roleIdActionIdsMap.put(
+			roleIdCheckedActionIdsMap.put(
 				roleId,
 				ArrayUtil.toStringArray(
 					_getCheckedActionIds(
@@ -573,10 +573,13 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 
 		for (String resourcePrimKey : resourcePrimKeys) {
+			Map<Long, String[]> roleIdActionIdsMap = new HashMap<>(
+				roleIdCheckedActionIdsMap);
+
 			if (GetterUtil.getBoolean(
 					PropsUtil.get("feature.flag.LPS-87806"))) {
 
-				roleIdActionIdsMap = _getRoleIdActionIdsMap(
+				_addIndeterminateActionIds(
 					actionRequest, themeDisplay.getCompanyId(), resourcePrimKey,
 					roleIdActionIdsMap, selResource);
 			}
@@ -751,6 +754,36 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		ResourcePermissionService resourcePermissionService) {
 
 		_resourcePermissionService = resourcePermissionService;
+	}
+
+	private void _addIndeterminateActionIds(
+			ActionRequest actionRequest, long companyId, String resourcePrimKey,
+			Map<Long, String[]> roleIdActionIdsMap, String selResource)
+		throws Exception {
+
+		for (Map.Entry<Long, String[]> entry : roleIdActionIdsMap.entrySet()) {
+			Long roleId = entry.getKey();
+
+			List<String> indeterminateActionIds = _getCheckedActionIds(
+				actionRequest, roleId,
+				value -> Objects.equals(value, "indeterminate"));
+
+			if (ListUtil.isEmpty(indeterminateActionIds)) {
+				continue;
+			}
+
+			List<String> availableActionIds =
+				_resourcePermissionLocalService.
+					getAvailableResourcePermissionActionIds(
+						companyId, selResource,
+						ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey,
+						roleId, indeterminateActionIds);
+
+			entry.setValue(
+				ArrayUtil.append(
+					entry.getValue(),
+					ArrayUtil.toStringArray(availableActionIds)));
+		}
 	}
 
 	private void _checkEditPermissionsJSP(PortletRequest request)
@@ -962,42 +995,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 
 		return portletTitle;
-	}
-
-	private Map<Long, String[]> _getRoleIdActionIdsMap(
-			ActionRequest actionRequest, long companyId, String resourcePrimKey,
-			Map<Long, String[]> roleIdsToActionIds, String selResource)
-		throws Exception {
-
-		Map<Long, String[]> allRoleIdsToActionIds = new HashMap<>(
-			roleIdsToActionIds);
-
-		for (Map.Entry<Long, String[]> entry : roleIdsToActionIds.entrySet()) {
-			Long roleId = entry.getKey();
-
-			List<String> indeterminateActionIds = _getCheckedActionIds(
-				actionRequest, roleId,
-				value -> Objects.equals(value, "indeterminate"));
-
-			if (ListUtil.isEmpty(indeterminateActionIds)) {
-				continue;
-			}
-
-			List<String> availableActionIds =
-				_resourcePermissionLocalService.
-					getAvailableResourcePermissionActionIds(
-						companyId, selResource,
-						ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey,
-						roleId, indeterminateActionIds);
-
-			allRoleIdsToActionIds.replace(
-				roleId,
-				ArrayUtil.append(
-					entry.getValue(),
-					ArrayUtil.toStringArray(availableActionIds)));
-		}
-
-		return allRoleIdsToActionIds;
 	}
 
 	private void _handleException(

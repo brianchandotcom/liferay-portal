@@ -57,12 +57,6 @@ definition {
 			PRMNavigator.assertActiveBreadcrumb(activeItem = "Enablement");
 		}
 
-		task ("Verify if page title is 'Enablement - Partner Portal Name - Liferay DXP") {
-			PRMUtils.assertTabTitle(
-				pageName = "Enablement",
-				siteName = "${testSiteName}");
-		}
-
 		task ("Verify if current URL contains 'partner-portal-name/enablement") {
 			AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/enablement");
 		}
@@ -83,12 +77,6 @@ definition {
 			PRMNavigator.assertActiveBreadcrumb(activeItem = "Home");
 		}
 
-		task ("Verify if page title is 'Home - Partner Portal Name - Liferay DXP") {
-			PRMUtils.assertTabTitle(
-				pageName = "Home",
-				siteName = "${testSiteName}");
-		}
-
 		task ("Verify if current URL contains 'partner-portal-name/home") {
 			AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/home");
 		}
@@ -101,18 +89,8 @@ definition {
 			PRMNavigator.goToNavItem(navItem = "Marketing");
 		}
 
-		task ("Verify if page title is 'Marketing'") {
-			PRMUtils.assertPageTitle(pageTitle = "Marketing");
-		}
-
 		task ("Verify if the current active breadcrumb is 'Marketing'") {
 			PRMNavigator.assertActiveBreadcrumb(activeItem = "Marketing");
-		}
-
-		task ("Verify if page title is 'Marketing - Partner Portal Name - Liferay DXP") {
-			PRMUtils.assertTabTitle(
-				pageName = "Marketing",
-				siteName = "${testSiteName}");
 		}
 
 		task ("Verify if current URL contains 'partner-portal-name/marketing") {
@@ -127,18 +105,8 @@ definition {
 			PRMNavigator.goToNavItem(navItem = "Sales");
 		}
 
-		task ("Verify if page title is 'Sales'") {
-			PRMUtils.assertPageTitle(pageTitle = "Sales");
-		}
-
 		task ("Verify if the current active breadcrumb is 'Sales'") {
 			PRMNavigator.assertActiveBreadcrumb(activeItem = "Sales");
-		}
-
-		task ("Verify if page title is 'Sales - Partner Portal Name - Liferay DXP") {
-			PRMUtils.assertTabTitle(
-				pageName = "Sales",
-				siteName = "${testSiteName}");
 		}
 
 		task ("Verify if current URL contains 'partner-portal-name/sales") {

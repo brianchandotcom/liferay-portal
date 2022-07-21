@@ -751,16 +751,15 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 	public Map<String, List<String>> populateResourcePermissionActionIds(
 			long groupId, Role role, List<Resource> resources,
-			List<String> actions, List<String> individualActions,
-			List<String> groupActions, List<String> groupTemplateActions,
-			List<String> companyActions)
+			List<String> individualActions, List<String> groupActions,
+			List<String> groupTemplateActions, List<String> companyActions)
 		throws PortalException {
 
 		Map<String, List<String>> resourceActionsMap = new HashMap<>();
 
 		for (Resource resource : resources) {
 			ResourcePermissionUtil.populateResourcePermissionActionIds(
-				groupId, role, resource, actions, individualActions,
+				groupId, role, resource, getActions(), individualActions,
 				groupActions, groupTemplateActions, companyActions);
 
 			if (GetterUtil.getBoolean(
@@ -771,7 +770,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 						getAvailableResourcePermissionActionIds(
 							resource.getCompanyId(), resource.getName(),
 							resource.getScope(), resource.getPrimKey(),
-							role.getRoleId(), actions);
+							role.getRoleId(), getActions());
 
 				_populateResourceActionsMap(
 					availableResourcePermissionActionIds, resourceActionsMap,

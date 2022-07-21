@@ -97,7 +97,7 @@ String resourceName = portletConfigurationPermissionsDisplayContext.getResourceN
 					List<String> currentGroupTemplateActions = new ArrayList<String>();
 					List<String> currentCompanyActions = new ArrayList<String>();
 
-					Map<String, List<String>> resourceActionsMap = portletConfigurationPermissionsDisplayContext.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resources, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
+					Map<String, List<String>> resourceActionsMap = portletConfigurationPermissionsDisplayContext.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resources, currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
 
 					for (String action : portletConfigurationPermissionsDisplayContext.getActions()) {
 						if (action.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {

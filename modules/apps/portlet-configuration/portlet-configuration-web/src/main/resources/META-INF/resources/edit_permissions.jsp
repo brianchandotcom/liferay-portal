@@ -99,7 +99,11 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 					List<String> currentGroupTemplateActions = new ArrayList<String>();
 					List<String> currentCompanyActions = new ArrayList<String>();
 
-					Map<String, List<String>> resourceActionsMap = portletConfigurationPermissionsDisplayContext.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resources, currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
+					for (Resource curResource : resources) {
+						ResourcePermissionUtil.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, curResource, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
+					}
+
+					Map<String, List<String>> actionIdResourcePrimKeysMap = portletConfigurationPermissionsDisplayContext.getActionIdResourcePrimKeysMap(role);
 
 					for (String action : portletConfigurationPermissionsDisplayContext.getActions()) {
 						if (action.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {

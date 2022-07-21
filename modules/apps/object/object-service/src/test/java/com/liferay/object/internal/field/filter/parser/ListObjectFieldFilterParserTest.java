@@ -49,7 +49,7 @@ public class ListObjectFieldFilterParserTest {
 		);
 
 		Mockito.when(
-			objectViewFilterColumn.getJson()
+			objectViewFilterColumn.getJSON()
 		).thenReturn(
 			"{\"includes\": [0, 1]}"
 		);
@@ -68,7 +68,7 @@ public class ListObjectFieldFilterParserTest {
 		}
 
 		Mockito.when(
-			objectViewFilterColumn.getJson()
+			objectViewFilterColumn.getJSON()
 		).thenReturn(
 			"{\"excludes\": [\"brazil\"]}"
 		);
@@ -93,7 +93,7 @@ public class ListObjectFieldFilterParserTest {
 		}
 
 		Mockito.when(
-			objectViewFilterColumn.getJson()
+			objectViewFilterColumn.getJSON()
 		).thenReturn(
 			"{\"excludes\": [0, 1]}"
 		);

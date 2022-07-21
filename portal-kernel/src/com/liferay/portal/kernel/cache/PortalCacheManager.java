@@ -65,6 +65,8 @@ public interface PortalCacheManager<K extends Serializable, V> {
 
 	public void removePortalCache(String portalCacheName);
 
+	public void removePortalCaches(long companyId);
+
 	public boolean unregisterPortalCacheManagerListener(
 		PortalCacheManagerListener portalCacheManagerListener);
 

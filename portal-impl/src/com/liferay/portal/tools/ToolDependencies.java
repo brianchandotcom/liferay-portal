@@ -461,6 +461,10 @@ public class ToolDependencies {
 		}
 
 		@Override
+		public void removePortalCaches(long companyId) {
+		}
+
+		@Override
 		public boolean unregisterPortalCacheManagerListener(
 			PortalCacheManagerListener portalCacheManagerListener) {
 

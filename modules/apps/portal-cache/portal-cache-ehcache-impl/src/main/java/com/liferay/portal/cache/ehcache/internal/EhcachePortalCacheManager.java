@@ -38,6 +38,7 @@ import java.io.Serializable;
 import java.net.URL;
 
 import java.util.Map;
+import java.util.Set;
 
 import javax.management.MBeanServer;
 
@@ -146,6 +147,19 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			_log.error(
 				"Unable to dispose cache with name " +
 					portalCache.getPortalCacheName());
+		}
+	}
+
+	@Override
+	protected void doRemoveShardedPortalCache(
+		long companyId, Set<PortalCache<K, V>> shardedPortalCaches) {
+
+		for (PortalCache<K, V> shardedPortalCache : shardedPortalCaches) {
+			ShardedEhcachePortalCache<K, V> shardedEhcachePortalCache =
+				(ShardedEhcachePortalCache<K, V>)
+					EhcacheUnwrapUtil.getWrappedPortalCache(shardedPortalCache);
+
+			shardedEhcachePortalCache.removeEhcache(companyId);
 		}
 	}
 

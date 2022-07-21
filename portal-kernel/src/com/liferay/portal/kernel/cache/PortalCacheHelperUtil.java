@@ -118,6 +118,16 @@ public class PortalCacheHelperUtil {
 		portalCacheManager.removePortalCache(portalCacheName);
 	}
 
+	public static void removePortalCaches(
+		String portalCacheManagerName, long companyId) {
+
+		PortalCacheManager<?, ?> portalCacheManager =
+			PortalCacheManagerProvider.getPortalCacheManager(
+				portalCacheManagerName);
+
+		portalCacheManager.removePortalCaches(companyId);
+	}
+
 	public static <K extends Serializable> void removeWithoutReplicator(
 		PortalCache<K, ?> portalCache, K key) {
 

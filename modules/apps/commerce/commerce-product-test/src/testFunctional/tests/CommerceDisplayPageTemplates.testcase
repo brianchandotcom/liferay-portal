@@ -489,7 +489,7 @@ definition {
 		task ("And the buyer logs in") {
 			ApplicationsMenu.gotoSite(site = "Minium");
 
-			CommerceLogin.miniumLogoutPG();
+			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",

@@ -69,7 +69,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
@@ -576,9 +575,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			Map<Long, String[]> roleIdActionIdsMap = new HashMap<>(
 				roleIdCheckedActionIdsMap);
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-87806"))) {
-
+			if (resourcePrimKeys.length > 1) {
 				_addIndeterminateActionIds(
 					actionRequest, themeDisplay.getCompanyId(), resourcePrimKey,
 					roleIdActionIdsMap, selResource);

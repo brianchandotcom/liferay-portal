@@ -35,6 +35,11 @@ function LanguageSelector({languageIds, onChange, selectedLanguageId}) {
 	return (
 		<ClayDropDown
 			active={isDropdownOpen}
+			menuElementAttrs={{
+				containerProps: {
+					className: 'translation-languages-dropdown',
+				},
+			}}
 			onActiveChange={setIsDropdownOpen}
 			trigger={
 				<ClayButton displayType="secondary" monospaced small>

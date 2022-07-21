@@ -209,3 +209,8 @@ $productMenuWidth: 320px;
 		}
 	}
 }
+
+.translation-languages-dropdown {
+	position: fixed;
+	z-index: $zindex-dropdown;
+}

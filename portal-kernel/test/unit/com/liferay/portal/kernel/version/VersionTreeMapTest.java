@@ -77,7 +77,7 @@ public class VersionTreeMapTest {
 			String step = version.getQualifier();
 
 			if (iterator.hasNext()) {
-				Assert.assertTrue(step.equals("Step-" + (i + 1)));
+				Assert.assertTrue(step.equals("step-" + (i + 1)));
 			}
 			else {
 				Assert.assertTrue(step.equals(StringPool.BLANK));

@@ -35,9 +35,9 @@ public class VersionTest {
 
 	@Test
 	public void testCompareEqualStepVersions() {
-		Version version1 = Version.parseVersion("1.2.3.Step-3");
+		Version version1 = Version.parseVersion("1.2.3.step-3");
 
-		Version version2 = Version.parseVersion("1.2.3.Step-3");
+		Version version2 = Version.parseVersion("1.2.3.step-3");
 
 		Assert.assertTrue(version1.compareTo(version2) == 0);
 	}
@@ -46,23 +46,23 @@ public class VersionTest {
 	public void testCompareFinalToStepVersion() {
 		Version version1 = Version.parseVersion("1.2.3");
 
-		Version version2 = Version.parseVersion("1.2.3.Step-2");
+		Version version2 = Version.parseVersion("1.2.3.step-2");
 
 		Assert.assertTrue(version1.compareTo(version2) > 0);
 	}
 
 	@Test
 	public void testCompareSteps() {
-		Version version1 = Version.parseVersion("1.2.3.Step-1");
+		Version version1 = Version.parseVersion("1.2.3.step-1");
 
-		Version version2 = Version.parseVersion("1.2.3.Step-2");
+		Version version2 = Version.parseVersion("1.2.3.step-2");
 
 		Assert.assertTrue(version1.compareTo(version2) < 0);
 	}
 
 	@Test
 	public void testCompareStepToFinalVersion() {
-		Version version1 = Version.parseVersion("1.2.3.Step-2");
+		Version version1 = Version.parseVersion("1.2.3.step-2");
 
 		Version version2 = Version.parseVersion("1.2.3");
 
@@ -80,9 +80,9 @@ public class VersionTest {
 
 	@Test
 	public void testEqualStepVersions() {
-		Version version1 = Version.parseVersion("1.2.3.Step-1");
+		Version version1 = Version.parseVersion("1.2.3.step-1");
 
-		Version version2 = Version.parseVersion("1.2.3.Step-1");
+		Version version2 = Version.parseVersion("1.2.3.step-1");
 
 		Assert.assertTrue(version1.equals(version2));
 	}
@@ -91,7 +91,7 @@ public class VersionTest {
 	public void testNotEqualVersions() {
 		Version version1 = Version.parseVersion("1.2.3");
 
-		Version version2 = Version.parseVersion("1.2.3.Step-4");
+		Version version2 = Version.parseVersion("1.2.3.step-4");
 
 		Assert.assertTrue(!version1.equals(version2));
 	}
@@ -118,12 +118,12 @@ public class VersionTest {
 
 	@Test
 	public void testParseStepVersion() {
-		Version version = Version.parseVersion("1.2.3.Step-4");
+		Version version = Version.parseVersion("1.2.3.step-4");
 
 		Assert.assertEquals(1, version.getMajor());
 		Assert.assertEquals(2, version.getMinor());
 		Assert.assertEquals(3, version.getMicro());
-		Assert.assertEquals("Step-4", version.getQualifier());
+		Assert.assertEquals("step-4", version.getQualifier());
 	}
 
 	@Test
@@ -155,9 +155,9 @@ public class VersionTest {
 
 	@Test
 	public void testToStringStepVersion() {
-		Version version = Version.parseVersion("1.2.3.Step-4");
+		Version version = Version.parseVersion("1.2.3.step-4");
 
-		Assert.assertEquals("1.2.3.Step-4", version.toString());
+		Assert.assertEquals("1.2.3.step-4", version.toString());
 	}
 
 }

@@ -29,7 +29,7 @@ public class VersionTreeMap extends TreeMap<Version, UpgradeProcess> {
 
 			Version stepVersion = new Version(
 				key.getMajor(), key.getMinor(), key.getMicro(),
-				"Step-" + (i + 1));
+				"step-" + (i + 1));
 
 			put(stepVersion, upgradeProcess);
 		}

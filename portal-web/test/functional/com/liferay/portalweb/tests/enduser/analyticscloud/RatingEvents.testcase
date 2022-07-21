@@ -127,4 +127,87 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-11450 | Automation ID: LRAC-11507 | Test Summary: Check vote is triggered when voting for DM and check its properties"
+	@priority = "5"
+    test CheckVoteEventWhenVotingForDMAndCheckProperties {
+		property proxy.server.enabled = "true";
+
+		task("Add a documents and media to the page and connect DXP to AC") {
+			ACUtils.createDMAndAddToPage();
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task("Go to Settings and save the property id and data source id") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
+
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "Combined");
+
+			var dataSourceName = StringUtil.trim("${dataSourceName}");
+
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+		}
+
+		task ("Go to the site page and rate the documents and media") {
+			ACUtils.launchDXP();
+
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			task("Start the har recording") {
+				ProxyUtil.startHarRecording("VOTE");
+
+				ACUtils.waitForSendingRequest(); 
+			}
+
+			DMDocument.expandInfo();
+
+			Ratings.rateStar(ratingStarCount = "4");
+		}
+
+		task ("Get the document entry Id") {
+			var entryId = JSONDocument.getFileEntryId( 
+				dmDocumentTitle = "DM AC Title",
+				groupName = "Site Name");
+		}
+
+		task("Assert the properties of the VOTE event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Ratings",
+				eventId = "VOTE",
+				property = "classPK",
+				value = "${entryId}");
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Ratings",
+				eventId = "VOTE",
+				property = "className",
+				value = "com.liferay.document.library.kernel.model.DLFileEntry");
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Ratings",
+				eventId = "VOTE",
+				property = "ratingType",
+				value = "stars");
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Ratings",
+				eventId = "VOTE",
+				property = "score",
+				value = "0.8"); 
+		}
+
+		task("Assert the common request values") {
+			ACUtils.assertRequestCommonPropertiesValue(
+				expectedChannelId = "${expectedChannelId}",
+				expectedDataSourceId = "${expectedDataSourceId}");
+		}
+	}
 }

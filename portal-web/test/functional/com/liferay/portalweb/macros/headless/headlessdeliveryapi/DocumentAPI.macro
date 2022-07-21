@@ -74,11 +74,7 @@ definition {
 
 	macro assertExternalReferenceCodeWithCorrectValue {
 		if (!(isSet(expectedExternalReferenceCodeValue))) {
-			var contentURL = JSONUtil.getWithJSONPath("${responseToParse}", "$.['contentUrl']");
-
-			var contentURLSubString = StringUtil.extractFirst("${contentURL}", "?");
-
-			var expectedExternalReferenceCodeValue = StringUtil.extractLast("${contentURLSubString}", "/");
+			var expectedExternalReferenceCodeValue = DocumentAPI.getUuidOfCreatedDocument(responseToParse = "${responseToParse}");
 		}
 
 		var actualExternalReferenceCodeValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..externalReferenceCode");
@@ -119,6 +115,18 @@ definition {
 		var documentId = JSONUtil.getWithJSONPath("${response}", "$.['id']");
 
 		return "${documentId}";
+	}
+
+	macro getUuidOfCreatedDocument {
+		Variables.assertDefined(parameterList = "${responseToParse}");
+
+		var contentURL = JSONUtil.getWithJSONPath("${responseToParse}", "$.['contentUrl']");
+
+		var contentURLSubString = StringUtil.extractFirst("${contentURL}", "?");
+
+		var documentUuid = StringUtil.extractLast("${contentURLSubString}", "/");
+
+		return "${documentUuid}";
 	}
 
 }

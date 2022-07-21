@@ -54,6 +54,35 @@ definition {
 		}
 	}
 
+	@description = "Get document in asset library by existing uuid as erc"
+	@priority = "5"
+	test CanGetDocumentInAssetLibraryByExistingUuidAsErc {
+		property portal.acceptance = "true";
+
+		task ("Given a document without a custom erc is created with a POST request in asset library") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
+				assetLibraryId = "${assetLibraryId}",
+				filePath = "${filePath}");
+		}
+
+		task ("When I make a GET request by assetLibraryId and UUID as the erc") {
+			var documentUuid = DocumentAPI.getUuidOfCreatedDocument(responseToParse = "${response}");
+
+			var response = DocumentAPI.getDocumentsByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "${documentUuid}");
+		}
+
+		task ("Then I receive a correct body response") {
+			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "${documentUuid}",
+				responseToParse = "${response}");
+		}
+	}
+
 	@description = "Document is not able to create with an existing erc in asset library"
 	@priority = "5"
 	test CannotCreateDocumentInAssetLibraryWithExistingErc {

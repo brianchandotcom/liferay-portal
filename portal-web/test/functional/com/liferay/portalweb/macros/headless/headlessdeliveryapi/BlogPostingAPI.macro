@@ -141,6 +141,14 @@ definition {
 		return "${curl}";
 	}
 
+	macro getNumberOfBlogPostingsCreated {
+		var response = BlogPostingAPI._getBlogPostings();
+
+		var numberOfBlogPostingsCreated = JSONUtil.getWithJSONPath("${response}", "$.totalCount");
+
+		return "${numberOfBlogPostingsCreated}";
+	}
+
 	macro _getArticleBodyOfExistingBlogPosting {
 		var articleBody = JSONUtil.getWithJSONPath("${response}", "$.items.[0].articleBody");
 

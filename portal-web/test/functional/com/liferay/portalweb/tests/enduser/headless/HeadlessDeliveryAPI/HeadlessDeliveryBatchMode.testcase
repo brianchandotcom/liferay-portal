@@ -148,4 +148,39 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
+	@priority = "5"
+	test CanUpdateBlogPostingWithBatchPostCreateStrategyUpsertWhenOneOfThemAlreadyExisting {
+		property portal.acceptance = "true";
+
+		task ("I use POST with parameter createStrategy set to UPSERT to create two blog posts") {
+			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+				createStrategy = "UPSERT",
+				numberOfBlogPostingsToCreate = "2");
+		}
+
+		task ("And Given I repeat the same request again") {
+			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+				createStrategy = "UPSERT",
+				numberOfBlogPostingsToCreate = "2");
+		}
+
+		task ("When I check the status of the task with its id in batch engine") {
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+		}
+
+		task ("Then I receive executeStatus: completed") {
+			TestUtils.assertEquals(
+				actual = "${executeStatus}",
+				expected = "COMPLETED");
+		}
+
+		task ("And Then the number of blog posting exiting is correct") {
+			var actualNumberOfBlogPostings = BlogPostingAPI.getNumberOfBlogPostingsCreated();
+
+			TestUtils.assertEquals(
+				actual = "${actualNumberOfBlogPostings}",
+				expected = "2");
+		}
+	}
 }

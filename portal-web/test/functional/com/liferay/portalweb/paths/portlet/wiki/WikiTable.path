@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ALL_PAGES_STATUS</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[2]//span//strong | //tr[contains(.,'${key_wikiPageTitle}')]/td[3]//span//strong</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[2]//span | //tr[contains(.,'${key_wikiPageTitle}')]/td[3]//span</td>
 	<td></td>
 </tr>
 <tr>

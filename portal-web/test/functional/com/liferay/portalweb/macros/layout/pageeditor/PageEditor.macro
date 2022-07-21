@@ -2581,11 +2581,6 @@ definition {
 				value1 = "${field}");
 
 			PageEditor.waitForAutoSave();
-
-			AssertTextEquals(
-				key_text = "Label",
-				locator1 = "TextInput#ANY",
-				value1 = "${field}");
 		}
 
 		if ("${markAsRequired}" == "true") {

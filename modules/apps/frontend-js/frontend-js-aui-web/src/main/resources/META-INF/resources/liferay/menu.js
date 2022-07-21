@@ -440,22 +440,26 @@ AUI.add(
 			},
 
 			_setARIARoles(trigger, menu) {
-				const links = menu.all(SELECTOR_ANCHOR);
+				const links = menu
+					.all(SELECTOR_ANCHOR)
+					.filter(':not([aria-haspopup="dialog"]');
 
 				const searchContainer = menu.one(SELECTOR_SEARCH_CONTAINER);
 
 				const listNode = menu.one('ul');
 
-				const ariaLinksAttr = 'menuitem';
+				let ariaLinksAttr = 'menuitem';
 				let ariaListNodeAttr = 'menu';
 
 				if (searchContainer) {
+					ariaLinksAttr = 'option';
 					ariaListNodeAttr = 'listbox';
-					ariaListNodeAttr = 'option';
 				}
 
-				listNode.setAttribute(ARIA_ATTR_ROLE, ariaListNodeAttr);
-				links.set(ARIA_ATTR_ROLE, ariaLinksAttr);
+				if (links.size() > 0) {
+					listNode.setAttribute(ARIA_ATTR_ROLE, ariaListNodeAttr);
+					links.set(ARIA_ATTR_ROLE, ariaLinksAttr);
+				}
 
 				trigger.attr({
 					'aria-haspopup': true,

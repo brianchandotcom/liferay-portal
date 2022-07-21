@@ -68,7 +68,7 @@ definition {
 			var testCase = "";
 		}
 
-		if ("${testCase}" == "LPS-157601") {
+		if ("${testCase}" == "updateOneBlogPosting") {
 			var response = BlogPostingAPI._getBlogPostings();
 
 			var existingHeadline = BlogPostingAPI._getHeadlineOfExistingBlogPosting(response = "${response}");

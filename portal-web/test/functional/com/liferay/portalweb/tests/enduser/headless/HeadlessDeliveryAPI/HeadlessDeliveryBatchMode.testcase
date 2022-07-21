@@ -90,11 +90,11 @@ definition {
 				numberOfBlogPostingsToCreate = "2");
 		}
 
-		task ("And Given I repeat the same request again changing all the data of second comment") {
+		task ("And Given I repeat the same request again changing all the data of second blog post") {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
 				numberOfBlogPostingsToCreate = "2",
-				testCase = "LPS-157601");
+				testCase = "updateOneBlogPosting");
 		}
 
 		task ("When I check the status of the task with its id in batch engine") {
@@ -181,6 +181,43 @@ definition {
 			TestUtils.assertEquals(
 				actual = "${actualNumberOfBlogPostings}",
 				expected = "2");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "5"
+	test CanCreateAndUpdateBlogPostingWithBatchPostCreateStrategyUpsert {
+		property portal.acceptance = "true";
+
+		task ("I use POST with parameter createStrategy set to UPSERT to create two blog posts") {
+			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+				createStrategy = "UPSERT",
+				numberOfBlogPostingsToCreate = "2");
+		}
+
+		task ("And Given I repeat the same request changing all the parameters of the second blog post") {
+			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+				createStrategy = "UPSERT",
+				numberOfBlogPostingsToCreate = "2",
+				testCase = "updateOneBlogPosting");
+		}
+
+		task ("When I check the status of the task with its id in batch engine") {
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+		}
+
+		task ("Then I receive executeStatus: completed") {
+			TestUtils.assertEquals(
+				actual = "${executeStatus}",
+				expected = "COMPLETED");
+		}
+
+		task ("And Then the 3 blog postings are visible as created") {
+			var actualNumberOfBlogPostings = BlogPostingAPI.getNumberOfBlogPostingsCreated();
+
+			TestUtils.assertEquals(
+				actual = "${actualNumberOfBlogPostings}",
+				expected = "3");
 		}
 	}
 }

@@ -31,6 +31,18 @@ public class SystemPropertiesTest {
 	}
 
 	@Test
+	public void testGetArray() {
+		Assert.assertTrue(
+			ArrayUtil.isEmpty(SystemProperties.getArray(_TEST_KEY)));
+
+		SystemProperties.set(_TEST_KEY, "test.array.value,test.array.value");
+
+		Assert.assertArrayEquals(
+			new String[] {"test.array.value", "test.array.value"},
+			SystemProperties.getArray(_TEST_KEY));
+	}
+
+	@Test
 	public void testGetProperties() {
 		Properties properties1 = SystemProperties.getProperties();
 

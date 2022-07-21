@@ -235,6 +235,147 @@ definition {
 			locator1 = "CommerceNavigation#ENTRY_NAME");
 	}
 
+	@description = "COMMERCE-5979. As a user of the storefront, I should be able to see the stock quantity value of the Warehouses based on the View permission of my role"
+	@priority = "4"
+	test CanSFUsersSeeStockQuantityBasedOnViewPermissionForWarehouse {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And Power User role is given to the buyer user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And on Italy Warehouse, View permission is removed for User and Guest, given to Power User") {
+			CommerceNavigator.gotoPortlet(
+				category = "Inventory Management",
+				portlet = "Warehouses");
+
+			Click(
+				key_language = "Italy",
+				locator1 = "Icon#DEPOT_LANGUAGES_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Permissions");
+
+			CommercePermissions.removePermissionsPG(
+				permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitles = "Guest,User");
+
+			CommercePermissions.definePermissionsPG(
+				permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitles = "Power User");
+
+			IFrame.closeFrame();
+		}
+
+		task ("When the buyer clicks U-Joint product on the catalog") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
+
+		task ("Then sees the exact number of the stock quantity value (120)") {
+			AssertElementPresent(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_STOCK_QUANTITY",
+				value1 = "120");
+		}
+	}
+
+	@description = "COMMERCE-5979. As a user of the storefront, I should be able to see a decreased stock quantity value of the Warehouses when my role does not have permission to View Warehouses"
+	@priority = "4"
+	test CanSFUsersWithoutWarehouseViewPermissionSeeDecreasedStockQuantity {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And Power User role is given to the buyer user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And on Italy Warehouse, View permission is removed for User and Guest, and verify Power User does not have it") {
+			CommerceNavigator.gotoPortlet(
+				category = "Inventory Management",
+				portlet = "Warehouses");
+
+			Click(
+				key_language = "Italy",
+				locator1 = "Icon#DEPOT_LANGUAGES_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Permissions");
+
+			CommercePermissions.removePermissionsPG(
+				permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitles = "Guest,User");
+
+			Role.viewPermissionPG(
+				permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+				permissionFlagged = "false",
+				roleTitle = "Power User");
+
+			IFrame.closeFrame();
+		}
+
+		task ("When the buyer clicks U-Joint product on the catalog") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
+
+		task ("Then sees a decreased number of the stock quantity value (80)") {
+			AssertElementPresent(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_STOCK_QUANTITY",
+				value1 = "80");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6200. Consume booked quantities of one item in multiple warehouses"
 	@priority = "3"
 	test ConsumeBookedQuantitiesFromMultipleWarehouses {

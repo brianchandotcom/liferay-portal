@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -110,8 +109,8 @@ public class EditCPMeasurementUnitMVCActionCommand
 			deleteCPMeasurementUnitIds = new long[] {cpMeasurementUnitId};
 		}
 		else {
-			deleteCPMeasurementUnitIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "rowIds"), 0L);
+			deleteCPMeasurementUnitIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
 		for (long deleteCPMeasurementUnitId : deleteCPMeasurementUnitIds) {

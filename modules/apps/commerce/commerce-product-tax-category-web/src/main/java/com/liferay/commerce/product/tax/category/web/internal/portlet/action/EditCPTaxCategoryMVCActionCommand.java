@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -109,8 +108,8 @@ public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 			deleteCPTaxCategoryIds = new long[] {cpTaxCategoryId};
 		}
 		else {
-			deleteCPTaxCategoryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "rowIds"), 0L);
+			deleteCPTaxCategoryIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
 		for (long deleteCPTaxCategoryId : deleteCPTaxCategoryIds) {

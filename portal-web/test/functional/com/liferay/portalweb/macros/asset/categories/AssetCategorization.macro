@@ -8,7 +8,7 @@ definition {
 		ScrollWebElementIntoView(locator1 = "AssetCategorization#TAGS_FIELD");
 
 		if (IsElementPresent(key_tagName = "${tagName}", locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC")) {
-			Click(
+			Click.mouseDownMouseUp(
 				key_tagName = "${tagName}",
 				locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC");
 		}

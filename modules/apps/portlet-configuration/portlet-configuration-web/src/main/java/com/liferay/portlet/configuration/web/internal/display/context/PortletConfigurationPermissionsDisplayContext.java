@@ -325,6 +325,10 @@ public class PortletConfigurationPermissionsDisplayContext {
 			throw new ResourcePrimKeyException();
 		}
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
+			_resourcePrimKeys = new String[] {_resourcePrimKeys[0]};
+		}
+
 		return _resourcePrimKeys;
 	}
 

@@ -100,6 +100,22 @@ public class VarPoshiElement extends PoshiElement {
 		return attributeValue(valueAttributeName);
 	}
 
+	public boolean isDoubleQuotedVar(String value) {
+		if (value.matches(_VAR_VALUE_INTEGER_REGEX)) {
+			return false;
+		}
+
+		if (value.matches(_VAR_VALUE_MATH_EXPRESSION_REGEX)) {
+			return true;
+		}
+
+		if (value.matches(_VAR_VALUE_VARIABLE_REGEX)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	@Override
 	public void parsePoshiScript(String poshiScript)
 		throws PoshiScriptParserException {
@@ -205,9 +221,7 @@ public class VarPoshiElement extends PoshiElement {
 			return;
 		}
 
-		if (value.matches(_VAR_VALUE_INTEGER_REGEX) ||
-			value.matches(_VAR_VALUE_VARIABLE_REGEX)) {
-
+		if (value.matches(_VAR_VALUE_INTEGER_REGEX)) {
 			addAttribute("value", value);
 
 			return;
@@ -226,6 +240,12 @@ public class VarPoshiElement extends PoshiElement {
 					matcher.group(3), "')");
 
 				addAttribute("method", mathUtilValue);
+
+				return;
+			}
+
+			if (value.matches(_VAR_VALUE_VARIABLE_REGEX)) {
+				addAttribute("value", value);
 
 				return;
 			}
@@ -353,7 +373,9 @@ public class VarPoshiElement extends PoshiElement {
 			else {
 				value = StringUtil.replace(value, "\"", "\\\"");
 
-				value = doubleQuoteContent(value);
+				if (isDoubleQuotedVar(value)) {
+					value = doubleQuoteContent(value);
+				}
 			}
 		}
 
@@ -533,7 +555,7 @@ public class VarPoshiElement extends PoshiElement {
 
 	private static final String _VAR_VALUE_STRING_REGEX = "\".*\"";
 
-	private static final String _VAR_VALUE_VARIABLE_REGEX = "\\$\\{.+}";
+	private static final String _VAR_VALUE_VARIABLE_REGEX = "\\$\\{.+\\}";
 
 	private static final Map<String, String> _mathOperatorsMap =
 		new HashMap<String, String>() {

@@ -81,9 +81,9 @@ public class Version implements Comparable<Version> {
 			return result;
 		}
 
-		result = _qualifier.compareTo(version._qualifier);
-
 		String qualifier = version._qualifier;
+
+		result = _qualifier.compareTo(qualifier);
 
 		if (_qualifier.equals(StringPool.BLANK) ||
 			qualifier.equals(StringPool.BLANK)) {

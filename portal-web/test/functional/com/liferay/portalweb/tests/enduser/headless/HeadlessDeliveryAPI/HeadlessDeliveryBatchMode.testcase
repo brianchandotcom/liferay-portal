@@ -256,4 +256,31 @@ definition {
 				expected = "2");
 		}
 	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CannotUpdateBlogPostingWithBatchPostCreateStrategyInsert {
+		property portal.acceptance = "true";
+
+		task ("I use POST with parameter createStrategy set to UPSERT to create two blog posts") {
+			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+				createStrategy = "UPSERT",
+				numberOfBlogPostingsToCreate = "2");
+		}
+
+		task ("I use POST with parameter createStrategy set to INSERT with the same data") {
+			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+				createStrategy = "INSERT",
+				numberOfBlogPostingsToCreate = "2");		}
+
+		task ("When I check the status of the task with its id in batch engine") {
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+		}
+
+		task ("Then I receive executeStatus: failed") {
+			TestUtils.assertEquals(
+				actual = "${executeStatus}",
+				expected = "FAILED");
+		}
+	}
 }

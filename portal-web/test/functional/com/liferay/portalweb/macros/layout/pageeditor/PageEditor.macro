@@ -1162,6 +1162,21 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if ("${enableLazyLoading}" == "true") {
+			Check.checkNotVisible(
+				checkboxName = "Enable Lazy Loading",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
+		else if ("${enableLazyLoading}" == "false") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Enable Lazy Loading",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(headingLevel)) {
 			Select(
 				key_fieldLabel = "Heading Level",

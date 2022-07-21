@@ -17,6 +17,16 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		if (IsTextNotEqual(locator1 = "Portlet#HEADER", value1 = "Data Definitions")) {
+			AssertTextEquals(
+				locator1 = "DataEngineModal#MODAL_TITLE",
+				value1 = "Data Definitions");
+
+			SelectFrame(
+				key_title = "Data Definitions",
+				locator1 = "IFrame#MODAL_ANY");
+		}
+
 		DDLDataDefinition.editName(ddlDataDefinitionName = "${ddlDataDefinitionName}");
 
 		if (isSet(ddlDataDefinitionDescription)) {

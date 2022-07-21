@@ -123,6 +123,8 @@ ${Application['org.apache.catalina.resources'].getContext().getInstanceManager()
 
 	@priority = "4"
 	test ViewInstanceManagerVelocity {
+		SetWindowSize(value1 = "1920,1080");
+
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
 			siteName = "Test Site Name");

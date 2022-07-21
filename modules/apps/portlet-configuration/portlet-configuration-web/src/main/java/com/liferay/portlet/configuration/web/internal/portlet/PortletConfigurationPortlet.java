@@ -94,6 +94,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -554,7 +555,11 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		for (long roleId : roleIds) {
 			roleIdsToActionIds.put(
-				roleId, _getActionIds(actionRequest, roleId, false));
+				roleId,
+				ArrayUtil.toStringArray(
+					_getCheckedActionIds(
+						actionRequest, roleId,
+						value -> !Objects.equals(value, "indeterminate"))));
 		}
 
 		PermissionPropagator permissionPropagator = null;
@@ -779,17 +784,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			portletResource, ActionKeys.PERMISSIONS);
 	}
 
-	private String[] _getActionIds(
-		ActionRequest actionRequest, long roleId, boolean includePreselected) {
-
-		List<String> actionIds = _getActionIdsList(
-			actionRequest, roleId, includePreselected);
-
-		return actionIds.toArray(new String[0]);
-	}
-
-	private List<String> _getActionIdsList(
-		ActionRequest actionRequest, long roleId, boolean includePreselected) {
+	private List<String> _getCheckedActionIds(
+		ActionRequest actionRequest, long roleId,
+		Predicate<String> valuePredicate) {
 
 		List<String> actionIds = new ArrayList<>();
 
@@ -801,24 +798,12 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			if (name.startsWith(roleId + ActionUtil.ACTION)) {
 				int pos = name.indexOf(ActionUtil.ACTION);
 
-				if (!Objects.equals(
-						actionRequest.getParameter(name), "indeterminate")) {
-
+				if (valuePredicate.test(actionRequest.getParameter(name))) {
 					String actionId = name.substring(
 						pos + ActionUtil.ACTION.length());
 
 					actionIds.add(actionId);
 				}
-			}
-			else if (includePreselected &&
-					 name.startsWith(roleId + ActionUtil.PRESELECTED)) {
-
-				int pos = name.indexOf(ActionUtil.PRESELECTED);
-
-				String actionId = name.substring(
-					pos + ActionUtil.PRESELECTED.length());
-
-				actionIds.add(actionId);
 			}
 		}
 
@@ -842,33 +827,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 
 		return configurationAction;
-	}
-
-	private List<String> _getIndeterminateStateActionIds(
-		ActionRequest actionRequest, long roleId) {
-
-		List<String> actionIds = new ArrayList<>();
-
-		Enumeration<String> enumeration = actionRequest.getParameterNames();
-
-		while (enumeration.hasMoreElements()) {
-			String name = enumeration.nextElement();
-
-			if (name.startsWith(roleId + ActionUtil.ACTION)) {
-				int pos = name.indexOf(ActionUtil.ACTION);
-
-				if (Objects.equals(
-						actionRequest.getParameter(name), "indeterminate")) {
-
-					String actionId = name.substring(
-						pos + ActionUtil.ACTION.length());
-
-					actionIds.add(actionId);
-				}
-			}
-		}
-
-		return actionIds;
 	}
 
 	private Tuple _getNewScope(ActionRequest actionRequest) throws Exception {
@@ -1017,8 +975,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		for (Map.Entry<Long, String[]> entry : roleIdsToActionIds.entrySet()) {
 			Long roleId = entry.getKey();
 
-			List<String> indeterminateActionIds =
-				_getIndeterminateStateActionIds(actionRequest, roleId);
+			List<String> indeterminateActionIds = _getCheckedActionIds(
+				actionRequest, roleId,
+				value -> Objects.equals(value, "indeterminate"));
 
 			if (ListUtil.isEmpty(indeterminateActionIds)) {
 				continue;

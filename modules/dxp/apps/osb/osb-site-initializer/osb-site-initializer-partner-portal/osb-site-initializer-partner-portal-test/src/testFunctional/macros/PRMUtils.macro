@@ -5,11 +5,5 @@ definition {
 			key_title = "${pageTitle}",
 			locator1 = "Header#H1_TITLE");
 	}
-
-	macro assertTabTitle {
-		AssertElementPresent(
-			key_tabTitle = "${pageName} - ${siteName} - Liferay DXP",
-			locator1 = "PRMUtils#TAB_TITLE");
-	}
-
+	
 }

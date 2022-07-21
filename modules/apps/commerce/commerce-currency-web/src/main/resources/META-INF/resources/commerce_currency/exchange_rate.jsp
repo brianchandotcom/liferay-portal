@@ -28,7 +28,7 @@ boolean enableAutoUpdate = commerceCurrencyConfiguration.enableAutoUpdate();
 	<div class="mt-4" id="<portlet:namespace />exchangeRateContainer">
 		<portlet:actionURL name="/commerce_currency/edit_exchange_rate" var="editExchangeRateActionURL" />
 
-		<aui:form action="<%= editExchangeRateActionURL %>" method="post" name="fm">
+		<aui:form action="<%= editExchangeRateActionURL %>" cssClass="container" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="exchangeRateConfiguration--groupId--" type="hidden" value="<%= scopeGroupId %>" />

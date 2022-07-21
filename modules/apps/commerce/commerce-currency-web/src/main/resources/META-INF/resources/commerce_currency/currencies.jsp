@@ -78,7 +78,7 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 
 	<portlet:actionURL name="/commerce_currency/edit_commerce_currency" var="editCommerceCurrencyActionURL" />
 
-	<aui:form action="<%= editCommerceCurrencyActionURL %>" method="post" name="fm">
+	<aui:form action="<%= editCommerceCurrencyActionURL %>" cssClass="container" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="deleteCommerceCurrencyIds" type="hidden" />

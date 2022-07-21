@@ -50,6 +50,11 @@ public abstract class BasePortalCache<K extends Serializable, V>
 	}
 
 	@Override
+	public boolean isSharded() {
+		return false;
+	}
+
+	@Override
 	public void put(K key, V value) {
 		put(key, value, DEFAULT_TIME_TO_LIVE);
 	}

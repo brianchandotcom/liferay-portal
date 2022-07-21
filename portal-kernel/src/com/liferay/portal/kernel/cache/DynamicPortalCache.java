@@ -31,11 +31,13 @@ public class DynamicPortalCache<K extends Serializable, V>
 
 	public DynamicPortalCache(
 		PortalCacheManager<K, V> portalCacheManager,
-		PortalCache<K, V> portalCache, String portalCacheName, boolean mvcc) {
+		PortalCache<K, V> portalCache, String portalCacheName, boolean mvcc,
+		boolean sharded) {
 
 		_portalCacheManager = portalCacheManager;
 		_portalCacheName = portalCacheName;
 		_mvcc = mvcc;
+		_sharded = sharded;
 
 		if (portalCache == null) {
 			portalCache = (PortalCache<K, V>)_DUMMY_PORTAL_CACHE;
@@ -73,6 +75,11 @@ public class DynamicPortalCache<K extends Serializable, V>
 	@Override
 	public boolean isMVCC() {
 		return _mvcc;
+	}
+
+	@Override
+	public boolean isSharded() {
+		return _sharded;
 	}
 
 	@Override
@@ -161,5 +168,6 @@ public class DynamicPortalCache<K extends Serializable, V>
 		_portalCacheListeners = new ConcurrentHashMap<>();
 	private final PortalCacheManager<K, V> _portalCacheManager;
 	private final String _portalCacheName;
+	private final boolean _sharded;
 
 }

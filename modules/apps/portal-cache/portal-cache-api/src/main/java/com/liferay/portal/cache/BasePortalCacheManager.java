@@ -71,11 +71,20 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			String portalCacheName, boolean mvcc)
 		throws PortalCacheException {
 
+		return getPortalCache(portalCacheName, mvcc, false);
+	}
+
+	@Override
+	public PortalCache<K, V> getPortalCache(
+			String portalCacheName, boolean mvcc, boolean sharded)
+		throws PortalCacheException {
+
 		return _portalCaches.compute(
 			portalCacheName,
 			(key, value) -> {
 				if (value != null) {
-					_verifyPortalCache(value, mvcc);
+					_verifyMVCCPortalCache(value, mvcc);
+					_verifyShardedPortalCache(value, sharded);
 
 					return value;
 				}
@@ -84,7 +93,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 					_portalCacheManagerConfiguration.
 						getPortalCacheConfiguration(portalCacheName);
 
-				value = createPortalCache(portalCacheConfiguration);
+				value = createPortalCache(portalCacheConfiguration, sharded);
 
 				_initPortalCacheListeners(value, portalCacheConfiguration);
 
@@ -174,7 +183,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	}
 
 	protected abstract PortalCache<K, V> createPortalCache(
-		PortalCacheConfiguration portalCacheConfiguration);
+		PortalCacheConfiguration portalCacheConfiguration, boolean sharded);
 
 	protected abstract void doClearAll();
 
@@ -295,7 +304,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	private void _verifyPortalCache(
+	private void _verifyMVCCPortalCache(
 		PortalCache<K, V> portalCache, boolean mvcc) {
 
 		if (mvcc == portalCache.isMVCC()) {
@@ -324,6 +333,42 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		}
 		else {
 			sb.append("non-MVCC ");
+		}
+
+		sb.append("portal cache with same name exists.");
+
+		throw new IllegalStateException(sb.toString());
+	}
+
+	private void _verifyShardedPortalCache(
+		PortalCache<K, V> portalCache, boolean sharded) {
+
+		if (sharded == portalCache.isSharded()) {
+			return;
+		}
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("Unable to get portal cache ");
+		sb.append(portalCache.getPortalCacheName());
+		sb.append(" from portal cache manager ");
+		sb.append(_portalCacheManagerName);
+		sb.append(" as a ");
+
+		if (sharded) {
+			sb.append("sharded ");
+		}
+		else {
+			sb.append("non-sharded ");
+		}
+
+		sb.append("portal cache, cause a ");
+
+		if (portalCache.isSharded()) {
+			sb.append("sharded ");
+		}
+		else {
+			sb.append("non-sharded ");
 		}
 
 		sb.append("portal cache with same name exists.");

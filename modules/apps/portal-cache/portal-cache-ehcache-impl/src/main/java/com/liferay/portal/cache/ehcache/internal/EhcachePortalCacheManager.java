@@ -91,10 +91,17 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	protected PortalCache<K, V> createPortalCache(
-		PortalCacheConfiguration portalCacheConfiguration) {
+		PortalCacheConfiguration portalCacheConfiguration, boolean sharded) {
 
-		return new EhcachePortalCache<>(
-			this, (EhcachePortalCacheConfiguration)portalCacheConfiguration);
+		EhcachePortalCacheConfiguration ehcachePortalCacheConfiguration =
+			(EhcachePortalCacheConfiguration)portalCacheConfiguration;
+
+		if (sharded) {
+			return new ShardedEhcachePortalCache<>(
+				this, ehcachePortalCacheConfiguration);
+		}
+
+		return new EhcachePortalCache<>(this, ehcachePortalCacheConfiguration);
 	}
 
 	@Override

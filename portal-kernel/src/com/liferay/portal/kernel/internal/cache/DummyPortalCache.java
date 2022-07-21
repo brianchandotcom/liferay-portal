@@ -66,6 +66,11 @@ public class DummyPortalCache<K extends Serializable, V>
 	}
 
 	@Override
+	public boolean isSharded() {
+		return false;
+	}
+
+	@Override
 	public void put(K key, V value) {
 	}
 

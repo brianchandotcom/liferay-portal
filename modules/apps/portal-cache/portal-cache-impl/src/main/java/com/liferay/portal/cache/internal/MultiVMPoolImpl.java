@@ -51,6 +51,14 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	}
 
 	@Override
+	public PortalCache<? extends Serializable, ? extends Serializable>
+		getPortalCache(String portalCacheName, boolean mvcc, boolean sharded) {
+
+		return _portalCacheManager.getPortalCache(
+			portalCacheName, mvcc, sharded);
+	}
+
+	@Override
 	public PortalCacheManager<? extends Serializable, ? extends Serializable>
 		getPortalCacheManager() {
 

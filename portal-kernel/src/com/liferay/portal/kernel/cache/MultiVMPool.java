@@ -33,6 +33,9 @@ public interface MultiVMPool {
 	public PortalCache<? extends Serializable, ? extends Serializable>
 		getPortalCache(String portalCacheName, boolean mvcc);
 
+	public PortalCache<? extends Serializable, ? extends Serializable>
+		getPortalCache(String portalCacheName, boolean mvcc, boolean sharded);
+
 	public PortalCacheManager<? extends Serializable, ? extends Serializable>
 		getPortalCacheManager();
 

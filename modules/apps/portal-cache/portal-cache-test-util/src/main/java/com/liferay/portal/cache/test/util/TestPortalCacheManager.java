@@ -55,7 +55,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	protected PortalCache<K, V> createPortalCache(
-		PortalCacheConfiguration portalCacheConfiguration) {
+		PortalCacheConfiguration portalCacheConfiguration, boolean sharded) {
 
 		String portalCacheName = portalCacheConfiguration.getPortalCacheName();
 

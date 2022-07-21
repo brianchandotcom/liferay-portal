@@ -25,7 +25,7 @@ import java.util.Map;
 public interface ExtensionProvider {
 
 	public Map<String, Serializable> getExtendedProperties(
-			long companyId, Object entity)
+			long companyId, String className, Object entity)
 		throws Exception;
 
 	public Map<String, PropertyDefinition> getExtendedPropertyDefinitions(
@@ -37,7 +37,7 @@ public interface ExtensionProvider {
 	public boolean isApplicableExtension(long companyId, String className);
 
 	public void setExtendedProperties(
-			long companyId, Object entity,
+			long companyId, String className, Object entity,
 			Map<String, Serializable> extendedProperties)
 		throws Exception;
 

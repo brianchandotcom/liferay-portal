@@ -73,6 +73,47 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-150908. Configure Display Template without saving in Breadcrumb widget."
+	@priority = "4"
+	test ConfigureDisplayTemplateWithoutSave {
+		task ("Add a Breadcrumb widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Breadcrumb");
+		}
+
+		task ("View Breadcrumbs widget with the default configuration") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Breadcrumb",
+				portletOption = "Configuration");
+
+			Breadcrumb.viewDisplayTemplatePreview(displayStyle = "Horizontal");
+		}
+
+		task ("Set Display Template to arrows without saving") {
+			Breadcrumb.configureBreadcrumb(
+				configureWithoutSave = "true",
+				selectAdtType = "Arrows");
+		}
+
+		task ("View Breadcrumbs widget still with the default configuration") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Breadcrumb",
+				portletOption = "Configuration");
+
+			Breadcrumb.viewDisplayTemplatePreview(displayStyle = "Horizontal");
+		}
+	}
+
 	@description = "Configure Show Application in Breadcrumb widget."
 	@priority = "4"
 	@uitest

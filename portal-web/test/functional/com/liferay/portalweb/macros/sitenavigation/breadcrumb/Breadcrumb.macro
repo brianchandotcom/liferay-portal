@@ -123,6 +123,16 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro viewDisplayTemplatePreview {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Select#DISPLAY_TEMPLATE",
+			value1 = "${displayStyle}");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro viewEntry {
 		AssertTextEquals(
 			key_breadcrumbName = "${breadcrumbName}",

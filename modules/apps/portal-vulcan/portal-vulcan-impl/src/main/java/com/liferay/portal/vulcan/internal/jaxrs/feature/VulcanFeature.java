@@ -37,6 +37,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.Context
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.LogContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.NestedFieldsContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.TransactionContainerRequestFilter;
+import com.liferay.portal.vulcan.internal.jaxrs.container.response.filter.EntityExtensionContainerResponseFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.AcceptLanguageContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.AggregationContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.CompanyContextProvider;
@@ -108,6 +109,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(BeanValidationInterceptor.class);
 		featureContext.register(CTContainerRequestFilter.class);
 		featureContext.register(DateParamConverterProvider.class);
+		featureContext.register(EntityExtensionContainerResponseFilter.class);
 		featureContext.register(EntityExtensionWriterInterceptor.class);
 		featureContext.register(ExceptionMapper.class);
 		featureContext.register(FieldsQueryParamContextProvider.class);

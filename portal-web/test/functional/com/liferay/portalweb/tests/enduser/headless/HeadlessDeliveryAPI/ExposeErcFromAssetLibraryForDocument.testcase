@@ -26,6 +26,34 @@ definition {
 		}
 	}
 
+	@description = "Get document in asset library by existing custom erc"
+	@priority = "5"
+	test CanGetDocumentInAssetLibraryByExistingCustomErc {
+		property portal.acceptance = "true";
+
+		task ("Given a document with a custom erc is created with a POST request in asset library") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			DocumentAPI.addDocumentInAssetLibraryByUploadFile(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				filePath = "${filePath}");
+		}
+
+		task ("When I make a GET request by assetLibraryId and erc") {
+			var response = DocumentAPI.getDocumentsByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc");
+		}
+
+		task ("Then I receive a correct body response") {
+			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "erc",
+				responseToParse = "${response}");
+		}
+	}
+
 	@description = "Document is not able to create with an existing erc in asset library"
 	@priority = "5"
 	test CannotCreateDocumentInAssetLibraryWithExistingErc {

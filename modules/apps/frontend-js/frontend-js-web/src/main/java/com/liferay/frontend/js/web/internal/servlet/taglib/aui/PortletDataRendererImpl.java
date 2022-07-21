@@ -46,7 +46,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 	public void write(Collection<PortletData> portletDatas, Writer writer)
 		throws IOException {
 
-		writer.write("<script type=\"module\">\n// <![CDATA[\n");
+		writer.write("<script type=\"module\">\n");
 
 		// Write ES prolog
 
@@ -138,7 +138,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 			writer.write("});\n");
 		}
 
-		writer.write("\n// ]]>\n</script>");
+		writer.write("\n</script>");
 	}
 
 	private Map<AMDRequire, AMDRequire> _computeAMDRequireMap(

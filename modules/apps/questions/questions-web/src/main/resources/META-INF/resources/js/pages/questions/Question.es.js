@@ -127,8 +127,7 @@ export default withRouter(
 							);
 							setError(errorObject);
 							setLoading(false);
-						}
-						else {
+						} else {
 							setQuestion(messageBoardThreadByFriendlyUrlPath);
 							setLoading(false);
 						}
@@ -218,8 +217,7 @@ export default withRouter(
 				await onSubscription();
 
 				fetchMessages();
-			}
-			catch (error) {}
+			} catch (error) {}
 		};
 
 		const deleteAnswer = useCallback(
@@ -381,11 +379,13 @@ export default withRouter(
 											{`${Liferay.Language.get(
 												'asked'
 											)} - ${dateToInternationalHuman(
-												question.dateCreated
+												question.dateCreated,
+												context.locale.language
 											)} / ${Liferay.Language.get(
 												'active'
 											)} - ${dateToInternationalHuman(
-												question.dateModified
+												question.dateModified,
+												context.locale.language
 											)} - ${lang.sub(
 												Liferay.Language.get(
 													'viewed-x-times'
@@ -536,6 +536,7 @@ export default withRouter(
 													!question.locked &&
 													!!question.actions.replace
 												}
+												context={context}
 												deleteAnswer={deleteAnswer}
 												editable={!question.locked}
 												key={answer.id}

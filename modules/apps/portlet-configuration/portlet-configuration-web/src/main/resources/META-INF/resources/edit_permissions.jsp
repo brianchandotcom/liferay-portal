@@ -110,9 +110,11 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 							continue;
 						}
 
-						boolean checked = portletConfigurationPermissionsDisplayContext.isChecked(action, currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions, resourceActionsMap);
+						boolean checked = false;
 
-						boolean indeterminate = portletConfigurationPermissionsDisplayContext.isIndeterminate(action, checked, resourceActionsMap);
+						if (currentIndividualActions.contains(action) || currentGroupActions.contains(action) || currentGroupTemplateActions.contains(action) || currentCompanyActions.contains(action)) {
+							checked = true;
+						}
 
 						String preselectedMsg = StringPool.BLANK;
 

@@ -551,10 +551,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		String[] resourcePrimKeys = ParamUtil.getStringValues(
 			actionRequest, "resourcePrimKey");
 
-		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
+		Map<Long, String[]> roleIdActionIdsMap = new HashMap<>();
 
 		for (long roleId : roleIds) {
-			roleIdsToActionIds.put(
+			roleIdActionIdsMap.put(
 				roleId,
 				ArrayUtil.toStringArray(
 					_getCheckedActionIds(
@@ -575,9 +575,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			if (GetterUtil.getBoolean(
 					PropsUtil.get("feature.flag.LPS-87806"))) {
 
-				roleIdsToActionIds = _getRoleIdsToActionIdsResourcePrimKey(
-					themeDisplay.getCompanyId(), resourcePrimKey,
-					roleIdsToActionIds, selResource, actionRequest);
+				roleIdActionIdsMap = _getRoleIdActionIdsMap(
+					actionRequest, themeDisplay.getCompanyId(), resourcePrimKey,
+					roleIdActionIdsMap, selResource);
 			}
 
 			long ctCollectionId = 0;
@@ -592,7 +592,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 				_resourcePermissionService.setIndividualResourcePermissions(
 					resourceGroupId, themeDisplay.getCompanyId(), selResource,
-					resourcePrimKey, roleIdsToActionIds);
+					resourcePrimKey, roleIdActionIdsMap);
 			}
 
 			if (permissionPropagator != null) {
@@ -963,10 +963,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		return portletTitle;
 	}
 
-	private Map<Long, String[]> _getRoleIdsToActionIdsResourcePrimKey(
-			long companyId, String resourcePrimKey,
-			Map<Long, String[]> roleIdsToActionIds, String selResource,
-			ActionRequest actionRequest)
+	private Map<Long, String[]> _getRoleIdActionIdsMap(
+			ActionRequest actionRequest, long companyId, String resourcePrimKey,
+			Map<Long, String[]> roleIdsToActionIds, String selResource)
 		throws Exception {
 
 		Map<Long, String[]> allRoleIdsToActionIds = new HashMap<>(

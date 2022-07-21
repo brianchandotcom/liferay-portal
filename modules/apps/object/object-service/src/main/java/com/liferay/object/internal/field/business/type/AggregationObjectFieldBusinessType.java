@@ -119,7 +119,7 @@ public class AggregationObjectFieldBusinessType
 
 	@Override
 	public void validateObjectFieldSettings(
-			String objectFieldName,
+			long objectDefinitionId, String objectFieldName,
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 

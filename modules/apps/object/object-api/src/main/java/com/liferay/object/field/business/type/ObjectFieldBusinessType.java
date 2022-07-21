@@ -75,7 +75,7 @@ public interface ObjectFieldBusinessType {
 	}
 
 	public default void validateObjectFieldSettings(
-			String objectFieldName,
+			long objectDefinitionId, String objectFieldName,
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 

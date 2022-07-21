@@ -18,18 +18,6 @@ definition {
 		ACUtils.launchDXP();
 
 		ACUtils.addSiteAndPage();
-
-		ACUtils.createBlogsAndAddToPage();
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		task ("Change blog rating type to star") {
-			Ratings.configureRatingType(
-				applications = "Blogs",
-				portlet = "Ratings",
-				ratingType = "Stars",
-				siteName = "Site Name");
-		}
 	}
 
 	tearDown {
@@ -49,8 +37,22 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8923 | Test Summary: Check vote is triggered when voting and check its properties"
 	@priority = "5"
-	test CheckVoteEventWhenVotingAndCheckProperties {
+	test CheckVoteEventWhenVotingForBlogAndCheckProperties {
 		property proxy.server.enabled = "true";
+
+		task ("Add a blog to the page and connect AC to DXP") {
+			ACUtils.createBlogsAndAddToPage();
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Change blog rating type to star") {
+			Ratings.configureRatingType(
+				applications = "Blogs",
+				portlet = "Ratings",
+				ratingType = "Stars",
+				siteName = "Site Name");
+		}
 
 		task ("Get the Property ID in AC") {
 			ACUtils.launchAC();
@@ -129,22 +131,21 @@ definition {
 
 	@description = "Bug: LRAC-11450 | Automation ID: LRAC-11507 | Test Summary: Check vote is triggered when voting for DM and check its properties"
 	@priority = "5"
-    test CheckVoteEventWhenVotingForDMAndCheckProperties {
+	test CheckVoteEventWhenVotingForDMAndCheckProperties {
 		property proxy.server.enabled = "true";
 
-		task("Add a documents and media to the page and connect DXP to AC") {
+		task ("Add a documents and media to the page and connect DXP to AC") {
 			ACUtils.createDMAndAddToPage();
 
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
-		task("Go to Settings and save the property id and data source id") {
+		task ("Go to Settings and save the property id and data source id") {
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
 
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
-
 			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "Combined");
 
 			var dataSourceName = StringUtil.trim("${dataSourceName}");
@@ -161,10 +162,10 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			task("Start the har recording") {
+			task ("Start the har recording") {
 				ProxyUtil.startHarRecording("VOTE");
 
-				ACUtils.waitForSendingRequest(); 
+				ACUtils.waitForSendingRequest();
 			}
 
 			DMDocument.expandInfo();
@@ -173,12 +174,12 @@ definition {
 		}
 
 		task ("Get the document entry Id") {
-			var entryId = JSONDocument.getFileEntryId( 
+			var entryId = JSONDocument.getFileEntryId(
 				dmDocumentTitle = "DM AC Title",
 				groupName = "Site Name");
 		}
 
-		task("Assert the properties of the VOTE event") {
+		task ("Assert the properties of the VOTE event") {
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Ratings",
 				eventId = "VOTE",
@@ -201,13 +202,14 @@ definition {
 				applicationId = "Ratings",
 				eventId = "VOTE",
 				property = "score",
-				value = "0.8"); 
+				value = "0.8");
 		}
 
-		task("Assert the common request values") {
+		task ("Assert the common request values") {
 			ACUtils.assertRequestCommonPropertiesValue(
 				expectedChannelId = "${expectedChannelId}",
 				expectedDataSourceId = "${expectedDataSourceId}");
 		}
 	}
+
 }

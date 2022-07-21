@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -83,38 +84,44 @@ public class CountrySearchContainerFactory {
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords");
 
+		BaseModelSearchResult<Country> baseModelSearchResult;
+
 		if (Validator.isNotNull(keywords)) {
-			searchContainer.setResultsAndTotal(
-				CountryServiceUtil.searchCountries(
-					PortalUtil.getCompanyId(liferayPortletRequest), active,
-					keywords, searchContainer.getStart(),
-					searchContainer.getEnd(),
-					searchContainer.getOrderByComparator()));
+			baseModelSearchResult = CountryServiceUtil.searchCountries(
+				PortalUtil.getCompanyId(liferayPortletRequest), active,
+				keywords, searchContainer.getStart(), searchContainer.getEnd(),
+				searchContainer.getOrderByComparator());
 		}
 		else {
 			if (active == null) {
-				searchContainer.setResultsAndTotal(
-					() -> CountryServiceUtil.getCompanyCountries(
-						PortalUtil.getCompanyId(liferayPortletRequest),
-						searchContainer.getStart(), searchContainer.getEnd(),
-						searchContainer.getOrderByComparator()),
-					CountryServiceUtil.getCompanyCountriesCount(
-						PortalUtil.getCompanyId(liferayPortletRequest)));
+				baseModelSearchResult =
+					BaseModelSearchResult.createWithStartAndEnd(
+						startAndEnd -> CountryServiceUtil.getCompanyCountries(
+							PortalUtil.getCompanyId(liferayPortletRequest),
+							startAndEnd.getStart(), startAndEnd.getEnd(),
+							searchContainer.getOrderByComparator()),
+						CountryServiceUtil.getCompanyCountriesCount(
+							PortalUtil.getCompanyId(liferayPortletRequest)),
+						searchContainer.getStart(), searchContainer.getEnd());
 			}
 			else {
 				boolean navigationActive = active;
 
-				searchContainer.setResultsAndTotal(
-					() -> CountryServiceUtil.getCompanyCountries(
-						PortalUtil.getCompanyId(liferayPortletRequest),
-						navigationActive, searchContainer.getStart(),
-						searchContainer.getEnd(),
-						searchContainer.getOrderByComparator()),
-					CountryServiceUtil.getCompanyCountriesCount(
-						PortalUtil.getCompanyId(liferayPortletRequest),
-						navigationActive));
+				baseModelSearchResult =
+					BaseModelSearchResult.createWithStartAndEnd(
+						startAndEnd -> CountryServiceUtil.getCompanyCountries(
+							PortalUtil.getCompanyId(liferayPortletRequest),
+							navigationActive, startAndEnd.getStart(),
+							startAndEnd.getEnd(),
+							searchContainer.getOrderByComparator()),
+						CountryServiceUtil.getCompanyCountriesCount(
+							PortalUtil.getCompanyId(liferayPortletRequest),
+							navigationActive),
+						searchContainer.getStart(), searchContainer.getEnd());
 			}
 		}
+
+		searchContainer.setResultsAndTotal(baseModelSearchResult);
 
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));

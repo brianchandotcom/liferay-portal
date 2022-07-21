@@ -83,11 +83,11 @@ const TabItem = ({item}) => {
 					displayType="unstyled"
 					onClick={() => addItem({item, plid, setWidgets, widgets})}
 					small
-					title={item.name}
+					title={item.label}
 				>
 					<ClayIcon symbol="plus" />
 
-					<span className="sr-only">{item.name}</span>
+					<span className="sr-only">{item.label}</span>
 				</ClayButton>
 			)}
 		</li>

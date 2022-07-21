@@ -300,6 +300,8 @@ components:
                 valid:
                     readOnly: true
                     type: boolean
+            required:
+                - skuId
             type: object
         CouponCode:
             properties:

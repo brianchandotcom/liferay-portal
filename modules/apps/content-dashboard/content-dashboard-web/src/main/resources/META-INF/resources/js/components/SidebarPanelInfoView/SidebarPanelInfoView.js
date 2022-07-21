@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
@@ -19,7 +20,7 @@ import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
 import Sidebar from '../Sidebar';
 import CollapsibleSection from './CollapsibleSection';
@@ -67,6 +68,8 @@ const SidebarPanelInfoView = ({
 	viewURLs = [],
 	vocabularies = {},
 }) => {
+	const [error, setError] = useState(false);
+
 	const stickerColor = parseInt(user.userId, 10) % 10;
 
 	const [publicVocabularies, internalVocabularies] = groupVocabulariesBy({
@@ -92,65 +95,87 @@ const SidebarPanelInfoView = ({
 
 	const hasActions = preview?.downloadURL || fetchSharingButtonURL;
 
+	const handleError = () => {
+		setError(true);
+	};
+
 	return (
 		<>
 			<Sidebar.Header title={title} />
 
-			<Sidebar.Body>
-				<div className="sidebar-section sidebar-section--compress">
-					{showClipboard && (
-						<>
-							<div className="c-mt-1">
-								<FileUrlCopyButton url={clipboard.url} />
-							</div>
-							<p className="c-mb-1 text-secondary">
-								{clipboard.name}
-							</p>
-						</>
-					)}
-
-					<p
-						className="c-mb-1 text-secondary"
-						data-qa-id="assetTypeInfo"
+			<Sidebar.Body className="px-0">
+				{error && (
+					<ClayAlert
+						className="mb-3"
+						displayType="warning"
+						onClose={() => {
+							setError(false);
+						}}
+						variant="stripe"
 					>
-						{subType ? `${type} - ${subType}` : `${type}`}
-					</p>
-
-					{versions.map((version) => (
-						<div className="c-mt-2" key={version.version}>
-							<ClayLabel displayType="info">
-								{Liferay.Language.get('version') + ' '}
-
-								{version.version}
-							</ClayLabel>
-
-							<ClayLabel displayType={version.statusStyle}>
-								{version.statusLabel}
-							</ClayLabel>
-						</div>
-					))}
-				</div>
-
-				<div className="sidebar-dl sidebar-section">
-					<ClaySticker
-						className={classnames('sticker-user-icon', {
-							[`user-icon-color-${stickerColor}`]: !user.url,
-						})}
-						shape="circle"
-					>
-						{user.url ? (
-							<img
-								alt={`${user.name}.`}
-								className="sticker-img"
-								src={user.url}
-							/>
-						) : (
-							<ClayIcon symbol="user" />
+						{Liferay.Language.get(
+							'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
 						)}
-					</ClaySticker>
+					</ClayAlert>
+				)}
 
-					<span className="c-ml-2 text-secondary">{user.name}</span>
-				</div>
+				<div className="px-3">
+					<div className="sidebar-section sidebar-section--compress">
+						{showClipboard && (
+							<>
+								<div className="c-mt-1">
+									<FileUrlCopyButton url={clipboard.url} />
+								</div>
+								<p className="c-mb-1 text-secondary">
+									{clipboard.name}
+								</p>
+							</>
+						)}
+
+						<p
+							className="c-mb-1 text-secondary"
+							data-qa-id="assetTypeInfo"
+						>
+							{subType ? `${type} - ${subType}` : `${type}`}
+						</p>
+
+						{versions.map((version) => (
+							<div className="c-mt-2" key={version.version}>
+								<ClayLabel displayType="info">
+									{Liferay.Language.get('version') + ' '}
+
+									{version.version}
+								</ClayLabel>
+
+								<ClayLabel displayType={version.statusStyle}>
+									{version.statusLabel}
+								</ClayLabel>
+							</div>
+						))}
+					</div>
+
+					<div className="sidebar-dl sidebar-section">
+						<ClaySticker
+							className={classnames('sticker-user-icon', {
+								[`user-icon-color-${stickerColor}`]: !user.url,
+							})}
+							shape="circle"
+						>
+							{user.url ? (
+								<img
+									alt={`${user.name}.`}
+									className="sticker-img"
+									src={user.url}
+								/>
+							) : (
+								<ClayIcon symbol="user" />
+							)}
+						</ClaySticker>
+
+						<span className="c-ml-2 text-secondary">
+							{user.name}
+						</span>
+					</div>
 
 				{preview && preview.url && (
 					<Preview
@@ -161,151 +186,163 @@ const SidebarPanelInfoView = ({
 					/>
 				)}
 
-				{hasActions && (
-					<div className="sidebar-section">
-						{preview?.downloadURL && (
-							<ClayLink
-								className="btn btn-primary"
-								href={preview?.downloadURL}
-							>
-								{Liferay.Language.get('download')}
-							</ClayLink>
-						)}
+					{hasActions && (
+						<div className="sidebar-section">
+							{preview?.downloadURL && (
+								<ClayLink
+									className="btn btn-primary"
+									href={preview?.downloadURL}
+								>
+									{Liferay.Language.get('download')}
+								</ClayLink>
+							)}
 
-						{fetchSharingButtonURL && <Share fetchSharingButtonURL={fetchSharingButtonURL} />}
-					</div>
-				)}
-
-				{description && (
-					<div className="sidebar-section">
-						<h5 className="c-mb-1 font-weight-semi-bold">
-							{Liferay.Language.get('description')}
-						</h5>
-
-						<div
-							className="text-secondary"
-							dangerouslySetInnerHTML={{__html: description}}
-						/>
-					</div>
-				)}
-
-				<ClayPanel.Group className="panel-group-flush panel-group-sm">
-					{showTaxonomies && (
-						<CollapsibleSection
-							expanded={true}
-							title={Liferay.Language.get('categorization')}
-						>
-							{!!publicCategoriesCount && (
-								<ItemVocabularies
-									title={Liferay.Language.get(
-										'public-categories'
-									)}
-									vocabularies={publicVocabularies}
+							{fetchSharingButtonURL && (
+								<Share
+									fetchSharingButtonURL={
+										fetchSharingButtonURL
+									}
+									onError={handleError}
 								/>
 							)}
-
-							{!!internalCategoriesCount && (
-								<ItemVocabularies
-									cssClassNames="c-mt-4"
-									title={Liferay.Language.get(
-										'internal-categories'
-									)}
-									vocabularies={internalVocabularies}
-								/>
-							)}
-
-							{!!tags.length && (
-								<div className="c-mb-4 sidebar-dl sidebar-section">
-									<h5 className="c-mb-1 font-weight-semi-bold">
-										{Liferay.Language.get('tags')}
-									</h5>
-
-									<p>
-										{tags.map((tag) => (
-											<ClayLabel
-												className="c-mb-2 c-mr-2"
-												displayType="secondary"
-												key={tag}
-												large
-											>
-												{tag}
-											</ClayLabel>
-										))}
-									</p>
-								</div>
-							)}
-						</CollapsibleSection>
+						</div>
 					)}
 
-					<CollapsibleSection title={Liferay.Language.get('details')}>
+					{description && (
 						<div className="sidebar-section">
-							{!!items.length &&
-								items.map(
-									({title, type, value}) =>
-										title &&
-										value &&
-										type && (
-											<div
-												className="c-mb-4 sidebar-dl sidebar-section"
-												key={title}
-											>
-												<h5 className="c-mb-1 font-weight-semi-bold">
-													{title}
-												</h5>
+							<h5 className="c-mb-1 font-weight-semi-bold">
+								{Liferay.Language.get('description')}
+							</h5>
 
-												<p className="text-secondary">
-													{type === 'Date'
-														? formatDate(
-																value,
-																languageTag
-														  )
-														: value}
-												</p>
-											</div>
-										)
+							<div
+								className="text-secondary"
+								dangerouslySetInnerHTML={{__html: description}}
+							/>
+						</div>
+					)}
+
+					<ClayPanel.Group className="panel-group-flush panel-group-sm">
+						{showTaxonomies && (
+							<CollapsibleSection
+								expanded={true}
+								title={Liferay.Language.get('categorization')}
+							>
+								{!!publicCategoriesCount && (
+									<ItemVocabularies
+										title={Liferay.Language.get(
+											'public-categories'
+										)}
+										vocabularies={publicVocabularies}
+									/>
 								)}
 
-							<div
-								className="c-mb-4 sidebar-dl sidebar-section"
-								key="creation-date"
-							>
-								<h5 className="c-mb-1 font-weight-semi-bold">
-									{Liferay.Language.get('creation-date')}
-								</h5>
+								{!!internalCategoriesCount && (
+									<ItemVocabularies
+										cssClassNames="c-mt-4"
+										title={Liferay.Language.get(
+											'internal-categories'
+										)}
+										vocabularies={internalVocabularies}
+									/>
+								)}
 
-								<p className="text-secondary">
-									{formatDate(createDate, languageTag)}
-								</p>
+								{!!tags.length && (
+									<div className="c-mb-4 sidebar-dl sidebar-section">
+										<h5 className="c-mb-1 font-weight-semi-bold">
+											{Liferay.Language.get('tags')}
+										</h5>
+
+										<p>
+											{tags.map((tag) => (
+												<ClayLabel
+													className="c-mb-2 c-mr-2"
+													displayType="secondary"
+													key={tag}
+													large
+												>
+													{tag}
+												</ClayLabel>
+											))}
+										</p>
+									</div>
+								)}
+							</CollapsibleSection>
+						)}
+
+						<CollapsibleSection
+							title={Liferay.Language.get('details')}
+						>
+							<div className="sidebar-section">
+								{!!items.length &&
+									items.map(
+										({title, type, value}) =>
+											title &&
+											value &&
+											type && (
+												<div
+													className="c-mb-4 sidebar-dl sidebar-section"
+													key={title}
+												>
+													<h5 className="c-mb-1 font-weight-semi-bold">
+														{title}
+													</h5>
+
+													<p className="text-secondary">
+														{type === 'Date'
+															? formatDate(
+																	value,
+																	languageTag
+															  )
+															: value}
+													</p>
+												</div>
+											)
+									)}
+
+								<div
+									className="c-mb-4 sidebar-dl sidebar-section"
+									key="creation-date"
+								>
+									<h5 className="c-mb-1 font-weight-semi-bold">
+										{Liferay.Language.get('creation-date')}
+									</h5>
+
+									<p className="text-secondary">
+										{formatDate(createDate, languageTag)}
+									</p>
+								</div>
+
+								<div
+									className="c-mb-4 sidebar-dl sidebar-section"
+									key="modified-date"
+								>
+									<h5 className="c-mb-1 font-weight-semi-bold">
+										{Liferay.Language.get('modified-date')}
+									</h5>
+
+									<p className="text-secondary">
+										{formatDate(modifiedDate, languageTag)}
+									</p>
+								</div>
+
+								<div
+									className="c-mb-4 sidebar-dl sidebar-section"
+									key="id"
+								>
+									<h5 className="c-mb-1 font-weight-semi-bold">
+										{Liferay.Language.get('id')}
+									</h5>
+
+									<p className="text-secondary">{classPK}</p>
+								</div>
 							</div>
 
-							<div
-								className="c-mb-4 sidebar-dl sidebar-section"
-								key="modified-date"
-							>
-								<h5 className="c-mb-1 font-weight-semi-bold">
-									{Liferay.Language.get('modified-date')}
-								</h5>
-
-								<p className="text-secondary">
-									{formatDate(modifiedDate, languageTag)}
-								</p>
-							</div>
-
-							<div
-								className="c-mb-4 sidebar-dl sidebar-section"
-								key="id"
-							>
-								<h5 className="c-mb-1 font-weight-semi-bold">
-									{Liferay.Language.get('id')}
-								</h5>
-
-								<p className="text-secondary">{classPK}</p>
-							</div>
-						</div>
-
-						{!!viewURLs.length && <ItemLanguages urls={viewURLs} />}
-					</CollapsibleSection>
-				</ClayPanel.Group>
+							{!!viewURLs.length && (
+								<ItemLanguages urls={viewURLs} />
+							)}
+						</CollapsibleSection>
+					</ClayPanel.Group>
+				</div>
 			</Sidebar.Body>
 		</>
 	);

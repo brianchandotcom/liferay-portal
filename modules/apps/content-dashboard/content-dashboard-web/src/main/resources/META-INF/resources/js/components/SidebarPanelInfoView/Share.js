@@ -16,7 +16,7 @@ import {fetch, runScriptsInElement} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
 
-const Share = ({fetchSharingButtonURL}) => {
+const Share = ({fetchSharingButtonURL, onError}) => {
 	const elRef = useRef(null);
 
 	useEffect(() => {
@@ -36,11 +36,15 @@ const Share = ({fetchSharingButtonURL}) => {
 					runScriptsInElement(elRef.current);
 				})
 				.catch((error) => {
+					if (onError) {
+						onError();
+					}
 					if (process.env.NODE_ENV === 'development') {
 						console.error('Failed to fetch share button: ', error);
 					}
 				});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fetchSharingButtonURL]);
 
 	return <span ref={elRef} />;
@@ -48,6 +52,7 @@ const Share = ({fetchSharingButtonURL}) => {
 
 Share.propTypes = {
 	fetchSharingButtonURL: PropTypes.string.isRequired,
+	onError: PropTypes.func,
 };
 
 export default Share;

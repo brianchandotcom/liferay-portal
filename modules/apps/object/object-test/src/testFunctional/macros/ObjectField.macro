@@ -40,6 +40,12 @@ definition {
 			locator1 = "Card#CARD");
 	}
 
+	macro assertHelpText {
+		AssertElementPresent(
+			key_helpText = "${helpText}",
+			locator1 = "ObjectField#HELP_TEXT");
+	}
+
 	macro assertLabel {
 		AssertTextEquals(
 			locator1 = "ObjectField#LABEL_LOCALIZED",
@@ -184,6 +190,13 @@ definition {
 			value1 = "${newValue}");
 	}
 
+	macro viewCountCharactersOnEntries {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			key_viewCountCharacters = "${viewCountCharacters}",
+			locator1 = "ObjectField#VIEW_COUNT_CHARACTERS_ON_ENTRIES");
+	}
+
 	macro viewToogleOnSidePanelShowFilesInDM {
 		if ("${isDisabled}" == "Yes") {
 			AssertElementPresent(locator1 = "ObjectField#SHOW_FILES_IN_DM_SIDE_PANEL_DISABLED");
@@ -191,19 +204,6 @@ definition {
 		else if ("${isDisabled}" == "No") {
 			AssertElementPresent(locator1 = "ObjectField#SHOW_FILES_IN_DM_SIDE_PANEL_NOT_DISABLED");
 		}
-	}
-
-	macro assertHelpText{
-		AssertElementPresent(
-			key_helpText = "${helpText}",
-			locator1 = "ObjectField#HELP_TEXT");
-	}
-
-	macro viewCountCharactersOnEntries {
-		AssertElementPresent(
-			key_viewCountCharacters = "${viewCountCharacters}",
-			key_fieldName = "${fieldName}",
-			locator1 = "ObjectField#VIEW_COUNT_CHARACTERS_ON_ENTRIES");
 	}
 
 }

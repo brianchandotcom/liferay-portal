@@ -22,35 +22,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' on a Text the Maximum Number of Characters field has the 280 value as default"
-	@priority = "4"
-	test 280IsDefaultMaximumCharacterText {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 151571",
-			objectName = "CustomObject151571",
-			pluralLabelName = "Custom Objects 151571");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Text Field",
-			fieldName = "customTextField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject151571");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 151571");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Text Field");
-
-		ObjectField.checkLimitCharacters();
-
-		ObjectField.assertValueOnLimitCharacters(maxValue = "280");
-	}
-
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' on a Long Text the Maximum Number of Characters field has the 65,000 value as default"
 	@priority = "4"
 	test 65000IsDefaultMaximumCharacterLongText {
@@ -593,39 +564,6 @@ definition {
 		ObjectField.assertOptionAndDescriptionOnRequestFiles(
 			description = "Users can upload or select existing files from Documents and Media.",
 			option = "Upload or Select from Documents and Media Item Selector");
-	}
-
-	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' a Maximum Number of Characters field is shown"
-	@priority = "4"
-	test CanViewMaximumCharactersField {
-		property portal.upstream = "quarantine";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 151570",
-			objectName = "CustomObject151570",
-			pluralLabelName = "Custom Objects 151570");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field Text",
-			fieldName = "customObjectFieldText",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject151570");
-
-		Navigator.openURL();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 151570");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field Text");
-
-		ObjectField.checkLimitCharacters();
-
-		ObjectField.assertValueOnLimitCharacters(maxValue = "280");
 	}
 
 	@description = "LPS-147944 - Verify it is possible to view more than 20 picklists for the picklist drop-down"

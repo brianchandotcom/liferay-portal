@@ -81,7 +81,8 @@
 														}
 													}
 												},
-												"fragmentLink": {}
+												"fragmentLink": {
+												}
 											}
 										}
 									],
@@ -122,7 +123,8 @@
 							{
 								"definition": {
 									"fragmentSettings": {
-										"unallowedFragments": []
+										"unallowedFragments": [
+										]
 									}
 								},
 								"type": "DropZone"
@@ -235,7 +237,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -290,7 +293,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "© 2022 Liferay Inc. All Rights Reserved&nbsp; &nbsp; &nbsp; |"
@@ -442,10 +446,10 @@
 		"colorSchemeName": "01",
 		"themeName": "Dialect",
 		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
 			"lfr-theme:regular:show-header": "false",
-			"lfr-theme:regular:wrap-widget-page-content": "false",
 			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-footer": "false"
+			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},
 	"version": 1.1

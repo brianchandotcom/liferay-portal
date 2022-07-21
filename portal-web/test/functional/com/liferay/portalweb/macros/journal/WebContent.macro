@@ -136,8 +136,6 @@ definition {
 			assetType = "${assetType}",
 			scopeSite = "${scopeSite}");
 
-		Pause(locator1 = "3000");
-
 		SelectFrame(value1 = "relative=top");
 
 		var key_assetTitle = "${assetTitle}";
@@ -263,7 +261,7 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		Pause(locator1 = "5000");
+		WaitForPageLoad();
 
 		var key_assetTitle = "${webContentTitle}";
 
@@ -293,7 +291,7 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		Pause(locator1 = "5000");
+		WaitForPageLoad();
 	}
 
 	macro addPriority {
@@ -346,8 +344,6 @@ definition {
 
 		var key_imageFileName = "${dmDocumentTitle}";
 		var key_imageFileName = StringUtil.replace("${dmDocumentTitle}", " ", "+");
-
-		Pause(locator1 = "1000");
 
 		if (isSet(siteName)) {
 			AssertClick(
@@ -823,8 +819,6 @@ definition {
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
 			value1 = "Submit for Publication");
 
-		Pause(locator1 = "5000");
-
 		SelectFrame();
 
 		if (IsElementPresent(locator1 = "Message#INFO")) {
@@ -1193,8 +1187,6 @@ definition {
 			pageName = "${displayPageName}",
 			pageType = "${pageType}");
 
-		Pause(locator1 = "3000");
-
 		SelectFrame(value1 = "relative=top");
 	}
 
@@ -1456,8 +1448,6 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = "3000");
-
 		WebContentFolder.selectFolderTreeNode(nodeName = "${folderName}");
 
 		SelectFrameTop();
@@ -1486,8 +1476,6 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = "3000");
-
 		WebContentFolder.selectFolderTreeNode(nodeName = "${folderName}");
 
 		SelectFrame(value1 = "relative=top");
@@ -1514,8 +1502,6 @@ definition {
 			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Pause(locator1 = "3000");
 
 		WebContentFolder.selectFolderTreeNode(nodeName = "${folderName}");
 
@@ -1604,8 +1590,6 @@ definition {
 		AssertTextPresent(
 			locator1 = "IFrame#MODAL_BODY",
 			value1 = "${webContentContent}");
-
-		Pause(locator1 = "3000");
 
 		takeScreenshot();
 
@@ -1746,8 +1730,6 @@ definition {
 
 		Panel.expandPanel(panel = "Default Template");
 
-		Pause(locator1 = "3000");
-
 		Click(
 			buttonId = "selectDDMTemplate",
 			locator1 = "Button#BUTTON_ID");
@@ -1755,8 +1737,6 @@ definition {
 		IFrame.selectTopFrame();
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Pause(locator1 = "3000");
 
 		if (isSet(confirm)) {
 			LexiconCard.clickCard(card = "${templateName}");
@@ -2107,8 +2087,6 @@ definition {
 
 	macro viewEntryListAuthor {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		Pause(locator1 = "3000");
 
 		AssertTextEquals.assertPartialText(
 			key_entryAuthor = "${author}",
@@ -2471,8 +2449,6 @@ definition {
 			WebContentNavigator.gotoPreviewEntryCP(
 				liveSite = "${liveSite}",
 				webContentTitle = "${webContentTitle}");
-
-			Pause(locator1 = "3000");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}

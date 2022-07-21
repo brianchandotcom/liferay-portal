@@ -26,9 +26,7 @@ definition {
 
 		AssertVisible(locator1 = "TextInput#TITLE");
 
-		while (IsElementNotPresent(locator1 = "WCEditWebContent#SIDEBAR")) {
-			Pause(locator1 = "1000");
-		}
+		WaitForVisible(locator1 = "WCEditWebContent#SIDEBAR");
 	}
 
 	macro gotoArticleEllipsisMenu {

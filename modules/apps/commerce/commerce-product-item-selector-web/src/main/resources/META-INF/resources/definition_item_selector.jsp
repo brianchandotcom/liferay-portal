@@ -24,43 +24,11 @@ SearchContainer<CPDefinition> cpDefinitionSearchContainer = cpDefinitionItemSele
 String displayStyle = cpDefinitionItemSelectorViewDisplayContext.getDisplayStyle();
 
 String itemSelectedEventName = cpDefinitionItemSelectorViewDisplayContext.getItemSelectedEventName();
-
-PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL();
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= !cpDefinitionItemSelectorViewDisplayContext.isSingleSelection() %>"
-	searchContainerId="cpDefinitions"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= cpDefinitionItemSelectorViewDisplayContext.getOrderByCol() %>"
-			orderByType="<%= cpDefinitionItemSelectorViewDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name", "modified-date", "display-date"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<li>
-			<liferay-commerce:search-input
-				actionURL="<%= portletURL %>"
-				formName="searchFm"
-			/>
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new CPDefinitionItemSelectorViewManagementToolbarDisplayContext(cpDefinitionItemSelectorViewDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
+/>
 
 <div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />cpDefinitionSelectorWrapper">
 	<liferay-ui:search-container

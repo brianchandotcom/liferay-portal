@@ -24,43 +24,11 @@ SearchContainer<CPInstance> cpInstanceSearchContainer = cpInstanceItemSelectorVi
 String displayStyle = cpInstanceItemSelectorViewDisplayContext.getDisplayStyle();
 
 String itemSelectedEventName = cpInstanceItemSelectorViewDisplayContext.getItemSelectedEventName();
-
-PortletURL portletURL = cpInstanceItemSelectorViewDisplayContext.getPortletURL();
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="cpInstances"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= cpInstanceItemSelectorViewDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= cpInstanceItemSelectorViewDisplayContext.getOrderByCol() %>"
-			orderByType="<%= cpInstanceItemSelectorViewDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date", "display-date", "sku"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<li>
-			<liferay-commerce:search-input
-				actionURL="<%= portletURL %>"
-				formName="searchFm"
-			/>
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new CPInstanceItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, cpInstanceSearchContainer) %>"
+/>
 
 <div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />cpInstanceSelectorWrapper">
 	<liferay-ui:search-container

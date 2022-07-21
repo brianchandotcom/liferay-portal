@@ -44,6 +44,8 @@ import com.liferay.commerce.product.internal.upgrade.v2_3_0.CommerceChannelUpgra
 import com.liferay.commerce.product.internal.upgrade.v2_5_0.FriendlyURLEntryUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v3_1_0.CPTaxCategoryUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v3_8_0.CPMeasurementUnitUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v3_9_2.MiniumSiteInitializerUpgradeProcess;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -299,6 +301,10 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 			});
 
+		registry.register(
+			"3.9.1", "3.9.2",
+			new MiniumSiteInitializerUpgradeProcess(_counterLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}
@@ -318,6 +324,9 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

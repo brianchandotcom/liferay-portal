@@ -71,7 +71,8 @@ public class ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isSelectable() {
-		return false;
+		return _itemSelectorViewDescriptorRendererDisplayContext.
+			isMultipleSelection();
 	}
 
 	@Override

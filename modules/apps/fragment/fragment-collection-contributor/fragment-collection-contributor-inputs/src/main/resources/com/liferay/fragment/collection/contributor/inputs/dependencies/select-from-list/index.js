@@ -11,7 +11,7 @@ const defaultOptionLabel = document.getElementById(
 	`${fragmentNamespace}-option--`
 ).textContent;
 const dropdown = wrapper.querySelector('.dropdown-menu');
-const inputElement = wrapper.querySelector('input');
+const inputElement = wrapper.querySelector(`input[name="${input.name}"]`);
 const labelInputElement = wrapper.querySelector(
 	`input[name="${input.name}-label"]`
 );

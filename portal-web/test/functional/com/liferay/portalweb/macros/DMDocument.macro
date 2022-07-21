@@ -2778,9 +2778,30 @@ definition {
 				key_fieldLabel = "Maximum File Size",
 				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 				value1 = "${maximumFileSizeValue}");
+
+			if (isSet(validateInvalidsize)) {
+				FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Error: Please enter a valid number.");
+			}
 		}
 
-		SystemSettings.saveConfiguration();
+		if (isSet(validateInvalidValue)) {
+			Button.clickSave();
+
+			AssertTextEquals.assertPartialText(
+				key_alertMessage = "Your request failed to complete.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "Your request failed to complete.");
+
+			if (isSet(viewErrorAlert)) {
+				AssertTextEquals.assertPartialText(
+					key_alertMessage = "Error:Mime type or size limit is not valid.",
+					locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+					value1 = "Error:Mime type or size limit is not valid.");
+			}
+		}
+		else {
+			SystemSettings.saveConfiguration();
+		}
 	}
 
 	macro viewActiveURL {

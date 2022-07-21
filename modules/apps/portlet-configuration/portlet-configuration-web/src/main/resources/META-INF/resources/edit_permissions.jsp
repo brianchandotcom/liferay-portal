@@ -162,6 +162,21 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 
 							<c:choose>
 								<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806")) %>'>
+
+									<%
+									List<String> resourcePrimKeys = actionIdResourcePrimKeysMap.getOrDefault(action, Collections.emptyList());
+
+									if (resourcePrimKeys.size() < resources.size()) {
+										checked = false;
+									}
+
+									boolean indeterminate = false;
+
+									if (!checked && ListUtil.isNotEmpty(resourcePrimKeys)) {
+										indeterminate = true;
+									}
+									%>
+
 									<div>
 										<div class="custom-checkbox custom-control custom-control-inline">
 											<label>

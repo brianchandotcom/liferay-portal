@@ -419,6 +419,8 @@ definition {
 
 		Button.clickSubmitButton();
 
+		SelectFrameTop();
+
 		Type(
 			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
 			value1 = "${optionDescription}");

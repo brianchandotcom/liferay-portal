@@ -44,6 +44,8 @@ definition {
 
 		CommerceItemSelector.uploadSingleFile(uploadFileName = "Commerce_Black.jpg");
 
+		SelectFrameTop();
+
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
@@ -209,7 +211,11 @@ definition {
 
 		CommerceItemSelector.uploadSingleFile(uploadFileName = "Commerce_Black.jpg");
 
+		SelectFrameTop();
+
 		Button.clickSave();
+
+		SelectFrameTop();
 
 		Alert.viewSuccessMessage();
 

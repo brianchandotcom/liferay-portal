@@ -236,6 +236,8 @@ definition {
 		WaitForPageLoad();
 
 		for (var productSku : list "${productSkuList}") {
+			SelectFrameTop();
+
 			CommerceNavigator.gotoEntry(entryName = "${productSku}");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");

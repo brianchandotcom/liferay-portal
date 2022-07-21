@@ -180,6 +180,43 @@ definition {
 		}
 	}
 
+	@description = "Document erc is not able to update with put request in asset library"
+	@priority = "5"
+	test CannotUpdateDocumentErcInAssetLibraryByErc {
+		property portal.acceptance = "true";
+
+		task ("Given a document with a custom erc is created in asset library with a POST request") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			DocumentAPI.addDocumentInAssetLibraryByUploadFile(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				filePath = "${filePath}");
+		}
+
+		task ("When I make a PUT request by assetLibraryId and erc with an erc modified in the body") {
+			var response = DocumentAPI.updateDocumentByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				title = "title",
+				updateExternalReferenceCode = "update-erc");
+		}
+
+		task ("Then the erc in the response body is not changed") {
+			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "erc",
+				responseToParse = "${response}");
+		}
+
+		task ("And Then another document with an erc being the modified value is not being created") {
+			DocumentAPI.assertProperDocumentTotalCount(
+				assetLibraryId = "${assetLibraryId}",
+				expectedDocumentTotalCount = "1",
+				filtervalue = "title%20eq%20%27title%27");
+		}
+	}
+
 	@description = "Unable to get document by nonexistent assetLibraryId"
 	@priority = "4"
 	test CanReturnErrorWithGetDocumentInAssetLibraryByNonexistentAssetLibraryId {

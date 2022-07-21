@@ -50,14 +50,15 @@ public class Version implements Comparable<Version> {
 			GetterUtil.getInteger(matcher.group(1)),
 			GetterUtil.getInteger(matcher.group(3)),
 			GetterUtil.getInteger(matcher.group(5)),
-			GetterUtil.getString(matcher.group(7), _LAST_STEP));
+			GetterUtil.getString(matcher.group(7)));
 	}
 
 	public Version(int major, int minor, int micro) {
 		_major = major;
 		_minor = minor;
 		_micro = micro;
-		_qualifier = _LAST_STEP;
+
+		_qualifier = StringPool.BLANK;
 	}
 
 	@Override
@@ -80,7 +81,17 @@ public class Version implements Comparable<Version> {
 			return result;
 		}
 
-		return _qualifier.compareTo(version._qualifier);
+		result = _qualifier.compareTo(version._qualifier);
+
+		String qualifier = version._qualifier;
+
+		if (_qualifier.equals(StringPool.BLANK) ||
+			qualifier.equals(StringPool.BLANK)) {
+
+			return result * -1;
+		}
+
+		return result;
 	}
 
 	@Override
@@ -96,7 +107,8 @@ public class Version implements Comparable<Version> {
 		Version version = (Version)object;
 
 		if ((_major == version._major) && (_minor == version._minor) &&
-			(_micro == version._micro) && _qualifier.equals(version._qualifier)) {
+			(_micro == version._micro) &&
+			_qualifier.equals(version._qualifier)) {
 
 			return true;
 		}
@@ -133,7 +145,7 @@ public class Version implements Comparable<Version> {
 
 	@Override
 	public String toString() {
-		if (getQualifier().equals(_LAST_STEP)) {
+		if (getQualifier().equals(StringPool.BLANK)) {
 			return StringBundler.concat(
 				_major, StringPool.PERIOD, _minor, StringPool.PERIOD, _micro);
 		}
@@ -149,8 +161,6 @@ public class Version implements Comparable<Version> {
 		_micro = micro;
 		_qualifier = qualifier;
 	}
-
-	private static final String _LAST_STEP = "updated";
 
 	private static final Pattern _versionPattern = Pattern.compile(
 		"(\\d{1,10})(\\.(\\d{1,10})(\\.(\\d{1,10})" +

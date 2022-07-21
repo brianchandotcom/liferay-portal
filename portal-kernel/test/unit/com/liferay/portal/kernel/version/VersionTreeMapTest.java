@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.version;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -22,19 +22,12 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Luis Ortiz
  */
 public class VersionTreeMapTest {
-
-	@Before
-	public void setUp() throws Exception {
-		_lastStepSuffix = ReflectionTestUtil.getFieldValue(
-			Version.class, "_LAST_STEP");
-	}
 
 	@Test
 	public void testInsertMultipleUpgradeProcesses() {
@@ -87,13 +80,11 @@ public class VersionTreeMapTest {
 				Assert.assertTrue(step.equals("Step-" + (i + 1)));
 			}
 			else {
-				Assert.assertTrue(step.equals(_lastStepSuffix));
+				Assert.assertTrue(step.equals(StringPool.BLANK));
 			}
 
 			i++;
 		}
 	}
-
-	private static String _lastStepSuffix;
 
 }

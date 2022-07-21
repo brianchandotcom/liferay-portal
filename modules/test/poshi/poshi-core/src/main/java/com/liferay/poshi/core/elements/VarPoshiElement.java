@@ -555,7 +555,7 @@ public class VarPoshiElement extends PoshiElement {
 
 	private static final String _VAR_VALUE_STRING_REGEX = "\".*\"";
 
-	private static final String _VAR_VALUE_VARIABLE_REGEX = "\\$\\{.+\\}";
+	private static final String _VAR_VALUE_VARIABLE_REGEX = "\\$\\{[\\w_-]+\\}";
 
 	private static final Map<String, String> _mathOperatorsMap =
 		new HashMap<String, String>() {

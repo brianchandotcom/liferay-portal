@@ -97,8 +97,8 @@ definition {
 	}
 
 	@priority = "3"
-	test SmokeWithReadWriterDatabaseConfigurationJDBC {
-		property configure.read-writer.database = "jdbc";
+	test SmokeWithReadWriteDatabaseConfigurationJDBC {
+		property configure.read.write.database = "jdbc";
 		property databases.size = "1";
 		property portal.smoke = "false";
 		property test.assert.warning.exceptions = "true";
@@ -111,8 +111,8 @@ definition {
 	}
 
 	@priority = "3"
-	test SmokeWithReadWriterDatabaseConfigurationJNDI {
-		property configure.read-writer.database = "jndi";
+	test SmokeWithReadWriteDatabaseConfigurationJNDI {
+		property configure.read.write.database = "jndi";
 		property databases.size = "1";
 		property portal.smoke = "false";
 		property test.assert.warning.exceptions = "true";

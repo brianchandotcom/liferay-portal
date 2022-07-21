@@ -15,7 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {VerticalBar} from '@clayui/core';
 import {navigate} from 'frontend-js-web';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import NavigationPanel from './NavigationPanel';
 
@@ -26,9 +26,49 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 
 	const currentItem = items.find((item) => item.active);
 
-	const onIconClick = (item) => {
-		if (item.key !== currentItem.key) {
+	const [productMenuOpen, setProductMenuOpen] = useState(false);
+
+	useEffect(() => {
+		const productMenu = Liferay.SideNavigation.instance(
+			document.querySelector('.product-menu-toggle')
+		);
+
+		if (productMenu) {
+			setProductMenuOpen(productMenu.visible());
+
+			const productMenuOpenListener = productMenu.on(
+				'openStart.lexicon.sidenav',
+				() => {
+					setProductMenuOpen(true);
+				}
+			);
+
+			const productMenuCloseListener = productMenu.on(
+				'closedStart.lexicon.sidenav',
+				() => {
+					setProductMenuOpen(false);
+				}
+			);
+
+			return () => {
+				productMenuOpenListener.removeListener();
+				productMenuCloseListener.removeListener();
+			};
+		}
+	}, []);
+
+	useEffect(() => {
+		if (productMenuOpen) {
+			parentContainer.classList.remove(CSS_EXPANDED);
+		}
+		else {
 			parentContainer.classList.add(CSS_EXPANDED);
+		}
+	}, [productMenuOpen, parentContainer]);
+
+	const onIconClick = (event, item) => {
+		if (item.key !== currentItem.key) {
+			event.preventDefault();
 
 			navigate(item.href);
 		}
@@ -44,15 +84,19 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 	};
 
 	return (
-		<VerticalBar absolute position="left">
+		<VerticalBar
+			absolute
+			active={productMenuOpen ? undefined : currentItem.key}
+			position="left"
+		>
 			<VerticalBar.Bar displayType="light" items={items}>
 				{(item) => (
 					<VerticalBar.Item key={item.key}>
 						<ClayButtonWithIcon
 							data-tooltip-align="right"
 							displayType="unstyled"
-							onClick={() => {
-								onIconClick(item);
+							onClick={(event) => {
+								onIconClick(event, item);
 							}}
 							symbol={item.icon}
 							title={Liferay.Language.get(item.title)}

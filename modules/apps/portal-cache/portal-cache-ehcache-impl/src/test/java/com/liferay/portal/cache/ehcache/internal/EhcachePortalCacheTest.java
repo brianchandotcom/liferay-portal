@@ -15,27 +15,25 @@
 package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.portal.cache.test.util.TestPortalCacheListener;
-import com.liferay.portal.cache.test.util.TestPortalCacheManager;
 import com.liferay.portal.cache.test.util.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
-import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.FutureTask;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
-import net.sf.ehcache.event.CacheEventListener;
-import net.sf.ehcache.event.RegisteredEventListeners;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -81,12 +79,16 @@ public class EhcachePortalCacheTest {
 
 		_ehcache = _cacheManager.getCache(_PORTAL_CACHE_NAME);
 
-		PortalCacheManager<String, String> portalCacheManager =
-			TestPortalCacheManager.createTestPortalCacheManager(
-				_PORTAL_CACHE_NAME);
+		EhcachePortalCacheManager ehcachePortalCacheManager =
+			new EhcachePortalCacheManager();
+
+		ReflectionTestUtil.setFieldValue(
+			ehcachePortalCacheManager, "_cacheManager", _cacheManager);
 
 		_ehcachePortalCache = new EhcachePortalCache<>(
-			portalCacheManager, _ehcache, false);
+			ehcachePortalCacheManager,
+			new EhcachePortalCacheConfiguration(
+				_PORTAL_CACHE_NAME, null, false));
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
 
@@ -240,8 +242,62 @@ public class EhcachePortalCacheTest {
 	}
 
 	@Test
+	public void testDispose() {
+		Assert.assertNotNull(_cacheManager.getCache(_PORTAL_CACHE_NAME));
+
+		_ehcachePortalCache.dispose();
+
+		Assert.assertNull(_cacheManager.getCache(_PORTAL_CACHE_NAME));
+	}
+
+	@Test
 	public void testGetEhcache() {
 		Assert.assertSame(_ehcache, _ehcachePortalCache.getEhcache());
+	}
+
+	@Test
+	public void testGetEhcacheConcurrently() throws Exception {
+		Ehcache ehcache = _ehcachePortalCache.getEhcache();
+
+		_ehcachePortalCache.resetEhcache();
+		_cacheManager.removeCache(_PORTAL_CACHE_NAME);
+
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		FutureTask<Void> controllerFutureTask = new FutureTask<>(
+			() -> {
+				synchronized (_ehcachePortalCache) {
+					countDownLatch.await();
+				}
+
+				return null;
+			});
+
+		Thread controllerThread = new Thread(
+			controllerFutureTask,
+			"Ehcache Portal Cache Test_Thread_Controller");
+
+		controllerThread.start();
+
+		FutureTask<Ehcache> futureTask1 = new FutureTask<>(
+			_ehcachePortalCache::getEhcache);
+		FutureTask<Ehcache> futureTask2 = new FutureTask<>(
+			_ehcachePortalCache::getEhcache);
+
+		Thread thread1 = new Thread(
+			futureTask1, "Ehcache Portal Cache Test_Thread_1");
+		Thread thread2 = new Thread(
+			futureTask2, "Ehcache Portal Cache Test_Thread_2");
+
+		thread1.start();
+		thread2.start();
+
+		countDownLatch.countDown();
+
+		Assert.assertNotNull(futureTask1.get());
+		Assert.assertNotSame(ehcache, futureTask2.get());
+
+		Assert.assertSame(futureTask1.get(), futureTask2.get());
 	}
 
 	@Test
@@ -259,6 +315,18 @@ public class EhcachePortalCacheTest {
 	public void testGetName() {
 		Assert.assertEquals(
 			_PORTAL_CACHE_NAME, _ehcachePortalCache.getPortalCacheName());
+	}
+
+	@Test
+	public void testGetPortalCacheListeners() {
+		Map<PortalCacheListener<String, String>, PortalCacheListenerScope>
+			portalCacheListeners =
+				_ehcachePortalCache.getPortalCacheListeners();
+
+		Assert.assertTrue(
+			portalCacheListeners.containsKey(_defaultPortalCacheListener));
+		Assert.assertTrue(
+			portalCacheListeners.containsKey(_defaultPortalCacheReplicator));
 	}
 
 	@Test
@@ -346,43 +414,6 @@ public class EhcachePortalCacheTest {
 		_defaultPortalCacheReplicator.assertPut(_KEY_1, _VALUE_1);
 
 		_defaultPortalCacheReplicator.reset();
-	}
-
-	@Test
-	public void testReconfigEhcache() {
-		Assert.assertSame(_ehcache, _ehcachePortalCache.getEhcache());
-
-		Map<PortalCacheListener<String, String>, PortalCacheListenerScope>
-			oldPortalCacheListeners =
-				_ehcachePortalCache.getPortalCacheListeners();
-
-		_cacheManager.addCache(_NEW_PORTAL_CACHE_NAME);
-
-		Ehcache ehcache2 = _cacheManager.getCache(_NEW_PORTAL_CACHE_NAME);
-
-		_ehcachePortalCache.reconfigEhcache(ehcache2);
-
-		Assert.assertSame(ehcache2, _ehcachePortalCache.getEhcache());
-
-		Assert.assertEquals(
-			oldPortalCacheListeners,
-			_ehcachePortalCache.getPortalCacheListeners());
-
-		RegisteredEventListeners registeredEventListeners =
-			_ehcache.getCacheEventNotificationService();
-
-		Set<CacheEventListener> cacheEventListeners =
-			registeredEventListeners.getCacheEventListeners();
-
-		Assert.assertTrue(
-			cacheEventListeners.toString(), cacheEventListeners.isEmpty());
-
-		registeredEventListeners = ehcache2.getCacheEventNotificationService();
-
-		cacheEventListeners = registeredEventListeners.getCacheEventListeners();
-
-		Assert.assertFalse(
-			cacheEventListeners.toString(), cacheEventListeners.isEmpty());
 	}
 
 	@Test
@@ -558,14 +589,29 @@ public class EhcachePortalCacheTest {
 	}
 
 	@Test
+	public void testResetEhcache() {
+		Assert.assertNotNull(
+			ReflectionTestUtil.getFieldValue(_ehcachePortalCache, "_ehcache"));
+
+		_ehcachePortalCache.resetEhcache();
+
+		Assert.assertNull(
+			ReflectionTestUtil.getFieldValue(_ehcachePortalCache, "_ehcache"));
+	}
+
+	@Test
 	public void testSerializable() {
-		_cacheManager.addCache("SerializablePortalCache");
+		EhcachePortalCacheManager ehcachePortalCacheManager =
+			new EhcachePortalCacheManager();
+
+		ReflectionTestUtil.setFieldValue(
+			ehcachePortalCacheManager, "_cacheManager", _cacheManager);
 
 		EhcachePortalCache<String, Object> ehcachePortalCache =
 			new EhcachePortalCache<>(
-				TestPortalCacheManager.createTestPortalCacheManager(
-					"SerializablePortalCache"),
-				_cacheManager.getCache("SerializablePortalCache"), true);
+				ehcachePortalCacheManager,
+				new EhcachePortalCacheConfiguration(
+					"SerializablePortalCache", null, true));
 
 		Assert.assertTrue(ehcachePortalCache.isSerializable());
 
@@ -693,9 +739,6 @@ public class EhcachePortalCacheTest {
 	private static final String _KEY_1 = "KEY_1";
 
 	private static final String _KEY_2 = "KEY_2";
-
-	private static final String _NEW_PORTAL_CACHE_NAME =
-		"NEW_PORTAL_CACHE_NAME";
 
 	private static final String _PORTAL_CACHE_NAME = "PORTAL_CACHE_NAME";
 

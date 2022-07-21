@@ -16,8 +16,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>AUTOSAVE_MESSAGE</td>
-	<td>//span[contains(@class,'navbar-text')]</td>
+	<td>CHANGES_SAVED_MESSAGE</td>
+	<td>//span[contains(@class,'navbar-text')][normalize-space(text())='Changes Saved']</td>
 	<td></td>
 </tr>
 <tr>

@@ -78,7 +78,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 	ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
 />
 
-<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-150762")) && (article != null) %>'>
+<c:if test="<%= article != null %>">
 
 	<%
 	AssetAutoTaggerConfiguration assetAutoTaggerConfiguration = (AssetAutoTaggerConfiguration)request.getAttribute(AssetAutoTaggerConfiguration.class.getName());

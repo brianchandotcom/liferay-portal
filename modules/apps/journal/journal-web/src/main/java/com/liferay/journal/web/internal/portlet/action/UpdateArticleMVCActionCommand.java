@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -67,7 +66,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -300,11 +298,9 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		String articleURL = ParamUtil.getString(
 			uploadPortletRequest, "articleURL");
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-150762"))) {
-			serviceContext.setAttribute(
-				"updateAutoTags",
-				ParamUtil.getBoolean(actionRequest, "updateAutoTags"));
-		}
+		serviceContext.setAttribute(
+			"updateAutoTags",
+			ParamUtil.getBoolean(actionRequest, "updateAutoTags"));
 
 		JournalArticle article = null;
 		String oldUrlTitle = StringPool.BLANK;

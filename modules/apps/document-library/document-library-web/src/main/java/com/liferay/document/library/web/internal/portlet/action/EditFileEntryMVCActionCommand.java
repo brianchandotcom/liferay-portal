@@ -101,7 +101,6 @@ import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -115,7 +114,6 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.trash.service.TrashEntryService;
@@ -658,11 +656,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		_setUpDDMFormValues(serviceContext);
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-150762"))) {
-			serviceContext.setAttribute(
-				"updateAutoTags",
-				ParamUtil.getBoolean(httpServletRequest, "updateAutoTags"));
-		}
+		serviceContext.setAttribute(
+			"updateAutoTags",
+			ParamUtil.getBoolean(httpServletRequest, "updateAutoTags"));
 
 		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 

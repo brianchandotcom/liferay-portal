@@ -12,27 +12,23 @@
  * details.
  */
 
-package com.liferay.content.dashboard.blogs.internal.item.action.provider.test;
+package com.liferay.content.dashboard.document.library.internal.item.action.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
-import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -41,24 +37,21 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import java.util.Date;
-import java.util.Locale;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,9 +61,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Cristina González
  */
-@Ignore
 @RunWith(Arquillian.class)
-public class EditBlogsEntryContentDashboardItemActionProviderTest {
+public class SharingFileEntryContentDashboardItemActionProviderTest {
 
 	@ClassRule
 	@Rule
@@ -83,72 +75,83 @@ public class EditBlogsEntryContentDashboardItemActionProviderTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
 	}
 
 	@Test
 	public void testGetContentDashboardItemAction() throws Exception {
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(),
+		_fileEntryId = DLAppLocalServiceUtil.addFileEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + "." + ContentTypes.IMAGE_JPEG,
+			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+			new byte[0], null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG, _getLiferayPortletConfig());
+			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			new MockLiferayPortletRenderResponse());
+
 		mockHttpServletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "http://www.liferay.com");
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY,
-			_getThemeDisplay(
-				mockHttpServletRequest, LocaleUtil.US,
-				TestPropsValues.getUser()));
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
 
 		ContentDashboardItemAction contentDashboardItemAction =
 			_contentDashboardItemActionProvider.getContentDashboardItemAction(
-				blogsEntry, mockHttpServletRequest);
+				_fileEntryId, mockHttpServletRequest);
 
 		String url = contentDashboardItemAction.getURL();
 
-		Assert.assertTrue(url.contains("entryId=" + blogsEntry.getEntryId()));
+		Assert.assertTrue(Validator.isNotNull(url));
+
 		Assert.assertTrue(
-			url.contains(
-				"redirect=" + HtmlUtil.escapeURL("http://www.liferay.com")));
+			url.contains("param_classPK=" + _fileEntryId.getFileEntryId()));
+
+		Assert.assertTrue(url.contains("param_mvcPath=/sharing_button.jsp"));
 	}
 
 	@Test
 	public void testGetKey() {
 		Assert.assertEquals(
-			"edit", _contentDashboardItemActionProvider.getKey());
+			"share", _contentDashboardItemActionProvider.getKey());
 	}
 
 	@Test
 	public void testGetType() {
 		Assert.assertEquals(
-			ContentDashboardItemAction.Type.EDIT,
+			ContentDashboardItemAction.Type.SHARING_BUTTON,
 			_contentDashboardItemActionProvider.getType());
 	}
 
 	@Test
 	public void testIsShow() throws Exception {
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(),
+		_fileEntryId = DLAppLocalServiceUtil.addFileEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + "." + ContentTypes.IMAGE_JPEG,
+			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+			new byte[0], null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		MockPortletRequest mockPortletRequest =
+			new MockLiferayResourceRequest();
+
+		mockPortletRequest.setAttribute(
+			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
+
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY,
-			_getThemeDisplay(
-				mockHttpServletRequest, LocaleUtil.US,
-				TestPropsValues.getUser()));
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
 
 		Assert.assertTrue(
 			_contentDashboardItemActionProvider.isShow(
-				blogsEntry, mockHttpServletRequest));
+				_fileEntryId, mockHttpServletRequest));
 	}
 
 	@Test
@@ -156,52 +159,42 @@ public class EditBlogsEntryContentDashboardItemActionProviderTest {
 		User user = UserTestUtil.addUser();
 
 		try {
-			BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), new Date(),
+			_fileEntryId = DLAppLocalServiceUtil.addFileEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString() + "." + ContentTypes.IMAGE_JPEG,
+				MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+				new byte[0], null, null,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 			MockHttpServletRequest mockHttpServletRequest =
 				new MockHttpServletRequest();
 
+			ThemeDisplay themeDisplay = _getThemeDisplay(
+				mockHttpServletRequest);
+
 			mockHttpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY,
-				_getThemeDisplay(mockHttpServletRequest, LocaleUtil.US, user));
+				WebKeys.THEME_DISPLAY, themeDisplay);
+
+			themeDisplay.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
 
 			Assert.assertTrue(
 				!_contentDashboardItemActionProvider.isShow(
-					blogsEntry, mockHttpServletRequest));
+					_fileEntryId, mockHttpServletRequest));
 		}
 		finally {
 			_userLocalService.deleteUser(user);
 		}
 	}
 
-	private LiferayPortletConfig _getLiferayPortletConfig() {
-		Portlet portlet = _portletLocalService.getPortletById(
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
-
-		return (LiferayPortletConfig)PortletConfigFactoryUtil.create(
-			portlet, null);
-	}
-
-	private ThemeDisplay _getThemeDisplay(
-			HttpServletRequest httpServletRequest, Locale locale, User user)
+	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(
-			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
-
-		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
-
-		themeDisplay.setLayout(layout);
-		themeDisplay.setLayoutSet(layout.getLayoutSet());
-
-		themeDisplay.setLocale(locale);
 		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
@@ -210,30 +203,20 @@ public class EditBlogsEntryContentDashboardItemActionProviderTest {
 	}
 
 	@Inject
-	private AssetDisplayPageEntryLocalService
-		_assetDisplayPageEntryLocalService;
-
-	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.content.dashboard.blogs.internal.item.action.provider.EditBlogsEntryContentDashboardItemActionProvider"
+		filter = "component.name=com.liferay.content.dashboard.document.library.internal.item.action.provider.SharingFileEntryContentDashboardItemActionProvider"
 	)
 	private ContentDashboardItemActionProvider
 		_contentDashboardItemActionProvider;
 
+	private FileEntry _fileEntryId;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
-
-	@Inject
-	private Portal _portal;
-
-	@Inject
-	private PortletLocalService _portletLocalService;
+	private ServiceContext _serviceContext;
 
 	@Inject
 	private UserLocalService _userLocalService;

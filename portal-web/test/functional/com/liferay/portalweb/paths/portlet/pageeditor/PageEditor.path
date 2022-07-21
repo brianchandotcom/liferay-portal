@@ -878,6 +878,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVE_CONFIGURATION_PANEL_HANDLE</td>
+	<td>//div[contains(@class,'resize-handler')][contains(@class,'active')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION_PANEL_RESIZE</td>
 	<td>//div[contains(@class,'section resized')]</td>
 	<td></td>

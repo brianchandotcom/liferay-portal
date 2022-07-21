@@ -46,8 +46,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -119,6 +121,13 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 					Constants.VIEW,
 					ParamUtil.getString(httpServletRequest, "p_l_mode"))) {
 
+				throw new InfoFormInvalidLayoutModeException();
+			}
+
+			Layout layout = _layoutLocalService.fetchLayout(
+				ParamUtil.getLong(httpServletRequest, "plid"));
+
+			if ((layout == null) || layout.isDraftLayout()) {
 				throw new InfoFormInvalidLayoutModeException();
 			}
 
@@ -397,6 +406,9 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 
 	private volatile InfoRequestFieldValuesProviderHelper
 		_infoRequestFieldValuesProviderHelper;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

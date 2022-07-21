@@ -18,13 +18,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
-import com.liferay.portal.vulcan.internal.extension.EntityExtensionThreadLocal;
 import com.liferay.portal.vulcan.internal.jaxrs.extension.ExtendedEntity;
 
 import java.io.IOException;
-import java.io.Serializable;
-
-import java.util.Map;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
@@ -49,46 +45,36 @@ public class EntityExtensionWriterInterceptor implements WriterInterceptor {
 			_getEntityExtensionHandler(
 				writerInterceptorContext.getType(),
 				writerInterceptorContext.getMediaType());
-		Map<String, Serializable> extendedProperties =
-			EntityExtensionThreadLocal.getExtendedProperties();
 
-		try {
-			if ((entityExtensionHandler != null) &&
-				(extendedProperties != null)) {
-
-				entityExtensionHandler.setExtendedProperties(
-					_company.getCompanyId(),
-					writerInterceptorContext.getEntity(), extendedProperties);
-			}
-
-			if (entityExtensionHandler != null) {
-				_extendEntity(entityExtensionHandler, writerInterceptorContext);
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			throw new WebApplicationException(exception);
+		if (entityExtensionHandler != null) {
+			_extendEntity(entityExtensionHandler, writerInterceptorContext);
 		}
 
 		writerInterceptorContext.proceed();
 	}
 
 	private void _extendEntity(
-			EntityExtensionHandler entityExtensionHandler,
-			WriterInterceptorContext writerInterceptorContext)
-		throws Exception {
+		EntityExtensionHandler entityExtensionHandler,
+		WriterInterceptorContext writerInterceptorContext) {
 
-		writerInterceptorContext.setEntity(
-			ExtendedEntity.extend(
-				writerInterceptorContext.getEntity(),
-				entityExtensionHandler.getExtendedProperties(
-					_company.getCompanyId(),
-					writerInterceptorContext.getEntity()),
-				entityExtensionHandler.getFilteredPropertyNames(
-					_company.getCompanyId(),
-					writerInterceptorContext.getEntity())));
-		writerInterceptorContext.setGenericType(ExtendedEntity.class);
+		try {
+			writerInterceptorContext.setEntity(
+				ExtendedEntity.extend(
+					writerInterceptorContext.getEntity(),
+					entityExtensionHandler.getExtendedProperties(
+						_company.getCompanyId(),
+						writerInterceptorContext.getEntity()),
+					entityExtensionHandler.getFilteredPropertyNames(
+						_company.getCompanyId(),
+						writerInterceptorContext.getEntity())));
+
+			writerInterceptorContext.setGenericType(ExtendedEntity.class);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			throw new WebApplicationException(exception);
+		}
 	}
 
 	private EntityExtensionHandler _getEntityExtensionHandler(

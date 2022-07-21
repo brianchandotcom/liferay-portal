@@ -22,44 +22,48 @@ definition {
 		}
 	}
 
-	@description = "LPS-135406 - Verify it is not possible to delete native fields of objects native"
+	@description = "LPS-135406 - Verify it is the user is able to delete a relationship of object native"
 	@priority = "4"
-	test CannotDeleteFieldsFromNativeObjects {
-		property portal.upstream = "quarantine";
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "User");
-
-		ObjectAdmin.goToFieldsTab();
-
-		AssertElementNotPresent(locator1 = "Icon#DELETE");
-	}
-
-	@description = "LPS-135406 - Verify it is the user is not able to delete a relationship of object native"
-	@priority = "4"
-	test CannotDeleteRelationshipFromNativeObject {
-		property portal.upstream = "quarantine";
-
+	test CanDeleteRelationshipFromNativeObject {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151498",
 			objectName = "CustomObject151498",
 			pluralLabelName = "Custom Objects 151498");
 
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "User",
-			objectName_2 = "CustomObject151498",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
-			relationshipType = "oneToMany");
+		for (var systemObjects : list "Account,Commerce Product,Commerce Product Group,Commerce Order,User") {
+			ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.openObjectAdmin();
+			ObjectPortlet.selectSystemObject(label = "${systemObjects}");
 
-		ObjectPortlet.selectCustomObject(label = "User");
+			ObjectAdmin.gotoRelationshipsTab();
 
-		ObjectAdmin.gotoRelationshipsTab();
+			ObjectAdmin.addObjectRelationshipViaUI(
+				label = "Relationship",
+				object = "CustomObject151498",
+				type = "One to Many");
 
-		AssertElementNotPresent(locator1 = "Icon#DELETE");
+			Refresh();
+
+			ObjectAdmin.deleteRelationshipViaUI(
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship");
+
+			ObjectAdmin.assertObjectRelationshipNotPresent(relationshipLabel = "Relationship");
+		}
+	}
+
+	@description = "LPS-135406 - Verify it is not possible to delete native fields of objects native"
+	@priority = "4"
+	test CannotDeleteFieldsFromNativeObjects {
+		for (var systemObjects : list "Account,Commerce Product,Commerce Product Group,Commerce Order,Postal Address,User") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "${systemObjects}");
+
+			ObjectAdmin.goToFieldsTab();
+
+			AssertNotVisible(locator1 = "Icon#DELETE");
+		}
 	}
 
 	@description = "LPS-135406 - Verify it is not possible to delete a relationship field of custom object from a native object"

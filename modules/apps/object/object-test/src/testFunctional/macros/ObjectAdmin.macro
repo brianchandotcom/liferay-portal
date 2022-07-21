@@ -521,6 +521,12 @@ definition {
 		AssertElementNotPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_LAYOUT_LABEL");
 	}
 
+	macro assertObjectRelationshipNotPresent {
+		AssertElementNotPresent(
+			key_label = "${relationshipLabel}",
+			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
+	}
+
 	macro assertObjectStatus {
 		var key_status = "${status}";
 		var key_label = "${label}";
@@ -694,6 +700,24 @@ definition {
 			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
+	}
+
+	macro deleteRelationshipViaUI {
+		Click(
+			key_objectLabel = "${relationshipLabel}",
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_ADD_COLUMNS");
+
+		Type(
+			locator1 = "ObjectAdmin#PLACEHOLDER_DELETE_RELATIONSHIP",
+			value1 = "${relationshipName}");
+
+		Click(locator1 = "Form#SIDEBAR_DELETE_FIELD_MODAL_DELETE_BUTTON");
+
+		Refresh();
 	}
 
 	macro editClobEntryName {

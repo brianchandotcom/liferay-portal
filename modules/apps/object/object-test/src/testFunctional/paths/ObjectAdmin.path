@@ -500,6 +500,11 @@
 		<td>//*[contains(@class,'nav-link active link-unstyled')]//span[contains(@class,'navbar-text-truncate') and (contains(text(),'${key_selectedTab}'))]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>PLACEHOLDER_DELETE_RELATIONSHIP</td>
+		<td>//input[contains(@placeholder,'Confirm Relationship Name')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

@@ -422,7 +422,7 @@ public class XLIFFInfoFormTranslationImporter
 							_createInfoField(targetLocale, iTextUnit.getId()),
 							InfoLocalizedValue.builder(
 							).value(
-								targetLocale, targetTextFragment.getText()
+								targetLocale, targetTextFragment.toText()
 							).value(
 								biConsumer -> {
 									if (includeSource) {
@@ -432,7 +432,7 @@ public class XLIFFInfoFormTranslationImporter
 
 										biConsumer.accept(
 											sourceLocale,
-											sourceTextFragment.getText());
+											sourceTextFragment.toText());
 									}
 								}
 							).build()));

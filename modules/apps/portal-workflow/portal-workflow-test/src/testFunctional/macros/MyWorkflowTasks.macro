@@ -130,7 +130,7 @@ definition {
 	}
 
 	macro viewTaskAssignedAndAssertTextsPresent {
-		var elements = "Assigned to,State,Create Date,Due Date";
+		var elements = "Assigned to,Task Name,Create Date,Due Date";
 
 		for (var list : list "${elements}") {
 			AssertElementPresent(

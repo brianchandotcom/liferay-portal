@@ -130,7 +130,7 @@
 
 <tr>
 	<td>ASSET_STATE</td>
-	<td>//div/span[contains(.,'State')]/..//div[(@class='panel-body') and contains(.,'${key_state}')]</td>
+	<td>//div/span[contains(.,'Task Name')]/..//div[(@class='panel-body') and contains(.,'${key_state}')]</td>
 	<td></td>
 </tr>
 <tr>

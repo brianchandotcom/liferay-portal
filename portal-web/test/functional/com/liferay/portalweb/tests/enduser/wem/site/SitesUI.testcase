@@ -178,10 +178,15 @@ definition {
 		}
 
 		task ("View the new site created") {
+			var groupId = JSONGroupAPI._getGroupIdByNameNoError(
+				groupName = "Test Site Name",
+				site = "true");
 
-			// Temp solution until LPS-146278 finished
-
-			Pause(locator1 = "10000");
+			while (("${groupId}" == "")) {
+				var groupId = JSONGroupAPI._getGroupIdByNameNoError(
+					groupName = "Test Site Name",
+					site = "true");
+			}
 
 			Site.openSitesAdmin();
 

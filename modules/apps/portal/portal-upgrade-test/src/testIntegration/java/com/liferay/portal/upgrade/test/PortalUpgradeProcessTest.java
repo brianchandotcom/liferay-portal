@@ -185,7 +185,7 @@ public class PortalUpgradeProcessTest {
 				Version.class, "_LAST_STEP");
 
 			Assert.assertEquals(
-				lastStepSuffix, requiredSchemaVersion.getStep());
+				lastStepSuffix, requiredSchemaVersion.getQualifier());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

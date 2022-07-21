@@ -254,16 +254,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 			"resourceGroupId", _getResourceGroupId()
 		).setParameter(
 			"resourcePrimKey",
-			() -> {
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-87806"))) {
-
-					return StringUtil.merge(
-						getResourcePrimKeys(), StringPool.COMMA);
-				}
-
-				return getResourcePrimKey();
-			}
+			StringUtil.merge(getResourcePrimKeys(), StringPool.COMMA)
 		).setParameter(
 			"returnToFullPageURL", _getReturnToFullPageURL()
 		).setParameter(
@@ -683,16 +674,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 			"resourceGroupId", _getResourceGroupId()
 		).setParameter(
 			"resourcePrimKey",
-			() -> {
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-87806"))) {
-
-					return StringUtil.merge(
-						getResourcePrimKeys(), StringPool.COMMA);
-				}
-
-				return getResourcePrimKey();
-			}
+			StringUtil.merge(getResourcePrimKeys(), StringPool.COMMA)
 		).setParameter(
 			"returnToFullPageURL", _getReturnToFullPageURL()
 		).setParameter(

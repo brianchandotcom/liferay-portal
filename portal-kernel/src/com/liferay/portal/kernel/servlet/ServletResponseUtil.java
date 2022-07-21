@@ -245,7 +245,7 @@ public class ServletResponseUtil {
 					contentLength = bytes.length;
 				}
 
-				httpServletResponse.setContentLength(contentLength);
+				setContentLength(httpServletResponse, contentLength);
 
 				httpServletResponse.flushBuffer();
 

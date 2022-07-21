@@ -20,43 +20,11 @@
 CommercePriceListItemSelectorViewDisplayContext commercePriceListItemSelectorViewDisplayContext = (CommercePriceListItemSelectorViewDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 String itemSelectedEventName = commercePriceListItemSelectorViewDisplayContext.getItemSelectedEventName();
-
-PortletURL portletURL = commercePriceListItemSelectorViewDisplayContext.getPortletURL();
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="commercePriceLists"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="list"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commercePriceListItemSelectorViewDisplayContext.getOrderByCol() %>"
-			orderByType="<%= commercePriceListItemSelectorViewDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date", "display-date"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<li>
-			<liferay-commerce:search-input
-				actionURL="<%= commercePriceListItemSelectorViewDisplayContext.getPortletURL() %>"
-				formName="searchFm"
-			/>
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new CommercePriceListItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, commercePriceListItemSelectorViewDisplayContext.getSearchContainer()) %>"
+/>
 
 <div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commercePriceListSelectorWrapper">
 	<liferay-ui:search-container

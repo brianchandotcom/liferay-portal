@@ -20,36 +20,11 @@
 CommerceCountryItemSelectorViewDisplayContext commerceCountryItemSelectorViewDisplayContext = (CommerceCountryItemSelectorViewDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 String itemSelectedEventName = commerceCountryItemSelectorViewDisplayContext.getItemSelectedEventName();
-
-PortletURL portletURL = commerceCountryItemSelectorViewDisplayContext.getPortletURL();
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="commerceCountries"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="list"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceCountryItemSelectorViewDisplayContext.getOrderByCol() %>"
-			orderByType="<%= commerceCountryItemSelectorViewDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"priority"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new CommerceCountryItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, commerceCountryItemSelectorViewDisplayContext.getSearchContainer()) %>"
+/>
 
 <div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commerceCountrySelectorWrapper">
 	<liferay-ui:search-container

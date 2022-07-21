@@ -79,6 +79,8 @@ public class ClusterMasterTokenTransitionListenerTracker {
 				}
 
 			});
+
+		_serviceTracker.open();
 	}
 
 	@Deactivate

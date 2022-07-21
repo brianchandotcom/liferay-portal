@@ -96,6 +96,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
@@ -790,20 +791,20 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		List<String> actionIds = new ArrayList<>();
 
-		Enumeration<String> enumeration = actionRequest.getParameterNames();
+		ActionParameters actionParameters = actionRequest.getActionParameters();
 
-		while (enumeration.hasMoreElements()) {
-			String name = enumeration.nextElement();
+		for (String name : actionParameters.getNames()) {
+			if (!name.startsWith(roleId + ActionUtil.ACTION)) {
+				continue;
+			}
 
-			if (name.startsWith(roleId + ActionUtil.ACTION)) {
+			if (valuePredicate.test(actionParameters.getValue(name))) {
 				int pos = name.indexOf(ActionUtil.ACTION);
 
-				if (valuePredicate.test(actionRequest.getParameter(name))) {
-					String actionId = name.substring(
-						pos + ActionUtil.ACTION.length());
+				String actionId = name.substring(
+					pos + ActionUtil.ACTION.length());
 
-					actionIds.add(actionId);
-				}
+				actionIds.add(actionId);
 			}
 		}
 

@@ -1,3 +1,4 @@
+/* eslint-disable @liferay/no-absolute-import */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -9,12 +10,18 @@
  * distribution rights of the Software.
  */
 
-import react from '@vitejs/plugin-react';
-import {defineConfig} from 'vite';
+// @ts-ignore
 
-// https://vitejs.dev/config/
+import RefreshRuntime from '/@react-refresh';
 
-export default defineConfig({
-	build: {assetsDir: 'static', outDir: 'build'},
-	plugins: [react()],
-});
+/**
+ * @description This file is used ONLY and EXCLUSIVE for development
+ * When setting up the remote app, add this import
+ * http://localhost:5173/@vite/refresh.ts
+ */
+
+RefreshRuntime.injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;
+
+window.__vite_plugin_react_preamble_installed__ = true;

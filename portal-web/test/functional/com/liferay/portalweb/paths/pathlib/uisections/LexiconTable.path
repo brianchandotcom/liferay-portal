@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_UNCHECKED</td>
+	<td>//tr[@class][contains(.,'${key_tableEntry}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_CHECKBOX_DISABLED</td>
 	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//input[@type='checkbox'][@disabled]</td>
 	<td></td>

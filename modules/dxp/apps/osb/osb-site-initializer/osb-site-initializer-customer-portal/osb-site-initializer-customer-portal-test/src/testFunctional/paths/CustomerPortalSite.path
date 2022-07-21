@@ -162,7 +162,7 @@
 </tr>
 <tr>
 	<td>START_PROJECT_SETUP_BUTTON</td>
-	<td>//div[contains(@class,'d-flex')]//button[contains(@class,'btn-primary')]</td>
+	<td>//div[contains(@class,'d-flex')]//button[contains(text(),'Start Project Setup')]</td>
 	<td></td>
 </tr>
 <tr>

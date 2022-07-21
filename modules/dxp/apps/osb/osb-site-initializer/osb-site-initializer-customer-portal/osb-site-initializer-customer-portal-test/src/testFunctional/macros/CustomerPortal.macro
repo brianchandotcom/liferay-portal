@@ -4,6 +4,26 @@ definition {
 		Click(locator1 = "CustomerPortalSite#ACCOUNTS_PROJECTS");
 	}
 
+	macro addCustomerPortalSite {
+		Site.openSitesAdmin();
+
+		Site.addSiteTemplateCP(
+			siteName = "${siteName}",
+			siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+	}
+
+	macro openAccountsAdminForCP {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Navigator.gotoNavTab(navTab = "Users");
+
+		Accounts.goToEntryMenuItem(
+			menuItem = "Assign Roles",
+			rowEntry = "Test Test");
+	}
+
 	macro activeContactRole {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",

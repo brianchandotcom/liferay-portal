@@ -39,7 +39,23 @@ definition {
     @description = "Automation ID: LPS-147722 | Test Summary: Verify if when user is Liferay Staff and not administrator of a project, he wont pass through the onboarding"
     @priority = "5"
     test IfStaffNotAdmWontPassOnboarding {
+        task ("Navigate to Account Administrator") {
+            CustomerPortal.openAccountsAdminForCP();
+        }
 
+        task ("View the checkbox of role entry is unchecked") {
+			AssertElementPresent(
+				key_tableEntry = "Account Administrator",
+				locator1 = "LexiconTable#TABLE_ENTRY_UNCHECKED");
+		}
+
+        task ("Assert that the Liferay Staff user has not gone through onboarding") {
+            ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+		    CustomerPortal.enterOnProject(title = "Test Account 01");
+
+            AssertElementNotPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
+        }
     }
 
     @description = "Automation ID: LPS-147725 | Test Summary: Verify if when the user is Liferay Staff and it's administrator of the project, he will pass through the onboarding"

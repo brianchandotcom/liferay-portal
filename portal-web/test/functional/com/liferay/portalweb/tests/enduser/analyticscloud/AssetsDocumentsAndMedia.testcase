@@ -565,7 +565,7 @@ definition {
 		}
 
 		task ("Delete the rating star for the DM") {
-			Click(locator1 = "Icon#INFO");
+			DMDocument.expandInfo();
 
 			Ratings.revokeStarsRating();
 		}

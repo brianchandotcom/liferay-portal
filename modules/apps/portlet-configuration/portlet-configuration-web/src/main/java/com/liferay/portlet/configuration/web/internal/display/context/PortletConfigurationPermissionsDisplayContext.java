@@ -118,6 +118,33 @@ public class PortletConfigurationPermissionsDisplayContext {
 		_groupId = groupId;
 	}
 
+	public Map<String, List<String>> getActionIdResourcePrimKeysMap(Role role)
+		throws PortalException {
+
+		Map<String, List<String>> actionIdResourcePrimKeysMap = new HashMap<>();
+
+		for (Resource resource : getResources()) {
+			List<String> availableResourcePermissionActionIds =
+				ResourcePermissionLocalServiceUtil.
+					getAvailableResourcePermissionActionIds(
+						resource.getCompanyId(), resource.getName(),
+						resource.getScope(), resource.getPrimKey(),
+						role.getRoleId(), getActions());
+
+			for (String actionId : availableResourcePermissionActionIds) {
+				List<String> resourcePrimKeys =
+					actionIdResourcePrimKeysMap.getOrDefault(
+						actionId, new ArrayList<>());
+
+				resourcePrimKeys.add(resource.getPrimKey());
+
+				actionIdResourcePrimKeysMap.put(actionId, resourcePrimKeys);
+			}
+		}
+
+		return actionIdResourcePrimKeysMap;
+	}
+
 	public List<String> getActions() throws PortalException {
 		if (_actions != null) {
 			return _actions;

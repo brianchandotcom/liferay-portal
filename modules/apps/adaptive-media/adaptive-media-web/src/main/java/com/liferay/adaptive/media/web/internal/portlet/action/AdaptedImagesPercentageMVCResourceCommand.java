@@ -16,6 +16,7 @@ package com.liferay.adaptive.media.web.internal.portlet.action;
 
 import com.liferay.adaptive.media.constants.AMOptimizeImagesBackgroundTaskConstants;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
+import com.liferay.adaptive.media.web.internal.background.task.OptimizeImagesAllConfigurationsBackgroundTaskExecutor;
 import com.liferay.adaptive.media.web.internal.background.task.OptimizeImagesSingleConfigurationBackgroundTaskExecutor;
 import com.liferay.adaptive.media.web.internal.constants.AMPortletKeys;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -119,6 +121,16 @@ public class AdaptedImagesPercentageMVCResourceCommand
 
 				return true;
 			}
+		}
+
+		backgroundTasks = _backgroundTaskManager.getBackgroundTasks(
+			CompanyConstants.SYSTEM,
+			OptimizeImagesAllConfigurationsBackgroundTaskExecutor.class.
+				getName(),
+			BackgroundTaskConstants.STATUS_IN_PROGRESS);
+
+		if (ListUtil.isNotEmpty(backgroundTasks)) {
+			return true;
 		}
 
 		return false;

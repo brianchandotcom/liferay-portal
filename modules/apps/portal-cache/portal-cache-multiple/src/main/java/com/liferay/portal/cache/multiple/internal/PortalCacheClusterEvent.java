@@ -79,6 +79,10 @@ public class PortalCacheClusterEvent implements Serializable {
 		setElementValue(elementValue);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
 	public Serializable getElementKey() {
 		return SerializableObjectWrapper.unwrap(_elementKey);
 	}
@@ -117,6 +121,10 @@ public class PortalCacheClusterEvent implements Serializable {
 		return _timeToLive;
 	}
 
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public void setElementValue(Serializable elementValue) {
 		if (elementValue == null) {
 			return;
@@ -141,9 +149,11 @@ public class PortalCacheClusterEvent implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{elementKey=");
+		sb.append("{companyId=");
+		sb.append(_companyId);
+		sb.append(", elementKey=");
 		sb.append(_elementKey);
 
 		if (_elementValueBytes != null) {
@@ -167,6 +177,7 @@ public class PortalCacheClusterEvent implements Serializable {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalCacheClusterEvent.class);
 
+	private long _companyId = Long.MIN_VALUE;
 	private final SerializableObjectWrapper _elementKey;
 	private byte[] _elementValueBytes;
 	private final PortalCacheClusterEventType _portalCacheClusterEventType;

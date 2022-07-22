@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.kernel.version.VersionTreeMap;
-import com.liferay.portal.kernel.version.VersionTreeMapBuilder;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 import com.liferay.portal.upgrade.v7_1_x.PortalUpgradeProcessRegistryImpl;
 
@@ -263,9 +262,11 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 
 	private static final Version _initialSchemaVersion = new Version(0, 1, 0);
 	private static final VersionTreeMap _upgradeProcesses =
-		VersionTreeMapBuilder.put(
-			_initialSchemaVersion, new DummyUpgradeProcess()
-		).build();
+		new VersionTreeMap() {
+			{
+				put(_initialSchemaVersion, new DummyUpgradeProcess());
+			}
+		};
 
 	static {
 		try {

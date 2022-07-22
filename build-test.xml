@@ -3057,49 +3057,27 @@ jdbc.write.jndi.name=jdbc/LiferayWritePool</echo>
 				</elseif>
 			</if>
 
+			<property file="${project.dir}/portal-impl/src/portal.properties" />
+
+			<propertycopy from="spring.configs" name="spring.configs.default" />
+			<propertycopy from="spring.infrastructure.configs" name="spring.infrastructure.configs.default" />
+
 			<echo append="true" file="${test.app.server.classes.portal.dir}/portal-ext.properties">
 				<![CDATA[
 counter.jdbc.prefix=jdbc.write.
 spring.configs=\
-    /META-INF/base-spring.xml,\
-    \
-    /META-INF/util-spring.xml,\
-    \
-    /META-INF/executor-spring.xml,\
-    \
-    /META-INF/messaging-core-spring.xml,\
-    /META-INF/messaging-misc-spring.xml,\
-    \
-    /META-INF/security-spring.xml,\
-    \
-    /META-INF/document-library-spring.xml,\
-    /META-INF/dynamic-data-source-spring.xml,\
-    /META-INF/layout-spring.xml,\
-    /META-INF/model-listener-spring.xml,\
-    /META-INF/notifications-spring.xml,\
-    /META-INF/poller-spring.xml,\
-    /META-INF/prefs-spring.xml,\
-    /META-INF/repository-spring.xml,\
-    /META-INF/search-spring.xml,\
-    /META-INF/social-spring.xml,\
-    /META-INF/workflow-spring.xml,\
-    \
-    /META-INF/counter-spring.xml,\
-    /META-INF/mail-spring.xml,\
-    /META-INF/portal-spring.xml,\
-    /META-INF/portlet-container-spring.xml,\
-    /META-INF/staging-spring.xml,\
-    /META-INF/virtual-layouts-spring.xml,\
-    \
-    classpath*:META-INF/ext-spring*.xml
+	${spring.configs.default},/META-INF/dynamic-data-source-spring.xml
 spring.infrastructure.configs=\
-    /META-INF/infrastructure-spring.xml,\
-    \
-    /META-INF/counter-infrastructure-spring.xml,\
-    /META-INF/dynamic-data-source-infrastructure-spring.xml,\
-    /META-INF/hibernate-spring.xml
+	${spring.infrastructure.configs.default}
 				]]>
 			</echo>
+
+			<replace
+				file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+			>
+				<replacetoken><![CDATA[#/META-INF/dynamic-data-source-infrastructure-spring.xml]]></replacetoken>
+				<replacevalue><![CDATA[/META-INF/dynamic-data-source-infrastructure-spring.xml]]></replacevalue>
+			</replace>
 		</sequential>
 	</macrodef>
 

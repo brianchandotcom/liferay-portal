@@ -357,12 +357,6 @@ definition {
 			var indexNumber = "2";
 		}
 
-		CommerceNavigator.searchEntry(entryName = "${productName}");
-
-		CommerceNavigator.gotoEntry(entryName = "${productName}");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Subscription");
-
 		Check.checkToggleSwitch(
 			key_subscriptionName = "${subscriptionName}",
 			locator1 = "CommerceEntry#SUBSCRIPTION_TOGGLE");

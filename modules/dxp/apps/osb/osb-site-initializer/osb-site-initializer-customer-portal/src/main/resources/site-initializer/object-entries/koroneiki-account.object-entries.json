@@ -1,0 +1,75 @@
+{
+	"object-entries": [
+		{
+			"accountKey": "ERC-012",
+			"code": "TESTACCOUNT12",
+			"dxpVersion": "7.4",
+			"liferayContactEmailAddress": "customer-service@liferay.com",
+			"liferayContactName": "Liferay Support",
+			"maxRequestors": -1,
+			"name": "Test Account QA 7.4",
+			"partner": false,
+			"region": "United States",
+			"slaCurrent": "Platinum Subscription",
+			"slaCurrentEndDate": "2022-08-24 00:00:00.0",
+			"slaCurrentStartDate": "2021-08-24 00:00:00.0"
+		},
+		{
+			"accountKey": "ERC-013",
+			"code": "TESTACCOUNT13",
+			"dxpVersion": "7.3",
+			"liferayContactEmailAddress": "customer-service@liferay.com",
+			"liferayContactName": "Liferay Support",
+			"maxRequestors": -1,
+			"name": "Test Account QA 7.3",
+			"partner": false,
+			"region": "United States",
+			"slaCurrent": "Gold Subscription",
+			"slaCurrentEndDate": "2022-08-24 00:00:00.0",
+			"slaCurrentStartDate": "2021-08-24 00:00:00.0"
+		},
+		{
+			"accountKey": "ERC-014",
+			"code": "TESTACCOUNT14",
+			"dxpVersion": "7.2",
+			"liferayContactEmailAddress": "customer-service@liferay.com",
+			"liferayContactName": "Liferay Support",
+			"maxRequestors": -1,
+			"name": "Test Account QA 7.2",
+			"partner": false,
+			"region": "United States",
+			"slaCurrent": "Gold Subscription",
+			"slaCurrentEndDate": "2022-08-24 00:00:00.0",
+			"slaCurrentStartDate": "2021-08-24 00:00:00.0"
+		},
+		{
+			"accountKey": "ERC-015",
+			"code": "TESTACCOUNT15",
+			"dxpVersion": "7.1",
+			"liferayContactEmailAddress": "customer-service@liferay.com",
+			"liferayContactName": "Liferay Support",
+			"maxRequestors": -1,
+			"name": "Test Account QA 7.1",
+			"partner": false,
+			"region": "United States",
+			"slaCurrent": "Gold Subscription",
+			"slaCurrentEndDate": "2022-08-24 00:00:00.0",
+			"slaCurrentStartDate": "2021-08-24 00:00:00.0"
+		},
+		{
+			"accountKey": "ERC-016",
+			"code": "TESTACCOUNT16",
+			"dxpVersion": "7.0",
+			"liferayContactEmailAddress": "customer-service@liferay.com",
+			"liferayContactName": "Liferay Support",
+			"maxRequestors": -1,
+			"name": "Test Account QA 7.0",
+			"partner": false,
+			"region": "United States",
+			"slaCurrent": "Gold Subscription",
+			"slaCurrentEndDate": "2022-08-24 00:00:00.0",
+			"slaCurrentStartDate": "2021-08-24 00:00:00.0"
+		}
+	],
+	"objectDefinitionName": "KoroneikiAccount"
+}

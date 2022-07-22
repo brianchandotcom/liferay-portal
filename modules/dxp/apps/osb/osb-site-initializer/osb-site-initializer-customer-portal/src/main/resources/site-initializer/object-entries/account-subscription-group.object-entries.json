@@ -1,0 +1,75 @@
+{
+	"object-entries": [
+		{
+			"accountKey": "ERC-012",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "DXP",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-012",
+			"hasActivation": true,
+			"menuOrder": 5,
+			"name": "Commerce",
+			"tabOrder": 6
+		},
+		{
+			"accountKey": "ERC-013",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "DXP",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-013",
+			"hasActivation": true,
+			"menuOrder": 5,
+			"name": "Commerce",
+			"tabOrder": 6
+		},
+		{
+			"accountKey": "ERC-014",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "DXP",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-014",
+			"hasActivation": true,
+			"menuOrder": 5,
+			"name": "Commerce",
+			"tabOrder": 6
+		},
+		{
+			"accountKey": "ERC-015",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "DXP",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-015",
+			"hasActivation": true,
+			"menuOrder": 5,
+			"name": "Commerce",
+			"tabOrder": 6
+		},
+		{
+			"accountKey": "ERC-016",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "DXP",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-016",
+			"hasActivation": true,
+			"menuOrder": 5,
+			"name": "Commerce",
+			"tabOrder": 6
+		}
+	],
+	"objectDefinitionName": "AccountSubscriptionGroup"
+}

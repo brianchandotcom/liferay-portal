@@ -1,0 +1,55 @@
+{
+	"object-entries": [
+		{
+			"accountKey": "ERC-012",
+			"accountSubscriptionGroupERC": "ERC-012_dxp",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-013",
+			"accountSubscriptionGroupERC": "ERC-013_dxp",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-014",
+			"accountSubscriptionGroupERC": "ERC-014_dxp",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-015",
+			"accountSubscriptionGroupERC": "ERC-015_dxp",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-016",
+			"accountSubscriptionGroupERC": "ERC-016_dxp",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		}
+	],
+	"objectDefinitionName": "AccountSubscription"
+}

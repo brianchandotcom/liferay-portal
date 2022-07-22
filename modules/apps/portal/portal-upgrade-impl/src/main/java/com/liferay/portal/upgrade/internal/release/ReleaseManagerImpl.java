@@ -21,6 +21,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -155,36 +156,36 @@ public class ReleaseManagerImpl implements ReleaseManager {
 			new ReleaseManagerImpl.UpgradeInfoServiceTrackerMapListener());
 
 		synchronized (this) {
-			Set<String> upgradedBundleSymbolicNames = new HashSet<>();
+			Set<String> bundleSymbolicNames = new HashSet<>();
 
-			Set<String> bundleSymbolicNames = _serviceTrackerMap.keySet();
+			for (Release release :
+					_releaseLocalService.getReleases(
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
-			while (upgradedBundleSymbolicNames.addAll(bundleSymbolicNames)) {
-				for (String bundleSymbolicName : bundleSymbolicNames) {
-					if (!PropsValues.UPGRADE_DATABASE_AUTO_RUN &&
-						(_releaseLocalService.fetchRelease(
-							bundleSymbolicName) != null)) {
+				bundleSymbolicNames.add(release.getBundleSymbolicName());
+			}
 
-						continue;
-					}
+			for (String bundleSymbolicName : _serviceTrackerMap.keySet()) {
+				if (!PropsValues.UPGRADE_DATABASE_AUTO_RUN &&
+					bundleSymbolicNames.contains(bundleSymbolicName)) {
 
-					List<UpgradeInfo> upgradeSteps =
-						_serviceTrackerMap.getService(bundleSymbolicName);
-
-					try {
-						_upgradeExecutor.execute(
-							bundleSymbolicName, upgradeSteps,
-							OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
-					}
-					catch (Throwable throwable) {
-						_log.error(
-							"Failed upgrade process for module " +
-								bundleSymbolicName,
-							throwable);
-					}
+					continue;
 				}
 
-				bundleSymbolicNames = _serviceTrackerMap.keySet();
+				List<UpgradeInfo> upgradeSteps = _serviceTrackerMap.getService(
+					bundleSymbolicName);
+
+				try {
+					_upgradeExecutor.execute(
+						bundleSymbolicName, upgradeSteps,
+						OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
+				}
+				catch (Throwable throwable) {
+					_log.error(
+						"Failed upgrade process for module " +
+							bundleSymbolicName,
+						throwable);
+				}
 			}
 
 			_activated = true;

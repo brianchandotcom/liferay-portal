@@ -156,17 +156,21 @@ public class ReleaseManagerImpl implements ReleaseManager {
 			new ReleaseManagerImpl.UpgradeInfoServiceTrackerMapListener());
 
 		synchronized (this) {
-			Set<String> bundleSymbolicNames = new HashSet<>();
+			Set<String> bundleSymbolicNames = null;
 
-			for (Release release :
-					_releaseLocalService.getReleases(
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+			if (!PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+				bundleSymbolicNames = new HashSet<>();
 
-				bundleSymbolicNames.add(release.getBundleSymbolicName());
+				for (Release release :
+						_releaseLocalService.getReleases(
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+					bundleSymbolicNames.add(release.getBundleSymbolicName());
+				}
 			}
 
 			for (String bundleSymbolicName : _serviceTrackerMap.keySet()) {
-				if (!PropsValues.UPGRADE_DATABASE_AUTO_RUN &&
+				if ((bundleSymbolicNames != null) &&
 					bundleSymbolicNames.contains(bundleSymbolicName)) {
 
 					continue;

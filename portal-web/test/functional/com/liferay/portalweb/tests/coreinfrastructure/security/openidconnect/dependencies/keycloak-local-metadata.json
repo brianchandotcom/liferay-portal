@@ -1,0 +1,11 @@
+{
+	"authorization_endpoint": "http://127.0.0.1:18080/auth/realms/master/protocol/openid-connect/auth",
+	"issuer": "http://127.0.0.1:18080/auth/realms/master",
+	"jwks_uri": "http://127.0.0.1:18080/auth/realms/master/protocol/openid-connect/certs",
+	"subject_types_supported": [
+		"public",
+		"pairwise"
+	],
+	"token_endpoint": "http://127.0.0.1:18080/auth/realms/master/protocol/openid-connect/token",
+	"userinfo_endpoint": "http://127.0.0.1:18080/auth/realms/master/protocol/openid-connect/userinfo"
+}

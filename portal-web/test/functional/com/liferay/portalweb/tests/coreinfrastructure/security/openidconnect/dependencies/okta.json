@@ -1,0 +1,21 @@
+{
+	"application_type": "web",
+	"client_id": "0oa2f6ikwu8bYgkyq5d7",
+	"client_name": "OKTA",
+	"client_secret": "yyabDVfpgIJfEFiHIeLBmd4l7VhBbIZBg5tksLtS",
+	"client_secret_expires_at": 0,
+	"grant_types": [
+		"authorization_code",
+		"refresh_token"
+	],
+	"id_token_signed_response_alg": "RS256",
+	"redirect_uris": [
+		""
+	],
+	"response_types": [
+		"code"
+	],
+	"scope": "openid email profile",
+	"subject_type": "public",
+	"token_endpoint_auth_method": "client_secret_basic"
+}

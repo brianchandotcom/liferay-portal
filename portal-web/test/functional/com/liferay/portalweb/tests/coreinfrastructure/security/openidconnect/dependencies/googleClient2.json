@@ -1,0 +1,21 @@
+{
+	"application_type": "web",
+	"client_id": "626781307908-kmlie52v1vh5l6dru8bp43hjoangk6ne.apps.googleusercontent.com",
+	"client_name": "Google2",
+	"client_secret": "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",
+	"client_secret_expires_at": 0,
+	"grant_types": [
+		"authorization_code",
+		"refresh_token"
+	],
+	"id_token_signed_response_alg": "RS256",
+	"redirect_uris": [
+		""
+	],
+	"response_types": [
+		"code"
+	],
+	"scope": "openid email profile",
+	"subject_type": "public",
+	"token_endpoint_auth_method": "client_secret_basic"
+}

@@ -4,37 +4,27 @@
 @import 'PortletIcon';
 @import 'PropertiesPanel';
 
-$controlMenuDesktopHeight: 56px;
 $controlMenuHeight: 48px;
-$toolbarDesktopHeight: 4rem;
+$desktopControlMenuHeight: 56px;
+$desktopToolbarHeight: 4rem;
 $toolbarHeight: 6.875rem;
 
 .ddm_template_editor__App {
 	display: flex;
-	height: calc(100vh - #{$toolbarHeight} - #{$controlMenuHeight});
+	/* stylelint-disable */
+	height: calc(
+		100vh -
+			(
+				var(--control-menu-height) + var(--toolbar-height) +
+					var(--change-tracking-indicator-height, 0px)
+			)
+	);
+	/* stylelint-enable */
 	left: 0;
 	overflow: hidden;
 	position: absolute;
-	top: $toolbarHeight;
+	top: var(--toolbar-height);
 	width: 100%;
-
-	@include media-breakpoint-up(sm) {
-		height: calc(100vh - #{$toolbarHeight} - #{$controlMenuDesktopHeight});
-	}
-
-	@include media-breakpoint-up(lg) {
-		top: $toolbarDesktopHeight;
-		height: calc(
-			100vh - #{$toolbarDesktopHeight} - #{$controlMenuDesktopHeight}
-		);
-	}
-
-	@include media-breakpoint-up(lg) {
-		top: $toolbarDesktopHeight;
-		height: calc(
-			100vh - #{$toolbarDesktopHeight} - #{$controlMenuDesktopHeight}
-		);
-	}
 
 	.alert:first-of-type {
 		margin-top: 1rem;
@@ -56,15 +46,17 @@ $toolbarHeight: 6.875rem;
 
 	&-sidebar {
 		display: flex;
-		height: calc(100vh - #{$toolbarHeight} - #{$controlMenuHeight});
+		/* stylelint-disable */
+		height: calc(
+			100vh -
+				(
+					var(--control-menu-height) + var(--toolbar-height) +
+						var(--change-tracking-indicator-height, 0px)
+				)
+		);
+		/* stylelint-enable */
 		position: fixed;
 		right: 0;
-
-		@include media-breakpoint-up(lg) {
-			height: calc(
-				100vh - #{$toolbarDesktopHeight} - #{$controlMenuDesktopHeight}
-			);
-		}
 
 		&-buttons {
 			align-items: center;
@@ -94,7 +86,17 @@ $toolbarHeight: 6.875rem;
 		&-content {
 			background-color: $white;
 			border-left: 1px solid $gray-300;
-			height: calc(100vh - #{$toolbarHeight} - #{$controlMenuHeight});
+
+			/* stylelint-disable */
+			height: calc(
+				100vh -
+					(
+						var(--control-menu-height) + var(--toolbar-height) +
+							var(--change-tracking-indicator-height, 0px)
+					)
+			);
+			/* stylelint-enable */
+
 			overflow-y: auto;
 			position: fixed;
 			right: 42px;
@@ -105,12 +107,6 @@ $toolbarHeight: 6.875rem;
 
 			.rtl & {
 				transform: translateX(-100%);
-			}
-
-			@include media-breakpoint-up(lg) {
-				height: calc(
-					100vh - #{$toolbarDesktopHeight} - #{$controlMenuDesktopHeight}
-				);
 			}
 
 			&.open {
@@ -153,5 +149,24 @@ $toolbarHeight: 6.875rem;
 				}
 			}
 		}
+	}
+}
+
+body {
+	--toolbar-height: #{$toolbarHeight};
+	/* stylelint-disable */
+	--control-menu-height: 0px;
+	/* stylelint-enable */
+
+	&.has-control-menu {
+		--control-menu-height: #{$controlMenuHeight};
+
+		@include media-breakpoint-up(sm) {
+			--control-menu-height: #{$desktopControlMenuHeight};
+		}
+	}
+
+	@include media-breakpoint-up(xl) {
+		--toolbar-height: #{$desktopToolbarHeight};
 	}
 }

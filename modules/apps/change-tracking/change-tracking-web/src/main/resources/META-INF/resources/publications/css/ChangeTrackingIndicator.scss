@@ -47,6 +47,10 @@ html#{$cadmin-selector} .cadmin {
 	}
 }
 
+.change-tracking-enabled {
+	--change-tracking-indicator-height: 24px;
+}
+
 .publications-loading {
 	opacity: 0.5;
 }

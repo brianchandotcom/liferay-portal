@@ -116,6 +116,7 @@ else {
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= ColumnTypeException.class %>" message="please-select-a-valid-type" />
+<liferay-ui:error exception="<%= DefaultLocaleValueNotDefinedException.class %>" message="please-enter-a-value-also-for-default-locale" />
 <liferay-ui:error exception="<%= DuplicateColumnNameException.class %>" message="please-enter-a-unique-name" />
 <liferay-ui:error exception="<%= ValueDataException.class %>" message="please-enter-a-valid-value" />
 

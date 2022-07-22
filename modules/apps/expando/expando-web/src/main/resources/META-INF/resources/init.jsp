@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.expando.kernel.exception.ColumnNameException" %><%@
 page import="com.liferay.expando.kernel.exception.ColumnTypeException" %><%@
+page import="com.liferay.expando.kernel.exception.DefaultLocaleValueNotDefinedException" %><%@
 page import="com.liferay.expando.kernel.exception.DuplicateColumnNameException" %><%@
 page import="com.liferay.expando.kernel.exception.NoSuchColumnException" %><%@
 page import="com.liferay.expando.kernel.exception.ValueDataException" %><%@

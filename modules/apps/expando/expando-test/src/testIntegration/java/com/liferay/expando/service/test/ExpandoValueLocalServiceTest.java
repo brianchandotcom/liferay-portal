@@ -166,7 +166,7 @@ public class ExpandoValueLocalServiceTest {
 			Assert.fail();
 		}
 		catch (DefaultLocaleValueNotDefinedException
-				defaultLocaleValueNotDefinedException) {
+					defaultLocaleValueNotDefinedException) {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(defaultLocaleValueNotDefinedException);

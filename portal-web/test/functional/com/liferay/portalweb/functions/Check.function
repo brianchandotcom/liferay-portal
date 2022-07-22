@@ -110,6 +110,8 @@ definition {
 
 		selenium.waitForVisible();
 
+		selenium.waitForEditable();
+
 		selenium.mouseOver();
 
 		if (selenium.isNotChecked()) {

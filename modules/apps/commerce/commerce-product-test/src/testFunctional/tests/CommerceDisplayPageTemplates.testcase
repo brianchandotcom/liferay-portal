@@ -389,7 +389,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-9696. Verify user can see DPT mapping categories of selected vocabularies fields into the product details"
 	@priority = "3"
-	test CanMapCategoriesOfRespectiveVocabulariesFields {
+	test CanMapCategoriesFromDifferentVocabularies {
 		property portal.acceptance = "false";
 
 		task ("Given a new vocabulary is added with some categories added inside of it (from the Global site administration panel)") {
@@ -434,15 +434,7 @@ definition {
 				key_fieldName = "Test Vocabulary",
 				locator1 = "Button#SELECT_BUTTON");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-			Click.clickAtNotVisible(
-				key_nodeName = "Category 1",
-				locator1 = "Treeview#NODE_CHECKBOX");
-
-			SelectFrame(value1 = "relative=top");
-
-			Click(locator1 = "Button#DONE");
+			AssetCategorization.selectCategories(categoryNameList = "Category 1,Category 2");
 		}
 
 		task ("And the category related to Topic is also selected inside the product") {
@@ -450,15 +442,7 @@ definition {
 				key_fieldName = "Topic",
 				locator1 = "Button#SELECT_BUTTON");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-			Click.clickAtNotVisible(
-				key_nodeName = "Topic Category",
-				locator1 = "Treeview#NODE_CHECKBOX");
-
-			SelectFrame(value1 = "relative=top");
-
-			Click(locator1 = "Button#DONE");
+			AssetCategorization.selectCategories(categoryNameList = "Topic Category");
 
 			Button.clickPublish();
 		}
@@ -504,12 +488,7 @@ definition {
 				key_productName = "ABS Sensor",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 
-			for (var categoryName : list "Category 1,Topic Category,Brake System") {
-				AssertElementPresent(
-					key_fragmentText = "${categoryName}",
-					key_id = "element-text",
-					locator1 = "CommerceEntry#ASSERT_FRAGMENTS_TEXT_IN_SF");
-			}
+			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "Category 1,Category 2,Topic Category,Brake System");
 		}
 	}
 

@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_STATUS</td>
-	<td>//span[contains(@class,'workflow-status')]/strong</td>
+	<td>//span[contains(@class,'taglib-workflow-status')]</td>
 	<td></td>
 </tr>
 </tbody>

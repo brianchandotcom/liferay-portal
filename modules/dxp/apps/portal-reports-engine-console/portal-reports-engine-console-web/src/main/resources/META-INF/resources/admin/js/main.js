@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-AUI().use('escape', 'aui-lang', (A) => {
+ AUI().use('escape', 'aui-lang', (A) => {
 	const AEscape = A.Escape;
 
 	const TPL_TAG_FORM =

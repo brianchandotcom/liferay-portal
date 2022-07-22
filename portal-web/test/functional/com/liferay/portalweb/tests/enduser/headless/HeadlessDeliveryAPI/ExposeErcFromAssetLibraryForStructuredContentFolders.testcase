@@ -202,6 +202,45 @@ definition {
 		}
 	}
 
+	@description = "Structured content folder erc is not able to update with erc in body in an asset library"
+	@priority = "5"
+	test CannotUpdateStructuredContentFolderErcInAssetLibraryWithErcInBody {
+		property portal.acceptance = "true";
+
+		task ("Given a structured content folder with a custom erc is created with a POST request") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				name = "Test Folder");
+		}
+
+		task ("When I make a PUT request by previous custom erc and updated erc in body") {
+			var response = HeadlessWebcontentFolderAPI.updateStructureContentFolderByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				externalReferenceCodeInBody = "update-erc",
+				name = "Update Test Folder");
+		}
+
+		task ("Then the erc in response body is still the previous erc") {
+			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "erc",
+				responseToParse = "${response}");
+		}
+
+		task ("And Then another folder with updated erc is not being created") {
+			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "update-erc");
+
+			TestUtils.assertPartialEquals(
+				actual = "${response}",
+				expected = "No JournalFolder exists with the key");
+		}
+	}
+
 	@description = "Unable to get structured content folder by nonexistent assetLibraryId"
 	@priority = "4"
 	test CanReturnErrorWithGetStructuredContentFolderInAssetLibraryByNonexistentAssetLibraryId {

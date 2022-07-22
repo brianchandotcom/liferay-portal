@@ -120,10 +120,8 @@ public class ExpandoPortlet extends MVCPortlet {
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
 
-		expandoBridge.addAttribute(name, type);
-
-		expandoBridge.setAttributeDefault(
-			name, _getDefaultValue(actionRequest, type));
+		expandoBridge.addAttribute(
+			name, type, _getDefaultValue(actionRequest, type));
 
 		_updateProperties(actionRequest, expandoBridge, name);
 	}

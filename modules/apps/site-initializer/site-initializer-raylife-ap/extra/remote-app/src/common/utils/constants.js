@@ -38,4 +38,26 @@ export const CONSTANTS = {
 		'Nov',
 		'Dec',
 	],
+	US_STATES: [
+		{
+			label: '',
+			value: '',
+		},
+		{
+			label: 'CHOOSE AN OPTION',
+			value: 'CHOOSE AN OPTION',
+		},
+		{
+			label: 'CA',
+			value: 'CA',
+		},
+		{
+			label: 'NV',
+			value: 'NV',
+		},
+		{
+			label: 'NY',
+			value: 'NY',
+		},
+	],
 };

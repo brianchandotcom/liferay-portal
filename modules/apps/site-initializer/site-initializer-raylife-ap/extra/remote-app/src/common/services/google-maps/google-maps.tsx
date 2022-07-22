@@ -37,7 +37,8 @@ const setup = (GOOGLE_API: any) => {
 		});
 
 		googleMapsLoader.load();
-	} catch (error) {
+	}
+	catch (error) {
 		console.warn(error);
 	}
 };

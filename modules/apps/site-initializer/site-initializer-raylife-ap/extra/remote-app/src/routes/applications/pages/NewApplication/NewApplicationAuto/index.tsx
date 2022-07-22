@@ -157,19 +157,31 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 								Exit
 							</ClayButton>
 
-							<ClayTooltipProvider>
+							{!state.isAbleToBeSave ? (
+								<ClayTooltipProvider>
+									<ClayButton
+										aria-disabled="true"
+										className="disabled text-uppercase"
+										data-tooltip-align="top"
+										displayType="secondary"
+										onClick={() => handleSaveChanges()}
+										small={true}
+										title={tooltipTitle}
+									>
+										Save
+									</ClayButton>
+								</ClayTooltipProvider>
+							) : (
 								<ClayButton
 									className="text-uppercase"
-									data-tooltip-align="top"
-									disabled={!state.isAbleToBeSave}
+									disabled={false}
 									displayType="secondary"
 									onClick={() => handleSaveChanges()}
 									small={true}
-									title={tooltipTitle}
 								>
 									Save
 								</ClayButton>
-							</ClayTooltipProvider>
+							)}
 						</div>
 					</div>
 

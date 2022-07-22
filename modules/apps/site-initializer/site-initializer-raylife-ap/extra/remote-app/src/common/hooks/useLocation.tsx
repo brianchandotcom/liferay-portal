@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -26,7 +25,8 @@ export function useLocation() {
 		try {
 			const response = await MockService.getUSStates();
 			setData(response);
-		} catch (error) {
+		}
+		catch (error) {
 			console.warn(error);
 			setError(error);
 		}
@@ -53,7 +53,8 @@ export function useLocation() {
 
 				callback(address);
 			});
-		} catch (error) {
+		}
+		catch (error) {
 			console.warn(error);
 		}
 	};

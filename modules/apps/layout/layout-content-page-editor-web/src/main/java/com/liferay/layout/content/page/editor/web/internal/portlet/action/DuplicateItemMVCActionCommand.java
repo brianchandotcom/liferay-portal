@@ -353,13 +353,10 @@ public class DuplicateItemMVCActionCommand
 				segmentsExperienceId);
 
 		for (long fragmentEntryLinkId : duplicatedFragmentEntryLinkIds) {
-			FragmentEntryLink fragmentEntryLink =
-				_fragmentEntryLinkLocalService.getFragmentEntryLink(
-					fragmentEntryLinkId);
-
 			jsonArray.put(
 				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-					fragmentEntryLink,
+					_fragmentEntryLinkLocalService.getFragmentEntryLink(
+						fragmentEntryLinkId),
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
 					layoutStructure));

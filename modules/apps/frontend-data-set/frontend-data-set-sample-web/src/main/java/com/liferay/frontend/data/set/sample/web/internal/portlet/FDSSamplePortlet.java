@@ -131,11 +131,16 @@ public class FDSSamplePortlet extends MVCPortlet {
 						"description", false),
 					ObjectFieldUtil.createObjectField(
 						"Date", "Date", true, false, null, "Date", "date",
+						false),
+					ObjectFieldUtil.createObjectField(
+						"Text", "String", true, false, null, "Color", "color",
 						false)));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				user.getUserId(), objectDefinition.getObjectDefinitionId());
+
+		String[] colors = {"Blue", "Green", "Red", "Yellow"};
 
 		Calendar calendar = Calendar.getInstance();
 
@@ -146,6 +151,8 @@ public class FDSSamplePortlet extends MVCPortlet {
 			_objectEntryLocalService.addObjectEntry(
 				user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
+					"color", colors[i % 4]
+				).put(
 					"date", calendar.getTime()
 				).put(
 					"description", "This is a description for sample " + i + "."

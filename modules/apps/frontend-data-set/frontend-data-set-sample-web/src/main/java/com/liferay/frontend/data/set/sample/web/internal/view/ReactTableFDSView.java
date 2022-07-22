@@ -50,6 +50,8 @@ public class ReactTableFDSView extends BaseTableFDSView {
 		).add(
 			"date", "date"
 		).add(
+			"color", "color"
+		).add(
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"status")

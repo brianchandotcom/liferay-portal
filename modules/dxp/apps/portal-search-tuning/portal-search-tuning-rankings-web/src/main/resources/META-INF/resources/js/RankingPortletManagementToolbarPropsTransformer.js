@@ -11,6 +11,8 @@
 
 import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
+import openConfirm from './utils/openConfirm.es';
+
 export default function propsTransformer({
 	additionalProps: {
 		activateResultsRankingEntryURL,
@@ -61,29 +63,34 @@ export default function propsTransformer({
 	};
 
 	const deleteResultsRankingsEntries = () => {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			const form = document.getElementById(`${portletNamespace}fm`);
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					const form = document.getElementById(
+						`${portletNamespace}fm`
+					);
 
-			const searchContainer = document.getElementById(
-				`${portletNamespace}resultsRankingEntries`
-			);
+					const searchContainer = document.getElementById(
+						`${portletNamespace}resultsRankingEntries`
+					);
 
-			if (form && searchContainer) {
-				postForm(form, {
-					data: {
-						actionFormInstanceIds: getCheckedCheckboxes(
-							searchContainer,
-							`${portletNamespace}allRowIds`
-						),
-					},
-					url: deleteResultsRankingEntryURL,
-				});
-			}
-		}
+					if (form && searchContainer) {
+						postForm(form, {
+							data: {
+								actionFormInstanceIds: getCheckedCheckboxes(
+									searchContainer,
+									`${portletNamespace}allRowIds`
+								),
+							},
+							url: deleteResultsRankingEntryURL,
+						});
+					}
+				}
+			},
+		});
 	};
 
 	return {

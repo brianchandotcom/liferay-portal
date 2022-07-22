@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>CP2ActivationKeys</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CP2ActivationKeys</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>DROPDOWN</td>
+	<td>//select/option[text()='${key_option}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,10 @@
+definitions {
+
+    macro assertDropDownSelection {
+        var key_option = "${option}";
+
+        AssertElementPresent(locator1 = "CP2ActivationKeys#DROPDOWN");
+
+        AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN");
+    }
+}

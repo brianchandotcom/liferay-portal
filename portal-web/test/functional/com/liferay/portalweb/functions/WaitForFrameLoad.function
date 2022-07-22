@@ -1,0 +1,22 @@
+@default = "waitForFrameLoad"
+definition {
+
+	function waitForFrameLoad {
+		if (!(isSet(locator1))) {
+			var locator1 = "0";
+		}
+
+		var javascript = '''
+			window.onload = function() {
+				document.querySelector('iframe[src*="dialog-iframe-popup"]').onload = function() {
+					setTimeout(() => {
+						console.log("IFrame is fully loaded");
+					}, "${locator1}");
+				};
+			};
+		''';
+
+		selenium.runScript("${javascript}");
+	}
+
+}

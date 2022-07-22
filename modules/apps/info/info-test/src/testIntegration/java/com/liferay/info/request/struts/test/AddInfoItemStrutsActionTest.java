@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -169,10 +168,6 @@ public class AddInfoItemStrutsActionTest {
 	}
 
 	private Layout _addLayout() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
 		Layout layout = _layoutLocalService.addLayout(
 			_user.getUserId(), _group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
@@ -183,7 +178,9 @@ public class AddInfoItemStrutsActionTest {
 			UnicodePropertiesBuilder.put(
 				"published", "true"
 			).buildString(),
-			false, false, Collections.emptyMap(), 0, serviceContext);
+			false, false, Collections.emptyMap(), 0,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId()));
 
 		_defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(

@@ -249,13 +249,11 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		long oAuthClientEntryId =
+		requestAuthentication(
 			_openIdConnectProviderManagedServiceFactory.getOAuthClientEntryId(
 				_portal.getCompanyId(httpServletRequest),
-				openIdConnectProviderName);
-
-		requestAuthentication(
-			oAuthClientEntryId, httpServletRequest, httpServletResponse);
+				openIdConnectProviderName),
+			httpServletRequest, httpServletResponse);
 	}
 
 	private URI _getAuthenticationRequestURI(

@@ -40,19 +40,29 @@ export default function propsTransformer({
 					'are-you-sure-you-want-to-delete-the-selected-entries'
 			  );
 
-		openConfirmModal({
-			message,
-			onConfirm: (isConfirmed) => {
-				if (isConfirmed || trashEnabled) {
-					postForm(form, {
-						data: {
-							cmd: deleteEntriesCmd,
-						},
-						url: editEntryURL,
-					});
-				}
-			},
-		});
+		if (trashEnabled) {
+			postForm(form, {
+				data: {
+					cmd: deleteEntriesCmd,
+				},
+				url: editEntryURL,
+			});
+		}
+		else {
+			openConfirmModal({
+				message,
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						postForm(form, {
+							data: {
+								cmd: deleteEntriesCmd,
+							},
+							url: editEntryURL,
+						});
+					}
+				},
+			});
+		}
 	};
 
 	const lockEntries = () => {

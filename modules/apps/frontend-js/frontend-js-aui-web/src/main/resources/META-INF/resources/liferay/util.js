@@ -1020,39 +1020,72 @@
 						return;
 					}
 
+					const doSelect = () => {
+						if (disableButton) {
+							selectorButtons.forEach((selectorButton) => {
+								selectorButton.disabled = false;
+							});
+
+							currentTarget.disabled = true;
+						}
+
+						const result = Util.getAttributes(
+							currentTarget,
+							'data-'
+						);
+
+						openingLiferay.fire(selectEventName, result);
+
+						const window = Util.getWindow();
+
+						if (window) {
+							window.hide();
+						}
+					};
+
 					const confirmSelection =
 						currentTarget.dataset['confirmSelection'] === 'true';
 
-					Liferay.Util.openConfirmModal({
-						message:
-							currentTarget.dataset['confirmSelectionMessage'],
-						onConfirm: (isConfirmed) => {
-							if (isConfirmed || !confirmSelection) {
-								if (disableButton) {
-									selectorButtons.forEach(
-										(selectorButton) => {
-											selectorButton.disabled = false;
-										}
+					if (!confirmSelection) {
+						doSelect();
+					}
+					else {
+						Liferay.Util.openConfirmModal({
+							message:
+								currentTarget.dataset[
+									'confirmSelectionMessage'
+								],
+							onConfirm: (isConfirmed) => {
+								if (isConfirmed) {
+									if (disableButton) {
+										selectorButtons.forEach(
+											(selectorButton) => {
+												selectorButton.disabled = false;
+											}
+										);
+
+										currentTarget.disabled = true;
+									}
+
+									const result = Util.getAttributes(
+										currentTarget,
+										'data-'
 									);
 
-									currentTarget.disabled = true;
+									openingLiferay.fire(
+										selectEventName,
+										result
+									);
+
+									const window = Util.getWindow();
+
+									if (window) {
+										window.hide();
+									}
 								}
-
-								const result = Util.getAttributes(
-									currentTarget,
-									'data-'
-								);
-
-								openingLiferay.fire(selectEventName, result);
-
-								const window = Util.getWindow();
-
-								if (window) {
-									window.hide();
-								}
-							}
-						},
-					});
+							},
+						});
+					}
 				},
 				'.selector-button'
 			);

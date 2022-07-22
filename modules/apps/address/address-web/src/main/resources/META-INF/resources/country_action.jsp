@@ -60,6 +60,7 @@ Country country = (Country)row.getObject();
 			<c:otherwise>
 				<portlet:actionURL name="/address/update_country_status" var="activateCountryURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="navigation" value="<%= navigation %>" />
 					<portlet:param name="countryId" value="<%= String.valueOf(country.getCountryId()) %>" />
 				</portlet:actionURL>

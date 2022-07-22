@@ -31,7 +31,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-137508. Create a Site with the Masterclass Site initializer"
+	@description = "This is a test for LPS-137508 and LPS-143260. Create a Site with the Masterclass Site initializer"
 	@priority = "5"
 	test AddMasterclassSite {
 		property portal.acceptance = "true";
@@ -45,6 +45,10 @@ definition {
 			AssertElementPresent(
 				key_title = "Welcome to Masterclass",
 				locator1 = "Masterclass#FRAGMENT_HERO_PRE");
+		}
+
+		task ("Assert the user icon is present") {
+			AssertElementPresent(locator1 = "Masterclass#USER_AVATAR_ICON");
 		}
 	}
 

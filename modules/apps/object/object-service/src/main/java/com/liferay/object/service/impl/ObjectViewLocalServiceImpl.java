@@ -554,6 +554,9 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 
 				if (Objects.equals(
 						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+					Objects.equals(
+						objectField.getBusinessType(),
 						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
 					throw new ObjectViewSortColumnObjectFieldNameException(

@@ -1,0 +1,39 @@
+definition {
+
+	macro addClient {
+		var jsonFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies";
+
+		var clientInfo = FileUtil.read("${jsonFileBaseDir}/${jsonFileName}");
+
+		Button.clickAdd();
+
+		FormFields.editText(
+			fieldName = "authServerWellKnownURI",
+			fieldValue = "${wellknownURI}");
+
+		FormFields.editTextMultiline(
+			fieldName = "infoJSON",
+			fieldValue = "${clientInfo}");
+
+		FormFields.editTextMultiline(
+			fieldName = "authRequestParametersJSON",
+			fieldValue = '''
+				{
+				    "response_type": "code",
+				    "scope": "openid email profile"
+				}
+			''');
+
+		FormFields.editTextMultiline(
+			fieldName = "tokenRequestParametersJSON",
+			fieldValue = '''
+				{
+				    "grant_type": "authorization_code",
+				    "scope": "openid email profile"
+				}
+			''');
+
+		PortletEntry.save();
+	}
+
+}

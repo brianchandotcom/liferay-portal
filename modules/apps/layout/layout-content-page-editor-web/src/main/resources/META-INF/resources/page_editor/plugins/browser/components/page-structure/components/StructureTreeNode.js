@@ -40,7 +40,6 @@ import {
 import selectCanUpdatePageStructure from '../../../../../app/selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../../../../../app/selectors/selectSegmentsExperienceId';
 import CollectionService from '../../../../../app/services/CollectionService';
-import deleteItem from '../../../../../app/thunks/deleteItem';
 import moveItem from '../../../../../app/thunks/moveItem';
 import updateItemConfig from '../../../../../app/thunks/updateItemConfig';
 import canBeRenamed from '../../../../../app/utils/canBeRenamed';
@@ -289,7 +288,6 @@ function StructureTreeNodeContent({
 	}, [isOverTarget, node]);
 
 	const showOptions =
-		Liferay.FeatureFlags['LPS-147895'] &&
 		canUpdatePageStructure &&
 		node.itemType !== ITEM_TYPES.editable &&
 		node.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
@@ -391,15 +389,6 @@ function StructureTreeNodeContent({
 							visible={node.hidden || isHovered || isSelected}
 						/>
 					)}
-
-					{!Liferay.FeatureFlags['LPS-147895'] &&
-						node.removable &&
-						canUpdatePageStructure && (
-							<RemoveButton
-								node={node}
-								visible={isHovered || isSelected}
-							/>
-						)}
 
 					{showOptions && (
 						<StructureTreeNodeActions
@@ -549,33 +538,6 @@ const VisibilityButton = ({
 			<ClayIcon
 				symbol={node.hidden || node.hiddenAncestor ? 'hidden' : 'view'}
 			/>
-		</ClayButton>
-	);
-};
-
-const RemoveButton = ({node, visible}) => {
-	const dispatch = useDispatch();
-	const selectItem = useSelectItem();
-
-	return (
-		<ClayButton
-			aria-label={Liferay.Util.sub(Liferay.Language.get('remove-x'), [
-				node.name,
-			])}
-			className={classNames(
-				'page-editor__page-structure__tree-node__remove-button',
-				{
-					'page-editor__page-structure__tree-node__remove-button--visible': visible,
-				}
-			)}
-			displayType="unstyled"
-			onClick={(event) => {
-				event.stopPropagation();
-
-				dispatch(deleteItem({itemId: node.id, selectItem}));
-			}}
-		>
-			<ClayIcon symbol="trash" />
 		</ClayButton>
 	);
 };

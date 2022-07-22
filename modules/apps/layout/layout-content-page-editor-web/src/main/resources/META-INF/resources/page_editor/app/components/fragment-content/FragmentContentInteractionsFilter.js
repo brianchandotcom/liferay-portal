@@ -237,9 +237,7 @@ function FragmentContentInteractionsFilter({
 				) {
 					requestAnimationFrame(() => {
 						activeEditable.element.addEventListener(
-							Liferay.FeatureFlags['LPS-147895']
-								? 'click'
-								: 'dblclick',
+							'click',
 							enableProcessor
 						);
 					});
@@ -258,7 +256,7 @@ function FragmentContentInteractionsFilter({
 		return () => {
 			if (activeEditable) {
 				activeEditable.element.removeEventListener(
-					Liferay.FeatureFlags['LPS-147895'] ? 'click' : 'dblclick',
+					'click',
 					enableProcessor
 				);
 			}

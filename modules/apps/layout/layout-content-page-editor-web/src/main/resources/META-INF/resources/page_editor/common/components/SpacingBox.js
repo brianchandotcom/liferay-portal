@@ -164,9 +164,7 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 		if (active && itemListRef.current) {
 			itemListRef.current
 				.querySelector(
-					Liferay.FeatureFlags['LPS-147895']
-						? `button[data-value="${value || field?.defaultValue}"]`
-						: 'button'
+					`button[data-value="${value || field?.defaultValue}"]`
 				)
 				?.focus();
 		}
@@ -251,10 +249,8 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 								}}
 							>
 								<span className="text-truncate w-50">
-									{Liferay.FeatureFlags['LPS-147895']
-										? tokenValues[`spacer${option.value}`]
-												?.label || option.label
-										: option.label}
+									{tokenValues[`spacer${option.value}`]
+										?.label || option.label}
 								</span>
 
 								<strong className="flex-grow-1 pl-2 text-right text-truncate">
@@ -285,10 +281,7 @@ function SpacingOptionValue({
 	const [value, setValue] = useState(optionValue);
 
 	useEffect(() => {
-		if (
-			Liferay.FeatureFlags['LPS-147895'] &&
-			tokenValues[`spacer${optionValue}`]
-		) {
+		if (tokenValues[`spacer${optionValue}`]) {
 			setValue(tokenValues[`spacer${optionValue}`].value);
 
 			return;
@@ -299,20 +292,9 @@ function SpacingOptionValue({
 		element.classList.add(`${type[0]}${position[0]}-${optionValue}`);
 		globalContext.document.body.appendChild(element);
 
-		let nextValue = globalContext.window
+		const nextValue = globalContext.window
 			.getComputedStyle(element)
 			.getPropertyValue(`${type}-${position}`);
-
-		if (!Liferay.FeatureFlags['LPS-147895'] && removeValueUnit) {
-			nextValue = parseFloat(nextValue);
-
-			if (isNaN(nextValue)) {
-				nextValue = '0';
-			}
-			else {
-				nextValue = nextValue.toString();
-			}
-		}
 
 		setValue(nextValue);
 		globalContext.document.body.removeChild(element);

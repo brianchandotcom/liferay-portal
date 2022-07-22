@@ -82,36 +82,34 @@ export default function ContainerAdvancedPanel({item}) {
 						)}
 					</p>
 
-					{Liferay.FeatureFlags['LPS-147895'] && (
-						<CheckboxField
-							className="mb-2"
-							field={{
-								defaultValue: '',
-								label: Liferay.Language.get(
-									'set-content-visibility-to-auto'
-								),
-								name: 'contentVisibility',
-								typeOptions: {
-									customValues: {
-										checked: 'auto',
-										unchecked: '',
-									},
+					<CheckboxField
+						className="mb-2"
+						field={{
+							defaultValue: '',
+							label: Liferay.Language.get(
+								'set-content-visibility-to-auto'
+							),
+							name: 'contentVisibility',
+							typeOptions: {
+								customValues: {
+									checked: 'auto',
+									unchecked: '',
 								},
-							}}
-							onValueSelect={(name, value) => {
-								dispatch(
-									updateItemConfig({
-										itemConfig: {
-											[name]: value,
-										},
-										itemId: item.itemId,
-										segmentsExperienceId,
-									})
-								);
-							}}
-							value={item.config.contentVisibility}
-						/>
-					)}
+							},
+						}}
+						onValueSelect={(name, value) => {
+							dispatch(
+								updateItemConfig({
+									itemConfig: {
+										[name]: value,
+									},
+									itemId: item.itemId,
+									segmentsExperienceId,
+								})
+							);
+						}}
+						value={item.config.contentVisibility}
+					/>
 				</>
 			)}
 

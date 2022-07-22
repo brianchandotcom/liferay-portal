@@ -20,11 +20,7 @@ export default function selectLayoutDataItemLabel(
 	item,
 	{useCustomName = true} = {}
 ) {
-	if (
-		useCustomName &&
-		Liferay.FeatureFlags['LPS-147895'] &&
-		item.config?.name
-	) {
+	if (useCustomName && item.config?.name) {
 		return item.config.name;
 	}
 

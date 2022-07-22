@@ -23,8 +23,5 @@ const RENAMABLE_ITEM_TYPES = [
 ];
 
 export default function canBeRenamed(item) {
-	return (
-		Liferay.FeatureFlags['LPS-147895'] &&
-		RENAMABLE_ITEM_TYPES.includes(item.type)
-	);
+	return RENAMABLE_ITEM_TYPES.includes(item.type);
 }

@@ -130,37 +130,35 @@ export default function ImageSourcePanel({item}) {
 
 			{ConfigurationPanel && <ConfigurationPanel item={item} />}
 
-			{Liferay.FeatureFlags['LPS-147895'] &&
-				item.type === EDITABLE_TYPES.image && (
-					<CheckboxField
-						field={{
-							defaultValue: false,
-							label: Liferay.Language.get('enable-lazy-loading'),
-							name: 'lazyLoading',
-						}}
-						onValueSelect={(name, value) => {
-							dispatch(
-								updateEditableValuesThunk({
-									editableValues: setIn(
-										editableValues,
-										[
-											EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-											item.editableId,
-											'config',
-											name,
-										],
-										value
-									),
-									fragmentEntryLinkId:
-										item.fragmentEntryLinkId,
-									languageId,
-									segmentsExperienceId,
-								})
-							);
-						}}
-						value={editableValue.config.lazyLoading}
-					/>
-				)}
+			{item.type === EDITABLE_TYPES.image && (
+				<CheckboxField
+					field={{
+						defaultValue: false,
+						label: Liferay.Language.get('enable-lazy-loading'),
+						name: 'lazyLoading',
+					}}
+					onValueSelect={(name, value) => {
+						dispatch(
+							updateEditableValuesThunk({
+								editableValues: setIn(
+									editableValues,
+									[
+										EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+										item.editableId,
+										'config',
+										name,
+									],
+									value
+								),
+								fragmentEntryLinkId: item.fragmentEntryLinkId,
+								languageId,
+								segmentsExperienceId,
+							})
+						);
+					}}
+					value={editableValue.config.lazyLoading}
+				/>
+			)}
 		</>
 	);
 }

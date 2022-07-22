@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -101,6 +102,10 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			layoutStructure.updateItemConfig(
 				JSONFactoryUtil.createJSONObject(itemConfig), formItemId);
 
+			FragmentCollectionContributor fragmentCollectionContributor =
+				_fragmentCollectionContributorTracker.
+					getFragmentCollectionContributor("INPUTS");
+
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(actionRequest);
 
@@ -110,7 +115,15 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 			List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
-			if (fragmentEntry == null) {
+			if (fragmentCollectionContributor == null) {
+				jsonObject.put(
+					"errorMessage",
+					LanguageUtil.get(
+						themeDisplay.getLocale(),
+						"your-form-could-not-be-loaded-because-fragments-are-" +
+							"not-available"));
+			}
+			else if (fragmentEntry == null) {
 				jsonObject.put(
 					"errorMessage",
 					LanguageUtil.format(

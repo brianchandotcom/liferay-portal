@@ -26,6 +26,50 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	@refactordone
+	test CanDisableSubscriptionsToThreadAndCategory {
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
+
+		MessageboardsThread.addPG(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.viewCategorySubscribeLink(categoryName = "MB Category Name");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewThreadSubscribeLink(threadSubject = "MB Thread Message Subject");
+
+		MessageboardsPortlet.configureMessageAddedEmail(
+			messageAddedEmailEnabled = "false",
+			siteURLKey = "guest");
+
+		MessageboardsPortlet.configureMessageUpdatedEmail(
+			messageUpdatedEmailEnabled = "false",
+			siteURLKey = "guest");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.viewCategorySubscribeLink(
+			categoryName = "MB Category Name",
+			disabledEmailConfiguration = "true");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewThreadSubscribeLink(
+			disabledEmailConfiguration = "true",
+			threadSubject = "MB Thread Message Subject");
+	}
+
 	@description = "This is a test for LPS-136922. It checks that a banned user cannot create a new thread."
 	@priority = "3"
 	test CannotCreateThreadAsBannedUser {

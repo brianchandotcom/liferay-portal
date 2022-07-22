@@ -297,13 +297,20 @@ AUI.add(
 					const locale = event.currentTarget.attr('locale');
 
 					if (event.target.hasClass(CSS_DELETE_TRANSLATION)) {
-						if (confirm(MSG_DEACTIVATE_LANGUAGE)) {
-							instance.deleteAvailableLocale(locale);
+						instance._openConfirm({
+							message: MSG_DEACTIVATE_LANGUAGE,
+							onConfirm: (isConfirmed) => {
+								if (isConfirmed) {
+									instance.deleteAvailableLocale(locale);
 
-							if (locale === instance.get('editingLocale')) {
-								instance._resetEditingLocale();
-							}
-						}
+									if (
+										locale === instance.get('editingLocale')
+									) {
+										instance._resetEditingLocale();
+									}
+								}
+							},
+						});
 					}
 					else {
 						instance.set('editingLocale', locale);
@@ -330,6 +337,15 @@ AUI.add(
 					instance.set('defaultLocale', event.target.val());
 
 					instance.toggleDefaultLocales();
+				},
+
+				_openConfirm({message, onConfirm}) {
+					if (Liferay.FeatureFlags.enableCustomDialogs) {
+						Liferay.Util.openConfirmModal({message, onConfirm});
+					}
+					else if (confirm(message)) {
+						onConfirm(true);
+					}
 				},
 
 				_resetEditingLocale() {

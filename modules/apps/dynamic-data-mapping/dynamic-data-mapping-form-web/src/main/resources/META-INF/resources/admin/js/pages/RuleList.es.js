@@ -431,20 +431,23 @@ const ListItem = ({
 							},
 							{
 								label: Liferay.Language.get('delete'),
-								onClick: () =>
-									openConfirmModal({
-										message: Liferay.Language.get(
-											'you-cannot-create-rules-with-nested-functions.-are-you-sure-you-want-to-delete-this-rule'
-										),
-										onConfirm: (isConfirmed) => {
-											if (
-												isConfirmed ||
-												!isNestedCondition
-											) {
-												onDelete();
-											}
-										},
-									}),
+								onClick: () => {
+									if (!isNestedCondition) {
+										onDelete();
+									}
+									else {
+										openConfirmModal({
+											message: Liferay.Language.get(
+												'you-cannot-create-rules-with-nested-functions.-are-you-sure-you-want-to-delete-this-rule'
+											),
+											onConfirm: (isConfirmed) => {
+												if (isConfirmed) {
+													onDelete();
+												}
+											},
+										});
+									}
+								},
 							},
 						]}
 						trigger={

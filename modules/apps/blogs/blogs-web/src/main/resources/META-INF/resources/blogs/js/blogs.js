@@ -13,7 +13,7 @@
  */
 
 import {State} from '@liferay/frontend-js-state-web';
-import {openConfirmModal, toggleBoxes} from 'frontend-js-web';
+import {fetch, openConfirmModal, toggleBoxes} from 'frontend-js-web';
 import {
 	STR_NULL_IMAGE_FILE_ENTRY_ID,
 	imageSelectorImageAtom,
@@ -433,7 +433,7 @@ export default class Blogs {
 
 				const body = new URLSearchParams(bodyData);
 
-				Liferay.Util.fetch(this._config.editEntryURL, {
+				fetch(this._config.editEntryURL, {
 					body,
 					method: 'POST',
 				})

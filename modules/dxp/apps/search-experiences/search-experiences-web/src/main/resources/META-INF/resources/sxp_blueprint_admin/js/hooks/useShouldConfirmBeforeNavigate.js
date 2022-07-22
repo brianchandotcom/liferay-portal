@@ -9,9 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {useEffect} from 'react';
-
 import {openConfirmModal} from 'frontend-js-web';
+import {useEffect} from 'react';
 
 function openConfirm({message, onConfirm}) {
 	if (Liferay.FeatureFlags['LPS-148659']) {
@@ -67,8 +66,8 @@ export default function useShouldConfirmBeforeNavigate(
 					if (!isConfirmed) {
 						event.originalEvent.preventDefault();
 					}
-				}
-			})
+				},
+			});
 		};
 
 		if (requiresConfirmation) {

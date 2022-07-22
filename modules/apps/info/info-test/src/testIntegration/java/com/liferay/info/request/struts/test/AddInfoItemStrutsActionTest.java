@@ -154,7 +154,7 @@ public class AddInfoItemStrutsActionTest {
 	@Test
 	public void testAddInfoItemMaxValues() throws Exception {
 		_testAddInfoItem(
-			"99999999999999.9999999999999999", "9999999999999998", "999999999",
+			"99999999999999.9999999999999999", "9999999999", "999999999",
 			"9007199254740991", RandomTestUtil.randomString());
 	}
 

@@ -12,6 +12,7 @@
  * details.
  */
 
+import openConfirm from './openConfirm';
 import openDeleteStyleBookModal from './openDeleteSiteModal';
 
 const ACTIONS = {
@@ -20,13 +21,16 @@ const ACTIONS = {
 	},
 
 	deactivateSite(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-deactivate-this')
-			)
-		) {
-			this.send(itemData.deactivateSiteURL);
-		}
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-deactivate-this'
+			),
+			onConfirm: (isConfirm) => {
+				if (isConfirm) {
+					this.send(itemData.deactivateSiteURL);
+				}
+			},
+		});
 	},
 
 	deleteSite(itemData) {

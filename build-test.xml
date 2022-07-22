@@ -9462,6 +9462,13 @@ virtualHostname="localhost"
 										</then>
 									</elseif>
 									<else>
+										<if>
+											<isset property="env.TEST_PORTAL_RELEASE_VERSION" />
+											<then>
+												<fail message="This release test is attempting to build Marketplace application(s) from source instead of deploying the latest released version from Marketplace." />
+											</then>
+										</if>
+
 										<echo>Deploying all relevant modules that make up ${Liferay-Releng-App-Title}.lpkg.</echo>
 
 										<local name="app.name" />

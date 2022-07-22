@@ -27,6 +27,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -75,6 +76,28 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
 			_updateFormItemConfig(actionRequest, actionResponse));
+	}
+
+	private FragmentEntryLink _addFragmentEntryLink(
+			String formItemId, FragmentEntry fragmentEntry,
+			LayoutStructure layoutStructure, long segmentsExperienceId,
+			ServiceContext serviceContext, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				themeDisplay.getScopeGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
+				themeDisplay.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				serviceContext);
+
+		layoutStructure.addFragmentStyledLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(), formItemId, 0);
+
+		return fragmentEntryLink;
 	}
 
 	private JSONObject _updateFormItemConfig(
@@ -136,19 +159,9 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(httpServletRequest);
 
-				FragmentEntryLink fragmentEntryLink =
-					_fragmentEntryLinkService.addFragmentEntryLink(
-						themeDisplay.getScopeGroupId(), 0,
-						fragmentEntry.getFragmentEntryId(),
-						segmentsExperienceId, themeDisplay.getPlid(),
-						fragmentEntry.getCss(), fragmentEntry.getHtml(),
-						fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
-						null, StringPool.BLANK, 0,
-						fragmentEntry.getFragmentEntryKey(),
-						fragmentEntry.getType(), serviceContext);
-
-				layoutStructure.addFragmentStyledLayoutStructureItem(
-					fragmentEntryLink.getFragmentEntryLinkId(), formItemId, 0);
+				FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+					formItemId, fragmentEntry, layoutStructure,
+					segmentsExperienceId, serviceContext, themeDisplay);
 
 				addedFragmentEntryLinks.add(fragmentEntryLink);
 			}

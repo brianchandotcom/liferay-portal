@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -137,6 +138,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					_toString(contentDashboardItem.getCreateDate())
 				).put(
 					"description", contentDashboardItem.getDescription(locale)
+				).put(
+					"fetchSharingButtonURL",
+					_getFetchSharingButtonURL(
+						contentDashboardItem, httpServletRequest)
 				).put(
 					"languageTag", locale.toLanguageTag()
 				).put(
@@ -301,6 +306,29 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 
 				return first;
 			});
+	}
+
+	private String _getFetchSharingButtonURL(
+		ContentDashboardItem contentDashboardItem,
+		HttpServletRequest httpServletRequest) {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152906"))) {
+			return null;
+		}
+
+		List<ContentDashboardItemAction> contentDashboardItemActions =
+			contentDashboardItem.getContentDashboardItemActions(
+				httpServletRequest,
+				ContentDashboardItemAction.Type.SHARING_BUTTON);
+
+		if (ListUtil.isNotEmpty(contentDashboardItemActions)) {
+			ContentDashboardItemAction contentDashboardItemAction =
+				contentDashboardItemActions.get(0);
+
+			return contentDashboardItemAction.getURL();
+		}
+
+		return null;
 	}
 
 	private JSONObject _getSpecificFieldsJSONObject(

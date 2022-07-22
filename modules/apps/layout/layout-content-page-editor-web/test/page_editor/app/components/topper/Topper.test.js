@@ -87,12 +87,8 @@ describe('Topper', () => {
 	});
 
 	it('renders custom name of the fragment', () => {
-		Liferay.FeatureFlags['LPS-147895'] = true;
-
 		renderTopper({rowConfig: {name: 'customName'}});
 
 		expect(screen.queryByLabelText('customName')).toBeInTheDocument();
-
-		Liferay.FeatureFlags['LPS-147895'] = false;
 	});
 });

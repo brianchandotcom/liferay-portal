@@ -271,27 +271,6 @@ describe('PageStructureSidebar', () => {
 		expect(button.parentElement).toHaveAttribute('aria-disabled', 'true');
 	});
 
-	it('allows removing items of certain types', () => {
-		renderComponent({
-			activeItemId: '11-container',
-			rootItemChildren: [
-				'01-container',
-				'02-row',
-				'03-column',
-				'04-fragment',
-			],
-		});
-
-		expect(
-			screen.queryByLabelText('remove-x-container')
-		).toBeInTheDocument();
-		expect(screen.queryByLabelText('remove-x-grid')).toBeInTheDocument();
-		expect(screen.queryByLabelText('remove-x-module')).toBe(null);
-		expect(
-			screen.queryByLabelText('remove-x-Fragment 1')
-		).toBeInTheDocument();
-	});
-
 	it('scans fragments editables', () => {
 		renderComponent({
 			activeItemId: '04-fragment',
@@ -379,8 +358,6 @@ describe('PageStructureSidebar', () => {
 	});
 
 	it('allow changing fragment name', () => {
-		Liferay.FeatureFlags['LPS-147895'] = true;
-
 		const {baseElement} = renderComponent({
 			activeItemId: '11-container',
 			rootItemChildren: ['04-fragment'],
@@ -405,7 +382,5 @@ describe('PageStructureSidebar', () => {
 		);
 
 		updateItemConfig.mockClear();
-
-		Liferay.FeatureFlags['LPS-147895'] = false;
 	});
 });

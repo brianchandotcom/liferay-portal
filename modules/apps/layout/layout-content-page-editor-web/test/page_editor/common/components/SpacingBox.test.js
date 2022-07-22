@@ -119,15 +119,11 @@ describe('SpacingBox', () => {
 	let _liferayUtilSub;
 
 	beforeEach(() => {
-		Liferay.FeatureFlags['LPS-147895'] = true;
-
 		_getComputedStyle = window.getComputedStyle;
 		_liferayUtilSub = window.Liferay.Util.sub;
 	});
 
 	afterEach(() => {
-		Liferay.FeatureFlags['LPS-147895'] = false;
-
 		window.getComputedStyle = _getComputedStyle;
 		window.Liferay.Util.sub = _liferayUtilSub;
 	});

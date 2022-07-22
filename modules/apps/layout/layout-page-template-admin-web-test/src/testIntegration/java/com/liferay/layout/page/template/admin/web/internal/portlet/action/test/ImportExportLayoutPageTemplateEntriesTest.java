@@ -210,27 +210,22 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryCollectionDisplayName()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-147895", Boolean.TRUE.toString())) {
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
+			"CLASS_PK",
+			() -> {
+				AssetListEntry assetListEntry = _addAssetListEntry(
+					_group1.getGroupId());
 
-			Map<String, String> numberValuesMap = HashMapBuilder.put(
-				"CLASS_PK",
-				() -> {
-					AssetListEntry assetListEntry = _addAssetListEntry(
-						_group1.getGroupId());
+				return String.valueOf(assetListEntry.getAssetListEntryId());
+			}
+		).build();
 
-					return String.valueOf(assetListEntry.getAssetListEntryId());
-				}
-			).build();
+		File expectedFile = _generateZipFile(
+			"collection_display/name/expected", numberValuesMap, null);
+		File inputFile = _generateZipFile(
+			"collection_display/name/input", numberValuesMap, null);
 
-			File expectedFile = _generateZipFile(
-				"collection_display/name/expected", numberValuesMap, null);
-			File inputFile = _generateZipFile(
-				"collection_display/name/input", numberValuesMap, null);
-
-			_validateImportExport(expectedFile, inputFile);
-		}
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -294,17 +289,12 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerContentVisibility()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-147895", Boolean.TRUE.toString())) {
+		File expectedFile = _generateZipFile(
+			"container/content_visibility/expected", null, null);
+		File inputFile = _generateZipFile(
+			"container/content_visibility/input", null, null);
 
-			File expectedFile = _generateZipFile(
-				"container/content_visibility/expected", null, null);
-			File inputFile = _generateZipFile(
-				"container/content_visibility/input", null, null);
-
-			_validateImportExport(expectedFile, inputFile);
-		}
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -482,33 +472,21 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerName()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-147895", Boolean.TRUE.toString())) {
+		File expectedFile = _generateZipFile(
+			"container/name/expected", null, null);
+		File inputFile = _generateZipFile("container/name/input", null, null);
 
-			File expectedFile = _generateZipFile(
-				"container/name/expected", null, null);
-			File inputFile = _generateZipFile(
-				"container/name/input", null, null);
-
-			_validateImportExport(expectedFile, inputFile);
-		}
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
 	public void testImportExportLayoutPageTemplateEntryFormContainerName()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-147895", Boolean.TRUE.toString())) {
+		File expectedFile = _generateZipFile("form/name/expected", null, null);
+		File inputFile = _generateZipFile("form/name/input", null, null);
 
-			File expectedFile = _generateZipFile(
-				"form/name/expected", null, null);
-			File inputFile = _generateZipFile("form/name/input", null, null);
-
-			_validateImportExport(expectedFile, inputFile);
-		}
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -691,19 +669,13 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryFragmentName()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-147895", Boolean.TRUE.toString())) {
+		_addTextFragmentEntry();
 
-			_addTextFragmentEntry();
+		File expectedFile = _generateZipFile(
+			"fragment/name/expected", null, null);
+		File inputFile = _generateZipFile("fragment/name/input", null, null);
 
-			File expectedFile = _generateZipFile(
-				"fragment/name/expected", null, null);
-			File inputFile = _generateZipFile(
-				"fragment/name/input", null, null);
-
-			_validateImportExport(expectedFile, inputFile);
-		}
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -991,16 +963,10 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryRowName()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-147895", Boolean.TRUE.toString())) {
+		File expectedFile = _generateZipFile("row/name/expected", null, null);
+		File inputFile = _generateZipFile("row/name/input", null, null);
 
-			File expectedFile = _generateZipFile(
-				"row/name/expected", null, null);
-			File inputFile = _generateZipFile("row/name/input", null, null);
-
-			_validateImportExport(expectedFile, inputFile);
-		}
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	private AssetListEntry _addAssetListEntry(long groupId)

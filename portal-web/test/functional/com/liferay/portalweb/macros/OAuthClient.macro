@@ -5,7 +5,7 @@ definition {
 
 		var clientInfo = FileUtil.read("${jsonFileBaseDir}/${jsonFileName}");
 
-		Button.clickAdd();
+		LexiconEntry.gotoAdd();
 
 		FormFields.editText(
 			fieldName = "authServerWellKnownURI",
@@ -34,6 +34,14 @@ definition {
 			''');
 
 		PortletEntry.save();
+	}
+
+	macro openOAuthClientAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_oauth_client_admin_web_internal_portlet_OAuthClientAdminPortlet");
+
+		WaitForVisible(locator1 = "Button#PLUS");
 	}
 
 }

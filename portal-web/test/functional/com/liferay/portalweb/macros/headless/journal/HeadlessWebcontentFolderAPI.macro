@@ -73,6 +73,29 @@ definition {
 		return "${response}";
 	}
 
+	macro _deleteStructuredContentFolderByErc {
+		Variables.assertDefined(parameterList = "${externalReferenceCode}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(assetLibraryId)) {
+			var api = "asset-libraries/${assetLibraryId}/structured-content-folders/by-external-reference-code/${externalReferenceCode}";
+		}
+		else {
+			var api = "sites/${siteId}/structured-contents-folders/by-external-reference-code/${externalReferenceCode}";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/${api} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+		''';
+
+		var curl = JSONCurlUtil.delete("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _filterStructuredContentFolders {
 		Variables.assertDefined(parameterList = "${filterValue}");
 
@@ -205,6 +228,14 @@ definition {
 			viewableBy = "${viewableBy}");
 
 		return "${response}";
+	}
+
+	macro deleteStructuredContentFolderByErcInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId}");
+
+		HeadlessWebcontentFolderAPI._deleteStructuredContentFolderByErc(
+			assetLibraryId = "${assetLibraryId}",
+			externalReferenceCode = "${externalReferenceCode}");
 	}
 
 	macro getElementOfCreatedStructuredContentFolder {

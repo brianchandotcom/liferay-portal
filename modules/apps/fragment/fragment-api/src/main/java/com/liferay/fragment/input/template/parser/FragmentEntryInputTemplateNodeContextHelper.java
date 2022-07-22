@@ -54,8 +54,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -272,16 +270,14 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 							RequestBackedPortletURLFactoryUtil.create(
 								httpServletRequest);
 
-					PortletURL itemSelectorURL =
-						_itemSelector.getItemSelectorURL(
-							requestBackedPortletURLFactory,
-							fragmentEntryLink.getNamespace() +
-								"selectFileEntry",
-							fileItemSelectorCriterion);
-
 					inputTemplateNode.addAttribute(
 						"selectFromDocumentLibraryURL",
-						itemSelectorURL.toString());
+						String.valueOf(
+							_itemSelector.getItemSelectorURL(
+								requestBackedPortletURLFactory,
+								fragmentEntryLink.getNamespace() +
+									"selectFileEntry",
+								fileItemSelectorCriterion)));
 				}
 			}
 		}

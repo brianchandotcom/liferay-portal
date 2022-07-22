@@ -20,6 +20,14 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkService;
+import com.liferay.info.field.type.BooleanInfoFieldType;
+import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.FileInfoFieldType;
+import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.RelationshipInfoFieldType;
+import com.liferay.info.field.type.SelectInfoFieldType;
+import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -163,6 +171,36 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			fragmentEntryLink.getFragmentEntryLinkId(), formItemId, -1);
 
 		return fragmentEntryLink;
+	}
+
+	private String _getFragmentEntryKey(InfoFieldType infoFieldType) {
+		if (infoFieldType instanceof BooleanInfoFieldType) {
+			return "INPUTS-checkbox";
+		}
+
+		if (infoFieldType instanceof DateInfoFieldType) {
+			return "INPUTS-date-input";
+		}
+
+		if (infoFieldType instanceof FileInfoFieldType) {
+			return "INPUTS-file-upload";
+		}
+
+		if (infoFieldType instanceof NumberInfoFieldType) {
+			return "INPUTS-numeric-input";
+		}
+
+		if (infoFieldType instanceof RelationshipInfoFieldType ||
+			infoFieldType instanceof SelectInfoFieldType) {
+
+			return "INPUTS-select-from-list";
+		}
+
+		if (infoFieldType instanceof TextInfoFieldType) {
+			return "INPUTS-text-input";
+		}
+
+		return null;
 	}
 
 	private JSONArray _removeFormChildrenItems(

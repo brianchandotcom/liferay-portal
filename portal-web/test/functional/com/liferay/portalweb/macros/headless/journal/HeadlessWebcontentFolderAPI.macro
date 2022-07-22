@@ -54,7 +54,7 @@ definition {
 			var api = "asset-libraries/${assetLibraryId}/structured-content-folders";
 		}
 		else {
-			var api = "sites/${siteId}/structured-contents";
+			var api = "sites/${siteId}/structured-contents-folders";
 		}
 
 		var curl = '''
@@ -108,6 +108,37 @@ definition {
         ''';
 
 		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
+	macro _updateStructureContentFolderByErc {
+		Variables.assertDefined(parameterList = "${externalReferenceCode},${name}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(assetLibraryId)) {
+			var api = "asset-libraries/${assetLibraryId}/structured-content-folders/by-external-reference-code/${externalReferenceCode}";
+		}
+		else {
+			var api = "sites/${siteId}/structured-contents-folders/by-external-reference-code/${externalReferenceCode}";
+		}
+
+		if (!(isSet(externalReferenceCodeInBody))) {
+			var externalReferenceCodeInBody = "";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/${api} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+			-d {
+  "externalReferenceCode": "${externalReferenceCodeInBody}",
+  "name": "${name}"
+	}
+		''';
+
+		var curl = JSONCurlUtil.put("${curl}");
 
 		return "${curl}";
 	}
@@ -208,6 +239,18 @@ definition {
 		var structuredContentUuid = StringUtil.extractLast("${uuidResult}", "uuid_");
 
 		return "${structuredContentUuid}";
+	}
+
+	macro updateStructureContentFolderByErcInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId}");
+
+		var response = HeadlessWebcontentFolderAPI._updateStructureContentFolderByErc(
+			assetLibraryId = "${assetLibraryId}",
+			externalReferenceCode = "${externalReferenceCode}",
+			externalReferenceCodeInBody = "${externalReferenceCodeInBody}",
+			name = "${name}");
+
+		return "${response}";
 	}
 
 }

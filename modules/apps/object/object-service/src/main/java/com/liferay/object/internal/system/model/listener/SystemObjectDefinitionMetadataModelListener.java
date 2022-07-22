@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -197,14 +198,22 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 			"classPK", baseModel.getPrimaryKeyObj()
 		).put(
 			"extendedProperties",
-			HashMapBuilder.<String, Object>putAll(
-				_objectEntryLocalService.
-					getExtensionDynamicObjectDefinitionTableValues(
-						objectDefinition,
-						GetterUtil.getLong(baseModel.getPrimaryKeyObj()))
-			).putAll(
-				EntityExtensionThreadLocal.getExtendedProperties()
-			).build()
+			() -> {
+				if (!GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-135404"))) {
+
+					return null;
+				}
+
+				return HashMapBuilder.<String, Object>putAll(
+					_objectEntryLocalService.
+						getExtensionDynamicObjectDefinitionTableValues(
+							objectDefinition,
+							GetterUtil.getLong(baseModel.getPrimaryKeyObj()))
+				).putAll(
+					EntityExtensionThreadLocal.getExtendedProperties()
+				).build();
+			}
 		).put(
 			"model" + _modelClass.getSimpleName(),
 			baseModel.getModelAttributes()

@@ -3,10 +3,7 @@ definition {
 
 	function selectFrame {
 		if (contains("${locator1}", "/iframe")) {
-			WaitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
+			WaitForFrameLoad();
 
 			selenium.waitForVisible();
 

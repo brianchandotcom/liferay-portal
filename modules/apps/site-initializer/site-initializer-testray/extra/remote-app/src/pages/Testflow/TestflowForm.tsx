@@ -12,17 +12,13 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import {useState} from 'react';
 
 import Form from '../../components/Form';
 import Container from '../../components/Layout/Container';
-import {
-	CTypePagination,
-	TestrayCaseType,
-	getCaseTypes,
-} from '../../graphql/queries';
+import {TestrayCaseType} from '../../graphql/queries';
+import {useFetch} from '../../hooks/useFetch';
 import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 import {searchUtil} from '../../util/search';
@@ -33,11 +29,9 @@ const TestflowForm = () => {
 	const [users, setUsers] = useState([]);
 	const [modalType, setModalType] = useState('assign-users');
 
-	const {data} = useQuery<CTypePagination<'caseTypes', TestrayCaseType>>(
-		getCaseTypes
-	);
+	const {data} = useFetch('/casetypes');
 
-	const caseTypes = data?.c.caseTypes?.items || [];
+	const caseTypes = data?.items || [];
 
 	const {modal} = useFormModal({
 		onSave: setUsers,
@@ -56,9 +50,11 @@ const TestflowForm = () => {
 			<Form.Clay.Group>
 				<label className="mb-2">{i18n.translate('case-type')}</label>
 
-				{caseTypes.slice(0, 10).map((caseType, index) => (
-					<Form.Checkbox key={index} label={caseType.name} />
-				))}
+				{caseTypes
+					.slice(0, 10)
+					.map((caseType: TestrayCaseType, index: number) => (
+						<Form.Checkbox key={index} label={caseType.name} />
+					))}
 			</Form.Clay.Group>
 
 			<h3>{i18n.translate('users')}</h3>

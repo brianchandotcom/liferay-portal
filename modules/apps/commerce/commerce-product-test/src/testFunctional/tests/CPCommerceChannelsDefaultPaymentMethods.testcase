@@ -38,7 +38,11 @@ definition {
 		}
 
 		task ("And clicks on the Set Default Account Payment Methods button") {
-			Button.click(button = "Set Default Commerce Payment Method");
+			Click(
+				key_text = "Set Default Commerce Payment Method",
+				locator1 = "Button#ANY");
+
+			SelectFrameTop();
 		}
 
 		task ("Then a dropdown appears with all the payment methods entries created by default using Minium") {

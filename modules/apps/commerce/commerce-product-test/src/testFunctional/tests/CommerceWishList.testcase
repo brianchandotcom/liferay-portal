@@ -861,15 +861,15 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code");
 
-			Button.click(button = "Continue");
+			Click(locator1 = "Button#CONTINUE");
 
 			Click(
 				key_radioOption = "Standard",
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
-			Button.click(button = "Continue");
+			Click(locator1 = "Button#CONTINUE");
 
-			Button.click(button = "Continue");
+			Click(locator1 = "Button#CONTINUE");
 		}
 
 		task ("And when the user go to placed orders and select the completed order") {

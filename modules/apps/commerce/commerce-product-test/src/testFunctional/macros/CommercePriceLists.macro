@@ -20,7 +20,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${modifier}");
 
-		Button.click(button = "Submit");
+		Button.clickSubmitButton();
 	}
 
 	macro createPriceListPriceTiers {

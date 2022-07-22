@@ -773,7 +773,7 @@ definition {
 			locator1 = "TextArea#ANY",
 			value1 = "test1 product group");
 
-		Button.click(button = "Submit");
+		Button.clickSubmitButton();
 
 		Navigator.gotoNavTab(navTab = "Products");
 
@@ -1464,7 +1464,7 @@ definition {
 			catalogLanguage = "English (United States)",
 			catalogName = "Test Catalog");
 
-		Button.click(button = "Submit");
+		Button.clickSubmitButton();
 
 		Refresh();
 
@@ -1474,6 +1474,8 @@ definition {
 			portlet = "Price Lists");
 
 		Click(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
@@ -1493,12 +1495,14 @@ definition {
 
 		Click(locator1 = "Icon#CLOSE");
 
+		SelectFrameTop();
+
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		WaitForElementPresent(
-			ocator1 = "TextInput#NAME",
+			locator1 = "TextInput#NAME",
 			value1 = "Test Price List");
 
 		Type(
@@ -1631,7 +1635,7 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "Test Group");
 
-		Button.click(button = "Submit");
+		Button.clickSubmitButton();
 
 		Navigator.gotoNavTab(navTab = "Products");
 

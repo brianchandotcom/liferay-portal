@@ -573,7 +573,11 @@ definition {
 		CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "${accountName}");
 
 		if (isSet(paymentMethod)) {
-			Button.click(button = "Set Default Commerce Payment Method");
+			WaitForPageLoad();
+
+			Click(
+				key_text = "Set Default Commerce Payment Method",
+				locator1 = "Button#ANY");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
@@ -592,7 +596,11 @@ definition {
 		}
 
 		if (isSet(paymentTerm)) {
-			Button.click(button = "Set Default Payment Commerce Terms Entry");
+			WaitForPageLoad();
+
+			Click(
+				key_text = "Set Default Commerce Payment Method",
+				locator1 = "Button#ANY");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
@@ -611,7 +619,11 @@ definition {
 		}
 
 		if (isSet(deliveryTerm)) {
-			Button.click(button = "Set Default Delivery Commerce Terms Entry");
+			WaitForPageLoad();
+
+			Click(
+				key_text = "Set Default Commerce Payment Method",
+				locator1 = "Button#ANY");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
@@ -634,6 +646,8 @@ definition {
 				key_entryName = "${channelName}",
 				key_table = "Default Account Commerce Channels Shipping Options",
 				locator1 = "CommerceEntry#TABLE_ENTRY_EDIT_BUTTON");
+
+			SelectFrameTop();
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 

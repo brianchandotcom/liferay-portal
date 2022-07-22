@@ -99,7 +99,7 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				shippingMethod = "Standard");
 
-			Button.click(button = "Continue");
+			Click(locator1 = "Button#CONTINUE");
 
 			CommerceCheckout.setStandardShippingOption();
 		}

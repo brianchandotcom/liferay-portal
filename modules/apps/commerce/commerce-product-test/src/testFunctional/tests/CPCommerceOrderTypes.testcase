@@ -473,6 +473,8 @@ definition {
 
 			Button.click(button = "Add Order");
 
+			SelectFrameTop();
+
 			AssertElementPresent(
 				key_orderType = "Test Order Type",
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
@@ -517,6 +519,8 @@ definition {
 				value1 = "Test Order Type 2");
 
 			Button.click(button = "Add Order");
+
+			SelectFrameTop();
 
 			AssertElementPresent(
 				key_orderType = "Test Order Type 2",

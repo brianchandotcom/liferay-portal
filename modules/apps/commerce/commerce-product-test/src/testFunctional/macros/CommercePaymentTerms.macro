@@ -3,7 +3,7 @@ definition {
 	macro addTermsAndCondition {
 		LexiconEntry.gotoAdd();
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Type(
 			locator1 = "TextInput#NAME",

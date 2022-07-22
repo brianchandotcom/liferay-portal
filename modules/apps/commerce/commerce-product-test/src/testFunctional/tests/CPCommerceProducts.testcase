@@ -1318,7 +1318,9 @@ definition {
 			key_filterOption = "Add",
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 
-		Button.clickSave();
+		SelectFrameTop();
+
+		Click(locator1 = "Button#SAVE");
 
 		Alert.viewSuccessMessage();
 

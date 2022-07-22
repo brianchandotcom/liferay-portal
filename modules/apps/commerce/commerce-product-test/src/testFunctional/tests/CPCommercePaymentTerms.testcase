@@ -114,6 +114,8 @@ definition {
 		}
 
 		task ("Then the Sales Manager receives an error.") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			Alert.viewErrorMessage(errorMessage = "Error:Please enter a valid name.");
 		}
 	}
@@ -214,6 +216,8 @@ definition {
 		}
 
 		task ("Then the Sales Manager receives an error because the priority is not unique.") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			Alert.viewErrorMessage(errorMessage = "Error:Please enter a valid priority.");
 		}
 	}

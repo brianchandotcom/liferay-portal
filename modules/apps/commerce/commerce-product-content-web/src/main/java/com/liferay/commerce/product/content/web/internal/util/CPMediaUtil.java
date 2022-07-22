@@ -89,12 +89,12 @@ public class CPMediaUtil {
 		for (CPAttachmentFileEntry cpAttachmentFileEntry :
 				cpAttachmentFileEntries) {
 
-			String url = commerceMediaResolver.getURL(
-				commerceAccountId,
-				cpAttachmentFileEntry.getCPAttachmentFileEntryId());
-
 			String originalImgTag = StringBundler.concat(
-				"<img class=\"product-img\" src=\"", url, "\" />");
+				"<img class=\"product-img\" src=\"",
+				commerceMediaResolver.getURL(
+					commerceAccountId,
+					cpAttachmentFileEntry.getCPAttachmentFileEntryId()),
+				"\" />");
 
 			String adaptiveMediaImageHTMLTag = amImageHTMLTagFactory.create(
 				originalImgTag, cpAttachmentFileEntry.fetchFileEntry());

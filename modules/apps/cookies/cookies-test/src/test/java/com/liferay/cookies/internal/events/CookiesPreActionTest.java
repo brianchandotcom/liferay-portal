@@ -57,12 +57,11 @@ public class CookiesPreActionTest {
 	public void testCookieManagementDisabledWithAllCookies() throws Exception {
 		_setUp(false, false);
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest(
-			true, true, true);
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_cookiesPreAction.run(httpServletRequest, mockHttpServletResponse);
+		_cookiesPreAction.run(
+			_getHttpServletRequest(true, true, true), mockHttpServletResponse);
 
 		Cookie[] cookies = mockHttpServletResponse.getCookies();
 
@@ -97,12 +96,11 @@ public class CookiesPreActionTest {
 
 		_setUp(false, false);
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest(
-			true, true, false);
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_cookiesPreAction.run(httpServletRequest, mockHttpServletResponse);
+		_cookiesPreAction.run(
+			_getHttpServletRequest(true, true, false), mockHttpServletResponse);
 
 		Cookie[] cookies = mockHttpServletResponse.getCookies();
 
@@ -133,12 +131,12 @@ public class CookiesPreActionTest {
 	public void testCookieManagementDisabledWithoutCookies() throws Exception {
 		_setUp(false, false);
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest(
-			false, false, false);
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_cookiesPreAction.run(httpServletRequest, mockHttpServletResponse);
+		_cookiesPreAction.run(
+			_getHttpServletRequest(false, false, false),
+			mockHttpServletResponse);
 
 		Cookie[] cookies = mockHttpServletResponse.getCookies();
 
@@ -149,12 +147,11 @@ public class CookiesPreActionTest {
 	public void testExplicitModeWithAllCookies() throws Exception {
 		_setUp(true, true);
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest(
-			true, true, true);
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_cookiesPreAction.run(httpServletRequest, mockHttpServletResponse);
+		_cookiesPreAction.run(
+			_getHttpServletRequest(true, true, true), mockHttpServletResponse);
 
 		Cookie[] cookies = mockHttpServletResponse.getCookies();
 
@@ -165,12 +162,11 @@ public class CookiesPreActionTest {
 	public void testExplicitModeWithConsentCookies() throws Exception {
 		_setUp(true, true);
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest(
-			true, true, false);
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_cookiesPreAction.run(httpServletRequest, mockHttpServletResponse);
+		_cookiesPreAction.run(
+			_getHttpServletRequest(true, true, false), mockHttpServletResponse);
 
 		Cookie[] cookies = mockHttpServletResponse.getCookies();
 
@@ -199,12 +195,12 @@ public class CookiesPreActionTest {
 	public void testExplicitModeWithoutCookies() throws Exception {
 		_setUp(true, true);
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest(
-			false, false, false);
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_cookiesPreAction.run(httpServletRequest, mockHttpServletResponse);
+		_cookiesPreAction.run(
+			_getHttpServletRequest(false, false, false),
+			mockHttpServletResponse);
 
 		Cookie[] cookies = mockHttpServletResponse.getCookies();
 
@@ -235,12 +231,11 @@ public class CookiesPreActionTest {
 	public void testImplicitModeWithAllCookies() throws Exception {
 		_setUp(true, false);
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest(
-			true, true, true);
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_cookiesPreAction.run(httpServletRequest, mockHttpServletResponse);
+		_cookiesPreAction.run(
+			_getHttpServletRequest(true, true, true), mockHttpServletResponse);
 
 		Cookie[] cookies = mockHttpServletResponse.getCookies();
 
@@ -251,12 +246,11 @@ public class CookiesPreActionTest {
 	public void testImplicitModeWithConsentCookies() throws Exception {
 		_setUp(true, false);
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest(
-			true, true, false);
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_cookiesPreAction.run(httpServletRequest, mockHttpServletResponse);
+		_cookiesPreAction.run(
+			_getHttpServletRequest(true, true, false), mockHttpServletResponse);
 
 		Cookie[] cookies = mockHttpServletResponse.getCookies();
 
@@ -267,12 +261,12 @@ public class CookiesPreActionTest {
 	public void testImplicitModeWithoutCookies() throws Exception {
 		_setUp(true, false);
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest(
-			false, false, false);
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_cookiesPreAction.run(httpServletRequest, mockHttpServletResponse);
+		_cookiesPreAction.run(
+			_getHttpServletRequest(false, false, false),
+			mockHttpServletResponse);
 
 		Cookie[] cookies = mockHttpServletResponse.getCookies();
 

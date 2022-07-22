@@ -23,9 +23,7 @@ import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,17 +89,7 @@ public class RowLayoutStructureItemMapper
 							() -> getFragmentViewPorts(
 								rowStyledLayoutStructureItem.
 									getItemConfigJSONObject()));
-						setName(
-							() -> {
-								if (!GetterUtil.getBoolean(
-										PropsUtil.get(
-											"feature.flag.LPS-147895"))) {
-
-									return null;
-								}
-
-								return rowStyledLayoutStructureItem.getName();
-							});
+						setName(rowStyledLayoutStructureItem::getName);
 						setRowViewports(
 							() -> {
 								Map<String, JSONObject>

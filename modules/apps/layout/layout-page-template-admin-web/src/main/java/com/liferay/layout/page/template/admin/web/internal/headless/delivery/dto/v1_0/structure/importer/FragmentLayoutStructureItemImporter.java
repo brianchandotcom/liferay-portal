@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
@@ -209,9 +208,7 @@ public class FragmentLayoutStructureItemImporter
 				GetterUtil.getBoolean(definitionMap.get("indexed")));
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147895")) &&
-			definitionMap.containsKey("name")) {
-
+		if (definitionMap.containsKey("name")) {
 			fragmentStyledLayoutStructureItem.setName(
 				GetterUtil.getString(definitionMap.get("name")));
 		}

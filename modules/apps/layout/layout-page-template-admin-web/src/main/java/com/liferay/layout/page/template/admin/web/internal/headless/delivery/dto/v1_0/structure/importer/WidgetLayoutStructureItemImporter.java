@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.HashSet;
@@ -138,9 +137,7 @@ public class WidgetLayoutStructureItemImporter
 			}
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147895")) &&
-			definitionMap.containsKey("name")) {
-
+		if (definitionMap.containsKey("name")) {
 			fragmentStyledLayoutStructureItem.setName(
 				GetterUtil.getString(definitionMap.get("name")));
 		}

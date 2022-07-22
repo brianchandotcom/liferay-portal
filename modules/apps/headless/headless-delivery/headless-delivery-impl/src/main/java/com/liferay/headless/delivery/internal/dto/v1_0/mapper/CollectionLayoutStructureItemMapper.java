@@ -27,10 +27,8 @@ import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,18 +104,7 @@ public class CollectionLayoutStructureItemMapper
 							() -> getFragmentViewPorts(
 								collectionStyledLayoutStructureItem.
 									getItemConfigJSONObject()));
-						setName(
-							() -> {
-								if (!GetterUtil.getBoolean(
-										PropsUtil.get(
-											"feature.flag.LPS-147895"))) {
-
-									return null;
-								}
-
-								return collectionStyledLayoutStructureItem.
-									getName();
-							});
+						setName(collectionStyledLayoutStructureItem::getName);
 					}
 				};
 				type = Type.COLLECTION;

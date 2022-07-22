@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.HashSet;
 import java.util.List;
@@ -111,16 +110,13 @@ public class ContainerLayoutStructureItemImporter
 			stylesJSONObject.put("backgroundImage", jsonObject);
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147895"))) {
-			String contentVisibility = String.valueOf(
-				definitionMap.getOrDefault(
-					"contentVisibility", StringPool.BLANK));
+		String contentVisibility = String.valueOf(
+			definitionMap.getOrDefault("contentVisibility", StringPool.BLANK));
 
-			if (Validator.isNotNull(contentVisibility)) {
-				containerStyledLayoutStructureItem.setContentVisibility(
-					ContentVisibilityConverter.convertToInternalValue(
-						contentVisibility));
-			}
+		if (Validator.isNotNull(contentVisibility)) {
+			containerStyledLayoutStructureItem.setContentVisibility(
+				ContentVisibilityConverter.convertToInternalValue(
+					contentVisibility));
 		}
 
 		if (definitionMap.containsKey("cssClasses")) {
@@ -395,11 +391,7 @@ public class ContainerLayoutStructureItemImporter
 				GetterUtil.getBoolean(definitionMap.get("indexed")));
 		}
 
-		if (GetterUtil.getBoolean(
-				com.liferay.portal.kernel.util.PropsUtil.get(
-					"feature.flag.LPS-147895")) &&
-			definitionMap.containsKey("name")) {
-
+		if (definitionMap.containsKey("name")) {
 			containerStyledLayoutStructureItem.setName(
 				GetterUtil.getString(definitionMap.get("name")));
 		}

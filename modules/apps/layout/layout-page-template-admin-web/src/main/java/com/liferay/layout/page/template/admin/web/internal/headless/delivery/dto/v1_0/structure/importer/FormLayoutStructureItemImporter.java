@@ -215,9 +215,7 @@ public class FormLayoutStructureItemImporter
 			}
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147895")) &&
-			definitionMap.containsKey("name")) {
-
+		if (definitionMap.containsKey("name")) {
 			formStyledLayoutStructureItem.setName(
 				GetterUtil.getString(definitionMap.get("name")));
 		}

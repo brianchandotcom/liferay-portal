@@ -22,7 +22,6 @@ import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.HashSet;
 import java.util.List;
@@ -94,9 +93,7 @@ public class RowLayoutStructureItemImporter
 				GetterUtil.getBoolean(definitionMap.get("indexed")));
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147895")) &&
-			definitionMap.containsKey("name")) {
-
+		if (definitionMap.containsKey("name")) {
 			rowStyledLayoutStructureItem.setName(
 				GetterUtil.getString(definitionMap.get("name")));
 		}

@@ -38,7 +38,6 @@ import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -86,13 +85,6 @@ public class ContainerLayoutStructureItemMapper
 
 						setContentVisibility(
 							() -> {
-								if (!GetterUtil.getBoolean(
-										PropsUtil.get(
-											"feature.flag.LPS-147895"))) {
-
-									return null;
-								}
-
 								String contentVisibility =
 									containerStyledLayoutStructureItem.
 										getContentVisibility();
@@ -123,18 +115,7 @@ public class ContainerLayoutStructureItemMapper
 							() -> _toHtmlProperties(
 								containerStyledLayoutStructureItem));
 
-						setName(
-							() -> {
-								if (!GetterUtil.getBoolean(
-										PropsUtil.get(
-											"feature.flag.LPS-147895"))) {
-
-									return null;
-								}
-
-								return containerStyledLayoutStructureItem.
-									getName();
-							});
+						setName(containerStyledLayoutStructureItem::getName);
 					}
 				};
 				type = Type.SECTION;

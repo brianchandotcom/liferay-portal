@@ -837,6 +837,8 @@ definition {
 		task ("Then a success message should display and the user should be listed under the organization") {
 			Alert.viewSuccessMessageText(successMessage = "The user was created successfully. You can now add additional information about the user.");
 
+			Organization.openOrganizationsAdmin();
+
 			LexiconEntry.gotoEntry(rowEntry = "Organization Name");
 
 			LexiconEntry.viewEntryContent(
@@ -872,6 +874,8 @@ definition {
 		}
 
 		task ("Then the user should be created and associated under the organization") {
+			Organization.openOrganizationsAdmin();
+
 			LexiconEntry.gotoEntry(rowEntry = "Organization Name");
 
 			LexiconEntry.viewEntryContent(

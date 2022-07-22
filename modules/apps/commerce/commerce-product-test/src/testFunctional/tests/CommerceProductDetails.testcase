@@ -483,6 +483,87 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9678 | As a buyer, I want to not be able to see Full Description tab if the field is empty"
+	@priority = "3"
+	test CanAssertFullDescriptionTabNotPresent {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a product with the Full Description is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productDescription = "This product has Full Description",
+				productName = "Simple T-Shirt",
+				productType = "Simple",
+				shortDescription = "Short Description",
+				sku = "SIMPLE-T-SHIRT");
+		}
+
+		task ("And a product without the Full Description is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Simple Jeans",
+				productType = "Simple",
+				shortDescription = "Short Description",
+				sku = "SIMPLE-JEANS");
+		}
+
+		task ("When the buyer navigates to Simple Jeans detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoProductDetails(productName = "Simple Jeans");
+		}
+
+		task ("Then the buyer cannot see the Full Description and its related tab") {
+			AssertElementNotPresent(
+				key_text = "Full Description",
+				locator1 = "Button#ANY");
+
+			AssertElementNotPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_FULL_DESCRIPTION");
+		}
+
+		task ("When the buyer navigates to Simple T-Shirt product") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceNavigator.gotoProductDetails(productName = "Simple T-Shirt");
+		}
+
+		task ("Then the buyer can see the Full Description in its related tab") {
+			AssertElementPresent(
+				key_text = "Full Description",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_text = "Full Description",
+				locator1 = "Button#ANY");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_FULL_DESCRIPTION",
+				value1 = "This product has Full Description");
+		}
+	}
+
 	@description = "COMMERCE-9675. Users can view and download a product's attachments"
 	@priority = "3"
 	test CanDownloadProductAttachments {

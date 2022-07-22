@@ -145,7 +145,6 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 	}
 
 	public void setMarkupView(String markupView) {
-		_markupView = markupView;
 	}
 
 	public void setPersistState(boolean persistState) {
@@ -162,7 +161,6 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 		_endPage = null;
 		_extended = null;
 		_id = null;
-		_markupView = null;
 		_persistState = false;
 		_startPage = null;
 	}
@@ -188,7 +186,6 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 	private String _endPage;
 	private Boolean _extended;
 	private String _id;
-	private String _markupView;
 	private boolean _persistState;
 	private String _startPage;
 

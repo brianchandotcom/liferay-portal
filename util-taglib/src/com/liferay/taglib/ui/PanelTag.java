@@ -97,7 +97,7 @@ public class PanelTag extends IncludeTag {
 	}
 
 	public String getMarkupView() {
-		return _markupView;
+		return null;
 	}
 
 	public String getParentId() {
@@ -157,7 +157,6 @@ public class PanelTag extends IncludeTag {
 	}
 
 	public void setMarkupView(String markupView) {
-		_markupView = markupView;
 	}
 
 	public void setParentId(String parentId) {
@@ -193,7 +192,6 @@ public class PanelTag extends IncludeTag {
 		_helpMessage = null;
 		_iconCssClass = null;
 		_id = null;
-		_markupView = null;
 		_parentId = StringPool.BLANK;
 		_persistState = true;
 		_startPage = null;
@@ -228,7 +226,6 @@ public class PanelTag extends IncludeTag {
 	private String _helpMessage;
 	private String _iconCssClass;
 	private String _id;
-	private String _markupView;
 	private String _parentId = StringPool.BLANK;
 	private boolean _persistState = true;
 	private String _startPage;

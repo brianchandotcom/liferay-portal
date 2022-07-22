@@ -50,7 +50,7 @@ public class Menu extends BaseUIItem {
 	}
 
 	public String getMarkupView() {
-		return _markupView;
+		return null;
 	}
 
 	public List<MenuItem> getMenuItems() {
@@ -110,7 +110,6 @@ public class Menu extends BaseUIItem {
 	}
 
 	public void setMarkupView(String markupView) {
-		_markupView = markupView;
 	}
 
 	public void setMenuItems(List<MenuItem> menuItems) {
@@ -147,7 +146,6 @@ public class Menu extends BaseUIItem {
 	private boolean _extended = true;
 	private String _icon = StringPool.BLANK;
 	private String _label = StringPool.BLANK;
-	private String _markupView = StringPool.BLANK;
 	private List<MenuItem> _menuItems;
 	private String _message = StringPool.BLANK;
 	private boolean _scroll = true;

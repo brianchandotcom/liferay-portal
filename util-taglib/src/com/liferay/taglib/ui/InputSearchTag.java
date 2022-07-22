@@ -47,7 +47,7 @@ public class InputSearchTag extends BaseValidatorTagSupport {
 	}
 
 	public String getMarkupView() {
-		return _markupView;
+		return null;
 	}
 
 	public String getName() {
@@ -91,7 +91,6 @@ public class InputSearchTag extends BaseValidatorTagSupport {
 	}
 
 	public void setMarkupView(String markupView) {
-		_markupView = markupView;
 	}
 
 	public void setName(String name) {
@@ -122,7 +121,6 @@ public class InputSearchTag extends BaseValidatorTagSupport {
 		_buttonLabel = null;
 		_cssClass = null;
 		_id = null;
-		_markupView = null;
 		_name = null;
 		_placeholder = null;
 		_showButton = true;
@@ -191,7 +189,6 @@ public class InputSearchTag extends BaseValidatorTagSupport {
 	private String _buttonLabel;
 	private String _cssClass;
 	private String _id;
-	private String _markupView;
 	private String _name;
 	private String _placeholder;
 	private boolean _showButton = true;

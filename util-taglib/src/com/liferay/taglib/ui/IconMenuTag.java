@@ -201,7 +201,6 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 	}
 
 	public void setMarkupView(String markupView) {
-		_markupView = markupView;
 	}
 
 	public void setMaxDisplayItems(int maxDisplayItems) {
@@ -513,7 +512,6 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 	private String _icon;
 	private String _id;
 	private boolean _localizeMessage = true;
-	private String _markupView;
 	private int _maxDisplayItems = _DEFAULT_MAX_DISPLAY_ITEMS;
 	private String _message = "actions";
 	private boolean _scroll;

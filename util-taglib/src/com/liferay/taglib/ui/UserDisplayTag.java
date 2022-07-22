@@ -139,7 +139,6 @@ public class UserDisplayTag extends TagSupport {
 	}
 
 	public void setMarkupView(String markupView) {
-		_markupView = markupView;
 	}
 
 	public void setShowLink(boolean showLink) {
@@ -194,7 +193,6 @@ public class UserDisplayTag extends TagSupport {
 	private int _displayStyle = 1;
 	private String _endPage;
 	private String _imageCssClass;
-	private String _markupView;
 	private boolean _showLink = true;
 	private boolean _showUserDetails = true;
 	private boolean _showUserName = true;

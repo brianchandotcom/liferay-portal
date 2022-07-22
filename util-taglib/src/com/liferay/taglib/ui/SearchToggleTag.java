@@ -37,7 +37,7 @@ public class SearchToggleTag extends IncludeTag {
 	}
 
 	public String getMarkupView() {
-		return _markupView;
+		return null;
 	}
 
 	public boolean isAutoFocus() {
@@ -61,7 +61,6 @@ public class SearchToggleTag extends IncludeTag {
 	}
 
 	public void setMarkupView(String markupView) {
-		_markupView = markupView;
 	}
 
 	@Override
@@ -72,7 +71,6 @@ public class SearchToggleTag extends IncludeTag {
 		_buttonLabel = null;
 		_displayTerms = null;
 		_id = null;
-		_markupView = null;
 	}
 
 	@Override
@@ -100,6 +98,5 @@ public class SearchToggleTag extends IncludeTag {
 	private String _buttonLabel;
 	private DisplayTerms _displayTerms;
 	private String _id;
-	private String _markupView;
 
 }

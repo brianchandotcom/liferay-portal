@@ -87,7 +87,7 @@ public abstract class BaseProductNavigationControlMenuEntry
 
 	@Override
 	public String getMarkupView(HttpServletRequest httpServletRequest) {
-		return "lexicon";
+		return null;
 	}
 
 	@Override

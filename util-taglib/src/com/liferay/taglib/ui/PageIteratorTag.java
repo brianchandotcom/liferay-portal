@@ -55,7 +55,7 @@ public class PageIteratorTag extends IncludeTag {
 	}
 
 	public String getMarkupView() {
-		return _markupView;
+		return null;
 	}
 
 	public int getMaxPages() {
@@ -123,7 +123,6 @@ public class PageIteratorTag extends IncludeTag {
 	}
 
 	public void setMarkupView(String markupView) {
-		_markupView = markupView;
 	}
 
 	public void setMaxPages(int maxPages) {
@@ -159,7 +158,6 @@ public class PageIteratorTag extends IncludeTag {
 		_formName = "fm";
 		_id = null;
 		_jsCall = null;
-		_markupView = null;
 		_maxPages = 10;
 		_pages = 0;
 		_portletURL = null;
@@ -227,7 +225,6 @@ public class PageIteratorTag extends IncludeTag {
 	private String _formName = "fm";
 	private String _id;
 	private String _jsCall;
-	private String _markupView;
 	private int _maxPages = 10;
 	private int _pages;
 	private PortletURL _portletURL;

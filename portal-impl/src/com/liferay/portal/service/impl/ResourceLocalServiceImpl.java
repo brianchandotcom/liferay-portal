@@ -235,9 +235,25 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			boolean addGuestPermissions)
 		throws PortalException {
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(addGroupPermissions);
+		serviceContext.setAddGuestPermissions(addGuestPermissions);
+
+		addResources(
+			companyId, groupId, userId, name, primKey, portletActions,
+			serviceContext);
+	}
+
+	@Override
+	public void addResources(
+			long companyId, long groupId, long userId, String name,
+			long primKey, boolean portletActions, ServiceContext serviceContext)
+		throws PortalException {
+
 		_resourcePermissionLocalService.addResourcePermissions(
 			companyId, groupId, userId, name, String.valueOf(primKey),
-			portletActions, addGroupPermissions, addGuestPermissions);
+			portletActions, serviceContext);
 	}
 
 	/**
@@ -265,9 +281,14 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			boolean addGuestPermissions)
 		throws PortalException {
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(addGroupPermissions);
+		serviceContext.setAddGuestPermissions(addGuestPermissions);
+
 		_resourcePermissionLocalService.addResourcePermissions(
 			companyId, groupId, userId, name, primKey, portletActions,
-			addGroupPermissions, addGuestPermissions);
+			serviceContext);
 	}
 
 	/**
@@ -286,8 +307,13 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			long companyId, long groupId, String name, boolean portletActions)
 		throws PortalException {
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(false);
+
 		_resourcePermissionLocalService.addResourcePermissions(
-			companyId, groupId, 0, name, null, portletActions, false, false);
+			companyId, groupId, 0, name, null, portletActions, serviceContext);
 	}
 
 	@Override

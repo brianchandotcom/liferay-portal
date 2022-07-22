@@ -122,10 +122,7 @@ public class ResourcePermissionLocalServiceImpl
 
 			long groupId = 0;
 
-			boolean addGroupPermissions =
-				serviceContext.isAddGroupPermissions();
-
-			if (addGroupPermissions) {
+			if (serviceContext.isAddGroupPermissions()) {
 				groupId = getGroupId(auditedModel);
 			}
 
@@ -133,7 +130,7 @@ public class ResourcePermissionLocalServiceImpl
 				auditedModel.getCompanyId(), groupId, auditedModel.getUserId(),
 				auditedModel.getModelClassName(),
 				String.valueOf(auditedModel.getPrimaryKeyObj()), false,
-				addGroupPermissions, serviceContext.isAddGuestPermissions());
+				serviceContext);
 		}
 		else {
 			if (serviceContext.isDeriveDefaultPermissions()) {
@@ -340,14 +337,14 @@ public class ResourcePermissionLocalServiceImpl
 	 *        optionally an empty string if no instance exists
 	 * @param portletActions whether to associate portlet actions with the
 	 *        resource
-	 * @param addGroupPermissions whether to add group permissions
-	 * @param addGuestPermissions whether to add guest permissions
+	 * @param serviceContext the service context to be applied. Can set group
+	 *        and guest permissions.
 	 */
 	@Override
 	public void addResourcePermissions(
 			long companyId, long groupId, long userId, String name,
-			String primKey, boolean portletActions, boolean addGroupPermissions,
-			boolean addGuestPermissions)
+			String primKey, boolean portletActions,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (!PermissionThreadLocal.isAddResource()) {
@@ -405,7 +402,9 @@ public class ResourcePermissionLocalServiceImpl
 
 			// Group permissions
 
-			if ((groupId > 0) && addGroupPermissions) {
+			if ((groupId > 0) && (serviceContext != null) &&
+				serviceContext.isAddGroupPermissions()) {
+
 				List<String> actions = null;
 
 				if (portletActions) {
@@ -434,7 +433,8 @@ public class ResourcePermissionLocalServiceImpl
 
 			// Guest permissions
 
-			if (addGuestPermissions) {
+			if ((serviceContext != null) &&
+				serviceContext.isAddGuestPermissions()) {
 
 				// Don't add guest permissions when you've already added group
 				// permissions and the given group is the guest group.
@@ -474,7 +474,11 @@ public class ResourcePermissionLocalServiceImpl
 				PermissionCacheUtil.clearResourcePermissionCache(
 					ResourceConstants.SCOPE_INDIVIDUAL, name, primKey);
 
-				IndexWriterHelperUtil.updatePermissionFields(name, primKey);
+				if ((serviceContext == null) ||
+					serviceContext.isIndexingEnabled()) {
+
+					IndexWriterHelperUtil.updatePermissionFields(name, primKey);
+				}
 			}
 		}
 	}

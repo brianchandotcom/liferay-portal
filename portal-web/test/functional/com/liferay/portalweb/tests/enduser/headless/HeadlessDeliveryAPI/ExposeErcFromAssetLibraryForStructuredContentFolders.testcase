@@ -611,4 +611,51 @@ definition {
 		}
 	}
 
+	@description = "Sub folder is deleted by erc of parent structured content folder in asset library"
+	@priority = "4"
+	test SubStructuredContentFolderIsDeletedInAssetLibraryWithParentStructuredContentErc {
+		property portal.acceptance = "true";
+
+		task ("Given a structured content folder with a custom erc is created with a POST request") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				name = "Test Folder");
+		}
+
+		task ("Given a subfolder with another custom erc is created with a POST reqeust") {
+			var folderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+				element = "$.id",
+				responseToParse = "${response}");
+
+			HeadlessWebcontentFolderAPI.createSubfolderInStructuredContentFolder(
+				externalReferenceCode = "subfolder-erc",
+				name = "Sub Folder",
+				parentStructuredContentFolderId = "${folderId}");
+		}
+
+		task ("When I make a DELETE request by erc of parent folder") {
+			HeadlessWebcontentFolderAPI.deleteStructuredContentFolderByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc");
+		}
+
+		task ("Then both parent and sub structured content folders are deleted") {
+			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "subfolder-erc");
+
+			TestUtils.assertPartialEquals(
+				actual = "${response}",
+				expected = "No JournalFolder exists with the key");
+
+			HeadlessWebcontentFolderAPI.assertProperTotalCountOfStructuredContentFoldersInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				expectedStructuredContentFolderTotalCount = "0",
+				filterValue = "name%20eq%20%27Test%20Folder%27");
+		}
+	}
+
 }

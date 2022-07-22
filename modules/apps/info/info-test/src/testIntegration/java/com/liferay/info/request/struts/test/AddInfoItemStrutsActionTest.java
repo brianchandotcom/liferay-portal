@@ -121,17 +121,6 @@ public class AddInfoItemStrutsActionTest {
 	}
 
 	@Test
-	public void testAddInfoItemInvalidDoubleTooBig() throws Exception {
-		_testAddInfoItemDouble("12345678901234567", "12345678901234568", false);
-	}
-
-	@Test
-	public void testAddInfoItemInvalidDoubleTooSmall() throws Exception {
-		_testAddInfoItemDouble(
-			"-12345678901234567", "-12345678901234568", false);
-	}
-
-	@Test
 	public void testAddInfoItemInvalidIntegerTooBig() throws Exception {
 		_testAddInfoItemInteger("2147483648", true);
 	}

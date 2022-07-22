@@ -14,23 +14,27 @@
 
 import {addParams, navigate} from 'frontend-js-web';
 
+import openConfirm from './openConfirm';
 import openDeleteLayoutModal from './openDeleteLayoutModal';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const convertSelectedPages = (itemData) => {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-convert-the-selected-pages'
-				)
-			)
-		) {
-			const form = document.getElementById(`${portletNamespace}fm`);
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-convert-the-selected-pages'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					const form = document.getElementById(
+						`${portletNamespace}fm`
+					);
 
-			if (form) {
-				submitForm(form, itemData?.convertLayoutURL);
-			}
-		}
+					if (form) {
+						submitForm(form, itemData?.convertLayoutURL);
+					}
+				}
+			},
+		});
 	};
 
 	const deleteSelectedPages = (itemData) => {

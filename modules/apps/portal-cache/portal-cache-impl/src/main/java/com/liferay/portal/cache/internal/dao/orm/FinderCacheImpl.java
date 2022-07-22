@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -59,6 +60,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -515,6 +517,9 @@ public class FinderCacheImpl
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
+		_dbPartitionEnabled = GetterUtil.getBoolean(
+			_props.get("database.partition.enabled"));
+
 		_valueObjectFinderCacheEnabled = GetterUtil.getBoolean(
 			_props.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_ENABLED));
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
@@ -528,7 +533,7 @@ public class FinderCacheImpl
 			_props.get(
 				PropsKeys.VALUE_OBJECT_FINDER_THREAD_LOCAL_CACHE_MAX_SIZE));
 
-		if (localCacheMaxSize > 0) {
+		if (!_dbPartitionEnabled && (localCacheMaxSize > 0)) {
 			_localCache = new CentralizedThreadLocal<>(
 				FinderCacheImpl.class + "._localCache",
 				() -> new LRUMap<>(localCacheMaxSize));
@@ -663,11 +668,25 @@ public class FinderCacheImpl
 			return portalCache;
 		}
 
+		boolean sharded = false;
+
+		if (_dbPartitionEnabled) {
+			String modleImplClassName = className;
+
+			if (className.endsWith(".List1") || className.endsWith(".List2")) {
+				modleImplClassName = className.substring(
+					0, className.length() - 6);
+			}
+
+			sharded = GetterUtil.getBoolean(
+				_modelImplClassSharded.get(modleImplClassName));
+		}
+
 		String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
 		portalCache =
 			(PortalCache<Serializable, Serializable>)
-				_multiVMPool.getPortalCache(groupKey);
+				_multiVMPool.getPortalCache(groupKey, false, sharded);
 
 		PortalCache<Serializable, Serializable> previousPortalCache =
 			_portalCaches.putIfAbsent(className, portalCache);
@@ -729,12 +748,15 @@ public class FinderCacheImpl
 	@Reference
 	private ClusterExecutor _clusterExecutor;
 
+	private boolean _dbPartitionEnabled;
 	private final Map<String, Set<String>> _dslQueryCacheNamesMap =
 		new ConcurrentHashMap<>();
 	private final Map<String, Map<String, FinderPath>> _finderPathsMap =
 		new ConcurrentHashMap<>();
 	private ThreadLocal<LRUMap<LocalCacheKey, Serializable>> _localCache;
 	private final Map<String, String> _modelImplClassNames =
+		new ConcurrentHashMap<>();
+	private final Map<String, Boolean> _modelImplClassSharded =
 		new ConcurrentHashMap<>();
 
 	@Reference
@@ -790,11 +812,32 @@ public class FinderCacheImpl
 			ArgumentsResolver argumentsResolver = _bundleContext.getService(
 				serviceReference);
 
-			_argumentsResolvers.put(
-				argumentsResolver.getClassName(), argumentsResolver);
-			_modelImplClassNames.put(
-				argumentsResolver.getTableName(),
-				argumentsResolver.getClassName());
+			String className = argumentsResolver.getClassName();
+			String tableName = argumentsResolver.getTableName();
+
+			_argumentsResolvers.put(className, argumentsResolver);
+
+			_modelImplClassNames.put(tableName, className);
+
+			if (!Objects.equals(className, tableName)) {
+				Class<?> clazz = argumentsResolver.getClass();
+
+				ClassLoader classLoader = clazz.getClassLoader();
+
+				try {
+					Class<?> modelImplClass = classLoader.loadClass(
+						argumentsResolver.getClassName());
+
+					_modelImplClassSharded.put(
+						argumentsResolver.getClassName(),
+						ShardedModel.class.isAssignableFrom(modelImplClass));
+				}
+				catch (ClassNotFoundException classNotFoundException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(classNotFoundException);
+					}
+				}
+			}
 
 			return argumentsResolver;
 		}

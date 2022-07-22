@@ -31,7 +31,7 @@ import java.util.function.Function;
 public class DLVideoExternalShortcutUIItemsUtil {
 
 	public static void processDropdownItems(List<DropdownItem> dropdownItems) {
-		_removeItems(
+		_removeUIItems(
 			dropdownItems, dropdownItem -> (String)dropdownItem.get("key"),
 			SetUtil.fromArray(
 				DLUIItemKeys.CANCEL_CHECKOUT, DLUIItemKeys.CHECKIN,
@@ -40,7 +40,7 @@ public class DLVideoExternalShortcutUIItemsUtil {
 	}
 
 	public static void processUIItems(List<? extends UIItem> uiItems) {
-		_removeItems(
+		_removeUIItems(
 			uiItems, UIItem::getKey,
 			SetUtil.fromArray(
 				DLUIItemKeys.CANCEL_CHECKOUT, DLUIItemKeys.CHECKIN,
@@ -48,7 +48,7 @@ public class DLVideoExternalShortcutUIItemsUtil {
 				DLUIItemKeys.OPEN_IN_MS_OFFICE));
 	}
 
-	private static <T> void _removeItems(
+	private static <T> void _removeUIItems(
 		List<T> items, Function<T, String> function, Set<String> keys) {
 
 		Iterator<T> iterator = items.iterator();

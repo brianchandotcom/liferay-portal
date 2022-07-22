@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -159,55 +160,70 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			LayoutStructure layoutStructure = LayoutStructure.of(
 				layoutPageTemplateStructure.getData(segmentsExperienceId));
 
+			FormStyledLayoutStructureItem
+				previousFormStyledLayoutStructureItem =
+					(FormStyledLayoutStructureItem)
+						layoutStructure.getLayoutStructureItem(formItemId);
+
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 				(FormStyledLayoutStructureItem)layoutStructure.updateItemConfig(
 					JSONFactoryUtil.createJSONObject(itemConfig), formItemId);
 
 			JSONArray removedLayoutStructureItemsJSONArray =
-				_removeFormChildrenItems(
-					layoutStructure,
-					ListUtil.copy(
-						formStyledLayoutStructureItem.getChildrenItemIds()));
-
-			FragmentCollectionContributor fragmentCollectionContributor =
-				_fragmentCollectionContributorTracker.
-					getFragmentCollectionContributor("INPUTS");
+				JSONFactoryUtil.createJSONArray();
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(actionRequest);
 
-			FragmentEntry fragmentEntry =
-				_fragmentCollectionContributorTracker.getFragmentEntry(
-					"INPUTS-submit-button");
-
 			List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
-			if (fragmentCollectionContributor == null) {
-				jsonObject.put(
-					"errorMessage",
-					LanguageUtil.get(
-						themeDisplay.getLocale(),
-						"your-form-could-not-be-loaded-because-fragments-are-" +
-							"not-available"));
-			}
-			else if (fragmentEntry == null) {
-				jsonObject.put(
-					"errorMessage",
-					LanguageUtil.format(
-						themeDisplay.getLocale(),
-						"some-fragments-are-missing.-x-could-not-be-added-to-" +
-							"your-form-because-they-are-not-available",
-						"submit-button"));
-			}
-			else {
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(httpServletRequest);
+			if (!Objects.equals(
+					previousFormStyledLayoutStructureItem.getClassNameId(),
+					formStyledLayoutStructureItem.getClassNameId()) ||
+				!Objects.equals(
+					previousFormStyledLayoutStructureItem.getClassNameId(),
+					formStyledLayoutStructureItem.getClassTypeId())) {
 
-				FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-					formItemId, fragmentEntry, layoutStructure,
-					segmentsExperienceId, serviceContext, themeDisplay);
+				removedLayoutStructureItemsJSONArray = _removeFormChildrenItems(
+					layoutStructure,
+					ListUtil.copy(
+						formStyledLayoutStructureItem.getChildrenItemIds()));
 
-				addedFragmentEntryLinks.add(fragmentEntryLink);
+				FragmentCollectionContributor fragmentCollectionContributor =
+					_fragmentCollectionContributorTracker.
+						getFragmentCollectionContributor("INPUTS");
+
+				FragmentEntry fragmentEntry =
+					_fragmentCollectionContributorTracker.getFragmentEntry(
+						"INPUTS-submit-button");
+
+				if (fragmentCollectionContributor == null) {
+					jsonObject.put(
+						"errorMessage",
+						LanguageUtil.get(
+							themeDisplay.getLocale(),
+							"your-form-could-not-be-loaded-because-fragments-" +
+								"are-not-available"));
+				}
+				else if (fragmentEntry == null) {
+					jsonObject.put(
+						"errorMessage",
+						LanguageUtil.format(
+							themeDisplay.getLocale(),
+							"some-fragments-are-missing.-x-could-not-be-added-" +
+								"to-your-form-because-they-are-not-available",
+							"submit-button"));
+				}
+				else {
+					ServiceContext serviceContext =
+						ServiceContextFactory.getInstance(httpServletRequest);
+
+					FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+						formItemId, fragmentEntry, layoutStructure,
+						segmentsExperienceId, serviceContext, themeDisplay);
+
+					addedFragmentEntryLinks.add(fragmentEntryLink);
+				}
 			}
 
 			layoutPageTemplateStructure =

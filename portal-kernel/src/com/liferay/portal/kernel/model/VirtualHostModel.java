@@ -32,8 +32,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface VirtualHostModel
-	extends BaseModel<VirtualHost>, CTModel<VirtualHost>, MVCCModel,
-			ShardedModel {
+	extends BaseModel<VirtualHost>, CTModel<VirtualHost>, MVCCModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -108,7 +107,6 @@ public interface VirtualHostModel
 	 *
 	 * @return the company ID of this virtual host
 	 */
-	@Override
 	public long getCompanyId();
 
 	/**
@@ -116,7 +114,6 @@ public interface VirtualHostModel
 	 *
 	 * @param companyId the company ID of this virtual host
 	 */
-	@Override
 	public void setCompanyId(long companyId);
 
 	/**

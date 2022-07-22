@@ -14,6 +14,7 @@
 
 import {addParams, openModal, openSelectionModal} from 'frontend-js-web';
 
+import openConfirm from './modals/openConfirm';
 import openDeleteArticleModal from './modals/openDeleteArticleModal';
 
 const ACTIONS = {
@@ -63,28 +64,34 @@ const ACTIONS = {
 			multiple: true,
 			onSelect: (selectedItems) => {
 				if (selectedItems?.length) {
-					if (
-						confirm(
-							Liferay.Language.get(
-								'are-you-sure-you-want-to-delete-the-selected-entries'
-							)
-						)
-					) {
-						const form = document.hrefFm;
+					openConfirm({
+						message: Liferay.Language.get(
+							'are-you-sure-you-want-to-delete-the-selected-entries'
+						),
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								const form = document.hrefFm;
 
-						if (!form) {
-							return;
-						}
+								if (!form) {
+									return;
+								}
 
-						const input = document.createElement('input');
+								const input = document.createElement('input');
 
-						input.name = `${portletNamespace}rowIds`;
-						input.value = selectedItems.map((item) => item.value);
+								input.name = `${portletNamespace}rowIds`;
+								input.value = selectedItems.map(
+									(item) => item.value
+								);
 
-						form.appendChild(input);
+								form.appendChild(input);
 
-						submitForm(form, itemData.deleteArticleTranslationsURL);
-					}
+								submitForm(
+									form,
+									itemData.deleteArticleTranslationsURL
+								);
+							}
+						},
+					});
 				}
 			},
 			title: Liferay.Language.get('delete-translations'),
@@ -116,27 +123,23 @@ const ACTIONS = {
 	},
 
 	publishArticleToLive({itemData}) {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-publish-the-selected-web-content'
-				)
-			)
-		) {
-			this.send(itemData.publishArticleURL);
-		}
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-publish-the-selected-web-content'
+			),
+			onConfirm: (isConfirmed) =>
+				isConfirmed && this.send(itemData.publishArticleURL),
+		});
 	},
 
 	publishFolderToLive({itemData}) {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-publish-the-selected-folder'
-				)
-			)
-		) {
-			this.send(itemData.publishFolderURL);
-		}
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-publish-the-selected-folder'
+			),
+			onConfirm: (isConfirmed) =>
+				isConfirmed && this.send(itemData.publishFolderURL),
+		});
 	},
 
 	send(url) {

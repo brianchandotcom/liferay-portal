@@ -12,37 +12,45 @@
  * details.
  */
 
+import openConfirm from './modals/openConfirm';
+
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteArticles = (itemData) => {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-delete-the-selected-version'
-				)
-			)
-		) {
-			const form = document.getElementById(`${portletNamespace}fm`);
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-the-selected-version'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					const form = document.getElementById(
+						`${portletNamespace}fm`
+					);
 
-			if (form) {
-				submitForm(form, itemData?.deleteArticlesURL);
-			}
-		}
+					if (form) {
+						submitForm(form, itemData?.deleteArticlesURL);
+					}
+				}
+			},
+		});
 	};
 
 	const expireArticles = (itemData) => {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-expire-the-selected-version'
-				)
-			)
-		) {
-			const form = document.getElementById(`${portletNamespace}fm`);
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-expire-the-selected-version'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					const form = document.getElementById(
+						`${portletNamespace}fm`
+					);
 
-			if (form) {
-				submitForm(form, itemData?.expireArticlesURL);
-			}
-		}
+					if (form) {
+						submitForm(form, itemData?.expireArticlesURL);
+					}
+				}
+			},
+		});
 	};
 
 	return {

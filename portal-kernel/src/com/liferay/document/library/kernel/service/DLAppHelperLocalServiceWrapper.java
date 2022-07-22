@@ -329,13 +329,11 @@ public class DLAppHelperLocalServiceWrapper
 			long userId,
 			com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 			com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-			long[] assetCategoryIds, String[] assetTagNames,
-			long[] assetLinkEntryIds)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlAppHelperLocalService.updateAsset(
-			userId, fileEntry, fileVersion, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds);
+			userId, fileEntry, fileVersion, serviceContext);
 	}
 
 	@Override

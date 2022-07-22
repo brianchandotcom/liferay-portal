@@ -171,6 +171,11 @@ public interface ResourceLocalService extends BaseLocalService {
 			boolean addGuestPermissions)
 		throws PortalException;
 
+	public void addResources(
+			long companyId, long groupId, long userId, String name,
+			long primKey, boolean portletActions, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Adds resources for the entity with the name and primary key string,
 	 * always creating a resource at the individual scope and only creating

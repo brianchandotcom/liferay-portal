@@ -166,18 +166,18 @@ public class ResourcePermissionLocalServiceUtil {
 	 optionally an empty string if no instance exists
 	 * @param portletActions whether to associate portlet actions with the
 	 resource
-	 * @param addGroupPermissions whether to add group permissions
-	 * @param addGuestPermissions whether to add guest permissions
+	 * @param serviceContext the service context to be applied. Can set group
+	 and guest permissions.
 	 */
 	public static void addResourcePermissions(
 			long companyId, long groupId, long userId, String name,
-			String primKey, boolean portletActions, boolean addGroupPermissions,
-			boolean addGuestPermissions)
+			String primKey, boolean portletActions,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		getService().addResourcePermissions(
 			companyId, groupId, userId, name, primKey, portletActions,
-			addGroupPermissions, addGuestPermissions);
+			serviceContext);
 	}
 
 	/**

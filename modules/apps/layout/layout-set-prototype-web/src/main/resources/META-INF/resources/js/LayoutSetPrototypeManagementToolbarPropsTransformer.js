@@ -12,26 +12,38 @@
  * details.
  */
 
+import {openConfirmModal} from 'frontend-js-web';
+
+function openConfirm({message, onConfirm}) {
+	if (Liferay.FeatureFlags.enableCustomDialogs) {
+		openConfirmModal({message, onConfirm});
+	}
+	else if (confirm(message)) {
+		onConfirm(true);
+	}
+}
+
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
 		...otherProps,
 		onActionButtonClick(event, {item}) {
 			if (item?.data?.action === 'deleteLayoutSetPrototypes') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-this'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				openConfirm({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-this'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fm`
+							);
 
-					if (form) {
-						submitForm(form);
-					}
-				}
+							if (form) {
+								submitForm(form);
+							}
+						}
+					},
+				});
 			}
 		},
 	};

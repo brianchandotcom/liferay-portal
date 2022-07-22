@@ -15,6 +15,7 @@
 package com.liferay.portal.cache.internal.dao.orm;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -119,9 +122,15 @@ public class EntityCacheImpl
 			mvcc = true;
 		}
 
+		boolean sharded = false;
+
+		if (_dbPartitionEnabled && ShardedModel.class.isAssignableFrom(clazz)) {
+			sharded = true;
+		}
+
 		portalCache =
 			(PortalCache<Serializable, Serializable>)
-				_multiVMPool.getPortalCache(groupKey, mvcc);
+				_multiVMPool.getPortalCache(groupKey, mvcc, sharded);
 
 		PortalCache<Serializable, Serializable> previousPortalCache =
 			_portalCaches.putIfAbsent(className, portalCache);
@@ -242,6 +251,8 @@ public class EntityCacheImpl
 
 	@Activate
 	protected void activate() {
+		_dbPartitionEnabled = GetterUtil.getBoolean(
+			_props.get("database.partition.enabled"));
 		_valueObjectEntityCacheEnabled = GetterUtil.getBoolean(
 			_props.get(PropsKeys.VALUE_OBJECT_ENTITY_CACHE_ENABLED));
 		_valueObjectMVCCEntityCacheEnabled = GetterUtil.getBoolean(
@@ -251,7 +262,7 @@ public class EntityCacheImpl
 			_props.get(
 				PropsKeys.VALUE_OBJECT_ENTITY_THREAD_LOCAL_CACHE_MAX_SIZE));
 
-		if (localCacheMaxSize > 0) {
+		if (!_dbPartitionEnabled && (localCacheMaxSize > 0)) {
 			_localCache = new CentralizedThreadLocal<>(
 				EntityCacheImpl.class + "._localCache",
 				() -> new LRUMap<>(localCacheMaxSize));
@@ -280,34 +291,39 @@ public class EntityCacheImpl
 	}
 
 	private void _notify(
-		String className, BaseModel<?> baseModel, Boolean removePortalCache) {
+		String className, BaseModel<?> baseModel, Boolean removePortalCache,
+		long companyId) {
 
-		FinderCacheImpl finderCacheImpl = _finderCacheImpl;
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
-		if (finderCacheImpl == null) {
-			return;
-		}
+			FinderCacheImpl finderCacheImpl = _finderCacheImpl;
 
-		if (removePortalCache == null) {
-			finderCacheImpl.updateByEntityCache(className, baseModel);
-		}
-		else if (baseModel != null) {
-			finderCacheImpl.removeByEntityCache(className, baseModel);
-		}
-		else if (removePortalCache) {
-			if (className == null) {
-				finderCacheImpl.dispose();
+			if (finderCacheImpl == null) {
+				return;
+			}
+
+			if (removePortalCache == null) {
+				finderCacheImpl.updateByEntityCache(className, baseModel);
+			}
+			else if (baseModel != null) {
+				finderCacheImpl.removeByEntityCache(className, baseModel);
+			}
+			else if (removePortalCache) {
+				if (className == null) {
+					finderCacheImpl.dispose();
+				}
+				else {
+					finderCacheImpl.removeCacheByEntityCache(className);
+				}
 			}
 			else {
-				finderCacheImpl.removeCacheByEntityCache(className);
-			}
-		}
-		else {
-			if (className == null) {
-				finderCacheImpl.clearCache();
-			}
-			else {
-				finderCacheImpl.clearByEntityCache(className);
+				if (className == null) {
+					finderCacheImpl.clearCache();
+				}
+				else {
+					finderCacheImpl.clearByEntityCache(className);
+				}
 			}
 		}
 	}
@@ -315,7 +331,9 @@ public class EntityCacheImpl
 	private void _notifyFinderCache(
 		String className, BaseModel<?> baseModel, Boolean removePortalCache) {
 
-		_notify(className, baseModel, removePortalCache);
+		_notify(
+			className, baseModel, removePortalCache,
+			CompanyThreadLocal.getCompanyId());
 
 		if (!_clusterExecutor.isEnabled() ||
 			!ClusterInvokeThreadLocal.isEnabled()) {
@@ -326,7 +344,10 @@ public class EntityCacheImpl
 		try {
 			MethodHandler methodHandler = new MethodHandler(
 				_notifyMethodKey,
-				new Object[] {className, baseModel, removePortalCache});
+				new Object[] {
+					className, baseModel, removePortalCache,
+					CompanyThreadLocal.getCompanyId()
+				});
 
 			ClusterRequest clusterRequest =
 				ClusterRequest.createMulticastRequest(methodHandler, true);
@@ -426,11 +447,12 @@ public class EntityCacheImpl
 	private static volatile FinderCacheImpl _finderCacheImpl;
 	private static final MethodKey _notifyMethodKey = new MethodKey(
 		EntityCacheImpl.class, "_notify", String.class, BaseModel.class,
-		Boolean.class);
+		Boolean.class, long.class);
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;
 
+	private boolean _dbPartitionEnabled;
 	private ThreadLocal<LRUMap<Serializable, Serializable>> _localCache;
 
 	@Reference

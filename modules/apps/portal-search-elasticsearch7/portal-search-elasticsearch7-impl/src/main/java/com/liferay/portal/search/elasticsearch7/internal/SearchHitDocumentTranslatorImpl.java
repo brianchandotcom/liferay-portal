@@ -103,16 +103,14 @@ public class SearchHitDocumentTranslatorImpl
 	private Field _getField(
 		String fieldName, Map<String, DocumentField> documentFields) {
 
-		String geopointIndicatorSuffix = ".geopoint";
-
-		if (fieldName.endsWith(geopointIndicatorSuffix)) {
+		if (fieldName.endsWith(_GEOPOINT_INDICATOR_SUFFIX)) {
 			return null;
 		}
 
 		DocumentField documentField = documentFields.get(fieldName);
 
 		if (documentFields.containsKey(
-				fieldName.concat(geopointIndicatorSuffix))) {
+				fieldName.concat(_GEOPOINT_INDICATOR_SUFFIX))) {
 
 			return _translateGeoPoint(documentField);
 		}
@@ -123,16 +121,14 @@ public class SearchHitDocumentTranslatorImpl
 	private Field _getFieldFromSource(
 		String fieldName, Map<String, Object> documentSourceMap) {
 
-		String geopointIndicatorSuffix = ".geopoint";
-
-		if (fieldName.endsWith(geopointIndicatorSuffix)) {
+		if (fieldName.endsWith(_GEOPOINT_INDICATOR_SUFFIX)) {
 			return null;
 		}
 
 		Object value = documentSourceMap.get(fieldName);
 
 		if (documentSourceMap.containsKey(
-				fieldName.concat(geopointIndicatorSuffix))) {
+				fieldName.concat(_GEOPOINT_INDICATOR_SUFFIX))) {
 
 			return _translateGeoPoint(fieldName, value);
 		}
@@ -156,5 +152,7 @@ public class SearchHitDocumentTranslatorImpl
 
 		return field;
 	}
+
+	private static final String _GEOPOINT_INDICATOR_SUFFIX = ".geopoint";
 
 }

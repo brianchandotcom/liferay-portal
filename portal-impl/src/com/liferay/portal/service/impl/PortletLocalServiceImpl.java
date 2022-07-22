@@ -813,17 +813,14 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				if (!Objects.equals(
 						portletModel.getPortletId(),
 						PortletKeys.SERVER_ADMIN) &&
-					!portletModel.isInclude()) {
+					!portletModel.isInclude() &&
+					!Objects.equals(
+						portletModel.getPortletId(),
+						PortletProviderUtil.getPortletId(
+							PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
+							PortletProvider.Action.VIEW))) {
 
-					String portletId = PortletProviderUtil.getPortletId(
-						PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
-						PortletProvider.Action.VIEW);
-
-					if (!Objects.equals(
-							portletModel.getPortletId(), portletId)) {
-
-						iterator.remove();
-					}
+					iterator.remove();
 				}
 			}
 		}
@@ -2264,10 +2261,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			Element nameElement = supportedPublishingEventElement.element(
 				"name");
 
-			QName qName = PortletQNameUtil.getQName(
-				qNameElement, nameElement, portletApp.getDefaultNamespace());
-
-			publishingEvents.add(qName);
+			publishingEvents.add(
+				PortletQNameUtil.getQName(
+					qNameElement, nameElement,
+					portletApp.getDefaultNamespace()));
 		}
 
 		portletModel.setPublishingEvents(publishingEvents);
@@ -2436,10 +2433,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			List<Element> aliases = eventDefinitionElement.elements("alias");
 
 			for (Element alias : aliases) {
-				qName = PortletQNameUtil.getQName(
-					alias, null, portletApp.getDefaultNamespace());
-
-				eventDefinition.addAliasQName(qName);
+				eventDefinition.addAliasQName(
+					PortletQNameUtil.getQName(
+						alias, null, portletApp.getDefaultNamespace()));
 			}
 
 			portletApp.addEventDefinition(eventDefinition);

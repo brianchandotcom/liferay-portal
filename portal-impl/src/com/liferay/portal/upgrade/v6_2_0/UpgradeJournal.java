@@ -483,14 +483,14 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 					long resourcePrimKey = resultSet.getLong("resourcePrimKey");
 					String structureId = resultSet.getString("structureId");
 
-					long ddmStructureId = getDDMStructureId(
-						groupId, getCompanyGroupId(companyId), structureId);
-
-					preparedStatement2.setLong(1, ddmStructureId);
+					preparedStatement2.setLong(
+						1,
+						getDDMStructureId(
+							groupId, getCompanyGroupId(companyId),
+							structureId));
 
 					preparedStatement2.setLong(2, classNameId);
 					preparedStatement2.setLong(3, resourcePrimKey);
-
 					preparedStatement2.addBatch();
 				}
 

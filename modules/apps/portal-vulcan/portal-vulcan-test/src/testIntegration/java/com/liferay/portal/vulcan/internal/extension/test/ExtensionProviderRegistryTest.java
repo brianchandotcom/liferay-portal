@@ -26,7 +26,6 @@ import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -72,17 +71,15 @@ public class ExtensionProviderRegistryTest {
 
 	@Test
 	public void testGetExtensionProviders() {
-		List<ExtensionProvider> extensionProviders =
+		Assert.assertEquals(
+			Collections.singletonList(_extensionProvider),
 			_extensionProviderRegistry.getExtensionProviders(
-				_COMPANY_ID, _CLASS_NAME);
+				_COMPANY_ID, _CLASS_NAME));
 
 		Assert.assertEquals(
-			Collections.singletonList(_extensionProvider), extensionProviders);
-
-		extensionProviders = _extensionProviderRegistry.getExtensionProviders(
-			22222, RandomTestUtil.randomString());
-
-		Assert.assertEquals(Collections.emptyList(), extensionProviders);
+			Collections.emptyList(),
+			_extensionProviderRegistry.getExtensionProviders(
+				22222, RandomTestUtil.randomString()));
 	}
 
 	private static final String _CLASS_NAME = "com.liferay.test.model.Test";

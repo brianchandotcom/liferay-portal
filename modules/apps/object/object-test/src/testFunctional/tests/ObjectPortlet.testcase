@@ -2237,7 +2237,7 @@ definition {
 			column = "Author");
 	}
 
-	@description = "LPS-135393 - Verify that the columns ID, Field(s) and Workflow Status are displayed"
+	@description = "LPS-135393 - Verify that the columns ID, Field(s) and Status are displayed"
 	@priority = "5"
 	test ColumnsAreDisplayed {
 		property portal.acceptance = "true";

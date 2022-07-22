@@ -383,7 +383,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(columnOption = "Author");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
 		Button.clickSave();
 
@@ -438,7 +438,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(columnOption = "ID");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "ID");
 
 		ObjectCustomViews.goToDefaultSortTab();
 
@@ -648,6 +648,8 @@ definition {
 	@description = "LPS-149508 - Verify if there are default resources of the System Objects on the Audit Portlet"
 	@priority = "4"
 	test CanViewDefaultResourcesOnSystemObjects {
+		property portal.upstream = "quarantine";
+
 		Audit.openAuditAdmin();
 
 		Audit.searchViaKeywords(
@@ -848,6 +850,8 @@ definition {
 	@description = "LPS-149508 - Verify if the default resources has not User ID and User Name on the Audit Portlet"
 	@priority = "4"
 	test CanViewEmptyValuesDefaultOnColumnsOnSystemObjects {
+		property portal.upstream = "quarantine";
+
 		Audit.openAuditAdmin();
 
 		Audit.searchViaKeywords(
@@ -1065,7 +1069,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(columnOption = "Author");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
 		Button.clickSave();
 

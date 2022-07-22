@@ -46,9 +46,9 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Create Date");
 
-		for (var columnOption : list "Author,Creation Date") {
+		for (var columnOption : list "Author,Create Date") {
 			ObjectCustomViews.assertColumnPresent(columnName = "${columnOption}");
 		}
 	}
@@ -73,7 +73,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		var listMetaData = "Author,Creation Date,Modified Date,Workflow Status,ID";
+		var listMetaData = "Author,Create Date,Modified Date,Status,ID";
 
 		ObjectCustomViews.addColumnsViaUI(addColumns = "${listMetaData}");
 
@@ -494,14 +494,14 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date,Modified Date");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Create Date,Modified Date");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Author",
 			position = "1");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			columnName = "Creation Date",
+			columnName = "Create Date",
 			position = "2");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
@@ -509,7 +509,7 @@ definition {
 			position = "3");
 
 		DragAndDrop.javaScriptDragAndDropToUp(
-			key_columnName = "Creation Date",
+			key_columnName = "Create Date",
 			key_columnName1 = "Author",
 			key_position = "1",
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT",
@@ -517,7 +517,7 @@ definition {
 			value1 = "");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			columnName = "Creation Date",
+			columnName = "Create Date",
 			position = "1");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
@@ -620,7 +620,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(addColumns = "Workflow Status");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Status");
 
 		Button.clickSave();
 
@@ -646,7 +646,7 @@ definition {
 	@description = "LPS-144472 - Verify it is possible to prioritize columns to Default Sort"
 	@priority = "4"
 	test CanPrioritizeColumns {
-		var listColumns = "Author,Creation Date";
+		var listColumns = "Author,Create Date";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152061",
@@ -680,18 +680,18 @@ definition {
 			position = "1");
 
 		ObjectCustomViews.viewColumnOrderOnDefaultSort(
-			columnName = "Creation Date",
+			columnName = "Create Date",
 			position = "2");
 
 		DragAndDrop.javaScriptDragAndDropToUp(
-			key_columnName = "Creation Date",
+			key_columnName = "Create Date",
 			key_columnName1 = "Author",
 			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_RESULT",
 			locator2 = "ObjectCustomViews#CHANGE_POSITION_DEFAULT_SORT_SEARCH_RESULT",
 			value1 = "");
 
 		ObjectCustomViews.viewColumnOrderOnDefaultSort(
-			columnName = "Creation Date",
+			columnName = "Create Date",
 			position = "1");
 
 		ObjectCustomViews.viewColumnOrderOnDefaultSort(
@@ -729,13 +729,13 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Create Date");
 
 		ObjectCustomViews.searchOnViewBuilder(columnName = "Author");
 
 		ObjectCustomViews.assertColumnPresent(columnName = "Author");
 
-		ObjectCustomViews.assertColumnNotPresent(columnName = "Creation Date");
+		ObjectCustomViews.assertColumnNotPresent(columnName = "Create Date");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to search for a column on the Add Columns modal"
@@ -764,7 +764,7 @@ definition {
 
 		ObjectCustomViews.assertColumnVisibleOnAddColumnModal(columnOption = "Author");
 
-		ObjectCustomViews.assertColumnNotPresentOnAddColumnModal(columnOption = "Creation Date");
+		ObjectCustomViews.assertColumnNotPresentOnAddColumnModal(columnOption = "Create Date");
 	}
 
 	@description = "LPS-144472 - Verify it is possible to search columns to a New Default Sort modal"
@@ -818,17 +818,17 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date,Modified Date,Workflow Status,ID");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Create Date,Modified Date,Status,ID");
 
 		ObjectCustomViews.goToDefaultSortTab();
 
-		for (var columnName : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
+		for (var columnName : list "Author,Create Date,Modified Date,Status,ID") {
 			ObjectCustomViews.addDefaultSort(
 				columnOption = "${columnName}",
 				sortOption = "Ascending");
 		}
 
-		for (var columnName : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
+		for (var columnName : list "Author,Create Date,Modified Date,Status,ID") {
 			ObjectCustomViews.searchOnDefaultSort(columnName = "${columnName}");
 
 			ObjectCustomViews.assertColumnPresentOnDefaultSort(
@@ -882,7 +882,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		var listColumns = "Author,Creation Date,Modified Date";
+		var listColumns = "Author,Create Date,Modified Date";
 
 		ObjectCustomViews.addColumnsViaUI(addColumns = "${listColumns}");
 
@@ -904,7 +904,7 @@ definition {
 			columnName = "Author",
 			sortingLabel = "Ascending");
 
-		for (var columnNotPresent : list "Creation Date,Modified Date") {
+		for (var columnNotPresent : list "Create Date,Modified Date") {
 			ObjectCustomViews.assertColumnNotPresentOnDefaultSort(columnName = "${columnNotPresent}");
 		}
 	}
@@ -1491,13 +1491,13 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date,Modified Date,Workflow Status,ID");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Create Date,Modified Date,Status,ID");
 
 		Button.clickSave();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject149239");
 
-		for (var columnName : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
+		for (var columnName : list "Author,Create Date,Modified Date,Status,ID") {
 			ObjectPortlet.assertEntryColumnPresent(column = "${columnName}");
 		}
 	}
@@ -1534,7 +1534,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date,Custom Field");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Create Date,Custom Field");
 
 		Button.clickSave();
 
@@ -1549,11 +1549,11 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject147771");
 
-		for (var columnName : list "Author,Creation Date,Custom Field") {
+		for (var columnName : list "Author,Create Date,Custom Field") {
 			ObjectPortlet.assertEntryColumnPresent(column = "${columnName}");
 		}
 
-		for (var columnName : list "Modified Date,Workflow Status,ID") {
+		for (var columnName : list "Modified Date,Status,ID") {
 			ObjectPortlet.assertEntryColumnNotPresent(column = "${columnName}");
 		}
 	}
@@ -1590,10 +1590,10 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date,ID");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Create Date,ID");
 
 		DragAndDrop.javaScriptDragAndDropToUp(
-			key_columnName = "Creation Date",
+			key_columnName = "Create Date",
 			key_columnName1 = "Author",
 			key_position = "1",
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT",
@@ -1616,7 +1616,7 @@ definition {
 		WaitForPageLoad();
 
 		ObjectCustomViews.viewColumnsOrder(
-			columnName = "Creation Date",
+			columnName = "Create Date",
 			position = "1");
 
 		ObjectCustomViews.viewColumnsOrder(
@@ -1650,7 +1650,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date,Modified Date,Workflow Status,ID");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Create Date,Modified Date,Status,ID");
 
 		Button.clickSave();
 
@@ -1667,7 +1667,7 @@ definition {
 			position = "1");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			columnName = "Creation Date",
+			columnName = "Create Date",
 			position = "2");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
@@ -1675,7 +1675,7 @@ definition {
 			position = "3");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			columnName = "Workflow Status",
+			columnName = "Status",
 			position = "4");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
@@ -1834,7 +1834,7 @@ definition {
 		ObjectAdmin.assertNoResultsWereFound();
 	}
 
-	@description = "LPS-135394 - Verify the Author, Creation Date, Modified Date, Workflow Status, ID columns (Metadata columns) are displayed to be selected"
+	@description = "LPS-135394 - Verify the Author, Create Date, Modified Date, Status, ID columns (Metadata columns) are displayed to be selected"
 	@priority = "5"
 	test MetadataColumnsDisplayed {
 		property portal.acceptance = "quarantine";
@@ -1858,7 +1858,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		for (var columnOption : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
+		for (var columnOption : list "Author,Create Date,Modified Date,Status,ID") {
 			ObjectCustomViews.assertColumnVisibleOnAddColumnModal(columnOption = "${columnOption}");
 		}
 	}

@@ -49,6 +49,9 @@
 				"pageElements": [
 					{
 						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -203,7 +206,7 @@
 														"ar_SA": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
 														"ca_ES": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
 														"de_DE": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
-														"en_US": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+														"en_US": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
 														"es_ES": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
 														"fi_FI": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
 														"fr_FR": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP. Partner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
@@ -221,12 +224,30 @@
 											"id": "second-welcome-banner-title",
 											"value": {
 												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Partner Marketing",
+														"ca_ES": "Partner Marketing",
+														"de_DE": "Partner Marketing",
+														"en_US": "Partner Marketing",
+														"es_ES": "Partner Marketing",
+														"fi_FI": "Partner Marketing",
+														"fr_FR": "Partner Marketing",
+														"hu_HU": "Partner Marketing",
+														"ja_JP": "Partner Marketing",
+														"nl_NL": "Partner Marketing",
+														"pt_BR": "Partner Marketing",
+														"sv_SE": "Partner Marketing",
+														"zh_CN": "Partner Marketing"
+													}
 												}
 											}
 										}
 									],
 									"fragmentStyle": {
-										"marginBottom": "5"
+										"marginBottom": "5",
+										"textAlign": ""
 									},
 									"indexed": true
 								},
@@ -237,28 +258,43 @@
 					},
 					{
 						"definition": {
-							"fragmentConfig": {
-								"headingLevel": "h1"
-							},
-							"fragmentFields": [
-								{
-									"id": "element-text",
-									"value": {
-										"fragmentLink": {
-										},
-										"text": {
-											"value_i18n": {
-												"en_US": "Marketing"
-											}
-										}
-									}
-								}
-							],
 							"fragmentStyle": {
 								"borderWidth": "0",
+								"marginTop": "5",
 								"textAlign": ""
 							},
-							"indexed": true
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"hidden": true
+									},
+									"id": "portraitMobile"
+								},
+								{
+									"fragmentViewportStyle": {
+										"marginTop": "4",
+										"paddingLeft": "0",
+										"paddingRight": "0"
+									},
+									"id": "tablet"
+								}
+							],
+							"indexed": true,
+							"layout": {
+								"align": "Start",
+								"borderWidth": 0,
+								"contentDisplay": "FlexColumn",
+								"justify": "Center",
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 4,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
 						},
 						"pageElements": [
 							{
@@ -298,9 +334,8 @@
 									"fragmentStyle": {
 										"fontFamily": "fontFamilySansSerif",
 										"fontWeight": "fontWeightBold",
-										"paddingBottom": "4",
-										"paddingLeft": "3",
-										"textAlign": ""
+										"textAlign": "",
+										"textColor": "colorNeutral10"
 									},
 									"indexed": true
 								},
@@ -309,9 +344,19 @@
 							{
 								"definition": {
 									"fragmentStyle": {
+										"marginTop": "4",
 										"textAlign": ""
 									},
-									"gutters": true,
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"marginLeft": "0",
+												"textAlign": "left"
+											},
+											"id": "portraitMobile"
+										}
+									],
+									"gutters": false,
 									"indexed": true,
 									"modulesPerRow": 2,
 									"numberOfColumns": 4,
@@ -326,16 +371,17 @@
 										{
 											"id": "portraitMobile",
 											"rowViewportDefinition": {
+												"verticalAlignment": "middle"
 											}
 										},
 										{
 											"id": "tablet",
 											"rowViewportDefinition": {
-												"modulesPerRow": 1
+												"modulesPerRow": 4
 											}
 										}
 									],
-									"verticalAlignment": "top"
+									"verticalAlignment": "middle"
 								},
 								"pageElements": [
 									{
@@ -354,7 +400,7 @@
 												},
 												{
 													"columnViewportDefinition": {
-														"size": 12
+														"size": 3
 													},
 													"id": "tablet"
 												}
@@ -369,20 +415,48 @@
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1",
 														"marginBottom": "4",
+														"marginRight": "3",
+														"maxHeight": "164px",
+														"minHeight": "164px",
 														"paddingBottom": "4",
 														"paddingLeft": "4",
 														"paddingRight": "4",
 														"paddingTop": "4",
 														"textAlign": ""
 													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"height": ""
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"marginLeft": "0",
+																"maxHeight": "194px",
+																"minHeight": "164px",
+																"textAlign": "left"
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"marginRight": "0",
+																"maxHeight": "164px"
+															},
+															"id": "tablet"
+														}
+													],
 													"indexed": true,
 													"layout": {
+														"align": "Center",
 														"borderColor": "colorNeutral3",
 														"borderWidth": 1,
 														"contentDisplay": "FlexRow",
 														"marginBottom": 2,
 														"marginLeft": 0,
-														"marginRight": 0,
+														"marginRight": 1,
 														"marginTop": 0,
 														"paddingBottom": 2,
 														"paddingLeft": 2,
@@ -405,6 +479,11 @@
 																	"id": "image-square",
 																	"value": {
 																		"fragmentImage": {
+																			"description": {
+																				"value_i18n": {
+																					"en_US": ""
+																				}
+																			},
 																			"url": {
 																				"mapping": {
 																					"fieldKey": "FileEntry_previewImage",
@@ -425,8 +504,18 @@
 																"paddingLeft": "3",
 																"paddingRight": "4",
 																"paddingTop": "3",
-																"textAlign": "center"
+																"textAlign": ""
 															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"hidden": false,
+																		"paddingTop": "4",
+																		"textAlign": "left"
+																	},
+																	"id": "portraitMobile"
+																}
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -434,14 +523,14 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
+																"borderWidth": "",
 																"marginLeft": "2",
 																"paddingLeft": "4",
 																"textAlign": ""
 															},
 															"indexed": true,
 															"layout": {
-																"borderWidth": 0,
+																"align": "Start",
 																"contentDisplay": "FlexColumn",
 																"marginBottom": 0,
 																"marginLeft": 0,
@@ -499,6 +588,16 @@
 																	"fragmentViewports": [
 																		{
 																			"fragmentViewportStyle": {
+																				"fontSize": "",
+																				"maxHeight": "60px"
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"height": "",
+																				"maxHeight": "",
+																				"minHeight": "",
 																				"textAlign": "left"
 																			},
 																			"id": "portraitMobile"
@@ -514,7 +613,7 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph"
+																		"textType": "h6"
 																	},
 																	"fragmentFields": [
 																		{
@@ -524,28 +623,29 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"ca_ES": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"de_DE": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"en_US": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"es_ES": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"fi_FI": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"fr_FR": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"hu_HU": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"ja_JP": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"nl_NL": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"pt_BR": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"sv_SE": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
-																						"zh_CN": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"
+																						"ar_SA": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
+																						"ca_ES": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
+																						"de_DE": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
+																						"en_US": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
+																						"es_ES": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
+																						"fi_FI": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
+																						"fr_FR": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
+																						"hu_HU": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
+																						"ja_JP": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
+																						"nl_NL": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
+																						"pt_BR": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
+																						"sv_SE": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
+																						"zh_CN": "Apply online for MDF toward your marketing activities to grow your business and attract new customers."
 																					}
 																				}
 																			}
 																		}
 																	],
 																	"fragmentStyle": {
-																		"height": "48px",
-																		"marginBottom": "2",
-																		"marginTop": "2",
+																		"height": "60px",
+																		"overflow": "auto",
+																		"paddingBottom": "2",
+																		"paddingTop": "2",
 																		"textAlign": "",
 																		"textColor": "colorNeutral8"
 																	},
@@ -555,10 +655,16 @@
 															},
 															{
 																"definition": {
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "https://www.liferay.com/"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"borderWidth": "0",
-																		"textAlign": "",
-																		"width": "fit-content"
+																		"textAlign": ""
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -578,91 +684,56 @@
 																"pageElements": [
 																	{
 																		"definition": {
-																			"fragmentStyle": {
-																				"borderWidth": "0",
-																				"textAlign": ""
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
 																			},
-																			"indexed": true,
-																			"layout": {
-																				"borderWidth": 0,
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
-																				"widthType": "Fluid"
-																			}
-																		},
-																		"pageElements": [
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "DIALECT-dialect-text"
-																					},
-																					"fragmentConfig": {
-																						"textType": "text-link-md"
-																					},
-																					"fragmentFields": [
-																						{
-																							"id": "element-text",
-																							"value": {
-																								"fragmentLink": {
-																									"value": {
-																										"href": {
-																											"value_i18n": {
-																												"ar_SA": "https://www.liferay.com/",
-																												"ca_ES": "https://www.liferay.com/",
-																												"de_DE": "https://www.liferay.com/",
-																												"en_US": "https://www.liferay.com/",
-																												"es_ES": "https://www.liferay.com/",
-																												"fi_FI": "https://www.liferay.com/",
-																												"fr_FR": "https://www.liferay.com/",
-																												"hu_HU": "https://www.liferay.com/",
-																												"ja_JP": "https://www.liferay.com/",
-																												"nl_NL": "https://www.liferay.com/",
-																												"pt_BR": "https://www.liferay.com/",
-																												"sv_SE": "https://www.liferay.com/",
-																												"zh_CN": "https://www.liferay.com/"
-																											}
-																										}
-																									}
-																								},
-																								"text": {
-																									"value_i18n": {
-																										"ar_SA": "Apply for Funds",
-																										"ca_ES": "Apply for Funds",
-																										"de_DE": "Apply for Funds",
-																										"en_US": "Apply for Funds",
-																										"es_ES": "Apply for Funds",
-																										"fi_FI": "Apply for Funds",
-																										"fr_FR": "Apply for Funds",
-																										"hu_HU": "Apply for Funds",
-																										"ja_JP": "Apply for Funds",
-																										"nl_NL": "Apply for Funds",
-																										"pt_BR": "Apply for Funds",
-																										"sv_SE": "Apply for Funds",
-																										"zh_CN": "Apply for Funds"
-																									}
-																								}
+																			"fragmentConfig": {
+																				"textType": "text-paragraph"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "Apply for Funds",
+																								"ca_ES": "Apply for Funds",
+																								"de_DE": "Apply for Funds",
+																								"en_US": "Apply for Funds",
+																								"es_ES": "Apply for Funds",
+																								"fi_FI": "Apply for Funds",
+																								"fr_FR": "Apply for Funds",
+																								"hu_HU": "Apply for Funds",
+																								"ja_JP": "Apply for Funds",
+																								"nl_NL": "Apply for Funds",
+																								"pt_BR": "Apply for Funds",
+																								"sv_SE": "Apply for Funds",
+																								"zh_CN": "Apply for Funds"
 																							}
 																						}
-																					],
-																					"fragmentStyle": {
-																						"fontWeight": "fontWeightBold",
-																						"height": "24px",
-																						"paddingRight": "1",
-																						"textAlign": "",
-																						"textColor": "colorActionPrimaryDefault"
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBold",
+																				"height": "24px",
+																				"paddingRight": "1",
+																				"textAlign": "",
+																				"textColor": "colorBrandPrimary"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginRight": "0"
 																					},
-																					"indexed": true
-																				},
-																				"type": "Fragment"
-																			}
-																		],
-																		"type": "Section"
+																					"id": "tablet"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
 																	},
 																	{
 																		"definition": {
@@ -670,14 +741,14 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
-																				"iconLink": "https://www.liferay.com/",
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
-																				"textColor": "colorActionPrimaryDefault"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"indexed": true
 																		},
@@ -711,7 +782,7 @@
 												},
 												{
 													"columnViewportDefinition": {
-														"size": 12
+														"size": 3
 													},
 													"id": "tablet"
 												}
@@ -726,19 +797,39 @@
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1",
 														"marginBottom": "4",
+														"marginLeft": "3",
+														"maxHeight": "164px",
+														"minHeight": "164px",
 														"paddingBottom": "4",
 														"paddingLeft": "4",
 														"paddingRight": "4",
 														"paddingTop": "4",
 														"textAlign": ""
 													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginLeft": "0",
+																"maxHeight": "194px"
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"marginLeft": "0",
+																"marginRight": "0"
+															},
+															"id": "tablet"
+														}
+													],
 													"indexed": true,
 													"layout": {
+														"align": "Center",
 														"borderColor": "colorNeutral3",
 														"borderWidth": 1,
 														"contentDisplay": "FlexRow",
 														"marginBottom": 2,
-														"marginLeft": 0,
+														"marginLeft": 1,
 														"marginRight": 0,
 														"marginTop": 0,
 														"paddingBottom": 2,
@@ -762,6 +853,11 @@
 																	"id": "image-square",
 																	"value": {
 																		"fragmentImage": {
+																			"description": {
+																				"value_i18n": {
+																					"en_US": ""
+																				}
+																			},
 																			"url": {
 																				"mapping": {
 																					"fieldKey": "FileEntry_previewImage",
@@ -783,8 +879,16 @@
 																"paddingLeft": "3",
 																"paddingRight": "4",
 																"paddingTop": "3",
-																"textAlign": "center"
+																"textAlign": ""
 															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingTop": "4"
+																	},
+																	"id": "portraitMobile"
+																}
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -848,6 +952,8 @@
 																	],
 																	"fragmentStyle": {
 																		"fontWeight": "fontWeightBold",
+																		"maxHeight": "60px",
+																		"minHeight": "28px",
 																		"textAlign": "",
 																		"textColor": "colorNeutral10"
 																	},
@@ -869,7 +975,7 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph"
+																		"textType": "h6"
 																	},
 																	"fragmentFields": [
 																		{
@@ -898,21 +1004,36 @@
 																		}
 																	],
 																	"fragmentStyle": {
-																		"marginBottom": "2",
-																		"marginTop": "2",
+																		"height": "60px",
+																		"paddingBottom": "2",
+																		"paddingTop": "2",
 																		"textAlign": "",
 																		"textColor": "colorNeutral8"
 																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"height": "72px"
+																			},
+																			"id": "portraitMobile"
+																		}
+																	],
 																	"indexed": true
 																},
 																"type": "Fragment"
 															},
 															{
 																"definition": {
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": ""
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"borderWidth": "0",
-																		"textAlign": "",
-																		"width": "fit-content"
+																		"textAlign": ""
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -932,91 +1053,75 @@
 																"pageElements": [
 																	{
 																		"definition": {
-																			"fragmentStyle": {
-																				"borderWidth": "0",
-																				"textAlign": ""
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
 																			},
-																			"indexed": true,
-																			"layout": {
-																				"borderWidth": 0,
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
-																				"widthType": "Fluid"
-																			}
-																		},
-																		"pageElements": [
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "DIALECT-dialect-text"
-																					},
-																					"fragmentConfig": {
-																						"textType": "text-link-md"
-																					},
-																					"fragmentFields": [
-																						{
-																							"id": "element-text",
+																			"fragmentConfig": {
+																				"textType": "text-paragraph"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
 																							"value": {
-																								"fragmentLink": {
-																									"value": {
-																										"href": {
-																											"value_i18n": {
-																												"ar_SA": "https://www.liferay.com/",
-																												"ca_ES": "https://www.liferay.com/",
-																												"de_DE": "https://www.liferay.com/",
-																												"en_US": "https://www.liferay.com/",
-																												"es_ES": "https://www.liferay.com/",
-																												"fi_FI": "https://www.liferay.com/",
-																												"fr_FR": "https://www.liferay.com/",
-																												"hu_HU": "https://www.liferay.com/",
-																												"ja_JP": "https://www.liferay.com/",
-																												"nl_NL": "https://www.liferay.com/",
-																												"pt_BR": "https://www.liferay.com/",
-																												"sv_SE": "https://www.liferay.com/",
-																												"zh_CN": "https://www.liferay.com/"
-																											}
-																										}
-																									}
-																								},
-																								"text": {
+																								"href": {
 																									"value_i18n": {
-																										"ar_SA": "View Marketing Resources",
-																										"ca_ES": "View Marketing Resources",
-																										"de_DE": "View Marketing Resources",
-																										"en_US": "View Marketing Resources",
-																										"es_ES": "View Marketing Resources",
-																										"fi_FI": "View Marketing Resources",
-																										"fr_FR": "View Marketing Resources",
-																										"hu_HU": "View Marketing Resources",
-																										"ja_JP": "View Marketing Resources",
-																										"nl_NL": "View Marketing Resources",
-																										"pt_BR": "View Marketing Resources",
-																										"sv_SE": "View Marketing Resources",
-																										"zh_CN": "View Marketing Resources"
+																										"ar_SA": "https://www.liferay.com/",
+																										"ca_ES": "https://www.liferay.com/",
+																										"de_DE": "https://www.liferay.com/",
+																										"en_US": "https://www.liferay.com/",
+																										"es_ES": "https://www.liferay.com/",
+																										"fi_FI": "https://www.liferay.com/",
+																										"fr_FR": "https://www.liferay.com/",
+																										"hu_HU": "https://www.liferay.com/",
+																										"ja_JP": "https://www.liferay.com/",
+																										"nl_NL": "https://www.liferay.com/",
+																										"pt_BR": "https://www.liferay.com/",
+																										"sv_SE": "https://www.liferay.com/",
+																										"zh_CN": "https://www.liferay.com/"
 																									}
 																								}
 																							}
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "View Dashboard",
+																								"ca_ES": "View Dashboard",
+																								"de_DE": "View Dashboard",
+																								"en_US": "View Marketing Resources",
+																								"es_ES": "View Dashboard",
+																								"fi_FI": "View Dashboard",
+																								"fr_FR": "View Dashboard",
+																								"hu_HU": "View Dashboard",
+																								"ja_JP": "View Dashboard",
+																								"nl_NL": "View Dashboard",
+																								"pt_BR": "View Dashboard",
+																								"sv_SE": "View Dashboard",
+																								"zh_CN": "View Dashboard"
+																							}
 																						}
-																					],
-																					"fragmentStyle": {
-																						"fontWeight": "fontWeightBold",
-																						"height": "24px",
-																						"paddingRight": "1",
-																						"textAlign": "",
-																						"textColor": "colorActionPrimaryDefault"
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBold",
+																				"height": "24px",
+																				"paddingRight": "1",
+																				"textAlign": "",
+																				"textColor": "colorBrandPrimary"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginRight": "0"
 																					},
-																					"indexed": true
-																				},
-																				"type": "Fragment"
-																			}
-																		],
-																		"type": "Section"
+																					"id": "tablet"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
 																	},
 																	{
 																		"definition": {
@@ -1024,14 +1129,14 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
-																				"iconLink": "https://www.liferay.com/",
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
-																				"textColor": "colorActionPrimaryDefault"
+																				"textColor": "linkColor"
 																			},
 																			"indexed": true
 																		},
@@ -1065,7 +1170,7 @@
 												},
 												{
 													"columnViewportDefinition": {
-														"size": 12
+														"size": 3
 													},
 													"id": "tablet"
 												}
@@ -1080,6 +1185,9 @@
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1",
 														"marginBottom": "4",
+														"marginRight": "3",
+														"maxHeight": "164px",
+														"minHeight": "164px",
 														"paddingBottom": "4",
 														"paddingLeft": "4",
 														"paddingRight": "4",
@@ -1089,19 +1197,34 @@
 													"fragmentViewports": [
 														{
 															"fragmentViewportStyle": {
-																"marginBottom": "4"
+																"height": ""
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"marginLeft": "0",
+																"maxHeight": "194px",
+																"textAlign": "left"
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"marginRight": "0"
 															},
 															"id": "tablet"
 														}
 													],
 													"indexed": true,
 													"layout": {
+														"align": "Center",
 														"borderColor": "colorNeutral3",
 														"borderWidth": 1,
 														"contentDisplay": "FlexRow",
 														"marginBottom": 2,
 														"marginLeft": 0,
-														"marginRight": 0,
+														"marginRight": 1,
 														"marginTop": 0,
 														"paddingBottom": 2,
 														"paddingLeft": 2,
@@ -1124,6 +1247,11 @@
 																	"id": "image-square",
 																	"value": {
 																		"fragmentImage": {
+																			"description": {
+																				"value_i18n": {
+																					"en_US": ""
+																				}
+																			},
 																			"url": {
 																				"mapping": {
 																					"fieldKey": "FileEntry_previewImage",
@@ -1140,13 +1268,22 @@
 																}
 															],
 															"fragmentStyle": {
-																"marginRight": "2",
 																"paddingBottom": "3",
 																"paddingLeft": "3",
 																"paddingRight": "4",
 																"paddingTop": "3",
-																"textAlign": "center"
+																"textAlign": ""
 															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"hidden": false,
+																		"paddingTop": "7",
+																		"textAlign": "left"
+																	},
+																	"id": "portraitMobile"
+																}
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -1154,13 +1291,13 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
+																"borderWidth": "",
+																"marginLeft": "2",
 																"paddingLeft": "4",
 																"textAlign": ""
 															},
 															"indexed": true,
 															"layout": {
-																"borderWidth": 0,
 																"contentDisplay": "FlexColumn",
 																"marginBottom": 0,
 																"marginLeft": 0,
@@ -1170,7 +1307,7 @@
 																"paddingLeft": 2,
 																"paddingRight": 0,
 																"paddingTop": 0,
-																"widthType": "Fixed"
+																"widthType": "Fluid"
 															}
 														},
 														"pageElements": [
@@ -1210,12 +1347,17 @@
 																	],
 																	"fragmentStyle": {
 																		"fontWeight": "fontWeightBold",
+																		"maxHeight": "60px",
+																		"minHeight": "28px",
 																		"textAlign": "",
 																		"textColor": "colorNeutral10"
 																	},
 																	"fragmentViewports": [
 																		{
 																			"fragmentViewportStyle": {
+																				"height": "",
+																				"maxHeight": "60px",
+																				"minHeight": "28px",
 																				"textAlign": "left"
 																			},
 																			"id": "portraitMobile"
@@ -1231,7 +1373,7 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph"
+																		"textType": "h6"
 																	},
 																	"fragmentFields": [
 																		{
@@ -1241,29 +1383,30 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"ca_ES": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"de_DE": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"en_US": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"es_ES": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"fi_FI": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"fr_FR": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"hu_HU": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"ja_JP": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"nl_NL": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"pt_BR": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"sv_SE": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
-																						"zh_CN": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;"
+																						"ar_SA": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
+																						"ca_ES": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
+																						"de_DE": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
+																						"en_US": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
+																						"es_ES": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
+																						"fi_FI": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
+																						"fr_FR": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
+																						"hu_HU": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
+																						"ja_JP": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
+																						"nl_NL": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
+																						"pt_BR": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
+																						"sv_SE": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
+																						"zh_CN": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications"
 																					}
 																				}
 																			}
 																		}
 																	],
 																	"fragmentStyle": {
-																		"marginBottom": "2",
-																		"marginTop": "2",
+																		"height": "60px",
+																		"paddingBottom": "2",
+																		"paddingTop": "2",
 																		"textAlign": "",
-																		"textColor": "colorNeutral8"
+																		"textColor": "gray700Color"
 																	},
 																	"indexed": true
 																},
@@ -1271,6 +1414,13 @@
 															},
 															{
 																"definition": {
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": ""
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"borderWidth": "0",
 																		"textAlign": "",
@@ -1298,7 +1448,7 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "text-link-md"
+																				"textType": "text-paragraph"
 																			},
 																			"fragmentFields": [
 																				{
@@ -1350,8 +1500,16 @@
 																				"height": "24px",
 																				"paddingRight": "1",
 																				"textAlign": "",
-																				"textColor": "colorActionPrimaryDefault"
+																				"textColor": "colorBrandPrimary"
 																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginRight": "0"
+																					},
+																					"id": "tablet"
+																				}
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -1362,14 +1520,14 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
-																				"iconLink": "https://www.liferay.com/",
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
-																				"textColor": "colorActionPrimaryDefault"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"indexed": true
 																		},
@@ -1403,7 +1561,7 @@
 												},
 												{
 													"columnViewportDefinition": {
-														"size": 12
+														"size": 3
 													},
 													"id": "tablet"
 												}
@@ -1418,19 +1576,38 @@
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1",
 														"marginBottom": "4",
+														"marginLeft": "3",
+														"maxHeight": "164px",
+														"minHeight": "164px",
 														"paddingBottom": "4",
 														"paddingLeft": "4",
 														"paddingRight": "4",
 														"paddingTop": "4",
 														"textAlign": ""
 													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginLeft": "0",
+																"maxHeight": "194px"
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"marginLeft": "0"
+															},
+															"id": "tablet"
+														}
+													],
 													"indexed": true,
 													"layout": {
+														"align": "Center",
 														"borderColor": "colorNeutral3",
 														"borderWidth": 1,
 														"contentDisplay": "FlexRow",
 														"marginBottom": 2,
-														"marginLeft": 0,
+														"marginLeft": 1,
 														"marginRight": 0,
 														"marginTop": 0,
 														"paddingBottom": 2,
@@ -1454,6 +1631,11 @@
 																	"id": "image-square",
 																	"value": {
 																		"fragmentImage": {
+																			"description": {
+																				"value_i18n": {
+																					"en_US": ""
+																				}
+																			},
 																			"url": {
 																				"mapping": {
 																					"fieldKey": "FileEntry_previewImage",
@@ -1475,7 +1657,7 @@
 																"paddingLeft": "3",
 																"paddingRight": "4",
 																"paddingTop": "3",
-																"textAlign": "center"
+																"textAlign": ""
 															},
 															"indexed": true
 														},
@@ -1500,7 +1682,7 @@
 																"paddingLeft": 2,
 																"paddingRight": 0,
 																"paddingTop": 0,
-																"widthType": "Fluid"
+																"widthType": "Fixed"
 															}
 														},
 														"pageElements": [
@@ -1540,6 +1722,8 @@
 																	],
 																	"fragmentStyle": {
 																		"fontWeight": "fontWeightBold",
+																		"maxHeight": "60px",
+																		"minHeight": "28px",
 																		"textAlign": "",
 																		"textColor": "colorNeutral10"
 																	},
@@ -1561,7 +1745,7 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph"
+																		"textType": "h6"
 																	},
 																	"fragmentFields": [
 																		{
@@ -1571,29 +1755,30 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"ca_ES": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"de_DE": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"en_US": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;",
-																						"es_ES": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"fi_FI": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"fr_FR": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"hu_HU": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"ja_JP": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"nl_NL": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"pt_BR": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"sv_SE": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
-																						"zh_CN": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in."
+																						"ar_SA": "Be in the loop on dedicated events for partner enablement and all Lifearay events that partners can participate in.",
+																						"ca_ES": "Be in the loop on dedicated events for partner enablement and all Lifearay events that partners can participate in.",
+																						"de_DE": "Be in the loop on dedicated events for partner enablement and all Lifearay events that partners can participate in.",
+																						"en_US": "Be in the loop on dedicated events for partner enablement and all Lifearay events that partners can participate in.",
+																						"es_ES": "Be in the loop on dedicated events for partner enablement and all Lifearay events that partners can participate in.",
+																						"fi_FI": "Be in the loop on dedicated events for partner enablement and all Lifearay events that partners can participate in.",
+																						"fr_FR": "Be in the loop on dedicated events for partner enablement and all Lifearay events that partners can participate in.",
+																						"hu_HU": "Be in the loop on dedicated events for partner enablement and all Lifearay events that partners can participate in.",
+																						"ja_JP": "Be in the loop on dedicated events for partner enablement and all Lifearay events that partners can participate in.",
+																						"nl_NL": "Be in the loop on dedicated events for partner enablement and all Lifearay events that partners can participate in.",
+																						"pt_BR": "Be in the loop on dedicated events for partner enablement and all Lifearay events that partners can participate in.",
+																						"sv_SE": "Be in the loop on dedicated events for partner enablement and all Lifearay events that partners can participate in.",
+																						"zh_CN": "Be in the loop on dedicated events for partner enablement and all Lifearay events that partners can participate in."
 																					}
 																				}
 																			}
 																		}
 																	],
 																	"fragmentStyle": {
-																		"marginBottom": "2",
-																		"marginTop": "2",
+																		"height": "60px",
+																		"paddingBottom": "2",
+																		"paddingTop": "2",
 																		"textAlign": "",
-																		"textColor": "colorNeutral8"
+																		"textColor": "btnOutlineSecondaryColor"
 																	},
 																	"indexed": true
 																},
@@ -1601,6 +1786,25 @@
 															},
 															{
 																"definition": {
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"ar_SA": "https://www.liferay.com/",
+																				"ca_ES": "https://www.liferay.com/",
+																				"de_DE": "https://www.liferay.com/",
+																				"en_US": "https://www.liferay.com/",
+																				"es_ES": "https://www.liferay.com/",
+																				"fi_FI": "https://www.liferay.com/",
+																				"fr_FR": "https://www.liferay.com/",
+																				"hu_HU": "https://www.liferay.com/",
+																				"ja_JP": "https://www.liferay.com/",
+																				"nl_NL": "https://www.liferay.com/",
+																				"pt_BR": "https://www.liferay.com/",
+																				"sv_SE": "https://www.liferay.com/",
+																				"zh_CN": "https://www.liferay.com/"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"borderWidth": "0",
 																		"textAlign": "",
@@ -1628,32 +1832,13 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "text-link-md"
+																				"textType": "text-paragraph"
 																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
 																						"fragmentLink": {
-																							"value": {
-																								"href": {
-																									"value_i18n": {
-																										"ar_SA": "https://www.liferay.com/",
-																										"ca_ES": "https://www.liferay.com/",
-																										"de_DE": "https://www.liferay.com/",
-																										"en_US": "https://www.liferay.com/",
-																										"es_ES": "https://www.liferay.com/",
-																										"fi_FI": "https://www.liferay.com/",
-																										"fr_FR": "https://www.liferay.com/",
-																										"hu_HU": "https://www.liferay.com/",
-																										"ja_JP": "https://www.liferay.com/",
-																										"nl_NL": "https://www.liferay.com/",
-																										"pt_BR": "https://www.liferay.com/",
-																										"sv_SE": "https://www.liferay.com/",
-																										"zh_CN": "https://www.liferay.com/"
-																									}
-																								}
-																							}
 																						},
 																						"text": {
 																							"value_i18n": {
@@ -1680,8 +1865,16 @@
 																				"height": "24px",
 																				"paddingRight": "1",
 																				"textAlign": "",
-																				"textColor": "colorActionPrimaryDefault"
+																				"textColor": "colorBrandPrimary"
 																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginRight": "0"
+																					},
+																					"id": "tablet"
+																				}
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -1692,14 +1885,14 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
-																				"iconLink": "https://www.liferay.com/",
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
-																				"textColor": "colorActionPrimaryDefault"
+																				"textColor": "colorBrandPrimary"
 																			},
 																			"indexed": true
 																		},

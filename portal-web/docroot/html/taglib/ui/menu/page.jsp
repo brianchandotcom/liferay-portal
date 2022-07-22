@@ -28,7 +28,6 @@ List<MenuItem> menuItems = menu.getMenuItems();
 	direction="<%= menu.getDirection() %>"
 	extended="<%= menu.isExtended() %>"
 	icon="<%= menu.getIcon() %>"
-	markupView="<%= menu.getMarkupView() %>"
 	message="<%= menu.getMessage() %>"
 	scroll="<%= menu.isScroll() %>"
 	showArrow="<%= menu.isShowArrow() %>"

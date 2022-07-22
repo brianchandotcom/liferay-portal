@@ -65,7 +65,6 @@ String iconCssClass = (String)request.getAttribute("liferay-ui:icon:iconCssClass
 String id = (String)request.getAttribute("liferay-ui:icon:id");
 String image = (String)request.getAttribute("liferay-ui:icon:image");
 boolean forcePost = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:forcePost"));
-String markupView = (String)request.getAttribute("liferay-ui:icon:markupView");
 String message = (String)request.getAttribute("liferay-ui:icon:message");
 boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:label"));
 String lang = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:lang"));

@@ -25,7 +25,6 @@ SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("l
 boolean compactEmptyResultsMessage = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:search:compactEmptyResultsMessage"));
 String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:search-iterator:displayStyle"), SearchIteratorTag.DEFAULT_DISPLAY_STYLE);
 boolean fixedHeader = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:search-iterator:fixedHeader"));
-String markupView = (String)request.getAttribute("liferay-ui:search-iterator:markupView");
 boolean paginate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:search-iterator:paginate"));
 ResultRowSplitter resultRowSplitter = (ResultRowSplitter)request.getAttribute("liferay-ui:search-iterator:resultRowSplitter");
 String rowIdProperty = (String)request.getAttribute("liferay-ui:search-container-row:rowIdProperty");

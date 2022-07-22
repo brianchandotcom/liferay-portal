@@ -18,7 +18,6 @@
 			<div class="taglib-search-iterator-page-iterator-bottom">
 				<liferay-ui:search-paginator
 					id='<%= id + "PageIteratorBottom" %>'
-					markupView="<%= markupView %>"
 					searchContainer="<%= searchContainer %>"
 					type="<%= type %>"
 				/>

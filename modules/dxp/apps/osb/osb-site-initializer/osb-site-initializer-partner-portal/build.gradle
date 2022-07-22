@@ -19,8 +19,8 @@ task buildExtraRemoteApp
 task forceDeploy
 task zipExtraRemoteApp(type: Zip)
 
-String extraRemoteAppName = "com.liferay.site.initializer.partner.portal.extra.remote.app"
-String extraRemoteAppVersion = "20220716.0256"
+String extraRemoteAppName = "com.liferay.osb.site.initializer.partner.portal.extra.remote.app"
+String extraRemoteAppVersion = "0.0"
 
 DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd.HHmm")
 
@@ -70,7 +70,9 @@ processResources {
 		}
 	}
 
-	if (gradle.startParameter.taskNames.contains("forceDeploy") || gradle.startParameter.taskNames.contains("uploadExtraRemoteApp")) {
+	ResolvedConfiguration resolvedConfiguration = configurations.extraRemoteApp.getResolvedConfiguration()
+
+	if (gradle.startParameter.taskNames.contains("forceDeploy") || gradle.startParameter.taskNames.contains("uploadExtraRemoteApp") || resolvedConfiguration.hasError()) {
 		dependsOn buildExtraRemoteApp
 
 		into("site-initializer/documents/company/remote-app/" + webContextPath) {

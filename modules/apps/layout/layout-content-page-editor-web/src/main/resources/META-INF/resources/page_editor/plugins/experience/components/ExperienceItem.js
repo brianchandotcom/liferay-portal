@@ -22,6 +22,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import openConfirm from '../../../app/utils/openConfirm';
 import {STATUS_DRAFT} from '../statuses';
 import {ExperienceType} from '../types';
 import ExperimentLabel from './ExperimentLabel';
@@ -67,11 +68,14 @@ const ExperienceItem = ({
 			  )
 			: Liferay.Language.get('do-you-want-to-delete-this-experience');
 
-		const confirmed = confirm(confirmationMessage);
-
-		if (confirmed) {
-			onDeleteExperience(experience.segmentsExperienceId);
-		}
+		openConfirm({
+			message: confirmationMessage,
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					onDeleteExperience(experience.segmentsExperienceId);
+				}
+			},
+		});
 	};
 	const handleExperienceDuplicate = () => {
 		onDuplicateExperience(experience.segmentsExperienceId);

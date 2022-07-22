@@ -1166,7 +1166,9 @@ public class Entity implements Comparable<Entity> {
 
 	public boolean isShardedModel() {
 		if (_packagePath.equals("com.liferay.portal") &&
-			_name.equals("Company")) {
+			(_name.equals("Company") ||
+			 (_serviceBuilder.isVersionGTE_7_4_0() &&
+			  _name.equals("VirtualHost")))) {
 
 			return false;
 		}

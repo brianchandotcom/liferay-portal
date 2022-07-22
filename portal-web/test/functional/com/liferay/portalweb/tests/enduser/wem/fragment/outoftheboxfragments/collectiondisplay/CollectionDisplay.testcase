@@ -2247,6 +2247,213 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-150318 and LPS-152245. Fragments used in nested elements and nested tabs within collection display are not given unique fragment ids."
+	@priority = "3"
+	test ViewUniqueFragmentIdsInNestedElementsAndNestedTabs {
+		task ("Given a fragment is given unique ID") {
+			task ("Add a fragment collection via JSON") {
+				JSONFragment.addFragmentCollection(
+					groupName = "Test Site Name",
+					name = "Collection Name");
+			}
+
+			task ("Add a section fragment to the fragment collection via JSON") {
+				JSONFragment.addSection(
+					collectionName = "Collection Name",
+					groupName = "Test Site Name",
+					name = "Fragment Name");
+			}
+
+			task ("Navigate to fragments admin") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			}
+
+			task ("Edit this  fragment with the following codes") {
+				FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+				FragmentsAdminNavigator.gotoEntryEllipsisItem(
+					entry = "Fragment Name",
+					item = "Edit");
+
+				var htmlContent = '''<div class="fragment_name">${fragmentElementId}</div>''';
+
+				FragmentsEditor.typeHtmlEditor(content = "${htmlContent}");
+
+				FragmentsEditor.waitForAutoSave();
+
+				FragmentsEditor.publish();
+			}
+		}
+
+		task ("When deploy it to nexted elements and nested tabs within collection display") {
+			task ("Add three web contents") {
+				for (var i : list "1,2,3") {
+					JSONWebcontent.addWebContent(
+						content = "WC WebContent Content ${i}",
+						groupName = "Test Site Name",
+						title = "WC WebContent Title ${i}");
+				}
+			}
+
+			task ("Add a Collection Display fragment to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Collection Display");
+			}
+
+			task ("Add a Collection Display fragment to another content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Content Page Name 2",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name 2",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Collection Display");
+			}
+
+			task ("Select the Recent Content in Collection Display") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.editCollectionDisplay(
+					fragmentName = "Collection Display",
+					infoListProviderName = "Recent Content");
+			}
+
+			task ("Add the created fragment into one cell of Collection Display") {
+				PageEditor.addFragmentToCollectionDisplay(
+					collectionName = "Collection Name",
+					entryTitle = "WC WebContent Title 3",
+					fragmentName = "Fragment Name");
+			}
+
+			task ("Select the Recent Content in Collection Display in the second page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name 2",
+					siteName = "Test Site Name");
+
+				PageEditor.editCollectionDisplay(
+					fragmentName = "Collection Display",
+					infoListProviderName = "Recent Content");
+			}
+
+			task ("Add the created fragment into tabs fragment of Collection Display") {
+				PageEditor.addFragmentToCollectionDisplay(
+					collectionName = "Basic Components",
+					entryTitle = "WC WebContent Title 3",
+					fragmentName = "Tabs");
+
+				PageEditor.addElementToTab(
+					collectionName = "Collection Name",
+					fragmentName = "Fragment Name",
+					index = "2",
+					navItem = "Tab 1",
+					navTab = "Fragments",
+					position = "1");
+			}
+		}
+
+		task ("Then the unique id is shown in edit and view mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			var fragmentId = selenium.getText("//div[@aria-label='Fragment Name']");
+
+			AssertTextNotEquals(
+				key_columnNumber = "1",
+				key_position = "1",
+				key_rowNumber = "2",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
+				value1 = "${fragmentId}");
+
+			AssertTextNotEquals(
+				key_columnNumber = "1",
+				key_position = "1",
+				key_rowNumber = "3",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
+				value1 = "${fragmentId}");
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name 2",
+				siteName = "Test Site Name");
+
+			var fragmentId2 = selenium.getText("//div[@aria-label='Fragment Name']//div[contains(@id,'fragment-')]");
+
+			AssertTextNotEquals.assertNotPartialText(
+				key_columnNumber = "1",
+				key_position = "1",
+				key_rowNumber = "2",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
+				value1 = "${fragmentId2}");
+
+			AssertTextNotEquals.assertNotPartialText(
+				key_columnNumber = "1",
+				key_position = "1",
+				key_rowNumber = "3",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
+				value1 = "${fragmentId2}");
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				key_colPosition = "1",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM",
+				value1 = "${fragmentId}");
+
+			AssertTextNotEquals(
+				key_colPosition = "1",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM",
+				value1 = "${fragmentId}");
+
+			AssertTextNotEquals(
+				key_colPosition = "1",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM",
+				value1 = "${fragmentId}");
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name 2",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				key_colPosition = "1",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM",
+				value1 = "${fragmentId2}");
+
+			AssertTextNotEquals.assertNotPartialText(
+				key_colPosition = "1",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM",
+				value1 = "${fragmentId2}");
+
+			AssertTextNotEquals.assertNotPartialText(
+				key_colPosition = "1",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM",
+				value1 = "${fragmentId2}");
+		}
+	}
+
 	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed using Default Template when add a Content Display to Collection Display."
 	@priority = "5"
 	@uitest

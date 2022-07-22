@@ -1142,12 +1142,51 @@ definition {
 	}
 
 	@description = "This test covers LPS-49419. It validates that BBCode cannot be injected into a blog comment using Pingback."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotInjectBBCodeIntoCommentUsingPingback {
+		property test.name.skip.portal.instance = "BlogsEntry#CannotInjectBBCodeIntoCommentUsingPingback";
 
-		// TODO LPS-147822
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "test");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		for (var ip : list "0.0.0.0,127.127.127.127,[::1],10.0.0.10,172.17.172.17") {
+			var curl = '''
+				${portalURL}/xmlrpc/pingback \
+				-H 'Content-Type: text/xml' \
+				-u test@liferay.com:test \
+				-d '
+				<?xml version="1.0" encoding="iso-8859-1"?>
+				<methodCall>
+				<methodName>pingback.ping</methodName>
+				<params>
+				<param><value><string>http://${ip}</string></value></param>
+				<param><value><string>http://localhost:8080/web/guest/home/-/blogs/test</string></value></param>
+				</params>
+				</methodCall>'
+			''';
+
+			var returnValue = JSONCurlUtil.post("${curl}");
+
+			if (contains("${returnValue}", "Access Denied")) {
+				echo("The return value is Access Denied");
+			}
+			else {
+				fail("FAIL!");
+			}
+		}
 	}
 
 	@description = "This is a test for LPS-136788. It checks that a user cannot rate a post when it is disabled in the configuration."

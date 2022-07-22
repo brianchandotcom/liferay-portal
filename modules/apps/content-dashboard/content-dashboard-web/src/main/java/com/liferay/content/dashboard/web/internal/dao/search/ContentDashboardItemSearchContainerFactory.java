@@ -43,7 +43,6 @@ import com.liferay.portal.search.searcher.Searcher;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -141,11 +140,9 @@ public class ContentDashboardItemSearchContainerFactory {
 		Stream<Document> stream = documents.stream();
 
 		return stream.map(
-			this::_toContentDashboardItemOptional
+			this::_toContentDashboardItem
 		).filter(
-			Optional::isPresent
-		).map(
-			Optional::get
+			Objects::nonNull
 		).collect(
 			Collectors.toList()
 		);
@@ -240,35 +237,32 @@ public class ContentDashboardItemSearchContainerFactory {
 		return new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
 	}
 
-	private Optional<ContentDashboardItem<?>> _toContentDashboardItemOptional(
+	private ContentDashboardItem<?> _toContentDashboardItem(
 		ContentDashboardItemFactory<?> contentDashboardItemFactory,
 		Document document) {
 
 		try {
-			return Optional.of(
-				contentDashboardItemFactory.create(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+			return contentDashboardItemFactory.create(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
 
-			return Optional.empty();
+			return null;
 		}
 	}
 
-	private Optional<ContentDashboardItem<?>> _toContentDashboardItemOptional(
-		Document document) {
+	private ContentDashboardItem<?> _toContentDashboardItem(Document document) {
+		ContentDashboardItemFactory<?> contentDashboardItemFactory =
+			_contentDashboardItemFactoryTracker.getContentDashboardItemFactory(
+				_contentDashboardItemSearchClassMapperTracker.getClassName(
+					document.get(Field.ENTRY_CLASS_NAME)));
 
-		Optional<ContentDashboardItemFactory<?>>
-			contentDashboardItemFactoryOptional =
-				_contentDashboardItemFactoryTracker.
-					getContentDashboardItemFactoryOptional(
-						_contentDashboardItemSearchClassMapperTracker.
-							getClassName(document.get(Field.ENTRY_CLASS_NAME)));
+		if (contentDashboardItemFactory == null) {
+			return null;
+		}
 
-		return contentDashboardItemFactoryOptional.flatMap(
-			contentDashboardItemFactory -> _toContentDashboardItemOptional(
-				contentDashboardItemFactory, document));
+		return _toContentDashboardItem(contentDashboardItemFactory, document);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -185,21 +185,29 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		for (String className :
 				_contentDashboardItemFactoryTracker.getClassNames()) {
 
-			Optional<ContentDashboardItemFactory<?>>
-				contentDashboardItemFactoryOptional =
-					_contentDashboardItemFactoryTracker.
-						getContentDashboardItemFactoryOptional(className);
+			ContentDashboardItemFactory<?> contentDashboardItemFactory =
+				_contentDashboardItemFactoryTracker.
+					getContentDashboardItemFactory(className);
 
-			contentDashboardItemFactoryOptional.flatMap(
-				ContentDashboardItemFactory::
-					getContentDashboardItemSubtypeFactoryOptional
-			).ifPresent(
-				contentDashboardItemSubtypeFactory ->
-					_populateContentDashboardItemTypesJSONArray(
-						className, contentDashboardItemSubtypeFactory,
-						checkedContentDashboardItemSubtypesInfoItemReferences,
-						contentDashboardItemTypesJSONArray, themeDisplay)
-			);
+			if (contentDashboardItemFactory == null) {
+				continue;
+			}
+
+			Optional<ContentDashboardItemSubtypeFactory>
+				contentDashboardItemSubtypeFactoryOptional =
+					contentDashboardItemFactory.
+						getContentDashboardItemSubtypeFactoryOptional();
+
+			if (contentDashboardItemSubtypeFactoryOptional.isPresent()) {
+				ContentDashboardItemSubtypeFactory
+					contentDashboardItemSubtypeFactory =
+						contentDashboardItemSubtypeFactoryOptional.get();
+
+				_populateContentDashboardItemTypesJSONArray(
+					className, contentDashboardItemSubtypeFactory,
+					checkedContentDashboardItemSubtypesInfoItemReferences,
+					contentDashboardItemTypesJSONArray, themeDisplay);
+			}
 		}
 
 		return contentDashboardItemTypesJSONArray;

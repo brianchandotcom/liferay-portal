@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,25 +58,20 @@ public class ContentDashboardAdminSharingDisplayContext {
 	}
 
 	public boolean isSharingButtonVisible() throws PortalException {
-		Optional<ContentDashboardItemFactory<?>>
-			contentDashboardItemFactoryOptional =
-				_contentDashboardItemFactoryTracker.
-					getContentDashboardItemFactoryOptional(getClassName());
+		ContentDashboardItemFactory<?> contentDashboardItemFactory =
+			_contentDashboardItemFactoryTracker.getContentDashboardItemFactory(
+				getClassName());
 
-		Optional<ContentDashboardItem<?>> contentDashboardItemOptional =
-			contentDashboardItemFactoryOptional.map(
-				contentDashboardItemFactory -> _toContentDashboardItemOptional(
-					contentDashboardItemFactory, getClassPK())
-			).orElse(
-				Optional.empty()
-			);
-
-		if (!contentDashboardItemOptional.isPresent()) {
+		if (contentDashboardItemFactory == null) {
 			return false;
 		}
 
-		ContentDashboardItem<?> contentDashboardItem =
-			contentDashboardItemOptional.get();
+		ContentDashboardItem<?> contentDashboardItem = _toContentDashboardItem(
+			contentDashboardItemFactory, getClassPK());
+
+		if (contentDashboardItem == null) {
+			return false;
+		}
 
 		ContentDashboardItemAction contentDashboardItemAction =
 			_getSharingContentDashboardItemAction(contentDashboardItem);
@@ -104,19 +98,18 @@ public class ContentDashboardAdminSharingDisplayContext {
 		return null;
 	}
 
-	private Optional<ContentDashboardItem<?>> _toContentDashboardItemOptional(
+	private ContentDashboardItem<?> _toContentDashboardItem(
 		ContentDashboardItemFactory<?> contentDashboardItemFactory,
 		long classPK) {
 
 		try {
-			return Optional.of(
-				contentDashboardItemFactory.create(
-					GetterUtil.getLong(classPK)));
+			return contentDashboardItemFactory.create(
+				GetterUtil.getLong(classPK));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
 
-			return Optional.empty();
+			return null;
 		}
 	}
 

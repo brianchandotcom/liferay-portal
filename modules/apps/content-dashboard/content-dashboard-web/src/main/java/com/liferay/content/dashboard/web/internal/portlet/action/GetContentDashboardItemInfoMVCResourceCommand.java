@@ -105,28 +105,28 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		try {
 			String className = ParamUtil.getString(
 				resourceRequest, "className");
+
+			ContentDashboardItemFactory<?> contentDashboardItemFactory =
+				_contentDashboardItemFactoryTracker.
+					getContentDashboardItemFactory(className);
+
+			if (contentDashboardItemFactory == null) {
+				JSONPortletResponseUtil.writeJSON(
+					resourceRequest, resourceResponse,
+					JSONFactoryUtil.createJSONArray());
+
+				return;
+			}
+
 			long classPK = GetterUtil.getLong(
 				ParamUtil.getLong(resourceRequest, "classPK"));
 
-			Optional<ContentDashboardItemFactory<?>>
-				contentDashboardItemFactoryOptional =
-					_contentDashboardItemFactoryTracker.
-						getContentDashboardItemFactoryOptional(className);
+			ContentDashboardItem<?> contentDashboardItem =
+				contentDashboardItemFactory.create(classPK);
 
-			JSONObject jsonObject = contentDashboardItemFactoryOptional.flatMap(
-				contentDashboardItemFactory -> {
-					try {
-						return Optional.of(
-							contentDashboardItemFactory.create(classPK));
-					}
-					catch (PortalException portalException) {
-						_log.error(portalException);
-
-						return Optional.empty();
-					}
-				}
-			).map(
-				contentDashboardItem -> JSONUtil.put(
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
 					"className", _getClassName(contentDashboardItem)
 				).put(
 					"classPK", _getClassPK(contentDashboardItem)
@@ -184,13 +184,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"vocabularies",
 					_getAssetVocabulariesJSONObject(
 						contentDashboardItem, locale)
-				)
-			).orElseGet(
-				JSONFactoryUtil::createJSONObject
-			);
-
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse, jsonObject);
+				));
 		}
 		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {

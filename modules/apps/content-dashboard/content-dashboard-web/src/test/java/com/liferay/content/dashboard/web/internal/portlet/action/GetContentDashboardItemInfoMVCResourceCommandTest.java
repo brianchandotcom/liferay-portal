@@ -371,38 +371,36 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			"_contentDashboardItemFactoryTracker",
 			new ContentDashboardItemFactoryTracker() {
 
-				public Optional<ContentDashboardItemFactory<?>>
-					getContentDashboardItemFactoryOptional(String className) {
+				public ContentDashboardItemFactory<?>
+					getContentDashboardItemFactory(String className) {
 
-					return Optional.ofNullable(
-						new ContentDashboardItemFactory() {
+					return new ContentDashboardItemFactory() {
 
-							@Override
-							public ContentDashboardItem create(long classPK) {
-								InfoItemReference infoItemReference =
-									contentDashboardItem.getInfoItemReference();
+						@Override
+						public ContentDashboardItem create(long classPK) {
+							InfoItemReference infoItemReference =
+								contentDashboardItem.getInfoItemReference();
 
-								if (Objects.equals(
-										className,
-										infoItemReference.getClassName()) &&
-									Objects.equals(
-										classPK,
-										infoItemReference.getClassPK())) {
+							if (Objects.equals(
+									className,
+									infoItemReference.getClassName()) &&
+								Objects.equals(
+									classPK, infoItemReference.getClassPK())) {
 
-									return contentDashboardItem;
-								}
-
-								return null;
+								return contentDashboardItem;
 							}
 
-							@Override
-							public Optional<ContentDashboardItemSubtypeFactory>
-								getContentDashboardItemSubtypeFactoryOptional() {
+							return null;
+						}
 
-								return Optional.empty();
-							}
+						@Override
+						public Optional<ContentDashboardItemSubtypeFactory>
+							getContentDashboardItemSubtypeFactoryOptional() {
 
-						});
+							return Optional.empty();
+						}
+
+					};
 				}
 
 			});

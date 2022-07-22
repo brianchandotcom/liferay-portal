@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -54,10 +53,10 @@ public class ContentDashboardItemFactoryTracker {
 		return Collections.unmodifiableCollection(_serviceTrackerMap.keySet());
 	}
 
-	public Optional<ContentDashboardItemFactory<?>>
-		getContentDashboardItemFactoryOptional(String className) {
+	public ContentDashboardItemFactory<?> getContentDashboardItemFactory(
+		String className) {
 
-		return Optional.ofNullable(_serviceTrackerMap.getService(className));
+		return _serviceTrackerMap.getService(className);
 	}
 
 	@Activate

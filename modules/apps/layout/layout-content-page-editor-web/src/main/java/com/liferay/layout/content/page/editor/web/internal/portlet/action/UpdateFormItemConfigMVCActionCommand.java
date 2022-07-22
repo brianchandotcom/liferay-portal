@@ -18,6 +18,8 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.listener.FragmentEntryLinkListener;
+import com.liferay.fragment.listener.FragmentEntryLinkListenerTracker;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -411,34 +413,39 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 						themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 						segmentsExperienceId, layoutStructure.toString());
 
+			JSONObject addedFragmentEntryLinksJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(actionResponse);
 
 			LayoutStructure updatedLayoutStructure = LayoutStructure.of(
 				layoutPageTemplateStructure.getData(segmentsExperienceId));
 
-			jsonObject.put(
-				"addedFragmentEntryLinks",
-				() -> {
-					JSONObject addedFragmentEntryLinksJSONObject =
-						JSONFactoryUtil.createJSONObject();
+			List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
+				_fragmentEntryLinkListenerTracker.
+					getFragmentEntryLinkListeners();
 
-					for (FragmentEntryLink addedFragmentEntryLink :
-							addedFragmentEntryLinks) {
+			for (FragmentEntryLink addedFragmentEntryLink :
+					addedFragmentEntryLinks) {
 
-						addedFragmentEntryLinksJSONObject.put(
-							String.valueOf(
-								addedFragmentEntryLink.
-									getFragmentEntryLinkId()),
-							_fragmentEntryLinkManager.
-								getFragmentEntryLinkJSONObject(
-									addedFragmentEntryLink, httpServletRequest,
-									httpServletResponse,
-									updatedLayoutStructure));
-					}
+				addedFragmentEntryLinksJSONObject.put(
+					String.valueOf(
+						addedFragmentEntryLink.getFragmentEntryLinkId()),
+					_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+						addedFragmentEntryLink, httpServletRequest,
+						httpServletResponse, updatedLayoutStructure));
 
-					return addedFragmentEntryLinksJSONObject;
+				for (FragmentEntryLinkListener fragmentEntryLinkListener :
+						fragmentEntryLinkListeners) {
+
+					fragmentEntryLinkListener.onAddFragmentEntryLink(
+						addedFragmentEntryLink);
 				}
+			}
+
+			jsonObject.put(
+				"addedFragmentEntryLinks", addedFragmentEntryLinksJSONObject
 			).put(
 				"layoutData", updatedLayoutStructure.toJSONObject()
 			).put(
@@ -466,6 +473,9 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentEntryLinkListenerTracker _fragmentEntryLinkListenerTracker;
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;

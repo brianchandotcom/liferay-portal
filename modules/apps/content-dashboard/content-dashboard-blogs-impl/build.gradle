@@ -8,5 +8,7 @@ dependencies {
 	compileOnly project(":apps:blogs:blogs-api")
 	compileOnly project(":apps:content-dashboard:content-dashboard-api")
 	compileOnly project(":apps:info:info-api")
+	compileOnly project(":apps:petra:petra-portlet-url-builder")
+	compileOnly project(":apps:sharing:sharing-api")
 	compileOnly project(":core:petra:petra-string")
 }

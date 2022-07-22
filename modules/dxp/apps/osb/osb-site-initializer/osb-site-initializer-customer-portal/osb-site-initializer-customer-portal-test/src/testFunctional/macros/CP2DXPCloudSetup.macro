@@ -38,7 +38,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Objects");
 
-		CustomerPortal.viewCPObjectCustomInfo(index = "13");
+		CustomerPortal.viewCPObjectCustomInfo(index = "16");
 
 		CreateObject.checkToggleActive();
 
@@ -82,7 +82,7 @@ definition {
 	macro clearDXPCloudInfo {
 		CP2DXPCloudSetup.clearActivationStatus();
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CP2DXPCloudSetup.deleteEntryDXPCloudEnvironments(entry = "ERC-001");
 	}

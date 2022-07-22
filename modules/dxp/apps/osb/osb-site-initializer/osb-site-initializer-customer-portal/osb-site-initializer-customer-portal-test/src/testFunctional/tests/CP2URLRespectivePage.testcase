@@ -1,16 +1,14 @@
 @component-name = "portal-solutions"
-@ignore = "true"
 definition {
 
-	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
-	var testSiteName = "Customer Portal Name";
-	var testSiteURL = "customer-portal-name";
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -20,33 +18,29 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			Site.openSitesAdmin();
-
-			TeamExtranet.addSiteTemplateCP(
-				siteName = "${testSiteName}",
-				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		CustomerPortal.customerPortalApisTearDown();
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-
-			CustomerPortal.customerPortalApisTearDown();
 		}
 	}
 
 	@description = "LPS-148483 - Verify if when the user choose the ERC-003 and clicks on the Analytics Cloud product the url follow the respective page."
 	@priority = "5"
 	test IfAnalyticsCloudUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-003/activation/analytics-cloud");
+		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-003/activation/analytics-cloud");
 
 		AssertElementPresent(
 			locator1 = "CP2NavigationMenu#PRODUCT",
@@ -56,9 +50,9 @@ definition {
 	@description = "LPS-148477 - Verify if when the user choose the ERC-004 and clicks on the Commerce product the url follow the respective page."
 	@priority = "5"
 	test IfCommerceUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-004/activation/commerce");
+		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-004/activation/commerce");
 
 		AssertElementPresent(
 			locator1 = "CP2NavigationMenu#PRODUCT",
@@ -68,9 +62,9 @@ definition {
 	@description = "LPS-148479 - Verify if when the user choose the ERC-001 and clicks on the DXP Cloud product the url follow the respective page."
 	@priority = "5"
 	test IfDXPCloudUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-001/activation/dxp-cloud");
+		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-001/activation/dxp-cloud");
 
 		AssertElementPresent(
 			locator1 = "CP2NavigationMenu#PRODUCT",
@@ -80,9 +74,9 @@ definition {
 	@description = "LPS-148478 - Verify if when the user choose the ERC-007 and clicks on the DXP product the url follow the respective page."
 	@priority = "5"
 	test IfDXPUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-007/activation/dxp");
+		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-007/activation/dxp");
 
 		AssertElementPresent(
 			locator1 = "CP2NavigationMenu#PRODUCT",
@@ -92,9 +86,9 @@ definition {
 	@description = "LPS-148481- Verify if when the user choose the Riyad Bank - Corporate Website and clicks on the Enterprise Search product the url follow the respective page."
 	@priority = "5"
 	test IfEnterpriseUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-009/activation/enterprise-search");
+		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-009/activation/enterprise-search");
 
 		AssertElementPresent(
 			locator1 = "CP2NavigationMenu#PRODUCT",
@@ -104,9 +98,9 @@ definition {
 	@description = "LPS-148480 - Verify if when the user choose the ERC-002 and clicks on the Partnership product the url follow the respective page."
 	@priority = "5"
 	test IfPartnershipUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-002/activation/partnership");
+		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-002/activation/partnership");
 
 		AssertElementPresent(
 			locator1 = "CP2NavigationMenu#PRODUCT",
@@ -116,9 +110,9 @@ definition {
 	@description = "LPS-148482 - Verify if when the user choose the ERC-005 and clicks on the Portal product the url follow the respective page."
 	@priority = "5"
 	test IfPortalUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-005/activation/portal");
+		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-005/activation/portal");
 
 		AssertElementPresent(
 			locator1 = "CP2NavigationMenu#PRODUCT",
@@ -129,15 +123,15 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test IfProjectListingURLStillTheSame {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-007/activation/dxp");
+		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-007/activation/dxp");
 
 		AssertElementPresent(
 			locator1 = "CP2NavigationMenu#PRODUCT",
 			product = "DXP");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal");
+		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site");
 
 		AssertElementPresent(locator1 = "CP2LiferayContact#FIND_A_PROJECT");
 	}

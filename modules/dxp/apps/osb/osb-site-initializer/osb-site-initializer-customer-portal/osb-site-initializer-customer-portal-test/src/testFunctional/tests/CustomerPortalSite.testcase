@@ -1,16 +1,14 @@
 @component-name = "portal-solutions"
-@ignore = "true"
 definition {
 
-	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
-	var testSiteName = "Customer Portal Name";
-	var testSiteURL = "customer-portal-name";
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -20,24 +18,20 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			Site.openSitesAdmin();
-
-			TeamExtranet.addSiteTemplateCP(
-				siteName = "${testSiteName}",
-				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		CustomerPortal.customerPortalApisTearDown(groupName = "${testSiteName}");
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-
-			CustomerPortal.customerPortalApisTearDown(groupName = "${testSiteName}");
 		}
 	}
 
@@ -142,7 +136,7 @@ definition {
 				siteName = "${testSiteName}",
 				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 			AssertElementPresent(
 				locator1 = "CP2LiferayContact#PROJECT_CARD",

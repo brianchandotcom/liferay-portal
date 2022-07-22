@@ -1,16 +1,14 @@
 @component-name = "portal-solutions"
-@ignore = "true"
 definition {
 
-	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
-	var testSiteName = "Customer Portal Name";
-	var testSiteURL = "customer-portal-name";
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -20,31 +18,27 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			Site.openSitesAdmin();
-
-			TeamExtranet.addSiteTemplateCP(
-				siteName = "${testSiteName}",
-				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		CustomerPortal.customerPortalApisTearDown();
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-
-			CustomerPortal.customerPortalApisTearDown();
 		}
 	}
 
 	@description = "LPS-144412 - Verify if the user can open the drop-down filter and select Active Status"
 	@priority = "4"
 	test CanUserSelectActiveStatus {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -60,7 +54,7 @@ definition {
 	@description = "LPS-144413 - Verify if the user can open the drop-down filter and select Expired Status"
 	@priority = "4"
 	test CanUserSelectExpiredStatus {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -76,7 +70,7 @@ definition {
 	@description = "LPS-144414 - Verify if the user can open the drop-down filter and select Future Status"
 	@priority = "4"
 	test CanUserSelectFutureStatus {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -92,7 +86,7 @@ definition {
 	@description = "LPS-144416 - Verify if the user can open the drop-down filter and select three statuses"
 	@priority = "3"
 	test CanUserSelectThreeStatuses {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -108,7 +102,7 @@ definition {
 	@description = "LPS-144419 - Verify if the value of the filter when transitioning between subscription types is kept and only reset when the user leaves the page"
 	@priority = "4"
 	test ValueIsKeptOnTransition {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -122,7 +116,7 @@ definition {
 			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
 			title = "Active");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 

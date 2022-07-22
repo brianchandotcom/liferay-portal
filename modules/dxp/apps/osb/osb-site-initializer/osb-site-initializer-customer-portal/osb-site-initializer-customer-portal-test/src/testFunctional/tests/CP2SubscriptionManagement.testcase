@@ -1,16 +1,14 @@
 @component-name = "portal-solutions"
-@ignore = "true"
 definition {
 
-	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
-	var testSiteName = "Customer Portal Name";
-	var testSiteURL = "customer-portal-name";
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -20,31 +18,27 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			Site.openSitesAdmin();
-
-			TeamExtranet.addSiteTemplateCP(
-				siteName = "${testSiteName}",
-				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		CustomerPortal.customerPortalApisTearDown();
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-
-			CustomerPortal.customerPortalApisTearDown();
 		}
 	}
 
 	@description = "LPS-147029 - Verify that the cards Subscriptions displays (Product logo - Subscription - Instance Size - Start Date - End Date)"
 	@priority = "5"
 	test AffirmAllCardInformation {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -54,7 +48,7 @@ definition {
 	@description = "LPS-147027 - Verify if the Active status reflects the dates displayed"
 	@priority = "4"
 	test IfActiveStatusReflectsDate {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -67,7 +61,7 @@ definition {
 	@description = "LPS-147025 - Verify if the Expired status reflects the dates displayed"
 	@priority = "4"
 	test IfExpiredStatusReflectsDate {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 02");
 
@@ -80,7 +74,7 @@ definition {
 	@description = "LPS-147026 - Verify if the Future status reflects the dates displayed"
 	@priority = "4"
 	test IfFutureStatusReflectsDate {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 02");
 
@@ -93,7 +87,7 @@ definition {
 	@description = "LPS-147021 - Verify if a tab is shown only if there are subscriptions to display on that tab"
 	@priority = "5"
 	test IfTabAppearOnlyWithSubscriptions {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(
 			status = "Future",
@@ -108,7 +102,7 @@ definition {
 	test LessThan5TabsAreSideBySide {
 		SetWindowSize(value1 = "1920,1080");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 06");
 
@@ -120,7 +114,7 @@ definition {
 	test TabDontAppearWithoutSubscription {
 		SetWindowSize(value1 = "1920,1080");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -132,7 +126,7 @@ definition {
 	test Tabs5OrMoreBecamesDropdownList {
 		SetWindowSize(value1 = "1920,1080");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 09");
 

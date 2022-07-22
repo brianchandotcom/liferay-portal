@@ -1,7 +1,6 @@
 @component-name = "portal-solutions"
 definition {
 
-	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -30,44 +29,38 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		CustomerPortal.deleteCPObject(title = "Account Flag");
+
+		CustomerPortal.customerPortalApisTearDown();
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-
-			CustomerPortal.deleteCPObject(title = "Account Flag");
-
-			CustomerPortal.customerPortalApisTearDown();
 		}
 	}
 
-    @description = "Automation ID: LPS-147722 | Test Summary: Verify if when user is Liferay Staff and not administrator of a project, he wont pass through the onboarding"
-    @priority = "5"
-    test IfStaffNotAdmWontPassOnboarding {
-        task ("Navigate to Account Administrator") {
-            CustomerPortal.openAccountsAdminForCP();
-        }
+	@description = "Automation ID: LPS-147791 | Test Summary: Verify if the Liferay Staff user can view a project for which he is not a member/worker/does not participate/does not have a role in it"
+	@priority = "4"
+	test IfStaffCanSeeProjectHeIsNotRelated {
+		task ("Check how many projects are available in CP2.0") {
+			Accounts.openAccountsAdmin();
 
-        task ("View the checkbox of role entry is unchecked") {
-			AssertElementPresent(
-				key_tableEntry = "Account Administrator",
-				locator1 = "LexiconTable#TABLE_ENTRY_UNCHECKED");
+			CustomerPortal.tableListInAccountsAdmin(projectsList = "Test Account 01,Test Account 02,Test Account 03,Test Account 04,Test Account 05,Test Account 06,Test Account 07,Test Account 08,Test Account 09,Test Account 10,Test Account 11");
 		}
 
-        task ("Assert that the Liferay Staff user has not gone through onboarding") {
-            ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Navigate to the Customer Portal 2.0 and assert the number of projects displayed on the homepage") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		    CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.tableListInHomepage(projectList = "Test Account 01,Test Account 02,Test Account 03,Test Account 04,Test Account 05,Test Account 06,Test Account 07,Test Account 08,Test Account 09,Test Account 10,Test Account 11");
+		}
+	}
 
-            AssertElementNotPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
-        }
-    }
-
-    @description = "Automation ID: LPS-147725 | Test Summary: Verify if when the user is Liferay Staff and it's administrator of the project, he will pass through the onboarding"
-    @priority = "5"
-    test IfStaffIsAdmWillPassOnboarding {
-        task ("Navigate to Account Administrator and make the user an admin of the project") {
+	@description = "Automation ID: LPS-147725 | Test Summary: Verify if when the user is Liferay Staff and it's administrator of the project, he will pass through the onboarding"
+	@priority = "5"
+	test IfStaffIsAdmWillPassOnboarding {
+		task ("Navigate to Account Administrator and make the user an admin of the project") {
 			Accounts.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account 01");
@@ -80,36 +73,45 @@ definition {
 		task ("Assert that when the user is Liferay Staff and administrator of the project has gone through onboarding") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		    CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account 01");
 
-            AssertElementPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
+			AssertElementPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
 		}
 
 		task ("Delete entry from the Account Flag object") {
 			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
 		}
-    }
+	}
 
-    @description = "Automation ID: LPS-147731 | Test Summary: Verify if when the user isn't Liferay Staff and it's a administrator of a Project, he will pass through the onboarding"
-    @ignore = "true"
+	@description = "Automation ID: LPS-147722 | Test Summary: Verify if when user is Liferay Staff and not administrator of a project, he wont pass through the onboarding"
 	@priority = "5"
-    test NotASatffButIsAdmWillPassOnboarding {
-        
-    }
-
-    @description = "Automation ID: LPS-147791 | Test Summary: Verify if the Liferay Staff user can view a project for which he is not a member/worker/does not participate/does not have a role in it"
-    @priority = "4"
-    test IfStaffCanSeeProjectHeIsNotRelated {
-        task ("Check how many projects are available in CP2.0") {
-			Accounts.openAccountsAdmin();
-
-			CustomerPortal.tableListInAccountsAdmin(projectsList = "Test Account 01,Test Account 02,Test Account 03,Test Account 04,Test Account 05,Test Account 06,Test Account 07,Test Account 08,Test Account 09,Test Account 10,Test Account 11");
+	test IfStaffNotAdmWontPassOnboarding {
+		task ("Navigate to Account Administrator") {
+			CustomerPortal.openAccountsAdminForCP();
 		}
 
-		task ("Navigate to the Customer Portal 2.0 and assert the number of projects displayed on the homepage") {
+		task ("View the checkbox of role entry is unchecked") {
+			AssertElementPresent(
+				key_tableEntry = "Account Administrator",
+				locator1 = "LexiconTable#TABLE_ENTRY_UNCHECKED");
+		}
+
+		task ("Assert that the Liferay Staff user has not gone through onboarding") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.tableListInHomepage(projectList = "Test Account 01,Test Account 02,Test Account 03,Test Account 04,Test Account 05,Test Account 06,Test Account 07,Test Account 08,Test Account 09,Test Account 10,Test Account 11");
+			CustomerPortal.enterOnProject(title = "Test Account 01");
+
+			AssertElementNotPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
 		}
-    }
+	}
+
+	@description = "Automation ID: LPS-147731 | Test Summary: Verify if when the user isn't Liferay Staff and it's a administrator of a Project, he will pass through the onboarding"
+	@ignore = "true"
+	@priority = "5"
+	test NotASatffButIsAdmWillPassOnboarding {
+
+		// TODO LPS-147731 NotASatffButIsAdmWillPassOnboarding pending implementation
+
+	}
+
 }

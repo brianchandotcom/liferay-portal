@@ -1,16 +1,14 @@
 @component-name = "portal-solutions"
-@ignore = "true"
 definition {
 
-	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
-	var testSiteName = "Customer Portal Name";
-	var testSiteURL = "customer-portal-name";
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -20,29 +18,24 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			Site.openSitesAdmin();
-
-			TeamExtranet.addSiteTemplateCP(
-				siteName = "${testSiteName}",
-				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		CustomerPortal.customerPortalApisTearDown();
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-
-			CustomerPortal.customerPortalApisTearDown();
 		}
 	}
 
 	@description = "LPS-146856 - Verify that when the status is active the page displays (Subtitle - Link - Link redirects to another page)"
-	@ignore = "true"
 	@priority = "4"
 	test AffirmAllTextAndLinksOnThePage {
 		CustomerPortal.showCPObject(title = "Account Flag");
@@ -57,7 +50,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -79,7 +72,7 @@ definition {
 
 		CP2DXPCloudSetup.activeStatus();
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -95,8 +88,6 @@ definition {
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#YOUR_ACCOUNT");
 
-		SelectWindow(locator1 = "title=Home - Customer Portal Name - Liferay DXP");
-
 		CP2DXPCloudSetup.clearDXPCloudInfo();
 
 		CP2DXPCloudSetup.deleteDXPCloudObject();
@@ -107,7 +98,6 @@ definition {
 	}
 
 	@description = "LPS-146852 - Verify if when the status is 'In Progress' the page subtitle: 'Your DXP Cloud environments are being set up and will be available soon' appears"
-	@ignore = "true"
 	@priority = "4"
 	test CanViewCaptionWhenTheStatusIsInProgress {
 		CustomerPortal.showCPObject(title = "Account Flag");
@@ -120,7 +110,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -152,7 +142,7 @@ definition {
 	@description = "LPS-146849 - Verify if Link 'Finish Activation' hidden to requestor and user roles"
 	@priority = "5"
 	test NoLinkIsDisplayedWhenYouAreARequesterOrUserRoles {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -168,7 +158,7 @@ definition {
 	@description = "LPS-146843 - Verify that the Activation Form Card - DXP Cloud displays (Product logo - Subscription - Start Date - End Date - Form Link - Page Subtitleis/Not Activated)"
 	@priority = "4"
 	test ViewTheDisplaysTheDxpCloudLogo {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -192,7 +182,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 

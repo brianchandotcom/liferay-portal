@@ -4,26 +4,6 @@ definition {
 		Click(locator1 = "CustomerPortalSite#ACCOUNTS_PROJECTS");
 	}
 
-	macro addCustomerPortalSite {
-		Site.openSitesAdmin();
-
-		Site.addSiteTemplateCP(
-			siteName = "${siteName}",
-			siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
-	}
-
-	macro openAccountsAdminForCP {
-		Accounts.openAccountsAdmin();
-
-		CustomerPortal.accountTableProject(title = "Test Account 01");
-
-		Navigator.gotoNavTab(navTab = "Users");
-
-		Accounts.goToEntryMenuItem(
-			menuItem = "Assign Roles",
-			rowEntry = "Test Test");
-	}
-
 	macro activeContactRole {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -37,6 +17,14 @@ definition {
 			value1 = "Quality Assurance Analyst");
 
 		Click(locator1 = "Button#SAVE");
+	}
+
+	macro addCustomerPortalSite {
+		Site.openSitesAdmin();
+
+		Site.addSiteTemplateCP(
+			siteName = "${siteName}",
+			siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
 	}
 
 	macro addIdPCForCustomerPortal {
@@ -269,6 +257,18 @@ definition {
 		}
 	}
 
+	macro openAccountsAdminForCP {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Navigator.gotoNavTab(navTab = "Users");
+
+		Accounts.goToEntryMenuItem(
+			menuItem = "Assign Roles",
+			rowEntry = "Test Test");
+	}
+
 	macro replaceCertificateAndPrivateKey {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -411,6 +411,24 @@ definition {
 		CreateObject.saveObject();
 	}
 
+	macro tableListInAccountsAdmin {
+		for (var tableEntry : list "${projectsList}") {
+			AssertElementPresent(
+				key_tableEntry = "${tableEntry}",
+				locator1 = "CustomerPortalSite#TABLE_ENTRY",
+				value1 = "${tableEntry}");
+		}
+	}
+
+	macro tableListInHomepage {
+		for (var project : list "${projectList}") {
+			AssertElementPresent(
+				key_project = "${project}",
+				locator1 = "CP2LiferayContact#PROJECT_TABLE",
+				title = "${project}");
+		}
+	}
+
 	macro tearDownForOktaAndSAML {
 		task ("Teardown") {
 			var entityId = "http://www.okta.com/exk158id544C4j3KK0h8";
@@ -526,24 +544,6 @@ definition {
 				locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
 				value = "${product}");
 		}
-	}
-
-	macro tableListInAccountsAdmin {
-		for (var tableEntry : list "${projectsList}") {
-            AssertElementPresent(
-                key_tableEntry = "${tableEntry}",
-                locator1 = "CustomerPortalSite#TABLE_ENTRY",
-                value1 = "${tableEntry}");
-        }
-	}
-
-	macro tableListInHomepage {
-		for (var project : list "${projectList}") {
-            AssertElementPresent(
-                key_project = "${project}",
-                locator1 = "CP2LiferayContact#PROJECT_TABLE",
-                title = "${project}");
-        }
 	}
 
 	macro viewTableValue {

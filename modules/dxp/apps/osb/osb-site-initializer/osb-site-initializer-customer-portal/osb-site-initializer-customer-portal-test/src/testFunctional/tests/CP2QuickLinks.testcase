@@ -1,16 +1,14 @@
 @component-name = "portal-solutions"
-@ignore = "true"
 definition {
 
-	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
-	var testSiteName = "Customer Portal Name";
-	var testSiteURL = "customer-portal-name";
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -20,31 +18,27 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			Site.openSitesAdmin();
-
-			TeamExtranet.addSiteTemplateCP(
-				siteName = "${testSiteName}",
-				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		CustomerPortal.customerPortalApisTearDown();
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-
-			CustomerPortal.customerPortalApisTearDown();
 		}
 	}
 
 	@description = "LPS-144906 - Verify if when Hide button is clicked by user, the Quick Links panel collapses"
 	@priority = "3"
 	test HideButtonClickedPanelCollapses {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -57,7 +51,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test IfACActiveNoActivateAC {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 	}
@@ -66,7 +60,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test IfACNotActiveShowActivateAC {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(
 			status = "Expired",
@@ -82,7 +76,7 @@ definition {
 	@description = "LPS-144912 - Verify if 'Environment Details' appears in Quick Links panel when DXP is 'Active'"
 	@priority = "5"
 	test IfDXPActiveShowsEnvironmentDetails {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 02");
 
@@ -96,7 +90,7 @@ definition {
 	@description = "LPS-144928 - Verify if 'Source Code Access' appears in Quick Links panel when DXP is 'Active'"
 	@priority = "5"
 	test IfDXPActiveShowsSourceCode {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 02");
 
@@ -110,7 +104,7 @@ definition {
 	@description = "LPS-144930 - Verify if 'Latest Fix Packs' appears in Quick Links panel when DXP Cloud is 'Active'"
 	@priority = "5"
 	test IfDXPCloudActiveShowLatestFix {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 06");
 
@@ -126,7 +120,7 @@ definition {
 	test IfDXPCloudAndCommerceActiveShowsEnvironmentDetails {
 		SetWindowSize(value1 = "1920,1080");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 06");
 
@@ -138,7 +132,7 @@ definition {
 	@description = "LPS-144929 - Verify if when DXP Cloud is not active, 'Source Code Access' doesn't show up. DXP cannot be active otherwise, Source Code Access will appear"
 	@priority = "4"
 	test IfDXPCloudNotActiveNoSourceCode {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(
 			status = "Expired",
@@ -152,7 +146,7 @@ definition {
 	@description = "LPS-144931 - Verify if 'Latest Fix Packs' does not appear when DXP is not active. DXP Cloud cannot be active otherwise, Latest Fix Packs will appear"
 	@priority = "4"
 	test IfDXPNotActiveNoLatestFix {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -164,7 +158,7 @@ definition {
 	@description = "LPS-144926 - Verify if when Limited SLA is 'Active', 'Large File Attachments' doesn't show up"
 	@priority = "4"
 	test IfLimitedSLAActiveNoLargeFile {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 06");
 
@@ -174,9 +168,10 @@ definition {
 	}
 
 	@description = "LPS-144914 - Verify if when Partnership is Active, 'Environment Details' doesn't appear. Note: DXP, Portal and Commerce cannot be active otherwise, Environment Details will appear"
+	@ignore = "true"
 	@priority = "4"
 	test IfPartnershipActiveNoEnvironmentDetails {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 10");
 
@@ -188,7 +183,7 @@ definition {
 	@description = "LPS-144925 - Verify if 'Large File Attachments' appears in Quick Links panel when there is no Limited SLA or Partnership 'Active'"
 	@priority = "5"
 	test IfPartnershipNorLimitedSLAShowsLargeFile {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -203,7 +198,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test IfPortalActiveButNoDXPNoActivateAC {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 	}
@@ -211,7 +206,7 @@ definition {
 	@description = "LPS-144741 - Verify if the Quick Links panel is visible on the Overview page"
 	@priority = "5"
 	test IsQuickLinksOnOverviewPage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -221,7 +216,7 @@ definition {
 	@description = "LPS-144742 - Verify if the Quick Links panel is visible on the Product Activation pages"
 	@priority = "5"
 	test IsQuickLinksOnProductActivation {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -235,7 +230,7 @@ definition {
 	@description = "LPS-154791 - Verify that the Quick Links Panel does not appear in Team Members"
 	@priority = "3"
 	test QuickLinksDoesNotAppearInTeamMembers {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -247,7 +242,7 @@ definition {
 	@description = "LPS-144907 - Verify if when user clicks on Show, the Quick Links panel expands"
 	@priority = "3"
 	test ShowButtonClickedPanelExpands {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 

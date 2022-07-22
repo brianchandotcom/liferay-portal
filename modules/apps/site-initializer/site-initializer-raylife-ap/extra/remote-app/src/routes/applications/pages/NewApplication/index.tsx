@@ -16,6 +16,7 @@ import {useContext} from 'react';
 
 import {NewApplicationAutoContext} from '../../context/NewApplicationAutoContextProvider';
 import ContactInfo from '../../forms/steps/ContactInfo/ContactInfoForm';
+import Coverage from '../../forms/steps/Coverage';
 import DriverInfo from '../../forms/steps/DriverInfo';
 import VehicleInfo from '../../forms/steps/VehicleInfo';
 import NewApplicationAuto from './NewApplicationAuto';
@@ -30,6 +31,8 @@ const NewApplication = () => {
 			{state.currentStep === 1 && <VehicleInfo />}
 
 			{state.currentStep === 2 && <DriverInfo />}
+
+			{state.currentStep === 3 && <Coverage />}
 		</NewApplicationAuto>
 	);
 };

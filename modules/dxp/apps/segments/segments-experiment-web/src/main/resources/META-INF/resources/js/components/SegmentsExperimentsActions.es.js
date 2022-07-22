@@ -23,6 +23,7 @@ import {
 	runExperiment,
 	updateSegmentsExperimentStatus,
 } from '../state/actions.es';
+import openConfirm from '../util/openConfirm.es';
 import {
 	STATUS_COMPLETED,
 	STATUS_DRAFT,
@@ -65,18 +66,19 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 					className="w-100"
 					displayType="secondary"
 					onClick={() => {
-						const confirmed = confirm(
-							Liferay.Language.get(
+						openConfirm({
+							message: Liferay.Language.get(
 								'are-you-sure-you-want-to-terminate-this-test'
-							)
-						);
-
-						if (confirmed) {
-							onEditSegmentsExperimentStatus(
-								experiment,
-								STATUS_TERMINATED
-							);
-						}
+							),
+							onConfirm: (isConfirmed) => {
+								if (isConfirmed) {
+									onEditSegmentsExperimentStatus(
+										experiment,
+										STATUS_TERMINATED
+									);
+								}
+							},
+						});
 					}}
 				>
 					{Liferay.Language.get('terminate-test')}

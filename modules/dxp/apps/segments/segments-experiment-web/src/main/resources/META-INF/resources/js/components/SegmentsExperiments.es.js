@@ -23,6 +23,7 @@ import {archiveExperiment} from '../state/actions.es';
 import {DispatchContext, StateContext} from '../state/context.es';
 import {NO_EXPERIMENT_ILLUSTRATION_FILE_NAME} from '../util/contants.es';
 import {navigateToExperience} from '../util/navigation.es';
+import openConfirm from '../util/openConfirm.es';
 import {
 	STATUS_COMPLETED,
 	STATUS_DRAFT,
@@ -279,13 +280,18 @@ function SegmentsExperiments({
 	);
 
 	function _handleDeleteActiveExperiment() {
-		const confirmed = confirm(
-			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-		);
-
-		if (confirmed) {
-			return onDeleteSegmentsExperiment(experiment.segmentsExperimentId);
-		}
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					return onDeleteSegmentsExperiment(
+						experiment.segmentsExperimentId
+					);
+				}
+			},
+		});
 	}
 
 	function _handleEditExperiment() {
@@ -299,28 +305,29 @@ function SegmentsExperiments({
 			winnerSegmentsExperienceId: experienceId,
 		};
 
-		const confirmed = confirm(
-			Liferay.Language.get(
+		openConfirm({
+			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-publish-this-variant'
-			)
-		);
+			),
+			onConfirm: (isConfimed) => {
+				if (isConfimed) {
+					APIService.publishExperience(body)
+						.then(({segmentsExperiment}) => {
+							openSuccessToast();
 
-		if (confirmed) {
-			APIService.publishExperience(body)
-				.then(({segmentsExperiment}) => {
-					openSuccessToast();
-
-					dispatch(
-						archiveExperiment({
-							status: segmentsExperiment.status,
+							dispatch(
+								archiveExperiment({
+									status: segmentsExperiment.status,
+								})
+							);
+							navigateToExperience(experienceId);
 						})
-					);
-					navigateToExperience(experienceId);
-				})
-				.catch((_error) => {
-					openErrorToast();
-				});
-		}
+						.catch((_error) => {
+							openErrorToast();
+						});
+				}
+			},
+		});
 	}
 }
 

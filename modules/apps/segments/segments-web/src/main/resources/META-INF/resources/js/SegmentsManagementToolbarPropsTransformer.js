@@ -12,26 +12,29 @@
  * details.
  */
 
+import openConfirm from './utils/openConfirm.es';
+
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
 		...otherProps,
 		onActionButtonClick(event, {item}) {
 			if (item?.data?.action === 'deleteSegmentsEntries') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-this'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fmSegmentsEntries`
-					);
+				openConfirm({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-this'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fmSegmentsEntries`
+							);
 
-					if (form) {
-						submitForm(form);
-					}
-				}
+							if (form) {
+								submitForm(form);
+							}
+						}
+					},
+				});
 			}
 		},
 	};

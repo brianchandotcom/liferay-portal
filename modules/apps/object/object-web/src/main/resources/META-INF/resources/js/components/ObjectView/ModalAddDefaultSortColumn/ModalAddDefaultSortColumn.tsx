@@ -75,8 +75,10 @@ export function ModalAddDefaultSortColumn({
 
 	useEffect(() => {
 		const newAvailableViewColumns = objectViewColumns.filter(
-			({defaultSort, objectFieldBusinessType}) =>
-				!defaultSort && objectFieldBusinessType !== 'Relationship'
+			(objectViewColumn) =>
+				!objectViewColumn.defaultSort &&
+				objectViewColumn.objectFieldBusinessType !== 'Relationship' &&
+				objectViewColumn.objectFieldBusinessType !== 'Aggregation'
 		);
 
 		setAvailableViewColumns(newAvailableViewColumns);

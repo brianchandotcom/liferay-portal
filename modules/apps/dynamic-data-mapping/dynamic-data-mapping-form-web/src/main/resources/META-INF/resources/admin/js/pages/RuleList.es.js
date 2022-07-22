@@ -20,9 +20,8 @@ import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import {RulesSupport, capitalize} from 'data-engine-js-components-web';
 import {LangUtil, OPERATOR_OPTIONS_TYPES} from 'data-engine-taglib';
-import React, {useMemo} from 'react';
-
 import {openConfirmModal} from 'frontend-js-web';
+import React, {useMemo} from 'react';
 
 import './RuleList.scss';
 

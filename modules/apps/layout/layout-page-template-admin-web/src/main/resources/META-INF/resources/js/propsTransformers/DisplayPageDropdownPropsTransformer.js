@@ -13,13 +13,13 @@
  */
 
 import {
+	openConfirmModal,
 	openModal,
 	openSelectionModal,
 	openSimpleInputModal,
 } from 'frontend-js-web';
 
 import openDeletePageTemplateModal from '../modal/openDeletePageTemplateModal';
-import {openConfirmModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	deleteDisplayPage({deleteDisplayPageMessage, deleteDisplayPageURL}) {

@@ -22,11 +22,11 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayPanel from '@clayui/panel';
 import ClayTimePicker from '@clayui/time-picker';
+import {openConfirmModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import ChangeTrackingBaseScheduleView from './ChangeTrackingBaseScheduleView';
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
-import {openConfirmModal} from 'frontend-js-web';
 
 class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 	constructor(props) {

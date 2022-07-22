@@ -327,7 +327,8 @@ const openConfirmModal = ({message, onConfirm, title}) => {
 			onClose: () => onConfirm(false),
 			title,
 		});
-	} else if (confirm(message)) {
+	}
+	else if (confirm(message)) {
 		onConfirm(true);
 	}
 };

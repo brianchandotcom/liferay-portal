@@ -12,9 +12,12 @@
  * details.
  */
 
-import {addParams, openSelectionModal, sub} from 'frontend-js-web';
-
-import {openConfirmModal} from 'frontend-js-web';
+import {
+	addParams,
+	openConfirmModal,
+	openSelectionModal,
+	sub,
+} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteSelectedUserGroups = () => {

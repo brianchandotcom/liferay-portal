@@ -13,8 +13,8 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {useModal} from '@clayui/modal';
-import PropTypes from 'prop-types';
 import {openConfirmModal} from 'frontend-js-web';
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import SegmentsExperimentsContext from '../context.es';

@@ -297,7 +297,7 @@ AUI.add(
 					const locale = event.currentTarget.attr('locale');
 
 					if (event.target.hasClass(CSS_DELETE_TRANSLATION)) {
-						instance._openConfirmModal({
+						Liferay.Util.openConfirmModal({
 							message: MSG_DEACTIVATE_LANGUAGE,
 							onConfirm: (isConfirmed) => {
 								if (isConfirmed) {
@@ -337,15 +337,6 @@ AUI.add(
 					instance.set('defaultLocale', event.target.val());
 
 					instance.toggleDefaultLocales();
-				},
-
-				_openConfirmModal({message, onConfirm}) {
-					if (Liferay.FeatureFlags['LPS-148659']) {
-						Liferay.Util.openConfirmModal({message, onConfirm});
-					}
-					else if (confirm(message)) {
-						onConfirm(true);
-					}
 				},
 
 				_resetEditingLocale() {

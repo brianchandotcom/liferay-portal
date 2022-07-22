@@ -12,10 +12,16 @@
  * details.
  */
 
-import {debounce, fetch, navigate, openToast, sub} from 'frontend-js-web';
+import {
+	debounce,
+	fetch,
+	navigate,
+	openConfirmModal,
+	openToast,
+	sub,
+} from 'frontend-js-web';
 
 import {LocaleChangedHandler} from './LocaleChangedHandler.es';
-import {openConfirmModal} from 'frontend-js-web';
 
 const AUTO_SAVE_DELAY = 1500;
 

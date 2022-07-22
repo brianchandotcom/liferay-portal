@@ -15,11 +15,10 @@
 import ClayAlert from '@clayui/alert';
 import ClayLayout from '@clayui/layout';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch, navigate} from 'frontend-js-web';
+import {fetch, navigate, openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useReducer, useState} from 'react';
 
-import {openConfirmModal} from 'frontend-js-web';
 import TranslateActionBar from './components/TranslateActionBar/TranslateActionBar';
 import TranslateFieldSetEntries from './components/TranslateFieldSetEntries';
 import TranslateHeader from './components/TranslateHeader';

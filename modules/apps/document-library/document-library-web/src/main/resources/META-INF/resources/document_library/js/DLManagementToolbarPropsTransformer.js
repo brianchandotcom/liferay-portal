@@ -15,13 +15,13 @@
 import {
 	addParams,
 	navigate,
+	openConfirmModal,
 	openModal,
 	openSelectionModal,
 	sub,
 } from 'frontend-js-web';
 
 import {collectDigitalSignature} from './digital-signature/DigitalSignatureUtil';
-import {openConfirmModal} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {

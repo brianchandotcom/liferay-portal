@@ -311,7 +311,7 @@ AUI.add(
 						[contact.fullName]
 					);
 
-					instance._openConfirmModal({
+					Liferay.Util.openConfirmModal({
 						message: confirmMessageText,
 						onConfirm: (isConfirmed) => {
 							if (isConfirmed) {
@@ -453,15 +453,6 @@ AUI.add(
 
 							instance.deleteContactResults(contacts.val());
 						}
-					}
-				},
-
-				_openConfirmModal({message, onConfirm}) {
-					if (Liferay.FeatureFlags['LPS-148659']) {
-						Liferay.Util.openConfirmModal({message, onConfirm});
-					}
-					else if (confirm(message)) {
-						onConfirm(true);
 					}
 				},
 

@@ -428,15 +428,6 @@
 		function (portlet, skipConfirm, options) {
 			const instance = this;
 
-			const _openConfirm = ({message, onConfirm}) => {
-				if (Liferay.FeatureFlags['LPS-148659']) {
-					Liferay.Util.openConfirmModal({message, onConfirm});
-				}
-				else if (confirm(message)) {
-					onConfirm(true);
-				}
-			};
-
 			const _removeComponent = () => {
 				const portletId = portlet.portletId;
 
@@ -459,7 +450,7 @@
 
 			if (portlet) {
 				if (!skipConfirm) {
-					_openConfirmModal({
+					Liferay.Util.openConfirmModal({
 						message: Liferay.Language.get(
 							'are-you-sure-you-want-to-remove-this-component'
 						),

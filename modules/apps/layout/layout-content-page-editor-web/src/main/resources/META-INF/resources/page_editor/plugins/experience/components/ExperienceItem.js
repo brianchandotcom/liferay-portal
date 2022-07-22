@@ -19,10 +19,10 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
+import {openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {openConfirmModal} from 'frontend-js-web'
 import {STATUS_DRAFT} from '../statuses';
 import {ExperienceType} from '../types';
 import ExperimentLabel from './ExperimentLabel';

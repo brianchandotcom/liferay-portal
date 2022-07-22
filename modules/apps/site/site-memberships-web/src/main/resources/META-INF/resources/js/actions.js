@@ -12,9 +12,7 @@
  * details.
  */
 
-import {openSelectionModal} from 'frontend-js-web';
-
-import {openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal, openSelectionModal} from 'frontend-js-web';
 
 export const ACTIONS = {
 	assignRoles(itemData, portletNamespace) {

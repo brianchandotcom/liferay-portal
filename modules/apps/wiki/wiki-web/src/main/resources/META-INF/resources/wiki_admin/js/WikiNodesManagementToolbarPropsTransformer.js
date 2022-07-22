@@ -12,9 +12,7 @@
  * details.
  */
 
-import {postForm} from 'frontend-js-web';
-
-import {openConfirmModal} from 'frontend-js-web'
+import {openConfirmModal, postForm} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {deleteNodesCmd, deleteNodesURL, trashEnabled},

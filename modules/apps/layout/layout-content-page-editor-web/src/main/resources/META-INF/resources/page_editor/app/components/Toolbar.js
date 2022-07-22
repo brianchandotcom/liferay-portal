@@ -17,6 +17,7 @@ import ClayLayout from '@clayui/layout';
 import {useModal} from '@clayui/modal';
 import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
+import {openConfirmModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import useLazy from '../../core/hooks/useLazy';
@@ -34,7 +35,6 @@ import selectCanPublish from '../selectors/selectCanPublish';
 import redo from '../thunks/redo';
 import undo from '../thunks/undo';
 import {useDropClear} from '../utils/drag-and-drop/useDragAndDrop';
-import {openConfirmModal} from 'frontend-js-web';
 import EditModeSelector from './EditModeSelector';
 import ExperimentsLabel from './ExperimentsLabel';
 import NetworkStatusBar from './NetworkStatusBar';

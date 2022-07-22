@@ -109,6 +109,13 @@ const renderComponent = ({
 };
 
 describe('CollectionGeneralPanel', () => {
+	beforeAll(() => {
+		window.Liferay = {
+			...Liferay,
+			FeatureFlags: {},
+		};
+	});
+
 	it('allows changing the Gutter select', async () => {
 		renderComponent({
 			itemConfig: {

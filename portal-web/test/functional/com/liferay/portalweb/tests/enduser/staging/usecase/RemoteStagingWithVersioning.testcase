@@ -38,7 +38,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-128736."
+	@description = "This is a use case for LPS-128736. Check Asset Publisher can't publish the displayed content to live by default."
 	@priority = "4"
 	test AssertContentNotBePublishedByDefault {
 		property test.name.skip.portal.instance = "RemoteStagingWithVersioning#AssertContentNotBePublishedByDefault";
@@ -90,6 +90,7 @@ definition {
 		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
 	}
 
+	@description = "Able to publish web content via remote staging."
 	@priority = "3"
 	test PublishWCViaRemoteStaging {
 		property test.name.skip.portal.instance = "RemoteStagingWithVersioning#PublishWCViaRemoteStaging";

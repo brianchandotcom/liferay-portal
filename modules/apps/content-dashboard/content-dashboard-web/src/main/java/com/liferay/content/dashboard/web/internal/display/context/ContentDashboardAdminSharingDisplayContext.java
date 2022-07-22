@@ -50,7 +50,7 @@ public class ContentDashboardAdminSharingDisplayContext {
 
 	public String getClassName() {
 		return _contentDashboardItemSearchClassMapperTracker.getSearchClassName(
-			ParamUtil.getString(_httpServletRequest, "className"));
+			_getClassName());
 	}
 
 	public long getClassPK() {
@@ -60,7 +60,7 @@ public class ContentDashboardAdminSharingDisplayContext {
 	public boolean isSharingButtonVisible() throws PortalException {
 		ContentDashboardItemFactory<?> contentDashboardItemFactory =
 			_contentDashboardItemFactoryTracker.getContentDashboardItemFactory(
-				getClassName());
+				_getClassName());
 
 		if (contentDashboardItemFactory == null) {
 			return false;
@@ -81,6 +81,10 @@ public class ContentDashboardAdminSharingDisplayContext {
 		}
 
 		return false;
+	}
+
+	private String _getClassName() {
+		return ParamUtil.getString(_httpServletRequest, "className");
 	}
 
 	private ContentDashboardItemAction _getSharingContentDashboardItemAction(

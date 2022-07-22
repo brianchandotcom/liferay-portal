@@ -25,7 +25,7 @@ import {selectPageContentDropdownItems} from '../../app/selectors/selectPageCont
 import {useId} from '../../app/utils/useId';
 import {openItemSelector} from '../../core/openItemSelector';
 
-const DEFAULT_PREVENT_ITEM_SELECT = () => false;
+const DEFAULT_PREVENT_ITEM_SELECT = (callback) => callback(false);
 
 const DEFAULT_OPTIONS_MENU_ITEMS = [];
 

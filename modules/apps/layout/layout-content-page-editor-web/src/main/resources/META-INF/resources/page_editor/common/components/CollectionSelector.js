@@ -81,5 +81,5 @@ CollectionSelector.propTypes = {
 	collectionItem: PropTypes.shape({title: PropTypes.string}),
 	label: PropTypes.string,
 	onCollectionSelect: PropTypes.func.isRequired,
-	shouldPreventCollectionSelect: PropTypes.func,
+	onPreventCollectionSelect: PropTypes.func,
 };

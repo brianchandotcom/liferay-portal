@@ -486,22 +486,17 @@ AUI.add(
 							);
 						}
 
-						if (Liferay.FeatureFlags['LPS-148659']) {
-							Liferay.Util.openConfirmModal({
-								message: confirmationMessage,
-								onConfirm: (isConfirmed) => {
-									if (isConfirmed) {
-										remoteServices.deleteEvent(
-											schedulerEvent,
-											success
-										);
-									}
-								},
-							});
-						}
-						else if (confirm(confirmationMessage)) {
-							remoteServices.deleteEvent(schedulerEvent, success);
-						}
+						Liferay.Util.openConfirmModal({
+							message: confirmationMessage,
+							onConfirm: (isConfirmed) => {
+								if (isConfirmed) {
+									remoteServices.deleteEvent(
+										schedulerEvent,
+										success
+									);
+								}
+							},
+						});
 					}
 
 					event.preventDefault();

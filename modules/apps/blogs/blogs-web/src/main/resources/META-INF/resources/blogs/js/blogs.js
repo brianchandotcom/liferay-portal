@@ -38,15 +38,6 @@ const STRINGS = {
 	),
 };
 
-function openConfirm({message, onConfirm}) {
-	if (Liferay.FeatureFlags['LPS-148659']) {
-		openConfirmModal({message, onConfirm});
-	}
-	else if (confirm(message)) {
-		onConfirm(true);
-	}
-}
-
 function addNamespace(object, namespace) {
 	return Object.entries(object).reduce((memo, [key, value]) => ({
 		...memo,
@@ -222,7 +213,7 @@ export default class Blogs {
 		const tempImages = this._getTempImages();
 
 		if (tempImages.length) {
-			openConfirm({
+			openConfirmModal({
 				message: this._config.strings.confirmDiscardImages,
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {

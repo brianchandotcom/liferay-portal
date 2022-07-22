@@ -19,7 +19,7 @@ import {
 	sub,
 } from 'frontend-js-web';
 
-import openConfirm from '../../common/js/openConfirm.es';
+import {openConfirmModal} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
@@ -30,7 +30,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			const action = data?.action;
 
 			if (action === 'removeOrganizations') {
-				openConfirm({
+				openConfirmModal({
 					message: Liferay.Language.get(
 						'are-you-sure-you-want-to-remove-the-selected-organizations'
 					),

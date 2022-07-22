@@ -18,15 +18,6 @@ import {
 	postForm,
 } from 'frontend-js-web';
 
-function openConfirm({message, onConfirm}) {
-	if (Liferay.FeatureFlags['LPS-148659']) {
-		openConfirmModal({message, onConfirm});
-	}
-	else if (confirm(message)) {
-		onConfirm(true);
-	}
-}
-
 export default function propsTransformer({
 	additionalProps: {deleteDataProviderURL},
 	portletNamespace,
@@ -36,7 +27,7 @@ export default function propsTransformer({
 		...otherProps,
 		onActionButtonClick(event, {item}) {
 			if (item?.data?.action === 'deleteDataProviderInstances') {
-				openConfirm({
+				openConfirmModal({
 					message: Liferay.Language.get(
 						'are-you-sure-you-want-to-delete-this'
 					),

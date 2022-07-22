@@ -17,7 +17,7 @@ import React from 'react';
 import SegmentsExperimentContext from '../context.es';
 import {SegmentsExperimentType} from '../types.es';
 import {NO_EXPERIMENT_ILLUSTRATION_FILE_NAME} from '../util/contants.es';
-import openConfirm from '../util/openConfirm.es';
+import {openConfirmModal} from 'frontend-js-web';
 import {statusToLabelDisplayType} from '../util/statuses.es';
 
 const {useContext} = React;
@@ -96,7 +96,7 @@ function ExperimentsHistory({experimentHistory, onDeleteSegmentsExperiment}) {
 	);
 
 	function _handleDeleteExperiment(experimentId) {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this'
 			),

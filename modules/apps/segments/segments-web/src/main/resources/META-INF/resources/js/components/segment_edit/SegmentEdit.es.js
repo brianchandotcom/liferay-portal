@@ -33,7 +33,7 @@ import {
 	applyCriteriaChangeToContributors,
 	initialContributorsToContributors,
 } from '../../utils/contributors.es';
-import openConfirm from '../../utils/openConfirm.es';
+import {openConfirmModal} from 'frontend-js-web'
 import {initialContributorShape} from '../../utils/types.es';
 import {sub} from '../../utils/utils.es';
 import ContributorInputs from '../criteria_builder/ContributorInputs.es';
@@ -301,7 +301,7 @@ class SegmentEdit extends Component {
 		const {hasChanged} = this.state;
 
 		if (hasChanged) {
-			openConfirm({
+			openConfirmModal({
 				message: Liferay.Language.get(
 					'criteria-cancel-confirmation-message'
 				),

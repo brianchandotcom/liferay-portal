@@ -14,11 +14,11 @@
 
 import {DefaultEventHandler} from 'frontend-js-web';
 
-import openConfirm from './openConfirm.es';
+import {openConfirmModal} from 'frontend-js-web';
 
 class DepotEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	deleteDepotEntry(itemData) {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'removing-an-asset-library-can-affect-sites-that-use-the-contents-stored-in-it.-are-you-sure-you-want-to-continue-removing-this-asset-library'
 			),

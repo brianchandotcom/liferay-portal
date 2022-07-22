@@ -21,13 +21,13 @@ import {
 } from '../data/users';
 import {ACTION_KEYS} from '../utils/constants';
 import {hasPermission} from '../utils/index';
-import openConfirm from '../utils/openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 export default function AccountMenuContent({closeMenu, data, parentData}) {
 	const {chartInstanceRef} = useContext(ChartContext);
 
 	function handleDelete() {
-		openConfirm({
+		openConfirmModal({
 			message: sub(
 				Liferay.Language.get('x-will-be-deleted'),
 				data.name
@@ -45,7 +45,7 @@ export default function AccountMenuContent({closeMenu, data, parentData}) {
 	}
 
 	function handleRemove() {
-		openConfirm({
+		openConfirmModal({
 			message: sub(
 				Liferay.Language.get('x-will-be-removed-from-x'),
 				data.name,

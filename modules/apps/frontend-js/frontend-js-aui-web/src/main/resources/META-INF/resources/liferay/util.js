@@ -1032,7 +1032,7 @@
 						}
 					};
 
-					_openConfirm({
+					_openConfirmModal({
 						message:
 							currentTarget.dataset['confirmSelectionMessage'],
 						onConfirm: (isConfirmed) => {

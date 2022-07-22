@@ -21,7 +21,7 @@ import {fetch, objectToFormData, runScriptsInElement} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-import openConfirm from '../../js/openConfirm';
+import {openConfirmModal} from 'frontend-js-web'
 import {useConstants} from '../contexts/ConstantsContext';
 import {
 	useSelectedMenuItemId,
@@ -183,7 +183,7 @@ function confirmUnsavedChanges() {
 	let confirmChanged;
 
 	if (!error) {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'you-have-unsaved-changes.-do-you-want-to-save-them'
 			),

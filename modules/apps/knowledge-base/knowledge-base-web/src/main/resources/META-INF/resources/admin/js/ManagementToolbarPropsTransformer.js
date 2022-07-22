@@ -12,7 +12,7 @@
  * details.
  */
 
-import openConfirm from './openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
@@ -21,7 +21,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			const action = item?.data?.action;
 
 			if (action === 'deleteEntries') {
-				openConfirm({
+				openConfirmModal({
 					message: Liferay.Language.get(
 						'are-you-sure-you-want-to-delete-the-selected-entries'
 					),

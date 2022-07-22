@@ -15,7 +15,7 @@
 import {debounce, fetch, navigate, openToast, sub} from 'frontend-js-web';
 
 import {LocaleChangedHandler} from './LocaleChangedHandler.es';
-import openConfirm from './modals/openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 const AUTO_SAVE_DELAY = 1500;
 
@@ -214,7 +214,7 @@ export default function _JournalPortlet({
 	const handleResetValuesButtonClick = (event) => {
 		publishingLock.lock();
 
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-reset-the-default-values'
 			),

@@ -19,7 +19,7 @@ import {fetch, navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useReducer, useState} from 'react';
 
-import openConfirm from '../openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 import TranslateActionBar from './components/TranslateActionBar/TranslateActionBar';
 import TranslateFieldSetEntries from './components/TranslateFieldSetEntries';
 import TranslateHeader from './components/TranslateHeader';
@@ -138,7 +138,7 @@ const Translate = ({
 			return;
 		}
 
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-leave-the-page-you-may-lose-your-changes'
 			),

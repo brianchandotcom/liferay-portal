@@ -19,7 +19,7 @@ import {
 } from 'frontend-js-web';
 
 import openDeletePageTemplateModal from '../modal/openDeletePageTemplateModal';
-import openConfirm from '../util/openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	deleteDisplayPage({deleteDisplayPageMessage, deleteDisplayPageURL}) {
@@ -39,7 +39,7 @@ const ACTIONS = {
 	},
 
 	discardDraft({discardDraftURL}) {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
 			),
@@ -53,7 +53,7 @@ const ACTIONS = {
 
 	markAsDefaultDisplayPage({markAsDefaultDisplayPageURL, message}) {
 		if (message !== '') {
-			openConfirm({
+			openConfirmModal({
 				message: Liferay.Language.get(message),
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
@@ -96,7 +96,7 @@ const ACTIONS = {
 	},
 
 	unmarkAsDefaultDisplayPage({unmarkAsDefaultDisplayPageURL}) {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get('unmark-default-confirmation'),
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {

@@ -14,7 +14,7 @@
 
 import {delegate} from 'frontend-js-web';
 
-import openConfirm from '../openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 export default function ({namespace}) {
 	const ratingSettingsContainer = document.getElementById(
@@ -35,7 +35,7 @@ export default function ({namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
 
 	const onSubmit = (event) => {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'existing-ratings-data-values-will-be-adapted-to-match-the-new-ratings-type-even-though-it-may-not-be-accurate'
 			),

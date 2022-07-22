@@ -22,7 +22,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import openConfirm from '../../../app/utils/openConfirm';
+import {openConfirmModal} from 'frontend-js-web'
 import {STATUS_DRAFT} from '../statuses';
 import {ExperienceType} from '../types';
 import ExperimentLabel from './ExperimentLabel';
@@ -68,7 +68,7 @@ const ExperienceItem = ({
 			  )
 			: Liferay.Language.get('do-you-want-to-delete-this-experience');
 
-		openConfirm({
+		openConfirmModal({
 			message: confirmationMessage,
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {

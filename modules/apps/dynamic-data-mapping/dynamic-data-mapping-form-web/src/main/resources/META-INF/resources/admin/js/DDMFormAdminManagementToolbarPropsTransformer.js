@@ -14,7 +14,7 @@
 
 import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
-import openConfirm from './openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {deleteFormInstanceURL, deleteStructureURL},
@@ -22,7 +22,7 @@ export default function propsTransformer({
 	...otherProps
 }) {
 	const deleteFormInstances = () => {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this'
 			),
@@ -53,7 +53,7 @@ export default function propsTransformer({
 	};
 
 	const deleteStructures = () => {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this'
 			),

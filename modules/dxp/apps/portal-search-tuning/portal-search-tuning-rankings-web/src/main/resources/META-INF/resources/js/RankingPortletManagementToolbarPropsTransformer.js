@@ -11,7 +11,7 @@
 
 import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
-import openConfirm from './utils/openConfirm.es';
+import {openConfirmModal} from 'frontend-js-web'
 
 export default function propsTransformer({
 	additionalProps: {
@@ -63,7 +63,7 @@ export default function propsTransformer({
 	};
 
 	const deleteResultsRankingsEntries = () => {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this'
 			),

@@ -12,7 +12,7 @@
  * details.
  */
 
-import openConfirm from './openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	delete(itemData, trashEnabled) {
@@ -20,7 +20,7 @@ const ACTIONS = {
 			'are-you-sure-you-want-to-delete-this'
 		);
 
-		openConfirm({
+		openConfirmModal({
 			message,
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed || trashEnabled) {

@@ -19,7 +19,7 @@ import {
 	sub,
 } from 'frontend-js-web';
 
-import openConfirm from '../../common/js/openConfirm.es';
+import {openConfirmModal} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {
@@ -37,7 +37,7 @@ export default function propsTransformer({
 			const action = item?.data?.action;
 
 			if (action === 'removeAccountGroupAccountEntries') {
-				openConfirm({
+				openConfirmModal({
 					message: Liferay.Language.get(
 						'are-you-sure-you-want-to-remove-the-selected-accounts'
 					),

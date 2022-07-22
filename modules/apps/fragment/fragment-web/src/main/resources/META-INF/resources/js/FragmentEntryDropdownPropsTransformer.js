@@ -20,15 +20,6 @@ import {
 
 import openDeleteFragmentModal from './openDeleteFragmentModal';
 
-function openConfirm({message, onConfirm}) {
-	if (Liferay.FeatureFlags['LPS-148659']) {
-		openConfirmModal({message, onConfirm});
-	}
-	else if (confirm(message)) {
-		onConfirm(true);
-	}
-}
-
 const ACTIONS = {
 	copyFragmentEntry(
 		{copyFragmentEntryURL, fragmentCollectionId, fragmentEntryId},
@@ -76,7 +67,7 @@ const ACTIONS = {
 	},
 
 	deleteDraftFragmentEntry({deleteDraftFragmentEntryURL}) {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this'
 			),

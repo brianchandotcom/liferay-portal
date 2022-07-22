@@ -68,6 +68,11 @@ public class ObjectEntryStatusCheckBoxFDSFilter extends BaseCheckBoxFDSFilter {
 	}
 
 	@Override
+	public String getEntityFieldType() {
+		return "collection";
+	}
+
+	@Override
 	public String getId() {
 		return "status";
 	}

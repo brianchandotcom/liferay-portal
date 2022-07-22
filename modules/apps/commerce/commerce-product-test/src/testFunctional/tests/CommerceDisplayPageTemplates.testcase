@@ -497,6 +497,8 @@ definition {
 	test CanMapDeliverySubscriptionFieldsToFragments {
 		property portal.acceptance = "false";
 
+		var productName = "U-Joint";
+
 		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Delivery Subscription related fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
 				contentType = "Commerce Product",
@@ -514,8 +516,13 @@ definition {
 				panel = "Commerce",
 				portlet = "Products");
 
+			CommerceNavigator.searchEntry(entryName = "${productName}");
+
+			CommerceNavigator.gotoEntry(entryName = "${productName}");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+
 			CommerceProducts.configureSubscription(
-				productName = "U-Joint",
 				subscriptionExactDay = "1",
 				subscriptionLength = "5",
 				subscriptionMode = "Exact Day of Month",
@@ -642,6 +649,8 @@ definition {
 	test CanMapPaymentSubscriptionFieldsToFragments {
 		property portal.acceptance = "false";
 
+		var productName = "U-Joint";
+
 		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Payment Subscription related fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
 				contentType = "Commerce Product",
@@ -659,8 +668,13 @@ definition {
 				panel = "Commerce",
 				portlet = "Products");
 
+			CommerceNavigator.searchEntry(entryName = "${productName}");
+
+			CommerceNavigator.gotoEntry(entryName = "${productName}");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+
 			CommerceProducts.configureSubscription(
-				productName = "U-Joint",
 				subscriptionExactDay = "15",
 				subscriptionLength = "10",
 				subscriptionMode = "Exact Day of Month",

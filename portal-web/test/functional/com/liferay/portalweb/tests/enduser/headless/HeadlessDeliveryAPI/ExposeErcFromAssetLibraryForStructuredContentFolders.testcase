@@ -54,6 +54,35 @@ definition {
 		}
 	}
 
+	@description = "Structured content folder is deleted by custom erc in an asset library"
+	@priority = "4"
+	test CanDeleteStructuredContentFolderInAssetLibraryByDefaultErc {
+		property portal.acceptance = "true";
+
+		task ("Given a structured content folder without a custom erc is created with a POST request") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				name = "Test Folder");
+		}
+
+		task ("When I make a DELETE request by uuid as the erc") {
+			var structuredContentUuid = HeadlessWebcontentFolderAPI.getUuidOfCreatedStructuredContentFolder(responseToParse = "${response}");
+
+			var response = HeadlessWebcontentFolderAPI.deleteStructuredContentFolderByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "${structuredContentUuid}");
+		}
+
+		task ("Then the structured content folder is correctly deleted") {
+			HeadlessWebcontentFolderAPI.assertProperTotalCountOfStructuredContentFoldersInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				expectedStructuredContentFolderTotalCount = "0",
+				filterValue = "name%20eq%20%27Test%20Folder%27");
+		}
+	}
+
 	@description = "Get structured content folder with erc of parent folder in an asset library"
 	@priority = "5"
 	test CanGetParentStructuredContentFolderInAssetLibraryByErc {

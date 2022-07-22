@@ -19,6 +19,8 @@ import {
 	sub,
 } from 'frontend-js-web';
 
+import openConfirm from '../../common/js/openConfirm.es';
+
 export default function propsTransformer({
 	additionalProps: {
 		accountEntryName,
@@ -36,29 +38,30 @@ export default function propsTransformer({
 			const action = data?.action;
 
 			if (action === 'removeUsers') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-remove-the-selected-users'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				openConfirm({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-remove-the-selected-users'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fm`
+							);
 
-					if (form) {
-						postForm(form, {
-							data: {
-								accountUserIds: getCheckedCheckboxes(
-									form,
-									`${portletNamespace}allRowIds`
-								),
-							},
-							url: data?.removeUsersURL,
-						});
-					}
-				}
+							if (form) {
+								postForm(form, {
+									data: {
+										accountUserIds: getCheckedCheckboxes(
+											form,
+											`${portletNamespace}allRowIds`
+										),
+									},
+									url: data?.removeUsersURL,
+								});
+							}
+						}
+					},
+				});
 			}
 		},
 		onCreateButtonClick: () => {

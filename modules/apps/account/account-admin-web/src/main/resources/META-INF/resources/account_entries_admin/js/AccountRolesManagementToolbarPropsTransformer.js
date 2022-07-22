@@ -14,6 +14,8 @@
 
 import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
+import openConfirm from '../../common/js/openConfirm.es';
+
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
 		...otherProps,
@@ -23,29 +25,30 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			const action = data?.action;
 
 			if (action === 'deleteAccountRoles') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-the-selected-roles'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				openConfirm({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-the-selected-roles'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fm`
+							);
 
-					if (form) {
-						postForm(form, {
-							data: {
-								accountRoleIds: getCheckedCheckboxes(
-									form,
-									`${portletNamespace}allRowIds`
-								),
-							},
-							url: data?.deleteAccountRolesURL,
-						});
-					}
-				}
+							if (form) {
+								postForm(form, {
+									data: {
+										accountRoleIds: getCheckedCheckboxes(
+											form,
+											`${portletNamespace}allRowIds`
+										),
+									},
+									url: data?.deleteAccountRolesURL,
+								});
+							}
+						}
+					},
+				});
 			}
 		},
 	};

@@ -14,6 +14,8 @@
 
 import {openSelectionModal} from 'frontend-js-web';
 
+import openConfirm from '../../common/js/openConfirm.es';
+
 export const ACTIONS = {
 	assignRoleAccountUsers(itemData, portletNamespace) {
 		openSelectionModal({
@@ -52,14 +54,15 @@ export const ACTIONS = {
 	},
 
 	removeAccountUsers(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-remove-this-user'
-				)
-			)
-		) {
-			submitForm(document.hrefFm, itemData.removeAccountUsersURL);
-		}
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-remove-this-user'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(document.hrefFm, itemData.removeAccountUsersURL);
+				}
+			},
+		});
 	},
 };

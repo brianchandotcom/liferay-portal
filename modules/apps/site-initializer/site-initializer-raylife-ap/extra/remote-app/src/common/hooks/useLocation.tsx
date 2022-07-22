@@ -15,8 +15,8 @@
 
 import {useEffect, useState} from 'react';
 
-import {GoogleMapsService} from './google-maps';
-import {MockService} from './mock';
+import {GoogleMapsService} from '../services/google-maps/google-maps';
+import {MockService} from '../services/google-maps/mock';
 
 export function useLocation() {
 	const [data, setData] = useState<any>();
@@ -44,17 +44,13 @@ export function useLocation() {
 			const autocomplete = GoogleMapsService.autocomplete(htmlElement);
 			const infoWindow = GoogleMapsService.InfoWindow();
 
-			// eslint-disable-next-line no-console
-			console.log('autocomplete', autocomplete);
-
-			// eslint-disable-next-line no-console
-			console.log('infoWindow', infoWindow);
-
 			autocomplete.addListener('place_changed', () => {
 				infoWindow.close();
+
 				const address = GoogleMapsService.getAutocompletePlaces(
 					autocomplete
 				);
+
 				callback(address);
 			});
 		} catch (error) {

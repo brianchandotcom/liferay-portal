@@ -47,15 +47,7 @@ const setup = (GOOGLE_API: any) => {
  * @returns {any} Google Maps Autocomplete Instance
  */
 const autocomplete = (input: any) => {
-	// eslint-disable-next-line no-console
-	console.log('input', input);
-
-	// eslint-disable-next-line no-console
-	console.log('innerWidth', window);
-
 	const google = window.google;
-	// eslint-disable-next-line no-console
-	console.log('google', google);
 
 	if (!google) {
 		throw new Error(
@@ -71,7 +63,7 @@ const autocomplete = (input: any) => {
 
 	// Prevent crashes if the user hits enter in a autocomplete search
 
-	google.maps.event.addDomListener(input, 'keydown', (event: any) => {
+	input.addEventListener('keydown', (event: any) => {
 		if (event.keyCode === 13 || event.key === 'Enter') {
 			event.preventDefault();
 		}

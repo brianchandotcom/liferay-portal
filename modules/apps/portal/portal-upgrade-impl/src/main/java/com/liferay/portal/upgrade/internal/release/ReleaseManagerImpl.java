@@ -154,39 +154,41 @@ public class ReleaseManagerImpl implements ReleaseManager {
 					"upgrade.from.schema.version")),
 			new ReleaseManagerImpl.UpgradeInfoServiceTrackerMapListener());
 
-		Set<String> upgradedBundleSymbolicNames = new HashSet<>();
+		synchronized (this) {
+			Set<String> upgradedBundleSymbolicNames = new HashSet<>();
 
-		Set<String> bundleSymbolicNames = _serviceTrackerMap.keySet();
+			Set<String> bundleSymbolicNames = _serviceTrackerMap.keySet();
 
-		while (upgradedBundleSymbolicNames.addAll(bundleSymbolicNames)) {
-			for (String bundleSymbolicName : bundleSymbolicNames) {
-				if (!PropsValues.UPGRADE_DATABASE_AUTO_RUN &&
-					(_releaseLocalService.fetchRelease(bundleSymbolicName) !=
-						null)) {
+			while (upgradedBundleSymbolicNames.addAll(bundleSymbolicNames)) {
+				for (String bundleSymbolicName : bundleSymbolicNames) {
+					if (!PropsValues.UPGRADE_DATABASE_AUTO_RUN &&
+						(_releaseLocalService.fetchRelease(
+							bundleSymbolicName) != null)) {
 
-					continue;
+						continue;
+					}
+
+					List<UpgradeInfo> upgradeSteps =
+						_serviceTrackerMap.getService(bundleSymbolicName);
+
+					try {
+						_upgradeExecutor.execute(
+							bundleSymbolicName, upgradeSteps,
+							OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
+					}
+					catch (Throwable throwable) {
+						_log.error(
+							"Failed upgrade process for module " +
+								bundleSymbolicName,
+							throwable);
+					}
 				}
 
-				List<UpgradeInfo> upgradeSteps = _serviceTrackerMap.getService(
-					bundleSymbolicName);
-
-				try {
-					_upgradeExecutor.execute(
-						bundleSymbolicName, upgradeSteps,
-						OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
-				}
-				catch (Throwable throwable) {
-					_log.error(
-						"Failed upgrade process for module " +
-							bundleSymbolicName,
-						throwable);
-				}
+				bundleSymbolicNames = _serviceTrackerMap.keySet();
 			}
 
-			bundleSymbolicNames = _serviceTrackerMap.keySet();
+			_activated = true;
 		}
-
-		_activated = true;
 	}
 
 	@Deactivate
@@ -313,11 +315,14 @@ public class ReleaseManagerImpl implements ReleaseManager {
 			String key, UpgradeInfo upgradeInfo,
 			List<UpgradeInfo> upgradeInfos) {
 
-			if (_activated && UpgradeStepRegistratorThreadLocal.isEnabled() &&
-				(PropsValues.UPGRADE_DATABASE_AUTO_RUN ||
-				 (_releaseLocalService.fetchRelease(key) == null))) {
+			synchronized (ReleaseManagerImpl.this) {
+				if (_activated &&
+					UpgradeStepRegistratorThreadLocal.isEnabled() &&
+					(PropsValues.UPGRADE_DATABASE_AUTO_RUN ||
+					 (_releaseLocalService.fetchRelease(key) == null))) {
 
-				_upgradeExecutor.execute(key, upgradeInfos, null);
+					_upgradeExecutor.execute(key, upgradeInfos, null);
+				}
 			}
 		}
 

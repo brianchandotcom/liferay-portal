@@ -774,10 +774,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 			_dlAppHelperLocalService.updateAsset(
 				userId, new LiferayFileEntry(dlFileEntry),
-				new LiferayFileVersion(dlFileVersion),
-				serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames(),
-				serviceContext.getAssetLinkEntryIds());
+				new LiferayFileVersion(dlFileVersion), serviceContext);
 		}
 
 		List<DLFolder> subfolders = _dlFolderPersistence.findByG_M_P_H(

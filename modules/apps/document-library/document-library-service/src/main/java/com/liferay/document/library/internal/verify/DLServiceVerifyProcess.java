@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -372,8 +373,8 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 				try {
 					_dlAppHelperLocalService.updateAsset(
-						dlFileEntry.getUserId(), fileEntry, fileVersion, null,
-						null, null);
+						dlFileEntry.getUserId(), fileEntry, fileVersion,
+						new ServiceContext());
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {

@@ -965,9 +965,14 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			long[] assetLinkEntryIds)
 		throws PortalException {
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
+		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
+		serviceContext.setAssetTagNames(assetTagNames);
+
 		_dlAppHelperLocalService.updateAsset(
-			userId, fileEntry, fileVersion, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds);
+			userId, fileEntry, fileVersion, serviceContext);
 	}
 
 	/**

@@ -56,10 +56,7 @@ public class LiferayWorkflowLocalRepositoryWrapper
 			reviewDate, serviceContext);
 
 		DLAppHelperLocalServiceUtil.updateAsset(
-			userId, fileEntry, fileEntry.getFileVersion(),
-			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
+			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
 		_workflowSupport.addFileEntry(userId, fileEntry, serviceContext);
 
@@ -81,10 +78,7 @@ public class LiferayWorkflowLocalRepositoryWrapper
 			expirationDate, reviewDate, serviceContext);
 
 		DLAppHelperLocalServiceUtil.updateAsset(
-			userId, fileEntry, fileEntry.getFileVersion(),
-			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
+			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
 		_workflowSupport.addFileEntry(userId, fileEntry, serviceContext);
 
@@ -130,10 +124,7 @@ public class LiferayWorkflowLocalRepositoryWrapper
 			userId, groupId, fileEntryId, destFolderId, serviceContext);
 
 		DLAppHelperLocalServiceUtil.updateAsset(
-			userId, fileEntry, fileEntry.getFileVersion(),
-			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
+			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
 		_workflowSupport.addFileEntry(userId, fileEntry, serviceContext);
 

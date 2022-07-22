@@ -64,7 +64,7 @@ definition {
 	}
 
 	macro gotoDisplayPageEllipsisItem {
-		Pause(locator = "1000");
+		WaitForPageLoad();
 
 		LexiconCard.clickEllipsisItem(
 			card = "${displayPageName}",

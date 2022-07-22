@@ -126,8 +126,6 @@ definition {
 				else if ("${assetType}" == "Category") {
 					Portlet.expandTree();
 
-					Pause(locator1 = "3000");
-
 					Click(
 						key_nodeName = "${assetTitle}",
 						locator1 = "Treeview#NODE_UNSELECTED");

@@ -502,6 +502,7 @@
 			</attribute>
 			<attribute>
 				<name>markupView</name>
+				<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
@@ -518,6 +519,7 @@
 		<attributes>
 			<attribute>
 				<name>markupView</name>
+				<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
@@ -629,6 +631,7 @@
 			</attribute>
 			<attribute>
 				<name>markupView</name>
+				<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
@@ -1071,6 +1074,7 @@
 			</attribute>
 			<attribute>
 				<name>markupView</name>
+				<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
@@ -1672,6 +1676,7 @@
 			</attribute>
 			<attribute>
 				<name>markupView</name>
+				<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>

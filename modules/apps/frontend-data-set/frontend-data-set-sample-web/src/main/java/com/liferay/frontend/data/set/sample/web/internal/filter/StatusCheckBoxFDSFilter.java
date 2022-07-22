@@ -18,13 +18,11 @@ import com.liferay.frontend.data.set.filter.BaseCheckBoxFDSFilter;
 import com.liferay.frontend.data.set.filter.CheckBoxFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
 	service = FDSFilter.class
 )
-public class CustomizedCheckBoxFDSFilter extends BaseCheckBoxFDSFilter {
+public class StatusCheckBoxFDSFilter extends BaseCheckBoxFDSFilter {
 
 	@Override
 	public List<CheckBoxFDSFilterItem> getCheckBoxFDSFilterItems(
@@ -64,19 +62,6 @@ public class CustomizedCheckBoxFDSFilter extends BaseCheckBoxFDSFilter {
 	@Override
 	public String getLabel() {
 		return "status";
-	}
-
-	@Override
-	public Map<String, Object> getPreloadedData() {
-		return HashMapBuilder.<String, Object>put(
-			"exclude", false
-		).put(
-			"itemsValues",
-			new Integer[] {
-				WorkflowConstants.STATUS_APPROVED,
-				WorkflowConstants.STATUS_DRAFT
-			}
-		).build();
 	}
 
 }

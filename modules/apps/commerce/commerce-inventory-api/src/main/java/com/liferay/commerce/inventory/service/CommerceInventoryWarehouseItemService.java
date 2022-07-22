@@ -174,6 +174,12 @@ public interface CommerceInventoryWarehouseItemService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getStockQuantity(long companyId, long groupId, String sku);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getStockQuantity(long companyId, String sku);
+
 	public CommerceInventoryWarehouseItem
 			increaseCommerceInventoryWarehouseItemQuantity(
 				long commerceInventoryWarehouseItemId, int quantity)

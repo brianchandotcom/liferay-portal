@@ -227,6 +227,16 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static int getStockQuantity(
+		long companyId, long groupId, String sku) {
+
+		return getService().getStockQuantity(companyId, groupId, sku);
+	}
+
+	public static int getStockQuantity(long companyId, String sku) {
+		return getService().getStockQuantity(companyId, sku);
+	}
+
 	public static CommerceInventoryWarehouseItem
 			increaseCommerceInventoryWarehouseItemQuantity(
 				long commerceInventoryWarehouseItemId, int quantity)

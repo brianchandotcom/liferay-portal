@@ -270,6 +270,18 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 	}
 
 	@Override
+	public int getStockQuantity(long companyId, long groupId, String sku) {
+		return _commerceInventoryWarehouseItemService.getStockQuantity(
+			companyId, groupId, sku);
+	}
+
+	@Override
+	public int getStockQuantity(long companyId, String sku) {
+		return _commerceInventoryWarehouseItemService.getStockQuantity(
+			companyId, sku);
+	}
+
+	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 			increaseCommerceInventoryWarehouseItemQuantity(
 				long commerceInventoryWarehouseItemId, int quantity)

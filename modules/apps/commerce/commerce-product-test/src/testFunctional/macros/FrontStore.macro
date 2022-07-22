@@ -190,19 +190,114 @@ definition {
 				value1 = "${productMPN}");
 		}
 
+		if (isSet(productGTIN)) {
+			AssertElementPresent(
+				key_detail = "GTIN:",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL",
+				value1 = "${productGTIN}");
+		}
+
+		if (isSet(productShortDescription)) {
+			AssertElementPresent(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_DESCRIPTION",
+				value1 = "${productShortDescription}");
+		}
+
+		if (isSet(paymentSubscriptionPeriod)) {
+			AssertTextEquals.assertPartialText(
+				key_subscriptionName = "Payment",
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_SUBSCRIPTION_INFO",
+				value1 = "${paymentSubscriptionPeriod}");
+		}
+
+		if (isSet(deliverySubscriptionPeriod)) {
+			AssertTextEquals.assertPartialText(
+				key_subscriptionName = "Delivery",
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_SUBSCRIPTION_INFO",
+				value1 = "${deliverySubscriptionPeriod}");
+		}
+
 		if (isSet(productListPrice)) {
 			AssertElementPresent(
 				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
 				value1 = "${productListPrice}");
 		}
-
-		if (!(isSet(productImage))) {
-			var productImage = "";
+		else if (isSet(productListPriceInactive)) {
+			AssertElementPresent(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
+				value1 = "${productListPriceInactive}");
 		}
 
-		AssertElementPresent(
-			key_fsProductImage = "${productImage}",
-			locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
+		if (isSet(productSalePrice)) {
+			AssertElementPresent(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_PROMO",
+				value1 = "${productSalePrice}");
+		}
+		else if (isSet(productSalePriceInactive)) {
+			AssertElementPresent(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PROMO_PRICE_INACTIVE",
+				value1 = "${productSalePricePriceInactive}");
+		}
+
+		if (isSet(discountPercentage) && isSet(productNetPrice)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_DISCOUNT",
+				value1 = "${discountPercentage}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_NET_PRICE",
+				value1 = "${productNetPrice}");
+		}
+
+		if (isSet(minQuantity)) {
+			AssertElementPresent(
+				key_minQuantity = "${minQuantity}",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_MIN_QUANTITY_PER_ORDER");
+		}
+
+		if (isSet(groupedProductEntryNames)) {
+			FrontStore.viewGroupedProductEntries(productNames = "${groupedProductEntryNames}");
+		}
+
+		if (isSet(sampleFileName)) {
+			AssertElementPresent(
+				key_sampleFileName = "${sampleFileName}",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_DOWNLOAD_SAMPLE_FILE_BUTTON");
+		}
+
+		if (isSet(productFullDescription)) {
+			Click(
+				key_text = "Full Description",
+				locator1 = "Button#ANY");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_FULL_DESCRIPTION",
+				value1 = "${productFullDescription}");
+		}
+
+		if (isSet(productSpecifications)) {
+			Click(
+				key_text = "Specifications",
+				locator1 = "Button#ANY");
+
+			for (var productSpecification : list "${productSpecifications}") {
+				var specificationKey = StringUtil.extractFirst("${productSpecification}", ":");
+				var specificationValue = StringUtil.extractLast("${productSpecification}", ":");
+
+				AssertTextEquals.assertPartialText(
+					key_specification = "${specificationKey}",
+					locator1 = "CommerceFrontStore#FS_PRODUCT_SPECIFICATIONS",
+					value1 = "${specificationValue}");
+			}
+		}
+
+		if (isSet(productImages)) {
+			for (var productImage : list "${productImages}") {
+				AssertElementPresent(
+					key_fsProductImage = "${productImage}",
+					locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
+			}
+		}
 	}
 
 	macro assertPromoPrice {

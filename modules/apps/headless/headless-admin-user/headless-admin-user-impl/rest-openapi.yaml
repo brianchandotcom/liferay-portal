@@ -714,6 +714,10 @@ components:
                     type: object
                 descriptiveName:
                     type: string
+                descriptiveName_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 friendlyUrlPath:
                     type: string
                 id:
@@ -746,6 +750,11 @@ components:
                         The site's descriptive name.
                     readOnly: true
                     type: string
+                descriptiveName_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
                 id:
                     description:
                         The site's ID.

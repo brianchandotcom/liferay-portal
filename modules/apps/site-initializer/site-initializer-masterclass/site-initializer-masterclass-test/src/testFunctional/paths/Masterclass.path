@@ -107,6 +107,11 @@
 	<td>//a[contains(@class,'signed-in') and contains (text(),'${userName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>USER_AVATAR_ICON</td>
+	<td>//ul[contains(@class,'masterclass-navbar-user')]//a[@type='button']/img</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

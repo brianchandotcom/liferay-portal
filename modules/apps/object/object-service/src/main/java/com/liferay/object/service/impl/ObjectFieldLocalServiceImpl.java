@@ -19,7 +19,6 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.DuplicateObjectFieldExternalReferenceCodeException;
-import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectFieldBusinessTypeException;
 import com.liferay.object.exception.ObjectFieldDBTypeException;
 import com.liferay.object.exception.ObjectFieldDefaultValueException;
@@ -486,26 +485,23 @@ public class ObjectFieldLocalServiceImpl
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
+		_validateLabel(labelMap);
+
 		ObjectField oldObjectField = objectFieldPersistence.findByPrimaryKey(
 			objectFieldId);
 
 		ObjectField newObjectField = (ObjectField)oldObjectField.clone();
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				newObjectField.getObjectDefinitionId());
-
-		if (objectDefinition.isSystem()) {
-			throw new ObjectDefinitionStatusException();
-		}
-
 		_validateExternalReferenceCode(
 			newObjectField.getObjectFieldId(), newObjectField.getCompanyId(),
 			externalReferenceCode, newObjectField.getObjectDefinitionId());
-		_validateLabel(labelMap);
 
 		newObjectField.setExternalReferenceCode(externalReferenceCode);
 		newObjectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				newObjectField.getObjectDefinitionId());
 
 		if (objectDefinition.isApproved()) {
 			newObjectField = objectFieldPersistence.update(newObjectField);

@@ -46,12 +46,15 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.TreeSet;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -110,26 +113,34 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			_fragmentCollectionContributorTracker.getFragmentEntry(
 				"INPUTS-submit-button");
 
+		Collection<String> missingInputTypes = new TreeSet<>();
+		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
+
 		if (fragmentEntry == null) {
+			missingInputTypes.add(
+				LanguageUtil.get(themeDisplay.getLocale(), "submit-button"));
+		}
+		else {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				httpServletRequest);
+
+			addedFragmentEntryLinks.add(
+				_addFragmentEntryLink(
+					formItemId, fragmentEntry, layoutStructure,
+					segmentsExperienceId, serviceContext, themeDisplay));
+		}
+
+		if (!missingInputTypes.isEmpty()) {
 			jsonObject.put(
 				"errorMessage",
 				LanguageUtil.format(
 					themeDisplay.getLocale(),
 					"some-fragments-are-missing.-x-could-not-be-added-to-" +
 						"your-form-because-they-are-not-available",
-					"submit-button"));
-
-			return Collections.emptyList();
+					StringUtil.merge(missingInputTypes)));
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			httpServletRequest);
-
-		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			formItemId, fragmentEntry, layoutStructure, segmentsExperienceId,
-			serviceContext, themeDisplay);
-
-		return ListUtil.fromArray(fragmentEntryLink);
+		return addedFragmentEntryLinks;
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
@@ -149,7 +160,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 				serviceContext);
 
 		layoutStructure.addFragmentStyledLayoutStructureItem(
-			fragmentEntryLink.getFragmentEntryLinkId(), formItemId, 0);
+			fragmentEntryLink.getFragmentEntryLinkId(), formItemId, -1);
 
 		return fragmentEntryLink;
 	}

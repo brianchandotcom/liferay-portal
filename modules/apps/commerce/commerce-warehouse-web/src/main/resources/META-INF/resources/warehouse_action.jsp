@@ -54,6 +54,21 @@ CommerceInventoryWarehouse commerceInventoryWarehouse = (CommerceInventoryWareho
 			url="<%= geolocateURL %>"
 		/>
 
+		<liferay-security:permissionsURL
+			modelResource="<%= CommerceInventoryWarehouse.class.getName() %>"
+			modelResourceDescription="<%= commerceInventoryWarehouse.getName() %>"
+			resourcePrimKey="<%= String.valueOf(commerceInventoryWarehouse.getCommerceInventoryWarehouseId()) %>"
+			var="permissionsCommerceInventoryWarehouseURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			message="permissions"
+			method="get"
+			url="<%= permissionsCommerceInventoryWarehouseURL %>"
+			useDialog="<%= true %>"
+		/>
+
 		<portlet:actionURL name="/commerce_inventory_warehouse/edit_commerce_inventory_warehouse" var="setActiveURL">
 			<portlet:param name="<%= Constants.CMD %>" value="setActive" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -172,10 +172,10 @@ public class FriendlyURLServlet extends HttpServlet {
 			"request", httpServletRequest
 		).build();
 
-		ServiceContext serviceContext = _getServiceContext(httpServletRequest);
+		ServiceContext serviceContext = _getServiceContext(
+			group, httpServletRequest);
 
-		serviceContext.setCompanyId(group.getCompanyId());
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		Layout defaultLayout = null;
 
@@ -373,6 +373,9 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 
 			layoutFriendlyURL = null;
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
 		}
 
 		String actualURL = portal.getActualURL(
@@ -797,7 +800,7 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	private ServiceContext _getServiceContext(
-			HttpServletRequest httpServletRequest)
+			Group group, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		ServiceContext serviceContext =
@@ -809,6 +812,11 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 		}
+
+		serviceContext = (ServiceContext)serviceContext.clone();
+
+		serviceContext.setCompanyId(group.getCompanyId());
+		serviceContext.setScopeGroupId(group.getGroupId());
 
 		return serviceContext;
 	}

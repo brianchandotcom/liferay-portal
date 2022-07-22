@@ -23,23 +23,6 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.getCPCatalogEntries();
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= false %>"
-	searchContainerId="catalogEntries"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:add-menu
-			inline="<%= true %>"
-		>
-			<liferay-frontend:add-menu-item
-				id="addCommerceProductDefinition"
-				title="add"
-				url="javascript:void(0);"
-			/>
-		</liferay-frontend:add-menu>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
-
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
 	emptyResultsMessage="none"
@@ -109,11 +92,13 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 	/>
 </liferay-ui:search-container>
 
-<div class="select-asset-selector">
-	<div class="c-mt-3 edit-controls">
-
-	</div>
-</div>
+<liferay-ui:icon
+	id="addCommerceProductDefinition"
+	label="<%= true %>"
+	linkCssClass="btn btn-secondary"
+	message="select"
+	url="javascript:void(0);"
+/>
 
 <aui:script>
 	function <portlet:namespace />moveSelectionDown(productEntryOrder) {

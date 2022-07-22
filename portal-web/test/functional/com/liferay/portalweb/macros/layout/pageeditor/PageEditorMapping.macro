@@ -81,9 +81,9 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${uploadFileName}");
 
-			AssertElementPresent.pauseAssertVisible(
-				locator1 = "ItemSelector#ADD_BUTTON",
-				value1 = "Add");
+			WaitForElementPresent(
+				key_text = "Add",
+				locator1 = "Button#ANY_ENABLED");
 
 			AssertClick(
 				locator1 = "ItemSelector#ADD_BUTTON",

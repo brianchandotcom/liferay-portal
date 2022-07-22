@@ -84,8 +84,6 @@ definition {
 	@summary = "Add newly created pages to specified navigation menus or assert that the option to add the pages to navigation menus is missing."
 	macro _addPageToNavigationMenu {
 		if (isSet(navigationMenus)) {
-			Pause(locator1 = "5000");
-
 			for (var navigationMenu : list "${navigationMenus}") {
 				if ("${assertCheckboxMissing}" == "true") {
 					AssertElementNotPresent(
@@ -94,10 +92,6 @@ definition {
 				}
 				else {
 					Check(
-						checkboxName = "${navigationMenu}",
-						locator1 = "Checkbox#ANY_CHECKBOX");
-
-					AssertChecked(
 						checkboxName = "${navigationMenu}",
 						locator1 = "Checkbox#ANY_CHECKBOX");
 				}
@@ -194,8 +188,6 @@ definition {
 		}
 
 		LexiconCard.viewCardPresent(card = "${sitePageType}");
-
-		Pause(locator1 = "3000");
 
 		LexiconCard.clickCard(card = "${sitePageType}");
 	}
@@ -439,6 +431,8 @@ definition {
 	macro addPageUnderSitePagesVariation {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 
+		WaitForPageLoad();
+
 		PagesAdmin._selectPageType(
 			collectionName = "${collectionName}",
 			pageTemplateName = "${pageTemplateName}",
@@ -567,6 +561,8 @@ definition {
 
 	macro addPublicPageUnderSitePagesVariation {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+
+		WaitForPageLoad();
 
 		PagesAdmin._selectPageType(
 			collectionName = "${collectionName}",
@@ -1288,11 +1284,15 @@ definition {
 			buttonId = "uploadImage",
 			locator1 = "Button#BUTTON_ID");
 
+		WaitForEditable(locator1 = "TextInput#FILE");
+
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
 			value1 = "${logoFile}");
 
-		Pause(locator1 = "10000");
+		WaitForElementPresent(
+			key_text = "Done",
+			locator1 = "Button#ANY_ENABLED");
 
 		Button.clickDone();
 

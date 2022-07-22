@@ -2472,6 +2472,10 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${fileName}");
 
+			WaitForElementPresent(
+				key_text = "Add",
+				locator1 = "Button#ANY_ENABLED");
+
 			Button.clickAdd();
 		}
 

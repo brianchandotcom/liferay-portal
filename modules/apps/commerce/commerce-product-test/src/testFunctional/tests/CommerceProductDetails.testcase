@@ -695,6 +695,150 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9676 | As a buyer, I want to be able to view a grouped product Detail page"
+	@priority = "3"
+	test CanViewSingleSkuGroupedProductDetailPage {
+		property portal.acceptance = "false";
+
+		var groupedProductEntryNames = "ABS Sensor,Brake Pads,Cams";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a new Grouped product is created with all the data needed") {
+			for (var groupedProductEntryName : list "${groupedProductEntryNames}") {
+				CommerceProducts.openProductsAdmin();
+
+				CommerceNavigator.searchEntry(entryName = "${groupedProductEntryName}");
+
+				CommerceNavigator.gotoEntry(entryName = "${groupedProductEntryName}");
+
+				Type(
+					locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
+					value1 = "${groupedProductEntryName} Short Description");
+
+				Button.clickPublish();
+			}
+
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				gtin = "GTIN1",
+				manufacturerPartNumber = "MPN1",
+				productDescription = "Full Description",
+				productName = "Grouped Product",
+				productType = "Grouped",
+				shortDescription = "Short Description",
+				sku = "GROUPEDSKU",
+				specifications = "Warranty:6 Months,Material:Iron");
+
+			CommerceJSONWarehousesAndInventoriesAPI._addWarehouseItem(
+				warehouseItemQuantity = "60",
+				warehouseItemSku = "GROUPEDSKU",
+				warehouseName = "Italy");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Grouped");
+
+			CommerceNavigator.gotoEntry(entryName = "Grouped Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Grouped");
+
+			CommerceProducts.addGroupedProductEntries(productNames = "${groupedProductEntryNames}");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "GROUPEDSKU");
+
+			CommerceSKUs.editSkuPricing(
+				basePrice = "55.00",
+				salePrice = "50.00");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceProductImages.addProductImages(imageTitles = "Black,Blue");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+
+			for (var subscriptionName : list "Payment,Delivery") {
+				CommerceProducts.configureSubscription(
+					subscriptionExactDay = "15",
+					subscriptionLength = "10",
+					subscriptionMode = "Exact Day of Month",
+					subscriptionName = "${subscriptionName} Subscription",
+					subscriptionType = "Month");
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+			CommerceProducts.updateProductInventoryConfiguration(
+				allowBackOrders = "true",
+				displayAvailability = "true",
+				displayStockQuantity = "true",
+				minOrderQuantity = "4",
+				publish = "true");
+
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "20",
+				target = "products",
+				title = "Grouped Products Discount",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Grouped Products Discount",
+				productName = "Grouped Product");
+		}
+
+		task ("When the buyer navigates to the product detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoProductDetails(productName = "Grouped Product");
+		}
+
+		task ("Then the buyer can see all the Grouped Products fields") {
+			FrontStore.assertProductDetails(
+				deliverySubscriptionPeriod = "Every 10 Months",
+				discountPercentage = "20",
+				groupedProductEntryNames = "${groupedProductEntryNames}",
+				minQuantity = "4",
+				paymentSubscriptionPeriod = "Every 10 Months",
+				productAvailability = "Available",
+				productFullDescription = "Full Description",
+				productGTIN = "GTIN1",
+				productImages = "Black,Blue",
+				productListPriceInactive = "55.00",
+				productMPN = "MPN1",
+				productName = "Grouped Product",
+				productNetPrice = "160.00",
+				productSalePriceInactive = "50.00",
+				productShortDescription = "Short Description",
+				productSKU = "GROUPEDSKU",
+				productSpecifications = "Warranty:6 Months,Material:Iron",
+				productStockQuantity = "60");
+		}
+	}
+
 	@description = "COMMERCE-9673 | As a buyer, I want to be able to view the incoming date/quantity for a single SKU product"
 	@priority = "3"
 	test CanViewSingleSkuProductIncomingQuantity {

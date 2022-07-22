@@ -426,23 +426,10 @@ definition {
 			noAttachment = "true");
 	}
 
-	@priority = "4"
-	@refactordone
-	test CannotAddArticleWithoutContent {
-		KBArticle.addCP(
-			kbArticleContent = "",
-			kbArticleInvalidContent = "true",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.viewDefaultCP();
-	}
-
 	@priority = "3"
 	@refactordone
-	test CannotAddArticleWithoutRequiredCategory {
-		property test.name.skip.portal.instance = "KBAdmin#CannotAddArticleWithoutRequiredCategory";
+	test CannotAddArticleWithoutCategory {
+		property test.name.skip.portal.instance = "KBAdmin#CannotAddArticleWithoutCategory";
 
 		Category.openCategoriesAdmin(siteURLKey = "guest");
 
@@ -463,6 +450,19 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbMissingRequiredCategory = "true",
 			vocabularyName = "Vocabulary Name");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CannotAddArticleWithoutContent {
+		KBArticle.addCP(
+			kbArticleContent = "",
+			kbArticleInvalidContent = "true",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewDefaultCP();
 	}
 
 	@priority = "4"

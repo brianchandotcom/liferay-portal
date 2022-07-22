@@ -323,6 +323,64 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
+	test CanTraverseArticleHierachy {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		for (var articleCount : list "1,2,3") {
+			KBArticle.addCP(
+				kbArticleContent = "Knowledge Base Article Parent Content ${articleCount}",
+				kbArticleTitle = "Knowledge Base Article Parent Title ${articleCount}");
+		}
+
+		for (var articleCount : list "1,2,3") {
+			KBArticle.addChildArticleViaKBAdmin(
+				kbArticleTitle = "Knowledge Base Article Parent Title 1",
+				kbChildArticleContent = "Knowledge Base Article Parent Content 1 Child ${articleCount}",
+				kbChildArticleTitle = "Knowledge Base Article Parent Title 1 Child ${articleCount}");
+		}
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbChildArticleContent = "Knowledge Base Article Parent Content 2 Child 1",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 1");
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbChildArticleContent = "Knowledge Base Article Parent Content 2 Child 2",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Parent Title 3",
+			kbChildArticleContent = "Knowledge Base Article Parent Content 3 Child 1",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 3 Child 1");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 2");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 3");
+
+		KBArticle.gotoKBChildArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 2 Child 2",
+			kbArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
+	}
+
+	@priority = "4"
 	@refactordone
 	test CanViewArticlesInFolder {
 		JSONKnowledgeBase.addkBFolder(
@@ -970,64 +1028,6 @@ definition {
 		KBArticle.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Parent Content 1",
 			kbArticleTitle = "Knowledge Base Article Parent Title 1");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test ViewKBArticleWithKBChildArticleHierarchyNavigation {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		for (var articleCount : list "1,2,3") {
-			KBArticle.addCP(
-				kbArticleContent = "Knowledge Base Article Parent Content ${articleCount}",
-				kbArticleTitle = "Knowledge Base Article Parent Title ${articleCount}");
-		}
-
-		for (var articleCount : list "1,2,3") {
-			KBArticle.addChildArticleViaKBAdmin(
-				kbArticleTitle = "Knowledge Base Article Parent Title 1",
-				kbChildArticleContent = "Knowledge Base Article Parent Content 1 Child ${articleCount}",
-				kbChildArticleTitle = "Knowledge Base Article Parent Title 1 Child ${articleCount}");
-		}
-
-		KBArticle.addChildArticleViaKBAdmin(
-			kbArticleTitle = "Knowledge Base Article Parent Title 2",
-			kbChildArticleContent = "Knowledge Base Article Parent Content 2 Child 1",
-			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 1");
-
-		KBArticle.addChildArticleViaKBAdmin(
-			kbArticleTitle = "Knowledge Base Article Parent Title 2",
-			kbChildArticleContent = "Knowledge Base Article Parent Content 2 Child 2",
-			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
-
-		KBArticle.addChildArticleViaKBAdmin(
-			kbArticleTitle = "Knowledge Base Article Parent Title 3",
-			kbChildArticleContent = "Knowledge Base Article Parent Content 3 Child 1",
-			kbChildArticleTitle = "Knowledge Base Article Parent Title 3 Child 1");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
-
-		KBArticle.viewViaKBDisplayPG(
-			kbArticleContent = "Knowledge Base Article Parent Content 1",
-			kbArticleTitle = "Knowledge Base Article Parent Title 1");
-
-		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
-
-		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
-
-		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 2");
-
-		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 3");
-
-		KBArticle.gotoKBChildArticleViaKBDisplayHierarchyNavigationPG(
-			kbArticleTitle = "Knowledge Base Article Parent Title 2",
-			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
-
-		KBArticle.viewViaKBDisplayPG(
-			kbArticleContent = "Knowledge Base Article Parent Content 2 Child 2",
-			kbArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
 	}
 
 	@priority = "3"

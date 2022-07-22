@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.TryFilter;
-import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
@@ -138,8 +137,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 		_auditLogContext.setContext(
 			remoteAddr, _portal.getCompanyId(httpServletRequest), emailAddress,
-			httpSession.getId(), httpServletRequest.getServerName(), userId,
-			userLogin, xRequestId);
+			httpServletRequest.getServerName(), userId, userLogin, xRequestId);
 
 		return null;
 	}
@@ -220,8 +218,6 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 		return true;
 	}
 
-	private static final String _MESSAGE_DIGEST_ALGORITHM = "SHA-256";
-
 	private static final Log _log = LogFactoryUtil.getLog(AuditFilter.class);
 
 	private AuditLogContext _auditLogContext;
@@ -261,7 +257,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 		public void setContext(
 			String clientIP, long companyId, String emailAddress,
-			String sessionId, String serverName, Long userId, String userLogin,
+			String serverName, Long userId, String userLogin,
 			String xRequestId) {
 
 			_contexts.set(
@@ -273,9 +269,6 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 					"emailAddress", emailAddress
 				).put(
 					"serverName", serverName
-				).put(
-					"sessionId",
-					DigesterUtil.digest(_MESSAGE_DIGEST_ALGORITHM, sessionId)
 				).put(
 					"userId", (userId != null) ? String.valueOf(userId) : ""
 				).put(

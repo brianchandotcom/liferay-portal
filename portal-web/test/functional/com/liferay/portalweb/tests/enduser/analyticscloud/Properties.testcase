@@ -145,15 +145,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9113 | Test Summary: It is possible to create multiple properties in different workspaces"
-	@ignore = "true"
-	@priority = "4"
-	test CanCreateMultiplePropertiesInDifferentWorkspaces {
-
-		// TODO LRAC-9113 CanCreateMultiplePropertiesInDifferentWorkspaces pending implementation
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9108 | Test Summary: [AC][Portal] Creating a property at the same time (concurrency scenario)"
 	@ignore = "true"
 	@priority = "3"
@@ -248,6 +239,55 @@ definition {
 			ACSettings.goToProperties();
 
 			ACUtils.assertItemsName(itemList = "Name with special chars = @#$%&!");
+		}
+	}
+
+	@description = "Bug: LRAC-7916 | Automation ID: LRAC-11529 | Test Summary: It is possible to create multiple properties in different workspaces"
+	@priority = "4"
+	test CanCreateSamePropertyNameInDifferentWorkspaces {
+		property test.name.skip.portal.instance = "Properties#CanCreateSamePropertyNameInDifferentWorkspaces";
+
+		var acProperty = "AC Property Name";
+		var acWorkspace = "New AC Workspace";
+
+		task ("Launch AC and create a new workspace then go to settings and add a new property") {
+			ACUtils.launchAC(
+				emailList = "test@liferay.com",
+				workspaceName = "${acWorkspace}");
+
+			ACUtils.dismissOnboardingModal();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACProperties.addNewProperty(propertyName = "${acProperty}");
+		}
+
+		task ("Go back to properties and see the newly created property") {
+			ACSettings.goToProperties();
+
+			ACProperties.assertPropertyTitleList(propertyName = "${acProperty}");
+		}
+
+		task ("Exit settings and switch workspaces") {
+			ACNavigation.exitSettings();
+
+			ACWorkspace.switchWorkspace(workspaceName = "FARO-DEV-liferay");
+		}
+
+		task ("Go to settings and create a property that has the same name as the previous one") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACProperties.addNewProperty(propertyName = "${acProperty}");
+		}
+
+		task ("Go back to properties and see the newly created property") {
+			ACSettings.goToProperties();
+
+			ACProperties.assertPropertyTitleList(propertyName = "${acProperty}");
 		}
 	}
 

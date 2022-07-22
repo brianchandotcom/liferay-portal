@@ -20,7 +20,7 @@ import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import Sidebar from '../Sidebar';
 import CollapsibleSection from './CollapsibleSection';
@@ -95,9 +95,9 @@ const SidebarPanelInfoView = ({
 
 	const hasActions = preview?.downloadURL || fetchSharingButtonURL;
 
-	const handleError = () => {
+	const handleError = useCallback(() => {
 		setError(true);
-	};
+	}, []);
 
 	return (
 		<>
@@ -177,14 +177,14 @@ const SidebarPanelInfoView = ({
 						</span>
 					</div>
 
-				{preview && preview.url && (
-					<Preview
-						compressed={hasActions}
-						imageURL={preview.imageURL}
-						title={title}
-						url={preview.url}
-					/>
-				)}
+					{preview && preview.url && (
+						<Preview
+							compressed={hasActions}
+							imageURL={preview.imageURL}
+							title={title}
+							url={preview.url}
+						/>
+					)}
 
 					{hasActions && (
 						<div className="sidebar-section">

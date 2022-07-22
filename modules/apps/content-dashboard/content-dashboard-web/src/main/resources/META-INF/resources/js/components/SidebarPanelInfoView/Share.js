@@ -44,8 +44,7 @@ const Share = ({fetchSharingButtonURL, onError}) => {
 					}
 				});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fetchSharingButtonURL]);
+	}, [fetchSharingButtonURL, onError]);
 
 	return <span ref={elRef} />;
 };

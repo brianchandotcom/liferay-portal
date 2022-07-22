@@ -12,6 +12,8 @@
  * details.
  */
 
+import {openConfirmModal} from 'frontend-js-web';
+
 export default function propsTransformer({
 	additionalProps: {deleteEntriesURL, inputId, inputValue},
 	portletNamespace,
@@ -21,33 +23,34 @@ export default function propsTransformer({
 		...props,
 		onActionButtonClick(event, {item}) {
 			if (item?.data?.action === 'deleteEntries') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-the-selected-trigger'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
-
-					if (!form) {
-						return;
-					}
-
-					form.setAttribute('method', 'post');
-
-					const inputElement = document.getElementById(
-						`${portletNamespace}${inputId}`
-					);
-
-					if (inputElement) {
-						inputElement.setAttribute('value', inputValue);
-					}
-
-					submitForm(form, deleteEntriesURL);
-				}
+				openConfirmModal({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-the-selected-trigger'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fm`
+							);
+		
+							if (!form) {
+								return;
+							}
+		
+							form.setAttribute('method', 'post');
+		
+							const inputElement = document.getElementById(
+								`${portletNamespace}${inputId}`
+							);
+		
+							if (inputElement) {
+								inputElement.setAttribute('value', inputValue);
+							}
+		
+							submitForm(form, deleteEntriesURL);
+						}
+					} 
+				});
 			}
 		},
 	};

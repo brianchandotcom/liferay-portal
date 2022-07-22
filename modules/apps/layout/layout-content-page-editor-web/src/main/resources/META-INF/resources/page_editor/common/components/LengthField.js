@@ -27,7 +27,7 @@ import './LengthField.scss';
 
 const CUSTOM = 'custom';
 
-const KEYS_NOT_ALLOWED = ['+', ',', 'e'];
+const KEYS_NOT_ALLOWED = new Set(['+', ',', 'e']);
 
 // Try to parse a value
 // 1st group: a number, a number with decimal and a decimal without integer part
@@ -143,7 +143,7 @@ const Field = ({
 	};
 
 	const handleKeyDown = (event) => {
-		if (nextUnit !== CUSTOM && KEYS_NOT_ALLOWED.includes(event.key)) {
+		if (nextUnit !== CUSTOM && KEYS_NOT_ALLOWED.has(event.key)) {
 			event.preventDefault();
 		}
 

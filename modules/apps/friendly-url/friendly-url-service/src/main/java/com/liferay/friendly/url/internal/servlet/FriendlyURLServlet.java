@@ -172,15 +172,10 @@ public class FriendlyURLServlet extends HttpServlet {
 			"request", httpServletRequest
 		).build();
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = _getServiceContext(httpServletRequest);
 
-		if (serviceContext == null) {
-			serviceContext = ServiceContextFactory.getInstance(
-				httpServletRequest);
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-		}
+		serviceContext.setCompanyId(group.getCompanyId());
+		serviceContext.setScopeGroupId(group.getGroupId());
 
 		Layout defaultLayout = null;
 
@@ -799,6 +794,23 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		return requestURI.substring(_pathInfoOffset, pos);
+	}
+
+	private ServiceContext _getServiceContext(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = ServiceContextFactory.getInstance(
+				httpServletRequest);
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		}
+
+		return serviceContext;
 	}
 
 	private User _getUser(HttpServletRequest httpServletRequest)

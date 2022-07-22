@@ -686,6 +686,50 @@ definition {
 		}
 	}
 
+	@description = "LPS-152542: Given 'Assign Role by Segment' is disabled at System Settings
+	And user does not has permission to System Settings
+	When user navigates to 'Instance Settings'
+	Then the warning informs to contact system administrator"
+	@ignore
+	@priority = "3"
+	test ViewAssignRoleBySegmentDisabledWarningUserWithoutsPermissionToSystemSettings {
+		property test.name.skip.portal.instance = "SegmentationDisabled#ViewAssignRoleBySegmentDisabledWarningUserWithoutsPermissionToSystemSettings";
+
+		task ("Enable segments") {
+			Segmentation.resetSegmentationAtInstanceSettings();
+		}
+
+		task ("Create a new instance tango.com") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "tango.com",
+				portalInstanceId = "tango.com",
+				virtualHost = "tango.com");
+
+			User.logoutPG();
+
+			User.viewLoggedOutPG();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://tango.com:8080",
+				userEmailAddress = "test@tango.com");
+		}
+
+		task ("User navigates to Instance Settings") {
+			Segmentation.gotoSegmeentsService(key_portlet = "Instance Settings");
+		}
+
+		task ("Then the warning informs to contact system administrator") {
+			Segmentation.checkSegmentationDisabledWarning(textValue = "Assign roles by segment is disabled in System Settings.");
+
+			Segmentation.checkSegmentationDisabledWarningUserWithoutPermission();
+
+			User.logoutPG();
+
+			User.firstLoginUI();
+		}
+	}
+
 	@description = "LPS-151362: Given the 'Enable Segmentation'
 	When the 'Enable Segmentation' is disabled
 	Then segmentation is disabled for Experiences"

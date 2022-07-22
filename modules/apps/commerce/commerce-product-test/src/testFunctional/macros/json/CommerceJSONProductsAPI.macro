@@ -6,6 +6,10 @@ definition {
 		var productType = StringUtil.lowerCase("${productType}");
 		var baseURL = "${baseURL}";
 
+		if (!(isSet(allowBackOrder))) {
+			var allowBackOrder = "true";
+		}
+
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
@@ -22,10 +26,18 @@ definition {
 			var discontinued = "false";
 		}
 
+		if (!(isSet(displayAvailability))) {
+			var displayAvailability = "false";
+		}
+
 		if (!(isSet(displayDate))) {
 			var displayDateYear = DateUtil.getCurrentYear();
 
 			var displayDate = "${displayDateYear}-01-01T01:01:00Z";
+		}
+
+		if (!(isSet(displayStockQuantity))) {
+			var displayStockQuantity = "false";
 		}
 
 		if (!(isSet(expirationDate))) {
@@ -48,8 +60,20 @@ definition {
 			var height = "0";
 		}
 
+		if (!(isSet(inventoryEngine))) {
+			var inventoryEngine = "default";
+		}
+
+		if (!(isSet(lowStockAction))) {
+			var lowStockAction = "";
+		}
+
 		if (!(isSet(manufacturerPartNumber))) {
 			var manufacturerPartNumber = "";
+		}
+
+		if (!(isSet(maxOrderQuantity))) {
+			var maxOrderQuantity = "10000";
 		}
 
 		if (!(isSet(metaDescription))) {
@@ -62,6 +86,18 @@ definition {
 
 		if (!(isSet(metaTitle))) {
 			var metaTitle = "";
+		}
+
+		if (!(isSet(minOrderQuantity))) {
+			var minOrderQuantity = "1";
+		}
+
+		if (!(isSet(minStockQuantity))) {
+			var minStockQuantity = "0";
+		}
+
+		if (!(isSet(multipleOrderQuantity))) {
+			var multipleOrderQuantity = "1";
 		}
 
 		if (!(isSet(neverExpire))) {
@@ -105,6 +141,37 @@ definition {
 
 		if (!(isSet(sku))) {
 			var sku = "default";
+		}
+
+		var productSpecifications = "";
+
+		if (isSet(specifications)) {
+			var specificationPriority = "0";
+
+			for (var specificationKeyValue : list "${specifications}") {
+				var specificationKey = StringUtil.extractFirst("${specificationKeyValue}", ":");
+				var specificationValue = StringUtil.extractLast("${specificationKeyValue}", ":");
+				var specificationKey = CommerceUtilities.convertStringToKey(string = "${specificationKey}");
+
+				if ("${productSpecifications}" != "") {
+					var comma = ",";
+				}
+				else {
+					var comma = "";
+				}
+
+				var productSpecifications = '''
+						${productSpecifications}${comma}
+						{
+							"priority": ${specificationPriority},
+							"specificationKey": "${specificationKey}",
+							"value": {
+								"en_US": "${specificationValue}"
+							}
+						}
+				''';
+				var specificationPriority = ${specificationPriority} + 1;
+			}
 		}
 
 		if (!(isSet(unspc))) {
@@ -158,6 +225,19 @@ definition {
 					"shortDescription": {
 					  "en_US": "${shortDescription}"
 					},
+					"productConfiguration": {
+    					"allowBackOrder": ${allowBackOrder},
+						"allowedOrderQuantities": [],
+						"displayAvailability": ${displayAvailability},
+						"displayStockQuantity": ${displayStockQuantity},
+						"inventoryEngine": "${inventoryEngine}",
+						"lowStockAction": "${lowStockAction}",
+						"maxOrderQuantity": ${maxOrderQuantity},
+						"minOrderQuantity": ${minOrderQuantity},
+						"minStockQuantity": ${minStockQuantity},
+						"multipleOrderQuantity": ${multipleOrderQuantity}
+					},
+					"productSpecifications": [${productSpecifications}],
 					"skus": [
 				    {
 				      "cost": "${cost}",
@@ -167,6 +247,8 @@ definition {
 				      "height": "${height}",
 				      "manufacturerPartNumber": "${manufacturerPartNumber}",
 				      "neverExpire": true,
+					  "price": ${price},
+					  "promoPrice": ${promoPrice},
 				      "published": true,
 				      "purchasable": "${purchasable}",
 				      "replacementSkuId": "${replacementSkuId}",

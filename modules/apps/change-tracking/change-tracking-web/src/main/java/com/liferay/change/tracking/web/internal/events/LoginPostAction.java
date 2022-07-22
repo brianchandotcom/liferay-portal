@@ -16,7 +16,6 @@ package com.liferay.change.tracking.web.internal.events;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
@@ -84,11 +83,9 @@ public class LoginPostAction extends Action {
 				return;
 			}
 
-			CTPreferences ctPreferences =
+			_sandboxHelper.sandbox(
 				_ctPreferencesLocalService.getCTPreferences(
-					user.getCompanyId(), user.getUserId());
-
-			_sandboxHelper.sandbox(ctPreferences);
+					user.getCompanyId(), user.getUserId()));
 		}
 		catch (Exception exception) {
 			throw new ActionException(exception);

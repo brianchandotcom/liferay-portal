@@ -838,11 +838,11 @@ public class ViewChangesDisplayContext {
 			"everything", everythingJSONObject);
 
 		for (Map.Entry<Long, JSONArray> entry : rootDisplayMap.entrySet()) {
-			String typeName = _getTypeName(
-				_themeDisplay.getLocale(), entry.getKey(), typeNameCacheMap);
-
 			contextViewJSONObject.put(
-				typeName, JSONUtil.put("children", entry.getValue()));
+				_getTypeName(
+					_themeDisplay.getLocale(), entry.getKey(),
+					typeNameCacheMap),
+				JSONUtil.put("children", entry.getValue()));
 		}
 
 		return contextViewJSONObject;

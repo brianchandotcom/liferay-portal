@@ -13,7 +13,7 @@
  */
 
 import {cleanup, fireEvent, render} from '@testing-library/react';
-import {openToast} from 'frontend-js-web';
+import {openConfirmModal, openToast} from 'frontend-js-web';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -33,7 +33,8 @@ const _getComponent = (props) => {
 };
 
 jest.mock('frontend-js-web', () => ({
-	openToast: jest.fn(),
+		openConfirmModal: jest.fn(({message, onConfirm}) => onConfirm(true)),
+		openToast: jest.fn(),
 }));
 
 jest.mock(
@@ -58,6 +59,7 @@ describe('VariationsNav Initial State', () => {
 
 	afterEach(() => {
 		jest.restoreAllMocks();
+		jest.clearAllMocks();
 		cleanup();
 	});
 
@@ -119,13 +121,6 @@ describe('VariationsNav Initial State', () => {
 });
 
 describe('VariationsNav With segments', () => {
-	beforeAll(() => {
-		window.Liferay = {
-			...Liferay,
-			FeatureFlags: {},
-		};
-	});
-
 	beforeEach(() => {
 		window['openSelectSegmentsEntryDialogMethod'] = jest.fn();
 		window.confirm = jest.fn(() => true);
@@ -134,6 +129,7 @@ describe('VariationsNav With segments', () => {
 
 	afterEach(() => {
 		jest.restoreAllMocks();
+		jest.clearAllMocks();
 		cleanup();
 	});
 
@@ -211,9 +207,12 @@ describe('VariationsNav With segments', () => {
 		expect(deleteButtons[1]).not.toBeDisabled();
 
 		fireEvent.click(deleteButtons[1]);
-		expect(window.confirm).toHaveBeenCalledWith(
-			'are-you-sure-you-want-to-delete-this'
-		);
+
+		expect(openConfirmModal).toHaveBeenCalledWith({
+			message: 'are-you-sure-you-want-to-delete-this',
+			onConfirm: expect.any(Function),
+		});
+
 		expect(window.submitForm).toHaveBeenCalledWith(
 			undefined,
 			'delete-asset-list-entry-url-1'
@@ -228,7 +227,7 @@ describe('VariationsNav With segments', () => {
 		expect(deleteButtons[0]).toBeDisabled();
 
 		fireEvent.click(deleteButtons[0]);
-		expect(window.confirm).not.toHaveBeenCalled();
+		expect(openConfirmModal).not.toHaveBeenCalled();
 		expect(window.submitForm).not.toHaveBeenCalledWith();
 	});
 });

@@ -52,6 +52,7 @@ export function MultiStep({activePage, editable, pages}) {
 												containerElement.current
 											)
 										),
+										selectedPage: index,
 									})
 								);
 							}
@@ -64,6 +65,7 @@ export function MultiStep({activePage, editable, pages}) {
 												containerElement.current
 											)
 										),
+										selectedPage: index,
 									})
 								);
 							}

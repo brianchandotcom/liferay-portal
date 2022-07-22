@@ -24,6 +24,7 @@ export default function previousPage({
 	pages,
 	portletNamespace,
 	rules,
+	selectedPage,
 	viewMode,
 }) {
 	return (dispatch) => {
@@ -42,11 +43,16 @@ export default function previousPage({
 		}).then((evaluatedPages) => {
 			let previousActivePageIndex = activePage;
 
-			for (let i = activePage - 1; i > -1; i--) {
-				if (evaluatedPages[i].enabled) {
-					previousActivePageIndex = i;
+			if (typeof selectedPage === 'number') {
+				previousActivePageIndex = selectedPage;
+			}
+			else {
+				for (let i = activePage - 1; i > -1; i--) {
+					if (evaluatedPages[i].enabled) {
+						previousActivePageIndex = i;
 
-					break;
+						break;
+					}
 				}
 			}
 

@@ -21,6 +21,7 @@ import {
 } from 'frontend-js-web';
 
 import {collectDigitalSignature} from './digital-signature/DigitalSignatureUtil';
+import openConfirm from './openConfirm';
 
 export default function propsTransformer({
 	additionalProps: {
@@ -111,22 +112,23 @@ export default function propsTransformer({
 	};
 
 	const deleteEntries = () => {
-		let action;
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-the-selected-entries'
+			),
+			onConfirm: (isConfirmed) => {
+				let action;
 
-		if (trashEnabled) {
-			action = 'move_to_trash';
-		}
-		else if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-delete-the-selected-entries'
-				)
-			)
-		) {
-			action = 'delete';
-		}
+				if (trashEnabled) {
+					action = 'move_to_trash';
+				}
+				else if (isConfirmed) {
+					action = 'delete';
+				}
 
-		processAction(action, editEntryURL);
+				processAction(action, editEntryURL);
+			},
+		});
 	};
 
 	const editCategories = () => {

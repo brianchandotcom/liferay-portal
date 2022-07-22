@@ -19,6 +19,8 @@ import {
 	openSelectionModal,
 } from 'frontend-js-web';
 
+import openConfirm from './openConfirm';
+
 const ACTIONS = {
 	checkin({checkinURL}, portletNamespace) {
 		Liferay.componentReady(
@@ -85,13 +87,13 @@ const ACTIONS = {
 	},
 
 	delete({deleteURL}) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, deleteURL);
-		}
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) =>
+				isConfirmed && submitForm(document.hrefFm, deleteURL),
+		});
 	},
 
 	deleteVersion({deleteURL}) {
@@ -123,15 +125,16 @@ const ACTIONS = {
 	},
 
 	publish({publishURL}) {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-publish-the-selected-document'
-				)
-			)
-		) {
-			location.href = publishURL;
-		}
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-publish-the-selected-document'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					location.href = publishURL;
+				}
+			},
+		});
 	},
 };
 

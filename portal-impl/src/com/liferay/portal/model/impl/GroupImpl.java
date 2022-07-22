@@ -72,6 +72,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -259,6 +260,19 @@ public class GroupImpl extends GroupBaseImpl {
 		}
 
 		return name;
+	}
+
+	@Override
+	public Map<Locale, String> getDescriptiveNameMap() throws PortalException {
+		Map<Locale, String> descriptiveNameMap = new HashMap<>();
+
+		for (Locale locale :
+				LanguageUtil.getCompanyAvailableLocales(getCompanyId())) {
+
+			descriptiveNameMap.put(locale, getDescriptiveName(locale));
+		}
+
+		return descriptiveNameMap;
 	}
 
 	@Override

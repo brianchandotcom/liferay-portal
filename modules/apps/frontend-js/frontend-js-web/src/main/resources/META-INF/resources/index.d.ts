@@ -829,7 +829,7 @@ export function setCookie(
 export function removeCookie(name: string): void;
 
 /**
- * Object with cookie consent types as keys, for use with {@link setCookie}
+ * Object with cookie consent types as keys
  */
 export const TYPES: {[key: string]: TYPE_VALUES};
 
@@ -838,3 +838,35 @@ export type TYPE_VALUES =
 	| 'CONSENT_TYPE_NECESSARY'
 	| 'CONSENT_TYPE_PERFORMANCE'
 	| 'CONSENT_TYPE_PERSONALIZATION';
+
+type Storage = {
+	clear(): void;
+
+	getItem(key: string, type: TYPE_VALUES): string | undefined;
+
+	key(index: number, type: TYPE_VALUES): string | undefined;
+
+	removeItem(key: string): void;
+
+	setItem(
+		key: string,
+		value: string,
+		type: TYPE_VALUES,
+		options?: {
+			'domain'?: string;
+			'expires'?: string;
+			'max-age'?: string;
+			'path'?: string;
+			'samesite'?: string;
+			'secure'?: boolean;
+		}
+	): boolean;
+
+	TYPES: typeof TYPES;
+
+	size: number;
+};
+
+export const localStorage: Storage;
+
+export const sessionStorage: Storage;

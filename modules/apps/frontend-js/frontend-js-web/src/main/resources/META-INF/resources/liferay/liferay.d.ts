@@ -325,6 +325,106 @@ declare module Liferay {
 			): Promise<any>;
 		}
 
+		namespace LocalStorage {
+
+			/* Removes all keys stored in localStorage */
+			export function clear(): void;
+
+			/**
+			 * Object with cookie consent types as keys
+			 */
+			export const TYPES: {[key: string]: TYPE_VALUES};
+
+			export type TYPE_VALUES =
+				| 'CONSENT_TYPE_FUNCTIONAL'
+				| 'CONSENT_TYPE_NECESSARY'
+				| 'CONSENT_TYPE_PERFORMANCE'
+				| 'CONSENT_TYPE_PERSONALIZATION';
+
+			/* Returns the value in localStorage for the corresponding key if user has consented to the type of storage */
+			export function getItem(
+				key: string,
+				type: TYPE_VALUES
+			): string | undefined;
+
+			/* Returns the value in localStorage for the corresponding index if user has consented to the type of storage */
+			export function key(
+				index: number,
+				type: TYPE_VALUES
+			): string | undefined;
+
+			/* Removes the value for the corresponding key in localStorage regardless of consent */
+			export function removeItem(key: string): void;
+
+			/* Sets the key-value pair in localStorage if user has consented to the type of storage */
+			export function setItem(
+				key: string,
+				value: string,
+				type: TYPE_VALUES,
+				options?: {
+					'domain'?: string;
+					'expires'?: string;
+					'max-age'?: string;
+					'path'?: string;
+					'samesite'?: string;
+					'secure'?: boolean;
+				}
+			): boolean;
+
+			/* Returns the number of items in localStorage */
+			export const size: number;
+		}
+
+		namespace SessionStorage {
+
+			/* Removes all keys stored in sessionStorage */
+			export function clear(): void;
+
+			/**
+			 * Object with cookie consent types as keys
+			 */
+			export const TYPES: {[key: string]: TYPE_VALUES};
+
+			export type TYPE_VALUES =
+				| 'CONSENT_TYPE_FUNCTIONAL'
+				| 'CONSENT_TYPE_NECESSARY'
+				| 'CONSENT_TYPE_PERFORMANCE'
+				| 'CONSENT_TYPE_PERSONALIZATION';
+
+			/* Returns the value in sessionStorage for the corresponding key if user has consented to the type of storage */
+			export function getItem(
+				key: string,
+				type: TYPE_VALUES
+			): string | undefined;
+
+			/* Returns the value in sessionStorage for the corresponding index if user has consented to the type of storage */
+			export function key(
+				index: number,
+				type: TYPE_VALUES
+			): string | undefined;
+
+			/* Removes the value for the corresponding key in sessionStorage regardless of consent */
+			export function removeItem(key: string): void;
+
+			/* Sets the key-value pair in sessionStorage if user has consented to the type of storage */
+			export function setItem(
+				key: string,
+				value: string,
+				type: TYPE_VALUES,
+				options?: {
+					'domain'?: string;
+					'expires'?: string;
+					'max-age'?: string;
+					'path'?: string;
+					'samesite'?: string;
+					'secure'?: boolean;
+				}
+			): boolean;
+
+			/* Returns the number of items in sessionStorage */
+			export const size: number;
+		}
+
 		/* Escapes HTML from the given string */
 		export function escapeHTML(string: string): string;
 

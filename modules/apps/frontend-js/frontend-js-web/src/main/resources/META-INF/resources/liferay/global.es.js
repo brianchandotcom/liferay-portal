@@ -78,6 +78,7 @@ import {
 import inBrowserView from './util/in_browser_view';
 import isPhone from './util/is_phone';
 import isTablet from './util/is_tablet';
+import localStorage from './util/local_storage';
 import navigate from './util/navigate.es';
 import normalizeFriendlyURL from './util/normalize_friendly_url';
 import ns from './util/ns.es';
@@ -90,6 +91,7 @@ import createResourceURL from './util/portlet_url/create_resource_url.es';
 import removeEntitySelection from './util/remove_entity_selection';
 import selectFolder from './util/select_folder';
 import {getSessionValue, setSessionValue} from './util/session.es';
+import sessionStorage from './util/session_storage';
 import showCapsLock from './util/show_caps_lock';
 import sub from './util/sub';
 import toCharCode from './util/to_char_code.es';
@@ -346,5 +348,8 @@ Liferay.Util.unescape = unescape;
 Liferay.Util.unescapeHTML = unescapeHTML;
 
 Liferay.Util.Cookie = Cookie;
+
+Liferay.Util.LocalStorage = localStorage;
+Liferay.Util.SessionStorage = sessionStorage;
 
 export {portlet};

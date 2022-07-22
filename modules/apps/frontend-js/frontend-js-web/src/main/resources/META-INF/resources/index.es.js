@@ -88,6 +88,11 @@ export {
 
 export {getSessionValue, setSessionValue} from './liferay/util/session.es';
 
+// Storage APIs
+
+export {default as localStorage} from './liferay/util/local_storage';
+export {default as sessionStorage} from './liferay/util/session_storage';
+
 // Toast API
 
 export {openToast} from './liferay/toast/commands/OpenToast.es';

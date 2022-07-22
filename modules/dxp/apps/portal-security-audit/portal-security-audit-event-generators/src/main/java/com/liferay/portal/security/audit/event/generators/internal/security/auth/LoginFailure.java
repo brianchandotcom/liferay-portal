@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
+ * @author Stian Sigvartsen
  */
 @Component(
 	immediate = true, property = "key=auth.failure", service = AuthFailure.class
@@ -51,7 +52,8 @@ public class LoginFailure implements AuthFailure {
 				companyId, emailAddress);
 
 			AuditMessage auditMessage = _buildAuditMessage(
-				user, headerMap, "Failed to authenticate by email address");
+				user, emailAddress, headerMap,
+				"Failed to authenticate by email address");
 
 			_auditRouter.route(auditMessage);
 		}
@@ -77,7 +79,8 @@ public class LoginFailure implements AuthFailure {
 				companyId, screenName);
 
 			AuditMessage auditMessage = _buildAuditMessage(
-				user, headerMap, "Failed to authenticate by screen name");
+				user, screenName, headerMap,
+				"Failed to authenticate by screen name");
 
 			_auditRouter.route(auditMessage);
 		}
@@ -102,7 +105,8 @@ public class LoginFailure implements AuthFailure {
 			User user = _userLocalService.getUserById(companyId, userId);
 
 			AuditMessage auditMessage = _buildAuditMessage(
-				user, headerMap, "Failed to authenticate by user ID");
+				user, String.valueOf(userId), headerMap,
+				"Failed to authenticate by user ID");
 
 			_auditRouter.route(auditMessage);
 		}
@@ -119,7 +123,8 @@ public class LoginFailure implements AuthFailure {
 	}
 
 	private AuditMessage _buildAuditMessage(
-		User user, Map<String, String[]> headerMap, String reason) {
+		User user, String userLogin, Map<String, String[]> headerMap,
+		String reason) {
 
 		JSONObject additionalInfoJSONObject = _jsonFactory.createJSONObject();
 
@@ -129,11 +134,15 @@ public class LoginFailure implements AuthFailure {
 			"reason", reason
 		);
 
-		return new AuditMessage(
+		AuditMessage auditMessage = new AuditMessage(
 			EventTypes.LOGIN_FAILURE, user.getCompanyId(), user.getUserId(),
 			user.getFullName(), User.class.getName(),
 			String.valueOf(user.getPrimaryKey()), null,
 			additionalInfoJSONObject);
+
+		auditMessage.setUserLogin(userLogin);
+
+		return auditMessage;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LoginFailure.class);

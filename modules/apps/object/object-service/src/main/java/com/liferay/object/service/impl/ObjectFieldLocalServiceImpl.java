@@ -492,16 +492,22 @@ public class ObjectFieldLocalServiceImpl
 
 		ObjectField newObjectField = (ObjectField)oldObjectField.clone();
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				newObjectField.getObjectDefinitionId());
+
+		if (objectDefinition.isSystem() &&
+			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135404"))) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		_validateExternalReferenceCode(
 			newObjectField.getObjectFieldId(), newObjectField.getCompanyId(),
 			externalReferenceCode, newObjectField.getObjectDefinitionId());
 
 		newObjectField.setExternalReferenceCode(externalReferenceCode);
 		newObjectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				newObjectField.getObjectDefinitionId());
 
 		if (objectDefinition.isApproved()) {
 			newObjectField = objectFieldPersistence.update(newObjectField);

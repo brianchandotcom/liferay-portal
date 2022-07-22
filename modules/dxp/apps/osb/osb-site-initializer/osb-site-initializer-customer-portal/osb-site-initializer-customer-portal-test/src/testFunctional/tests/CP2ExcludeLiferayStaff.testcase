@@ -21,6 +21,10 @@ definition {
 		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
+
+		task ("Add Objects for CP2.0") {
+			CustomerPortal.showCPObject(title = "Account Flag");
+		}
 	}
 
 	tearDown {
@@ -31,6 +35,8 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
+			CustomerPortal.deleteCPObject(title = "Account Flag");
 
 			CustomerPortal.customerPortalApisTearDown();
 		}
@@ -61,11 +67,32 @@ definition {
     @description = "Automation ID: LPS-147725 | Test Summary: Verify if when the user is Liferay Staff and it's administrator of the project, he will pass through the onboarding"
     @priority = "5"
     test IfStaffIsAdmWillPassOnboarding {
-        
+        task ("Navigate to Account Administrator and make the user an admin of the project") {
+			Accounts.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "Test Account 01");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Assert that when the user is Liferay Staff and administrator of the project has gone through onboarding") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+		    CustomerPortal.enterOnProject(title = "Test Account 01");
+
+            AssertElementPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
+		}
+
+		task ("Delete entry from the Account Flag object") {
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
+		}
     }
 
     @description = "Automation ID: LPS-147731 | Test Summary: Verify if when the user isn't Liferay Staff and it's a administrator of a Project, he will pass through the onboarding"
-    @priority = "5"
+    @ignore = "true"
+	@priority = "5"
     test NotASatffButIsAdmWillPassOnboarding {
         
     }
@@ -73,6 +100,16 @@ definition {
     @description = "Automation ID: LPS-147791 | Test Summary: Verify if the Liferay Staff user can view a project for which he is not a member/worker/does not participate/does not have a role in it"
     @priority = "4"
     test IfStaffCanSeeProjectHeIsNotRelated {
-        
+        task ("Check how many projects are available in CP2.0") {
+			Accounts.openAccountsAdmin();
+
+			CustomerPortal.tableListInAccountsAdmin(projectsList = "Test Account 01,Test Account 02,Test Account 03,Test Account 04,Test Account 05,Test Account 06,Test Account 07,Test Account 08,Test Account 09,Test Account 10,Test Account 11");
+		}
+
+		task ("Navigate to the Customer Portal 2.0 and assert the number of projects displayed on the homepage") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			CustomerPortal.tableListInHomepage(projectList = "Test Account 01,Test Account 02,Test Account 03,Test Account 04,Test Account 05,Test Account 06,Test Account 07,Test Account 08,Test Account 09,Test Account 10,Test Account 11");
+		}
     }
 }

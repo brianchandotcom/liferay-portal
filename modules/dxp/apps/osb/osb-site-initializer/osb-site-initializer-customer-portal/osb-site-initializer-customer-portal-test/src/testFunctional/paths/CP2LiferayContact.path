@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROJECT_TABLE</td>
+	<td>//div[contains(@class, 'card-body') and contains(.,'${title}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HIDE_WIDGET</td>
 	<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_portlet']</td>
 	<td></td>

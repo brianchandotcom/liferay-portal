@@ -220,6 +220,11 @@
 	<td>//h1[contains(@class, 'no-subtitle') and contains(text(), 'Log Into Your Account')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TABLE_ENTRY</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${tableEntry}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -528,6 +528,24 @@ definition {
 		}
 	}
 
+	macro tableListInAccountsAdmin {
+		for (var tableEntry : list "${projectsList}") {
+            AssertElementPresent(
+                key_tableEntry = "${tableEntry}",
+                locator1 = "CustomerPortalSite#TABLE_ENTRY",
+                value1 = "${tableEntry}");
+        }
+	}
+
+	macro tableListInHomepage {
+		for (var project : list "${projectList}") {
+            AssertElementPresent(
+                key_project = "${project}",
+                locator1 = "CP2LiferayContact#PROJECT_TABLE",
+                title = "${project}");
+        }
+	}
+
 	macro viewTableValue {
 		AssertTextEquals(
 			locator1 = "CustomerPortalSite#TABLE_VALUE",

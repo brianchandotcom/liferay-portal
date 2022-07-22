@@ -73,7 +73,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -576,15 +575,13 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		jspWriter.write("\" style=\"");
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147895"))) {
-			String contentVisibility =
-				containerStyledLayoutStructureItem.getContentVisibility();
+		String contentVisibility =
+			containerStyledLayoutStructureItem.getContentVisibility();
 
-			if (Validator.isNotNull(contentVisibility)) {
-				jspWriter.append("content-visibility:");
-				jspWriter.append(contentVisibility);
-				jspWriter.append(StringPool.SEMICOLON);
-			}
+		if (Validator.isNotNull(contentVisibility)) {
+			jspWriter.append("content-visibility:");
+			jspWriter.append(contentVisibility);
+			jspWriter.append(StringPool.SEMICOLON);
 		}
 
 		jspWriter.write(

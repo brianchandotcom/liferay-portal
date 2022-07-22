@@ -195,6 +195,18 @@ export function minimizePortlet(
 	options?: object
 ): void;
 
+export function openAlertModal({message}: {message: string}): void;
+
+export function openConfirmModal({
+	message,
+	onConfirm,
+	title,
+}: {
+	message: string;
+	onConfirm: (confirmed: boolean) => void;
+	title?: string;
+}): void;
+
 export function openModal(props: Object): void;
 
 export function openSelectionModal<T>(init: {

@@ -12,7 +12,11 @@
  * details.
  */
 
-import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
+import {
+	getCheckedCheckboxes,
+	openConfirmModal,
+	postForm,
+} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
@@ -23,29 +27,30 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			const action = data?.action;
 
 			if (action === 'deleteAccountEntryAddresses') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-this'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				openConfirmModal({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-this'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fm`
+							);
 
-					if (form) {
-						postForm(form, {
-							data: {
-								accountEntryAddressIds: getCheckedCheckboxes(
-									form,
-									`${portletNamespace}allRowIds`
-								),
-							},
-							url: data?.deleteAccountEntryAddressesURL,
-						});
-					}
-				}
+							if (form) {
+								postForm(form, {
+									data: {
+										accountEntryAddressIds: getCheckedCheckboxes(
+											form,
+											`${portletNamespace}allRowIds`
+										),
+									},
+									url: data?.deleteAccountEntryAddressesURL,
+								});
+							}
+						}
+					},
+				});
 			}
 		},
 	};

@@ -15,6 +15,7 @@
 import {
 	addParams,
 	navigate,
+	openConfirmModal,
 	openModal,
 	openSelectionModal,
 } from 'frontend-js-web';
@@ -85,23 +86,26 @@ const ACTIONS = {
 	},
 
 	delete({deleteURL}) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, deleteURL);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) =>
+				isConfirmed && submitForm(document.hrefFm, deleteURL),
+		});
 	},
 
 	deleteVersion({deleteURL}) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, deleteURL);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(document.hrefFm, deleteURL);
+				}
+			},
+		});
 	},
 
 	editImage({fileEntryId, imageURL}, portletNamespace) {
@@ -123,15 +127,16 @@ const ACTIONS = {
 	},
 
 	publish({publishURL}) {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-publish-the-selected-document'
-				)
-			)
-		) {
-			location.href = publishURL;
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-publish-the-selected-document'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					location.href = publishURL;
+				}
+			},
+		});
 	},
 };
 

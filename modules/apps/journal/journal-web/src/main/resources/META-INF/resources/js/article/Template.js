@@ -12,7 +12,12 @@
  * details.
  */
 
-import {addParams, openSelectionModal} from 'frontend-js-web';
+import {
+	addParams,
+	navigate,
+	openConfirmModal,
+	openSelectionModal,
+} from 'frontend-js-web';
 
 export default function ({
 	currentURL,
@@ -31,37 +36,40 @@ export default function ({
 			return;
 		}
 
-		if (
-			confirm(
-				Liferay.Language.get(
-					'editing-the-current-template-deletes-all-unsaved-content'
-				)
-			)
-		) {
-			const newDDMTemplateId =
-				(newDDMTemplate && newDDMTemplate.ddmtemplateid) || -1;
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'editing-the-current-template-deletes-all-unsaved-content'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					const newDDMTemplateId =
+						(newDDMTemplate && newDDMTemplate.ddmtemplateid) || -1;
 
-			const url = addParams(
-				`${namespaceId('ddmTemplateId')}=${newDDMTemplateId}`,
-				currentURL
-			);
+					const url = addParams(
+						`${namespaceId('ddmTemplateId')}=${newDDMTemplateId}`,
+						currentURL
+					);
 
-			const form = document.getElementById(namespaceId('fm1'));
+					const form = document.getElementById(namespaceId('fm1'));
 
-			if (form) {
-				Liferay.Util.setFormValues(form, {
-					ddmTemplateId: newDDMTemplateId,
-					ddmTemplateKey:
-						(newDDMTemplate && newDDMTemplate.ddmtemplatekey) || '',
-					ddmTemplateName:
-						(newDDMTemplate && newDDMTemplate.name) || '',
-				});
+					if (form) {
+						Liferay.Util.setFormValues(form, {
+							ddmTemplateId: newDDMTemplateId,
+							ddmTemplateKey:
+								(newDDMTemplate &&
+									newDDMTemplate.ddmtemplatekey) ||
+								'',
+							ddmTemplateName:
+								(newDDMTemplate && newDDMTemplate.name) || '',
+						});
 
-				form.action = url;
+						form.action = url;
 
-				form.submit();
-			}
-		}
+						form.submit();
+					}
+				}
+			},
+		});
 	};
 
 	const previewWithTemplateButton = document.getElementById(
@@ -136,15 +144,13 @@ export default function ({
 
 	if (editDDMTemplateButton) {
 		const editDDMTemplateButtonClick = () => {
-			if (
-				confirm(
-					Liferay.Language.get(
-						'editing-the-current-template-deletes-all-unsaved-content'
-					)
-				)
-			) {
-				Liferay.Util.navigate(editDDMTemplateURL);
-			}
+			openConfirmModal({
+				message: Liferay.Language.get(
+					'editing-the-current-template-deletes-all-unsaved-content'
+				),
+				onConfirm: (isConfirmed) =>
+					isConfirmed && navigate(editDDMTemplateURL),
+			});
 		};
 
 		editDDMTemplateButton.addEventListener(

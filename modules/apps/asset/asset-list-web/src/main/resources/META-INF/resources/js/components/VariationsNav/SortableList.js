@@ -13,7 +13,7 @@
  */
 
 import ClayList from '@clayui/list';
-import {openToast} from 'frontend-js-web';
+import {openConfirmModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import {DndProvider} from 'react-dnd';
@@ -84,13 +84,16 @@ const SortableList = ({items, namespace, savePriorityURL}) => {
 			return;
 		}
 
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, deleteURL);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(document.hrefFm, deleteURL);
+				}
+			},
+		});
 	};
 
 	return (

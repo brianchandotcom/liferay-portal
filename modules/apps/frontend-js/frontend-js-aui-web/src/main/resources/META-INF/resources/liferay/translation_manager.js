@@ -297,13 +297,20 @@ AUI.add(
 					const locale = event.currentTarget.attr('locale');
 
 					if (event.target.hasClass(CSS_DELETE_TRANSLATION)) {
-						if (confirm(MSG_DEACTIVATE_LANGUAGE)) {
-							instance.deleteAvailableLocale(locale);
+						Liferay.Util.openConfirmModal({
+							message: MSG_DEACTIVATE_LANGUAGE,
+							onConfirm: (isConfirmed) => {
+								if (isConfirmed) {
+									instance.deleteAvailableLocale(locale);
 
-							if (locale === instance.get('editingLocale')) {
-								instance._resetEditingLocale();
-							}
-						}
+									if (
+										locale === instance.get('editingLocale')
+									) {
+										instance._resetEditingLocale();
+									}
+								}
+							},
+						});
 					}
 					else {
 						instance.set('editingLocale', locale);

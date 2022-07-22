@@ -12,7 +12,11 @@
  * details.
  */
 
-import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
+import {
+	getCheckedCheckboxes,
+	openConfirmModal,
+	postForm,
+} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {revokeOAuth2AuthorizationsURL},
@@ -23,29 +27,30 @@ export default function propsTransformer({
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {
 			if (item?.data?.action === 'revokeOAuth2Authorizations') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-revoke-the-selected-authorizations-they-will-be-revoked-immediately'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				openConfirmModal({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-revoke-the-selected-authorizations-they-will-be-revoked-immediately'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fm`
+							);
 
-					if (form) {
-						postForm(form, {
-							data: {
-								oAuth2AuthorizationIds: getCheckedCheckboxes(
-									form,
-									`${portletNamespace}allRowIds`
-								),
-							},
-							url: revokeOAuth2AuthorizationsURL,
-						});
-					}
-				}
+							if (form) {
+								postForm(form, {
+									data: {
+										oAuth2AuthorizationIds: getCheckedCheckboxes(
+											form,
+											`${portletNamespace}allRowIds`
+										),
+									},
+									url: revokeOAuth2AuthorizationsURL,
+								});
+							}
+						}
+					},
+				});
 			}
 		},
 	};

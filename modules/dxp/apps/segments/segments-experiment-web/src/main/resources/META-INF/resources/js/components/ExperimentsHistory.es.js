@@ -11,6 +11,7 @@
 
 import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
+import {openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -95,13 +96,16 @@ function ExperimentsHistory({experimentHistory, onDeleteSegmentsExperiment}) {
 	);
 
 	function _handleDeleteExperiment(experimentId) {
-		const confirmed = confirm(
-			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-		);
-
-		if (confirmed) {
-			return onDeleteSegmentsExperiment(experimentId);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					return onDeleteSegmentsExperiment(experimentId);
+				}
+			},
+		});
 	}
 }
 

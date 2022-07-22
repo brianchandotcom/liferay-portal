@@ -14,11 +14,10 @@
 
 import {
 	getCheckedCheckboxes,
+	openConfirmModal,
 	openSimpleInputModal,
 	postForm,
 } from 'frontend-js-web';
-
-import confirmDepotEntryDeletion from './confirmDepotEntryDeletion.es';
 
 export default function propsTransformer({
 	additionalProps: {deleteDepotEntriesURL},
@@ -26,21 +25,30 @@ export default function propsTransformer({
 	...otherProps
 }) {
 	const deleteSelectedDepotEntries = () => {
-		if (confirmDepotEntryDeletion()) {
-			const form = document.getElementById(`${portletNamespace}fm`);
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'removing-an-asset-library-can-affect-sites-that-use-the-contents-stored-in-it.-are-you-sure-you-want-to-continue-removing-this-asset-library'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					const form = document.getElementById(
+						`${portletNamespace}fm`
+					);
 
-			if (form) {
-				postForm(form, {
-					data: {
-						deleteEntryIds: getCheckedCheckboxes(
-							form,
-							`${portletNamespace}allRowIds`
-						),
-					},
-					url: deleteDepotEntriesURL,
-				});
-			}
-		}
+					if (form) {
+						postForm(form, {
+							data: {
+								deleteEntryIds: getCheckedCheckboxes(
+									form,
+									`${portletNamespace}allRowIds`
+								),
+							},
+							url: deleteDepotEntriesURL,
+						});
+					}
+				}
+			},
+		});
 	};
 
 	return {

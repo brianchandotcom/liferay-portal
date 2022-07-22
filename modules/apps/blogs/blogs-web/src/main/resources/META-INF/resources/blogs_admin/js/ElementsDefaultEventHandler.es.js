@@ -12,17 +12,25 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {DefaultEventHandler, openConfirmModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class ElementsDefaultEventHandler extends DefaultEventHandler {
 	delete(itemData) {
-		const message = Liferay.Language.get(
-			'are-you-sure-you-want-to-delete-this'
-		);
-
-		if (this.trashEnabled || confirm(message)) {
+		if (this.trashEnabled) {
 			this._send(itemData.deleteURL);
+		}
+		else {
+			openConfirmModal({
+				message: Liferay.Language.get(
+					'are-you-sure-you-want-to-delete-this'
+				),
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						this._send(itemData.deleteURL);
+					}
+				},
+			});
 		}
 	}
 
@@ -41,13 +49,16 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	publishToLive(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-publish-to-live')
-			)
-		) {
-			this._send(itemData.publishEntryURL);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-publish-to-live'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					this._send(itemData.publishEntryURL);
+				}
+			},
+		});
 	}
 
 	_send(url) {

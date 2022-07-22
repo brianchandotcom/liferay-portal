@@ -14,7 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import {navigate, openToast} from 'frontend-js-web';
+import {navigate, openConfirmModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
@@ -61,55 +61,65 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 		currentAction.href && formatActionURL(currentAction.href, itemData);
 
 	function handleClickOnLink(event) {
-		if (
-			currentAction.data &&
-			currentAction.data.confirmationMessage &&
-			!confirm(currentAction.data.confirmationMessage)
-		) {
-			return;
-		}
-		if (currentAction.target === 'modal') {
-			event.preventDefault();
+		const doAction = () => {
+			if (currentAction.target === 'modal') {
+				event.preventDefault();
 
-			openModal({
-				size: currentAction.size || 'lg',
-				title: currentAction.title,
-				url: formattedHref,
-			});
-		}
-		else if (currentAction.target === 'sidePanel') {
-			event.preventDefault();
+				openModal({
+					size: currentAction.size || 'lg',
+					title: currentAction.title,
+					url: formattedHref,
+				});
+			}
+			else if (currentAction.target === 'sidePanel') {
+				event.preventDefault();
 
-			highlightItems([itemId]);
-			openSidePanel({
-				size: currentAction.size || 'lg',
-				title: currentAction.title,
-				url: formattedHref,
-			});
-		}
-		else if (
-			currentAction.target === 'async' ||
-			currentAction.target === 'headless'
-		) {
-			event.preventDefault();
+				highlightItems([itemId]);
+				openSidePanel({
+					size: currentAction.size || 'lg',
+					title: currentAction.title,
+					url: formattedHref,
+				});
+			}
+			else if (
+				currentAction.target === 'async' ||
+				currentAction.target === 'headless'
+			) {
+				event.preventDefault();
 
-			executeAsyncItemAction(formattedHref, currentAction.method).then(
-				() => {
+				executeAsyncItemAction(
+					formattedHref,
+					currentAction.method
+				).then(() => {
 					openToast({
 						message:
 							currentAction.data?.successMessage ||
 							Liferay.Language.get('action-completed'),
 						type: 'success',
 					});
-				}
-			);
-		}
-		else if (currentAction.onClick) {
-			event.preventDefault();
+				});
+			}
+			else if (currentAction.onClick) {
+				event.preventDefault();
 
-			event.target.setAttribute('onClick', currentAction.onClick);
-			event.target.onclick();
-			event.target.removeAttribute('onClick');
+				event.target.setAttribute('onClick', currentAction.onClick);
+				event.target.onclick();
+				event.target.removeAttribute('onClick');
+			}
+		};
+
+		if (currentAction?.data?.confirmMessage) {
+			openConfirmModal({
+				message: currentAction.data.confirmationMessage,
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						doAction();
+					}
+				},
+			});
+		}
+		else {
+			doAction();
 		}
 	}
 
@@ -135,9 +145,14 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 								if (confirmMessage) {
 									event.preventDefault();
 
-									if (confirm(confirmMessage)) {
-										navigate(formattedHref);
-									}
+									openConfirmModal({
+										message: confirmMessage,
+										onConfirm: (isConfirmed) => {
+											if (isConfirmed) {
+												navigate(formattedHref);
+											}
+										},
+									});
 								}
 						  }
 				}

@@ -12,29 +12,33 @@
  * details.
  */
 
+import {openConfirmModal} from 'frontend-js-web';
+
 const ACTIONS = {
 	activate(itemData) {
 		submitForm(document.hrefFm, itemData.activateURL);
 	},
 
 	deactivate(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-deactivate-this')
-			)
-		) {
-			submitForm(document.hrefFm, itemData.deactivateURL);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get('are-you-sure-you-want-to-deactivate-this'),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(document.hrefFm, itemData.deactivateURL);
+				}
+			}
+		});
 	},
 
 	delete(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, itemData.deleteURL);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get('are-you-sure-you-want-to-delete-this'),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(document.hrefFm, itemData.deleteURL);
+				}
+			}
+		});
 	},
 
 	disablePropagation(itemData) {

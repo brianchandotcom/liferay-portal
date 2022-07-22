@@ -12,7 +12,11 @@
  * details.
  */
 
-import {openSelectionModal, openSimpleInputModal} from 'frontend-js-web';
+import {
+	openConfirmModal,
+	openSelectionModal,
+	openSimpleInputModal,
+} from 'frontend-js-web';
 
 import openDeleteFragmentModal from './openDeleteFragmentModal';
 
@@ -63,13 +67,16 @@ const ACTIONS = {
 	},
 
 	deleteDraftFragmentEntry({deleteDraftFragmentEntryURL}) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, deleteDraftFragmentEntryURL);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(document.hrefFm, deleteDraftFragmentEntryURL);
+				}
+			},
+		});
 	},
 
 	deleteFragmentEntry({deleteFragmentEntryURL}) {

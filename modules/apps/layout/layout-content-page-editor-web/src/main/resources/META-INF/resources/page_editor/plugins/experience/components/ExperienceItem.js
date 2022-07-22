@@ -19,6 +19,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
+import {openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -67,11 +68,14 @@ const ExperienceItem = ({
 			  )
 			: Liferay.Language.get('do-you-want-to-delete-this-experience');
 
-		const confirmed = confirm(confirmationMessage);
-
-		if (confirmed) {
-			onDeleteExperience(experience.segmentsExperienceId);
-		}
+		openConfirmModal({
+			message: confirmationMessage,
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					onDeleteExperience(experience.segmentsExperienceId);
+				}
+			},
+		});
 	};
 	const handleExperienceDuplicate = () => {
 		onDuplicateExperience(experience.segmentsExperienceId);

@@ -15,6 +15,7 @@
 import {
 	addParams,
 	navigate,
+	openConfirmModal,
 	openModal,
 	openSelectionModal,
 	sub,
@@ -111,22 +112,21 @@ export default function propsTransformer({
 	};
 
 	const deleteEntries = () => {
-		let action;
-
 		if (trashEnabled) {
-			action = 'move_to_trash';
+			processAction('move_to_trash', editEntryURL);
 		}
-		else if (
-			confirm(
-				Liferay.Language.get(
+		else {
+			openConfirmModal({
+				message: Liferay.Language.get(
 					'are-you-sure-you-want-to-delete-the-selected-entries'
-				)
-			)
-		) {
-			action = 'delete';
+				),
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						processAction('delete', editEntryURL);
+					}
+				},
+			});
 		}
-
-		processAction(action, editEntryURL);
 	};
 
 	const editCategories = () => {

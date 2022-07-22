@@ -23,7 +23,7 @@ import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
-import {fetch} from 'frontend-js-web';
+import {fetch, openConfirmModal} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 const LocalizationDropdown = ({
@@ -813,9 +813,12 @@ export default function ChangeTrackingRenderView({
 				editPortletURL.toString()
 			);
 
-			if (confirm(confirmationMessage)) {
-				submitForm(document.hrefFm, checkoutPortletURL.toString());
-			}
+			openConfirmModal({
+				message: confirmationMessage,
+				onConfirm: (isConfirmed) =>
+					isConfirmed &&
+					submitForm(document.hrefFm, checkoutPortletURL.toString()),
+			});
 		});
 	};
 

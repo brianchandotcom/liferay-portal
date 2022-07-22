@@ -10,7 +10,7 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
-import {sub} from 'frontend-js-web';
+import {openConfirmModal, sub} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import ChartContext from '../ChartContext';
@@ -22,37 +22,41 @@ export default function AccountMenuContent({closeMenu, data, parentData}) {
 	const {chartInstanceRef} = useContext(ChartContext);
 
 	function handleDelete() {
-		if (
-			confirm(sub(Liferay.Language.get('x-will-be-deleted'), data.name))
-		) {
-			deleteAccount(data.id).then(() => {
-				chartInstanceRef.current.deleteNodes([data], true);
+		openConfirmModal({
+			message: sub(Liferay.Language.get('x-will-be-deleted'), data.name),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					deleteAccount(data.id).then(() => {
+						chartInstanceRef.current.deleteNodes([data], true);
 
-				closeMenu();
-			});
-		}
+						closeMenu();
+					});
+				}
+			},
+		});
 	}
 
 	function handleRemove() {
-		if (
-			confirm(
-				sub(
-					Liferay.Language.get('x-will-be-removed-from-x'),
-					data.name,
-					parentData.name
-				)
-			)
-		) {
-			updateAccount(data.id, {
-				organizationIds: data.organizationIds.filter(
-					(id) => Number(id) !== Number(parentData.id)
-				),
-			}).then(() => {
-				chartInstanceRef.current.deleteNodes([data], false);
+		openConfirmModal({
+			message: sub(
+				Liferay.Language.get('x-will-be-removed-from-x'),
+				data.name,
+				parentData.name
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					updateAccount(data.id, {
+						organizationIds: data.organizationIds.filter(
+							(id) => Number(id) !== Number(parentData.id)
+						),
+					}).then(() => {
+						chartInstanceRef.current.deleteNodes([data], false);
 
-				closeMenu();
-			});
-		}
+						closeMenu();
+					});
+				}
+			},
+		});
 	}
 
 	const actions = [];

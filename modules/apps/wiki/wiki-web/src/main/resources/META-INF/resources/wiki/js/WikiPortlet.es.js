@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fetch, sub} from 'frontend-js-web';
+import {fetch, openConfirmModal, sub} from 'frontend-js-web';
 
 const CONFIRM_DISCARD_IMAGES = Liferay.Language.get(
 	'uploads-are-in-progress-confirmation'
@@ -138,16 +138,21 @@ class WikiPortlet {
 			newFormat
 		);
 
-		if (confirm(confirmMessage)) {
-			const form = this.rootNode.querySelector(
-				`[name="${this._namespace}fm"]`
-			);
-			form.setAttribute('action', this._renderUrl);
-			this._save();
-		}
-		else {
-			formatSelect.selectedIndex = this.currentFormatIndex;
-		}
+		openConfirmModal({
+			message: confirmMessage,
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					const form = this.rootNode.querySelector(
+						`[name="${this._namespace}fm"]`
+					);
+					form.setAttribute('action', this._renderUrl);
+					this._save();
+				}
+				else {
+					formatSelect.selectedIndex = this.currentFormatIndex;
+				}
+			},
+		});
 	}
 
 	/**
@@ -180,25 +185,27 @@ class WikiPortlet {
 	 * confirmation to the user.
 	 *
 	 * @protected
-	 * @return {Boolean} False if there are temporal images and
-	 * user does not confirm she wants to lose them. True in other case.
+	 * @return {void} Call the callback if there aren't temporal
+	 * images, and the user does not confirm she wants to lose them.
+	 * Otherwise, the callback will not be called.
 	 */
-	_removeTempImages() {
+	_maybeRemoveTempImages(callback) {
 		const tempImages = this.rootNode.querySelector('img[data-random-id]');
-		let discardTempImages = true;
 
 		if (tempImages && !!tempImages.length) {
-			if (confirm(this._strings.confirmDiscardImages)) {
-				tempImages.forEach((node) => {
-					node.parentElement.remove();
-				});
-			}
-			else {
-				discardTempImages = false;
-			}
-		}
+			openConfirmModal({
+				message: this._strings.confirmDiscardImages,
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						tempImages.forEach((node) => {
+							node.parentElement.remove();
+						});
 
-		return discardTempImages;
+						callback();
+					}
+				},
+			});
+		}
 	}
 
 	/**
@@ -209,7 +216,7 @@ class WikiPortlet {
 	_save() {
 		const namespace = this._namespace;
 
-		if (this._removeTempImages()) {
+		this._maybeRemoveTempImages(() => {
 			document.getElementById(
 				namespace + this._constants.CMD
 			).value = this._currentAction;
@@ -223,7 +230,7 @@ class WikiPortlet {
 			}
 
 			submitForm(document[`${namespace}fm`]);
-		}
+		});
 	}
 }
 

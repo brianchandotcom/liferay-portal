@@ -17,6 +17,7 @@ import ClayLayout from '@clayui/layout';
 import {useModal} from '@clayui/modal';
 import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
+import {openConfirmModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import useLazy from '../../core/hooks/useLazy';
@@ -134,27 +135,33 @@ function ToolbarBody({className}) {
 	);
 
 	const handleDiscardVariant = (event) => {
-		if (
-			!confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
-				)
-			)
-		) {
-			event.preventDefault();
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
+			),
+			onConfirm: (isConfirmed) => {
+				if (!isConfirmed) {
+					event.preventDefault();
+				}
+			},
+		});
 	};
 
 	const onPublish = () => {
-		if (
-			!config.masterUsed ||
-			confirm(
-				Liferay.Language.get(
-					'changes-made-on-this-master-are-going-to-be-propagated-to-all-page-templates,-display-page-templates,-and-pages-using-it.are-you-sure-you-want-to-proceed'
-				)
-			)
-		) {
+		if (!config.masterUsed) {
 			setPublishPending(true);
+		}
+		else {
+			openConfirmModal({
+				message: Liferay.Language.get(
+					'changes-made-on-this-master-are-going-to-be-propagated-to-all-page-templates,-display-page-templates,-and-pages-using-it.are-you-sure-you-want-to-proceed'
+				),
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						setPublishPending(true);
+					}
+				},
+			});
 		}
 	};
 

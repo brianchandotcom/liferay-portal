@@ -311,27 +311,32 @@ AUI.add(
 						[contact.fullName]
 					);
 
-					if (confirm(confirmMessageText)) {
-						const url = Liferay.Util.PortletURL.createActionURL(
-							config.baseActionURL,
-							{
-								'entryId': contact.entryId,
-								'javax.portlet.action': 'deleteEntry',
-								'p_p_state': 'NORMAL',
-							}
-						);
+					Liferay.Util.openConfirmModal({
+						message: confirmMessageText,
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								const url = Liferay.Util.PortletURL.createActionURL(
+									config.baseActionURL,
+									{
+										'entryId': contact.entryId,
+										'javax.portlet.action': 'deleteEntry',
+										'p_p_state': 'NORMAL',
+									}
+								);
 
-						Liferay.Util.fetch(url)
-							.then((response) => {
-								return response.text();
-							})
-							.then(() => {
-								location.href = contact.redirect;
-							})
-							.catch(() => {
-								instance.showMessage(false);
-							});
-					}
+								Liferay.Util.fetch(url)
+									.then((response) => {
+										return response.text();
+									})
+									.then(() => {
+										location.href = contact.redirect;
+									})
+									.catch(() => {
+										instance.showMessage(false);
+									});
+							}
+						},
+					});
 				},
 
 				_editEntry(contact) {

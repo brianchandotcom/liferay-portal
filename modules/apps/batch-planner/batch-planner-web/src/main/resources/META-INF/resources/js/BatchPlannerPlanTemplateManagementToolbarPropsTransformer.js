@@ -12,35 +12,42 @@
  * details.
  */
 
-import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
+import {
+	getCheckedCheckboxes,
+	openConfirmModal,
+	postForm,
+} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteBatchPlannerPlanTemplates = (itemData) => {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-delete-the-selected-templates'
-				)
-			)
-		) {
-			const form = document.getElementById(`${portletNamespace}fm`);
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-the-selected-templates'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					const form = document.getElementById(
+						`${portletNamespace}fm`
+					);
 
-			const searchContainer = document.getElementById(
-				`${portletNamespace}batchPlannerPlanTemplateSearchContainer`
-			);
+					const searchContainer = document.getElementById(
+						`${portletNamespace}batchPlannerPlanTemplateSearchContainer`
+					);
 
-			if (form && searchContainer) {
-				postForm(form, {
-					data: {
-						batchPlannerPlanIds: getCheckedCheckboxes(
-							searchContainer,
-							`${portletNamespace}allRowIds`
-						),
-					},
-					url: itemData?.deleteBatchPlannerPlanTemplatesURL,
-				});
-			}
-		}
+					if (form && searchContainer) {
+						postForm(form, {
+							data: {
+								batchPlannerPlanIds: getCheckedCheckboxes(
+									searchContainer,
+									`${portletNamespace}allRowIds`
+								),
+							},
+							url: itemData?.deleteBatchPlannerPlanTemplatesURL,
+						});
+					}
+				}
+			},
+		});
 	};
 
 	return {

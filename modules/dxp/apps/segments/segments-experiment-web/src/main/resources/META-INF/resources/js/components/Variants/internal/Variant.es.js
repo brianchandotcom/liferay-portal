@@ -13,6 +13,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
+import {openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
@@ -150,13 +151,16 @@ function Variant({
 	);
 
 	function _handleDeletion() {
-		const confirmed = confirm(
-			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-		);
-
-		if (confirmed) {
-			return onVariantDeletion(variantId);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					return onVariantDeletion(variantId);
+				}
+			},
+		});
 	}
 
 	function _handleEdition() {

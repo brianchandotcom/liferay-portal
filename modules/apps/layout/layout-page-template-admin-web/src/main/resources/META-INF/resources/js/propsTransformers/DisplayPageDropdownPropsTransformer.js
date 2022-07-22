@@ -13,6 +13,7 @@
  */
 
 import {
+	openConfirmModal,
 	openModal,
 	openSelectionModal,
 	openSimpleInputModal,
@@ -38,22 +39,28 @@ const ACTIONS = {
 	},
 
 	discardDraft({discardDraftURL}) {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
-				)
-			)
-		) {
-			send(discardDraftURL);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					send(discardDraftURL);
+				}
+			},
+		});
 	},
 
 	markAsDefaultDisplayPage({markAsDefaultDisplayPageURL, message}) {
 		if (message !== '') {
-			if (confirm(Liferay.Language.get(message))) {
-				send(markAsDefaultDisplayPageURL);
-			}
+			openConfirmModal({
+				message: Liferay.Language.get(message),
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						send(markAsDefaultDisplayPageURL);
+					}
+				},
+			});
 		}
 		else {
 			send(markAsDefaultDisplayPageURL);
@@ -89,9 +96,14 @@ const ACTIONS = {
 	},
 
 	unmarkAsDefaultDisplayPage({unmarkAsDefaultDisplayPageURL}) {
-		if (confirm(Liferay.Language.get('unmark-default-confirmation'))) {
-			send(unmarkAsDefaultDisplayPageURL);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get('unmark-default-confirmation'),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					send(unmarkAsDefaultDisplayPageURL);
+				}
+			},
+		});
 	},
 
 	updateLayoutPageTemplateEntryPreview(

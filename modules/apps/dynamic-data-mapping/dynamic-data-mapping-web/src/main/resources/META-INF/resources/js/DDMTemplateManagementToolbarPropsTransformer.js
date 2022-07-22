@@ -12,7 +12,11 @@
  * details.
  */
 
-import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
+import {
+	getCheckedCheckboxes,
+	openConfirmModal,
+	postForm,
+} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {deleteTemplatesURL},
@@ -23,33 +27,34 @@ export default function propsTransformer({
 		...otherProps,
 		onActionButtonClick(event, {item}) {
 			if (item?.data?.action === 'deleteTemplates') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-this'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				openConfirmModal({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-this'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fm`
+							);
 
-					const searchContainer = document.getElementById(
-						`${portletNamespace}entriesContainer`
-					);
+							const searchContainer = document.getElementById(
+								`${portletNamespace}entriesContainer`
+							);
 
-					if (form && searchContainer) {
-						postForm(form, {
-							data: {
-								deleteTemplateIds: getCheckedCheckboxes(
-									searchContainer,
-									`${portletNamespace}allRowIds`
-								),
-							},
-							url: deleteTemplatesURL,
-						});
-					}
-				}
+							if (form && searchContainer) {
+								postForm(form, {
+									data: {
+										deleteTemplateIds: getCheckedCheckboxes(
+											searchContainer,
+											`${portletNamespace}allRowIds`
+										),
+									},
+									url: deleteTemplatesURL,
+								});
+							}
+						}
+					},
+				});
 			}
 		},
 	};

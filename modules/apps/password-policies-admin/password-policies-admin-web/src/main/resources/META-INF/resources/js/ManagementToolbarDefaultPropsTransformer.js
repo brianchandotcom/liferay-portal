@@ -12,46 +12,58 @@
  * details.
  */
 
-import {createActionURL, getCheckedCheckboxes} from 'frontend-js-web';
+import {
+	createActionURL,
+	getCheckedCheckboxes,
+	openConfirmModal,
+} from 'frontend-js-web';
 
 const ACTIONS = {
 	deletePasswordPolicies(portletNamespace, basePortletURL) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			const form = document.getElementById(`${portletNamespace}fm`);
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					const form = document.getElementById(
+						`${portletNamespace}fm`
+					);
 
-			if (!form) {
-				return;
-			}
+					if (!form) {
+						return;
+					}
 
-			form.setAttribute('method', 'post');
+					form.setAttribute('method', 'post');
 
-			const passwordPolicyIdsInput = form.querySelector(
-				`#${portletNamespace}passwordPolicyIds`
-			);
+					const passwordPolicyIdsInput = form.querySelector(
+						`#${portletNamespace}passwordPolicyIds`
+					);
 
-			if (passwordPolicyIdsInput) {
-				passwordPolicyIdsInput.setAttribute(
-					'value',
-					getCheckedCheckboxes(form, `${portletNamespace}allRowIds`)
-				);
-			}
+					if (passwordPolicyIdsInput) {
+						passwordPolicyIdsInput.setAttribute(
+							'value',
+							getCheckedCheckboxes(
+								form,
+								`${portletNamespace}allRowIds`
+							)
+						);
+					}
 
-			const lifecycleInput = form.querySelector('#p_p_lifecycle');
+					const lifecycleInput = form.querySelector('#p_p_lifecycle');
 
-			if (lifecycleInput) {
-				lifecycleInput.setAttribute('value', '1');
-			}
+					if (lifecycleInput) {
+						lifecycleInput.setAttribute('value', '1');
+					}
 
-			const actionURL = createActionURL(basePortletURL, {
-				'javax.portlet.action': 'deletePasswordPolicies',
-			});
+					const actionURL = createActionURL(basePortletURL, {
+						'javax.portlet.action': 'deletePasswordPolicies',
+					});
 
-			submitForm(form, actionURL.toString());
-		}
+					submitForm(form, actionURL.toString());
+				}
+			},
+		});
 	},
 };
 

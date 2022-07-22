@@ -12,17 +12,18 @@
  * details.
  */
 
-import {openModal} from 'frontend-js-web';
+import {openConfirmModal, openModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	deleteDDMStructure(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, itemData.deleteDDMStructureURL);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfimed) =>
+				isConfimed &&
+				submitForm(document.hrefFm, itemData.deleteDDMStructureURL),
+		});
 	},
 
 	importAndOverrideDDMStructure(itemData) {

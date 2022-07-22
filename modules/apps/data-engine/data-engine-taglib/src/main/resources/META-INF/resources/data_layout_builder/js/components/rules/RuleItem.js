@@ -17,6 +17,7 @@ import ClayLabel from '@clayui/label';
 import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
 import {useFormState} from 'data-engine-js-components-web';
+import {openConfirmModal} from 'frontend-js-web';
 import React from 'react';
 
 import {
@@ -69,13 +70,16 @@ export default function RuleItem({loc, onDeleteRule, onEditRule, rule}) {
 		},
 		{
 			action: () => {
-				const confirmed = confirm(
-					Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-				);
-
-				if (confirmed) {
-					onDeleteRule(loc);
-				}
+				openConfirmModal({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-this'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							onDeleteRule(loc);
+						}
+					},
+				});
 			},
 			name: Liferay.Language.get('delete'),
 		},

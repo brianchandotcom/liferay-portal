@@ -12,7 +12,11 @@
  * details.
  */
 
-import {openModal, openSimpleInputModal} from 'frontend-js-web';
+import {
+	openConfirmModal,
+	openModal,
+	openSimpleInputModal,
+} from 'frontend-js-web';
 
 import openDeleteSiteNavigationMenuModal from './openDeleteSiteNavigationMenuModal';
 
@@ -29,13 +33,19 @@ const ACTIONS = {
 	},
 
 	markAsPrimary(itemData) {
-		if (
-			itemData.confirmationMessage &&
-			!confirm(itemData.confirmationMessage)
-		) {
-			return;
+		if (itemData.confirmationMessage) {
+			openConfirmModal({
+				message: itemData.confirmationMessage,
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						submitForm(document.hrefFm, itemData.markAsPrimaryURL);
+					}
+				},
+			});
 		}
-		submitForm(document.hrefFm, itemData.markAsPrimaryURL);
+		else {
+			submitForm(document.hrefFm, itemData.markAsPrimaryURL);
+		}
 	},
 
 	markAsSecondary(itemData) {

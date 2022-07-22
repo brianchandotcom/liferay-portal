@@ -14,6 +14,7 @@
 
 import {
 	getCheckedCheckboxes,
+	openConfirmModal,
 	openSelectionModal,
 	postForm,
 	sub,
@@ -35,29 +36,30 @@ export default function propsTransformer({
 			const action = item?.data?.action;
 
 			if (action === 'removeAccountGroupAccountEntries') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-remove-the-selected-accounts'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				openConfirmModal({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-remove-the-selected-accounts'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fm`
+							);
 
-					if (form) {
-						postForm(form, {
-							data: {
-								accountEntryIds: getCheckedCheckboxes(
-									form,
-									`${portletNamespace}allRowIds`
-								),
-							},
-							url: removeAccountGroupAccountEntriesURL,
-						});
-					}
-				}
+							if (form) {
+								postForm(form, {
+									data: {
+										accountEntryIds: getCheckedCheckboxes(
+											form,
+											`${portletNamespace}allRowIds`
+										),
+									},
+									url: removeAccountGroupAccountEntriesURL,
+								});
+							}
+						}
+					},
+				});
 			}
 		},
 		onCreateButtonClick: () => {

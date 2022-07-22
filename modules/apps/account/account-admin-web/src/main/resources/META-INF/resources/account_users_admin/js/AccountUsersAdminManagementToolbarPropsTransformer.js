@@ -16,6 +16,7 @@ import {
 	createPortletURL,
 	getCheckedCheckboxes,
 	navigate,
+	openConfirmModal,
 	openSelectionModal,
 	postForm,
 } from 'frontend-js-web';
@@ -42,33 +43,35 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	};
 
 	const deactivateAccountUsers = (itemData) => {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-deactivate-the-selected-users'
-				)
-			)
-		) {
-			updateAccountUsers(
-				portletNamespace,
-				itemData?.deactivateAccountUsersURL
-			);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-deactivate-the-selected-users'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					updateAccountUsers(
+						portletNamespace,
+						itemData?.deactivateAccountUsersURL
+					);
+				}
+			},
+		});
 	};
 
 	const deleteAccountUsers = (itemData) => {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-delete-the-selected-users'
-				)
-			)
-		) {
-			updateAccountUsers(
-				portletNamespace,
-				itemData?.deleteAccountUsersURL
-			);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-the-selected-users'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					updateAccountUsers(
+						portletNamespace,
+						itemData?.deleteAccountUsersURL
+					);
+				}
+			},
+		});
 	};
 
 	const selectAccountEntries = (itemData) => {

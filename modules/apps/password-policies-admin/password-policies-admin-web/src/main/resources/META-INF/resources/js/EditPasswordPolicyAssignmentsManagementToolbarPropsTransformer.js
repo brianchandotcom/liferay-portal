@@ -12,7 +12,12 @@
  * details.
  */
 
-import {getCheckedCheckboxes, openSelectionModal, sub} from 'frontend-js-web';
+import {
+	getCheckedCheckboxes,
+	openConfirmModal,
+	openSelectionModal,
+	sub,
+} from 'frontend-js-web';
 
 function addEntity(portletNamespace, inputName, entity) {
 	const addUserIdsInput = document.getElementById(
@@ -31,22 +36,30 @@ function addEntity(portletNamespace, inputName, entity) {
 }
 
 function deleteEntities(portletNamespace, inputName) {
-	if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
-		const form = document.getElementById(`${portletNamespace}fm`);
+	openConfirmModal({
+		message: Liferay.Language.get('are-you-sure-you-want-to-delete-this'),
+		onConfirm: (isConfirmed) => {
+			if (isConfirmed) {
+				const form = document.getElementById(`${portletNamespace}fm`);
 
-		const input = document.getElementById(
-			`${portletNamespace}${inputName}`
-		);
+				const input = document.getElementById(
+					`${portletNamespace}${inputName}`
+				);
 
-		if (form && input) {
-			input.setAttribute(
-				'value',
-				getCheckedCheckboxes(form, `${portletNamespace}allRowIds`)
-			);
+				if (form && input) {
+					input.setAttribute(
+						'value',
+						getCheckedCheckboxes(
+							form,
+							`${portletNamespace}allRowIds`
+						)
+					);
 
-			submitForm(form);
-		}
-	}
+					submitForm(form);
+				}
+			}
+		},
+	});
 }
 
 const ACTIONS = {

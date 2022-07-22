@@ -109,6 +109,13 @@ const renderComponent = ({
 };
 
 describe('CollectionGeneralPanel', () => {
+	beforeAll(() => {
+		window.Liferay = {
+			...Liferay,
+			FeatureFlags: {},
+		};
+	});
+
 	it('allows changing the Gutter select', async () => {
 		renderComponent({
 			itemConfig: {
@@ -353,10 +360,10 @@ describe('CollectionGeneralPanel', () => {
 
 		it('shows a confirmation when updating a collection linked to a filter', async () => {
 			CollectionSelector.mockImplementation(
-				({shouldPreventCollectionSelect}) => {
+				({onPreventCollectionSelect}) => {
 					useEffect(
 						() => {
-							shouldPreventCollectionSelect();
+							onPreventCollectionSelect();
 						},
 						// eslint-disable-next-line react-hooks/exhaustive-deps
 						[]

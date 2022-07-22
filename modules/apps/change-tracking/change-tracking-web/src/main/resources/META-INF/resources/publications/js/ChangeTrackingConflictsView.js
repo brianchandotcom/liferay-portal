@@ -22,6 +22,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayPanel from '@clayui/panel';
 import ClayTimePicker from '@clayui/time-picker';
+import {openConfirmModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import ChangeTrackingBaseScheduleView from './ChangeTrackingBaseScheduleView';
@@ -295,8 +296,15 @@ const ConflictsTable = ({conflicts, spritemap}) => {
 						<ClayButton
 							displayType="secondary"
 							onClick={() =>
-								confirm(action.confirmationMessage) &&
-								submitForm(document.hrefFm, action.href)
+								openConfirmModal({
+									message: action.confirmationMessage,
+									onConfirm: (isConfirmed) =>
+										isConfirmed &&
+										submitForm(
+											document.hrefFm,
+											action.href
+										),
+								})
 							}
 						>
 							<span className="inline-item inline-item-before">
@@ -381,8 +389,15 @@ const ConflictsTable = ({conflicts, spritemap}) => {
 						<ClayButton
 							displayType="secondary"
 							onClick={() =>
-								confirm(firstAction.confirmationMessage) &&
-								submitForm(document.hrefFm, firstAction.href)
+								openConfirmModal({
+									message: firstAction.confirmationMessage,
+									onConfirm: (isConfirmed) =>
+										isConfirmed &&
+										submitForm(
+											document.hrefFm,
+											firstAction.href
+										),
+								})
 							}
 							small
 						>
@@ -423,8 +438,12 @@ const ConflictsTable = ({conflicts, spritemap}) => {
 				items.push({
 					label: action.label,
 					onClick: () =>
-						confirm(action.confirmationMessage) &&
-						submitForm(document.hrefFm, action.href),
+						openConfirmModal({
+							message: action.confirmationMessage,
+							onConfirm: (isConfirmed) =>
+								isConfirmed &&
+								submitForm(document.hrefFm, action.href),
+						}),
 					symbolLeft: action.symbol,
 				});
 			}
@@ -444,8 +463,15 @@ const ConflictsTable = ({conflicts, spritemap}) => {
 						<ClayButton
 							displayType="secondary"
 							onClick={() =>
-								confirm(firstAction.confirmationMessage) &&
-								submitForm(document.hrefFm, firstAction.href)
+								openConfirmModal({
+									message: firstAction.confirmationMessage,
+									onConfirm: (isConfirmed) =>
+										isConfirmed &&
+										submitForm(
+											document.hrefFm,
+											firstAction.href
+										),
+								})
 							}
 							small
 						>

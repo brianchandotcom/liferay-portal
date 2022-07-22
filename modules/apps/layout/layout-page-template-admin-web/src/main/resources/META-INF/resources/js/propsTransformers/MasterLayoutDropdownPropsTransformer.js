@@ -13,6 +13,7 @@
  */
 
 import {
+	openConfirmModal,
 	openModal,
 	openSelectionModal,
 	openSimpleInputModal,
@@ -39,22 +40,28 @@ const ACTIONS = {
 	},
 
 	discardDraft({discardDraftURL}) {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
-				)
-			)
-		) {
-			send(discardDraftURL);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					send(discardDraftURL);
+				}
+			},
+		});
 	},
 
 	markAsDefaultMasterLayout({markAsDefaultMasterLayoutURL, message}) {
 		if (message !== '') {
-			if (confirm(Liferay.Language.get(message))) {
-				send(markAsDefaultMasterLayoutURL);
-			}
+			openConfirmModal({
+				message: Liferay.Language.get(message),
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						send(markAsDefaultMasterLayoutURL);
+					}
+				},
+			});
 		}
 		else {
 			send(markAsDefaultMasterLayoutURL);

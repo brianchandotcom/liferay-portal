@@ -13,6 +13,7 @@
  */
 
 import {
+	openConfirmModal,
 	openModal,
 	openSelectionModal,
 	openSimpleInputModal,
@@ -37,15 +38,16 @@ const ACTIONS = {
 	},
 
 	discardDraft({discardDraftURL}) {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
-				)
-			)
-		) {
-			send(discardDraftURL);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					send(discardDraftURL);
+				}
+			},
+		});
 	},
 
 	moveLayoutPageTemplateEntry(

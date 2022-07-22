@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fetch, openModal, sub} from 'frontend-js-web';
+import {fetch, openConfirmModal, openModal, sub} from 'frontend-js-web';
 
 const RECENTLY_REMOVED_ATTACHMENTS = {
 	multiple: Liferay.Language.get('x-recently-removed-attachments'),
@@ -199,13 +199,18 @@ class MBPortlet {
 		);
 
 		if (tempImages.length) {
-			if (confirm(this._strings.confirmDiscardImages)) {
-				tempImages.forEach((node) => {
-					node.parentElement.remove();
-				});
+			openConfirmModal({
+				message: this._strings.confirmDiscardImages,
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						tempImages.forEach((node) => {
+							node.parentElement.remove();
+						});
 
-				this._submitMBForm();
-			}
+						this._submitMBForm();
+					}
+				},
+			});
 		}
 		else {
 			this._submitMBForm();

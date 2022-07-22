@@ -15,7 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayLayout from '@clayui/layout';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch, navigate} from 'frontend-js-web';
+import {fetch, navigate, openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useReducer, useState} from 'react';
 
@@ -133,16 +133,20 @@ const Translate = ({
 
 		if (!state.formHasChanges) {
 			navigate(url);
+
+			return;
 		}
-		else if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-leave-the-page-you-may-lose-your-changes'
-				)
-			)
-		) {
-			navigate(url);
-		}
+
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-leave-the-page-you-may-lose-your-changes'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					navigate(url);
+				}
+			},
+		});
 	};
 
 	const handleOnSaveDraft = () => {

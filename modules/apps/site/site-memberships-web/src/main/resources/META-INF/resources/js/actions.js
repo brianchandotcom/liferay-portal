@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openSelectionModal} from 'frontend-js-web';
+import {openConfirmModal, openSelectionModal} from 'frontend-js-web';
 
 export const ACTIONS = {
 	assignRoles(itemData, portletNamespace) {
@@ -53,12 +53,15 @@ export const ACTIONS = {
 	},
 
 	deleteGroupUsers(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, itemData.deleteGroupUsersURL);
-		}
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(document.hrefFm, itemData.deleteGroupUsersURL);
+				}
+			},
+		});
 	},
 };

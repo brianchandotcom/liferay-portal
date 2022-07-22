@@ -23,7 +23,7 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
+import {fetch, openConfirmModal} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 const PublicationsSearchContainer = ({
@@ -767,10 +767,21 @@ export default function ChangeTrackingIndicator({
 	if (checkoutDropdownItem) {
 		dropdownItems.push({
 			label: checkoutDropdownItem.label,
-			onClick: () =>
-				(!checkoutDropdownItem.confirmationMessage ||
-					confirm(checkoutDropdownItem.confirmationMessage)) &&
-				navigate(checkoutDropdownItem.href, true),
+			onClick: () => {
+				if (!checkoutDropdownItem.confirmationMessage) {
+					navigate(checkoutDropdownItem.href, true);
+				}
+				else {
+					openConfirmModal({
+						message: checkoutDropdownItem.confirmationMessage,
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								navigate(checkoutDropdownItem.href, true);
+							}
+						},
+					});
+				}
+			},
 			symbolLeft: checkoutDropdownItem.symbolLeft,
 		});
 	}

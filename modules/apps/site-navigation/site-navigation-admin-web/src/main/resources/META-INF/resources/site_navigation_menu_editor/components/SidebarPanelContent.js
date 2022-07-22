@@ -17,7 +17,12 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch, objectToFormData, runScriptsInElement} from 'frontend-js-web';
+import {
+	fetch,
+	objectToFormData,
+	openConfirmModal,
+	runScriptsInElement,
+} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -44,11 +49,11 @@ export function SidebarPanelContent({contentRequestBody, contentUrl, title}) {
 
 	useEffect(() => {
 		if (changedRef.current) {
-			const confirm = confirmUnsavedChanges();
-
-			if (confirm) {
-				return;
-			}
+			confirmUnsavedChanges({
+				onConfirm: () => {
+					return;
+				},
+			});
 		}
 
 		setBody(null);
@@ -174,26 +179,27 @@ class SidebarBody extends React.Component {
 	}
 }
 
-function confirmUnsavedChanges() {
+function confirmUnsavedChanges({onConfirm}) {
 	const form = document.querySelector(`.sidebar-body form`);
 
 	const error = form ? form.querySelector('.has-error') : null;
 
-	let confirmChanged;
-
 	if (!error) {
-		confirmChanged = confirm(
-			Liferay.Language.get(
+		openConfirmModal({
+			message: Liferay.Language.get(
 				'you-have-unsaved-changes.-do-you-want-to-save-them'
-			)
-		);
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					if (onConfirm) {
+						onConfirm();
+					}
 
-		if (confirmChanged) {
-			if (form) {
-				form.submit();
-			}
-		}
+					if (form) {
+						form.submit();
+					}
+				}
+			},
+		});
 	}
-
-	return confirmChanged;
 }

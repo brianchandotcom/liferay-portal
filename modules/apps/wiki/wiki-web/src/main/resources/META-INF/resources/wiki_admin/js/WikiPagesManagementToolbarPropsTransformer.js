@@ -12,7 +12,7 @@
  * details.
  */
 
-import {postForm} from 'frontend-js-web';
+import {openConfirmModal, postForm} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {deletePagesCmd, deletePagesURL, trashEnabled},
@@ -23,24 +23,32 @@ export default function propsTransformer({
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {
 			if (item?.data?.action === 'deletePages') {
-				if (
-					trashEnabled ||
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-the-selected-entries'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				const form = document.getElementById(`${portletNamespace}fm`);
 
-					if (form) {
+				if (form) {
+					if (trashEnabled) {
 						postForm(form, {
 							data: {
 								cmd: deletePagesCmd,
 							},
 							url: deletePagesURL,
+						});
+					}
+					else {
+						openConfirmModal({
+							message: Liferay.Language.get(
+								'are-you-sure-you-want-to-delete-the-selected-entries'
+							),
+							onConfirm: (isConfirmed) => {
+								if (isConfirmed) {
+									postForm(form, {
+										data: {
+											cmd: deletePagesCmd,
+										},
+										url: deletePagesURL,
+									});
+								}
+							},
 						});
 					}
 				}

@@ -12,50 +12,53 @@
  * details.
  */
 
-import {getCheckedCheckboxes} from 'frontend-js-web';
+import {getCheckedCheckboxes, openConfirmModal} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {
 			if (item?.data?.action === 'deleteImages') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-the-selected-images'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				openConfirmModal({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-the-selected-images'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fm`
+							);
 
-					if (!form) {
-						return;
-					}
+							if (!form) {
+								return;
+							}
 
-					const cmd = form.querySelector(`#${portletNamespace}cmd`);
+							const cmd = form.querySelector(
+								`#${portletNamespace}cmd`
+							);
 
-					if (cmd) {
-						cmd.setAttribute('value', 'delete');
-					}
+							if (cmd) {
+								cmd.setAttribute('value', 'delete');
+							}
 
-					const deleteFileEntryIds = form.querySelector(
-						`#${portletNamespace}deleteFileEntryIds`
-					);
+							const deleteFileEntryIds = form.querySelector(
+								`#${portletNamespace}deleteFileEntryIds`
+							);
 
-					if (deleteFileEntryIds) {
-						deleteFileEntryIds.setAttribute(
-							'value',
-							getCheckedCheckboxes(
-								form,
-								`${portletNamespace}allRowIds`
-							)
-						);
-					}
+							if (deleteFileEntryIds) {
+								deleteFileEntryIds.setAttribute(
+									'value',
+									getCheckedCheckboxes(
+										form,
+										`${portletNamespace}allRowIds`
+									)
+								);
+							}
 
-					submitForm(form);
-				}
+							submitForm(form);
+						}
+					},
+				});
 			}
 		},
 	};

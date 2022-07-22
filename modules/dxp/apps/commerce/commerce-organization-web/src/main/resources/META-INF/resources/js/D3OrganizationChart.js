@@ -10,7 +10,7 @@
  */
 
 import * as d3 from 'd3';
-import {openToast, sub} from 'frontend-js-web';
+import {openConfirmModal, openToast, sub} from 'frontend-js-web';
 
 import {getAccount} from './data/accounts';
 import {getOrganization} from './data/organizations';
@@ -447,9 +447,14 @@ class D3OrganizationChart {
 									target.data.name
 							  );
 
-					if (confirm(message)) {
-						this._moveNodes(nodesToBeMoved, target);
-					}
+					openConfirmModal({
+						message,
+						onConfirm: (isConfimed) => {
+							if (isConfimed) {
+								this._moveNodes(nodesToBeMoved, target);
+							}
+						},
+					});
 				}
 			});
 	}

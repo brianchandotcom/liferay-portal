@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openToast} from 'frontend-js-web';
+import {openConfirmModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
@@ -83,68 +83,80 @@ export function handleAction(
 		toggleItemInlineEdit,
 	}
 ) {
-	if (confirmationMessage && !confirm(confirmationMessage)) {
-		return;
-	}
+	const doAction = () => {
+		if (target?.includes('modal')) {
+			event.preventDefault();
 
-	if (target?.includes('modal')) {
-		event.preventDefault();
-
-		if (target === MODAL_PERMISSIONS) {
-			openPermissionsModal(url);
+			if (target === MODAL_PERMISSIONS) {
+				openPermissionsModal(url);
+			}
+			else {
+				openModal({
+					size: resolveModalSize(target),
+					title,
+					url,
+				});
+			}
 		}
-		else {
-			openModal({
-				size: resolveModalSize(target),
+		else if (target === 'sidePanel') {
+			event.preventDefault();
+
+			highlightItems([itemId]);
+			openSidePanel({
+				size: size || 'lg',
 				title,
 				url,
 			});
 		}
-	}
-	else if (target === 'sidePanel') {
-		event.preventDefault();
+		else if (target === 'async' || target === 'headless') {
+			event.preventDefault();
 
-		highlightItems([itemId]);
-		openSidePanel({
-			size: size || 'lg',
-			title,
-			url,
+			setLoading(true);
+			executeAsyncItemAction(url, method)
+				.then(() => {
+					openToast({
+						message:
+							successMessage ||
+							Liferay.Language.get('action-completed'),
+						type: 'success',
+					});
+					setLoading(false);
+				})
+				.catch((_) => {
+					setLoading(false);
+				});
+		}
+		else if (target === 'inlineEdit') {
+			event.preventDefault();
+
+			toggleItemInlineEdit(itemId);
+		}
+		else if (target === 'blank') {
+			event.preventDefault();
+
+			window.open(url);
+		}
+		else if (onClick) {
+			event.preventDefault();
+
+			event.target.setAttribute('onClick', onClick);
+			event.target.onclick();
+			event.target.removeAttribute('onClick');
+		}
+	};
+
+	if (confirmationMessage) {
+		openConfirmModal({
+			message: confirmationMessage,
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					doAction();
+				}
+			},
 		});
 	}
-	else if (target === 'async' || target === 'headless') {
-		event.preventDefault();
-
-		setLoading(true);
-		executeAsyncItemAction(url, method)
-			.then(() => {
-				openToast({
-					message:
-						successMessage ||
-						Liferay.Language.get('action-completed'),
-					type: 'success',
-				});
-				setLoading(false);
-			})
-			.catch((_) => {
-				setLoading(false);
-			});
-	}
-	else if (target === 'inlineEdit') {
-		event.preventDefault();
-
-		toggleItemInlineEdit(itemId);
-	}
-	else if (target === 'blank') {
-		event.preventDefault();
-
-		window.open(url);
-	}
-	else if (onClick) {
-		event.preventDefault();
-
-		event.target.setAttribute('onClick', onClick);
-		event.target.onclick();
-		event.target.removeAttribute('onClick');
+	else {
+		doAction();
 	}
 }
 function Actions({actions, itemData, itemId}) {

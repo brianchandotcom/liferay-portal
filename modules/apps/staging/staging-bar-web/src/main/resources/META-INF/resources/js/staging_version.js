@@ -138,13 +138,18 @@ AUI.add(
 				const cmd = MAP_CMD_REVISION[type];
 				const confirmText = MAP_TEXT_REVISION[type];
 
-				if (confirm(confirmText)) {
-					instance._updateRevision(
-						cmd,
-						event.layoutRevisionId,
-						event.layoutSetBranchId
-					);
-				}
+				Liferay.Util.openConfirmModal({
+					message: confirmText,
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							instance._updateRevision(
+								cmd,
+								event.layoutRevisionId,
+								event.layoutSetBranchId
+							);
+						}
+					},
+				});
 			},
 
 			_onSubmit(event) {

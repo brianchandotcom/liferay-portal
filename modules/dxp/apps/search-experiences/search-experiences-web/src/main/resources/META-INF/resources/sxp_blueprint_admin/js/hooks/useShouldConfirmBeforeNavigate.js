@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {openConfirmModal} from 'frontend-js-web';
 import {useEffect} from 'react';
 
 /**
@@ -50,9 +51,14 @@ export default function useShouldConfirmBeforeNavigate(
 		// https://help.liferay.com/hc/en-us/articles/360030709511-Available-SPA-Lifecycle-Events
 
 		const handleBeforeNavigate = (event) => {
-			if (!confirm(message)) {
-				event.originalEvent.preventDefault();
-			}
+			openConfirmModal({
+				message,
+				onConfirm: (isConfirmed) => {
+					if (!isConfirmed) {
+						event.originalEvent.preventDefault();
+					}
+				},
+			});
 		};
 
 		if (requiresConfirmation) {

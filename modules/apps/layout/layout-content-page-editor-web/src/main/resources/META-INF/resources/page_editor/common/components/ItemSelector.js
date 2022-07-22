@@ -25,7 +25,7 @@ import {selectPageContentDropdownItems} from '../../app/selectors/selectPageCont
 import {useId} from '../../app/utils/useId';
 import {openItemSelector} from '../../core/openItemSelector';
 
-const DEFAULT_PREVENT_ITEM_SELECT = () => false;
+const DEFAULT_PREVENT_ITEM_SELECT = (callback) => callback(false);
 
 const DEFAULT_OPTIONS_MENU_ITEMS = [];
 
@@ -39,10 +39,10 @@ export default function ItemSelector({
 	label,
 	modalProps,
 	onItemSelect,
+	onPreventCollectionSelect = DEFAULT_PREVENT_ITEM_SELECT,
 	optionsMenuItems = DEFAULT_OPTIONS_MENU_ITEMS,
 	quickMappedInfoItems = DEFAULT_QUICK_MAPPED_INFO_ITEMS,
 	selectedItem,
-	shouldPreventItemSelect = DEFAULT_PREVENT_ITEM_SELECT,
 	showEditControls = true,
 	showMappedItems = true,
 	transformValueCallback,
@@ -51,23 +51,25 @@ export default function ItemSelector({
 	const itemSelectorInputId = useId();
 
 	const openModal = useCallback(() => {
-		if (shouldPreventItemSelect()) {
-			return;
-		}
-
-		openItemSelector({
-			callback: onItemSelect,
-			eventName: eventName || `${config.portletNamespace}selectInfoItem`,
-			itemSelectorURL: itemSelectorURL || config.infoItemSelectorURL,
-			modalProps,
-			transformValueCallback,
+		onPreventCollectionSelect((result) => {
+			if (!result) {
+				openItemSelector({
+					callback: onItemSelect,
+					eventName:
+						eventName || `${config.portletNamespace}selectInfoItem`,
+					itemSelectorURL:
+						itemSelectorURL || config.infoItemSelectorURL,
+					modalProps,
+					transformValueCallback,
+				});
+			}
 		});
 	}, [
 		eventName,
 		itemSelectorURL,
 		modalProps,
 		onItemSelect,
-		shouldPreventItemSelect,
+		onPreventCollectionSelect,
 		transformValueCallback,
 	]);
 

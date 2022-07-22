@@ -43,7 +43,6 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -103,10 +102,11 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private List<FragmentEntryLink> _addFormChildrenItems(
-			String formItemId, HttpServletRequest httpServletRequest,
-			JSONObject jsonObject, LayoutStructure layoutStructure,
-			long segmentsExperienceId, ThemeDisplay themeDisplay)
-		throws PortalException {
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			HttpServletRequest httpServletRequest, JSONObject jsonObject,
+			LayoutStructure layoutStructure, long segmentsExperienceId,
+			ThemeDisplay themeDisplay)
+		throws Exception {
 
 		FragmentCollectionContributor fragmentCollectionContributor =
 			_fragmentCollectionContributorTracker.
@@ -123,25 +123,50 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			return Collections.emptyList();
 		}
 
+		Collection<String> missingInputTypes = new TreeSet<>();
+		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			httpServletRequest);
+
+		for (InfoField<?> infoField :
+				_getEditableInfoFields(
+					formStyledLayoutStructureItem,
+					themeDisplay.getScopeGroupId())) {
+
+			InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+			FragmentEntry fragmentEntry =
+				_fragmentCollectionContributorTracker.getFragmentEntry(
+					_getFragmentEntryKey(infoFieldType));
+
+			if (fragmentEntry == null) {
+				missingInputTypes.add(
+					infoFieldType.getLabel(themeDisplay.getLocale()));
+
+				continue;
+			}
+
+			addedFragmentEntryLinks.add(
+				_addFragmentEntryLink(
+					formStyledLayoutStructureItem.getItemId(), fragmentEntry,
+					layoutStructure, segmentsExperienceId, serviceContext,
+					themeDisplay));
+		}
+
 		FragmentEntry fragmentEntry =
 			_fragmentCollectionContributorTracker.getFragmentEntry(
 				"INPUTS-submit-button");
-
-		Collection<String> missingInputTypes = new TreeSet<>();
-		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
 		if (fragmentEntry == null) {
 			missingInputTypes.add(
 				LanguageUtil.get(themeDisplay.getLocale(), "submit-button"));
 		}
 		else {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				httpServletRequest);
-
 			addedFragmentEntryLinks.add(
 				_addFragmentEntryLink(
-					formItemId, fragmentEntry, layoutStructure,
-					segmentsExperienceId, serviceContext, themeDisplay));
+					formStyledLayoutStructureItem.getItemId(), fragmentEntry,
+					layoutStructure, segmentsExperienceId, serviceContext,
+					themeDisplay));
 		}
 
 		if (!missingInputTypes.isEmpty()) {
@@ -161,7 +186,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			String formItemId, FragmentEntry fragmentEntry,
 			LayoutStructure layoutStructure, long segmentsExperienceId,
 			ServiceContext serviceContext, ThemeDisplay themeDisplay)
-		throws PortalException {
+		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
@@ -341,8 +366,8 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 				if (formStyledLayoutStructureItem.getClassNameId() > 0) {
 					addedFragmentEntryLinks.addAll(
 						_addFormChildrenItems(
-							formItemId, httpServletRequest, jsonObject,
-							layoutStructure, segmentsExperienceId,
+							formStyledLayoutStructureItem, httpServletRequest,
+							jsonObject, layoutStructure, segmentsExperienceId,
 							themeDisplay));
 				}
 			}

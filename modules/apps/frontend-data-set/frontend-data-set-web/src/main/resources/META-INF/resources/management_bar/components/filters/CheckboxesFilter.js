@@ -42,25 +42,43 @@ const getSelectedItemsLabel = ({items, selectedData}) => {
 	);
 };
 
-const getOdataString = ({id, selectedData}) => {
+const getOdataString = ({entityFieldType, id, selectedData}) => {
 	const {exclude, itemsValues} = selectedData;
 
-	if (itemsValues?.length) {
-		return `${id}/any(x:${itemsValues
-			.map(
-				(itemValue) =>
-					`(x ${exclude ? 'ne' : 'eq'} ${
-						typeof itemValue === 'string'
-							? `'${itemValue}'`
-							: itemValue
-					})`
-			)
-			.join(exclude ? ' and ' : ' or ')})`;
+	if (!itemsValues?.length) {
+		return null;
 	}
 
-	return null;
+	const quotedItemValues = itemsValues.map((itemValue) => {
+		return typeof itemValue === 'string' ? `'${itemValue}'` : itemValue;
+	});
+
+	if (entityFieldType === 'collection') {
+		return `${id}/any(x:${quotedItemValues
+			.map((itemValue) => `(x ${exclude ? 'ne' : 'eq'} ${itemValue})`)
+			.join(exclude ? ' and ' : ' or ')})`;
+	}
+	else if (itemsValues.length === 1) {
+		return `${id} ${exclude ? 'ne' : 'eq'} ${quotedItemValues[0]}`;
+	}
+	else if (!exclude) {
+		return `${id} in (${quotedItemValues.join(', ')})`;
+	}
+	else {
+		return quotedItemValues.reduce((previous, current) => {
+			const value = `(${id} ne ${current})`;
+
+			return previous ? `${previous} and ${value}` : value;
+		}, '');
+	}
 };
-function CheckboxesFilter({id, items, selectedData, setFilter}) {
+function CheckboxesFilter({
+	entityFieldType,
+	id,
+	items,
+	selectedData,
+	setFilter,
+}) {
 	const [itemsValues, setItemsValues] = useState(
 		selectedData?.itemsValues || []
 	);
@@ -165,6 +183,7 @@ function CheckboxesFilter({id, items, selectedData, setFilter}) {
 								active: true,
 								id,
 								odataFilterString: getOdataString({
+									entityFieldType,
 									id,
 									selectedData: newSelectedData,
 								}),
@@ -192,6 +211,7 @@ function CheckboxesFilter({id, items, selectedData, setFilter}) {
 }
 
 CheckboxesFilter.propTypes = {
+	entityFieldType: PropTypes.string,
 	id: PropTypes.string.isRequired,
 	items: PropTypes.arrayOf(
 		PropTypes.shape({

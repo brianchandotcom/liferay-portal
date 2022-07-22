@@ -167,7 +167,7 @@ public class GoogleDocsUIItemsProcessor {
 		return urlUIItem;
 	}
 
-	private <T> void _removeItems(
+	private <T> void _removeUIItems(
 		List<T> items, Function<T, String> function, Set<String> keys) {
 
 		Iterator<T> iterator = items.iterator();
@@ -184,7 +184,7 @@ public class GoogleDocsUIItemsProcessor {
 	private void _removeUnsupportedDropdownItems(
 		List<DropdownItem> dropdownItems) {
 
-		_removeItems(
+		_removeUIItems(
 			dropdownItems, dropdownItem -> (String)dropdownItem.get("key"),
 			SetUtil.fromArray(
 				DLUIItemKeys.CANCEL_CHECKOUT, DLUIItemKeys.CHECKIN,
@@ -193,7 +193,7 @@ public class GoogleDocsUIItemsProcessor {
 	}
 
 	private void _removeUnsupportedUIItems(List<? extends UIItem> uiItems) {
-		_removeItems(
+		_removeUIItems(
 			uiItems, UIItem::getKey,
 			SetUtil.fromArray(
 				DLUIItemKeys.CANCEL_CHECKOUT, DLUIItemKeys.CHECKIN,

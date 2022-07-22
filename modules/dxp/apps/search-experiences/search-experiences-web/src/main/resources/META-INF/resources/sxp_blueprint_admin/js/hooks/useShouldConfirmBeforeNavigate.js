@@ -14,12 +14,12 @@ import {useEffect} from 'react';
 import {openConfirmModal} from 'frontend-js-web';
 
 function openConfirm({message, onConfirm}) {
-    if (Liferay.FeatureFlags.enableCustomDialogs) {
-        openConfirmModal({message, onConfirm});
-    }
-    else if (confirm(message)) {
-        onConfirm(true);
-    }
+	if (Liferay.FeatureFlags['LPS-148659']) {
+		openConfirmModal({message, onConfirm});
+	}
+	else if (confirm(message)) {
+		onConfirm(true);
+	}
 }
 
 /**

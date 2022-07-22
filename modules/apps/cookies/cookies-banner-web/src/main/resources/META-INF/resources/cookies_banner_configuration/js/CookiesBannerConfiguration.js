@@ -12,6 +12,8 @@
  * details.
  */
 
+import {getOpener} from 'frontend-js-web';
+
 import {
 	acceptAllCookies,
 	declineAllCookies,
@@ -35,7 +37,7 @@ export default function ({
 		const cookieKey = toggleSwitch.dataset.cookieKey;
 
 		toggleSwitch.addEventListener('click', () => {
-			Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
+			getOpener().Liferay.fire('cookiePreferenceUpdate', {
 				key: cookieKey,
 				value: toggleSwitch.checked ? 'true' : 'false',
 			});

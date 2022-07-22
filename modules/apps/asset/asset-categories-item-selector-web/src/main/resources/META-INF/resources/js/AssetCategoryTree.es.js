@@ -16,6 +16,7 @@ import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {getOpener} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 const nodeByName = (items, name) => {
@@ -99,7 +100,7 @@ export function AssetCategoryTree({
 
 		requestAnimationFrame(() => {
 			if (data) {
-				Liferay.Util.getOpener().Liferay.fire(itemSelectedEventName, {
+				getOpener().Liferay.fire(itemSelectedEventName, {
 					data,
 				});
 			}

@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {getOpener} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -42,7 +43,7 @@ const DLVideoExternalShortcutURLItemSelectorView = ({
 					return;
 				}
 
-				Liferay.Util.getOpener().Liferay.fire(eventName, {
+				getOpener().Liferay.fire(eventName, {
 					data: {
 						returnType,
 						value: {

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fetch, openToast} from 'frontend-js-web';
+import {fetch, getOpener, openToast} from 'frontend-js-web';
 
 export default function ({namespace}) {
 	const addButton = document.getElementById(`${namespace}addButton`);
@@ -38,11 +38,11 @@ export default function ({namespace}) {
 				.then((response) => response.json())
 				.then((response) => {
 					if (response.siteNavigationMenuItemId) {
-						Liferay.Util.getOpener().Liferay.fire(
+						getOpener().Liferay.fire(
 							'reloadSiteNavigationMenuEditor'
 						);
 
-						Liferay.Util.getOpener().Liferay.fire('closeModal', {
+						getOpener().Liferay.fire('closeModal', {
 							id: `${namespace}addMenuItem`,
 						});
 					}

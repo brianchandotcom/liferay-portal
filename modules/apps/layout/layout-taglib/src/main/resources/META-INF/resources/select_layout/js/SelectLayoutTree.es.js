@@ -16,6 +16,7 @@ import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {getOpener} from 'frontend-js-web';
 import React, {useMemo, useRef, useState} from 'react';
 
 const nodeByName = (items, name) => {
@@ -79,7 +80,7 @@ export function SelectLayoutTree({
 		}
 
 		if (followURLOnTitleClick) {
-			Liferay.Util.getOpener().document.location.href = item.url;
+			getOpener().document.location.href = item.url;
 		}
 		else {
 			const data = Array.from(selectedItemsRef.current.values());
@@ -88,7 +89,7 @@ export function SelectLayoutTree({
 				data,
 			});
 
-			Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
+			getOpener().Liferay.fire(itemSelectorSaveEvent, {
 				data,
 			});
 		}
@@ -110,7 +111,7 @@ export function SelectLayoutTree({
 			data,
 		});
 
-		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
+		getOpener().Liferay.fire(itemSelectorSaveEvent, {
 			data,
 		});
 
@@ -123,7 +124,7 @@ export function SelectLayoutTree({
 		event.preventDefault();
 
 		if (followURLOnTitleClick) {
-			Liferay.Util.getOpener().document.location.href = item.url;
+			getOpener().document.location.href = item.url;
 
 			return;
 		}

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {delegate} from 'frontend-js-web';
+import {delegate, getOpener} from 'frontend-js-web';
 
 export default function ({eventName, selector}) {
 	const delegateHandler = delegate(
@@ -32,7 +32,7 @@ export default function ({eventName, selector}) {
 
 			newSelectedCard.classList.add('active');
 
-			Liferay.Util.getOpener().Liferay.fire(eventName, {
+			getOpener().Liferay.fire(eventName, {
 				data: newSelectedCard.dataset,
 			});
 		}

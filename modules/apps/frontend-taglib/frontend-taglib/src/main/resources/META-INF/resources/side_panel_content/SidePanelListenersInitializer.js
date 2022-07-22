@@ -13,6 +13,7 @@
  */
 
 import {DATA_SET_EVENT} from '@liferay/frontend-data-set-web';
+import {getOpener} from 'frontend-js-web';
 
 class SidePanelListenersInitializer {
 	constructor() {
@@ -29,7 +30,7 @@ class SidePanelListenersInitializer {
 				trigger.addEventListener('click', (event) => {
 					event.preventDefault();
 
-					const parentWindow = Liferay.Util.getOpener();
+					const parentWindow = getOpener();
 
 					parentWindow.Liferay.fire(DATA_SET_EVENT.CLOSE_SIDE_PANEL);
 				});

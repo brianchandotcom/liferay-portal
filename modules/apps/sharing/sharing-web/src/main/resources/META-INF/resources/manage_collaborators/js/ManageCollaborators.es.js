@@ -21,7 +21,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import {useTimeout} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {fetch, objectToFormData, sub} from 'frontend-js-web';
+import {fetch, getOpener, objectToFormData, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -67,7 +67,7 @@ const ManageCollaborators = ({
 	};
 
 	const closeDialog = () => {
-		Liferay.Util.getOpener().Liferay.fire('closeModal', {
+		getOpener().Liferay.fire('closeModal', {
 			id: 'sharingDialog',
 		});
 	};
@@ -224,7 +224,7 @@ const ManageCollaborators = ({
 	};
 
 	const showNotification = (message, error) => {
-		const parentOpenToast = Liferay.Util.getOpener().Liferay.Util.openToast;
+		const parentOpenToast = getOpener().Liferay.Util.openToast;
 
 		const openToastParams = {
 			message,

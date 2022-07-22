@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {fetch, openModal} from 'frontend-js-web';
+import {fetch, getOpener, openModal} from 'frontend-js-web';
 
 let copySaved = '';
 
@@ -89,7 +89,7 @@ function openItem(
 				displayType: 'secondary',
 				label: Liferay.Language.get('cancel'),
 				onClick() {
-					Liferay.Util.getOpener().Liferay.fire('closeModal', {
+					getOpener().Liferay.fire('closeModal', {
 						id: 'selectStarterkit',
 					});
 				},
@@ -98,7 +98,7 @@ function openItem(
 				id: 'createSite',
 				label: 'Select',
 				onClick() {
-					Liferay.Util.getOpener().Liferay.fire('closeModal', {
+					getOpener().Liferay.fire('closeModal', {
 						id: 'selectStarterkit',
 					});
 

@@ -12,6 +12,8 @@
  * details.
  */
 
+import {getOpener} from 'frontend-js-web';
+
 function getUploadFileMetadata(file) {
 	return {
 		groups: [
@@ -63,7 +65,7 @@ function getPreviewProps({
 	return {
 		currentIndex: 0,
 		handleSelectedItem: ({returntype, value}) => {
-			Liferay.Util.getOpener().Liferay.fire(itemSelectedEventName, {
+			getOpener().Liferay.fire(itemSelectedEventName, {
 				data: {
 					returnType: returntype,
 					value,

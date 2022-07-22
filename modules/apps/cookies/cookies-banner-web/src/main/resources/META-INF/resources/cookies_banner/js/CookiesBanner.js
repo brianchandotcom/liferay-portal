@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openModal} from 'frontend-js-web';
+import {getOpener, openModal} from 'frontend-js-web';
 
 import {
 	acceptAllCookies,
@@ -96,7 +96,7 @@ export default function ({
 
 							setBannerVisibility(cookieBanner);
 
-							Liferay.Util.getOpener().Liferay.fire('closeModal');
+							getOpener().Liferay.fire('closeModal');
 						},
 					},
 					{
@@ -112,7 +112,7 @@ export default function ({
 
 							setBannerVisibility(cookieBanner);
 
-							Liferay.Util.getOpener().Liferay.fire('closeModal');
+							getOpener().Liferay.fire('closeModal');
 						},
 					},
 					{
@@ -129,7 +129,7 @@ export default function ({
 
 							setBannerVisibility(cookieBanner);
 
-							Liferay.Util.getOpener().Liferay.fire('closeModal');
+							getOpener().Liferay.fire('closeModal');
 						},
 					},
 				],

@@ -15,7 +15,7 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch} from 'frontend-js-web';
+import {fetch, getOpener} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 const VALID_EXTENSIONS = '.json';
@@ -27,7 +27,7 @@ const ImportSXPBlueprintModal = ({redirectURL}) => {
 	const [importFile, setImportFile] = useState();
 
 	const _handleClose = (data) => {
-		Liferay.Util.getOpener().Liferay.fire('closeModal', data);
+		getOpener().Liferay.fire('closeModal', data);
 	};
 
 	const _handleFormError = (error) => {

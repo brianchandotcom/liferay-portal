@@ -12,6 +12,8 @@
  * details.
  */
 
+import {getOpener} from 'frontend-js-web';
+
 export default function ({namespace}) {
 	const importButton = document.getElementById(`${namespace}importButton`);
 
@@ -19,7 +21,7 @@ export default function ({namespace}) {
 		importButton.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			const openerWindow = Liferay.Util.getOpener();
+			const openerWindow = getOpener();
 			const form = document.getElementById(`${namespace}fm`);
 
 			form.classList.add('hide');

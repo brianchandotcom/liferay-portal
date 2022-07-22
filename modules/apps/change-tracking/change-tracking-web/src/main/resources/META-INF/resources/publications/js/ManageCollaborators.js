@@ -35,7 +35,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
-import {fetch, objectToFormData, openConfirmModal, sub} from 'frontend-js-web';
+import {fetch, getOpener, objectToFormData, openConfirmModal, sub} from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
 const CollaboratorRow = ({
@@ -547,7 +547,7 @@ const ManageCollaborators = ({
 	};
 
 	const showNotification = (message, error) => {
-		const parentOpenToast = Liferay.Util.getOpener().Liferay.Util.openToast;
+		const parentOpenToast = getOpener().Liferay.Util.openToast;
 
 		const openToastParams = {message};
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {delegate, sub} from 'frontend-js-web';
+import {delegate, getOpener, sub} from 'frontend-js-web';
 
 export default function ({
 	displayPageItemSelectorUrl,
@@ -21,7 +21,7 @@ export default function ({
 	removeIcon,
 	searchContainerId,
 }) {
-	const openerWindow = Liferay.Util.getOpener();
+	const openerWindow = getOpener();
 
 	const initProductSelection = (searchContainer) => {
 		const selectProductButton = document.getElementById(

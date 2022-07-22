@@ -17,13 +17,14 @@ import ClayEmptyState from '@clayui/empty-state';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import {getOpener} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 	const [filterQuery, setFilterQuery] = useState('');
 
 	const handleSelectionChange = (item) => {
-		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
+		getOpener().Liferay.fire(itemSelectorSaveEvent, {
 			data: {
 				folderId: item.id,
 				folderName: item.name,

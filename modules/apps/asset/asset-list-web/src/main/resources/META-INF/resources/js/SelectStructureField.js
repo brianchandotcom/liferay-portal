@@ -15,6 +15,7 @@
 import {
 	delegate,
 	fetch,
+	getOpener,
 	objectToFormData,
 	runScriptsInElement,
 } from 'frontend-js-web';
@@ -54,7 +55,7 @@ export default function ({
 				if (response.success) {
 					message.classList.add('hide');
 
-					Liferay.Util.getOpener().Liferay.fire(eventName, {
+					getOpener().Liferay.fire(eventName, {
 						data: {
 							className: assetClassName,
 							displayValue: response.displayValue,

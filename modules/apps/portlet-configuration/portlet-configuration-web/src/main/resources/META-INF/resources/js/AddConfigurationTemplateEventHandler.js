@@ -12,14 +12,14 @@
  * details.
  */
 
+import {getOpener} from 'frontend-js-web';
+
 export default function ({namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
 
 	const handleSubmit = () =>
 		Liferay.once('destroyPortlet', () =>
-			Liferay.Util.getOpener()?.Liferay.fire(
-				'addPortletConfigurationTemplate'
-			)
+			getOpener()?.Liferay.fire('addPortletConfigurationTemplate')
 		);
 
 	form?.addEventListener('submit', handleSubmit);

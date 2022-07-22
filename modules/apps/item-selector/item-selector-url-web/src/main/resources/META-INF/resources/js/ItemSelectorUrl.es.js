@@ -17,6 +17,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
+import {getOpener} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
@@ -62,7 +63,7 @@ const ItemSelectorUrl = ({eventName}) => {
 			},
 		};
 
-		Liferay.Util.getOpener().Liferay.fire(eventName, eventData);
+		getOpener().Liferay.fire(eventName, eventData);
 	};
 
 	const handleUrlChange = (event) => {

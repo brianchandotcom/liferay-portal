@@ -12,7 +12,7 @@
  * details.
  */
 
-import {delegate, navigate} from 'frontend-js-web';
+import {delegate, getOpener, navigate} from 'frontend-js-web';
 
 const createButton = ({action, buttonClass, label, type = 'submit'}) => {
 	const wrapper = document.createElement('div');
@@ -36,7 +36,7 @@ export default function ({currentURL, namespace, redirect}) {
 
 	formSheet.classList.add('border-0');
 
-	const openerWindow = Liferay.Util.getOpener();
+	const openerWindow = getOpener();
 
 	const modalTitle = openerWindow.document.querySelector('.modal-title');
 

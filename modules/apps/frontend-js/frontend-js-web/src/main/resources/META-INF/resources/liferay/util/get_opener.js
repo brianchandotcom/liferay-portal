@@ -12,14 +12,17 @@
  * details.
  */
 
+import getTop from './get_top';
+
 let _opener;
 
 export default function getOpener() {
+	console.log('GETOPENER');
 	let openingWindow = _opener;
 
 	if (!openingWindow) {
-		const topUtil = Liferay.Util.getTop().Liferay.Util;
-		const windowName = Liferay.Util.getWindowName();
+		const topUtil = getTop().Liferay.Util;
+		const windowName = window.name;
 
 		const dialog = topUtil.Window.getById(windowName);
 

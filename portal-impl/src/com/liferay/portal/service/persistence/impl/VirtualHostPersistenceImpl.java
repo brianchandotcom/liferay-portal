@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.VirtualHostTable;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.VirtualHostPersistence;
 import com.liferay.portal.kernel.service.persistence.VirtualHostUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
@@ -2734,8 +2733,6 @@ public class VirtualHostPersistenceImpl
 
 		virtualHost.setNew(true);
 		virtualHost.setPrimaryKey(virtualHostId);
-
-		virtualHost.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return virtualHost;
 	}

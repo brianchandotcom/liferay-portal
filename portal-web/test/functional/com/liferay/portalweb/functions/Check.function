@@ -42,6 +42,8 @@ definition {
 
 		selenium.waitForElementPresent();
 
+		selenium.waitForEditable();
+
 		selenium.mouseOver();
 
 		if (selenium.isNotChecked()) {

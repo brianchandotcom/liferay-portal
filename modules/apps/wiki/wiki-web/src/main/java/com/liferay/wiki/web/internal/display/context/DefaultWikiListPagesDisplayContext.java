@@ -157,7 +157,6 @@ public class DefaultWikiListPagesDisplayContext
 		Menu menu = new Menu();
 
 		menu.setDirection("left-side");
-		menu.setMarkupView("lexicon");
 		menu.setScroll(false);
 
 		List<MenuItem> menuItems = new ArrayList<>();

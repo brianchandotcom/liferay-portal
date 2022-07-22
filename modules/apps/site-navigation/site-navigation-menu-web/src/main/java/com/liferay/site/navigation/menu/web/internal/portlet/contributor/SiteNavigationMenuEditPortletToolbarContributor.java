@@ -89,7 +89,6 @@ public class SiteNavigationMenuEditPortletToolbarContributor
 		menu.setDirection("right");
 		menu.setExtended(false);
 		menu.setIcon("pencil");
-		menu.setMarkupView("lexicon");
 		menu.setMenuItems(menuItems);
 		menu.setMessage("edit");
 		menu.setScroll(false);

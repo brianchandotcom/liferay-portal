@@ -140,7 +140,6 @@ public class SimulationProductNavigationControlMenuEntry
 
 		iconTag.setCssClass("icon-monospaced");
 		iconTag.setImage("simulation-menu-closed");
-		iconTag.setMarkupView("lexicon");
 
 		try {
 			values.put(
@@ -243,7 +242,6 @@ public class SimulationProductNavigationControlMenuEntry
 					(HttpServletRequest)pageContext.getRequest(), "close"));
 			iconTag.setCssClass("close sidenav-close");
 			iconTag.setImage("times");
-			iconTag.setMarkupView("lexicon");
 			iconTag.setUrl("javascript:void(0);");
 
 			values.put("sidebarIcon", iconTag.doTagAsString(pageContext));

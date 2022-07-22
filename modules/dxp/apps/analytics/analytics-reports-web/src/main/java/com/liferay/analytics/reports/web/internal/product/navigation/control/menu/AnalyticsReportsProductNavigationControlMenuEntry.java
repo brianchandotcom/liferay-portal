@@ -158,7 +158,6 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 		iconTag.setCssClass("icon-monospaced");
 		iconTag.setImage("analytics");
-		iconTag.setMarkupView("lexicon");
 
 		try {
 			values.put(
@@ -373,7 +372,6 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 			iconTag.setCssClass("sidenav-close text-secondary");
 			iconTag.setImage("times");
-			iconTag.setMarkupView("lexicon");
 			iconTag.setUrl("javascript:void(0);");
 
 			sb.append(iconTag.doTagAsString(pageContext));

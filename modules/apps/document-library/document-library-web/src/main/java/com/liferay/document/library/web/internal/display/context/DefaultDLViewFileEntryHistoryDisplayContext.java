@@ -100,7 +100,6 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 		Menu menu = new Menu();
 
 		menu.setDirection("left-side");
-		menu.setMarkupView("lexicon");
 		menu.setMenuItems(_getMenuItems());
 		menu.setScroll(false);
 		menu.setShowWhenSingleIcon(true);

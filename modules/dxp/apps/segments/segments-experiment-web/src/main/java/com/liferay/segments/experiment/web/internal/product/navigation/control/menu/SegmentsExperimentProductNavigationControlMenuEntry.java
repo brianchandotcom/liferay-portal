@@ -173,7 +173,6 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 		iconTag.setCssClass("icon-monospaced");
 		iconTag.setImage("test");
-		iconTag.setMarkupView("lexicon");
 
 		try {
 			values.put(

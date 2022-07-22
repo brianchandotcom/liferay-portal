@@ -203,7 +203,6 @@ public class ViewSharedAssetsDisplayContext {
 		Menu menu = new Menu();
 
 		menu.setDirection("left-side");
-		menu.setMarkupView("lexicon");
 		menu.setMessage(LanguageUtil.get(_httpServletRequest, "actions"));
 		menu.setScroll(false);
 		menu.setShowWhenSingleIcon(true);

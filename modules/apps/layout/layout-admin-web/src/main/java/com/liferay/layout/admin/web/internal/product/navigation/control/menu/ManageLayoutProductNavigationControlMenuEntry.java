@@ -142,7 +142,6 @@ public class ManageLayoutProductNavigationControlMenuEntry
 
 			iconTag.setCssClass("icon-monospaced");
 			iconTag.setImage("cog");
-			iconTag.setMarkupView("lexicon");
 
 			PageContext pageContext = PageContextFactoryUtil.create(
 				httpServletRequest, httpServletResponse);

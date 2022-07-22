@@ -144,7 +144,6 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 			iconTag.setCssClass("icon-monospaced icon-product-menu-closed");
 			iconTag.setImage("product-menu-closed");
-			iconTag.setMarkupView("lexicon");
 
 			values.put(
 				"closedIcon",
@@ -152,7 +151,6 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 			iconTag.setCssClass("icon-monospaced icon-product-menu-open");
 			iconTag.setImage("product-menu-open");
-			iconTag.setMarkupView("lexicon");
 
 			values.put(
 				"openIcon",

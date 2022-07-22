@@ -134,7 +134,6 @@ public class DefaultIGViewFileVersionDisplayContext
 		Menu menu = new Menu();
 
 		menu.setDirection("left-side");
-		menu.setMarkupView("lexicon");
 		menu.setMenuItems(getMenuItems());
 		menu.setScroll(false);
 		menu.setShowWhenSingleIcon(true);

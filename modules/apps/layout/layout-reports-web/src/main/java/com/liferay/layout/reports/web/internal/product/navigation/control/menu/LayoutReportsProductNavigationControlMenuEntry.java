@@ -168,7 +168,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 		iconTag.setCssClass("icon-monospaced");
 		iconTag.setImage("info-circle");
-		iconTag.setMarkupView("lexicon");
 
 		try {
 			values.put(
@@ -402,7 +401,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 		iconTag.setCssClass("icon-monospaced sidenav-close");
 		iconTag.setImage("times");
-		iconTag.setMarkupView("lexicon");
 		iconTag.setUrl("javascript:void(0);");
 
 		sb.append(iconTag.doTagAsString(pageContext));

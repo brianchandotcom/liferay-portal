@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>OAuthClient</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">OAuthClient</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>AUTH_SERVER_LOCAL_WELL_KNOWN_URI</td>
+	<td>//td[contains(@class,'well-known-uri')]//a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

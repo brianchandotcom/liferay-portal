@@ -8,7 +8,7 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		FormFields.editTextMultiline(
-			fieldName = "infoJSON",
+			fieldName = "metadataJSON",
 			fieldValue = "${authServerMetadata}");
 
 		PortletEntry.save();
@@ -66,6 +66,16 @@ definition {
 		}
 
 		PortletEntry.save();
+	}
+
+	macro getWellKnownURI {
+		Click(locator1 = "OAuthClient#AUTH_SERVER_LOCAL_WELL_KNOWN_URI");
+
+		var wellknownURI = selenium.getAttribute("//input[contains(@id,'localWellKnownURI')]@value");
+
+		echo("Well-known URI: ${wellknownURI}");
+
+		return "${wellknownURI}";
 	}
 
 	macro openOAuthClientAdmin {

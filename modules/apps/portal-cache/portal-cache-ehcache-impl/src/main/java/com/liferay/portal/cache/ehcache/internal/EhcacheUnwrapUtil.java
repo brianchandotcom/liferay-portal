@@ -40,7 +40,7 @@ public class EhcacheUnwrapUtil {
 			"Unable to locate Ehcache from " + portalCache);
 	}
 
-	public static <K extends Serializable, V> PortalCache<K, V>
+	public static <K extends Serializable, V> BaseEhcachePortalCache<K, V>
 		getWrappedPortalCache(PortalCache<K, V> portalCache) {
 
 		PortalCache<K, V> currentPortalCache = portalCache;
@@ -52,7 +52,7 @@ public class EhcacheUnwrapUtil {
 			currentPortalCache = portalCacheWrapper.getWrappedPortalCache();
 		}
 
-		return currentPortalCache;
+		return (BaseEhcachePortalCache<K, V>)currentPortalCache;
 	}
 
 }

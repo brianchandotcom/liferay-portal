@@ -213,12 +213,6 @@ definition {
 				Check.checkNotVisible(
 					key_checkboxName = "${categoryName}",
 					locator1 = "MenuItem#ANY_CHECKBOX");
-
-				Pause(locator1 = "3000");
-
-				AssertChecked.assertCheckedNotVisible(
-					key_checkboxName = "${categoryName}",
-					locator1 = "MenuItem#ANY_CHECKBOX");
 			}
 
 			DropdownMenuItem.click(menuItem = "Apply");
@@ -532,8 +526,6 @@ definition {
 	}
 
 	macro viewWithWorkflowPG {
-		Pause(locator1 = "5000");
-
 		if ("${workflowStatus}" == "Ready for Publication") {
 			AssertElementPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");
 		}

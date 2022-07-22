@@ -139,7 +139,7 @@
 </tr>
 <tr>
 	<td>NO_FRAGMENTS_MESSAGE</td>
-	<td>xpath=(//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__no-fragments-state')][normalize-space()='${key_messageInfo}'])[${key_position}]</td>
+	<td>xpath=(//div[@aria-label='${key_fragmentName}']//p[contains(@class,'page-editor__no-fragments-state__message')][normalize-space()='${key_messageInfo}'])[${key_position}]</td>
 	<td></td>
 </tr>
 

@@ -20,7 +20,6 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
-taglib uri="http://liferay.com/tld/commerce" prefix="liferay-commerce" %><%@
 taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
@@ -31,8 +30,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.product.constants.CPActionKeys" %><%@
-page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
+<%@ page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
 page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
 page import="com.liferay.commerce.product.exception.CPOptionCategoryKeyException" %><%@
 page import="com.liferay.commerce.product.exception.CPOptionKeyException" %><%@
@@ -47,8 +45,10 @@ page import="com.liferay.commerce.product.model.CPOptionValue" %><%@
 page import="com.liferay.commerce.product.model.CPSpecificationOption" %><%@
 page import="com.liferay.commerce.product.options.web.internal.constants.CommerceOptionFDSNames" %><%@
 page import="com.liferay.commerce.product.options.web.internal.display.context.CPOptionCategoryDisplayContext" %><%@
+page import="com.liferay.commerce.product.options.web.internal.display.context.CPOptionCategoryManagementToolbarDisplayContext" %><%@
 page import="com.liferay.commerce.product.options.web.internal.display.context.CPOptionDisplayContext" %><%@
 page import="com.liferay.commerce.product.options.web.internal.display.context.CPSpecificationOptionDisplayContext" %><%@
+page import="com.liferay.commerce.product.options.web.internal.display.context.CPSpecificationOptionManagementToolbarDisplayContext" %><%@
 page import="com.liferay.commerce.product.options.web.internal.security.permission.resource.CPOptionCategoryPermission" %><%@
 page import="com.liferay.commerce.product.options.web.internal.security.permission.resource.CPSpecificationOptionPermission" %><%@
 page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.constants.CPOptionCategoryFormNavigatorConstants" %><%@

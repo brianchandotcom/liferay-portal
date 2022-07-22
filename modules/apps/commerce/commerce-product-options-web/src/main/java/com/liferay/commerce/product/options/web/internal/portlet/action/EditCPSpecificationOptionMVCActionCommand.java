@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -108,10 +107,8 @@ public class EditCPSpecificationOptionMVCActionCommand
 			};
 		}
 		else {
-			deleteCPSpecificationOptionIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCPSpecificationOptionIds"),
-				0L);
+			deleteCPSpecificationOptionIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
 		for (long deleteCPSpecificationOptionId :

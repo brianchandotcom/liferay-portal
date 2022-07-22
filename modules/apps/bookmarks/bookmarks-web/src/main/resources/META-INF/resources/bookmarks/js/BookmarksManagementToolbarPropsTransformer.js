@@ -12,6 +12,8 @@
  * details.
  */
 
+import {openConfirmModal} from 'frontend-js-web';
+
 export default function propsTransformer({
 	additionalProps: {deleteEntriesURL, inputId, inputValue, trashEnabled},
 	portletNamespace,
@@ -20,33 +22,54 @@ export default function propsTransformer({
 	return {
 		...props,
 		onActionButtonClick(event, {item}) {
+			const handleDelete = () => {
+				const form = document.getElementById(`${portletNamespace}fm`);
+
+				if (!form) {
+					return;
+				}
+
+				form.setAttribute('method', 'post');
+
+				const inputElement = document.getElementById(
+					`${portletNamespace}${inputId}`
+				);
+
+				if (inputElement) {
+					inputElement.setAttribute('value', inputValue);
+
+					submitForm(form, deleteEntriesURL);
+				}
+			};
+
 			if (item?.data?.action === 'deleteEntries') {
-				if (
-					trashEnabled ||
-					confirm(
-						Liferay.Language.get(
+				if (trashEnabled) {
+					handleDelete();
+
+					return;
+				}
+
+				if (Liferay.__FF__.customDialogsEnabled) {
+					openConfirmModal({
+						message: Liferay.Language.get(
 							'are-you-sure-you-want-to-delete-the-selected-entries'
+						),
+						onConfirm: (result) => {
+							if (result) {
+								handleDelete();
+							}
+						},
+					});
+				}
+				else {
+					if (
+						confirm(
+							Liferay.Language.get(
+								'are-you-sure-you-want-to-delete-the-selected-entries'
+							)
 						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
-
-					if (!form) {
-						return;
-					}
-
-					form.setAttribute('method', 'post');
-
-					const inputElement = document.getElementById(
-						`${portletNamespace}${inputId}`
-					);
-
-					if (inputElement) {
-						inputElement.setAttribute('value', inputValue);
-
-						submitForm(form, deleteEntriesURL);
+					) {
+						handleDelete();
 					}
 				}
 			}

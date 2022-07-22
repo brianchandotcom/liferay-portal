@@ -24,6 +24,7 @@ definition {
 		}
 	}
 
+	@description = "Check the publication summary that is published via local staging."
 	@priority = "4"
 	test CheckPublicationSummaryLocal {
 		JSONLayout.addPublicLayout(
@@ -56,6 +57,7 @@ definition {
 			publicationTitle = "summCheck");
 	}
 
+	@description = "Check the publication summary that is published via remote staging."
 	@priority = "4"
 	test CheckPublicationSummaryRemote {
 		property app.server.bundles.size = "1";
@@ -88,6 +90,7 @@ definition {
 		Staging.viewPublicationSummary(publicationTitle = "summCheck");
 	}
 
+	@description = "Verify that the recycle bin of the site is automatically emptied before turning on local staging."
 	@priority = "4"
 	test DeleteRecycleBinOnStagingActivation {
 		property portal.acceptance = "true";

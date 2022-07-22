@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -31,6 +33,7 @@ import java.util.Date;
  * @author Michael C. Han
  * @author Mika Koivisto
  * @author Bruno Farache
+ * @author Stian Sigvartsen
  */
 public class AuditMessage implements Serializable {
 
@@ -124,12 +127,13 @@ public class AuditMessage implements Serializable {
 
 		long realUserId = auditRequestThreadLocal.getRealUserId();
 
-		if ((realUserId == 0) || (userId != realUserId)) {
-			throw new IllegalStateException(
-				"AuditRequestThreadLocal not initialized");
+		if (userId == realUserId) {
+			_userLogin = auditRequestThreadLocal.getRealUserLogin();
 		}
-
-		_userLogin = auditRequestThreadLocal.getRealUserLogin();
+		else if (realUserId > 0) {
+			_log.error(
+				"Impersonated actions should be audited on the real user's ID");
+		}
 
 		if (_timestamp == null) {
 			_timestamp = new Date();
@@ -345,6 +349,8 @@ public class AuditMessage implements Serializable {
 	private static final String _USER_LOGIN = "userLogin";
 
 	private static final String _USER_NAME = "userName";
+
+	private static final Log _log = LogFactoryUtil.getLog(AuditMessage.class);
 
 	private JSONObject _additionalInfoJSONObject;
 	private String _className;

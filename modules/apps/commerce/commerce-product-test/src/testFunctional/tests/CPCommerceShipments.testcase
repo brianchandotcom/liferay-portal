@@ -296,7 +296,7 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Check.checkToggleSwitch(
 			key_productSku = "MIN55861",
@@ -524,7 +524,7 @@ definition {
 				key_text = "Carrier Details",
 				locator1 = "CommerceOrders#EDIT_SHIPMENT_DETAILS");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			Type(
 				locator1 = "CommerceOrders#CARRIER_DETAILS_URL_TEXTAREA",
@@ -671,6 +671,8 @@ definition {
 				key_zip = "0100");
 
 			Alert.viewSuccessMessage();
+
+			Refresh();
 		}
 
 		task ("When admin creates shipment for the order") {
@@ -692,6 +694,14 @@ definition {
 		}
 
 		task ("And the shipping method and tracking URL are correct") {
+			Navigator.gotoNavTab(navTab = "Shipments");
+
+			Click(
+				key_text = "Shipped",
+				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Edit");
+
 			AssertTextEquals.assertPartialText(
 				key_detail = "Shipping Method",
 				locator1 = "CommerceOrders#SHIPMENT_CARRIER_DETAILS",
@@ -704,19 +714,11 @@ definition {
 		}
 
 		task ("And the Shipping method is changed") {
-			Navigator.gotoNavTab(navTab = "Shipments");
-
-			Click(
-				key_text = "Shipped",
-				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
-
-			MenuItem.clickNoError(menuItem = "Edit");
-
 			Click(
 				key_text = "Carrier Details",
 				locator1 = "CommerceOrders#EDIT_SHIPMENT_DETAILS");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			Select(
 				key_fieldLabel = "Shipping Method",
@@ -1409,7 +1411,7 @@ definition {
 				key_text = "Carrier Details",
 				locator1 = "CommerceOrders#EDIT_SHIPMENT_DETAILS");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			Type(
 				locator1 = "CommerceOrders#CARRIER_DETAILS_URL_TEXTAREA",
@@ -2120,7 +2122,7 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		AssertClickNoError(
 			locator1 = "Button#SUBMIT",
@@ -2244,7 +2246,7 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Check.checkToggleSwitch(
 			key_productSku = "MIN55861",
@@ -2380,7 +2382,7 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		for (var productSku : list "MIN55860,MIN55861") {
 			Check.checkToggleSwitch(
@@ -2415,7 +2417,7 @@ definition {
 			key_index = "Delete",
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
 			key_filterOption = "Submit",

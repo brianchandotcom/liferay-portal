@@ -591,7 +591,7 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT");
 
 		KeyPress(
-			key_label = "Tracking URL",
+			key_fieldLabel = "Tracking URL",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "\BACK_SPACE");
 

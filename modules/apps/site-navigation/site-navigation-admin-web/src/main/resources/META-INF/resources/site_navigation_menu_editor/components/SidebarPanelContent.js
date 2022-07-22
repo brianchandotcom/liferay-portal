@@ -49,11 +49,11 @@ export function SidebarPanelContent({contentRequestBody, contentUrl, title}) {
 
 	useEffect(() => {
 		if (changedRef.current) {
-			const confirm = confirmUnsavedChanges();
-
-			if (confirm) {
-				return;
-			}
+			confirmUnsavedChanges({
+				onConfirm: () => {
+					return;
+				},
+			});
 		}
 
 		setBody(null);
@@ -179,12 +179,10 @@ class SidebarBody extends React.Component {
 	}
 }
 
-function confirmUnsavedChanges() {
+function confirmUnsavedChanges({onConfirm}) {
 	const form = document.querySelector(`.sidebar-body form`);
 
 	const error = form ? form.querySelector('.has-error') : null;
-
-	let confirmChanged;
 
 	if (!error) {
 		openConfirmModal({
@@ -193,7 +191,9 @@ function confirmUnsavedChanges() {
 			),
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
-					confirmChanged = isConfirmed;
+					if (onConfirm) {
+						onConfirm();
+					}
 
 					if (form) {
 						form.submit();
@@ -202,6 +202,4 @@ function confirmUnsavedChanges() {
 			},
 		});
 	}
-
-	return confirmChanged;
 }

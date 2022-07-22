@@ -70,6 +70,7 @@
 										"key": "marketing-welcome-banner"
 									},
 									"fragmentConfig": {
+										"secondaryButtonLink": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]"
 									},
 									"fragmentFields": [
 										{

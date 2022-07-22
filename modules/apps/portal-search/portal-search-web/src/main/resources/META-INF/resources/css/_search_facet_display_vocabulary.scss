@@ -1,0 +1,36 @@
+.search-facet-display-vocabulary {
+	.treeview-vocabulary-display {
+		.tree-item-category {
+			padding-left: 24px;
+
+			.custom-control-label-text {
+				color: #6b6c7e;
+			}
+
+			> .c-inner {
+				margin-left: -24px;
+			}
+
+			&:active,
+			&:hover {
+				background-color: transparent;
+				cursor: initial;
+			}
+		}
+
+		.tree-item-vocabulary {
+			color: #272833;
+			font-weight: 600;
+			margin-bottom: 8px;
+
+			&:active,
+			&:hover {
+				background-color: transparent;
+			}
+		}
+
+		.treeview-group > .treeview-item:last-child {
+			margin-bottom: 24px;
+		}
+	}
+}

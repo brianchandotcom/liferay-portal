@@ -25,4 +25,12 @@
 		<script-file>com/liferay/portal/search/web/internal/category/facet/portlet/display/template/dependencies/portlet_display_template_label.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
+	<template>
+		<template-key>category-facet-vocabulary-ftl</template-key>
+		<name>portlet-display-template-name-vocabulary-layout</name>
+		<description>portlet-display-template-description-facet-vocabulary</description>
+		<language>ftl</language>
+		<script-file>com/liferay/portal/search/web/internal/category/facet/portlet/display/template/dependencies/portlet_display_template_vocabulary.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
 </root>

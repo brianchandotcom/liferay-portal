@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -165,7 +166,8 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			JSONArray removedLayoutStructureItemsJSONArray =
 				_removeFormChildrenItems(
 					layoutStructure,
-					formStyledLayoutStructureItem.getChildrenItemIds());
+					ListUtil.copy(
+						formStyledLayoutStructureItem.getChildrenItemIds()));
 
 			FragmentCollectionContributor fragmentCollectionContributor =
 				_fragmentCollectionContributorTracker.

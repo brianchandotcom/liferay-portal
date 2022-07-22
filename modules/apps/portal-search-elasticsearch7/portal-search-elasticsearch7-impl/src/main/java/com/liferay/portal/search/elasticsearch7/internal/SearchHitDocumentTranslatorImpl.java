@@ -137,7 +137,13 @@ public class SearchHitDocumentTranslatorImpl
 	}
 
 	private boolean _invalidFieldName(String fieldName) {
-		return fieldName.endsWith(_GEOPOINT_INDICATOR_SUFFIX);
+		if (fieldName.endsWith(_GEOPOINT_INDICATOR_SUFFIX) ||
+			fieldName.equals("_ignored")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private Field _translateGeoPoint(DocumentField documentField) {

@@ -19,6 +19,9 @@ import com.liferay.commerce.inventory.internal.upgrade.v2_0_0.CommerceInventoryA
 import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.MVCCUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
@@ -122,6 +126,13 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 
 			});
 
+		registry.register(
+			"2.4.1", "2.5.0",
+			new com.liferay.commerce.inventory.internal.upgrade.v2_5_0.
+				CommerceInventoryWarehouseUpgradeProcess(
+					_companyLocalService, _resourceActionLocalService,
+					_resourceLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce inventory upgrade step registrator finished");
 		}
@@ -129,5 +140,14 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceInventoryServiceUpgradeStepRegistrator.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 }

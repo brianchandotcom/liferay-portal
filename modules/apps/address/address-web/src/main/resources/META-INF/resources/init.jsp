@@ -34,6 +34,7 @@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.CountryA2Exception" %><%@
 page import="com.liferay.portal.kernel.exception.CountryA3Exception" %><%@
 page import="com.liferay.portal.kernel.exception.CountryNameException" %><%@
+page import="com.liferay.portal.kernel.exception.CountryNumberException" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateCountryException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Country" %><%@

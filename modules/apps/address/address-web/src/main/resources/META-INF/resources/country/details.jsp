@@ -42,6 +42,7 @@ renderResponse.setTitle((country == null) ? LanguageUtil.get(request, "add-count
 	<liferay-ui:error exception="<%= CountryA2Exception.class %>" message="please-enter-a-valid-two-letter-iso-code" />
 	<liferay-ui:error exception="<%= CountryA3Exception.class %>" message="please-enter-a-valid-three-letter-iso-code" />
 	<liferay-ui:error exception="<%= CountryNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= CountryNumberException.class %>" message="please-enter-a-valid-number" />
 	<liferay-ui:error exception="<%= DuplicateCountryException.class %>" message="the-two-letter-iso-code-is-already-used" />
 
 	<aui:model-context bean="<%= country %>" model="<%= Country.class %>" />

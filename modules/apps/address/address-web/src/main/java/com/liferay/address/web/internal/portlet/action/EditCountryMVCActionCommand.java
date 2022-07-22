@@ -18,6 +18,7 @@ import com.liferay.address.web.internal.constants.AddressPortletKeys;
 import com.liferay.portal.kernel.exception.CountryA2Exception;
 import com.liferay.portal.kernel.exception.CountryA3Exception;
 import com.liferay.portal.kernel.exception.CountryNameException;
+import com.liferay.portal.kernel.exception.CountryNumberException;
 import com.liferay.portal.kernel.exception.DuplicateCountryException;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.language.Language;
@@ -94,6 +95,7 @@ public class EditCountryMVCActionCommand extends BaseMVCActionCommand {
 			else if (throwable instanceof CountryA2Exception ||
 					 throwable instanceof CountryA3Exception ||
 					 throwable instanceof CountryNameException ||
+					 throwable instanceof CountryNumberException ||
 					 throwable instanceof DuplicateCountryException) {
 
 				hideDefaultErrorMessage(actionRequest);

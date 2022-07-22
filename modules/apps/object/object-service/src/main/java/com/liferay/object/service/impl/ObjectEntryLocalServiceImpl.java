@@ -442,6 +442,44 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public Map<String, Serializable>
+			getExtensionDynamicObjectDefinitionTableValues(
+				ObjectDefinition objectDefinition, long primaryKey)
+		throws PortalException {
+
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
+			_getExtensionDynamicObjectDefinitionTable(
+				objectDefinition.getObjectDefinitionId());
+
+		Expression<?>[] selectExpressions =
+			extensionDynamicObjectDefinitionTable.getSelectExpressions();
+
+		List<Object[]> rows = _list(
+			DSLQueryFactoryUtil.selectDistinct(
+				selectExpressions
+			).from(
+				extensionDynamicObjectDefinitionTable
+			).where(
+				extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
+				).eq(
+					primaryKey
+				)
+			),
+			selectExpressions);
+
+		if (rows.isEmpty()) {
+			return new HashMap<>();
+		}
+
+		Map<String, Serializable> values = _getValues(
+			rows.get(0), selectExpressions);
+
+		values.remove(objectDefinition.getPKObjectFieldName());
+
+		return values;
+	}
+
+	@Override
 	public List<ObjectEntry> getManyToManyRelatedObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean reverse, int start, int end)
@@ -552,7 +590,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	public Map<String, Object> getSystemModelAttributes(
-			ObjectDefinition objectDefinition, long objectEntryId)
+			ObjectDefinition objectDefinition, long primaryKey)
 		throws PortalException {
 
 		if (!objectDefinition.isSystem()) {
@@ -577,7 +615,7 @@ public class ObjectEntryLocalServiceImpl
 			).from(
 				dynamicObjectDefinitionTable
 			).where(
-				primaryKeyColumn.eq(objectEntryId)
+				primaryKeyColumn.eq(primaryKey)
 			));
 
 		if (!baseModels.isEmpty()) {
@@ -590,33 +628,42 @@ public class ObjectEntryLocalServiceImpl
 			HashMapBuilder.<String, Object>put(
 				"createDate",
 				GetterUtil.get(
-					baseModelAttributes.get("createDate"), objectEntryId)
+					baseModelAttributes.get("createDate"), primaryKey)
 			).put(
 				"externalReferenceCode",
 				GetterUtil.get(
 					baseModelAttributes.get("externalReferenceCode"),
-					objectEntryId)
+					primaryKey)
 			).put(
 				"modifiedDate",
 				GetterUtil.get(
-					baseModelAttributes.get("modifiedDate"), objectEntryId)
+					baseModelAttributes.get("modifiedDate"), primaryKey)
 			).put(
 				"objectDefinitionId", objectDefinition.getObjectDefinitionId()
 			).put(
 				"uuid",
-				GetterUtil.get(baseModelAttributes.get("uuid"), objectEntryId)
+				GetterUtil.get(baseModelAttributes.get("uuid"), primaryKey)
 			).build();
 
 		for (ObjectField objectField :
 				_objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId())) {
 
+			if (!objectField.isSystem()) {
+				continue;
+			}
+
 			modelAttributes.put(
 				objectField.getName(),
 				GetterUtil.getObject(
 					baseModelAttributes.get(objectField.getDBColumnName()),
-					objectEntryId));
+					primaryKey));
 		}
+
+		modelAttributes.putAll(
+			objectEntryLocalService.
+				getExtensionDynamicObjectDefinitionTableValues(
+					objectDefinition, primaryKey));
 
 		return modelAttributes;
 	}

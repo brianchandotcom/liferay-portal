@@ -1,0 +1,44 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Name";
+	var testSiteURL = "customer-portal-name";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			Site.openSitesAdmin();
+
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+		}
+	}
+
+	tearDown {
+		PortalInstances.tearDownCP();
+
+		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
+		CustomerPortal.customerPortalApisTearDown();
+	}
+
+	@description = "LPS-146856 - Verify that when the status is active the page displays (Subtitle - Link - Link redirects to another page)"
+	@ignore = "true"
+	@priority = "4"
+	test AffirmAllTextAndLinksOnThePage {
+        
+	}
+}

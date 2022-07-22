@@ -2431,7 +2431,8 @@ definition {
 			notificationScript = '''returnValue = "Transition Name";''',
 			notificationTemplateValue = '''${userName} sent you a ${entryType} for review in the workflow.''',
 			notificationTypeOption = "userNotification",
-			recipientTypeOption = "Scripted Recipient");
+			recipientTypeOption = "Scripted Recipient",
+			singleAction = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 

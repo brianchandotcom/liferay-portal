@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -60,6 +61,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -149,8 +151,8 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			addedFragmentEntryLinks.add(
 				_addFragmentEntryLink(
 					formStyledLayoutStructureItem.getItemId(), fragmentEntry,
-					layoutStructure, segmentsExperienceId, serviceContext,
-					themeDisplay));
+					infoField, layoutStructure, segmentsExperienceId,
+					serviceContext, themeDisplay));
 		}
 
 		FragmentEntry fragmentEntry =
@@ -165,7 +167,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			addedFragmentEntryLinks.add(
 				_addFragmentEntryLink(
 					formStyledLayoutStructureItem.getItemId(), fragmentEntry,
-					layoutStructure, segmentsExperienceId, serviceContext,
+					null, layoutStructure, segmentsExperienceId, serviceContext,
 					themeDisplay));
 		}
 
@@ -184,8 +186,9 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 	private FragmentEntryLink _addFragmentEntryLink(
 			String formItemId, FragmentEntry fragmentEntry,
-			LayoutStructure layoutStructure, long segmentsExperienceId,
-			ServiceContext serviceContext, ThemeDisplay themeDisplay)
+			InfoField<?> infoField, LayoutStructure layoutStructure,
+			long segmentsExperienceId, ServiceContext serviceContext,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
@@ -197,6 +200,36 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
 				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
 				serviceContext);
+
+		if (infoField != null) {
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			if (Validator.isNotNull(fragmentEntryLink.getEditableValues())) {
+				editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
+			}
+
+			JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+			if (jsonObject == null) {
+				jsonObject = JSONFactoryUtil.createJSONObject();
+
+				editableValuesJSONObject.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					jsonObject);
+			}
+
+			jsonObject.put("inputFieldId", infoField.getUniqueId());
+
+			fragmentEntryLink =
+				_fragmentEntryLinkService.updateFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId(),
+					editableValuesJSONObject.toString());
+		}
 
 		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(), formItemId, -1);

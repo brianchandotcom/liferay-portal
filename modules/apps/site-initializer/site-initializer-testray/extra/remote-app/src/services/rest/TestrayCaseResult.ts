@@ -17,6 +17,9 @@ import {APIResponse, TestrayCaseResult} from '../../graphql/queries';
 const caseResultResource =
 	'/caseresults?nestedFields=case,component.team,build.productVersion,build.routine,run,user&nestedFieldsDepth=3';
 
+const getCaseResults =
+	'/caseresults?nestedFields=case,component.team,build.productVersion,build.routine,run,user&nestedFieldsDepth=3';
+
 const normalizeCaseResultResponse = (caseResult: TestrayCaseResult) => ({
 	...caseResult,
 	build: caseResult.r_buildToCaseResult_c_build
@@ -60,4 +63,4 @@ const getCaseResultTransformData = (
 	items: response?.items?.map(normalizeCaseResultResponse),
 });
 
-export {caseResultResource, getCaseResultTransformData};
+export {caseResultResource, getCaseResultTransformData, getCaseResults};

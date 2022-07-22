@@ -70,7 +70,9 @@ processResources {
 		}
 	}
 
-	if (gradle.startParameter.taskNames.contains("forceDeploy") || gradle.startParameter.taskNames.contains("uploadExtraRemoteApp")) {
+	ResolvedConfiguration resolvedConfiguration = configurations.extraRemoteApp.getResolvedConfiguration()
+
+	if (gradle.startParameter.taskNames.contains("forceDeploy") || gradle.startParameter.taskNames.contains("uploadExtraRemoteApp") || resolvedConfiguration.hasError()) {
 		dependsOn buildExtraRemoteApp
 
 		into("site-initializer/documents/company/remote-app/" + webContextPath) {

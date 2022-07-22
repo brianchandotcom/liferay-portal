@@ -17,6 +17,7 @@ package com.liferay.object.internal.upgrade.v3_18_0;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -44,16 +45,19 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String selectSQL = StringBundler.concat(
-			"select ObjectDefinition.companyId, ObjectDefinition.dbTableName, ",
-			"ObjectDefinition.objectDefinitionId, ObjectDefinition.userName, ",
-			"ObjectDefinition.userId, ObjectDefinition.system_ from ",
-			"ObjectDefinition where ObjectDefinition.objectDefinitionId not ",
-			"in (select distinct ObjectField.objectDefinitionId from ",
-			"ObjectField where (ObjectField.name = 'creator' or ",
-			"ObjectField.name = 'createDate' or ObjectField.name = 'id' or ",
-			"ObjectField.name = 'modifiedDate' or ObjectField.name = 'status' ",
-			"and ObjectField.system_ = [$TRUE$])");
+		String selectSQL = SQLTransformer.transform(
+			StringBundler.concat(
+				"select ObjectDefinition.companyId, ",
+				"ObjectDefinition.dbTableName, ",
+				"ObjectDefinition.objectDefinitionId, ",
+				"ObjectDefinition.userName, ObjectDefinition.userId, ",
+				"ObjectDefinition.system_ from ObjectDefinition where ",
+				"ObjectDefinition.objectDefinitionId not in (select distinct ",
+				"ObjectField.objectDefinitionId from ObjectField where ",
+				"(ObjectField.name = 'creator' or ObjectField.name = ",
+				"'createDate' or ObjectField.name = 'id' or ObjectField.name ",
+				"= 'modifiedDate' or ObjectField.name = 'status') and ",
+				"ObjectField.system_ = [$TRUE$])"));
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				selectSQL);

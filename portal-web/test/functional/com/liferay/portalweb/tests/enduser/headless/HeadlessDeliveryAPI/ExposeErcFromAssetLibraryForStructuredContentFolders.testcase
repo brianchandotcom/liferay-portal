@@ -422,6 +422,54 @@ definition {
 		}
 	}
 
+	@description = "Get structured content folder with deletion of subfolder in an asset library"
+	@priority = "5"
+	test GetStructuredContentFolderInAssetLibraryWithSubfolderDeletionByErc {
+		property portal.acceptance = "true";
+
+		task ("Given a structured content folder with a custom erc is created with a POST request") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				name = "Test Folder");
+		}
+
+		task ("Given a subfolder with another custom erc is created with a POST reqeust") {
+			var folderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+				element = "$.id",
+				responseToParse = "${response}");
+
+			HeadlessWebcontentFolderAPI.createSubfolderInStructuredContentFolder(
+				externalReferenceCode = "subfolder-erc",
+				name = "Sub Folder",
+				parentStructuredContentFolderId = "${folderId}");
+		}
+
+		task ("Given I make a DELETE request by erc of subfolder") {
+			HeadlessWebcontentFolderAPI.deleteStructuredContentFolderByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "subfolder-erc");
+		}
+
+		task ("When I make a GET request by parent erc") {
+			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc");
+		}
+
+		task ("Then I receive a correct body response with numberOfStructuredContentFolders is 0") {
+			var numberOfStructuredContentFoldersInResponse = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+				element = "$.numberOfStructuredContentFolders",
+				responseToParse = "${response}");
+
+			TestUtils.assertEquals(
+				actual = "${numberOfStructuredContentFoldersInResponse}",
+				expected = "0");
+		}
+	}
+
 	@description = "Structured content folder is not able to delete by nonexistent erc in an asset library"
 	@priority = "3"
 	test StructruedContentFolderDeletionImpossibleByNonexistentErc {

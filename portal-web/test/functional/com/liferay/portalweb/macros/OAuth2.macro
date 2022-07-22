@@ -200,6 +200,11 @@ definition {
 				locator1 = "OAuth2#OAUTH2_TESTER_PORTAL_URL",
 				value1 = "${portalURL}");
 		}
+		else {
+			Type(
+				locator1 = "OAuth2#OAUTH2_TESTER_PORTAL_URL",
+				value1 = "https://localhost:8443");
+		}
 
 		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
@@ -246,6 +251,11 @@ definition {
 			Type(
 				locator1 = "OAuth2#OAUTH2_TESTER_PORTAL_URL",
 				value1 = "${portalURL}");
+		}
+		else {
+			Type(
+				locator1 = "OAuth2#OAUTH2_TESTER_PORTAL_URL",
+				value1 = "https://localhost:8443");
 		}
 
 		Type(
@@ -451,7 +461,10 @@ definition {
 
 	macro getAuthorizationCode {
 		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
-		var portalURL = PropsUtil.get("portal.url");
+
+		if (!(isSet(portalURL))) {
+			var portalURL = PropsUtil.get("portal.url");
+		}
 
 		Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
 
@@ -680,6 +693,12 @@ definition {
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
 
 		WaitForVisible(locator1 = "Button#PLUS");
+	}
+
+	macro openSSLPage {
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		Alert.confirmSecurity();
 	}
 
 	@description = "Get ClientId and ClientSecret from the page then post client credential token via curl."

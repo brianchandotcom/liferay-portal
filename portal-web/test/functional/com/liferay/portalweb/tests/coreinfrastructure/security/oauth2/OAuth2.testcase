@@ -29,9 +29,12 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCanBeAuthorizedWithoutUserSession";
 
 		task ("Add and edit 2 external applications") {
+			OAuth2.openSSLPage();
+
 			for (var count : list "1,2") {
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
+					baseURL = "https://localhost:8443",
 					callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
@@ -89,9 +92,12 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCanBeAuthorizedWithRememberDeviceEnabled";
 
 		task ("Add and edit an external application with remember device enabled") {
+			OAuth2.openSSLPage();
+
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
+				baseURL = "https://localhost:8443",
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				checkboxCheckList = "Remember Device",
 				clientId = "abc123",
 				clientProfile = "Web Application",
@@ -124,9 +130,12 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCannotBeAuthorizedWithClientSecretJWTWithoutJWTAssertion";
 
 		task ("Add and edit an external application") {
+			OAuth2.openSSLPage();
+
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
+				baseURL = "https://localhost:8443",
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientAuthenticationMethod = "Client Secret JWT",
 				clientId = "abc123",
 				clientProfile = "Web Application",
@@ -232,9 +241,12 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCannotBeAuthorizedWithPrivateKeyJWTWithoutJWTAssertion";
 
 		task ("Add and edit an external application") {
+			OAuth2.openSSLPage();
+
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
+				baseURL = "https://localhost:8443",
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientAuthenticationMethod = "Private Key JWT",
 				clientId = "abc123",
 				clientProfile = "Web Application",
@@ -421,9 +433,12 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#AuthorizationCanBeRevokedViaKebabMenu";
 
 		task ("Add and edit an external application") {
+			OAuth2.openSSLPage();
+
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=default''',
+				baseURL = "https://localhost:8443",
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=default''',
 				clientId = "default",
 				clientProfile = "Web Application",
 				clientSecret = "defaultsecret",
@@ -431,7 +446,7 @@ definition {
 		}
 
 		task ("Verify that the created application is in the first row and the Revoke button is not present") {
-			OAuth2.openOAuth2Admin();
+			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
 
 			OAuth2.viewApplicationInAuthorizationsTable(
 				entryIndex = "0",
@@ -451,7 +466,7 @@ definition {
 		}
 
 		task ("Verify that the created application is in the first row in OAuth 2 admin page then revoke the application") {
-			OAuth2.openOAuth2Admin();
+			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
 
 			OAuth2.viewApplicationInAuthorizationsTable(
 				entryIndex = "1",
@@ -472,9 +487,12 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#AuthorizationCanBeRevokedViaKebabMenuWithTrustedDevice";
 
 		task ("Add and edit an external application") {
+			OAuth2.openSSLPage();
+
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=default''',
+				baseURL = "https://localhost:8443",
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=default''',
 				checkboxCheckList = "Trusted Application",
 				clientId = "default",
 				clientProfile = "Web Application",
@@ -483,7 +501,7 @@ definition {
 		}
 
 		task ("Verify that the application has 0 authorizations at OAuth 2 admin and the Revoke button is not present") {
-			OAuth2.openOAuth2Admin();
+			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
 
 			OAuth2.viewApplicationInAuthorizationsTable(
 				entryIndex = "0",
@@ -504,7 +522,7 @@ definition {
 		}
 
 		task ("Verify that the application has 1 authorization at OAuth 2 admin then Revoke it's authorization") {
-			OAuth2.openOAuth2Admin();
+			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
 
 			OAuth2.viewApplicationInAuthorizationsTable(
 				entryIndex = "1",
@@ -865,17 +883,15 @@ definition {
 		property portal.ssl.enabled = "true";
 
 		task ("Add a new OAuth 2 application") {
-			var portalURL = PropsUtil.get("portal.url");
+			OAuth2.openSSLPage();
 
-			OAuth2.openOAuth2Admin();
-
-			var clientId = "abc123";
-			var clientSecret = "abc123";
-			var portalURL = PropsUtil.get("portal.url");
+			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
 
 			OAuth2.addApplication(
 				applicationName = "Test Expired Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''');
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=${clientId}''',
+				clientId = "abc123",
+				clientSecret = "abc123");
 		}
 
 		task ("Edit scopes") {
@@ -895,20 +911,20 @@ definition {
 				rowEntry = "Test Expired Application");
 
 			OAuth2.inputApplicationValues(
-				clientId = "${clientId}",
-				clientSecret = "${clientSecret}");
+				clientId = "abc123",
+				clientSecret = "abc123");
 		}
 
 		task ("Get authorization code") {
-			var authorizationCode = OAuth2.getAuthorizationCode();
+			var authorizationCode = OAuth2.getAuthorizationCode(portalURL = "https://localhost:8443");
 		}
 
 		task ("Verify OAuth 2 access is valid") {
-			OAuth2.viewValidOAuth2LaunchRequest(clientSecret = "${clientSecret}");
+			OAuth2.viewValidOAuth2LaunchRequest(clientSecret = "abc123");
 		}
 
 		task ("Verify authorization is granted via user") {
-			Navigator.openURL();
+			OAuth2.openSSLPage();
 
 			OAuth2.viewGrantedAuthViaUser(applicationName = "Test Expired Application");
 
@@ -1058,9 +1074,12 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeAuthorized";
 
 		task ("Add and edit an external application") {
+			OAuth2.openSSLPage();
+
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
+				baseURL = "https://localhost:8443",
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientId = "abc123",
 				clientProfile = "Web Application",
 				clientSecret = "abc123");
@@ -1085,9 +1104,12 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeTrustedAndAuthorized";
 
 		task ("Add and edit an external trusted application") {
+			OAuth2.openSSLPage();
+
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
+				baseURL = "https://localhost:8443",
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				checkboxCheckList = "Trusted Application",
 				clientId = "abc123",
 				clientProfile = "Web Application",
@@ -1609,9 +1631,12 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#RefreshTokenTimeCanBeSetExpiredAndRenewed";
 
 		task ("Add and edit an external application") {
+			OAuth2.openSSLPage();
+
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
+				baseURL = "https://localhost:8443",
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientId = "abc123",
 				clientProfile = "Web Application",
 				clientSecret = "abc123");
@@ -1643,14 +1668,13 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#RememberDeviceExternalPropertyShouldBeVisible";
 
 		task ("Add a new external application with remember device checked") {
-			var portalURL = PropsUtil.get("portal.url");
-			var clientId = "abc123";
+			OAuth2.openSSLPage();
 
-			OAuth2.openOAuth2Admin();
+			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
 
 			OAuth2.addApplication(
 				applicationName = "Remember Device Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				checkboxCheckList = "Remember Device",
 				clientProfile = "Web Application");
 		}
@@ -1672,8 +1696,11 @@ definition {
 
 		task ("Add and edit 2 external applications") {
 			for (var count : list "1,2") {
+				OAuth2.openSSLPage();
+
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
+					baseURL = "https://localhost:8443",
 					callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
@@ -1728,9 +1755,12 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#RevokeAuthorizationViaKebabMenuWithRememberDevice";
 
 		task ("Add and edit an external application") {
+			OAuth2.openSSLPage();
+
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=default''',
+				baseURL = "https://localhost:8443",
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=default''',
 				checkboxCheckList = "Remember Device",
 				clientId = "default",
 				clientProfile = "Web Application",
@@ -1739,7 +1769,7 @@ definition {
 		}
 
 		task ("Verify My Application has 0 authorizations at OAuth 2 admin") {
-			OAuth2.openOAuth2Admin();
+			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
 
 			OAuth2.viewApplicationInAuthorizationsTable(
 				entryIndex = "0",
@@ -1760,7 +1790,7 @@ definition {
 		}
 
 		task ("Verify My Application has 1 authorization at OAuth 2 admin") {
-			OAuth2.openOAuth2Admin();
+			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
 
 			OAuth2.viewApplicationInAuthorizationsTable(
 				entryIndex = "1",
@@ -1918,9 +1948,12 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#TokenIntrospectionShouldWorkWithEmptyClientSecretForPKCE";
 
 		task ("Given: Add and edit an PKCE application") {
+			OAuth2.openSSLPage();
+
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/pkce/?url=${portalURL}&client_id=pkce''',
+				baseURL = "https://localhost:8443",
+				callbackUri = '''http://martamedio.com/oauth2-tester/pkce/?url=https://localhost:8443&client_id=pkce''',
 				checkboxCheckList = "Token Introspection",
 				checkboxUncheckList = "Authorization Code,Client Credentials,JWT_BEARER,Resource Owner Password Credentials",
 				clientAuthenticationMethod = "None",
@@ -1945,15 +1978,13 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#TrustedExternalPropertyShouldBeVisible";
 
 		task ("Add a trusted OAuth 2 application") {
-			var portalURL = PropsUtil.get("portal.url");
+			OAuth2.openSSLPage();
 
-			OAuth2.openOAuth2Admin();
-
-			var clientId = "abc123";
+			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
 
 			OAuth2.addApplication(
 				applicationName = "Trusted Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				checkboxCheckList = "Trusted Application",
 				clientProfile = "Web Application");
 		}

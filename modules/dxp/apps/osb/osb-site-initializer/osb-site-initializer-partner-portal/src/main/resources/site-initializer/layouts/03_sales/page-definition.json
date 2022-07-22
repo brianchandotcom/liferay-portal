@@ -56,7 +56,8 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0"
+								"borderWidth": "0",
+								"textAlign": ""
 							},
 							"indexed": true,
 							"layout": {
@@ -1391,7 +1392,7 @@
 																		}
 																	],
 																	"fragmentStyle": {
-																		"height": "72px",
+																		"height": "60px",
 																		"overflow": "auto",
 																		"paddingBottom": "2",
 																		"paddingTop": "2",
@@ -1753,7 +1754,7 @@
 																		}
 																	],
 																	"fragmentStyle": {
-																		"height": "72px",
+																		"height": "60px",
 																		"paddingBottom": "2",
 																		"paddingTop": "2",
 																		"textAlign": "",
@@ -2139,7 +2140,7 @@
 																		}
 																	],
 																	"fragmentStyle": {
-																		"height": "72px",
+																		"height": "60px",
 																		"paddingBottom": "2",
 																		"paddingTop": "2",
 																		"textAlign": "",
@@ -2447,6 +2448,8 @@
 																	],
 																	"fragmentStyle": {
 																		"fontWeight": "fontWeightBold",
+																		"maxHeight": "60px",
+																		"minHeight": "28px",
 																		"textAlign": "",
 																		"textColor": "colorNeutral10"
 																	},
@@ -2497,7 +2500,7 @@
 																		}
 																	],
 																	"fragmentStyle": {
-																		"height": "72px",
+																		"height": "60px",
 																		"paddingBottom": "2",
 																		"paddingTop": "2",
 																		"textAlign": "",
@@ -2780,6 +2783,7 @@
 															],
 															"indexed": true,
 															"layout": {
+																"align": "Start",
 																"contentDisplay": "FlexColumn",
 																"marginBottom": 0,
 																"marginLeft": 0,
@@ -2829,7 +2833,8 @@
 																	],
 																	"fragmentStyle": {
 																		"fontWeight": "fontWeightBold",
-																		"height": "28px",
+																		"maxHeight": "60px",
+																		"minHeight": "28px",
 																		"textAlign": "",
 																		"textColor": "colorNeutral10"
 																	},
@@ -2880,7 +2885,7 @@
 																		}
 																	],
 																	"fragmentStyle": {
-																		"height": "72px",
+																		"height": "60px",
 																		"paddingBottom": "2",
 																		"paddingTop": "2",
 																		"textAlign": "",
@@ -3189,6 +3194,8 @@
 																	],
 																	"fragmentStyle": {
 																		"fontWeight": "fontWeightBold",
+																		"maxHeight": "60px",
+																		"minHeight": "28px",
 																		"textAlign": "",
 																		"textColor": "colorNeutral10"
 																	},
@@ -3239,7 +3246,7 @@
 																		}
 																	],
 																	"fragmentStyle": {
-																		"height": "72px",
+																		"height": "60px",
 																		"paddingBottom": "2",
 																		"paddingTop": "2",
 																		"textAlign": "",

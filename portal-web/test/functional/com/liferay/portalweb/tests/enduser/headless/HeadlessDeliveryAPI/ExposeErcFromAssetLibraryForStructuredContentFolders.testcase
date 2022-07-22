@@ -322,6 +322,49 @@ definition {
 		}
 	}
 
+	@description = "Update structured content folder subfolder name by erc with put request in an asset library"
+	@priority = "5"
+	test CanUpdateSubfolderNameOfStructuredContentFolderInAssetLibraryByPutErc {
+		property portal.acceptance = "true";
+
+		task ("Given a structured content folder with a custom erc is created with a POST request") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				name = "Test Folder");
+		}
+
+		task ("Given a subfolder is created with a POST request") {
+			var folderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+				element = "$.id",
+				responseToParse = "${response}");
+
+			HeadlessWebcontentFolderAPI.createSubfolderInStructuredContentFolder(
+				externalReferenceCode = "subfolder-erc",
+				name = "Sub Folder",
+				parentStructuredContentFolderId = "${folderId}");
+		}
+
+		task ("When I make a PUT request by subfolder erc and a new subfolder name in the body") {
+			var response = HeadlessWebcontentFolderAPI.updateStructureContentFolderByErcInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "subfolder-erc",
+				name = "Update Sub Folder");
+		}
+
+		task ("Then subfolder of structured content folder is correctly updated") {
+			var nameInResponse = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+				element = "$.name",
+				responseToParse = "${response}");
+
+			TestUtils.assertEquals(
+				actual = "${nameInResponse}",
+				expected = "Update Sub Folder");
+		}
+	}
+
 	@description = "Structured content folder is created with custom erc in an asset library"
 	@priority = "5"
 	test StructuredContentFolderIsCreatedInAssetLibraryWithCustomErc {

@@ -315,7 +315,7 @@ AUI.add(
 						message: confirmMessageText,
 						onConfirm: (isConfirmed) => {
 							if (isConfirmed) {
-								var url = Liferay.Util.PortletURL.createActionURL(
+								const url = Liferay.Util.PortletURL.createActionURL(
 									config.baseActionURL,
 									{
 										'entryId': contact.entryId,

@@ -25,9 +25,13 @@ import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLin
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -44,6 +48,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -100,6 +105,37 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		return fragmentEntryLink;
 	}
 
+	private JSONArray _removeFormChildrenItems(
+		LayoutStructure layoutStructure, List<String> childrenItemIdsToRemove) {
+
+		JSONArray fragmentEntryLinkIdsJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		for (String childItemId : childrenItemIdsToRemove) {
+			layoutStructure.markLayoutStructureItemForDeletion(
+				childItemId, Collections.emptyList());
+
+			LayoutStructureItem removedLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childItemId);
+
+			if (removedLayoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem) {
+
+				FragmentStyledLayoutStructureItem
+					fragmentStyledLayoutStructureItem =
+						(FragmentStyledLayoutStructureItem)
+							removedLayoutStructureItem;
+
+				fragmentEntryLinkIdsJSONArray.put(
+					String.valueOf(
+						fragmentStyledLayoutStructureItem.
+							getFragmentEntryLinkId()));
+			}
+		}
+
+		return fragmentEntryLinkIdsJSONArray;
+	}
+
 	private JSONObject _updateFormItemConfig(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
@@ -122,8 +158,14 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			LayoutStructure layoutStructure = LayoutStructure.of(
 				layoutPageTemplateStructure.getData(segmentsExperienceId));
 
-			layoutStructure.updateItemConfig(
-				JSONFactoryUtil.createJSONObject(itemConfig), formItemId);
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+				(FormStyledLayoutStructureItem)layoutStructure.updateItemConfig(
+					JSONFactoryUtil.createJSONObject(itemConfig), formItemId);
+
+			JSONArray removedLayoutStructureItemsJSONArray =
+				_removeFormChildrenItems(
+					layoutStructure,
+					formStyledLayoutStructureItem.getChildrenItemIds());
 
 			FragmentCollectionContributor fragmentCollectionContributor =
 				_fragmentCollectionContributorTracker.
@@ -202,6 +244,9 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 				}
 			).put(
 				"layoutData", updatedLayoutStructure.toJSONObject()
+			).put(
+				"removedFragmentEntryLinkIds",
+				removedLayoutStructureItemsJSONArray
 			);
 		}
 		catch (Exception exception) {

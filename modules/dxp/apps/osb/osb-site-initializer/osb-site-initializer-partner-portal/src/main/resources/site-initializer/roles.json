@@ -1,0 +1,72 @@
+[
+	{
+		"actions": [],
+		"description": "",
+		"name": "Channel General Manager",
+		"subtype": "",
+		"type": 1
+	},
+	{
+		"actions": [],
+		"description": "",
+		"name": "Channel Account Manager",
+		"subtype": "",
+		"type": 1
+	},
+	{
+		"actions": [],
+		"description": "",
+		"name": "Channel Regional Marketing Manager",
+		"subtype": "",
+		"type": 1
+	},
+	{
+		"actions": [],
+		"description": "",
+		"name": "Channel Global Marketing Manager",
+		"subtype": "",
+		"type": 1
+	},
+	{
+		"actions": [],
+		"description": "",
+		"name": "Channel Finance Manager",
+		"subtype": "",
+		"type": 1
+	},
+	{
+		"actions": [],
+		"description": "",
+		"name": "Partner",
+		"subtype": "",
+		"type": 6
+	},
+	{
+		"actions": [],
+		"description": "",
+		"name": "Partner Manager",
+		"subtype": "",
+		"type": 6
+	},
+	{
+		"actions": [],
+		"description": "",
+		"name": "Partner Marketing User",
+		"subtype": "",
+		"type": 6
+	},
+	{
+		"actions": [],
+		"description": "",
+		"name": "Partner Sales Users",
+		"subtype": "",
+		"type": 6
+	},
+	{
+		"actions": [],
+		"description": "",
+		"name": "Partner Technical User",
+		"subtype": "",
+		"type": 6
+	}
+]

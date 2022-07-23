@@ -13,7 +13,9 @@ definition {
 			locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS",
 			value1 = "${key_product}");
 
-		Click(locator1 = "Button#SEARCH");
+		KeyPress(
+			locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS",
+			value1 = "\RETURN");
 
 		Check.checkToggleSwitch(
 			locator1 = "CommerceAccelerators#SELECT_PRODUCT_RELATIONS",
@@ -39,7 +41,9 @@ definition {
 			locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS",
 			value1 = "${productNameRelation}");
 
-		Click(locator1 = "Button#SEARCH");
+		KeyPress(
+			locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS",
+			value1 = "\RETURN");
 
 		Check.checkToggleSwitch(
 			locator1 = "CommerceAccelerators#SELECT_PRODUCT_RELATIONS",

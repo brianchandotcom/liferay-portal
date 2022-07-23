@@ -1093,7 +1093,7 @@
 </tr>
 <tr>
 	<td>SEARCH_PRODUCT_RELATIONS</td>
-	<td>//input[@data-qa-id='searchInput']</td>
+	<td>//input[@placeholder='Search for']</td>
 	<td></td>
 </tr>
 <tr>

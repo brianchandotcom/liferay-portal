@@ -1,9 +1,6 @@
 [
 	{
 		"clientExtensionEntryKey": "PARTNER-PORTAL-REACT-APP",
-		"cssURLs": [
-			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-partner-portal/index.css$]"
-		],
 		"elementURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-partner-portal/index.js$]"
 		],

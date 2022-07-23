@@ -32,6 +32,13 @@ public class CTCollectionIdSupplierImpl implements CTCollectionIdSupplier {
 
 	@Override
 	public long getCTCollectionId() {
+		long ctCollectionId =
+			CTCollectionPreviewThreadLocal.getCTCollectionId();
+
+		if (ctCollectionId > -1) {
+			return ctCollectionId;
+		}
+
 		CTPreferences ctPreferences =
 			_ctPreferencesLocalService.fetchCTPreferences(
 				CompanyThreadLocal.getCompanyId(),

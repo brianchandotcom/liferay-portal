@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -82,10 +83,12 @@ public class DLEditFileShortcutDisplayContext {
 		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
 
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);
+
 		return String.valueOf(
 			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(
-					_liferayPortletRequest),
+				requestBackedPortletURLFactory,
 				_liferayPortletResponse.getNamespace() +
 					"toFileEntrySelectedItem",
 				fileItemSelectorCriterion));

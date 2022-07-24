@@ -593,50 +593,61 @@ const ManageCollaborators = ({
 						'you-are-inviting-user-x-who-does-not-have-access-to-publications'
 				  );
 
-		openConfirmModal({
-			message: sub(
-				langKey,
-				publicationsUserRoleEmailAddresses.join(', ')
-			),
-			onConfirm: (isConfirmed) => {
-				if (publicationsUserRoleUserIds.length && isConfirmed) {
-					const updatedRolesKeys = Object.keys(updatedRoles);
-
-					for (let i = 0; i < updatedRolesKeys.length; i++) {
-						roleValues.push(
-							updatedRoles[updatedRolesKeys[i]].value
+		if (publicationsUserRoleUserIds.length) {
+			openConfirmModal({
+				message: sub(
+					langKey,
+					publicationsUserRoleEmailAddresses.join(', ')
+				),
+				onConfirm: (isConfirmed) => {
+					if (publicationsUserRoleUserIds.length && isConfirmed) {
+						sendInvite(
+							publicationsUserRoleUserIds,
+							roleValues,
+							userIds
 						);
-						userIds.push(updatedRolesKeys[i]);
 					}
+				},
+			});
+		}
+		else {
+			sendInvite(publicationsUserRoleUserIds, roleValues, userIds);
+		}
+	};
 
-					const formData = objectToFormData({
-						[`${namespace}publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
-							','
-						),
-						[`${namespace}roleValues`]: roleValues.join(','),
-						[`${namespace}userIds`]: userIds.join(','),
-					});
+	const sendInvite = (publicationsUserRoleUserIds, roleValues, userIds) => {
+		const updatedRolesKeys = Object.keys(updatedRoles);
 
-					fetch(inviteUsersURL, {
-						body: formData,
-						method: 'POST',
-					})
-						.then((response) => response.json())
-						.then(({errorMessage, successMessage}) => {
-							if (errorMessage) {
-								showNotification(errorMessage, true);
+		for (let i = 0; i < updatedRolesKeys.length; i++) {
+			roleValues.push(updatedRoles[updatedRolesKeys[i]].value);
+			userIds.push(updatedRolesKeys[i]);
+		}
 
-								return;
-							}
-
-							showNotification(successMessage);
-						})
-						.catch((error) => {
-							showNotification(error.message, true);
-						});
-				}
-			},
+		const formData = objectToFormData({
+			[`${namespace}publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
+				','
+			),
+			[`${namespace}roleValues`]: roleValues.join(','),
+			[`${namespace}userIds`]: userIds.join(','),
 		});
+
+		fetch(inviteUsersURL, {
+			body: formData,
+			method: 'POST',
+		})
+			.then((response) => response.json())
+			.then(({errorMessage, successMessage}) => {
+				if (errorMessage) {
+					showNotification(errorMessage, true);
+
+					return;
+				}
+
+				showNotification(successMessage);
+			})
+			.catch((error) => {
+				showNotification(error.message, true);
+			});
 	};
 
 	const updateRole = (role, user) => {

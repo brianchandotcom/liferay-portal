@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="VariableDeclarationAsUsedCheck" files="change-tracking-store-test/src/testIntegration/java/com/liferay/change/tracking/store/internal/test/CTStoreTest\.java" />
+	</checkstyle>
+</suppressions>

@@ -89,9 +89,14 @@ public class VariableDeclarationAsUsedCheck extends BaseAsUsedCheck {
 				actionLineNumber);
 		}
 
-		checkInline(
-			assignDetailAST, variableName, firstDependentIdentDetailAST,
-			dependentIdentDetailASTList);
+		DetailAST modifiersDetailAST =
+			variableDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
+
+		if (!modifiersDetailAST.branchContains(TokenTypes.ANNOTATION)) {
+			checkInline(
+				assignDetailAST, variableName, firstDependentIdentDetailAST,
+				dependentIdentDetailASTList);
+		}
 	}
 
 }

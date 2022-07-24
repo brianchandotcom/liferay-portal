@@ -41,7 +41,9 @@ public class JavaUpgradeIndexCheck extends BaseJavaTermCheck {
 
 		List<String> extendedClassNames = javaClass.getExtendedClassNames();
 
-		if (extendedClassNames.contains("UpgradeProcess")) {
+		if (extendedClassNames.contains("BaseUpgradePortletPreferences") ||
+			extendedClassNames.contains("UpgradeProcess")) {
+
 			Matcher matcher = _pattern.matcher(fileContent);
 
 			while (matcher.find()) {

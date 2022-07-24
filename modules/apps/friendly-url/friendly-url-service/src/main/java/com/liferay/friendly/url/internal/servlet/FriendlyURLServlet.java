@@ -172,10 +172,8 @@ public class FriendlyURLServlet extends HttpServlet {
 			"request", httpServletRequest
 		).build();
 
-		ServiceContext serviceContext = _getServiceContext(
-			group, httpServletRequest);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(
+			_getServiceContext(group, httpServletRequest));
 
 		Layout defaultLayout = null;
 

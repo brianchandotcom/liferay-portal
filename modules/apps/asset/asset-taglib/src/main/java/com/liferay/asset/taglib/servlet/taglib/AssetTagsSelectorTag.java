@@ -237,10 +237,9 @@ public class AssetTagsSelectorTag extends IncludeTag {
 
 	protected List<String> getTagNames() {
 		if (Validator.isNotNull(_className) && (_classPK > 0)) {
-			List<AssetTag> tags = AssetTagServiceUtil.getTags(
-				_className, _classPK);
-
-			return ListUtil.toList(tags, AssetTag.NAME_ACCESSOR);
+			return ListUtil.toList(
+				AssetTagServiceUtil.getTags(_className, _classPK),
+				AssetTag.NAME_ACCESSOR);
 		}
 
 		if (!_ignoreRequestValue) {

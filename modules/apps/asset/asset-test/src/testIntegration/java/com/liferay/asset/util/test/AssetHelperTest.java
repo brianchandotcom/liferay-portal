@@ -167,32 +167,26 @@ public class AssetHelperTest {
 		Group group2 = GroupTestUtil.addGroup();
 
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, StringPool.BLANK,
+				RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true,
+				null, StringPool.BLANK, null, null,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 			BlogsEntryLocalServiceUtil.addEntry(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				StringPool.BLANK, StringPool.BLANK,
 				RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true,
-				null, StringPool.BLANK, null, null, serviceContext);
-
-			serviceContext = ServiceContextTestUtil.getServiceContext(
-				group1.getGroupId());
+				null, StringPool.BLANK, null, null,
+				ServiceContextTestUtil.getServiceContext(group1.getGroupId()));
 
 			BlogsEntryLocalServiceUtil.addEntry(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				StringPool.BLANK, StringPool.BLANK,
 				RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true,
-				null, StringPool.BLANK, null, null, serviceContext);
-
-			serviceContext = ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId());
-
-			BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				StringPool.BLANK, StringPool.BLANK,
-				RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true,
-				null, StringPool.BLANK, null, null, serviceContext);
+				null, StringPool.BLANK, null, null,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 			AssetEntryQuery assetEntryQuery1 = new AssetEntryQuery();
 
@@ -249,14 +243,11 @@ public class AssetHelperTest {
 			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
 			serviceContext);
 
-		serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId());
-
 		BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
 			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		AssetEntryQuery assetEntryQuery1 = new AssetEntryQuery();
 

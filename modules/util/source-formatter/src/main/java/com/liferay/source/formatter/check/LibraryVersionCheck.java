@@ -24,13 +24,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.GitException;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.processor.SourceProcessor;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.StringReader;
 
 import java.util.ArrayList;
@@ -184,14 +184,14 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			File file = new File(_GITHUB_TOKEN_FILE_PATH);
 
 			if (!file.exists()) {
-				throw new FileNotFoundException(
+				throw new GitException(
 					_GITHUB_TOKEN_FILE_PATH + " does not exist");
 			}
 
 			githubToken = FileUtil.read(file);
 
 			if (Validator.isNull(githubToken)) {
-				throw new RuntimeException(
+				throw new GitException(
 					"No github token found, place the github token in " +
 						_GITHUB_TOKEN_FILE_PATH);
 			}
@@ -322,8 +322,9 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				}
 			}
 			else if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
-				throw new Exception(
-					"Not authorized to access GitHub GraphQL API");
+				throw new GitException(
+					"Not authorized to access GitHub GraphQL API, check the " +
+						"github token in " + _GITHUB_TOKEN_FILE_PATH);
 			}
 		}
 

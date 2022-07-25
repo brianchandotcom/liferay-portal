@@ -982,21 +982,37 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		if ((layout != null) &&
-			((layout.isPrivateLayout() &&
-			  !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
-			 (layout.isPublicLayout() &&
-			  !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED))) {
-
+		if (layout != null) {
 			Group layoutGroup = layout.getGroup();
 
 			if (layoutGroup.isUser()) {
-				User layoutUser = UserLocalServiceUtil.getUserById(
-					company.getCompanyId(), layoutGroup.getClassPK());
+				long originalPlid = ParamUtil.getLong(
+						PortalUtil.getOriginalServletRequest(httpServletRequest),
+						"p_l_id"
+				);
 
-				_updateUserLayouts(layoutUser);
+				if (originalPlid == plid) {
+					String message = "User pages cannot be accessed via p_l_id";
 
-				layout = LayoutLocalServiceUtil.fetchLayout(layout.getPlid());
+					if (_log.isWarnEnabled()) {
+						_log.warn(message);
+					}
+
+					throw new NoSuchLayoutException(message);
+				}
+
+				if ((layout.isPrivateLayout() &&
+						!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
+						(layout.isPublicLayout() &&
+								!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED)) {
+
+					User layoutUser = UserLocalServiceUtil.getUserById(
+							company.getCompanyId(), layoutGroup.getClassPK());
+
+					_updateUserLayouts(layoutUser);
+
+					layout = LayoutLocalServiceUtil.fetchLayout(layout.getPlid());
+				}
 			}
 		}
 

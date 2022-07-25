@@ -1145,7 +1145,7 @@ definition {
 			siteName = "Site Name");
 
 		WebContentDisplayPortlet.viewContent(
-			imageFileName = "custom-url",
+			imageFileName = "dm-document-title",
 			webContentTitle = "Web Content Title");
 	}
 

@@ -4593,7 +4593,7 @@ definition {
 			siteName = "Remote Site");
 
 		WebContentDisplayPortlet.viewContent(
-			imageFileName = "custom-url",
+			imageFileName = "document_1",
 			webContentTitle = "WC WebContent Title");
 	}
 

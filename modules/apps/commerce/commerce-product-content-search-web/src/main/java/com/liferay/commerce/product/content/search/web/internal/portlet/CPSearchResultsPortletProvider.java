@@ -33,14 +33,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Crescenzo Rega
+ * @author Andrea Sbarra
  */
 @Component(
 	enabled = false, immediate = true,
 	property = "model.class.name=" + CPPortletKeys.CP_SEARCH_RESULTS,
 	service = ViewPortletProvider.class
 )
-public class LoginPortletProvider
+public class CPSearchResultsPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override

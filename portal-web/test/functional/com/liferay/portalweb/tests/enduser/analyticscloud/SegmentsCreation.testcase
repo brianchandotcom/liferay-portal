@@ -1610,7 +1610,7 @@ definition {
 
 			ACSegments.editTextCriterion(
 				skip = "true",
-				textInput = "ac-page");
+				textInput = "site-name");
 
 			ACSegments.viewAutocompleteSuggestions(
 				autocompleteText = "${myUrl}",

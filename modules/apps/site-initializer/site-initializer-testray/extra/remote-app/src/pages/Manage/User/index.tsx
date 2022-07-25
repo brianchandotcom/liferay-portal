@@ -15,17 +15,22 @@
 import {useNavigate} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
-import ListView, {ListViewProps} from '../../../components/ListView/ListView';
+import ListView, {
+	ListViewProps,
+} from '../../../components/ListView/ListViewRest';
 import {TableProps} from '../../../components/Table';
-import {getLiferayUserAccounts} from '../../../graphql/queries/liferayUserAccount';
+
+// import {getLiferayUserAccounts} from '../../../graphql/queries/liferayUserAccount';
+
 import {FormModal} from '../../../hooks/useFormModal';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
+import {ActionList} from '../../../types';
 import UserFormModal from './UserFormModal';
 import useUserActions from './useUserActions';
 
 type UserListViewProps = {
-	actions?: any[];
+	actions?: ActionList;
 	formModal?: FormModal;
 	variables?: any;
 } & {listViewProps?: Partial<ListViewProps>; tableProps?: Partial<TableProps>};
@@ -46,7 +51,7 @@ const UserListView: React.FC<UserListViewProps> = ({
 				addButton: () => navigate('create'),
 				title: i18n.translate('users'),
 			}}
-			query={getLiferayUserAccounts}
+			resource="/user-accounts"
 			tableProps={{
 				actions,
 				columns: [
@@ -73,7 +78,6 @@ const UserListView: React.FC<UserListViewProps> = ({
 				],
 				...tableProps,
 			}}
-			transformData={(data) => data?.userAccounts}
 			variables={variables}
 			{...listViewProps}
 		/>

@@ -18,6 +18,8 @@ import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -89,6 +91,14 @@ public class ObjectActionExecutorRegistryImpl
 			(serviceReference, emitter) -> {
 				ObjectActionExecutor objectActionExecutor =
 					bundleContext.getService(serviceReference);
+
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("block-groovy-scripts")) &&
+					(objectActionExecutor instanceof
+						GroovyObjectActionExecutorImpl)) {
+
+					return;
+				}
 
 				emitter.emit(objectActionExecutor.getKey());
 			});

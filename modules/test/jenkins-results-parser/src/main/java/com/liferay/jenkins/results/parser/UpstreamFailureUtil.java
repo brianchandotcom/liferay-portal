@@ -88,17 +88,9 @@ public class UpstreamFailureUtil {
 			return null;
 		}
 
-		String upstreamBranchName = topLevelBuild.getBranchName();
-
-		String repositoryName = "liferay-portal";
-
-		if (!upstreamBranchName.equals("master")) {
-			repositoryName += "-ee";
-		}
-
 		GitWorkingDirectory gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
-				upstreamBranchName, (File)null, repositoryName);
+				topLevelBuild.getBranchName(), (File)null, "liferay-portal");
 
 		for (TestrayBuild testrayBuild : testrayRoutine.getTestrayBuilds()) {
 			if (!gitWorkingDirectory.refContainsSHA(

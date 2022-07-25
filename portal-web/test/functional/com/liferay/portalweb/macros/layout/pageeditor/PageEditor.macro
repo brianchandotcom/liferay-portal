@@ -797,23 +797,19 @@ definition {
 			var position = "1";
 		}
 
-		if (isSet(targetFragmentName)) {
-			PageEditor.addFragment(
-				collectionName = "${collectionName}",
-				fragmentName = "${fragmentName}",
-				targetFragmentName = "Form Container");
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-			PageEditor.moveFragmentToFormContainerViaPageStructure(
-				dropTarget = "${dropTarget}",
-				fragmentName = "${fragmentName}",
-				index = "${index}",
-				targetFragmentName = "${targetFragmentName}");
+		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
+
+		if (isSet(targetFragmentName)) {
+			DragAndDrop.javaScriptDragAndDropObjectBelowNestedObject(
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${fragmentName}",
+				key_targetFragmentName = "${targetFragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
 		}
 		else {
-			PageEditor.gotoTab(tabName = "Fragments and Widgets");
-
-			PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
-
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "${collectionName}",
 				key_fragmentName = "${fragmentName}",
@@ -821,9 +817,9 @@ definition {
 				key_targetFragmentName = "Form Container",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#FORM_CONTAINER_CONTAINER");
-
-			PageEditor.waitForAutoSave();
 		}
+
+		PageEditor.waitForAutoSave();
 	}
 
 	macro addVideoFragmentURL {

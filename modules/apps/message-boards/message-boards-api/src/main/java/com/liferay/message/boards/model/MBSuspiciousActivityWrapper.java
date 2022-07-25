@@ -59,8 +59,7 @@ public class MBSuspiciousActivityWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("messageId", getMessageId());
 		attributes.put("threadId", getThreadId());
-		attributes.put("description", getDescription());
-		attributes.put("type", getType());
+		attributes.put("reason", getReason());
 		attributes.put("validated", isValidated());
 
 		return attributes;
@@ -141,16 +140,10 @@ public class MBSuspiciousActivityWrapper
 			setThreadId(threadId);
 		}
 
-		String description = (String)attributes.get("description");
+		String reason = (String)attributes.get("reason");
 
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
+		if (reason != null) {
+			setReason(reason);
 		}
 
 		Boolean validated = (Boolean)attributes.get("validated");
@@ -216,16 +209,6 @@ public class MBSuspiciousActivityWrapper
 	}
 
 	/**
-	 * Returns the description of this message boards suspicious activity.
-	 *
-	 * @return the description of this message boards suspicious activity
-	 */
-	@Override
-	public String getDescription() {
-		return model.getDescription();
-	}
-
-	/**
 	 * Returns the group ID of this message boards suspicious activity.
 	 *
 	 * @return the group ID of this message boards suspicious activity
@@ -286,6 +269,16 @@ public class MBSuspiciousActivityWrapper
 	}
 
 	/**
+	 * Returns the reason of this message boards suspicious activity.
+	 *
+	 * @return the reason of this message boards suspicious activity
+	 */
+	@Override
+	public String getReason() {
+		return model.getReason();
+	}
+
+	/**
 	 * Returns the suspicious activity ID of this message boards suspicious activity.
 	 *
 	 * @return the suspicious activity ID of this message boards suspicious activity
@@ -303,16 +296,6 @@ public class MBSuspiciousActivityWrapper
 	@Override
 	public long getThreadId() {
 		return model.getThreadId();
-	}
-
-	/**
-	 * Returns the type of this message boards suspicious activity.
-	 *
-	 * @return the type of this message boards suspicious activity
-	 */
-	@Override
-	public String getType() {
-		return model.getType();
 	}
 
 	/**
@@ -421,16 +404,6 @@ public class MBSuspiciousActivityWrapper
 	}
 
 	/**
-	 * Sets the description of this message boards suspicious activity.
-	 *
-	 * @param description the description of this message boards suspicious activity
-	 */
-	@Override
-	public void setDescription(String description) {
-		model.setDescription(description);
-	}
-
-	/**
 	 * Sets the group ID of this message boards suspicious activity.
 	 *
 	 * @param groupId the group ID of this message boards suspicious activity
@@ -491,6 +464,16 @@ public class MBSuspiciousActivityWrapper
 	}
 
 	/**
+	 * Sets the reason of this message boards suspicious activity.
+	 *
+	 * @param reason the reason of this message boards suspicious activity
+	 */
+	@Override
+	public void setReason(String reason) {
+		model.setReason(reason);
+	}
+
+	/**
 	 * Sets the suspicious activity ID of this message boards suspicious activity.
 	 *
 	 * @param suspiciousActivityId the suspicious activity ID of this message boards suspicious activity
@@ -508,16 +491,6 @@ public class MBSuspiciousActivityWrapper
 	@Override
 	public void setThreadId(long threadId) {
 		model.setThreadId(threadId);
-	}
-
-	/**
-	 * Sets the type of this message boards suspicious activity.
-	 *
-	 * @param type the type of this message boards suspicious activity
-	 */
-	@Override
-	public void setType(String type) {
-		model.setType(type);
 	}
 
 	/**

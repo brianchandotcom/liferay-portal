@@ -271,34 +271,19 @@ public interface MBSuspiciousActivityModel
 	public void setThreadId(long threadId);
 
 	/**
-	 * Returns the description of this message boards suspicious activity.
+	 * Returns the reason of this message boards suspicious activity.
 	 *
-	 * @return the description of this message boards suspicious activity
+	 * @return the reason of this message boards suspicious activity
 	 */
 	@AutoEscape
-	public String getDescription();
+	public String getReason();
 
 	/**
-	 * Sets the description of this message boards suspicious activity.
+	 * Sets the reason of this message boards suspicious activity.
 	 *
-	 * @param description the description of this message boards suspicious activity
+	 * @param reason the reason of this message boards suspicious activity
 	 */
-	public void setDescription(String description);
-
-	/**
-	 * Returns the type of this message boards suspicious activity.
-	 *
-	 * @return the type of this message boards suspicious activity
-	 */
-	@AutoEscape
-	public String getType();
-
-	/**
-	 * Sets the type of this message boards suspicious activity.
-	 *
-	 * @param type the type of this message boards suspicious activity
-	 */
-	public void setType(String type);
+	public void setReason(String reason);
 
 	/**
 	 * Returns the validated of this message boards suspicious activity.

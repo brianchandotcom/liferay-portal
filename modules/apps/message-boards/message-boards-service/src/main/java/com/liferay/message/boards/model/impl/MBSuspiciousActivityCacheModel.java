@@ -78,7 +78,7 @@ public class MBSuspiciousActivityCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,10 +104,8 @@ public class MBSuspiciousActivityCacheModel
 		sb.append(messageId);
 		sb.append(", threadId=");
 		sb.append(threadId);
-		sb.append(", description=");
-		sb.append(description);
-		sb.append(", type=");
-		sb.append(type);
+		sb.append(", reason=");
+		sb.append(reason);
 		sb.append(", validated=");
 		sb.append(validated);
 		sb.append("}");
@@ -159,18 +157,11 @@ public class MBSuspiciousActivityCacheModel
 		mbSuspiciousActivityImpl.setMessageId(messageId);
 		mbSuspiciousActivityImpl.setThreadId(threadId);
 
-		if (description == null) {
-			mbSuspiciousActivityImpl.setDescription("");
+		if (reason == null) {
+			mbSuspiciousActivityImpl.setReason("");
 		}
 		else {
-			mbSuspiciousActivityImpl.setDescription(description);
-		}
-
-		if (type == null) {
-			mbSuspiciousActivityImpl.setType("");
-		}
-		else {
-			mbSuspiciousActivityImpl.setType(type);
+			mbSuspiciousActivityImpl.setReason(reason);
 		}
 
 		mbSuspiciousActivityImpl.setValidated(validated);
@@ -201,8 +192,7 @@ public class MBSuspiciousActivityCacheModel
 		messageId = objectInput.readLong();
 
 		threadId = objectInput.readLong();
-		description = objectInput.readUTF();
-		type = objectInput.readUTF();
+		reason = objectInput.readUTF();
 
 		validated = objectInput.readBoolean();
 	}
@@ -242,18 +232,11 @@ public class MBSuspiciousActivityCacheModel
 
 		objectOutput.writeLong(threadId);
 
-		if (description == null) {
+		if (reason == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(description);
-		}
-
-		if (type == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(type);
+			objectOutput.writeUTF(reason);
 		}
 
 		objectOutput.writeBoolean(validated);
@@ -271,8 +254,7 @@ public class MBSuspiciousActivityCacheModel
 	public long modifiedDate;
 	public long messageId;
 	public long threadId;
-	public String description;
-	public String type;
+	public String reason;
 	public boolean validated;
 
 }

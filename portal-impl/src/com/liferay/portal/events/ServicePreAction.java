@@ -986,32 +986,38 @@ public class ServicePreAction extends Action {
 			Group layoutGroup = layout.getGroup();
 
 			if (layoutGroup.isUser()) {
-				long originalPlid = ParamUtil.getLong(
-						PortalUtil.getOriginalServletRequest(httpServletRequest),
-						"p_l_id"
-				);
+				if (!GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-155692"))) {
 
-				if (originalPlid == plid) {
-					String message = "User pages cannot be accessed via p_l_id";
+					long originalPlid = ParamUtil.getLong(
+						PortalUtil.getOriginalServletRequest(
+							httpServletRequest),
+						"p_l_id");
 
-					if (_log.isWarnEnabled()) {
-						_log.warn(message);
+					if (originalPlid == plid) {
+						String message =
+							"User pages cannot be accessed via p_l_id";
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(message);
+						}
+
+						throw new NoSuchLayoutException(message);
 					}
-
-					throw new NoSuchLayoutException(message);
 				}
 
 				if ((layout.isPrivateLayout() &&
-						!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
-						(layout.isPublicLayout() &&
-								!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED)) {
+					 !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
+					(layout.isPublicLayout() &&
+					 !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED)) {
 
 					User layoutUser = UserLocalServiceUtil.getUserById(
-							company.getCompanyId(), layoutGroup.getClassPK());
+						company.getCompanyId(), layoutGroup.getClassPK());
 
 					_updateUserLayouts(layoutUser);
 
-					layout = LayoutLocalServiceUtil.fetchLayout(layout.getPlid());
+					layout = LayoutLocalServiceUtil.fetchLayout(
+						layout.getPlid());
 				}
 			}
 		}

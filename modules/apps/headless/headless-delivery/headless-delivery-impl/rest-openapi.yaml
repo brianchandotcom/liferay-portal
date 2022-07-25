@@ -15895,6 +15895,22 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
                                 type: array
+        delete:
+            description:
+                Deletes the suspicious activity from message board and returns a 204 if the operation succeeds.
+            operationId: deleteMessageBoardSuspiciousActivityMessageBoardSuspiciousActivity
+            parameters:
+                - in: path
+                  name: suspiciousActivityId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
             tags: [ "MessageBoardSuspiciousActivity" ]
     "/message-board-message/{messageBoardMessageId}/message-board-suspicious-activity":
         get:
@@ -16035,7 +16051,7 @@ paths:
         post:
             description:
                 Creates a new message board suspicious activity inside a thread.
-            operationId: postMessageBoardThreadMessageBoardSuspiciousActivity
+            operationId: postMessageBoardThreadMessageBoardSuspiciousActivityPage
             parameters:
                 - in: path
                   name: messageBoardThreadId

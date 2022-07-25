@@ -95,7 +95,7 @@ export declare function normalizeFieldSettings(
 				objectStates: ObjectState[];
 		  }
 		| undefined;
-	relationship?:
+	objectRelationshipName?:
 		| string
 		| number
 		| boolean
@@ -105,7 +105,7 @@ export declare function normalizeFieldSettings(
 				objectStates: ObjectState[];
 		  }
 		| undefined;
-	summarizeField?:
+	objectFieldName?:
 		| string
 		| number
 		| boolean

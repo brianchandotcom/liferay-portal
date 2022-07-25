@@ -46,8 +46,8 @@ export declare function useObjectFieldForm({
 			showCounter: any;
 			showFilesInDocumentsAndMedia: any;
 			storageDLFolderPath: any;
-			relationship: any;
-			summarizeField: any;
+			objectRelationshipName: any;
+			objectFieldName: any;
 			filters: any;
 			stateFlow: any;
 		}

@@ -151,9 +151,9 @@ type ObjectFieldSettingName =
 	| 'showCounter'
 	| 'showFilesInDocumentsAndMedia'
 	| 'storageDLFolderPath'
-	| 'relationship'
+	| 'objectRelationshipName'
 	| 'function'
-	| 'summarizeField'
+	| 'objectFieldName'
 	| 'filters'
 	| 'stateFlow';
 

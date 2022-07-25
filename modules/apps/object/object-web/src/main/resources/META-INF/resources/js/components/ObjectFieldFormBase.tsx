@@ -430,14 +430,14 @@ export function useObjectFieldForm({
 			errors.businessType = REQUIRED_MSG;
 		}
 		else if (field.businessType === 'Aggregation') {
-			if (!settings.relationship) {
-				errors.relationship = REQUIRED_MSG;
+			if (!settings.objectRelationshipName) {
+				errors.objectRelationshipName = REQUIRED_MSG;
 			}
 			if (!settings.function) {
 				errors.function = REQUIRED_MSG;
 			}
-			if (settings.function !== 'COUNT' && !settings.summarizeField) {
-				errors.summarizeField = REQUIRED_MSG;
+			if (settings.function !== 'COUNT' && !settings.objectFieldName) {
+				errors.objectFieldName = REQUIRED_MSG;
 			}
 		}
 		else if (field.businessType === 'Attachment') {
@@ -578,7 +578,7 @@ function AggregationSourceProperty({
 
 				const currentRelatedObjectRelationship = objectRelationships.find(
 					(relationship) =>
-						relationship.name === settings.relationship
+						relationship.name === settings.objectRelationshipName
 				) as ObjectRelationship;
 
 				const currentFunction = aggregationFunctions.find(
@@ -592,7 +592,7 @@ function AggregationSourceProperty({
 
 				const currentSummarizeField = relatedFields.find(
 					(relatedField) =>
-						relatedField.name === settings.summarizeField
+						relatedField.name === settings.objectFieldName
 				) as ObjectField;
 
 				if (onRelationshipChange) {
@@ -655,15 +655,15 @@ function AggregationSourceProperty({
 
 		const fieldSettingWithoutSummarizeField = objectFieldSettings.filter(
 			(fieldSettings) =>
-				fieldSettings.name !== 'summarizeField' &&
+				fieldSettings.name !== 'objectFieldName' &&
 				fieldSettings.name !== 'filters' &&
-				fieldSettings.name !== 'relationship'
+				fieldSettings.name !== 'objectRelationshipName'
 		);
 
 		const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
 			...fieldSettingWithoutSummarizeField,
 			{
-				name: 'relationship',
+				name: 'objectRelationshipName',
 				value: objectRelationship.name,
 			},
 			{
@@ -700,7 +700,7 @@ function AggregationSourceProperty({
 			setSelectedSummarizeField('');
 
 			const fieldSettingWithoutSummarizeField = objectFieldSettings.filter(
-				(fieldSettings) => fieldSettings.name !== 'summarizeField'
+				(fieldSettings) => fieldSettings.name !== 'objectFieldName'
 			);
 
 			newObjectFieldSettings = [
@@ -740,10 +740,10 @@ function AggregationSourceProperty({
 
 		const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
 			...objectFieldSettings.filter(
-				(fieldSettings) => fieldSettings.name !== 'summarizeField'
+				(fieldSettings) => fieldSettings.name !== 'objectFieldName'
 			),
 			{
-				name: 'summarizeField',
+				name: 'objectFieldName',
 				value: objectField.name as string,
 			},
 		];
@@ -759,7 +759,7 @@ function AggregationSourceProperty({
 				emptyStateMessage={Liferay.Language.get(
 					'no-relationships-were-found'
 				)}
-				error={errors.relationship}
+				error={errors.objectRelationshipName}
 				items={objectRelationships ?? []}
 				label={Liferay.Language.get('relationship')}
 				onChangeQuery={setQuery}
@@ -794,9 +794,9 @@ function AggregationSourceProperty({
 					emptyStateMessage={Liferay.Language.get(
 						'no-fields-were-found'
 					)}
-					error={errors.summarizeField}
+					error={errors.objectFieldName}
 					items={objectRelationshipFields ?? []}
-					label={Liferay.Language.get('summarize-field')}
+					label={Liferay.Language.get('field')}
 					onChangeQuery={setQuery}
 					onSelectItem={(item: ObjectField) => {
 						handleSummarizeFieldChange(item);

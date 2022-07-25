@@ -15,6 +15,11 @@
 	<td>//select/option[text()='${key_option}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RESPONSIVE_TABLE</td>
+	<td>//div[@class='table-responsive']//td[contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

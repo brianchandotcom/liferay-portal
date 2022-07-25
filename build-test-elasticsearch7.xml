@@ -752,9 +752,9 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 			<configure-elasticsearch-ltr-properties />
 
-			<prepare-elasticsearch-ltr />
-
 			<configure-elasticsearch-jdk17 />
+
+			<prepare-elasticsearch-ltr />
 
 			<if>
 				<not>

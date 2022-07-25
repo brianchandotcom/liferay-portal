@@ -123,9 +123,19 @@ public class AssignAsUsedCheck extends BaseAsUsedCheck {
 				}
 			}
 
-			checkInline(
-				assignDetailAST, variableName, dependentIdentDetailAST,
-				dependentIdentDetailASTList);
+			parentDetailAST = getParentWithTokenType(
+				assignDetailAST, TokenTypes.LITERAL_FOR,
+				TokenTypes.LITERAL_WHILE);
+
+			if (parentDetailAST != null) {
+				List<String> names = getNames(parentDetailAST, true);
+
+				if (!names.contains(variableName)) {
+					checkInline(
+						assignDetailAST, variableName, dependentIdentDetailAST,
+						dependentIdentDetailASTList);
+				}
+			}
 
 			return;
 		}

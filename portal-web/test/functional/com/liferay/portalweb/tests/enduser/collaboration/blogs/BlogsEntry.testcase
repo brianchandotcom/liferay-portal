@@ -1163,29 +1163,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		for (var ip : list "0.0.0.0,127.127.127.127,[::1],10.0.0.10,172.17.172.17") {
-			var curl = '''
-				${portalURL}/xmlrpc/pingback \
-				-H 'Content-Type: text/xml' \
-				-u test@liferay.com:test \
-				-d '
-				<?xml version="1.0" encoding="iso-8859-1"?>
-				<methodCall>
-				<methodName>pingback.ping</methodName>
-				<params>
-				<param><value><string>http://${ip}</string></value></param>
-				<param><value><string>http://localhost:8080/web/guest/home/-/blogs/test</string></value></param>
-				</params>
-				</methodCall>'
-			''';
-
-			var returnValue = JSONCurlUtil.post("${curl}");
-
-			if (contains("${returnValue}", "Access Denied")) {
-				echo("The return value is Access Denied");
-			}
-			else {
-				fail("FAIL!");
-			}
+			BlogsEntry.executePingbackViacURL(entryTitle = "test");
 		}
 	}
 

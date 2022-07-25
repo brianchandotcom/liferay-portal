@@ -83,7 +83,7 @@ public class EntityExtensionHandler {
 	}
 
 	public void setExtendedProperties(
-			long companyId, Object entity,
+			long companyId, long userId, Object entity,
 			Map<String, Serializable> extendedProperties)
 		throws Exception {
 
@@ -105,7 +105,7 @@ public class EntityExtensionHandler {
 			}
 
 			extensionProvider.setExtendedProperties(
-				companyId, _className, entity,
+				companyId, userId, _className, entity,
 				extensionProviderExtendedProperties);
 		}
 	}

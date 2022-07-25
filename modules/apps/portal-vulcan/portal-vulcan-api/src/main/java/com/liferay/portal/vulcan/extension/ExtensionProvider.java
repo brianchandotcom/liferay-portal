@@ -37,7 +37,7 @@ public interface ExtensionProvider {
 	public boolean isApplicableExtension(long companyId, String className);
 
 	public void setExtendedProperties(
-			long companyId, String className, Object entity,
+			long companyId, long userId, String className, Object entity,
 			Map<String, Serializable> extendedProperties)
 		throws Exception;
 

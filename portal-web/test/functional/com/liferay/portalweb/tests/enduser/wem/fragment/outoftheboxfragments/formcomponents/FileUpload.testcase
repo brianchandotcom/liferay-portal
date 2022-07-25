@@ -102,6 +102,14 @@ definition {
 
 				PageEditor.addFragment(
 					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
 					fragmentName = "File Upload");
 			}
 		}

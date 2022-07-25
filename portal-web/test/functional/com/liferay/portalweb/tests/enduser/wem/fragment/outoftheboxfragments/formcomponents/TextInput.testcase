@@ -305,6 +305,14 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
 				fragmentName = "Text Input");
 		}
 
@@ -358,6 +366,14 @@ definition {
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Text Input");
 		}
@@ -414,6 +430,14 @@ definition {
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Text Input");
 

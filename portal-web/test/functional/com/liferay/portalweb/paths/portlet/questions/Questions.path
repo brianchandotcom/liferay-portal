@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>EDIT_ANSWER</td>
-	<td>//button[contains(@class,'text-reset')]//a[contains(.,'Edit')]</td>
+	<td>//button[contains(@class,'btn btn-secondary') and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

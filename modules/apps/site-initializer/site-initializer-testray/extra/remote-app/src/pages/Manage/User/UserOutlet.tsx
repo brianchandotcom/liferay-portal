@@ -12,23 +12,19 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import {useEffect} from 'react';
 import {Outlet, useParams} from 'react-router-dom';
 
-import {UserAccount, getLiferayUserAccount} from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
+import {useFetch} from '../../../hooks/useFetch';
 import i18n from '../../../i18n';
+import {getUserAccountQuery} from '../../../services/rest';
 
 const UserOutlet = () => {
 	const {userId} = useParams();
-	const {data} = useQuery<{userAccount: UserAccount}>(getLiferayUserAccount, {
-		variables: {
-			userAccountId: userId,
-		},
-	});
+	const {data} = useFetch(getUserAccountQuery(userId as string));
 
-	const userAccount = data?.userAccount;
+	const userAccount = data;
 	const {setHeading, setTabs} = useHeader();
 
 	useEffect(() => {

@@ -650,7 +650,7 @@ definition {
 
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Rating",
-				metricValue = "8.00/10");
+				metricValue = "8.00");
 		}
 	}
 

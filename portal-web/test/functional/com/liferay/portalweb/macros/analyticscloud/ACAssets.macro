@@ -165,9 +165,7 @@ definition {
 			}
 		}
 
-		AssertTextEquals(
-			locator1 = "ACAssets#METRIC_VALUE",
-			value1 = "${metricValue}");
+		AssertElementPresent(locator1 = "ACAssets#METRIC_VALUE");
 	}
 
 }

@@ -94,22 +94,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 
 	@Override
 	public void onBeforeCreate(T model) throws ModelListenerException {
-		try {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-					_getCompanyId(model), _modelClass.getName());
-
-			if (objectDefinition == null) {
-				return;
-			}
-
-			_objectValidationRuleLocalService.validate(
-				model, objectDefinition.getObjectDefinitionId(),
-				model.getModelAttributes());
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
+		_validateSystemObject(model);
 	}
 
 	@Override
@@ -136,22 +121,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 	public void onBeforeUpdate(T originalModel, T model)
 		throws ModelListenerException {
 
-		try {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-					_getCompanyId(model), _modelClass.getName());
-
-			if (objectDefinition == null) {
-				return;
-			}
-
-			_objectValidationRuleLocalService.validate(
-				model, objectDefinition.getObjectDefinitionId(),
-				model.getModelAttributes());
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
+		_validateSystemObject(model);
 	}
 
 	private void _executeObjectActions(
@@ -309,6 +279,25 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 		}
 
 		return baseModel.getModelAttributes();
+	}
+
+	private void _validateSystemObject(T model) throws ModelListenerException {
+		try {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+					_getCompanyId(model), _modelClass.getName());
+
+			if (objectDefinition == null) {
+				return;
+			}
+
+			_objectValidationRuleLocalService.validate(
+				model, objectDefinition.getObjectDefinitionId(),
+				model.getModelAttributes());
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

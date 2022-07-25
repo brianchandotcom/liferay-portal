@@ -33,7 +33,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,16 +47,12 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		_indexUserDocuments();
-	}
-
 	@Test
 	public void testMultiMatchQueryBoolPrefix() {
+		_indexUserDocuments("delta", "omega", "userName4");
+
+		_indexUserDocuments("omega", "delta", "userName5");
+
 		MultiMatchQuery multiMatchQuery = queries.multiMatch(
 			"delta", "firstName", "lastName");
 
@@ -70,6 +65,8 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 
 	@Test
 	public void testMultiMatchQueryCrossField() {
+		_indexUserDocuments("bravo", "alpha", "userName2");
+
 		MultiMatchQuery multiMatchQuery = queries.multiMatch(
 			"bravo alpha", "firstName", "lastName");
 
@@ -83,6 +80,12 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 
 	@Test
 	public void testMultiMatchQueryDefault() {
+		_indexUserDocuments("alpha", "omega", "userName1");
+
+		_indexUserDocuments("bravo", "alpha", "userName2");
+
+		_indexUserDocuments("alpha", "zeta", "userName6");
+
 		MultiMatchQuery multiMatchQuery = queries.multiMatch(
 			"alpha", "firstName", "lastName");
 
@@ -94,6 +97,8 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 
 	@Test
 	public void testMultiMatchQueryPhrasePrefix() {
+		_indexUserDocuments("bro charlie", "iota", "userName3");
+
 		MultiMatchQuery multiMatchQuery = queries.multiMatch(
 			"bro", "firstName", "lastName");
 
@@ -106,6 +111,10 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 
 	@Test
 	public void testMultiMatchQueryTieBreaker() {
+		_indexUserDocuments("delta", "omega", "userName4");
+
+		_indexUserDocuments("omega", "delta", "userName5");
+
 		MultiMatchQuery multiMatchQuery = queries.multiMatch(
 			"delta", "firstName", "lastName");
 
@@ -159,42 +168,14 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 			});
 	}
 
-	private void _indexUserDocuments() {
+	private void _indexUserDocuments(
+		String firstName, String lastName, String userName) {
+
 		addDocument(
 			document -> {
-				document.addKeyword("firstName", "alpha");
-				document.addKeyword("lastName", "omega");
-				document.addKeyword(Field.USER_NAME, "userName1");
-			});
-		addDocument(
-			document -> {
-				document.addKeyword("firstName", "bravo");
-				document.addKeyword("lastName", "alpha");
-				document.addKeyword(Field.USER_NAME, "userName2");
-			});
-		addDocument(
-			document -> {
-				document.addKeyword("firstName", "bro charlie");
-				document.addKeyword("lastName", "iota");
-				document.addKeyword(Field.USER_NAME, "userName3");
-			});
-		addDocument(
-			document -> {
-				document.addKeyword("firstName", "delta");
-				document.addKeyword("lastName", "omega");
-				document.addKeyword(Field.USER_NAME, "userName4");
-			});
-		addDocument(
-			document -> {
-				document.addKeyword("firstName", "omega");
-				document.addKeyword("lastName", "delta");
-				document.addKeyword(Field.USER_NAME, "userName5");
-			});
-		addDocument(
-			document -> {
-				document.addKeyword("firstName", "alpha");
-				document.addKeyword("lastName", "zeta");
-				document.addKeyword(Field.USER_NAME, "userName6");
+				document.addKeyword("firstName", firstName);
+				document.addKeyword("lastName", lastName);
+				document.addKeyword(Field.USER_NAME, userName);
 			});
 	}
 

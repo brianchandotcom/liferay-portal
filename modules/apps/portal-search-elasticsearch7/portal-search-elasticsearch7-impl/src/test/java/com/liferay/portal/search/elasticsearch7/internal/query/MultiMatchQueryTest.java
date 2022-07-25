@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.query;
 
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
@@ -26,9 +27,11 @@ import com.liferay.portal.search.query.MultiMatchQuery;
 import com.liferay.portal.search.query.Operator;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
+import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -168,15 +171,29 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 			});
 	}
 
+	private Document _createDocument(
+		String firstName, String lastName, String userName) {
+
+		Document document = DocumentFixture.newDocument(
+			getCompanyId(), getGroupId(), getEntryClassName());
+
+		document.addKeyword("firstName", firstName);
+		document.addKeyword("lastName", lastName);
+		document.addKeyword(Field.USER_NAME, userName);
+
+		return document;
+	}
+
 	private void _indexUserDocuments(
 		String firstName, String lastName, String userName) {
 
-		addDocument(
-			document -> {
-				document.addKeyword("firstName", firstName);
-				document.addKeyword("lastName", lastName);
-				document.addKeyword(Field.USER_NAME, userName);
-			});
+		Document document = _createDocument(firstName, lastName, userName);
+
+		addDocument(document);
+
+		_documents.add(document);
 	}
+
+	private final List<Document> _documents = new ArrayList<>();
 
 }

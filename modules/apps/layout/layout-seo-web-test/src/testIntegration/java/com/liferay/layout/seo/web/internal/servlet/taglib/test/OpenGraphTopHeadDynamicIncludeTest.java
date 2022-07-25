@@ -1406,7 +1406,11 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Elements alternateLinkElements = document.select(
 			"link[rel='alternate']");
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		for (Locale locale : locales) {
 			Elements localeAlternateLinkElements = alternateLinkElements.select(

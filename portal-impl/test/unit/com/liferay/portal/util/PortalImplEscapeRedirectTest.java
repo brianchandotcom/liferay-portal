@@ -121,6 +121,11 @@ public class PortalImplEscapeRedirectTest {
 	}
 
 	@Test
+	public void testEscapeRedirectWithEscapingSequenceCharacter() {
+		Assert.assertNull(_portalImpl.escapeRedirect("\t//example.com"));
+	}
+
+	@Test
 	public void testEscapeRedirectWithIPs() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS", 2);

@@ -135,8 +135,7 @@ create table MBSuspiciousActivity (
 	modifiedDate DATE null,
 	messageId LONG,
 	threadId LONG,
-	description STRING null,
-	type_ VARCHAR(75) null,
+	reason VARCHAR(75) null,
 	validated BOOLEAN,
 	primary key (suspiciousActivityId, ctCollectionId)
 );

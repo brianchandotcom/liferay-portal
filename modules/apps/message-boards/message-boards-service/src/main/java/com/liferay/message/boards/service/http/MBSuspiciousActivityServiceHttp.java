@@ -51,19 +51,61 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class MBSuspiciousActivityServiceHttp {
 
 	public static com.liferay.message.boards.model.MBSuspiciousActivity
-			addOrUpdateSuspiciousActivity(
-				HttpPrincipal httpPrincipal, long messageId, String description,
-				String type)
+			addOrUpdateSuspiciousActivityByMessage(
+				HttpPrincipal httpPrincipal, long messageId, String reason)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBSuspiciousActivityServiceUtil.class,
-				"addOrUpdateSuspiciousActivity",
-				_addOrUpdateSuspiciousActivityParameterTypes0);
+				"addOrUpdateSuspiciousActivityByMessage",
+				_addOrUpdateSuspiciousActivityByMessageParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, messageId, description, type);
+				methodKey, messageId, reason);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.message.boards.model.MBSuspiciousActivity)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.message.boards.model.MBSuspiciousActivity
+			addOrUpdateSuspiciousActivityByThread(
+				HttpPrincipal httpPrincipal, String reason, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBSuspiciousActivityServiceUtil.class,
+				"addOrUpdateSuspiciousActivityByThread",
+				_addOrUpdateSuspiciousActivityByThreadParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, reason, threadId);
 
 			Object returnObj = null;
 
@@ -103,7 +145,7 @@ public class MBSuspiciousActivityServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				MBSuspiciousActivityServiceUtil.class,
 				"deleteSuspiciousActivity",
-				_deleteSuspiciousActivityParameterTypes1);
+				_deleteSuspiciousActivityParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, suspiciousActivityId);
@@ -146,7 +188,7 @@ public class MBSuspiciousActivityServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				MBSuspiciousActivityServiceUtil.class,
 				"getMessageSuspiciousActivities",
-				_getMessageSuspiciousActivitiesParameterTypes2);
+				_getMessageSuspiciousActivitiesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, messageId);
@@ -182,7 +224,7 @@ public class MBSuspiciousActivityServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBSuspiciousActivityServiceUtil.class, "getSuspiciousActivity",
-				_getSuspiciousActivityParameterTypes3);
+				_getSuspiciousActivityParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, suspiciousActivityId);
@@ -225,7 +267,7 @@ public class MBSuspiciousActivityServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				MBSuspiciousActivityServiceUtil.class,
 				"getThreadSuspiciousActivities",
-				_getThreadSuspiciousActivitiesParameterTypes4);
+				_getThreadSuspiciousActivitiesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, threadId);
@@ -261,7 +303,7 @@ public class MBSuspiciousActivityServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBSuspiciousActivityServiceUtil.class, "updateValidated",
-				_updateValidatedParameterTypes5);
+				_updateValidatedParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, suspiciousActivityId);
@@ -299,22 +341,26 @@ public class MBSuspiciousActivityServiceHttp {
 		MBSuspiciousActivityServiceHttp.class);
 
 	private static final Class<?>[]
-		_addOrUpdateSuspiciousActivityParameterTypes0 = new Class[] {
-			long.class, String.class, String.class
+		_addOrUpdateSuspiciousActivityByMessageParameterTypes0 = new Class[] {
+			long.class, String.class
 		};
-	private static final Class<?>[] _deleteSuspiciousActivityParameterTypes1 =
+	private static final Class<?>[]
+		_addOrUpdateSuspiciousActivityByThreadParameterTypes1 = new Class[] {
+			String.class, long.class
+		};
+	private static final Class<?>[] _deleteSuspiciousActivityParameterTypes2 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_getMessageSuspiciousActivitiesParameterTypes2 = new Class[] {
+		_getMessageSuspiciousActivitiesParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getSuspiciousActivityParameterTypes3 =
+	private static final Class<?>[] _getSuspiciousActivityParameterTypes4 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_getThreadSuspiciousActivitiesParameterTypes4 = new Class[] {
+		_getThreadSuspiciousActivitiesParameterTypes5 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateValidatedParameterTypes5 =
+	private static final Class<?>[] _updateValidatedParameterTypes6 =
 		new Class[] {long.class};
 
 }

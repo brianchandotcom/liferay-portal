@@ -17,7 +17,6 @@ import getTop from './get_top';
 let _opener;
 
 export default function getOpener() {
-	console.log('GETOPENER');
 	let openingWindow = _opener;
 
 	if (!openingWindow) {

@@ -35,7 +35,13 @@ import ClayModal, {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
-import {fetch, getOpener, objectToFormData, openConfirmModal, sub} from 'frontend-js-web';
+import {
+	fetch,
+	getOpener,
+	objectToFormData,
+	openConfirmModal,
+	sub,
+} from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
 const CollaboratorRow = ({

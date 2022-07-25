@@ -992,6 +992,138 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9677 | As a buyer, I want to be able to view a virtual product Detail page"
+	@priority = "3"
+	test CanViewSingleSkuVirtualProductDetailPage {
+		property portal.acceptance = "false";
+
+		var sampleFileName = "Commerce_White.jpg";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a new Virtual product is created with all the data needed") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				gtin = "GTIN1",
+				manufacturerPartNumber = "MPN1",
+				productDescription = "Full Description",
+				productName = "Virtual Product",
+				productType = "Virtual",
+				shortDescription = "Short Description",
+				sku = "VIRTUALSKU",
+				specifications = "Warranty:6 Months");
+
+			CommerceJSONWarehousesAndInventoriesAPI._addWarehouseItem(
+				warehouseItemQuantity = "60",
+				warehouseItemSku = "VIRTUALSKU",
+				warehouseName = "Italy");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Virtual");
+
+			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Virtual");
+
+			CommerceProducts.updateProductVirtualConfiguration(
+				enableSample = "true",
+				sampleFileName = "${sampleFileName}",
+				virtualProductFile = "Commerce_Blue.jpg");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "VIRTUALSKU");
+
+			CommerceSKUs.editSkuPricing(
+				basePrice = "55.00",
+				salePrice = "50.00");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceProductImages.addProductImages(imageTitles = "Black,Blue");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+
+			for (var subscriptionName : list "Payment,Delivery") {
+				CommerceProducts.configureSubscription(
+					subscriptionExactDay = "15",
+					subscriptionLength = "10",
+					subscriptionMode = "Exact Day of Month",
+					subscriptionName = "${subscriptionName} Subscription",
+					subscriptionType = "Month");
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+			CommerceProducts.updateProductInventoryConfiguration(
+				displayAvailability = "true",
+				displayStockQuantity = "true",
+				minOrderQuantity = "4",
+				publish = "true");
+
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "20",
+				target = "products",
+				title = "Virtual Products Discount",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Virtual Products Discount",
+				productName = "Virtual Product");
+		}
+
+		task ("When the buyer navigates to the product detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoProductDetails(productName = "Virtual Product");
+		}
+
+		task ("Then the buyer can see all the Virtual Products fields") {
+			FrontStore.assertProductDetails(
+				deliverySubscriptionPeriod = "Every 10 Months",
+				discountPercentage = "20",
+				minQuantity = "4",
+				paymentSubscriptionPeriod = "Every 10 Months",
+				productAvailability = "Available",
+				productFullDescription = "Full Description",
+				productGTIN = "GTIN1",
+				productImages = "Black,Blue",
+				productListPriceInactive = "55.00",
+				productMPN = "MPN1",
+				productName = "Virtual Product",
+				productNetPrice = "160.00",
+				productSalePriceInactive = "50.00",
+				productShortDescription = "Short Description",
+				productSKU = "VIRTUALSKU",
+				productSpecifications = "Warranty:6 Months",
+				productStockQuantity = "60",
+				sampleFileName = "${sampleFileName}");
+		}
+	}
+
 	@description = "COMMERCE-6355. As a buyer, I want to be able to remove a product from wish list from Product Details"
 	@priority = "3"
 	test RemoveProductFromWishListFromProductDetails {

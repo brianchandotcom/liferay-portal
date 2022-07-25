@@ -202,11 +202,6 @@ definition {
 					key_text = "Help Text",
 					locator1 = "TextInput#ANY",
 					value1 = "Add your help text here.");
-
-				AssertTextEquals(
-					key_text = "Label",
-					locator1 = "TextInput#ANY",
-					value1 = "Custom Attachment From Computer");
 			}
 
 			task ("Assert there's a help text displayed") {
@@ -276,11 +271,6 @@ definition {
 					key_text = "Help Text",
 					locator1 = "TextInput#ANY",
 					value1 = "Add your help text here.");
-
-				AssertTextEquals(
-					key_text = "Label",
-					locator1 = "TextInput#ANY",
-					value1 = "Custom Attachment From DM");
 			}
 
 			task ("Assert there's a help text displayed") {

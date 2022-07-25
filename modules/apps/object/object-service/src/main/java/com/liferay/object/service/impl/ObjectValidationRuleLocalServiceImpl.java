@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -192,13 +191,7 @@ public class ObjectValidationRuleLocalServiceImpl
 		}
 
 		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
-			HashMapBuilder.<String, Object>putAll(
-				modelAttributes
-			).put(
-				"currentUserId",
-				() -> (PrincipalThreadLocal.getUserId() > 0) ?
-					PrincipalThreadLocal.getUserId() : null
-			);
+			HashMapBuilder.<String, Object>putAll(modelAttributes);
 
 		if (object instanceof ObjectEntry) {
 			Map<String, Serializable> values =

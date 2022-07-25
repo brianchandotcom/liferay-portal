@@ -25,6 +25,7 @@ import java.util.List;
 public interface GroupedCPTypeHelper {
 
 	public List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntry(
+			long commerceAccountId, long commerceChannelGroupId,
 			long cpDefinitionId)
 		throws PortalException;
 

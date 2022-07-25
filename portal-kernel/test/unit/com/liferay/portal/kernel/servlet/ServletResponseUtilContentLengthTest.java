@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.ByteArrayInputStream;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -31,73 +32,53 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 public class ServletResponseUtilContentLengthTest {
 
+	@BeforeClass
+	public static void setUpClass() {
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
+	}
+
 	@Test
 	public void testContentLengthEqualsToInputStreamLength() throws Exception {
-		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
-
-		String content = StringUtil.randomString(10);
-
-		int contentLength = content.length();
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		ServletResponseUtil.write(
-			mockHttpServletResponse,
-			new ByteArrayInputStream(content.getBytes()), contentLength);
-
-		Assert.assertEquals(
-			String.valueOf(contentLength),
-			mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_LENGTH));
-		Assert.assertEquals(
-			content, mockHttpServletResponse.getContentAsString());
+		_assertContentLength(_INPUTSTREAM_LENGTH);
 	}
 
 	@Test
 	public void testContentLengthGreaterThanInputStreamLength()
 		throws Exception {
 
-		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
-
-		String content = StringUtil.randomString(10);
-
-		int contentLength = content.length() + 1;
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		ServletResponseUtil.write(
-			mockHttpServletResponse,
-			new ByteArrayInputStream(content.getBytes()), contentLength);
-
-		Assert.assertEquals(
-			String.valueOf(contentLength),
-			mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_LENGTH));
-		Assert.assertEquals(
-			content, mockHttpServletResponse.getContentAsString());
+		_assertContentLength(_INPUTSTREAM_LENGTH + 1);
 	}
 
 	@Test
 	public void testContentLengthLowerThanInputStreamLength() throws Exception {
-		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
+		_assertContentLength(_INPUTSTREAM_LENGTH - 1);
+	}
 
-		String content = StringUtil.randomString(10);
-
-		int contentLength = content.length() - 1;
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
+	private void _assertContentLength(int contentLength) throws Exception {
+		String content = StringUtil.randomString(_INPUTSTREAM_LENGTH);
 
 		ServletResponseUtil.write(
-			mockHttpServletResponse,
+			_mockHttpServletResponse,
 			new ByteArrayInputStream(content.getBytes()), contentLength);
 
 		Assert.assertEquals(
 			String.valueOf(contentLength),
-			mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_LENGTH));
-		Assert.assertEquals(
-			content.substring(0, contentLength),
-			mockHttpServletResponse.getContentAsString());
+			_mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_LENGTH));
+
+		if (contentLength >= _INPUTSTREAM_LENGTH) {
+			Assert.assertEquals(
+				content, _mockHttpServletResponse.getContentAsString());
+		}
+		else {
+			Assert.assertEquals(
+				content.substring(0, contentLength),
+				_mockHttpServletResponse.getContentAsString());
+		}
 	}
+
+	private static final int _INPUTSTREAM_LENGTH = 10;
+
+	private final MockHttpServletResponse _mockHttpServletResponse =
+		new MockHttpServletResponse();
 
 }

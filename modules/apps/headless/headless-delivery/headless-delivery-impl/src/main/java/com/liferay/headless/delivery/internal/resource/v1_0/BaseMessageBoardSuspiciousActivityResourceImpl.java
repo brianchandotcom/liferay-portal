@@ -266,7 +266,13 @@ public abstract class BaseMessageBoardSuspiciousActivityResourceImpl
 			)
 		}
 	)
-	@io.swagger.v3.oas.annotations.tags.Tags(value = {})
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "MessageBoardSuspiciousActivity"
+			)
+		}
+	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
 		"/message-board-suspicious-activity/{suspiciousActivityId}/message-board-suspicious-activity"

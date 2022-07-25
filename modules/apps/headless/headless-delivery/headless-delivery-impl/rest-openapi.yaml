@@ -15895,6 +15895,7 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
                                 type: array
+            tags: [ "MessageBoardSuspiciousActivity" ]
         delete:
             description:
                 Deletes the suspicious activity from message board and returns a 204 if the operation succeeds.
@@ -16051,7 +16052,7 @@ paths:
         post:
             description:
                 Creates a new message board suspicious activity inside a thread.
-            operationId: postMessageBoardThreadMessageBoardSuspiciousActivityPage
+            operationId: postMessageBoardThreadMessageBoardSuspiciousActivity
             parameters:
                 - in: path
                   name: messageBoardThreadId

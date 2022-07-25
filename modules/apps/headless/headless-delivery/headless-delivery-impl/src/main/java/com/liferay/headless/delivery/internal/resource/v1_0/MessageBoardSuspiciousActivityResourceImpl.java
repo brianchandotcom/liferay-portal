@@ -166,7 +166,7 @@ public class MessageBoardSuspiciousActivityResourceImpl
 
 
 	@Override
-	public Page<MessageBoardSuspiciousActivity> postMessageBoardThreadMessageBoardSuspiciousActivityPage(
+	public MessageBoardSuspiciousActivity postMessageBoardThreadMessageBoardSuspiciousActivity(
 		Long messageBoardThreadId, MessageBoardSuspiciousActivity messageBoardSuspiciousActivity)
 		throws Exception{
 
@@ -180,10 +180,9 @@ public class MessageBoardSuspiciousActivityResourceImpl
 				messageBoardSuspiciousActivity.getType()
 			));
 		System.out.println(mbSuspiciousActivity);
-		return Page.of(
-			TransformUtil.transform(
-				mbSuspiciousActivity,
-				this::_toMessageSuspiciousActivity));
+		return TransformUtil.transform(
+			mbSuspiciousActivity,
+			this::_toMessageSuspiciousActivity).get(0);
 
 
 	}

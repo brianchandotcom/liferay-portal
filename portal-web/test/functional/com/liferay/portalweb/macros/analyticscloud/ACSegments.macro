@@ -611,7 +611,9 @@ definition {
 	}
 
 	macro viewAutocompleteSuggestions {
-		Click(locator1 = "ACSegments#TEXT_INPUT");
+		Click(
+			index = "1",
+			locator1 = "ACSegments#TEXT_INPUT");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ACSegments#SEGMENT_AUTOCOMPLETE_DROPDOWN",

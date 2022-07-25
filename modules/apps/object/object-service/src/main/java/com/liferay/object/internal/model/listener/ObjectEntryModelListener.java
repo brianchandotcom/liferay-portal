@@ -217,8 +217,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		try {
 			_objectValidationRuleLocalService.validate(
-				objectEntry, objectEntry.getObjectDefinitionId(),
-				objectEntry.getModelAttributes());
+				objectEntry, objectEntry.getObjectDefinitionId());
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);

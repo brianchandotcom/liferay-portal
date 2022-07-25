@@ -30,6 +30,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
@@ -181,21 +182,20 @@ public class ObjectValidationRuleLocalServiceImpl
 	}
 
 	@Override
-	public void validate(
-			Object object, long objectDefinitionId,
-			Map<String, Object> modelAttributes)
+	public void validate(BaseModel<?> baseModel, long objectDefinitionId)
 		throws PortalException {
 
-		if (object == null) {
+		if (baseModel == null) {
 			return;
 		}
 
 		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
-			HashMapBuilder.<String, Object>putAll(modelAttributes);
+			HashMapBuilder.<String, Object>putAll(
+				baseModel.getModelAttributes());
 
-		if (object instanceof ObjectEntry) {
+		if (baseModel instanceof ObjectEntry) {
 			Map<String, Serializable> values =
-				_objectEntryLocalService.getValues((ObjectEntry)object);
+				_objectEntryLocalService.getValues((ObjectEntry)baseModel);
 
 			if (values != null) {
 				hashMapWrapper.putAll(values);

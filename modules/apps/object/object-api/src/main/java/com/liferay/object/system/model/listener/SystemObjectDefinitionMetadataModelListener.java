@@ -292,8 +292,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 			}
 
 			_objectValidationRuleLocalService.validate(
-				model, objectDefinition.getObjectDefinitionId(),
-				model.getModelAttributes());
+				model, objectDefinition.getObjectDefinitionId());
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);

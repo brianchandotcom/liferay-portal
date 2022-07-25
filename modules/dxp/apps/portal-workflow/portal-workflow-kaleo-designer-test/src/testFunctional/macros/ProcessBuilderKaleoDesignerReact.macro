@@ -1611,4 +1611,13 @@ definition {
 			value1 = "${coordinateY}");
 	}
 
+	macro deleteByIconTrashSidebar {
+		Click(
+			key_propertyValue = "${propertyValue}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_SIDEBAR_PROPERTY_BY_VALUE");
+
+	}
+
+	
+
 }

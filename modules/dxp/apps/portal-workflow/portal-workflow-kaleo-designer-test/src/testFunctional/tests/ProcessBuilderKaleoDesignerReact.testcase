@@ -896,12 +896,46 @@ definition {
 	}
 
 	@description = "Verify that the user can delete a specific notification configuration"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeleteSpecificNotification {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteSpecificNotification";
 
-		// TODO CanDeleteSpecificNotification pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "Liferay Notification",
+			newNotification = "true",
+			notificationTemplateValue = "Liferay Template",
+			notificationTypeOption = "email",
+			newSection = "New Notification",
+			sectionOptionList = "1,2,");
+
+		ProcessBuilderKaleoDesignerReact.viewMultipleNotificationPresent(
+			notificationTypeOption = "email",
+			notificationTemplateValue = "Liferay Template",
+			name = "Liferay Notification",
+			sectionOptionList = "1,2");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
+			propertyName = "Notification",
+			propertyValue = "Liferay Notification 1,Liferay Notification 2");
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Liferay Notification 1,Liferay Notification 2");
+
+		ProcessBuilderKaleoDesignerReact.deleteByIconTrashSidebar(propertyValue ="Liferay Notification 1");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationNotPresent(notificationName = "Liferay Notification 1");
+
+		
+		
 	}
 
 	@description = "Verify that the user can delete Nodes of Start"

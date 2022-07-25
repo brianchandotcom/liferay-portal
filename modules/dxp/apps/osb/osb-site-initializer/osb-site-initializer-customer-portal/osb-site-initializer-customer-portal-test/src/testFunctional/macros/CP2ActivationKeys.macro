@@ -7,4 +7,14 @@ definitions {
 
         AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN");
     }
+
+    macro assertInstructionsTable {
+        for (var text : list "${textList}") {
+            var key_text = "${text}";
+
+            AssertElementPresent(locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+
+            AssertVisible(locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+        }
+    }
 }

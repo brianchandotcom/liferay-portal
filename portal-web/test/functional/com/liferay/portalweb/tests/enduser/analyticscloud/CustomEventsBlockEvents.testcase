@@ -149,7 +149,7 @@ definition {
 		task ("Block all custom events") {
 			ACCustomEvents.blockAllCustomEvents();
 
-			ACUtils.viewNoResultsMessage(noResultMessage = "Create some custom events");
+			ACUtils.viewNoResultsMessage(noResultMessage = "No Custom Events Found");
 		}
 
 		task ("Navigation to block custom event list") {

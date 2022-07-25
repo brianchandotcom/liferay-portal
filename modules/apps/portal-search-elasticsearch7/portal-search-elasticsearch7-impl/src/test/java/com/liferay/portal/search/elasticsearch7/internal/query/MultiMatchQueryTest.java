@@ -83,23 +83,27 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 
 	@Test
 	public void testMultiMatchQueryBoolPrefix() {
-		_indexUserDocuments("delta", "omega", "userName4");
+		_indexUserDocuments("delta", "omega", "userName1");
 
-		_indexUserDocuments("omega", "delta", "userName5");
+		_indexUserDocuments("omega", "delta", "userName2");
+
+		_indexUserDocuments("omega", "alpha", "userName3");
 
 		MultiMatchQuery multiMatchQuery = queries.multiMatch(
 			"delta", "firstName", "lastName");
 
 		multiMatchQuery.setType(MultiMatchQuery.Type.BOOL_PREFIX);
 
-		List<String> expected = Arrays.asList("userName4", "userName5");
+		List<String> expected = Arrays.asList("userName1", "userName2");
 
 		_assertSearch(expected, multiMatchQuery);
 	}
 
 	@Test
 	public void testMultiMatchQueryCrossField() {
-		_indexUserDocuments("bravo", "alpha", "userName2");
+		_indexUserDocuments("bravo", "alpha", "userName1");
+
+		_indexUserDocuments("omega", "beta", "userName2");
 
 		MultiMatchQuery multiMatchQuery = queries.multiMatch(
 			"bravo alpha", "firstName", "lastName");
@@ -107,7 +111,7 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 		multiMatchQuery.setOperator(Operator.AND);
 		multiMatchQuery.setType(MultiMatchQuery.Type.CROSS_FIELDS);
 
-		List<String> expected = Arrays.asList("userName2");
+		List<String> expected = Arrays.asList("userName1");
 
 		_assertSearch(expected, multiMatchQuery);
 	}
@@ -118,43 +122,49 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 
 		_indexUserDocuments("bravo", "alpha", "userName2");
 
-		_indexUserDocuments("alpha", "zeta", "userName6");
+		_indexUserDocuments("alpha", "zeta", "userName3");
+
+		_indexUserDocuments("omega", "beta", "userName4");
 
 		MultiMatchQuery multiMatchQuery = queries.multiMatch(
 			"alpha", "firstName", "lastName");
 
 		List<String> expected = Arrays.asList(
-			"userName1", "userName2", "userName6");
+			"userName1", "userName2", "userName3");
 
 		_assertSearch(expected, multiMatchQuery);
 	}
 
 	@Test
 	public void testMultiMatchQueryPhrasePrefix() {
-		_indexUserDocuments("bro charlie", "iota", "userName3");
+		_indexUserDocuments("bro charlie", "iota", "userName1");
+
+		_indexUserDocuments("omega", "beta", "userName2");
 
 		MultiMatchQuery multiMatchQuery = queries.multiMatch(
 			"bro", "firstName", "lastName");
 
 		multiMatchQuery.setType(MultiMatchQuery.Type.PHRASE_PREFIX);
 
-		List<String> expected = Arrays.asList("userName3");
+		List<String> expected = Arrays.asList("userName1");
 
 		_assertSearch(expected, multiMatchQuery);
 	}
 
 	@Test
 	public void testMultiMatchQueryTieBreaker() {
-		_indexUserDocuments("delta", "omega", "userName4");
+		_indexUserDocuments("delta", "omega", "userName1");
 
-		_indexUserDocuments("omega", "delta", "userName5");
+		_indexUserDocuments("omega", "delta", "userName2");
+
+		_indexUserDocuments("omega", "beta", "userName3");
 
 		MultiMatchQuery multiMatchQuery = queries.multiMatch(
 			"delta", "firstName", "lastName");
 
 		multiMatchQuery.setTieBreaker(Float.valueOf(0.3F));
 
-		List<String> expected = Arrays.asList("userName4", "userName5");
+		List<String> expected = Arrays.asList("userName1", "userName2");
 
 		_assertSearch(expected, multiMatchQuery);
 	}

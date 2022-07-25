@@ -27,6 +27,7 @@ import com.liferay.object.service.base.ObjectValidationRuleLocalServiceBaseImpl;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineTracker;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -181,6 +182,7 @@ public class ObjectValidationRuleLocalServiceImpl
 		return objectValidationRulePersistence.update(objectValidationRule);
 	}
 
+	@CTAware(onProduction = true)
 	@Override
 	public void validate(BaseModel<?> baseModel, long objectDefinitionId)
 		throws PortalException {

@@ -51,13 +51,13 @@ definition {
 		}
 
 		task ("And click on 'Save as Draft'") {
-			Click(
+			ClickNoError(
 				key_text = "Save as Draft",
 				locator1 = "Button#ANY");
 		}
 
 		task ("And the admin click on 'OK'") {
-			Click(locator1 = "Button#OK");
+			AssertConfirm(value1 = "There is already a draft version of this product. Continuing will replace that draft version with this draft version. Do you wish to proceed?");
 		}
 
 		task ("And the admin now will see 3 products, one is approved, one is draft and the last one is incomplete") {
@@ -151,11 +151,11 @@ definition {
 				key_itemName = "",
 				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
 
-			Click(
+			ClickNoError(
 				key_optionValue = "Convert to Draft",
 				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
 
-			Click(locator1 = "Button#OK");
+			AssertConfirm(value1 = "Converting the product status to draft will remove the product from the product catalog. Do you wish to proceed?");
 
 			AssertElementPresent(
 				key_status = "Draft",
@@ -418,17 +418,13 @@ definition {
 		}
 
 		task ("And click on 'Save as Draft'") {
-			Click(
+			ClickNoError(
 				key_text = "Save as Draft",
 				locator1 = "Button#ANY");
 		}
 
-		task ("Then a message will be pop-out (check the message)") {
-			AssertElementPresent(locator1 = "CommerceNavigation#VALIDATE_SAVE_AS_DRAFT_MODAL_MESSAGE_WITH_VALIDATION");
-		}
-
-		task ("And if the admin clicks on the 'Cancel' button") {
-			Click(locator1 = "Button#CANCEL");
+		task ("Then a message will be pop-out and if the admin clicks on the 'Cancel' button") {
+			Confirm.dismissAlert();
 		}
 
 		task ("Then nothing happens (check that we still have only 2 products)") {
@@ -443,11 +439,11 @@ definition {
 				key_status = "Approved",
 				locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
 
-			Click(
+			ClickNoError(
 				key_text = "Save as Draft",
 				locator1 = "Button#ANY");
 
-			Click(locator1 = "Button#OK");
+			AssertConfirm(value1 = "There is already a draft version of this product. Continuing will replace that draft version with this draft version. Do you wish to proceed?");
 
 			AssertElementPresent(
 				key_status = "Draft",

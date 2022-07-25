@@ -431,23 +431,21 @@ definition {
 				key_itemName = "",
 				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
 
-			Click(
+			ClickNoError(
 				key_optionValue = "Convert to Draft",
 				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
 
-			Click(locator1 = "Button#CANCEL");
+			Confirm.dismissAlert();
 
 			Click(
 				key_itemName = "",
 				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
 
-			Click(
+			ClickNoError(
 				key_optionValue = "Convert to Draft",
 				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
 
-			AssertElementPresent(locator1 = "CommerceNavigation#VALIDATE_CONVERT_TO_DRAFT_MODAL_MESSAGE");
-
-			Click(locator1 = "Button#OK");
+			AssertConfirm(value1 = "Converting the product status to draft will remove the product from the product catalog. Do you wish to proceed?");
 
 			AssertElementPresent(
 				key_text = "Save as Draft",

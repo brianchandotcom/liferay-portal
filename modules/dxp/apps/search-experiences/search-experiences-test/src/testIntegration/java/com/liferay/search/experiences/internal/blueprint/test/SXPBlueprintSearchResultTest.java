@@ -110,6 +110,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -2024,24 +2025,27 @@ public class SXPBlueprintSearchResultTest {
 
 	@Test
 	public void testTextMatchOverMultipleFields_mostFields() throws Exception {
-		_journalArticleBuilder.setTitle(
-			"coca cola most fields"
+		_updateConfigurationJSON(
+			"queryConfiguration", JSONUtil.put("applyIndexerClauses", false));
+
+		_journalArticleBuilder.setTitleMap(
+			HashMapBuilder.put(
+				LocaleUtil.GERMANY, "coca cola most fields"
+			).put(
+				LocaleUtil.SPAIN, "coca cola most fields"
+			).put(
+				LocaleUtil.US, "coca cola most fields"
+			).build()
 		).build();
 
 		_journalArticleBuilder.setTitle(
 			"coca cola"
 		).build();
 
-		JournalTestUtil.updateArticle(
-			_journalArticles.get(0), "coca cola most fields");
-
 		Map<String, Object> textMatchOverMultipleFields =
 			_getTextMatchOverMultipleFields();
 
-		String[] fields = {
-			"localized_title_en_US^1", "localized_title_de_DE^1",
-			"localized_title_es_ES^1"
-		};
+		String[] fields = {"title_en_US", "title_de_DE", "title_es_ES"};
 
 		textMatchOverMultipleFields.replace("type", "most_fields");
 		textMatchOverMultipleFields.replace("fields", fields);
@@ -2601,10 +2605,18 @@ public class SXPBlueprintSearchResultTest {
 				journalFolderId = _journalFolder.getFolderId();
 			}
 
-			_journalArticles.add(
-				_addJournalArticle(
-					_getGroupId(), journalFolderId, _title, _content,
-					_workflowEnabled, _approved));
+			if (_titleMap != null) {
+				_journalArticles.add(
+					_addJournalArticle(
+						_getGroupId(), journalFolderId, _titleMap, _content,
+						_workflowEnabled, _approved));
+			}
+			else {
+				_journalArticles.add(
+					_addJournalArticle(
+						_getGroupId(), journalFolderId, _title, _content,
+						_workflowEnabled, _approved));
+			}
 
 			_reset();
 		}
@@ -2675,12 +2687,33 @@ public class SXPBlueprintSearchResultTest {
 			return this;
 		}
 
+		public JournalArticleBuilder setTitleMap(Map<Locale, String> titleMap) {
+			_titleMap = titleMap;
+
+			return this;
+		}
+
 		public JournalArticleBuilder setWorkflowEnabled(
 			boolean workflowEnabled) {
 
 			_workflowEnabled = workflowEnabled;
 
 			return this;
+		}
+
+		private JournalArticle _addJournalArticle(
+				long groupId, long folderId, Map<Locale, String> titleMap,
+				String content, boolean workflowEnabled, boolean approved)
+			throws Exception {
+
+			return JournalTestUtil.addArticle(
+				groupId, folderId,
+				PortalUtil.getClassNameId(JournalArticle.class), titleMap, null,
+				HashMapBuilder.put(
+					LocaleUtil.US, content
+				).build(),
+				LocaleUtil.getSiteDefault(), workflowEnabled, approved,
+				_serviceContext);
 		}
 
 		private JournalArticle _addJournalArticle(
@@ -2716,6 +2749,7 @@ public class SXPBlueprintSearchResultTest {
 			_assetTag = null;
 			_content = StringPool.BLANK;
 			_fieldName = StringPool.BLANK;
+			_titleMap = null;
 			_group = null;
 			_journalFolder = null;
 			_latitude = 200;
@@ -2738,6 +2772,7 @@ public class SXPBlueprintSearchResultTest {
 		private double _longitude;
 		private ServiceContext _serviceContext;
 		private String _title;
+		private Map<Locale, String> _titleMap;
 		private boolean _workflowEnabled;
 
 	}

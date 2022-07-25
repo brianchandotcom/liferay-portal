@@ -1164,7 +1164,10 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		for (var ip : list "0.0.0.0,127.127.127.127,[::1],10.0.0.10,172.17.172.17") {
-			BlogsEntry.executePingbackViacURL(entryTitle = "test");
+			BlogsEntry.executePingbackViacURL(
+				entryTitle = "test",
+				ip = "${ip}",
+				portalURL = "${portalURL}");
 		}
 	}
 

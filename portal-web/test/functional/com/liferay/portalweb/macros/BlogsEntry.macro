@@ -539,6 +539,9 @@ definition {
 	}
 
 	macro executePingbackViacURL {
+		var ip = "${ip}";
+		var portalURL = "${portalURL}";
+
 		var curl = '''
 			${portalURL}/xmlrpc/pingback \
 			-H 'Content-Type: text/xml' \

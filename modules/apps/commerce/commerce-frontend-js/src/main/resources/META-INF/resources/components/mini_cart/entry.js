@@ -15,6 +15,8 @@
 import launcher from '../../utilities/launcher';
 import MiniCart from './MiniCart';
 
+import './mini_cart.scss';
+
 export default function entry(...data) {
 	return launcher(MiniCart, ...data);
 }

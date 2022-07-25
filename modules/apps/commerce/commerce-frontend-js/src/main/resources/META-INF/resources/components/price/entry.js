@@ -15,6 +15,8 @@
 import launcher from '../../utilities/launcher';
 import Price from './Price';
 
+import './price.scss';
+
 export default function entry(...data) {
 	return launcher(Price, ...data);
 }

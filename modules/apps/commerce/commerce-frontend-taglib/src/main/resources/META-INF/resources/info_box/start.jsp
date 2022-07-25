@@ -20,6 +20,10 @@
 String linkId = PortalUtil.generateRandomKey(request, "info-box") + "_action-link";
 %>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/info_box/info_box.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div class="<%= "info-box" + (Validator.isNotNull(elementClasses) ? StringPool.SPACE + elementClasses : StringPool.BLANK) %>">
 	<header class="header pb-2">
 		<c:if test="<%= Validator.isNotNull(title) %>">

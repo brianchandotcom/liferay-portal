@@ -17,6 +17,8 @@ import React from 'react';
 
 import Price from '../price/Price';
 
+import './data_renderers.scss';
+
 function PriceRenderer(data) {
 	if (!data.value) {
 		return null;

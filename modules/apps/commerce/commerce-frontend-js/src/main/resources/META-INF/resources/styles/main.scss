@@ -1,19 +1,80 @@
 @import './variables';
 
-@import '../components/account_selector/account_selector';
-@import '../components/add_to_wish_list/add_to_wish_list';
-@import '../components/data_renderers/data_renderers';
-@import '../components/gallery/gallery';
-@import '../components/info_box/info_box';
-@import '../components/item_finder/item_finder';
-@import '../components/mini_cart/mini_cart';
-@import '../components/mini_compare/mini_compare';
-@import '../components/modal_content/modal_content';
-@import '../components/price/price';
-@import '../components/product_card/product_card';
-@import '../components/quantity_selector/quantity_selector';
-@import '../components/step_tracker/step_tracker';
-@import '../components/summary/summary';
+.product-card {
+	$product-card-gutter: 1rem;
+	$product-card-min-width: 15rem;
+	$product-card-min-width-1024: 13.125rem;
+
+	a {
+		text-decoration: none;
+	}
+
+	&-tiles {
+		display: grid;
+		grid-column-gap: $product-card-gutter;
+		grid-template-columns: repeat(
+			auto-fill,
+			minmax($product-card-min-width, 1fr)
+		);
+		margin-bottom: $product-card-gutter;
+
+		@media (max-width: 1024px) {
+			grid-template-columns: repeat(
+				auto-fill,
+				minmax($product-card-min-width-1024, 1fr)
+			);
+		}
+
+		@media all and (-ms-high-contrast: none) {
+			display: flex;
+			flex-wrap: wrap;
+
+			&::before,
+			&::after {
+				content: '';
+				order: 100;
+			}
+
+			&::before,
+			&::after,
+			& .product-card {
+				flex: 1 1 $product-card-min-width;
+				margin: 0 $product-card-gutter $product-card-gutter 0;
+			}
+		}
+	}
+
+	.product-card-picture {
+		height: 190px;
+		object-fit: cover;
+		object-position: center;
+		width: 100%;
+	}
+
+	.two-lined-description {
+		display: -webkit-box;
+		height: 44px;
+		overflow: hidden;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+	}
+}
+
+.products-comparison-table {
+	thead td {
+		padding: 0;
+	}
+
+	.card-item-first {
+		padding: 0.25rem;
+	}
+
+	.product-card {
+		border: none;
+		box-shadow: none;
+		margin: 0;
+	}
+}
 
 .cell-comment {
 	cursor: pointer;

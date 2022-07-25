@@ -15,6 +15,8 @@
 import launcher from '../../utilities/launcher';
 import QuantitySelector from './QuantitySelector';
 
+import './quantity_selector.scss';
+
 export default function entry(...data) {
 	return launcher(QuantitySelector, ...data);
 }

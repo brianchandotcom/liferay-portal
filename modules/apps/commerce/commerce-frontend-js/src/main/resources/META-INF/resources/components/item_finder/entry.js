@@ -15,6 +15,8 @@
 import launcher from '../../utilities/launcher';
 import ItemFinder from './ItemFinder';
 
+import './item_finder.scss';
+
 export default function entry(...data) {
 	return launcher(ItemFinder, ...data);
 }

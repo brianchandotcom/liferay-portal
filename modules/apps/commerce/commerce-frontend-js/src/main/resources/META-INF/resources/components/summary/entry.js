@@ -15,6 +15,8 @@
 import launcher from '../../utilities/launcher';
 import Summary from './Summary';
 
+import './summary.scss';
+
 export default function entry(...data) {
 	return launcher(Summary, ...data);
 }

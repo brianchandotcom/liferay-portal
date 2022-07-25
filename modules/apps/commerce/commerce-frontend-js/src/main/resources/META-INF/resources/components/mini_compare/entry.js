@@ -15,6 +15,8 @@
 import launcher from '../../utilities/launcher';
 import MiniCompare from './MiniCompare';
 
+import './mini_compare.scss';
+
 export default function entry(...data) {
 	return launcher(MiniCompare, ...data);
 }

@@ -16,6 +16,10 @@
 
 <%@ include file="/modal_content/init.jsp" %>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/modal_content/modal_content.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div class="modal-iframe-wrapper">
 	<c:if test="<%= Validator.isNotNull(title) %>">
 		<header class="modal-header modal-iframe-header">

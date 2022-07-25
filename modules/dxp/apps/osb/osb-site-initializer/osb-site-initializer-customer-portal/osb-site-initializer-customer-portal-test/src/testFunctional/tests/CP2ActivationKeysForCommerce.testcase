@@ -10,6 +10,7 @@ definition {
 
 	var testSiteName = "Customer Portal Name";
 	var testSiteURL = "customer-portal-name";
+    var testSiteTamplate = "Liferay OSB Site Initializer Customer Portal";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -23,8 +24,12 @@ definition {
 
 			TeamExtranet.addSiteTemplateCP(
 				siteName = "${testSiteName}",
-				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+				siteTemplateName = "${testSiteTamplate}");
 		}
+
+        task ("Go to Customer Portal") {
+            ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+        }
 	}
 
 	tearDown {

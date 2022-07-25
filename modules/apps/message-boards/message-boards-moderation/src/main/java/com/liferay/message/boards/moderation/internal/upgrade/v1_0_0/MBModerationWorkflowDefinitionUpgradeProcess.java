@@ -15,6 +15,7 @@
 package com.liferay.message.boards.moderation.internal.upgrade.v1_0_0;
 
 import com.liferay.message.boards.moderation.internal.constants.MBModerationConstants;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -40,6 +41,10 @@ public class MBModerationWorkflowDefinitionUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (StartupHelperUtil.isDBNew()) {
+			return;
+		}
+
 		_companyLocalService.forEachCompanyId(
 			companyId -> updateMBModerationWorkflowDefinition(companyId));
 	}

@@ -12,6 +12,8 @@
  * details.
  */
 
+import {getTop} from 'frontend-js-web';
+
 import {MODAL_STATE_ACCOUNT_USERS} from './SessionStorageKeys.es';
 
 export default function propsTransformer({
@@ -28,7 +30,7 @@ export default function propsTransformer({
 				);
 			}
 
-			const openerWindow = Liferay.Util.getTop();
+			const openerWindow = getTop();
 
 			openerWindow.Liferay.Util.navigate(addAccountEntryUserURL);
 		},

@@ -13,7 +13,7 @@
  */
 
 import {DATA_SET_EVENT} from '@liferay/frontend-data-set-web';
-import {getOpener} from 'frontend-js-web';
+import {getOpener, getTop} from 'frontend-js-web';
 
 class SidePanelListenersInitializer {
 	constructor() {
@@ -45,7 +45,7 @@ class SidePanelListenersInitializer {
 	}
 
 	handleOpenModalFromSidePanel(payload) {
-		const topWindow = Liferay.Util.getTop();
+		const topWindow = getTop();
 
 		topWindow.Liferay.fire(DATA_SET_EVENT.OPEN_MODAL_FROM_IFRAME, payload);
 	}

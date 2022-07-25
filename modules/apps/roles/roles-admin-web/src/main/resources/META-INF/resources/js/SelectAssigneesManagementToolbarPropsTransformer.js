@@ -12,6 +12,8 @@
  * details.
  */
 
+import {getTop} from 'frontend-js-web';
+
 export default function propsTransformer({...otherProps}) {
 	return {
 		...otherProps,
@@ -21,7 +23,7 @@ export default function propsTransformer({...otherProps}) {
 			if (data?.action === 'addSegmentEntry') {
 				window.sessionStorage.setItem(data?.sessionKey, 'open');
 
-				Liferay.Util.getTop().location.href = data?.addSegmentEntryURL;
+				getTop().location.href = data?.addSegmentEntryURL;
 			}
 		},
 	};

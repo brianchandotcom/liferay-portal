@@ -91,17 +91,17 @@ public class MiniumSiteInitializerUpgradeProcess
 
 			preparedStatement1.setBoolean(1, true);
 
-			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
-				while (resultSet1.next()) {
-					long siteGroupId = resultSet1.getLong("siteGroupId");
+			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+				while (resultSet.next()) {
+					long siteGroupId = resultSet.getLong("siteGroupId");
 
 					long maxLayoutId = _getMaxLayoutId(
 						preparedStatement4, siteGroupId);
 
-					_updateLayoutId(
+					_updateLayoutIds(
 						preparedStatement2, preparedStatement3, siteGroupId);
 
-					_updateParentLayoutId(
+					_updateParentLayoutIds(
 						maxLayoutId, preparedStatement5, preparedStatement6,
 						siteGroupId);
 
@@ -128,7 +128,7 @@ public class MiniumSiteInitializerUpgradeProcess
 		return 0;
 	}
 
-	private void _updateLayoutId(
+	private void _updateLayoutIds(
 			PreparedStatement preparedStatement1,
 			PreparedStatement preparedStatement2, long siteGroupId)
 		throws SQLException {
@@ -191,7 +191,7 @@ public class MiniumSiteInitializerUpgradeProcess
 		}
 	}
 
-	private void _updateParentLayoutId(
+	private void _updateParentLayoutIds(
 			long maxLayoutId, PreparedStatement preparedStatement1,
 			PreparedStatement preparedStatement2, long siteGroupId)
 		throws SQLException {
@@ -199,11 +199,11 @@ public class MiniumSiteInitializerUpgradeProcess
 		preparedStatement1.setLong(1, siteGroupId);
 		preparedStatement1.setLong(2, maxLayoutId);
 
-		try (ResultSet resultSet8 = preparedStatement1.executeQuery()) {
-			while (resultSet8.next()) {
-				long layoutId = resultSet8.getLong("layoutId");
+		try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+			while (resultSet.next()) {
+				long layoutId = resultSet.getLong("layoutId");
 
-				long parentLayoutId = resultSet8.getLong("parentLayoutId");
+				long parentLayoutId = resultSet.getLong("parentLayoutId");
 
 				preparedStatement2.setLong(1, parentLayoutId + maxLayoutId);
 

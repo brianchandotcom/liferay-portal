@@ -16,6 +16,7 @@ package com.liferay.flags.service.impl;
 
 import com.liferay.flags.internal.messaging.FlagsRequest;
 import com.liferay.flags.service.base.FlagsEntryServiceBaseImpl;
+import com.liferay.message.boards.service.MBSuspiciousActivityService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,9 +64,46 @@ public class FlagsEntryServiceImpl extends FlagsEntryServiceBaseImpl {
 		message.setPayload(flagsRequest);
 
 		_messageBus.sendMessage(DestinationNames.FLAGS, message);
+
+		if(className.equals("com.liferay.message.boards.model.MBMessage")){
+
+
+			System.out.println("ID of thread or message reported");
+			System.out.println(classPK);
+
+
+			System.out.println("User was reported the Thread or message");
+			System.out.println(reportedUserId);
+
+			System.out.println("Title of thread or message");
+			System.out.println(contentTitle);
+
+			System.out.println("Reason of the thread or message was reported");
+			System.out.println(reason);
+
+			System.out.println("User was reported the Thread or message");
+			System.out.println(serviceContext.getUserId());
+
+			if(contentTitle.contains("RE:")){
+				_messageBoardSuspiciousActivityLocalService.addOrUpdateSuspiciousActivityByMessage(
+					classPK,"",reason
+				);
+			}else{
+				_messageBoardSuspiciousActivityLocalService.addOrUpdateSuspiciousActivityByThread(
+					classPK + 1, "", reason
+				);
+			}
+	}
+
+
+
 	}
 
 	@Reference
 	private MessageBus _messageBus;
+
+	@Reference
+	private MBSuspiciousActivityService
+		_messageBoardSuspiciousActivityLocalService;
 
 }

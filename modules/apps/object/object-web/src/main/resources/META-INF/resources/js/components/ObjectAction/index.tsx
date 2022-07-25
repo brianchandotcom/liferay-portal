@@ -54,6 +54,10 @@ export default function Action({
 	const [backEndErrors, setBackEndErrors] = useState<Error>({});
 
 	const onSubmit = async (objectAction: ObjectAction) => {
+		if (objectAction.parameters) {
+			delete objectAction?.parameters['lineCount'];
+		}
+
 		const response = await fetch(url, {
 			body: JSON.stringify(objectAction),
 			headers: HEADERS,
@@ -224,6 +228,15 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 			invalidateRequired(values.parameters?.url)
 		) {
 			errors.url = REQUIRED_MSG;
+		}
+		else if (
+			values.objectActionExecutorKey === 'groovy' &&
+			!!values.parameters?.lineCount &&
+			values.parameters.lineCount > 2987
+		) {
+			errors.script = Liferay.Language.get(
+				'the-maximum-number-of-lines-available-is-2987'
+			);
 		}
 		else if (values.objectActionExecutorKey === 'add-object-entry') {
 			if (!values.parameters?.objectDefinitionId) {

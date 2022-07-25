@@ -131,7 +131,9 @@ function Conditions({
 				<CodeEditor
 					error={errors.script}
 					mode={engine}
-					onChange={(script?: string) => setValues({script})}
+					onChange={(script?: string, lineCount?: number) =>
+						setValues({lineCount, script})
+					}
 					placeholder={placeholder}
 					readOnly={disabled}
 					sidebarElements={objectValidationRuleElements}

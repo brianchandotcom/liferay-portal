@@ -45,6 +45,16 @@ export function useObjectValidationForm({
 			errors.script = REQUIRED_MSG;
 		}
 
+		if (
+			validation.engine === 'groovy' &&
+			!!validation.lineCount &&
+			validation.lineCount > 2987
+		) {
+			errors.script = Liferay.Language.get(
+				'the-maximum-number-of-lines-available-is-2987'
+			);
+		}
+
 		return errors;
 	};
 

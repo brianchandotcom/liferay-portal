@@ -26,6 +26,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.base.ObjectValidationRuleLocalServiceBaseImpl;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineTracker;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import groovy.lang.GroovyShell;
@@ -278,6 +280,11 @@ public class ObjectValidationRuleLocalServiceImpl
 						engine,
 						ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY)) {
 
+				if (StringUtil.count(script, StringPool.NEW_LINE) > 2987) {
+					throw new ObjectValidationRuleScriptException(
+						"the-maximum-number-of-lines-available-is-2987");
+				}
+
 				GroovyShell groovyShell = new GroovyShell();
 
 				groovyShell.parse(script);
@@ -286,6 +293,10 @@ public class ObjectValidationRuleLocalServiceImpl
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
+			}
+
+			if (exception instanceof ObjectValidationRuleScriptException) {
+				throw exception;
 			}
 
 			throw new ObjectValidationRuleScriptException("syntax-error");

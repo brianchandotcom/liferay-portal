@@ -56,6 +56,8 @@ export default function EditObjectValidation({
 	);
 
 	const onSubmit = async (objectValidation: ObjectValidation) => {
+		delete objectValidation.lineCount;
+
 		const response = await fetch(
 			`/o/object-admin/v1.0/object-validation-rules/${objectValidation.id}`,
 			{

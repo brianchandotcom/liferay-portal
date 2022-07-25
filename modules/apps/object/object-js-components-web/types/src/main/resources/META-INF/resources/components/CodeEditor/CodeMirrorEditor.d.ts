@@ -27,5 +27,5 @@ export default _default;
 export interface ICodeMirrorEditor extends CodeMirror.EditorConfiguration {
 	className?: string;
 	fixed?: boolean;
-	onChange: (value?: string) => void;
+	onChange: (value?: string, lineCount?: number) => void;
 }

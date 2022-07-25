@@ -59,8 +59,9 @@ const CodeMirrorEditor = React.forwardRef<CodeMirror.Editor, ICodeMirrorEditor>(
 				>).current = editor;
 			}
 
-			const handleChange = (editor: CodeMirror.Editor) =>
-				onChange(editor.getValue());
+			const handleChange = (editor: CodeMirror.Editor) => {
+				onChange(editor.getValue(), editor.lineCount());
+			};
 
 			editor.on('change', handleChange);
 
@@ -86,5 +87,5 @@ export default React.memo(CodeMirrorEditor);
 export interface ICodeMirrorEditor extends CodeMirror.EditorConfiguration {
 	className?: string;
 	fixed?: boolean;
-	onChange: (value?: string) => void;
+	onChange: (value?: string, lineCount?: number) => void;
 }

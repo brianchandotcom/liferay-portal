@@ -560,10 +560,11 @@ export default function ActionBuilder({
 						error={errors.script}
 						fixed
 						mode="groovy"
-						onChange={(script) =>
+						onChange={(script, lineCount) =>
 							setValues({
 								parameters: {
 									...values.parameters,
+									lineCount,
 									script,
 								},
 							})

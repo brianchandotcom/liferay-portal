@@ -29,6 +29,7 @@ interface ObjectAction {
 }
 
 interface ObjectActionParameters {
+	lineCount?: number;
 	notificationTemplateId?: number;
 	objectDefinitionId?: number;
 	predefinedValues?: PredefinedValue[];
@@ -163,6 +164,7 @@ interface ObjectValidation {
 	engineLabel: string;
 	errorLabel: LocalizedValue<string>;
 	id: number;
+	lineCount?: number;
 	name: LocalizedValue<string>;
 	script: string;
 }

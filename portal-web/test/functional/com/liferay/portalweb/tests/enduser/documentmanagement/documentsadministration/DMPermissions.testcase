@@ -776,7 +776,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136852. It checks that a guest cannot access a folder image without permissions."
-	@priority = "3"
+	@priority = "4"
 	test GuestCannotAccessFolderImageThroughURLWithoutPermissions {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

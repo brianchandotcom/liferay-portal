@@ -76,6 +76,8 @@ renderResponse.setTitle((country == null) ? LanguageUtil.get(request, "add-count
 
 			<aui:input id="numericISOCode" name="number" />
 
+			<aui:input label="country-calling-code" name="idd" />
+
 			<aui:input checked="<%= (country == null) ? false : country.getSubjectToVAT() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="subjectToVAT" type="toggle-switch" />
 
 			<aui:input id="priority" name="position" />

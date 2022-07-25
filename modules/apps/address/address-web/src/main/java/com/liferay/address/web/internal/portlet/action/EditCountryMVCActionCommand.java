@@ -131,6 +131,7 @@ public class EditCountryMVCActionCommand
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		boolean billingAllowed = ParamUtil.getBoolean(
 			actionRequest, "billingAllowed");
+		String idd = ParamUtil.getString(actionRequest, "idd");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String number = ParamUtil.getString(actionRequest, "number");
 		double position = ParamUtil.getDouble(actionRequest, "position");
@@ -140,7 +141,7 @@ public class EditCountryMVCActionCommand
 			actionRequest, "subjectToVAT");
 
 		Country country = _countryService.addCountry(
-			a2, a3, active, billingAllowed, null, name, number, position,
+			a2, a3, active, billingAllowed, idd, name, number, position,
 			shippingAllowed, subjectToVAT, false,
 			ServiceContextFactory.getInstance(
 				Country.class.getName(), actionRequest));
@@ -162,6 +163,7 @@ public class EditCountryMVCActionCommand
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		boolean billingAllowed = ParamUtil.getBoolean(
 			actionRequest, "billingAllowed");
+		String idd = ParamUtil.getString(actionRequest, "idd");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String number = ParamUtil.getString(actionRequest, "number");
 		double position = ParamUtil.getDouble(actionRequest, "position");
@@ -170,11 +172,9 @@ public class EditCountryMVCActionCommand
 		boolean subjectToVAT = ParamUtil.getBoolean(
 			actionRequest, "subjectToVAT");
 
-		Country country = _countryService.getCountry(countryId);
-
-		country = _countryService.updateCountry(
-			countryId, a2, a3, active, billingAllowed, country.getIdd(), name,
-			number, position, shippingAllowed, subjectToVAT);
+		Country country = _countryService.updateCountry(
+			countryId, a2, a3, active, billingAllowed, idd, name, number,
+			position, shippingAllowed, subjectToVAT);
 
 		_updateCountryLocalizations(
 			country,

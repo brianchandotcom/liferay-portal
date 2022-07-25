@@ -26,34 +26,42 @@ definition {
 
 	@priority = "4"
 	test CheckPublicationSummaryLocal {
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Staging Test Page");
+		task ("Given: Add a new page on site and enable local staging") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Staging Test Page");
 
-		JSONStaging.enableLocalStaging(groupName = "Site Name");
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name (Staging)",
-			layoutName = "Staging Test Page",
-			site = "false",
-			widgetName = "Documents and Media");
+		task ("And: Place a DM widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name (Staging)",
+				layoutName = "Staging Test Page",
+				site = "false",
+				widgetName = "Documents and Media");
+		}
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
+		task ("When: Publish to local live site") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
 
-		Staging.gotoPublishToLive();
+			Staging.gotoPublishToLive();
 
-		Staging.publishToLive(publicationName = "summCheck");
+			Staging.publishToLive(publicationName = "summCheck");
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		task ("Then: Check publication summary") {
+			Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
-		Staging.viewPublicationSummary(
-			dateRestrictionOption = "From Last Publish Date",
-			deletions = "true",
-			pagesOption = "Pages",
-			permissions = "true",
-			publicationTitle = "summCheck");
+			Staging.viewPublicationSummary(
+				dateRestrictionOption = "From Last Publish Date",
+				deletions = "true",
+				pagesOption = "Pages",
+				permissions = "true",
+				publicationTitle = "summCheck");
+		}
 	}
 
 	@priority = "4"
@@ -65,52 +73,64 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "StagingActivation#CheckPublicationSummaryRemote";
 
-		Staging.remoteStagingSetUpViaJson(
-			groupName = "Site Name",
-			remotePort = "9080");
+		task ("Given: Enable remote staging and add a new page on site") {
+			Staging.remoteStagingSetUpViaJson(
+				groupName = "Site Name",
+				remotePort = "9080");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Staging Test Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Staging Test Page");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
+		task ("When: Publish to remote live site") {
+			Navigator.gotoSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
 
-		Staging.gotoPublishToLive();
+			Staging.gotoPublishToLive();
 
-		Staging.publishToLive(
-			publicationName = "summCheck",
-			remoteStaging = "true");
+			Staging.publishToLive(
+				publicationName = "summCheck",
+				remoteStaging = "true");
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
+		task ("Then: Check publication summary") {
+			Staging.openStagingAdmin(siteURLKey = "site-name");
 
-		Staging.viewPublicationSummary(publicationTitle = "summCheck");
+			Staging.viewPublicationSummary(publicationTitle = "summCheck");
+		}
 	}
 
 	@priority = "4"
 	test DeleteRecycleBinOnStagingActivation {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		task ("Given: Add a web content entry") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		WebContent.addArticleCP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+			WebContent.addArticleCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
 
-		WebContent.moveToRecycleBinCP(webContentTitle = "Web Content Title");
+		task ("When: Move web content entry to recycle bin") {
+			WebContent.moveToRecycleBinCP(webContentTitle = "Web Content Title");
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
+		task ("Then: Verify recycle bin of the local staging is empty") {
+			Staging.openStagingAdmin(siteURLKey = "site-name");
 
-		Staging.activateStagingCP(
-			recycleBinNotification = "true",
-			siteName = "Site Name");
+			Staging.activateStagingCP(
+				recycleBinNotification = "true",
+				siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
+			ProductMenu.gotoPortlet(
+				category = "Recycle Bin",
+				portlet = "Recycle Bin");
 
-		RecycleBin.viewDefaultCP(assetName = "Web Content Title");
+			RecycleBin.viewDefaultCP(assetName = "Web Content Title");
+		}
 	}
 
 }

@@ -35,6 +35,8 @@ definition {
 	@description = "This test ensures that an asset library custom document entry can be displayed with the default display page template on a connected site."
 	@priority = "5"
 	test CanViewDepotDMUsingDepotType {
+		property portal.upstream = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
@@ -127,6 +129,8 @@ definition {
 	@description = "This test ensures that an asset library document entry created with a type stored in the global site can be displayed with the default display page template on the generic site."
 	@priority = "5"
 	test CanViewDepotDMUsingGlobalType {
+		property portal.upstream = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");

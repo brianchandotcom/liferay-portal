@@ -1577,8 +1577,8 @@ definition {
 
 		task ("Verify portal version equals 7.4") {
 			var accessToken = OAuth2.getAccessToken(
-				clientId = "${generatedClientId}",
-				clientSecret = "${generatedClientSecret}",
+				client_id = "${generatedClientId}",
+				client_secret = "${generatedClientSecret}",
 				grantFlow = "clientCredentials");
 
 			SystemSettings.assertPortalBuildNumber(

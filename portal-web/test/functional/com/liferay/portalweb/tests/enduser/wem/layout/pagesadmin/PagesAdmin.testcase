@@ -279,45 +279,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-75936. Full Page Application page types allow users to access portlets and make changes without the required permissions."
-	@priority = "5"
-	test CanAccessProductMenuPermissionsAfterUsingFullPageApplication {
-		var portalURL = PropsUtil.get("portal.url");
-
-		task ("Given as admin user create a new page 'SPA' with type Full Page Application") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page Name",
-				type = "full_page_application");
-		}
-
-		task ("And delete the welcome page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
-
-			PagesAdmin.deletePage(pageName = "Home");
-		}
-
-		task ("When going to the page created before and closing the menu on the left") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "test-page-name");
-
-			ProductMenuHelper.closeProductMenu();
-		}
-
-		task ("And sign out by sending http://localhost:8080/c/portal/logout, and log in again as admin") {
-			Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
-
-			User.signInPG(userEmailAddress = "test@liferay.com");
-		}
-
-		task ("Then the menu is visible after opening the product menu, and no error message "You do not have the roles required to access this portlet."") {
-			ProductMenuHelper.openProductMenu();
-
-			AssertElementNotPresent(
-				locator1 = "Portlet#ERROR",
-				value1 = "You do not have the roles required to access this portlet.");
-		}
-	}
-
 	@description = "This is a test for LPS-145215. View alert message when delete a page."
 	@priority = "5"
 	@uitest

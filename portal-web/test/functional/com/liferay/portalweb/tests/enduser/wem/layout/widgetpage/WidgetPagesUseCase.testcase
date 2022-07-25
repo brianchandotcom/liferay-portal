@@ -28,6 +28,37 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-75936. The admin user should access to product menu on page with Full Page Application type."
+	@priority = "5"
+	test AccessToProductMenuOnFullPageApplicationPageAsAdmin {
+		task ("Given an admin user has a page with Full Page Application type") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "full_page_application");
+		}
+
+		task ("When the admin user signs out via URL") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		}
+
+		task ("Then the admin user could access to product menu after sign in") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site name");
+
+			User.signInPG(userEmailAddress = "test@liferay.com");
+
+			ProductMenuHelper.openProductMenu();
+
+			AssertElementNotPresent(
+				locator1 = "Portlet#ERROR",
+				value1 = "You do not have the roles required to access this portlet.");
+		}
+	}
+
 	@description = "The user can add a blogs entry and message boards via collaboration panel page."
 	@priority = "3"
 	@uitest

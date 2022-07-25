@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -343,19 +342,24 @@ public class SalesforceObjectEntryManagerImpl
 			_objectFieldLocalService.getObjectFields(objectDefinitionId);
 
 		for (Sort sort : sorts) {
+			String fieldName = sort.getFieldName();
+
+			if (fieldName.startsWith("nestedFieldArray.")) {
+				String[] parts = StringUtil.split(
+					sort.getFieldName(), StringPool.POUND);
+
+				fieldName = parts[1];
+			}
+
+			if (Objects.equals("status", fieldName)) {
+				continue;
+			}
+
 			if (sb.length() == 0) {
 				sb.append(" ORDER BY ");
 			}
 			else {
 				sb.append(StringPool.COMMA_AND_SPACE);
-			}
-
-			String fieldName = sort.getFieldName();
-
-			if (Field.isSortableFieldName(fieldName)) {
-				fieldName = StringUtil.removeSubstring(
-					fieldName,
-					StringPool.UNDERLINE + Field.SORTABLE_FIELD_SUFFIX);
 			}
 
 			String defaultFieldName = _defaultObjectFieldNames.get(fieldName);
@@ -364,13 +368,6 @@ public class SalesforceObjectEntryManagerImpl
 				sb.append(defaultFieldName);
 			}
 			else {
-				if (fieldName.startsWith("nestedFieldArray.")) {
-					String[] parts = StringUtil.split(
-						sort.getFieldName(), StringPool.POUND);
-
-					fieldName = parts[1];
-				}
-
 				ObjectField objectField = _getObjectFieldByName(
 					fieldName, objectFields);
 
@@ -574,9 +571,13 @@ public class SalesforceObjectEntryManagerImpl
 		HashMapBuilder.put(
 			"createDate", "CreatedDate"
 		).put(
+			"creator", "OwnerId"
+		).put(
 			"externalReferenceCode", "Id"
 		).put(
-			"modified", "LastModifiedDate"
+			"id", "Id"
+		).put(
+			"modifiedDate", "LastModifiedDate"
 		).put(
 			"userName", "OwnerId"
 		).build();

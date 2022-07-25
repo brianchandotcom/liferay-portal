@@ -17,6 +17,9 @@ package com.liferay.portal.search.elasticsearch7.internal.query;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexWriter;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -34,8 +37,12 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,6 +56,30 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_indexWriter = getIndexWriter();
+	}
+
+	@After
+	@Override
+	public void tearDown() throws SearchException {
+		Stream<Document> stream = _documents.stream();
+
+		_indexWriter.deleteDocuments(
+			_getSearchContext(),
+			stream.map(
+				document -> document.get(Field.UID)
+			).collect(
+				Collectors.toList()
+			));
+
+		_documents.clear();
+	}
 
 	@Test
 	public void testMultiMatchQueryBoolPrefix() {
@@ -184,6 +215,14 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 		return document;
 	}
 
+	private SearchContext _getSearchContext() {
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(getCompanyId());
+
+		return searchContext;
+	}
+
 	private void _indexUserDocuments(
 		String firstName, String lastName, String userName) {
 
@@ -195,5 +234,6 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 	}
 
 	private final List<Document> _documents = new ArrayList<>();
+	private IndexWriter _indexWriter;
 
 }

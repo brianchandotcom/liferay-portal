@@ -142,8 +142,12 @@ definition {
 	}
 
 	@description = "Bug: LRAC-10856 | Automation ID: LRAC-10892 | Test Summary: Change the AC page default language"
+	@ignore = "true"
 	@priority = "2"
 	test ChangeDefaultLanguage {
+
+		// AC Bug ticket: LRAC-11185
+
 		var sidebarList1 = "Sites,Recursos,Eventos,Segmentos,Contas,Indivíduos,Testes";
 		var sidebarList2 = "Sites,Assets,Events,Segments,Accounts,Individuals,Tests";
 

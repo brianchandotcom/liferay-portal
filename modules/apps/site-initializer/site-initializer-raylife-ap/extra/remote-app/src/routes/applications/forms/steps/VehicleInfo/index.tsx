@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import {
 	ACTIONS,
@@ -51,6 +51,38 @@ const VehicleInfo = () => {
 		}
 	};
 
+	const handleSaveChanges = (currentForm: any) => {
+		const hasAllRequiredFieldsToNextStep = currentForm.every(
+			(_form: any) =>
+				_form.annualMileage !== '' &&
+				_form.make !== '' &&
+				_form.ownership !== '' &&
+				_form.primaryUsage !== '' &&
+				_form.year !== ''
+		);
+
+		const minAnnualMileage = 50;
+
+		const annualGreaterThanFifty = currentForm.every(
+			(_form: any) => _form.annualMileage >= minAnnualMileage
+		);
+
+		dispatch({
+			payload: true,
+			type: ACTIONS.SET_IS_ABLE_TO_SAVE,
+		});
+		dispatch({
+			payload: hasAllRequiredFieldsToNextStep && annualGreaterThanFifty,
+			type: ACTIONS.SET_IS_ABLE_TO_NEXT,
+		});
+	};
+
+	useEffect(() => {
+		handleSaveChanges(form);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [state.steps.vehicleInfo]);
+
 	return (
 		<div className="bg-neutral-0 mx-8">
 			<ClayForm>
@@ -64,6 +96,7 @@ const VehicleInfo = () => {
 				))}
 
 				<ClayButton
+					className="font-weight-bold pl-0 text-brand-primary text-paragraph-sm"
 					displayType="link"
 					onClick={() => handleAddVehicleClick()}
 				>

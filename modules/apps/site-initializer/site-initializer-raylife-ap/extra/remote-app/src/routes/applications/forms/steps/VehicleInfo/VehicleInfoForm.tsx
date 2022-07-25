@@ -13,14 +13,22 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayInput} from '@clayui/form';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
+import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {useContext} from 'react';
+import classNames from 'classnames';
+import {useContext, useEffect, useState} from 'react';
 
 import {
 	ACTIONS,
 	NewApplicationAutoContext,
 } from '../../../context/NewApplicationAutoContextProvider';
+import {
+	makeOptions,
+	ownershipOptions,
+	primaryUsageOptions,
+	yearsOptions,
+} from './SelectOptions';
 
 type FormVehicleInfoTypes = {
 	form: any[];
@@ -30,6 +38,62 @@ type FormVehicleInfoTypes = {
 
 const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 	const [_state, dispatch] = useContext(NewApplicationAutoContext);
+
+	const [_makeOptions, setMakeOptions] = useState<any[]>([]);
+	const [_yearsOptions, setYearsOptions] = useState<any[]>([]);
+	const [_model, setModel] = useState<string>('');
+	const [_year, setYear] = useState<string>('');
+
+	enum dropdownAlign {
+		topCenter = 0,
+		topRight = 1,
+		middleRight = 2,
+		bottomRight = 3,
+		bottomCenter = 4,
+		bottomLeft = 5,
+		middleLeft = 6,
+		topLeft = 7,
+	}
+
+	type formValidationTypes = {
+		annualMileage: boolean;
+		make: boolean;
+		model: boolean;
+		ownership: boolean;
+		primaryUsage: boolean;
+		year: boolean;
+	};
+
+	const hasRequiredError: formValidationTypes = {
+		annualMileage: false,
+		make: false,
+		model: false,
+		ownership: false,
+		primaryUsage: false,
+		year: false,
+	};
+
+	const [hasError, setHasError] = useState(hasRequiredError);
+
+	const setMakeOption = (value: any) => {
+		const newMakeChecked = _makeOptions.map((makeOption) => {
+			if (makeOption.name === value) {
+				return {
+					...makeOption,
+					checked: true,
+				};
+			}
+
+			return {
+				...makeOption,
+				checked: false,
+			};
+		});
+
+		setModel('');
+
+		setMakeOptions(newMakeChecked);
+	};
 
 	const handleChangeField = (
 		fieldName: string,
@@ -42,6 +106,10 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 			value,
 		};
 
+		if (fieldName === 'make') {
+			setMakeOption(value);
+		}
+
 		dispatch({payload, type: ACTIONS.SET_VEHICLE_INFO_FORM});
 
 		dispatch({payload: true, type: ACTIONS.SET_HAS_FORM_CHANGE});
@@ -51,6 +119,62 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 		const payload = {id};
 		dispatch({payload, type: ACTIONS.SET_REMOVE_VEHICLE});
 	};
+
+	useEffect(() => {
+		setMakeOptions(makeOptions);
+
+		const yearOptionsAddClick = yearsOptions.map((yearsOption) => {
+			return {
+				...yearsOption,
+				onClick: (event: any) => {
+					let value = event.target.textContent || '';
+
+					value = value === 'Choose an option' ? '' : value;
+
+					setYear(value);
+					handleChangeField('year', value, id);
+					setHasError({
+						...hasError,
+						year: value === '' ? true : false,
+					});
+				},
+			};
+		});
+
+		setYearsOptions(yearOptionsAddClick);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		setMakeOptions(
+			makeOptions.map((item: any) => {
+				if (item.name === form[formNumber - 1].make) {
+					return {
+						...item,
+						checked: true,
+					};
+				}
+
+				return {
+					...item,
+					checked: false,
+				};
+			})
+		);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [form]);
+
+	const ErrorMessage = ({text}: any) => (
+		<div className="form-feedback-group">
+			<div className="form-feedback-item">
+				<span className="form-feedback-indicator">
+					<ClayIcon symbol="info-circle"></ClayIcon>
+				</span>
+
+				{text ? text : 'This field is required'}
+			</div>
+		</div>
+	);
 
 	return (
 		<>
@@ -80,128 +204,256 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 			</div>
 
 			<div className="row">
-				<div className="col filled form-condensed form-group">
-					<ClayInput
-						autoComplete="off"
-						className="bg-neutral-0 w-100 year"
-						id="year"
-						name="year"
-						onChange={(event) => {
-							handleChangeField('year', event.target.value, id);
+				<div
+					className={classNames(
+						'col filled form-condensed form-group',
+						{
+							'has-error': hasError.year,
+						}
+					)}
+				>
+					<ClayDropDownWithItems
+						alignmentByViewport={true}
+						alignmentPosition={dropdownAlign.bottomCenter}
+						items={_yearsOptions}
+						onSearchValueChange={(value) => {
+							setYear(value);
 						}}
-						required
-						type="text"
+						searchValue={form[formNumber - 1].year}
+						searchable={true}
+						trigger={
+							<div className="d-flex select-years text-neutral-10">
+								<ClaySelect
+									className="bg-neutral-0 border-neutral-5 cursor-pointer font-weight-bold select-style text-paragraph-sm text-uppercase"
+									disabled
+									required
+									value={form[formNumber - 1].year}
+								>
+									<ClaySelect.Option
+										className="cursor-pointer font-weight-bold py-4 text-brand-primary text-center text-paragraph-sm text-uppercase"
+										label={form[formNumber - 1].year}
+										selected
+										value={form[formNumber - 1].year}
+									/>
+								</ClaySelect>
+							</div>
+						}
 					/>
 
 					<label htmlFor="year">
 						Year&nbsp;
 						<span className="text-danger-darken-1">*</span>
 					</label>
+
+					{hasError.year && <ErrorMessage />}
 				</div>
 
-				<div className="col filled form-condensed form-group">
-					<ClayInput
-						autoComplete="off"
-						className="bg-neutral-0 make w-100"
+				<div
+					className={classNames(
+						'col filled form-condensed form-group',
+						{
+							'has-error': hasError.make,
+						}
+					)}
+				>
+					<ClaySelect
+						aria-label="Select Label"
+						className="bg-neutral-0 font-weight-bold make pl-0 text-paragraph-sm text-uppercase"
 						id="make"
 						name="make"
 						onChange={(event) => {
-							handleChangeField('make', event.target.value, id);
+							let value = event.target.value;
+							value = value === 'Choose an option' ? '' : value;
+							handleChangeField('make', value, id);
+							setHasError({
+								...hasError,
+								make: value === '' ? true : false,
+							});
 						}}
-						required
-						type="text"
-					/>
+						value={form[formNumber - 1].make}
+					>
+						{makeOptions.map((makeOption, index) => (
+							<ClaySelect.Option
+								className="font-weight-bold py-6 text-brand-primary text-center text-paragraph-sm text-uppercase"
+								key={index}
+								label={makeOption.name}
+								selected={makeOption.checked}
+								value={makeOption.name}
+							/>
+						))}
+					</ClaySelect>
 
 					<label htmlFor="make">
 						Make&nbsp;
 						<span className="text-danger-darken-1">*</span>
 					</label>
+
+					{hasError.make && <ErrorMessage />}
 				</div>
 
 				<div className="col filled form-condensed form-group">
-					<ClayInput
-						autoComplete="off"
-						className="bg-neutral-0 model w-100"
+					<ClaySelect
+						aria-label="Select Label"
+						className="bg-neutral-0 font-weight-bold model pl-0 text-paragraph-sm text-uppercase"
 						id="model"
 						name="model"
 						onChange={(event) => {
-							handleChangeField('model', event.target.value, id);
+							let value = event.target.value;
+							value = value === 'Choose an option' ? '' : value;
+							setModel(value);
+							handleChangeField('model', value, id);
+							setHasError({
+								...hasError,
+								model: value === '' ? true : false,
+							});
 						}}
-						type="text"
-					/>
+						value={form[formNumber - 1].model}
+					>
+						{_makeOptions
+							.filter((makeOption) => makeOption.checked)[0]
+							?.model.map((model: any, index: number) => (
+								<ClaySelect.Option
+									className="font-weight-bold text-brand-primary text-center text-paragraph-sm text-uppercase"
+									key={index}
+									label={model.name}
+									value={model.name}
+								/>
+							))}
+					</ClaySelect>
 
 					<label htmlFor="model">Model</label>
 				</div>
 			</div>
 
 			<div className="row">
-				<div className="col filled form-condensed form-group">
-					<ClayInput
-						autoComplete="off"
-						className="bg-neutral-0 primary-usage w-100"
+				<div
+					className={classNames(
+						'col filled form-condensed form-group',
+						{
+							'has-error': hasError.primaryUsage,
+						}
+					)}
+				>
+					<ClaySelect
+						aria-label="Select Label"
+						className="bg-neutral-0 font-weight-bold pl-0 primary-usage text-paragraph-sm text-uppercase"
 						id="primary-usage"
 						name="primary-usage"
 						onChange={(event) => {
-							handleChangeField(
-								'primaryUsage',
-								event.target.value,
-								id
-							);
+							let value = event.target.value;
+							value = value === 'Choose an option' ? '' : value;
+							handleChangeField('primaryUsage', value, id);
+							setHasError({
+								...hasError,
+								primaryUsage: value === '' ? true : false,
+							});
 						}}
-						required
-						type="text"
-					/>
+						value={form[formNumber - 1].primaryUsage}
+					>
+						{primaryUsageOptions.map(
+							(primaryUsageOption, index) => (
+								<ClaySelect.Option
+									className="font-weight-bold py-4 text-brand-primary text-center text-paragraph-sm text-uppercase"
+									key={index}
+									label={primaryUsageOption.name}
+									value={primaryUsageOption.name}
+								/>
+							)
+						)}
+					</ClaySelect>
 
 					<label htmlFor="primary-usage">
 						Vehicle Primary Usage&nbsp;
 						<span className="text-danger-darken-1">*</span>
 					</label>
+
+					{hasError.primaryUsage && <ErrorMessage />}
 				</div>
 
-				<div className="col filled form-condensed form-group">
+				<div
+					className={classNames(
+						'col filled form-condensed form-group',
+						{
+							'has-error':
+								hasError.annualMileage ||
+								(form[formNumber - 1].annualMileage < 50 &&
+									form[formNumber - 1].annualMileage !== ''),
+						}
+					)}
+				>
 					<ClayInput
 						autoComplete="off"
-						className="annual-mileage bg-neutral-0 w-100"
+						className="annual-mileage bg-neutral-0 text-center w-100"
 						id="annual-mileage"
+						min={0}
 						name="annual-mileage"
 						onChange={(event) => {
-							handleChangeField(
-								'annualMileage',
-								event.target.value,
-								id
-							);
+							let value = event.target.value;
+							value = value === 'Choose an option' ? '' : value;
+							handleChangeField('annualMileage', value, id);
+							setHasError({
+								...hasError,
+								annualMileage: value === '' ? true : false,
+							});
 						}}
 						required
-						type="text"
+						type="number"
+						value={form[formNumber - 1].annualMileage}
 					/>
 
 					<label htmlFor="annual-mileage">
 						Annual Mileage&nbsp;
 						<span className="text-danger-darken-1">*</span>
 					</label>
+
+					{hasError.annualMileage && <ErrorMessage />}
+
+					{form[formNumber - 1].annualMileage < 50 &&
+						form[formNumber - 1].annualMileage !== '' && (
+							<ErrorMessage text="Please enter a value greater than 50" />
+						)}
 				</div>
 
-				<div className="col filled form-condensed form-group">
-					<ClayInput
-						autoComplete="off"
-						className="bg-neutral-0 ownership w-100"
+				<div
+					className={classNames(
+						'col filled form-condensed form-group',
+						{
+							'has-error': hasError.ownership,
+						}
+					)}
+				>
+					<ClaySelect
+						aria-label="Select Label"
+						className="bg-neutral-0 font-weight-bold ownership pl-0 text-paragraph-sm text-uppercase"
 						id="ownership"
 						name="ownership"
 						onChange={(event) => {
-							handleChangeField(
-								'ownership',
-								event.target.value,
-								id
-							);
+							let value = event.target.value;
+							value = value === 'Choose an option' ? '' : value;
+							handleChangeField('ownership', value, id);
+							setHasError({
+								...hasError,
+								ownership: value === '' ? true : false,
+							});
 						}}
-						required
-						type="text"
-					/>
+						value={form[formNumber - 1].ownership}
+					>
+						{ownershipOptions.map((ownershipOption, index) => (
+							<ClaySelect.Option
+								className="font-weight-bold py-4 text-brand-primary text-center text-paragraph-sm text-uppercase"
+								key={index}
+								label={ownershipOption.name}
+								value={ownershipOption.name}
+							/>
+						))}
+					</ClaySelect>
 
 					<label htmlFor="email">
 						Vehicle Ownership&nbsp;
 						<span className="text-danger-darken-1">*</span>
 					</label>
+
+					{hasError.ownership && <ErrorMessage />}
 				</div>
 			</div>
 		</>

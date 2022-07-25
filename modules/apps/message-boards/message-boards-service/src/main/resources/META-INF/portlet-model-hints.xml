@@ -151,10 +151,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="messageId" type="long" />
 		<field name="threadId" type="long" />
-		<field name="description" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
-		<field name="type" type="String" />
+		<field name="reason" type="String" />
 		<field name="validated" type="boolean" />
 	</model>
 	<model name="com.liferay.message.boards.model.MBThread">

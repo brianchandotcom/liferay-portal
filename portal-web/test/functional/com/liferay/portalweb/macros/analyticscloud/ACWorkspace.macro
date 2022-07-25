@@ -126,6 +126,47 @@ definition {
 		ACWorkspace.openWorkspace(workspaceName = "${workspaceName}");
 	}
 
+	macro setFriendlyURL {
+		Type(
+			locator1 = "ACWorkspace#FRIENDLY_URL",
+			value1 = "${urlName}");
+
+		Click(
+			key_text = "Add Incident Report Contacts",
+			locator1 = "TextInput#ANY");
+
+		KeyPress(
+			key_text = "Add Incident Report Contacts",
+			locator1 = "TextInput#ANY",
+			value1 = "\BACK_SPACE");
+
+		Type(
+			key_text = "Add Incident Report Contacts",
+			locator1 = "TextInput#ANY",
+			value1 = "test@liferay.com");
+
+		Click(
+			label = "Add Incident Report Contacts",
+			locator1 = "ACUtils#LABEL");
+
+		if (isSet(cancel)) {
+			WaitForElementNotPresent(
+				key_text = "Cancel",
+				locator1 = "Button#ANY_DISABLED");
+
+			Button.click(button = "Cancel");
+		}
+		else {
+			WaitForElementPresent(locator1 = "Button#SAVE");
+
+			Button.clickSave();
+
+			AssertElementPresent(locator1 = "ACWorkspace#FRIENDLY_URL_ADDRESS");
+
+			Button.clickSave();
+		}
+	}
+
 	macro viewWorkspaceSettings {
 		if (isSet(workspaceName)) {
 			AssertTextEquals(

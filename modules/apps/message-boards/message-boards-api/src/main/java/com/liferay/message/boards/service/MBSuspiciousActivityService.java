@@ -53,8 +53,12 @@ public interface MBSuspiciousActivityService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.message.boards.service.impl.MBSuspiciousActivityServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the message boards suspicious activity remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link MBSuspiciousActivityServiceUtil} if injection and service tracking are not available.
 	 */
-	public MBSuspiciousActivity addOrUpdateSuspiciousActivity(
-			long messageId, String description, String type)
+	public MBSuspiciousActivity addOrUpdateSuspiciousActivityByMessage(
+			long messageId, String reason)
+		throws PortalException;
+
+	public MBSuspiciousActivity addOrUpdateSuspiciousActivityByThread(
+			String reason, long threadId)
 		throws PortalException;
 
 	public MBSuspiciousActivity deleteSuspiciousActivity(

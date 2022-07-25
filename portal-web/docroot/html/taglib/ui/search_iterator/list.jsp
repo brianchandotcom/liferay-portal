@@ -313,7 +313,7 @@ if (fixedHeader) {
 
 							String normalizedColumnName = null;
 
-							if (j < normalizedHeaderNames.size()) {
+							if ((normalizedHeaderNames != null) && (j < normalizedHeaderNames.size())) {
 								normalizedColumnName = normalizedHeaderNames.get(j);
 
 								if (!Validator.isBlank(normalizedColumnName)) {

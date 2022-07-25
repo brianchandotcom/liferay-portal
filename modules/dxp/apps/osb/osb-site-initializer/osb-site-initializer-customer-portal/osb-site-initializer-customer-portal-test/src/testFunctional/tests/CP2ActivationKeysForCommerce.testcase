@@ -11,6 +11,7 @@ definition {
 	var testSiteName = "Customer Portal Name";
 	var testSiteURL = "customer-portal-name";
     var testSiteTamplate = "Liferay OSB Site Initializer Customer Portal";
+	var pageTitle = "Activation Keys";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -38,10 +39,60 @@ definition {
 		CustomerPortal.customerPortalApisTearDown();
 	}
 
-	@description = "LPS-146856 - Verify that when the status is active the page displays (Subtitle - Link - Link redirects to another page)"
-	@ignore = "true"
+	@description = "LPS-146072 - Verify that when selecting the 'Commerce' product the 'Activation Keys' page opens"
 	@priority = "4"
-	test AffirmAllTextAndLinksOnThePage {
+	test CanViewActivationKeysPage {
         
+        task ("Assert that project has DPX 7.4") {
+            CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
+
+            CP2NavigationMenu.goToProductActivation();
+
+            CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+            CP2ActivationKeys.assertDropDownSelection(option = "7.4");
+        }
+
+        task ("Assert Commerce Activation Key Page") {
+            CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+            CustomerPortal.assertPageTitle(title = "${pageTitle}");
+
+			var versions = "DXP 7.4 GA1+,DXP 7.3 FP3/SP2+,DXP 7.3 FP2/SP1";
+
+			var instructions = "All Commerce modules are enabled by default.,Commerce is activated using a portal property.,Commerce requires an activation key.";
+
+			CP2ActivationKeys.assertInstructionsTable(textList = "${versions}");
+
+			CP2ActivationKeys.assertInstructionsTable(textList = "${instructions}");
+        }
+
+		task ("Go to Customer Portal") {
+            ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+        }
+
+		task ("Assert that project has DPX 7.3") {
+            CustomerPortal.enterOnProject(title = "Test Account QA 7.3");
+
+            CP2NavigationMenu.goToProductActivation();
+
+            CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+            CP2ActivationKeys.assertDropDownSelection(option = "7.3");
+        }
+
+        task ("Assert Commerce Activation Key Page") {
+            CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+            CustomerPortal.assertPageTitle(title = "${pageTitle}");
+
+			var versions = "DXP 7.4 GA1+,DXP 7.3 FP3/SP2+,DXP 7.3 FP2/SP1";
+
+			var instructions = "All Commerce modules are enabled by default.,Commerce is activated using a portal property.,Commerce requires an activation key.";
+
+			CP2ActivationKeys.assertInstructionsTable(textList = "${versions}");
+
+			CP2ActivationKeys.assertInstructionsTable(textList = "${instructions}");
+        }
 	}
 }

@@ -94,6 +94,7 @@ export function FormCustomSelect<T extends CustomItem = CustomItem>({
 				<ClayAutocomplete.DropDown
 					active={active}
 					alignElementRef={inputRef}
+					alignmentByViewport
 					closeOnClickOutside
 					onSetActive={setActive}
 				>

@@ -8227,7 +8227,9 @@ public class PortalImpl implements Portal {
 
 		String groupFriendlyURL = StringPool.BLANK;
 
-		if (!currentURL.equals(canonicalURLSuffix)) {
+		if (!currentURL.equals(canonicalURLSuffix) &&
+			(groupFriendlyURLIndex != null)) {
+
 			groupFriendlyURL = canonicalURLSuffix.substring(
 				0, groupFriendlyURLIndex[1]);
 		}

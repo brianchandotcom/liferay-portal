@@ -909,15 +909,15 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
 			name = "Liferay Notification",
 			newNotification = "true",
+			newSection = "New Notification",
 			notificationTemplateValue = "Liferay Template",
 			notificationTypeOption = "email",
-			newSection = "New Notification",
 			sectionOptionList = "1,2,");
 
 		ProcessBuilderKaleoDesignerReact.viewMultipleNotificationPresent(
-			notificationTypeOption = "email",
-			notificationTemplateValue = "Liferay Template",
 			name = "Liferay Notification",
+			notificationTemplateValue = "Liferay Template",
+			notificationTypeOption = "email",
 			sectionOptionList = "1,2");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -928,14 +928,11 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Liferay Notification 1,Liferay Notification 2");
 
-		ProcessBuilderKaleoDesignerReact.deleteByIconTrashSidebar(propertyValue ="Liferay Notification 1");
+		ProcessBuilderKaleoDesignerReact.deleteByIconTrashSidebar(propertyValue = "Liferay Notification 1");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.viewNotificationNotPresent(notificationName = "Liferay Notification 1");
-
-		
-		
 	}
 
 	@description = "Verify that the user can delete Nodes of Start"

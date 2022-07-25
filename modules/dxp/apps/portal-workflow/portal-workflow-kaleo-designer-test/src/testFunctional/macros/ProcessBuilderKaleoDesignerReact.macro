@@ -121,6 +121,12 @@ definition {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_CLOSE_MODAL");
 	}
 
+	macro deleteByIconTrashSidebar {
+		Click(
+			key_propertyValue = "${propertyValue}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_SIDEBAR_PROPERTY_BY_VALUE");
+	}
+
 	macro deleteBySidebarCard {
 		Click(
 			key_propertyName = "${sidebarCardName}",
@@ -1610,14 +1616,5 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_METADATA_ELEMENT",
 			value1 = "${coordinateY}");
 	}
-
-	macro deleteByIconTrashSidebar {
-		Click(
-			key_propertyValue = "${propertyValue}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_SIDEBAR_PROPERTY_BY_VALUE");
-
-	}
-
-	
 
 }

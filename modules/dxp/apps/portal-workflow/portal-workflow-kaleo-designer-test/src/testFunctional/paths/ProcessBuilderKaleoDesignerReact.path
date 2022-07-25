@@ -412,8 +412,6 @@
 	<td>//div[@class='panel-body']//input[contains(@id,'notificationName') and contains(@value,'${propertyValue}')]/../..//*[contains(@class, 'icon-trash')]</td>
 	<td></td>
 </tr>
-
-
 <tr>
 	<td>SIDEBAR_HEADER</td>
 	<td>//div[contains(@class,'sidebar-header')]//span[contains(@class,'title')]/..//span[contains(., '${key_header}')]</td>

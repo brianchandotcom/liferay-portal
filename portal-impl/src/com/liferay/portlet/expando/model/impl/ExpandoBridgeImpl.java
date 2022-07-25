@@ -27,6 +27,7 @@ import com.liferay.expando.kernel.service.ExpandoValueServiceUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -157,7 +158,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 				throw (PortalException)exception;
 			}
 
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -235,7 +236,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 
 		return data;
@@ -331,7 +332,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 
 		return attributeValues;
@@ -410,7 +411,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			indexer.reindex(_className, _classPK);
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -451,7 +452,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -467,7 +468,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 				defaultValue);
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -507,7 +508,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -554,7 +555,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 

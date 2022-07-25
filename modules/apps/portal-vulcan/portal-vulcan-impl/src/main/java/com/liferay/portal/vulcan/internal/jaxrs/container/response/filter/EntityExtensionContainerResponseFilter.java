@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.container.response.filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.internal.extension.EntityExtensionThreadLocal;
 
@@ -80,8 +81,8 @@ public class EntityExtensionContainerResponseFilter
 
 		try {
 			entityExtensionHandler.setExtendedProperties(
-				_company.getCompanyId(), containerResponseContext.getEntity(),
-				extendedProperties);
+				_company.getCompanyId(), _user.getUserId(),
+				containerResponseContext.getEntity(), extendedProperties);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -117,5 +118,8 @@ public class EntityExtensionContainerResponseFilter
 
 	@Context
 	private Providers _providers;
+
+	@Context
+	private User _user;
 
 }

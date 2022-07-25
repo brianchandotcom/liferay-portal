@@ -206,6 +206,9 @@ class WikiPortlet {
 				},
 			});
 		}
+		else {
+			callback();
+		}
 	}
 
 	/**

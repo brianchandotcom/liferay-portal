@@ -1144,6 +1144,7 @@ definition {
 	@description = "This test covers LPS-49419. It validates that BBCode cannot be injected into a blog comment using Pingback."
 	@priority = "4"
 	test CannotInjectBBCodeIntoCommentUsingPingback {
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "BlogsEntry#CannotInjectBBCodeIntoCommentUsingPingback";
 
 		JSONLayout.addPublicLayout(

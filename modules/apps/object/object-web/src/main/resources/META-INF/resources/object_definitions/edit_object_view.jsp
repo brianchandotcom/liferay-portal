@@ -29,7 +29,7 @@ ObjectView objectView = (ObjectView)request.getAttribute(ObjectWebKeys.OBJECT_VI
 		).put(
 			"objectViewId", objectView.getObjectViewId()
 		).put(
-			"workflowStatusJSONArray", objectDefinitionsViewsDisplayContext.getWorkflowStatusJSONArray()
+			"workflowStatusJSONArray", LocalizedJSONArrayUtil.getWorkflowStatusJSONArray(locale)
 		).build()
 	%>'
 />

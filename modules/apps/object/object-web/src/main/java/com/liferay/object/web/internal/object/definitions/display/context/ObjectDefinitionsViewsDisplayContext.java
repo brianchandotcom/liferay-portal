@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 

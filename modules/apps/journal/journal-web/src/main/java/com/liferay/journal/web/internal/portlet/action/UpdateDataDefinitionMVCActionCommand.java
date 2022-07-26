@@ -123,10 +123,10 @@ public class UpdateDataDefinitionMVCActionCommand
 		dataDefinition.setDescription(
 			LocalizedValueUtil.toStringObjectMap(descriptionMap));
 
-		_clearCache(structureKey);
-
 		dataDefinitionResource.putDataDefinition(
 			dataDefinitionId, dataDefinition);
+
+		_clearCache(structureKey);
 	}
 
 	private void _clearCache(String ddmStructureKey) {

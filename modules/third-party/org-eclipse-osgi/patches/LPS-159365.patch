@@ -1,0 +1,25 @@
+diff --git a/org/eclipse/osgi/framework/util/CaseInsensitiveDictionaryMap.java b/org/eclipse/osgi/framework/util/CaseInsensitiveDictionaryMap.java
+index 6546345cbc4d..97cdfedf17bc 100644
+--- a/org/eclipse/osgi/framework/util/CaseInsensitiveDictionaryMap.java
++++ b/org/eclipse/osgi/framework/util/CaseInsensitiveDictionaryMap.java
+@@ -142,6 +142,10 @@ public class CaseInsensitiveDictionaryMap<K, V> extends Dictionary<K, V> impleme
+ 	 * @return The specified key or a case-insensitive wrapping of the key.
+ 	 */
+ 	private Object keyWrap(Object key) {
++		if (_CASE_SENSITIVE) {
++			return key;
++		}
++
+ 		if (key instanceof String) {
+ 			return new CaseInsensitiveKey((String) key);
+ 		}
+@@ -594,5 +598,8 @@ public class CaseInsensitiveDictionaryMap<K, V> extends Dictionary<K, V> impleme
+ 			return entry.toString();
+ 		}
+ 	}
++
++	private static final boolean _CASE_SENSITIVE = Boolean.getBoolean(
++		"org.eclipse.osgi.property.key.case.sensitive");
+ }
+ /* @generated */
+\ No newline at end of file

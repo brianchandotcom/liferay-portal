@@ -377,7 +377,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 		catch (SQLException sqlException) {
 		}
 
-		Assert.assertFalse(hasColumnType(_TABLE_NAME, "typeDouble", "INTEGER"));
+		Assert.assertFalse(hasColumnType(_TABLE_NAME, "typeDouble", "VARCHAR"));
 	}
 
 	@Test

@@ -18,10 +18,42 @@ import LiferaySurface from '../surface/Surface';
 import {getPortletBoundaryId, getUid, resetAllPortlets} from '../util/utils';
 import App from './App';
 
-import '../css/lfr_spa_loading_bar.scss';
-
 const MAX_TIMEOUT = Math.pow(2, 31) - 1;
 const PROPAGATED_PARAMS = ['bodyCssClass'];
+
+const CSS = `
+@keyframes shift-rightwards {
+	0% {
+		transform: translateX(-100%);
+	}
+	40% {
+		transform: translateX(0%);
+	}
+	60% {
+		transform: translateX(0%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
+}
+
+.lfr-spa-loading-bar {
+	background: var(--primary);
+	display: none;
+	height: 2px;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	transform: translateX(100%);
+	z-index: 2000;
+
+	.lfr-spa-loading & {
+		animation: shift-rightwards 1s ease-in-out infinite;
+		animation-delay: 0.4s;
+		display: block;
+	}
+}`;
 
 /**
  * LiferayApp
@@ -88,6 +120,9 @@ class LiferayApp extends App {
 
 		this.addSurfaces(new LiferaySurface(body.id));
 
+		document.head.appendChild(
+			buildFragment(`<style type="text/css">${CSS}</style>`)
+		);
 		body.appendChild(
 			buildFragment('<div class="lfr-spa-loading-bar"></div>')
 		);

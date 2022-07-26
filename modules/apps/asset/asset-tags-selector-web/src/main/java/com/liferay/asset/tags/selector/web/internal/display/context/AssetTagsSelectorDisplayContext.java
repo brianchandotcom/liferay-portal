@@ -162,16 +162,28 @@ public class AssetTagsSelectorDisplayContext {
 			return _groupIds;
 		}
 
-		_groupIds = StringUtil.split(
+		long[] groupIds = StringUtil.split(
 			ParamUtil.getString(_httpServletRequest, "groupIds"), 0L);
 
-		if (ArrayUtil.isEmpty(_groupIds)) {
+		if (ArrayUtil.isEmpty(groupIds)) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)_httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			_groupIds = new long[] {themeDisplay.getScopeGroupId()};
+			groupIds = new long[] {themeDisplay.getScopeGroupId()};
 		}
+
+		for (long groupId : groupIds) {
+			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+			if ((group != null) && group.isLayout() &&
+				!ArrayUtil.contains(groupIds, group.getParentGroupId())) {
+
+				groupIds = ArrayUtil.append(groupIds, group.getParentGroupId());
+			}
+		}
+
+		_groupIds = groupIds;
 
 		return _groupIds;
 	}

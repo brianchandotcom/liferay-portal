@@ -14,6 +14,7 @@
 
 import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplayOptions';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {collectionIsMapped} from '../collectionIsMapped';
 import {formIsMapped} from '../formIsMapped';
 import isItemEmpty from '../isItemEmpty';
 import checkAllowedChild from './checkAllowedChild';
@@ -74,6 +75,9 @@ export default function defaultComputeHover({
 	const validDropInsideTarget = (() => {
 		const targetIsColumn =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.column;
+		const targetIsCollectionNotMapped =
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+			!collectionIsMapped(targetItem);
 		const targetIsContainerFlex = itemIsContainerFlex(targetItem);
 		const targetIsFragment =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.fragment;
@@ -87,9 +91,12 @@ export default function defaultComputeHover({
 
 		return (
 			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
-			(targetIsEmpty || targetIsColumn || targetIsContainerFlex) &&
-			!targetIsFragment &&
-			!targetIsFormNotMapped
+			(targetIsEmpty ||
+				targetIsColumn ||
+				targetIsContainerFlex ||
+				targetIsCollectionNotMapped ||
+				targetIsFormNotMapped) &&
+			!targetIsFragment
 		);
 	})();
 

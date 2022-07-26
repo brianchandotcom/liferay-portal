@@ -1,5 +1,3 @@
-import {fetch} from 'frontend-js-web';
-
 const RAPID_TEXT_DELAY = 300;
 
 let rapidText = '';
@@ -332,7 +330,7 @@ function fetchRemoteOptions(query, abortController) {
 	const url = new URL(input.attributes.relationshipURL);
 	url.searchParams.set('search', query);
 
-	return fetch(url, {
+	return Liferay.Util.fetch(url, {
 		headers: new Headers({
 			'Accept': 'application/json',
 			'Content-Type': 'application/json',

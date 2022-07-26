@@ -192,7 +192,6 @@ const Field = ({
 						},
 					}}
 					onActiveChange={setActive}
-					role="listbox"
 					trigger={
 						<ClayButton
 							aria-expanded={active}
@@ -214,27 +213,18 @@ const Field = ({
 						</ClayButton>
 					}
 				>
-					<DropDownList
-						aria-labelledby={triggerId}
-						field={field}
-						onClick={handleUnitSelect}
-					/>
+					<ClayDropDown.ItemList aria-labelledby={triggerId}>
+						{UNITS.map((unit) => (
+							<ClayDropDown.Item
+								key={unit}
+								onClick={() => handleUnitSelect(unit)}
+							>
+								{unit.toUpperCase()}
+							</ClayDropDown.Item>
+						))}
+					</ClayDropDown.ItemList>
 				</ClayDropDown>
 			</ClayInput.GroupItem>
 		</ClayInput.Group>
 	);
 };
-
-const DropDownList = ({onClick, ...otherProps}) => (
-	<ClayDropDown.ItemList {...otherProps}>
-		{UNITS.map((unit) => (
-			<ClayDropDown.Item
-				aria-label={unit}
-				key={unit}
-				onClick={() => onClick(unit)}
-			>
-				{unit.toUpperCase()}
-			</ClayDropDown.Item>
-		))}
-	</ClayDropDown.ItemList>
-);

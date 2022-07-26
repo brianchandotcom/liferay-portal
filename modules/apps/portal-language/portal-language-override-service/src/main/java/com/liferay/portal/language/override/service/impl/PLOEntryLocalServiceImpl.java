@@ -17,7 +17,7 @@ package com.liferay.portal.language.override.service.impl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -128,7 +128,7 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 		throws PortalException {
 
 		for (Map.Entry<Locale, String> entry : localizationMap.entrySet()) {
-			String languageId = LanguageUtil.getLanguageId(entry.getKey());
+			String languageId = _language.getLanguageId(entry.getKey());
 			String value = StringUtil.trim(entry.getValue());
 
 			if ((value == null) || value.equals(StringPool.BLANK)) {
@@ -156,6 +156,9 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 			throw new PLOEntryValueException.MustNotBeNull();
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -17,7 +17,7 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.configur
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -56,7 +56,7 @@ public class DeleteDefinitionPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(getLocale(portletRequest), "delete");
+		return _language.get(getLocale(portletRequest), "delete");
 	}
 
 	@Override
@@ -141,6 +141,9 @@ public class DeleteDefinitionPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteDefinitionPortletConfigurationIcon.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -15,12 +15,13 @@
 package com.liferay.portal.language.override.internal.provider;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.language.override.provider.PLOOriginalTranslationProvider;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -34,8 +35,11 @@ public class PLOOriginalTranslationProviderImpl
 		try (SafeCloseable safeCloseable =
 				PLOOriginalTranslationThreadLocal.setWithSafeCloseable(true)) {
 
-			return LanguageUtil.get(locale, key, null);
+			return _language.get(locale, key, null);
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 }

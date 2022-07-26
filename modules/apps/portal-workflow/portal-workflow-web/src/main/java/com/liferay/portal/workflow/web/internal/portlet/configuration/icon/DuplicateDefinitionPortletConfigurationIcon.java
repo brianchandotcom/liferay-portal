@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.web.internal.portlet.configuration.icon;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -56,7 +56,7 @@ public class DuplicateDefinitionPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(getLocale(portletRequest), "duplicate");
+		return _language.get(getLocale(portletRequest), "duplicate");
 	}
 
 	@Override
@@ -119,6 +119,9 @@ public class DuplicateDefinitionPortletConfigurationIcon
 	}
 
 	private volatile boolean _companyAdministratorCanPublish;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

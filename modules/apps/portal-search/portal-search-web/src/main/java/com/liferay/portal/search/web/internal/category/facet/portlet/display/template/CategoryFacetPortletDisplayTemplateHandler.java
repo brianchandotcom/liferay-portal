@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.web.internal.category.facet.portlet.display.template;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -57,7 +57,7 @@ public class CategoryFacetPortletDisplayTemplateHandler
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale, getClass()));
 
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return _language.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override
@@ -111,6 +111,9 @@ public class CategoryFacetPortletDisplayTemplateHandler
 		return "com/liferay/portal/search/web/internal/category/facet/portlet" +
 			"/display/template/dependencies/portlet-display-templates.xml";
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

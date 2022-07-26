@@ -16,7 +16,7 @@ package com.liferay.portal.search.web.internal.search.results.portlet.display.te
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -67,7 +67,7 @@ public class SearchResultsPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.format(
+		return _language.format(
 			locale, "x-template",
 			_portal.getPortletTitle(
 				SearchResultsPortletKeys.SEARCH_RESULTS, resourceBundle),
@@ -143,6 +143,9 @@ public class SearchResultsPortletDisplayTemplateHandler
 			"/portlet/display/template/dependencies/portlet-display-" +
 				"templates.xml";
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

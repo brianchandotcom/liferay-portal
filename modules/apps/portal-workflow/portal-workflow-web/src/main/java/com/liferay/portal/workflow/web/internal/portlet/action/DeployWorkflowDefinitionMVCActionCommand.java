@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -127,12 +127,11 @@ public class DeployWorkflowDefinitionMVCActionCommand
 				WorkflowWebKeys.WORKFLOW_PUBLISH_DEFINITION_ACTION));
 
 		if (definitionPublishing) {
-			return LanguageUtil.get(
+			return language.get(
 				resourceBundle, "workflow-published-successfully");
 		}
 
-		return LanguageUtil.get(
-			resourceBundle, "workflow-updated-successfully");
+		return language.get(resourceBundle, "workflow-updated-successfully");
 	}
 
 	protected void validateTitle(
@@ -155,7 +154,7 @@ public class DeployWorkflowDefinitionMVCActionCommand
 				bytes);
 		}
 		catch (WorkflowException workflowException) {
-			String message = LanguageUtil.get(
+			String message = language.get(
 				getResourceBundle(actionRequest),
 				"please-enter-a-valid-definition-before-publishing");
 
@@ -163,6 +162,9 @@ public class DeployWorkflowDefinitionMVCActionCommand
 				message, workflowException);
 		}
 	}
+
+	@Reference
+	protected Language language;
 
 	@Reference(target = "(proxy.bean=false)")
 	protected WorkflowDefinitionManager unproxiedWorkflowDefinitionManager;

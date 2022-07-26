@@ -17,7 +17,7 @@ package com.liferay.portal.search.web.internal.custom.facet.portlet.shared.searc
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.facet.custom.CustomFacetSearchContributor;
 import com.liferay.portal.search.facet.nested.NestedFacetSearchContributor;
@@ -164,8 +164,8 @@ public class CustomFacetPortletSharedSearchContributor
 	}
 
 	private Locale _getSuffixLocale(String string) {
-		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
-			String availableLanguageId = LanguageUtil.getLanguageId(
+		for (Locale availableLocale : _language.getAvailableLocales()) {
+			String availableLanguageId = _language.getLanguageId(
 				availableLocale);
 
 			if (string.endsWith(availableLanguageId)) {
@@ -175,5 +175,8 @@ public class CustomFacetPortletSharedSearchContributor
 
 		return null;
 	}
+
+	@Reference
+	private Language _language;
 
 }

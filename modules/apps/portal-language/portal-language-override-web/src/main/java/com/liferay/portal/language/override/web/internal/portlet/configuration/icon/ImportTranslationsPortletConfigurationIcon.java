@@ -15,7 +15,7 @@
 package com.liferay.portal.language.override.web.internal.portlet.configuration.icon;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.service.permission.PortalPermission;
@@ -50,7 +50,7 @@ public class ImportTranslationsPortletConfigurationIcon
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getLocale(portletRequest), getClass());
 
-		return LanguageUtil.get(resourceBundle, "import-translations");
+		return _language.get(resourceBundle, "import-translations");
 	}
 
 	@Override
@@ -90,6 +90,9 @@ public class ImportTranslationsPortletConfigurationIcon
 
 		return false;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -15,7 +15,7 @@
 package com.liferay.portal.security.ldap.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
@@ -119,12 +119,15 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 		for (MembershipRequest membershipRequest : membershipRequests) {
 			_membershipRequestLocalService.updateStatus(
 				principalUserId, membershipRequest.getMembershipRequestId(),
-				LanguageUtil.get(
+				_language.get(
 					user.getLocale(), "your-membership-has-been-approved"),
 				MembershipRequestConstants.STATUS_APPROVED, false,
 				new ServiceContext());
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

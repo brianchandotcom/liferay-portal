@@ -15,7 +15,7 @@
 package com.liferay.portal.search.web.internal.product.navigation.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -63,7 +63,7 @@ public class IndexingProductNavigationControlMenuEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle, "the-portal-is-currently-reindexing");
 	}
 
@@ -95,5 +95,8 @@ public class IndexingProductNavigationControlMenuEntry
 		Collections.<String, Object>singletonMap("qa-id", "indexing");
 
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
+	private Language _language;
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -70,8 +69,7 @@ public class SaveWorkflowDefinitionMVCActionCommand
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(actionRequest), "workflow-saved");
+		return language.get(getResourceBundle(actionRequest), "workflow-saved");
 	}
 
 }

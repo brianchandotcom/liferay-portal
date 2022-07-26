@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.google.settings.authentication.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
@@ -53,8 +53,7 @@ public class GooglePortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(
-			locale, "google-authorization-configuration-name");
+		return _language.get(locale, "google-authorization-configuration-name");
 	}
 
 	@Override
@@ -66,6 +65,9 @@ public class GooglePortalSettingsConfigurationScreenContributor
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.google.settings.authentication.web)",

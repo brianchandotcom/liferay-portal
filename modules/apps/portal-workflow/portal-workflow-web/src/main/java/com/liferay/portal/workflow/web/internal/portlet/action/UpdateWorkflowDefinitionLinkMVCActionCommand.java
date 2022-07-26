@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -63,12 +63,12 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 		String successMessage = StringPool.BLANK;
 
 		if (Validator.isNull(workflowDefinition)) {
-			successMessage = LanguageUtil.format(
+			successMessage = _language.format(
 				getResourceBundle(actionRequest), "workflow-unassigned-from-x",
 				resource);
 		}
 		else {
-			successMessage = LanguageUtil.format(
+			successMessage = _language.format(
 				getResourceBundle(actionRequest), "workflow-assigned-to-x",
 				resource);
 		}
@@ -147,6 +147,9 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 	}
 
 	private static final String _PREFIX = "workflowDefinitionName@";
+
+	@Reference
+	private Language _language;
 
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;

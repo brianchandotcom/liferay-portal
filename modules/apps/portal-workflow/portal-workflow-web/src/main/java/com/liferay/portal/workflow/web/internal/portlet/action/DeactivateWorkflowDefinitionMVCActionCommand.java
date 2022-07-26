@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,6 +27,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -67,9 +68,12 @@ public class DeactivateWorkflowDefinitionMVCActionCommand
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(actionRequest),
 			"workflow-unpublished-successfully");
 	}
+
+	@Reference
+	private Language _language;
 
 }

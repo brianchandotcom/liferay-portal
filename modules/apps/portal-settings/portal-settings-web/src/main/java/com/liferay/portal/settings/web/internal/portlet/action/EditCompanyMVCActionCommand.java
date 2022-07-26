@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -330,7 +330,7 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 		String[] removedLanguageIds = ArrayUtil.filter(
 			LocaleUtil.toLanguageIds(
-				LanguageUtil.getCompanyAvailableLocales(companyId)),
+				_language.getCompanyAvailableLocales(companyId)),
 			languageId -> !StringUtil.contains(
 				newLanguageIds, languageId, StringPool.COMMA));
 
@@ -404,6 +404,9 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PhoneLocalService _phoneLocalService;

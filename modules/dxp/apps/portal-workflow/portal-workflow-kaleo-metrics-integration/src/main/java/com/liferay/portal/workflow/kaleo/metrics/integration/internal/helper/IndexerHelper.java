@@ -22,7 +22,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -315,7 +315,7 @@ public class IndexerHelper {
 			Map<Locale, String> localizationMap = new HashMap<>();
 
 			for (Locale availableLocale :
-					LanguageUtil.getAvailableLocales(groupId)) {
+					_language.getAvailableLocales(groupId)) {
 
 				localizationMap.put(
 					availableLocale,
@@ -333,9 +333,7 @@ public class IndexerHelper {
 
 		Map<Locale, String> localizationMap = new HashMap<>();
 
-		for (Locale availableLocale :
-				LanguageUtil.getAvailableLocales(groupId)) {
-
+		for (Locale availableLocale : _language.getAvailableLocales(groupId)) {
 			localizationMap.put(
 				availableLocale,
 				ResourceActionsUtil.getModelResource(
@@ -496,6 +494,9 @@ public class IndexerHelper {
 
 	@Reference
 	private KaleoTaskLocalService _kaleoTaskLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.web.internal.sort.portlet.display.template;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -56,7 +56,7 @@ public class SortPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.format(
+		return _language.format(
 			locale, "x-template",
 			_portal.getPortletTitle(SortPortletKeys.SORT, resourceBundle),
 			false);
@@ -113,6 +113,9 @@ public class SortPortletDisplayTemplateHandler
 		return "com/liferay/portal/search/web/internal/sort/portlet/display" +
 			"/template/dependencies/portlet-display-templates.xml";
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

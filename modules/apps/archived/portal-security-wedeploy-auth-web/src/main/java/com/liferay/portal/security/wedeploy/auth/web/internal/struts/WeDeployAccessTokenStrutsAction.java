@@ -16,7 +16,7 @@ package com.liferay.portal.security.wedeploy.auth.web.internal.struts;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -88,7 +88,7 @@ public class WeDeployAccessTokenStrutsAction implements StrutsAction {
 
 			jsonObject.put(
 				"error_message",
-				LanguageUtil.get(
+				_language.get(
 					LocaleUtil.getDefault(),
 					"client-id-and-client-secret-do-not-match"));
 		}
@@ -99,7 +99,7 @@ public class WeDeployAccessTokenStrutsAction implements StrutsAction {
 
 			jsonObject.put(
 				"error_message",
-				LanguageUtil.get(
+				_language.get(
 					LocaleUtil.getDefault(), "request-token-does-not-match"));
 		}
 		catch (Exception exception) {
@@ -107,7 +107,7 @@ public class WeDeployAccessTokenStrutsAction implements StrutsAction {
 
 			jsonObject.put(
 				"error_message",
-				LanguageUtil.get(
+				_language.get(
 					LocaleUtil.getDefault(),
 					"an-error-occurred-while-processing-the-requested-" +
 						"resource"));
@@ -120,6 +120,9 @@ public class WeDeployAccessTokenStrutsAction implements StrutsAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WeDeployAccessTokenStrutsAction.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private WeDeployAuthTokenLocalService _weDeployAuthTokenLocalService;

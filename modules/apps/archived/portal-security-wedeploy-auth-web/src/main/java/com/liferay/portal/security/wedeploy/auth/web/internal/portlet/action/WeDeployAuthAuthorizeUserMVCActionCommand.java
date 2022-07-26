@@ -17,7 +17,7 @@ package com.liferay.portal.security.wedeploy.auth.web.internal.portlet.action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -84,7 +84,7 @@ public class WeDeployAuthAuthorizeUserMVCActionCommand
 
 			JSONObject jsonObject = JSONUtil.put(
 				"error_message",
-				LanguageUtil.get(
+				_language.get(
 					themeDisplay.getLocale(),
 					"an-error-occurred-while-processing-the-requested-" +
 						"resource"));
@@ -116,6 +116,9 @@ public class WeDeployAuthAuthorizeUserMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WeDeployAuthAuthorizeUserMVCActionCommand.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private WeDeployAuthTokenLocalService _weDeployAuthTokenLocalService;

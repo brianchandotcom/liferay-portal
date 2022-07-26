@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.cas.settings.authentication.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
@@ -56,7 +56,7 @@ public class CASPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "cas-configuration-name");
+		return _language.get(locale, "cas-configuration-name");
 	}
 
 	@Override
@@ -80,6 +80,9 @@ public class CASPortalSettingsConfigurationScreenContributor
 
 		return renderResponse.getNamespace() + "testCasSettings();";
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.cas.settings.authentication.web)",

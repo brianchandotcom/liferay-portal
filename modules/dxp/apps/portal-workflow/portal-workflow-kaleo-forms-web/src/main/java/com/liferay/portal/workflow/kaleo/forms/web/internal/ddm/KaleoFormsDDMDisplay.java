@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -84,7 +84,7 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 		DDMStructure structure, DDMTemplate template, Locale locale) {
 
 		if ((structure != null) && (template == null)) {
-			return LanguageUtil.format(
+			return _language.format(
 				getResourceBundle(locale), "new-form-for-field-set-x",
 				structure.getName(locale), false);
 		}
@@ -104,7 +104,7 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getStructureName(Locale locale) {
-		return LanguageUtil.get(getResourceBundle(locale), "field-set");
+		return _language.get(getResourceBundle(locale), "field-set");
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getTitle(Locale locale) {
-		return LanguageUtil.get(getResourceBundle(locale), "field-sets");
+		return _language.get(getResourceBundle(locale), "field-sets");
 	}
 
 	@Override
@@ -146,7 +146,7 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 		Locale locale) {
 
 		if (structure != null) {
-			return LanguageUtil.format(
+			return _language.format(
 				getResourceBundle(locale), "forms-for-field-set-x",
 				structure.getName(locale), false);
 		}
@@ -161,7 +161,7 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	protected String getDefaultViewTemplateTitle(Locale locale) {
-		return LanguageUtil.get(getResourceBundle(locale), "forms");
+		return _language.get(getResourceBundle(locale), "forms");
 	}
 
 	private String _getSelectTemplateURL(
@@ -195,6 +195,9 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
 		return portletURL.toString();
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

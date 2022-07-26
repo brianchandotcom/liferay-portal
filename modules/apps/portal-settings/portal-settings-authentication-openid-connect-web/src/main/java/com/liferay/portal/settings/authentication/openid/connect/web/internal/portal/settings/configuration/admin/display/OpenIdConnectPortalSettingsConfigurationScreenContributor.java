@@ -14,7 +14,7 @@
 
 package com.liferay.portal.settings.authentication.openid.connect.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
@@ -54,7 +54,7 @@ public class OpenIdConnectPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "open-id-connect-configuration-name");
+		return _language.get(locale, "open-id-connect-configuration-name");
 	}
 
 	@Override
@@ -66,6 +66,9 @@ public class OpenIdConnectPortalSettingsConfigurationScreenContributor
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.openid.connect.web)",

@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
@@ -83,10 +83,10 @@ public class WorkflowTaskUserNotificationHandler
 			StringUtil.replace(
 				_BODY_TEMPLATE_DEFAULT, new String[] {"[$BODY$]", "[$TITLE$]"},
 				new String[] {
-					LanguageUtil.format(
+					_language.format(
 						locale, "notification-for-x-was-deactivated",
 						jsonObject.getString("entryType"), false),
-					LanguageUtil.get(locale, "notification-no-longer-applies")
+					_language.get(locale, "notification-no-longer-applies")
 				}),
 			StringPool.BLANK, false);
 	}
@@ -195,6 +195,9 @@ public class WorkflowTaskUserNotificationHandler
 	private static final String _BODY_TEMPLATE_DEFAULT =
 		"<div class=\"title\">[$TITLE$]</div><div class=\"body\">[$BODY$]" +
 			"</div>";
+
+	@Reference
+	private Language _language;
 
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;

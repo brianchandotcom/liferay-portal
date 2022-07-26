@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -97,7 +97,7 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 			!validateRankingMVCResourceRequest.getInactive()) {
 
 			jsonArray.put(
-				LanguageUtil.format(
+				_language.format(
 					portal.getHttpServletRequest(resourceRequest),
 					"active-search-queries-and-aliases-must-be-unique-across-" +
 						"all-rankings.-the-following-ones-already-exist-x",
@@ -211,6 +211,9 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ValidateRankingMVCResourceCommand.class);
+
+	@Reference
+	private Language _language;
 
 	private class ValidateRankingMVCResourceRequest {
 

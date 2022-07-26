@@ -103,6 +103,7 @@ function RadioFilter({id, items, selectedData, setFilter}) {
 							};
 
 							setFilter({
+								active: true,
 								id,
 								odataFilterString: getOdataString({
 									id,

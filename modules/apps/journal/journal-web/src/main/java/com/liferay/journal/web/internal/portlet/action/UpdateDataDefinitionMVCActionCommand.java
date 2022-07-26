@@ -130,16 +130,18 @@ public class UpdateDataDefinitionMVCActionCommand
 	}
 
 	private void _clearCache(String ddmStructureKey) {
-		List<JournalArticle> articles = _journalArticleLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				JournalArticleTable.INSTANCE
-			).from(
-				JournalArticleTable.INSTANCE
-			).where(
-				JournalArticleTable.INSTANCE.DDMStructureKey.eq(ddmStructureKey)
-			));
+		List<JournalArticle> journalArticles =
+			_journalArticleLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					JournalArticleTable.INSTANCE
+				).from(
+					JournalArticleTable.INSTANCE
+				).where(
+					JournalArticleTable.INSTANCE.DDMStructureKey.eq(
+						ddmStructureKey)
+				));
 
-		for (JournalArticle journalArticle : articles) {
+		for (JournalArticle journalArticle : journalArticles) {
 			JournalArticleUtil.clearCache(journalArticle);
 		}
 	}

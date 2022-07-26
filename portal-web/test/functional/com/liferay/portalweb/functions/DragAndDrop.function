@@ -228,7 +228,7 @@ Simulate = {
 				type,{
 					bubbles: true,
 					clientX: rect.left + (rect.width / 2),
-					clientY: rect.top + (rect.height / 3),
+					clientY: rect.top + (rect.height / 5),
 					dataTransfer: dataTransfer,
 					relatedTarget: element
 				});
@@ -277,7 +277,7 @@ Simulate = {
 				type,{
 					bubbles: true,
 					clientX: rect.left + (rect.width / 2),
-					clientY: rect.top + (rect.height / (3 / 2)),
+					clientY: rect.top + (rect.height / (5 / 4)),
 					dataTransfer: dataTransfer,
 					relatedTarget: element
 				});

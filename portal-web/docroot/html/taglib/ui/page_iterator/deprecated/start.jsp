@@ -55,6 +55,8 @@ if (Validator.isNull(id)) {
 	id = PortalUtil.generateRandomKey(request, "taglib-page-iterator");
 }
 
+int start = (cur - 1) * delta;
+
 int end = cur * delta;
 
 if (end > total) {
@@ -258,7 +260,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 		</c:if>
 
 		<c:if test='<%= type.equals("approximate") || type.equals("more") || type.equals("regular") %>'>
-			<%@ include file="/html/taglib/ui/page_iterator/showing_x_results.jspf" %>
+			<%@ include file="/html/taglib/ui/page_iterator/deprecated/showing_x_results.jspf" %>
 		</c:if>
 
 		<ul class="lfr-pagination-buttons pagination">

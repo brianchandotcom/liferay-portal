@@ -19,6 +19,7 @@ import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectD
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.Locale;
 
@@ -59,6 +60,11 @@ public class RelationshipObjectFieldBusinessType
 	@Override
 	public String getName() {
 		return ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP;
+	}
+
+	@Override
+	public PropertyDefinition.PropertyType getPropertyType() {
+		return PropertyDefinition.PropertyType.LONG;
 	}
 
 	@Override

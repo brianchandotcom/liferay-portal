@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.math.BigDecimal;
 
@@ -119,6 +120,11 @@ public class AttachmentObjectFieldBusinessType
 		properties.remove("storageDLFolderPath");
 
 		return properties;
+	}
+
+	@Override
+	public PropertyDefinition.PropertyType getPropertyType() {
+		return PropertyDefinition.PropertyType.LONG;
 	}
 
 	@Override

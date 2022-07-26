@@ -22,6 +22,7 @@ import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -60,6 +61,8 @@ public interface ObjectFieldBusinessType {
 
 		return Collections.emptyMap();
 	}
+
+	public PropertyDefinition.PropertyType getPropertyType();
 
 	public default Set<String> getRequiredObjectFieldSettingsNames() {
 		return Collections.emptySet();

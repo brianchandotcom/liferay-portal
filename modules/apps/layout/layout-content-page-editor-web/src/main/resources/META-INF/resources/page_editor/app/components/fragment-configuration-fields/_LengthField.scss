@@ -2,6 +2,8 @@
 
 html#{$cadmin-selector} .cadmin .page-editor__length-field {
 	&__button {
+		border-bottom-left-radius: 0;
+		border-top-left-radius: 0;
 		font-size: 0.75rem;
 		min-width: 45px;
 	}

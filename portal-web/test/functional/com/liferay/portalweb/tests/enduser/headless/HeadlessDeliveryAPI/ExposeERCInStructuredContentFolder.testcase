@@ -1,0 +1,48 @@
+@component-name = "portal-headless-frontend-infrastructure"
+@disable-webdriver = "true"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		task ("Given a site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@description = "Structured Content Folder is created with default ERC"
+	@priority = "5"
+	test StructuredContentFolderIsCreatedWithDefaultErc {
+		property portal.acceptance = "true";
+
+		task ("When with postSiteStructuredContentFolder") {
+			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolder(
+				groupName = "Site Name",
+				name = "Test Folder");
+		}
+
+		task ("Then a new folder is created with the erc value equals to the uuid in the body response") {
+			var structuredContentUUId = HeadlessWebcontentFolderAPI.getUuidOfCreatedStructuredContentFolder(responseToParse = "${response}");
+
+			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "${structuredContentUUId}",
+				responseToParse = "${response}");
+		}
+	}
+
+}

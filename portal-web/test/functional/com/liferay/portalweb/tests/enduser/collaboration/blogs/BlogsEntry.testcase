@@ -839,39 +839,201 @@ definition {
 	}
 
 	@description = "This is a test for LPS-67515. It ensures that an exported blog entry with a cover image can be imported to a new site after cleaning the DB."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanImportEntryWithImageAfterCleaningDB {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "BlogsEntry#CanImportEntryWithImageAfterCleaningDB";
 
-		// TODO LPS-149060 CanImportEntryWithImageAfterCleaningDB pending implementation
+		var imageId = JSONBlog.uploadBlogImage(
+			groupName = "Guest",
+			sourceFileName = "Document_1.jpg");
 
+		JSONBlog.addEntryWithImage(
+			coverImageId = "${imageId}",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LAR.exportPortlet(larFileName = "Blog_portlet.lar");
+
+		Portlet.shutdownServer();
+
+		SQL.executeMySQLStatement(mysqlStatement = "drop database if exists lportal;");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+
+		Portlet.startServer();
+
+		Navigator.openURL();
+
+		SignIn.agreeToTermsOfUse();
+
+		User.answerPasswordReminder();
+
+		SearchAdministration.executeReindex();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsEntry.viewDefaultCP();
+
+		LAR.importPortlet(larFileName = "Blog_portlet.lar");
+
+		AssertConsoleTextNotPresent(value1 = "Unable to execute background task");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "Document_1");
 	}
 
 	@description = "This is a test for LPS-67515. It ensures that a blog entry with a cover image can be exported and imported between different sites."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanImportEntryWithImageBetweenDifferentSites {
+		property portal.acceptance = "false";
 
-		// TODO LPS-149060 CanImportEntryWithImageBetweenDifferentSites pending implementation
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
+		var imageId = JSONBlog.uploadBlogImage(
+			groupName = "Guest",
+			sourceFileName = "Document_1.jpg");
+
+		JSONBlog.addEntryWithImage(
+			coverImageId = "${imageId}",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LAR.exportPortlet(larFileName = "Blog_portlet.lar");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		LAR.importPortlet(larFileName = "Blog_portlet.lar");
+
+		AssertConsoleTextNotPresent(value1 = "Unable to execute background task");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "Document_1");
 	}
 
 	@description = "This is a test for LPS-67515. It ensures that an exported blog entry with a small image can be imported to a new site after cleaning the DB."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanImportEntryWithSmallImageAfterCleaningDB {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "BlogsEntry#CanImportEntryWithSmallImageAfterCleaningDB";
 
-		// TODO LPS-149060 CanImportEntryWithSmallImageAfterCleaningDB pending implementation
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry with Small Image");
+
+		BlogsEntry.addSmallImage(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.jpg");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LAR.exportPortlet(larFileName = "Blog_portlet.lar");
+
+		Portlet.shutdownServer();
+
+		SQL.executeMySQLStatement(mysqlStatement = "drop database if exists lportal;");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+
+		Portlet.startServer();
+
+		Navigator.openURL();
+
+		SignIn.agreeToTermsOfUse();
+
+		User.answerPasswordReminder();
+
+		SearchAdministration.executeReindex();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsEntry.viewDefaultCP();
+
+		LAR.importPortlet(larFileName = "Blog_portlet.lar");
+
+		AssertConsoleTextNotPresent(value1 = "Unable to execute background task");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry with Small Image");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entrySmallImage = "Document_1",
+			entryTitle = "Blogs Entry with Small Image");
 	}
 
 	@description = "This is a test for LPS-67515. It ensures that a blog entry with a small image can be exported and imported between different sites."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanImportEntryWithSmallImageBetweenDifferentSites {
+		property portal.acceptance = "false";
 
-		// TODO LPS-149060 CanImportEntryWithSmallImageBetweenDifferentSites pending implementation
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry with Small Image");
+
+		BlogsEntry.addSmallImage(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.jpg");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LAR.exportPortlet(larFileName = "Blog_portlet.lar");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		LAR.importPortlet(larFileName = "Blog_portlet.lar");
+
+		AssertConsoleTextNotPresent(value1 = "Unable to execute background task");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry with Small Image");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entrySmallImage = "Document_1",
+			entryTitle = "Blogs Entry with Small Image");
 	}
 
 	@description = "This checks that a blog entry can be manually saved as a draft."

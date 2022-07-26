@@ -115,7 +115,7 @@ public class KBTemplatesManagementToolbarDisplayContext {
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setMVCPath(
-						"/admin/common/edit_template.jsp"
+						"/admin/common/edit_kb_template.jsp"
 					).setRedirect(
 						PortalUtil.getCurrentURL(_httpServletRequest)
 					).buildPortletURL());

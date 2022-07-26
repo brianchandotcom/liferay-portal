@@ -103,7 +103,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 						</span>
 
 						<liferay-portlet:renderURL var="editURL">
-							<portlet:param name="mvcPath" value="/admin/common/edit_template.jsp" />
+							<portlet:param name="mvcPath" value="/admin/common/edit_kb_template.jsp" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
 						</liferay-portlet:renderURL>

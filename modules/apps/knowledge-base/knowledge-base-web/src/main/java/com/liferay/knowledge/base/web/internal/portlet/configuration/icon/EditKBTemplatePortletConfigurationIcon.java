@@ -64,7 +64,7 @@ public class EditKBTemplatePortletConfigurationIcon
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				PortletRequest.RENDER_PHASE)
 		).setMVCPath(
-			"/admin/edit_template.jsp"
+			"/admin/edit_kb_template.jsp"
 		).setRedirect(
 			_portal.getCurrentURL(portletRequest)
 		).setParameter(

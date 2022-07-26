@@ -2016,7 +2016,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
-			value1 = "The first character of a name must be an upper case letter.");
+			value1 = "The first character of a name must be an uppercase letter.");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Field Name"
@@ -2066,7 +2066,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
-			value1 = "The first character of a name must be an lower case letter.");
+			value1 = "The first character of a name must be a lowercase letter.");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Object Name"

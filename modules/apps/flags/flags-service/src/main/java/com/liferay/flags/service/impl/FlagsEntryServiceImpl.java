@@ -16,6 +16,9 @@ package com.liferay.flags.service.impl;
 
 import com.liferay.flags.internal.messaging.FlagsRequest;
 import com.liferay.flags.service.base.FlagsEntryServiceBaseImpl;
+import com.liferay.message.boards.constants.MBMessageConstants;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBSuspiciousActivityService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.EmailAddressException;
@@ -65,39 +68,28 @@ public class FlagsEntryServiceImpl extends FlagsEntryServiceBaseImpl {
 
 		_messageBus.sendMessage(DestinationNames.FLAGS, message);
 
-		if(className.equals("com.liferay.message.boards.model.MBMessage")){
+		if (className.equals("com.liferay.message.boards.model.MBMessage")) {
+			if (contentTitle.contains(
+					MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE)) {
 
+				_messageBoardSuspiciousActivityLocalService.
+					addOrUpdateSuspiciousActivityByMessage(classPK, reason);
+			}
+			else {
+				MBMessage mbMessage = _mbMessageService.getMessage(classPK);
 
-			System.out.println("ID of thread or message reported");
-			System.out.println(classPK);
-
-
-			System.out.println("User was reported the Thread or message");
-			System.out.println(reportedUserId);
-
-			System.out.println("Title of thread or message");
-			System.out.println(contentTitle);
-
-			System.out.println("Reason of the thread or message was reported");
-			System.out.println(reason);
-
-			System.out.println("User was reported the Thread or message");
-			System.out.println(serviceContext.getUserId());
-
-			if(contentTitle.contains("RE:")){
-				_messageBoardSuspiciousActivityLocalService.addOrUpdateSuspiciousActivityByMessage(
-					classPK,"",reason
-				);
-			}else{
-				_messageBoardSuspiciousActivityLocalService.addOrUpdateSuspiciousActivityByThread(
-					classPK + 1, "", reason
-				);
+				_messageBoardSuspiciousActivityLocalService.
+					addOrUpdateSuspiciousActivityByThread(
+						reason, mbMessage.getThreadId());
 			}
 	}
 
+	@Reference
+	private MBMessageService _mbMessageService;
 
-
-	}
+	@Reference
+	private MBSuspiciousActivityService
+		_messageBoardSuspiciousActivityLocalService;
 
 	@Reference
 	private MessageBus _messageBus;

@@ -2749,12 +2749,12 @@ public class SXPBlueprintSearchResultTest {
 			_assetTag = null;
 			_content = StringPool.BLANK;
 			_fieldName = StringPool.BLANK;
-			_titleMap = null;
 			_group = null;
 			_journalFolder = null;
 			_latitude = 200;
 			_longitude = 200;
 			_title = StringPool.BLANK;
+			_titleMap = null;
 			_workflowEnabled = false;
 		}
 

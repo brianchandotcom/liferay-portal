@@ -475,12 +475,12 @@ definition {
 			Navigator.gotoNavTab(navTab = "Fragments");
 
 			DragAndDrop.javaScriptDragAndDropToUp(
+				index = "1",
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Button",
 				key_targetFragmentName = "Grid",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-				value1 = "");
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
 
 			PageEditor.waitForAutoSave();
 		}

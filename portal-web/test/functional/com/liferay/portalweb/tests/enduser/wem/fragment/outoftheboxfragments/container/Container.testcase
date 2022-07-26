@@ -1171,6 +1171,7 @@ definition {
 
 		task ("When the Page designer dragging a new Heading fragment inside the first Container") {
 			DragOver.dragOverAtBottom(
+				index = "1",
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				key_targetFragmentName = "Heading",
@@ -1212,6 +1213,7 @@ definition {
 			WaitForPageLoad();
 
 			DragOver.dragOverAtBottom(
+				index = "1",
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				key_targetFragmentName = "Button",

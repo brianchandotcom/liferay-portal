@@ -439,6 +439,8 @@ definition {
 
 			Button.clickSave();
 
+			SelectFrameTop();
+
 			AssertElementPresent(
 				key_domainName = "gmail.com",
 				locator1 = "Account#VALID_DOMAINS_DOMAIN_NAME");

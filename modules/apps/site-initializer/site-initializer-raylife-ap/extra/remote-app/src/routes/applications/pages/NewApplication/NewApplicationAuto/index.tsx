@@ -22,6 +22,7 @@ import {ReactNode, useContext, useState} from 'react';
 import ClayIconProvider from '../../../../../common/context/ClayIconProvider';
 import {createOrUpdateRaylifeApplication} from '../../../../../common/services';
 import {CONSTANTS} from '../../../../../common/utils/constants';
+import {redirectTo} from '../../../../../common/utils/liferay';
 import {
 	ACTIONS,
 	NewApplicationAutoContext,
@@ -76,7 +77,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 		const applicationStatus =
 			state.currentStep < 4
 				? CONSTANTS.APPLICATION_STATUS.OPEN
-				: CONSTANTS.APPLICATION_STATUS.QUOTED;
+				: CONSTANTS.APPLICATION_STATUS.BOUND;
 
 		createOrUpdateRaylifeApplication(state, applicationStatus).then(
 			(response) => {
@@ -93,6 +94,10 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 				payload: state.currentStep + 1,
 				type: ACTIONS.SET_CURRENT_STEP,
 			});
+		}
+
+		if (state.currentStep === 4) {
+			redirectTo('Applications');
 		}
 	};
 

@@ -1061,146 +1061,163 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-6656. As an admin and as a buyer, the user is unable to add a bundled product(Price Type Static) to cart directly"
+	@description = "COMMERCE-6656. As a buyer, I want to be unable to add a bundled product(Price Type Static) to cart directly"
 	@priority = "3"
 	test AssertStaticPriceBundledProductCannotBeAddedToCartDirectly {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
-		task ("Given a Commerce Account with a buyer user") {
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				accountType = "Business",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "true",
-				requireReset = "false",
-				userEmailAddress = "buyer@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userRole = "Buyer",
-				userScreenName = "buyeruser",
-				userSiteMembership = "Minium");
-		}
+		// TODO Review
 
-		task ("and a minium site with a new option") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Options");
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Options");
 
-			CPCommerceCatalog.newOptionsEntry(
-				optionDescription = "Option Description",
-				optionFieldType = "Select from List",
-				optionName = "Color");
-		}
+		CPCommerceCatalog.newOptionsEntry(
+			optionDescription = "Option Description",
+			optionFieldType = "Select from List",
+			optionName = "Color");
 
-		task ("And Faceted Navigation, Required, and SKU Contributor are enabled with an option value") {
-			CommerceOptions.enableUseInFacetedNavigation();
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Use in Faceted Navigation",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-			CommerceOptions.enableRequired();
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Required",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-			CommerceOptions.enableSKUContributor();
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "SKU Contributor",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-			Button.clickSave();
+		Button.clickSave();
 
-			CommerceEntry.addOptionValue(
-				valueName = "Black",
-				valuePosition = "");
+		Click(locator1 = "Button#PLUS");
 
-			SelectFrameTop();
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			Button.clickSave();
-		}
+		CommerceEntry.addOptionValue(
+			valueName = "Black",
+			valuePosition = "");
 
-		task ("When creating a simple product with a set option value") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+		Button.click(button = "Submit");
 
-			CPCommerceCatalog.newProductsEntry(
-				productCatalog = "Minium",
-				productName = "Bundled Product",
-				productType = "Simple");
+		SelectFrameTop();
 
-			CommerceEntry.gotoMenuTab(menuTab = "Options");
+		Button.clickSave();
 
-			CommerceOptions.addColorOption();
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
 
-			Refresh();
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Minium",
+			productName = "Bundled Product",
+			productType = "Simple");
 
-			CommerceNavigator.gotoEntry(entryName = "Color");
+		CommerceEntry.gotoMenuTab(menuTab = "Options");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		Type(
+			key_title = "Add Options",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+			value1 = "Color");
 
-			CommerceOptions.setPriceType(priceType = "Static");
+		Button.click(button = "Select");
 
-			CommerceOptions.setDeltaPrice(
-				deltaPrice = "60.00",
-				key_index = "Black",
-				productSKU = "MIN55861");
+		Refresh();
 
-			Refresh();
-		}
+		CommerceNavigator.gotoEntry(entryName = "Color");
 
-		task ("and an SKU is created and made Purchasable") {
-			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceSKUs.addSKU(optionValuesList = "Black:10.0");
+		Select(
+			key_fieldLabel = "Price Type",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Static");
 
-			Refresh();
-		}
+		Button.clickSave();
 
-		task ("Then the user is unable to add the Static Price Bundled Product to cart as an admin and a buyer") {
-			ApplicationsMenu.gotoSite(site = "Minium");
+		Alert.viewSuccessMessage();
 
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+		Click(
+			key_index = "Black",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
-			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "First Account");
+		Type(
+			key_fieldLabel = "Delta Price",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "60.00");
 
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		Type(
+			key_fieldLabel = "SKU",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "MIN55861");
 
-			AssertElementNotPresent(
-				key_productName = "Bundled Product",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
+		Button.clickSave();
 
-			AssertElementNotPresent(
-				key_productName = "Bundled Product",
-				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		Alert.viewSuccessMessage();
 
-			AssertElementNotPresent(
-				key_productName = "Bundled Product",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABLE_LABEL");
+		Refresh();
 
-			AssertElementNotPresent(
-				key_productName = "Bundled Product",
-				key_productSku = "BLACKSKU",
-				locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-			User.logoutPG();
+		Click(locator1 = "Button#PLUS");
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
+		Click(
+			key_fieldName = "Add SKU",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
 
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			AssertElementNotPresent(
-				key_productName = "Bundled Product",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
+		Type(
+			key_fieldLabel = "SKU",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "BLACKSKU");
 
-			AssertElementNotPresent(
-				key_productName = "Bundled Product",
-				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		Click(locator1 = "Dropdown#TRIGGER");
 
-			AssertElementNotPresent(
-				key_productName = "Bundled Product",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABLE_LABEL");
+		Click(
+			key_fieldName = "Black",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
 
-			AssertElementNotPresent(
-				key_productName = "Bundled Product",
-				key_productSku = "BLACKSKU",
-				locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
-		}
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Purchasable",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Type(
+			key_fieldLabel = "Base Price",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "10.0");
+
+		Button.click(button = "Publish");
+
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
+
+		Refresh();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "First Account");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		AssertElementNotPresent(
+			key_productName = "Bundled Product",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
+
+		AssertElementNotPresent(
+			key_productName = "Bundled Product",
+			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+
+		AssertElementNotPresent(
+			key_productName = "Bundled Product",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABLE_LABEL");
+
+		AssertElementNotPresent(
+			key_productName = "Bundled Product",
+			key_productSku = "BLACKSKU",
+			locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
 	}
 
 	@description = "COMMERCE-5873. As a buyer, I want to be able to navigate to the product detail page via primary CTA, to check its variants"

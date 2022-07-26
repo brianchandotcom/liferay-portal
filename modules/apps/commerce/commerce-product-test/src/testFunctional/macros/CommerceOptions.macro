@@ -1,14 +1,5 @@
 definition {
 
-	macro addColorOption {
-		Type(
-			key_title = "Add Options",
-			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-			value1 = "Color");
-
-		Button.click(button = "Select");
-	}
-
 	macro addEntry {
 		WaitForElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
 
@@ -42,55 +33,6 @@ definition {
 		ClickNoError.clickNoMouseOver(locator1 = "CommerceEntry#DELETE_OPTION_BUTTON");
 
 		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete the selected option?");
-	}
-
-	macro enableRequired {
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "Required",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-	}
-
-	macro enableSKUContributor {
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "SKU Contributor",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-	}
-
-	macro enableUseInFacetedNavigation {
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "Use in Faceted Navigation",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-	}
-
-	macro setDeltaPrice {
-		Click(
-			key_index = "${key_index}",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
-
-		Type(
-			key_fieldLabel = "Delta Price",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${deltaPrice}");
-
-		Type(
-			key_fieldLabel = "SKU",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${productSKU}");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-	}
-
-	macro setPriceType {
-		Select(
-			key_fieldLabel = "Price Type",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${priceType}");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
 	}
 
 }

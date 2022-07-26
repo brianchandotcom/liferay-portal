@@ -999,7 +999,7 @@ definition {
 
 		var resourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage/-/knowledge_base_admin/article/${resourcePrimKey}/maximized?_com_liferay_knowledge_base_web_portlet_AdminPortlet_resourceClassNameId=${resourceClassNameId}");
+		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcRenderCommandName=%2Fknowledge_base%2Fview_article&_com_liferay_knowledge_base_web_portlet_AdminPortlet_resourceClassNameId=${resourceClassNameId}&_com_liferay_knowledge_base_web_portlet_AdminPortlet_resourcePrimKey=${resourcePrimKey}&_com_liferay_knowledge_base_web_portlet_AdminPortlet_redirect=com_liferay_knowledge_base_web_portlet_AdminPortlet");
 	}
 
 	macro selectAllCP {

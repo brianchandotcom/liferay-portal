@@ -17,7 +17,7 @@ package com.liferay.portlet.configuration.css.web.internal.portlet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -111,7 +111,7 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 		boolean useCustomTitle = ParamUtil.getBoolean(
 			actionRequest, "useCustomTitle");
 
-		Set<Locale> locales = LanguageUtil.getAvailableLocales(
+		Set<Locale> locales = _language.getAvailableLocales(
 			themeDisplay.getSiteGroupId());
 
 		for (Locale locale : locales) {
@@ -412,6 +412,9 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletConfigurationCSSPortlet.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

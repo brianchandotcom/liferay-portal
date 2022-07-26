@@ -16,7 +16,7 @@ package com.liferay.portlet.configuration.sharing.web.internal.portlet.configura
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -59,8 +59,7 @@ public class IGooglePortletConfigurationIcon
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getLocale(portletRequest), getClass());
 
-		return LanguageUtil.get(
-			resourceBundle, "add-to-an-open-social-platform");
+		return _language.get(resourceBundle, "add-to-an-open-social-platform");
 	}
 
 	@Override
@@ -136,6 +135,9 @@ public class IGooglePortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IGooglePortletConfigurationIcon.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

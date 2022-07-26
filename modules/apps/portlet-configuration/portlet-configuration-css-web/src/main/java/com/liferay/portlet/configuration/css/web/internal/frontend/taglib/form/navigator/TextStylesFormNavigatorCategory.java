@@ -15,12 +15,13 @@
 package com.liferay.portlet.configuration.css.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSConstants;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -43,7 +44,10 @@ public class TextStylesFormNavigatorCategory implements FormNavigatorCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "text-styles");
+		return _language.get(locale, "text-styles");
 	}
+
+	@Reference
+	private Language _language;
 
 }

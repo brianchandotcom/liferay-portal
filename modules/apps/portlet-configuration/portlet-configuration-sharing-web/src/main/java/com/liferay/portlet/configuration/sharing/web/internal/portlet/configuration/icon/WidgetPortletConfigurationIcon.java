@@ -16,7 +16,7 @@ package com.liferay.portlet.configuration.sharing.web.internal.portlet.configura
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -55,7 +55,7 @@ public class WidgetPortletConfigurationIcon
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getLocale(portletRequest), getClass());
 
-		return LanguageUtil.get(resourceBundle, "add-to-any-website");
+		return _language.get(resourceBundle, "add-to-any-website");
 	}
 
 	@Override
@@ -125,6 +125,9 @@ public class WidgetPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WidgetPortletConfigurationIcon.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

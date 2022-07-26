@@ -15,7 +15,7 @@
 package com.liferay.portlet.configuration.sharing.web.internal.portlet.configuration.icon;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -32,6 +32,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -45,7 +46,7 @@ public class FacebookPortletConfigurationIcon
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getLocale(portletRequest), getClass());
 
-		return LanguageUtil.get(resourceBundle, "add-to-facebook");
+		return _language.get(resourceBundle, "add-to-facebook");
 	}
 
 	@Override
@@ -109,5 +110,8 @@ public class FacebookPortletConfigurationIcon
 
 		return false;
 	}
+
+	@Reference
+	private Language _language;
 
 }

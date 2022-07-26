@@ -16,7 +16,7 @@ package com.liferay.portlet.configuration.css.web.internal.portlet.configuration
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -35,6 +35,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -48,7 +49,7 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getLocale(portletRequest), getClass());
 
-		return LanguageUtil.get(resourceBundle, "look-and-feel-configuration");
+		return _language.get(resourceBundle, "look-and-feel-configuration");
 	}
 
 	@Override
@@ -119,5 +120,8 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletConfigurationCSSPortletConfigurationIcon.class);
+
+	@Reference
+	private Language _language;
 
 }

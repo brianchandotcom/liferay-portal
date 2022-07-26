@@ -23,10 +23,14 @@ import org.gradle.internal.resource.transfer.ExternalResourceConnector;
  */
 public class LiferayHttpConnectorFactory extends HttpConnectorFactory {
 
-	public LiferayHttpConnectorFactory(SslContextFactory sslContextFactory) {
-		super(sslContextFactory);
+	public LiferayHttpConnectorFactory(
+		SslContextFactory sslContextFactory,
+		HttpClientHelper.Factory httpClientHelperFactory) {
+
+		super(sslContextFactory, httpClientHelperFactory);
 
 		_sslContextFactory = sslContextFactory;
+		_httpClientHelperFactory = httpClientHelperFactory;
 	}
 
 	@Override
@@ -41,7 +45,8 @@ public class LiferayHttpConnectorFactory extends HttpConnectorFactory {
 
 		HttpSettings httpSettings = builder.build();
 
-		HttpClientHelper httpClientHelper = new HttpClientHelper(httpSettings);
+		HttpClientHelper httpClientHelper = _httpClientHelperFactory.create(
+			httpSettings);
 
 		HttpResourceAccessor httpResourceAccessor =
 			new LiferayHttpResourceAccessor(httpClientHelper);
@@ -56,6 +61,7 @@ public class LiferayHttpConnectorFactory extends HttpConnectorFactory {
 			httpResourceAccessor, httpResourceLister, httpResourceUploader);
 	}
 
+	private final HttpClientHelper.Factory _httpClientHelperFactory;
 	private final SslContextFactory _sslContextFactory;
 
 }

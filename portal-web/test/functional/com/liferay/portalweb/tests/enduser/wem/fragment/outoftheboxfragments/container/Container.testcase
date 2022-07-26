@@ -301,8 +301,6 @@ definition {
 				composition = "true",
 				dropTarget = "Up",
 				fragmentName = "Banner Center",
-				index = "2",
-				layoutElementName = "Container",
 				navTab = "Fragments",
 				targetElementName = "Heading");
 

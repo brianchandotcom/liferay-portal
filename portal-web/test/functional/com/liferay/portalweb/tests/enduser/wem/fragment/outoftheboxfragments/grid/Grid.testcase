@@ -97,7 +97,6 @@ definition {
 			PageEditor.addElementToContainer(
 				collectionName = "Layout Elements",
 				fragmentName = "Grid",
-				index = "2",
 				navTab = "Fragments",
 				targetElementName = "Grid");
 

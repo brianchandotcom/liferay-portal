@@ -134,14 +134,14 @@ public class EntityExtensionWriterInterceptorTest {
 
 		Mockito.verify(
 			_writerInterceptorContext
-		).setGenericType(
-			ExtendedEntity.class
+		).setEntity(
+			Mockito.any(ExtendedEntity.class)
 		);
 
 		Mockito.verify(
 			_writerInterceptorContext
-		).setEntity(
-			Mockito.any(ExtendedEntity.class)
+		).setGenericType(
+			ExtendedEntity.class
 		);
 	}
 
@@ -163,10 +163,8 @@ public class EntityExtensionWriterInterceptorTest {
 			_writerInterceptorContext);
 
 		Mockito.verify(
-			_writerInterceptorContext, Mockito.never()
-		).setGenericType(
-			Mockito.any()
-		);
+			_writerInterceptorContext
+		).proceed();
 
 		Mockito.verify(
 			_writerInterceptorContext, Mockito.never()
@@ -175,8 +173,10 @@ public class EntityExtensionWriterInterceptorTest {
 		);
 
 		Mockito.verify(
-			_writerInterceptorContext
-		).proceed();
+			_writerInterceptorContext, Mockito.never()
+		).setGenericType(
+			Mockito.any()
+		);
 	}
 
 	@Test
@@ -248,18 +248,18 @@ public class EntityExtensionWriterInterceptorTest {
 
 		Mockito.verify(
 			_writerInterceptorContext
-		).setGenericType(
-			ExtendedEntity.class
-		);
-
-		Mockito.verify(
-			_writerInterceptorContext
 		).proceed();
 
 		Mockito.verify(
 			_writerInterceptorContext
 		).setEntity(
 			Mockito.any(ExtendedEntity.class)
+		);
+
+		Mockito.verify(
+			_writerInterceptorContext
+		).setGenericType(
+			ExtendedEntity.class
 		);
 	}
 

@@ -1,6 +1,6 @@
 package ${configYAML.apiPackagePath}.client.http;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -66,7 +66,10 @@ public class HttpInvoker {
 
 		HttpURLConnection httpURLConnection = _openHttpURLConnection();
 
-		httpResponse.setContent(_readResponse(httpURLConnection));
+		byte[] response = _readResponse(httpURLConnection);
+
+		httpResponse.setBinaryContent(response);
+		httpResponse.setContent(new String(response));
 		httpResponse.setMessage(httpURLConnection.getResponseMessage());
 		httpResponse.setStatusCode(httpURLConnection.getResponseCode());
 
@@ -146,6 +149,10 @@ public class HttpInvoker {
 
 	public class HttpResponse {
 
+		public byte[] getBinaryContent() {
+			return _binaryContent;
+		}
+
 		public String getContent() {
 			return _content;
 		}
@@ -156,6 +163,10 @@ public class HttpInvoker {
 
 		public int getStatusCode() {
 			return _statusCode;
+		}
+
+		public void setBinaryContent(byte[] binaryContent) {
+			_binaryContent = binaryContent;
 		}
 
 		public void setContent(String content) {
@@ -170,6 +181,7 @@ public class HttpInvoker {
 			_statusCode = statusCode;
 		}
 
+		private byte[] _binaryContent;
 		private String _content;
 		private String _message;
 		private int _statusCode;
@@ -320,10 +332,8 @@ public class HttpInvoker {
 		return httpURLConnection;
 	}
 
-	private String _readResponse(HttpURLConnection httpURLConnection)
+	private byte[] _readResponse(HttpURLConnection httpURLConnection)
 		throws IOException {
-
-		StringBuilder sb = new StringBuilder();
 
 		int responseCode = httpURLConnection.getResponseCode();
 
@@ -336,22 +346,23 @@ public class HttpInvoker {
 			inputStream = httpURLConnection.getInputStream();
 		}
 
-		BufferedReader bufferedReader = new BufferedReader(
-			new InputStreamReader(inputStream));
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+		byte[] data = new byte[_BUFFER_SIZE];
 
 		while (true) {
-			String line = bufferedReader.readLine();
+			int read = inputStream.read(data, 0, data.length);
 
-			if (line == null) {
+			if (read == -1) {
 				break;
 			}
 
-			sb.append(line);
+			buffer.write(data, 0, read);
 		}
 
-		bufferedReader.close();
+		buffer.flush();
 
-		return sb.toString();
+		return buffer.toByteArray();
 	}
 
 	private void _writeBody(HttpURLConnection httpURLConnection)
@@ -392,6 +403,8 @@ public class HttpInvoker {
 	}
 
 	private static final Logger _logger = Logger.getLogger(HttpInvoker.class.getName());
+
+	private static final int _BUFFER_SIZE = 8092;
 
 	private String _body;
 	private String _contentType;

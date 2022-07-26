@@ -1,6 +1,6 @@
 apply plugin: "com.gradle.plugin-publish"
 
-String gradleVersion = "6.6.1"
+String gradleVersion = "6.9.2"
 
 tasks.eclipse {
 	ext.gradleVersion = gradleVersion

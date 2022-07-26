@@ -253,6 +253,11 @@
 	width: 220px;
 }
 
+.cke_panel.cke_panel,
+.cke_panel.cke_combopanel {
+	z-index: 100 !important;
+}
+
 .cke_panel_block {
 	.cke_panel_grouptitle {
 		font-size: 20px;

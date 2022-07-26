@@ -224,16 +224,16 @@ public class FragmentEntryConfigurationParserImpl
 		FragmentConfigurationField fragmentConfigurationField, Locale locale,
 		String value) {
 
-		value = GetterUtil.getString(value);
+		String parsedValue = GetterUtil.getString(value);
 
 		if (fragmentConfigurationField.isLocalizable() &&
-			JSONUtil.isValid(value)) {
+			JSONUtil.isValid(parsedValue)) {
 
 			try {
 				JSONObject valueJSONObject = JSONFactoryUtil.createJSONObject(
-					value);
+					parsedValue);
 
-				value = valueJSONObject.getString(
+				parsedValue = valueJSONObject.getString(
 					LocaleUtil.toLanguageId(locale),
 					valueJSONObject.getString(
 						LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
@@ -245,26 +245,26 @@ public class FragmentEntryConfigurationParserImpl
 			}
 		}
 		else if (value == null) {
-			value = fragmentConfigurationField.getDefaultValue();
+			parsedValue = fragmentConfigurationField.getDefaultValue();
 		}
 
 		if (StringUtil.equalsIgnoreCase(
 				fragmentConfigurationField.getType(), "checkbox")) {
 
 			return _getFieldValue(
-				FragmentConfigurationFieldDataType.BOOLEAN, value);
+				FragmentConfigurationFieldDataType.BOOLEAN, parsedValue);
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(),
 					"collectionSelector")) {
 
-			return _getInfoListObjectEntryJSONObject(value);
+			return _getInfoListObjectEntryJSONObject(parsedValue);
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "colorPalette")) {
 
 			JSONObject jsonObject = (JSONObject)_getFieldValue(
-				FragmentConfigurationFieldDataType.OBJECT, value);
+				FragmentConfigurationFieldDataType.OBJECT, parsedValue);
 
 			if (jsonObject.isNull("color") && !jsonObject.isNull("cssClass")) {
 				jsonObject.put("color", jsonObject.getString("cssClass"));
@@ -276,14 +276,14 @@ public class FragmentEntryConfigurationParserImpl
 					fragmentConfigurationField.getType(), "colorPicker")) {
 
 			String fieldValue = (String)_getFieldValue(
-				FragmentConfigurationFieldDataType.STRING, value);
+				FragmentConfigurationFieldDataType.STRING, parsedValue);
 
 			return _getColorPickerCssVariable(fieldValue);
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "itemSelector")) {
 
-			return _getInfoDisplayObjectEntryJSONObject(value);
+			return _getInfoDisplayObjectEntryJSONObject(parsedValue);
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "select") ||
@@ -300,10 +300,12 @@ public class FragmentEntryConfigurationParserImpl
 					FragmentConfigurationFieldDataType.STRING;
 			}
 
-			return _getFieldValue(fragmentConfigurationFieldDataType, value);
+			return _getFieldValue(
+				fragmentConfigurationFieldDataType, parsedValue);
 		}
 
-		return _getFieldValue(FragmentConfigurationFieldDataType.STRING, value);
+		return _getFieldValue(
+			FragmentConfigurationFieldDataType.STRING, parsedValue);
 	}
 
 	@Override

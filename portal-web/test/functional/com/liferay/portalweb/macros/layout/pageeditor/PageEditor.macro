@@ -219,6 +219,10 @@ definition {
 				var position = "1";
 			}
 
+			if (!(isSet(indexItem))) {
+				var indexItem = "1";
+			}
+
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 			if (!(isSet(displayStyle))) {
@@ -253,8 +257,7 @@ definition {
 					key_fragmentName = "${fragmentName}",
 					key_position = "${position}",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM",
-					locator2 = "PageEditor#CONTAINER_CONTAINER",
-					value1 = "");
+					locator2 = "PageEditor#CONTAINER_CONTAINER");
 			}
 
 			if (("${navTab}" == "Fragments") && ("${displayStyle}" == "list")) {
@@ -266,8 +269,7 @@ definition {
 					key_fragmentName = "${fragmentName}",
 					key_position = "${position}",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-					locator2 = "PageEditor#CONTAINER_CONTAINER",
-					value1 = "");
+					locator2 = "PageEditor#CONTAINER_CONTAINER");
 			}
 
 			if ("${navTab}" == "Widgets") {
@@ -277,12 +279,11 @@ definition {
 
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_elementType = "Container",
-					key_indexItem = "${position}",
+					key_indexItem = "${indexItem}",
 					key_portletName = "${portletName}",
 					key_position = "${position}",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-					locator2 = "PageEditor#CONTAINER_CONTAINER",
-					value1 = "${portletName}");
+					locator2 = "PageEditor#CONTAINER_CONTAINER");
 			}
 
 			PageEditor.waitForAutoSave();
@@ -306,31 +307,90 @@ definition {
 			}
 		}
 		else {
-			if ("${navTab}" == "Fragments") {
-				PageEditor.addFragment(
-					collectionName = "${collectionName}",
-					composition = "${composition}",
-					fragmentName = "${fragmentName}",
-					targetFragmentName = "Container");
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-				PageEditor.moveElementToContainerViaPageStructure(
-					composition = "${composition}",
-					dropTarget = "${dropTarget}",
-					elementName = "${fragmentName}",
-					index = "${index}",
-					layoutElementName = "${layoutElementName}",
-					targetElementName = "${targetElementName}");
+			if (!(isSet(index))) {
+				var index = "1";
+			}
+
+			if ("${navTab}" == "Fragments") {
+				PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
+
+				if ("${dropTarget}" == "Up") {
+					DragAndDrop.javaScriptDragAndDropObjectAboveNestedObject(
+						index = "${index}",
+						key_collectionName = "${collectionName}",
+						key_fragmentName = "${fragmentName}",
+						key_targetFragmentName = "${targetElementName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+						locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+				}
+				else {
+					DragAndDrop.javaScriptDragAndDropObjectBelowNestedObject(
+						index = "${index}",
+						key_collectionName = "${collectionName}",
+						key_fragmentName = "${fragmentName}",
+						key_targetFragmentName = "${targetElementName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+						locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+				}
+
+				PageEditor.waitForAutoSave();
+
+				if (("${fragmentName}" == "Grid") || ("${fragmentName}" == "Container")) {
+					PageEditor.viewFragment(
+						fragmentName = "${fragmentName}",
+						position = "${position}");
+				}
+
+				if (("${fragmentName}" == "Content Display") || ("${fragmentName}" == "Collection Display") || ("${fragmentName}" == "Display Page Content")) {
+					PageEditor.viewFragmentMessageInfo(fragmentName = "${fragmentName}");
+				}
+
+				if (isSet(composition)) {
+					echo("## Adding a composition of fragments");
+				}
+				else {
+					PageEditor.viewFragment(
+						fragmentName = "${fragmentName}",
+						position = "${position}");
+				}
 			}
 			else {
-				PageEditor.addWidget(
-					portletName = "${portletName}",
-					targetFragmentName = "Container");
+				Navigator.gotoNavTab(navTab = "Widgets");
 
-				PageEditor.moveElementToContainerViaPageStructure(
-					dropTarget = "${dropTarget}",
-					elementName = "${portletName}",
-					index = "${index}",
-					targetElementName = "${targetElementName}");
+				Type.sendKeysApplicationSearch(
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
+					value1 = "${portletName}");
+
+				if (!(isSet(indexItem))) {
+					var indexItem = "1";
+				}
+
+				if ("${dropTarget}" == "Up") {
+					DragAndDrop.javaScriptDragAndDropObjectAboveNestedObject(
+						index = "${index}",
+						key_indexItem = "${indexItem}",
+						key_portletName = "${portletName}",
+						key_targetFragmentName = "${targetElementName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+						locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+				}
+				else {
+					DragAndDrop.javaScriptDragAndDropObjectBelowNestedObject(
+						index = "${index}",
+						key_indexItem = "${indexItem}",
+						key_portletName = "${portletName}",
+						key_targetFragmentName = "${targetElementName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+						locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+				}
+
+				PageEditor.waitForAutoSave();
+
+				PageEditor.viewFragment(fragmentName = "${portletName}");
+
+				Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
 			}
 		}
 	}
@@ -583,6 +643,10 @@ definition {
 			var switchTo = "list";
 		}
 
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
 		if (IsElementNotPresent(key_switchTo = "${switchTo}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 			Click(
 				key_switchTo = "",
@@ -603,22 +667,22 @@ definition {
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM",
-					locator2 = "PageEditor#HEADER_DROP_TARGET",
-					value1 = "");
+					locator2 = "PageEditor#HEADER_DROP_TARGET");
 			}
 
 			if (("${scope}" == "Master") && ("${dropTarget}" == "Footer")) {
 				DragAndDrop.javaScriptDragAndDropToBottom(
+					index = "${index}",
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
 					key_targetFragmentName = "Drop Zone",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM",
-					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-					value1 = "");
+					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
 			}
 
 			if (isSet(targetFragmentName) && ("${dropTarget}" == "Header")) {
 				DragAndDrop.javaScriptDragAndDropToUp(
+					index = "${index}",
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
 					key_targetFragmentName = "${targetFragmentName}",
@@ -628,20 +692,19 @@ definition {
 
 			if (isSet(targetFragmentName) && !(isSet(dropTarget))) {
 				DragAndDrop.javaScriptDragAndDropToBottom(
+					index = "${index}",
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
 					key_targetFragmentName = "${targetFragmentName}",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM",
-					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-					value1 = "");
+					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
 			}
 			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM",
-					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
-					value1 = "");
+					locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
 			}
 		}
 
@@ -651,22 +714,22 @@ definition {
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-					locator2 = "PageEditor#HEADER_DROP_TARGET",
-					value1 = "");
+					locator2 = "PageEditor#HEADER_DROP_TARGET");
 			}
 
 			if (("${scope}" == "Master") && ("${dropTarget}" == "Footer")) {
 				DragAndDrop.javaScriptDragAndDropToBottom(
+					index = "${index}",
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
 					key_targetFragmentName = "Drop Zone",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-					value1 = "");
+					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
 			}
 
 			if (isSet(targetFragmentName) && ("${dropTarget}" == "Header")) {
 				DragAndDrop.javaScriptDragAndDropToUp(
+					index = "${index}",
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
 					key_targetFragmentName = "${targetFragmentName}",
@@ -676,28 +739,23 @@ definition {
 
 			if (isSet(targetFragmentName) && !(isSet(dropTarget))) {
 				DragAndDrop.javaScriptDragAndDropToBottom(
+					index = "${index}",
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
 					key_targetFragmentName = "${targetFragmentName}",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-					value1 = "");
+					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
 			}
 			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
-					value1 = "");
+					locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
 			}
 		}
 
 		PageEditor.waitForAutoSave();
-
-		if (!(isSet(position))) {
-			var key_position = "1";
-		}
 
 		if (("${fragmentName}" == "Grid") || ("${fragmentName}" == "Container")) {
 			PageEditor.viewFragment(
@@ -797,12 +855,17 @@ definition {
 			var position = "1";
 		}
 
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
 		if (isSet(targetFragmentName)) {
 			DragAndDrop.javaScriptDragAndDropObjectBelowNestedObject(
+				index = "${index}",
 				key_collectionName = "${collectionName}",
 				key_fragmentName = "${fragmentName}",
 				key_targetFragmentName = "${targetFragmentName}",
@@ -853,6 +916,10 @@ definition {
 		var key_portletName = "${portletName}";
 		var key_indexItem = "${indexItem}";
 
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
 		if (isSet(scope) && ("${dropTarget}" == "Header")) {
 			DragAndDrop.javaScriptDragAndDropToUp(
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
@@ -862,34 +929,33 @@ definition {
 
 		if (isSet(scope) && ("${dropTarget}" == "Footer")) {
 			DragAndDrop.javaScriptDragAndDropToBottom(
+				index = "${index}",
 				key_targetFragmentName = "Drop Zone",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-				value1 = "");
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
 		}
 
 		if (isSet(targetFragmentName) && isSet(collectionName)) {
 			DragAndDrop.javaScriptDragAndDropToBottom(
+				index = "${index}",
 				key_collectionName = "${collectionName}",
 				key_fragmentName = "${portletName}",
 				key_targetFragmentName = "${targetFragmentName}",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-				value1 = "");
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
 		}
 
 		if (isSet(targetFragmentName) && !(isSet(collectionName))) {
 			DragAndDrop.javaScriptDragAndDropToBottom(
+				index = "${index}",
 				key_targetFragmentName = "${targetFragmentName}",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-				value1 = "${portletName}");
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
 		}
 		else {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
-				value1 = "${portletName}");
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
 		}
 
 		PageEditor.waitForAutoSave();

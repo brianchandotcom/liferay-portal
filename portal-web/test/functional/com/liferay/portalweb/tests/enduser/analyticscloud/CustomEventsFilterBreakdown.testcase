@@ -184,7 +184,7 @@ definition {
 		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "CustomEventsFilterBreakdown#AssertAttributeBreakdownsSortedByHighestEventCount";
 
-		var attributeNameList = "pageTitle,url";
+		var attributeName = "pageTitle";
 		var layoutNameList = "Custom 1,Custom 2";
 		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
 
@@ -243,7 +243,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
 		}
 
 		task ("Check that the analysis is being ordered by the number of interactions by default") {
@@ -460,7 +460,7 @@ definition {
 	test AssertTheAnalysisResultIsSorted {
 		property test.name.skip.portal.instance = "CustomEventsFilterBreakdown#AssertTheAnalysisResultIsSorted";
 
-		var attributeNameList = "pageTitle,url";
+		var attributeName = "pageTitle";
 		var layoutNameList = "Custom 1,Custom 2";
 		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
 
@@ -519,7 +519,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
 		}
 
 		task ("Change the time filter to 24 hours") {

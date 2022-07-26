@@ -34,9 +34,11 @@ public class LiferayHttpResourcesPluginServiceRegistry
 
 		@SuppressWarnings("unused")
 		public ResourceConnectorFactory createHttpConnectorFactory(
-			SslContextFactory sslContextFactory) {
+			SslContextFactory sslContextFactory,
+			HttpClientHelper.Factory httpClientHelperFactory) {
 
-			return new LiferayHttpConnectorFactory(sslContextFactory);
+			return new LiferayHttpConnectorFactory(
+				sslContextFactory, httpClientHelperFactory);
 		}
 
 		@SuppressWarnings("unused")

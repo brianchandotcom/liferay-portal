@@ -32,7 +32,7 @@ String[] searchKeywords = (String[])renderRequest.getAttribute(KBWebKeys.KNOWLED
 		</c:if>
 
 		<div class="kb-article-container">
-			<liferay-util:include page="/admin/common/view_article.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/admin/common/view_kb_article.jsp" servletContext="<%= application %>" />
 		</div>
 	</c:when>
 	<c:otherwise>

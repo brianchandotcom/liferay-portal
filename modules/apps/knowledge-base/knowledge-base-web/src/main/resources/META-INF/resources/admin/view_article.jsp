@@ -24,7 +24,7 @@
 			<div class="knowledge-base-admin-content">
 		</c:if>
 
-		<liferay-util:include page="/admin/common/view_article.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/common/view_kb_article.jsp" servletContext="<%= application %>" />
 
 		<c:if test="<%= redirect.equals(currentURL) %>">
 			</div>
@@ -35,6 +35,6 @@
 			<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
 		</c:if>
 
-		<liferay-util:include page="/admin/common/view_article.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/common/view_kb_article.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>

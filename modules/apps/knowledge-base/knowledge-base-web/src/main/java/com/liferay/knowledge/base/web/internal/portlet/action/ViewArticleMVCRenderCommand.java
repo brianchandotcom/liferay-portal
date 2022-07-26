@@ -61,7 +61,7 @@ public class ViewArticleMVCRenderCommand implements MVCRenderCommand {
 			return "/display/view_article.jsp";
 		}
 
-		return "/admin/common/view_article.jsp";
+		return "/admin/common/view_kb_article.jsp";
 	}
 
 	private String _getRootPortletId(RenderRequest renderRequest) {

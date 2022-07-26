@@ -765,6 +765,8 @@ definition {
 		}
 
 		if (isSet(templateName)) {
+			SelectFrameTop();
+
 			Panel.expandPanel(panel = "Default Template");
 
 			if (IsTextNotEqual(inputFieldId = "ddmTemplateName", locator1 = "TextInput#INPUT_ID", value1 = "${templateName}")) {

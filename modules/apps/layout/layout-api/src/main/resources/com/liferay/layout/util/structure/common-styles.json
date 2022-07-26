@@ -764,7 +764,7 @@
 				"label": "border-width",
 				"name": "borderWidth",
 				"responsive": false,
-				"type": "text",
+				"type": "length",
 				"typeOptions": {
 					"validation": {
 						"type": "number"

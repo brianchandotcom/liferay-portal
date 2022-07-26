@@ -14,6 +14,8 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.petra.string.StringPool;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -26,7 +28,7 @@ public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 	}
 
 	public String getMarkupView() {
-		return null;
+		return _markupView;
 	}
 
 	public String getType() {
@@ -38,6 +40,7 @@ public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 	}
 
 	public void setMarkupView(String markupView) {
+		_markupView = markupView;
 	}
 
 	public void setType(String type) {
@@ -49,6 +52,7 @@ public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 		super.cleanUp();
 
 		_id = null;
+		_markupView = StringPool.BLANK;
 		_type = "regular";
 	}
 
@@ -62,10 +66,13 @@ public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 		super.setAttributes(httpServletRequest);
 
 		httpServletRequest.setAttribute("liferay-ui:search:id", _id);
+		httpServletRequest.setAttribute(
+			"liferay-ui:search:markupView", _markupView);
 		httpServletRequest.setAttribute("liferay-ui:search:type", _type);
 	}
 
 	private String _id;
+	private String _markupView = StringPool.BLANK;
 	private String _type = "regular";
 
 }

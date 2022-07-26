@@ -202,7 +202,9 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
-		DMDocument.downloadCP(dmDocumentTitle = "Document_2.jpg");
+		DMDocument.downloadCP(
+			dmDocumentSize = "30 KB",
+			dmDocumentTitle = "Document_2.jpg");
 
 		DMDocument.assertFileNameFromTempFolder(fileName = "Document_2.jpg");
 	}

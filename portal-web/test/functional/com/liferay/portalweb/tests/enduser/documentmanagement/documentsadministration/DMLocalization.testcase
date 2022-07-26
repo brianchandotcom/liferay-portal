@@ -39,7 +39,9 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMDocument.downloadCP(dmDocumentTitle = "これは文書です");
+		DMDocument.downloadCP(
+			dmDocumentSize = "68 B",
+			dmDocumentTitle = "これは文書です");
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 

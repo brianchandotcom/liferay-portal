@@ -1386,9 +1386,9 @@ definition {
 			key_rowEntry = "${dmDocumentTitle}",
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "MenuItem#DOWNLOAD",
-			value1 = "Download");
+		Click(
+			key_menuItem = "Download (${dmDocumentSize})",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
 		DownloadTempFile();
 	}

@@ -112,7 +112,9 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
-		DMDocument.downloadCP(dmDocumentTitle = "Document_1.txt");
+		DMDocument.downloadCP(
+			dmDocumentSize = "259 B",
+			dmDocumentTitle = "Document_1.txt");
 
 		DMDocument.assertDownloadedFileContent(
 			downloadedContent = "This is a *.txt document.",

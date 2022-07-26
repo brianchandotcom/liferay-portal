@@ -862,7 +862,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder 2 Name");
 
-		DMDocument.downloadCP(dmDocumentTitle = "DM Document Title");
+		DMDocument.downloadCP(
+			dmDocumentSize = "22 KB",
+			dmDocumentTitle = "DM Document Title");
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 	}
@@ -1028,7 +1030,9 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMDocument.downloadCP(dmDocumentTitle = "DM Document Title");
+		DMDocument.downloadCP(
+			dmDocumentSize = "259 B",
+			dmDocumentTitle = "DM Document Title");
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 

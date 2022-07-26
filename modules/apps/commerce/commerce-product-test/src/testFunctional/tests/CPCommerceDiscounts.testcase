@@ -862,7 +862,7 @@ definition {
 
 		Button.clickPublish();
 
-		while (IsElementPresent(locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD", value1 = "Approved") && (maxIterations = "40")) {
+		while (IsElementPresent(locator1 = "CommerceEntry#WORKFLOW_STATUS", key_status = "Approved") && (maxIterations = "40")) {
 
 			// We need this pause for waiting for the Discount to expire
 
@@ -871,9 +871,9 @@ definition {
 			Refresh();
 		}
 
-		AssertTextEquals(
-			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD",
-			value1 = "Expired");
+		AssertElementPresent(
+			locator1 = "CommerceEntry#WORKFLOW_STATUS",
+			key_status = "Expired");
 	}
 
 }

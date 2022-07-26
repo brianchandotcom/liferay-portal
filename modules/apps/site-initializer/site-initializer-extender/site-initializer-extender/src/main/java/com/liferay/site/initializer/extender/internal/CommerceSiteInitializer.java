@@ -676,16 +676,16 @@ public class CommerceSiteInitializer {
 		throws Exception {
 
 		_addOrUpdateCommercePriceEntry(
-			cpDefinition, cpInstance,
-			 serviceContext, CommercePriceListConstants.TYPE_PRICE_LIST);
+			cpDefinition, cpInstance, serviceContext,
+			CommercePriceListConstants.TYPE_PRICE_LIST);
 		_addOrUpdateCommercePriceEntry(
-			cpDefinition, cpInstance,
-			serviceContext, CommercePriceListConstants.TYPE_PROMOTION);
+			cpDefinition, cpInstance, serviceContext,
+			CommercePriceListConstants.TYPE_PROMOTION);
 	}
 
 	private void _addOrUpdateCommercePriceEntry(
 			CPDefinition cpDefinition, CPInstance cpInstance,
-			ServiceContext serviceContext,  String typePrice)
+			ServiceContext serviceContext, String typePrice)
 		throws Exception {
 
 		CommercePriceList commercePriceList =

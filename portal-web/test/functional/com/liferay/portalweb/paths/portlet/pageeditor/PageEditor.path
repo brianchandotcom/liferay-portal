@@ -292,7 +292,7 @@
 
 <tr>
 	<td>ANY_FRAGMENT_DROP_TARGET</td>
-	<td>//div[@aria-label='${key_targetFragmentName}']/div[contains(@class,'page-editor__topper__content')]</td>
+	<td>xpath=(//div[@aria-label='${key_targetFragmentName}']/div[contains(@class,'page-editor__topper__content')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

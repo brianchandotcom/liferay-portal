@@ -3057,7 +3057,13 @@ jdbc.write.jndi.name=jdbc/LiferayWritePool</echo>
 				</elseif>
 			</if>
 
-			<property file="${project.dir}/portal-impl/src/portal.properties" />
+			<loadproperties srcFile="${project.dir}/portal-impl/src/portal.properties">
+				<filterchain>
+					<tokenfilter>
+						<containsstring contains="spring" />
+					</tokenfilter>
+				</filterchain>
+			</loadproperties>
 
 			<propertycopy from="spring.configs" name="spring.configs.default" />
 			<propertycopy from="spring.infrastructure.configs" name="spring.infrastructure.configs.default" />

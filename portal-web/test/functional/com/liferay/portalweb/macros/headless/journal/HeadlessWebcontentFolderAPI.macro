@@ -119,6 +119,22 @@ definition {
 		return "${curl}";
 	}
 
+	macro _getSiteStructuredContentFoldersByErc {
+		Variables.assertDefined(parameterList = "${siteId},${externalReferenceCode}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+            ${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/structured-content-folders/by-external-reference-code/${externalReferenceCode} \
+            -u test@liferay.com:test \
+            -H Content-Type: application/json
+        ''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _getStructuredContentFoldersByErcInAssetLibrary {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
 
@@ -192,6 +208,42 @@ definition {
 			expected = "${expectedStructuredContentFolderTotalCount}");
 	}
 
+	macro assertResponseHasCorrectDetails {
+		HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
+			expectedExternalReferenceCodeValue = "${expectedExternalReferenceCodeValue}",
+			responseToParse = "${responseFromGet}");
+
+		HeadlessWebcontentFolderAPI.assertResponseHasCorrectStructuredContentFolderId(
+			response = "${responseFromCreate}",
+			responseToParse = "${responseFromGet}");
+
+		HeadlessWebcontentFolderAPI.assertResponseHasCorrectStructuredContentFolderName(
+			response = "${responseFromCreate}",
+			responseToParse = "${responseFromGet}");
+	}
+
+	macro assertResponseHasCorrectStructuredContentFolderId {
+		var structuredContentFolderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+			element = "$.id",
+			responseToParse = "${response}");
+		var actualStructuredContentFolderId = JSONUtil.getWithJSONPath("${responseToParse}", "$.id");
+
+		TestUtils.assertEquals(
+			actual = "${actualStructuredContentFolderId}",
+			expected = "${structuredContentFolderId}");
+	}
+
+	macro assertResponseHasCorrectStructuredContentFolderName {
+		var structuredContentFolderName = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+			element = "$.name",
+			responseToParse = "${response}");
+		var actualStructuredContentFolderName = JSONUtil.getWithJSONPath("${responseToParse}", "$.name");
+
+		TestUtils.assertEquals(
+			actual = "${actualStructuredContentFolderName}",
+			expected = "${structuredContentFolderName}");
+	}
+
 	macro assetProperNumberOfStructuredContentFolders {
 		var actualNumbers = JSONUtil.getWithJSONPath("${responseToParse}", "$..['numberOfStructuredContentFolders']");
 
@@ -261,6 +313,18 @@ definition {
 		var elementValue = JSONUtil.getWithJSONPath("${responseToParse}", "${element}");
 
 		return "${elementValue}";
+	}
+
+	macro getSiteStructuredContentFoldersByErc {
+		Variables.assertDefined(parameterList = "${groupName},${externalReferenceCode}");
+
+		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+
+		var response = HeadlessWebcontentFolderAPI._getSiteStructuredContentFoldersByErc(
+			externalReferenceCode = "${externalReferenceCode}",
+			siteId = "${siteId}");
+
+		return "${response}";
 	}
 
 	macro getStructuredContentFoldersByErcInAssetLibrary {

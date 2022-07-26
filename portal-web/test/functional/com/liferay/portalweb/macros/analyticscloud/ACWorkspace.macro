@@ -109,6 +109,8 @@ definition {
 	}
 
 	macro setFriendlyURL {
+		var key_friendlyURL = "${friendlyURL}";
+
 		Type(
 			locator1 = "ACWorkspace#FRIENDLY_URL",
 			value1 = "${urlName}");

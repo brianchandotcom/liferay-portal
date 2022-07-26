@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>FRIENDLY_URL_ADDRESS</td>
-	<td>//div[contains(@class,'modal-container')]//div[contains(@class,'modal-body')]//p[contains(.,'${friendlyURL}')]</td>
+	<td>//div[contains(@class,'modal-container')]//div[contains(@class,'modal-body')]//p[contains(.,'${key_friendlyURL}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -25,6 +25,32 @@ definition {
 		}
 	}
 
+	@description = "Can get correct details with custom erc from folders"
+	@priority = "5"
+	test CanGetCorrectDetailsWithCustomErcFromFolders {
+		property portal.acceptance = "true";
+
+		task ("Given a folder with custom erc") {
+			var responseFromCreate = HeadlessWebcontentFolderAPI.createStructuredContentFolder(
+				externalReferenceCode = "CustomeCode",
+				groupName = "Site Name",
+				name = "Test Folder");
+		}
+
+		task ("When I use getSiteStructuredContentFolderByExternalReferenceCode") {
+			var responseFromGet = HeadlessWebcontentFolderAPI.getSiteStructuredContentFoldersByErc(
+				externalReferenceCode = "CustomeCode",
+				groupName = "Site Name");
+		}
+
+		task ("Then I can retrieve the correct information from the response") {
+			HeadlessWebcontentFolderAPI.assertResponseHasCorrectDetails(
+				expectedExternalReferenceCodeValue = "CustomeCode",
+				responseFromCreate = "${responseFromCreate}",
+				responseFromGet = "${responseFromGet}");
+		}
+	}
+
 	@description = "Can get correct details with default erc from folders"
 	@priority = "5"
 	test CanGetCorrectDetailsWithDefaultErcFromFolders {

@@ -119,7 +119,13 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 		OpenAPI openAPI = openApiContext.read();
 
-		if (openAPISchemaFilter != null) {
+		OpenAPISchemaFilter schemaFilter = _getOpenAPISchemaFilter(
+			_getBasePath(uriInfo), _extensionProviderRegistry, resourceClasses);
+
+		schemaFilter = _mergeOpenAPISchemaFilters(
+			openAPISchemaFilter, schemaFilter);
+
+		if (schemaFilter != null) {
 			SpecFilter specFilter = new SpecFilter();
 
 			Map<String, List<String>> queryParameters = null;
@@ -129,8 +135,8 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			}
 
 			openAPI = specFilter.filter(
-				openAPI, _toOpenAPISpecFilter(openAPISchemaFilter),
-				queryParameters, null, null);
+				openAPI, _toOpenAPISpecFilter(schemaFilter), queryParameters,
+				null, null);
 		}
 
 		if (openAPI == null) {
@@ -178,17 +184,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
 		throws Exception {
 
-		OpenAPISchemaFilter openAPISchemaFilter = null;
-
-		Set<String> dtoClassNames = _getDTOClassNames(resourceClasses);
-
-		if (SetUtil.isNotEmpty(dtoClassNames)) {
-			openAPISchemaFilter = _getOpenAPISchemaFilter(
-				_getBasePath(uriInfo), dtoClassNames,
-				_extensionProviderRegistry);
-		}
-
-		return getOpenAPI(openAPISchemaFilter, resourceClasses, type, uriInfo);
+		return getOpenAPI(null, resourceClasses, type, uriInfo);
 	}
 
 	private String _getBasePath(UriInfo uriInfo) {
@@ -324,6 +320,41 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	}
 
 	private OpenAPISchemaFilter _getOpenAPISchemaFilter(
+		String basePath, ExtensionProviderRegistry extensionProviderRegistry,
+		Set<Class<?>> resourceClasses) {
+
+		Set<String> classNames = _getDTOClassNames(resourceClasses);
+
+		if (SetUtil.isEmpty(classNames)) {
+			return null;
+		}
+
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		Map<String, List<PropertyDefinition>> propertyDefinitionMap =
+			new HashMap<>();
+
+		for (String className : classNames) {
+			List<PropertyDefinition> propertyDefinitions =
+				_getExtendedPropertyDefinitions(
+					className, companyId, extensionProviderRegistry);
+
+			if (ListUtil.isNotEmpty(propertyDefinitions)) {
+				propertyDefinitionMap.put(className, propertyDefinitions);
+			}
+		}
+
+		OpenAPISchemaFilter openAPISchemaFilter = null;
+
+		if (MapUtil.isNotEmpty(propertyDefinitionMap)) {
+			openAPISchemaFilter = _getOpenAPISchemaFilter(
+				basePath, propertyDefinitionMap);
+		}
+
+		return openAPISchemaFilter;
+	}
+
+	private OpenAPISchemaFilter _getOpenAPISchemaFilter(
 		String applicationPath,
 		Map<String, List<PropertyDefinition>> propertyDefinitions) {
 
@@ -352,33 +383,33 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		};
 	}
 
-	private OpenAPISchemaFilter _getOpenAPISchemaFilter(
-		String basePath, Set<String> classNames,
-		ExtensionProviderRegistry extensionProviderRegistry) {
+	private OpenAPISchemaFilter _mergeOpenAPISchemaFilters(
+		OpenAPISchemaFilter openAPISchemaFilter1,
+		OpenAPISchemaFilter openAPISchemaFilter2) {
 
-		long companyId = CompanyThreadLocal.getCompanyId();
+		if (openAPISchemaFilter1 == null) {
+			return openAPISchemaFilter2;
+		}
 
-		Map<String, List<PropertyDefinition>> propertyDefinitionMap =
-			new HashMap<>();
+		if (openAPISchemaFilter2 == null) {
+			return openAPISchemaFilter1;
+		}
 
-		for (String className : classNames) {
-			List<PropertyDefinition> propertyDefinitions =
-				_getExtendedPropertyDefinitions(
-					className, companyId, extensionProviderRegistry);
+		return new OpenAPISchemaFilter() {
+			{
+				setApplicationPath(openAPISchemaFilter1.getApplicationPath());
 
-			if (ListUtil.isNotEmpty(propertyDefinitions)) {
-				propertyDefinitionMap.put(className, propertyDefinitions);
+				getDTOProperties().addAll(
+					openAPISchemaFilter1.getDTOProperties());
+				getDTOProperties().addAll(
+					openAPISchemaFilter2.getDTOProperties());
+
+				getSchemaMappings().putAll(
+					openAPISchemaFilter1.getSchemaMappings());
+				getSchemaMappings().putAll(
+					openAPISchemaFilter2.getSchemaMappings());
 			}
-		}
-
-		OpenAPISchemaFilter openAPISchemaFilter = null;
-
-		if (MapUtil.isNotEmpty(propertyDefinitionMap)) {
-			openAPISchemaFilter = _getOpenAPISchemaFilter(
-				basePath, propertyDefinitionMap);
-		}
-
-		return openAPISchemaFilter;
+		};
 	}
 
 	private OpenAPISpecFilter _toOpenAPISpecFilter(

@@ -32,10 +32,12 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 
 DDMForm ddmForm = null;
 long ddmStructureId = 0L;
+String ddmStructureKey = StringPool.BLANK;
 
 if (ddmStructure != null) {
 	ddmForm = ddmStructure.getDDMForm();
 	ddmStructureId = ddmStructure.getStructureId();
+	ddmStructureKey = ddmStructure.getStructureKey();
 }
 
 PortletURL editDDMStructureURL = renderResponse.createActionURL();
@@ -49,6 +51,7 @@ else {
 
 editDDMStructureURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 editDDMStructureURL.setParameter("ddmStructureId", String.valueOf(ddmStructureId));
+editDDMStructureURL.setParameter("ddmStructureKey", String.valueOf(ddmStructureKey));
 %>
 
 <liferay-util:html-top>

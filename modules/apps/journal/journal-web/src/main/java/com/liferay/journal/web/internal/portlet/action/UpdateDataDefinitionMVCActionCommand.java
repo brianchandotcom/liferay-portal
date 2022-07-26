@@ -25,6 +25,7 @@ import com.liferay.journal.model.JournalArticleTable;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.persistence.JournalArticleUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -112,19 +113,20 @@ public class UpdateDataDefinitionMVCActionCommand
 		DataDefinition dataDefinition = DataDefinition.toDTO(
 			dataDefinitionString);
 
-		String structureKey = ParamUtil.getString(
-			actionRequest, "structureKey");
 		String dataLayout = ParamUtil.getString(actionRequest, "dataLayout");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		dataDefinition.setDataDefinitionKey(structureKey);
+		dataDefinition.setDataDefinitionKey(StringPool.BLANK);
 		dataDefinition.setDefaultDataLayout(DataLayout.toDTO(dataLayout));
 		dataDefinition.setDescription(
 			LocalizedValueUtil.toStringObjectMap(descriptionMap));
 
 		dataDefinitionResource.putDataDefinition(
 			dataDefinitionId, dataDefinition);
+
+		String ddmStructureKey = ParamUtil.getString(
+			actionRequest, "ddmStructureKey");
 
 		List<JournalArticle> journalArticles =
 			_journalArticleLocalService.dslQuery(
@@ -134,7 +136,7 @@ public class UpdateDataDefinitionMVCActionCommand
 					JournalArticleTable.INSTANCE
 				).where(
 					JournalArticleTable.INSTANCE.DDMStructureKey.eq(
-						structureKey)
+						ddmStructureKey)
 				));
 
 		for (JournalArticle journalArticle : journalArticles) {

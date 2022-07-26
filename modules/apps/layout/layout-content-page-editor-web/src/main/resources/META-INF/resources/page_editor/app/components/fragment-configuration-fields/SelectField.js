@@ -26,6 +26,7 @@ import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useActiveItemId} from '../../contexts/ControlsContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
+import isNullOrUndefined from '../../utils/isNullOrUndefined';
 import {useId} from '../../utils/useId';
 
 export function SelectField({
@@ -43,7 +44,7 @@ export function SelectField({
 
 	const multiSelect = field.typeOptions?.multiSelect ?? false;
 
-	const defaultValue = value || field.defaultValue;
+	const defaultValue = isNullOrUndefined(value) ? field.defaultValue : value;
 
 	const getFrontendTokenOption = (option) => {
 		const token = tokenValues[option.frontendTokenName];
@@ -86,7 +87,9 @@ export function SelectField({
 					field={field}
 					onValueSelect={onValueSelect}
 					options={getOptions(validValues)}
-					value={value || field.defaultValue}
+					value={
+						isNullOrUndefined(value) ? field.defaultValue : value
+					}
 				/>
 			) : (
 				<SingleSelect
@@ -94,7 +97,9 @@ export function SelectField({
 					field={field}
 					onValueSelect={onValueSelect}
 					options={getOptions(validValues)}
-					value={value || field.defaultValue}
+					value={
+						isNullOrUndefined(value) ? field.defaultValue : value
+					}
 				/>
 			)}
 		</ClayForm.Group>

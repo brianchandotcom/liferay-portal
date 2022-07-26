@@ -313,26 +313,53 @@ definition {
 				var index = "1";
 			}
 
+			if (!(isSet(height))) {
+				var height = "Short";
+			}
+
 			if ("${navTab}" == "Fragments") {
 				PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
-				if ("${dropTarget}" == "Up") {
-					DragAndDrop.javaScriptDragAndDropObjectAboveNestedObject(
-						index = "${index}",
-						key_collectionName = "${collectionName}",
-						key_fragmentName = "${fragmentName}",
-						key_targetFragmentName = "${targetElementName}",
-						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-						locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+				if (isSet(targetElementName) && ("${height}" == "Short")) {
+					if ("${dropTarget}" == "Up") {
+						DragAndDrop.javaScriptDragAndDropObjectAboveShortNestedObject(
+							index = "${index}",
+							key_collectionName = "${collectionName}",
+							key_fragmentName = "${fragmentName}",
+							key_targetFragmentName = "${targetElementName}",
+							locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+							locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+					}
+					else {
+						DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
+							index = "${index}",
+							key_collectionName = "${collectionName}",
+							key_fragmentName = "${fragmentName}",
+							key_targetFragmentName = "${targetElementName}",
+							locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+							locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+					}
 				}
-				else {
-					DragAndDrop.javaScriptDragAndDropObjectBelowNestedObject(
-						index = "${index}",
-						key_collectionName = "${collectionName}",
-						key_fragmentName = "${fragmentName}",
-						key_targetFragmentName = "${targetElementName}",
-						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-						locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+
+				if (isSet(targetElementName) && ("${height}" == "Tall")) {
+					if ("${dropTarget}" == "Up") {
+						DragAndDrop.javaScriptDragAndDropObjectAboveTallNestedObject(
+							index = "${index}",
+							key_collectionName = "${collectionName}",
+							key_fragmentName = "${fragmentName}",
+							key_targetFragmentName = "${targetElementName}",
+							locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+							locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+					}
+					else {
+						DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
+							index = "${index}",
+							key_collectionName = "${collectionName}",
+							key_fragmentName = "${fragmentName}",
+							key_targetFragmentName = "${targetElementName}",
+							locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+							locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+					}
 				}
 
 				PageEditor.waitForAutoSave();
@@ -367,23 +394,46 @@ definition {
 					var indexItem = "1";
 				}
 
-				if ("${dropTarget}" == "Up") {
-					DragAndDrop.javaScriptDragAndDropObjectAboveNestedObject(
-						index = "${index}",
-						key_indexItem = "${indexItem}",
-						key_portletName = "${portletName}",
-						key_targetFragmentName = "${targetElementName}",
-						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-						locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+				if (isSet(targetElementName) && ("${height}" == "Short")) {
+					if ("${dropTarget}" == "Up") {
+						DragAndDrop.javaScriptDragAndDropObjectAboveShortNestedObject(
+							index = "${index}",
+							key_indexItem = "${indexItem}",
+							key_portletName = "${portletName}",
+							key_targetFragmentName = "${targetElementName}",
+							locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+							locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+					}
+					else {
+						DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
+							index = "${index}",
+							key_indexItem = "${indexItem}",
+							key_portletName = "${portletName}",
+							key_targetFragmentName = "${targetElementName}",
+							locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+							locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+					}
 				}
-				else {
-					DragAndDrop.javaScriptDragAndDropObjectBelowNestedObject(
-						index = "${index}",
-						key_indexItem = "${indexItem}",
-						key_portletName = "${portletName}",
-						key_targetFragmentName = "${targetElementName}",
-						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-						locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+
+				if (isSet(targetElementName) && ("${height}" == "Tall")) {
+					if ("${dropTarget}" == "Up") {
+						DragAndDrop.javaScriptDragAndDropObjectAboveTallNestedObject(
+							index = "${index}",
+							key_indexItem = "${indexItem}",
+							key_portletName = "${portletName}",
+							key_targetFragmentName = "${targetElementName}",
+							locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+							locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+					}
+					else {
+						DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
+							index = "${index}",
+							key_indexItem = "${indexItem}",
+							key_portletName = "${portletName}",
+							key_targetFragmentName = "${targetElementName}",
+							locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+							locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+					}
 				}
 
 				PageEditor.waitForAutoSave();
@@ -864,7 +914,7 @@ definition {
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
 		if (isSet(targetFragmentName)) {
-			DragAndDrop.javaScriptDragAndDropObjectBelowNestedObject(
+			DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
 				index = "${index}",
 				key_collectionName = "${collectionName}",
 				key_fragmentName = "${fragmentName}",

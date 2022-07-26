@@ -71,6 +71,8 @@ definition {
 			else {
 				Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 			}
+
+			SelectFrameTop();
 		}
 
 		if (isSet(embedVideo)) {

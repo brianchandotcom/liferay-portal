@@ -179,7 +179,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 
 		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
 
-		if (mvcPath.endsWith("/edit_article.jsp") ||
+		if (mvcPath.endsWith("/edit_kb_article.jsp") ||
 			mvcPath.endsWith("/history.jsp") ||
 			mvcPath.endsWith("/print_article.jsp")) {
 

@@ -116,7 +116,7 @@ public class KBArticleAssetRendererFactory
 				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, 0, 0,
 				PortletRequest.RENDER_PHASE)
 		).setMVCPath(
-			"/admin/common/edit_article.jsp"
+			"/admin/common/edit_kb_article.jsp"
 		).buildPortletURL();
 	}
 

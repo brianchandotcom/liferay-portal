@@ -179,7 +179,7 @@ public class KBAdminManagementToolbarDisplayContext {
 						PortletURLBuilder.createRenderURL(
 							_liferayPortletResponse
 						).setMVCPath(
-							"/admin/common/edit_article.jsp"
+							"/admin/common/edit_kb_article.jsp"
 						).setRedirect(
 							PortalUtil.getCurrentURL(_httpServletRequest)
 						).setParameter(
@@ -208,7 +208,7 @@ public class KBAdminManagementToolbarDisplayContext {
 								PortletURLBuilder.createRenderURL(
 									_liferayPortletResponse
 								).setMVCPath(
-									"/admin/common/edit_article.jsp"
+									"/admin/common/edit_kb_article.jsp"
 								).setRedirect(
 									PortalUtil.getCurrentURL(
 										_httpServletRequest)

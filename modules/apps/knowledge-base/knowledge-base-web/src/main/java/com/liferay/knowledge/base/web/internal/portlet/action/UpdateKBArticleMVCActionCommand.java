@@ -157,7 +157,7 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 					PortletRequest.RENDER_PHASE)
 			).setMVCPath(
-				"/admin/common/edit_article.jsp"
+				"/admin/common/edit_kb_article.jsp"
 			).setRedirect(
 				_getRedirect(actionRequest)
 			).setParameter(
@@ -178,7 +178,7 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 			editURL, "p_p_id", portletDisplay.getId());
 		editURL = HttpComponentsUtil.setParameter(
 			editURL, actionResponse.getNamespace() + "mvcPath",
-			"/admin/common/edit_article.jsp");
+			"/admin/common/edit_kb_article.jsp");
 		editURL = HttpComponentsUtil.setParameter(
 			editURL, actionResponse.getNamespace() + "redirect",
 			_getRedirect(actionRequest));

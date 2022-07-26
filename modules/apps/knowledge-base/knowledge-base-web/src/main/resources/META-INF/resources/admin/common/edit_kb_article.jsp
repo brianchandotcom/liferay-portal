@@ -77,7 +77,7 @@ if (portletTitleBasedNavigation) {
 	<liferay-portlet:actionURL name="/knowledge_base/update_kb_article" var="updateKBArticleURL" />
 
 	<aui:form action="<%= updateKBArticleURL %>" method="post" name="fm">
-		<aui:input name="mvcPath" type="hidden" value="/admin/common/edit_article.jsp" />
+		<aui:input name="mvcPath" type="hidden" value="/admin/common/edit_kb_article.jsp" />
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (kbArticle == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="resourcePrimKey" type="hidden" value="<%= String.valueOf(resourcePrimKey) %>" />

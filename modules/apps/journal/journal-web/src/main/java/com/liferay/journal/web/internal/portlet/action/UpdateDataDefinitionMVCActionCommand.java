@@ -25,7 +25,6 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.persistence.JournalArticleUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -139,9 +138,8 @@ public class UpdateDataDefinitionMVCActionCommand
 				_ddmStructureLocalService.getDDMStructure(dataDefinitionId);
 
 			List<JournalArticle> articles =
-				_journalArticleLocalService.getArticlesByStructureId(
-					ddmStructure.getGroupId(), ddmStructure.getStructureKey(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				_journalArticleLocalService.getStructureArticles(
+					new String[] {ddmStructure.getStructureKey()});
 
 			for (JournalArticle journalArticle : articles) {
 				JournalArticleUtil.clearCache(journalArticle);

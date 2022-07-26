@@ -398,8 +398,7 @@
 
 		<column name="messageId" type="long" />
 		<column name="threadId" type="long" />
-		<column name="description" type="String" />
-		<column name="type" type="String" />
+		<column name="reason" type="String" />
 		<column name="validated" type="boolean" />
 
 		<!-- Finder methods -->

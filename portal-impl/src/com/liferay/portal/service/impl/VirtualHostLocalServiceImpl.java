@@ -133,6 +133,14 @@ public class VirtualHostLocalServiceImpl
 		return virtualHostPersistence.findByC_L(companyId, layoutSetId);
 	}
 
+	@Override
+	public long getVirtualHostsCount(
+		long excludedLayoutSetId, String[] virtualHostNames) {
+
+		return virtualHostPersistence.countByNotL_H(
+			excludedLayoutSetId, virtualHostNames);
+	}
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #updateVirtualHosts(long, long, TreeMap)}

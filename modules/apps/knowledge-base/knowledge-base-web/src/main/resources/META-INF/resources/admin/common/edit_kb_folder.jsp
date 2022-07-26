@@ -45,7 +45,7 @@ renderResponse.setTitle((kbFolder == null) ? LanguageUtil.get(resourceBundle, "n
 	cssClass="container-form-lg"
 >
 	<aui:form action="<%= updateKBFolderURL %>" method="post" name="fm">
-		<aui:input name="mvcPath" type="hidden" value="/admin/common/edit_folder.jsp" />
+		<aui:input name="mvcPath" type="hidden" value="/admin/common/edit_kb_folder.jsp" />
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (kbFolder == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="kbFolderId" type="hidden" value="<%= String.valueOf(kbFolderId) %>" />

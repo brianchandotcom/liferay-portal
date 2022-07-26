@@ -156,7 +156,7 @@ public class KBAdminManagementToolbarDisplayContext {
 						PortletURLBuilder.createRenderURL(
 							_liferayPortletResponse
 						).setMVCPath(
-							"/admin/common/edit_folder.jsp"
+							"/admin/common/edit_kb_folder.jsp"
 						).setRedirect(
 							PortalUtil.getCurrentURL(_httpServletRequest)
 						).setParameter(

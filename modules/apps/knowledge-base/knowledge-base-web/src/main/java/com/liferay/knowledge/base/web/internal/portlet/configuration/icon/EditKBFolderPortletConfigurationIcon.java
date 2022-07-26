@@ -64,7 +64,7 @@ public class EditKBFolderPortletConfigurationIcon
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				PortletRequest.RENDER_PHASE)
 		).setMVCPath(
-			"/admin/common/edit_folder.jsp"
+			"/admin/common/edit_kb_folder.jsp"
 		).setRedirect(
 			_portal.getCurrentURL(portletRequest)
 		).setParameter(

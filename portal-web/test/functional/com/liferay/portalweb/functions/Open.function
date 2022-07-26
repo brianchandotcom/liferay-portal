@@ -40,4 +40,14 @@ definition {
 		selenium.open();
 	}
 
+	function openRedirect {
+		WaitForSPARefresh();
+
+		var javascript = '''
+window.open("${locator1}","_self");
+		''';
+
+		selenium.runScript("${javascript}");
+	}
+
 }

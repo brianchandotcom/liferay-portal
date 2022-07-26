@@ -125,13 +125,9 @@ public class UpdateDataDefinitionMVCActionCommand
 		dataDefinitionResource.putDataDefinition(
 			dataDefinitionId, dataDefinition);
 
-		_clearCache(structureKey);
-	}
-
-	private void _clearCache(String ddmStructureKey) {
 		List<JournalArticle> journalArticles =
 			_journalArticleLocalService.getStructureArticles(
-				new String[] {ddmStructureKey});
+				new String[] {structureKey});
 
 		for (JournalArticle journalArticle : journalArticles) {
 			JournalArticleUtil.clearCache(journalArticle);

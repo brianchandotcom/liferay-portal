@@ -35,7 +35,12 @@ const DriverInfo = () => {
 
 		if (!isThereId) {
 			const driverInfoObject = {
-				accidentCitation: '',
+				accidentCitation: [
+					{
+						id: Number((Math.random() * 1000000).toFixed(0)),
+						value: '',
+					},
+				],
 				ageFirstLicenced: '',
 				firstName: '',
 				gender: '',
@@ -63,7 +68,9 @@ const DriverInfo = () => {
 			<ClayForm>
 				{form.map((currentForm, index) => (
 					<DriverInfoForm
+						accidentCitationForm={currentForm.accidentCitation}
 						form={form}
+						formIndex={index}
 						formNumber={index + 1}
 						id={currentForm.id}
 						key={index}

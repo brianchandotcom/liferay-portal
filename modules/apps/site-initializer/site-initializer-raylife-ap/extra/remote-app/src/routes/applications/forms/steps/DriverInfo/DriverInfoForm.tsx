@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayForm, {
 	ClayInput,
@@ -29,15 +29,59 @@ import {
 } from '../../../context/NewApplicationAutoContextProvider';
 
 type FormDriverInfoTypes = {
+	accidentCitationForm: any[];
 	form: any[];
+	formIndex: number;
 	formNumber: number;
 	id: number;
 };
 
-const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
+const DriverInfoForm = ({
+	accidentCitationForm,
+	form,
+	formIndex,
+	formNumber,
+	id,
+}: FormDriverInfoTypes) => {
 	const [_state, dispatch] = useContext(NewApplicationAutoContext);
 
 	const [occupationValue, setOccupationValue] = useState<string>();
+
+	const [accidentCitationValue, setAccidentCitationValue] = useState<boolean>(
+		false
+	);
+
+	const accidentCitations = form.map((form) => {
+		return form.accidentCitation.filter(
+			(accidentCitation: {id: number}) => accidentCitation.id !== id
+		);
+	});
+
+	const handleAddCitationClick = () => {
+		const driverInfoObject = {
+			accidentCitation: [
+				{id: Number((Math.random() * 1000000).toFixed(0)), value: ''},
+			],
+			ageFirstLicenced: '',
+			firstName: '',
+			gender: '',
+			governmentAffiliation: '',
+			hasAccidentOrCitations: false,
+			highestEducation: '',
+			id,
+			lastName: '',
+			maritalStatus: '',
+			militaryAffiliation: '',
+			ocupation: '',
+			otherOcupation: '',
+			relationToContact: '',
+		};
+
+		dispatch({
+			payload: driverInfoObject,
+			type: ACTIONS.SET_NEW_ACCIDENT_CITATION,
+		});
+	};
 
 	const handleChangeField = (
 		fieldName: string,
@@ -58,6 +102,14 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 	const handleRemoveFormClick = (id: number) => {
 		const payload = {id};
 		dispatch({payload, type: ACTIONS.SET_REMOVE_DRIVER});
+	};
+
+	const handleRemoveAccidentCitationClick = (
+		accidentCitationId: number,
+		formId: number
+	) => {
+		const payload = {accidentCitationId, formId};
+		dispatch({payload, type: ACTIONS.SET_REMOVE_ACCIDENT_CITATION});
 	};
 
 	const relationToContactOptions = [
@@ -209,8 +261,8 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 			value: 'chooseAnOption',
 		},
 		{
-			label: 'Hign School',
-			value: 'hignSchool',
+			label: 'High School',
+			value: 'highSchool',
 		},
 		{
 			label: 'College',
@@ -246,6 +298,41 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 		{
 			label: 'State Firefighters Association',
 			value: 'stateFirefightersAssociation',
+		},
+	];
+
+	const accidentCitation = [
+		{
+			label: '',
+			value: '',
+		},
+		{
+			label: 'Choose an option',
+			value: 'chooseAnOption',
+		},
+		{
+			label: 'Accident - Not at fault',
+			value: 'accidentNotAtFault',
+		},
+		{
+			label: 'Accident - At fault',
+			value: 'accidentAtFault',
+		},
+		{
+			label: 'Accident - Car rolled over',
+			value: 'accidentCarRolledOver',
+		},
+		{
+			label: 'Citation - Driving under the influence',
+			value: 'citationDrivingUnderTheInfluence',
+		},
+		{
+			label: 'Citation - Failing to Yield',
+			value: 'citationFailingToYield',
+		},
+		{
+			label: 'US Citation - Speeding',
+			value: 'citationSpeeding',
 		},
 	];
 
@@ -466,7 +553,7 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 						</ClaySelect>
 
 						<label htmlFor="occupation">
-							Ocuppation&nbsp;
+							Occupation&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>
 					</div>
@@ -490,15 +577,15 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 						/>
 
 						{occupationValue === 'other' && (
-							<label htmlFor="otherOcupation">
-								Other Ocupation
+							<label htmlFor="otherOccupation">
+								Other Occupation
 								<span className="text-danger-darken-1">*</span>
 							</label>
 						)}
 
 						{occupationValue !== 'other' && (
-							<label htmlFor="otherOcupation">
-								Other Ocupation
+							<label htmlFor="otherOccupation">
+								Other Occupation
 							</label>
 						)}
 					</div>
@@ -583,10 +670,10 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 							items={millitaryAffiliationOptions}
 							searchable
 							trigger={
-								<ClayButton className="after bg-neutral-0 border-neutral-5 button-millitary-affiliation d-flex icon justify-content-end rounded text-neutral-10">
+								<ClayButton className="after bg-neutral-0 border-neutral-5 button-select d-flex icon justify-content-end rounded text-neutral-10">
 									<span>
 										<ClayIcon
-											className="button-millitary-affiliation-icon"
+											className="button-select-icon"
 											symbol="caret-double-l"
 										/>
 									</span>
@@ -610,12 +697,84 @@ const DriverInfoForm = ({form, formNumber, id}: FormDriverInfoTypes) => {
 						Accidents or Citations in the last 10 years?*
 					</div>
 
-					<ClayRadioGroup className="mb-2" inline>
-						<ClayRadio label="Yes" value="yes" />
+					<ClayRadioGroup inline>
+						<ClayRadio
+							label="Yes"
+							onClick={() => setAccidentCitationValue(true)}
+							value="yes"
+						/>
 
-						<ClayRadio label="No" value="no" />
+						<ClayRadio
+							label="No"
+							onClick={() => setAccidentCitationValue(false)}
+							value="no"
+						/>
 					</ClayRadioGroup>
 				</div>
+
+				{accidentCitationValue && (
+					<div className="row">
+						{accidentCitations[formIndex].map(
+							(
+								currentAccidentCitations: number,
+								index: number
+							) => (
+								<>
+									<div className="accidentCitation col-10 filled form-condensed form-group">
+										<ClayDropDownWithItems
+											items={accidentCitation}
+											key={index}
+											searchable
+											trigger={
+												<ClayButton className="after bg-neutral-0 border-neutral-5 button-select d-flex icon justify-content-end mb-3 rounded text-neutral-10">
+													<span>
+														<ClayIcon
+															className="button-select-icon"
+															symbol="caret-double-l"
+														/>
+													</span>
+												</ClayButton>
+											}
+										/>
+
+										<label htmlFor="accidentCitation">
+											Accident Citation
+											<span className="text-danger-darken-1">
+												*
+											</span>
+										</label>
+									</div>
+									{index === 0 ? (
+										<div className="col-1 form-group p-0">
+											<ClayButtonWithIcon
+												className="outline-primary"
+												onClick={() =>
+													handleAddCitationClick()
+												}
+												outline
+												symbol="plus"
+											/>
+										</div>
+									) : (
+										<div className="col-1 form-group p-0">
+											<ClayButtonWithIcon
+												className="bg-neutral-0 border-neutral-0 text-neutral-9"
+												onClick={() => {
+													handleRemoveAccidentCitationClick(
+														accidentCitationForm[0]
+															.id,
+														form[formIndex].id
+													);
+												}}
+												symbol="times-circle"
+											/>
+										</div>
+									)}
+								</>
+							)
+						)}
+					</div>
+				)}
 			</ClayForm>
 		</div>
 	);

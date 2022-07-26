@@ -40,8 +40,13 @@ type CoverageFormTypes = {
 	uninsuredOrUnderinsuredMPD: string;
 };
 
+type AccidentCitationTypes = {
+	id: number;
+	value: string;
+};
+
 export type DriverInfoFormTypes = {
-	accidentCitation: string;
+	accidentCitation: AccidentCitationTypes[];
 	ageFirstLicenced: string;
 	firstName: string;
 	gender: string;
@@ -141,7 +146,12 @@ const initialState: InitialStateTypes = {
 		driverInfo: {
 			form: [
 				{
-					accidentCitation: '',
+					accidentCitation: [
+						{
+							id: Number((Math.random() * 1000000).toFixed(0)),
+							value: '',
+						},
+					],
 					ageFirstLicenced: '',
 					firstName: '',
 					gender: '',
@@ -194,6 +204,8 @@ export enum ACTIONS {
 	SET_IS_ABLE_TO_SAVE = 'SET_IS_ABLE_TO_SAVE',
 	SET_NEW_VEHICLE = 'SET_NEW_VEHICLE',
 	SET_NEW_DRIVER = 'SET_NEW_DRIVER',
+	SET_NEW_ACCIDENT_CITATION = 'SET_NEW_ACCIDENT_CITATION',
+	SET_REMOVE_ACCIDENT_CITATION = 'SET_REMOVE_ACCIDENT_CITATION',
 	SET_REMOVE_DRIVER = 'SET_REMOVE_DRIVER',
 	SET_REMOVE_VEHICLE = 'SET_REMOVE_VEHICLE',
 }
@@ -211,8 +223,13 @@ type ActionsPayload = {
 	[ACTIONS.SET_HAS_FORM_CHANGE]: boolean;
 	[ACTIONS.SET_IS_ABLE_TO_NEXT]: boolean;
 	[ACTIONS.SET_IS_ABLE_TO_SAVE]: boolean;
+	[ACTIONS.SET_NEW_ACCIDENT_CITATION]: DriverInfoFormTypes;
 	[ACTIONS.SET_NEW_DRIVER]: DriverInfoFormTypes;
 	[ACTIONS.SET_NEW_VEHICLE]: VehicleInfoFormTypes;
+	[ACTIONS.SET_REMOVE_ACCIDENT_CITATION]: {
+		accidentCitationId: number;
+		formId: number;
+	};
 	[ACTIONS.SET_REMOVE_DRIVER]: {id: number};
 	[ACTIONS.SET_REMOVE_VEHICLE]: {id: number};
 	[ACTIONS.SET_VEHICLE_INFO_FORM]: {
@@ -368,7 +385,64 @@ const reducer = (state: InitialStateTypes, action: ApplicationActions) => {
 				steps: {
 					...state.steps,
 					driverInfo: {
-						...state.steps.vehicleInfo,
+						...state.steps.driverInfo,
+						form: payload,
+					},
+				},
+			};
+		}
+
+		case ACTIONS.SET_NEW_ACCIDENT_CITATION: {
+			const payload = state?.steps?.driverInfo?.form;
+			const formId = action?.payload?.id;
+
+			const forms = payload.filter((form) => form.id === formId);
+
+			forms.forEach((form) =>
+				form.accidentCitation.push(action.payload.accidentCitation[0])
+			);
+
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					driverInfo: {
+						...state.steps.driverInfo,
+						form: payload,
+					},
+				},
+			};
+		}
+
+		case ACTIONS.SET_REMOVE_ACCIDENT_CITATION: {
+			const formId = action?.payload?.formId;
+			const accidentCitationId = action?.payload?.accidentCitationId;
+			const payload = state?.steps?.driverInfo?.form;
+
+			const uniqueIdForm = payload.filter((form) => form.id === formId);
+
+			const formsWithoutUniqueId = payload.filter(
+				(form) => form.id !== formId
+			);
+
+			const accidentCitationListFiltered = uniqueIdForm.map(
+				(uniqueIdForm) =>
+					uniqueIdForm.accidentCitation.filter(
+						(accidentCitation) =>
+							accidentCitation.id !== accidentCitationId
+					)
+			);
+
+			uniqueIdForm[0].accidentCitation = accidentCitationListFiltered[0];
+
+			formsWithoutUniqueId.push(uniqueIdForm[0]);
+
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					driverInfo: {
+						...state.steps.driverInfo,
 						form: payload,
 					},
 				},

@@ -610,7 +610,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchResults#RESULTS_PORTLET_SEARCH_QUERY",
-			value1 = "1 results for bicycle");
+			value1 = "1 result for bicycle");
 	}
 
 	@priority = "4"

@@ -153,6 +153,8 @@ definition {
 			locator1 = "Button#CHOOSE_THIS_FOLDER",
 			value1 = "Choose This Folder");
 
+		SelectFrameTop();
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#RECYCLE_BIN_RESTORE_SUCCESS",
 			value1 = "The ${assetType} ${assetName} was restored to ${assetRestoreLocation}.");

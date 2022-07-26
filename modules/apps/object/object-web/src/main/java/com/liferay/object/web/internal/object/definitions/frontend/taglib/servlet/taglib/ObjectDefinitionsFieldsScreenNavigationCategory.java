@@ -20,7 +20,7 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessTypeTracker;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsFieldsDisplayContext;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -67,7 +67,7 @@ public class ObjectDefinitionsFieldsScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "fields");
+		return _language.get(locale, "fields");
 	}
 
 	@Override
@@ -84,6 +84,9 @@ public class ObjectDefinitionsFieldsScreenNavigationCategory
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

@@ -17,12 +17,13 @@ package com.liferay.object.internal.field.business.type;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcela Cunha
@@ -46,7 +47,7 @@ public class DateObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public String getDescription(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"add-a-date");
@@ -54,7 +55,7 @@ public class DateObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"date");
@@ -64,5 +65,8 @@ public class DateObjectFieldBusinessType implements ObjectFieldBusinessType {
 	public String getName() {
 		return ObjectFieldConstants.BUSINESS_TYPE_DATE;
 	}
+
+	@Reference
+	private Language _language;
 
 }

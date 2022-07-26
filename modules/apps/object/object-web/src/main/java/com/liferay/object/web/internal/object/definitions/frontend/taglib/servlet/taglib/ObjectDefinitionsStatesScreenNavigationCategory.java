@@ -19,7 +19,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsStateManagerDisplayContext;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -69,7 +69,7 @@ public class ObjectDefinitionsStatesScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "state-manager");
+		return _language.get(locale, "state-manager");
 	}
 
 	@Override
@@ -94,6 +94,9 @@ public class ObjectDefinitionsStatesScreenNavigationCategory
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

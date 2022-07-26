@@ -16,12 +16,13 @@ package com.liferay.object.internal.field.business.type;
 
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcela Cunha
@@ -48,7 +49,7 @@ public class LargeFileObjectFieldBusinessType
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"large-file");
@@ -63,5 +64,8 @@ public class LargeFileObjectFieldBusinessType
 	public boolean isVisible() {
 		return false;
 	}
+
+	@Reference
+	private Language _language;
 
 }

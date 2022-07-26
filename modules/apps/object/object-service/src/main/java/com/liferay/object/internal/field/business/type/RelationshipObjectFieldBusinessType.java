@@ -17,12 +17,13 @@ package com.liferay.object.internal.field.business.type;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcela Cunha
@@ -49,7 +50,7 @@ public class RelationshipObjectFieldBusinessType
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"relationship");
@@ -64,5 +65,8 @@ public class RelationshipObjectFieldBusinessType
 	public boolean isVisible() {
 		return true;
 	}
+
+	@Reference
+	private Language _language;
 
 }

@@ -23,7 +23,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -68,7 +68,7 @@ public class AttachmentUploadResponseHandler implements UploadResponseHandler {
 		else if (portalException instanceof FileSizeException) {
 			errorMessage = themeDisplay.translate(
 				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
-				LanguageUtil.formatStorageSize(
+				_language.formatStorageSize(
 					_attachmentValidator.getMaximumFileSize(
 						ParamUtil.getLong(portletRequest, "objectFieldId"),
 						themeDisplay.isSignedIn()),
@@ -116,5 +116,8 @@ public class AttachmentUploadResponseHandler implements UploadResponseHandler {
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private Language _language;
 
 }

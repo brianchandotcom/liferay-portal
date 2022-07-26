@@ -26,7 +26,7 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -70,7 +70,7 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public String getDescription(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"add-text-up-to-280-characters");
@@ -78,7 +78,7 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"text");
@@ -151,6 +151,9 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 				objectFieldName, "showCounter", showCounter);
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;

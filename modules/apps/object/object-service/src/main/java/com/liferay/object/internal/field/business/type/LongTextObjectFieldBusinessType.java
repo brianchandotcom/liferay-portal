@@ -26,7 +26,7 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -74,7 +74,7 @@ public class LongTextObjectFieldBusinessType
 
 	@Override
 	public String getDescription(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"add-text-that-up-to-65,000-characters");
@@ -82,7 +82,7 @@ public class LongTextObjectFieldBusinessType
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"long-text");
@@ -157,6 +157,9 @@ public class LongTextObjectFieldBusinessType
 				objectFieldName, "showCounter", showCounter);
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;

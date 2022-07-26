@@ -20,7 +20,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineTracker;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsValidationsDisplayContext;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -68,7 +68,7 @@ public class ObjectDefinitionsValidationsScreeNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "validations");
+		return _language.get(locale, "validations");
 	}
 
 	@Override
@@ -96,6 +96,9 @@ public class ObjectDefinitionsValidationsScreeNavigationCategory
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

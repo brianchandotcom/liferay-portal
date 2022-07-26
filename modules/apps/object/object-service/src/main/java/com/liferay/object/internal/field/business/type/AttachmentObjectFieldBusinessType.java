@@ -28,7 +28,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -79,7 +79,7 @@ public class AttachmentObjectFieldBusinessType
 
 	@Override
 	public String getDescription(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"upload-files-or-select-from-documents-and-media");
@@ -87,7 +87,7 @@ public class AttachmentObjectFieldBusinessType
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"attachment");
@@ -259,6 +259,9 @@ public class AttachmentObjectFieldBusinessType
 				numberFormatException);
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;

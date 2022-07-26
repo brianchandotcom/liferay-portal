@@ -73,7 +73,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -776,7 +776,7 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectEntryTable.INSTANCE.userName.getName(), dbTableName,
 			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(
-				LanguageUtil.get(LocaleUtil.getDefault(), "author")),
+				_language.get(LocaleUtil.getDefault(), "author")),
 			"creator", false, false);
 
 		_objectFieldLocalService.addSystemObjectField(
@@ -785,7 +785,7 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectEntryTable.INSTANCE.createDate.getName(), dbTableName,
 			ObjectFieldConstants.DB_TYPE_DATE, null, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(
-				LanguageUtil.get(LocaleUtil.getDefault(), "create-date")),
+				_language.get(LocaleUtil.getDefault(), "create-date")),
 			"createDate", false, false);
 
 		_objectFieldLocalService.addSystemObjectField(
@@ -795,7 +795,7 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectEntryTable.INSTANCE.getTableName(),
 			ObjectFieldConstants.DB_TYPE_LONG, null, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(
-				LanguageUtil.get(LocaleUtil.getDefault(), "id")),
+				_language.get(LocaleUtil.getDefault(), "id")),
 			"id", false, false);
 
 		_objectFieldLocalService.addSystemObjectField(
@@ -804,7 +804,7 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectEntryTable.INSTANCE.modifiedDate.getName(), dbTableName,
 			ObjectFieldConstants.DB_TYPE_DATE, null, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(
-				LanguageUtil.get(LocaleUtil.getDefault(), "modified-date")),
+				_language.get(LocaleUtil.getDefault(), "modified-date")),
 			"modifiedDate", false, false);
 
 		_objectFieldLocalService.addSystemObjectField(
@@ -813,7 +813,7 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectEntryTable.INSTANCE.status.getName(), dbTableName,
 			ObjectFieldConstants.DB_TYPE_INTEGER, null, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(
-				LanguageUtil.get(LocaleUtil.getDefault(), "status")),
+				_language.get(LocaleUtil.getDefault(), "status")),
 			"status", false, false);
 
 		if (objectFields != null) {
@@ -975,7 +975,7 @@ public class ObjectDefinitionLocalServiceImpl
 		for (LayoutClassedModelUsage layoutClassedModelUsage :
 				layoutClassedModelUsages) {
 
-			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+			Set<Locale> availableLocales = _language.getAvailableLocales(
 				layoutClassedModelUsage.getGroupId());
 
 			for (Locale locale : availableLocales) {
@@ -1343,6 +1343,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutClassedModelUsageLocalService

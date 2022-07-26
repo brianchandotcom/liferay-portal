@@ -30,7 +30,7 @@ import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -76,7 +76,7 @@ public class PicklistObjectFieldBusinessType
 
 	@Override
 	public String getDescription(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"choose-from-a-picklist");
@@ -84,7 +84,7 @@ public class PicklistObjectFieldBusinessType
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"picklist");
@@ -215,6 +215,9 @@ public class PicklistObjectFieldBusinessType
 
 		return listTypeEntries;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;

@@ -38,7 +38,7 @@ import com.liferay.object.util.ObjectEntryFieldValueUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -254,7 +254,7 @@ public class ObjectEntryDTOConverter
 						code = objectEntry.getStatus();
 						label = WorkflowConstants.getStatusLabel(
 							objectEntry.getStatus());
-						label_i18n = LanguageUtil.get(
+						label_i18n = _language.get(
 							LanguageResources.getResourceBundle(
 								dtoConverterContext.getLocale()),
 							WorkflowConstants.getStatusLabel(
@@ -503,6 +503,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;

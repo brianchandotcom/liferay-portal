@@ -17,13 +17,14 @@ package com.liferay.object.internal.scope;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.scope.ObjectScopeProvider;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -48,7 +49,7 @@ public class CompanyInstanceObjectScopeProviderImpl
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "company");
+		return _language.get(locale, "company");
 	}
 
 	@Override
@@ -72,5 +73,8 @@ public class CompanyInstanceObjectScopeProviderImpl
 
 		return false;
 	}
+
+	@Reference
+	private Language _language;
 
 }

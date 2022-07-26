@@ -20,7 +20,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -28,6 +28,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcela Cunha
@@ -53,7 +54,7 @@ public class DecimalObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public String getDescription(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"add-a-decimal-number-that-supports-fractional-portions");
@@ -61,7 +62,7 @@ public class DecimalObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
 			"decimal");
@@ -81,5 +82,8 @@ public class DecimalObjectFieldBusinessType implements ObjectFieldBusinessType {
 			FieldConstants.DATA_TYPE, FieldConstants.DOUBLE
 		).build();
 	}
+
+	@Reference
+	private Language _language;
 
 }

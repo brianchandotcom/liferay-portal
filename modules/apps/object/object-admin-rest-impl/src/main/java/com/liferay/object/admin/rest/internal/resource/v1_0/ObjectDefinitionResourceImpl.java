@@ -41,7 +41,7 @@ import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -316,7 +316,7 @@ public class ObjectDefinitionResourceImpl
 						code = objectDefinition.getStatus();
 						label = WorkflowConstants.getStatusLabel(
 							objectDefinition.getStatus());
-						label_i18n = LanguageUtil.get(
+						label_i18n = _language.get(
 							LanguageResources.getResourceBundle(
 								contextAcceptLanguage.getPreferredLocale()),
 							WorkflowConstants.getStatusLabel(
@@ -363,6 +363,9 @@ public class ObjectDefinitionResourceImpl
 
 	private static final EntityModel _entityModel =
 		new ObjectDefinitionEntityModel();
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;

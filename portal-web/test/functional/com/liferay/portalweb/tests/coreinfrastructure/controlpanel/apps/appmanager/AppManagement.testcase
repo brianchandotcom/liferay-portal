@@ -587,7 +587,7 @@ definition {
 			WaitForPageLoad();
 
 			AppManager.filtersApp(
-				filterBy = "    Page Layouts ",
+				filterBy = "   Page Layouts",
 				filterName = "Category");
 		}
 
@@ -673,7 +673,7 @@ definition {
 			WaitForPageLoad();
 
 			AppManager.filtersApp(
-				filterBy = " Free ",
+				filterBy = "Free",
 				filterName = "Price");
 		}
 

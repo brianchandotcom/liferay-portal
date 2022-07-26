@@ -2152,6 +2152,10 @@ definition {
 
 		Staging.gotoPublishToLive();
 
+		Staging.configurePublishToLive(
+			checkContentNameList = "Web Content",
+			contentDateRange = "All");
+
 		Staging.publishToLive();
 
 		ProductMenu.gotoLiveSite(site = "Staging Site");

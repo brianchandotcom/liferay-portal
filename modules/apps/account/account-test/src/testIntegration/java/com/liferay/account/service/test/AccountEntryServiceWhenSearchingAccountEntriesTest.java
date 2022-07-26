@@ -51,7 +51,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -133,7 +132,7 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 	public void testShouldReturnAllAccountEntriesWithCompanyViewPermission()
 		throws Exception {
 
-		_assertSearch(Collections.emptyList());
+		_assertSearch();
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -150,7 +149,7 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 	public void testShouldReturnDirectMembershipAccountEntries()
 		throws Exception {
 
-		_assertSearch(Collections.emptyList());
+		_assertSearch();
 
 		AccountEntry accountEntry = _organizationAccountEntries.get(
 			_rootOrganization);
@@ -158,7 +157,7 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry.getAccountEntryId(), _user.getUserId());
 
-		_assertSearch(Collections.singletonList(accountEntry));
+		_assertSearch(accountEntry);
 	}
 
 	@Test
@@ -170,7 +169,7 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 				organization.getOrganizationId(), _user);
 		}
 
-		_assertSearch(Collections.emptyList());
+		_assertSearch();
 	}
 
 	@Test
@@ -191,9 +190,7 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 			_user.getUserId(), _rootOrganization.getGroupId(),
 			role.getRoleId());
 
-		_assertSearch(
-			ListUtil.toList(
-				_organizationAccountEntries.get(_rootOrganization)));
+		_assertSearch(_organizationAccountEntries.get(_rootOrganization));
 	}
 
 	@Test
@@ -216,7 +213,7 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 		AccountEntry accountEntry = _organizationAccountEntries.get(
 			_organization);
 
-		_assertSearch(ListUtil.toList(accountEntry));
+		_assertSearch(accountEntry);
 
 		RoleTestUtil.addResourcePermission(
 			role, Organization.class.getName(),
@@ -226,7 +223,7 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 		AccountEntry suborgAccountEntry = _organizationAccountEntries.get(
 			_suborganization);
 
-		_assertSearch(Arrays.asList(accountEntry, suborgAccountEntry));
+		_assertSearch(accountEntry, suborgAccountEntry);
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_user);

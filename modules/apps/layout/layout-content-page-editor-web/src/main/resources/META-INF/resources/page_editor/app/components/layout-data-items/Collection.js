@@ -30,6 +30,7 @@ import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import CollectionService from '../../services/CollectionService';
 import updateItemConfig from '../../thunks/updateItemConfig';
+import {collectionIsMapped} from '../../utils/collectionIsMapped';
 import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
@@ -41,10 +42,6 @@ const COLLECTION_ID_DIVIDER = '$';
 
 function paginationIsEnabled(collectionConfig) {
 	return collectionConfig.paginationType !== 'none';
-}
-
-function collectionIsMapped(collectionConfig) {
-	return collectionConfig.collection;
 }
 
 function getCollectionPrefix(collectionId, index) {

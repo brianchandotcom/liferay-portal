@@ -3779,50 +3779,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		PageEditor.configureFragment(hideFragment = "true");
 	}
 
-	macro moveElementToContainerViaPageStructure {
-		Variables.assertDefined(parameterList = "${elementName}");
-
-		PageEditor.gotoTab(tabName = "Browser");
-
-		Navigator.gotoNavTab(navTab = "Page Elements");
-
-		if (!(isSet(index))) {
-			var index = "1";
-		}
-
-		Click(
-			key_nodeName = "Container",
-			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
-
-		if (isSet(composition)) {
-			var elementName = "${layoutElementName}";
-		}
-
-		if ("${dropTarget}" == "Up") {
-			DragAndDrop.javaScriptDragAndDropToUp(
-				index = "${index}",
-				key_elementName = "${elementName}",
-				key_targetElementName = "${targetElementName}",
-				locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
-				locator2 = "Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
-		}
-		else {
-			DragAndDrop.javaScriptDragAndDropToBottom(
-				index = "${index}",
-				key_elementName = "${elementName}",
-				key_targetElementName = "${targetElementName}",
-				locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
-				locator2 = "Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
-		}
-
-		PageEditor.waitForAutoSave();
-
-		AssertElementPresent(
-			key_elementHeader = "//div[@aria-label='${elementName}']",
-			key_position = "1",
-			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
-	}
-
 	macro openExperienceMenu {
 		if (IsElementNotPresent(locator1 = "PageEditor#EXPERIENCE_MENU")) {
 			Click(locator1 = "PageEditor#EXPERIENCE_MENU_BUTTON");

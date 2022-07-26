@@ -133,12 +133,9 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10265 | Test Summary: Max of 3 breakdowns options are allowed"
-	@ignore = "true"
 	@priority = "4"
 	test AddMaxOf3AttributesToEvent {
 		property test.name.skip.portal.instance = "CustomEventsFilterBreakdown#AddMaxOf3AttributesToEvent";
-
-		// AC ticket: Waiting for LRAC-11491 to resolve
 
 		var attributeNameList = "category,pageTitle,url";
 
@@ -187,7 +184,7 @@ definition {
 		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "CustomEventsFilterBreakdown#AssertAttributeBreakdownsSortedByHighestEventCount";
 
-		var attributeName = "pageTitle";
+		var attributeNameList = "pageTitle,url";
 		var layoutNameList = "Custom 1,Custom 2";
 		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
 
@@ -246,7 +243,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
 		}
 
 		task ("Check that the analysis is being ordered by the number of interactions by default") {
@@ -272,12 +269,9 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10267 | Test Summary: Rearrange breakdown and assert data change and after rearrange to return to original state"
-	@ignore = "true"
 	@priority = "4"
 	test AssertDataChangeWhenRearrangeBreakdownAndReturnOriginalState {
 		property test.name.skip.portal.instance = "CustomEventsFilterBreakdown#AssertDataChangeWhenRearrangeBreakdownAndReturnOriginalState";
-
-		// AC ticket: Waiting for LRAC-11491 to resolve
 
 		var attributeNameList = "category,pageTitle,url";
 
@@ -466,7 +460,7 @@ definition {
 	test AssertTheAnalysisResultIsSorted {
 		property test.name.skip.portal.instance = "CustomEventsFilterBreakdown#AssertTheAnalysisResultIsSorted";
 
-		var attributeName = "pageTitle";
+		var attributeNameList = "pageTitle,url";
 		var layoutNameList = "Custom 1,Custom 2";
 		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
 
@@ -525,7 +519,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
 		}
 
 		task ("Change the time filter to 24 hours") {
@@ -1153,14 +1147,11 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10272 | Test Summary: Sorting the analysis result after rearranging the breakdowns"
-	@ignore = "true"
 	@priority = "3"
 	test SortTheResultsAnalysisAfterRearrangingBreakdowns {
 		var attributeNameList = "pageTitle,category";
 		var layoutNameList = "Custom 1,Custom 2";
 		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
-
-		// AC ticket: Waiting for LRAC-11491 to resolve
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();

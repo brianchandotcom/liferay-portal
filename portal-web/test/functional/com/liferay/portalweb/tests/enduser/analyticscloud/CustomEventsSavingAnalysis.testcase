@@ -135,10 +135,16 @@ definition {
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10557 | Test Summary: Change data type with event already in use"
 	@priority = "4"
 	test CanChangeAttributeTypeInUseWithoutAffectingExistingAnalysisReports {
-		var attributeName = "temp";
+		var attributeNameList = "temp,category,duration";
+		var attributeNameChangeList = "temp,duration";
 		var filterName = "temp";
-		var newDataType = "Date";
-		var oldDataType = "Number";
+		var newDataTypeList = "Date,String";
+		var oldDataTypeList = "Number,Duration";
+		var list1 = ListUtil.newListFromString("${attributeNameChangeList}");
+		var list2 = ListUtil.newListFromString("${newDataTypeList}");
+		var list3 = ListUtil.newListFromString("${oldDataTypeList}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
@@ -165,7 +171,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
 		}
 
 		task ("Add the filter to analysis") {
@@ -184,7 +190,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "10 - 19,1");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "10 - 19,wetsuit,01:00:00 - 01:00:59,1");
 		}
 
 		task ("Save the newly created analysis") {
@@ -205,30 +211,39 @@ definition {
 			ACNavigation.openItem(itemName = "Attributes");
 		}
 
-		task ("Edit the new attribute") {
-			ACUtils.searchBar(searchItem = "${attributeName}");
+		while ("${i}" != "${size}") {
+			var attributeName = ListUtil.get("${list1}", "${i}");
+			var newDataType = ListUtil.get("${list2}", "${i}");
 
-			ACNavigation.openItem(itemName = "${attributeName}");
+			task ("Edit the new attribute") {
+				ACUtils.searchBar(searchItem = "${attributeName}");
 
-			ACUtils.clickAnyButton(button = "Edit");
-		}
+				ACNavigation.openItem(itemName = "${attributeName}");
 
-		task ("Change the type of the attribute") {
-			ACCustomEvents.changeAttributeDataType(newDataType = "${newDataType}");
-		}
+				ACUtils.clickAnyButton(button = "Edit");
+			}
 
-		task ("Back to Event Attributes and Navigation to attributes tab") {
-			ACNavigation.backNavigation(pageName = "Event Attributes");
+			task ("Change the type of the attribute") {
+				ACCustomEvents.changeAttributeDataType(newDataType = "${newDataType}");
+			}
 
-			ACNavigation.openItem(itemName = "Attributes");
-		}
+			task ("Back to Event Attributes and Navigation to attributes tab") {
+				ACNavigation.backNavigation(pageName = "Event Attributes");
 
-		task ("Check if the type has been changed") {
-			ACUtils.searchBar(searchItem = "${attributeName}");
+				ACNavigation.openItem(itemName = "Attributes");
+			}
 
-			ACCustomEvents.viewDataTypeList(
-				attributeName = "${attributeName}",
-				typeValue = "${newDataType}");
+			task ("Check if the type has been changed") {
+				ACUtils.searchBar(searchItem = "${attributeName}");
+
+				ACCustomEvents.viewDataTypeList(
+					attributeName = "${attributeName}",
+					typeValue = "${newDataType}");
+			}
+
+			var i = ${i} + 1;
+
+			var i = StringUtil.valueOf("${i}");
 		}
 
 		task ("Go to event analysis and click on newly created analysis") {
@@ -241,26 +256,38 @@ definition {
 
 		task ("Check that the analysis dashboard contains the event,attribute and filter") {
 			ACEventAnalysis.viewAnalysisDashboard(
-				attributeNameList = "${attributeName}",
+				attributeNameList = "${attributeNameList}",
 				eventName = "${customEventName}",
 				filterNameList = "${filterName}");
 		}
 
 		task ("Check the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "10 - 19,1");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "10 - 19,wetsuit,01:00:00 - 01:00:59,1");
 		}
 
 		task ("Check that the attributes used have not had the attribute type changed") {
-			var oldDataType = StringUtil.upperCase("${oldDataType}");
+			var size = ListUtil.size("${list1}");
+			var i = "0";
 
-			Click(
-				key_attributeName = "${attributeName}",
-				locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
+			while ("${i}" != "${size}") {
+				var attributeName = ListUtil.get("${list1}", "${i}");
+				var oldDataType = ListUtil.get("${list3}", "${i}");
 
-			AssertTextEquals(
-				key_attributeName = "${attributeName}",
-				locator1 = "ACEventAnalysis#EDITOR_LABEL",
-				value1 = "${oldDataType}");
+				var oldDataType = StringUtil.upperCase("${oldDataType}");
+
+				Click(
+					key_attributeName = "${attributeName}",
+					locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
+
+				AssertTextEquals(
+					key_attributeName = "${attributeName}",
+					locator1 = "ACEventAnalysis#EDITOR_LABEL",
+					value1 = "${oldDataType}");
+
+				var i = ${i} + 1;
+
+				var i = StringUtil.valueOf("${i}");
+			}
 		}
 	}
 
@@ -493,7 +520,8 @@ definition {
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10559 | Test Summary: Edit an analysis report"
 	@priority = "5"
 	test CanEditAnalysisReport {
-		var attributeName = "price";
+		var attributeName1 = "price";
+		var attributeName2 = "like";
 		var filterName = "birthdate";
 
 		task ("Fill fields and create custom event") {
@@ -521,7 +549,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName1}");
 		}
 
 		task ("Name the report") {
@@ -548,6 +576,10 @@ definition {
 			ACUtils.setItemName(itemName = "Edited Analysis");
 		}
 
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName2}");
+		}
+
 		task ("Add the filter to analysis") {
 			ACEventAnalysis.addFilter(
 				filterName = "${filterName}",
@@ -558,7 +590,7 @@ definition {
 		}
 
 		task ("Check the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "260 - 269,1");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "260 - 269,true,1");
 		}
 
 		task ("Save the newly created analysis") {
@@ -571,13 +603,13 @@ definition {
 
 		task ("Check that the analysis dashboard contains the event,attribute and filter") {
 			ACEventAnalysis.viewAnalysisDashboard(
-				attributeNameList = "${attributeName}",
+				attributeNameList = "${attributeName1},${attributeName2}",
 				eventName = "${customEventName}",
 				filterNameList = "${filterName}");
 		}
 
 		task ("Check the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "260 - 269,1");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "260 - 269,true,1");
 		}
 	}
 

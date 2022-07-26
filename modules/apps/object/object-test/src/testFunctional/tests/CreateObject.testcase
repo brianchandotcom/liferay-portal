@@ -2211,9 +2211,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Entry 1");
 
-		AssertClick(
-			locator1 = "Button#MAIN_CONTENT_SUBMIT",
-			value1 = "Submit");
+		Button.clickSubmitForPublication();
 
 		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
@@ -3223,7 +3221,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Entry 1");
 
-		FormPortlet.submitSuccessfully();
+		Button.clickSubmitForPublication();
 
 		Navigator.openURL();
 
@@ -8642,7 +8640,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Entry Test");
 
-		FormPortlet.submitSuccessfully();
+		Button.clickSubmitForPublication();
 
 		Navigator.openURL();
 

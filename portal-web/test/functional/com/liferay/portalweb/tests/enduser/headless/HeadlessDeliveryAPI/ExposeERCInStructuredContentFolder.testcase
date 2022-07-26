@@ -25,6 +25,33 @@ definition {
 		}
 	}
 
+	@description = "Can get correct details with default erc from folders"
+	@priority = "5"
+	test CanGetCorrectDetailsWithDefaultErcFromFolders {
+		property portal.acceptance = "true";
+
+		task ("Given a folder") {
+			var responseFromCreate = HeadlessWebcontentFolderAPI.createStructuredContentFolder(
+				groupName = "Site Name",
+				name = "Test Folder");
+		}
+
+		task ("When I use getSiteStructuredContentFolderByExternalReferenceCode") {
+			var structuredContentUUId = HeadlessWebcontentFolderAPI.getUuidOfCreatedStructuredContentFolder(responseToParse = "${responseFromCreate}");
+
+			var responseFromGet = HeadlessWebcontentFolderAPI.getSiteStructuredContentFoldersByErc(
+				externalReferenceCode = "${structuredContentUUId}",
+				groupName = "Site Name");
+		}
+
+		task ("Then I can retrieve the correct information from the response") {
+			HeadlessWebcontentFolderAPI.assertResponseHasCorrectDetails(
+				expectedExternalReferenceCodeValue = "${structuredContentUUId}",
+				responseFromCreate = "${responseFromCreate}",
+				responseFromGet = "${responseFromGet}");
+		}
+	}
+
 	@description = "Structured Content Folder is created with custom ERC"
 	@priority = "5"
 	test StructuredContentFolderIsCreatedWithCustomErc {

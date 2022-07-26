@@ -110,6 +110,8 @@ definition {
 
 		Button.clickAdd();
 
+		SelectFrameTop();
+
 		SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
 		Navigator.gotoNavItem(navItem = "All Sites");
@@ -313,9 +315,7 @@ definition {
 
 		Button.clickAdd();
 
-		if (IsElementNotPresent(locator1 = "IFrame#SELECT_SITES")) {
-			Button.clickAdd();
-		}
+		SelectFrameTop();
 
 		SelectFrame(locator1 = "IFrame#SELECT_SITES");
 

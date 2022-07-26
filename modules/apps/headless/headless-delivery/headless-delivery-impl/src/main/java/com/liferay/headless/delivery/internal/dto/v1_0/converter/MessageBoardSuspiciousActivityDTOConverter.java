@@ -60,7 +60,7 @@ public class MessageBoardSuspiciousActivityDTOConverter
 					mbSuspiciousActivity.getSuspiciousActivityId();
 				threadId = mbSuspiciousActivity.getThreadId();
 				userId = mbSuspiciousActivity.getUserId();
-				validated = mbSuspiciousActivity.getValidated();
+				validated = mbSuspiciousActivity.isValidated();
 			}
 		};
 	}

@@ -552,10 +552,12 @@ definition {
 			<methodName>pingback.ping</methodName>
 			<params>
 			<param><value><string>http://${ip}</string></value></param>
-			<param><value><string>http://${portalURL}/web/guest/home/-/blogs/${entryTitle}</string></value></param>
+			<param><value><string>${portalURL}/web/guest/home/-/blogs/${entryTitle}</string></value></param>
 			</params>
 			</methodCall>'
 		''';
+
+		echo("${curl}");
 
 		var returnValue = JSONCurlUtil.post("${curl}");
 

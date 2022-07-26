@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.commerce.order.content.web
 Bundle-Version: 4.0.62
 Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
 Web-ContextPath: /commerce-order-content-web
+-dsannotations-options: inherit

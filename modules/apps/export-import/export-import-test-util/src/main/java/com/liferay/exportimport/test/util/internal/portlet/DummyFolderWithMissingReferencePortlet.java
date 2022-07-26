@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.preferences-unique-per-layout=false",
 		"javax.portlet.name=" + DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.version=3.0"
+		"javax.portlet.resource-bundle=content.Language"
 	},
 	service = {DummyFolderWithMissingReferencePortlet.class, Portlet.class}
 )

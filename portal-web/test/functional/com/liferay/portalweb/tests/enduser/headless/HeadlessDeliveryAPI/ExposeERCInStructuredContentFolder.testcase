@@ -25,6 +25,25 @@ definition {
 		}
 	}
 
+	@description = "Structured Content Folder is created with custom ERC"
+	@priority = "5"
+	test StructuredContentFolderIsCreatedWithCustomErc {
+		property portal.acceptance = "true";
+
+		task ("When with postSiteStructuredContentFolder") {
+			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolder(
+				externalReferenceCode = "CustomeCode",
+				groupName = "Site Name",
+				name = "Test Folder");
+		}
+
+		task ("Then a new folder is created with the custom erc in the body response") {
+			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "CustomeCode",
+				responseToParse = "${response}");
+		}
+	}
+
 	@description = "Structured Content Folder is created with default ERC"
 	@priority = "5"
 	test StructuredContentFolderIsCreatedWithDefaultErc {

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetBranchPersistence;
 import com.liferay.portal.kernel.service.persistence.VirtualHostPersistence;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -502,6 +503,15 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			groupId, privateLayout);
 
 		if (!virtualHostnames.isEmpty()) {
+			long virtualHostsCount =
+				_virtualHostLocalService.getVirtualHostsCount(
+					layoutSet.getLayoutSetId(),
+					ArrayUtil.toStringArray(virtualHostnames.keySet()));
+
+			if (virtualHostsCount > 0) {
+				throw new LayoutSetVirtualHostException();
+			}
+
 			_virtualHostLocalService.updateVirtualHosts(
 				layoutSet.getCompanyId(), layoutSet.getLayoutSetId(),
 				virtualHostnames);

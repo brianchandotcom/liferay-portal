@@ -1571,6 +1571,8 @@ definition {
 	@description = "Bug: LRAC-10972 | Automation ID: LRAC-11506 | Test Summary: Check Autocomplete Suggestions For All Criteria Types"
 	@priority = "3"
 	test CheckAutocompleteSuggestionsForAllCriteriaTypes {
+		property analytics.cloud.upstream = "false";
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",

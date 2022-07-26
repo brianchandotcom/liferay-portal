@@ -108,24 +108,6 @@ definition {
 		ACUtils.dismissOnboardingModal();
 	}
 
-	macro signOut {
-		if (IsElementPresent(locator1 = "ACSettings#SETTINGS_PAGE")) {
-			Click(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON");
-		}
-
-		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
-
-		Click(locator1 = "ACWorkspace#LOGOUT_WORKSPACE_OPTION");
-	}
-
-	macro switchWorkspace {
-		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
-
-		Click(locator1 = "ACWorkspace#SWITCH_WORKSPACE_OPTION");
-
-		ACWorkspace.openWorkspace(workspaceName = "${workspaceName}");
-	}
-
 	macro setFriendlyURL {
 		Type(
 			locator1 = "ACWorkspace#FRIENDLY_URL",
@@ -165,6 +147,24 @@ definition {
 
 			Button.clickSave();
 		}
+	}
+
+	macro signOut {
+		if (IsElementPresent(locator1 = "ACSettings#SETTINGS_PAGE")) {
+			Click(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON");
+		}
+
+		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
+
+		Click(locator1 = "ACWorkspace#LOGOUT_WORKSPACE_OPTION");
+	}
+
+	macro switchWorkspace {
+		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
+
+		Click(locator1 = "ACWorkspace#SWITCH_WORKSPACE_OPTION");
+
+		ACWorkspace.openWorkspace(workspaceName = "${workspaceName}");
 	}
 
 	macro viewWorkspaceSettings {

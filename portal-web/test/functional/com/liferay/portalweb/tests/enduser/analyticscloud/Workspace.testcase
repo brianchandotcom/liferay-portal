@@ -159,7 +159,7 @@ definition {
 	}
 
 	@description = "Bug: LRAC-8268 | Automation ID: LRAC-11511 | Test Summary: Change friendlyURL for workspace"
-	@priority = "5"
+	@priority = "4"
 	test UpdateWorkspaceURLWithFriendlyURL {
 		var currentURL = Navigator.getCurrentURL();
 
@@ -172,17 +172,16 @@ definition {
 		}
 
 		task ("Set friendly URL") {
-			ACWorkspace.setFriendlyURL(urlName = "faro-dev-liferay",
-									friendlyURL = "${extractedAddress}/workspace/faro-dev-liferay");
+			ACWorkspace.setFriendlyURL(
+				friendlyURL = "${extractedAddress}/workspace/faro-dev-liferay",
+				urlName = "faro-dev-liferay");
 
 			ACUtils.waitForLoading();
 		}
 
 		task ("Assert friendly URL being apply to workspace url") {
-
 			Navigator.openSpecificURL(url = "${extractedAddress}/workspace/faro-dev-liferay/sites");
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9146 | Test Summary: Timezones are sorted in an increasing fashion"

@@ -92,6 +92,8 @@ definition {
 			locator1 = "AccountUsers#SELECT_AN_ACCOUNT_CHOOSE_BUTTON",
 			value1 = "Choose");
 
+		SelectFrameTop();
+
 		Button.clickSave();
 
 		AccountUsers.openAccountUsersAdmin();

@@ -58,7 +58,7 @@ public class PlacedOrderAddressDTOConverter
 
 		Locale locale = dtoConverterContext.getLocale();
 
-		PlacedOrderAddress address = new PlacedOrderAddress() {
+		PlacedOrderAddress placedOrderAddress = new PlacedOrderAddress() {
 			{
 				city = commerceAddress.getCity();
 				country = addressCountry.getTitle(locale);
@@ -78,11 +78,12 @@ public class PlacedOrderAddressDTOConverter
 		};
 
 		if (addressRegion != null) {
-			address.setRegion(addressRegion.getName());
-			address.setRegionISOCode(_getRegionISOCode(addressRegion));
+			placedOrderAddress.setRegion(addressRegion.getName());
+			placedOrderAddress.setRegionISOCode(
+				_getRegionISOCode(addressRegion));
 		}
 
-		return address;
+		return placedOrderAddress;
 	}
 
 	private String _getRegionISOCode(Region region) {

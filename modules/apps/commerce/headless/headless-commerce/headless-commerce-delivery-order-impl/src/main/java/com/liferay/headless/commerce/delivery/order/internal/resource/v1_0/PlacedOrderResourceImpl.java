@@ -119,8 +119,6 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 		sb.append(CommercePaymentConstants.SERVLET_PATH);
 		sb.append("?groupId=");
 		sb.append(commerceOrder.getGroupId());
-		sb.append("&uuid=");
-		sb.append(commerceOrder.getUuid());
 		sb.append(StringPool.AMPERSAND);
 
 		if (commerceOrder.isGuestOrder()) {
@@ -145,6 +143,9 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 				URLCodec.encodeURL(
 					_getPlacedOrderConfirmationCheckoutStepURL(commerceOrder)));
 		}
+
+		sb.append("&uuid=");
+		sb.append(commerceOrder.getUuid());
 
 		return sb.toString();
 	}

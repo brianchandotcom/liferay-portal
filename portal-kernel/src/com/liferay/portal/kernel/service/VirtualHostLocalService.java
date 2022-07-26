@@ -288,6 +288,10 @@ public interface VirtualHostLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getVirtualHostsCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getVirtualHostsCount(
+		long excludedLayoutSetId, String[] virtualHostNames);
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 #updateVirtualHosts(long, long, TreeMap)}

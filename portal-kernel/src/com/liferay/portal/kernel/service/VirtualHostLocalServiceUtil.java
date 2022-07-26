@@ -319,6 +319,13 @@ public class VirtualHostLocalServiceUtil {
 		return getService().getVirtualHostsCount();
 	}
 
+	public static long getVirtualHostsCount(
+		long excludedLayoutSetId, String[] virtualHostNames) {
+
+		return getService().getVirtualHostsCount(
+			excludedLayoutSetId, virtualHostNames);
+	}
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 #updateVirtualHosts(long, long, TreeMap)}

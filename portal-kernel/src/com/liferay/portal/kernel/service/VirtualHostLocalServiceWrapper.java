@@ -349,6 +349,14 @@ public class VirtualHostLocalServiceWrapper
 		return _virtualHostLocalService.getVirtualHostsCount();
 	}
 
+	@Override
+	public long getVirtualHostsCount(
+		long excludedLayoutSetId, String[] virtualHostNames) {
+
+		return _virtualHostLocalService.getVirtualHostsCount(
+			excludedLayoutSetId, virtualHostNames);
+	}
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 #updateVirtualHosts(long, long, TreeMap)}

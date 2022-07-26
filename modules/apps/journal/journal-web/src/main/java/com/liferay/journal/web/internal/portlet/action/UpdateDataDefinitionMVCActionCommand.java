@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.persistence.JournalArticlePersistence;
+import com.liferay.journal.service.persistence.JournalArticleUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -143,7 +143,9 @@ public class UpdateDataDefinitionMVCActionCommand
 					ddmStructure.getGroupId(), ddmStructure.getStructureKey(),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-			_journalArticlePersistence.clearCache(articles);
+			for (JournalArticle journalArticle : articles) {
+				JournalArticleUtil.clearCache(journalArticle);
+			}
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -163,8 +165,5 @@ public class UpdateDataDefinitionMVCActionCommand
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Reference
-	private JournalArticlePersistence _journalArticlePersistence;
 
 }

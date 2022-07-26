@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -161,6 +162,27 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 	}
 
 	@Test
+	public void testShouldReturnManagedAccountEntriesWithManageAvailableAccountsPermission()
+		throws Exception {
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			role, PortletKeys.PORTAL, ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			ActionKeys.MANAGE_AVAILABLE_ACCOUNTS);
+
+		_userLocalService.addRoleUser(role.getRoleId(), _user);
+
+		_userLocalService.addOrganizationUser(
+			_organization.getOrganizationId(), _user);
+
+		_assertSearch(
+			_organizationAccountEntries.get(_organization),
+			_organizationAccountEntries.get(_suborganization));
+	}
+
+	@Test
 	public void testShouldReturnNoAccountEntriesWithoutManageAccountsPermission()
 		throws Exception {
 
@@ -270,6 +292,12 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 		return _roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, RandomTestUtil.randomString(),
 			null, null, RoleConstants.TYPE_ORGANIZATION, null, null);
+	}
+
+	private void _assertSearch(AccountEntry... expectedAccountEntries)
+		throws Exception {
+
+		_assertSearch(Arrays.asList(expectedAccountEntries));
 	}
 
 	private void _assertSearch(List<AccountEntry> expectedAccountEntries)

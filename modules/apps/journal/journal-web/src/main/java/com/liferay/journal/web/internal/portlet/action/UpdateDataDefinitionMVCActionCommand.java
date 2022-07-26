@@ -19,15 +19,11 @@ import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.resource.exception.DataDefinitionValidationException;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.persistence.JournalArticleUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -126,34 +122,21 @@ public class UpdateDataDefinitionMVCActionCommand
 		dataDefinition.setDescription(
 			LocalizedValueUtil.toStringObjectMap(descriptionMap));
 
-		_clearCache(dataDefinitionId);
+		_clearCache(structureKey);
 
 		dataDefinitionResource.putDataDefinition(
 			dataDefinitionId, dataDefinition);
 	}
 
-	private void _clearCache(long dataDefinitionId) {
-		try {
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.getDDMStructure(dataDefinitionId);
+	private void _clearCache(String ddmStructureKey) {
+		List<JournalArticle> articles =
+			_journalArticleLocalService.getStructureArticles(
+				new String[] {ddmStructureKey});
 
-			List<JournalArticle> articles =
-				_journalArticleLocalService.getStructureArticles(
-					new String[] {ddmStructure.getStructureKey()});
-
-			for (JournalArticle journalArticle : articles) {
-				JournalArticleUtil.clearCache(journalArticle);
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
+		for (JournalArticle journalArticle : articles) {
+			JournalArticleUtil.clearCache(journalArticle);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpdateDataDefinitionMVCActionCommand.class);
 
 	@Reference
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;

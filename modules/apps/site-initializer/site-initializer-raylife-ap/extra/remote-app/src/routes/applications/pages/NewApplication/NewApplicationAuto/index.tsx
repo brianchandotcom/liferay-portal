@@ -263,15 +263,29 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 							</ClayButton>
 						)}
 
-						<ClayButton
-							className="text-uppercase"
-							disabled={!state.isAbleToNextStep}
-							displayType="primary"
-							onClick={(event) => handleNextClick(event)}
-							small={true}
-						>
-							Next
-						</ClayButton>
+						{state.currentStep <= 2 && (
+							<ClayButton
+								className="text-uppercase"
+								disabled={!state.isAbleToNextStep}
+								displayType="primary"
+								onClick={(event) => handleNextClick(event)}
+								small={true}
+							>
+								Next
+							</ClayButton>
+						)}
+
+						{state.currentStep === 3 && (
+							<ClayButton
+								className="text-uppercase"
+								disabled={!state.isAbleToNextStep}
+								displayType="primary"
+								onClick={(event) => handleNextClick(event)}
+								small={true}
+							>
+								Review Quote
+							</ClayButton>
+						)}
 					</div>
 				</div>
 			</div>

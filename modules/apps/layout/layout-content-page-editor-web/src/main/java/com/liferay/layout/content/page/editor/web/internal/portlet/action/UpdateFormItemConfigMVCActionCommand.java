@@ -102,10 +102,64 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
-			_updateFormItemConfig(actionRequest, actionResponse));
+			_updateFormStyledLayoutStructureItemConfig(
+				actionRequest, actionResponse));
 	}
 
-	private List<FragmentEntryLink> _addFormChildrenItems(
+	private FragmentEntryLink _addFragmentEntryLink(
+			String formItemId, FragmentEntry fragmentEntry,
+			InfoField<?> infoField, LayoutStructure layoutStructure,
+			long segmentsExperienceId, ServiceContext serviceContext,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				themeDisplay.getScopeGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
+				themeDisplay.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				serviceContext);
+
+		if (infoField != null) {
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			if (Validator.isNotNull(fragmentEntryLink.getEditableValues())) {
+				editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
+			}
+
+			JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+			if (jsonObject == null) {
+				jsonObject = JSONFactoryUtil.createJSONObject();
+
+				editableValuesJSONObject.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					jsonObject);
+			}
+
+			jsonObject.put("inputFieldId", infoField.getUniqueId());
+
+			fragmentEntryLink =
+				_fragmentEntryLinkService.updateFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId(),
+					editableValuesJSONObject.toString());
+		}
+
+		layoutStructure.addFragmentStyledLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(), formItemId, -1);
+
+		return fragmentEntryLink;
+	}
+
+	private List<FragmentEntryLink> _addFragmentEntryLinks(
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			HttpServletRequest httpServletRequest, JSONObject jsonObject,
 			LayoutStructure layoutStructure, long segmentsExperienceId,
@@ -186,59 +240,6 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		return addedFragmentEntryLinks;
 	}
 
-	private FragmentEntryLink _addFragmentEntryLink(
-			String formItemId, FragmentEntry fragmentEntry,
-			InfoField<?> infoField, LayoutStructure layoutStructure,
-			long segmentsExperienceId, ServiceContext serviceContext,
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkService.addFragmentEntryLink(
-				themeDisplay.getScopeGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
-				themeDisplay.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
-				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
-				serviceContext);
-
-		if (infoField != null) {
-			JSONObject editableValuesJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			if (Validator.isNotNull(fragmentEntryLink.getEditableValues())) {
-				editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues());
-			}
-
-			JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-			if (jsonObject == null) {
-				jsonObject = JSONFactoryUtil.createJSONObject();
-
-				editableValuesJSONObject.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					jsonObject);
-			}
-
-			jsonObject.put("inputFieldId", infoField.getUniqueId());
-
-			fragmentEntryLink =
-				_fragmentEntryLinkService.updateFragmentEntryLink(
-					fragmentEntryLink.getFragmentEntryLinkId(),
-					editableValuesJSONObject.toString());
-		}
-
-		layoutStructure.addFragmentStyledLayoutStructureItem(
-			fragmentEntryLink.getFragmentEntryLinkId(), formItemId, -1);
-
-		return fragmentEntryLink;
-	}
-
 	private List<InfoField<?>> _getEditableInfoFields(
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			long groupId)
@@ -316,18 +317,18 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		return null;
 	}
 
-	private JSONArray _removeFormChildrenItems(
-		LayoutStructure layoutStructure, List<String> childrenItemIdsToRemove) {
+	private JSONArray _removeLayoutStructureItems(
+		LayoutStructure layoutStructure, List<String> itemIds) {
 
 		JSONArray fragmentEntryLinkIdsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
-		for (String childItemId : childrenItemIdsToRemove) {
+		for (String itemId : itemIds) {
 			layoutStructure.markLayoutStructureItemForDeletion(
-				childItemId, Collections.emptyList());
+				itemId, Collections.emptyList());
 
 			LayoutStructureItem removedLayoutStructureItem =
-				layoutStructure.getLayoutStructureItem(childItemId);
+				layoutStructure.getLayoutStructureItem(itemId);
 
 			if (removedLayoutStructureItem instanceof
 					FragmentStyledLayoutStructureItem) {
@@ -347,7 +348,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		return fragmentEntryLinkIdsJSONArray;
 	}
 
-	private JSONObject _updateFormItemConfig(
+	private JSONObject _updateFormStyledLayoutStructureItemConfig(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -393,14 +394,16 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 					previousFormStyledLayoutStructureItem.getClassNameId(),
 					formStyledLayoutStructureItem.getClassTypeId())) {
 
-				removedLayoutStructureItemsJSONArray = _removeFormChildrenItems(
-					layoutStructure,
-					ListUtil.copy(
-						formStyledLayoutStructureItem.getChildrenItemIds()));
+				removedLayoutStructureItemsJSONArray =
+					_removeLayoutStructureItems(
+						layoutStructure,
+						ListUtil.copy(
+							formStyledLayoutStructureItem.
+								getChildrenItemIds()));
 
 				if (formStyledLayoutStructureItem.getClassNameId() > 0) {
 					addedFragmentEntryLinks.addAll(
-						_addFormChildrenItems(
+						_addFragmentEntryLinks(
 							formStyledLayoutStructureItem, httpServletRequest,
 							jsonObject, layoutStructure, segmentsExperienceId,
 							themeDisplay));

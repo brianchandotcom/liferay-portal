@@ -42,7 +42,7 @@ public class MBSuspiciousActivityLocalServiceImpl
 
 	@Override
 	public MBSuspiciousActivity addOrUpdateSuspiciousActivityByMessage(
-		 long messageId, String reason, long userId)
+			long messageId, String reason, long userId)
 		throws PortalException {
 
 		MBSuspiciousActivity suspiciousActivity =
@@ -78,10 +78,9 @@ public class MBSuspiciousActivityLocalServiceImpl
 			suspiciousActivity);
 	}
 
-
 	@Override
 	public MBSuspiciousActivity addOrUpdateSuspiciousActivityByThread(
-		String reason, long threadId, long userId)
+			String reason, long threadId, long userId)
 		throws PortalException {
 
 		MBSuspiciousActivity suspiciousActivity =
@@ -93,8 +92,7 @@ public class MBSuspiciousActivityLocalServiceImpl
 			suspiciousActivity = mbSuspiciousActivityPersistence.create(
 				suspiciousActivityId);
 
-			MBThread thread = _mbThreadPersistence.findByPrimaryKey(
-				threadId);
+			MBThread thread = _mbThreadPersistence.findByPrimaryKey(threadId);
 
 			suspiciousActivity.setGroupId(thread.getGroupId());
 

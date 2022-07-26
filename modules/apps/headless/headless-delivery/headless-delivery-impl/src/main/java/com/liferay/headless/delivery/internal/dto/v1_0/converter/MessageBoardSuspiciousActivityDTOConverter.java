@@ -55,10 +55,10 @@ public class MessageBoardSuspiciousActivityDTOConverter
 				createDate = mbSuspiciousActivity.getCreateDate();
 				messageId = mbSuspiciousActivity.getMessageId();
 				modifiedDate = mbSuspiciousActivity.getModifiedDate();
+				reason = mbSuspiciousActivity.getReason();
 				suspiciousActivityId =
 					mbSuspiciousActivity.getSuspiciousActivityId();
 				threadId = mbSuspiciousActivity.getThreadId();
-				reason = mbSuspiciousActivity.getReason();
 				userId = mbSuspiciousActivity.getUserId();
 				validated = mbSuspiciousActivity.getValidated();
 			}

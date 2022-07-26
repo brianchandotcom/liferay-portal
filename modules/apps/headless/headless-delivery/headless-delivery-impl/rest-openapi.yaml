@@ -2860,6 +2860,10 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                reason:
+                    description:
+                        The reason of report.
+                    type: string
                 suspiciousActivityId:
                     description:
                         The ID of the Suspicious Activity reported.
@@ -2870,10 +2874,6 @@ components:
                         The ID of the Message Board thread reported.
                     format: int64
                     type: integer
-                reason:
-                    description:
-                        The reason of report.
-                    type: string
                 userId:
                     description:
                         The ID of the user reported the message.

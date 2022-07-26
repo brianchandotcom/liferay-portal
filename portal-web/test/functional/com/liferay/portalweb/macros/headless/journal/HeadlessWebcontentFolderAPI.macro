@@ -54,7 +54,7 @@ definition {
 			var api = "asset-libraries/${assetLibraryId}/structured-content-folders";
 		}
 		else {
-			var api = "sites/${siteId}/structured-contents-folders";
+			var api = "sites/${siteId}/structured-content-folders";
 		}
 
 		var curl = '''
@@ -198,6 +198,23 @@ definition {
 		TestUtils.assertEquals(
 			actual = "${actualNumbers}",
 			expected = "${expectedNumbers}");
+	}
+
+	macro createStructuredContentFolder {
+		Variables.assertDefined(parameterList = "${groupName},${name}");
+
+		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+
+		var response = HeadlessWebcontentFolderAPI._addWebcontentFolder(
+			description = "${description}",
+			externalReferenceCode = "${externalReferenceCode}",
+			name = "${name}",
+			siteId = "${siteId}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}",
+			viewableBy = "${viewableBy}");
+
+		return "${response}";
 	}
 
 	macro createStructuredContentFolderInAssetLibrary {

@@ -2849,10 +2849,6 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
-                description:
-                    description:
-                        Description of the suspicious activity resported.
-                    type: string
                 messageId:
                     description:
                         The ID of the Message Board Message reported.
@@ -2874,9 +2870,9 @@ components:
                         The ID of the Message Board thread reported.
                     format: int64
                     type: integer
-                type:
+                reason:
                     description:
-                        The type of report.
+                        The reason of report.
                     type: string
                 userId:
                     description:

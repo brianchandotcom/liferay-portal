@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
- * @author Felipe VelosoS
+ * @author Felipe Veloso
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/message-board-suspicious-activity.properties",
@@ -140,8 +140,7 @@ public class MessageBoardSuspiciousActivityResourceImpl
 		mbSuspiciousActivity.add(
 			_mbSuspiciousActivityService.addOrUpdateSuspiciousActivityByMessage(
 				messageBoardMessageId,
-				messageBoardSuspiciousActivity.getDescription(),
-				messageBoardSuspiciousActivity.getType()));
+				messageBoardSuspiciousActivity.getReason()));
 
 		return Page.of(
 			TransformUtil.transform(
@@ -159,9 +158,8 @@ public class MessageBoardSuspiciousActivityResourceImpl
 
 		mbSuspiciousActivity.add(
 			_mbSuspiciousActivityService.addOrUpdateSuspiciousActivityByThread(
-				messageBoardThreadId,
-				messageBoardSuspiciousActivity.getDescription(),
-				messageBoardSuspiciousActivity.getType()));
+				messageBoardSuspiciousActivity.getReason(),
+				messageBoardThreadId));
 
 		List<MessageBoardSuspiciousActivity> messageBoardSuspiciousActivities =
 			TransformUtil.transform(

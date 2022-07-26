@@ -53,13 +53,12 @@ public class MessageBoardSuspiciousActivityDTOConverter
 		return new MessageBoardSuspiciousActivity() {
 			{
 				createDate = mbSuspiciousActivity.getCreateDate();
-				description = mbSuspiciousActivity.getDescription();
 				messageId = mbSuspiciousActivity.getMessageId();
 				modifiedDate = mbSuspiciousActivity.getModifiedDate();
 				suspiciousActivityId =
 					mbSuspiciousActivity.getSuspiciousActivityId();
 				threadId = mbSuspiciousActivity.getThreadId();
-				type = mbSuspiciousActivity.getType();
+				reason = mbSuspiciousActivity.getReason();
 				userId = mbSuspiciousActivity.getUserId();
 				validated = mbSuspiciousActivity.getValidated();
 			}

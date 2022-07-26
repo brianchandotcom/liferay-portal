@@ -102,14 +102,16 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
-			_updateFormItemConfig(actionRequest, actionResponse));
+			_updateFormStyledLayoutStructureItemConfig(
+				actionRequest, actionResponse));
 	}
 
-	private List<FragmentEntryLink> _addFormChildrenItems(
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-			HttpServletRequest httpServletRequest, JSONObject jsonObject,
-			LayoutStructure layoutStructure, long segmentsExperienceId,
-			ThemeDisplay themeDisplay)
+	private List<FragmentEntryLink>
+			_addFormStyledLayoutStructureItemChildrenItems(
+				FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+				HttpServletRequest httpServletRequest, JSONObject jsonObject,
+				LayoutStructure layoutStructure, long segmentsExperienceId,
+				ThemeDisplay themeDisplay)
 		throws Exception {
 
 		FragmentCollectionContributor fragmentCollectionContributor =
@@ -316,7 +318,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		return null;
 	}
 
-	private JSONArray _removeFormChildrenItems(
+	private JSONArray _removeFormStyledLayoutStructureItemChildrenItems(
 		LayoutStructure layoutStructure, List<String> childrenItemIdsToRemove) {
 
 		JSONArray fragmentEntryLinkIdsJSONArray =
@@ -347,7 +349,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		return fragmentEntryLinkIdsJSONArray;
 	}
 
-	private JSONObject _updateFormItemConfig(
+	private JSONObject _updateFormStyledLayoutStructureItemConfig(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -393,14 +395,16 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 					previousFormStyledLayoutStructureItem.getClassNameId(),
 					formStyledLayoutStructureItem.getClassTypeId())) {
 
-				removedLayoutStructureItemsJSONArray = _removeFormChildrenItems(
-					layoutStructure,
-					ListUtil.copy(
-						formStyledLayoutStructureItem.getChildrenItemIds()));
+				removedLayoutStructureItemsJSONArray =
+					_removeFormStyledLayoutStructureItemChildrenItems(
+						layoutStructure,
+						ListUtil.copy(
+							formStyledLayoutStructureItem.
+								getChildrenItemIds()));
 
 				if (formStyledLayoutStructureItem.getClassNameId() > 0) {
 					addedFragmentEntryLinks.addAll(
-						_addFormChildrenItems(
+						_addFormStyledLayoutStructureItemChildrenItems(
 							formStyledLayoutStructureItem, httpServletRequest,
 							jsonObject, layoutStructure, segmentsExperienceId,
 							themeDisplay));

@@ -130,13 +130,8 @@ public class UpgradeProcessFactory {
 
 		String callerClassName = thread.getStackTrace()[3].getClassName();
 
-		String tableInfo = StringPool.BLANK;
-
-		if (tableName != null) {
-			tableInfo = "Modifying table " + tableName + " to ";
-		}
-
-		return StringBundler.concat(callerClassName, " - ", tableInfo, message);
+		return StringBundler.concat(
+			callerClassName, " - Modifying table ", tableName, " to ", message);
 	}
 
 }

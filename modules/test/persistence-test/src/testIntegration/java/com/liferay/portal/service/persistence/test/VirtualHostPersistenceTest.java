@@ -190,6 +190,24 @@ public class VirtualHostPersistenceTest {
 	}
 
 	@Test
+	public void testCountByNotL_H() throws Exception {
+		_persistence.countByNotL_H(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByNotL_H(0L, "null");
+
+		_persistence.countByNotL_H(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByNotL_HArrayable() throws Exception {
+		_persistence.countByNotL_H(
+			RandomTestUtil.nextLong(),
+			new String[] {
+				RandomTestUtil.randomString(), "", "null", null, null
+			});
+	}
+
+	@Test
 	public void testCountByC_L_D() throws Exception {
 		_persistence.countByC_L_D(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

@@ -609,6 +609,7 @@ create index IX_30C7B8AD on VirtualHost (companyId, ctCollectionId);
 create index IX_741D01F2 on VirtualHost (companyId, layoutSetId, ctCollectionId);
 create index IX_6A3E4238 on VirtualHost (companyId, layoutSetId, defaultVirtualHost, ctCollectionId);
 create unique index IX_76A64FBE on VirtualHost (hostname[$COLUMN_LENGTH:200$], ctCollectionId);
+create index IX_1079582F on VirtualHost (layoutSetId, hostname[$COLUMN_LENGTH:200$], ctCollectionId);
 
 create unique index IX_97DFA146 on WebDAVProps (classNameId, classPK);
 

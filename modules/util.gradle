@@ -169,17 +169,18 @@ wrapperPortal {
 		ant.replace(
 			failOnNoReplacements: true,
 			file: gradlewFile,
-			token: '# Escape application args',
+			token: '# Use the maximum available, or set MAX_FD != -1 to use that value.',
 			value: '''\
-# Escape application args
-DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS \\\"-Dgradle.user.home=$APP_HOME/.gradle\\\""'''
+DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS \\\"-Dgradle.user.home=$APP_HOME/.gradle\\\""
+
+# Use the maximum available, or set MAX_FD != -1 to use that value.'''
 		)
 
 		ant.replace(
 			failOnNoReplacements: true,
 			file: gradlewFile,
-			token: 'org.gradle.wrapper.GradleWrapperMain "$APP_ARGS"',
-			value: 'org.gradle.wrapper.GradleWrapperMain "--init-script=$APP_HOME/modules/init.gradle" "$APP_ARGS"'
+			token: 'org.gradle.wrapper.GradleWrapperMain ',
+			value: 'org.gradle.wrapper.GradleWrapperMain "--init-script=$APP_HOME/modules/init.gradle" '
 		)
 
 		File gradlewBatFile = new File(wrapperDir, "gradlew.bat")
@@ -227,10 +228,11 @@ wrapperSubrepo {
 		ant.replace(
 			failOnNoReplacements: true,
 			file: gradlewFile,
-			token: '# Escape application args',
+			token: '# Use the maximum available, or set MAX_FD != -1 to use that value.',
 			value: '''\
-# Escape application args
-DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS \\\"-Dgradle.user.home=$APP_HOME/.gradle\\\""'''
+DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS \\\"-Dgradle.user.home=$APP_HOME/.gradle\\\""
+
+# Use the maximum available, or set MAX_FD != -1 to use that value.'''
 		)
 
 		File gradlewBatFile = new File(wrapperDir, "gradlew.bat")

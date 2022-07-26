@@ -126,7 +126,8 @@ public class EntityExtensionTest {
 		Assert.assertEquals(
 			200, _getResponseCode("http://localhost:8080/o/test-vulcan/test"));
 
-		Assert.assertEquals(usersCount + 1, UserLocalServiceUtil.getUsersCount());
+		Assert.assertEquals(
+			usersCount + 1, UserLocalServiceUtil.getUsersCount());
 	}
 
 	@Test
@@ -245,7 +246,8 @@ public class EntityExtensionTest {
 			return HashMapBuilder.<String, PropertyDefinition>put(
 				_propertyName,
 				new PropertyDefinition(
-					_propertyName, PropertyDefinition.PropertyType.TEXT, false)
+					_propertyName, _propertyName,
+					PropertyDefinition.PropertyType.TEXT, false)
 			).build();
 		}
 

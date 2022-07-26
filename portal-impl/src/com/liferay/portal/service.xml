@@ -2952,6 +2952,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="layoutSetId" />
 		</finder>
+		<finder name="NotL_H" return-type="Collection">
+			<finder-column comparator="!=" name="layoutSetId" />
+			<finder-column arrayable-operator="OR" name="hostname" />
+		</finder>
 		<finder name="C_L_D" return-type="VirtualHost">
 			<finder-column name="companyId" />
 			<finder-column name="layoutSetId" />

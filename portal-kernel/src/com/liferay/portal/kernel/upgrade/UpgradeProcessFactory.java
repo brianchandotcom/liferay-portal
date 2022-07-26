@@ -83,30 +83,6 @@ public class UpgradeProcessFactory {
 		};
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #alterColumnType(String, String, String)}
-	 */
-	@Deprecated
-	public static UpgradeProcess alterColumnTypes(
-		String tableName, String newType, String... columnNames) {
-
-		return new UpgradeProcess(
-			_getUpgradeInfo(
-				tableName,
-				StringBundler.concat(
-					"alter the type of the columns ",
-					Arrays.toString(columnNames), " to ", newType))) {
-
-			@Override
-			protected void doUpgrade() throws Exception {
-				for (String columnName : columnNames) {
-					alterColumnType(tableName, columnName, newType);
-				}
-			}
-
-		};
-	}
-
 	public static UpgradeProcess dropColumns(
 		String tableName, String... columnNames) {
 

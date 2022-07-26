@@ -1613,7 +1613,7 @@ definition {
 				textInput = "site-name");
 
 			ACSegments.viewAutocompleteSuggestions(
-				autocompleteText = "${myUrl}",
+				autocompleteText = "${myURL}",
 				notPresent = "home");
 		}
 

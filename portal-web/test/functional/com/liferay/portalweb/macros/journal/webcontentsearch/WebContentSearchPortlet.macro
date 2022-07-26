@@ -2,12 +2,11 @@ definition {
 
 	macro search {
 		Type(
-			locator1 = "TextInput#SEARCH_2",
+			inputFieldId = "JournalContentSearchPortlet_keywords",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "${webContentSearchTerm}");
 
-		AssertClick(
-			locator1 = "Button#SEARCH",
-			value1 = "Search");
+		Click(locator1 = "Button#SEARCH");
 	}
 
 	macro viewNoResults {

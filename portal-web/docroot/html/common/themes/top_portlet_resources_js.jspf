@@ -30,7 +30,7 @@
 
 	<%
 	for (String url : urls) {
-		PortletPathsUtil.writeJavaScriptPath(out, url, Collections.singletonMap("data-senna-track", "temporary"));
+		PortletRenderUtil.writeJavaScriptPath(out, url, Collections.singletonMap("data-senna-track", "temporary"));
 	}
 	%>
 

@@ -30,7 +30,7 @@
 
 	<%
 	for (String url : urls) {
-		PortletPathsUtil.writeJavaScriptPath(out, url, null);
+		PortletRenderUtil.writeJavaScriptPath(out, url, null);
 	}
 	%>
 

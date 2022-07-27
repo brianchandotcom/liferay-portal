@@ -29,12 +29,13 @@ import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletParameterUtil;
-import com.liferay.portal.kernel.portlet.PortletPathsUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.portlet.constants.PortletPreferencesFactoryConstants;
+import com.liferay.portal.kernel.portlet.render.PortletRenderParts;
+import com.liferay.portal.kernel.portlet.render.PortletRenderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
@@ -302,7 +303,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			httpServletRequest.setAttribute(
 				WebKeys.SETTINGS_SCOPE, settingsScope);
 
-			Map<String, Object> paths = null;
+			PortletRenderParts portletRenderParts = null;
 
 			boolean writeObject = false;
 
@@ -352,12 +353,13 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			}
 
 			if (writeObject) {
-				paths = PortletPathsUtil.getPortletPaths(
+				portletRenderParts = PortletRenderUtil.getPortletRenderParts(
 					httpServletRequest, StringPool.BLANK, portlet);
 			}
 
-			if (paths != null) {
-				PortletPathsUtil.writeHeaderPaths(httpServletResponse, paths);
+			if (portletRenderParts != null) {
+				PortletRenderUtil.writeHeaderPaths(
+					httpServletResponse, portletRenderParts);
 			}
 
 			embeddedPortletIds.push(rootPortletId);
@@ -380,8 +382,9 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 
 			embeddedPortletIds.pop();
 
-			if (paths != null) {
-				PortletPathsUtil.writeFooterPaths(httpServletResponse, paths);
+			if (portletRenderParts != null) {
+				PortletRenderUtil.writeFooterPaths(
+					httpServletResponse, portletRenderParts);
 			}
 		}
 		finally {

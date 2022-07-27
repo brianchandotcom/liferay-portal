@@ -21,16 +21,17 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
-import com.liferay.portal.kernel.portlet.PortletPathsUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.render.PortletRenderParts;
+import com.liferay.portal.kernel.portlet.render.PortletRenderUtil;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -57,9 +58,6 @@ import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
-
-import java.util.Collection;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -292,8 +290,6 @@ public class UpdateLayoutAction extends JSONAction {
 			ParamUtil.getString(httpServletRequest, "dataType"));
 
 		if (dataType.equals("json")) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 			BufferCacheServletResponse bufferCacheServletResponse =
 				new BufferCacheServletResponse(httpServletResponse);
 
@@ -304,22 +300,25 @@ public class UpdateLayoutAction extends JSONAction {
 
 			portletHTML = portletHTML.trim();
 
-			Map<String, Object> paths = PortletPathsUtil.getPortletPaths(
-				httpServletRequest, portletHTML, portlet);
+			PortletRenderParts portletRenderParts =
+				PortletRenderUtil.getPortletRenderParts(
+					httpServletRequest, portletHTML, portlet);
 
-			for (Map.Entry<String, Object> entry : paths.entrySet()) {
-				Object value = entry.getValue();
-
-				if (value instanceof Collection) {
-					jsonObject.put(
-						entry.getKey(),
-						JSONFactoryUtil.createJSONArray(
-							(Collection<String>)value));
-				}
-				else {
-					jsonObject.put(entry.getKey(), value);
-				}
-			}
+			JSONObject jsonObject = JSONUtil.put(
+				"footerCssPaths", portletRenderParts.getFooterCssPaths()
+			).put(
+				"footerJavaScriptPaths",
+				portletRenderParts.getFooterJavaScriptPaths()
+			).put(
+				"headerCssPaths", portletRenderParts.getHeaderCssPaths()
+			).put(
+				"headerJavaScriptPaths",
+				portletRenderParts.getHeaderJavaScriptPaths()
+			).put(
+				"portletHTML", portletRenderParts.getPortletHTML()
+			).put(
+				"refresh", portletRenderParts.isRefresh()
+			);
 
 			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 

@@ -73,6 +73,28 @@ definition {
 		return "${response}";
 	}
 
+	macro _assertResponseHasCorrectStructuredContentFolderId {
+		var structuredContentFolderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+			element = "$.id",
+			responseToParse = "${response}");
+		var actualStructuredContentFolderId = JSONUtil.getWithJSONPath("${responseToParse}", "$.id");
+
+		TestUtils.assertEquals(
+			actual = "${actualStructuredContentFolderId}",
+			expected = "${structuredContentFolderId}");
+	}
+
+	macro _assertResponseHasCorrectStructuredContentFolderName {
+		var structuredContentFolderName = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+			element = "$.name",
+			responseToParse = "${response}");
+		var actualStructuredContentFolderName = JSONUtil.getWithJSONPath("${responseToParse}", "$.name");
+
+		TestUtils.assertEquals(
+			actual = "${actualStructuredContentFolderName}",
+			expected = "${structuredContentFolderName}");
+	}
+
 	macro _deleteStructuredContentFolderByErc {
 		Variables.assertDefined(parameterList = "${externalReferenceCode}");
 
@@ -229,38 +251,16 @@ definition {
 			expectedExternalReferenceCodeValue = "${expectedExternalReferenceCodeValue}",
 			responseToParse = "${responseFromGet}");
 
-		HeadlessWebcontentFolderAPI.assertResponseHasCorrectStructuredContentFolderId(
+		HeadlessWebcontentFolderAPI._assertResponseHasCorrectStructuredContentFolderId(
 			response = "${responseFromCreate}",
 			responseToParse = "${responseFromGet}");
 
-		HeadlessWebcontentFolderAPI.assertResponseHasCorrectStructuredContentFolderName(
+		HeadlessWebcontentFolderAPI._assertResponseHasCorrectStructuredContentFolderName(
 			response = "${responseFromCreate}",
 			responseToParse = "${responseFromGet}");
 	}
 
-	macro assertResponseHasCorrectStructuredContentFolderId {
-		var structuredContentFolderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
-			element = "$.id",
-			responseToParse = "${response}");
-		var actualStructuredContentFolderId = JSONUtil.getWithJSONPath("${responseToParse}", "$.id");
-
-		TestUtils.assertEquals(
-			actual = "${actualStructuredContentFolderId}",
-			expected = "${structuredContentFolderId}");
-	}
-
-	macro assertResponseHasCorrectStructuredContentFolderName {
-		var structuredContentFolderName = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
-			element = "$.name",
-			responseToParse = "${response}");
-		var actualStructuredContentFolderName = JSONUtil.getWithJSONPath("${responseToParse}", "$.name");
-
-		TestUtils.assertEquals(
-			actual = "${actualStructuredContentFolderName}",
-			expected = "${structuredContentFolderName}");
-	}
-
-	macro assertStructuredContentFolderHasDeleted {
+	macro assertStructuredContentFolderDeleted {
 		Variables.assertDefined(parameterList = "${expectedValue},${structuredContentFolderId}");
 
 		var responseToParse = HeadlessWebcontentFolderAPI._getStructuredContentFolderById(structuredContentFolderId = "${structuredContentFolderId}");
@@ -272,7 +272,7 @@ definition {
 			expected = "${expectedValue}");
 	}
 
-	macro assertStructuredContentFolderHasUpdated {
+	macro assertStructuredContentFolderUpdated {
 		Variables.assertDefined(parameterList = "${expectedValue},${structuredContentFolderId}");
 
 		var responseToParse = HeadlessWebcontentFolderAPI._getStructuredContentFolderById(structuredContentFolderId = "${structuredContentFolderId}");
@@ -347,7 +347,7 @@ definition {
 			externalReferenceCode = "${externalReferenceCode}");
 	}
 
-	macro deleteWebcontentFolder {
+	macro deleteWebContentFolder {
 		Variables.assertDefined(parameterList = "${externalReferenceCode},${groupName}");
 
 		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
@@ -415,7 +415,7 @@ definition {
 		return "${response}";
 	}
 
-	macro updateWebcontentFolder {
+	macro updateWebContentFolder {
 		Variables.assertDefined(parameterList = "${externalReferenceCode},${groupName},${name}");
 
 		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");

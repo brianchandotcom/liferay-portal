@@ -1197,7 +1197,7 @@ definition {
 		}
 
 		task ("When the first price entry expires and the buyer views the U-Joint product") {
-			while (IsElementPresent(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "20.00") && (maxIterations = "50")) {
+			while (IsElementPresent(key_productName = "U-Joint", key_productPrice = "20.00", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_VALUE") && (maxIterations = "50")) {
 
 				// We need this pause for waiting for the Price List to expire
 
@@ -1215,7 +1215,7 @@ definition {
 		}
 
 		task ("When the second price entry is published and the buyer views the U-Joint product") {
-			while (IsElementPresent(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "24.00") && (maxIterations = "50")) {
+			while (IsElementPresent(key_productName = "U-Joint", key_productPrice = "24.00", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_VALUE") && (maxIterations = "50")) {
 
 				// We need this pause for waiting for the second price entry to be published
 

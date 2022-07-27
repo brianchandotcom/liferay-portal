@@ -92,10 +92,8 @@ public class EditCPDefinitionGroupedEntryMVCActionCommand
 			};
 		}
 		else {
-			deleteCPDefinitionGroupedEntryIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCPDefinitionGroupedEntryIds"),
-				0L);
+			deleteCPDefinitionGroupedEntryIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
 		for (long deleteCPDefinitionGroupedEntryId :

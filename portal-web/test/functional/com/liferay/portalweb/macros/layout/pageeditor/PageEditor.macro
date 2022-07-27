@@ -1355,7 +1355,7 @@ definition {
 				ariaLabel = "Margin Bottom",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-			DropdownMenuItem.click(menuItem = "${marginBottom}");
+			DropdownMenuItem.click(menuItem = "Spacer ${marginBottom}");
 
 			PageEditor.waitForAutoSave();
 		}
@@ -1365,7 +1365,7 @@ definition {
 				ariaLabel = "Margin Left",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-			DropdownMenuItem.click(menuItem = "${marginLeft}");
+			DropdownMenuItem.click(menuItem = "Spacer ${marginLeft}");
 
 			PageEditor.waitForAutoSave();
 		}
@@ -1375,7 +1375,7 @@ definition {
 				ariaLabel = "Margin Right",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-			DropdownMenuItem.click(menuItem = "${marginRight}");
+			DropdownMenuItem.click(menuItem = "Spacer ${marginRight}");
 
 			PageEditor.waitForAutoSave();
 		}
@@ -1385,7 +1385,7 @@ definition {
 				ariaLabel = "Margin Top",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-			DropdownMenuItem.click(menuItem = "${marginTop}");
+			DropdownMenuItem.click(menuItem = "Spacer ${marginTop}");
 
 			PageEditor.waitForAutoSave();
 		}
@@ -1444,7 +1444,7 @@ definition {
 				ariaLabel = "Padding Bottom",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-			DropdownMenuItem.click(menuItem = "${paddingBottom}");
+			DropdownMenuItem.click(menuItem = "Spacer ${paddingBottom}");
 
 			PageEditor.waitForAutoSave();
 		}
@@ -1454,7 +1454,7 @@ definition {
 				ariaLabel = "Padding Left",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-			DropdownMenuItem.click(menuItem = "${paddingLeft}");
+			DropdownMenuItem.click(menuItem = "Spacer ${paddingLeft}");
 
 			PageEditor.waitForAutoSave();
 		}
@@ -1464,7 +1464,7 @@ definition {
 				ariaLabel = "Padding Right",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-			DropdownMenuItem.click(menuItem = "${paddingRight}");
+			DropdownMenuItem.click(menuItem = "Spacer ${paddingRight}");
 
 			PageEditor.waitForAutoSave();
 		}
@@ -1474,7 +1474,7 @@ definition {
 				ariaLabel = "Padding Top",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-			DropdownMenuItem.click(menuItem = "${paddingTop}");
+			DropdownMenuItem.click(menuItem = "Spacer ${paddingTop}");
 
 			PageEditor.waitForAutoSave();
 		}

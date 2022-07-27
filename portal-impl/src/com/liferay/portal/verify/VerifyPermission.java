@@ -244,7 +244,7 @@ public class VerifyPermission extends VerifyProcess {
 				StringBundler.concat(
 					"insert into ", userPagePermissionsTableName,
 					" select resourcePermissionId, primKey, 0 as plidLength, ",
-					"NULL as plidString, 0 as plid, roleId, FALSE as conflict ",
+					"NULL as plidString, 0 as plid, roleId, [$FALSE$] as conflict ",
 					"from ResourcePermission where companyId = ",
 					String.valueOf(companyId),
 					" and primKey LIKE '%_LAYOUT_%' and scope = ",
@@ -309,7 +309,7 @@ public class VerifyPermission extends VerifyProcess {
 			runSQL(
 				StringBundler.concat(
 					"update ", userPagePermissionsTableName,
-					" set conflict = TRUE where exists (select 1 from ",
+					" set conflict = [$TRUE$] where exists (select 1 from ",
 					userPagePermissionsConflictsTableName, " where ",
 					userPagePermissionsTableName, ".primKey = ",
 					userPagePermissionsConflictsTableName, ".primKey)"));
@@ -325,7 +325,7 @@ public class VerifyPermission extends VerifyProcess {
 					"delete from ResourcePermission where ",
 					"resourcePermissionId in (select resourcePermissionId ",
 					"from ", userPagePermissionsTableName,
-					" where conflict = TRUE)"));
+					" where conflict = [$TRUE$])"));
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -339,7 +339,7 @@ public class VerifyPermission extends VerifyProcess {
 					String.valueOf(userRole.getRoleId()),
 					" where resourcePermissionId in (select ",
 					"resourcePermissionId from ", userPagePermissionsTableName,
-					" where conflict = FALSE)"));
+					" where conflict = [$FALSE$])"));
 		}
 	}
 

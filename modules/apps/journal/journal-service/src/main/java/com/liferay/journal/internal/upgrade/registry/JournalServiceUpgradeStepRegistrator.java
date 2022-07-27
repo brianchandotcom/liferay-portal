@@ -342,9 +342,9 @@ public class JournalServiceUpgradeStepRegistrator
 
 		db.runSQL(
 			"delete from Image where imageId IN (SELECT articleImageId FROM " +
-				"JournalArticleImage where tempImage = TRUE)");
+				"JournalArticleImage where tempImage = [$TRUE$])");
 
-		db.runSQL("delete from JournalArticleImage where tempImage = TRUE");
+		db.runSQL("delete from JournalArticleImage where tempImage = [$TRUE$]");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

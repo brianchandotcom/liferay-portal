@@ -16,8 +16,8 @@ import ClayEmptyState from '@clayui/empty-state';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {CONTENT_TYPE_LABELS} from '../../../../../app/config/constants/contentTypeLabels';
-import Collapse from '../../../../../common/components/Collapse';
+import {CONTENT_TYPE_LABELS} from '../../../app/config/constants/contentTypeLabels';
+import Collapse from '../../../common/components/Collapse';
 import PageContent from './PageContent';
 
 export default function ContentList({contents, selectedType}) {

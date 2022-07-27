@@ -18,15 +18,12 @@ import {ImageEditor} from 'item-selector-taglib';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import updatePreviewImage from '../../../../../app/actions/updatePreviewImage';
-import {config} from '../../../../../app/config/index';
-import {
-	useDispatch,
-	useSelector,
-} from '../../../../../app/contexts/StoreContext';
-import selectLanguageId from '../../../../../app/selectors/selectLanguageId';
-import FragmentService from '../../../../../app/services/FragmentService';
-import ImageService from '../../../../../app/services/ImageService';
+import updatePreviewImage from '../../../app/actions/updatePreviewImage';
+import {config} from '../../../app/config/index';
+import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
+import selectLanguageId from '../../../app/selectors/selectLanguageId';
+import FragmentService from '../../../app/services/FragmentService';
+import ImageService from '../../../app/services/ImageService';
 
 export function updateFragmentsPreviewImage({
 	dispatch,

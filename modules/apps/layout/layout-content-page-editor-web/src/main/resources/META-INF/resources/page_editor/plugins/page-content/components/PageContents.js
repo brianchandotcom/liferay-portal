@@ -15,7 +15,7 @@
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
-import {CONTENT_TYPE_LABELS} from '../../../../../app/config/constants/contentTypeLabels';
+import {CONTENT_TYPE_LABELS} from '../../../app/config/constants/contentTypeLabels';
 import ContentFilter from './ContentFilter';
 import ContentList from './ContentList';
 

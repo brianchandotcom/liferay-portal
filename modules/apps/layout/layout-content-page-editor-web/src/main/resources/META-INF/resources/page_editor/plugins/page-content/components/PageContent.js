@@ -20,27 +20,27 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {fromControlsId} from '../../../../../app/components/layout-data-items/Collection';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
-import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
-import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
+import {fromControlsId} from '../../../app/components/layout-data-items/Collection';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
+import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
+import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import {
 	useHoverItem,
 	useHoveredItemId,
 	useSelectItem,
-} from '../../../../../app/contexts/ControlsContext';
+} from '../../../app/contexts/ControlsContext';
 import {
 	useEditableProcessorUniqueId,
 	useSetEditableProcessorUniqueId,
-} from '../../../../../app/contexts/EditableProcessorContext';
+} from '../../../app/contexts/EditableProcessorContext';
 import {
 	useSelector,
 	useSelectorCallback,
-} from '../../../../../app/contexts/StoreContext';
-import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
-import {selectPageContentDropdownItems} from '../../../../../app/selectors/selectPageContentDropdownItems';
-import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
-import getFragmentItem from '../../../../../app/utils/getFragmentItem';
+} from '../../../app/contexts/StoreContext';
+import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEditables';
+import {selectPageContentDropdownItems} from '../../../app/selectors/selectPageContentDropdownItems';
+import getFirstControlsId from '../../../app/utils/getFirstControlsId';
+import getFragmentItem from '../../../app/utils/getFragmentItem';
 import ImageEditorModal from './ImageEditorModal';
 
 export default function PageContent({

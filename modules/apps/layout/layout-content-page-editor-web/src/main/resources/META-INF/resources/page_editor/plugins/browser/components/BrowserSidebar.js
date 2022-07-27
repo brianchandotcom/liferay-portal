@@ -23,7 +23,7 @@ import {
 } from '../../../app/contexts/ControlsContext';
 import {useId} from '../../../app/utils/useId';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import ContentsSidebar from './contents/components/ContentsSidebar';
+import ContentsSidebar from '../../page-content/components/ContentsSidebar';
 import PageStructureSidebar from './page-structure/components/PageStructureSidebar';
 
 const TABS_IDS = {
@@ -65,37 +65,42 @@ export default function BrowserSidebar({title}) {
 		>
 			<SidebarPanelHeader>{title}</SidebarPanelHeader>
 
-			<ClayTabs className="page-editor__sidebar__browser__tabs">
-				{TABS.map((tab, index) => (
-					<ClayTabs.Item
-						active={activeTabId === index}
-						innerProps={{
-							'aria-controls': getTabPanelId(index),
-							'id': getTabId(index),
-						}}
-						key={index}
-						onClick={() => setActiveTabId(index)}
+			{Liferay.FeatureFlags['LPS-153452'] ? (
+				<PageStructureSidebar />
+			) : (
+				<>
+					<ClayTabs className="page-editor__sidebar__browser__tabs">
+						{TABS.map((tab, index) => (
+							<ClayTabs.Item
+								active={activeTabId === index}
+								innerProps={{
+									'aria-controls': getTabPanelId(index),
+									'id': getTabId(index),
+								}}
+								key={index}
+								onClick={() => setActiveTabId(index)}
+							>
+								{tab.label}
+							</ClayTabs.Item>
+						))}
+					</ClayTabs>
+					<ClayTabs.Content
+						activeIndex={activeTabId}
+						className="page-editor__sidebar__browser__tab-content"
+						fade
 					>
-						{tab.label}
-					</ClayTabs.Item>
-				))}
-			</ClayTabs>
-
-			<ClayTabs.Content
-				activeIndex={activeTabId}
-				className="page-editor__sidebar__browser__tab-content"
-				fade
-			>
-				{TABS.map((tab, index) => (
-					<ClayTabs.TabPane
-						aria-labelledby={getTabId(index)}
-						id={getTabPanelId(index)}
-						key={index}
-					>
-						{tab.component}
-					</ClayTabs.TabPane>
-				))}
-			</ClayTabs.Content>
+						{TABS.map((tab, index) => (
+							<ClayTabs.TabPane
+								aria-labelledby={getTabId(index)}
+								id={getTabPanelId(index)}
+								key={index}
+							>
+								{tab.component}
+							</ClayTabs.TabPane>
+						))}
+					</ClayTabs.Content>{' '}
+				</>
+			)}
 		</div>
 	);
 }

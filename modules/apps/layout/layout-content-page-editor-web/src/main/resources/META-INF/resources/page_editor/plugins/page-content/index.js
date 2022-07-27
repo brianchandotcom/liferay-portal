@@ -18,9 +18,9 @@ import {Component} from '../../core/AppContext';
 import ContentsSidebar from './components/ContentsSidebar';
 
 /**
- * Entry-point for "Contents" (sidebar pane) functionality.
+ * Entry-point for "Mapping" (sidebar pane) functionality.
  */
-export default class Contents {
+export default class PageContent {
 	constructor({app, panel}) {
 		this.Component = Component(app);
 		this.title = panel.label;
@@ -31,7 +31,7 @@ export default class Contents {
 
 		return (
 			<Component>
-				<ContentsSidebar title={this.title} />
+				<ContentsSidebar />
 			</Component>
 		);
 	}

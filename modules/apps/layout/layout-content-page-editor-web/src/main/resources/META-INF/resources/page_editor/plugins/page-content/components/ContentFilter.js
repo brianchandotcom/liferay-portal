@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useState} from 'react';
 
-import SearchForm from '../../../../../common/components/SearchForm';
+import SearchForm from '../../../common/components/SearchForm';
 
 export default function ContentFilter({
 	contentTypes,

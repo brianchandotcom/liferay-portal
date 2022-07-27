@@ -78,6 +78,36 @@ definition {
 		}
 	}
 
+	@description = "Existed Structured Content Folder will be updated with custom ERC"
+	@priority = "5"
+	test ExistedStructuredContentFolderWillBeUpdatedWithCustomErc {
+		property portal.acceptance = "true";
+
+		task ("Given a folder with custom ERC") {
+			HeadlessWebcontentFolderAPI.createStructuredContentFolder(
+				externalReferenceCode = "CustomeCode",
+				groupName = "Site Name",
+				name = "Test Folder");
+		}
+
+		task ("When with putSiteStructuredContentFolderByExternalReferenceCode") {
+			var response = HeadlessWebcontentFolderAPI.updateWebcontentFolder(
+				externalReferenceCode = "CustomeCode",
+				groupName = "Site Name",
+				name = "Test Folder Updated");
+		}
+
+		task ("Then the same folder's name is updated in a response body of getStructureContentFolderById") {
+			var structuredContentFolderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+				element = "$.id",
+				responseToParse = "${response}");
+
+			HeadlessWebcontentFolderAPI.assertStructuredContentFolderHasUpdated(
+				expectedValue = "Test Folder Updated",
+				structuredContentFolderId = "${structuredContentFolderId}");
+		}
+	}
+
 	@description = "Not existed Structured Content Folder will be created with custom ERC"
 	@priority = "5"
 	test NotExistedStructuredContentFolderWillBeCreatedWithCustomErc {

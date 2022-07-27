@@ -125,6 +125,15 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 	}
 
 	@Test
+	public void testAddDropZoneFragmentEntryLinks() throws Exception {
+		int numberOfFragmentEntryLinks = RandomTestUtil.randomInt(1, 3);
+
+		_testAddFragmentEntryLinks(
+			"<div><lfr-drop-zone></lfr-drop-zone></div>",
+			numberOfFragmentEntryLinks);
+	}
+
+	@Test
 	public void testAddFragmentEntryLinks() throws Exception {
 		int numberOfFragmentEntryLinks = RandomTestUtil.randomInt(1, 3);
 

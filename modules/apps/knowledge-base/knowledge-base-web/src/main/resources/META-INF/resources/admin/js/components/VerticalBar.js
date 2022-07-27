@@ -17,6 +17,8 @@ import {VerticalBar} from '@clayui/core';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
+import NavigationPanel from './NavigationPanel';
+
 const CSS_EXPANDED = 'expanded';
 
 const VerticalNavigationBar = ({items, parentContainerId}) => {
@@ -33,6 +35,12 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 		else {
 			parentContainer.classList.toggle(CSS_EXPANDED);
 		}
+	};
+
+	const VerticalBarPanels = {
+		article: NavigationPanel,
+		suggestion: NavigationPanel,
+		template: NavigationPanel,
 	};
 
 	return (
@@ -54,15 +62,15 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 			</VerticalBar.Bar>
 
 			<VerticalBar.Content items={items}>
-				{(item) => (
-					<VerticalBar.Panel key={item.key}>
-						<div className="sidebar-header">
-							<div className="component-title">
-								{item.title} Tree View
-							</div>
-						</div>
-					</VerticalBar.Panel>
-				)}
+				{(item) => {
+					const PanelComponent = VerticalBarPanels[item.key];
+
+					return (
+						<VerticalBar.Panel key={item.key}>
+							<PanelComponent />
+						</VerticalBar.Panel>
+					);
+				}}
 			</VerticalBar.Content>
 		</VerticalBar>
 	);

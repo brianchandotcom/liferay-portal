@@ -17,7 +17,7 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
-import {API, FormCustomSelect, Input} from '@liferay/object-js-components-web';
+import {API, Input, SingleSelect} from '@liferay/object-js-components-web';
 import React, {FormEvent, useEffect, useState} from 'react';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
@@ -125,7 +125,7 @@ function ModalAddObjectValidation({
 						value={labelInput[defaultLanguageId]}
 					/>
 
-					<FormCustomSelect<ObjectValidationType>
+					<SingleSelect<ObjectValidationType>
 						error={
 							showError && fieldErrors.typeError !== ''
 								? fieldErrors.typeError

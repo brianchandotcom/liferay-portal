@@ -17,7 +17,7 @@ import {
 	API,
 	AutoComplete,
 	CustomItem,
-	FormCustomSelect,
+	MultipleSelect,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -171,10 +171,9 @@ export function Attachments({setValues, values}: IProps) {
 					</div>
 
 					<div className="lfr__notification-template-attachments-fields">
-						<FormCustomSelect
+						<MultipleSelect
 							disabled={!selectedEntity}
 							label={Liferay.Language.get('field')}
-							multipleChoice
 							options={attachmentsFields}
 							placeholder={Liferay.Language.get('select-a-field')}
 							setOptions={setAttachmentsFields}

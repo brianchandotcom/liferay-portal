@@ -16,9 +16,9 @@ import ClayLabel from '@clayui/label';
 import {
 	API,
 	AutoComplete,
-	FormCustomSelect,
 	FormError,
 	Input,
+	SingleSelect,
 	invalidateRequired,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -199,7 +199,7 @@ export function ObjectRelationshipFormBase({
 				value={values.name}
 			/>
 
-			<FormCustomSelect
+			<SingleSelect
 				disabled={readonly}
 				error={errors.type}
 				label={Liferay.Language.get('type')}

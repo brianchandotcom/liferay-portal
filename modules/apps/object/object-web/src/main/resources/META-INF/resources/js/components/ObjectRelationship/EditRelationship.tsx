@@ -16,10 +16,10 @@ import ClayAlert from '@clayui/alert';
 import {
 	API,
 	Card,
-	FormCustomSelect,
 	Input,
 	InputLocalized,
 	SidePanelForm,
+	SingleSelect,
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
@@ -115,7 +115,7 @@ export default function EditRelationship({
 					values={values}
 				/>
 
-				<FormCustomSelect
+				<SingleSelect
 					disabled={readOnly}
 					label={Liferay.Language.get('deletion-type')}
 					onChange={(deletionType) =>

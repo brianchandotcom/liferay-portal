@@ -18,10 +18,10 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import {
 	API,
 	Card,
-	FormCustomSelect,
 	Input,
 	InputLocalized,
 	RichTextLocalized,
+	SingleSelect,
 	openToast,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -231,7 +231,7 @@ export default function EditNotificationTemplate({
 									value={values.description}
 								/>
 
-								<FormCustomSelect
+								<SingleSelect
 									disabled
 									label={Liferay.Language.get('type')}
 									options={[]}

@@ -22,10 +22,10 @@ import {
 	CodeEditor,
 	CustomItem,
 	ExpressionBuilder,
-	FormCustomSelect,
 	Input,
 	SelectWithOption,
 	SidebarCategory,
+	SingleSelect,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -318,7 +318,7 @@ export default function ActionBuilder({
 					title={Liferay.Language.get('when[object]')}
 					viewMode="inline"
 				>
-					<FormCustomSelect
+					<SingleSelect
 						error={errors.objectActionTriggerKey}
 						onChange={({value}) =>
 							setValues({
@@ -395,7 +395,7 @@ export default function ActionBuilder({
 					viewMode="inline"
 				>
 					<div className="lfr-object__action-builder-then">
-						<FormCustomSelect
+						<SingleSelect
 							error={errors.objectActionExecutorKey}
 							onChange={({value}) => {
 								if (value === 'add-object-entry') {
@@ -471,7 +471,7 @@ export default function ActionBuilder({
 						)}
 
 						{values.objectActionExecutorKey === 'notification' && (
-							<FormCustomSelect<CustomItem<number>>
+							<SingleSelect<CustomItem<number>>
 								className="lfr-object__action-builder-notification-then"
 								error={errors.objectActionExecutorKey}
 								label={Liferay.Language.get('notification')}

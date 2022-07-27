@@ -15,7 +15,7 @@
 import {
 	Card,
 	CustomItem,
-	FormCustomSelect,
+	MultipleSelect,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
@@ -99,9 +99,8 @@ export default function StateDefinition({
 					<label>{Liferay.Language.get('next-status')}</label>
 				)}
 
-				<FormCustomSelect
+				<MultipleSelect
 					disabled={disabled}
-					multipleChoice
 					options={items}
 					selectAllOption
 					setOptions={setItems}

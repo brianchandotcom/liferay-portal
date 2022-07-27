@@ -73,7 +73,9 @@ definition {
 		}
 
 		task ("When the user clicks on the Remove button next to the Payment Method") {
-			Button.clickRemove();
+			Click(
+				key_text = "Remove",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Then the Default Account Commerce Payment Method should be 'Use Priority Settings'") {

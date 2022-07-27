@@ -238,6 +238,8 @@ definition {
 				termsAndConditionName = "Test Terms and Condition",
 				termsAndConditionType = "Payment Terms",
 				valuePosition = "");
+
+			SelectFrameTop();
 		}
 
 		task ("Then the entry should not be created") {

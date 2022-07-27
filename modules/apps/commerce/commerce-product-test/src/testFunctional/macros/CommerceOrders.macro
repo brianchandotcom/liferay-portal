@@ -192,7 +192,7 @@ definition {
 				key_text = "Carrier Details",
 				locator1 = "CommerceOrders#EDIT_SHIPMENT_DETAILS");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			Type(
 				key_fieldLabel = "Carrier",
@@ -223,7 +223,7 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		for (var productSku : list "${productSkuList}") {
 			Check.checkToggleSwitch(
@@ -233,10 +233,8 @@ definition {
 
 		Button.clickSubmitButton();
 
-		WaitForPageLoad();
-
 		for (var productSku : list "${productSkuList}") {
-			SelectFrameTop();
+			WaitForPageLoad();
 
 			CommerceNavigator.gotoEntry(entryName = "${productSku}");
 
@@ -247,7 +245,9 @@ definition {
 				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
 				value1 = "1");
 
-			Button.clickSave();
+			Button.click(button = "Save");
+
+			SelectFrameTop();
 
 			Click(locator1 = "Icon#CLOSE");
 
@@ -294,7 +294,7 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "${keyReferenceCode}");
 
-		Button.clickSubmitButton();
+		Button.click(button = "Submit");
 
 		if (isSet(checkReferenceCode)) {
 			AssertElementPresent(

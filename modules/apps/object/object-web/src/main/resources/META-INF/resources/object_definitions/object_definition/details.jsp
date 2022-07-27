@@ -104,7 +104,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 							for (ObjectField objectField : nonrelationshipObjectFields) {
 							%>
 
-								<aui:option label="<%= objectField.getLabel(locale) %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getTitleObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
+								<aui:option label="<%= HtmlUtil.escape(objectField.getLabel(locale)) %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getTitleObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
 
 							<%
 							}
@@ -126,7 +126,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 							for (ObjectField objectField : nonrelationshipObjectFields) {
 							%>
 
-								<aui:option label="<%= objectField.getLabel(locale) %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getDescriptionObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
+								<aui:option label="<%= HtmlUtil.escape(objectField.getLabel(locale)) %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getDescriptionObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
 
 							<%
 							}

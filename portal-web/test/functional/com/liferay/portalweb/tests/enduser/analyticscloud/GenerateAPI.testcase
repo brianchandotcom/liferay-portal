@@ -39,24 +39,6 @@ definition {
 		ACUtils.clickAnyButton(button = "Continue");
 	}
 
-	@description = "Feature ID: LRAC-8103 | Automation ID: LRAC-11502 | Test Summary: Assert the user is able to query data using Analytics Cloud API"
-	@priority = "3"
-	test CreateQueryDataWithAnalyticsCloudAPI {
-		var typeList = "accounts,blogs,documents-and-media,forms,individuals,pages,segments,web-contents";
-
-		task ("Get the token value to create the schedule") {
-			var token = ACApi.getTokenValue();
-		}
-
-		task ("Create a query data using analytics cloud API") {
-			ACApi.createQueryData(token = "${token}");
-		}
-
-		task ("Check the list of endpoints that are available for querying in the API") {
-			ACApi.viewApiResponseForQueryData(typeList = "${typeList}");
-		}
-	}
-
 	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11103 | Test Summary: There is no previous export process for the same type and date range"
 	@priority = "4"
 	test CreateNewScheduledExportProcess {
@@ -93,6 +75,24 @@ definition {
 				startTime = "${startTime}",
 				status = "${status}",
 				upperCaseType = "${upperCaseType}");
+		}
+	}
+
+	@description = "Feature ID: LRAC-8103 | Automation ID: LRAC-11502 | Test Summary: Assert the user is able to query data using Analytics Cloud API"
+	@priority = "3"
+	test CreateQueryDataWithAnalyticsCloudAPI {
+		var typeList = "accounts,blogs,documents-and-media,forms,individuals,pages,segments,web-contents";
+
+		task ("Get the token value") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Create a query data using analytics cloud API") {
+			ACApi.createQueryData(token = "${token}");
+		}
+
+		task ("Check the list of endpoints that are available for querying in the API") {
+			ACApi.viewApiResponseForQueryData(typeList = "${typeList}");
 		}
 	}
 

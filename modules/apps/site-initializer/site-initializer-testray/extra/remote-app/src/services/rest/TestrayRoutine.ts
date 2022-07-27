@@ -12,6 +12,7 @@
  * details.
  */
 
+import {APIResponse} from '../../graphql/queries';
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
 
@@ -35,6 +36,11 @@ const createRoutine = (routine: Routine & {projectId: number}) =>
 const updateRoutine = (id: number, routine: Routine) =>
 	fetcher.put(`/routines/${id}`, adapter(routine));
 
+const getRoutinesTransformData = (response: APIResponse<TestrayRoutine>) => ({
+	...response,
+	items: response?.items,
+});
+
 export type {TestrayRoutine};
 
-export {createRoutine, updateRoutine};
+export {createRoutine, updateRoutine, getRoutinesTransformData};

@@ -12,6 +12,7 @@
  * details.
  */
 
+import {APIResponse} from '../../graphql/queries';
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
 
@@ -35,6 +36,11 @@ const createProject = (project: Project) =>
 const updateProject = (id: number, project: Project) =>
 	fetcher.put(`/projects/${id}`, adapter(project));
 
+const getProjectsTransformData = (response: APIResponse<TestrayProject>) => ({
+	...response,
+	items: response?.items,
+});
+
 export type {TestrayProject};
 
-export {createProject, updateProject};
+export {createProject, updateProject, getProjectsTransformData};

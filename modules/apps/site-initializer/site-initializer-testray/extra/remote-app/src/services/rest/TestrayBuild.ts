@@ -45,15 +45,17 @@ const buildsResource = `/builds?${nestedFieldsParam}`;
 const getBuildQuery = (buildId: number | string) =>
 	`/builds/${buildId}?${nestedFieldsParam}`;
 
-const getBuildTransformData = (testrayBuild: TestrayBuild): TestrayBuild => ({
-	...testrayBuild,
-	creator: testrayBuild.creator || {},
-	productVersion: testrayBuild?.r_productVersionToBuilds_c_productVersion,
-});
+const getBuildTransformData = (testrayBuild: TestrayBuild): TestrayBuild => {
+	return {
+		...testrayBuild,
+		creator: testrayBuild?.creator || {},
+		productVersion: testrayBuild?.r_productVersionToBuilds_c_productVersion,
+	};
+};
 
 const getBuildsTransformData = (response: APIResponse<TestrayBuild>) => ({
 	...response,
-	items: response?.items?.map(getBuildTransformData),
+	items: response?.items?.map((item) => getBuildTransformData(item)),
 });
 
 const createBuild = (build: Build) => fetcher.post('/builds', adapter(build));

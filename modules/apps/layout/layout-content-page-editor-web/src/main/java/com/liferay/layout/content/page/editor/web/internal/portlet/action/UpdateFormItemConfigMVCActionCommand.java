@@ -246,6 +246,36 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		return addedFragmentEntryLinks;
 	}
 
+	private String _getFragmentEntryKey(InfoFieldType infoFieldType) {
+		if (infoFieldType instanceof BooleanInfoFieldType) {
+			return "INPUTS-checkbox";
+		}
+
+		if (infoFieldType instanceof DateInfoFieldType) {
+			return "INPUTS-date-input";
+		}
+
+		if (infoFieldType instanceof FileInfoFieldType) {
+			return "INPUTS-file-upload";
+		}
+
+		if (infoFieldType instanceof NumberInfoFieldType) {
+			return "INPUTS-numeric-input";
+		}
+
+		if (infoFieldType instanceof RelationshipInfoFieldType ||
+			infoFieldType instanceof SelectInfoFieldType) {
+
+			return "INPUTS-select-from-list";
+		}
+
+		if (infoFieldType instanceof TextInfoFieldType) {
+			return "INPUTS-text-input";
+		}
+
+		return null;
+	}
+
 	private List<InfoField<?>> _getInfoFields(
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			long groupId)
@@ -281,36 +311,6 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			groupId);
 
 		return infoForm.getAllInfoFields();
-	}
-
-	private String _getFragmentEntryKey(InfoFieldType infoFieldType) {
-		if (infoFieldType instanceof BooleanInfoFieldType) {
-			return "INPUTS-checkbox";
-		}
-
-		if (infoFieldType instanceof DateInfoFieldType) {
-			return "INPUTS-date-input";
-		}
-
-		if (infoFieldType instanceof FileInfoFieldType) {
-			return "INPUTS-file-upload";
-		}
-
-		if (infoFieldType instanceof NumberInfoFieldType) {
-			return "INPUTS-numeric-input";
-		}
-
-		if (infoFieldType instanceof RelationshipInfoFieldType ||
-			infoFieldType instanceof SelectInfoFieldType) {
-
-			return "INPUTS-select-from-list";
-		}
-
-		if (infoFieldType instanceof TextInfoFieldType) {
-			return "INPUTS-text-input";
-		}
-
-		return null;
 	}
 
 	private JSONArray _removeLayoutStructureItems(

@@ -75,9 +75,9 @@ definition {
 
 	macro selectScopeInput {
 		if (("${searchScope}" == "Everything") || ("${searchScope}" == "This Site")) {
-			Select(
-				locator1 = "Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT",
-				value1 = "${searchScope}");
+			Click.clickNoMouseOver(
+				locator1 = "Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT_OPTION",
+				searchScope = "${searchScope}");
 		}
 		else {
 			fail("Invalid search scope. Must be (Everything|This Site).");

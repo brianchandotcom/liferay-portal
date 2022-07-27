@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>PENDING_ORDERS_ORDER_ID</td>
-	<td>//dt[contains(text(),'Order Id')]/..//dd</td>
+	<td>//dt[contains(text(),'Order ID')]/..//dd</td>
 	<td></td>
 </tr>
 <tr>
@@ -147,12 +147,12 @@
 </tr>
 <tr>
 	<td>PENDING_ORDERS_BILLING_ADDRESS_DROPDOWN</td>
-	<td>//select[@title= 'billing-address-id']</td>
+	<td>//select[@title= 'Billing Address ID']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PENDING_ORDERS_SHIPPING_ADDRESS_DROPDOWN</td>
-	<td>//select[@title= 'shipping-address-id']</td>
+	<td>//select[@title= 'Shipping Address ID']</td>
 	<td></td>
 </tr>
 <tr>

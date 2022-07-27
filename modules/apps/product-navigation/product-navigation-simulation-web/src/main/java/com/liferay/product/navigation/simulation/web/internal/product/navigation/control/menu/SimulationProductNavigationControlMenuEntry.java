@@ -153,6 +153,10 @@ public class SimulationProductNavigationControlMenuEntry
 		values.put("portletNamespace", _portletNamespace);
 		values.put("simulationPanelURL", simulationPanelURL.toString());
 		values.put(
+			"skipLinkLabel",
+			_html.escape(
+				_language.get(httpServletRequest, "skip-to-simulation-panel")));
+		values.put(
 			"title",
 			_html.escape(_language.get(httpServletRequest, "simulation")));
 

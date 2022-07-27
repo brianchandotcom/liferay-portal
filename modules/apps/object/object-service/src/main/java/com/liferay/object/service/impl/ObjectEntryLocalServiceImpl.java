@@ -244,6 +244,22 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public void addOrUpdateExtensionDynamicObjectDefinitionTableValues(
+			long userId, ObjectDefinition objectDefinition, long primaryKey,
+			Map<String, Serializable> values, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
+		_validateValues(
+			user.isDefaultUser(), objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getClassName(), serviceContext, userId, values);
+
+		insertIntoOrUpdateExtensionTable(
+			objectDefinition.getObjectDefinitionId(), primaryKey, values);
+	}
+
+	@Override
 	public ObjectEntry addOrUpdateObjectEntry(
 			String externalReferenceCode, long userId, long groupId,
 			long objectDefinitionId, Map<String, Serializable> values,

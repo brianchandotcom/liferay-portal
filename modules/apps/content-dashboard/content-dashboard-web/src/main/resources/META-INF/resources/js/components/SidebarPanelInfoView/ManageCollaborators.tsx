@@ -16,7 +16,7 @@ import {fetch, runScriptsInElement} from 'frontend-js-web';
 import React, {useEffect, useRef} from 'react';
 
 const ManageCollaborators = ({
-	fetchSharingContactsButtonURL,
+	fetchSharingCollaboratorsURL,
 	onError,
 }: IProps) => {
 	const elementRef = useRef<HTMLDivElement>(document.createElement('div'));
@@ -25,12 +25,12 @@ const ManageCollaborators = ({
 		const fetchButton = async () => {
 			try {
 				const response: Response = await fetch(
-					fetchSharingContactsButtonURL
+					fetchSharingCollaboratorsURL
 				);
 
 				if (!response.ok) {
 					throw new Error(
-						`Failed to fetch ${fetchSharingContactsButtonURL}`
+						`Failed to fetch ${fetchSharingCollaboratorsURL}`
 					);
 				}
 
@@ -43,14 +43,14 @@ const ManageCollaborators = ({
 		};
 
 		fetchButton();
-	}, [fetchSharingContactsButtonURL, onError]);
+	}, [fetchSharingCollaboratorsURL, onError]);
 
 	return <div className="manage-collaborators mt-4" ref={elementRef} />;
 };
 
 interface IProps {
 	children?: React.ReactNode;
-	fetchSharingContactsButtonURL: RequestInfo;
+	fetchSharingCollaboratorsURL: RequestInfo;
 	onError: Function;
 }
 

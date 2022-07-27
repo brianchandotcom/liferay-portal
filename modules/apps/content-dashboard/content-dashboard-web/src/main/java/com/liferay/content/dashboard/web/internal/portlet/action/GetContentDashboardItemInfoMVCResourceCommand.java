@@ -143,8 +143,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					_getFetchSharingButtonURL(
 						contentDashboardItem, httpServletRequest)
 				).put(
-					"fetchSharingContactsURL",
-					_getFetchSharingContactsURL(
+					"fetchSharingCollaboratorsURL",
+					_getFetchSharingCollaboratorsURL(
 						contentDashboardItem, httpServletRequest)
 				).put(
 					"languageTag", locale.toLanguageTag()
@@ -335,7 +335,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		return null;
 	}
 
-	private String _getFetchSharingContactsURL(
+	private String _getFetchSharingCollaboratorsURL(
 		ContentDashboardItem contentDashboardItem,
 		HttpServletRequest httpServletRequest) {
 

@@ -14,12 +14,12 @@
 
 import React from 'react';
 declare const ManageCollaborators: ({
-	fetchSharingContactsButtonURL,
+	fetchSharingCollaboratorsURL,
 	onError,
 }: IProps) => JSX.Element;
 interface IProps {
 	children?: React.ReactNode;
-	fetchSharingContactsButtonURL: RequestInfo;
+	fetchSharingCollaboratorsURL: RequestInfo;
 	onError: Function;
 }
 export default ManageCollaborators;

@@ -64,7 +64,7 @@ const SidebarPanelInfoView = ({
 	type,
 	preview,
 	fetchSharingButtonURL,
-	fetchSharingContactsButtonURL,
+	fetchSharingCollaboratorsURL,
 	user,
 	versions = [],
 	viewURLs = [],
@@ -157,10 +157,10 @@ const SidebarPanelInfoView = ({
 					</div>
 
 					<div className="sidebar-dl sidebar-section">
-						{fetchSharingContactsButtonURL ? (
+						{fetchSharingCollaboratorsURL ? (
 							<ManageCollaborators
-								fetchSharingContactsButtonURL={
-									fetchSharingContactsButtonURL
+								fetchSharingCollaboratorsURL={
+									fetchSharingCollaboratorsURL
 								}
 								onError={handleError}
 							/>
@@ -374,7 +374,7 @@ SidebarPanelInfoView.propTypes = {
 	createDate: PropTypes.string.isRequired,
 	description: PropTypes.string,
 	fetchSharingButtonURL: PropTypes.string,
-	fetchSharingContactsButtonURL: PropTypes.string,
+	fetchSharingCollaboratorsURL: PropTypes.string,
 	modifiedDate: PropTypes.string.isRequired,
 	preview: PropTypes.object,
 	specificFields: PropTypes.object.isRequired,

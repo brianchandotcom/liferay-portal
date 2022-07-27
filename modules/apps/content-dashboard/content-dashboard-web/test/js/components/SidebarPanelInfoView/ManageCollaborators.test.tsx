@@ -30,13 +30,13 @@ jest.mock('frontend-js-web', () => ({
 	runScriptsInElement: jest.fn(),
 }));
 
-const fetchSharingContactsButtonURL =
+const fetchSharingCollaboratorsURL =
 	'http://localhost:8080/fetch-manage-collaborators-button-url';
 
 const _getComponent = () => {
 	return (
 		<ManageCollaborators
-			fetchSharingContactsButtonURL={fetchSharingContactsButtonURL}
+			fetchSharingCollaboratorsURL={fetchSharingCollaboratorsURL}
 			onError={() => {}}
 		/>
 	);
@@ -51,7 +51,7 @@ describe('Manage collaborators component', () => {
 	it('call the endpoint and renders', async () => {
 		const {getByText} = render(_getComponent());
 
-		expect(fetch).toHaveBeenCalledWith(fetchSharingContactsButtonURL);
+		expect(fetch).toHaveBeenCalledWith(fetchSharingCollaboratorsURL);
 
 		await waitFor(() => {
 			expect(getByText('Manage Collaborators')).toBeInTheDocument();

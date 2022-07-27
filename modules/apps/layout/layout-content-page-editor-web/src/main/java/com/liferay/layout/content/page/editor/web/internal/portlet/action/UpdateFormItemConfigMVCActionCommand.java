@@ -312,7 +312,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		return infoForm.getAllInfoFields();
 	}
 
-	private JSONArray _removeLayoutStructureItems(
+	private JSONArray _removeLayoutStructureItemsJSONArray(
 		LayoutStructure layoutStructure,
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
 
@@ -397,7 +397,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 					 formStyledLayoutStructureItem.getClassTypeId()))) {
 
 				removedLayoutStructureItemsJSONArray =
-					_removeLayoutStructureItems(
+					_removeLayoutStructureItemsJSONArray(
 						layoutStructure, formStyledLayoutStructureItem);
 
 				if (formStyledLayoutStructureItem.getClassNameId() > 0) {

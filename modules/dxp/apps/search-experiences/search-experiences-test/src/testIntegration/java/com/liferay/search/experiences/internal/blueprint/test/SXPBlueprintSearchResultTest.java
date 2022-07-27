@@ -2227,36 +2227,23 @@ public class SXPBlueprintSearchResultTest {
 		SearchResponse searchResponse = _getSearchResponseSearchPage(
 			searchRequestBuilderConsumer);
 
-		try {
-			DocumentsAssert.assertValues(
-				searchResponse.getRequestString(),
-				searchResponse.getDocumentsStream(), "title_en_US", expected);
-		}
-		catch (AssertionError assertionError) {
-			String message = _getScore(searchResponse);
+		String message =
+			_getScore(searchResponse) + searchResponse.getRequestString();
 
-			message = message + assertionError.getMessage();
-
-			throw new AssertionError(message);
-		}
+		DocumentsAssert.assertValues(
+			message, searchResponse.getDocumentsStream(), "title_en_US",
+			expected);
 
 		if (!Objects.equals("{}", _sxpBlueprint.getElementInstancesJSON())) {
 			searchResponse = _getSearchResponsePreview(
 				searchRequestBuilderConsumer);
 
-			try {
-				DocumentsAssert.assertValues(
-					searchResponse.getRequestString(),
-					searchResponse.getDocumentsStream(), "title_en_US",
-					expected);
-			}
-			catch (AssertionError assertionError) {
-				String message = _getScore(searchResponse);
+			message =
+				_getScore(searchResponse) + searchResponse.getRequestString();
 
-				message = message + assertionError.getMessage();
-
-				throw new AssertionError(message);
-			}
+			DocumentsAssert.assertValues(
+				message, searchResponse.getDocumentsStream(), "title_en_US",
+				expected);
 		}
 	}
 
@@ -2325,8 +2312,8 @@ public class SXPBlueprintSearchResultTest {
 			Map<String, Field> fields = document.getFields();
 
 			message =
-				message + "Title: " + fields.get("title_en_US") + " Score: " +
-					searchHit.getScore() + StringPool.NEW_LINE;
+				message + "Title: \"" + fields.get("title_en_US") +
+					"\" Score: " + searchHit.getScore() + StringPool.NEW_LINE;
 		}
 
 		return message;

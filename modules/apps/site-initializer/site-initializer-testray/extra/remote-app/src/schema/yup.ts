@@ -41,7 +41,7 @@ const yupSchema = {
 		stepsType: yup.string(),
 	}),
 	caseResult: yup.object({
-		comment: yup.string(),
+		commentMBMessage: yup.string(),
 		dueStatus: yup.string().required(),
 		issues: yup.string(),
 	}),

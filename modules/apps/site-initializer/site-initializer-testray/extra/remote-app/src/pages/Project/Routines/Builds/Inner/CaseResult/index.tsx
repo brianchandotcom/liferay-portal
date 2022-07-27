@@ -73,13 +73,12 @@ const CaseResult = () => {
 		refetch: () => void;
 	} = useOutletContext();
 
-	const {onAssignToMe} = useAssignCaseResult();
+	const {onAssignToMeFetch} = useAssignCaseResult();
 
 	const getAttachments = (): TestrayAttachment[] => {
 		try {
 			return JSON.parse(caseResult.attachments);
-		}
-		catch (error) {
+		} catch (error) {
 			return [];
 		}
 	};
@@ -88,10 +87,7 @@ const CaseResult = () => {
 
 	return (
 		<>
-			<CaseResultHeaderActions
-				caseResult={caseResult}
-				refetch={refetch}
-			/>
+			<CaseResultHeaderActions caseResult={caseResult} />
 			<ClayLayout.Row>
 				<ClayLayout.Col xs={9}>
 					<Container
@@ -125,7 +121,7 @@ const CaseResult = () => {
 									flexHeading: true,
 									title: i18n.sub(
 										'warnings-x',
-										caseResult.warnings.toString()
+										caseResult.warnings?.toString()
 									),
 									value: attachments.find(({name}) =>
 										name.toLowerCase().includes('warning')
@@ -222,7 +218,7 @@ const CaseResult = () => {
 						/>
 
 						<Link
-							to={`/project/${projectId}/cases/${caseResult.case.id}`}
+							to={`/project/${projectId}/cases/${caseResult.id}`}
 						>
 							{i18n.translate('view-case')}
 						</Link>
@@ -261,9 +257,9 @@ const CaseResult = () => {
 									) : (
 										<AssignToMe
 											onClick={() =>
-												onAssignToMe(caseResult).then(
-													refetch
-												)
+												onAssignToMeFetch(
+													caseResult
+												).then(refetch)
 											}
 										/>
 									),
@@ -275,7 +271,7 @@ const CaseResult = () => {
 								},
 								{
 									title: i18n.translate('comment'),
-									value: 'None',
+									value: caseResult.commentMBMessage,
 								},
 							]}
 							orientation={Orientation.VERTICAL}

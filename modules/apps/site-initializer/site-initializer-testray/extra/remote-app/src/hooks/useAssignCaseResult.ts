@@ -12,50 +12,56 @@
  * details.
  */
 
-import client from '../graphql/apolloClient';
-import {UpdateCaseResult} from '../graphql/mutations';
 import {TestrayCaseResult} from '../graphql/queries';
+import fetcher from '../services/fetcher';
 import {Liferay} from '../services/liferay';
 import {TEST_STATUS} from '../util/constants';
 
 const useAssignCaseResult = () => {
-	const onAssignTo = (
+	const onAssignToFetch = async (
 		caseResult: TestrayCaseResult,
 		userId: number | string | null
-	) =>
-		client.mutate({
-			mutation: UpdateCaseResult,
-			variables: {
-				CaseResult: {
-					dueStatus: caseResult.dueStatus,
-					r_userToCaseResults_userId: userId,
-					startDate: caseResult.startDate,
-				},
-				caseResultId: caseResult.id,
-			},
-		});
+	) => {
+		const url = `/caseresults/${caseResult.id}`;
 
-	const onAssignToMe = (caseResult: TestrayCaseResult) =>
-		onAssignTo(
-			{
-				...caseResult,
-				dueStatus: TEST_STATUS['In Progress'],
-				startDate: new Date() as any,
-			},
-			Liferay.ThemeDisplay.getUserId()
-		);
+		const data = {
+			dueStatus: caseResult.dueStatus,
+			r_userToCaseResults_userId: userId,
+			startDate: caseResult.startDate,
+		};
 
-	const onRemoveAssign = (caseResult: TestrayCaseResult) =>
-		onAssignTo(
-			{
-				...caseResult,
-				dueStatus: TEST_STATUS.Untested,
-				startDate: null as any,
-			},
-			0
-		);
+		return fetcher.put(url, data);
+	};
 
-	return {onAssignTo, onAssignToMe, onRemoveAssign};
+	const onAssignToMeFetch = async (caseResult: TestrayCaseResult) => {
+		const url = `/caseresults/${caseResult.id}`;
+
+		const data = {
+			dueStatus: TEST_STATUS['In Progress'],
+			r_userToCaseResults_userId: Liferay.ThemeDisplay.getUserId(),
+			startDate: caseResult.startDate,
+		};
+
+		return fetcher.put(url, data);
+	};
+
+	const onRemoveAssignFetch = async (caseResult: TestrayCaseResult) => {
+		const url = `/caseresults/${caseResult.id}`;
+
+		const data = {
+			dueStatus: TEST_STATUS.Untested,
+			r_userToCaseResults_userId: 0,
+			startDate: null as any,
+		};
+
+		return fetcher.put(url, data);
+	};
+
+	return {
+		onAssignToFetch,
+		onAssignToMeFetch,
+		onRemoveAssignFetch,
+	};
 };
 
 export default useAssignCaseResult;

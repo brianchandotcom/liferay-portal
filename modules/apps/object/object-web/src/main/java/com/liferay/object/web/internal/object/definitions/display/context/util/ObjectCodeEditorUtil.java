@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,7 +49,9 @@ public class ObjectCodeEditorUtil {
 					_objectFieldLocalService.getObjectFields(
 						objectDefinitionId),
 					objectField -> HashMapBuilder.put(
-						"content", objectField.getName()
+						"content",
+						StringUtil.removeSubstring(
+							objectField.getDBColumnName(), StringPool.UNDERLINE)
 					).put(
 						"helpText", StringPool.BLANK
 					).put(

@@ -81,12 +81,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	public void onBeforeCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		try {
-			_objectValidationRuleLocalService.validate(objectEntry);
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
+		_validateObjectEntry(objectEntry);
 	}
 
 	@Override
@@ -94,12 +89,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		try {
-			_objectValidationRuleLocalService.validate(objectEntry);
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
+		_validateObjectEntry(objectEntry);
 	}
 
 	private void _executeObjectActions(
@@ -220,6 +210,18 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		}
 
 		return objectEntry.getModelAttributes();
+	}
+
+	private void _validateObjectEntry(ObjectEntry objectEntry)
+		throws ModelListenerException {
+
+		try {
+			_objectValidationRuleLocalService.validate(
+				objectEntry, objectEntry.getObjectDefinitionId());
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

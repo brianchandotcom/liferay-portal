@@ -18,6 +18,7 @@ import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.system.model.listener.SystemObjectDefinitionMetadataModelListener;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
@@ -77,7 +78,8 @@ public abstract class BaseSystemObjectDefinitionMetadata
 			new SystemObjectDefinitionMetadataModelListener(
 				dtoConverterRegistry, jsonFactory, getModelClass(),
 				objectActionEngine, objectDefinitionLocalService,
-				objectEntryLocalService, userLocalService),
+				objectEntryLocalService, objectValidationRuleLocalService,
+				userLocalService),
 			null);
 	}
 
@@ -121,6 +123,9 @@ public abstract class BaseSystemObjectDefinitionMetadata
 
 	@Reference
 	protected ObjectEntryLocalService objectEntryLocalService;
+
+	@Reference
+	protected ObjectValidationRuleLocalService objectValidationRuleLocalService;
 
 	@Reference
 	protected UserLocalService userLocalService;

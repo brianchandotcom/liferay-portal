@@ -27,14 +27,15 @@ import com.liferay.object.service.base.ObjectValidationRuleLocalServiceBaseImpl;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineTracker;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -181,31 +182,31 @@ public class ObjectValidationRuleLocalServiceImpl
 		return objectValidationRulePersistence.update(objectValidationRule);
 	}
 
+	@CTAware(onProduction = true)
 	@Override
-	public void validate(ObjectEntry objectEntry) throws PortalException {
-		if (objectEntry == null) {
+	public void validate(BaseModel<?> baseModel, long objectDefinitionId)
+		throws PortalException {
+
+		if (baseModel == null) {
 			return;
 		}
 
-		Map<String, Serializable> values = _objectEntryLocalService.getValues(
-			objectEntry);
-
 		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
 			HashMapBuilder.<String, Object>putAll(
-				objectEntry.getModelAttributes());
+				baseModel.getModelAttributes());
 
-		if (values != null) {
-			hashMapWrapper.putAll(values);
-		}
+		if (baseModel instanceof ObjectEntry) {
+			Map<String, Serializable> values =
+				_objectEntryLocalService.getValues((ObjectEntry)baseModel);
 
-		if (PrincipalThreadLocal.getUserId() > 0) {
-			hashMapWrapper.put(
-				"currentUserId", PrincipalThreadLocal.getUserId());
+			if (values != null) {
+				hashMapWrapper.putAll(values);
+			}
 		}
 
 		List<ObjectValidationRule> objectValidationRules =
 			objectValidationRuleLocalService.getObjectValidationRules(
-				objectEntry.getObjectDefinitionId(), true);
+				objectDefinitionId, true);
 
 		for (ObjectValidationRule objectValidationRule :
 				objectValidationRules) {

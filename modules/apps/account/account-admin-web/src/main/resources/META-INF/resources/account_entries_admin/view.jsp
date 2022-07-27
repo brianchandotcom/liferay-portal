@@ -31,6 +31,19 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 	<aui:form method="post" name="fm">
 		<aui:input name="accountEntryIds" type="hidden" />
 
+		<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-151671")) %>'>
+			<liferay-ui:error exception="<%= ObjectValidationRuleEngineException.class %>">
+
+				<%
+				ModelListenerException mle = (ModelListenerException)errorException;
+
+				ObjectValidationRuleEngineException ovree = (ObjectValidationRuleEngineException)mle.getCause();
+				%>
+
+				<liferay-ui:message key="<%= ovree.getMessage() %>" />
+			</liferay-ui:error>
+		</c:if>
+
 		<liferay-ui:search-container
 			searchContainer="<%= accountEntryDisplaySearchContainer %>"
 		>

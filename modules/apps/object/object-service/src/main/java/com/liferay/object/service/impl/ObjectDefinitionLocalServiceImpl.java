@@ -788,12 +788,17 @@ public class ObjectDefinitionLocalServiceImpl
 				LanguageUtil.get(LocaleUtil.getDefault(), "create-date")),
 			"createDate", false, false);
 
+		String dbColumnName = ObjectEntryTable.INSTANCE.objectEntryId.getName();
+
+		if (system) {
+			dbColumnName = pkObjectFieldName;
+		}
+
 		_objectFieldLocalService.addSystemObjectField(
 			userId, objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
-			ObjectEntryTable.INSTANCE.objectEntryId.getName(),
-			ObjectEntryTable.INSTANCE.getTableName(),
-			ObjectFieldConstants.DB_TYPE_LONG, null, false, false, null,
+			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER, dbColumnName,
+			dbTableName, ObjectFieldConstants.DB_TYPE_LONG, null, false, false,
+			null,
 			LocalizedMapUtil.getLocalizedMap(
 				LanguageUtil.get(LocaleUtil.getDefault(), "id")),
 			"id", false, false);

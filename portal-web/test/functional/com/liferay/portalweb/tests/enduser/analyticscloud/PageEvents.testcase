@@ -180,7 +180,7 @@ definition {
 			ScrollWebElementIntoView(
 				key_entryTitle = "Blogs Entry Title 4",
 				locator1 = "BlogsEntry#TITLE");
-			
+
 			ACUtils.waitForScrollEvent();
 		}
 

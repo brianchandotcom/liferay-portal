@@ -9,7 +9,7 @@
 		</div>
 
 		[#if input.showHelpText && input.helpText?has_content]
-			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-date-input-help-text">${input.helpText}</p>
+			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-date-input-help-text">${htmlUtil.escape(input.helpText)}</p>
 		[/#if]
 	</div>
 </div>

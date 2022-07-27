@@ -4,7 +4,7 @@
 
 	<input aria-describedby="${fragmentEntryLinkNamespace}-numeric-input-help-text" class="form-control" data-validation-message-text="${languageUtil.get(locale, "enter-a-valid-value.-the-value-has-too-many-decimals")}" id="${fragmentEntryLinkNamespace}-numeric-input" [#if input.attributes.max??]max="${input.attributes.max}"[/#if] [#if input.attributes.min??]min="${input.attributes.min}"[/#if] name="${input.name}" [#if input.required]required[/#if] [#if input.attributes.dataType?? && input.attributes.dataType="decimal" && input.attributes.step??]step="${input.attributes.step}"[/#if] placeholder="${configuration.placeholder}" type="number" [#if input.value??]value="${input.value}"[/#if] />
 		[#if input.showHelpText && input.helpText?has_content]
-			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-numeric-input-help-text">${input.helpText}</p>
+			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-numeric-input-help-text">${htmlUtil.escape(input.helpText)}</p>
 		[/#if]
 	</div>
 </div>

@@ -104,6 +104,10 @@ public class UpstreamFailureUtil {
 			TopLevelBuildReport topLevelBuildReport =
 				testrayBuild.getTopLevelBuildReport();
 
+			if (topLevelBuildReport == null) {
+				continue;
+			}
+
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Comparing with test results from ",

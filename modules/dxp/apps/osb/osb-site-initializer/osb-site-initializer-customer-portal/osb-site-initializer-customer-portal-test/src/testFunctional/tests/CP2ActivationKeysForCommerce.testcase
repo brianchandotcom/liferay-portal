@@ -164,4 +164,72 @@ definition {
 		}
 	}
 
+	@description = "Verify that once a subscription is selected, the next drop-down is populated with a list of start and end dates."
+	@priority = "4"
+	test CanViewListOfStartAndEndDatesActiveSubscriptionTerms {
+
+		property portal.upstream = "quarantine";
+		//Reason: Not eble to reproduce scenario without OKTA workaround.
+
+		task ("Assert that project has DPX 7.2") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+		}
+
+		task ("Assert Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+
+			//Select DropDown list of LES subscription			
+
+			//Assert Subscription Term Date Time Option		
+		}
+
+		task ("Assert that project has DPX 7.1") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.1");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.1");
+		}
+
+		task ("Assert Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+
+			//Select DropDown list of LES subscription			
+
+			//Assert Subscription Term Date Time Option		
+		}
+
+		task ("Assert that project has DPX 7.1") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.0");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.0");
+		}
+
+		task ("Assert Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+
+			//Select DropDown list of LES subscription			
+
+			//Assert Subscription Term Date Time Option		
+		}
+	}
+
 }

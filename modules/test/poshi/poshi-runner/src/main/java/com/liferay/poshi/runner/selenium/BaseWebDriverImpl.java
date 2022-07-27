@@ -702,7 +702,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		selectedLabelCondition.assertTrue();
 	}
 
-	public void assertTableContents(String locator, String tableString)
+	@Override
+	public void assertTable(String locator, String tableString)
 		throws Exception {
 
 		List<List<String>> htmlRawDataList = getRawDataList(locator);

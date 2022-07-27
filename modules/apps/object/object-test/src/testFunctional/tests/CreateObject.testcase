@@ -1352,8 +1352,6 @@ definition {
 	@description = "LPS-135401 - Verify that it is possible to delete a relation with an entry on the Relationship tab"
 	@priority = "5"
 	test CanDeleteRelationOnRelationshipTab {
-		property portal.acceptance = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141661",
 			objectName = "CustomObject141661",
@@ -1433,7 +1431,7 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry A");
 
-		CreateObject.deleteEntryInRelationshipTab();
+		CreateObject.deleteEntryInRelationshipTab(kebabOption = "Delete");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "Entry B");
 
@@ -1664,7 +1662,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
-			value1 = "Duplicate name relationship");
+			value1 = "An error occurred.");
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to delete an Object without the Delete permission"

@@ -297,9 +297,11 @@ definition {
 	macro deleteEntryInRelationshipTab {
 		ObjectAdmin.gotoRelationshipsTab();
 
-		Click(locator1 = "CreateObject#DELETE_ENTRY_IN_RELATIONSHIP_TAB");
+		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
-		AssertElementNotPresent(locator1 = "CreateObject#KEBAB_MENU_BLOCK_FIELD_OPTION_DELETE");
+		Click(
+			key_kebabOption = "${kebabOption}",
+			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 	}
 
 	macro deleteFieldOnBlock {

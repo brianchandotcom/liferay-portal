@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
@@ -58,6 +59,11 @@ public class JavaRunSqlStylingCheck extends BaseJavaTermCheck {
 				"([\\s\\S]*)?(?<!\\[\\$)\\b(FALSE|TRUE)\\b(?!\\$\\])" +
 					"([\\s\\S]*)",
 				"$1[\\$$2\\$]$3");
+
+			if (newParameter.endsWith(";\"")) {
+				newParameter = StringUtil.removeLast(
+					newParameter, StringPool.SEMICOLON);
+			}
 
 			if (parameter.equals(newParameter)) {
 				continue;

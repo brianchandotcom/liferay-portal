@@ -26,10 +26,13 @@ scopeGroup = themeDisplay.getScopeGroup();
 	String taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + cmd + "'); void(0);";
 	%>
 
-	<liferay-frontend:management-bar-button
-		href="<%= taglibURL %>"
+	<liferay-ui:icon
 		icon="import-export"
-		label="<%= cmd %>"
+		label="<%= false %>"
+		linkCssClass="btn btn-monospaced btn-outline-secondary"
+		markupView="lexicon"
+		message="<%= cmd %>"
+		url="<%= taglibURL %>"
 	/>
 
 	<%

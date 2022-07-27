@@ -166,4 +166,32 @@ definition {
 		}
 	}
 
+	@description = "Structured Content Folder Is Deleted With Default ERC"
+	@priority = "5"
+	test StructuredContentFolderIsDeletedWithDefaultErc {
+		property portal.acceptance = "true";
+
+		task ("Given a folder") {
+			var responseFromCreate = HeadlessWebcontentFolderAPI.createStructuredContentFolder(
+				groupName = "Site Name",
+				name = "Test Folder");
+		}
+
+		task ("When I use deleteSiteStructuredContentFolderByExternalReferenceCode") {
+			var structuredContentUUId = HeadlessWebcontentFolderAPI.getUuidOfCreatedStructuredContentFolder(responseToParse = "${responseFromCreate}");
+			var structuredContentFolderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+				element = "$.id",
+				responseToParse = "${responseFromCreate}");
+			var response = HeadlessWebcontentFolderAPI.deleteWebcontentFolder(
+				externalReferenceCode = "${structuredContentUUId}",
+				groupName = "Site Name");
+		}
+
+		task ("Then the folder is deleted successfully") {
+			HeadlessWebcontentFolderAPI.assertStructuredContentFolderHasDeleted(
+				expectedValue = "No JournalFolder exists with the primary key ${structuredContentFolderId}",
+				structuredContentFolderId = "${structuredContentFolderId}");
+		}
+	}
+
 }

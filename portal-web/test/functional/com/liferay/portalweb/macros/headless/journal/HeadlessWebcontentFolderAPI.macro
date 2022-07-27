@@ -135,6 +135,22 @@ definition {
 		return "${curl}";
 	}
 
+	macro _getStructuredContentFolderById {
+		Variables.assertDefined(parameterList = "${structuredContentFolderId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+            ${portalURL}/o/headless-delivery/v1.0/structured-content-folders/${structuredContentFolderId} \
+            -u test@liferay.com:test \
+            -H accept: application/json
+        ''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _getStructuredContentFoldersByErcInAssetLibrary {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
 
@@ -242,6 +258,18 @@ definition {
 		TestUtils.assertEquals(
 			actual = "${actualStructuredContentFolderName}",
 			expected = "${structuredContentFolderName}");
+	}
+
+	macro assertStructuredContentFolderHasUpdated {
+		Variables.assertDefined(parameterList = "${expectedValue},${structuredContentFolderId}");
+
+		var responseToParse = HeadlessWebcontentFolderAPI._getStructuredContentFolderById(structuredContentFolderId = "${structuredContentFolderId}");
+
+		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.name");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${expectedValue}");
 	}
 
 	macro assetProperNumberOfStructuredContentFolders {

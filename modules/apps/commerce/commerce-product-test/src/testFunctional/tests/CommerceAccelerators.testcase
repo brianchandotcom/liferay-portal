@@ -300,6 +300,8 @@ definition {
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 
+		// Quarantined because of COMMERCE-9825
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
@@ -619,6 +621,8 @@ definition {
 		property portal.acceptance = "quarantine";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
+
+		// Quarantined because of COMMERCE-9825
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

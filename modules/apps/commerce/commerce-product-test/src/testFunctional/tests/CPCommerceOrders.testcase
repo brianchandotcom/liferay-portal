@@ -1598,11 +1598,8 @@ definition {
 		Button.clickSave();
 	}
 
-	@ignore = "true"
 	test EditOrder {
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

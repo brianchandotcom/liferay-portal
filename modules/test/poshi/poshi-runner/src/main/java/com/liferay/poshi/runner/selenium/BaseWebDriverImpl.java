@@ -1369,30 +1369,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return _webDriver.getPageSource();
 	}
 
-	protected List<List<String>> getRawDataList(String locator) {
-		List<List<String>> rawDataList = new ArrayList<>();
-
-		List<WebElement> rowsList = findElements(By.xpath(locator + "//tr"));
-		List<WebElement> columnsList;
-
-		for (int i = 2; i <= rowsList.size(); i++) {
-			List<String> rowContent = new ArrayList<>();
-			columnsList = findElements(
-				By.xpath(locator + "//tr[" + i + "]//td"));
-
-			for (int j = 1; j <= columnsList.size(); j++) {
-				WebElement entryContent = findElement(
-					By.xpath(locator + "//tr[" + i + "]//td[" + j + "]"));
-
-				rowContent.add(entryContent.getText());
-			}
-
-			rawDataList.add(rowContent);
-		}
-
-		return rawDataList;
-	}
-
 	@Override
 	public String getPrimaryTestSuiteName() {
 		return _primaryTestSuiteName;
@@ -4112,6 +4088,30 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			}
 
 		};
+	}
+
+	protected List<List<String>> getRawDataList(String locator) {
+		List<List<String>> rawDataList = new ArrayList<>();
+
+		List<WebElement> rowsList = findElements(By.xpath(locator + "//tr"));
+		List<WebElement> columnsList;
+
+		for (int i = 2; i <= rowsList.size(); i++) {
+			List<String> rowContent = new ArrayList<>();
+			columnsList = findElements(
+				By.xpath(locator + "//tr[" + i + "]//td"));
+
+			for (int j = 1; j <= columnsList.size(); j++) {
+				WebElement entryContent = findElement(
+					By.xpath(locator + "//tr[" + i + "]//td[" + j + "]"));
+
+				rowContent.add(entryContent.getText());
+			}
+
+			rawDataList.add(rowContent);
+		}
+
+		return rawDataList;
 	}
 
 	protected int getScrollOffsetX() {

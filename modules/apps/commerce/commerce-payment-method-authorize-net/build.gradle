@@ -15,7 +15,6 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-payment-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
-	compileOnly project(":apps:petra:petra-apache-http-components")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

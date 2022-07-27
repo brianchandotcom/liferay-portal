@@ -20,6 +20,7 @@ import {useFormik} from 'formik';
 import {
 	createResourceURL,
 	fetch,
+	navigate,
 	objectToFormData,
 	openToast,
 } from 'frontend-js-web';
@@ -54,7 +55,7 @@ const DigitalSignatureForm = ({fileEntries = [], history}) => {
 			return history.goBack();
 		}
 
-		return Liferay.Util.navigate(backURL);
+		return navigate(backURL);
 	};
 
 	const onSubmit = async (values) => {

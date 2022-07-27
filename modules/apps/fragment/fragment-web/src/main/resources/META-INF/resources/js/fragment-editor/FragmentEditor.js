@@ -20,6 +20,7 @@ import {
 	cancelDebounce,
 	debounce,
 	fetch,
+	navigate,
 	objectToFormData,
 	openToast,
 	sub,
@@ -124,7 +125,7 @@ const FragmentEditor = ({
 			.then((response) => {
 				const redirectURL = response.redirect || urls.redirect;
 
-				Liferay.Util.navigate(redirectURL);
+				navigate(redirectURL);
 			})
 			.catch((error) => {
 				if (isMounted()) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fetch} from 'frontend-js-web';
+import {fetch, navigate} from 'frontend-js-web';
 import React from 'react';
 
 class ChangeTrackingBaseScheduleView extends React.Component {
@@ -93,7 +93,7 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 				.then((response) => response.json())
 				.then((json) => {
 					if (json.redirect) {
-						Liferay.Util.navigate(json.redirect);
+						navigate(json.redirect);
 					}
 					else if (json.validationError) {
 						this.setState({validationError: json.validationError});

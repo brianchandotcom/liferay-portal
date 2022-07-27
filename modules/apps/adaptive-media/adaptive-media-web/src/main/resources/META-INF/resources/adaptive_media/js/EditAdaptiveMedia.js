@@ -19,6 +19,7 @@ import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
 import {
 	fetch,
+	navigate,
 	normalizeFriendlyURL,
 	objectToFormData,
 	openToast,
@@ -121,7 +122,7 @@ const EditAdaptiveMedia = ({
 							type: 'success',
 						});
 
-						Liferay.Util.navigate(redirect);
+						navigate(redirect);
 					}
 					else {
 						setErrorMessage(message);
@@ -173,7 +174,7 @@ const EditAdaptiveMedia = ({
 
 	const onCancel = useCallback(() => {
 		if (redirect) {
-			Liferay.Util.navigate(redirect);
+			navigate(redirect);
 		}
 	}, [redirect]);
 

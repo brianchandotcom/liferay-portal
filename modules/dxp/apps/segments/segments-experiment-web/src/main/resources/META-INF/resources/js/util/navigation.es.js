@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import {navigate} from 'frontend-js-web';
+
 const EXPERIENCE_ID_URL_KEY = 'segmentsExperienceId';
 
 const EXPERIENCE_KEY_URL_KEY = 'segmentsExperienceKey';
@@ -39,5 +41,5 @@ export function navigateToExperience(
 
 	const newUrl = currentUrl.toString();
 
-	Liferay.Util.navigate(newUrl);
+	navigate(newUrl);
 }

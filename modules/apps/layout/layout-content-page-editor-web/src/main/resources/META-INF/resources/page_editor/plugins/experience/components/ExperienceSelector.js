@@ -19,7 +19,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import {useModal} from '@clayui/modal';
 import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
-import {openToast} from 'frontend-js-web';
+import {navigate, openToast} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {config} from '../../../app/config/index';
@@ -129,7 +129,7 @@ const ExperienceSelector = ({
 			segmentId,
 		});
 
-		Liferay.Util.navigate(config.editSegmentsEntryURL);
+		navigate(config.editSegmentsEntryURL);
 	};
 
 	useEffect(() => {

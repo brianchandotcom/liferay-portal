@@ -19,7 +19,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
-import {openConfirmModal} from 'frontend-js-web';
+import {navigate, openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -87,7 +87,7 @@ const ExperienceItem = ({
 			'com.liferay.segments.experiment.web_panelState',
 			'open'
 		).then(() => {
-			Liferay.Util.navigate(experience.segmentsExperimentURL);
+			navigate(experience.segmentsExperimentURL);
 		});
 	};
 

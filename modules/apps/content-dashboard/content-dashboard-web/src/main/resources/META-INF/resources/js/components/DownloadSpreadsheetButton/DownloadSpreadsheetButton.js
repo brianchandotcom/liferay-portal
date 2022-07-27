@@ -18,6 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classnames from 'classnames';
+import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -178,7 +179,7 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 
 			setTimeout(() => {
 				onClose();
-				Liferay.Util.navigate(tentativeNavigationPath);
+				navigate(tentativeNavigationPath);
 			}, DEFAULT_TIMEOUT_DELAY + FEEDBACK_TIMEOUT_DELAY);
 		},
 		[tentativeNavigationPath]

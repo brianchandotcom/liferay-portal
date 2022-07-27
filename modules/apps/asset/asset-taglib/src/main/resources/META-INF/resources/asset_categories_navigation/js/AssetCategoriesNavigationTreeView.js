@@ -14,6 +14,7 @@
 
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 const AssetCategoriesNavigationTreeView = ({
@@ -25,7 +26,7 @@ const AssetCategoriesNavigationTreeView = ({
 			return;
 		}
 
-		Liferay.Util.navigate(item.url);
+		navigate(item.url);
 	};
 
 	const onClick = (event, item, expand) => {

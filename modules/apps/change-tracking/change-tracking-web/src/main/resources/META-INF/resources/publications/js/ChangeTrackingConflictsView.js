@@ -22,7 +22,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayPanel from '@clayui/panel';
 import ClayTimePicker from '@clayui/time-picker';
-import {openConfirmModal} from 'frontend-js-web';
+import {navigate, openConfirmModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import ChangeTrackingBaseScheduleView from './ChangeTrackingBaseScheduleView';
@@ -252,9 +252,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 						<div className="btn-group-item">
 							<button
 								className="btn btn-secondary"
-								onClick={() =>
-									Liferay.Util.navigate(this.redirect)
-								}
+								onClick={() => navigate(this.redirect)}
 								type="button"
 							>
 								{Liferay.Language.get('cancel')}

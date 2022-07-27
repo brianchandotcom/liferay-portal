@@ -16,6 +16,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useEventListener} from '@liferay/frontend-js-react-web';
+import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 import {
@@ -41,7 +42,7 @@ const handleKeydown = (event) => {
 	).get('resetBarsCategoryFiltersURL');
 
 	if (event.key === 'Escape' && resetBarsCategoryFiltersURL) {
-		Liferay.Util.navigate(decodeURIComponent(resetBarsCategoryFiltersURL));
+		navigate(decodeURIComponent(resetBarsCategoryFiltersURL));
 	}
 };
 
@@ -263,7 +264,7 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 				}
 			});
 
-			Liferay.Util.navigate(uri);
+			navigate(uri);
 		}
 	};
 

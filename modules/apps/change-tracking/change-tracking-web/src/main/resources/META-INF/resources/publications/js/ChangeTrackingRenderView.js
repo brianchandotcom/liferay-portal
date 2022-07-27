@@ -23,7 +23,11 @@ import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
-import {fetch, openConfirmModal} from 'frontend-js-web';
+import {
+	fetch,
+	navigate as navigateUtil,
+	openConfirmModal,
+} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 const LocalizationDropdown = ({
@@ -799,7 +803,7 @@ export default function ChangeTrackingRenderView({
 			);
 
 			if (!checkoutURL) {
-				Liferay.Util.navigate(editPortletURL.toString());
+				navigateUtil(editPortletURL.toString());
 
 				return;
 			}

@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {sub} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
@@ -104,7 +104,7 @@ const ContentOptions = ({onChangeSelect}) => {
 							key={index}
 							onClick={() => {
 								setActive(false);
-								Liferay.Util.navigate(content.url);
+								navigate(content.url);
 							}}
 						>
 							{content.label}

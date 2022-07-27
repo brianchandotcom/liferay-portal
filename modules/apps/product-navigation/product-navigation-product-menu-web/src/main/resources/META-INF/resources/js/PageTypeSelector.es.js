@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import {fetch, openToast} from 'frontend-js-web';
+import {fetch, navigate, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
@@ -79,12 +79,12 @@ function PageTypeSelector({
 
 	const handleOnAddCollectionPageClick = useCallback(() => {
 		setAddPageDropdownActive(false);
-		Liferay.Util.navigate(addCollectionLayoutURL);
+		navigate(addCollectionLayoutURL);
 	}, [addCollectionLayoutURL]);
 
 	const handleOnAddPageClick = useCallback(() => {
 		setAddPageDropdownActive(false);
-		Liferay.Util.navigate(addLayoutURL);
+		navigate(addLayoutURL);
 	}, [addLayoutURL]);
 
 	return (

@@ -14,6 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 export default function NavigationMenuItemsTreeNode({node}) {
@@ -25,7 +26,7 @@ export default function NavigationMenuItemsTreeNode({node}) {
 				className="d-block h-100 w-100"
 				href={node.url}
 				onMouseDownCapture={() => {
-					Liferay.Util.navigate(node.url);
+					navigate(node.url);
 				}}
 			>
 				{children}

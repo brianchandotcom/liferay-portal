@@ -21,6 +21,7 @@ import {FieldArray, withFormik} from 'formik';
 import {
 	debounce,
 	fetch,
+	navigate,
 	openConfirmModal,
 	openModal,
 	openToast,
@@ -328,7 +329,7 @@ class SegmentEdit extends Component {
 	 * @memberof SegmentEdit
 	 */
 	_redirect = () => {
-		Liferay.Util.navigate(this.props.redirect);
+		navigate(this.props.redirect);
 	};
 
 	/**

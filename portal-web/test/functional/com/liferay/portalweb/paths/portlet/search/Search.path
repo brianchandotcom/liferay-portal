@@ -72,6 +72,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMBEDDED_SEARCH_BAR_SCOPE_SELECT_OPTION</td>
+	<td>//header[@id='banner']//div/select[@title='Scope']/option[contains(.,'${searchScope}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FACET_DISPLAY_FREQUENCIES</td>
 	<td>//small[contains(@class,'term-count')]/preceding-sibling::span[contains(.,'${facetValueName}')]</td>
 	<td></td>

@@ -166,6 +166,34 @@ definition {
 		}
 	}
 
+	@description = "Structured Content Folder Is Deleted With Custom ERC"
+	@priority = "5"
+	test StructuredContentFolderIsDeletedWithCustomErc {
+		property portal.acceptance = "true";
+
+		task ("Given a folder with custom ERC") {
+			var responseFromCreate = HeadlessWebcontentFolderAPI.createStructuredContentFolder(
+				externalReferenceCode = "CustomeCode",
+				groupName = "Site Name",
+				name = "Test Folder");
+		}
+
+		task ("When I use deleteSiteStructuredContentFolderByExternalReferenceCode") {
+			var structuredContentFolderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+				element = "$.id",
+				responseToParse = "${responseFromCreate}");
+			var response = HeadlessWebcontentFolderAPI.deleteWebcontentFolder(
+				externalReferenceCode = "CustomeCode",
+				groupName = "Site Name");
+		}
+
+		task ("Then the folder is deleted successfully") {
+			HeadlessWebcontentFolderAPI.assertStructuredContentFolderHasDeleted(
+				expectedValue = "No JournalFolder exists with the primary key ${structuredContentFolderId}",
+				structuredContentFolderId = "${structuredContentFolderId}");
+		}
+	}
+
 	@description = "Structured Content Folder Is Deleted With Default ERC"
 	@priority = "5"
 	test StructuredContentFolderIsDeletedWithDefaultErc {

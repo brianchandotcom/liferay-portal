@@ -185,9 +185,9 @@ definition {
 
 		PageEditor.gotoDuplicate(fragmentName = "Container");
 
-		PageEditor.removeFragmentViaPageStructure(
-			duplicateFragment = "true",
-			fragmentName = "Container");
+		PageEditor.gotoEllipsisMenuItemInPageStructure(
+			fragmentName = "Container",
+			menuItem = "Delete");
 
 		AssertVisible(
 			key_text = "undo",

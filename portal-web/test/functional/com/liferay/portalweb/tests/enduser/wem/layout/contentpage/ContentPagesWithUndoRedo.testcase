@@ -482,7 +482,9 @@ definition {
 		}
 
 		task ("Remove the fragment composition via Selection panel") {
-			PageEditor.removeFragmentViaPageStructure(fragmentName = "Container");
+			PageEditor.gotoEllipsisMenuItemInPageStructure(
+				fragmentName = "Container",
+				menuItem = "Delete");
 
 			for (var fragmentName : list "Container,Grid") {
 				PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");

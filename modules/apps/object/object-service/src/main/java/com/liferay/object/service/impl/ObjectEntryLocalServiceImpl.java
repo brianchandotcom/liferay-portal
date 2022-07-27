@@ -283,6 +283,27 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteExtensionDynamicObjectDefinitionTableValues(
+			ObjectDefinition objectDefinition, long primaryKey)
+		throws PortalException {
+
+		Map<String, Serializable> extensionDynamicObjectDefinitionTableValues =
+			getExtensionDynamicObjectDefinitionTableValues(
+				objectDefinition, primaryKey);
+
+		_deleteFromTable(
+			objectDefinition.getExtensionDBTableName(),
+			objectDefinition.getPKObjectFieldDBColumnName(), primaryKey);
+
+		deleteRelatedObjectEntries(
+			0, objectDefinition.getObjectDefinitionId(), primaryKey);
+
+		_deleteFileEntries(
+			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),
+			extensionDynamicObjectDefinitionTableValues);
+	}
+
+	@Override
 	public ObjectEntry deleteObjectEntry(long objectEntryId)
 		throws PortalException {
 
@@ -315,10 +336,13 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
 		_deleteFromTable(
-			objectDefinition.getDBTableName(), objectDefinition, objectEntry);
+			objectDefinition.getDBTableName(),
+			objectDefinition.getPKObjectFieldDBColumnName(),
+			objectEntry.getObjectEntryId());
 		_deleteFromTable(
-			objectDefinition.getExtensionDBTableName(), objectDefinition,
-			objectEntry);
+			objectDefinition.getExtensionDBTableName(),
+			objectDefinition.getPKObjectFieldDBColumnName(),
+			objectEntry.getObjectEntryId());
 
 		deleteRelatedObjectEntries(
 			objectEntry.getGroupId(), objectDefinition.getObjectDefinitionId(),
@@ -1179,6 +1203,10 @@ public class ObjectEntryLocalServiceImpl
 				objectDefinitionId);
 
 		for (ObjectField objectField : objectFields) {
+			if (objectField.isSystem()) {
+				continue;
+			}
+
 			String objectFieldName = objectField.getName();
 
 			if (!Objects.equals(
@@ -1223,15 +1251,14 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _deleteFromTable(
-			String dbTableName, ObjectDefinition objectDefinition,
-			ObjectEntry objectEntry)
+			String dbTableName, String pkObjectFieldDBColumnName,
+			long primaryKey)
 		throws PortalException {
 
 		runSQL(
 			StringBundler.concat(
 				"delete from ", dbTableName, " where ",
-				objectDefinition.getPKObjectFieldDBColumnName(), " = ",
-				objectEntry.getObjectEntryId()));
+				pkObjectFieldDBColumnName, " = ", primaryKey));
 	}
 
 	private Predicate _fillAccountEntriesPredicate(

@@ -710,8 +710,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (String resourcePath : resourcePaths) {
 			_defaultDDMStructureHelper.addDDMStructures(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(JournalArticle.class),
-				_classLoader, resourcePath, serviceContext);
+				_portal.getClassNameId(JournalArticle.class), _classLoader,
+				resourcePath, serviceContext);
 		}
 
 		List<DDMStructure> ddmStructures =
@@ -1241,15 +1241,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			ddmStructureLocalService.getStructure(
 				serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(JournalArticle.class),
-				ddmStructureKey);
+				_portal.getClassNameId(JournalArticle.class), ddmStructureKey);
 
 			String ddmTemplateKey = jsonObject.getString("ddmTemplateKey");
 
 			ddmTemplateLocalService.getTemplate(
 				serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(DDMStructure.class),
-				ddmTemplateKey);
+				_portal.getClassNameId(DDMStructure.class), ddmTemplateKey);
 
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				serviceContext.getTimeZone());

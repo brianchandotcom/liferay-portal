@@ -17,16 +17,16 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {useSelectItem} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
+import {useSelectItem} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import {
 	useEditableProcessorUniqueId,
 	useSetEditableProcessorUniqueId,
-} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/EditableProcessorContext';
-import {StoreContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
-import PageContent from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/contents/components/PageContent';
+} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/EditableProcessorContext';
+import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import PageContent from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-content/components/PageContent';
 
 jest.mock(
-	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext',
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext',
 	() => {
 		const selectItem = jest.fn();
 		const hoverItem = jest.fn();
@@ -41,7 +41,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/EditableProcessorContext'
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/EditableProcessorContext'
 );
 
 const contents = [

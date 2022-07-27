@@ -18,8 +18,8 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {StoreContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
-import PageContents from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/contents/components/PageContents';
+import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import PageContents from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-content/components/PageContents';
 
 const contents = {
 	Collection: [

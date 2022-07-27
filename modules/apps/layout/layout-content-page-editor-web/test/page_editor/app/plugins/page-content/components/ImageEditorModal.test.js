@@ -14,16 +14,16 @@
 
 import '@testing-library/jest-dom/extend-expect';
 
-import updatePreviewImage from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updatePreviewImage';
-import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/backgroundImageFragmentEntryProcessor';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
-import FragmentService from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService';
-import ImageService from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/ImageService';
-import {updateFragmentsPreviewImage} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/contents/components/ImageEditorModal';
+import updatePreviewImage from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updatePreviewImage';
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/backgroundImageFragmentEntryProcessor';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
+import FragmentService from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService';
+import ImageService from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/ImageService';
+import {updateFragmentsPreviewImage} from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-content/components/ImageEditorModal';
 
 jest.mock(
-	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService',
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService',
 	() => ({
 		renderFragmentEntryLinkContent: jest.fn(() =>
 			Promise.resolve({
@@ -35,7 +35,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/ImageService',
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/ImageService',
 	() => ({
 		getFileEntry: jest.fn(() =>
 			Promise.resolve({fileEntryURL: '/new-preview-url'})
@@ -44,7 +44,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updatePreviewImage',
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updatePreviewImage',
 	() => jest.fn()
 );
 

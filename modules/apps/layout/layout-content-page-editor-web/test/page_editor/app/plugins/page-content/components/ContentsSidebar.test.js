@@ -17,9 +17,9 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
-import {StoreContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
-import ContentsSidebar from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/contents/components/ContentsSidebar';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
+import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import ContentsSidebar from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-content/components/ContentsSidebar';
 
 const PAGE_CONTENTS = [
 	{

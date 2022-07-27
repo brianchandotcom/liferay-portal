@@ -31,7 +31,7 @@ public class VersionTreeMapTest {
 
 	@Test
 	public void testPutMultipleUpgradeProcesses() {
-		VersionTreeMap treeMap = new VersionTreeMap();
+		VersionTreeMap<UpgradeProcess> treeMap = new VersionTreeMap<>();
 
 		UpgradeProcess[] upgradeProcesses = {
 			new DummyUpgradeProcess(), new DummyUpgradeProcess(),
@@ -45,7 +45,7 @@ public class VersionTreeMapTest {
 
 	@Test
 	public void testPutSingleUpgradeProcess() {
-		VersionTreeMap treeMap = new VersionTreeMap();
+		VersionTreeMap<UpgradeProcess> treeMap = new VersionTreeMap<>();
 
 		UpgradeProcess upgradeProcess = new DummyUpgradeProcess();
 
@@ -57,9 +57,11 @@ public class VersionTreeMapTest {
 	}
 
 	private void _checkTreeMapValues(
-		VersionTreeMap treeMap, UpgradeProcess[] upgradeProcesses) {
+		VersionTreeMap<UpgradeProcess> treeMap,
+		UpgradeProcess[] upgradeProcesses) {
 
-		Assert.assertEquals(upgradeProcesses.length, treeMap.size());
+		Assert.assertEquals(
+			treeMap.toString(), upgradeProcesses.length, treeMap.size());
 
 		Collection<Version> keys = treeMap.keySet();
 

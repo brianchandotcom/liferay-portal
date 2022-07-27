@@ -14,24 +14,22 @@
 
 package com.liferay.portal.kernel.version;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-
 import java.util.TreeMap;
 
 /**
  * @author Luis Ortiz
  */
-public class VersionTreeMap extends TreeMap<Version, UpgradeProcess> {
+public class VersionTreeMap<T> extends TreeMap<Version, T> {
 
-	public void put(Version key, UpgradeProcess... values) {
+	public void put(Version key, T... values) {
 		for (int i = 0; i < (values.length - 1); i++) {
-			UpgradeProcess upgradeProcess = values[i];
+			T value = values[i];
 
 			Version stepVersion = new Version(
 				key.getMajor(), key.getMinor(), key.getMicro(),
 				"step-" + (i + 1));
 
-			put(stepVersion, upgradeProcess);
+			put(stepVersion, value);
 		}
 
 		Version finalVersion = new Version(

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -325,6 +326,10 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 		if (Validator.isNull(regionCode)) {
 			throw new RegionCodeException("Region code is null");
+		}
+
+		if (CompanyThreadLocal.isInitializingPortalInstance()) {
+			return;
 		}
 
 		Region region = fetchRegion(countryId, regionCode);

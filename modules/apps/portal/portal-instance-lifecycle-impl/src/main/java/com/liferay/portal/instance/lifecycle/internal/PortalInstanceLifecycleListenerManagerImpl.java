@@ -14,6 +14,7 @@
 
 package com.liferay.portal.instance.lifecycle.internal;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.instance.lifecycle.Clusterable;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -178,7 +179,9 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		Long companyId = CompanyThreadLocal.getCompanyId();
 		Locale siteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
 
-		try {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setInitializingPortalInstance(true)) {
+
 			CompanyThreadLocal.setCompanyId(company.getCompanyId());
 			LocaleThreadLocal.setSiteDefaultLocale(null);
 

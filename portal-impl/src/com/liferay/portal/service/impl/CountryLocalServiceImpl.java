@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
@@ -411,6 +412,10 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 		if (Validator.isNull(number)) {
 			throw new CountryNumberException("Missing number");
+		}
+
+		if (CompanyThreadLocal.isInitializingPortalInstance()) {
+			return;
 		}
 
 		if (_isDuplicateCountry(fetchCountryByA2(companyId, a2), countryId)) {

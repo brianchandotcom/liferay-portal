@@ -16,10 +16,13 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCompositionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -51,6 +54,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -61,11 +65,13 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -208,6 +214,45 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
+	private void _assertFragmentEntryLinksContent(
+		JSONObject fragmentEntryLinksJSONObject,
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest,
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse) {
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			mockLiferayPortletActionRequest);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(mockLiferayPortletActionResponse);
+		Locale locale = LocaleUtil.getMostRelevantLocale();
+
+		for (String fragmentEntryLinkId :
+				fragmentEntryLinksJSONObject.keySet()) {
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					Long.valueOf(fragmentEntryLinkId));
+
+			Assert.assertNotNull(fragmentEntryLink);
+
+			DefaultFragmentRendererContext defaultFragmentRendererContext =
+				new DefaultFragmentRendererContext(fragmentEntryLink);
+
+			defaultFragmentRendererContext.setLocale(locale);
+
+			defaultFragmentRendererContext.setMode(
+				FragmentEntryLinkConstants.EDIT);
+
+			JSONObject fragmentEntryLinkJSONObject =
+				fragmentEntryLinksJSONObject.getJSONObject(fragmentEntryLinkId);
+
+			Assert.assertEquals(
+				_fragmentRendererController.render(
+					defaultFragmentRendererContext, httpServletRequest,
+					httpServletResponse),
+				fragmentEntryLinkJSONObject.getString("content"));
+		}
+	}
+
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
 			String fragmentEntryKey)
 		throws Exception {
@@ -262,19 +307,21 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		FragmentComposition fragmentComposition = _addFragmentComposition(
 			html, numberOfFragmentEntryLinks);
 
-		List<FragmentEntryLink> originalFragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				_group.getGroupId(), _layout.getPlid());
-
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(
 				fragmentComposition.getFragmentCompositionKey());
 
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		List<FragmentEntryLink> originalFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), _layout.getPlid());
+
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_processAddFragmentEntryLinks",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
 
 		List<FragmentEntryLink> actualFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
@@ -291,6 +338,10 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		Assert.assertEquals(
 			fragmentEntryLinksJSONObject.toString(), numberOfFragmentEntryLinks,
 			fragmentEntryLinksJSONObject.length());
+
+		_assertFragmentEntryLinksContent(
+			fragmentEntryLinksJSONObject, mockLiferayPortletActionRequest,
+			mockLiferayPortletActionResponse);
 	}
 
 	private Company _company;
@@ -309,6 +360,9 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
+	private FragmentRendererController _fragmentRendererController;
 
 	@DeleteAfterTestRun
 	private Group _group;

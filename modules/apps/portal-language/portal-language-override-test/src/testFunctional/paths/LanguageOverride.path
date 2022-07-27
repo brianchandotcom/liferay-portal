@@ -69,6 +69,19 @@
 	<td></td>
 	<td></td>
 </tr>
+
+<!--IMPORT_TRANSLATIONS-->
+
+<tr>
+	<td>IMPORT_TRANSLATIONS_DESCRIPTION</td>
+	<td>//div[@class='sheet-text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

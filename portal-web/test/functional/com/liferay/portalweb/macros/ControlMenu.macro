@@ -13,4 +13,10 @@ definition {
 			value1 = "${headerTitleLabel}");
 	}
 
+	macro viewHeaderTitleNotPresent {
+		AssertTextNotEquals(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "${headerTitle}");
+	}
+
 }

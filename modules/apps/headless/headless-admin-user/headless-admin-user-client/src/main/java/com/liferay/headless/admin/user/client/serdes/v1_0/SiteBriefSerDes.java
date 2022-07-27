@@ -67,6 +67,16 @@ public class SiteBriefSerDes {
 			sb.append("\"");
 		}
 
+		if (siteBrief.getDescriptiveName_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"descriptiveName_i18n\": ");
+
+			sb.append(_toJSON(siteBrief.getDescriptiveName_i18n()));
+		}
+
 		if (siteBrief.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -128,6 +138,15 @@ public class SiteBriefSerDes {
 				String.valueOf(siteBrief.getDescriptiveName()));
 		}
 
+		if (siteBrief.getDescriptiveName_i18n() == null) {
+			map.put("descriptiveName_i18n", null);
+		}
+		else {
+			map.put(
+				"descriptiveName_i18n",
+				String.valueOf(siteBrief.getDescriptiveName_i18n()));
+		}
+
 		if (siteBrief.getId() == null) {
 			map.put("id", null);
 		}
@@ -172,6 +191,15 @@ public class SiteBriefSerDes {
 			if (Objects.equals(jsonParserFieldName, "descriptiveName")) {
 				if (jsonParserFieldValue != null) {
 					siteBrief.setDescriptiveName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "descriptiveName_i18n")) {
+
+				if (jsonParserFieldValue != null) {
+					siteBrief.setDescriptiveName_i18n(
+						(Map)SiteBriefSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

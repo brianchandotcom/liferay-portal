@@ -205,6 +205,38 @@ public class Site implements Serializable {
 	protected String descriptiveName;
 
 	@Schema
+	@Valid
+	public Map<String, String> getDescriptiveName_i18n() {
+		return descriptiveName_i18n;
+	}
+
+	public void setDescriptiveName_i18n(
+		Map<String, String> descriptiveName_i18n) {
+
+		this.descriptiveName_i18n = descriptiveName_i18n;
+	}
+
+	@JsonIgnore
+	public void setDescriptiveName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			descriptiveName_i18nUnsafeSupplier) {
+
+		try {
+			descriptiveName_i18n = descriptiveName_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> descriptiveName_i18n;
+
+	@Schema
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
 	}
@@ -522,6 +554,16 @@ public class Site implements Serializable {
 			sb.append(_escape(descriptiveName));
 
 			sb.append("\"");
+		}
+
+		if (descriptiveName_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"descriptiveName_i18n\": ");
+
+			sb.append(_toJSON(descriptiveName_i18n));
 		}
 
 		if (friendlyUrlPath != null) {

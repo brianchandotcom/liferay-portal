@@ -180,8 +180,6 @@ public class StartupAction extends SimpleAction {
 		StartupHelperUtil.initResourceActions();
 
 		if (StartupHelperUtil.isDBNew()) {
-			DBUpgrader.verify();
-
 			DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 		}
 

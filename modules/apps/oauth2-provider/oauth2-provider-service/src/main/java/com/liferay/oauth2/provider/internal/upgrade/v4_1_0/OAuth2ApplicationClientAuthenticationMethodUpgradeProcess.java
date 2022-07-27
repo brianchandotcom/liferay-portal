@@ -31,10 +31,10 @@ public class OAuth2ApplicationClientAuthenticationMethodUpgradeProcess
 		runSQL(
 			"update OAuth2Application set clientAuthenticationMethod = " +
 				"'client_secret_post' where (clientAuthenticationMethod is " +
-					"null or clientAuthenticationMethod = '');");
+					"null or clientAuthenticationMethod = '')");
 		runSQL(
 			"update OAuth2Application set clientAuthenticationMethod = " +
-				"'none' where (clientSecret is null OR clientSecret = '');");
+				"'none' where (clientSecret is null OR clientSecret = '')");
 
 		alterTableAddColumn("OAuth2Application", "jwks", "VARCHAR(3999) null");
 	}

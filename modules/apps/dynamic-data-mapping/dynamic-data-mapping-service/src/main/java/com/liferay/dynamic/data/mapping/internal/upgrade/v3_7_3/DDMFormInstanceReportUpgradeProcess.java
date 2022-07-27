@@ -69,7 +69,7 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("delete from DDMFormInstanceReport;");
+		runSQL("delete from DDMFormInstanceReport");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select formInstanceId, groupId, companyId, createDate from " +

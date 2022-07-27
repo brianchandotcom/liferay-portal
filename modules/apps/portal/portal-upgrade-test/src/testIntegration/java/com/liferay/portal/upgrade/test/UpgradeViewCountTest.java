@@ -60,9 +60,9 @@ public class UpgradeViewCountTest {
 
 		_db.runSQL(
 			"create table UpgradeViewCount (primaryKey LONG not null primary " +
-				"key, companyId LONG not null, readCount LONG);");
+				"key, companyId LONG not null, readCount LONG)");
 
-		_db.runSQL("insert into UpgradeViewCount values (1, 2, 3);");
+		_db.runSQL("insert into UpgradeViewCount values (1, 2, 3)");
 	}
 
 	@After

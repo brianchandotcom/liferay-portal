@@ -65,7 +65,7 @@ public class UpgradeCTModelTest {
 
 		_db.runSQL(
 			"insert into UpgradeCTModelTest values (0, 'uuid', 1, 2, NULL, " +
-				"NULL, 'name');");
+				"NULL, 'name')");
 
 		_db.runSQL(
 			StringBundler.concat(
@@ -73,7 +73,7 @@ public class UpgradeCTModelTest {
 				"null, leftId LONG not null, rightId LONG not null, primary ",
 				"key (leftId, rightId));"));
 
-		_db.runSQL("insert into UpgradeCTModelMappingTest values (1, 2, 3);");
+		_db.runSQL("insert into UpgradeCTModelMappingTest values (1, 2, 3)");
 	}
 
 	@AfterClass

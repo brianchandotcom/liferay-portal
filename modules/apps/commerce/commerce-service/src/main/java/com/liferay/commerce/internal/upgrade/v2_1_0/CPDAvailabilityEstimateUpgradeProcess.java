@@ -71,7 +71,7 @@ public class CPDAvailabilityEstimateUpgradeProcess
 			}
 		}
 
-		runSQL("drop index IX_86A2368F on CPDAvailabilityEstimate;");
+		runSQL("drop index IX_86A2368F on CPDAvailabilityEstimate");
 
 		alterTableDropColumn("CPDAvailabilityEstimate", "CPDefinitionId");
 	}

@@ -164,7 +164,7 @@ public class CTClosureFactoryImplTest {
 
 		_db.runSQL(
 			"create table GrandParentTable (grandParentId LONG not null " +
-				"primary key, parentGrandParentId LONG);");
+				"primary key, parentGrandParentId LONG)");
 		_db.runSQL(
 			StringBundler.concat(
 				"create table ParentTable (parentId LONG not null, ",
@@ -173,7 +173,7 @@ public class CTClosureFactoryImplTest {
 
 		_db.runSQL(
 			"create unique index IX_GP_N on ParentTable (grandParentId, " +
-				"name, ctCollectionId);");
+				"name, ctCollectionId)");
 
 		_db.runSQL(
 			StringBundler.concat(

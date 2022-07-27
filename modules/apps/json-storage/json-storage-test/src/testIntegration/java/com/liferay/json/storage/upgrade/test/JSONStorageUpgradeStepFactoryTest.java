@@ -78,7 +78,7 @@ public class JSONStorageUpgradeStepFactoryTest {
 	public void tearDown() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		db.runSQL("drop table JSONStorageUpgrade;");
+		db.runSQL("drop table JSONStorageUpgrade");
 
 		_jsonStorageEntryLocalService.deleteJSONStorageEntries(
 			_className.getClassNameId(), _CLASS_PK);

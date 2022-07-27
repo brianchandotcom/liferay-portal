@@ -93,27 +93,27 @@ public class CTSQLTransformerTest {
 				"name VARCHAR(20), primary key (mainTableId, ",
 				"ctCollectionId));"));
 
-		_db.runSQL("insert into MainTable values (1, 0, 2, 3, 'mt1 v1');");
-		_db.runSQL("insert into MainTable values (2, 0, 2, 3, 'mt2 v1');");
-		_db.runSQL("insert into MainTable values (3, 0, 2, 3, 'mt3 v1');");
-		_db.runSQL("insert into MainTable values (4, 0, 2, 3, 'mt4 v1');");
-		_db.runSQL("insert into MainTable values (5, 0, 2, 4, 'mt5 v1');");
+		_db.runSQL("insert into MainTable values (1, 0, 2, 3, 'mt1 v1')");
+		_db.runSQL("insert into MainTable values (2, 0, 2, 3, 'mt2 v1')");
+		_db.runSQL("insert into MainTable values (3, 0, 2, 3, 'mt3 v1')");
+		_db.runSQL("insert into MainTable values (4, 0, 2, 3, 'mt4 v1')");
+		_db.runSQL("insert into MainTable values (5, 0, 2, 4, 'mt5 v1')");
 
 		_db.runSQL(
 			"insert into MainTable values (6, " + _getCTCollectionId(1) +
-				" , 2, 3, 'mt6 add');");
+				" , 2, 3, 'mt6 add')");
 
 		_db.runSQL(
 			"insert into MainTable values (1, " + _getCTCollectionId(2) +
-				" , 2, 3, 'mt1 modify');");
+				" , 2, 3, 'mt1 modify')");
 
 		_db.runSQL(
 			"insert into MainTable values (1, " + _getCTCollectionId(3) +
-				" , 2, 4, 'mt1 moved');");
+				" , 2, 4, 'mt1 moved')");
 
 		_db.runSQL(
 			"insert into MainTable values (7, " + _getCTCollectionId(5) +
-				" , 2, 3, 'mt7 add');");
+				" , 2, 3, 'mt7 add')");
 
 		CTModelRegistry.registerCTModel(
 			new CTModelRegistration(
@@ -133,27 +133,27 @@ public class CTSQLTransformerTest {
 				"VARCHAR(20), primary key (referenceTableId, ",
 				"ctCollectionId));"));
 
-		_db.runSQL("insert into ReferenceTable values (1, 0, 1, 'rt1 v1');");
-		_db.runSQL("insert into ReferenceTable values (2, 0, 1, 'rt2 v1');");
-		_db.runSQL("insert into ReferenceTable values (3, 0, 2, 'rt3 v1');");
-		_db.runSQL("insert into ReferenceTable values (4, 0, 2, 'rt4 v1');");
-		_db.runSQL("insert into ReferenceTable values (5, 0, 2, 'rt5 v1');");
+		_db.runSQL("insert into ReferenceTable values (1, 0, 1, 'rt1 v1')");
+		_db.runSQL("insert into ReferenceTable values (2, 0, 1, 'rt2 v1')");
+		_db.runSQL("insert into ReferenceTable values (3, 0, 2, 'rt3 v1')");
+		_db.runSQL("insert into ReferenceTable values (4, 0, 2, 'rt4 v1')");
+		_db.runSQL("insert into ReferenceTable values (5, 0, 2, 'rt5 v1')");
 
 		_db.runSQL(
 			"insert into ReferenceTable values (6, " + _getCTCollectionId(1) +
-				" , 1, 'rt6 add');");
+				" , 1, 'rt6 add')");
 
 		_db.runSQL(
 			"insert into ReferenceTable values (1, " + _getCTCollectionId(2) +
-				" , 1, 'rt1 modify');");
+				" , 1, 'rt1 modify')");
 
 		_db.runSQL(
 			"insert into ReferenceTable values (1, " + _getCTCollectionId(3) +
-				" , 2, 'rt1 moved');");
+				" , 2, 'rt1 moved')");
 
 		_db.runSQL(
 			"insert into ReferenceTable values (1, " + _getCTCollectionId(5) +
-				" , 2, 'rt1 modify2');");
+				" , 2, 'rt1 modify2')");
 	}
 
 	@AfterClass
@@ -164,11 +164,11 @@ public class CTSQLTransformerTest {
 
 		_ctPreferencesLocalService.deleteCTPreferences(ctPreferences);
 
-		_db.runSQL("drop table MainTable;");
+		_db.runSQL("drop table MainTable");
 
 		CTModelRegistry.unregisterCTModel("MainTable");
 
-		_db.runSQL("drop table ReferenceTable;");
+		_db.runSQL("drop table ReferenceTable");
 
 		CTModelRegistry.unregisterCTModel("ReferenceTable");
 
@@ -955,7 +955,7 @@ public class CTSQLTransformerTest {
 
 		_db.runSQL(
 			"insert into MainTable values (1, " + ctCollectionId7 +
-				" , 2, 3, 'temp');");
+				" , 2, 3, 'temp')");
 
 		_assertQuery(
 			"select * from MainTable where mainTableId = 1 and " +

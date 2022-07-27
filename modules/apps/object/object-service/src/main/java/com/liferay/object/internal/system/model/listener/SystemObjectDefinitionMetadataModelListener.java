@@ -108,9 +108,10 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 				return;
 			}
 
-			_objectEntryLocalService.deleteRelatedObjectEntries(
-				0, objectDefinition.getObjectDefinitionId(),
-				GetterUtil.getLong(baseModel.getPrimaryKeyObj()));
+			_objectEntryLocalService.
+				deleteExtensionDynamicObjectDefinitionTableValues(
+					objectDefinition,
+					GetterUtil.getLong(baseModel.getPrimaryKeyObj()));
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);

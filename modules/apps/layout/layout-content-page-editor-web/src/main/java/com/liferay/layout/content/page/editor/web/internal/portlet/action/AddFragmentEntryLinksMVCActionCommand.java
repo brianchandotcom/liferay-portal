@@ -124,22 +124,12 @@ public class AddFragmentEntryLinksMVCActionCommand
 		String parentItemId = ParamUtil.getString(
 			actionRequest, "parentItemId");
 
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(parentItemId);
-
-		JSONObject fragmentEntryLinksJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_layoutPageTemplatesImporter.importPageElement(
 				themeDisplay.getLayout(), layoutStructure, parentItemId,
 				fragmentComposition.getData(), position, segmentsExperienceId);
-
-		layoutStructure = LayoutStructureUtil.getLayoutStructure(
-			themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-			segmentsExperienceId);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
@@ -152,7 +142,19 @@ public class AddFragmentEntryLinksMVCActionCommand
 				fragmentEntryLinkListener.onAddFragmentEntryLink(
 					fragmentEntryLink);
 			}
+		}
 
+		JSONObject fragmentEntryLinksJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		layoutStructure = LayoutStructureUtil.getLayoutStructure(
+			themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+			segmentsExperienceId);
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(parentItemId);
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			fragmentEntryLinksJSONObject.put(
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(

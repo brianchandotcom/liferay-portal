@@ -37,6 +37,8 @@ definition {
 		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 
 		CustomerPortal.customerPortalApisTearDown();
+
+		PortalInstances.tearDownCP();
 	}
 
 	@description = "LPS-146072 - Verify that when selecting the 'Commerce' product the 'Activation Keys' page opens"

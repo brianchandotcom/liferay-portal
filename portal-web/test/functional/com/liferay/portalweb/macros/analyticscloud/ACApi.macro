@@ -24,6 +24,18 @@ definition {
 
 		return "${apiResponse}";
 	}
+
+	macro viewApiResponseForQueryData {
+		for (var type : list "${typeList}") {
+			if (contains("${apiResponse}", "${type}={href=http://osbasahbackend:8080/api/reports/${type}}")) {
+				echo("${type} - PASSED");
+			}
+			else {
+				fail("${apiResponse}");
+			}
+		}
+	}
+
 	macro getTokenValue {
 		if (IsElementNotPresent(locator1 = "ACSettings#COPY_TOKEN_BUTTON")) {
 			ACUtils.clickAnyButton(button = "Generate Token");

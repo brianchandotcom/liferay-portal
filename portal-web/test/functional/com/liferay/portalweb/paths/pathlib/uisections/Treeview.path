@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS</td>
-	<td>xpath=(//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]])[${key_index}]</td>
+	<td>xpath=(//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')]//button[*[name()='svg'][contains(@class,'icon-ellipsis')]])[${key_index}]</td>
 	<td></td>
 </tr>
 </tbody>

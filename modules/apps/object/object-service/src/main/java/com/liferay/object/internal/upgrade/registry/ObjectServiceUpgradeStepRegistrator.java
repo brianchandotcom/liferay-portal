@@ -175,8 +175,8 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.19.0", "3.19.1",
-			UpgradeStepFactory.alterColumnTypes(
-				"ObjectFieldSetting", "VARCHAR(255) null", "value"));
+			UpgradeProcessFactory.alterColumnType(
+				"ObjectFieldSetting", "value", "VARCHAR(255) null"));
 
 		registry.register(
 			"3.19.1", "3.19.2",

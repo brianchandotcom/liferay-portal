@@ -3,7 +3,7 @@
 		<input aria-describedby="${fragmentEntryLinkNamespace}-checkbox-help-text" class="custom-control-input" id="${fragmentEntryLinkNamespace}-checkbox" name="${input.name}" ${input.required?then('required', '')} type="checkbox" [#if input.value?? && input.value == 'true']checked[/#if] />
 
 		<label class="custom-control-label" for="${fragmentEntryLinkNamespace}-checkbox">
-			<span class="[#if !input.showLabel || !input.label?has_content]sr-only [/#if]custom-control-label-text">${input.label}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</span>
+			<span class="[#if !input.showLabel || !input.label?has_content]sr-only [/#if]custom-control-label-text">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</span>
 		</label>
 	</div>
 

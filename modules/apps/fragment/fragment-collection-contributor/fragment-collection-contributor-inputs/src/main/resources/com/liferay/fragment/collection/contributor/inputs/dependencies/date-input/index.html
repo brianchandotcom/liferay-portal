@@ -1,6 +1,6 @@
 <div class="date-input">
 	<div class="form-group mb-0">
-		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-date-input">${input.label}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-date-input">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
 		<div class="position-relative">
 			<input aria-describedby="${fragmentEntryLinkNamespace}-date-input-help-text" class="form-control" id="${fragmentEntryLinkNamespace}-date-input" max="9999-12-31" name="${input.name}" ${input.required?then('required', '')} type="date" [#if input.value??]value="${input.value}"[/#if] />

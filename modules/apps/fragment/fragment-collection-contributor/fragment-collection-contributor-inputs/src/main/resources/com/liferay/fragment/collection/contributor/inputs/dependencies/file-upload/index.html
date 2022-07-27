@@ -1,6 +1,6 @@
 <div class="file-upload">
 	<div class="form-group mb-0">
-		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-file-upload">${input.label}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-file-upload">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
 		<div class="align-items-center d-flex">
 			<label class="btn btn-secondary" for="${fragmentEntryLinkNamespace}-file-upload">[@clay["icon"] symbol="upload" /] ${configuration.buttonText}</label>

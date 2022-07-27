@@ -60,7 +60,9 @@ public class JavaRunSqlStylingCheck extends BaseJavaTermCheck {
 					"([\\s\\S]*)",
 				"$1[\\$$2\\$]$3");
 
-			if (newParameter.endsWith(";\"")) {
+			if (newParameter.endsWith(";\"") &&
+				!newParameter.endsWith("\";\"")) {
+
 				newParameter = StringUtil.removeLast(
 					newParameter, StringPool.SEMICOLON);
 			}

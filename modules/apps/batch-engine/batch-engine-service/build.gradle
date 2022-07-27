@@ -16,13 +16,14 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.apache.commons", name: "commons-compress", version: "1.21"
 	compileOnly group: "org.apache.commons", name: "commons-csv", version: "1.9.0"
+	compileOnly group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
+	compileOnly group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileOnly group: "org.osgi", name: "org.osgi.annotation", version: "6.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:batch-engine:batch-engine-api")
 	compileOnly project(":apps:object:object-rest-api")
-	compileOnly project(":apps:petra:petra-apache-http-components")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")

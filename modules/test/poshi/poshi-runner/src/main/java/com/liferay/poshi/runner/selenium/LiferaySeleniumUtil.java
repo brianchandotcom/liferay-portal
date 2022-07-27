@@ -419,21 +419,21 @@ public class LiferaySeleniumUtil {
 
 		baseDirNames.add(PropsValues.TEST_BASE_DIR_NAME);
 
+		if (Validator.isNotNull(PropsValues.TEST_DIRS)) {
+			Collections.addAll(baseDirNames, PropsValues.TEST_DIRS);
+		}
+
 		if (Validator.isNotNull(PropsValues.TEST_INCLUDE_DIR_NAMES)) {
 			Collections.addAll(
 				baseDirNames, PropsValues.TEST_INCLUDE_DIR_NAMES);
 		}
 
-		if (Validator.isNotNull(PropsValues.TEST_DIRS)) {
-			Collections.addAll(baseDirNames, PropsValues.TEST_DIRS);
+		if (Validator.isNotNull(PropsValues.TEST_SUBREPO_DIRS)) {
+			Collections.addAll(baseDirNames, PropsValues.TEST_SUBREPO_DIRS);
 		}
 
 		if (Validator.isNotNull(PropsValues.TEST_SUPPORT_DIRS)) {
-			Collections.addAll(baseDirNames, PropsValues.TEST_SUBREPO_DIRS);
-		}
-
-		if (Validator.isNotNull(PropsValues.TEST_SUBREPO_DIRS)) {
-			Collections.addAll(baseDirNames, PropsValues.TEST_SUBREPO_DIRS);
+			Collections.addAll(baseDirNames, PropsValues.TEST_SUPPORT_DIRS);
 		}
 
 		for (String baseDirName : baseDirNames) {

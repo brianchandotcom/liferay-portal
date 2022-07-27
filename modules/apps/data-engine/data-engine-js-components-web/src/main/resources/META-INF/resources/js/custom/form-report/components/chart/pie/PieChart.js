@@ -86,10 +86,18 @@ export default function PieChart({data, height, totalEntries, width}) {
 	};
 
 	return (
-		<div className="custom-chart-size pie-chart">
+		<div
+			className="lfr-de-recharts"
+			style={{
+				display: 'flex',
+				height: '100%',
+				minHeight: '500px',
+				width: '100%',
+			}}
+		>
 			<ResponsiveContainer
-				height={height || '99%'}
-				width={width || '50%'}
+				height={height || '100%'}
+				width={width || '70%'}
 			>
 				<RechartsPieChart>
 					<Pie
@@ -100,13 +108,13 @@ export default function PieChart({data, height, totalEntries, width}) {
 						data={data}
 						dataKey="count"
 						endAngle={-270}
-						innerRadius={80}
+						innerRadius="30%"
 						isAnimationActive={isAnimationActive}
 						label={Label}
 						labelLine={false}
 						nameKey="label"
 						onMouseOver={(_, index) => handleOnMouseOver(index)}
-						outerRadius={135}
+						outerRadius="60%"
 						paddingAngle={0}
 						startAngle={90}
 					>

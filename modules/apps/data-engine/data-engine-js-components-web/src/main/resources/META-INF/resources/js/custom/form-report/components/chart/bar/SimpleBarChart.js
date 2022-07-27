@@ -68,10 +68,18 @@ export default function SimpleBarChart({data, height, totalEntries, width}) {
 	};
 
 	return (
-		<div className="custom-chart-size simple-bar-chart">
+		<div
+			className="lfr-de-recharts"
+			style={{
+				display: 'flex',
+				height: '100%',
+				minHeight: '500px',
+				width: '100%',
+			}}
+		>
 			<ResponsiveContainer
-				height={height || '99%'}
-				width={width || '99%'}
+				height={height || '100%'}
+				width={width || '100%'}
 			>
 				<BarChart
 					data={data}

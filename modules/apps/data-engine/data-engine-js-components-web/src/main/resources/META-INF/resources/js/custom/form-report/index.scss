@@ -25,12 +25,31 @@
 	}
 }
 
+.col-md-4 {
+	.recharts-pie {
+		font-size: 10px;
+	}
+}
+
+.col-md-4,
+.col-md-6 {
+	.lfr-de__form-report {
+		.card .card-body .legend-container {
+			margin-top: 0;
+			width: 100%;
+		}
+
+		.recharts-responsive-container {
+			width: 100% !important;
+		}
+	}
+}
+
 .col-md-4,
 .col-md-6,
 .col-md-8 {
 	.lfr-de__form-report {
 		display: block;
-
 		.report-cards-area,
 		.card-item {
 			width: auto;
@@ -40,31 +59,40 @@
 	.report-cards-shortcut {
 		display: none;
 	}
-
-	.custom-chart-size {
-		&.pie-chart {
-			display: block;
-		}
-	}
 }
 
-.col-md-4 {
-	.custom-chart-size {
-		&.pie-chart {
-			display: block;
-			margin-left: -83px;
+.col-md-12 {
+	.lfr-de__form-report {
+		.report-cards-area {
+			width: 100%;
+		}
+
+		.report-cards-shortcut {
+			display: none;
+		}
+
+		@media (min-width: 1280px) {
+			.report-cards-area {
+				width: auto;
+
+				.card-item {
+					width: 808px;
+				}
+			}
+
+			.report-cards-shortcut {
+				display: block;
+			}
 		}
 	}
 }
 
 .col-md-8,
 .col-md-12 {
-	.custom-chart-size {
-		&.pie-chart {
-			margin-left: 63px;
-
-			@media screen and (max-width: 576px) {
-				display: block;
+	@media screen and (max-width: 808px) {
+		.lfr-de__form-report {
+			.report-cards-shortcut {
+				display: none;
 			}
 		}
 	}
@@ -180,8 +208,7 @@
 			}
 
 			.legend-container {
-				margin-left: 50px;
-				width: 50%;
+				width: 30%;
 
 				ul {
 					font-size: 14px;
@@ -189,6 +216,7 @@
 
 					li {
 						display: flex;
+						flex-wrap: wrap;
 						padding-bottom: 10px;
 
 						p {
@@ -332,10 +360,6 @@
 		}
 	}
 
-	.card-item {
-		width: 808px;
-	}
-
 	.card-item::before {
 		content: ' ';
 		display: block;
@@ -363,21 +387,6 @@
 		}
 		.color-text {
 			padding-top: 4px;
-		}
-	}
-
-	.custom-chart-size {
-		display: flex;
-		min-height: 400px;
-		min-width: 300px;
-		width: 100%;
-
-		&.multi-bar-chart {
-			margin-left: -32px;
-		}
-
-		&.simple-bar-chart {
-			margin-left: -43px;
 		}
 	}
 
@@ -422,6 +431,10 @@
 		ul {
 			list-style-type: none;
 		}
+	}
+
+	.lfr-de-recharts {
+		flex-wrap: wrap;
 	}
 
 	.loading-wrapper {
@@ -477,9 +490,7 @@
 	}
 
 	.recharts-responsive-container {
-		height: 400px !important;
-		min-height: 400px;
-		min-width: 400px;
+		min-height: 500px;
 	}
 
 	.report-cards-area {

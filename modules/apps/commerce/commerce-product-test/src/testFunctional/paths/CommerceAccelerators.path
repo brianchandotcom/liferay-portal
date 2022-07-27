@@ -161,6 +161,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_CARD_PRICE_VALUE</td>
+	<td>//p[@title='${key_productName}']/..//span[@class='price-value'][normalize-space(text())='$ ${key_productPrice}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINIUM_SIDEBAR_USER_AVATAR</td>
 	<td>//div[contains(@class,'minium-user-nav__avatar')]</td>
 	<td></td>

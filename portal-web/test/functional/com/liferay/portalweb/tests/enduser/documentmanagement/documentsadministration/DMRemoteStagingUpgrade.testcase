@@ -103,6 +103,10 @@ definition {
 
 		Staging.gotoPublishToLive();
 
+		Staging.configurePublishToLive(
+			checkContentNameList = "Documents and Media,Blogs",
+			contentDateRange = "All");
+
 		Staging.publishToLive(remoteStaging = "true");
 
 		Navigator.gotoSitePage(

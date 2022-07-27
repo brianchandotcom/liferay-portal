@@ -130,6 +130,10 @@ definition {
 
 		Staging.gotoPublishToLive();
 
+		Staging.configurePublishToLive(
+			checkContentNameList = "Documents and Media,Blogs",
+			contentDateRange = "All");
+
 		Staging.publishToLive();
 
 		BlogsNavigator.openToBlogEntry(
@@ -216,6 +220,10 @@ definition {
 			siteName = "Site Name");
 
 		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(
+			checkContentNameList = "Documents and Media,Blogs",
+			contentDateRange = "All");
 
 		Staging.publishToLive();
 

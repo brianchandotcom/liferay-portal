@@ -12,31 +12,23 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import {useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 
-import {
-	TestrayCaseResult,
-	getCaseResult,
-} from '../../../../../../graphql/queries';
+import {useFetch} from '../../../../../../hooks/useFetch';
 import useHeader from '../../../../../../hooks/useHeader';
 import i18n from '../../../../../../i18n';
+import {transformDataCaseResults} from '../../../../../../services/rest';
 
 const CaseResultOutlet = () => {
 	const {pathname} = useLocation();
 	const {buildId, caseResultId, projectId, routineId} = useParams();
 
-	const {data, refetch} = useQuery<{caseResult: TestrayCaseResult}>(
-		getCaseResult,
-		{
-			variables: {
-				caseResultId,
-			},
-		}
+	const {data} = useFetch(
+		`/caseresults/${caseResultId}?nestedFields=case.caseType,commentMBMessage,component,build.productVersion,build.routine,run,user&nestedFieldsDepth=3`
 	);
 
-	const caseResult = data?.caseResult;
+	const caseResult = transformDataCaseResults(data);
 
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultId}`;
 
@@ -50,7 +42,7 @@ const CaseResultOutlet = () => {
 				[
 					{
 						category: i18n.translate('case-result'),
-						title: caseResult.case?.name,
+						title: caseResult?.case?.name || '',
 					},
 				],
 				true
@@ -76,7 +68,7 @@ const CaseResultOutlet = () => {
 	}, [basePath, pathname, setTabs]);
 
 	if (caseResult) {
-		return <Outlet context={{caseResult, projectId, refetch}} />;
+		return <Outlet context={{caseResult, projectId}} />;
 	}
 
 	return null;

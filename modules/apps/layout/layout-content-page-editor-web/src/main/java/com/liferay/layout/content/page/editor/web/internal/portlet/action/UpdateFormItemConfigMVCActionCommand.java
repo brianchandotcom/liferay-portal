@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -314,31 +313,36 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private JSONArray _removeLayoutStructureItems(
-		LayoutStructure layoutStructure, List<String> itemIds) {
+		LayoutStructure layoutStructure,
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
 
 		JSONArray fragmentEntryLinkIdsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
-		for (String itemId : itemIds) {
+		for (String itemId :
+				formStyledLayoutStructureItem.getChildrenItemIds()) {
+
 			layoutStructure.markLayoutStructureItemForDeletion(
 				itemId, Collections.emptyList());
 
 			LayoutStructureItem removedLayoutStructureItem =
 				layoutStructure.getLayoutStructureItem(itemId);
 
-			if (removedLayoutStructureItem instanceof
-					FragmentStyledLayoutStructureItem) {
+			if (!(removedLayoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem)) {
 
-				FragmentStyledLayoutStructureItem
-					fragmentStyledLayoutStructureItem =
-						(FragmentStyledLayoutStructureItem)
-							removedLayoutStructureItem;
-
-				fragmentEntryLinkIdsJSONArray.put(
-					String.valueOf(
-						fragmentStyledLayoutStructureItem.
-							getFragmentEntryLinkId()));
+				continue;
 			}
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)
+						removedLayoutStructureItem;
+
+			fragmentEntryLinkIdsJSONArray.put(
+				String.valueOf(
+					fragmentStyledLayoutStructureItem.
+						getFragmentEntryLinkId()));
 		}
 
 		return fragmentEntryLinkIdsJSONArray;
@@ -394,10 +398,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 				removedLayoutStructureItemsJSONArray =
 					_removeLayoutStructureItems(
-						layoutStructure,
-						ListUtil.copy(
-							formStyledLayoutStructureItem.
-								getChildrenItemIds()));
+						layoutStructure, formStyledLayoutStructureItem);
 
 				if (formStyledLayoutStructureItem.getClassNameId() > 0) {
 					addedFragmentEntryLinks.addAll(

@@ -260,6 +260,18 @@ definition {
 			expected = "${structuredContentFolderName}");
 	}
 
+	macro assertStructuredContentFolderHasDeleted {
+		Variables.assertDefined(parameterList = "${expectedValue},${structuredContentFolderId}");
+
+		var responseToParse = HeadlessWebcontentFolderAPI._getStructuredContentFolderById(structuredContentFolderId = "${structuredContentFolderId}");
+
+		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.title");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${expectedValue}");
+	}
+
 	macro assertStructuredContentFolderHasUpdated {
 		Variables.assertDefined(parameterList = "${expectedValue},${structuredContentFolderId}");
 
@@ -333,6 +345,16 @@ definition {
 		HeadlessWebcontentFolderAPI._deleteStructuredContentFolderByErc(
 			assetLibraryId = "${assetLibraryId}",
 			externalReferenceCode = "${externalReferenceCode}");
+	}
+
+	macro deleteWebcontentFolder {
+		Variables.assertDefined(parameterList = "${externalReferenceCode},${groupName}");
+
+		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+
+		HeadlessWebcontentFolderAPI._deleteStructuredContentFolderByErc(
+			externalReferenceCode = "${externalReferenceCode}",
+			siteId = "${siteId}");
 	}
 
 	macro getElementOfCreatedStructuredContentFolder {

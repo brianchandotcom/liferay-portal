@@ -253,6 +253,26 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		}
 	}
 
+	private void _assertLayoutData(JSONObject jsonObject) {
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), _layout.getPlid());
+
+		LayoutStructure updatedLayoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		JSONObject updatedLayoutDataJSONObject =
+			updatedLayoutStructure.toJSONObject();
+
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		Assert.assertEquals(
+			updatedLayoutDataJSONObject.toString(),
+			layoutDataJSONObject.toString());
+	}
+
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
 			String fragmentEntryKey)
 		throws Exception {
@@ -342,6 +362,8 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		_assertFragmentEntryLinksContent(
 			fragmentEntryLinksJSONObject, mockLiferayPortletActionRequest,
 			mockLiferayPortletActionResponse);
+
+		_assertLayoutData(jsonObject);
 	}
 
 	private Company _company;

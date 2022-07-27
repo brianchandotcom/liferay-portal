@@ -15,9 +15,11 @@
 package com.liferay.translation.web.internal.servlet;
 
 import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +27,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -110,7 +116,25 @@ public class ExportTranslationServlet extends HttpServlet {
 					className, segmentsExperienceIds,
 					translationRequestHelper));
 
+			InfoItemPermissionProvider infoItemPermissionProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemPermissionProvider.class, className);
+
+			PermissionChecker permissionChecker =
+				_permissionCheckerFactory.create(user);
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
 			for (long classPK : classPKs) {
+				if ((infoItemPermissionProvider != null) &&
+					!infoItemPermissionProvider.hasPermission(
+						permissionChecker,
+						new InfoItemReference(className, classPK),
+						ActionKeys.VIEW)) {
+
+					throw new PrincipalException();
+				}
+
 				_addZipEntry(
 					zipWriter, className, classPK, exportMimeType,
 					sourceLanguageId, targetLanguageIds,
@@ -287,6 +311,9 @@ public class ExportTranslationServlet extends HttpServlet {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
 	private Portal _portal;

@@ -1428,6 +1428,35 @@ definition {
 		}
 	}
 
+	@description = "LPS-152906: Given the Info panel of the Content Dashboard
+	When the user accesses the Web Content information panel
+	Then share button must not be present for Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test CheckShareButtonNotPresentForWebContent {
+		task ("Create a Web Content and set a Display Page") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "WC Content");
+		}
+
+		task ("Navigate to the content Dashboard and the user accesses the Web Content information panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			ContentDashboard.openInfoPanelByDropdownMenu();
+		}
+
+		task ("Check if the share button is not present at info panel") {
+			AssertElementNotPresent(
+				key_text = "Share",
+				locator1 = "Button#ANY");
+		}
+	}
+
 	@description = "LPS-133716 When in Content Dashboard, a column with the Site / assetLibraty header is shown."
 	@priority = "2"
 	test CheckSiteAssertLibraryColumn {

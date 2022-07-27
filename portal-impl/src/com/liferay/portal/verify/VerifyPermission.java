@@ -244,8 +244,8 @@ public class VerifyPermission extends VerifyProcess {
 				StringBundler.concat(
 					"insert into ", userPagePermissionsTableName,
 					" select resourcePermissionId, primKey, 0 as plidLength, ",
-					"NULL as plidString, 0 as plid, roleId, [$FALSE$] as conflict ",
-					"from ResourcePermission where companyId = ",
+					"NULL as plidString, 0 as plid, roleId, [$FALSE$] as ",
+					"conflict from ResourcePermission where companyId = ",
 					String.valueOf(companyId),
 					" and primKey LIKE '%_LAYOUT_%' and scope = ",
 					String.valueOf(ResourceConstants.SCOPE_INDIVIDUAL),

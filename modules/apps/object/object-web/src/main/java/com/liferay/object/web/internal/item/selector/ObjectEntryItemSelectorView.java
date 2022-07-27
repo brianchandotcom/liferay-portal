@@ -316,7 +316,7 @@ public class ObjectEntryItemSelectorView
 					objectDefinitionId);
 
 			return StringUtil.toLowerCase(objectDefinition.getShortName()) +
-				"Id eq 0";
+				"Id eq '0'";
 		}
 
 		private ObjectEntry _toObjectEntry(

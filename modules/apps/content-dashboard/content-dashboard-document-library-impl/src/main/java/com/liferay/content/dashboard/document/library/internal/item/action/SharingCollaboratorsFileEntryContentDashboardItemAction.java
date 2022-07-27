@@ -79,7 +79,7 @@ public class SharingCollaboratorsFileEntryContentDashboardItemAction
 				"com_liferay_content_dashboard_web_portlet_" +
 					"ContentDashboardAdminPortlet"
 			).setMVCPath(
-				"/sharing_collaborators_button.jsp"
+				"/sharing_collaborators.jsp"
 			).setParameter(
 				"className", FileEntry.class.getName()
 			).setParameter(

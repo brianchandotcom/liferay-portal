@@ -261,8 +261,8 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		PortalUpgradeProcess.class);
 
 	private static final Version _initialSchemaVersion = new Version(0, 1, 0);
-	private static final VersionTreeMap _upgradeProcesses =
-		new VersionTreeMap() {
+	private static final VersionTreeMap<UpgradeProcess> _upgradeProcesses =
+		new VersionTreeMap<UpgradeProcess>() {
 			{
 				put(_initialSchemaVersion, new DummyUpgradeProcess());
 			}

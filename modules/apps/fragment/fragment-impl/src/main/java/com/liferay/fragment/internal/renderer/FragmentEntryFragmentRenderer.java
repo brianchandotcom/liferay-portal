@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -310,11 +311,12 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			if (fragmentEntryLink.isTypeInput()) {
 				sb.append("; var input = ");
 				sb.append(
-					JSONUtil.toString(
-						_getInputJSONObject(
-							fragmentEntryLink, httpServletRequest,
-							fragmentRendererContext.getInfoFormOptional(),
-							fragmentRendererContext.getLocale())));
+					HtmlUtil.escapeJS(
+						JSONUtil.toString(
+							_getInputJSONObject(
+								fragmentEntryLink, httpServletRequest,
+								fragmentRendererContext.getInfoFormOptional(),
+								fragmentRendererContext.getLocale()))));
 			}
 
 			sb.append("; var layoutMode = '");

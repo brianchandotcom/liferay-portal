@@ -14,10 +14,12 @@
 
 package com.liferay.object.rest.internal.graphql.dto.v1_0;
 
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
@@ -116,6 +118,14 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 				relationshipGraphQLDTOProperties.add(
 					GraphQLDTOProperty.of(relationshipName, Map.class));
+			}
+			else if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				graphQLDTOProperties.add(
+					GraphQLDTOProperty.of(
+						objectField.getName(), FileEntry.class));
 			}
 			else {
 				graphQLDTOProperties.add(

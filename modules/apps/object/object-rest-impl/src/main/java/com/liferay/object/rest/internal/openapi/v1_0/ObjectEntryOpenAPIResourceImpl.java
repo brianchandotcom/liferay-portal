@@ -14,9 +14,11 @@
 
 package com.liferay.object.rest.internal.openapi.v1_0;
 
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
@@ -310,6 +312,27 @@ public class ObjectEntryOpenAPIResourceImpl
 					new DTOProperty(
 						Collections.singletonMap("x-parent-map", "properties"),
 						"key", String.class.getSimpleName()),
+					new DTOProperty(
+						Collections.singletonMap("x-parent-map", "properties"),
+						"name", String.class.getSimpleName())));
+			dtoProperty.setRequired(objectField.isRequired());
+
+			return dtoProperty;
+		}
+
+		if (Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			DTOProperty dtoProperty = new DTOProperty(
+				Collections.singletonMap("x-parent-map", "properties"),
+				objectField.getName(), FileEntry.class.getSimpleName());
+
+			dtoProperty.setDTOProperties(
+				Arrays.asList(
+					new DTOProperty(
+						Collections.singletonMap("x-parent-map", "properties"),
+						"id", Long.class.getSimpleName()),
 					new DTOProperty(
 						Collections.singletonMap("x-parent-map", "properties"),
 						"name", String.class.getSimpleName())));

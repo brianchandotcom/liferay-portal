@@ -67,7 +67,7 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteEntries");
-				dropdownItem.setIcon("times");
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						dispatchRequestHelper.getLocale(), "delete"));

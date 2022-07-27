@@ -236,7 +236,7 @@ public class SynonymsDisplayBuilder {
 						"rowIds", synonymSet.getSynonymSetDocumentId()
 					).buildString());
 
-				dropdownItem.setIcon("times");
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					_language.get(_httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);

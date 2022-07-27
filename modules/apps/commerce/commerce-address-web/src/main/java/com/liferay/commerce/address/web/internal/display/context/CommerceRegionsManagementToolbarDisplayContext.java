@@ -67,7 +67,7 @@ public class CommerceRegionsManagementToolbarDisplayContext
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteEntries");
-				dropdownItem.setIcon("times");
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(themeDisplay.getLocale(), "delete"));
 				dropdownItem.setQuickAction(true);

@@ -63,7 +63,7 @@ public class CommerceCurrenciesManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteEntries");
 				dropdownItem.putData("cmd", Constants.DELETE);
-				dropdownItem.setIcon("times");
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(themeDisplay.getLocale(), "delete"));
 				dropdownItem.setQuickAction(true);

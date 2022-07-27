@@ -12,7 +12,7 @@
  * details.
  */
 
-import {isInputNode} from '@liferay/map-common/js/validators.es';
+import {isInputNode} from '@liferay/map-common/js/validators';
 import State, {Config} from 'metal-state';
 
 /**

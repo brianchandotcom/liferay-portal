@@ -12,7 +12,7 @@
  * details.
  */
 
-import State, {Config} from 'metal-state';
+import {EventEmitter} from 'frontend-js-web';
 
 /**
  * MarkerBase
@@ -22,7 +22,7 @@ import State, {Config} from 'metal-state';
  * @abstract
  * @review
  */
-class MarkerBase extends State {
+export default class MarkerBase extends EventEmitter {
 
 	/**
 	 * Initializes the instance with a native marker which will handle all
@@ -30,8 +30,11 @@ class MarkerBase extends State {
 	 * the future, but currently it supports the legacy API.
 	 * @review
 	 */
-	constructor(...args) {
-		super(...args);
+	constructor({location, map}) {
+		super({location, map});
+
+		this.location = location;
+		this.map = map;
 
 		this._nativeMarker = this._getNativeMarker(this.location, this.map);
 	}
@@ -66,12 +69,7 @@ class MarkerBase extends State {
 	 * @return {Object} Generated native marker
 	 * @review
 	 */
-	_getNativeMarker(
-		/* eslint-disable no-unused-vars */
-		location,
-		map
-		/* eslint-enable no-unused-vars */
-	) {
+	_getNativeMarker(_location, _map) {
 		throw new Error('Must be implemented');
 	}
 
@@ -83,11 +81,7 @@ class MarkerBase extends State {
 	 * @return {{ lat: number, lng: number }}
 	 * @review
 	 */
-	_getNormalizedEventData(
-		/* eslint-disable no-unused-vars */
-		nativeEvent
-		/* eslint-enable no-unused-vars */
-	) {
+	_getNormalizedEventData(_nativeEvent) {
 		throw new Error('Must be implemented');
 	}
 
@@ -103,38 +97,6 @@ class MarkerBase extends State {
 	}
 }
 
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-MarkerBase.STATE = {
-
-	/**
-	 * Location to be used
-	 * @review
-	 * @type {Object}
-	 */
-	location: Config.shapeOf({
-		lat: Config.number().required(),
-		lng: Config.number().required(),
-	}).value({
-		lat: 0,
-		lng: 0,
-	}),
-
-	/**
-	 * Map to be used
-	 * @review
-	 * @type {Object}
-	 */
-	map: Config.object().value({}),
-};
-
 window.Liferay = window.Liferay || {};
 
 window.Liferay.MapMarkerBase = MarkerBase;
-
-export default MarkerBase;
-export {MarkerBase};

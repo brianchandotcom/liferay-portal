@@ -12,7 +12,7 @@
  * details.
  */
 
-import GeoJSONBase from '../../src/main/resources/META-INF/resources/js/GeoJSONBase.es';
+import GeoJSONBase from '../../src/main/resources/META-INF/resources/js/GeoJSONBase';
 
 describe('GeoJSONBase', () => {
 	const features = [

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {isSubsetOf} from '../../src/main/resources/META-INF/resources/js/validators.es';
+import {isSubsetOf} from '../../src/main/resources/META-INF/resources/js/validators';
 
 describe('validators', () => {
 	describe('isSubsetOf()', () => {

@@ -12,8 +12,6 @@
  * details.
  */
 
-import State, {Config} from 'metal-state';
-
 /**
  * GeoJSONBase
  * Allows adding controls (called features) to the map, that produce
@@ -22,7 +20,10 @@ import State, {Config} from 'metal-state';
  * @abstract
  * @review
  */
-class GeoJSONBase extends State {
+
+import {EventEmitter} from 'frontend-js-web';
+
+class GeoJSONBase extends EventEmitter {
 
 	/**
 	 * Receives an object with native features data and tries
@@ -66,11 +67,7 @@ class GeoJSONBase extends State {
 	 * @return {Object[]} List of native features to be added
 	 * @review
 	 */
-	_getNativeFeatures(
-		/* eslint-disable no-unused-vars */
-		nativeFeaturesData
-		/* eslint-enable no-unused-vars */
-	) {
+	_getNativeFeatures(_nativeFeaturesData) {
 		throw new Error('Must be implemented');
 	}
 
@@ -82,30 +79,10 @@ class GeoJSONBase extends State {
 	 * @return {Object} Wrapped native feature
 	 * @review
 	 */
-	_wrapNativeFeature(
-		/* eslint-disable no-unused-vars */
-		nativeFeature
-		/* eslint-enable no-unused-vars */
-	) {
+	_wrapNativeFeature(_nativeFeature) {
 		throw new Error('Must be implemented');
 	}
 }
-
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-GeoJSONBase.STATE = {
-
-	/**
-	 * Map to be used
-	 * @review
-	 * @type {Object}
-	 */
-	map: Config.object(),
-};
 
 window.Liferay = window.Liferay || {};
 

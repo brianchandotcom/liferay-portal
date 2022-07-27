@@ -12,7 +12,7 @@
  * details.
  */
 
-import MarkerBase from '../../src/main/resources/META-INF/resources/js/MarkerBase.es';
+import MarkerBase from '../../src/main/resources/META-INF/resources/js/MarkerBase';
 
 describe('MarkerBase', () => {
 	let markerChild;

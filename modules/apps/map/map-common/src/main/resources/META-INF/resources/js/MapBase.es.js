@@ -15,9 +15,9 @@
 import {buildFragment} from 'frontend-js-web';
 import State, {Config} from 'metal-state';
 
-import GeoJSONBase from './GeoJSONBase.es';
-import MarkerBase from './MarkerBase.es';
-import {isSubsetOf} from './validators.es';
+import GeoJSONBase from './GeoJSONBase';
+import MarkerBase from './MarkerBase';
+import {isSubsetOf} from './validators';
 
 /**
  * HTML template string used for generating the home button that is

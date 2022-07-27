@@ -57,9 +57,7 @@ definition {
 			locator1 = "AuditReports#ADVANCED_SEARCH_${reportFieldKey}_FIELD",
 			value1 = "${searchTerm}");
 
-		AssertClick(
-			locator1 = "Button#SEARCH",
-			value1 = "Search");
+		Click(locator1 = "Icon#BASIC_SEARCH");
 
 		Click(locator1 = "Icon#ADVANCED_SEARCH");
 
@@ -79,9 +77,7 @@ definition {
 				locator1 = "AuditReports#ADVANCED_SEARCH_${reportFieldKey}_FIELD",
 				value1 = "${searchTerm}");
 
-			AssertClick(
-				locator1 = "Button#SEARCH",
-				value1 = "Search");
+			Click(locator1 = "Icon#BASIC_SEARCH");
 		}
 
 		AssertTextEquals(

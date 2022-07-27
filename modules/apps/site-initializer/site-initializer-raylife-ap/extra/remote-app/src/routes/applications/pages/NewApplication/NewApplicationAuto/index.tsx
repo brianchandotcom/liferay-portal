@@ -20,8 +20,12 @@ import classNames from 'classnames';
 import {ReactNode, useContext, useState} from 'react';
 
 import ClayIconProvider from '../../../../../common/context/ClayIconProvider';
-import {createOrUpdateRaylifeApplication} from '../../../../../common/services';
+import {
+	createOrUpdateRaylifeApplication,
+	exitRaylifeApplication,
+} from '../../../../../common/services';
 import {CONSTANTS} from '../../../../../common/utils/constants';
+import {redirectTo} from '../../../../../common/utils/liferay';
 import {
 	ACTIONS,
 	NewApplicationAutoContext,
@@ -109,10 +113,32 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 
 	const handleSaveChanges = () => {
 		setSaveChanges(true);
-
 		dispatch({payload: false, type: ACTIONS.SET_HAS_FORM_CHANGE});
+		createOrUpdateRaylifeApplication(
+			state,
+			CONSTANTS.APPLICATION_STATUS.OPEN
+		).then((response) => {
+			const {
+				data: {id},
+			} = response;
+			dispatch({payload: {id}, type: ACTIONS.SET_APPLICATION_ID});
+		});
 
 		return saveChanges;
+	};
+
+	const handleExitClick = () => {
+		exitRaylifeApplication(
+			state,
+			CONSTANTS.APPLICATION_STATUS.INCOMPLETE
+		).then((response) => {
+			const {
+				data: {id},
+			} = response;
+			dispatch({payload: {id}, type: ACTIONS.SET_APPLICATION_ID});
+		});
+
+		redirectTo('dashboard');
 	};
 
 	const ChangeStatusMessage = ({text}: any) => (
@@ -152,6 +178,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 							<ClayButton
 								className="text-uppercase"
 								displayType={null}
+								onClick={() => handleExitClick()}
 								small={true}
 							>
 								Exit

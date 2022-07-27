@@ -321,9 +321,10 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 			sb.append("; var layoutMode = '");
 			sb.append(
-				ParamUtil.getString(
-					_portal.getOriginalServletRequest(httpServletRequest),
-					"p_l_mode", Constants.VIEW));
+				HtmlUtil.escapeJS(
+					ParamUtil.getString(
+						_portal.getOriginalServletRequest(httpServletRequest),
+						"p_l_mode", Constants.VIEW)));
 			sb.append("';");
 			sb.append(fragmentEntryLink.getJs());
 			sb.append(";}());</script>");

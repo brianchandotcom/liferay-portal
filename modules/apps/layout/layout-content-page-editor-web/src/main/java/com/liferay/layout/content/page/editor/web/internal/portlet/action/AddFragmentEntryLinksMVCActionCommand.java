@@ -142,14 +142,6 @@ public class AddFragmentEntryLinksMVCActionCommand
 			segmentsExperienceId);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			fragmentEntryLinksJSONObject.put(
-				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-					fragmentEntryLink,
-					_portal.getHttpServletRequest(actionRequest),
-					_portal.getHttpServletResponse(actionResponse),
-					layoutStructure));
-
 			List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
 				_fragmentEntryLinkListenerTracker.
 					getFragmentEntryLinkListeners();
@@ -160,6 +152,14 @@ public class AddFragmentEntryLinksMVCActionCommand
 				fragmentEntryLinkListener.onAddFragmentEntryLink(
 					fragmentEntryLink);
 			}
+
+			fragmentEntryLinksJSONObject.put(
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+					fragmentEntryLink,
+					_portal.getHttpServletRequest(actionRequest),
+					_portal.getHttpServletResponse(actionResponse),
+					layoutStructure));
 		}
 
 		return JSONUtil.put(

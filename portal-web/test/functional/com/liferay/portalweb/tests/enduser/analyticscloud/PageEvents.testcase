@@ -103,10 +103,8 @@ definition {
 			ScrollWebElementIntoView(
 				key_entryTitle = "Blogs Entry Title 7",
 				locator1 = "BlogsEntry#TITLE");
-		}
 
-		task ("Wait for sending requests") {
-			ACUtils.waitForSendingRequest();
+			ACUtils.waitForScrollEvent();
 		}
 
 		task ("View the depth of pageDepthReached event is 25") {
@@ -182,10 +180,8 @@ definition {
 			ScrollWebElementIntoView(
 				key_entryTitle = "Blogs Entry Title 4",
 				locator1 = "BlogsEntry#TITLE");
-		}
-
-		task ("Wait for sending requests") {
-			ACUtils.waitForSendingRequest();
+			
+			ACUtils.waitForScrollEvent();
 		}
 
 		task ("View the depth of pageDepthReached event is 50") {
@@ -261,10 +257,8 @@ definition {
 			ScrollWebElementIntoView(
 				key_entryTitle = "Blogs Entry Title 2",
 				locator1 = "BlogsEntry#TITLE");
-		}
 
-		task ("Wait for sending requests") {
-			ACUtils.waitForSendingRequest();
+			ACUtils.waitForScrollEvent();
 		}
 
 		task ("View the depth of pageDepthReached event is 75") {

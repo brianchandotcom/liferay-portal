@@ -1090,6 +1090,13 @@ definition {
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
 	}
 
+	macro waitForScrollEvent {
+
+		// Pausing is necessary for poshi to scroll down to specific element. For more info see LRAC-11569
+
+		Pause(locator1 = "5000");
+	}
+
 	macro waitForSendingRequest {
 		if (isSet(time)) {
 

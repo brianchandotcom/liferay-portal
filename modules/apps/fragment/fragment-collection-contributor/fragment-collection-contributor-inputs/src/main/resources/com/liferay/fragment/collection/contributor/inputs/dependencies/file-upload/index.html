@@ -3,11 +3,11 @@
 		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-file-upload">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
 		<div class="align-items-center d-flex">
-			<label class="btn btn-secondary" for="${fragmentEntryLinkNamespace}-file-upload">[@clay["icon"] symbol="upload" /] ${configuration.buttonText}</label>
+			<label class="btn btn-secondary" for="${fragmentEntryLinkNamespace}-file-upload">[@clay["icon"] symbol="upload" /] ${htmlUtil.escape(configuration.buttonText)}</label>
 
 			<small class="inline-item inline-item-after">
 				<strong class="forms-file-upload-file-name">
-					[#if input.attributes.fileName??]${input.attributes.fileName}[/#if]
+					[#if input.attributes.fileName??]${htmlUtil.escape(input.attributes.fileName)}[/#if]
 				</strong>
 			</small>
 

@@ -131,7 +131,7 @@ public class CTSQLTransformerTest {
 				"create table ReferenceTable (referenceTableId LONG not null, ",
 				"ctCollectionId LONG not null, mainTableId LONG, name ",
 				"VARCHAR(20), primary key (referenceTableId, ",
-				"ctCollectionId));"));
+				"ctCollectionId))"));
 
 		_db.runSQL("insert into ReferenceTable values (1, 0, 1, 'rt1 v1')");
 		_db.runSQL("insert into ReferenceTable values (2, 0, 1, 'rt2 v1')");

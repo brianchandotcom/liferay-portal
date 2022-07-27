@@ -3696,7 +3696,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			rowEntry = "${itemName}");
 	}
 
-	macro gotoEllipsisMenuItemInPageStructure {
+	macro gotoEllipsisMenuItemInPageElementsPanel {
 		if (!(isSet(position))) {
 			var position = "1";
 		}
@@ -3711,14 +3711,16 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 		}
 
-		Click.clickNoWaitForVisible(
+		Click.clickAtNotVisible(
 			key_index = "${position}",
 			key_nodeName = "${fragmentName}",
 			locator1 = "Treeview#PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "${menuItem}");
 
-		PageEditor.waitForAutoSave();
+		if ("${menuItem}" != "Rename") {
+			PageEditor.waitForAutoSave();
+		}
 	}
 
 	macro gotoSaveAsFragment {

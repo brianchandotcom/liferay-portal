@@ -23,6 +23,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -76,6 +78,13 @@ public class ExportTranslationServlet extends HttpServlet {
 		throws IOException {
 
 		try {
+			User user = _portal.getUser(httpServletRequest);
+
+			if ((user == null) || user.isDefaultUser()) {
+				throw new PrincipalException.MustBeAuthenticated(
+					StringPool.BLANK);
+			}
+
 			long[] segmentsExperienceIds = ParamUtil.getLongValues(
 				httpServletRequest, "segmentsExperienceIds");
 

@@ -19,6 +19,52 @@ definition {
 	}
 
 	@priority = "5"
+	test CacheIsClearedOnCompanyRemoval {
+		property test.name.skip.portal.instance = "DatabasePartitioningCache#CacheIsClearedOnCompanyRemoval";
+
+		PortalInstances.openVirtualInstancesAdmin();
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		User.firstLoginPG();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		var secondCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+
+		PortalCache.putCache(
+			cacheValue = "test.value",
+			companyId = "${secondCompanyId}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.deleteCP(virtualHost = "www.able.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		PortalCache.getCache(
+			cacheValue = "null",
+			companyId = "${secondCompanyId}");
+	}
+
+	@priority = "5"
 	test CacheIsOnlyPopulatedToSingleCompany {
 		property test.name.skip.portal.instance = "DatabasePartitioningCache#CacheIsOnlyPopulatedToSingleCompany";
 

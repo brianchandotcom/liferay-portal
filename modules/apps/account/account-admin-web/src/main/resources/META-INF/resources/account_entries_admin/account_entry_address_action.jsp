@@ -31,7 +31,7 @@ AddressDisplay addressDisplay = (AddressDisplay)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.UPDATE) %>">
+	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), AccountActionKeys.MANAGE_ADDRESSES) %>">
 		<portlet:renderURL var="editAccountEntryAddressURL">
 			<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_entry_address" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />

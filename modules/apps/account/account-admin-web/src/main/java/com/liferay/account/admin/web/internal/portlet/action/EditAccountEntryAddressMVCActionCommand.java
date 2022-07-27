@@ -14,6 +14,7 @@
 
 package com.liferay.account.admin.web.internal.portlet.action;
 
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -148,7 +148,7 @@ public class EditAccountEntryAddressMVCActionCommand
 		_accountEntryModelResourcePermission.check(
 			themeDisplay.getPermissionChecker(),
 			ParamUtil.getLong(actionRequest, "accountEntryId"),
-			ActionKeys.UPDATE);
+			AccountActionKeys.MANAGE_ADDRESSES);
 	}
 
 	private void _updateAccountEntryAddress(ActionRequest actionRequest)

@@ -62,7 +62,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 				</portlet:renderURL>
 
 				<%
-				if (!AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.UPDATE)) {
+				if (!AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), AccountActionKeys.MANAGE_ADDRESSES)) {
 					rowURL = null;
 				}
 				%>

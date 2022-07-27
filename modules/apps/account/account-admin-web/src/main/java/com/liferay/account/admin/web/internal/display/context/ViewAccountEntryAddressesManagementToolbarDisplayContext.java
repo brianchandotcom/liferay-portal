@@ -17,6 +17,7 @@ package com.liferay.account.admin.web.internal.display.context;
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.admin.web.internal.display.AddressDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -101,7 +101,8 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 
 		if (AccountEntryPermission.contains(
 				themeDisplay.getPermissionChecker(),
-				accountEntryDisplay.getAccountEntryId(), ActionKeys.UPDATE)) {
+				accountEntryDisplay.getAccountEntryId(),
+				AccountActionKeys.MANAGE_ADDRESSES)) {
 
 			return Collections.<String>singletonList(
 				"deleteAccountEntryAddresses");
@@ -198,7 +199,7 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 		return AccountEntryPermission.contains(
 			themeDisplay.getPermissionChecker(),
 			ParamUtil.getLong(liferayPortletRequest, "accountEntryId"),
-			ActionKeys.UPDATE);
+			AccountActionKeys.MANAGE_ADDRESSES);
 	}
 
 	@Override

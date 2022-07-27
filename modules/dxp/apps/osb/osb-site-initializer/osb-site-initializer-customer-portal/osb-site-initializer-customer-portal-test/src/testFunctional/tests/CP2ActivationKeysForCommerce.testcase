@@ -94,4 +94,74 @@ definition {
 		}
 	}
 
+	@description = "Verify that when the DXP version of the project is below 7.3, clicking on subscriptions the user can select from a drop-down list their LES subscriptions."
+	@priority = "5"
+	test CanViewTheDropdownListWhenTheVersionIsLowerThanTheCurrentOne {
+
+		property portal.upstream = "quarantine";
+		//Reason: Not eble to reproduce scenario without OKTA workaround.
+
+		task ("Assert that project has DPX 7.2") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+		}
+
+		task ("Assert Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+
+			//Assert DropDown list of LES subscription			
+		}
+
+		task ("Go to Customer Portal") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Assert that project has DPX 7.1") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.1");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.1");
+		}
+
+		task ("Assert Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+
+			//Assert DropDown list of LES subscription		
+		}
+
+		task ("Go to Customer Portal") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Assert that project has DPX 7.0") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.0");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.0");
+		}
+
+		task ("Assert Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+
+			//Assert DropDown list of LES subscription		
+		}
+	}
+
 }

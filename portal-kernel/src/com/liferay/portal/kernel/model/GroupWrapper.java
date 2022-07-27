@@ -457,6 +457,13 @@ public class GroupWrapper
 	}
 
 	@Override
+	public Map<java.util.Locale, String> getDescriptiveNameMap()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getDescriptiveNameMap();
+	}
+
+	@Override
 	public String getDisplayURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 

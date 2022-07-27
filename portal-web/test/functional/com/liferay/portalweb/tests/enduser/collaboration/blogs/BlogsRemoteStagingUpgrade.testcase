@@ -103,9 +103,15 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Remote Site");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title With Video",
+			layoutName = "Staging Test Page",
+			siteURLKey = "remote-site");
+
+		BlogsEntry.viewEntryPG(
+			embedVideo = "true",
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title With Video");
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title With Inline Image",

@@ -705,33 +705,33 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void assertTableContents(String locator, String tableString)
 		throws Exception {
 
-		List<List<String>> parsedTable = getParsedTable(locator);
+		List<List<String>> htmlRawDataList = getRawDataList(locator);
 
-		List<List<String>> parsedUserTable = TableUtil.getRawDataListFromString(
+		List<List<String>> rawDataList = TableUtil.getRawDataListFromString(
 			tableString);
 
-		if (parsedTable.size() != parsedUserTable.size()) {
+		if (htmlRawDataList.size() != rawDataList.size()) {
 			throw new Exception("Table row numbers do not match");
 		}
 
-		for (int i = 0; i < parsedTable.size(); i++) {
-			List<String> rowContent = parsedTable.get(i);
+		for (int i = 0; i < htmlRawDataList.size(); i++) {
+			List<String> htmlRows = htmlRawDataList.get(i);
 
-			List<String> rowUserContent = parsedUserTable.get(i);
+			List<String> rows = rawDataList.get(i);
 
-			if (rowContent.size() != rowUserContent.size()) {
+			if (htmlRows.size() != rows.size()) {
 				throw new Exception("Table entry numbers do not match");
 			}
 
-			for (int j = 0; j < rowContent.size(); j++) {
-				String entry = rowContent.get(j);
+			for (int j = 0; j < htmlRows.size(); j++) {
+				String htmlEntry = htmlRows.get(j);
 
-				String userEntry = rowUserContent.get(j);
+				String entry = rows.get(j);
 
-				if (!entry.equals(userEntry)) {
+				if (!htmlEntry.equals(entry)) {
 					throw new Exception(
-						"Expected text: " + userEntry + "\nActual Text: " +
-							entry);
+						"Expected text: " + entry + "\nActual Text: " +
+							htmlEntry);
 				}
 			}
 		}
@@ -1368,8 +1368,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return _webDriver.getPageSource();
 	}
 
-	public List<List<String>> getParsedTable(String locator) {
-		List<List<String>> parsedTable = new ArrayList<>();
+	protected List<List<String>> getRawDataList(String locator) {
+		List<List<String>> rawDataList = new ArrayList<>();
 
 		List<WebElement> rowsList = findElements(By.xpath(locator + "//tr"));
 		List<WebElement> columnsList;
@@ -1386,10 +1386,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				rowContent.add(entryContent.getText());
 			}
 
-			parsedTable.add(rowContent);
+			rawDataList.add(rowContent);
 		}
 
-		return parsedTable;
+		return rawDataList;
 	}
 
 	@Override

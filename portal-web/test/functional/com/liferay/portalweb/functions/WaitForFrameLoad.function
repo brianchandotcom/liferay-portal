@@ -7,13 +7,16 @@ definition {
 		}
 
 		var javascript = '''
-			window.onload = function() {
-				document.querySelector('iframe[src*="dialog-iframe-popup"]').onload = function() {
-					setTimeout(() => {
-						console.log("IFrame is fully loaded");
-					}, "${locator1}");
-				};
-			};
+			window.addEventListener(
+				'load',
+				() => {
+					document.querySelector('iframe[src*="dialog-iframe-popup"]').onload = function() {
+						setTimeout(() => {
+							console.log("IFrame is fully loaded");
+						}, "${locator1}");
+				}},
+				{once: true}
+			);
 		''';
 
 		selenium.runScript("${javascript}");

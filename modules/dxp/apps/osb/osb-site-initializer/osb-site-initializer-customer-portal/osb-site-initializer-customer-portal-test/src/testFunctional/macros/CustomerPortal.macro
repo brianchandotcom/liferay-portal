@@ -1,11 +1,5 @@
 definition {
 
-	macro assertPageTitle {
-		AssertElementPresent(
-			key_title = "${title}",
-			locator1 = "CustomerPortalSite#PAGE_TITLE");
-	}
-
 	macro accountTableProject {
 		Click(locator1 = "CustomerPortalSite#ACCOUNTS_PROJECTS");
 	}
@@ -73,6 +67,12 @@ definition {
 		else if (isSet(idpAttributeMapping)) {
 			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMapping}");
 		}
+	}
+
+	macro assertPageTitle {
+		AssertElementPresent(
+			key_title = "${title}",
+			locator1 = "CustomerPortalSite#PAGE_TITLE");
 	}
 
 	macro assertQuickLinksPanelInfo {

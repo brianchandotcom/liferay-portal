@@ -1,20 +1,21 @@
-definitions {
+definition {
 
-    macro assertDropDownSelection {
-        var key_option = "${option}";
+	macro assertDropDownSelection {
+		var key_option = "${option}";
 
-        AssertElementPresent(locator1 = "CP2ActivationKeys#DROPDOWN");
+		AssertElementPresent(locator1 = "CP2ActivationKeys#DROPDOWN");
 
-        AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN");
-    }
+		AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN");
+	}
 
-    macro assertInstructionsTable {
-        for (var text : list "${textList}") {
-            var key_text = "${text}";
+	macro assertInstructionsTable {
+		for (var text : list "${textList}") {
+			var key_text = "${text}";
 
-            AssertElementPresent(locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+			AssertElementPresent(locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
 
-            AssertVisible(locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
-        }
-    }
+			AssertVisible(locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+		}
+	}
+
 }

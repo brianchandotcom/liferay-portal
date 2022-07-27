@@ -185,7 +185,7 @@ definition {
 
 		PageEditor.gotoDuplicate(fragmentName = "Container");
 
-		PageEditor.gotoEllipsisMenuItemInPageStructure(
+		PageEditor.gotoEllipsisMenuItemInPageElementsPanel(
 			fragmentName = "Container",
 			menuItem = "Delete");
 

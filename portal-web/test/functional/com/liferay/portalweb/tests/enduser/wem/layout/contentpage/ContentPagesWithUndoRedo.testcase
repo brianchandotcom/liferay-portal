@@ -482,7 +482,7 @@ definition {
 		}
 
 		task ("Remove the fragment composition via Selection panel") {
-			PageEditor.gotoEllipsisMenuItemInPageStructure(
+			PageEditor.gotoEllipsisMenuItemInPageElementsPanel(
 				fragmentName = "Container",
 				menuItem = "Delete");
 

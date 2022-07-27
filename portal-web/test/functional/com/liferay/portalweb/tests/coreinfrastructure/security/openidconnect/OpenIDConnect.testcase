@@ -15,7 +15,7 @@ definition {
 	@description = "This is a use case for LPS-139642 TC-10: A regular role is assigned to OIDC user if a regular role is defined through the property."
 	@priority = "5"
 	test AssertRegularRoleIsAssignedToOIDCUser {
-		property custom.properties = "open.id.connect.user.info.processor.impl.issuer=https://dev-5081331.okta.com/${line.separator}open.id.connect.user.info.processor.impl.regular.role=Power User";
+		property custom.properties = "open.id.connect.user.info.processor.impl.issuer=https://dev-5081331.okta.com/${line.separator}open.id.connect.user.info.processor.impl.regular.role=Administrator";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
 		property portal.acceptance = "true";
@@ -38,10 +38,10 @@ definition {
 				userPassword = "${userPassword}");
 		}
 
-		task ("Then: Verify that power user role is assigned to OIDC user") {
+		task ("Then: Verify that administrator role is assigned to OIDC user") {
 			MyAccount.openMyAccountAdmin();
 
-			User.viewUserInfomationRolesCP(roleTitle = "Power User");
+			User.viewUserInfomationRolesCP(roleTitle = "Administrator");
 		}
 	}
 

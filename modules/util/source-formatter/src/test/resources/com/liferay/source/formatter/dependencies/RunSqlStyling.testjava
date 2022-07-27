@@ -23,7 +23,7 @@ public class RunSqlStyling extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("update Marketplace_App set required = FALSE");
+		runSQL("update Marketplace_App set required = FALSE;");
 	}
 
 }

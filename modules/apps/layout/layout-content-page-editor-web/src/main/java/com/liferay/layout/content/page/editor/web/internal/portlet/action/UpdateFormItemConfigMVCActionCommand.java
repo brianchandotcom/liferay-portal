@@ -416,6 +416,21 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 						themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 						segmentsExperienceId, layoutStructure.toString());
 
+			List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
+				_fragmentEntryLinkListenerTracker.
+					getFragmentEntryLinkListeners();
+
+			for (FragmentEntryLink addedFragmentEntryLink :
+					addedFragmentEntryLinks) {
+
+				for (FragmentEntryLinkListener fragmentEntryLinkListener :
+						fragmentEntryLinkListeners) {
+
+					fragmentEntryLinkListener.onAddFragmentEntryLink(
+						addedFragmentEntryLink);
+				}
+			}
+
 			JSONObject addedFragmentEntryLinksJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
@@ -424,10 +439,6 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 			LayoutStructure updatedLayoutStructure = LayoutStructure.of(
 				layoutPageTemplateStructure.getData(segmentsExperienceId));
-
-			List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
-				_fragmentEntryLinkListenerTracker.
-					getFragmentEntryLinkListeners();
 
 			for (FragmentEntryLink addedFragmentEntryLink :
 					addedFragmentEntryLinks) {
@@ -438,13 +449,6 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 					_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 						addedFragmentEntryLink, httpServletRequest,
 						httpServletResponse, updatedLayoutStructure));
-
-				for (FragmentEntryLinkListener fragmentEntryLinkListener :
-						fragmentEntryLinkListeners) {
-
-					fragmentEntryLinkListener.onAddFragmentEntryLink(
-						addedFragmentEntryLink);
-				}
 			}
 
 			jsonObject.put(

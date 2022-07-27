@@ -5,7 +5,7 @@
 
 	<button [#if input.showHelpText && input.helpText?has_content]aria-describedby="${fragmentEntryLinkNamespace}-help-text" [/#if] aria-haspopup="${fragmentEntryLinkNamespace}-listbox" aria-labelledby="${fragmentEntryLinkNamespace}-label ${fragmentEntryLinkNamespace}-button" class="form-control pr-5 text-left text-truncate" id="${fragmentEntryLinkNamespace}-button" type="button">
 		<span class="forms-select-from-list-label text-secondary">
-			[#if input.attributes.selectedOptionLabel??]${input.attributes.selectedOptionLabel}[#else]${languageUtil.get(locale, "choose-an-option")}[/#if]
+			[#if input.attributes.selectedOptionLabel??]${htmlUtil.escape(input.attributes.selectedOptionLabel)}[#else]${languageUtil.get(locale, "choose-an-option")}[/#if]
 		</span>
 
 		[@clay["icon"] symbol="caret-double" /]
@@ -49,13 +49,13 @@
 			[/#if]
 
 			<li class="dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
-				${option.label}
+				${htmlUtil.escape(option.label)}
 			</li>
 		[/#list]
 
 			[#if !selectedValueFoundInOptions && input.value?? && input.attributes.selectedOptionLabel??]
 				<li class="dropdown-item" data-option-value="${input.value}" id="${fragmentEntryLinkNamespace}-option-${input.value}" role="option">
-					${input.attributes.selectedOptionLabel}
+					${htmlUtil.escape(input.attributes.selectedOptionLabel)}
 				</li>
 			[/#if]
 

@@ -61,29 +61,35 @@ public class MiniumSiteInitializerUpgradeProcess
 			 PreparedStatement preparedStatement4 =
 				 AutoBatchPreparedStatementUtil.autoBatch(
 					 connection,
+					 "update LayoutFriendlyURL set privateLayout = ? " +
+					 "where groupId = ? and plid = ? and privateLayout = ?");
+
+			 PreparedStatement preparedStatement5 =
+				 AutoBatchPreparedStatementUtil.autoBatch(
+					 connection,
 					 "select max(layoutId) from Layout where groupId = ? " +
 					 "and privateLayout = ?");
 
-			 PreparedStatement preparedStatement5 =
+			 PreparedStatement preparedStatement6 =
 				 AutoBatchPreparedStatementUtil.autoBatch(
 					 connection,
 					 "select layoutId, parentLayoutId from Layout where " +
 					 "groupId = ? and layoutId > ? and parentLayoutId > 0");
 
-			 PreparedStatement preparedStatement6 =
+			 PreparedStatement preparedStatement7 =
 				 AutoBatchPreparedStatementUtil.autoBatch(
 					 connection,
 					 "update Layout set parentLayoutId = ? where " +
 					 "groupId = ? and layoutId = ? and parentLayoutId > 0");
 
-			 PreparedStatement preparedStatement7 =
+			 PreparedStatement preparedStatement8 =
 				 AutoBatchPreparedStatementUtil.autoBatch(
 					 connection,
 					 "select plid from Layout where friendlyURL != '/login' " +
 					 "and groupId = ? and parentPlid = 0 and type_ = " +
 					 "'portlet' order by priority");
 
-			 PreparedStatement preparedStatement8 =
+			 PreparedStatement preparedStatement9 =
 				 AutoBatchPreparedStatementUtil.autoBatch(
 					 connection,
 					 "update Layout set priority = ? where groupId = ? and " +
@@ -96,17 +102,18 @@ public class MiniumSiteInitializerUpgradeProcess
 					long siteGroupId = resultSet.getLong("siteGroupId");
 
 					long maxLayoutId = _getMaxLayoutId(
-						preparedStatement4, siteGroupId);
+						preparedStatement5, siteGroupId);
 
 					_updateLayoutIds(
-						preparedStatement2, preparedStatement3, siteGroupId);
+						preparedStatement2, preparedStatement3,
+						preparedStatement4, siteGroupId);
 
 					_updateParentLayoutIds(
-						maxLayoutId, preparedStatement5, preparedStatement6,
+						maxLayoutId, preparedStatement6, preparedStatement7,
 						siteGroupId);
 
 					_updateLayoutPriorities(
-						preparedStatement7, preparedStatement8, siteGroupId);
+						preparedStatement8, preparedStatement9, siteGroupId);
 				}
 			}
 		}
@@ -130,7 +137,8 @@ public class MiniumSiteInitializerUpgradeProcess
 
 	private void _updateLayoutIds(
 			PreparedStatement preparedStatement1,
-			PreparedStatement preparedStatement2, long siteGroupId)
+			PreparedStatement preparedStatement2,
+			PreparedStatement preparedStatement3, long siteGroupId)
 		throws SQLException {
 
 		preparedStatement1.setLong(1, siteGroupId);
@@ -157,10 +165,22 @@ public class MiniumSiteInitializerUpgradeProcess
 				preparedStatement2.setBoolean(5, true);
 
 				preparedStatement2.addBatch();
+
+				preparedStatement3.setBoolean(1, false);
+
+				preparedStatement3.setLong(2, siteGroupId);
+
+				preparedStatement3.setLong(3, plid);
+
+				preparedStatement3.setBoolean(4, true);
+
+				preparedStatement3.addBatch();
 			}
 		}
 
 		preparedStatement2.executeBatch();
+
+		preparedStatement3.executeBatch();
 	}
 
 	private void _updateLayoutPriorities(

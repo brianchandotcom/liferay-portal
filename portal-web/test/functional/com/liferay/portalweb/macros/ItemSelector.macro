@@ -983,6 +983,8 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
+			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
 			for (var menuItem : list "File Upload,Folder,External Video Shortcut") {
 				MenuItem.viewPresent(menuItem = "${menuItem}");
 			}
@@ -990,6 +992,8 @@ definition {
 
 		if (isSet(addImageOptions)) {
 			LexiconEntry.gotoAdd();
+
+			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 			for (var menuItem : list "File Upload,Folder") {
 				MenuItem.viewPresent(menuItem = "${menuItem}");
@@ -1004,6 +1008,8 @@ definition {
 			ItemSelector.switchTab(navTab = "Documents and Media");
 
 			LexiconEntry.gotoAdd();
+
+			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 			for (var menuItem : list "File Upload,Folder,External Video Shortcut") {
 				MenuItem.viewPresent(menuItem = "${menuItem}");

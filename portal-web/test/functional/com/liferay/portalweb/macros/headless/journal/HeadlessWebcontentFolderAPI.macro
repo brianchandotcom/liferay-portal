@@ -82,7 +82,7 @@ definition {
 			var api = "asset-libraries/${assetLibraryId}/structured-content-folders/by-external-reference-code/${externalReferenceCode}";
 		}
 		else {
-			var api = "sites/${siteId}/structured-contents-folders/by-external-reference-code/${externalReferenceCode}";
+			var api = "sites/${siteId}/structured-content-folders/by-external-reference-code/${externalReferenceCode}";
 		}
 
 		var curl = '''
@@ -160,7 +160,7 @@ definition {
 			var api = "asset-libraries/${assetLibraryId}/structured-content-folders/by-external-reference-code/${externalReferenceCode}";
 		}
 		else {
-			var api = "sites/${siteId}/structured-contents-folders/by-external-reference-code/${externalReferenceCode}";
+			var api = "sites/${siteId}/structured-content-folders/by-external-reference-code/${externalReferenceCode}";
 		}
 
 		if (!(isSet(externalReferenceCodeInBody))) {
@@ -363,6 +363,17 @@ definition {
 			name = "${name}");
 
 		return "${response}";
+	}
+
+	macro updateWebcontentFolder {
+		Variables.assertDefined(parameterList = "${externalReferenceCode},${groupName},${name}");
+
+		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+
+		HeadlessWebcontentFolderAPI._updateStructureContentFolderByErc(
+			externalReferenceCode = "${externalReferenceCode}",
+			name = "${name}",
+			siteId = "${siteId}");
 	}
 
 }

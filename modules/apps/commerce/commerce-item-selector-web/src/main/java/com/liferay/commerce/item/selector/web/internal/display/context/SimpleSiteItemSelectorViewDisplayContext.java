@@ -16,7 +16,6 @@ package com.liferay.commerce.item.selector.web.internal.display.context;
 
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -36,7 +34,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -157,26 +154,6 @@ public class SimpleSiteItemSelectorViewDisplayContext
 		}
 
 		return false;
-	}
-
-	protected ManagementBarFilterItem getManagementBarFilterItem(
-			long siteGroupId, String label)
-		throws PortletException {
-
-		boolean active = false;
-
-		if (getGroupId() == siteGroupId) {
-			active = true;
-		}
-
-		return new ManagementBarFilterItem(
-			active, String.valueOf(siteGroupId), label,
-			PortletURLBuilder.create(
-				PortletURLUtil.clone(
-					getPortletURL(), cpRequestHelper.getRenderResponse())
-			).setParameter(
-				"siteGroupId", siteGroupId
-			).buildString());
 	}
 
 	private final CommerceChannelLocalService _commerceChannelLocalService;

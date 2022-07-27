@@ -275,14 +275,6 @@ public class LayoutSetPrototypeDisplayContext {
 		return false;
 	}
 
-	public boolean isDisabledManagementBar() {
-		if ((_getTotal() > 0) || !Objects.equals(_getNavigation(), "all")) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public boolean isIconView() {
 		if (Objects.equals(getDisplayStyle(), "icon")) {
 			return true;
@@ -350,16 +342,6 @@ public class LayoutSetPrototypeDisplayContext {
 		return _keywords;
 	}
 
-	private String _getNavigation() {
-		if (Validator.isNotNull(_navigation)) {
-			return _navigation;
-		}
-
-		_navigation = ParamUtil.getString(_httpServletRequest, "navigation");
-
-		return _navigation;
-	}
-
 	private List<DropdownItem> _getOrderByDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
@@ -384,7 +366,6 @@ public class LayoutSetPrototypeDisplayContext {
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
-	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

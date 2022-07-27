@@ -15,24 +15,17 @@
 package com.liferay.commerce.product.display.context;
 
 import com.liferay.commerce.product.portlet.action.ActionHelper;
-import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.List;
-
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,21 +66,6 @@ public abstract class BaseCPDefinitionsSearchContainerDisplayContext<T>
 		_keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
 		return _keywords;
-	}
-
-	public List<ManagementBarFilterItem> getManagementBarStatusFilterItems()
-		throws PortalException, PortletException {
-
-		return ListUtil.fromArray(
-			getManagementBarFilterItem(WorkflowConstants.STATUS_ANY),
-			getManagementBarFilterItem(WorkflowConstants.STATUS_DRAFT),
-			getManagementBarFilterItem(WorkflowConstants.STATUS_SCHEDULED),
-			getManagementBarFilterItem(WorkflowConstants.STATUS_APPROVED),
-			getManagementBarFilterItem(WorkflowConstants.STATUS_EXPIRED));
-	}
-
-	public String getManagementBarStatusFilterValue() {
-		return WorkflowConstants.getStatusLabel(getStatus());
 	}
 
 	public String getOrderByCol() {
@@ -213,24 +191,6 @@ public abstract class BaseCPDefinitionsSearchContainerDisplayContext<T>
 
 		return SearchDisplayStyleUtil.getDisplayStyle(
 			httpServletRequest, _portalPreferenceNamespace, "list", true);
-	}
-
-	protected ManagementBarFilterItem getManagementBarFilterItem(int status)
-		throws PortalException, PortletException {
-
-		boolean active = false;
-
-		if (status == getStatus()) {
-			active = true;
-		}
-
-		return new ManagementBarFilterItem(
-			active, WorkflowConstants.getStatusLabel(status),
-			PortletURLBuilder.create(
-				PortletURLUtil.clone(getPortletURL(), liferayPortletResponse)
-			).setParameter(
-				"status", status
-			).buildString());
 	}
 
 	protected SearchContainer<T> searchContainer;

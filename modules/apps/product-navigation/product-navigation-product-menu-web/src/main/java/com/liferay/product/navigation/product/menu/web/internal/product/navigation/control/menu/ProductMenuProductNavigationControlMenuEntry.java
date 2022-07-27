@@ -135,6 +135,10 @@ public class ProductMenuProductNavigationControlMenuEntry
 				ProductNavigationProductMenuPortletKeys.
 					PRODUCT_NAVIGATION_PRODUCT_MENU)
 		).put(
+			"skipLinkLabel",
+			HtmlUtil.escape(
+				LanguageUtil.get(httpServletRequest, "skip-to-product-menu"))
+		).put(
 			"title",
 			HtmlUtil.escape(LanguageUtil.get(httpServletRequest, "menu"))
 		).build();

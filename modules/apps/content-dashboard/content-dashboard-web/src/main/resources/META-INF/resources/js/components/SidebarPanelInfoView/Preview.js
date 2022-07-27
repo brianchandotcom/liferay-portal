@@ -13,15 +13,16 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 const Preview = ({compressed, imageURL, title, url}) => {
 	return (
 		<div
-			className={`document-preview sidebar-section ${
-				compressed ? 'sidebar-section--compress' : ''
-			}`}
+			className={classnames('document-preview sidebar-section', {
+				'sidebar-section--compress': compressed,
+			})}
 		>
 			{imageURL && (
 				<figure className="document-preview-figure mb-2">

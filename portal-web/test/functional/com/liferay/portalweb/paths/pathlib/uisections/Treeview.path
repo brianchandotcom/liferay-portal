@@ -115,6 +115,11 @@
 	<td>xpath=(//div[contains(@role,'treeitem')])[${key_position}]//div[contains(@class,'list-item__node')][contains(.,'${key_nodeName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS</td>
+	<td>xpath=(//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]])[${key_index}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

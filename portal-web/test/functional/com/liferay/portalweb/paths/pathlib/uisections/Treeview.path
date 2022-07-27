@@ -86,11 +86,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_STRUCTURE_TREE_NODE_DELETE</td>
-	<td>//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')]//button[contains(@class,'tree-node')][*[name()='svg'][contains(@class,'trash')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX</td>
 	<td>xpath=(//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')]//button[contains(@class,'tree-node')][*[name()='svg'][contains(@class,'lexicon-icon-view') or contains(@class,'lexicon-icon-hidden')]])[${key_index}]</td>
 	<td></td>

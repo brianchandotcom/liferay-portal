@@ -3914,28 +3914,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		PageEditor.waitForAutoSave();
 	}
 
-	macro removeFragmentViaPageStructure {
-		PageEditor.gotoTab(tabName = "Browser");
-
-		Navigator.gotoNavTab(navTab = "Page Elements");
-
-		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE")) {
-			Click(
-				key_nodeName = "${fragmentName}",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
-		}
-
-		Click.clickNoWaitForVisible(
-			key_nodeName = "${fragmentName}",
-			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_DELETE");
-
-		if (!(isSet(duplicateFragment))) {
-			PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
-		}
-
-		PageEditor.waitForAutoSave();
-	}
-
 	macro reopenResolvedComment {
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_CHECKBOX_UNCHECKED");
 

@@ -3696,6 +3696,31 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			rowEntry = "${itemName}");
 	}
 
+	macro gotoEllipsisMenuItemInPageStructure {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
+		PageEditor.gotoTab(tabName = "Browser");
+
+		Navigator.gotoNavTab(navTab = "Page Elements");
+
+		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE")) {
+			Click(
+				key_nodeName = "${fragmentName}",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+		}
+
+		Click.clickNoWaitForVisible(
+			key_index = "${position}",
+			key_nodeName = "${fragmentName}",
+			locator1 = "Treeview#PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "${menuItem}");
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro gotoSaveAsFragment {
 		var key_fragmentName = "${fragmentName}";
 

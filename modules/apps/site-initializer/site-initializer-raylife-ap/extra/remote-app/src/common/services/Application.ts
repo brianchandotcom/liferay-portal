@@ -49,6 +49,7 @@ export function deleteApplicationByExternalReferenceCode(
 const adaptToFormApplicationRequest = (state: any, status: any) => ({
 	address: state?.contactInfo?.form?.streetAddress,
 	addressApt: state?.contactInfo?.form?.apt,
+	applicationCreateDate: new Date(),
 	applicationStatus: {
 		key: status,
 	},
@@ -79,4 +80,10 @@ export function createOrUpdateRaylifeApplication(state: any, status: any) {
 	}
 
 	return axios.post(`${DeliveryAPI}/`, payload);
+}
+
+export function exitRaylifeApplication(state: any, status: any) {
+	const payload = adaptToFormApplicationRequest(state?.steps, status);
+
+	return axios.patch(`${DeliveryAPI}/${state.applicationId}`, payload);
 }

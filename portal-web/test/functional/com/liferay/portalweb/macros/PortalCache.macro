@@ -1,7 +1,9 @@
 definition {
 
 	macro getCache {
-		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+		if (!(isSet(companyId))) {
+			var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+		}
 
 		var getCacheGroovy = '''
 			import com.liferay.portal.kernel.cache.*;
@@ -23,7 +25,9 @@ definition {
 	}
 
 	macro putCache {
-		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+		if (!(isSet(companyId))) {
+			var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+		}
 
 		var putCacheGroovy = '''
 			import com.liferay.portal.kernel.cache.*;

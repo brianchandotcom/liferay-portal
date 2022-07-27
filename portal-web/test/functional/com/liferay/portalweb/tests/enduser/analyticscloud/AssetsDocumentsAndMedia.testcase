@@ -906,7 +906,9 @@ definition {
 
 		task ("Download the documents and media") {
 			for (var n : list "1,2") {
-				DMDocument.downloadCP(dmDocumentTitle = "DM AC Title");
+				DMDocument.downloadCP(
+					dmDocumentSize = "13 KB",
+					dmDocumentTitle = "DM AC Title");
 			}
 		}
 

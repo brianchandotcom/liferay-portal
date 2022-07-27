@@ -401,11 +401,10 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 						layoutStructure, formStyledLayoutStructureItem);
 
 				if (formStyledLayoutStructureItem.getClassNameId() > 0) {
-					addedFragmentEntryLinks.addAll(
-						_addFragmentEntryLinks(
-							formStyledLayoutStructureItem, httpServletRequest,
-							jsonObject, layoutStructure, segmentsExperienceId,
-							themeDisplay));
+					addedFragmentEntryLinks = _addFragmentEntryLinks(
+						formStyledLayoutStructureItem, httpServletRequest,
+						jsonObject, layoutStructure, segmentsExperienceId,
+						themeDisplay);
 				}
 			}
 

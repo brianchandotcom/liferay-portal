@@ -735,6 +735,25 @@ SideNavigation.prototype = {
 			this._renderNav();
 		}
 
+		if (toggler.parentElement && options.skipLinkLabel && container?.id) {
+			this.skipLink = document.createElement('a');
+
+			this.skipLink.className = 'd-none mx-2 px-2 py-1';
+			this.skipLink.href = `#${container.id}`;
+			this.skipLink.textContent = options.skipLinkLabel;
+
+			const {nextElementSibling, parentElement} = toggler;
+
+			if (nextElementSibling) {
+				parentElement.insertBefore(this.skipLink, nextElementSibling);
+			}
+			else {
+				parentElement.appendChild(this.skipLink);
+			}
+		}
+
+		this._updateSkipLink();
+
 		// Force Reflow for IE11 Browser Bug
 
 		setStyles(container, {
@@ -786,6 +805,25 @@ SideNavigation.prototype = {
 
 			fn();
 		}, SideNavigation.TRANSITION_DURATION);
+	},
+
+	_updateSkipLink() {
+		const container = document.querySelector(this.options.container);
+
+		if (!container) {
+			return;
+		}
+
+		if (this.skipLink) {
+			if (hasClass(container, 'closed')) {
+				this.skipLink.classList.add('d-none');
+				this.skipLink.classList.remove('sr-only', 'sr-only-focusable');
+			}
+			else {
+				this.skipLink.classList.add('sr-only', 'sr-only-focusable');
+				this.skipLink.classList.remove('d-none');
+			}
+		}
 	},
 
 	clearHeight() {
@@ -850,6 +888,12 @@ SideNavigation.prototype = {
 			window.removeEventListener('resize', handleWindowResize);
 
 			handleWindowResize = null;
+		}
+
+		if (this.skipLink) {
+			this.skipLink.parentElement.removeChild(this.skipLink);
+
+			this.skipLink = null;
 		}
 	},
 
@@ -1007,6 +1051,7 @@ SideNavigation.prototype = {
 				toggler.dataset.loadingIndicatorTpl ||
 				options.loadingIndicatorTPL;
 			options.openClass = toggler.dataset.openClass || 'open';
+			options.skipLinkLabel = toggler.dataset.skipLinkLabel;
 			options.type = toggler.dataset.type;
 			options.typeMobile = toggler.dataset.typeMobile;
 			options.url = toggler.dataset.url;
@@ -1369,6 +1414,8 @@ SideNavigation.prototype = {
 			active: closed,
 			open: closed,
 		});
+
+		this._updateSkipLink();
 	},
 
 	toggleSimpleSidenav() {
@@ -1380,6 +1427,8 @@ SideNavigation.prototype = {
 		else {
 			this.hideSimpleSidenav();
 		}
+
+		this._updateSkipLink();
 	},
 
 	visible() {

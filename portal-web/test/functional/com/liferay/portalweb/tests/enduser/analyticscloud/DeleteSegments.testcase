@@ -638,4 +638,92 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-8239 | Automation ID: LRAC-11536 | Test Summary: Delete a segment in edit mode"
+	@priority = "2"
+	test DeleteSegmentInEditMode {
+		property analytics.cloud.upstream = "false";
+
+		var staticSegmentName = "New Static Segment";
+		var dynamicSegmentName = "New Dynamic Segment";
+
+		task ("Create a blog and add to a page and then connect AC and DXP") {
+			ACUtils.createBlogsAndAddToPage();
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("See the blog and launch AC") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Go to segments and create a static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+
+			ACUtils.setItemName(itemName = "${staticSegmentName}");
+
+			ACSegments.addStaticMember(tableMember = "Test Test");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Edit the static segment, don't save the changes and then delete it, assert that the segment is not in the list") {
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(segmentName = "${staticSegmentName}");
+
+			ACSegments.removeStaticMember(tableMember = "Test Test");
+
+			ACUtils.clickAnyButton(button = "Delete Segment");
+
+			ACUtils.clickAnyButton(button = "Delete");
+
+			ACSegments.viewDeletedSegmentName(searchTerm = "${staticSegmentName}");
+		}
+
+		task ("Create a dynamic segment") {
+			ACSegments.createDynamicSegment();
+
+			ACUtils.setItemName(itemName = "${dynamicSegmentName}");
+
+			ACSegments.goToSidebarAttributes(criterion = "Events");
+
+			ACSegments.addSegmentField(segmentField = "Viewed Blog");
+
+			ACSegments.editWebBehaviorCriterion(
+				indexField = "1",
+				occurenceNumber = "2",
+				searchTerm = "Blogs AC Title");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Edit the dynamic segment, don't save the changes and then delete it, assert that the segment is not in the list") {
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(segmentName = "${dynamicSegmentName}");
+
+			ACSegments.editWebBehaviorCriterion(
+				indexField = "1",
+				occurenceNumber = "3");
+
+			ACUtils.clickAnyButton(button = "Delete Segment");
+
+			ACUtils.clickAnyButton(button = "Delete");
+
+			ACSegments.viewDeletedSegmentName(searchTerm = "${dynamicSegmentName}");
+		}
+	}
+
 }

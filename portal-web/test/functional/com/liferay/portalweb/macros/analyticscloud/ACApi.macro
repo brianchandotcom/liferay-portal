@@ -13,6 +13,17 @@ definition {
 		return "${apiResponse}";
 	}
 
+	macro createQueryData {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+		var curl = '''
+			${analyticsCloudURL}/api/reports -H "Authorization: Bearer ${token}"
+			''';
+
+		static var apiResponse = JSONCurlUtil.get("${curl}", "$");
+
+		return "${apiResponse}";
+	}
 	macro getTokenValue {
 		if (IsElementNotPresent(locator1 = "ACSettings#COPY_TOKEN_BUTTON")) {
 			ACUtils.clickAnyButton(button = "Generate Token");

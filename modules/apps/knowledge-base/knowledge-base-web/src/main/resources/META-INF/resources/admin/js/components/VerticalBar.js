@@ -67,7 +67,16 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 
 					return (
 						<VerticalBar.Panel key={item.key}>
-							<PanelComponent />
+							<>
+								<div className="sidebar-header">
+									<div className="component-title">
+										{item.title}
+									</div>
+								</div>
+								<div className="sidebar-body">
+									<PanelComponent />
+								</div>
+							</>
 						</VerticalBar.Panel>
 					);
 				}}

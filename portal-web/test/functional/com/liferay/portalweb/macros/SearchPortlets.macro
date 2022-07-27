@@ -55,9 +55,9 @@ definition {
 
 	macro chooseWidgetScope {
 		if (("${searchScope}" == "Everything") || ("${searchScope}" == "This Site")) {
-			Select(
+			Click.clickNoMouseOver(
 				locator1 = "Search#SEARCH_BAR_WIDGET_SCOPE_SELECT",
-				value1 = "${searchScope}");
+				searchScope = "${searchScope}");
 		}
 		else {
 			fail("Invalid search scope. Must be (Everything|This Site).");

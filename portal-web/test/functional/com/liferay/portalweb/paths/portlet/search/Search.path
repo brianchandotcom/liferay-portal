@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>SEARCH_BAR_WIDGET_SCOPE_SELECT</td>
-	<td>//div[not(ancestor::header[@id='banner'])]/select[@name='scope']</td>
+	<td>//div[not(ancestor::header[@id='banner'])]/select[@title='Scope']/option[contains(.,'${searchScope}')]</td>
 	<td></td>
 </tr>
 <tr>

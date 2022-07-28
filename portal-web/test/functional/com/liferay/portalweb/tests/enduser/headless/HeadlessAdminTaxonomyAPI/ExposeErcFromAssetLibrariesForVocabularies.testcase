@@ -133,6 +133,33 @@ definition {
 	}
 
 	@priority = "3"
+	test CannotDeleteVocabularyWithNonExistentErc {
+		property portal.acceptance = "true";
+
+		task ("Given an existing vocabulary with ERC") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			TaxonomyVocabularyAPI.createTaxonomyVocabulary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				name = "Vocabulary Name");
+		}
+
+		task ("When user makes a DELETE request to delete the vocabulary with a nonexisting ERC") {
+			TaxonomyVocabularyAPI.deleteTaxonomyVocabularyByErc(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "nonexistent-erc");
+		}
+
+		task ("Then existing vocabularies are still present") {
+			TaxonomyVocabularyAPI.assertProperVocabularyTotalCount(
+				assetLibraryId = "${assetLibraryId}",
+				expectedTotalCount = "1",
+				filterValue = "name%20eq%20%27Vocabulary%20Name%27");
+		}
+	}
+
+	@priority = "3"
 	test CanReturnErrorWithGetVocabularyWithNonExistingErc {
 		property portal.acceptance = "true";
 

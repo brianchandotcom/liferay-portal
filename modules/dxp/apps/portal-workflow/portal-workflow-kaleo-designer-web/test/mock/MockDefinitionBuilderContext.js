@@ -19,12 +19,18 @@ export default function MockDefinitionBuilderContext({children}) {
 	const [selectedLanguageId, setSelectedLanguageId] = useState('');
 	const [translations, setTranslations] = useState({});
 	const [showDefinitionInfo, setShowDefinitionInfo] = useState(false);
+	const [
+		definitionTitleTranslations,
+		setDefinitionTitleTranslations,
+	] = useState('');
 
 	const contextProps = {
 		blockingErrors,
 		defaultLanguageId: themeDisplay.getLanguageId(),
+		definitionTitleTranslations,
 		selectedLanguageId,
 		setBlockingErrors,
+		setDefinitionTitleTranslations,
 		setSelectedLanguageId,
 		setShowDefinitionInfo,
 		setTranslations,

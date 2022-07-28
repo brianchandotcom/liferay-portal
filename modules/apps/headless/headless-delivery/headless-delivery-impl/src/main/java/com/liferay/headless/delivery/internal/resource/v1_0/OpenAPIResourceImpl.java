@@ -112,6 +112,8 @@ public class OpenAPIResourceImpl {
 
 			add(MessageBoardSectionResourceImpl.class);
 
+			add(MessageBoardSuspiciousActivityResourceImpl.class);
+
 			add(MessageBoardThreadResourceImpl.class);
 
 			add(NavigationMenuResourceImpl.class);

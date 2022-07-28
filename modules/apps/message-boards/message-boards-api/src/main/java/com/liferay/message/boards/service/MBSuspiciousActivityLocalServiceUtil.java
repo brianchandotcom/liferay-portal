@@ -61,12 +61,20 @@ public class MBSuspiciousActivityLocalServiceUtil {
 		return getService().addMBSuspiciousActivity(mbSuspiciousActivity);
 	}
 
-	public static MBSuspiciousActivity addOrUpdateSuspiciousActivity(
-			long userId, long messageId, String description, String type)
+	public static MBSuspiciousActivity addOrUpdateSuspiciousActivityByMessage(
+			long messageId, String reason, long userId)
 		throws PortalException {
 
-		return getService().addOrUpdateSuspiciousActivity(
-			userId, messageId, description, type);
+		return getService().addOrUpdateSuspiciousActivityByMessage(
+			messageId, reason, userId);
+	}
+
+	public static MBSuspiciousActivity addOrUpdateSuspiciousActivityByThread(
+			String reason, long threadId, long userId)
+		throws PortalException {
+
+		return getService().addOrUpdateSuspiciousActivityByThread(
+			reason, threadId, userId);
 	}
 
 	/**

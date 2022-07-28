@@ -2830,6 +2830,62 @@ components:
             required:
                 - title
             type: object
+        MessageBoardSuspiciousActivity:
+            description:
+                Represents a report of a suspicious activity in a Thread or Message.
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    description:
+                        Block of suspicious activity reporteds.
+                    readOnly: true
+                    type: object
+                createDate:
+                    description:
+                        The date the suspicious activity was created.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                messageId:
+                    description:
+                        The ID of the Message Board Message reported.
+                    format: int64
+                    type: integer
+                modifiedDate:
+                    description:
+                        The last time any field of the suspicious activity changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                reason:
+                    description:
+                        The reason of report.
+                    type: string
+                suspiciousActivityId:
+                    description:
+                        The ID of the Suspicious Activity reported.
+                    format: int64
+                    type: integer
+                threadId:
+                    description:
+                        The ID of the Message Board thread reported.
+                    format: int64
+                    type: integer
+                userId:
+                    description:
+                        The ID of the user reported the message.
+                    format: int64
+                    type: integer
+                validated:
+                    description:
+                        A flag that indicates if the report was accepted.
+                    type: boolean
+            required:
+                - type
+            type: object
         # @review
         MessageBoardThread:
             description:
@@ -8939,6 +8995,92 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardAttachment"
             tags: ["MessageBoardAttachment"]
+    "/message-board-message/{messageBoardMessageId}/message-board-suspicious-activity":
+        get:
+            description:
+                Retrieves the message board suspicious activities from messages. Results can be paginated, filtered,
+                searched, and sorted.
+            operationId: getMessageBoardMessageMessageBoardSuspiciousActivityPage
+            parameters:
+                - in: path
+                  name: messageBoardMessageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+                                type: array
+            tags: ["MessageBoardSuspiciousActivity"]
+        post:
+            description:
+                Creates a new message board suspicious activity inside a message.
+            operationId: postMessageBoardMessageMessageBoardSuspiciousActivityPage
+            parameters:
+                - in: path
+                  name: messageBoardMessageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+                                type: array
+            tags: ["MessageBoardSuspiciousActivity"]
     "/message-board-messages/{messageBoardMessageId}":
         delete:
             description:
@@ -9772,6 +9914,102 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardSection"
             tags: ["MessageBoardSection"]
+    "/message-board-suspicious-activity/{suspiciousActivityId}/message-board-suspicious-activity":
+        delete:
+            description:
+                Deletes the suspicious activity from message board and returns a 204 if the operation succeeds.
+            operationId: deleteMessageBoardSuspiciousActivityMessageBoardSuspiciousActivity
+            parameters:
+                - in: path
+                  name: suspiciousActivityId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["MessageBoardSuspiciousActivity"]
+        get:
+            description:
+                Retrieves the suspicious activity from message board. Results can be paginated, filtered, searched, and
+                sorted.
+            operationId: getMessageBoardSuspiciousActivitiesMessageBoardSuspiciousActivityPage
+            parameters:
+                - in: path
+                  name: suspiciousActivityId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+                                type: array
+            tags: ["MessageBoardSuspiciousActivity"]
+    "/message-board-suspicious-activity/{suspiciousActivityId}/message-board-suspicious-activity-update-validated":
+        get:
+            description:
+                Update the validate field of a suspicious activity.
+            operationId: getMessageBoardSuspiciousActivitiesMessageBoardSuspiciousActivityUpdateValidatedPage
+            parameters:
+                - in: path
+                  name: suspiciousActivityId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+                                type: array
+            tags: ["MessageBoardSuspiciousActivity"]
     "/message-board-threads/ranked":
         get:
             operationId: getMessageBoardThreadsRankedPage
@@ -10100,6 +10338,87 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardMessage"
             tags: ["MessageBoardMessage"]
+    "/message-board-threads/{messageBoardThreadId}/message-board-suspicious-activity":
+        get:
+            description:
+                Retrieves the message board suspicious activities from threads. Results can be paginated, filtered,
+                searched, and sorted.
+            operationId: getMessageBoardThreadMessageBoardSuspiciousActivityPage
+            parameters:
+                - in: path
+                  name: messageBoardThreadId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+            tags: ["MessageBoardSuspiciousActivity"]
+        post:
+            description:
+                Creates a new message board suspicious activity inside a thread.
+            operationId: postMessageBoardThreadMessageBoardSuspiciousActivity
+            parameters:
+                - in: path
+                  name: messageBoardThreadId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardSuspiciousActivity"
+            tags: ["MessageBoardSuspiciousActivity"]
     "/message-board-threads/{messageBoardThreadId}/my-rating":
         delete:
             description:

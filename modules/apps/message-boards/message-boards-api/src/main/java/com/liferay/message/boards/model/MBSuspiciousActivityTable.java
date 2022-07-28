@@ -67,11 +67,9 @@ public class MBSuspiciousActivityTable
 			"messageId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<MBSuspiciousActivityTable, Long> threadId =
 		createColumn("threadId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<MBSuspiciousActivityTable, String> description =
+	public final Column<MBSuspiciousActivityTable, String> reason =
 		createColumn(
-			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<MBSuspiciousActivityTable, String> type = createColumn(
-		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+			"reason", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBSuspiciousActivityTable, Boolean> validated =
 		createColumn(
 			"validated", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

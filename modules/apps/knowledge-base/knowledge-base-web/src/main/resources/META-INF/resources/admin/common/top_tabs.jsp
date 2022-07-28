@@ -17,7 +17,7 @@
 <%@ include file="/admin/common/init.jsp" %>
 
 <%
-KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNavigationDisplayContext(request, liferayPortletResponse);
+KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNavigationDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <clay:navigation-bar

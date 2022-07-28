@@ -50,6 +50,32 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-139642 TC7: Verify OAuth client cannot be created with duplicate client ID."
+	@priority = "4"
+	test AssertOAuthClientCannotBeAddedWithDuplicateClientID {
+		property test.name.skip.portal.instance = "OpenIDConnect#AssertOAuthClientCannotBeAddedWithDuplicateClientID";
+
+		task ("Given: Add an OAuth Client") {
+			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
+
+			OAuthClient.addClient(
+				jsonFileName = "okta.json",
+				wellknownURI = "https://dev-5081331.okta.com/.well-known/openid-configuration");
+		}
+
+		task ("When: Add another OAuth Client with the same client ID") {
+			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
+
+			OAuthClient.addClient(
+				jsonFileName = "okta.json",
+				wellknownURI = "https://dev-5081331.okta.com/.well-known/openid-configuration");
+		}
+
+		task ("Then: Verify that the OAuth Client entry cannot be created with duplicate client ID") {
+			Alert.viewErrorMessage(errorMessage = "Duplicate Client");
+		}
+	}
+
 	@description = "This is a use case for LPS-139642 TC-10: A regular role is assigned to OIDC user if a regular role is defined through the property."
 	@priority = "5"
 	test AssertRegularRoleIsAssignedToOIDCUser {

@@ -68,6 +68,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Account Subscription Groups");
 
+		var key_status = "${status}";
+		
+		if (IsElementPresent(locator1 = "CP2DXPCloudSetup#DND_TABLE_ELEMENT")){
 		CustomerPortal.viewCPObjectInfo();
 
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
@@ -77,6 +80,7 @@ definition {
 		Click(locator1 = "Button#SAVE");
 
 		Alert.viewSuccessMessage();
+	}
 	}
 
 	macro clearDXPCloudInfo {

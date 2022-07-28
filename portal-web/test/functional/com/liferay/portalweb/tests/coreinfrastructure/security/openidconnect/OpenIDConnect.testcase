@@ -223,7 +223,49 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105151 and LPS-139642 TC-9:. Users could login with instance-level configured OpenID Connect provider."
+	@description = "This is a workaround usecase for LPS-139642 TC-11: Verify the OAuth client of System level should apply to OAuth client of virtual instance."
+	@priority = "5"
+	test ConfigureOnSystemLevelShouldApplyToInstanceLevel {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "OpenIDConnect#ConfigureOnSystemLevelShouldApplyToInstanceLevel";
+
+		task ("Given: Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~Okta.config");
+
+			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
+
+			AssertElementPresent(
+				key_rowIndexNumber = "1",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
+		}
+
+		task ("When: Add virtual instance and login at able.com") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.firstLoginUI(
+				domain = "www.able.com",
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("Then: Verify that the OAuth client should display on the virtual instance") {
+			OAuthClient.openOAuthClientAdmin(
+				baseURL = "http://www.able.com:8080",
+				navbar = "Clients");
+
+			AssertElementPresent(
+				key_rowIndexNumber = "1",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
+		}
+	}
+
+	@description = "This is a use case for LPS-105151 and LPS-139642 TC-9: Users could login with instance-level configured OpenID Connect provider."
 	@priority = "4"
 	test OpenIDConnectOnInstanceLevelSmoke {
 		property portal.acceptance = "true";
@@ -455,7 +497,7 @@ definition {
 	@description = "This is a use case for LPS-148619. User could log in and log out using Google as OpenID Connect provider, using custom parameters for the connection."
 	test OpenIDConnectWithGoogleCustomParameters {
 		property dummy.socket.proxy.disabled = "true";
-		property test.name.skip.portal.instance = "OpenIDConnect#EnabledOpenIDConnectOnSystemLevel";
+		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectWithGoogleCustomParameters";
 
 		var customTokenRequestParameters = "resource=https://contacts.google.com";
 		var customAuthorizationRequestParameters = "access_type=offline";

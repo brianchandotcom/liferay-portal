@@ -42,7 +42,7 @@ public class ColumnValuesExtractorTest {
 
 	@Test
 	public void testExtractValuesWithDoubleArray() throws Exception {
-		ArrayContainer<Double> arrayContainer = new ArrayContainer(
+		ArrayContainer arrayContainer = new ArrayContainer(
 			new Double[] {43.2, 12.8, 33.17, 0.234, 5D},
 			new String[] {"A,BC", "D\"EF", "GHI", "J'KL", "``NO,P"});
 
@@ -95,7 +95,7 @@ public class ColumnValuesExtractorTest {
 		return records.get(0);
 	}
 
-	private class ArrayContainer<T> {
+	private class ArrayContainer {
 
 		public Double[] doubles;
 		public int length;

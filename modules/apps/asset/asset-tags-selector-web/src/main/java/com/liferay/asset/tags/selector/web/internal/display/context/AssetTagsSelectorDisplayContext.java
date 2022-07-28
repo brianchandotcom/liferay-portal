@@ -21,6 +21,8 @@ import com.liferay.asset.tags.selector.web.internal.search.EntriesChecker;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -180,12 +182,17 @@ public class AssetTagsSelectorDisplayContext {
 			if ((group != null) && group.isLayout() &&
 				!ArrayUtil.contains(groupIds, group.getParentGroupId())) {
 
-				groupIds = ArrayUtil.append(groupIds, group.getParentGroupId());
-
-				groupIds = ArrayUtil.append(
-					groupIds,
-					PortalUtil.getAncestorSiteGroupIds(
-						group.getParentGroupId()));
+				try {
+					groupIds = ArrayUtil.append(
+						groupIds,
+						PortalUtil.getCurrentAndAncestorSiteGroupIds(
+							group.getParentGroupId()));
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+				}
 			}
 		}
 
@@ -226,6 +233,9 @@ public class AssetTagsSelectorDisplayContext {
 
 		return _orderByCol;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetTagsSelectorDisplayContext.class);
 
 	private String _eventName;
 	private long[] _groupIds;

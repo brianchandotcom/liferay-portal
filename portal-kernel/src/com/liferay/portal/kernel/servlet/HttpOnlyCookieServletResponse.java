@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.util.HashSet;
@@ -79,9 +78,8 @@ public class HttpOnlyCookieServletResponse extends HttpServletResponseWrapper {
 				add(CookiesConstants.NAME_USER_CONSENT_CONFIGURED);
 
 				for (String cookieName :
-						StringUtil.split(
-							SystemProperties.get(
-								"cookie.http.only.names.excludes"))) {
+						SystemProperties.getArray(
+							"cookie.http.only.names.excludes")) {
 
 					add(cookieName);
 				}

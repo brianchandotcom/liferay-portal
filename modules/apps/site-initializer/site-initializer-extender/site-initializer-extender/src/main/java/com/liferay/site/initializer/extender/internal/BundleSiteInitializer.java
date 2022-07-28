@@ -104,6 +104,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
@@ -2512,11 +2513,26 @@ public class BundleSiteInitializer implements SiteInitializer {
 					String.valueOf(serviceContext.getScopeGroupId()));
 			}
 
-			_resourcePermissionLocalService.addResourcePermission(
-				serviceContext.getCompanyId(),
-				jsonObject.getString("resourceName"), scope,
-				jsonObject.getString("primKey"), role.getRoleId(),
-				jsonObject.getString("actionId"));
+			ResourcePermission resourcePermission =
+				_resourcePermissionLocalService.fetchResourcePermission(
+					serviceContext.getCompanyId(),
+					jsonObject.getString("resourceName"), scope,
+					jsonObject.getString("primKey"), role.getRoleId());
+
+			if (resourcePermission == null) {
+				_resourcePermissionLocalService.addResourcePermission(
+					serviceContext.getCompanyId(),
+					jsonObject.getString("resourceName"), scope,
+					jsonObject.getString("primKey"), role.getRoleId(),
+					jsonObject.getString("actionId"));
+			}
+			else {
+				_resourcePermissionLocalService.updateResourcePermissions(
+					serviceContext.getCompanyId(),
+					jsonObject.getString("resourceName"), scope,
+					jsonObject.getString("primKey"),
+					jsonObject.getString("primKey"));
+			}
 		}
 	}
 

@@ -500,9 +500,7 @@ definition {
 		}
 
 		task ("Check Subscribe and enable RSS Subscriptions on Asset Publisher configuration") {
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "Web Content Title");
 
 			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Subscribe");
 
@@ -549,6 +547,8 @@ definition {
 		}
 
 		task ("View the Updated Feed Heading and Title on RSS Publisher") {
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "Web Content Title Updated Feed");
+
 			RSSPortlet.viewUpdateFeedTitle(
 				feedHeading = "Web Content Title Updated Feed",
 				pageName = "Test Page Name",

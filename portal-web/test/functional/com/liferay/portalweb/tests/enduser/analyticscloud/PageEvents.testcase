@@ -104,7 +104,7 @@ definition {
 				key_entryTitle = "Blogs Entry Title 7",
 				locator1 = "BlogsEntry#TITLE");
 
-			ACUtils.waitForScrollEvent();
+			ACUtils.waitForScrollDown();
 		}
 
 		task ("View the depth of pageDepthReached event is 25") {
@@ -181,7 +181,7 @@ definition {
 				key_entryTitle = "Blogs Entry Title 4",
 				locator1 = "BlogsEntry#TITLE");
 
-			ACUtils.waitForScrollEvent();
+			ACUtils.waitForScrollDown();
 		}
 
 		task ("View the depth of pageDepthReached event is 50") {
@@ -258,7 +258,7 @@ definition {
 				key_entryTitle = "Blogs Entry Title 2",
 				locator1 = "BlogsEntry#TITLE");
 
-			ACUtils.waitForScrollEvent();
+			ACUtils.waitForScrollDown();
 		}
 
 		task ("View the depth of pageDepthReached event is 75") {

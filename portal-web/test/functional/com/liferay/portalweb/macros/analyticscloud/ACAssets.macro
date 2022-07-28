@@ -87,7 +87,7 @@ definition {
 
 		ScrollWebElementIntoView(locator1 = "ACAssets#TECHNOLOGY_BAR_CHART");
 
-		ACUtils.waitForScrollEvent();
+		ACUtils.waitForScrollDown();
 
 		MouseOver(locator1 = "ACAssets#TECHNOLOGY_BAR_CHART");
 

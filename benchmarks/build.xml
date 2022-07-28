@@ -3,7 +3,7 @@
 <project basedir="." default="run" name="benchmarks">
 	<import file="../build-common.xml" />
 
-	<target name="build-sample-sql">
+	<target depends="clean" name="build-sample-sql">
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
 
 		<echoproperties destfile="benchmarks-actual.properties" prefix="sample.sql." />

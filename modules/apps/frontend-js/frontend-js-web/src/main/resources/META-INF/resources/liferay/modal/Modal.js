@@ -328,8 +328,8 @@ const openConfirmModal = ({message, onConfirm, title}) => {
 			title,
 		});
 	}
-	else if (confirm(message)) {
-		onConfirm(true);
+	else {
+		onConfirm(confirm(message));
 	}
 };
 

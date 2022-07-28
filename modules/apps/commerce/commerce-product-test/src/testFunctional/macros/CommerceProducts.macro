@@ -457,7 +457,7 @@ definition {
 		}
 	}
 
-	macro deleteEntries {	
+	macro deleteEntries {
 		if (isSet(countries)) {
 			Click.clickNoMouseOverNoWaitForVisible(locator1 = "AppBuilder#CHECKBOX");
 
@@ -467,10 +467,11 @@ definition {
 			else {
 				ClickNoError(locator1 = "Button#DELETE");
 			}
+
 			if (isSet(deleteMessage)) {
-            	Confirm(value1 = "${deleteMessage}");
-			}					
-		} 
+				Confirm(value1 = "${deleteMessage}");
+			}
+		}
 		else {
 			Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
 
@@ -479,11 +480,12 @@ definition {
 			}
 			else {
 				ClickNoError(locator1 = "Button#DELETE");
-			}	
+			}
+
 			if (isSet(deleteMessage)) {
-            	Confirm(value1 = "${deleteMessage}");
-			}		
-		}	
+				Confirm(value1 = "${deleteMessage}");
+			}
+		}
 	}
 
 	macro deleteProductsEntry {

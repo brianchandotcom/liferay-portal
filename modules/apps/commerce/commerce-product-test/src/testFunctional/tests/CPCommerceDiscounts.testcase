@@ -862,7 +862,7 @@ definition {
 
 		Button.clickPublish();
 
-		while (IsElementPresent(locator1 = "CommerceEntry#WORKFLOW_STATUS", key_status = "Approved") && (maxIterations = "40")) {
+		while (IsElementPresent(key_status = "Approved", locator1 = "CommerceEntry#WORKFLOW_STATUS") && (maxIterations = "40")) {
 
 			// We need this pause for waiting for the Discount to expire
 
@@ -872,8 +872,8 @@ definition {
 		}
 
 		AssertElementPresent(
-			locator1 = "CommerceEntry#WORKFLOW_STATUS",
-			key_status = "Expired");
+			key_status = "Expired",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
 	}
 
 }

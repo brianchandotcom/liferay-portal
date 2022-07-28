@@ -30,7 +30,7 @@ definition {
 
 		while (IsElementPresent(locator1 = "CommerceEntry#ROW_VERTICAL_ELLIPSIS")) {
 			CommerceProducts.deleteEntries(
-				countries = "true", 
+				countries = "true",
 				deleteMessage = "Are you sure you want to delete the selected countries?");
 		}
 

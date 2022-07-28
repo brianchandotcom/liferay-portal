@@ -26,7 +26,6 @@ import {casesResource, getCasesTransformData} from '../../../services/rest';
 import {ActionList} from '../../../types';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
-import CaseModal from './CaseModal';
 import useCaseActions from './useCaseActions';
 
 type CaseListViewProps = {
@@ -118,30 +117,26 @@ const Cases = () => {
 	const {actions, formModal} = useCaseActions();
 
 	return (
-		<>
-			<Container>
-				<CaseListView
-					actions={actions}
-					formModal={formModal}
-					listViewProps={{
-						initialContext: {
-							columns: {
-								caseType: false,
-								dateCreated: false,
-								dateModified: false,
-								issues: false,
-								team: false,
-							},
+		<Container>
+			<CaseListView
+				actions={actions}
+				formModal={formModal}
+				listViewProps={{
+					initialContext: {
+						columns: {
+							caseType: false,
+							dateCreated: false,
+							dateModified: false,
+							issues: false,
+							team: false,
 						},
-					}}
-					variables={{
-						filter: searchUtil.eq('projectId', projectId as string),
-					}}
-				/>
-			</Container>
-
-			<CaseModal modal={formModal.modal} projectId={Number(projectId)} />
-		</>
+					},
+				}}
+				variables={{
+					filter: searchUtil.eq('projectId', projectId as string),
+				}}
+			/>
+		</Container>
 	);
 };
 

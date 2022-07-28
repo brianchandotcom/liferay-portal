@@ -19,14 +19,10 @@ import ListView, {
 	ListViewProps,
 } from '../../../components/ListView/ListViewRest';
 import {TableProps} from '../../../components/Table';
-
-// import {getLiferayUserAccounts} from '../../../graphql/queries/liferayUserAccount';
-
 import {FormModal} from '../../../hooks/useFormModal';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
 import {ActionList} from '../../../types';
-import UserFormModal from './UserFormModal';
 import useUserActions from './useUserActions';
 
 type UserListViewProps = {
@@ -99,8 +95,6 @@ const Users: React.FC = () => {
 	return (
 		<Container>
 			<UserListView actions={actions} formModal={formModal} />
-
-			<UserFormModal modal={formModal.modal} />
 		</Container>
 	);
 };

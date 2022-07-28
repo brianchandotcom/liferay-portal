@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.inventory.web.internal.servlet.taglib.ui.constants;
+package com.liferay.commerce.inventory.web.internal.constants;
 
 /**
  * @author Luca Pellizzon

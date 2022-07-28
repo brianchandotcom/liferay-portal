@@ -386,6 +386,7 @@ public class DownstreamBuild extends BaseBuild {
 		buildDurationsHeaderElement.addAttribute(
 			"child-stopwatch-rows",
 			JenkinsResultsParserUtil.join(",", childStopWatchRows));
+
 		buildDurationsHeaderElement.addAttribute(
 			"id", hashCode() + "-build-durations-header");
 		buildDurationsHeaderElement.addAttribute("style", "display: none");
@@ -536,9 +537,9 @@ public class DownstreamBuild extends BaseBuild {
 			"id", hashCode() + "-test-durations-header");
 		testDurationsHeaderElement.addAttribute("style", "display: none");
 
-		List<String> childStopWatchRowNames = new ArrayList<>();
+		List<String> childStopWatchRows = new ArrayList<>();
 
-		childStopWatchRowNames.add("test-duration-names");
+		childStopWatchRows.add("test-duration-names");
 
 		Element testDurationsElement = Dom4JUtil.getNewElement(
 			"td", testDurationsHeaderElement,
@@ -640,7 +641,7 @@ public class DownstreamBuild extends BaseBuild {
 
 			Element durationValuesElement = Dom4JUtil.getNewElement("tr");
 
-			childStopWatchRowNames.add("test-duration-values-" + i);
+			childStopWatchRows.add("test-duration-values-" + i);
 
 			durationValuesElement.addAttribute(
 				"id", hashCode() + "-test-duration-values-" + i);
@@ -669,7 +670,7 @@ public class DownstreamBuild extends BaseBuild {
 
 		testDurationsHeaderElement.addAttribute(
 			"child-stopwatch-rows",
-			JenkinsResultsParserUtil.join(",", childStopWatchRowNames));
+			JenkinsResultsParserUtil.join(",", childStopWatchRows));
 
 		return jenkinsReportTableRowElements;
 	}

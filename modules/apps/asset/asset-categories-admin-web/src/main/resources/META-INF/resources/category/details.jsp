@@ -193,9 +193,9 @@ renderResponse.setTitle(title);
 			<liferay-frontend:edit-form-footer>
 				<aui:button disabled="<%= assetCategoriesDisplayContext.isSaveButtonDisabled() %>" type="submit" />
 
-				<aui:button cssClass="btn-secondary" disabled="<%= assetCategoriesDisplayContext.isSaveAndAddNewButtonDisabled() %>" onClick='<%= liferayPortletResponse.getNamespace() + "saveAndAddNew();" %>' value="save-and-add-a-new-one" />
+				<aui:button disabled="<%= assetCategoriesDisplayContext.isSaveAndAddNewButtonDisabled() %>" onClick='<%= liferayPortletResponse.getNamespace() + "saveAndAddNew();" %>' value="save-and-add-a-new-one" />
 
-				<aui:button cssClass="btn-secondary" href="<%= redirect %>" type="cancel" />
+				<aui:button href="<%= redirect %>" type="cancel" />
 			</liferay-frontend:edit-form-footer>
 		</c:when>
 		<c:otherwise>

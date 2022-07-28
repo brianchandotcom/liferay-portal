@@ -56,6 +56,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "assign-display-page-templa
 	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
-		<aui:button cssClass="btn-secondary" href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

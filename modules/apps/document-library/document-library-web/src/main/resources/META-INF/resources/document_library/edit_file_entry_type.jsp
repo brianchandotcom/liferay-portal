@@ -71,7 +71,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 				</li>
 				<li class="tbar-item">
 					<div class="metadata-type-button-row tbar-section text-right">
-						<aui:button cssClass="btn-secondary btn-sm mr-3" href="<%= redirect %>" type="cancel" />
+						<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
 
 						<aui:button cssClass="btn-sm mr-3" id="submitButton" type="submit" />
 					</div>

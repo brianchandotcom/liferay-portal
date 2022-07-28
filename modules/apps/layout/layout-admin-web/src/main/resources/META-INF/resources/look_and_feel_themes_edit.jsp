@@ -42,7 +42,7 @@ else {
 	</div>
 </div>
 
-<aui:button cssClass="btn btn-secondary" id="changeTheme" value="change-current-theme" />
+<aui:button id="changeTheme" value="change-current-theme" />
 
 <portlet:renderURL var="selectThemeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/select_theme.jsp" />

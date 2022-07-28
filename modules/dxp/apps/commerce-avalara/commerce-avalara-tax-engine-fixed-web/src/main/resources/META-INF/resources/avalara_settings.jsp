@@ -31,7 +31,7 @@ CommerceAvalaraConnectorConfiguration commerceAvalaraConnectorConfiguration = (C
 	<commerce-ui:panel>
 		<%@ include file="/edit_avalara_settings.jspf" %>
 
-		<aui:button cssClass="btn-lg btn-secondary" onClick='<%= liferayPortletResponse.getNamespace() + "verifyConnection();" %>' type="submit" value="verify-connection" />
+		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "verifyConnection();" %>' primary="<%= false %>" type="submit" value="verify-connection" />
 	</commerce-ui:panel>
 
 	<aui:button-row>

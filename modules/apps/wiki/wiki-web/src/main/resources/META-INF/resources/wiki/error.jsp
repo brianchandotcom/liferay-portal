@@ -101,7 +101,7 @@ if (portletTitleBasedNavigation) {
 				String taglibSearch = "location.href = '" + searchURL.toString() + "';";
 				%>
 
-				<aui:button cssClass="btn-secondary" onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(request, "search-for-x", HtmlUtil.escapeAttribute(title), false) %>' />
+				<aui:button onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(request, "search-for-x", HtmlUtil.escapeAttribute(title), false) %>' />
 			</div>
 		</div>
 	</div>

@@ -87,7 +87,7 @@ portletDisplay.setURLBack(redirect);
 
 		<aui:button-row>
 			<aui:button type="submit" value="save" />
-			<aui:button cssClass="btn-secondary" href="<%= redirect %>" type="cancel" />
+			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </liferay-frontend:side-panel-content>

@@ -98,7 +98,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 								<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
 							</portlet:actionURL>
 
-							<aui:button cssClass="btn-secondary btn-sm mr-3" data-url="<%= resetValuesDDMStructureURL %>" name="resetValuesButton" value="reset-values" />
+							<aui:button cssClass="btn-sm mr-3" data-url="<%= resetValuesDDMStructureURL %>" name="resetValuesButton" value="reset-values" />
 						</c:if>
 
 						<c:if test="<%= journalEditArticleDisplayContext.hasSavePermission() %>">

@@ -1,0 +1,7 @@
+dependencies {
+	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-api")
+	testIntegrationCompile project(":apps:object:object-api")
+	testIntegrationCompile project(":apps:object:object-rest-api")
+	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

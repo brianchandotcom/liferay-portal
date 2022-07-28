@@ -74,7 +74,9 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 									</div>
 								</div>
 								<div className="sidebar-body">
-									<PanelComponent />
+									<PanelComponent
+										items={item.navigationItems}
+									/>
 								</div>
 							</>
 						</VerticalBar.Panel>

@@ -18,9 +18,16 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.service.KBFolderServiceUtil;
+import com.liferay.knowledge.base.util.comparator.KBObjectsTitleComparator;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -31,6 +38,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +56,9 @@ public class KBAdminNavigationDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<NavigationItem> getInfoPanelNavigationItems() {
@@ -55,30 +66,20 @@ public class KBAdminNavigationDisplayContext {
 			NavigationItemBuilder.setActive(
 				true
 			).setHref(
-				() -> {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)_httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					return themeDisplay.getURLCurrent();
-				}
+				_themeDisplay.getURLCurrent()
 			).setLabel(
 				LanguageUtil.get(_httpServletRequest, "details")
 			).build());
 	}
 
 	public List<NavigationItem> getNavigationItems() throws PortalException {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 		String mvcPath = ParamUtil.getString(_httpServletRequest, "mvcPath");
 
 		return NavigationItemListBuilder.add(
 			() -> PortletPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
+				_themeDisplay.getPermissionChecker(), _themeDisplay.getPlid(),
 				portletDisplay.getId(), KBActionKeys.VIEW),
 			NavigationItemBuilder.setActive(
 				() -> {
@@ -101,8 +102,9 @@ public class KBAdminNavigationDisplayContext {
 			).build()
 		).add(
 			() -> AdminPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), KBActionKeys.VIEW_KB_TEMPLATES),
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
+				KBActionKeys.VIEW_KB_TEMPLATES),
 			NavigationItemBuilder.setActive(
 				() -> {
 					if (mvcPath.equals("/admin/view_templates.jsp")) {
@@ -122,8 +124,8 @@ public class KBAdminNavigationDisplayContext {
 			).build()
 		).add(
 			() -> AdminPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), KBActionKeys.VIEW_SUGGESTIONS),
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), KBActionKeys.VIEW_SUGGESTIONS),
 			NavigationItemBuilder.setActive(
 				() -> {
 					if (mvcPath.equals("/admin/view_suggestions.jsp")) {
@@ -183,6 +185,8 @@ public class KBAdminNavigationDisplayContext {
 					"icon", "pages-tree"
 				).put(
 					"key", "article"
+				).put(
+					"navigationItems", _getKBArticleNavigationJSONArray(0)
 				).put(
 					"title",
 					LanguageUtil.get(
@@ -254,7 +258,53 @@ public class KBAdminNavigationDisplayContext {
 		return verticalNavigationItems;
 	}
 
+	private JSONArray _getKBArticleNavigationJSONArray(long parentFolderId) {
+		JSONArray articleNavigationJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		List<Object> kbObjects = KBFolderServiceUtil.getKBFoldersAndKBArticles(
+			_themeDisplay.getScopeGroupId(), parentFolderId,
+			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new KBObjectsTitleComparator<Object>());
+
+		for (Object kbObject : kbObjects) {
+			JSONObject articleNavigationJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			if (kbObject instanceof KBFolder) {
+				KBFolder kbFolder = (KBFolder)kbObject;
+
+				articleNavigationJSONObject.put(
+					"children",
+					_getKBArticleNavigationJSONArray(kbFolder.getKbFolderId())
+				).put(
+					"id", kbFolder.getKbFolderId()
+				).put(
+					"name", kbFolder.getName()
+				).put(
+					"type", "folder"
+				);
+			}
+			else {
+				KBArticle kbArticle = (KBArticle)kbObject;
+
+				articleNavigationJSONObject.put(
+					"id", kbArticle.getKbArticleId()
+				).put(
+					"name", kbArticle.getTitle()
+				).put(
+					"type", "article"
+				);
+			}
+
+			articleNavigationJSONArray.put(articleNavigationJSONObject);
+		}
+
+		return articleNavigationJSONArray;
+	}
+
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final ThemeDisplay _themeDisplay;
 
 }

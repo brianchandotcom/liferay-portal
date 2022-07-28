@@ -69,7 +69,7 @@ public class PrintKBArticlePortletConfigurationIcon
 						portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 						PortletRequest.RENDER_PHASE)
 				).setMVCPath(
-					"/admin/common/print_article.jsp"
+					"/admin/common/print_kb_article.jsp"
 				).setParameter(
 					"resourceClassNameId", kbArticle.getClassNameId()
 				).setParameter(

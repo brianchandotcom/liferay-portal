@@ -201,7 +201,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 
 			<liferay-ui:section>
 				<div class="sidebar-body">
-					<liferay-util:include page="/admin/common/article_history.jsp" servletContext="<%= application %>" />
+					<liferay-util:include page="/admin/common/kb_article_history.jsp" servletContext="<%= application %>" />
 				</div>
 			</liferay-ui:section>
 		</liferay-ui:tabs>

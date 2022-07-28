@@ -71,7 +71,7 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 
 				<h2 class="h5">
 					<liferay-portlet:renderURL varImpl="rowURL">
-						<portlet:param name="mvcPath" value="/admin/common/view_suggestion.jsp" />
+						<portlet:param name="mvcPath" value="/admin/common/view_kb_suggestion.jsp" />
 						<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</liferay-portlet:renderURL>

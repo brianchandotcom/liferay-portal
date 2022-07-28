@@ -138,7 +138,7 @@ if (ratingsType == null) {
 				request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
 				%>
 
-				<liferay-util:include page="/admin/common/view_suggestions_by_status.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/admin/common/view_kb_suggestions_by_status.jsp" servletContext="<%= application %>" />
 			</c:when>
 			<c:otherwise>
 				<liferay-portlet:renderURL varImpl="iteratorURL">

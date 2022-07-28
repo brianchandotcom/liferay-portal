@@ -56,7 +56,7 @@ if (portletTitleBasedNavigation) {
 	%>
 
 	<liferay-portlet:renderURL varImpl="iteratorURL">
-		<portlet:param name="mvcPath" value="/admin/common/history.jsp" />
+		<portlet:param name="mvcPath" value="/admin/common/kb_history.jsp" />
 		<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 		<portlet:param name="status" value="<%= String.valueOf(status) %>" />
 	</liferay-portlet:renderURL>
@@ -81,7 +81,7 @@ if (portletTitleBasedNavigation) {
 			modelVar="curKBArticle"
 		>
 			<liferay-portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/admin/common/history.jsp" />
+				<portlet:param name="mvcPath" value="/admin/common/kb_history.jsp" />
 				<portlet:param name="resourcePrimKey" value="<%= String.valueOf(curKBArticle.getResourcePrimKey()) %>" />
 				<portlet:param name="status" value="<%= String.valueOf(status) %>" />
 				<portlet:param name="sourceVersion" value="<%= String.valueOf(curKBArticle.getVersion()) %>" />
@@ -150,7 +150,7 @@ if (portletTitleBasedNavigation) {
 					align="right"
 				>
 					<liferay-portlet:actionURL name="/knowledge_base/update_kb_article" varImpl="revertURL">
-						<portlet:param name="mvcPath" value="/admin/common/history.jsp" />
+						<portlet:param name="mvcPath" value="/admin/common/kb_history.jsp" />
 						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />

@@ -85,7 +85,7 @@ if (portletTitleBasedNavigation) {
 		</c:if>
 
 		<div class="kb-tools">
-			<liferay-util:include page="/admin/common/article_tools.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/admin/common/kb_article_tools.jsp" servletContext="<%= application %>" />
 		</div>
 
 		<div <%= portletTitleBasedNavigation ? "class=\"panel\"" : StringPool.BLANK %>>
@@ -100,7 +100,7 @@ if (portletTitleBasedNavigation) {
 					<%= kbArticle.getContent() %>
 				</div>
 
-				<liferay-util:include page="/admin/common/article_social_bookmarks.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/admin/common/kb_article_social_bookmarks.jsp" servletContext="<%= application %>" />
 
 				<liferay-expando:custom-attributes-available
 					className="<%= KBArticle.class.getName() %>"
@@ -113,16 +113,16 @@ if (portletTitleBasedNavigation) {
 					/>
 				</liferay-expando:custom-attributes-available>
 
-				<liferay-util:include page="/admin/common/article_assets.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/admin/common/kb_article_assets.jsp" servletContext="<%= application %>" />
 
 				<c:if test="<%= showKBArticleAttachments %>">
-					<liferay-util:include page="/admin/common/article_attachments.jsp" servletContext="<%= application %>" />
+					<liferay-util:include page="/admin/common/kb_article_attachments.jsp" servletContext="<%= application %>" />
 				</c:if>
 
-				<liferay-util:include page="/admin/common/article_asset_links.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/admin/common/kb_article_asset_links.jsp" servletContext="<%= application %>" />
 
 				<c:if test="<%= !portletTitleBasedNavigation %>">
-					<liferay-util:include page="/admin/common/article_asset_entries.jsp" servletContext="<%= application %>" />
+					<liferay-util:include page="/admin/common/kb_article_asset_entries.jsp" servletContext="<%= application %>" />
 				</c:if>
 
 				<c:if test="<%= enableKBArticleRatings %>">
@@ -136,7 +136,7 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 
 				<c:if test="<%= !portletTitleBasedNavigation && !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE) %>">
-					<liferay-util:include page="/admin/common/article_siblings.jsp" servletContext="<%= application %>" />
+					<liferay-util:include page="/admin/common/kb_article_siblings.jsp" servletContext="<%= application %>" />
 				</c:if>
 			</div>
 
@@ -155,18 +155,18 @@ if (portletTitleBasedNavigation) {
 								persistState="<%= true %>"
 								title="suggestions"
 							>
-								<liferay-util:include page="/admin/common/article_suggestions.jsp" servletContext="<%= application %>" />
+								<liferay-util:include page="/admin/common/kb_article_suggestions.jsp" servletContext="<%= application %>" />
 							</liferay-ui:panel>
 						</liferay-ui:panel-container>
 					</c:when>
 					<c:otherwise>
-						<liferay-util:include page="/admin/common/article_suggestions.jsp" servletContext="<%= application %>" />
+						<liferay-util:include page="/admin/common/kb_article_suggestions.jsp" servletContext="<%= application %>" />
 					</c:otherwise>
 				</c:choose>
 			</c:if>
 		</div>
 
-		<liferay-util:include page="/admin/common/article_child.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/common/kb_article_child.jsp" servletContext="<%= application %>" />
 	</div>
 </div>
 

@@ -96,7 +96,7 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 
 	<liferay-ui:success key="suggestionSaved" message="suggestion-was-saved-successfully" />
 
-	<liferay-util:include page="/admin/common/view_suggestions_by_status.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/admin/common/view_kb_suggestions_by_status.jsp" servletContext="<%= application %>" />
 </clay:container-fluid>
 
 <c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>

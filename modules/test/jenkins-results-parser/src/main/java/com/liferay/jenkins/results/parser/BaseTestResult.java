@@ -32,6 +32,45 @@ public abstract class BaseTestResult implements TestResult {
 	}
 
 	@Override
+	public long getOverheadDuration() {
+		Build build = getBuild();
+
+		if (!(build instanceof DownstreamBuild)) {
+			return 0L;
+		}
+
+		DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+		long overheadDuration = downstreamBuild.getTestExecutionDuration();
+
+		if (overheadDuration <= 0L) {
+			return 0L;
+		}
+
+		long totalDuration = 0L;
+
+		List<TestResult> testResults = build.getTestResults();
+
+		for (TestResult testResult : testResults) {
+			long duration = testResult.getDuration();
+
+			if (duration < 0L) {
+				continue;
+			}
+
+			totalDuration += duration;
+		}
+
+		overheadDuration -= totalDuration;
+
+		if (overheadDuration <= 0L) {
+			return 0L;
+		}
+
+		return overheadDuration / testResults.size();
+	}
+
+	@Override
 	public TestClassResult getTestClassResult() {
 		List<TestClassResult> testClassResults = _build.getTestClassResults();
 

@@ -103,6 +103,10 @@ definition {
 		Click(locator1 = "CP2DXPCloudSetup#REMOVE_THIS_ADMIN_DXP_CLOUD");
 	}
 
+	macro clickOnProductConsoleLink {
+		Click(locator1 = "CP2DXPCloudSetup#PRODUCT_CONSOLE");
+	}
+
 	macro createDXPCloudObjects {
 		CustomerPortal.showCPObject(title = "Account Subscription Group");
 

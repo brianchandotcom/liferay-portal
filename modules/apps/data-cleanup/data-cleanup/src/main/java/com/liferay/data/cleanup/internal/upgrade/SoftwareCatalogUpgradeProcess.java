@@ -45,8 +45,8 @@ public class SoftwareCatalogUpgradeProcess extends BaseUpgradeProcess {
 		_deleteSocial();
 
 		removePortletData(
-			null, null,
-			new String[] {"98", "com.liferay.portlet.softwarecatalog"});
+			null, new String[] {"98"},
+			new String[] {"com.liferay.portlet.softwarecatalog"});
 
 		removeServiceData(
 			null, new String[] {"com.liferay.softwarecatalog.service"},

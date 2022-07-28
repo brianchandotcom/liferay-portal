@@ -29,9 +29,9 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.account.constants.CommerceAccountConstants" %><%@
 page import="com.liferay.commerce.channel.web.internal.constants.CommerceChannelFDSNames" %><%@
+page import="com.liferay.commerce.channel.web.internal.constants.CommerceChannelScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.channel.web.internal.display.context.CommerceChannelDisplayContext" %><%@
 page import="com.liferay.commerce.channel.web.internal.display.context.SiteCommerceChannelTypeDisplayContext" %><%@
-page import="com.liferay.commerce.channel.web.internal.servlet.taglib.ui.constants.CommerceChannelScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.constants.CommerceOrderConstants" %><%@
 page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
 page import="com.liferay.commerce.pricing.constants.CommercePricingConstants" %><%@

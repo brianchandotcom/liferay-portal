@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.channel.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.channel.web.internal.constants.CommerceChannelScreenNavigationConstants;
 import com.liferay.commerce.channel.web.internal.display.context.SiteCommerceChannelTypeDisplayContext;
-import com.liferay.commerce.channel.web.internal.servlet.taglib.ui.constants.CommerceChannelScreenNavigationConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.product.channel.CommerceChannelHealthStatusRegistry;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;

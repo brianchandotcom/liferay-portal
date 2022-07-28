@@ -36,7 +36,8 @@ public class PrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 		_deleteMBThreads();
 
 		removePortletData(
-			new String[] {"com.liferay.social.privatemessaging.web"}, null,
+			new String[] {"com.liferay.social.privatemessaging.web"},
+			new String[] {"1_WAR_privatemessagingportlet"},
 			new String[] {
 				"com_liferay_social_privatemessaging_web_portlet_" +
 					"PrivateMessagingPortlet"

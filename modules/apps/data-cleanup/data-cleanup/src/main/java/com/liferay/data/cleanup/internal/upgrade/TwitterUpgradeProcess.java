@@ -22,7 +22,8 @@ public class TwitterUpgradeProcess extends BaseUpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		removePortletData(
-			new String[] {"com.liferay.twitter.web"}, null,
+			new String[] {"com.liferay.twitter.web"},
+			new String[] {"1_WAR_twitterportlet"},
 			new String[] {"com_liferay_twitter_web_portlet_TwitterPortlet"});
 
 		removeServiceData(

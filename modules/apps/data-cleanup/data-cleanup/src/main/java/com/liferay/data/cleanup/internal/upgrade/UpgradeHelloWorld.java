@@ -22,7 +22,7 @@ public class UpgradeHelloWorld extends BaseUpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		removePortletData(
-			new String[] {"com.liferay.hello.world.web"}, null,
+			new String[] {"com.liferay.hello.world.web"}, new String[] {"47"},
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
 			});

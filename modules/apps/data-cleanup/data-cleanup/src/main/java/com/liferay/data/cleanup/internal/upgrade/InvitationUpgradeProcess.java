@@ -22,7 +22,7 @@ public class InvitationUpgradeProcess extends BaseUpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		removePortletData(
-			new String[] {"com.liferay.invitation.web"}, null,
+			new String[] {"com.liferay.invitation.web"}, new String[] {"100"},
 			new String[] {
 				"com_liferay_invitation_web_portlet_InvitationPortlet"
 			});

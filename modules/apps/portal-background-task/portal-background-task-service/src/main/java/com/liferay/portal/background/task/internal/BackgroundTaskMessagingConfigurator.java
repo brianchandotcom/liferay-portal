@@ -17,6 +17,7 @@ package com.liferay.portal.background.task.internal;
 import com.liferay.portal.background.task.internal.messaging.BackgroundTaskMessageListener;
 import com.liferay.portal.background.task.internal.messaging.BackgroundTaskQueuingMessageListener;
 import com.liferay.portal.background.task.internal.messaging.RemoveOnCompletionBackgroundTaskStatusMessageListener;
+import com.liferay.portal.background.task.internal.messaging.SendNotificationOnFailedBackgroundTaskStatusMessageListener;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutorRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
@@ -27,6 +28,9 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
@@ -69,6 +73,10 @@ public class BackgroundTaskMessagingConfigurator {
 		backgroundTaskStatusDestination.register(
 			new RemoveOnCompletionBackgroundTaskStatusMessageListener(
 				_backgroundTaskLocalService));
+		backgroundTaskStatusDestination.register(
+			new SendNotificationOnFailedBackgroundTaskStatusMessageListener(
+				_backgroundTaskLocalService, _roleLocalService,
+				_userLocalService, _userNotificationEventLocalService));
 	}
 
 	@Deactivate
@@ -123,7 +131,17 @@ public class BackgroundTaskMessagingConfigurator {
 	@Reference
 	private MessageBus _messageBus;
 
+	@Reference
+	private RoleLocalService _roleLocalService;
+
 	private final List<ServiceRegistration<Destination>> _serviceRegistrations =
 		new ArrayList<>();
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

@@ -827,27 +827,10 @@ public class LayoutStagedModelDataHandler
 		if ((parentLayoutId != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) &&
 			(parentLayoutElement != null)) {
 
-			Layout importedParentLayout = null;
-
 			String action = GetterUtil.getString(
 				parentLayoutElement.attributeValue("action"));
 
-			if (action.equals(Constants.SKIP)) {
-				importedParentLayout =
-					_layoutLocalService.fetchLayoutByUuidAndGroupId(
-						parentLayoutUuid, groupId, privateLayout);
-
-				if (importedParentLayout == null) {
-					String parentLayoutFriendlyURL = GetterUtil.getString(
-						layoutElement.attributeValue(
-							"parent-layout-friendly-url"));
-
-					importedParentLayout =
-						_layoutLocalService.fetchLayoutByFriendlyURL(
-							groupId, privateLayout, parentLayoutFriendlyURL);
-				}
-			}
-			else {
+			if (!action.equals(Constants.SKIP)) {
 				long originalPlid = portletDataContext.getPlid();
 
 				try {
@@ -857,8 +840,19 @@ public class LayoutStagedModelDataHandler
 				finally {
 					portletDataContext.setPlid(originalPlid);
 				}
+			}
 
-				importedParentLayout = layouts.get(parentLayoutId);
+			Layout importedParentLayout =
+				_layoutLocalService.fetchLayoutByUuidAndGroupId(
+					parentLayoutUuid, groupId, privateLayout);
+
+			if (importedParentLayout == null) {
+				String parentLayoutFriendlyURL = GetterUtil.getString(
+					layoutElement.attributeValue("parent-layout-friendly-url"));
+
+				importedParentLayout =
+					_layoutLocalService.fetchLayoutByFriendlyURL(
+						groupId, privateLayout, parentLayoutFriendlyURL);
 			}
 
 			parentPlid = importedParentLayout.getPlid();

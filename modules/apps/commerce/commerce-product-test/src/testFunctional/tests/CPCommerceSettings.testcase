@@ -29,7 +29,9 @@ definition {
 		Pagination.changePagination(itemsPerPage = "60");
 
 		while (IsElementPresent(locator1 = "CommerceEntry#ROW_VERTICAL_ELLIPSIS")) {
-			CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected countries?");
+			CommerceProducts.deleteEntries(
+				countries = "true", 
+				deleteMessage = "Are you sure you want to delete the selected countries?");
 		}
 
 		AssertElementNotPresent(locator1 = "CommerceEntry#ROW_VERTICAL_ELLIPSIS");

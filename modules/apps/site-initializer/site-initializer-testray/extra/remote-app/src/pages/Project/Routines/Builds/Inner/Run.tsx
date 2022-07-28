@@ -15,54 +15,23 @@
 import {useParams} from 'react-router-dom';
 
 import Container from '../../../../../components/Layout/Container';
-import ListView from '../../../../../components/ListView/ListView';
-import {APIResponse, CTypePagination} from '../../../../../graphql/queries';
-import {TestrayRun, getRuns} from '../../../../../graphql/queries/testrayRun';
+import ListViewRest from '../../../../../components/ListView/ListViewRest';
 import i18n from '../../../../../i18n';
 import {filters} from '../../../../../schema/filter';
+import {getRunTransformData} from '../../../../../services/rest/TestrayRun';
 import {searchUtil} from '../../../../../util/search';
-
-const transformData = (
-	data: CTypePagination<'runs', TestrayRun>
-): APIResponse<TestrayRun> => {
-	const runsPagination = data?.c?.runs || {};
-
-	return {
-		...runsPagination,
-		items: runsPagination.items?.map((run) => {
-			const environmentValues = run.name.split('|');
-
-			const [
-				applicationServer,
-				browser,
-				database,
-				javaJDK,
-				operatingSystem,
-			] = environmentValues;
-
-			return {
-				...run,
-				applicationServer,
-				browser,
-				database,
-				javaJDK,
-				operatingSystem,
-			};
-		}),
-	};
-};
 
 const Runs = () => {
 	const {buildId} = useParams();
 
 	return (
 		<Container className="mt-4">
-			<ListView
+			<ListViewRest
 				managementToolbarProps={{
 					filterFields: filters.build.runs,
 					title: i18n.translate('runs'),
 				}}
-				query={getRuns}
+				resource="/runs"
 				tableProps={{
 					columns: [
 						{
@@ -92,7 +61,7 @@ const Runs = () => {
 						},
 					],
 				}}
-				transformData={transformData}
+				transformData={getRunTransformData}
 				variables={{
 					filter: searchUtil.eq('buildId', buildId as string),
 				}}

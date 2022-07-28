@@ -17,13 +17,10 @@ import {useOutletContext} from 'react-router-dom';
 
 import Button from '../../../components/Button';
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView/ListView';
-import {
-	TestrayCase,
-	TestrayRequirementCase,
-	getRequirementCases,
-} from '../../../graphql/queries';
+import ListView from '../../../components/ListView/ListViewRest';
+import {TestrayCase, TestrayRequirementCase} from '../../../graphql/queries';
 import i18n from '../../../i18n';
+import {caseRequirementsResource} from '../../../services/rest/TestrayCaseRequirements';
 import {searchUtil} from '../../../util/search';
 import CaseRequirementLinkModal from './CaseRequirementLinkModal';
 import useCaseRequirementActions from './useCaseRequirementActions';
@@ -34,7 +31,7 @@ const CaseRequirement = () => {
 		testrayCase,
 	}: {projectId: number; testrayCase: TestrayCase} = useOutletContext();
 
-	const {actions, formModal} = useCaseRequirementActions(testrayCase);
+	const {formModal} = useCaseRequirementActions(testrayCase);
 
 	return (
 		<Container>
@@ -55,9 +52,8 @@ const CaseRequirement = () => {
 					),
 					title: i18n.translate('requirements'),
 				}}
-				query={getRequirementCases}
+				resource={caseRequirementsResource}
 				tableProps={{
-					actions,
 					columns: [
 						{
 							clickable: true,
@@ -135,7 +131,9 @@ const CaseRequirement = () => {
 					navigateTo: ({requirement}: TestrayRequirementCase) =>
 						`/project/${projectId}/requirements/${requirement.id}`,
 				}}
-				transformData={(data) => data?.requirementscaseses}
+				transformData={(data) => {
+					return data?.items;
+				}}
 				variables={{
 					filter: searchUtil.eq('caseId', testrayCase.id),
 				}}

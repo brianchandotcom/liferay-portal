@@ -13,9 +13,8 @@
  */
 
 import Container from '../../../../../components/Layout/Container';
-import ListView from '../../../../../components/ListView/ListView';
+import ListView from '../../../../../components/ListView/ListViewRest';
 import ProgressBar from '../../../../../components/ProgressBar';
-import {getComponents} from '../../../../../graphql/queries';
 import i18n from '../../../../../i18n';
 import {filters} from '../../../../../schema/filter';
 
@@ -34,7 +33,7 @@ const Components = () => (
 				filterFields: filters.build.components,
 				title: i18n.translate('component'),
 			}}
-			query={getComponents}
+			resource="/components"
 			tableProps={{
 				columns: [
 					{
@@ -103,7 +102,6 @@ const Components = () => (
 					},
 				],
 			}}
-			transformData={(data) => data?.c?.components}
 		/>
 	</Container>
 );

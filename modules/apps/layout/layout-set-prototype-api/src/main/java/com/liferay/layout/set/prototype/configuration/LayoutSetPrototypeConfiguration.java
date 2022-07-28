@@ -39,4 +39,10 @@ public interface LayoutSetPrototypeConfiguration {
 	)
 	public boolean triggerPropagation();
 
+	@Meta.AD(
+		deflt = "false", description = "cancel-propagation-import-task-help",
+		name = "cancel-propagation-import-task", required = false
+	)
+	public boolean cancelPropagationImportTask();
+
 }

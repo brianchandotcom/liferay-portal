@@ -37,7 +37,7 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 				{key: 'priority', value: i18n.translate('priority')},
 				{
 					key: 'component',
-					render: (component) => component.name,
+					render: (component) => component?.name,
 					value: i18n.translate('component'),
 				},
 				{key: 'name', value: i18n.translate('name')},

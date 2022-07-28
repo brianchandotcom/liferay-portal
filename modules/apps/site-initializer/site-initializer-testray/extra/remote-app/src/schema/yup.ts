@@ -44,6 +44,7 @@ const yupSchema = {
 		commentMBMessage: yup.string(),
 		dueStatus: yup.string().required(),
 		issues: yup.string(),
+		userId: yup.number(),
 	}),
 	caseType: yup.object({
 		name: yup.string().required(),

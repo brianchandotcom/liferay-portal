@@ -24,7 +24,7 @@ const CaseResultOutlet = () => {
 	const {pathname} = useLocation();
 	const {buildId, caseResultId, projectId, routineId} = useParams();
 
-	const {data} = useFetch(
+	const {data, mutate: mutateCaseResult} = useFetch(
 		`/caseresults/${caseResultId}?nestedFields=case.caseType,commentMBMessage,component,build.productVersion,build.routine,run,user&nestedFieldsDepth=3`
 	);
 
@@ -68,7 +68,7 @@ const CaseResultOutlet = () => {
 	}, [basePath, pathname, setTabs]);
 
 	if (caseResult) {
-		return <Outlet context={{caseResult, projectId}} />;
+		return <Outlet context={{caseResult, mutateCaseResult, projectId}} />;
 	}
 
 	return null;

@@ -16,6 +16,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {ReactNode, useState} from 'react';
 import {Link, useOutletContext} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import Avatar from '../../../../../../components/Avatar';
 import AssignToMe from '../../../../../../components/Avatar/AssigneToMe';
@@ -65,10 +66,12 @@ const CollapsableItem: React.FC<CollapsableItemProps> = ({
 const CaseResult = () => {
 	const {
 		caseResult,
+		mutateCaseResult,
 		projectId,
 		refetch,
 	}: {
 		caseResult: TestrayCaseResult;
+		mutateCaseResult: KeyedMutator<any>;
 		projectId: string;
 		refetch: () => void;
 	} = useOutletContext();
@@ -87,7 +90,10 @@ const CaseResult = () => {
 
 	return (
 		<>
-			<CaseResultHeaderActions caseResult={caseResult} />
+			<CaseResultHeaderActions
+				caseResult={caseResult}
+				mutateCaseResult={mutateCaseResult}
+			/>
 			<ClayLayout.Row>
 				<ClayLayout.Col xs={9}>
 					<Container

@@ -26,6 +26,7 @@ export type TestrayCaseResult = {
 	build?: TestrayBuild;
 	case?: TestrayCase;
 	closedDate: string;
+	commentMBMessage: string;
 	commentMBMessageId: string;
 	component: TestrayComponent;
 	dateCreated: string;
@@ -33,6 +34,7 @@ export type TestrayCaseResult = {
 	dueStatus: number;
 	errors: string;
 	id: number;
+	issue: string;
 	r_buildToCaseResult_c_build?: TestrayBuild;
 	r_caseToCaseResult_c_case?: TestrayCase;
 	r_componentToCaseResult_c_component?: TestrayComponent;

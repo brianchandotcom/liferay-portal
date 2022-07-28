@@ -15,19 +15,21 @@
 import ClayAlert from '@clayui/alert';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
-import {useParams} from 'react-router-dom';
+import {useOutletContext, useParams} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import Form from '../../../../../../components/Form';
 import Footer from '../../../../../../components/Form/Footer';
 import Container from '../../../../../../components/Layout/Container';
-import {useFetch} from '../../../../../../hooks/useFetch';
+import {TestrayCaseResult} from '../../../../../../graphql/queries';
 import useFormActions from '../../../../../../hooks/useFormActions';
 import i18n from '../../../../../../i18n';
 import yupSchema from '../../../../../../schema/yup';
+import {Liferay} from '../../../../../../services/liferay';
 import {
 	createCaseResult,
 	updateCaseResult,
-} from '../../../../../../services/rest/TestrayCaseResult';
+} from '../../../../../../services/rest';
 import {TEST_STATUS} from '../../../../../../util/constants';
 
 type CaseResultForm = {
@@ -41,9 +43,14 @@ const CaseResultEditTest = () => {
 		form: {onClose, onError, onSave, onSubmitRest},
 	} = useFormActions();
 	const {caseResultId} = useParams();
-	const url = `/caseresults/${caseResultId}?nestedFields=case.caseType,commentMBMessage,component,build.productVersion,build.routine,run,user&nestedFieldsDepth=3`;
 
-	const {data, mutate} = useFetch(url);
+	const {
+		caseResult,
+		mutateCaseResult,
+	}: {
+		caseResult: TestrayCaseResult;
+		mutateCaseResult: KeyedMutator<any>;
+	} = useOutletContext();
 
 	const {
 		formState: {errors},
@@ -51,15 +58,16 @@ const CaseResultEditTest = () => {
 		register,
 		watch,
 	} = useForm<CaseResultForm>({
-		defaultValues: data?.dueStatus
-			? {
-					commentMBMessage: data?.commentMBMessage,
-					dueStatus: data?.dueStatus,
-					issue: data?.issue,
-			  }
+		defaultValues: caseResult?.dueStatus
+			? ({
+					commentMBMessage: caseResult?.commentMBMessage,
+					dueStatus: caseResult?.dueStatus,
+					issue: caseResult?.issue,
+			  } as any)
 			: {},
 		resolver: yupResolver(yupSchema.caseResult),
 	});
+
 	const inputProps = {
 		errors,
 		register,
@@ -70,17 +78,20 @@ const CaseResultEditTest = () => {
 		dueStatus,
 		issue,
 	}: CaseResultForm) => {
-		setTimeout(() => {
-			return mutate(url);
-		}, 0);
-
 		onSubmitRest(
-			{commentMBMessage, dueStatus, id: caseResultId, issue},
+			{
+				commentMBMessage,
+				dueStatus,
+				id: caseResultId,
+				issue,
+				userId: Liferay.ThemeDisplay.getUserId(),
+			},
 			{
 				create: createCaseResult,
 				update: updateCaseResult,
 			}
 		)
+			.then(mutateCaseResult)
 			.then(onSave)
 			.catch(onError);
 	};

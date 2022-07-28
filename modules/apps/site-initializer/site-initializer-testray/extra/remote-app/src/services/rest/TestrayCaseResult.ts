@@ -104,10 +104,16 @@ const normalizeCaseResultResponse = (caseResult: TestrayCaseResult) => ({
 	user: caseResult.r_userToCaseResults_user,
 });
 
-const adapter = ({commentMBMessage, dueStatus, issues}: CaseResult) => ({
+const adapter = ({
 	commentMBMessage,
 	dueStatus,
 	issues,
+	userId: r_userToCaseResults_userId,
+}: CaseResult) => ({
+	commentMBMessage,
+	dueStatus,
+	issues,
+	r_userToCaseResults_userId,
 });
 
 const createCaseResult = (caseResult: CaseResult) =>

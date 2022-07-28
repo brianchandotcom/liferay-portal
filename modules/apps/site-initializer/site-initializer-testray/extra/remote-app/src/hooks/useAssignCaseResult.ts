@@ -12,12 +12,14 @@
  * details.
  */
 
+import {KeyedMutator} from 'swr';
+
 import {TestrayCaseResult} from '../graphql/queries';
 import fetcher from '../services/fetcher';
 import {Liferay} from '../services/liferay';
 import {TEST_STATUS} from '../util/constants';
 
-const useAssignCaseResult = () => {
+const useAssignCaseResult = (mutate?: KeyedMutator<any>) => {
 	const onAssignToFetch = async (
 		caseResult: TestrayCaseResult,
 		userId: number | string | null
@@ -30,7 +32,13 @@ const useAssignCaseResult = () => {
 			startDate: caseResult.startDate,
 		};
 
-		return fetcher.put(url, data);
+		const response = await fetcher.put(url, data);
+
+		if (mutate) {
+			mutate(response);
+		}
+
+		return response;
 	};
 
 	const onAssignToMeFetch = async (caseResult: TestrayCaseResult) => {
@@ -42,7 +50,13 @@ const useAssignCaseResult = () => {
 			startDate: caseResult.startDate,
 		};
 
-		return fetcher.put(url, data);
+		const response = await fetcher.put(url, data);
+
+		if (mutate) {
+			mutate(response);
+		}
+
+		return response;
 	};
 
 	const onRemoveAssignFetch = async (caseResult: TestrayCaseResult) => {
@@ -54,7 +68,13 @@ const useAssignCaseResult = () => {
 			startDate: null as any,
 		};
 
-		return fetcher.put(url, data);
+		const response = await fetcher.put(url, data);
+
+		if (mutate) {
+			mutate(response);
+		}
+
+		return response;
 	};
 
 	return {

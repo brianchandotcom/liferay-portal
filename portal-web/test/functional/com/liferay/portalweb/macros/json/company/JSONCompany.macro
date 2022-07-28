@@ -1,5 +1,24 @@
 definition {
 
+	macro getAllCompanyNames {
+		if (!(isSet(portalInstanceName))) {
+			var portalInstanceName = JSONCompany.getPortalInstanceNameNoSelenium();
+		}
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/company/get-companies \
+				-u test@liferay.com:test
+		''';
+
+		var companies = JSONCurlUtil.get("${curl}", "$..['mx']");
+
+		return "${companies}";
+	}
+
 	macro getCompanyId {
 		if (!(isSet(portalInstanceName))) {
 			var portalInstanceName = JSONCompany.getPortalInstanceName();

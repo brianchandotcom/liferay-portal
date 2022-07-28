@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -82,8 +83,13 @@ public class WalkthroughBottomJSPDynamicInclude implements DynamicInclude {
 		String resolvedModuleName = _npmResolver.resolveModuleName(
 			"@liferay/frontend-js-walkthrough-web/index");
 
+		Group siteGroup = themeDisplay.getSiteGroup();
+
 		scriptData.append(
-			null, "WalkthroughRender.default(" + steps + ")",
+			null,
+			StringBundler.concat(
+				"WalkthroughRender.default(", steps, ",'",
+				siteGroup.getFriendlyURL(), "')"),
 			resolvedModuleName + " as WalkthroughRender",
 			ScriptData.ModulesType.ES6);
 

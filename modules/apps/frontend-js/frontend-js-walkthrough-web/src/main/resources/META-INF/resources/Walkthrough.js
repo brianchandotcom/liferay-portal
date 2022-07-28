@@ -149,9 +149,17 @@ const Step = ({
 	currentStep,
 	onCurrentStep,
 	pages,
+	siteGroupFriendlyURL,
 	skippable,
 	steps,
 }) => {
+
+	/**
+	 * Given a page url like:
+	 * `http://localhost:8080/web/fiona/home`, it will give us `web/fiona`
+	 */
+	const SITE_PREFIX_PATH = `/web${siteGroupFriendlyURL}`;
+
 	const popoverRef = useRef(null);
 
 	const hotspotRef = useRef(null);
@@ -310,7 +318,9 @@ const Step = ({
 
 	useObserveRect(align, popoverRef?.current);
 
-	const currentLayoutRelativeURL = themeDisplay.getLayoutRelativeURL();
+	const currentLayoutRelativeURL = themeDisplay
+		.getLayoutRelativeURL()
+		.replace(SITE_PREFIX_PATH, '');
 
 	const currentPage = useMemo(
 		() => findLongestMatch(currentLayoutRelativeURL, Object.keys(pages)),
@@ -404,7 +414,11 @@ const Step = ({
 												onPrevious(previous);
 
 												if (previous) {
-													navigate(previous);
+													navigate(
+														SITE_PREFIX_PATH.concat(
+															previous
+														)
+													);
 												}
 											}}
 											small
@@ -419,7 +433,11 @@ const Step = ({
 												onNext(next);
 
 												if (next) {
-													navigate(next);
+													navigate(
+														SITE_PREFIX_PATH.concat(
+															next
+														)
+													);
 												}
 											}}
 											small
@@ -451,6 +469,7 @@ const Walkthrough = ({
 	closeOnClickOutside,
 	closeable,
 	pages,
+	siteGroupFriendlyURL,
 	skippable,
 	steps,
 }) => {
@@ -472,6 +491,7 @@ const Walkthrough = ({
 			currentStep={currentStepIndex}
 			onCurrentStep={setCurrentStepIndex}
 			pages={pages}
+			siteGroupFriendlyURL={siteGroupFriendlyURL}
 			skippable={skippable}
 			steps={steps}
 		/>

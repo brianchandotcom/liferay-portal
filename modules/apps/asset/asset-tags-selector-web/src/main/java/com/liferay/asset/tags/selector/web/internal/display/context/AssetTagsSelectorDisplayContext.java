@@ -179,19 +179,21 @@ public class AssetTagsSelectorDisplayContext {
 		for (long groupId : groupIds) {
 			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-			if ((group != null) && group.isLayout() &&
-				!ArrayUtil.contains(groupIds, group.getParentGroupId())) {
+			if ((group == null) || !group.isLayout() ||
+				ArrayUtil.contains(groupIds, group.getParentGroupId())) {
 
-				try {
-					groupIds = ArrayUtil.append(
-						groupIds,
-						PortalUtil.getCurrentAndAncestorSiteGroupIds(
-							group.getParentGroupId()));
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
-					}
+				continue;
+			}
+
+			try {
+				groupIds = ArrayUtil.append(
+					groupIds,
+					PortalUtil.getCurrentAndAncestorSiteGroupIds(
+						group.getParentGroupId()));
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
 				}
 			}
 		}

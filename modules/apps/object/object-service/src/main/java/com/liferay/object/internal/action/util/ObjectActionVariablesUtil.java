@@ -49,6 +49,8 @@ public class ObjectActionVariablesUtil {
 
 			return HashMapBuilder.<String, Object>putAll(
 				(Map<String, Object>)object
+			).putAll(
+				(Map<String, Object>)payloadJSONObject.get("extendedProperties")
 			).put(
 				"companyId", payloadJSONObject.getLong("companyId")
 			).put(

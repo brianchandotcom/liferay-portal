@@ -33,9 +33,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
 
 import java.util.Collections;
 import java.util.Map;
@@ -130,6 +132,14 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 		throws ModelListenerException {
 
 		try {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+					_getCompanyId(baseModel), _modelClass.getName());
+
+			if (objectDefinition == null) {
+				return;
+			}
+
 			long userId = PrincipalThreadLocal.getUserId();
 
 			if (userId == 0) {
@@ -140,8 +150,8 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 				_modelClass.getName(), _getCompanyId(baseModel),
 				objectActionTriggerKey,
 				_getPayloadJSONObject(
-					objectActionTriggerKey, originalBaseModel, baseModel,
-					userId),
+					objectActionTriggerKey, objectDefinition, originalBaseModel,
+					baseModel, userId),
 				userId);
 		}
 		catch (PortalException portalException) {
@@ -180,14 +190,24 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 	}
 
 	private JSONObject _getPayloadJSONObject(
-			String objectActionTriggerKey, T originalBaseModel, T baseModel,
-			long userId)
+			String objectActionTriggerKey, ObjectDefinition objectDefinition,
+			T originalBaseModel, T baseModel, long userId)
 		throws PortalException {
 
 		String dtoConverterType = _getDTOConverterType();
 
 		return JSONUtil.put(
 			"classPK", baseModel.getPrimaryKeyObj()
+		).put(
+			"extendedProperties",
+			HashMapBuilder.<String, Object>putAll(
+				_objectEntryLocalService.
+					getExtensionDynamicObjectDefinitionTableValues(
+						objectDefinition,
+						GetterUtil.getLong(baseModel.getPrimaryKeyObj()))
+			).putAll(
+				EntityExtensionThreadLocal.getExtendedProperties()
+			).build()
 		).put(
 			"model" + _modelClass.getSimpleName(),
 			baseModel.getModelAttributes()

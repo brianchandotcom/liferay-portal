@@ -28,9 +28,25 @@ const populateAssignmentsData = (initialElements, setElements) => {
 			if (assignmentType === 'user') {
 				const sectionsData = [];
 
+				let filterTypeRetrieveUsersBy = Object.keys(
+					element.data.assignments
+				)[1];
+				const keywordRetrieveUsersBy = Object.values(
+					element.data.assignments
+				)[1];
+
+				if (filterTypeRetrieveUsersBy === 'userId') {
+					filterTypeRetrieveUsersBy = filterTypeRetrieveUsersBy
+						.toLocaleLowerCase()
+						.replace('user', '');
+				}
+				else if (filterTypeRetrieveUsersBy === 'screenName') {
+					filterTypeRetrieveUsersBy = 'alternateName';
+				}
+
 				retrieveUsersBy(
-					'emailAddress',
-					element.data.assignments.emailAddress
+					filterTypeRetrieveUsersBy,
+					keywordRetrieveUsersBy
 				)
 					.then((response) => response.json())
 					.then(({items}) => {

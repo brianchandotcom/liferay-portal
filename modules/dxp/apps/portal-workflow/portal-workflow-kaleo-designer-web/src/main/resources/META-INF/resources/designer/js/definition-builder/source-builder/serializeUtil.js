@@ -373,8 +373,8 @@ function appendXMLNotifications(buffer, notifications, nodeName, exporting) {
 			const recipientsAttrs = {};
 
 			if (
-				recipients[index].receptionType &&
-				recipients[index].receptionType.some(
+				recipients[index]?.receptionType &&
+				recipients[index]?.receptionType.some(
 					(receptionType) => receptionType !== ''
 				)
 			) {
@@ -385,7 +385,7 @@ function appendXMLNotifications(buffer, notifications, nodeName, exporting) {
 				recipientsAttrs.receptionType = receptionType[0];
 			}
 
-			recipients[index].roleType?.forEach((item, roleTypeIndex) => {
+			recipients[index]?.roleType?.forEach((item, roleTypeIndex) => {
 				if (item === 'depot' || item === 'asset library') {
 					recipients[index].roleType[roleTypeIndex] = roleTypeName;
 				}

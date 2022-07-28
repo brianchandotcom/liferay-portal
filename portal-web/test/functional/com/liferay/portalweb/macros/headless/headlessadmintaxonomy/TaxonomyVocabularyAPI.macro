@@ -16,6 +16,10 @@ definition {
 			var api = StringUtil.add("${api}", "${apiWithErc}", "/");
 		}
 
+		if (isSet(filterValue)) {
+			var api = StringUtil.add("${api}", "?filter=${filterValue}", "");
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-admin-taxonomy/v1.0/${api} \
 			-u test@liferay.com:test \
@@ -23,6 +27,57 @@ definition {
 		''';
 
 		return "${curl}";
+	}
+
+	macro assertProperVocabularyTotalCount {
+		Variables.assertDefined(parameterList = "${expectedTotalCount}");
+
+		var response = TaxonomyVocabularyAPI.filterTaxonomyVocabulary(
+			assetLibraryId = "${assetLibraryId}",
+			filterValue = "${filterValue}");
+
+		var actualTotalCount = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
+			element = "$..['totalCount']",
+			responseToParse = "${response}");
+
+		TestUtils.assertEquals(
+			actual = "${actualTotalCount}",
+			expected = "${expectedTotalCount}");
+	}
+
+	macro createTaxonomyVocabulary {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${name}");
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
+			assetLibraryId = "${assetLibraryId}",
+			siteId = "${siteId}");
+		var body = '''-d {
+				"name": "${name}",
+				"externalReferenceCode": "${externalReferenceCode}"
+			}''';
+
+		var curl = StringUtil.add("${curl}", "${body}", " ");
+
+		var response = JSONCurlUtil.post("${curl}");
+
+		return "${response}";
+	}
+
+	macro filterTaxonomyVocabulary {
+		Variables.assertDefined(parameterList = "${filterValue}");
+
+		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
+			assetLibraryId = "${assetLibraryId}",
+			filterValue = "${filterValue}",
+			siteId = "${siteId}");
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
 	}
 
 	macro getElementOfCreatedVocabulary {

@@ -75,4 +75,42 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test CanUpdateVocabularyByErc {
+		property portal.acceptance = "true";
+
+		task ("Given an existing vocabulary") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			TaxonomyVocabularyAPI.createTaxonomyVocabulary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				name = "Vocabulary Name");
+		}
+
+		task ("When user makes a PUT request to update the vocabulary name with assetLibraryId and ERC") {
+			var response = TaxonomyVocabularyAPI.updateTaxonomyVocabularyByErc(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				name = "Update Vocabulary Name");
+		}
+
+		task ("Then the vocabulary name is updated with the ERC in response body") {
+			var actualName = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
+				element = "$.name",
+				responseToParse = "${response}");
+
+			TestUtils.assertEquals(
+				actual = "${actualName}",
+				expected = "Update Vocabulary Name");
+		}
+
+		task ("And Then the previous vocabulary name is not present") {
+			TaxonomyVocabularyAPI.assertProperVocabularyTotalCount(
+				assetLibraryId = "${assetLibraryId}",
+				expectedTotalCount = "0",
+				filterValue = "name%20eq%20%27Vocabulary%20Name%27");
+		}
+	}
+
 }

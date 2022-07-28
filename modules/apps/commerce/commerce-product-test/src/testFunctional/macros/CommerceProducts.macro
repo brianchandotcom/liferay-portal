@@ -457,19 +457,33 @@ definition {
 		}
 	}
 
-	macro deleteEntries {
-		Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
+	macro deleteEntries {	
+		if (isSet(countries)) {
+			Click.clickNoMouseOverNoWaitForVisible(locator1 = "AppBuilder#CHECKBOX");
 
-		if (IsElementPresent(locator1 = "Button#TRASH_ENABLED")) {
-			ClickNoError(locator1 = "Button#TRASH_ENABLED");
-		}
+			if (IsElementPresent(locator1 = "TableViewBuilder#CLEAR_SEARCH")) {
+				ClickNoError(locator1 = "TableViewBuilder#CLEAR_SEARCH");
+			}
+			else {
+				ClickNoError(locator1 = "Button#DELETE");
+			}
+			if (isSet(deleteMessage)) {
+            	Confirm(value1 = "${deleteMessage}");
+			}					
+		} 
 		else {
-			ClickNoError(locator1 = "Button#DELETE");
-		}
+			Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
 
-		if (isSet(deleteMessage)) {
-			Confirm(value1 = "${deleteMessage}");
-		}
+			if (IsElementPresent(locator1 = "Button#TRASH_ENABLED")) {
+				ClickNoError(locator1 = "Button#TRASH_ENABLED");
+			}
+			else {
+				ClickNoError(locator1 = "Button#DELETE");
+			}	
+			if (isSet(deleteMessage)) {
+            	Confirm(value1 = "${deleteMessage}");
+			}		
+		}	
 	}
 
 	macro deleteProductsEntry {

@@ -12,7 +12,6 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import React, {useCallback, useState} from 'react';
 
 import Form from '../../../components/Form';
@@ -22,10 +21,14 @@ import DualListBox, {
 } from '../../../components/Form/DualListBox';
 import Modal from '../../../components/Modal';
 import {
-	SelectCasesParameters,
-	getSelectCasesParameters,
+	APIResponse,
+	TestrayCaseType,
+	TestrayComponent,
+	TestrayRequirement,
+	TestrayTeam,
 } from '../../../graphql/queries';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
+import {useFetch} from '../../../hooks/useFetch';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
@@ -47,20 +50,31 @@ type SelectCaseParametersProps = {
 const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 	setState,
 }) => {
-	const {data} = useQuery<SelectCasesParameters>(getSelectCasesParameters);
+	const {data: casetypes} = useFetch<APIResponse<TestrayCaseType>>(
+		'/casetypes?fields=id,name'
+	);
+	const {data: components} = useFetch<APIResponse<TestrayComponent>>(
+		'/components?fields=id,name'
+	);
+	const {data: requirements} = useFetch<APIResponse<TestrayRequirement>>(
+		'/requirements?fields=id,name'
+	);
+
+	const {data: teams} = useFetch<APIResponse<TestrayTeam>>(
+		'/teams?fields=id,name'
+	);
 
 	const getSelectedCaseParameters = useCallback(() => {
-		const queries = data?.c;
-		const defaultBox: any = [];
-
-		if (!queries) {
+		if (!casetypes || !components || !requirements || !teams) {
 			return;
 		}
 
-		const testrayCaseTypes = queries?.caseTypes.items || [];
-		const testrayComponents = queries?.components.items || [];
-		const testrayRequirements = queries?.requirements.items || [];
-		const testrayTeams = queries?.teams.items || [];
+		const defaultBox: any = [];
+
+		const testrayCaseTypes = casetypes.items || [];
+		const testrayComponents = components.items || [];
+		const testrayRequirements = requirements.items || [];
+		const testrayTeams = teams?.items || [];
 
 		return {
 			testrayCaseTypes: [testrayCaseTypes.map(onMapDefault), defaultBox],
@@ -84,7 +98,7 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 			],
 			testrayTeams: [testrayTeams.map(onMapDefault), defaultBox],
 		};
-	}, [data?.c]);
+	}, [casetypes, components, requirements, teams]);
 
 	const selectedCaseParameters = getSelectedCaseParameters();
 

@@ -12,35 +12,32 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
 import {useState} from 'react';
 
-import {
-	CreateRequirementCaseBatch,
-	DeleteRequirementCase,
-} from '../../../graphql/mutations';
 import {TestrayCase, TestrayRequirementCase} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
+import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
+import {
+	createRequirementCaseBatch,
+	deleteResource,
+} from '../../../services/rest';
 import {Action} from '../../../types';
 import {State} from './CaseRequirementLinkModal';
 
 const useCaseRequirementActions = (testrayCase: TestrayCase) => {
-	const [onDeleteRequirementCase] = useMutation(DeleteRequirementCase);
-	const [onCreateRequirementCase] = useMutation(CreateRequirementCaseBatch);
 	const [forceRefetch, setForceRefetch] = useState(0);
+	const {removeItemFromList} = useMutate();
 
 	const {forceRefetch: modalForceRefetch, modal} = useFormModal({
 		onSave: (requirements: State) => {
 			if (requirements.length) {
-				onCreateRequirementCase({
-					variables: {
-						data: requirements.map((requirementId) => ({
-							caseId: testrayCase.id,
-							requirementId,
-						})),
-					},
-				})
+				createRequirementCaseBatch(
+					requirements.map((requirementId) => ({
+						caseId: testrayCase.id,
+						requirementId,
+					}))
+				)
 					.then(() => {
 						setTimeout(() => {
 							setForceRefetch(new Date().getTime());
@@ -53,8 +50,9 @@ const useCaseRequirementActions = (testrayCase: TestrayCase) => {
 
 	const actions: Action[] = [
 		{
-			action: ({id}: TestrayRequirementCase) =>
-				onDeleteRequirementCase({variables: {id}})
+			action: ({id}: TestrayRequirementCase, mutate) =>
+				deleteResource(`/requirementscaseses/${id}`)
+					.then(() => removeItemFromList(mutate, id))
 					.then(() => modal.onSave())
 					.catch(modal.onError),
 			name: i18n.translate('delete'),

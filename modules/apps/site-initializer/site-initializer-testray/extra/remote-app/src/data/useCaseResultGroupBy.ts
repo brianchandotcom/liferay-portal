@@ -12,14 +12,10 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import {useCallback, useMemo} from 'react';
 
-import {
-	FacetAggregation,
-	FacetAggregationQuery,
-	getCaseResultsAggregation,
-} from '../graphql/queries';
+import {APIResponse, FacetAggregation, TestrayBuild} from '../graphql/queries';
+import {useFetch} from '../hooks/useFetch';
 import {Statuses, TEST_STATUS, chartColors} from '../util/constants';
 import {searchUtil} from '../util/search';
 
@@ -42,20 +38,16 @@ function getStatusesMap(
 }
 
 const useCaseResultGroupBy = (buildId: number = 0) => {
-	const {data, loading} = useQuery<
-		FacetAggregationQuery<'caseResultAggregation'>
-	>(getCaseResultsAggregation, {
-		skip: buildId === 0,
-		variables: {
-			aggregation: 'dueStatus',
-			filter: searchUtil.eq('buildId', buildId as number),
-		},
-	});
-
-	const statuses = useMemo(
-		() => getStatusesMap(data?.caseResultAggregation),
-		[data?.caseResultAggregation]
+	const {data, loading} = useFetch<
+		APIResponse<TestrayBuild> & FacetAggregation
+	>(
+		`/caseresults?aggregationTerms=dueStatus&filter=${searchUtil.eq(
+			'buildId',
+			buildId as number
+		)}&fields=id`
 	);
+
+	const statuses = useMemo(() => getStatusesMap(data), [data]);
 
 	const getStatusValue = useCallback(
 		(status: string | number) => statuses.get(String(status)) || 0,

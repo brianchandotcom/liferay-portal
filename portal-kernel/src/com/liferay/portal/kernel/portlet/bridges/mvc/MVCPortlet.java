@@ -333,7 +333,7 @@ public class MVCPortlet extends LiferayPortlet {
 		MVCHeaderCommand mvcHeaderCommand =
 			_headerMVCCommandCache.getMVCCommand(mvcRenderCommandName);
 
-		if (mvcHeaderCommand == MVCRenderCommand.EMPTY) {
+		if (mvcHeaderCommand == MVCHeaderCommand.EMPTY) {
 			return;
 		}
 

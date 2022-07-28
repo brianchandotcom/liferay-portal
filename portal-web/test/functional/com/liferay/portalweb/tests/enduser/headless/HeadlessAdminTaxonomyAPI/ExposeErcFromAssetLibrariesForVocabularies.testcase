@@ -105,6 +105,25 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test CanReturnErrorWithGetVocabularyWithNonExistingErc {
+		property portal.acceptance = "true";
+
+		task ("When user makes a GET request to retrieve the vocabulary with assetLibraryId and a nonexisting ERC") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = TaxonomyVocabularyAPI.getTaxonomyVocabularyByErc(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "nonexistent-erc");
+		}
+
+		task ("Then response body is No AssetVocabulary exists with the key {groupId=${GROUPID}, externalReferenceCode=${ERC}}") {
+			TestUtils.assertPartialEquals(
+				actual = "${response}",
+				expected = "No AssetVocabulary exists with the key");
+		}
+	}
+
 	@priority = "5"
 	test CanUpdateVocabularyByErc {
 		property portal.acceptance = "true";

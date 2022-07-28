@@ -23,17 +23,22 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		CP2DXPCloudSetup.clearDXPCloudInfo(status = "Active");
+
+		CP2DXPCloudSetup.clearDXPCloudInfo(status = "In-Progress");
+
+		CP2DXPCloudSetup.deleteDXPCloudObject();
+
+		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
+
+		CustomerPortal.deleteCPObject(title = "Account Flag");
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
-		}
-		else {
+	
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
-	}
 
 	@description = "LPS-146856 - Verify that when the status is active the page displays (Subtitle - Link - Link redirects to another page)"
 	@priority = "4"

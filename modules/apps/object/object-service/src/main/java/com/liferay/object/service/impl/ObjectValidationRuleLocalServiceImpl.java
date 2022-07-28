@@ -26,6 +26,7 @@ import com.liferay.object.scripting.exception.ObjectScriptingException;
 import com.liferay.object.scripting.validator.ObjectScriptingValidator;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.base.ObjectValidationRuleLocalServiceBaseImpl;
+import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineTracker;
 import com.liferay.portal.aop.AopService;
@@ -44,9 +45,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
 
-import java.io.Serializable;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -191,17 +192,27 @@ public class ObjectValidationRuleLocalServiceImpl
 			return;
 		}
 
-		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
-			HashMapBuilder.<String, Object>putAll(
-				baseModel.getModelAttributes());
+		Map<String, Object> values = new HashMap<>();
 
 		if (baseModel instanceof ObjectEntry) {
-			Map<String, Serializable> values =
-				_objectEntryLocalService.getValues((ObjectEntry)baseModel);
-
-			if (values != null) {
-				hashMapWrapper.putAll(values);
-			}
+			values = HashMapBuilder.<String, Object>putAll(
+				baseModel.getModelAttributes()
+			).putAll(
+				_objectEntryLocalService.getValues((ObjectEntry)baseModel)
+			).build();
+		}
+		else {
+			values = HashMapBuilder.<String, Object>putAll(
+				baseModel.getModelAttributes()
+			).putAll(
+				_objectEntryLocalService.
+					getExtensionDynamicObjectDefinitionTableValues(
+						_objectDefinitionPersistence.fetchByPrimaryKey(
+							objectDefinitionId),
+						GetterUtil.getLong(baseModel.getPrimaryKeyObj()))
+			).putAll(
+				EntityExtensionThreadLocal.getExtendedProperties()
+			).build();
 		}
 
 		List<ObjectValidationRule> objectValidationRules =
@@ -217,7 +228,7 @@ public class ObjectValidationRuleLocalServiceImpl
 						objectValidationRule.getEngine());
 
 			Map<String, Object> results = objectValidationRuleEngine.execute(
-				hashMapWrapper.build(), objectValidationRule.getScript());
+				values, objectValidationRule.getScript());
 
 			if (GetterUtil.getBoolean(results.get("invalidScript"))) {
 				throw new ObjectValidationRuleScriptException(
@@ -303,6 +314,9 @@ public class ObjectValidationRuleLocalServiceImpl
 
 	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;
+
+	@Reference
+	private ObjectDefinitionPersistence _objectDefinitionPersistence;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

@@ -19,7 +19,7 @@ import {Link, useParams} from 'react-router-dom';
 import Avatar from '../../components/Avatar';
 import Code from '../../components/Code';
 import Container from '../../components/Layout/Container';
-import ListView from '../../components/ListView/ListViewRest';
+import ListView from '../../components/ListView';
 import Loading from '../../components/Loading';
 import TaskbarProgress from '../../components/ProgressBar/TaskbarProgress';
 import StatusBadge from '../../components/StatusBadge';

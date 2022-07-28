@@ -15,9 +15,7 @@
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
-import ListView, {
-	ListViewProps,
-} from '../../../components/ListView/ListViewRest';
+import ListView, {ListViewProps} from '../../../components/ListView';
 import {TableProps} from '../../../components/Table';
 import {FormModal} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';

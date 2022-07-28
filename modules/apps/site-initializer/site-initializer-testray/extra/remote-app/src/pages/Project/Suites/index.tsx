@@ -15,7 +15,7 @@
 import {useNavigate, useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView/ListViewRest';
+import ListView from '../../../components/ListView';
 import i18n from '../../../i18n';
 import {searchUtil} from '../../../util/search';
 import useSuiteActions from './useSuiteActions';

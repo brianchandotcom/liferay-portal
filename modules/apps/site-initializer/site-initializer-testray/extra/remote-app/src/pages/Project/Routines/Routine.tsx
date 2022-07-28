@@ -17,7 +17,7 @@ import ClayIcon from '@clayui/icon';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView/ListViewRest';
+import ListView from '../../../components/ListView';
 import ProgressBar from '../../../components/ProgressBar';
 import useBuildHistory from '../../../data/useBuildHistory';
 import i18n from '../../../i18n';

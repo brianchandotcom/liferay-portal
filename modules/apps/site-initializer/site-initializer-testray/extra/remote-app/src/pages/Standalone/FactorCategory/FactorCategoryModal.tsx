@@ -12,7 +12,7 @@
  * details.
  */
 
-import ListView from '../../../components/ListView/ListViewRest';
+import ListView from '../../../components/ListView';
 import FactorCategoryFormModal from './FactorCategoryFormModal';
 import useFactorCategoryActions from './useFactorCategoryActions';
 

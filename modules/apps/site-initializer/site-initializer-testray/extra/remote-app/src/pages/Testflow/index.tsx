@@ -18,7 +18,7 @@ import {useOutletContext} from 'react-router-dom';
 
 import Avatar from '../../components/Avatar';
 import Container from '../../components/Layout/Container';
-import ListView from '../../components/ListView/ListViewRest';
+import ListView from '../../components/ListView';
 import ProgressBar from '../../components/ProgressBar';
 import StatusBadge from '../../components/StatusBadge';
 import useFormModal from '../../hooks/useFormModal';

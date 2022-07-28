@@ -16,7 +16,7 @@ import {useMemo} from 'react';
 import useSWR from 'swr';
 
 export function useFetch<Data = any, Error = any>(
-	url: string,
+	url: string | null,
 	transformData?: (data: Data) => Data
 ) {
 	const {data, error, mutate} = useSWR<Data, Error>(url);
@@ -31,6 +31,7 @@ export function useFetch<Data = any, Error = any>(
 	}, [data]);
 
 	return {
+		called: data && url,
 		data: memoizedData,
 		error,
 		loading: !data,

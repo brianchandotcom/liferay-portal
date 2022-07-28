@@ -17,7 +17,7 @@ import {useOutletContext} from 'react-router-dom';
 
 import Button from '../../../components/Button';
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView/ListViewRest';
+import ListView from '../../../components/ListView';
 import {TestrayCase, TestrayRequirementCase} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import {caseRequirementsResource} from '../../../services/rest/TestrayCaseRequirements';

@@ -19,7 +19,7 @@ import {useOutletContext, useParams} from 'react-router-dom';
 
 import Button from '../../../components/Button';
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView/ListViewRest';
+import ListView from '../../../components/ListView';
 import MarkdownPreview from '../../../components/Markdown';
 import QATable from '../../../components/Table/QATable';
 import {

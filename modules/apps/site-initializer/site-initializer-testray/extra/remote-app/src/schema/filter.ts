@@ -19,13 +19,8 @@ import {
 	TestrayProductVersion,
 	TestrayTeam,
 	UserAccount,
-	getCaseTypes,
-	getComponents,
-	getLiferayUserAccounts,
-	getProductVersions,
-	getTeams,
 } from '../graphql/queries';
-import {TestrayRun, getRuns} from '../graphql/queries/testrayRun';
+import {TestrayRun} from '../graphql/queries/testrayRun';
 import i18n from '../i18n';
 
 export type Filters = {
@@ -36,12 +31,12 @@ type Filter = {
 	[key: string]: RendererFields;
 };
 
-const transformData = <T = any>(response: any, objectName: string): T[] => {
-	return response?.[objectName]?.items || [];
+const transformData = <T = any>(response: any): T[] => {
+	return response?.items || [];
 };
 
-const transformCData = <T = any>(response: any, objectName: string): T[] => {
-	return response?.c[objectName]?.items || [];
+const transformCData = <T = any>(response: any): T[] => {
+	return response?.items || [];
 };
 
 const dataToOptions = <T = any>(
@@ -57,12 +52,12 @@ const dataToOptions = <T = any>(
 
 const baseFilters: Filter = {
 	assignee: {
-		gqlQuery: getLiferayUserAccounts,
 		label: i18n.translate('assignee'),
 		name: 'assignee',
+		resource: '/headless-admin-user/v1.0/user-accounts',
 		transformData(item) {
 			return dataToOptions(
-				transformData<UserAccount>(item, 'userAccounts'),
+				transformData<UserAccount>(item),
 				(userAccount) => ({
 					label: `${userAccount.givenName} ${userAccount.additionalName}`,
 					value: userAccount.id,
@@ -72,24 +67,20 @@ const baseFilters: Filter = {
 		type: 'select',
 	},
 	caseType: {
-		gqlQuery: getCaseTypes,
 		label: i18n.translate('case-type'),
 		name: 'caseType',
+		resource: '/casetypes?fields=id,name',
 		transformData(item) {
-			return dataToOptions(
-				transformCData<TestrayCaseType>(item, 'caseTypes')
-			);
+			return dataToOptions(transformCData<TestrayCaseType>(item));
 		},
 		type: 'multiselect',
 	},
 	component: {
-		gqlQuery: getComponents,
 		label: i18n.translate('Component'),
 		name: 'component',
+		resource: '/components?fields=id,name',
 		transformData(item) {
-			return dataToOptions(
-				transformCData<TestrayComponent>(item, 'components')
-			);
+			return dataToOptions(transformCData<TestrayComponent>(item));
 		},
 		type: 'select',
 	},
@@ -100,32 +91,30 @@ const baseFilters: Filter = {
 		type: 'multiselect',
 	},
 	productVersion: {
-		gqlQuery: getProductVersions,
 		label: i18n.translate('product-version'),
 		name: 'productVersion',
+		resource: '/productversions?fields=id,name',
 		transformData(item) {
-			return dataToOptions(
-				transformCData<TestrayProductVersion>(item, 'productVersions')
-			);
+			return dataToOptions(transformCData<TestrayProductVersion>(item));
 		},
 		type: 'select',
 	},
 	run: {
-		gqlQuery: getRuns,
 		label: i18n.translate('run'),
 		name: 'run',
+		resource: '/runs?fields=id,name',
 		transformData(item) {
-			return dataToOptions(transformCData<TestrayRun>(item, 'runs'));
+			return dataToOptions(transformCData<TestrayRun>(item));
 		},
 		type: 'select',
 	},
 	team: {
-		gqlQuery: getTeams,
 		label: i18n.translate('team'),
 		name: 'team',
 		options: [{label: 'Solutions', value: 'solutions'}],
+		resource: '/teams?fields=id,name',
 		transformData(item) {
-			return dataToOptions(transformCData<TestrayTeam>(item, 'teams'));
+			return dataToOptions(transformCData<TestrayTeam>(item));
 		},
 		type: 'select',
 	},

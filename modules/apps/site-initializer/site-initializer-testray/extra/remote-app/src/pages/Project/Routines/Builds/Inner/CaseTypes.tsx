@@ -13,7 +13,7 @@
  */
 
 import Container from '../../../../../components/Layout/Container';
-import ListView from '../../../../../components/ListView/ListViewRest';
+import ListView from '../../../../../components/ListView';
 import ProgressBar from '../../../../../components/ProgressBar';
 import i18n from '../../../../../i18n';
 import {filters} from '../../../../../schema/filter';

@@ -15,7 +15,7 @@
 import {useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
-import ListViewRest from '../../../components/ListView/ListViewRest';
+import ListViewRest from '../../../components/ListView';
 import ProgressBar from '../../../components/ProgressBar';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';

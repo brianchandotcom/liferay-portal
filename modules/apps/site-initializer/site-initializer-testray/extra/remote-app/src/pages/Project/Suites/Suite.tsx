@@ -16,7 +16,7 @@ import {useOutletContext} from 'react-router-dom';
 
 import {BoxItem} from '../../../components/Form/DualListBox';
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView/ListViewRest';
+import ListView from '../../../components/ListView';
 import QATable from '../../../components/Table/QATable';
 import {APIResponse, TestrayCase, TestraySuite} from '../../../graphql/queries';
 import {TestraySuiteCase} from '../../../graphql/queries/testraySuiteCase';

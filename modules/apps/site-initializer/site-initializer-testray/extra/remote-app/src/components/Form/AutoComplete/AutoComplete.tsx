@@ -14,15 +14,13 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import useDebounce from '../../../hooks/useDebounce';
 import {useFetch} from '../../../hooks/useFetch';
 
 export type AutoCompleteProps = {
-	gqlVariables?: any;
 	label?: string;
-	objectName: string;
 	onSearch: (keyword: string) => any;
 	resource: string;
 	transformData?: (item: any) => any;
@@ -38,33 +36,25 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
 	const [value, setValue] = useState('');
 	const [active, setActive] = useState(false);
 
-	const [data, setTest] = useState();
-
 	const debouncedValue = useDebounce(value, 1000);
 
-	const url = `${resource}/?filter=${onSearch(debouncedValue)}`;
+	const {called, data, error, loading} = useFetch(
+		debouncedValue
+			? `${resource}/?filter=${onSearch(debouncedValue)}`
+			: null,
+		transformData
+	);
 
-	const {error, loading, mutate} = useFetch(url);
-
-	const {items} = useMemo(() => {
-		if (transformData) {
-			return transformData(data);
-		}
-	}, [data, transformData]);
-
-	useEffect(() => {
-		if (debouncedValue) {
-			mutate(url).then((response) => {
-				setTest(response);
-				setActive(true);
-			});
-		}
-	}, [debouncedValue, mutate, onSearch, resource, url]);
+	const items = data?.items || [];
 
 	const onClickItem = (name: string) => {
 		setShowValue(name);
 		setActive(false);
 	};
+
+	useEffect(() => {
+		setActive(true);
+	}, [called]);
 
 	return (
 		<ClayAutocomplete className="mb-4">

@@ -18,7 +18,7 @@ import Avatar from '../../../../components/Avatar';
 import AssignToMe from '../../../../components/Avatar/AssigneToMe';
 import Code from '../../../../components/Code';
 import Container from '../../../../components/Layout/Container';
-import ListViewRest from '../../../../components/ListView/ListViewRest';
+import ListViewRest from '../../../../components/ListView';
 import StatusBadge from '../../../../components/StatusBadge';
 import {TestrayCaseResult} from '../../../../graphql/queries';
 import useAssignCaseResult from '../../../../hooks/useAssignCaseResult';

@@ -12,7 +12,7 @@
  * details.
  */
 
-import ListView from '../../../components/ListView/ListViewRest';
+import ListView from '../../../components/ListView';
 import i18n from '../../../i18n';
 import CaseTypeFormModal from './CaseTypeFormModal';
 import useCaseTypeActions from './useCaseTypeActions';

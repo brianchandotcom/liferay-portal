@@ -15,7 +15,7 @@
 import {useOutletContext, useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView/ListViewRest';
+import ListView from '../../../components/ListView';
 import StatusBadge from '../../../components/StatusBadge';
 import QATable from '../../../components/Table/QATable';
 import {TestrayCase} from '../../../graphql/queries';

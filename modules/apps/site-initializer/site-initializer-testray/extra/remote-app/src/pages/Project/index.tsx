@@ -15,7 +15,7 @@
 import {useEffect} from 'react';
 
 import Container from '../../components/Layout/Container';
-import ListView from '../../components/ListView/ListViewRest';
+import ListView from '../../components/ListView';
 import {useHeader} from '../../hooks';
 import i18n from '../../i18n';
 import ProjectModal from './ProjectModal';

@@ -18,9 +18,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 
 import Button from '../../../components/Button';
 import Container from '../../../components/Layout/Container';
-import ListView, {
-	ListViewProps,
-} from '../../../components/ListView/ListViewRest';
+import ListView, {ListViewProps} from '../../../components/ListView';
 import {TableProps} from '../../../components/Table';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';

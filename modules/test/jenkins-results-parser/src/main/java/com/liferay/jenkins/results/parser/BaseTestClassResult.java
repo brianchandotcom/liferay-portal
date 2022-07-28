@@ -124,7 +124,7 @@ public abstract class BaseTestClassResult implements TestClassResult {
 		_build = build;
 		_suiteJSONObject = suiteJSONObject;
 
-		_duration = (long)suiteJSONObject.getDouble("duration");
+		_duration = (long)(suiteJSONObject.getDouble("duration") * 1000);
 
 		if (!suiteJSONObject.has("cases")) {
 			return;

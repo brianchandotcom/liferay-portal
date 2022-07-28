@@ -192,7 +192,7 @@ public class JUnitTestResult extends BaseTestResult {
 		super(build);
 
 		_className = caseJSONObject.getString("className");
-		_duration = (long)caseJSONObject.getDouble("duration");
+		_duration = (long)(caseJSONObject.getDouble("duration") * 1000);
 		_status = caseJSONObject.getString("status");
 		_testName = caseJSONObject.getString("name");
 

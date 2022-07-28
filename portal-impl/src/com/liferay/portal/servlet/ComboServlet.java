@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.frontend.source.map.FrontendSourceMapUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -398,6 +399,10 @@ public class ComboServlet extends HttpServlet {
 					stringFileContent = AggregateUtil.updateRelativeURLs(
 						stringFileContent, baseURL);
 
+					stringFileContent =
+						FrontendSourceMapUtil.stripCSSSourceMapping(
+							stringFileContent);
+
 					stringFileContent = MinifierUtil.minifyCss(
 						stringFileContent);
 				}
@@ -420,6 +425,10 @@ public class ComboServlet extends HttpServlet {
 						stringFileContent = MinifierUtil.minifyJavaScript(
 							resourcePath, stringFileContent);
 					}
+
+					stringFileContent =
+						FrontendSourceMapUtil.stripJSSourceMapping(
+							stringFileContent);
 
 					stringFileContent = stringFileContent.concat(
 						StringPool.NEW_LINE);

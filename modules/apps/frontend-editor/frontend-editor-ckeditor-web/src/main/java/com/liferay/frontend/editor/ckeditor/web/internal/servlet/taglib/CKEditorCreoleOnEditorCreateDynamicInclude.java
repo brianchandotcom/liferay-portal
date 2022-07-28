@@ -15,8 +15,8 @@
 package com.liferay.frontend.editor.ckeditor.web.internal.servlet.taglib;
 
 import com.liferay.frontend.editor.ckeditor.web.internal.constants.CKEditorConstants;
+import com.liferay.portal.kernel.frontend.source.map.FrontendSourceMapUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.StreamUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,9 +50,8 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 			"/META-INF/resources/ckeditor/extension" +
 				"/creole_dialog_definition.js");
 
-		StreamUtil.transfer(
-			entryURL.openStream(), httpServletResponse.getOutputStream(),
-			false);
+		FrontendSourceMapUtil.transferJS(
+			entryURL.openStream(), httpServletResponse.getOutputStream());
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
@@ -65,9 +64,8 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 			entryURL = bundle.getEntry(
 				"/META-INF/resources/ckeditor/extension/creole_dialog_show.js");
 
-			StreamUtil.transfer(
-				entryURL.openStream(), httpServletResponse.getOutputStream(),
-				false);
+			FrontendSourceMapUtil.transferJS(
+				entryURL.openStream(), httpServletResponse.getOutputStream());
 
 			printWriter.println();
 		}

@@ -111,12 +111,16 @@ definition {
 			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
 		}
 
-		task ("Assert Commerce Activation Key Page") {
+		task ("Assert Access to Commerce Activation Key Page") {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
 			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
+
+		task ("Assert DropDown list of LES subscription") {
 
 			//Assert DropDown list of LES subscription			
+
 		}
 
 		task ("Go to Customer Portal") {
@@ -133,12 +137,16 @@ definition {
 			CP2ActivationKeys.assertDropDownSelection(option = "7.1");
 		}
 
-		task ("Assert Commerce Activation Key Page") {
+		task ("Assert Access to Commerce Activation Key Page") {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
 			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
 
-			//Assert DropDown list of LES subscription		
+		task ("Assert DropDown list of LES subscription") {
+
+			//Assert DropDown list of LES subscription			
+
 		}
 
 		task ("Go to Customer Portal") {
@@ -155,12 +163,16 @@ definition {
 			CP2ActivationKeys.assertDropDownSelection(option = "7.0");
 		}
 
-		task ("Assert Commerce Activation Key Page") {
+		task ("Assert Access to Commerce Activation Key Page") {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");	
+		}
 
-			//Assert DropDown list of LES subscription		
+		task ("Assert DropDown list of LES subscription") {
+
+			//Assert DropDown list of LES subscription			
+
 		}
 	}
 

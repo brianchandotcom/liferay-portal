@@ -325,7 +325,7 @@ definition {
 		AssertElementPresent(
 			label = "dxp.projectId",
 			locator1 = "CP2DXPCloudSetup#SETUP_VALUE",
-			value = "006");
+			value = "001");
 
 		AssertElementPresent(
 			locator1 = "CP2DXPCloudSetup#SELECT_DATA_CENTER_REGION",

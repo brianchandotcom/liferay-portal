@@ -23,22 +23,32 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.base.CPDefinitionVirtualSettingServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  * @author Andrea Di Giorgi
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CPDefinitionVirtualSetting"
+	},
+	service = AopService.class
+)
 public class CPDefinitionVirtualSettingServiceImpl
 	extends CPDefinitionVirtualSettingServiceBaseImpl {
 
@@ -173,10 +183,10 @@ public class CPDefinitionVirtualSettingServiceImpl
 		_checkCommerceCatalog(cpDefinitionId, action);
 	}
 
-	@ServiceReference(type = CommerceCatalogLocalService.class)
+	@Reference
 	protected CommerceCatalogLocalService commerceCatalogLocalService;
 
-	@ServiceReference(type = CPDefinitionLocalService.class)
+	@Reference
 	protected CPDefinitionLocalService cpDefinitionLocalService;
 
 	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)
@@ -201,14 +211,13 @@ public class CPDefinitionVirtualSettingServiceImpl
 			getPermissionChecker(), commerceCatalog, actionId);
 	}
 
-	private static volatile ModelResourcePermission<CommerceCatalog>
-		_commerceCatalogModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CPDefinitionVirtualSettingServiceImpl.class,
-				"_commerceCatalogModelResourcePermission",
-				CommerceCatalog.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CommerceCatalog)"
+	)
+	private ModelResourcePermission<CommerceCatalog>
+		_commerceCatalogModelResourcePermission;
 
-	@ServiceReference(type = CPInstanceLocalService.class)
+	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
 
 }

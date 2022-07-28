@@ -34,22 +34,30 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting",
+	service = AopService.class
+)
 public class CPDefinitionVirtualSettingLocalServiceImpl
 	extends CPDefinitionVirtualSettingLocalServiceBaseImpl {
 
@@ -488,19 +496,19 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = CPDefinitionLocalService.class)
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@ServiceReference(type = CPInstanceLocalService.class)
+	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
 
-	@ServiceReference(type = CProductLocalService.class)
+	@Reference
 	private CProductLocalService _cProductLocalService;
 
-	@ServiceReference(type = DLAppLocalService.class)
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
-	@ServiceReference(type = JournalArticleLocalService.class)
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 }

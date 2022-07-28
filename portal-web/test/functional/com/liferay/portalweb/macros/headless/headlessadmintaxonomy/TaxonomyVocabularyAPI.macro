@@ -88,6 +88,19 @@ definition {
 		return "${elementValue}";
 	}
 
+	macro getTaxonomyVocabularyByErc {
+		Variables.assertDefined(parameterList = "${externalReferenceCode}");
+
+		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
+			assetLibraryId = "${assetLibraryId}",
+			externalReferenceCode = "${externalReferenceCode}",
+			siteId = "${siteId}");
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
+	}
+
 	macro updateTaxonomyVocabularyByErc {
 		Variables.assertDefined(parameterList = "${externalReferenceCode},${name}");
 

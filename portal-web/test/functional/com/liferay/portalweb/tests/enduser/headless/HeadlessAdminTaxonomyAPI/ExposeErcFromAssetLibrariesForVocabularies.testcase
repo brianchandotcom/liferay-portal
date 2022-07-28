@@ -76,6 +76,36 @@ definition {
 	}
 
 	@priority = "5"
+	test CanGetVocabularyByErc {
+		property portal.acceptance = "true";
+
+		task ("Given an existing vocabulary with ERC") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			TaxonomyVocabularyAPI.createTaxonomyVocabulary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				name = "Vocabulary Name");
+		}
+
+		task ("When user makes a GET request to retrieve the vocabulary with assetLibraryId and ERC") {
+			var response = TaxonomyVocabularyAPI.getTaxonomyVocabularyByErc(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc");
+		}
+
+		task ("Then a vocabulary is retrieved with the ERC in response body") {
+			var actualExternalReferenceCodeValue = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
+				element = "$..externalReferenceCode",
+				responseToParse = "${response}");
+
+			TestUtils.assertEquals(
+				actual = "${actualExternalReferenceCodeValue}",
+				expected = "erc");
+		}
+	}
+
+	@priority = "5"
 	test CanUpdateVocabularyByErc {
 		property portal.acceptance = "true";
 

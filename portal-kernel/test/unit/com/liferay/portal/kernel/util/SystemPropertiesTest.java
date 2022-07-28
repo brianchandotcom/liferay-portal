@@ -14,12 +14,14 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.Map;
 import java.util.Properties;
 
 import org.junit.After;
@@ -62,6 +64,28 @@ public class SystemPropertiesTest {
 
 		Assert.assertNull(properties1.getProperty(_TEST_KEY));
 		Assert.assertEquals(_TEST_VALUE, properties2.get(_TEST_KEY));
+	}
+
+	@Test
+	public void testGetPropertiesWithPrefix() {
+		Map<String, String> propertiesWithPrefix =
+			SystemProperties.getProperties(_PREFIX, false);
+
+		Assert.assertTrue(propertiesWithPrefix.isEmpty());
+
+		SystemProperties.set(_PREFIX + _KEY, _TEST_VALUE);
+
+		Assert.assertEquals(
+			new HashMapBuilder<String, String>().put(
+				_KEY, _TEST_VALUE
+			).build(),
+			SystemProperties.getProperties(_PREFIX, true));
+
+		Assert.assertEquals(
+			new HashMapBuilder<String, String>().put(
+				_PREFIX + _KEY, _TEST_VALUE
+			).build(),
+			SystemProperties.getProperties(_PREFIX, false));
 	}
 
 	@Test
@@ -118,8 +142,12 @@ public class SystemPropertiesTest {
 		Assert.assertEquals(_TEST_VALUE, properties.get(_TEST_KEY));
 	}
 
-	private static final String _TEST_KEY =
-		SystemPropertiesTest.class.getName() + ".test.key";
+	private static final String _KEY = "test.key";
+
+	private static final String _PREFIX =
+		SystemPropertiesTest.class.getName() + StringPool.PERIOD;
+
+	private static final String _TEST_KEY = _PREFIX + _KEY;
 
 	private static final String _TEST_VALUE = "test.value";
 

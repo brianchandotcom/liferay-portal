@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.order.web.internal.servlet.taglib.ui.constants.CommerceOrderScreenNavigationConstants;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;

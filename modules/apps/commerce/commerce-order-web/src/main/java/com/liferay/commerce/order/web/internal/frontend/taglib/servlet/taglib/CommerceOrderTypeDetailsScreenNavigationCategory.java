@@ -15,8 +15,8 @@
 package com.liferay.commerce.order.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderTypeScreenNavigationConstants;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderTypeDisplayContext;
-import com.liferay.commerce.order.web.internal.servlet.taglib.ui.constants.CommerceOrderTypeScreenNavigationConstants;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;

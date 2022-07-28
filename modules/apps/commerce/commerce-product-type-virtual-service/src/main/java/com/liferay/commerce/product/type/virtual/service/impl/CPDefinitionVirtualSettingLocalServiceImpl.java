@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -206,7 +206,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			CPDefinitionVirtualSetting newCPDefinitionVirtualSetting =
 				(CPDefinitionVirtualSetting)cpDefinitionVirtualSetting.clone();
 
-			newCPDefinitionVirtualSetting.setUuid(PortalUUIDUtil.generate());
+			newCPDefinitionVirtualSetting.setUuid(_portalUUID.generate());
 			newCPDefinitionVirtualSetting.setCPDefinitionVirtualSettingId(
 				counterLocalService.increment());
 			newCPDefinitionVirtualSetting.setClassPK(newCPDefinitionId);
@@ -510,5 +510,8 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 }

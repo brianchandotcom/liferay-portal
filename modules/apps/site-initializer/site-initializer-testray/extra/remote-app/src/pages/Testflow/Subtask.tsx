@@ -22,7 +22,10 @@ import StatusBadge from '../../components/StatusBadge';
 import QATable from '../../components/Table/QATable';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
-import {getCaseResultTransformData, getCaseResults} from '../../services/rest';
+import {
+	caseResultsResource,
+	getCaseResultTransformData,
+} from '../../services/rest';
 import {getStatusLabel} from '../../util/constants';
 import {subtask} from '../../util/mock';
 
@@ -117,7 +120,7 @@ const Subtasks = () => {
 					managementToolbarProps={{
 						visible: false,
 					}}
-					resource={getCaseResults}
+					resource={caseResultsResource}
 					tableProps={{
 						columns: [
 							{

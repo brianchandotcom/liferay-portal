@@ -32,10 +32,9 @@ type UserManagementProps = {
 };
 
 const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
-	const [form, setForm] = useState(myUserAccount || {});
+	const [form, setForm] = useState(myUserAccount);
 
 	const {setDropdownIcon, setHeading} = useHeader();
-
 	useEffect(() => {
 		setDropdownIcon('cog');
 	}, [setDropdownIcon]);
@@ -80,7 +79,7 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 									name="firstname"
 									onChange={onChange}
 									required
-									value={form.givenName}
+									value={form?.givenName}
 								/>
 
 								<Form.Input
@@ -88,7 +87,7 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 									name="lastname"
 									onChange={onChange}
 									required
-									value={form.familyName}
+									value={form?.familyName}
 								/>
 
 								<Form.Input
@@ -96,7 +95,7 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 									name="emailAddress"
 									onChange={onChange}
 									required
-									value={form.emailAddress}
+									value={form?.emailAddress}
 								/>
 
 								<Form.Input
@@ -104,7 +103,7 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 									name="screeName"
 									onChange={onChange}
 									required
-									value={form.alternateName}
+									value={form?.alternateName}
 								/>
 							</ClayForm.Group>
 						</ClayLayout.Col>
@@ -124,7 +123,7 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 								<Avatar
 									displayName
 									name={Liferay.ThemeDisplay.getUserName()}
-									url={form.image}
+									url={form?.image}
 								/>
 
 								<br />

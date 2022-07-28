@@ -160,7 +160,8 @@ public class DataCleanupTest {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpSoftwareCatalogModuleData",
 			"com.liferay.softwarecatalog.service",
-			"dependencies/software-catalog-tables.sql", "98");
+			"dependencies/software-catalog-tables.sql",
+			"com.liferay.portlet.softwarecatalog");
 	}
 
 	@Test

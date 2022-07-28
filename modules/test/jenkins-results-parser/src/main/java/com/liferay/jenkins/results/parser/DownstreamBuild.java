@@ -187,6 +187,44 @@ public class DownstreamBuild extends BaseBuild {
 		return messageElement;
 	}
 
+	public long getOverheadDuration() {
+		long overheadDuration = getDuration() - getTestExecutionDuration();
+
+		if (overheadDuration <= 0L) {
+			return 0L;
+		}
+
+		return overheadDuration;
+	}
+
+	public long getTestExecutionDuration() {
+		StopWatchRecordsGroup stopWatchRecordsGroup =
+			getStopWatchRecordsGroup();
+
+		if (stopWatchRecordsGroup != null) {
+			long duration = getStopWatchRecordDuration(
+				"test.execution.duration");
+
+			if (duration > 0L) {
+				return duration;
+			}
+		}
+
+		long testExecutionDuration = 0L;
+
+		for (TestResult testResult : getTestResults(null)) {
+			long testDuration = testResult.getDuration();
+
+			if (testDuration < 0L) {
+				continue;
+			}
+
+			testExecutionDuration += testDuration;
+		}
+
+		return testExecutionDuration;
+	}
+
 	@Override
 	public List<TestResult> getTestResults(String testStatus) {
 		if (JenkinsResultsParserUtil.isNullOrEmpty(testStatus)) {
@@ -305,6 +343,30 @@ public class DownstreamBuild extends BaseBuild {
 	@Override
 	protected Element getGitHubMessageJobResultsElement() {
 		return null;
+	}
+
+	protected long getStopWatchRecordDuration(String stopWatchRecordName) {
+		StopWatchRecordsGroup stopWatchRecordsGroup =
+			getStopWatchRecordsGroup();
+
+		if (stopWatchRecordsGroup == null) {
+			return 0L;
+		}
+
+		StopWatchRecord stopWatchRecord = stopWatchRecordsGroup.get(
+			stopWatchRecordName);
+
+		if (stopWatchRecord == null) {
+			return 0L;
+		}
+
+		Long duration = stopWatchRecord.getDuration();
+
+		if (duration == null) {
+			return 0L;
+		}
+
+		return duration;
 	}
 
 	protected List<Element> getTestResultGitHubElements(

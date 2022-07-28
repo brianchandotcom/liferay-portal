@@ -27,6 +27,8 @@ public interface TestClassResult {
 
 	public long getDuration();
 
+	public long getOverheadDuration();
+
 	public String getPackageName();
 
 	public String getSimpleClassName();

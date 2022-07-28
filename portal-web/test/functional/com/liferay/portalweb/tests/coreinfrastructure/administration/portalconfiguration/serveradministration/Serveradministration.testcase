@@ -16,6 +16,8 @@ definition {
 
 		ServerAdministration.openServerAdmin();
 
+		var propsKey = "LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR";
+
 		var script = '''
 			import com.liferay.portal.kernel.util.PropsKeys;
 			import com.liferay.portal.util.PropsUtil;
@@ -27,7 +29,6 @@ definition {
 			language = "Groovy",
 			script = "${script}");
 
-		var propsKey = "LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR";
 		var dirName = PropsUtil.get("liferay.app.server.shielded.container.lib.portal.dir");
 
 		var dirEnding = StringUtil.endsWith("${dirName}", "/");

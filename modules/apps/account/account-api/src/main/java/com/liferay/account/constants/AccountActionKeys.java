@@ -33,6 +33,9 @@ public class AccountActionKeys {
 
 	public static final String MANAGE_ADDRESSES = "MANAGE_ADDRESSES";
 
+	public static final String MANAGE_AVAILABLE_ACCOUNTS =
+		"MANAGE_AVAILABLE_ACCOUNTS";
+
 	public static final String MANAGE_ORGANIZATIONS = "MANAGE_ORGANIZATIONS";
 
 	public static final String MANAGE_SUBORGANIZATIONS_ACCOUNTS =

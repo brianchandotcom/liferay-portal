@@ -12,19 +12,17 @@
  * details.
  */
 
-package com.liferay.commerce.warehouse.web.internal.servlet.taglib.ui.constants;
+package com.liferay.commerce.warehouse.web.internal.constants;
 
 /**
- * @author Andrea Sbarra
+ * @author Andrea Di Giorgi
  */
-public class CommerceInventoryWarehouseScreenNavigationConstants {
+public class CommerceInventoryWarehouseFormNavigatorConstants {
 
-	public static final String CATEGORY_KEY_DETAILS = "details";
+	public static final String CATEGORY_KEY_COMMERCE_WAREHOUSE_GENERAL =
+		"general";
 
-	public static final String CATEGORY_KEY_QUALIFIERS = "qualifiers";
-
-	public static final String
-		SCREEN_NAVIGATION_KEY_COMMERCE_INVENTORY_WAREHOUSE_GENERAL =
-			"commerce.inventory.warehouse.general";
+	public static final String FORM_NAVIGATOR_ID_COMMERCE_WAREHOUSE =
+		"commerce.warehouse.form";
 
 }

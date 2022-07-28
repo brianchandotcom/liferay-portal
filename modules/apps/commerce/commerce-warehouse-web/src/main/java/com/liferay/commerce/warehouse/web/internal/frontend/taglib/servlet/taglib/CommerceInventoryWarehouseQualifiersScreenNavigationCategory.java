@@ -15,8 +15,8 @@
 package com.liferay.commerce.warehouse.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.warehouse.web.internal.constants.CommerceInventoryWarehouseScreenNavigationConstants;
 import com.liferay.commerce.warehouse.web.internal.display.context.CommerceInventoryWarehouseQualifiersDisplayContext;
-import com.liferay.commerce.warehouse.web.internal.servlet.taglib.ui.constants.CommerceInventoryWarehouseScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;

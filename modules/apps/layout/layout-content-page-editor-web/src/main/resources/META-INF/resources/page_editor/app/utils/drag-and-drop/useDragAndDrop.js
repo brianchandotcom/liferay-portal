@@ -362,7 +362,7 @@ function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 			state.dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.collection
 		) {
 			message = Liferay.Language.get(
-				'fragments-cannot-be-placed-inside-an-unmapped-collection-display'
+				'fragments-cannot-be-placed-inside-an-unmapped-collection-display-fragment'
 			);
 		}
 		else if (state.dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.form) {

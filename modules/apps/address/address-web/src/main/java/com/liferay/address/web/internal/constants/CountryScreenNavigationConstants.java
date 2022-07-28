@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.address.web.internal.servlet.taglib.ui.constants;
+package com.liferay.address.web.internal.constants;
 
 /**
  * @author Pei-Jung Lan

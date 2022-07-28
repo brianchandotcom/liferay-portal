@@ -24,9 +24,9 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.address.web.internal.dao.search.CountrySearchContainerFactory" %><%@
+<%@ page import="com.liferay.address.web.internal.constants.CountryScreenNavigationConstants" %><%@
+page import="com.liferay.address.web.internal.dao.search.CountrySearchContainerFactory" %><%@
 page import="com.liferay.address.web.internal.display.context.CountriesManagementAdminManagementToolbarDisplayContext" %><%@
-page import="com.liferay.address.web.internal.servlet.taglib.ui.constants.CountryScreenNavigationConstants" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@

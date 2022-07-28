@@ -52,13 +52,13 @@ const getCaseQuery = (caseId: number | string) =>
 
 const getCaseTransformData = (testrayCase: TestrayCase): TestrayCase => ({
 	...testrayCase,
-	caseType: testrayCase.r_caseTypeToCases_c_caseType,
-	component: testrayCase.r_componentToCases_c_component
+	caseType: testrayCase?.r_caseTypeToCases_c_caseType,
+	component: testrayCase?.r_componentToCases_c_component
 		? {
-				...testrayCase.r_componentToCases_c_component,
+				...testrayCase?.r_componentToCases_c_component,
 				team:
-					testrayCase.r_componentToCases_c_component
-						.r_teamToComponents_c_team,
+					testrayCase?.r_componentToCases_c_component
+						?.r_teamToComponents_c_team,
 		  }
 		: undefined,
 });

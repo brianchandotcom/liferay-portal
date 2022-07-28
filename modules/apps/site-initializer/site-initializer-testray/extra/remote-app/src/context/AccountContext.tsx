@@ -15,8 +15,8 @@
 
 import {ReactNode, createContext, useEffect, useReducer} from 'react';
 
-import apolloClient from '../graphql/apolloClient';
-import {UserAccount, getLiferayMyUserAccount} from '../graphql/queries';
+import {UserAccount} from '../graphql/queries';
+import {useFetch} from '../hooks/useFetch';
 import {ActionMap} from '../types';
 
 type InitialState = {
@@ -62,20 +62,31 @@ const AccountContextProvider: React.FC<{
 	children: ReactNode;
 }> = ({children}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
+	const {data: myUserAccount} = useFetch(
+		'/my-user-account',
+		(user: UserAccount) => ({
+			additionalName: user?.additionalName,
+			alternateName: user?.alternateName,
+			emailAddress: user?.emailAddress,
+			familyName: user?.familyName,
+			givenName: user?.givenName,
+			id: user?.id,
+			image: '',
+			roleBriefs: user?.roleBriefs,
+			uuid: user?.uuid,
+		})
+	);
 
 	useEffect(() => {
-		apolloClient
-			.query({query: getLiferayMyUserAccount})
-			.then((response) =>
-				dispatch({
-					payload: {
-						account: response.data.myUserAccount as UserAccount,
-					},
-					type: AccountTypes.SET_MY_USER_ACCOUNT,
-				})
-			)
-			.catch(console.error);
-	}, []);
+		if (myUserAccount) {
+			dispatch({
+				payload: {
+					account: myUserAccount,
+				},
+				type: AccountTypes.SET_MY_USER_ACCOUNT,
+			});
+		}
+	}, [myUserAccount]);
 
 	return (
 		<AccountContext.Provider value={[state, dispatch]}>

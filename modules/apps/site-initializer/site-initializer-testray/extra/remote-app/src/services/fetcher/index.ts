@@ -17,12 +17,16 @@ import {Liferay} from '../liferay';
 import FetcherError from './FetchError';
 
 const liferayHost = window.location.origin;
-function changeResource(resource: RequestInfo) {
-	if (resource.toString().includes('roles')) {
-		return `${liferayHost}/o/headless-admin-user/v1.0${resource}`;
-	}
 
-	if (resource.toString().includes('account')) {
+function changeResource(resource: RequestInfo) {
+	const headlessAdminUserAPIs = ['account', 'roles'];
+
+	const isHeadlessAdminUserAPI = headlessAdminUserAPIs.some(
+		(headlessAdminUserAPI) =>
+			resource.toString().includes(headlessAdminUserAPI)
+	);
+
+	if (isHeadlessAdminUserAPI) {
 		return `${liferayHost}/o/headless-admin-user/v1.0${resource}`;
 	}
 

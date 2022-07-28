@@ -12,6 +12,7 @@
  * details.
  */
 
+import {useMemo} from 'react';
 import useSWR from 'swr';
 
 export function useFetch<Data = any, Error = any>(
@@ -20,8 +21,17 @@ export function useFetch<Data = any, Error = any>(
 ) {
 	const {data, error, mutate} = useSWR<Data, Error>(url);
 
+	const memoizedData = useMemo(() => {
+		if (data && transformData) {
+			return transformData(data || ({} as Data));
+		}
+
+		return data;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data]);
+
 	return {
-		data: transformData ? transformData((data || {}) as Data) : data,
+		data: memoizedData,
 		error,
 		loading: !data,
 		mutate,

@@ -26,6 +26,7 @@ export type UserAccount = {
 	id: number;
 	image: string;
 	roleBriefs: Role[];
+	uuid: number;
 };
 
 export const getLiferayMyUserAccount = gql`

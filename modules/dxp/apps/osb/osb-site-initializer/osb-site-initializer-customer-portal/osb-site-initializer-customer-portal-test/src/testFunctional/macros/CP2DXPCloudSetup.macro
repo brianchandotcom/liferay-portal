@@ -84,7 +84,7 @@ definition {
 	}
 
 	macro clearDXPCloudInfo {
-		CP2DXPCloudSetup.clearActivationStatus();
+		CP2DXPCloudSetup.clearActivationStatus(status = "${status}");
 
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 

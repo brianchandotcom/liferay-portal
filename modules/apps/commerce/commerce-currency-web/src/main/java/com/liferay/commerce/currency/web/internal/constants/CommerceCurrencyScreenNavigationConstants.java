@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.currency.web.internal.servlet.taglib.ui.constants;
+package com.liferay.commerce.currency.web.internal.constants;
 
 /**
  * @author Alessio Antonio Rendina

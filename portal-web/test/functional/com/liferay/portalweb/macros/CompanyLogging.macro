@@ -1,5 +1,21 @@
 definition {
 
+	macro downloadCompanyLog {
+		var logName = CompanyLogging.getCompanyLogName(portalInstanceName = "${portalInstanceName}");
+
+		Click(
+			key_virtualHost = "${portalInstanceName}",
+			locator1 = "CompanyLogging#COMPANY_LOG_NAME");
+
+		DownloadTempFile();
+
+		DMDocument.assertFileNameFromTempFolder(fileName = "${logName}");
+
+		var logContent = TestCase.getTempFileContent(fileName = "${logName}");
+
+		return "${logContent}";
+	}
+
 	macro getCompanyLogDirPath {
 		var companyId = JSONCompany.getCompanyIdByName(portalInstanceName = "${portalInstanceName}");
 		var homeDir = PropsUtil.get("liferay.home.dir.name");

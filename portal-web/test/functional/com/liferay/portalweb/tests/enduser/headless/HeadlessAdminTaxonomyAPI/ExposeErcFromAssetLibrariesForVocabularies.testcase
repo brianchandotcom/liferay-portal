@@ -27,6 +27,31 @@ definition {
 	}
 
 	@priority = "5"
+	test CanCreateVocabularyWithCustomErc {
+		property portal.acceptance = "true";
+
+		task ("When user makes a PUT request to create a vocabulary with assetLibraryId and a custom ERC") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = TaxonomyVocabularyAPI.updateTaxonomyVocabularyByErc(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				externalReferenceCodeInBody = "erc-in-body",
+				name = "Vocabulary Name");
+		}
+
+		task ("Then a vocabulary is created with the custom ERC in response body") {
+			var actualExternalReferenceCode = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
+				element = "$..externalReferenceCode",
+				responseToParse = "${response}");
+
+			TestUtils.assertEquals(
+				actual = "${actualExternalReferenceCode}",
+				expected = "erc");
+		}
+	}
+
+	@priority = "5"
 	test CanCreateVocabularyWithNonExistentErc {
 		property portal.acceptance = "true";
 

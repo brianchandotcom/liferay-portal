@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
 import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
-import com.liferay.portal.vulcan.internal.extension.EntityExtensionThreadLocal;
 
 import java.io.IOException;
 import java.io.Serializable;

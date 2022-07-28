@@ -14,12 +14,8 @@
 
 package com.liferay.portal.security.service.access.policy.internal.upgrade.registry;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
+import com.liferay.portal.security.service.access.policy.internal.verify.SAPServiceVerifyProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,28 +37,13 @@ public class SAPServiceInitialUpgradeStepRegistrator
 
 				@Override
 				protected void doUpgrade() throws Exception {
-					try {
-						_sapEntryLocalService.checkSystemSAPEntries(
-							_portal.getDefaultCompanyId());
-					}
-					catch (PortalException portalException) {
-						_log.error(
-							"Unable to add default service access policy for " +
-								"company " + _portal.getDefaultCompanyId(),
-							portalException);
-					}
+					_sapServiceVerifyProcess.verifyDefaultSAPEntry();
 				}
 
 			});
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SAPServiceInitialUpgradeStepRegistrator.class);
-
 	@Reference
-	private Portal _portal;
-
-	@Reference
-	private SAPEntryLocalService _sapEntryLocalService;
+	private SAPServiceVerifyProcess _sapServiceVerifyProcess;
 
 }

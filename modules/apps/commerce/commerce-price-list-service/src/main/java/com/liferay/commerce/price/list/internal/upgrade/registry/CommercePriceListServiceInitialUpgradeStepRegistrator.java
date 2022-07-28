@@ -14,14 +14,9 @@
 
 package com.liferay.commerce.price.list.internal.upgrade.registry;
 
-import com.liferay.commerce.price.list.internal.helper.CommerceBasePriceListHelper;
-import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.commerce.product.service.CommerceCatalogLocalService;
+import com.liferay.commerce.price.list.internal.verify.CommercePriceListServiceVerifyProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,26 +37,15 @@ public class CommercePriceListServiceInitialUpgradeStepRegistrator
 
 				@Override
 				protected void doUpgrade() throws Exception {
-					List<CommerceCatalog> commerceCatalogs =
-						_commerceCatalogLocalService.getCommerceCatalogs(
-							_portal.getDefaultCompanyId(), true);
-
-					for (CommerceCatalog commerceCatalog : commerceCatalogs) {
-						_commerceBasePriceListHelper.
-							addCatalogBaseCommercePriceList(commerceCatalog);
-					}
+					_commercePriceListServiceVerifyProcess.
+						verifyBasePriceLists();
 				}
 
 			});
 	}
 
 	@Reference
-	private CommerceBasePriceListHelper _commerceBasePriceListHelper;
-
-	@Reference
-	private CommerceCatalogLocalService _commerceCatalogLocalService;
-
-	@Reference
-	private Portal _portal;
+	private CommercePriceListServiceVerifyProcess
+		_commercePriceListServiceVerifyProcess;
 
 }

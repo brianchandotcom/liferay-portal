@@ -14,18 +14,8 @@
 
 package com.liferay.commerce.product.internal.upgrade.registry;
 
-import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.NoSuchUserException;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.commerce.product.internal.verify.CommerceProductServiceVerifyProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -47,54 +37,15 @@ public class CommerceProductServiceInitialUpgradeStepRegistrator
 
 				@Override
 				protected void doUpgrade() throws Exception {
-					ServiceContext serviceContext = new ServiceContext();
-
-					serviceContext.setCompanyId(_portal.getDefaultCompanyId());
-					serviceContext.setLanguageId(
-						UpgradeProcessUtil.getDefaultLanguageId(
-							_portal.getDefaultCompanyId()));
-					serviceContext.setScopeGroupId(0);
-					serviceContext.setUserId(
-						_getAdminUserId(_portal.getDefaultCompanyId()));
-					serviceContext.setUuid(_portalUUID.generate());
-
-					_cpMeasurementUnitLocalService.importDefaultValues(
-						serviceContext);
-				}
-
-				private long _getAdminUserId(long companyId) throws Exception {
-					Role role = _roleLocalService.getRole(
-						companyId, RoleConstants.ADMINISTRATOR);
-
-					long[] userIds = _userLocalService.getRoleUserIds(
-						role.getRoleId());
-
-					if (userIds.length == 0) {
-						throw new NoSuchUserException(
-							StringBundler.concat(
-								"No user exists in company ", companyId,
-								" with role ", role.getName()));
-					}
-
-					return userIds[0];
+					_commerceProductServiceVerifyProcess.
+						verifyCPMeasurementUnits();
 				}
 
 			});
 	}
 
 	@Reference
-	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private PortalUUID _portalUUID;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private CommerceProductServiceVerifyProcess
+		_commerceProductServiceVerifyProcess;
 
 }

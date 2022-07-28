@@ -36,12 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CommercePriceListServiceVerifyProcess extends VerifyProcess {
 
-	@Override
-	protected void doVerify() throws Exception {
-		_verifyBasePriceLists();
-	}
-
-	private void _verifyBasePriceLists() throws Exception {
+	public void verifyBasePriceLists() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_companyLocalService.forEachCompanyId(
 				companyId -> {
@@ -55,6 +50,11 @@ public class CommercePriceListServiceVerifyProcess extends VerifyProcess {
 					}
 				});
 		}
+	}
+
+	@Override
+	protected void doVerify() throws Exception {
+		verifyBasePriceLists();
 	}
 
 	@Reference

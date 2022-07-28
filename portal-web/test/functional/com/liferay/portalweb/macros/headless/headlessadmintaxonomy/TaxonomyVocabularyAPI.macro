@@ -67,6 +67,17 @@ definition {
 		return "${response}";
 	}
 
+	macro deleteTaxonomyVocabularyByErc {
+		Variables.assertDefined(parameterList = "${externalReferenceCode}");
+
+		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
+			assetLibraryId = "${assetLibraryId}",
+			externalReferenceCode = "${externalReferenceCode}",
+			siteId = "${siteId}");
+
+		JSONCurlUtil.delete("${curl}");
+	}
+
 	macro filterTaxonomyVocabulary {
 		Variables.assertDefined(parameterList = "${filterValue}");
 

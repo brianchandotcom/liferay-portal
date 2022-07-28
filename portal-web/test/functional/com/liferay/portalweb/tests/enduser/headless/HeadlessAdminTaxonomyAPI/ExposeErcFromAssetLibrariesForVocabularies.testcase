@@ -76,6 +76,33 @@ definition {
 	}
 
 	@priority = "5"
+	test CanDeleteVocabularyByErc {
+		property portal.acceptance = "true";
+
+		task ("Given an existing vocabulary with ERC") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			TaxonomyVocabularyAPI.createTaxonomyVocabulary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				name = "Vocabulary Name");
+		}
+
+		task ("When user makes a DELETE request to delete the vocabulary with ERC") {
+			TaxonomyVocabularyAPI.deleteTaxonomyVocabularyByErc(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc");
+		}
+
+		task ("Then the vocabulary is deleted") {
+			TaxonomyVocabularyAPI.assertProperVocabularyTotalCount(
+				assetLibraryId = "${assetLibraryId}",
+				expectedTotalCount = "0",
+				filterValue = "name%20eq%20%27Vocabulary%20Name%27");
+		}
+	}
+
+	@priority = "5"
 	test CanGetVocabularyByErc {
 		property portal.acceptance = "true";
 

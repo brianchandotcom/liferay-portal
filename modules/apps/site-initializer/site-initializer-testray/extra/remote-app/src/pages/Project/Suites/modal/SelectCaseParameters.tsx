@@ -18,6 +18,13 @@ import DualListBox, {
 	BoxItem,
 	Boxes,
 } from '../../../../components/Form/DualListBox';
+import {
+	APIResponse,
+	TestrayCaseType,
+	TestrayComponent,
+	TestrayRequirement,
+	TestrayTeam,
+} from '../../../../graphql/queries';
 import {useFetch} from '../../../../hooks/useFetch';
 import i18n from '../../../../i18n';
 
@@ -43,10 +50,19 @@ export type State = {
 const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 	setState,
 }) => {
-	const casetypes = useFetch('/casetypes');
-	const components = useFetch('/components');
-	const requirements = useFetch('/requirements');
-	const teams = useFetch('/teams');
+	const {data: casetypes} = useFetch<APIResponse<TestrayCaseType>>(
+		'/casetypes?fields=id,name'
+	);
+	const {data: components} = useFetch<APIResponse<TestrayComponent>>(
+		'/components?fields=id,name'
+	);
+	const {data: requirements} = useFetch<APIResponse<TestrayRequirement>>(
+		'/requirements?fields=id,name'
+	);
+
+	const {data: teams} = useFetch<APIResponse<TestrayTeam>>(
+		'/teams?fields=id,name'
+	);
 
 	const getSelectedCaseParameters = useCallback(() => {
 		const defaultBox: any = [];
@@ -55,10 +71,10 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 			return;
 		}
 
-		const testrayCaseTypes = casetypes?.data.items || [];
-		const testrayComponents = components?.data.items || [];
-		const testrayRequirements = requirements?.data.items || [];
-		const testrayTeams = teams?.data?.items || [];
+		const testrayCaseTypes = casetypes.items || [];
+		const testrayComponents = components.items || [];
+		const testrayRequirements = requirements.items || [];
+		const testrayTeams = teams?.items || [];
 
 		return {
 			testrayCaseTypes: [testrayCaseTypes.map(onMapDefault), defaultBox],
@@ -74,20 +90,10 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 				defaultBox,
 			],
 			testrayRequirements: [
-				testrayRequirements.map(
-					({
-						id,
-						key,
-						summary,
-					}: {
-						id: number;
-						key: number;
-						summary: string;
-					}) => ({
-						label: `${key} (${summary})`,
-						value: id.toString(),
-					})
-				),
+				testrayRequirements.map(({id, key, summary}) => ({
+					label: `${key} (${summary})`,
+					value: id.toString(),
+				})),
 				defaultBox,
 			],
 			testrayTeams: [testrayTeams.map(onMapDefault), defaultBox],

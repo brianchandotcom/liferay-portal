@@ -12,7 +12,6 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
@@ -23,15 +22,14 @@ import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
 import {
-	CTypePagination,
+	APIResponse,
 	TestrayCase,
 	TestrayCaseType,
 	TestrayComponent,
 	TestrayProject,
-	getCaseTypes,
-	getComponents,
 } from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
+import {useFetch} from '../../../hooks/useFetch';
 import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
@@ -75,16 +73,16 @@ const CaseForm = () => {
 		shouldUpdate: false,
 	});
 
-	const {data: testrayComponentsData} = useQuery<
-		CTypePagination<'components', TestrayComponent>
-	>(getComponents);
+	const {data: testrayComponentsData} = useFetch<
+		APIResponse<TestrayComponent>
+	>('/components?fields=id,name');
 
-	const {data: testrayCaseTypesData} = useQuery<
-		CTypePagination<'caseTypes', TestrayCaseType>
-	>(getCaseTypes);
+	const {data: testrayCaseTypesData} = useFetch<APIResponse<TestrayCaseType>>(
+		'/casetypes?fields=id,name'
+	);
 
-	const testrayCaseTypes = testrayCaseTypesData?.c.caseTypes.items || [];
-	const testrayComponents = testrayComponentsData?.c.components.items || [];
+	const testrayCaseTypes = testrayCaseTypesData?.items || [];
+	const testrayComponents = testrayComponentsData?.items || [];
 
 	useEffect(() => {
 		if (testrayProject) {

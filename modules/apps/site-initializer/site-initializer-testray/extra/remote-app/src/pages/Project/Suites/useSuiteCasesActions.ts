@@ -12,18 +12,19 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
 import {useNavigate, useParams} from 'react-router-dom';
 
-import {DeleteSuiteCase} from '../../../graphql/mutations';
 import {TestraySuiteCase} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
+import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
 import {Security} from '../../../security';
+import {deleteResource} from '../../../services/rest';
 import {Action} from '../../../types';
 
 const useSuiteCasesActions = ({isSmartSuite}: {isSmartSuite: boolean}) => {
-	const [onDeleteSuiteCase] = useMutation(DeleteSuiteCase);
+	const {removeItemFromList} = useMutate();
+
 	const {projectId} = useParams();
 	const formModal = useFormModal();
 	const navigate = useNavigate();
@@ -40,9 +41,10 @@ const useSuiteCasesActions = ({isSmartSuite}: {isSmartSuite: boolean}) => {
 			permission: 'UPDATE',
 		},
 		{
-			action: (suiteCase: TestraySuiteCase) =>
-				onDeleteSuiteCase({variables: {id: suiteCase.id}})
-					.then(() => modal.onSave())
+			action: (suiteCase: TestraySuiteCase, mutate) =>
+				deleteResource(`/suitescaseses/${suiteCase.id}`)
+					.then(() => removeItemFromList(mutate, suiteCase.id))
+					.then(modal.onSuccess)
 					.catch(modal.onError),
 			disabled: isSmartSuite,
 			name: i18n.translate('delete'),

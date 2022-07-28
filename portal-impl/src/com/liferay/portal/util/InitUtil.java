@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
@@ -49,6 +48,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
+import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.deploy.hot;
 
-import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.service.configuration.servlet.ServletServiceCon
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.util.portlet.PortletProps;
 

@@ -14,13 +14,13 @@
 
 package com.liferay.portal.test.log;
 
-import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.portal.kernel.log.Jdk14LogImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.log4j.Log4JUtil;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

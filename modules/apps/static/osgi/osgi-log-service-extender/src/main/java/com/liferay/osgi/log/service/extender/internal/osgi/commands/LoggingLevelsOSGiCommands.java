@@ -14,10 +14,10 @@
 
 package com.liferay.osgi.log.service.extender.internal.osgi.commands;
 
-import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.log4j.Log4JUtil;
 
 import java.util.ArrayList;
 import java.util.List;

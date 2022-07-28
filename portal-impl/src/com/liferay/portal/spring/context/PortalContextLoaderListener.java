@@ -16,7 +16,6 @@ package com.liferay.portal.spring.context;
 
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.ClassLoaderPool;
-import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -48,6 +47,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.spring.aop.DynamicProxyCreator;
 import com.liferay.portal.spring.compat.CompatBeanDefinitionRegistryPostProcessor;

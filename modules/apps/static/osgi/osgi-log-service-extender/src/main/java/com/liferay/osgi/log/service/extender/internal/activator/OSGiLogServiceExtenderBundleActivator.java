@@ -15,11 +15,11 @@
 package com.liferay.osgi.log.service.extender.internal.activator;
 
 import com.liferay.osgi.log.service.extender.internal.osgi.commands.LoggingLevelsOSGiCommands;
-import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.log4j.Log4JUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

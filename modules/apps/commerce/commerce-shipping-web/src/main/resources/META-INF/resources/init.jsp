@@ -28,8 +28,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.commerce.exception.CommerceShippingMethodNameException" %><%@
 page import="com.liferay.commerce.model.CommerceShippingMethod" %><%@
 page import="com.liferay.commerce.shipping.web.internal.constants.CommerceShippingFDSNames" %><%@
+page import="com.liferay.commerce.shipping.web.internal.constants.CommerceShippingScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodsDisplayContext" %><%@
-page import="com.liferay.commerce.shipping.web.internal.servlet.taglib.ui.constants.CommerceShippingScreenNavigationConstants" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@

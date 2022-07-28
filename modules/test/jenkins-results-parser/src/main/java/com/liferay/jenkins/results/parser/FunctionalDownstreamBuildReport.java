@@ -29,11 +29,7 @@ public class FunctionalDownstreamBuildReport extends BaseDownstreamBuildReport {
 			return super.getTestExecutionDuration();
 		}
 
-		System.out.println("testExecutionDuration=" + testExecutionDuration);
-
 		testExecutionDuration -= _getStopWatchRecordAppServerDuration();
-
-		System.out.println("testExecutionDuration=" + testExecutionDuration);
 
 		if (testExecutionDuration <= 0L) {
 			return super.getTestExecutionDuration();

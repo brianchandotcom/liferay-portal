@@ -42,10 +42,35 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CommerceAccountServiceVerifyProcess extends VerifyProcess {
 
+	public void verifyAccountGroup() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_companyLocalService.forEachCompanyId(
+				companyId ->
+					_commerceAccountGroupLocalService.
+						checkGuestCommerceAccountGroup(companyId));
+		}
+	}
+
+	public void verifyAccountRoles() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_companyLocalService.forEachCompanyId(
+				companyId -> {
+					ServiceContext serviceContext = new ServiceContext();
+
+					serviceContext.setCompanyId(companyId);
+					serviceContext.setUserId(_getAdminUserId(companyId));
+					serviceContext.setUuid(_portalUUID.generate());
+
+					_commerceAccountRoleHelper.checkCommerceAccountRoles(
+						serviceContext);
+				});
+		}
+	}
+
 	@Override
 	protected void doVerify() throws Exception {
-		_verifyAccountRoles();
-		_verifyAccountGroup();
+		verifyAccountRoles();
+		verifyAccountGroup();
 	}
 
 	private long _getAdminUserId(long companyId) throws PortalException {
@@ -62,31 +87,6 @@ public class CommerceAccountServiceVerifyProcess extends VerifyProcess {
 		}
 
 		return userIds[0];
-	}
-
-	private void _verifyAccountGroup() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_companyLocalService.forEachCompanyId(
-				companyId ->
-					_commerceAccountGroupLocalService.
-						checkGuestCommerceAccountGroup(companyId));
-		}
-	}
-
-	private void _verifyAccountRoles() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_companyLocalService.forEachCompanyId(
-				companyId -> {
-					ServiceContext serviceContext = new ServiceContext();
-
-					serviceContext.setCompanyId(companyId);
-					serviceContext.setUserId(_getAdminUserId(companyId));
-					serviceContext.setUuid(_portalUUID.generate());
-
-					_commerceAccountRoleHelper.checkCommerceAccountRoles(
-						serviceContext);
-				});
-		}
 	}
 
 	@Reference

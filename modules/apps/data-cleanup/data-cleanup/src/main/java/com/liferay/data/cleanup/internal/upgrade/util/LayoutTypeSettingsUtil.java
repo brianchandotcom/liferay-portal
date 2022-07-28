@@ -63,9 +63,9 @@ public class LayoutTypeSettingsUtil {
 							portletId, resultSet, updatePreparedStatement);
 					}
 				}
-			}
 
-			updatePreparedStatement.executeBatch();
+				updatePreparedStatement.executeBatch();
+			}
 		}
 	}
 

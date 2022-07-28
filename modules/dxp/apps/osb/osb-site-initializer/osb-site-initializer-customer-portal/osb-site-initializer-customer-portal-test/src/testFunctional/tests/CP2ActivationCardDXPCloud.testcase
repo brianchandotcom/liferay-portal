@@ -35,10 +35,10 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-			PortalInstances.tearDownCP();
-	
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-		}
+		PortalInstances.tearDownCP();
+
+		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+	}
 
 	@description = "Automation ID: LPS-146856 | Test Summary: Verify that when the status is active the page displays (Subtitle - Link - Link redirects to another page)"
 	@priority = "4"

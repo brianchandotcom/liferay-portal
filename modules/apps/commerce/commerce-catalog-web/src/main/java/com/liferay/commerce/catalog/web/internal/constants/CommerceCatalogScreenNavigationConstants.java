@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.catalog.web.internal.servlet.taglib.ui.constants;
+package com.liferay.commerce.catalog.web.internal.constants;
 
 /**
  * @author Gianmarco Brunialti Masera

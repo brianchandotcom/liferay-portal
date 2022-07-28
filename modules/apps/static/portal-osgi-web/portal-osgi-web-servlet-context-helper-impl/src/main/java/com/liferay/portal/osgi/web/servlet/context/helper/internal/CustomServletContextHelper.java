@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebResourceCollectionDefinition;
@@ -93,6 +94,11 @@ public class CustomServletContextHelper
 		ServletContextClassLoaderPool.register(
 			_servletContext.getServletContextName(),
 			bundleWiring.getClassLoader());
+	}
+
+	@Override
+	public String getMimeType(String name) {
+		return MimeTypesUtil.getContentType(name);
 	}
 
 	@Override

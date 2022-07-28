@@ -67,6 +67,11 @@ public class JUnitTestClass extends BaseTestClass {
 		return jsonObject;
 	}
 
+	public String getTestClassName() {
+		return JenkinsResultsParserUtil.combine(
+			_getPackageName(), ".", _getClassName());
+	}
+
 	public String getTestrayMainComponentName() {
 		return _testrayMainComponentName;
 	}

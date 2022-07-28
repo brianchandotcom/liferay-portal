@@ -7,11 +7,15 @@ definition {
 		}
 
 		var javascript = '''
-			window.onload = function() {
-				setTimeout(() => {
-					console.log("Page is fully loaded");
-				}, "${locator1}");
-			};
+			window.addEventListener(
+				'load',
+				() => {
+					setTimeout(() => {
+						console.log("Page is fully loaded");
+					}, "${locator1}");
+				},
+				{once: true}
+			);
 		''';
 
 		selenium.runScript("${javascript}");

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.address.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.address.web.internal.servlet.taglib.ui.constants.CommerceCountryScreenNavigationConstants;
+import com.liferay.commerce.address.web.internal.constants.CommerceCountryScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;

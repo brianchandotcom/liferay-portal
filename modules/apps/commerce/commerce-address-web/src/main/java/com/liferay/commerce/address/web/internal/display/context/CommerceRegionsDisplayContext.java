@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.address.web.internal.display.context;
 
+import com.liferay.commerce.address.web.internal.constants.CommerceCountryScreenNavigationConstants;
 import com.liferay.commerce.address.web.internal.portlet.action.helper.ActionHelper;
-import com.liferay.commerce.address.web.internal.servlet.taglib.ui.constants.CommerceCountryScreenNavigationConstants;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;

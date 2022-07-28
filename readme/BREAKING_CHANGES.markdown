@@ -1025,18 +1025,14 @@ If you need to retrieve data from these fields, you can get the same information
 
 ### What changed?
 
-- MySQL connector has been upgraded to version 8.0.29. It is forced to use protocol TLSv1.2 for MySQL because the new default MySQL connector after version 8.0.28 drops the old SSL connection protocols, which include TLSv1 and TLSv1.1. (FYI, https://dev.mysql.com/doc/refman/8.0/en/encrypted-connection-protocols-ciphers.html)
+- MySQL connector has been upgraded to version 8.0.29, it is forced to use protocol TLSv1.2 because it does not support TLSv1 and TLSv1.1 any more. (See https://dev.mysql.com/doc/refman/8.0/en/encrypted-connection-protocols-ciphers.html)
 
 ### Who is affected?
 
-- For the clients who use MySQL with version less than 5.7.28 (FYI, https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_tls_version) locally, if they use the auto-downloaded MySQL connector on DXP U37 or higher, or they manually have installed MySQL connector 8.0.28 or higher, then they will be affected.
+- For the clients who use MySQL with version less than 5.7.28, and if they use the auto-downloaded MySQL connector on DXP U37 or higher, or they manually installed MySQL connector 8.0.28 or higher.
 
 ### How should I update my code?
-
-1. Clients can use newer versions of MySQL with version >= 5.7.28.
-
-1. If clients still want to use MySQL with version < 5.7.28, they may need to set the protocol to TLSv1.2 manually, because older MySQL with version < 5.7.28 do not set TLSv1.2 by default.
-   - Here is the documentation for setting up TLS version: https://dev.mysql.com/doc/refman/5.7/en/encrypted-connection-protocols-ciphers.html#encrypted-connection-supported-protocols
+Upgrade MySQL to 5.7.28 or higher or set the protocol to TLSv1.2 manually (See https://dev.mysql.com/doc/refman/5.7/en/encrypted-connection-protocols-ciphers.html#encrypted-connection-supported-protocols).
 
 ### Why was this change made?
-- Use of library MySQL Connector/J has known vulnerability in version 8.0.21, and we need to upgrade it to version 8.0.28 and above. However, MySQL Connector/J with version 8.0.28 and above removes TLSv1 and TLSv1.1 SSL connection protocols, and TLSv1.2 or TLSv1.3 are required for SSL connection to MySQL. Therefore, we may need to set up TLSv1.2 or TLSv1.3 manually, if they are not set up by default in older MySQL versions.
+- This change was made due to security vulnerability.

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.internal.extension;
+package com.liferay.portal.vulcan.extension;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 

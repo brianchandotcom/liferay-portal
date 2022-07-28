@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.ObjectReader;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
 import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
-import com.liferay.portal.vulcan.internal.extension.EntityExtensionThreadLocal;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidationUtil;
 
 import java.io.IOException;

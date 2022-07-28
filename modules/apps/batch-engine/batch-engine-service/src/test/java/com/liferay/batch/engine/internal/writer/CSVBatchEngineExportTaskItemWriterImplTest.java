@@ -94,8 +94,12 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 		}
 	}
 
-	private String _formatValue(Object value) {
+	private String _formatValue(Object value, int fieldIndex) {
 		if (value == null) {
+			if (fieldIndex == 0) {
+				return "\"\"";
+			}
+
 			return StringPool.BLANK;
 		}
 
@@ -113,25 +117,25 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 
 		StringBundler sb = new StringBundler();
 
-		String lineSeparator = System.getProperty("line.separator");
-
 		if (Boolean.valueOf(
 				(String)parameters.getOrDefault(
 					"containsHeaders", StringPool.TRUE))) {
 
 			sb.append(StringUtil.merge(fieldNames, StringPool.COMMA));
 
-			sb.append(lineSeparator);
+			sb.append(StringPool.RETURN_NEW_LINE);
 		}
 
 		for (Item item : items) {
-			for (String fieldName : fieldNames) {
+			for (int i = 0; i < fieldNames.size(); i++) {
+				String fieldName = fieldNames.get(i);
+
 				int index = fieldName.indexOf(CharPool.UNDERLINE);
 
 				if (index == -1) {
 					Field field = fieldMap.get(fieldName);
 
-					sb.append(_formatValue(field.get(item)));
+					sb.append(_formatValue(field.get(item), i));
 				}
 				else {
 					Field field = fieldMap.get(fieldName.substring(0, index));
@@ -140,7 +144,7 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 
 					sb.append(
 						_formatValue(
-							valueMap.get(fieldName.substring(index + 1))));
+							valueMap.get(fieldName.substring(index + 1)), i));
 				}
 
 				sb.append(StringPool.COMMA);
@@ -148,7 +152,7 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 
 			sb.setIndex(sb.index() - 1);
 
-			sb.append(lineSeparator);
+			sb.append(StringPool.RETURN_NEW_LINE);
 		}
 
 		return sb.toString();

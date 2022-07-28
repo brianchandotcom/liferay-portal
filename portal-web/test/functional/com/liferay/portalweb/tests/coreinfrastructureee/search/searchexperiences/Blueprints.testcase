@@ -2973,6 +2973,10 @@ definition {
 			contributorClass = "AssetCategoryIdsQueryPreFilterContributor",
 			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ON_OFF_TOGGLE");
 
+		Uncheck.uncheckToggleSwitch(
+			contributorClass = "AssetEntryModelPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ON_OFF_TOGGLE");
+
 		Button.click(button = "Filter");
 
 		MenuItem.click(menuItem = "Inactive");

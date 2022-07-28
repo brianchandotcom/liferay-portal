@@ -70,15 +70,49 @@
 			}
 		},
 
+		_loadModules(moduleJavascriptPaths) {
+			return Promise.all(
+				moduleJavascriptPaths.map(
+					(path) =>
+						new Promise((resolve) => {
+							const script = document.createElement('script');
+
+							script.src = path;
+							script.type = 'module';
+
+							script.onload = script.onreadystatechange = () => {
+								if (
+									this.readyState &&
+									this.readyState !== 'complete' &&
+									this.readyState !== 'load'
+								) {
+									return;
+								}
+
+								script.onload = script.onreadystatechange = null;
+								script.onerror = null;
+
+								resolve();
+							};
+
+							script.onerror = () => {
+								script.onload = script.onreadystatechange = null;
+								script.onerror = null;
+
+								console.error('Unable to load', path);
+
+								resolve();
+							};
+
+							document.head.appendChild(script);
+						})
+				)
+			);
+		},
+
 		_loadPortletFiles(response, loadHTML) {
 			const footerCssPaths = response.footerCssPaths || [];
 			const headerCssPaths = response.headerCssPaths || [];
-
-			let javascriptPaths = response.headerJavaScriptPaths || [];
-
-			javascriptPaths = javascriptPaths.concat(
-				response.footerJavaScriptPaths || []
-			);
 
 			const head = A.one(STR_HEAD);
 
@@ -98,11 +132,27 @@
 
 			const responseHTML = response.portletHTML;
 
+			let javascriptPaths = response.headerJavaScriptPaths || [];
+
+			javascriptPaths = javascriptPaths.concat(
+				response.footerJavaScriptPaths || []
+			);
+
 			if (javascriptPaths.length) {
-				A.Get.script(javascriptPaths, {
-					onEnd() {
-						loadHTML(responseHTML);
-					},
+				const moduleJavascriptPaths = javascriptPaths
+					.filter((path) => path.startsWith('module:'))
+					.map((path) => path.substring(7));
+
+				javascriptPaths = javascriptPaths.filter(
+					(path) => !path.startsWith('module:')
+				);
+
+				Portlet._loadModules(moduleJavascriptPaths).then(() => {
+					A.Get.script(javascriptPaths, {
+						onEnd() {
+							loadHTML(responseHTML);
+						},
+					});
 				});
 			}
 			else {

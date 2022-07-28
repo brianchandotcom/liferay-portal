@@ -14,25 +14,32 @@
 
 package com.liferay.portal.kernel.portlet.render;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.comparator.PortletNameComparator;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -157,132 +164,111 @@ public class PortletRenderUtil {
 		HttpServletRequest httpServletRequest, String portletHTML,
 		Portlet portlet, boolean portletOnLayout) {
 
-		Set<String> footerCssSet = new LinkedHashSet<>();
-		Set<String> footerJavaScriptSet = new LinkedHashSet<>();
-		Set<String> headerCssSet = new LinkedHashSet<>();
-		Set<String> headerJavaScriptSet = new LinkedHashSet<>();
+		Collection<String> footerCssPaths = Collections.emptyList();
+		Collection<String> footerJavaScriptPaths = Collections.emptyList();
+		Collection<String> headerCssPaths = Collections.emptyList();
+		Collection<String> headerJavaScriptPaths = Collections.emptyList();
 
 		if (!portletOnLayout && portlet.isAjaxable()) {
-			Portlet rootPortlet = portlet.getRootPortlet();
+			Set<String> visitedURLs =
+				(Set<String>)httpServletRequest.getAttribute(
+					WebKeys.PORTLET_RESOURCE_STATIC_URLS);
 
-			for (String footerPortalCss : portlet.getFooterPortalCss()) {
-				if (!HttpComponentsUtil.hasProtocol(footerPortalCss)) {
-					footerPortalCss =
-						PortalUtil.getPathContext() + footerPortalCss;
+			if (visitedURLs == null) {
+				visitedURLs = new LinkedHashSet<>();
 
-					footerPortalCss = PortalUtil.getStaticResourceURL(
-						httpServletRequest, footerPortalCss,
-						rootPortlet.getTimestamp());
-				}
-
-				footerCssSet.add(footerPortalCss);
+				httpServletRequest.setAttribute(
+					WebKeys.PORTLET_RESOURCE_STATIC_URLS, visitedURLs);
 			}
 
-			for (String footerPortalJavaScript :
-					portlet.getFooterPortalJavaScript()) {
+			footerCssPaths = _getStaticURLs(
+				httpServletRequest, portlet,
+				Arrays.asList(
+					new PortletResourceAccessor(false) {
 
-				if (!HttpComponentsUtil.hasProtocol(footerPortalJavaScript)) {
-					footerPortalJavaScript =
-						PortalUtil.getPathContext() + footerPortalJavaScript;
+						@Override
+						public Collection<String> get(Portlet portlet) {
+							return portlet.getFooterPortletCss();
+						}
 
-					footerPortalJavaScript = PortalUtil.getStaticResourceURL(
-						httpServletRequest, footerPortalJavaScript,
-						rootPortlet.getTimestamp());
-				}
+					},
+					new PortletResourceAccessor(true) {
 
-				footerJavaScriptSet.add(footerPortalJavaScript);
-			}
+						@Override
+						public Collection<String> get(Portlet portlet) {
+							return portlet.getFooterPortalCss();
+						}
 
-			for (String footerPortletCss : portlet.getFooterPortletCss()) {
-				if (!HttpComponentsUtil.hasProtocol(footerPortletCss)) {
-					footerPortletCss =
-						portlet.getStaticResourcePath() + footerPortletCss;
+					}),
+				visitedURLs);
 
-					footerPortletCss = PortalUtil.getStaticResourceURL(
-						httpServletRequest, footerPortletCss,
-						rootPortlet.getTimestamp());
-				}
+			footerJavaScriptPaths = _getStaticURLs(
+				httpServletRequest, portlet,
+				Arrays.asList(
+					new PortletResourceAccessor(false) {
 
-				footerCssSet.add(footerPortletCss);
-			}
+						@Override
+						public Collection<String> get(Portlet portlet) {
+							return portlet.getFooterPortletJavaScript();
+						}
 
-			for (String footerPortletJavaScript :
-					portlet.getFooterPortletJavaScript()) {
+					},
+					new PortletResourceAccessor(true) {
 
-				if (!HttpComponentsUtil.hasProtocol(footerPortletJavaScript)) {
-					footerPortletJavaScript =
-						portlet.getStaticResourcePath() +
-							footerPortletJavaScript;
+						@Override
+						public Collection<String> get(Portlet portlet) {
+							return portlet.getFooterPortalJavaScript();
+						}
 
-					footerPortletJavaScript = PortalUtil.getStaticResourceURL(
-						httpServletRequest, footerPortletJavaScript,
-						rootPortlet.getTimestamp());
-				}
+					}),
+				visitedURLs);
 
-				footerJavaScriptSet.add(footerPortletJavaScript);
-			}
+			headerCssPaths = _getStaticURLs(
+				httpServletRequest, portlet,
+				Arrays.asList(
+					new PortletResourceAccessor(false) {
 
-			for (String headerPortalCss : portlet.getHeaderPortalCss()) {
-				if (!HttpComponentsUtil.hasProtocol(headerPortalCss)) {
-					headerPortalCss =
-						PortalUtil.getPathContext() + headerPortalCss;
+						@Override
+						public Collection<String> get(Portlet portlet) {
+							return portlet.getHeaderPortletCss();
+						}
 
-					headerPortalCss = PortalUtil.getStaticResourceURL(
-						httpServletRequest, headerPortalCss,
-						rootPortlet.getTimestamp());
-				}
+					},
+					new PortletResourceAccessor(true) {
 
-				headerCssSet.add(headerPortalCss);
-			}
+						@Override
+						public Collection<String> get(Portlet portlet) {
+							return portlet.getHeaderPortalCss();
+						}
 
-			for (String headerPortalJavaScript :
-					portlet.getHeaderPortalJavaScript()) {
+					}),
+				visitedURLs);
 
-				if (!HttpComponentsUtil.hasProtocol(headerPortalJavaScript)) {
-					headerPortalJavaScript =
-						PortalUtil.getPathContext() + headerPortalJavaScript;
+			headerJavaScriptPaths = _getStaticURLs(
+				httpServletRequest, portlet,
+				Arrays.asList(
+					new PortletResourceAccessor(false) {
 
-					headerPortalJavaScript = PortalUtil.getStaticResourceURL(
-						httpServletRequest, headerPortalJavaScript,
-						rootPortlet.getTimestamp());
-				}
+						@Override
+						public Collection<String> get(Portlet portlet) {
+							return portlet.getHeaderPortletJavaScript();
+						}
 
-				headerJavaScriptSet.add(headerPortalJavaScript);
-			}
+					},
+					new PortletResourceAccessor(true) {
 
-			for (String headerPortletCss : portlet.getHeaderPortletCss()) {
-				if (!HttpComponentsUtil.hasProtocol(headerPortletCss)) {
-					headerPortletCss =
-						portlet.getStaticResourcePath() + headerPortletCss;
+						@Override
+						public Collection<String> get(Portlet portlet) {
+							return portlet.getHeaderPortalJavaScript();
+						}
 
-					headerPortletCss = PortalUtil.getStaticResourceURL(
-						httpServletRequest, headerPortletCss,
-						rootPortlet.getTimestamp());
-				}
-
-				headerCssSet.add(headerPortletCss);
-			}
-
-			for (String headerPortletJavaScript :
-					portlet.getHeaderPortletJavaScript()) {
-
-				if (!HttpComponentsUtil.hasProtocol(headerPortletJavaScript)) {
-					headerPortletJavaScript =
-						portlet.getStaticResourcePath() +
-							headerPortletJavaScript;
-
-					headerPortletJavaScript = PortalUtil.getStaticResourceURL(
-						httpServletRequest, headerPortletJavaScript,
-						rootPortlet.getTimestamp());
-				}
-
-				headerJavaScriptSet.add(headerPortletJavaScript);
-			}
+					}),
+				visitedURLs);
 		}
 
 		return new PortletRenderParts(
-			footerCssSet, footerJavaScriptSet, headerCssSet,
-			headerJavaScriptSet, portletHTML, !portlet.isAjaxable());
+			footerCssPaths, footerJavaScriptPaths, headerCssPaths,
+			headerJavaScriptPaths, portletHTML, !portlet.isAjaxable());
 	}
 
 	private static String _getRootPortletId(Portlet portlet) {
@@ -293,6 +279,168 @@ public class PortletRenderUtil {
 		Portlet rootPortlet = portlet.getRootPortlet();
 
 		return rootPortlet.getPortletId();
+	}
+
+	private static List<String> _getComboServletURLs(
+		Collection<PortletResourceAccessor> portletResourceAccessors,
+		List<Portlet> portlets, Predicate<String> predicate, long timestamp,
+		String urlPrefix, Set<String> visitedURLs) {
+
+		if (predicate == null) {
+			predicate = s -> true;
+		}
+
+		List<String> urls = new ArrayList<>();
+
+		StringBundler comboServletSB = new StringBundler();
+
+		portlets = ListUtil.copy(portlets);
+
+		portlets = ListUtil.sort(portlets, _portletNameComparator);
+
+		for (Portlet portlet : portlets) {
+			for (PortletResourceAccessor portletResourceAccessor :
+				portletResourceAccessors) {
+
+				String contextPath = null;
+
+				if (portletResourceAccessor.isPortalResource()) {
+					contextPath = PortalUtil.getPathContext();
+				}
+				else {
+					contextPath =
+						PortalUtil.getPathProxy() + portlet.getContextPath();
+				}
+
+				Collection<String> portletResources =
+					portletResourceAccessor.get(portlet);
+
+				for (String portletResource : portletResources) {
+					if (!predicate.test(portletResource)) {
+						continue;
+					}
+
+					boolean module = false;
+
+					if (portletResource.startsWith("module:")) {
+						module = true;
+
+						portletResource = portletResource.substring(7);
+					}
+
+					boolean absolute = HttpComponentsUtil.hasProtocol(
+						portletResource);
+
+					if (!absolute) {
+						portletResource = contextPath + portletResource;
+					}
+
+					if (module) {
+						portletResource = "module:" + portletResource;
+					}
+
+					if (visitedURLs.contains(portletResource)) {
+						continue;
+					}
+
+					visitedURLs.add(portletResource);
+
+					if (absolute || module) {
+						urls.add(portletResource);
+					}
+					else {
+						comboServletSB.append(StringPool.AMPERSAND);
+
+						if (!portletResourceAccessor.isPortalResource()) {
+							comboServletSB.append(portlet.getPortletId());
+							comboServletSB.append(StringPool.COLON);
+						}
+
+						comboServletSB.append(
+							HtmlUtil.escapeURL(portletResource));
+
+						timestamp = Math.max(timestamp, portlet.getTimestamp());
+					}
+				}
+			}
+		}
+
+		if (comboServletSB.length() > 0) {
+			String url = urlPrefix + comboServletSB;
+
+			url = HttpComponentsUtil.addParameter(url, "t", timestamp);
+
+			urls.add(url);
+		}
+
+		return urls;
+	}
+
+	private static List<String> _getStaticURLs(
+		HttpServletRequest httpServletRequest, Portlet portlet,
+		Collection<PortletResourceAccessor> portletResourceAccessors,
+		Set<String> visitedURLs) {
+
+		Portlet rootPortlet = portlet.getRootPortlet();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		List<String> urls = new ArrayList<>();
+
+		for (PortletResourceAccessor portletResourceAccessor :
+				portletResourceAccessors) {
+
+			String contextPath = null;
+
+			if (portletResourceAccessor.isPortalResource()) {
+				contextPath = PortalUtil.getPathContext();
+			}
+			else {
+				contextPath =
+					PortalUtil.getPathProxy() + portlet.getContextPath();
+			}
+
+			Collection<String> portletResources = portletResourceAccessor.get(
+				portlet);
+
+			for (String portletResource : portletResources) {
+				boolean module = false;
+
+				if (portletResource.startsWith("module:")) {
+					module = true;
+
+					portletResource = portletResource.substring(7);
+				}
+
+				if (!HttpComponentsUtil.hasProtocol(portletResource)) {
+					portletResource = PortalUtil.getStaticResourceURL(
+						httpServletRequest, contextPath + portletResource,
+						rootPortlet.getTimestamp());
+				}
+
+				if (!portletResource.contains(Http.PROTOCOL_DELIMITER)) {
+					String cdnBaseURL = themeDisplay.getCDNBaseURL();
+
+					portletResource = cdnBaseURL.concat(portletResource);
+				}
+
+				if (module) {
+					portletResource = "module:" + portletResource;
+				}
+
+				if (visitedURLs.contains(portletResource)) {
+					continue;
+				}
+
+				visitedURLs.add(portletResource);
+
+				urls.add(portletResource);
+			}
+		}
+
+		return urls;
 	}
 
 	private static void _writePaths(
@@ -318,5 +466,8 @@ public class PortletRenderUtil {
 			writeJavaScriptPath(printWriter, javaScriptPath, null);
 		}
 	}
+
+	private static final PortletNameComparator _portletNameComparator =
+		new PortletNameComparator();
 
 }

@@ -17,7 +17,7 @@ package com.liferay.product.navigation.simulation.device.internal.application.li
 import com.liferay.application.list.BaseJSPPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -58,7 +58,7 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "screen-size");
+		return _language.get(resourceBundle, "screen-size");
 	}
 
 	@Override
@@ -108,5 +108,8 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 
 	@Reference
 	private GroupPermission _groupPermission;
+
+	@Reference
+	private Language _language;
 
 }

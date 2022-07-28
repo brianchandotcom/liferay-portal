@@ -18,7 +18,7 @@ import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -49,7 +49,7 @@ public class SecurityPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "security");
+		return _language.get(locale, "security");
 	}
 
 	@Override
@@ -64,6 +64,9 @@ public class SecurityPanelCategory extends BasePanelCategory {
 
 		return false;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PortalPermission _portalPermission;

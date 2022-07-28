@@ -16,7 +16,7 @@ package com.liferay.product.navigation.control.menu.web.internal;
 
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -107,7 +107,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			sb.append("<span class=\"bg-transparent flex-shrink-0 label ");
 			sb.append("label-inverse-secondary ml-2 mr-0\">");
 			sb.append("<span class=\"label-item label-item-expand\">");
-			sb.append(LanguageUtil.get(httpServletRequest, "draft"));
+			sb.append(_language.get(httpServletRequest, "draft"));
 			sb.append("</span></span>");
 		}
 
@@ -269,6 +269,9 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutHeaderProductNavigationControlMenuEntry.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutContentModelResourcePermission

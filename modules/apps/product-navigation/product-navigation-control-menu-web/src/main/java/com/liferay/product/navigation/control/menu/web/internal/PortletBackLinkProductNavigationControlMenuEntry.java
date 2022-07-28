@@ -15,7 +15,7 @@
 package com.liferay.product.navigation.control.menu.web.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -29,6 +29,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -57,7 +58,7 @@ public class PortletBackLinkProductNavigationControlMenuEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "back");
+		return _language.get(locale, "back");
 	}
 
 	@Override
@@ -93,5 +94,8 @@ public class PortletBackLinkProductNavigationControlMenuEntry
 
 		return super.isShow(httpServletRequest);
 	}
+
+	@Reference
+	private Language _language;
 
 }

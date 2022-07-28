@@ -133,7 +133,8 @@ public class ContentUtil {
 			_getLayoutClassedModelPageContentsJSONArray(
 				httpServletRequest, plid, segmentsExperienceId),
 			AssetListEntryUsagesUtil.getPageContentsJSONArray(
-				httpServletRequest, httpServletResponse, plid));
+				httpServletRequest, httpServletResponse, plid,
+				segmentsExperienceId));
 	}
 
 	private static String _generateUniqueLayoutClassedModelUsageKey(

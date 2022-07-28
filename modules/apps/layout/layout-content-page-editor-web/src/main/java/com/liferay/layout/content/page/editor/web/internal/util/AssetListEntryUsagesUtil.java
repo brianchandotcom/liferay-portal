@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -84,13 +83,14 @@ public class AssetListEntryUsagesUtil {
 
 	public static JSONArray getPageContentsJSONArray(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long plid)
+			HttpServletResponse httpServletResponse, long plid,
+			long segmentsExperienceId)
 		throws PortalException {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		LayoutStructure layoutStructure = _getLayoutStructure(
-			httpServletRequest, plid);
+			httpServletRequest, plid, segmentsExperienceId);
 		Set<String> uniqueAssetListEntryUsagesKeys = new HashSet<>();
 
 		List<AssetListEntryUsage> assetListEntryUsages =
@@ -425,7 +425,8 @@ public class AssetListEntryUsagesUtil {
 	}
 
 	private static LayoutStructure _getLayoutStructure(
-			HttpServletRequest httpServletRequest, long plid)
+			HttpServletRequest httpServletRequest, long plid,
+			long segmentsExperienceId)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -433,8 +434,7 @@ public class AssetListEntryUsagesUtil {
 				WebKeys.THEME_DISPLAY);
 
 		return LayoutStructureUtil.getLayoutStructure(
-			themeDisplay.getScopeGroupId(), plid,
-			ParamUtil.getLong(httpServletRequest, "segmentsExperienceId"));
+			themeDisplay.getScopeGroupId(), plid, segmentsExperienceId);
 	}
 
 	private static JSONObject _getPageContentJSONObject(

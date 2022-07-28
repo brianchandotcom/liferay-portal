@@ -44,6 +44,7 @@ import moveItem from '../../../../../app/thunks/moveItem';
 import updateItemConfig from '../../../../../app/thunks/updateItemConfig';
 import canBeRenamed from '../../../../../app/utils/canBeRenamed';
 import {deepEqual} from '../../../../../app/utils/checkDeepEqual';
+import {collectionIsMapped} from '../../../../../app/utils/collectionIsMapped';
 import checkAllowedChild from '../../../../../app/utils/drag-and-drop/checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from '../../../../../app/utils/drag-and-drop/constants/dragDropTargetType';
 import {ORIENTATIONS} from '../../../../../app/utils/drag-and-drop/constants/orientations';
@@ -58,6 +59,7 @@ import {
 	useDropTarget,
 	useIsDroppable,
 } from '../../../../../app/utils/drag-and-drop/useDragAndDrop';
+import {formIsMapped} from '../../../../../app/utils/formIsMapped';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import hideFragment from '../../../../../app/utils/hideFragment';
@@ -582,6 +584,9 @@ function computeHover({
 	// Drop inside target
 
 	const validDropInsideTarget = (() => {
+		const targetIsCollectionNotMapped =
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+			!collectionIsMapped(targetItem);
 		const targetIsColumn =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.column;
 		const targetIsFragment =
@@ -592,11 +597,18 @@ function computeHover({
 		const targetIsEmpty =
 			layoutDataRef.current.items[targetItem.itemId]?.children.length ===
 			0;
+		const targetIsFormNotMapped =
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
+			!formIsMapped(targetItem);
 		const targetIsParent = sourceItem.parentId === targetItem.itemId;
 
 		return (
 			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
-			(targetIsEmpty || targetIsColumn || targetIsContainer) &&
+			(targetIsEmpty ||
+				targetIsCollectionNotMapped ||
+				targetIsColumn ||
+				targetIsContainer ||
+				targetIsFormNotMapped) &&
 			!targetIsFragment &&
 			!targetIsParent
 		);

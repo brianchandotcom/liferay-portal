@@ -46,6 +46,7 @@ definition {
 
 	@description = "Aggregation Terms in oneToMany relationship"
 	@priority = "5"
+	@ignore = "true"
 	test CanReturnAggregationTermsDetailsInOneToManyRelationship {
 		property portal.acceptance = "true";
 
@@ -87,6 +88,7 @@ definition {
 
 	@description = "Aggregation Terms in oneToMany relationship after object deletion"
 	@priority = "5"
+	@ignore = "true"
 	test CanReturnAggregationTermsDetailsInOneToManyRelationshipAfterObjectDeletion {
 		property portal.acceptance = "true";
 
@@ -132,6 +134,7 @@ definition {
 
 	@description = "Aggregation Terms in oneToMany updated relationship"
 	@priority = "5"
+	@ignore = "true"
 	test CanReturnAggregationTermsDetailsInOneToManyUpdatedRelationship {
 		property portal.acceptance = "true";
 

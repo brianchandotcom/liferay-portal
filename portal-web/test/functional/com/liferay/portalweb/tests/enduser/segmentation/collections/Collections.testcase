@@ -344,13 +344,13 @@ definition {
 		}
 
 		task ("Assert that all web contents are displayed") {
-			for (var i : list "1,2") {
+			for (var i : list "3,4") {
 				AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_${i}");
 			}
 
 			Click(locator1 = "Pagination#NEXT_LINK");
 
-			for (var i : list "3,4") {
+			for (var i : list "1,2") {
 				AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_${i}");
 			}
 		}

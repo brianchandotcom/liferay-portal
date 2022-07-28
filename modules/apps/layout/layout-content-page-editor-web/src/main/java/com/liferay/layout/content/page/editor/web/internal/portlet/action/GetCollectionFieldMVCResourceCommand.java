@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryModel;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
@@ -382,9 +383,18 @@ public class GetCollectionFieldMVCResourceCommand
 
 		sourceItemTypes.add(itemType);
 
+		String className = itemType;
+
+		if (Objects.equals(className, FileEntry.class.getName())) {
+
+			// LPS-159039
+
+			className = DLFileEntry.class.getName();
+		}
+
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				itemType);
+				className);
 
 		if (assetRendererFactory != null) {
 			sourceItemTypes.add(AssetEntry.class.getName());

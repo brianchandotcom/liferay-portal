@@ -103,6 +103,8 @@ definition {
 	@description = "LPS-146852 - Verify if when the status is 'In Progress' the page subtitle: 'Your DXP Cloud environments are being set up and will be available soon' appears"
 	@priority = "4"
 	test CanViewCaptionWhenTheStatusIsInProgress {
+		CP2DXPCloudSetup.addCPDXPCloudObject();
+
 		CustomerPortal.showCPObject(title = "Account Flag");
 
 		Accounts.openAccountsAdmin();

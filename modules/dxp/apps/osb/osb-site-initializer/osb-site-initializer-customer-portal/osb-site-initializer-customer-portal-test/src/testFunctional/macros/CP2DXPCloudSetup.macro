@@ -152,11 +152,15 @@ definition {
 	}
 
 	macro deleteEntryDXPCloudEnvironments {
+		var key_status = "${entry}";
+
+		if(IsElementPresent(locator1 = "CP2DXPCloudSetup#DND_TABLE_ELEMENT")){
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "DXP Cloud Environments");
 
 		ObjectPortlet.deleteEntry(entry = "${entry}");
+	}
 	}
 
 	macro deleteObjectsForDXPCloud {

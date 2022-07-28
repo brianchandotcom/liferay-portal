@@ -33,7 +33,7 @@ import {searchUtil} from '../../../../util/search';
 
 const Build = () => {
 	const {buildId} = useParams();
-	const {onAssignToMe} = useAssignCaseResult();
+	const {onAssignToMeFetch} = useAssignCaseResult();
 
 	return (
 		<Container className="mt-4">
@@ -86,7 +86,9 @@ const Build = () => {
 									/>
 								) : (
 									<AssignToMe
-										onClick={() => onAssignToMe(caseResult)}
+										onClick={() =>
+											onAssignToMeFetch(caseResult)
+										}
 									/>
 								),
 							value: i18n.translate('assignee'),

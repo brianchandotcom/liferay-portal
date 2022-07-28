@@ -24,15 +24,16 @@ const useAssignCaseResult = (mutate?: KeyedMutator<any>) => {
 		caseResult: TestrayCaseResult,
 		userId: number | string | null
 	) => {
-		const url = `/caseresults/${caseResult.id}`;
-
 		const data = {
 			dueStatus: caseResult.dueStatus,
 			r_userToCaseResults_userId: userId,
 			startDate: caseResult.startDate,
 		};
 
-		const response = await fetcher.put(url, data);
+		const response = await fetcher.put(
+			`/caseresults/${caseResult.id}`,
+			data
+		);
 
 		if (mutate) {
 			mutate(response);
@@ -42,15 +43,16 @@ const useAssignCaseResult = (mutate?: KeyedMutator<any>) => {
 	};
 
 	const onAssignToMeFetch = async (caseResult: TestrayCaseResult) => {
-		const url = `/caseresults/${caseResult.id}`;
-
 		const data = {
 			dueStatus: TEST_STATUS['In Progress'],
 			r_userToCaseResults_userId: Liferay.ThemeDisplay.getUserId(),
 			startDate: caseResult.startDate,
 		};
 
-		const response = await fetcher.put(url, data);
+		const response = await fetcher.put(
+			`/caseresults/${caseResult.id}`,
+			data
+		);
 
 		if (mutate) {
 			mutate(response);
@@ -60,15 +62,16 @@ const useAssignCaseResult = (mutate?: KeyedMutator<any>) => {
 	};
 
 	const onRemoveAssignFetch = async (caseResult: TestrayCaseResult) => {
-		const url = `/caseresults/${caseResult.id}`;
-
 		const data = {
 			dueStatus: TEST_STATUS.Untested,
 			r_userToCaseResults_userId: 0,
 			startDate: null as any,
 		};
 
-		const response = await fetcher.put(url, data);
+		const response = await fetcher.put(
+			`/caseresults/${caseResult.id}`,
+			data
+		);
 
 		if (mutate) {
 			mutate(response);

@@ -17,21 +17,7 @@
 <c:if test="<%= !SetUtil.isEmpty(portletTreeSet) %>">
 
 	<%
-	PortletResourceAccessor[] portletResourceAccessors = {PortletResourceAccessor.HEADER_PORTAL_CSS, PortletResourceAccessor.HEADER_PORTLET_CSS};
-	Predicate<String> predicate = s -> true;
-	boolean useComboServletStaticURLGenerator = themeDisplay.isThemeCssFastLoad();
-	%>
-
-	<%@ include file="/html/common/themes/portlet_resources.jspf" %>
-
-	<%
-	for (String url : urls) {
-	%>
-
-		<link data-senna-track="temporary" href="<%= HtmlUtil.escapeAttribute(url) %>" id="<%= HtmlUtil.escapeAttribute(StringUtil.toHexString(url.hashCode())) %>" rel="stylesheet" type="text/css" />
-
-	<%
-	}
+	PortletRenderUtil.writeHeaderCSSPaths(request, portlets, out);
 	%>
 
 </c:if>

@@ -12,6 +12,44 @@ definition {
 		User.firstLoginPG();
 	}
 
+	@description = "This is a use case for LPS-139642 TC2: Verify OAuth client configurations could be removed and readded."
+	@priority = "4"
+	test AssertOAuthClientCanBeRemovedAndReadded {
+		property test.name.skip.portal.instance = "OpenIDConnect#AssertOAuthClientCouldBeRemovedAndReadded";
+
+		task ("Given: Add an OAuth Client") {
+			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
+
+			OAuthClient.addClient(
+				jsonFileName = "okta.json",
+				wellknownURI = "https://dev-5081331.okta.com/.well-known/openid-configuration");
+		}
+
+		task ("When: Delete the OAuth Client") {
+			OAuthClient.deleteClient(rowIndexNumber = "1");
+		}
+
+		task ("Then: Verify that the OAuth Client entry is removed from the UI") {
+			AssertElementNotPresent(
+				key_rowIndexNumber = "1",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
+		}
+
+		task ("When: Readd the OAuth Client with the same configurations") {
+			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
+
+			OAuthClient.addClient(
+				jsonFileName = "okta.json",
+				wellknownURI = "https://dev-5081331.okta.com/.well-known/openid-configuration");
+		}
+
+		task ("Then: Verify that the entry is readded in the UI") {
+			AssertElementPresent(
+				key_rowIndexNumber = "1",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
+		}
+	}
+
 	@description = "This is a use case for LPS-139642 TC-10: A regular role is assigned to OIDC user if a regular role is defined through the property."
 	@priority = "5"
 	test AssertRegularRoleIsAssignedToOIDCUser {

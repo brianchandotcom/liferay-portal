@@ -74,7 +74,7 @@ liferay-remote-app-testray {
 }
 
 .management-toolbar-filter-dropdown {
-	max-height: 600px;
+	max-height: 800px;
 	width: 300px;
 
 	label {
@@ -85,4 +85,20 @@ liferay-remote-app-testray {
 	.form-control {
 		margin-bottom: 15px;
 	}
+}
+
+.dropdown-header {
+	.form-control {
+		margin: 0;
+	}
+}
+.popover-body {
+	max-height: 580px;
+	min-height: 100px;
+	overflow-y: auto;
+}
+
+.popover-footer {
+	padding: 0 12px 12px;
+	z-index: 999;
 }

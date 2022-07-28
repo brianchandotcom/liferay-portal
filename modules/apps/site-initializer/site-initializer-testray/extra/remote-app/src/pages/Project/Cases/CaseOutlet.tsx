@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useEffect} from 'react';
+import {useEffect, useMemo} from 'react';
 import {
 	Outlet,
 	useLocation,
@@ -20,7 +20,6 @@ import {
 	useParams,
 } from 'react-router-dom';
 
-import {TestrayCase} from '../../../graphql/queries';
 import {useFetch} from '../../../hooks/useFetch';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
@@ -36,10 +35,8 @@ const CaseOutlet = () => {
 
 	const {setHeading, setTabs} = useHeader();
 
-	const {data: testrayCase, mutate: mutateCase} = useFetch<TestrayCase>(
-		getCaseQuery(caseId as string),
-		getCaseTransformData
-	);
+	const {data, mutate: mutateCase} = useFetch(getCaseQuery(caseId as string));
+	const testrayCase = useMemo(() => getCaseTransformData(data), [data]);
 
 	useEffect(() => {
 		if (testrayCase && testrayProject) {

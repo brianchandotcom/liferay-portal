@@ -101,7 +101,7 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 		>
 			{!!filterFields?.length && (
 				<>
-					<div className="px-3">
+					<div className="dropdown-header">
 						<p className="font-weight-bold my-2">
 							{i18n.translate('filter-results')}
 						</p>
@@ -113,10 +113,9 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 							value={filter}
 						/>
 					</div>
-
 					<Form.Divider />
 
-					<div className="px-3">
+					<div className="popover-body">
 						<Form.Renderer
 							fields={filterFields}
 							filter={filter}
@@ -127,7 +126,7 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 
 					<Form.Divider />
 
-					<div className="mb-2 px-3">
+					<div className="popover-footer">
 						<ClayButton onClick={onApply}>
 							{i18n.translate('apply')}
 						</ClayButton>

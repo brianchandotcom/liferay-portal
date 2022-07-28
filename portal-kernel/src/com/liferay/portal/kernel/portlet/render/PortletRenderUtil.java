@@ -197,9 +197,6 @@ public class PortletRenderUtil {
 
 		StringBundler comboServletSB = new StringBundler();
 
-		portlets = ListUtil.sort(
-			new ArrayList<>(portlets), _portletNameComparator);
-
 		for (Portlet portlet : portlets) {
 			for (PortletResourceAccessor portletResourceAccessor :
 					portletResourceAccessors) {
@@ -585,9 +582,6 @@ public class PortletRenderUtil {
 			}
 
 		};
-
-	private static final PortletNameComparator _portletNameComparator =
-		new PortletNameComparator();
 
 	private enum URLType {
 

@@ -13,6 +13,7 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 const CHECKBOX_DEFAULT_VALUE = 'on';
@@ -24,7 +25,6 @@ const CHECKBOX_STATUS = {
 };
 
 export default function PermissionsCheckbox({
-	additionalProps: _additionalProps,
 	checked,
 	componentId: _componentId,
 	cssClass,
@@ -68,3 +68,11 @@ export default function PermissionsCheckbox({
 		/>
 	);
 }
+
+PermissionsCheckbox.propTypes = {
+	checked: PropTypes.bool,
+	cssClass: PropTypes.string,
+	indeterminate: PropTypes.bool,
+	indeterminateValue: PropTypes.string,
+	value: PropTypes.string,
+};

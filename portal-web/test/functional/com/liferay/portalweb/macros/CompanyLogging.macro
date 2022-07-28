@@ -1,0 +1,21 @@
+definition {
+
+	macro getCompanyLogDirPath {
+		var companyId = JSONCompany.getCompanyIdByName(portalInstanceName = "${portalInstanceName}");
+		var homeDir = PropsUtil.get("liferay.home.dir.name");
+
+		var logsDir = "${homeDir}/logs/companies/${companyId}";
+		var pattern = StringUtil.split("**/*.log");
+
+		var filePath = FileUtil.getIncludedResourceURLs("${pattern}", "${logsDir}");
+
+		var filePath = StringUtil.valueOf("${filePath}");
+
+		var filePath = RegexUtil.replace("${filePath}", "\[(.*)\]", "1");
+
+		var filePath = StringUtil.replace("${filePath}", "file:/", "");
+
+		return "${filePath}";
+	}
+
+}

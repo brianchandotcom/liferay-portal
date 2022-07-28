@@ -87,6 +87,24 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public AxisTestClassGroup getAxisTestClassGroup(String axisName) {
+		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>();
+
+		axisTestClassGroups.addAll(getAxisTestClassGroups());
+		axisTestClassGroups.addAll(getDependentAxisTestClassGroups());
+
+		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+			if (!Objects.equals(axisName, axisTestClassGroup.getAxisName())) {
+				continue;
+			}
+
+			return axisTestClassGroup;
+		}
+
+		return null;
+	}
+
+	@Override
 	public List<AxisTestClassGroup> getAxisTestClassGroups() {
 		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>();
 

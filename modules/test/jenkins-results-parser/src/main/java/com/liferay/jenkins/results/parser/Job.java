@@ -43,6 +43,8 @@ public interface Job {
 
 	public int getAxisCount();
 
+	public AxisTestClassGroup getAxisTestClassGroup(String axisName);
+
 	public List<AxisTestClassGroup> getAxisTestClassGroups();
 
 	public Set<String> getBatchNames();

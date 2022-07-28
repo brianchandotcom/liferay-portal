@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -89,7 +88,7 @@ public class FriendlyURLServlet extends HttpServlet {
 					InfoItemPermissionProvider.class, className);
 
 			if (!infoItemPermissionProvider.hasPermission(
-					PermissionCheckerFactoryUtil.create(
+					_permissionCheckerFactory.create(
 						_portal.getUser(httpServletRequest)),
 					new InfoItemReference(
 						className, _getClassPK(httpServletRequest)),
@@ -172,7 +171,7 @@ public class FriendlyURLServlet extends HttpServlet {
 					InfoItemPermissionProvider.class, className);
 
 			if (!infoItemPermissionProvider.hasPermission(
-					PermissionCheckerFactoryUtil.create(
+					_permissionCheckerFactory.create(
 						_portal.getUser(httpServletRequest)),
 					new InfoItemReference(className, classPK),
 					ActionKeys.UPDATE)) {

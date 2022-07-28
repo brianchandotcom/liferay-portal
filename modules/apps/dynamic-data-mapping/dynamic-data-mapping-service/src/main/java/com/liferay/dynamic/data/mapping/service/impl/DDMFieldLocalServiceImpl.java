@@ -43,7 +43,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -769,15 +768,12 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		JSONDeserializer<Object> jsonDeserializer =
-			_jsonFactory.createJSONDeserializer();
-
 		for (DDMFieldAttributeInfo ddmFieldAttributeInfo :
 				ddmFieldAttributeInfos) {
 
 			jsonObject.put(
 				ddmFieldAttributeInfo._attributeName,
-				jsonDeserializer.deserialize(
+				_jsonFactory.looseDeserialize(
 					ddmFieldAttributeInfo._attributeValue));
 		}
 

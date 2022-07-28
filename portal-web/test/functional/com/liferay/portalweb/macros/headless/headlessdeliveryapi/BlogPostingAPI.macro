@@ -25,14 +25,10 @@ definition {
 	}
 
 	macro _createNBlogPostings {
-		Variables.assertDefined(parameterList = "${numberOfBlogPostingsToCreate},${createStrategy}");
-
-		if (!(isSet(importStrategy))) {
-			var importStrategy = "ON_ERROR_FAIL";
-		}
+		Variables.assertDefined(parameterList = "${numberOfBlogPostings},${createStrategy}");
 
 		var body = BlogPostingAPI._createNBlogPostingsBody(
-			numberOfBlogPostingsToCreate = "${numberOfBlogPostingsToCreate}",
+			numberOfBlogPostings = "${numberOfBlogPostings}",
 			testCase = "${testCase}");
 		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
@@ -68,14 +64,25 @@ definition {
 			var testCase = "";
 		}
 
-		if ("${testCase}" == "updateOneBlogPosting") {
-			var response = BlogPostingAPI._getBlogPostings();
+		if (isSet(testCase)) {
+			if (("${testCase}" == "updateOneBlogPosting") || ("${testCase}" == "updateAllFields")) {
+				var response = BlogPostingAPI.getBlogPostings();
 
-			var existingHeadline = BlogPostingAPI._getHeadlineOfExistingBlogPosting(response = "${response}");
-			var existingArticleBody = BlogPostingAPI._getArticleBodyOfExistingBlogPosting(response = "${response}");
-			var existingExternalReferenceCode = BlogPostingAPI._getExternalReferenceCodeOfExistingBlogPosting(response = "${response}");
+				var existingHeadline = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
+					fieldName = "headline",
+					response = "${response}");
+				var existingArticleBody = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
+					fieldName = "articleBody",
+					response = "${response}");
+				var existingExternalReferenceCode = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
+					fieldName = "externalReferenceCode",
+					response = "${response}");
+				var id = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
+					fieldName = "id",
+					response = "${response}");
 
-			var body = '''
+				if ("${testCase}" == "updateOneBlogPosting") {
+					var body = '''
 				[
 					{
 					"headline": "${existingHeadline}",
@@ -89,34 +96,77 @@ definition {
 					}
 				]
 			''';
-		}
-		else {
-			var size = ${numberOfBlogPostingsToCreate} + 1;
-			var i = "1";
-			var body = '''
+				}
+				else if ("${testCase}" == "updateAllFields") {
+					var body = '''
+				[
+					{
+					"headline": "headlineUpdated",
+        			"articleBody": "articleBodyUpdated",
+					"externalReferenceCode": "externalReferenceCodeUpdated",
+					"id": "${id}"
+					}
+				]
+			''';
+				}
+			}
+			else if ("${testCase}" == "incorrectData") {
+				var body = '''
+				[
+					{
+					"headline": "headline",
+        			"articleBody": "articleBody",
+					"externalReferenceCode": "externalReferenceCode"
+					},
+					{
+					"headline": "headlineUpdated",
+        			"articleBody": "articleBodyUpdated",
+					"externalReferenceCode": "ercUpdated",
+					"nonExistingField" : "this field does not exist"
+					}
+				]
+			''';
+			}
+			else if ("${testCase}" == "nonExistingId") {
+				var body = '''
+				[
+					{
+					"headline": "headlineUpdated",
+        			"articleBody": "articleBodyUpdated",
+					"externalReferenceCode": "ercUpdated",
+					"id" : "1234"
+					}
+				]
+			''';
+			}
+			else {
+				var size = "${numberOfBlogPostings}";
+				var i = "0";
+				var body = '''
 		[
 				''';
 
-			while ("${i}" != "${size}" && (maxIterations = "100")) {
-				var blogPostingBody = '''
+				while ("${i}" != "${size}" && (maxIterations = "100")) {
+					var blogPostingBody = '''
 					{
 					"headline": "${headline}${i}",
         			"articleBody": "${articleBody}${i}",
 					"externalReferenceCode": "${externalReferenceCode}${i}"
 					}
 			''';
-				var j = ${i} + 1;
+					var j = ${i} + 1;
 
-				if ("${j}" == "${size}") {
-					var body = StringUtil.replace("${body}", "${body}", "${body}${blogPostingBody}]");
+					if ("${j}" == "${size}") {
+						var body = StringUtil.replace("${body}", "${body}", "${body}${blogPostingBody}]");
+					}
+					else {
+						var blogPostingBody = StringUtil.replace("${blogPostingBody}", "${blogPostingBody}", "${blogPostingBody},");
+
+						var body = StringUtil.replace("${body}", "${body}", "${body}${blogPostingBody}");
+					}
+
+					var i = ${i} + 1;
 				}
-				else {
-					var blogPostingBody = StringUtil.replace("${blogPostingBody}", "${blogPostingBody}", "${blogPostingBody},");
-
-					var body = StringUtil.replace("${body}", "${body}", "${body}${blogPostingBody}");
-				}
-
-				var i = ${i} + 1;
 			}
 		}
 
@@ -141,39 +191,34 @@ definition {
 		return "${curl}";
 	}
 
-	macro _getArticleBodyOfExistingBlogPosting {
-		var articleBody = JSONUtil.getWithJSONPath("${response}", "$.items.[0].articleBody");
+	macro _getFieldValueOfExistingBlogPosting {
+		Variables.assertDefined(parameterList = "${response},${fieldName}");
 
-		return "${articleBody}";
+		var fieldValue = JSONUtil.getWithJSONPath("${response}", "$.items.[0].${fieldName}");
+
+		return "${fieldValue}";
 	}
 
-	macro _getBlogPostings {
+	macro _updateBlogPosting {
+		Variables.assertDefined(parameterList = "${numberOfBlogPostings},${updateStrategy}");
+
+		var body = BlogPostingAPI._createNBlogPostingsBody(
+			numberOfBlogPostings = "${numberOfBlogPostings}",
+			testCase = "${testCase}");
 		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
-
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings \
+			${portalURL}/o/headless-delivery/v1.0/blog-postings/batch?updateStrategy=${updateStrategy}\&importStrategy=${importStrategy} \
 			-u test@liferay.com:test \
-			-H Content-Type: application/json
+			-H Content-Type: application/json \
+            -d ${body}
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.put("${curl}");
 
 		return "${curl}";
-	}
-
-	macro _getExternalReferenceCodeOfExistingBlogPosting {
-		var externalReferenceCode = JSONUtil.getWithJSONPath("${response}", "$.items.[0].externalReferenceCode");
-
-		return "${externalReferenceCode}";
-	}
-
-	macro _getHeadlineOfExistingBlogPosting {
-		var headline = JSONUtil.getWithJSONPath("${response}", "$.items.[0].headline");
-
-		return "${headline}";
 	}
 
 	macro _updateOneBlogPostingBodyParameter {
@@ -201,13 +246,50 @@ definition {
 	}
 
 	macro deleteAllBlogPostings {
-		var response = BlogPostingAPI._getBlogPostings();
+		var response = BlogPostingAPI.getBlogPostings();
 
 		var blogPostingIdsList = JSONUtil.getWithJSONPath("${response}", "$.items.[*].id");
 
 		for (var blogPostingId : list "${blogPostingIdsList}") {
 			BlogPostingAPI._deleteBlogPosting(blogPostingId = "${blogPostingId}");
 		}
+	}
+
+	macro getBlogPostingDataToString {
+		if (!(isSet(response))) {
+			var response = BlogPostingAPI.getBlogPostings();
+		}
+
+		var headline = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
+			fieldName = "headline",
+			response = "${response}");
+		var articleBody = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
+			fieldName = "articleBody",
+			response = "${response}");
+		var externalReferenceCode = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
+			fieldName = "externalReferenceCode",
+			response = "${response}");
+
+		var blogPostingData = "${headline},${articleBody},${externalReferenceCode}";
+
+		return "${blogPostingData}";
+	}
+
+	macro getBlogPostings {
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			groupName = "Guest",
+			site = "true");
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
 	}
 
 	macro getIdOfCreatedBlogPosting {
@@ -221,10 +303,31 @@ definition {
 	}
 
 	macro getIdOfCreateNBlogPostingBatchEngineImportTask {
+		if (!(isSet(importStrategy))) {
+			var importStrategy = "ON_ERROR_FAIL";
+		}
+
 		var response = BlogPostingAPI._createNBlogPostings(
 			createStrategy = "${createStrategy}",
-			numberOfBlogPostingsToCreate = "${numberOfBlogPostingsToCreate}",
+			importStrategy = "${importStrategy}",
+			numberOfBlogPostings = "${numberOfBlogPostings}",
 			testCase = "${testCase}");
+
+		var importTaskId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+		return "${importTaskId}";
+	}
+
+	macro getIdOfUpdatedPostingBatchEngineImportTask {
+		if (!(isSet(importStrategy))) {
+			var importStrategy = "ON_ERROR_FAIL";
+		}
+
+		var response = BlogPostingAPI._updateBlogPosting(
+			importStrategy = "${importStrategy}",
+			numberOfBlogPostings = "${numberOfBlogPostings}",
+			testCase = "${testCase}",
+			updateStrategy = "${updateStrategy}");
 
 		var importTaskId = JSONUtil.getWithJSONPath("${response}", "$.id");
 
@@ -244,7 +347,9 @@ definition {
 	}
 
 	macro getNumberOfBlogPostingsCreated {
-		var response = BlogPostingAPI._getBlogPostings();
+		if (!(isSet(response))) {
+			var response = BlogPostingAPI.getBlogPostings();
+		}
 
 		var numberOfBlogPostingsCreated = JSONUtil.getWithJSONPath("${response}", "$.totalCount");
 

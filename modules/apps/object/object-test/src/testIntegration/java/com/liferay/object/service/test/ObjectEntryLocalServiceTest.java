@@ -73,12 +73,14 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -1088,6 +1090,98 @@ public class ObjectEntryLocalServiceTest {
 		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
 
 		_assertCount(0);
+	}
+
+	@Test
+	public void testExtensionDynamicObjectDefinitionTableValues()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), User.class.getName());
+
+		_objectFieldLocalService.addCustomObjectField(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(), "LongInteger", "Long",
+			null, RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean(), null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"longField", false, false, Collections.emptyList());
+		_objectFieldLocalService.addCustomObjectField(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(), "Text", "String", null,
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
+			null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"textField", true, false, Collections.emptyList());
+
+		User user = UserTestUtil.addUser();
+
+		Assert.assertTrue(
+			MapUtil.isEmpty(
+				_objectEntryLocalService.
+					getExtensionDynamicObjectDefinitionTableValues(
+						objectDefinition, user.getUserId())));
+
+		try {
+			_objectEntryLocalService.
+				addOrUpdateExtensionDynamicObjectDefinitionTableValues(
+					TestPropsValues.getUserId(), objectDefinition,
+					user.getUserId(), Collections.emptyMap(),
+					ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException.Required objectEntryValuesException) {
+			Assert.assertEquals(
+				"No value was provided for required object field \"textField\"",
+				objectEntryValuesException.getMessage());
+		}
+
+		Map<String, Serializable> values =
+			HashMapBuilder.<String, Serializable>put(
+				"longField", 10L
+			).put(
+				"textField", "Value"
+			).build();
+
+		_objectEntryLocalService.
+			addOrUpdateExtensionDynamicObjectDefinitionTableValues(
+				TestPropsValues.getUserId(), objectDefinition, user.getUserId(),
+				values, ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			values,
+			_objectEntryLocalService.
+				getExtensionDynamicObjectDefinitionTableValues(
+					objectDefinition, user.getUserId()));
+
+		values = HashMapBuilder.<String, Serializable>put(
+			"longField", 1000L
+		).put(
+			"textField", "New Value"
+		).build();
+
+		_objectEntryLocalService.
+			addOrUpdateExtensionDynamicObjectDefinitionTableValues(
+				TestPropsValues.getUserId(), objectDefinition, user.getUserId(),
+				values, ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			values,
+			_objectEntryLocalService.
+				getExtensionDynamicObjectDefinitionTableValues(
+					objectDefinition, user.getUserId()));
+
+		_objectEntryLocalService.
+			deleteExtensionDynamicObjectDefinitionTableValues(
+				objectDefinition, user.getUserId());
+
+		Assert.assertTrue(
+			MapUtil.isEmpty(
+				_objectEntryLocalService.
+					getExtensionDynamicObjectDefinitionTableValues(
+						objectDefinition, user.getUserId())));
 	}
 
 	@Test

@@ -30,6 +30,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
@@ -743,20 +744,44 @@ public class BundleSiteInitializer implements SiteInitializer {
 				ddmStructureId = ddmStructure.getStructureId();
 			}
 
-			_ddmTemplateLocalService.addTemplate(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+				serviceContext.getScopeGroupId(),
 				_portal.getClassNameId(
 					jsonObject.getString(
 						"className", DDMStructure.class.getName())),
-				ddmStructureId, resourceClassNameId,
-				jsonObject.getString("ddmTemplateKey"),
-				HashMapBuilder.put(
-					LocaleUtil.getSiteDefault(), jsonObject.getString("name")
-				).build(),
-				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
-				TemplateConstants.LANG_TYPE_FTL,
-				SiteInitializerUtil.read(_bundle, "ddm-template.ftl", url),
-				false, false, null, null, serviceContext);
+				jsonObject.getString("ddmTemplateKey"));
+
+			if (ddmTemplate == null) {
+				_ddmTemplateLocalService.addTemplate(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(),
+					_portal.getClassNameId(
+						jsonObject.getString(
+							"className", DDMStructure.class.getName())),
+					ddmStructureId, resourceClassNameId,
+					jsonObject.getString("ddmTemplateKey"),
+					HashMapBuilder.put(
+						LocaleUtil.getSiteDefault(),
+						jsonObject.getString("name")
+					).build(),
+					null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
+					TemplateConstants.LANG_TYPE_FTL,
+					SiteInitializerUtil.read(_bundle, "ddm-template.ftl", url),
+					false, false, null, null, serviceContext);
+			}
+			else {
+				_ddmTemplateLocalService.updateTemplate(
+					serviceContext.getUserId(), ddmTemplate.getTemplateId(),
+					ddmStructureId,
+					HashMapBuilder.put(
+						LocaleUtil.getSiteDefault(),
+						jsonObject.getString("name")
+					).build(),
+					null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
+					TemplateConstants.LANG_TYPE_FTL,
+					SiteInitializerUtil.read(_bundle, "ddm-template.ftl", url),
+					false, false, null, null, serviceContext);
+			}
 		}
 	}
 

@@ -120,13 +120,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			"historyKey", "kaleoProcessId", "kaleoTaskFormPairsData", "mvcPath",
 			"redirect", "tabs1", "translatedLanguagesDescription",
 			"translatedLanguagesName", "workflowDefinition");
-
-		for (Locale availableLocale : _language.getAvailableLocales()) {
-			_parameterNames.add(
-				"description" + LocaleUtil.toLanguageId(availableLocale));
-			_parameterNames.add(
-				"name" + LocaleUtil.toLanguageId(availableLocale));
-		}
 	}
 
 	/**
@@ -210,6 +203,13 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		for (Locale availableLocale : _language.getAvailableLocales()) {
+			_parameterNames.add(
+				"description" + LocaleUtil.toLanguageId(availableLocale));
+			_parameterNames.add(
+				"name" + LocaleUtil.toLanguageId(availableLocale));
+		}
+
 		_kaleoFormsWebConfiguration = ConfigurableUtil.createConfigurable(
 			KaleoFormsWebConfiguration.class, properties);
 	}

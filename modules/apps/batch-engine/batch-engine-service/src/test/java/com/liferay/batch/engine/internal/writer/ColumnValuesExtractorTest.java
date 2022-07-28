@@ -53,13 +53,11 @@ public class ColumnValuesExtractorTest {
 		List<Object> objects = columnValuesExtractor.extractValues(
 			arrayContainer);
 
+		Assert.assertEquals(objects.toString(), 3, objects.size());
+
 		Assert.assertEquals(Integer.valueOf(5), objects.get(1));
 
 		CSVRecord csvRecord = _parseCSV((String)objects.get(0));
-
-		Assert.assertEquals(1, csvRecord.size());
-
-		csvRecord = _parseCSV(csvRecord.get(0));
 
 		Assert.assertEquals(5, csvRecord.size());
 
@@ -70,10 +68,6 @@ public class ColumnValuesExtractorTest {
 
 		csvRecord = _parseCSV((String)objects.get(2));
 
-		Assert.assertEquals(1, csvRecord.size());
-
-		csvRecord = _parseCSV(csvRecord.get(0));
-
 		Assert.assertEquals(5, csvRecord.size());
 
 		for (int i = 0; i < arrayContainer.length; i++) {
@@ -82,10 +76,10 @@ public class ColumnValuesExtractorTest {
 	}
 
 	private CSVRecord _parseCSV(String stringToParse) throws Exception {
-		CSVParser csvRecords = new CSVParser(
+		CSVParser csvParser = new CSVParser(
 			new StringReader(stringToParse), CSVFormat.DEFAULT);
 
-		List<CSVRecord> records = csvRecords.getRecords();
+		List<CSVRecord> records = csvParser.getRecords();
 
 		if (records.isEmpty()) {
 			throw new IllegalArgumentException(

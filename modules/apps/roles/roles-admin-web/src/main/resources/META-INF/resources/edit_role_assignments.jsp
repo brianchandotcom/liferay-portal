@@ -178,7 +178,7 @@ renderResponse.setTitle(role.getTitle(locale));
 			modalSegmentState: modalSegmentState,
 			namespace: '<portlet:namespace />',
 			portletURL: '<%= portletURL.toString() %>',
-			roleName: '<%= role.getName() %>',
+			roleName: '<%= HtmlUtil.escapeJS(role.getName()) %>',
 			selectAssigneesURL: '<%= selectAssigneesURL.toString() %>',
 		});
 	}

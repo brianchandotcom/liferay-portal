@@ -40,9 +40,11 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
 
-	@description = "LPS-146856 - Verify that when the status is active the page displays (Subtitle - Link - Link redirects to another page)"
+	@description = "Automation ID: LPS-146856 | Test Summary: Verify that when the status is active the page displays (Subtitle - Link - Link redirects to another page)"
 	@priority = "4"
 	test AffirmAllTextAndLinksOnThePage {
+		CP2DXPCloudSetup.addCPDXPCloudObject();
+
 		CustomerPortal.showCPObject(title = "Account Flag");
 
 		CustomerPortal.showCPObject(title = "Account Subscription Group");
@@ -89,17 +91,13 @@ definition {
 			locator1 = "CP2DXPCloudSetup#PRODUCT_CONSOLE",
 			value1 = "Go to Product Console");
 
-		Click(locator1 = "CP2DXPCloudSetup#PRODUCT_CONSOLE");
+		CP2DXPCloudSetup.clickOnProductConsoleLink();
+
+		SelectWindow(locator1 = "title=Log in | DXP Cloud");
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#YOUR_ACCOUNT");
 
-		CP2DXPCloudSetup.clearDXPCloudInfo();
-
-		CP2DXPCloudSetup.deleteDXPCloudObject();
-
-		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
-
-		CustomerPortal.deleteCPObject(title = "Account Flag");
+		Navigator.closeWindow();
 	}
 
 	@description = "LPS-146852 - Verify if when the status is 'In Progress' the page subtitle: 'Your DXP Cloud environments are being set up and will be available soon' appears"

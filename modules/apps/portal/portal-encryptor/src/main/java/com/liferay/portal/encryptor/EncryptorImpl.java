@@ -61,8 +61,8 @@ public class EncryptorImpl implements Encryptor {
 	public static final int KEY_SIZE = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.COMPANY_ENCRYPTION_KEY_SIZE));
 
-	public static final String PROVIDER_CLASS = GetterUtil.getString(
-		SystemProperties.get(EncryptorImpl.class.getName() + ".provider.class"),
+	public static final String PROVIDER_CLASS = SystemProperties.get(
+		EncryptorImpl.class.getName() + ".provider.class",
 		EncryptorImpl.SUN_PROVIDER_CLASS);
 
 	public static final String SUN_PROVIDER_CLASS =

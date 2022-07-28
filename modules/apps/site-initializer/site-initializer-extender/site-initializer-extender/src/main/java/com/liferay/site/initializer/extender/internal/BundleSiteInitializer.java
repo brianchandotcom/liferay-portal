@@ -1730,7 +1730,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_layoutPageTemplatesImporter.importFile(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			zipWriter.getFile(), false);
+			zipWriter.getFile(), true);
 	}
 
 	private Map<String, Layout> _addLayouts(ServiceContext serviceContext)

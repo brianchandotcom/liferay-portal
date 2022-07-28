@@ -100,6 +100,11 @@
 	<td>//img[contains(@class, 'cp-img-activation-status') and contains(@src, '${product}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DND_TABLE_ELEMENT</td>
+	<td>//div[contains(@class, 'dnd-td')]//*[text()='${key_status}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

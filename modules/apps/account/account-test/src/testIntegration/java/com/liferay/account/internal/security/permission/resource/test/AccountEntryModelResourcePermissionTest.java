@@ -21,6 +21,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -128,6 +130,67 @@ public class AccountEntryModelResourcePermissionTest {
 	}
 
 	@Test
+	public void testManageSuborganizationsAccountsPermissions()
+		throws Exception {
+
+		AccountEntry accountEntry1 = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+		AccountEntry accountEntry2 = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_ORGANIZATION);
+		User user = UserTestUtil.addUser();
+
+		for (String actionId : _ACTION_IDS) {
+			RoleTestUtil.addResourcePermission(
+				role, AccountEntry.class.getName(),
+				ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+				actionId);
+		}
+
+		Organization parentOrganization =
+			OrganizationTestUtil.addOrganization();
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry1.getAccountEntryId(),
+			parentOrganization.getOrganizationId());
+
+		_assertDoesNotContain(user, accountEntry1, _ACTION_IDS);
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			user.getUserId(), parentOrganization.getGroupId(),
+			role.getRoleId());
+
+		_userLocalService.addOrganizationUser(
+			parentOrganization.getOrganizationId(), user.getUserId());
+
+		_assertContains(user, accountEntry1, _ACTION_IDS);
+
+		Organization childOrganization = OrganizationTestUtil.addOrganization(
+			parentOrganization.getOrganizationId(),
+			RandomTestUtil.randomString(), false);
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry2.getAccountEntryId(),
+			childOrganization.getOrganizationId());
+
+		_assertDoesNotContain(user, accountEntry2, _ACTION_IDS);
+
+		RoleTestUtil.addResourcePermission(
+			role, Organization.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS);
+		RoleTestUtil.removeResourcePermission(
+			role.getName(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			ActionKeys.VIEW);
+
+		_assertContains(user, accountEntry2, _ACTION_IDS);
+	}
+
+	@Test
 	public void testOwnerPermissions() throws Exception {
 		User user = UserTestUtil.addUser();
 
@@ -206,6 +269,9 @@ public class AccountEntryModelResourcePermissionTest {
 	@Inject
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

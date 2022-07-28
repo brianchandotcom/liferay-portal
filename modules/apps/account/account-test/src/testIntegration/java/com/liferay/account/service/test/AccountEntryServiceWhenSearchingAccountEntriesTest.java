@@ -23,6 +23,7 @@ import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -45,7 +46,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -168,9 +168,9 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		RoleTestUtil.addResourcePermission(
-			role, PortletKeys.PORTAL, ResourceConstants.SCOPE_COMPANY,
+			role, Organization.class.getName(), ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),
-			ActionKeys.MANAGE_AVAILABLE_ACCOUNTS);
+			AccountActionKeys.MANAGE_AVAILABLE_ACCOUNTS);
 
 		_userLocalService.addRoleUser(role.getRoleId(), _user);
 
@@ -213,6 +213,30 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 			role.getRoleId());
 
 		_assertSearch(_organizationAccountEntries.get(_rootOrganization));
+	}
+
+	@Test
+	public void testShouldReturnSuborganizationAccountEntriesWithManageSuborganizationAccountsPermission()
+		throws Exception {
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_ORGANIZATION);
+
+		RoleTestUtil.addResourcePermission(
+			role, Organization.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS);
+
+		_userLocalService.addOrganizationUser(
+			_rootOrganization.getOrganizationId(), _user);
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), _rootOrganization.getGroupId(),
+			role.getRoleId());
+
+		_assertSearch(
+			_organizationAccountEntries.get(_organization),
+			_organizationAccountEntries.get(_suborganization));
 	}
 
 	@Test

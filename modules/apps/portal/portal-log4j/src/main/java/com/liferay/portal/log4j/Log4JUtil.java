@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.petra.log4j;
+package com.liferay.portal.log4j;
 
 import com.liferay.petra.io.StreamUtil;
-import com.liferay.petra.log4j.internal.Log4jConfigUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.log4j.internal.Log4jConfigUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

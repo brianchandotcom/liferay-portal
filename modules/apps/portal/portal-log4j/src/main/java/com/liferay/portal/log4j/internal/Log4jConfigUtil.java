@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.log4j.internal;
+package com.liferay.portal.log4j.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -301,7 +301,7 @@ public class Log4jConfigUtil {
 		"TEXT_FILE", "XML_FILE");
 
 	static {
-		PluginManager.addPackage("com.liferay.petra.log4j.internal");
+		PluginManager.addPackage("com.liferay.portal.log4j.internal");
 
 		_centralizedConfiguration = new CentralizedConfiguration(
 			_loggerContext);

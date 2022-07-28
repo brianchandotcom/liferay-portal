@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.log4j.internal;
+package com.liferay.portal.log4j.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 

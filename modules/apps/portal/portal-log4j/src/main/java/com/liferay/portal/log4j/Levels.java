@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.log4j;
+package com.liferay.portal.log4j;
 
 import org.apache.log4j.Level;
 

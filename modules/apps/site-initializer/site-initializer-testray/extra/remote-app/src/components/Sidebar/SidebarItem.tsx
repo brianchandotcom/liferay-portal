@@ -16,6 +16,9 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 
+import i18n from '../../i18n';
+import ToolTip from '../Tooltip';
+
 type SidebarItemProps = {
 	active?: boolean;
 	className?: string;
@@ -38,28 +41,33 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 		: ({children, ...props}: any) => <div {...props}>{children}</div>;
 
 	return (
-		<LinkComponent
-			className={classNames(
-				'cursor-pointer testray-sidebar-item',
-				{active},
-				className
-			)}
-			to={path as string}
+		<ToolTip
+			position="right"
+			title={!expanded ? i18n.translate(label) : undefined}
 		>
-			<ClayIcon
-				color={active ? 'white' : undefined}
-				fontSize={20}
-				symbol={icon}
-			/>
-
-			<span
-				className={classNames('ml-1 testray-sidebar-text', {
-					'testray-sidebar-text-expanded': expanded,
-				})}
+			<LinkComponent
+				className={classNames(
+					'cursor-pointer testray-sidebar-item',
+					{active},
+					className
+				)}
+				to={path as string}
 			>
-				{label}
-			</span>
-		</LinkComponent>
+				<ClayIcon
+					color={active ? 'white' : undefined}
+					fontSize={20}
+					symbol={icon}
+				/>
+
+				<span
+					className={classNames('ml-1 testray-sidebar-text', {
+						'testray-sidebar-text-expanded': expanded,
+					})}
+				>
+					{label}
+				</span>
+			</LinkComponent>
+		</ToolTip>
 	);
 };
 

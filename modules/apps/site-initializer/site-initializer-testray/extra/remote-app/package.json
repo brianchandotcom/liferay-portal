@@ -19,6 +19,7 @@
 		"@clayui/sticker": "^3.56.0",
 		"@clayui/table": "^3.56.0",
 		"@clayui/tabs": "^3.58.0",
+		"@clayui/tooltip": "^3.58.0",
 		"@hookform/resolvers": "^2.8.8",
 		"apollo-link-rest": "^0.9.0-rc.1",
 		"classnames": "^2.3.1",

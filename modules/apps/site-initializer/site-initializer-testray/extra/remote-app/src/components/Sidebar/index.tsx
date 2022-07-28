@@ -14,13 +14,16 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
+import {useRef} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 
 import useLocalStorage from '../../hooks/useLocalStorage';
 import i18n from '../../i18n';
 import TestrayIcon from '../../images/testray-icon';
 import TestrayIconBrand from '../../images/testray-icon-brand';
+import ToolTip from '../Tooltip';
 import CompareRun from './CompareRuns';
 import SidebarFooter from './SidebarFooter';
 import SidebarItem from './SidebarItem';
@@ -28,6 +31,7 @@ import SidebarItem from './SidebarItem';
 const Sidebar = () => {
 	const {pathname} = useLocation();
 	const [expanded, setExpanded] = useLocalStorage('sidebar', true);
+	const tooltipRef = useRef(null);
 
 	const sidebarItems = [
 		{
@@ -50,23 +54,35 @@ const Sidebar = () => {
 					header="Compare Runs"
 					size="lg"
 					trigger={
-						<div
-							className={classNames(
-								'cursor-pointer testray-sidebar-item'
-							)}
-						>
-							<ClayIcon fontSize={20} symbol="drop" />
-
-							<span
-								className={classNames(
-									'ml-1 testray-sidebar-text',
-									{
-										'testray-sidebar-text-expanded': expanded,
-									}
-								)}
+						<div>
+							<ToolTip
+								position="right"
+								ref={tooltipRef}
+								title={
+									!expanded
+										? i18n.translate('compare-runs')
+										: undefined
+								}
 							>
-								{i18n.translate('compare-runs')}
-							</span>
+								<div
+									className={classNames(
+										'cursor-pointer testray-sidebar-item'
+									)}
+								>
+									<ClayIcon fontSize={20} symbol="drop" />
+
+									<span
+										className={classNames(
+											'ml-1 testray-sidebar-text',
+											{
+												'testray-sidebar-text-expanded': expanded,
+											}
+										)}
+									>
+										{i18n.translate('compare-runs')}
+									</span>
+								</div>
+							</ToolTip>
 						</div>
 					}
 				>
@@ -77,62 +93,66 @@ const Sidebar = () => {
 	];
 
 	return (
-		<div
-			className={classNames('testray-sidebar', {
-				'testray-sidebar-expanded': expanded,
-			})}
-		>
-			<div className="testray-sidebar-content">
-				<Link className="d-flex flex-center mb-5 w-100" to="/">
-					<TestrayIcon className="testray-logo" />
+		<ClayTooltipProvider>
+			<div
+				className={classNames('testray-sidebar', {
+					'testray-sidebar-expanded': expanded,
+				})}
+			>
+				<div className="testray-sidebar-content">
+					<Link className="d-flex flex-center mb-5 w-100" to="/">
+						<TestrayIcon className="testray-logo" />
 
-					<TestrayIconBrand
-						className={classNames('testray-brand-logo', {
-							'testray-brand-logo-expand': expanded,
-						})}
-					/>
-				</Link>
+						<TestrayIconBrand
+							className={classNames('testray-brand-logo', {
+								'testray-brand-logo-expand': expanded,
+							})}
+						/>
+					</Link>
 
-				{sidebarItems.map(
-					({className, element, icon, label, path}, index) => {
-						const [, ...items] = sidebarItems;
+					{sidebarItems.map(
+						({className, element, icon, label, path}, index) => {
+							const [, ...items] = sidebarItems;
 
-						if (path) {
-							const someItemIsActive = items.some((item) =>
-								item.path ? pathname.includes(item.path) : false
-							);
+							if (path) {
+								const someItemIsActive = items.some((item) =>
+									item.path
+										? pathname.includes(item.path)
+										: false
+								);
+
+								return (
+									<SidebarItem
+										active={
+											index === 0
+												? !someItemIsActive
+												: pathname.includes(path)
+										}
+										className={className}
+										expanded={expanded}
+										icon={icon}
+										key={index}
+										label={label}
+										path={path}
+									/>
+								);
+							}
 
 							return (
-								<SidebarItem
-									active={
-										index === 0
-											? !someItemIsActive
-											: pathname.includes(path)
-									}
-									className={className}
-									expanded={expanded}
-									icon={icon}
-									key={index}
-									label={label}
-									path={path}
-								/>
+								<div className={className} key={index}>
+									{element}
+								</div>
 							);
 						}
+					)}
+				</div>
 
-						return (
-							<div className={className} key={index}>
-								{element}
-							</div>
-						);
-					}
-				)}
+				<SidebarFooter
+					expanded={expanded}
+					onClick={() => setExpanded(!expanded)}
+				/>
 			</div>
-
-			<SidebarFooter
-				expanded={expanded}
-				onClick={() => setExpanded(!expanded)}
-			/>
-		</div>
+		</ClayTooltipProvider>
 	);
 };
 

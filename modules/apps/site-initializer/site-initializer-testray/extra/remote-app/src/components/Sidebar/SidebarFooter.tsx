@@ -23,6 +23,7 @@ import ForwardIcon from '../../images/ForwardIcon';
 import {Liferay} from '../../services/liferay';
 import Avatar from '../Avatar';
 import DropDown from '../DropDown';
+import ToolTip from '../Tooltip';
 import useSidebarActions from './useSidebarActions';
 
 type SidebarProps = {
@@ -39,29 +40,46 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 			<div className="divider divider-full" />
 
 			<div className="d-flex justify-content-end">
-				<div onClick={onClick}>
-					<ForwardIcon
-						className={classNames('forward-icon ', {
-							'forward-icon-expanded': expanded,
-						})}
-					/>
-				</div>
+				<ToolTip
+					position="right"
+					title={expanded ? undefined : i18n.translate('expand')}
+				>
+					<div onClick={onClick}>
+						<ForwardIcon
+							className={classNames('forward-icon ', {
+								'forward-icon-expanded': expanded,
+							})}
+						/>
+					</div>
+				</ToolTip>
 			</div>
 
 			<DropDown
 				items={MANAGE_DROPDOWN}
 				position={Align.RightBottom}
 				trigger={
-					<div className="testray-sidebar-item">
-						<ClayIcon fontSize={16} symbol="cog" />
-
-						<span
-							className={classNames('ml-1 testray-sidebar-text', {
-								'testray-sidebar-text-expanded': expanded,
-							})}
+					<div>
+						<ToolTip
+							position="right"
+							title={
+								expanded ? undefined : i18n.translate('manage')
+							}
 						>
-							{i18n.translate('manage')}
-						</span>
+							<div className="testray-sidebar-item">
+								<ClayIcon fontSize={16} symbol="cog" />
+
+								<span
+									className={classNames(
+										'ml-1 testray-sidebar-text',
+										{
+											'testray-sidebar-text-expanded': expanded,
+										}
+									)}
+								>
+									{i18n.translate('manage')}
+								</span>
+							</div>
+						</ToolTip>
 					</div>
 				}
 			/>
@@ -86,13 +104,24 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 				]}
 				position={Align.RightBottom}
 				trigger={
-					<div className="testray-avatar-dropdown testray-sidebar-item">
-						<Avatar
-							displayName
-							expanded={expanded}
-							name={Liferay.ThemeDisplay.getUserName()}
-							url={myUserAccount?.image}
-						/>
+					<div>
+						<ToolTip
+							position="right"
+							title={
+								expanded
+									? undefined
+									: Liferay.ThemeDisplay.getUserName()
+							}
+						>
+							<div className="testray-avatar-dropdown testray-sidebar-item">
+								<Avatar
+									displayName
+									expanded={expanded}
+									name={Liferay.ThemeDisplay.getUserName()}
+									url={myUserAccount?.image}
+								/>
+							</div>
+						</ToolTip>
 					</div>
 				}
 			/>

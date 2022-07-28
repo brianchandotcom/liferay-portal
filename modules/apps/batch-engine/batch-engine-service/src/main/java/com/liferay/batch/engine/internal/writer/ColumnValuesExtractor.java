@@ -19,23 +19,13 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 
 /**
  * @author Shuyang Zhou
@@ -89,57 +79,19 @@ public class ColumnValuesExtractor {
 			}
 
 			if (ItemClassIndexUtil.isSingleColumnAdoptableArray(fieldClass)) {
-				if (!Objects.equals(
-						fieldClass.getComponentType(), String.class)) {
-
-					_unsafeFunctions.add(
-						item -> {
-							if (field.get(item) == null) {
-								return StringPool.BLANK;
-							}
-
-							return CSVUtil.encode(field.get(item));
-						});
-
-					return;
-				}
-
 				_unsafeFunctions.add(
 					item -> {
 						if (field.get(item) == null) {
 							return StringPool.BLANK;
 						}
 
-						ByteArrayOutputStream byteArrayOutputStream =
-							new ByteArrayOutputStream();
-
-						try (CSVPrinter csvPrinter = new CSVPrinter(
-								new OutputStreamWriter(byteArrayOutputStream),
-								CSVFormat.DEFAULT)) {
-
-							csvPrinter.print(
-								StringUtil.merge(
-									(String[])field.get(item),
-									value -> CSVUtil.encode(value),
-									StringPool.COMMA));
-						}
-						catch (IOException ioException) {
-							_log.error(
-								"Unable to export array to column",
-								ioException);
-
-							return StringPool.BLANK;
-						}
-
-						return new String(byteArrayOutputStream.toByteArray());
+						return StringUtil.merge(
+							(Object[])field.get(item), CSVUtil::encode,
+							StringPool.COMMA);
 					});
 
 				return;
 			}
-
-			_unsafeFunctions.add(item -> StringPool.BLANK);
-
-			return;
 		}
 
 		int index = fieldName.indexOf(CharPool.UNDERLINE);
@@ -211,9 +163,6 @@ public class ColumnValuesExtractor {
 
 		return listEntry.getKey();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ColumnValuesExtractor.class);
 
 	private final List
 		<UnsafeFunction<Object, Object, ReflectiveOperationException>>

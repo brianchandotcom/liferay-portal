@@ -12,18 +12,22 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.servlet.taglib.ui.constants;
+package com.liferay.commerce.pricing.web.internal.constants;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceDiscountScreenNavigationConstants {
+public class CommercePricingClassScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_DETAILS = "details";
 
-	public static final String CATEGORY_KEY_QUALIFIERS = "qualifiers";
+	public static final String CATEGORY_KEY_DISCOUNTS = "discounts";
 
-	public static final String SCREEN_NAVIGATION_KEY_DISCOUNT_GENERAL =
-		"discount.general";
+	public static final String CATEGORY_KEY_PRICE_LISTS = "price-lists";
+
+	public static final String CATEGORY_KEY_PRODUCTS = "products";
+
+	public static final String SCREEN_NAVIGATION_KEY_PRICING_CLASS_GENERAL =
+		"pricing.class.general";
 
 }

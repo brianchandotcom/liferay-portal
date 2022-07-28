@@ -984,6 +984,8 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getObjectDefinitionId()),
 			objectEntryId, values);
 
+		_updateSystemFieldValues(objectEntry, values);
+
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
 		objectEntry.setValues(null);
 
@@ -2043,6 +2045,18 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(), userId,
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
 			objectEntry, serviceContext);
+	}
+
+	private void _updateSystemFieldValues(
+			ObjectEntry objectEntry, Map<String, Serializable> values)
+		throws PortalException {
+
+		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
+			if (StringUtil.equals(entry.getKey(), "externalReferenceCode")) {
+				objectEntry.setExternalReferenceCode(
+					String.valueOf(entry.getValue()));
+			}
+		}
 	}
 
 	private void _updateTable(

@@ -708,17 +708,17 @@
 				"validValues": [
 					{
 						"icon": "align-left",
-						"label": "left",
+						"label": "align-left",
 						"value": "left"
 					},
 					{
 						"icon": "align-center",
-						"label": "center",
+						"label": "align-center",
 						"value": "center"
 					},
 					{
 						"icon": "align-right",
-						"label": "right",
+						"label": "align-right",
 						"value": "right"
 					},
 					{

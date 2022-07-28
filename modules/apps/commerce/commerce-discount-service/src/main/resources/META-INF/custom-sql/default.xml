@@ -112,15 +112,15 @@
 						(CommerceChannelRel.commerceChannelRelId IS NULL)
 					) OR
 					(
-						(CDiscountCAccountGroupRel.cDiscountCAccountGroupRelId IN ([$ACCOUNT_GROUP_IDS$])) AND
+						(CDiscountCAccountGroupRel.commerceAccountGroupId IN ([$ACCOUNT_GROUP_IDS$])) AND
 						(CommerceChannelRel.commerceChannelId = ?)
 					) OR
 					(
-						(CDiscountCAccountGroupRel.cDiscountCAccountGroupRelId IN ([$ACCOUNT_GROUP_IDS$])) AND
+						(CDiscountCAccountGroupRel.commerceAccountGroupId IN ([$ACCOUNT_GROUP_IDS$])) AND
 						(CommerceChannelRel.commerceChannelRelId IS NULL)
 					) OR
 					(
-						(CommerceDiscountAccountRel.commerceAccountId IS NULL) AND
+						(CommerceDiscountAccountRel.commerceDiscountAccountRelId IS NULL) AND
 						(CDiscountCAccountGroupRel.cDiscountCAccountGroupRelId IS NULL) AND
 						(CommerceChannelRel.commerceChannelId = ?)
 					) OR

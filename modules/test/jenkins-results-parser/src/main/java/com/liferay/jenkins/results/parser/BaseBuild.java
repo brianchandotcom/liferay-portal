@@ -2803,6 +2803,27 @@ public abstract class BaseBuild implements Build {
 		return null;
 	}
 
+	protected Element getExpanderAnchorElement(
+		String expanderName, String namespace) {
+
+		Element expanderAnchorElement = Dom4JUtil.getNewAnchorElement("", "+ ");
+
+		expanderAnchorElement.addAttribute(
+			"id",
+			JenkinsResultsParserUtil.combine(
+				namespace, "-expander-anchor-", expanderName));
+		expanderAnchorElement.addAttribute(
+			"onClick",
+			JenkinsResultsParserUtil.combine(
+				"return toggleStopWatchRecordExpander(\'", namespace, "\', \'",
+				expanderName, "\')"));
+		expanderAnchorElement.addAttribute(
+			"style",
+			"font-family: monospace, monospace; text-decoration: none");
+
+		return expanderAnchorElement;
+	}
+
 	protected List<Build> getFailedDownstreamBuilds() {
 		List<Build> failedDownstreamBuilds = new ArrayList<>();
 
@@ -2856,6 +2877,43 @@ public abstract class BaseBuild implements Build {
 		List<Element> jenkinsReportStopWatchRecordTableRowElements =
 			new ArrayList<>();
 
+		Element stopWatchRecordHeaderRowElement = Dom4JUtil.getNewElement("tr");
+
+		stopWatchRecordHeaderRowElement.addAttribute(
+			"id", hashCode() + "-stop-watch-record-header");
+		stopWatchRecordHeaderRowElement.addAttribute("style", "display: none");
+
+		Element headerDataElement = Dom4JUtil.getNewElement(
+			"td", stopWatchRecordHeaderRowElement,
+			getExpanderAnchorElement(
+				"stop-watch-record-header", String.valueOf(hashCode())),
+			Dom4JUtil.getNewElement("u", null, "Stop Watch Record"));
+
+		headerDataElement.addAttribute(
+			"style",
+			JenkinsResultsParserUtil.combine(
+				"text-indent: ",
+				String.valueOf(getDepth() * _PIXELS_WIDTH_INDENT), "px"));
+
+		jenkinsReportStopWatchRecordTableRowElements.add(
+			stopWatchRecordHeaderRowElement);
+
+		StopWatchRecordsGroup stopWatchRecordsGroup =
+			getStopWatchRecordsGroup();
+
+		if (!stopWatchRecordsGroup.isEmpty()) {
+			List<String> childStopWatchRecordNames = new ArrayList<>(
+				stopWatchRecordsGroup.size());
+
+			for (StopWatchRecord stopWatchRecord : stopWatchRecordsGroup) {
+				childStopWatchRecordNames.add(stopWatchRecord.getName());
+			}
+
+			stopWatchRecordHeaderRowElement.addAttribute(
+				"child-stopwatch-rows",
+				JenkinsResultsParserUtil.join(",", childStopWatchRecordNames));
+		}
+
 		for (StopWatchRecord stopWatchRecord : getStopWatchRecordsGroup()) {
 			jenkinsReportStopWatchRecordTableRowElements.addAll(
 				_getStopWatchRecordTableRowElements(stopWatchRecord));
@@ -2895,21 +2953,13 @@ public abstract class BaseBuild implements Build {
 				Dom4JUtil.getNewAnchorElement(
 					getBuildURL() + "testReport", "Test Report")));
 
-		StopWatchRecordsGroup stopWatchRecordsGroup =
-			getStopWatchRecordsGroup();
+		List<String> childStopWatchRows = new ArrayList<>();
 
-		if (!stopWatchRecordsGroup.isEmpty()) {
-			List<String> childStopWatchRecordNames = new ArrayList<>(
-				stopWatchRecordsGroup.size());
+		childStopWatchRows.add("stop-watch-record-header");
 
-			for (StopWatchRecord stopWatchRecord : stopWatchRecordsGroup) {
-				childStopWatchRecordNames.add(stopWatchRecord.getName());
-			}
-
-			buildInfoElement.addAttribute(
-				"child-stopwatch-rows",
-				JenkinsResultsParserUtil.join(",", childStopWatchRecordNames));
-		}
+		buildInfoElement.addAttribute(
+			"child-stopwatch-rows",
+			JenkinsResultsParserUtil.join(",", childStopWatchRows));
 
 		buildInfoElement.addAttribute("id", String.valueOf(hashCode()) + "-");
 
@@ -3180,22 +3230,7 @@ public abstract class BaseBuild implements Build {
 			return null;
 		}
 
-		Element expanderAnchorElement = Dom4JUtil.getNewAnchorElement("", "+ ");
-
-		expanderAnchorElement.addAttribute(
-			"id",
-			JenkinsResultsParserUtil.combine(
-				namespace, "-expander-anchor-", stopWatchRecord.getName()));
-		expanderAnchorElement.addAttribute(
-			"onClick",
-			JenkinsResultsParserUtil.combine(
-				"return toggleStopWatchRecordExpander(\'", namespace, "\', \'",
-				stopWatchRecord.getName(), "\')"));
-		expanderAnchorElement.addAttribute(
-			"style",
-			"font-family: monospace, monospace; text-decoration: none");
-
-		return expanderAnchorElement;
+		return getExpanderAnchorElement(stopWatchRecord.getName(), namespace);
 	}
 
 	protected Element getStopWatchRecordsExpanderAnchorElement() {

@@ -1887,6 +1887,7 @@ public class VerifyProperties {
 		"microsoft.translator.client.id", "microsoft.translator.client.secret",
 		"minifier.inline.content.cache.size",
 		"mobile.device.styling.wap.enabled", "module.framework.initial.bundles",
+		"module.framework.properties.ds.lock.timeout.milliseconds",
 		"module.framework.properties.felix.fileinstall.disableNio2",
 		"module.framework.properties.felix.fileinstall.log.level",
 		"module.framework.properties.file.install.disableNio2",

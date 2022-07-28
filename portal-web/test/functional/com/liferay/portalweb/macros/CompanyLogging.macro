@@ -18,4 +18,12 @@ definition {
 		return "${filePath}";
 	}
 
+	macro getCompanyLogName {
+		var companyLogDirPath = CompanyLogging.getCompanyLogDirPath(portalInstanceName = "${portalInstanceName}");
+
+		var logName = FileUtil.getFileName("${companyLogDirPath}");
+
+		return "${logName}";
+	}
+
 }

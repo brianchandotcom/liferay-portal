@@ -27,18 +27,13 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		CustomerPortal.deleteCPObject(title = "Account Flag");
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-		}
+		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		
+		PortalInstances.tearDownCP();
 	}
 
 	@description = "Automation ID: LPS-147791 | Test Summary: Verify if the Liferay Staff user can view a project for which he is not a member/worker/does not participate/does not have a role in it"

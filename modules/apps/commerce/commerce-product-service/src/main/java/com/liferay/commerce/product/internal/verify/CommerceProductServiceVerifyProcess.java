@@ -42,28 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CommerceProductServiceVerifyProcess extends VerifyProcess {
 
-	@Override
-	protected void doVerify() throws Exception {
-		_verifyCPMeasurementUnits();
-	}
-
-	private long _getAdminUserId(long companyId) throws PortalException {
-		Role role = _roleLocalService.getRole(
-			companyId, RoleConstants.ADMINISTRATOR);
-
-		long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
-
-		if (userIds.length == 0) {
-			throw new NoSuchUserException(
-				StringBundler.concat(
-					"No user exists in company ", companyId, " with role ",
-					role.getName()));
-		}
-
-		return userIds[0];
-	}
-
-	private void _verifyCPMeasurementUnits() throws Exception {
+	public void verifyCPMeasurementUnits() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_companyLocalService.forEachCompanyId(
 				companyId -> {
@@ -80,6 +59,27 @@ public class CommerceProductServiceVerifyProcess extends VerifyProcess {
 						serviceContext);
 				});
 		}
+	}
+
+	@Override
+	protected void doVerify() throws Exception {
+		verifyCPMeasurementUnits();
+	}
+
+	private long _getAdminUserId(long companyId) throws PortalException {
+		Role role = _roleLocalService.getRole(
+			companyId, RoleConstants.ADMINISTRATOR);
+
+		long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
+
+		if (userIds.length == 0) {
+			throw new NoSuchUserException(
+				StringBundler.concat(
+					"No user exists in company ", companyId, " with role ",
+					role.getName()));
+		}
+
+		return userIds[0];
 	}
 
 	@Reference

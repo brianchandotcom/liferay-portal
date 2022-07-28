@@ -14,6 +14,7 @@
 
 package com.liferay.client.extension.type;
 
+import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.annotation.CETProperty;
 
 import java.util.Locale;
@@ -28,6 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface CET {
 
 	public String getBaseURL();
+
+	public ClientExtensionEntry getClientExtensionEntry();
 
 	public long getCompanyId();
 

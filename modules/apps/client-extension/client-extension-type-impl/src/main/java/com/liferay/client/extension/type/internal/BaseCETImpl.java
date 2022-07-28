@@ -107,6 +107,10 @@ public abstract class BaseCETImpl implements CET {
 		return _baseURL;
 	}
 
+	public ClientExtensionEntry getClientExtensionEntry() {
+		return _clientExtensionEntry;
+	}
+
 	@Override
 	public long getCompanyId() {
 		return _companyId;

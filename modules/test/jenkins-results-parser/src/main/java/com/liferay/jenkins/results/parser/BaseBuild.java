@@ -2869,6 +2869,10 @@ public abstract class BaseBuild implements Build {
 		return getGitHubMessageJobResultsElement();
 	}
 
+	protected List<Element> getJenkinsReportBuildDurationsElements() {
+		return new ArrayList<>();
+	}
+
 	protected String getJenkinsReportBuildInfoCellElementTagName() {
 		return "td";
 	}
@@ -2893,7 +2897,7 @@ public abstract class BaseBuild implements Build {
 			"style",
 			JenkinsResultsParserUtil.combine(
 				"text-indent: ",
-				String.valueOf(getDepth() * _PIXELS_WIDTH_INDENT), "px"));
+				String.valueOf(getDepth() * PIXELS_WIDTH_INDENT), "px"));
 
 		jenkinsReportStopWatchRecordTableRowElements.add(
 			stopWatchRecordHeaderRowElement);
@@ -2934,7 +2938,7 @@ public abstract class BaseBuild implements Build {
 			Dom4JUtil.getNewAnchorElement(
 				getBuildURL(), null, getDisplayName()));
 
-		int indent = getDepth() * _PIXELS_WIDTH_INDENT;
+		int indent = getDepth() * PIXELS_WIDTH_INDENT;
 
 		if (stopWatchRecordsExpanderAnchorElement != null) {
 			indent -= _PIXELS_WIDTH_EXPANDER;
@@ -2955,6 +2959,8 @@ public abstract class BaseBuild implements Build {
 
 		List<String> childStopWatchRows = new ArrayList<>();
 
+		childStopWatchRows.add("build-durations-header");
+		childStopWatchRows.add("test-durations-header");
 		childStopWatchRows.add("stop-watch-record-header");
 
 		buildInfoElement.addAttribute(
@@ -3020,6 +3026,10 @@ public abstract class BaseBuild implements Build {
 
 			tableRowElements.add(getJenkinsReportTableRowElement());
 
+			tableRowElements.addAll(getJenkinsReportBuildDurationsElements());
+
+			tableRowElements.addAll(getJenkinsReportTestDurationsElements());
+
 			tableRowElements.addAll(getJenkinsReportStopWatchRecordElements());
 		}
 
@@ -3055,6 +3065,10 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return tableRowElements;
+	}
+
+	protected List<Element> getJenkinsReportTestDurationsElements() {
+		return new ArrayList<>();
 	}
 
 	protected String getJenkinsReportTimeZoneName() {
@@ -3654,6 +3668,8 @@ public abstract class BaseBuild implements Build {
 			JenkinsResultsParserUtil.redact(replaceBuildURL(content)));
 	}
 
+	protected static final int PIXELS_WIDTH_INDENT = 35;
+
 	protected static final int REINVOCATIONS_SIZE_MAX = 1;
 
 	protected static final String URL_BASE_FAILURES_JOB_UPSTREAM =
@@ -4000,8 +4016,7 @@ public abstract class BaseBuild implements Build {
 			stopWatchRecord.getShortName());
 
 		int indent =
-			(getDepth() + stopWatchRecord.getDepth() + 1) *
-				_PIXELS_WIDTH_INDENT;
+			(getDepth() + stopWatchRecord.getDepth() + 1) * PIXELS_WIDTH_INDENT;
 
 		if (expanderAnchorElement != null) {
 			indent -= _PIXELS_WIDTH_EXPANDER;
@@ -4160,8 +4175,6 @@ public abstract class BaseBuild implements Build {
 	private static final String _NAME_JENKINS_REPORT_TIME_ZONE;
 
 	private static final int _PIXELS_WIDTH_EXPANDER = 20;
-
-	private static final int _PIXELS_WIDTH_INDENT = 35;
 
 	private static final String[] _TOKENS_HIGH_PRIORITY_CONTENT = {
 		"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"

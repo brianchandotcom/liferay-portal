@@ -28,6 +28,11 @@ import com.liferay.jenkins.results.parser.failure.message.generator.PluginGitIDF
 import com.liferay.jenkins.results.parser.failure.message.generator.SemanticVersioningFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormatFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.StartupFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.test.clazz.FunctionalTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +42,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -79,9 +85,30 @@ public class DownstreamBuild extends BaseBuild {
 		}
 	}
 
+	public long getAverageDuration() {
+		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
+
+		return axisTestClassGroup.getAverageDuration();
+	}
+
+	public long getAverageOverheadDuration() {
+		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
+
+		BatchTestClassGroup batchTestClassGroup =
+			axisTestClassGroup.getBatchTestClassGroup();
+
+		return batchTestClassGroup.getAverageOverheadDuration();
+	}
+
 	public String getAxisName() {
 		return JenkinsResultsParserUtil.combine(
 			getJobVariant(), "/", getAxisVariable());
+	}
+
+	public AxisTestClassGroup getAxisTestClassGroup() {
+		Job job = getJob();
+
+		return job.getAxisTestClassGroup(getAxisName());
 	}
 
 	public String getAxisVariable() {
@@ -343,6 +370,308 @@ public class DownstreamBuild extends BaseBuild {
 	@Override
 	protected Element getGitHubMessageJobResultsElement() {
 		return null;
+	}
+
+	protected List<Element> getJenkinsReportBuildDurationsElements() {
+		List<Element> jenkinsReportTableRowElements = new ArrayList<>();
+
+		Element buildDurationsHeaderElement = Dom4JUtil.getNewElement("tr");
+
+		List<String> childStopWatchRows = new ArrayList<>();
+
+		childStopWatchRows.add("build-duration-names");
+		childStopWatchRows.add("build-duration-values");
+		childStopWatchRows.add("build-test-duration-values");
+
+		buildDurationsHeaderElement.addAttribute(
+			"child-stopwatch-rows",
+			JenkinsResultsParserUtil.join(",", childStopWatchRows));
+		buildDurationsHeaderElement.addAttribute(
+			"id", hashCode() + "-build-durations-header");
+		buildDurationsHeaderElement.addAttribute("style", "display: none");
+
+		Element buildDurationsElement = Dom4JUtil.getNewElement(
+			"td", buildDurationsHeaderElement,
+			getExpanderAnchorElement(
+				"build-durations-header", String.valueOf(hashCode())),
+			Dom4JUtil.getNewElement("u", null, "Build Durations"));
+
+		buildDurationsElement.addAttribute(
+			"style",
+			JenkinsResultsParserUtil.combine(
+				"text-indent: ",
+				String.valueOf(getDepth() * PIXELS_WIDTH_INDENT), "px"));
+
+		jenkinsReportTableRowElements.add(buildDurationsHeaderElement);
+
+		Element durationNamesElement = Dom4JUtil.getNewElement("tr");
+
+		durationNamesElement.addAttribute(
+			"id", hashCode() + "-build-duration-names");
+		durationNamesElement.addAttribute("style", "display: none;");
+
+		Element durationNamesDataElement = Dom4JUtil.getNewElement(
+			"td", durationNamesElement);
+
+		String style = JenkinsResultsParserUtil.combine(
+			"text-indent: ",
+			String.valueOf((getDepth() + 1) * PIXELS_WIDTH_INDENT), "px");
+
+		durationNamesDataElement.addAttribute("style", style);
+
+		Dom4JUtil.getNewElement("td", durationNamesElement, "Actual");
+		Dom4JUtil.getNewElement("td", durationNamesElement, "Predicted");
+		Dom4JUtil.getNewElement("td", durationNamesElement, "Actual Overhead");
+		Dom4JUtil.getNewElement(
+			"td", durationNamesElement, "Predicted Overhead");
+
+		jenkinsReportTableRowElements.add(durationNamesElement);
+
+		Element durationValuesElement = Dom4JUtil.getNewElement("tr");
+
+		durationValuesElement.addAttribute(
+			"id", hashCode() + "-build-duration-values");
+		durationValuesElement.addAttribute("style", "display: none;");
+
+		Element durationValuesDataElement = Dom4JUtil.getNewElement(
+			"td", durationValuesElement, "Full Build");
+
+		durationValuesDataElement.addAttribute("style", style);
+
+		Dom4JUtil.getNewElement(
+			"td", durationValuesElement,
+			JenkinsResultsParserUtil.toDurationString(getDuration()));
+		Dom4JUtil.getNewElement(
+			"td", durationValuesElement,
+			JenkinsResultsParserUtil.toDurationString(getAverageDuration()));
+		Dom4JUtil.getNewElement(
+			"td", durationValuesElement,
+			JenkinsResultsParserUtil.toDurationString(getOverheadDuration()));
+		Dom4JUtil.getNewElement(
+			"td", durationValuesElement,
+			JenkinsResultsParserUtil.toDurationString(
+				getAverageOverheadDuration()));
+
+		jenkinsReportTableRowElements.add(durationValuesElement);
+
+		String batchName = getBatchName();
+
+		if (!batchName.startsWith("function") &&
+			!batchName.startsWith("integration") &&
+			!batchName.startsWith("modules-integration") &&
+			!batchName.startsWith("modules-unit") &&
+			!batchName.startsWith("unit")) {
+
+			return jenkinsReportTableRowElements;
+		}
+
+		Element testDurationsValuesElement = Dom4JUtil.getNewElement("tr");
+
+		testDurationsValuesElement.addAttribute(
+			"id", hashCode() + "-build-test-duration-values");
+		testDurationsValuesElement.addAttribute("style", "display: none;");
+
+		Element testDurationValuesDataElement = Dom4JUtil.getNewElement(
+			"td", testDurationsValuesElement, "Total Test Durations");
+
+		testDurationValuesDataElement.addAttribute("style", style);
+
+		long totalBuildTestDurations = 0L;
+		long totalBuildTestOverheadDurations = 0L;
+
+		for (TestResult testResult : getTestResults()) {
+			totalBuildTestDurations += testResult.getDuration();
+			totalBuildTestOverheadDurations += testResult.getOverheadDuration();
+		}
+
+		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
+
+		long averageBuildTestDurations = 0L;
+		long averageBuildTestOverheadDurations = 0L;
+
+		for (TestClass testClass : axisTestClassGroup.getTestClasses()) {
+			averageBuildTestDurations += testClass.getAverageDuration();
+			averageBuildTestOverheadDurations +=
+				testClass.getAverageOverheadDuration();
+		}
+
+		Dom4JUtil.getNewElement(
+			"td", testDurationsValuesElement,
+			JenkinsResultsParserUtil.toDurationString(totalBuildTestDurations));
+		Dom4JUtil.getNewElement(
+			"td", testDurationsValuesElement,
+			JenkinsResultsParserUtil.toDurationString(
+				averageBuildTestDurations));
+		Dom4JUtil.getNewElement(
+			"td", testDurationsValuesElement,
+			JenkinsResultsParserUtil.toDurationString(
+				totalBuildTestOverheadDurations));
+		Dom4JUtil.getNewElement(
+			"td", testDurationsValuesElement,
+			JenkinsResultsParserUtil.toDurationString(
+				averageBuildTestOverheadDurations));
+
+		jenkinsReportTableRowElements.add(testDurationsValuesElement);
+
+		return jenkinsReportTableRowElements;
+	}
+
+	protected List<Element> getJenkinsReportTestDurationsElements() {
+		String batchName = getBatchName();
+
+		if (!batchName.startsWith("function") &&
+			!batchName.startsWith("integration") &&
+			!batchName.startsWith("modules-integration") &&
+			!batchName.startsWith("modules-unit") &&
+			!batchName.startsWith("unit")) {
+
+			return new ArrayList<>();
+		}
+
+		List<Element> jenkinsReportTableRowElements = new ArrayList<>();
+
+		Element testDurationsHeaderElement = Dom4JUtil.getNewElement("tr");
+
+		testDurationsHeaderElement.addAttribute(
+			"id", hashCode() + "-test-durations-header");
+		testDurationsHeaderElement.addAttribute("style", "display: none");
+
+		List<String> childStopWatchRowNames = new ArrayList<>();
+
+		childStopWatchRowNames.add("test-duration-names");
+
+		Element testDurationsElement = Dom4JUtil.getNewElement(
+			"td", testDurationsHeaderElement,
+			getExpanderAnchorElement(
+				"test-durations-header", String.valueOf(hashCode())),
+			Dom4JUtil.getNewElement("u", null, "Test Durations"));
+
+		testDurationsElement.addAttribute(
+			"style",
+			JenkinsResultsParserUtil.combine(
+				"text-indent: ",
+				String.valueOf(getDepth() * PIXELS_WIDTH_INDENT), "px"));
+
+		jenkinsReportTableRowElements.add(testDurationsHeaderElement);
+
+		Element durationNamesElement = Dom4JUtil.getNewElement("tr");
+
+		durationNamesElement.addAttribute(
+			"id", hashCode() + "-test-duration-names");
+		durationNamesElement.addAttribute("style", "display: none;");
+
+		Element durationNamesDataElement = Dom4JUtil.getNewElement(
+			"td", durationNamesElement);
+
+		String style = JenkinsResultsParserUtil.combine(
+			"text-indent: ",
+			String.valueOf((getDepth() + 1) * PIXELS_WIDTH_INDENT), "px");
+
+		durationNamesDataElement.addAttribute("style", style);
+
+		Dom4JUtil.getNewElement("td", durationNamesElement, "Actual");
+		Dom4JUtil.getNewElement("td", durationNamesElement, "Predicted");
+		Dom4JUtil.getNewElement("td", durationNamesElement, "Actual Overhead");
+		Dom4JUtil.getNewElement(
+			"td", durationNamesElement, "Predicted Overhead");
+
+		jenkinsReportTableRowElements.add(durationNamesElement);
+
+		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
+
+		List<TestClass> testClasses = axisTestClassGroup.getTestClasses();
+
+		for (int i = 0; i < testClasses.size(); i++) {
+			TestClass testClass = testClasses.get(i);
+
+			TestClassResult testClassResult = null;
+
+			String durationString = "n/a";
+			String overheadDurationString = "n/a";
+			String testClassName = null;
+
+			if (testClass instanceof JUnitTestClass) {
+				JUnitTestClass jUnitTestClass = (JUnitTestClass)testClass;
+
+				testClassName = jUnitTestClass.getTestClassName();
+
+				testClassResult = getTestClassResult(testClassName);
+
+				if (testClassResult != null) {
+					durationString = JenkinsResultsParserUtil.toDurationString(
+						testClassResult.getDuration());
+					overheadDurationString =
+						JenkinsResultsParserUtil.toDurationString(
+							testClassResult.getOverheadDuration());
+				}
+			}
+			else if (testClass instanceof FunctionalTestClass) {
+				FunctionalTestClass functionalTestClass =
+					(FunctionalTestClass)testClass;
+
+				testClassName = functionalTestClass.getTestClassMethodName();
+
+				testClassResult = getTestClassResult(
+					"com.liferay.poshi.runner.PoshiRunner");
+
+				if (testClassResult != null) {
+					for (TestResult testResult :
+							testClassResult.getTestResults()) {
+
+						String testMethodName = "test[" + testClassName + "]";
+
+						if (!Objects.equals(
+								testMethodName, testResult.getTestName())) {
+
+							continue;
+						}
+
+						durationString =
+							JenkinsResultsParserUtil.toDurationString(
+								testResult.getDuration());
+						overheadDurationString =
+							JenkinsResultsParserUtil.toDurationString(
+								testResult.getOverheadDuration());
+
+						break;
+					}
+				}
+			}
+
+			Element durationValuesElement = Dom4JUtil.getNewElement("tr");
+
+			childStopWatchRowNames.add("test-duration-values-" + i);
+
+			durationValuesElement.addAttribute(
+				"id", hashCode() + "-test-duration-values-" + i);
+			durationValuesElement.addAttribute("style", "display: none;");
+
+			Element durationValuesDataElement = Dom4JUtil.getNewElement(
+				"td", durationValuesElement, testClassName);
+
+			durationValuesDataElement.addAttribute("style", style);
+
+			Dom4JUtil.getNewElement(
+				"td", durationValuesElement, durationString);
+			Dom4JUtil.getNewElement(
+				"td", durationValuesElement,
+				JenkinsResultsParserUtil.toDurationString(
+					testClass.getAverageDuration()));
+			Dom4JUtil.getNewElement(
+				"td", durationValuesElement, overheadDurationString);
+			Dom4JUtil.getNewElement(
+				"td", durationValuesElement,
+				JenkinsResultsParserUtil.toDurationString(
+					testClass.getAverageOverheadDuration()));
+
+			jenkinsReportTableRowElements.add(durationValuesElement);
+		}
+
+		testDurationsHeaderElement.addAttribute(
+			"child-stopwatch-rows",
+			JenkinsResultsParserUtil.join(",", childStopWatchRowNames));
+
+		return jenkinsReportTableRowElements;
 	}
 
 	protected long getStopWatchRecordDuration(String stopWatchRecordName) {

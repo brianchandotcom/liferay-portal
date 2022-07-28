@@ -114,7 +114,32 @@ public class SampleSQLBuilder {
 			Map<String, StringBundler> sqls, String insertSQL)
 		throws IOException, SQLException {
 
-		String tableName = insertSQL.substring(0, insertSQL.indexOf(' '));
+		String tableName = null;
+
+		if (insertSQL.startsWith("create")) {
+			if (insertSQL.startsWith("create table ")) {
+				tableName = insertSQL.substring(
+					13, insertSQL.indexOf(StringPool.OPEN_PARENTHESIS) - 1);
+			}
+			else {
+				int index = insertSQL.indexOf(" on ");
+
+				tableName = insertSQL.substring(
+					index + 4,
+					insertSQL.indexOf(StringPool.OPEN_PARENTHESIS) - 1);
+			}
+
+			insertSQL = db.buildSQL(insertSQL) + StringPool.NEW_LINE;
+
+			writeToInsertSQLFile(
+				directory, tableName, insertSQLWriters, insertSQL);
+
+			return;
+		}
+
+		insertSQL = insertSQL.substring(12);
+
+		tableName = insertSQL.substring(0, insertSQL.indexOf(' '));
 
 		int index = insertSQL.indexOf(" values ") + 8;
 
@@ -175,7 +200,9 @@ public class SampleSQLBuilder {
 				s = s.trim();
 
 				if (s.length() > 0) {
-					if (s.startsWith("insert into ")) {
+					if (s.startsWith("create") ||
+						s.startsWith("insert into ")) {
+
 						if (!s.endsWith(");")) {
 							StringBundler sb = new StringBundler();
 
@@ -191,11 +218,9 @@ public class SampleSQLBuilder {
 							s = sb.toString();
 						}
 
-						compressSQL(
-							db, dir, insertSQLWriters, insertSQLs,
-							s.substring(12));
+						compressSQL(db, dir, insertSQLWriters, insertSQLs, s);
 					}
-					else {
+					else if (!s.contains("##")) {
 						counterSQLs.add(s);
 					}
 				}

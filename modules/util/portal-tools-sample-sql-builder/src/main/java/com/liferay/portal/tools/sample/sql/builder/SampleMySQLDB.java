@@ -17,6 +17,8 @@ package com.liferay.portal.tools.sample.sql.builder;
 import com.liferay.portal.dao.db.MySQLDB;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.IOException;
+
 /**
  * A simplified version of MySQLDB for sample SQL generation. This should not be
  * used for any other purposes.
@@ -30,7 +32,11 @@ public class SampleMySQLDB extends MySQLDB {
 	}
 
 	@Override
-	public String buildSQL(String template) {
+	public String buildSQL(String template) throws IOException {
+		if (template.contains("create table") || template.contains(" on ")) {
+			return super.buildSQL(template);
+		}
+
 		return StringUtil.replace(template, _GENERIC_TEMPLATE, _MYSQL_TEMPLATE);
 	}
 

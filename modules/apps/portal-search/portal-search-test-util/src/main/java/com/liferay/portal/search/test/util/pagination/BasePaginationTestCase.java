@@ -15,18 +15,10 @@
 package com.liferay.portal.search.test.util.pagination;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
-
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -48,9 +40,7 @@ public abstract class BasePaginationTestCase extends BaseIndexingTestCase {
 		for (int i = 0; i < _TOTAL_DOCUMENTS; i++) {
 			addDocument(
 				DocumentCreationHelpers.singleText(
-					"test-field",
-					RandomTestUtil.randomString(
-						UniqueStringRandomizerBumper.INSTANCE)));
+					_FIELD, StringUtil.toLowerCase(testName.getMethodName())));
 		}
 	}
 
@@ -138,25 +128,22 @@ public abstract class BasePaginationTestCase extends BaseIndexingTestCase {
 	private void _assertPagination(int start, int end, int expectedSize)
 		throws Exception {
 
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
-			() -> {
-				IndexSearcher indexSearcher = getIndexSearcher();
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.define(
+					searchContext -> {
+						searchContext.setEnd(end);
+						searchContext.setStart(start);
+					});
 
-				SearchContext searchContext = _createSearchContext(start, end);
-
-				Hits hits = indexSearcher.search(
-					searchContext, getDefaultQuery());
-
-				Assert.assertEquals(
-					hits.toString(), _TOTAL_DOCUMENTS, hits.getLength());
-
-				Document[] documents = hits.getDocs();
+				indexingTestHelper.setQuery(getDefaultQuery());
 
 				Assert.assertEquals(
-					Arrays.toString(documents), expectedSize, documents.length);
+					_TOTAL_DOCUMENTS, indexingTestHelper.searchCount());
 
-				return null;
+				indexingTestHelper.search();
+
+				indexingTestHelper.assertResultCount(expectedSize);
 			});
 	}
 
@@ -168,6 +155,8 @@ public abstract class BasePaginationTestCase extends BaseIndexingTestCase {
 
 		return searchContext;
 	}
+
+	private static final String _FIELD = "test-field";
 
 	private static final int _TOTAL_DOCUMENTS = 20;
 

@@ -64,6 +64,7 @@
 		<permissions>
 			<supports>
 				<action-key>MANAGE_ACCOUNTS</action-key>
+				<action-key>MANAGE_AVAILABLE_ACCOUNTS</action-key>
 				<action-key>MANAGE_SUBORGANIZATIONS_ACCOUNTS</action-key>
 			</supports>
 			<guest-unsupported>

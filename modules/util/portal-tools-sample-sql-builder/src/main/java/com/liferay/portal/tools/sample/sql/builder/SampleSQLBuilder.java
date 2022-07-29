@@ -110,38 +110,36 @@ public class SampleSQLBuilder {
 	}
 
 	protected void compressSQL(
-			DB db, File directory, Map<String, Writer> insertSQLWriters,
-			Map<String, StringBundler> sqls, String insertSQL)
+			DB db, File directory, Map<String, Writer> sqlWriters,
+			Map<String, StringBundler> sqls, String sql)
 		throws IOException, SQLException {
 
 		String tableName = null;
 
-		if (insertSQL.startsWith("create")) {
-			if (insertSQL.startsWith("create table ")) {
-				tableName = insertSQL.substring(
-					13, insertSQL.indexOf(StringPool.OPEN_PARENTHESIS) - 1);
+		if (sql.startsWith("create")) {
+			if (sql.startsWith("create table ")) {
+				tableName = sql.substring(
+					13, sql.indexOf(StringPool.OPEN_PARENTHESIS) - 1);
 			}
 			else {
-				int index = insertSQL.indexOf(" on ");
+				int index = sql.indexOf(" on ");
 
-				tableName = insertSQL.substring(
-					index + 4,
-					insertSQL.indexOf(StringPool.OPEN_PARENTHESIS) - 1);
+				tableName = sql.substring(
+					index + 4, sql.indexOf(StringPool.OPEN_PARENTHESIS) - 1);
 			}
 
-			insertSQL = db.buildSQL(insertSQL) + StringPool.NEW_LINE;
+			sql = db.buildSQL(sql) + StringPool.NEW_LINE;
 
-			writeToInsertSQLFile(
-				directory, tableName, insertSQLWriters, insertSQL);
+			writeToSQLFile(directory, tableName, sqlWriters, sql);
 
 			return;
 		}
 
-		insertSQL = insertSQL.substring(12);
+		sql = sql.substring(12);
 
-		tableName = insertSQL.substring(0, insertSQL.indexOf(' '));
+		tableName = sql.substring(0, sql.indexOf(' '));
 
-		int index = insertSQL.indexOf(" values ") + 8;
+		int index = sql.indexOf(" values ") + 8;
 
 		StringBundler sb = sqls.get(tableName);
 
@@ -151,7 +149,7 @@ public class SampleSQLBuilder {
 			sqls.put(tableName, sb);
 
 			sb.append("insert into ");
-			sb.append(insertSQL.substring(0, index));
+			sb.append(sql.substring(0, index));
 			sb.append(StringPool.NEW_LINE);
 		}
 		else {
@@ -159,7 +157,7 @@ public class SampleSQLBuilder {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		String values = insertSQL.substring(index, insertSQL.length() - 1);
+		String values = sql.substring(index, sql.length() - 1);
 
 		sb.append(values);
 
@@ -167,12 +165,11 @@ public class SampleSQLBuilder {
 			sb.append(StringPool.SEMICOLON);
 			sb.append(StringPool.NEW_LINE);
 
-			insertSQL = db.buildSQL(sb.toString());
+			sql = db.buildSQL(sb.toString());
 
 			sb.setIndex(0);
 
-			writeToInsertSQLFile(
-				directory, tableName, insertSQLWriters, insertSQL);
+			writeToSQLFile(directory, tableName, sqlWriters, sql);
 		}
 	}
 
@@ -185,7 +182,7 @@ public class SampleSQLBuilder {
 			db = new SampleMySQLDB(db.getMajorVersion(), db.getMinorVersion());
 		}
 
-		Map<String, Writer> insertSQLWriters = new HashMap<>();
+		Map<String, Writer> sqlWriters = new HashMap<>();
 		Map<String, StringBundler> insertSQLs = new HashMap<>();
 		List<String> counterSQLs = new ArrayList<>();
 
@@ -218,7 +215,7 @@ public class SampleSQLBuilder {
 							s = sb.toString();
 						}
 
-						compressSQL(db, dir, insertSQLWriters, insertSQLs, s);
+						compressSQL(db, dir, sqlWriters, insertSQLs, s);
 					}
 					else if (!s.contains("##")) {
 						counterSQLs.add(s);
@@ -239,17 +236,16 @@ public class SampleSQLBuilder {
 			if (sb.index() > 0) {
 				String insertSQL = db.buildSQL(sb.toString());
 
-				writeToInsertSQLFile(
-					dir, tableName, insertSQLWriters, insertSQL);
+				writeToSQLFile(dir, tableName, sqlWriters, insertSQL);
 			}
 
-			try (Writer insertSQLWriter = insertSQLWriters.remove(tableName)) {
+			try (Writer insertSQLWriter = sqlWriters.remove(tableName)) {
 				insertSQLWriter.write(StringPool.SEMICOLON);
 				insertSQLWriter.write(StringPool.NEW_LINE);
 			}
 		}
 
-		for (Map.Entry<String, Writer> entry : insertSQLWriters.entrySet()) {
+		for (Map.Entry<String, Writer> entry : sqlWriters.entrySet()) {
 			Writer writer = entry.getValue();
 
 			writer.close();
@@ -355,22 +351,22 @@ public class SampleSQLBuilder {
 		inputFile.delete();
 	}
 
-	protected void writeToInsertSQLFile(
-			File dir, String tableName, Map<String, Writer> insertSQLWriters,
-			String insertSQL)
+	protected void writeToSQLFile(
+			File dir, String tableName, Map<String, Writer> sqlWriters,
+			String sql)
 		throws IOException {
 
-		Writer insertSQLWriter = insertSQLWriters.get(tableName);
+		Writer writer = sqlWriters.get(tableName);
 
-		if (insertSQLWriter == null) {
+		if (writer == null) {
 			File file = new File(dir, tableName + ".sql");
 
-			insertSQLWriter = createFileWriter(file);
+			writer = createFileWriter(file);
 
-			insertSQLWriters.put(tableName, insertSQLWriter);
+			sqlWriters.put(tableName, writer);
 		}
 
-		insertSQLWriter.write(insertSQL);
+		writer.write(sql);
 	}
 
 	private void _loadCreateSQL(InputStream inputStream, Writer writer)

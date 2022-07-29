@@ -43,7 +43,7 @@ const adapter = ({
 });
 
 const nestedFieldsParam =
-	'nestedFields=build.project,build.routine&nestedFieldsDepth=2';
+	'nestedFields=build.project,build.routine,caseType,component.team&nestedFieldsDepth=3';
 
 const casesResource = `/cases?${nestedFieldsParam}`;
 

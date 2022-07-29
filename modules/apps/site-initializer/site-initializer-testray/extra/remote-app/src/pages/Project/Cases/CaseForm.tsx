@@ -93,7 +93,7 @@ const CaseForm = () => {
 	}, [setTabs, testrayProject]);
 
 	const {
-		form: {onClose, onSubmitRest},
+		form: {onClose, onError, onSave, onSubmitRest},
 	} = useFormActions();
 
 	const {projectId} = useParams();
@@ -124,7 +124,10 @@ const CaseForm = () => {
 				create: createCase,
 				update: updateCase,
 			}
-		).then(mutateCase);
+		)
+			.then(mutateCase)
+			.then(() => onSave())
+			.catch(onError);
 	};
 
 	const caseTypeId = watch('caseTypeId');

@@ -156,7 +156,8 @@ if (portletTitleBasedNavigation) {
 		<clay:container-fluid>
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<liferay-frontend:info-bar-sidenav-toggler-button
+					<liferay-frontend:management-bar-sidenav-toggler-button
+						cssClass="btn-secondary"
 						icon="info-circle-open"
 						label="info"
 					/>

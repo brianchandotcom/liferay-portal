@@ -132,7 +132,8 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 					<ul class="end navbar-nav">
 						<li class="nav-item">
 							<c:if test='<%= !Objects.equals(state, WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE) && !Objects.equals(state, "view") %>'>
-								<liferay-frontend:info-bar-sidenav-toggler-button
+								<liferay-frontend:management-bar-sidenav-toggler-button
+									cssClass="btn-secondary"
 									icon="info-circle"
 									label="info"
 									typeMobile="relative"

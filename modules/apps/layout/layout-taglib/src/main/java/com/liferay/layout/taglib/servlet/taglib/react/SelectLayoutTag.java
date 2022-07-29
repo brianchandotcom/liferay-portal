@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -246,7 +246,7 @@ public class SelectLayoutTag extends IncludeTag {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+		List<Layout> layouts = LayoutServiceUtil.getLayouts(
 			groupId, privateLayout, parentLayoutId);
 
 		for (Layout layout : layouts) {

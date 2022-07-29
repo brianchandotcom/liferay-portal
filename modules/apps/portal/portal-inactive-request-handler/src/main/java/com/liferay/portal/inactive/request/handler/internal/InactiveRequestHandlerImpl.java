@@ -38,6 +38,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.portal.kernel.util.Validator;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -79,7 +80,9 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 
 		String message = null;
 
-		if (LanguageUtil.isValidLanguageKey(locale, messageKey)) {
+		String value = LanguageUtil.get(locale, messageKey, StringPool.BLANK);
+
+		if (Validator.isNotNull(value)) {
 			message = LanguageUtil.get(locale, messageKey);
 		}
 		else {

@@ -343,12 +343,6 @@ public class LanguageUtil {
 		return _language.isSameLanguage(locale1, locale2);
 	}
 
-	public static boolean isValidLanguageKey(Locale locale, String key) {
-		String value = _language.get(locale, key, StringPool.BLANK);
-
-		return Validator.isNotNull(value);
-	}
-
 	public static String process(
 		Supplier<ResourceBundle> resourceBundleSupplier, Locale locale,
 		String content) {

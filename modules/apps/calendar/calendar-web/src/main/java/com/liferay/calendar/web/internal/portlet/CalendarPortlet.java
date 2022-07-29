@@ -979,9 +979,9 @@ public class CalendarPortlet extends MVCPortlet {
 			hour += 12;
 		}
 
-		boolean allDay = ParamUtil.getBoolean(portletRequest, "allDay");
-
 		TimeZone timeZone = null;
+
+		boolean allDay = ParamUtil.getBoolean(portletRequest, "allDay");
 
 		if (allDay) {
 			timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);

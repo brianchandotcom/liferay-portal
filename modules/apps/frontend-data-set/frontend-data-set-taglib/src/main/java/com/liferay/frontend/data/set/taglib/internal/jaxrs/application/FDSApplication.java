@@ -199,7 +199,7 @@ public class FDSApplication extends Application {
 				userId, bodyJSONObject.getString("viewState"));
 
 			_fvsFrontendDataSetEntryLocalService.addFVSFrontendDataSetEntry(
-				fdsName, fvsEntry.getFvsEntryId(),
+				fvsEntry.getFvsEntryId(), fdsName,
 				bodyJSONObject.getString("name"),
 				bodyJSONObject.getLong("plid"),
 				bodyJSONObject.getString("portletId"), userId);

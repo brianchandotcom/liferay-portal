@@ -48,7 +48,7 @@ public class AccountEntryUserRelServiceImpl
 	public AccountEntryUserRel addAccountEntryUserRel(
 			long accountEntryId, long creatorUserId, String screenName,
 			String emailAddress, Locale locale, String firstName,
-			String middleName, String lastName, long prefixId, long suffixId,
+			String middleName, String lastName, long prefixListTypeId, long suffixListTypeId,
 			String jobTitle, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -57,7 +57,7 @@ public class AccountEntryUserRelServiceImpl
 
 		return accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixId, suffixId, jobTitle,
+			firstName, middleName, lastName, prefixListTypeId, suffixListTypeId, jobTitle,
 			serviceContext);
 	}
 
@@ -92,7 +92,7 @@ public class AccountEntryUserRelServiceImpl
 	public AccountEntryUserRel addPersonTypeAccountEntryUserRel(
 			long accountEntryId, long creatorUserId, String screenName,
 			String emailAddress, Locale locale, String firstName,
-			String middleName, String lastName, long prefixId, long suffixId,
+			String middleName, String lastName, long prefixListTypeId, long suffixListTypeId,
 			String jobTitle, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -101,7 +101,7 @@ public class AccountEntryUserRelServiceImpl
 
 		return accountEntryUserRelLocalService.addPersonTypeAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixId, suffixId, jobTitle,
+			firstName, middleName, lastName, prefixListTypeId, suffixListTypeId, jobTitle,
 			serviceContext);
 	}
 

@@ -108,7 +108,7 @@ public class AccountEntryUserRelLocalServiceImpl
 	public AccountEntryUserRel addAccountEntryUserRel(
 			long accountEntryId, long creatorUserId, String screenName,
 			String emailAddress, Locale locale, String firstName,
-			String middleName, String lastName, long prefixId, long suffixId,
+			String middleName, String lastName, long prefixListTypeId, long suffixListTypeId,
 			String jobTitle, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -140,7 +140,7 @@ public class AccountEntryUserRelLocalServiceImpl
 		User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
 			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
 			roleIds, userGroupIds, sendEmail, serviceContext);
 
@@ -219,7 +219,7 @@ public class AccountEntryUserRelLocalServiceImpl
 	public AccountEntryUserRel addPersonTypeAccountEntryUserRel(
 			long accountEntryId, long creatorUserId, String screenName,
 			String emailAddress, Locale locale, String firstName,
-			String middleName, String lastName, long prefixId, long suffixId,
+			String middleName, String lastName, long prefixListTypeId, long suffixListTypeId,
 			String jobTitle, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -237,7 +237,7 @@ public class AccountEntryUserRelLocalServiceImpl
 
 		return accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixId, suffixId, jobTitle,
+			firstName, middleName, lastName, prefixListTypeId, suffixListTypeId, jobTitle,
 			serviceContext);
 	}
 

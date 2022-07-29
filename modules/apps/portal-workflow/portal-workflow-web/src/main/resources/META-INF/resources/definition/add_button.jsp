@@ -29,15 +29,12 @@
 	<portlet:param name="backURL" value="<%= viewDefinitionsURL %>" />
 </portlet:renderURL>
 
-<%
-List<AddMenuItem> addMenuItems = new ArrayList<>();
-
-addMenuItems.add(new AddMenuItem(HtmlUtil.escape(LanguageUtil.get(request, "new-workflow")), addWorkflowDefinitionURL.toString()));
-%>
-
-<c:if test="<%= !addMenuItems.isEmpty() %>">
-	<liferay-frontend:add-menu
-		addMenuItems="<%= addMenuItems %>"
-		inline="<%= true %>"
-	/>
-</c:if>
+<liferay-ui:icon
+	icon="plus"
+	label="<%= false %>"
+	linkCssClass="btn btn-monospaced btn-primary"
+	markupView="lexicon"
+	message="new-workflow"
+	toolTip="<%= true %>"
+	url="<%= addWorkflowDefinitionURL %>"
+/>

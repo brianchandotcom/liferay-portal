@@ -17,8 +17,8 @@
 <%@ include file="/import_entity/init.jsp" %>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(), ActionKeys.EXPORT_IMPORT_PORTLET_INFO) %>">
-	<liferay-frontend:add-menu-item
-		title='<%= LanguageUtil.get(resourceBundle, "import") %>'
+	<liferay-ui:icon
+		message="import"
 		url='<%=
 			PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(request, ExportImportPortletKeys.EXPORT_IMPORT, PortletRequest.RENDER_PHASE)

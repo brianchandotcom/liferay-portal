@@ -12,6 +12,32 @@ definition {
 		User.firstLoginPG();
 	}
 
+	@description = "This is a use case for LPS-139642 TC6-3: Assert error message when add invalid auth server local metadata."
+	@priority = "3"
+	test AssertErrorMessageWhenAddInvalidAuthServerLocalMetadata {
+		property test.name.skip.portal.instance = "OpenIDConnect#AssertErrorMessageWhenAddInvalidAuthServerLocalMetadata";
+
+		task ("Add Auth Server Local Metadata with invalid metadata") {
+			OAuthClient.openOAuthClientAdmin(navbar = "Auth Server Local Metadata");
+
+			OAuthClient.addInvalidAuthServer();
+		}
+
+		task ("Assert error message displays in the UI") {
+			Alert.viewErrorMessage(errorMessage = "Invalid Authorization Server Metadata: The value must not be null or empty string");
+		}
+
+		task ("Add Auth Server Local Metadata with empty metadata") {
+			OAuthClient.openOAuthClientAdmin(navbar = "Auth Server Local Metadata");
+
+			OAuthClient.addInvalidAuthServer(authServerMetadata = "");
+		}
+
+		task ("Assert error message pops up") {
+			AssertConfirm.assertConfirmationNoError(value1 = "Ill-formatted Metadata JSON");
+		}
+	}
+
 	@description = "This is a use case for LPS-139642 TC2: Verify OAuth client configurations could be removed and readded."
 	@priority = "4"
 	test AssertOAuthClientCanBeRemovedAndReadded {
@@ -173,6 +199,76 @@ definition {
 			MyAccount.openMyAccountAdmin();
 
 			User.viewLoggedOutPG();
+		}
+	}
+
+	@description = "This is a use case for LPS-139642 TC6-2: Cannot add OAuth client with empty configuration."
+	@priority = "3"
+	test CannotAddOAuthClientWithEmptyConfiguration {
+		property test.name.skip.portal.instance = "OpenIDConnect#CannotAddOAuthClientWithEmptyConfiguration";
+
+		task ("Add an OAuth Client with empty well-known URI") {
+			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
+
+			OAuthClient.addInvalidClient(jsonFileName = "okta.json");
+		}
+
+		task ("Assert error message displays in the UI") {
+			Alert.viewErrorMessage(errorMessage = "Invalid Authorization Server Well-known URI");
+		}
+
+		task ("Add an OAuth Client with empty client information") {
+			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
+
+			OAuthClient.addInvalidClient(
+				clientInfo = "",
+				wellknownURI = "https://dev-5081331.okta.com/.well-known/openid-configuration");
+		}
+
+		task ("Assert error message pops up") {
+			AssertConfirm.assertConfirmationNoError(value1 = "Ill-formatted Info JSON");
+		}
+
+		task ("Add an OAuth Client with empty auth request parameters") {
+			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
+
+			OAuthClient.addInvalidClient(
+				authRequestParametersJSON = "",
+				jsonFileName = "okta.json",
+				wellknownURI = "https://dev-5081331.okta.com/.well-known/openid-configuration");
+		}
+
+		task ("Assert error message pops up") {
+			AssertConfirm.assertConfirmationNoError(value1 = "Ill-formatted Default Authorization Request Parameters JSON");
+		}
+
+		task ("Add an OAuth Client with empty token request parameters") {
+			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
+
+			OAuthClient.addInvalidClient(
+				jsonFileName = "okta.json",
+				tokenRequestParametersJSON = "",
+				wellknownURI = "https://dev-5081331.okta.com/.well-known/openid-configuration");
+		}
+
+		task ("Assert error message pops up") {
+			AssertConfirm.assertConfirmationNoError(value1 = "Ill-formatted Default Token Request Parameters JSON");
+		}
+	}
+
+	@description = "This is a use case for LPS-139642 TC6-1: Cannot add OAuth client with invalid configurations."
+	@priority = "3"
+	test CannotAddOAuthClientWithInvalidConfigurations {
+		property test.name.skip.portal.instance = "OpenIDConnect#CannotAddOAuthClientWithInvalidConfigurations";
+
+		task ("Add an OAuth Client with invalid client information") {
+			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
+
+			OAuthClient.addInvalidClient(wellknownURI = "https://dev-5081331.okta.com/.well-known/openid-configuration");
+		}
+
+		task ("Assert error message displays in the UI") {
+			Alert.viewErrorMessage(errorMessage = "Invalid Client Information: The value must not be null or empty string");
 		}
 	}
 

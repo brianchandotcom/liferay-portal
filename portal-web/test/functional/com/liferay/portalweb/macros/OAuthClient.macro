@@ -68,6 +68,58 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro addInvalidAuthServer {
+		LexiconEntry.gotoAdd();
+
+		if (isSet(authServerMetadata)) {
+			FormFields.editTextMultiline(
+				fieldName = "metadataJSON",
+				fieldValue = "${authServerMetadata}");
+		}
+
+		ClickNoError(locator1 = "Button#SAVE");
+	}
+
+	macro addInvalidClient {
+		LexiconEntry.gotoAdd();
+
+		if (isSet(wellknownURI)) {
+			FormFields.editText(
+				fieldName = "authServerWellKnownURI",
+				fieldValue = "${wellknownURI}");
+		}
+
+		if (isSet(clientInfo)) {
+			FormFields.editTextMultiline(
+				fieldName = "infoJSON",
+				fieldValue = "${clientInfo}");
+		}
+
+		if (isSet(jsonFileName)) {
+			var jsonFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies";
+
+			var clientInfo = FileUtil.read("${jsonFileBaseDir}/${jsonFileName}");
+
+			FormFields.editTextMultiline(
+				fieldName = "infoJSON",
+				fieldValue = "${clientInfo}");
+		}
+
+		if (isSet(authRequestParametersJSON)) {
+			FormFields.editTextMultiline(
+				fieldName = "authRequestParametersJSON",
+				fieldValue = "${authRequestParametersJSON}");
+		}
+
+		if (isSet(tokenRequestParametersJSON)) {
+			FormFields.editTextMultiline(
+				fieldName = "tokenRequestParametersJSON",
+				fieldValue = "${tokenRequestParametersJSON}");
+		}
+
+		ClickNoError(locator1 = "Button#SAVE");
+	}
+
 	macro deleteClient {
 		Click(
 			key_rowIndexNumber = "${rowIndexNumber}",

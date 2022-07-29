@@ -28,7 +28,7 @@ describe('MarkerBase', () => {
 	}
 
 	beforeEach(() => {
-		markerChild = new MarkerChild();
+		markerChild = new MarkerChild({});
 
 		jest.spyOn(markerChild, '_getNativeMarker');
 		jest.spyOn(markerChild, '_getNormalizedEventData');

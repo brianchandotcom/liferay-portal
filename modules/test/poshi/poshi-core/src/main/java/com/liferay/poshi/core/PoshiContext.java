@@ -1551,6 +1551,12 @@ public class PoshiContext {
 				Element defaultCommandElement = getFunctionCommandElement(
 					defaultClassCommandName, namespace);
 
+				if (defaultCommandElement == null) {
+					throw new Exception(
+						"Default tag has a syntax error: " +
+							defaultClassCommandName);
+				}
+
 				_commandElements.put(
 					classType + "#" + namespace + "." + className,
 					defaultCommandElement);

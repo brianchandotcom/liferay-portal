@@ -71,6 +71,7 @@ export function ColorPicker({
 	const activeItemId = useActiveItemId();
 	const colors = {};
 	const id = useId();
+	const labelId = useId();
 	const deleteStyleError = useDeleteStyleError();
 	const setStyleError = useSetStyleError();
 	const styleErrors = useStyleErrors();
@@ -257,11 +258,12 @@ export function ColorPicker({
 
 	return (
 		<ClayForm.Group small>
-			<label className={classNames({'sr-only': !showLabel})}>
+			<label className={classNames({'sr-only': !showLabel})} id={labelId}>
 				{field.label}
 			</label>
 
 			<ClayInput.Group
+				aria-labelledby={labelId}
 				className={classNames('page-editor__color-picker', {
 					'has-error': error.value,
 					'hovered':

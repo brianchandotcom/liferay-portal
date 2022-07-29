@@ -66,12 +66,12 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 						<c:choose>
 							<c:when test="<%= calendarBooking.isAllDay() %>">
 								<dd>
-									<%= utcLongDateFormat.format(startTimeJCalendar.getTime()) + ", " + utcTimeFormat.format(startTimeJCalendar.getTime()) %>
+									<%= utcLongDateJFormat.format(startTimeJCalendar.getTime()) + ", " + utcTimeJFormat.format(startTimeJCalendar.getTime()) %>
 								</dd>
 							</c:when>
 							<c:otherwise>
 								<dd>
-									<%= longDateFormat.format(startTimeJCalendar.getTime()) + ", " + timeFormat.format(startTimeJCalendar.getTime()) %>
+									<%= longDateJFormat.format(startTimeJCalendar.getTime()) + ", " + timeJFormat.format(startTimeJCalendar.getTime()) %>
 								</dd>
 							</c:otherwise>
 						</c:choose>
@@ -83,12 +83,12 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 						<c:choose>
 							<c:when test="<%= calendarBooking.isAllDay() %>">
 								<dd>
-									<%= utcLongDateFormat.format(endTimeJCalendar.getTime()) + ", " + utcTimeFormat.format(endTimeJCalendar.getTime()) %>
+									<%= utcLongDateJFormat.format(endTimeJCalendar.getTime()) + ", " + utcTimeJFormat.format(endTimeJCalendar.getTime()) %>
 								</dd>
 							</c:when>
 							<c:otherwise>
 								<dd>
-									<%= longDateFormat.format(endTimeJCalendar.getTime()) + ", " + timeFormat.format(endTimeJCalendar.getTime()) %>
+									<%= longDateJFormat.format(endTimeJCalendar.getTime()) + ", " + timeJFormat.format(endTimeJCalendar.getTime()) %>
 								</dd>
 							</c:otherwise>
 						</c:choose>

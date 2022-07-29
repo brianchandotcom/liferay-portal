@@ -43,6 +43,6 @@ function Root(props) {
 	return <Walkthrough {...DEFAULT_PROPS} {...props} />;
 }
 
-export default function main(props = {}, siteGroupFriendlyURL) {
-	render(Root, {...props, siteGroupFriendlyURL}, getDefaultContainer());
+export default function main(props = {}) {
+	render(Root, props, getDefaultContainer());
 }

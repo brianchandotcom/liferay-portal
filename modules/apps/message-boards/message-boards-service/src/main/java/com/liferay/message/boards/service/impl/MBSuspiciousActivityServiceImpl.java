@@ -41,8 +41,9 @@ public class MBSuspiciousActivityServiceImpl
 			long messageId, String reason)
 		throws PortalException {
 
-		return mbSuspiciousActivityLocalService.addOrUpdateSuspiciousActivityByMessage(
-			 messageId, reason ,getUserId());
+		return mbSuspiciousActivityLocalService.
+			addOrUpdateMessageSuspiciousActivity(
+				getUserId(),messageId, reason);
 	}
 
 
@@ -51,8 +52,9 @@ public class MBSuspiciousActivityServiceImpl
 			String reason, long threadId)
 		throws PortalException {
 
-		return mbSuspiciousActivityLocalService.addOrUpdateSuspiciousActivityByThread(
-			reason, threadId, getUserId());
+		return mbSuspiciousActivityLocalService.
+			addOrUpdateThreadSuspiciousActivity(
+				getUserId(),reason, threadId);
 	}
 
 	@Override

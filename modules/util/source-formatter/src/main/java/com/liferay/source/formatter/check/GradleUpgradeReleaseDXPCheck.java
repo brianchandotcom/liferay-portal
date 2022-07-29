@@ -44,7 +44,7 @@ import org.dom4j.Element;
 /**
  * @author Kevin Lee
  */
-public class GradleUpgradeReleaseDxpCheck extends BaseFileCheck {
+public class GradleUpgradeReleaseDXPCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
@@ -71,28 +71,29 @@ public class GradleUpgradeReleaseDxpCheck extends BaseFileCheck {
 			return content;
 		}
 
-		GradleBuildFile buildFile = new GradleBuildFile(content);
+		GradleBuildFile gradleBuildFile = new GradleBuildFile(content);
 
-		List<GradleDependency> dependencies = buildFile.getDependencies();
+		List<GradleDependency> gradleDependencies =
+			gradleBuildFile.getGradleDependencies();
 
-		Iterator<GradleDependency> iterator = dependencies.iterator();
+		Iterator<GradleDependency> iterator = gradleDependencies.iterator();
 
 		boolean hasCompile = false;
 		boolean hasTest = false;
 
 		while (iterator.hasNext()) {
-			GradleDependency dependency = iterator.next();
+			GradleDependency gradleDependency = iterator.next();
 
 			Set<String> names = releaseDXPDependencies.get(
-				dependency.getGroup());
+				gradleDependency.getGroup());
 
-			if ((names != null) && names.contains(dependency.getName())) {
+			if ((names != null) && names.contains(gradleDependency.getName())) {
 				continue;
 			}
 
 			iterator.remove();
 
-			String configuration = dependency.getConfiguration();
+			String configuration = gradleDependency.getConfiguration();
 
 			if (configuration.startsWith("compile")) {
 				hasCompile = true;
@@ -103,25 +104,25 @@ public class GradleUpgradeReleaseDxpCheck extends BaseFileCheck {
 			}
 		}
 
-		if (dependencies.isEmpty()) {
+		if (gradleDependencies.isEmpty()) {
 			return content;
 		}
 
-		buildFile.deleteDependencies(dependencies);
+		gradleBuildFile.deleteGradleDependencies(gradleDependencies);
 
 		if (hasCompile) {
-			buildFile.insertDependency(
+			gradleBuildFile.insertGradleDependency(
 				"compileOnly", "com.liferay.portal", "release.dxp.api",
 				upgradeToVersion);
 		}
 
 		if (hasTest) {
-			buildFile.insertDependency(
+			gradleBuildFile.insertGradleDependency(
 				"testCompile", "com.liferay.portal", "release.dxp.api",
 				upgradeToVersion);
 		}
 
-		return buildFile.getSource();
+		return gradleBuildFile.getSource();
 	}
 
 	private Map<String, Set<String>> _getReleaseDXPDependencies(
@@ -206,7 +207,7 @@ public class GradleUpgradeReleaseDxpCheck extends BaseFileCheck {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GradleUpgradeReleaseDxpCheck.class);
+		GradleUpgradeReleaseDXPCheck.class);
 
 	private Map<String, Set<String>> _releaseDXPDependencies;
 	private String _upgradeToVersion;

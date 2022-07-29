@@ -48,10 +48,10 @@ public class GradleDependency implements Comparable<GradleDependency> {
 	}
 
 	@Override
-	public int compareTo(GradleDependency dependency) {
-		String str = toString();
+	public int compareTo(GradleDependency gradleDependency) {
+		String string = toString();
 
-		return str.compareTo(dependency.toString());
+		return string.compareTo(gradleDependency.toString());
 	}
 
 	@Override
@@ -64,11 +64,11 @@ public class GradleDependency implements Comparable<GradleDependency> {
 			return false;
 		}
 
-		GradleDependency other = (GradleDependency)object;
+		GradleDependency gradleDependency = (GradleDependency)object;
 
-		if (Objects.equals(_configuration, other._configuration) &&
-			Objects.equals(_group, other._group) &&
-			Objects.equals(_name, other._name)) {
+		if (Objects.equals(_configuration, gradleDependency._configuration) &&
+			Objects.equals(_group, gradleDependency._group) &&
+			Objects.equals(_name, gradleDependency._name)) {
 
 			return true;
 		}

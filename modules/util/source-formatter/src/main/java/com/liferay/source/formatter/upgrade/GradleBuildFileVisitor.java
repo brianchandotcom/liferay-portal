@@ -35,16 +35,16 @@ import org.codehaus.groovy.ast.stmt.BlockStatement;
  */
 public class GradleBuildFileVisitor extends CodeVisitorSupport {
 
-	public List<GradleDependency> getDependencies() {
-		return _dependencies;
-	}
-
 	public int getDependenciesLastLineNumber() {
 		return _dependenciesLastLineNumber;
 	}
 
 	public int getDependenciesLineNumber() {
 		return _dependenciesLineNumber;
+	}
+
+	public List<GradleDependency> getGradleDependencies() {
+		return _gradleDependencies;
 	}
 
 	@Override
@@ -65,14 +65,14 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 
 			String text = constantExpression.getText();
 
-			String[] parts = text.split(":");
+			String[] textParts = text.split(":");
 
-			if (parts.length >= 3) {
-				GradleDependency dependency = new GradleDependency(
-					_configuration, parts[0], parts[1], parts[2],
+			if (textParts.length >= 3) {
+				GradleDependency gradleDependency = new GradleDependency(
+					_configuration, textParts[0], textParts[1], textParts[2],
 					_methodCallLineNumber, _methodCallLastLineNumber);
 
-				_dependencies.add(dependency);
+				_gradleDependencies.add(gradleDependency);
 			}
 		}
 
@@ -121,12 +121,12 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 		}
 
 		if (gav) {
-			GradleDependency dependency = new GradleDependency(
+			GradleDependency gradleDependency = new GradleDependency(
 				_configuration, keyValues.get("group"), keyValues.get("name"),
 				keyValues.get("version"), _methodCallLineNumber,
 				_methodCallLastLineNumber);
 
-			_dependencies.add(dependency);
+			_gradleDependencies.add(gradleDependency);
 		}
 
 		super.visitMapExpression(mapExpression);
@@ -173,9 +173,10 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 	}
 
 	private String _configuration;
-	private final List<GradleDependency> _dependencies = new ArrayList<>();
 	private int _dependenciesLastLineNumber = -1;
 	private int _dependenciesLineNumber = -1;
+	private final List<GradleDependency> _gradleDependencies =
+		new ArrayList<>();
 	private boolean _inDependencies;
 	private int _methodCallLastLineNumber = -1;
 	private int _methodCallLineNumber = -1;

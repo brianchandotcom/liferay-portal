@@ -24,6 +24,8 @@
 		"@clayui/layout": "^3.40.0",
 		"@clayui/loading-indicator": "^3.60.0",
 		"@clayui/multi-step-nav": "^3.64.0",
+		"@clayui/pagination": "^3.67.0",
+		"@clayui/pagination-bar": "^3.67.0",
 		"@clayui/tooltip": "^3.65.0",
 		"@googlemaps/js-api-loader": "^1.12.2",
 		"@types/google.maps": "^3.49.2",

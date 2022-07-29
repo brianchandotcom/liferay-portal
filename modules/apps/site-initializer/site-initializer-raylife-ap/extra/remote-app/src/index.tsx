@@ -20,6 +20,7 @@ import './common/styles/index.scss';
 import {GoogleMapsService} from './common/services/google-maps/google-maps';
 import NewApplicationAutoContextProvider from './routes/applications/context/NewApplicationAutoContextProvider';
 import Applications from './routes/applications/pages/Applications';
+import ApplicationsTable from './routes/applications/pages/ApplicationsTable';
 import NewApplication from './routes/applications/pages/NewApplication';
 import Claims from './routes/claims/pages/Claims';
 import RecentApplications from './routes/dashboard/pages/RecentApplications';
@@ -41,6 +42,10 @@ const DirectToCustomer: React.FC<Props> = ({route}) => {
 
 	if (routeEntry === 'applications') {
 		return <Applications />;
+	}
+
+	if (routeEntry === 'applications-table') {
+		return <ApplicationsTable />;
 	}
 
 	if (routeEntry === 'policies') {

@@ -13,46 +13,86 @@
  */
 
 import ClayTable from '@clayui/table';
-import React from 'react';
+import React, {useContext} from 'react';
+
+import {NewApplicationAutoContext} from '../../../context/NewApplicationAutoContextProvider';
 
 const Review = () => {
+	const [state] = useContext(NewApplicationAutoContext);
+
+	const {
+		steps: {
+			coverage: {form},
+		},
+	} = state;
+
+	const vehicleInfoForms = state.steps.vehicleInfo.form;
+
 	const coverages = [
 		{
 			name: 'BODILY INJURY',
-			premium: '$0.00 ',
-			protectionAmount: '$0.00 / $0.00',
+			premium: '$167.00 ',
+			protectionAmount: `${form.bodilyInjury}`,
 		},
 		{
 			name: 'PROPERTY DAMAGE',
-			premium: '$0.00 ',
-			protectionAmount: '$0.00 / $0.00',
+			premium: '$211.00 ',
+			protectionAmount: `${form.propertyDamage}`,
 		},
 		{
 			name: 'UNINSURED MOTORIST BODILY INJURY',
-			premium: '$0.00 ',
-			protectionAmount: '$0.00 / $0.00',
+			premium: '$111.00 ',
+			protectionAmount: `${form.uninsuredOrUnderinsuredMBI}`,
 		},
 		{
 			name: 'UNINSURED MOTORIST PROPERTY DAMAGE',
-			premium: '$0.00 ',
-			protectionAmount: '$0.00 / $0.00',
+			premium: '$98.00 ',
+			protectionAmount: `${form.uninsuredOrUnderinsuredMPD}`,
 		},
 		{
 			name: 'MEDICAL',
-			premium: '$0.00 ',
-			protectionAmount: '$0.00 / $0.00',
-		},
-		{
-			name: 'VEHICLE 1: COMPREHENSIVE',
-			premium: '$0.00 ',
-			protectionAmount: '$0.00 / $0.00',
-		},
-		{
-			name: 'VEHICLE 1: COLLISION',
-			premium: '$0.00 ',
-			protectionAmount: '$0.00 / $0.00',
+			premium: '$115.00 ',
+			protectionAmount: `${form.medical}`,
 		},
 	];
+
+	const vehiclesTable = vehicleInfoForms.map(
+		(_vehicleInfoForm: any, index: number) => (
+			<>
+				<ClayTable.Row className="no-gutters row text-uppercase">
+					<ClayTable.Cell className="col-6" headingTitle>
+						<p className="text-secondary">
+							Vehicle {index + 1}: Comprehensive
+						</p>
+					</ClayTable.Cell>
+
+					<ClayTable.Cell className="col-4">
+						<p className="text-secondary">{form.comprehensive}</p>
+					</ClayTable.Cell>
+
+					<ClayTable.Cell className="col">
+						<p className="text-secondary">$85.00</p>
+					</ClayTable.Cell>
+				</ClayTable.Row>
+
+				<ClayTable.Row className="no-gutters row text-uppercase">
+					<ClayTable.Cell className="col-6" headingTitle>
+						<p className="text-secondary">
+							Vehicle {index + 1}: Collision
+						</p>
+					</ClayTable.Cell>
+
+					<ClayTable.Cell className="col-4">
+						<p className="text-secondary">{form.collision}</p>
+					</ClayTable.Cell>
+
+					<ClayTable.Cell className="col">
+						<p className="text-secondary">$97.00</p>
+					</ClayTable.Cell>
+				</ClayTable.Row>
+			</>
+		)
+	);
 
 	return (
 		<div className="mx-8">
@@ -82,34 +122,33 @@ const Review = () => {
 				</ClayTable.Head>
 
 				<ClayTable.Body className="table-borderless">
-					{coverages.map((coverage) => {
-						return (
-							<>
-								<ClayTable.Row className="no-gutters row">
-									<ClayTable.Cell
-										className="col-6"
-										headingTitle
-									>
-										<p className="text-secondary">
-											{coverage.name}
-										</p>
-									</ClayTable.Cell>
+					{coverages.map((coverage: any) => (
+						<>
+							<ClayTable.Row className="no-gutters row">
+								<ClayTable.Cell className="col-6" headingTitle>
+									<p className="text-secondary">
+										{coverage.name}
+									</p>
+								</ClayTable.Cell>
 
-									<ClayTable.Cell className="col-4">
-										<p className="text-secondary">
-											{coverage.protectionAmount}
-										</p>
-									</ClayTable.Cell>
+								<ClayTable.Cell className="col-4">
+									<p className="text-secondary">
+										{coverage.protectionAmount}
+									</p>
+								</ClayTable.Cell>
 
-									<ClayTable.Cell className="col">
-										<p className="text-secondary">
-											{coverage.premium}
-										</p>
-									</ClayTable.Cell>
-								</ClayTable.Row>
-							</>
-						);
-					})}
+								<ClayTable.Cell className="col">
+									<p className="text-secondary">
+										{coverage.premium}
+									</p>
+								</ClayTable.Cell>
+							</ClayTable.Row>
+						</>
+					))}
+				</ClayTable.Body>
+
+				<ClayTable.Body className="table-borderless">
+					{vehiclesTable}
 				</ClayTable.Body>
 
 				<ClayTable.Head className="border-top">
@@ -130,7 +169,7 @@ const Review = () => {
 
 						<ClayTable.Cell className="col" headingCell>
 							<span className="text-dark">
-								<h6>$0.00</h6>
+								<h6>$611.00</h6>
 							</span>
 						</ClayTable.Cell>
 					</ClayTable.Row>

@@ -82,9 +82,12 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 		HttpServletRequest httpServletRequest =
 			fragmentEntryProcessorContext.getHttpServletRequest();
 
-		LayoutStructure layoutStructure =
-			(LayoutStructure)httpServletRequest.getAttribute(
+		LayoutStructure layoutStructure = null;
+
+		if (httpServletRequest != null) {
+			layoutStructure = (LayoutStructure)httpServletRequest.getAttribute(
 				LayoutWebKeys.LAYOUT_STRUCTURE);
+		}
 
 		if (layoutStructure == null) {
 			LayoutPageTemplateStructure layoutPageTemplateStructure =

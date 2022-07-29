@@ -232,9 +232,12 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					currentFragmentEntryLink.getSegmentsExperienceId(),
 					currentFragmentEntryLink.getPlid());
 
-		LayoutStructure layoutStructure =
-			(LayoutStructure)httpServletRequest.getAttribute(
+		LayoutStructure layoutStructure = null;
+
+		if (httpServletRequest != null) {
+			layoutStructure = (LayoutStructure)httpServletRequest.getAttribute(
 				LayoutWebKeys.LAYOUT_STRUCTURE);
+		}
 
 		if (layoutStructure == null) {
 			LayoutPageTemplateStructure layoutPageTemplateStructure =

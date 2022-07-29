@@ -144,9 +144,12 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 		FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest) {
 
-		LayoutStructure layoutStructure =
-			(LayoutStructure)httpServletRequest.getAttribute(
+		LayoutStructure layoutStructure = null;
+
+		if (httpServletRequest != null) {
+			layoutStructure = (LayoutStructure)httpServletRequest.getAttribute(
 				LayoutWebKeys.LAYOUT_STRUCTURE);
+		}
 
 		if (layoutStructure == null) {
 			try {

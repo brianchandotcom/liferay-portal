@@ -26,6 +26,7 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.info.list.renderer.InfoListRenderer;
@@ -57,6 +58,7 @@ import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemDet
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemFieldValuesProvider;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemFormProvider;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemObjectProvider;
+import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemPermissionProvider;
 import com.liferay.object.web.internal.info.item.renderer.ObjectEntryRowInfoItemRenderer;
 import com.liferay.object.web.internal.info.list.renderer.ObjectEntryTableInfoListRenderer;
 import com.liferay.object.web.internal.item.selector.ObjectEntryItemSelectorView;
@@ -190,6 +192,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"info.item.identifier",
 					"com.liferay.info.item.ClassPKInfoItemIdentifier"
 				).put(
+					"item.class.name", objectDefinition.getClassName()
+				).build()),
+			_bundleContext.registerService(
+				InfoItemPermissionProvider.class,
+				new ObjectEntryInfoItemPermissionProvider(
+					objectDefinition, _objectEntryService),
+				HashMapDictionaryBuilder.<String, Object>put(
 					"item.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(

@@ -18,6 +18,7 @@ import com.liferay.commerce.tax.exception.CommerceTaxMethodEngineKeyException;
 import com.liferay.commerce.tax.exception.CommerceTaxMethodNameException;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.base.CommerceTaxMethodLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -28,10 +29,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.tax.model.CommerceTaxMethod",
+	service = AopService.class
+)
 public class CommerceTaxMethodLocalServiceImpl
 	extends CommerceTaxMethodLocalServiceBaseImpl {
 

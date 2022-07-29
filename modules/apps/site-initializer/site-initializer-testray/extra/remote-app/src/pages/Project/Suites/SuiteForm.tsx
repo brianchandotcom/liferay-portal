@@ -46,7 +46,7 @@ type SuiteFormData = {
 
 const SuiteForm = () => {
 	const {
-		form: {onClose, onError, onSave, onSubmitRest},
+		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
 
 	const {setTabs} = useHeader({shouldUpdate: false});
@@ -80,7 +80,7 @@ const SuiteForm = () => {
 	const caseParameters = watch('caseParameters');
 
 	const _onSubmit = (form: SuiteFormData) => {
-		onSubmitRest<TestraySuite>(
+		onSubmit<TestraySuite>(
 			{...form, projectId},
 			{
 				create: createSuite,

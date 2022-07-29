@@ -33,7 +33,7 @@ type RoutineForm = {
 };
 
 const RoutineModal: React.FC<FormModalComponent & {projectId: number}> = ({
-	modal: {modalState, observer, onClose, onError, onSave, onSubmitRest},
+	modal: {modalState, observer, onClose, onError, onSave, onSubmit},
 	projectId,
 }) => {
 	const {
@@ -50,7 +50,7 @@ const RoutineModal: React.FC<FormModalComponent & {projectId: number}> = ({
 	const autoanalyze = watch('autoanalyze');
 
 	const _onSubmit = (form: RoutineForm) => {
-		onSubmitRest(
+		onSubmit(
 			{
 				...form,
 				projectId,

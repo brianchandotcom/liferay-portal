@@ -12,19 +12,11 @@
  * details.
  */
 
-import {MutationOptions} from '@apollo/client';
-import {DocumentNode} from 'graphql';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import client from '../graphql/apolloClient';
 import i18n from '../i18n';
 import {Liferay} from '../services/liferay';
-
-type OnSubmitOptions = {
-	createMutation: DocumentNode;
-	updateMutation: DocumentNode;
-};
 
 type OnSubmitOptionsRest<T = any> = {
 	create: (data: any) => Promise<T>;
@@ -38,20 +30,14 @@ export type FormOptions = {
 	onClose: () => void;
 	onError: (error?: any) => void;
 	onSave: (param?: any) => void;
-	onSubmit: (
-		data: any,
-		onSubmitOptions: OnSubmitOptions,
-		mutationOptions?: Omit<MutationOptions, 'mutation'>
-	) => Promise<any>;
-	onSubmitAndSave: (
-		data: any,
-		onSubmitOptions: OnSubmitOptions,
-		mutationOptions?: Omit<MutationOptions, 'mutation'>
-	) => Promise<void>;
-	onSubmitRest: <T = any>(
+	onSubmit: <T = any>(
 		data: any,
 		options: OnSubmitOptionsRest<T>
 	) => Promise<T>;
+	onSubmitAndSave: (
+		data: any,
+		onSubmitOptions: OnSubmitOptionsRest<any>
+	) => Promise<void>;
 	onSuccess: () => void;
 };
 
@@ -94,36 +80,7 @@ const useFormActions = (): Form => {
 		navigate(-1);
 	};
 
-	const onSubmit = async (
-		data: any,
-		{createMutation, updateMutation}: OnSubmitOptions,
-		options?: Omit<MutationOptions, 'mutation'>
-	) => {
-		const variables: any = {
-			data,
-		};
-
-		if (data.id) {
-			variables.id = data.id;
-		}
-
-		delete variables.data.id;
-
-		try {
-			return client.mutate({
-				mutation: variables.id ? updateMutation : createMutation,
-				variables,
-				...options,
-			});
-		}
-		catch (error) {
-			onError(error);
-
-			throw error;
-		}
-	};
-
-	const onSubmitRest = async <T = any>(
+	const onSubmit = async <T = any>(
 		data: any,
 		{create, update}: OnSubmitOptionsRest<T>
 	): Promise<T> => {
@@ -139,8 +96,7 @@ const useFormActions = (): Form => {
 			const response = await fn();
 
 			return response;
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 
 			throw error;
@@ -149,10 +105,9 @@ const useFormActions = (): Form => {
 
 	const onSubmitAndSave = async (
 		data: any,
-		onSubmitOptions: OnSubmitOptions,
-		options?: Omit<MutationOptions, 'mutation'>
+		onSubmitOptions: OnSubmitOptionsRest<any>
 	) => {
-		await onSubmit(data, onSubmitOptions, options);
+		await onSubmit(data, onSubmitOptions);
 		await onSave();
 	};
 
@@ -180,7 +135,6 @@ const useFormActions = (): Form => {
 			onSave,
 			onSubmit,
 			onSubmitAndSave,
-			onSubmitRest,
 			onSuccess,
 		},
 	};

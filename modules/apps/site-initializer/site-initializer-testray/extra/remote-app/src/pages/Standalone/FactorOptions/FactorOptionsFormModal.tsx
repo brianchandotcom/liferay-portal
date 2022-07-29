@@ -38,7 +38,7 @@ type FactorOptionsProps = {
 };
 
 const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
-	modal: {modalState, observer, onClose, onError, onSave, onSubmitRest},
+	modal: {modalState, observer, onClose, onError, onSave, onSubmit},
 }) => {
 	const {
 		formState: {errors},
@@ -54,7 +54,7 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 	const factorCategories = data?.items || [];
 
 	const _onSubmit = (form: FactorOptionsForm) => {
-		onSubmitRest(
+		onSubmit(
 			{id: form.id, name: form.name},
 			{
 				create: createFactorOption,

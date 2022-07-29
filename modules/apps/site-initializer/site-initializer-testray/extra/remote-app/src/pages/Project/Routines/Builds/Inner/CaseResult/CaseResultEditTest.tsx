@@ -40,7 +40,7 @@ type CaseResultForm = {
 
 const CaseResultEditTest = () => {
 	const {
-		form: {onClose, onError, onSave, onSubmitRest},
+		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
 	const {caseResultId} = useParams();
 
@@ -78,7 +78,7 @@ const CaseResultEditTest = () => {
 		dueStatus,
 		issue,
 	}: CaseResultForm) => {
-		onSubmitRest(
+		onSubmit(
 			{
 				commentMBMessage,
 				dueStatus,

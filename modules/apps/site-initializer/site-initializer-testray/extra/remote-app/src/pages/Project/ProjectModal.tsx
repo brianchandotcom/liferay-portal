@@ -25,7 +25,7 @@ import {createProject, updateProject} from '../../services/rest';
 type ProjectForm = typeof yupSchema.project.__outputType;
 
 const ProjectModal: React.FC<FormModalComponent> = ({
-	modal: {modalState, observer, onClose, onError, onSave, onSubmitRest},
+	modal: {modalState, observer, onClose, onError, onSave, onSubmit},
 }) => {
 	const {
 		formState: {errors},
@@ -37,7 +37,7 @@ const ProjectModal: React.FC<FormModalComponent> = ({
 	});
 
 	const _onSubmit = (form: ProjectForm) =>
-		onSubmitRest(form, {
+		onSubmit(form, {
 			create: createProject,
 			update: updateProject,
 		})

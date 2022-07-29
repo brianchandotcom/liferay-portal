@@ -14,16 +14,10 @@
 
 import {useModal} from '@clayui/modal';
 import {Observer} from '@clayui/modal/src/types';
-import {DocumentNode} from 'graphql';
 import {Dispatch, useState} from 'react';
 import {KeyedMutator} from 'swr';
 
 import useFormActions, {FormOptions} from './useFormActions';
-
-type OnSubmitOptions = {
-	createMutation: DocumentNode;
-	updateMutation: DocumentNode;
-};
 
 type onSaveOptions = {
 	forceRefetch?: boolean;
@@ -34,7 +28,6 @@ export type FormModalOptions = {
 	observer: Observer;
 	onClose: () => void;
 	onSave: (param?: any, options?: onSaveOptions) => void;
-	onSubmit: (data: any, options: OnSubmitOptions) => Promise<void>;
 	open: (state?: any) => void;
 	setVisible: Dispatch<boolean>;
 	visible: boolean;

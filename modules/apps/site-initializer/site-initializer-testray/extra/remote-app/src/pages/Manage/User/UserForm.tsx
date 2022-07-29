@@ -53,7 +53,7 @@ const UserForm = () => {
 	const roles = data?.items || [];
 
 	const {
-		form: {onClose, onError, onSave, onSubmitRest},
+		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
 
 	const {
@@ -74,7 +74,7 @@ const UserForm = () => {
 		delete form.__typename;
 		delete form.roleBriefs;
 
-		onSubmitRest(
+		onSubmit(
 			{...form, userId},
 			{
 				create: createUserAccount,
@@ -93,8 +93,7 @@ const UserForm = () => {
 
 		if (valueInsideList) {
 			newRoles = newRoles.filter((role) => role !== value);
-		}
-		else {
+		} else {
 			newRoles = [...newRoles, Number(value)];
 		}
 

@@ -58,7 +58,7 @@ const RoutineBuildForm = () => {
 	} = useOutletContext();
 
 	const {
-		form: {onClose, onSubmitRest},
+		form: {onClose, onSubmit},
 	} = useFormActions();
 
 	const {modal} = useFormModal({
@@ -126,7 +126,7 @@ const RoutineBuildForm = () => {
 			data.id = testrayBuild.id.toString();
 		}
 
-		const response = await onSubmitRest(data, {
+		const response = await onSubmit(data, {
 			create: createBuild,
 			update: updateBuild,
 		});

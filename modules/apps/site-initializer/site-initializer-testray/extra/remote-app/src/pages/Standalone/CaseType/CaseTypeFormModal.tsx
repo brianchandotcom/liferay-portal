@@ -32,7 +32,7 @@ type CaseTypeProps = {
 };
 
 const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
-	modal: {modalState, observer, onClose, onError, onSave, onSubmitRest},
+	modal: {modalState, observer, onClose, onError, onSave, onSubmit},
 }) => {
 	const {
 		formState: {errors},
@@ -44,7 +44,7 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 	});
 
 	const _onSubmit = (form: CaseTypeForm) =>
-		onSubmitRest(
+		onSubmit(
 			{id: form.id, name: form.name},
 			{
 				create: createCaseTypes,

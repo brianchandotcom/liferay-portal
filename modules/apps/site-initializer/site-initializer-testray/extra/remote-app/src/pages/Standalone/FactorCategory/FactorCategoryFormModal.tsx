@@ -28,7 +28,7 @@ import {
 type FactorCategoryForm = typeof yupSchema.factorCategory.__outputType;
 
 const FactorCategoryFormModal: React.FC<FormModalComponent> = ({
-	modal: {modalState, observer, onClose, onError, onSave, onSubmitRest},
+	modal: {modalState, observer, onClose, onError, onSave, onSubmit},
 }) => {
 	const {
 		formState: {errors},
@@ -40,7 +40,7 @@ const FactorCategoryFormModal: React.FC<FormModalComponent> = ({
 	});
 
 	const _onSubmit = (form: FactorCategoryForm) =>
-		onSubmitRest(form, {
+		onSubmit(form, {
 			create: createFactorCategory,
 			update: updateFactorCategory,
 		})

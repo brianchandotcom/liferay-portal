@@ -93,7 +93,7 @@ const CaseForm = () => {
 	}, [setTabs, testrayProject]);
 
 	const {
-		form: {onClose, onError, onSave, onSubmitRest},
+		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
 
 	const {projectId} = useParams();
@@ -118,7 +118,7 @@ const CaseForm = () => {
 	});
 
 	const _onSubmit = (form: CaseFormData) => {
-		onSubmitRest(
+		onSubmit(
 			{...form, projectId},
 			{
 				create: createCase,

@@ -48,7 +48,7 @@ const descriptionTypes = [
 
 const RequirementsForm = () => {
 	const {
-		form: {onClose, onError, onSave, onSubmitRest},
+		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
 	const {projectId} = useParams();
 
@@ -89,7 +89,7 @@ const RequirementsForm = () => {
 			form.key = `R-${Math.ceil(Math.random() * 1000)}`;
 		}
 
-		onSubmitRest(
+		onSubmit(
 			{...form, projectId},
 			{
 				create: createRequirement,

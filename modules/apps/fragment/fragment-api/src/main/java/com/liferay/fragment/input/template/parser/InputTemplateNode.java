@@ -17,6 +17,7 @@ package com.liferay.fragment.input.template.parser;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -113,9 +114,9 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		).put(
 			"errorMessage", _errorMessage
 		).put(
-			"helpText", _helpText
+			"helpText", HtmlUtil.escapeJS(_helpText)
 		).put(
-			"label", _label
+			"label", HtmlUtil.escapeJS(_label)
 		).put(
 			"name", _name
 		).put(

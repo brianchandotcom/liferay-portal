@@ -311,12 +311,11 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			if (fragmentEntryLink.isTypeInput()) {
 				sb.append("; var input = ");
 				sb.append(
-					HtmlUtil.escapeJS(
-						JSONUtil.toString(
-							_getInputJSONObject(
-								fragmentEntryLink, httpServletRequest,
-								fragmentRendererContext.getInfoFormOptional(),
-								fragmentRendererContext.getLocale()))));
+					JSONUtil.toString(
+						_getInputJSONObject(
+							fragmentEntryLink, httpServletRequest,
+							fragmentRendererContext.getInfoFormOptional(),
+							fragmentRendererContext.getLocale())));
 			}
 
 			sb.append("; var layoutMode = '");

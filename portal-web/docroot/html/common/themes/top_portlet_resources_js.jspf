@@ -17,7 +17,7 @@
 <c:if test="<%= !SetUtil.isEmpty(portletTreeSet) %>">
 
 	<%
-	PortletRenderUtil.writeHeaderJavaScriptPaths(request, portlets, out);
+	PortletRenderUtil.writeHeaderJavaScriptPaths(request, portletTreeSet, out);
 	%>
 
 </c:if>

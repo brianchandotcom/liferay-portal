@@ -1,0 +1,54 @@
+.dashboard-sales-container {
+	min-height: 257px;
+}
+
+.dashboard-sales-container
+	.dashboard-sales-header
+	.dashboard-sales-title::after {
+	background-color: #4d85ff;
+	content: '';
+	height: 1px;
+	left: 28px;
+	min-width: 20px;
+	position: absolute;
+	top: 50px;
+}
+
+.dashboard-sales-container .bb-chart-arcs-title {
+	color: #4d85ff;
+	dominant-baseline: central;
+	font-size: 32px;
+	font-weight: 700;
+}
+
+.dashboard-sales-container .dashboard-sales-select {
+	border-color: var(--white);
+	padding: 5px;
+	width: 105px;
+}
+
+.dashboard-sales-container .dashboard-sales-title::after {
+	background-color: var(--primary);
+	content: '';
+	display: block;
+	height: 1px;
+	margin-top: 6px;
+	position: absolute;
+	width: 19px;
+}
+
+.dashboard-sales-container .dashboard-sales-title::after {
+	background-color: var(--primary);
+	content: '';
+	display: block;
+	height: 1px;
+	margin-top: 6px;
+	position: absolute;
+	width: 19px;
+}
+
+@media screen and (max-width: 1280px) {
+	.dashboard-sales-title {
+		word-break: break-word;
+	}
+}

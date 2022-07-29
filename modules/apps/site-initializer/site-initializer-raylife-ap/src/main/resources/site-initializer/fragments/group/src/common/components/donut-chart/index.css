@@ -37,3 +37,15 @@
 		justify-content: space-evenly;
 	}
 }
+
+@media screen and (max-width: 1280px) {
+	.donut-chart-legend {
+		flex-direction: row !important;
+		justify-content: space-evenly !important;
+	}
+
+	.donut-chart-screen {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+}

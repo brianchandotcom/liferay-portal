@@ -5,9 +5,9 @@ definition {
 
 		MenuItem.click(menuItem = "RSS");
 
-		Pause(locator1 = "3000");
-
 		SelectWindow.selectPopUp(locator1 = "null");
+
+		WaitForPageLoad();
 
 		AssertLocation.assertPartialLocation(value1 = "${rssURL}/rss");
 	}

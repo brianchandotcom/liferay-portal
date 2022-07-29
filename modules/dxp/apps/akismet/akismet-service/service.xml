@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
 
-<service-builder auto-namespace-tables="true" mvcc-enabled="false" package-path="com.liferay.akismet">
+<service-builder auto-namespace-tables="true" dependency-injector="ds" mvcc-enabled="false" package-path="com.liferay.akismet">
 	<author>Jamie Sammons</author>
 	<namespace>OSBCommunity</namespace>
 	<entity cache-enabled="true" local-service="true" name="AkismetEntry" remote-service="false">

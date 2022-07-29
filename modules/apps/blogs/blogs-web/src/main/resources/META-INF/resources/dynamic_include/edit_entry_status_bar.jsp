@@ -24,27 +24,37 @@ BlogsEntry entry = blogsEditEntryDisplayContext.getBlogsEntry();
 BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortletInstanceConfigurationUtil.getBlogsPortletInstanceConfiguration(themeDisplay);
 %>
 
-<liferay-frontend:info-bar>
-	<c:choose>
-		<c:when test="<%= entry != null %>">
-			<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
-				<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
+<div class="management-bar management-bar-light navbar navbar-expand-md">
+	<clay:container-fluid>
+		<ul class="m-auto navbar-nav"></ul>
 
-				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-			</small>
-		</c:when>
-		<c:otherwise>
-			<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus"></small>
-		</c:otherwise>
-	</c:choose>
+		<ul class="middle navbar-nav">
+			<li class="nav-item">
+				<c:choose>
+					<c:when test="<%= entry != null %>">
+						<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
+							<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 
-	<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
-		<small class="reading-time-wrapper text-muted">
-			<liferay-reading-time:reading-time
-				displayStyle="descriptive"
-				id="readingTime"
-				model="<%= entry %>"
-			/>
-		</small>
-	</c:if>
-</liferay-frontend:info-bar>
+							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						</small>
+					</c:when>
+					<c:otherwise>
+						<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus"></small>
+					</c:otherwise>
+				</c:choose>
+
+				<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
+					<small class="reading-time-wrapper text-muted">
+						<liferay-reading-time:reading-time
+							displayStyle="descriptive"
+							id="readingTime"
+							model="<%= entry %>"
+						/>
+					</small>
+				</c:if>
+			</li>
+		</ul>
+
+		<ul class="end m-auto navbar-nav"></ul>
+	</clay:container-fluid>
+</div>

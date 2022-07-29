@@ -60,9 +60,19 @@ if (portletTitleBasedNavigation) {
 </liferay-util:buffer>
 
 <c:if test="<%= (kbArticle != null) && portletTitleBasedNavigation %>">
-	<liferay-frontend:info-bar>
-		<%= kbArticleStatus %>
-	</liferay-frontend:info-bar>
+	<div class="management-bar management-bar-light navbar navbar-expand-md">
+		<clay:container-fluid>
+			<ul class="m-auto navbar-nav"></ul>
+
+			<ul class="middle navbar-nav">
+				<li class="nav-item">
+					<%= kbArticleStatus %>
+				</li>
+			</ul>
+
+			<ul class="end m-auto navbar-nav"></ul>
+		</clay:container-fluid>
+	</div>
 </c:if>
 
 <c:if test="<%= !portletTitleBasedNavigation %>">

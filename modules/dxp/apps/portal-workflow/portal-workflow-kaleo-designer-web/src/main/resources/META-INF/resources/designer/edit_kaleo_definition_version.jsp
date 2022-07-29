@@ -85,57 +85,63 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 		<c:if test="<%= kaleoDefinitionVersion != null %>">
 			<aui:model-context bean="<%= kaleoDefinitionVersion %>" model="<%= KaleoDefinitionVersion.class %>" />
 
-			<liferay-frontend:info-bar>
+			<div class="management-bar management-bar-light navbar navbar-expand-md">
 				<clay:container-fluid>
-					<c:if test="<%= !Objects.equals(state, WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE) %>">
-						<div class="info-bar-item">
-							<c:choose>
-								<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() %>">
-									<clay:label
-										displayType="info"
-										label="published"
-										large="<%= true %>"
-									/>
-								</c:when>
-								<c:otherwise>
-									<clay:label
-										label="not-published"
-										large="<%= true %>"
-									/>
-								</c:otherwise>
-							</c:choose>
-						</div>
-					</c:if>
+					<ul class="m-auto navbar-nav"></ul>
 
-					<%
-					String userName = kaleoDesignerDisplayContext.getUserName(kaleoDefinitionVersion);
-					%>
+					<ul class="middle navbar-nav">
+						<li class="nav-item">
+							<c:if test="<%= !Objects.equals(state, WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE) %>">
+								<c:choose>
+									<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() %>">
+										<clay:label
+											displayType="info"
+											label="published"
+											large="<%= true %>"
+										/>
+									</c:when>
+									<c:otherwise>
+										<clay:label
+											label="not-published"
+											large="<%= true %>"
+										/>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
 
-					<span>
-						<c:choose>
-							<c:when test="<%= userName == null %>">
-								<%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %>
-							</c:when>
-							<c:when test="<%= Objects.equals(state, WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE) %>">
-								<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x,-by-x" translateArguments="<%= false %>" />
-							</c:otherwise>
-						</c:choose>
-					</span>
+							<%
+							String userName = kaleoDesignerDisplayContext.getUserName(kaleoDefinitionVersion);
+							%>
+
+							<span>
+								<c:choose>
+									<c:when test="<%= userName == null %>">
+										<%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %>
+									</c:when>
+									<c:when test="<%= Objects.equals(state, WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE) %>">
+										<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x,-by-x" translateArguments="<%= false %>" />
+									</c:otherwise>
+								</c:choose>
+							</span>
+						</li>
+					</ul>
+
+					<ul class="end navbar-nav">
+						<li class="nav-item">
+							<c:if test='<%= !Objects.equals(state, WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE) && !Objects.equals(state, "view") %>'>
+								<liferay-frontend:info-bar-sidenav-toggler-button
+									icon="info-circle"
+									label="info"
+									typeMobile="relative"
+								/>
+							</c:if>
+						</li>
+					</ul>
 				</clay:container-fluid>
-
-				<c:if test='<%= !Objects.equals(state, WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE) && !Objects.equals(state, "view") %>'>
-					<liferay-frontend:info-bar-buttons>
-						<liferay-frontend:info-bar-sidenav-toggler-button
-							icon="info-circle"
-							label="info"
-							typeMobile="relative"
-						/>
-					</liferay-frontend:info-bar-buttons>
-				</c:if>
-			</liferay-frontend:info-bar>
+			</div>
 		</c:if>
 
 		<div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

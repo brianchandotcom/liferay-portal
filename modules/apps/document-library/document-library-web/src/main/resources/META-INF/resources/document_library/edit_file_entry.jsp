@@ -134,9 +134,19 @@ renderResponse.setTitle(headerTitle);
 	}
 	%>
 
-	<liferay-frontend:info-bar>
-		<aui:workflow-status markupView="lexicon" model="<%= DLFileEntry.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" version="<%= version %>" />
-	</liferay-frontend:info-bar>
+	<div class="management-bar management-bar-light navbar navbar-expand-md">
+		<clay:container-fluid>
+			<ul class="m-auto navbar-nav"></ul>
+
+			<ul class="middle navbar-nav">
+				<li class="nav-item">
+					<aui:workflow-status markupView="lexicon" model="<%= DLFileEntry.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" version="<%= version %>" />
+				</li>
+			</ul>
+
+			<ul class="end m-auto navbar-nav"></ul>
+		</clay:container-fluid>
+	</div>
 </c:if>
 
 <clay:container-fluid

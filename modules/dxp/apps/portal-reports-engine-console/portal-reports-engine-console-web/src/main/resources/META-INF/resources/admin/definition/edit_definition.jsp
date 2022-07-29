@@ -69,13 +69,23 @@ else {
 	<aui:input name="definitionId" type="hidden" />
 
 	<c:if test="<%= definition != null %>">
-		<liferay-frontend:info-bar>
-			<span class="text-muted">
-				<span class="definition-id-label"><liferay-ui:message key="id" />:</span>
+		<div class="management-bar management-bar-light navbar navbar-expand-md">
+			<clay:container-fluid>
+				<ul class="m-auto navbar-nav"></ul>
 
-				<span class="definition-id-value"><%= definition.getDefinitionId() %></span>
-			</span>
-		</liferay-frontend:info-bar>
+				<ul class="middle navbar-nav">
+					<li class="nav-item">
+						<span class="text-muted">
+							<span class="definition-id-label"><liferay-ui:message key="id" />:</span>
+
+							<span class="definition-id-value"><%= definition.getDefinitionId() %></span>
+						</span>
+					</li>
+				</ul>
+
+				<ul class="end m-auto navbar-nav"></ul>
+			</clay:container-fluid>
+		</div>
 	</c:if>
 
 	<aui:fieldset-group markupView="lexicon">

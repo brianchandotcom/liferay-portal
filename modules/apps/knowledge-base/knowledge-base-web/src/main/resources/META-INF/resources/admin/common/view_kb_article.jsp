@@ -53,16 +53,26 @@ if (portletTitleBasedNavigation) {
 %>
 
 <c:if test="<%= portletTitleBasedNavigation %>">
-	<liferay-frontend:info-bar>
-		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
+	<div class="management-bar management-bar-light navbar navbar-expand-md">
+		<clay:container-fluid>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<liferay-frontend:info-bar-sidenav-toggler-button
+						icon="info-circle-open"
+						label="info"
+					/>
+				</li>
+			</ul>
 
-		<liferay-frontend:info-bar-buttons>
-			<liferay-frontend:info-bar-sidenav-toggler-button
-				icon="info-circle-open"
-				label="info"
-			/>
-		</liferay-frontend:info-bar-buttons>
-	</liferay-frontend:info-bar>
+			<ul class="middle navbar-nav">
+				<li class="nav-item">
+					<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
+				</li>
+			</ul>
+
+			<ul class="end m-auto navbar-nav"></ul>
+		</clay:container-fluid>
+	</div>
 </c:if>
 
 <div <%= portletTitleBasedNavigation ? "class=\"closed kb-article sidenav-container sidenav-right\" id=\"" + liferayPortletResponse.getNamespace() + "infoPanelId\"" : StringPool.BLANK %>>

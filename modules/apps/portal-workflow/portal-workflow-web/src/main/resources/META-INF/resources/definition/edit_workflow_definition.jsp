@@ -56,50 +56,56 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 </liferay-portlet:actionURL>
 
 <c:if test="<%= workflowDefinition != null %>">
-	<liferay-frontend:info-bar>
+	<div class="management-bar management-bar-light navbar navbar-expand-md">
 		<clay:container-fluid>
-			<div class="info-bar-item">
-				<c:choose>
-					<c:when test="<%= active %>">
-						<clay:label
-							displayType="info"
-							label="published"
-							large="<%= true %>"
-						/>
-					</c:when>
-					<c:otherwise>
-						<clay:label
-							label="not-published"
-							large="<%= true %>"
-						/>
-					</c:otherwise>
-				</c:choose>
-			</div>
+			<ul class="m-auto navbar-nav"></ul>
 
-			<%
-			String userName = workflowDefinitionDisplayContext.getUserName(workflowDefinition);
-			%>
+			<ul class="middle navbar-nav">
+				<li class="nav-item">
+					<c:choose>
+						<c:when test="<%= active %>">
+							<clay:label
+								displayType="info"
+								label="published"
+								large="<%= true %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<clay:label
+								label="not-published"
+								large="<%= true %>"
+							/>
+						</c:otherwise>
+					</c:choose>
 
-			<span>
-				<c:choose>
-					<c:when test="<%= userName == null %>">
-						<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x,-by-x" translateArguments="<%= false %>" />
-					</c:otherwise>
-				</c:choose>
-			</span>
+					<%
+					String userName = workflowDefinitionDisplayContext.getUserName(workflowDefinition);
+					%>
+
+					<span>
+						<c:choose>
+							<c:when test="<%= userName == null %>">
+								<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x,-by-x" translateArguments="<%= false %>" />
+							</c:otherwise>
+						</c:choose>
+					</span>
+				</li>
+			</ul>
+
+			<ul class="end navbar-nav">
+				<li class="nav-item">
+					<liferay-frontend:info-bar-sidenav-toggler-button
+						icon="info-circle"
+						label="info"
+						typeMobile="relative"
+					/>
+				</li>
+			</ul>
 		</clay:container-fluid>
-
-		<liferay-frontend:info-bar-buttons>
-			<liferay-frontend:info-bar-sidenav-toggler-button
-				icon="info-circle"
-				label="info"
-				typeMobile="relative"
-			/>
-		</liferay-frontend:info-bar-buttons>
-	</liferay-frontend:info-bar>
+	</div>
 </c:if>
 
 <div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

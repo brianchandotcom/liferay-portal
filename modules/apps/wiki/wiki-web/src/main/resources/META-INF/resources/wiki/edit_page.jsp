@@ -119,9 +119,19 @@ if (portletTitleBasedNavigation) {
 %>
 
 <c:if test="<%= portletTitleBasedNavigation && (wikiPage != null) && !wikiPage.isNew() %>">
-	<liferay-frontend:info-bar>
-		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
-	</liferay-frontend:info-bar>
+	<div class="management-bar management-bar-light navbar navbar-expand-md">
+		<clay:container-fluid>
+			<ul class="m-auto navbar-nav"></ul>
+
+			<ul class="middle navbar-nav">
+				<li class="nav-item">
+					<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
+				</li>
+			</ul>
+
+			<ul class="end m-auto navbar-nav"></ul>
+		</clay:container-fluid>
+	</div>
 </c:if>
 
 <portlet:actionURL name="/wiki/edit_page" var="editPageActionURL">

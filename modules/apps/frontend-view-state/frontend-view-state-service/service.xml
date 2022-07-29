@@ -88,8 +88,8 @@
 
 		<!-- Other fields -->
 
-		<column name="fdsName" type="String" />
 		<column name="fvsEntryId" type="long" />
+		<column name="fdsName" type="String" />
 		<column name="name" type="String" />
 		<column name="plid" type="long" />
 		<column name="portletId" type="String" />

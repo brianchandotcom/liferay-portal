@@ -217,6 +217,10 @@ definition {
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
 			value1 = "This node is master node");
 
+		// Pausing 10 seconds due to LRQA-75909
+
+		Pause(locator1 = "10000");
+
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Received message at",
 			nodePort = "9080");

@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>STATUS_READING_TIME</td>
-	<td>//div[@class='info-bar-center']//small/time[contains(@id,'readingTime') and contains (.,'${key_readingTime}')]</td>
+	<td>//div[contains(@class,'management-bar')]//span/time[contains(@id,'readingTime') and contains (.,'${key_readingTime}')]</td>
 	<td></td>
 </tr>
 </tbody>

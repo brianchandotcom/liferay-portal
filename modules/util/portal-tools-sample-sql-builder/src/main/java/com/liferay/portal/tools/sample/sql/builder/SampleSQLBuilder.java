@@ -249,6 +249,12 @@ public class SampleSQLBuilder {
 			}
 		}
 
+		for (Map.Entry<String, Writer> entry : insertSQLWriters.entrySet()) {
+			Writer writer = entry.getValue();
+
+			writer.close();
+		}
+
 		try (Writer counterSQLWriter = new FileWriter(
 				new File(dir, "Counter.sql"), true)) {
 

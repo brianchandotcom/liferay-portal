@@ -157,7 +157,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 												<aui:input name="postReplyBody0" type="hidden" />
 
 												<aui:button-row>
-													<aui:button cssClass="btn-comment btn-primary btn-sm" disabled="<%= true %>" id="postReplyButton0" onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+													<aui:button cssClass="btn-comment btn-sm" disabled="<%= true %>" id="postReplyButton0" onClick='<%= randomNamespace + "postReply(0);" %>' primary="<%= true %>" value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 												</aui:button-row>
 											</clay:content-col>
 										</clay:content-row>

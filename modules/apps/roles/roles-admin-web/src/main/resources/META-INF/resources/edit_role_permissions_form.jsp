@@ -144,7 +144,7 @@ if (Validator.isNotNull(portletResource)) {
 		</c:if>
 
 		<clay:sheet-footer>
-			<aui:button cssClass="btn-primary" onClick='<%= liferayPortletResponse.getNamespace() + "updateActions();" %>' value="save" />
+			<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "updateActions();" %>' primary="<%= true %>" value="save" />
 		</clay:sheet-footer>
 	</clay:sheet>
 </aui:form>

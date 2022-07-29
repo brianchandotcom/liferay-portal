@@ -293,7 +293,7 @@ if (commerceOrder != null) {
 	<aui:button cssClass="btn btn-lg btn-secondary" onClick='<%= liferayPortletResponse.getNamespace() + "reorderCommerceOrder();" %>' value="reorder" />
 
 	<c:if test="<%= commerceOrderContentDisplayContext.isShowRetryPayment() %>">
-		<aui:button cssClass="btn btn-lg btn-primary" href="<%= commerceOrderContentDisplayContext.getRetryPaymentURL() %>" value="retry-payment" />
+		<aui:button cssClass="btn-lg" href="<%= commerceOrderContentDisplayContext.getRetryPaymentURL() %>" primary="<%= true %>" value="retry-payment" />
 	</c:if>
 
 	<liferay-util:dynamic-include key="com.liferay.commerce.order.content.web#/place_order_detail_cta#" />

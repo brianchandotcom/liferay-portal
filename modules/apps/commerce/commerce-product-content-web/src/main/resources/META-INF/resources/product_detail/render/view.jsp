@@ -70,7 +70,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 				<c:if test="<%= hasReplacement %>">
 					<p class="product-description"><%= LanguageUtil.get(request, "this-product-is-discontinued.-you-can-see-the-replacement-product-by-clicking-on-the-button-below") %></p>
 
-					<aui:button cssClass="btn btn-primary btn-sm my-2" href="<%= cpContentHelper.getReplacementCommerceProductFriendlyURL(cpSku, themeDisplay) %>" value="replacement-product" />
+					<aui:button cssClass="btn-sm my-2" href="<%= cpContentHelper.getReplacementCommerceProductFriendlyURL(cpSku, themeDisplay) %>" primary="<%= true %>" value="replacement-product" />
 				</c:if>
 
 				<c:if test="<%= (cpSku != null) && (cpSku.getDiscontinuedDate() != null) %>">

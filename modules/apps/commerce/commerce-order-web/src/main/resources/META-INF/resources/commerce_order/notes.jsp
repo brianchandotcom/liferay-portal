@@ -156,7 +156,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							<aui:input helpMessage="restricted-help" label="private" name="restricted" type="toggle-switch" />
 
 							<aui:button-row>
-								<aui:button cssClass="btn-large btn-primary" type="submit" />
+								<aui:button cssClass="btn-large" type="submit" />
 							</aui:button-row>
 						</div>
 					</div>

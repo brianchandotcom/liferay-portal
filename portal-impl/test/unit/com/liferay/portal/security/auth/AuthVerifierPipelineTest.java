@@ -147,19 +147,14 @@ public class AuthVerifierPipelineTest {
 		AuthVerifierResult.State expectedState =
 			AuthVerifierResult.State.SUCCESS;
 
-		String proxyPath = "/proxy";
-
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PORTAL_PROXY_PATH", proxyPath)) {
+					"PORTAL_PROXY_PATH", "/proxy")) {
 
 			_setUpPortalUtil();
 
-			String portalUtilPathContext = PortalUtil.getPathContext(
-				contextPath);
-
 			_assertAuthVerifierResult(
-				portalUtilPathContext, includeURLs, requestURI, expectedState);
+				contextPath, includeURLs, requestURI, expectedState);
 		}
 	}
 

@@ -9,4 +9,23 @@
  * distribution rights of the Software.
  */
 
-export {default} from './DatePicker';
+import {ClayRadio} from '@clayui/form';
+
+type Props = {
+	checked: boolean;
+	inline: any;
+	label: string;
+	name: string;
+	onChange: any;
+	value: string;
+};
+
+const Radio = ({...props}: Props) => {
+	return (
+		<>
+			<ClayRadio {...props} />
+		</>
+	);
+};
+
+export default Radio;

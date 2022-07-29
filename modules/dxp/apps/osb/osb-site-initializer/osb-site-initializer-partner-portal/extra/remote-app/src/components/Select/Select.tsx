@@ -9,4 +9,32 @@
  * distribution rights of the Software.
  */
 
-export {default} from './DatePicker';
+import {ClaySelect} from '@clayui/form';
+
+type Props = {
+	label: string;
+	name: string;
+	onChange: any;
+	options: any;
+	value: any;
+};
+
+const Select = ({label, options, ...props}: Props) => {
+	return (
+		<>
+			<label>{label}</label>
+
+			<ClaySelect {...props}>
+				{options.map((item: any) => (
+					<ClaySelect.Option
+						key={item.value}
+						label={item.label}
+						value={item.value}
+					/>
+				))}
+			</ClaySelect>
+		</>
+	);
+};
+
+export default Select;

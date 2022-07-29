@@ -9,4 +9,21 @@
  * distribution rights of the Software.
  */
 
-export {default} from './DatePicker';
+import {ClayCheckbox} from '@clayui/form';
+
+type Props = {
+	checked: boolean;
+	label: string;
+	onChange: any;
+	readOnly: any;
+};
+
+const CheckBox = ({...props}: Props) => {
+	return (
+		<>
+			<ClayCheckbox {...props} />
+		</>
+	);
+};
+
+export default CheckBox;

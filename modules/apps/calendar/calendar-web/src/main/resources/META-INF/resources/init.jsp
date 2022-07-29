@@ -230,9 +230,13 @@ TimeZone userTimeZone = TimeZone.getTimeZone(timeZoneId);
 
 Format longDateFormat = FastDateFormatFactoryUtil.getDate(FastDateFormatConstants.LONG, locale, userTimeZone);
 
+Format utcLongDateFormat = FastDateFormatFactoryUtil.getDate(FastDateFormatConstants.LONG, locale, TimeZone.getTimeZone(StringPool.UTC));
+
 boolean useIsoTimeFormat = timeFormat.equals("24-hour") || (timeFormat.equals("locale") && !DateUtil.isFormatAmPm(locale));
 
 Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(useIsoTimeFormat ? "HH:mm" : "hh:mm a", locale, userTimeZone);
+
+Format utcTimeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(useIsoTimeFormat ? "HH:mm" : "hh:mm a", locale, TimeZone.getTimeZone(StringPool.UTC));
 %>
 
 <%@ include file="/init-ext.jsp" %>

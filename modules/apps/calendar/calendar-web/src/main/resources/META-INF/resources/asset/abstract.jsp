@@ -75,7 +75,14 @@ String languageId = LanguageUtil.getLanguageId(request);
 		java.util.Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(calendarBooking.getStartTime(), user.getTimeZone());
 		%>
 
-		<liferay-ui:message key="starts" />: <%= longDateFormat.format(startTimeJCalendar.getTime()) + ", " + timeFormat.format(startTimeJCalendar.getTime()) %>
+		<c:choose>
+			<c:when test="<%= calendarBooking.isAllDay() %>">
+				<liferay-ui:message key="starts" />: <%= utcLongDateFormat.format(startTimeJCalendar.getTime()) + ", " + utcTimeFormat.format(startTimeJCalendar.getTime()) %>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="starts" />: <%= longDateFormat.format(startTimeJCalendar.getTime()) + ", " + timeFormat.format(startTimeJCalendar.getTime()) %>
+			</c:otherwise>
+		</c:choose>
 
 		<br />
 
@@ -89,7 +96,14 @@ String languageId = LanguageUtil.getLanguageId(request);
 		java.util.Calendar endTimeJCalendar = JCalendarUtil.getJCalendar(calendarBooking.getEndTime(), user.getTimeZone());
 		%>
 
-		<liferay-ui:message key="ends" />: <%= longDateFormat.format(endTimeJCalendar.getTime()) + ", " + timeFormat.format(endTimeJCalendar.getTime()) %>
+		<c:choose>
+			<c:when test="<%= calendarBooking.isAllDay() %>">
+				<liferay-ui:message key="ends" />: <%= utcLongDateFormat.format(endTimeJCalendar.getTime()) + ", " + utcTimeFormat.format(endTimeJCalendar.getTime()) %>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="ends" />: <%= longDateFormat.format(endTimeJCalendar.getTime()) + ", " + timeFormat.format(endTimeJCalendar.getTime()) %>
+			</c:otherwise>
+		</c:choose>
 	</p>
 </div>
 

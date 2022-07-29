@@ -66,10 +66,7 @@ export default withRouter(
 
 					{editable && comment.actions.delete && (
 						<>
-							<div
-								className="font-weight-bold text-secondary"
-								spaced={true}
-							>
+							<div className="font-weight-bold text-secondary">
 								<ClayButton
 									className="btn-sm c-mr-2 c-px-2 c-py-1"
 									displayType="secondary"

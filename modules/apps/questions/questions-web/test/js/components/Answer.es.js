@@ -67,6 +67,7 @@ const mockAnswer = {
 		postsNumber: 12,
 		rank: 'Youngling',
 	},
+	dateCreated: '2020-07-30T09:44:49Z',
 	encodingFormat: 'html',
 	friendlyUrlPath: 're-new-question',
 	id: 36801,

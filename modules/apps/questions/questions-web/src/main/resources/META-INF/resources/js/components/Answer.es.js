@@ -127,10 +127,7 @@ export default withRouter(
 							<div className="d-flex justify-content-between">
 								<div>
 									{editable && (
-										<div
-											className="font-weight-bold text-secondary"
-											spaced={true}
-										>
+										<div className="font-weight-bold text-secondary">
 											{answer.actions[
 												'reply-to-message'
 											] &&

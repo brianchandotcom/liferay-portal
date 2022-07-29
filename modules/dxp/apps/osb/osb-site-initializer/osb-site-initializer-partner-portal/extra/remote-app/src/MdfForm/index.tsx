@@ -9,12 +9,10 @@
  * distribution rights of the Software.
  */
 
-import MdfForm from './MdfForm';
+import GoalsPage from './pages/GoalsPage';
 
-const App = () => (
-	<div>
-		<MdfForm />
-	</div>
-);
+const MdfForm = () => {
+	return <GoalsPage />;
+};
 
-export default App;
+export default MdfForm;

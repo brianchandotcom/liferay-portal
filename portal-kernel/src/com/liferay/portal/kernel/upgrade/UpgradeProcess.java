@@ -80,6 +80,10 @@ public abstract class UpgradeProcess
 		return 0;
 	}
 
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {this};
+	}
+
 	public void upgrade() throws UpgradeException {
 		long start = System.currentTimeMillis();
 

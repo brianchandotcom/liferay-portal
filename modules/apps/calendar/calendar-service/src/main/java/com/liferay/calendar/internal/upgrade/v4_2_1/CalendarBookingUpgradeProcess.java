@@ -107,10 +107,7 @@ public class CalendarBookingUpgradeProcess extends UpgradeProcess {
 	}
 
 	private boolean _isLastHour(Calendar jCalendar) {
-		int hour = jCalendar.get(Calendar.HOUR_OF_DAY);
-		int minute = jCalendar.get(Calendar.MINUTE);
-
-		if ((hour == 23) && (minute == 59)) {
+		if ((jCalendar.get(Calendar.HOUR_OF_DAY) == 23) && (jCalendar.get(Calendar.MINUTE) == 59)) {
 			return true;
 		}
 
@@ -118,10 +115,7 @@ public class CalendarBookingUpgradeProcess extends UpgradeProcess {
 	}
 
 	private boolean _isMidnight(Calendar jCalendar) {
-		int hour = jCalendar.get(Calendar.HOUR_OF_DAY);
-		int minute = jCalendar.get(Calendar.MINUTE);
-
-		if ((hour == 0) && (minute == 0)) {
+		if ((jCalendar.get(Calendar.HOUR_OF_DAY) == 0) && (jCalendar.get(Calendar.MINUTE) == 0)) {
 			return true;
 		}
 

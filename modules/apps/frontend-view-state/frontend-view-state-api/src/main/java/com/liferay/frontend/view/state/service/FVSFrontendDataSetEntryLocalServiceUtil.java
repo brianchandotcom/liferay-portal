@@ -62,12 +62,12 @@ public class FVSFrontendDataSetEntryLocalServiceUtil {
 	}
 
 	public static FVSFrontendDataSetEntry addFVSFrontendDataSetEntry(
-			String fdsName, long fvsEntryId, String name, long plid,
+			long fvsEntryId, String fdsName, String name, long plid,
 			String portletId, long userId)
 		throws PortalException {
 
 		return getService().addFVSFrontendDataSetEntry(
-			fdsName, fvsEntryId, name, plid, portletId, userId);
+			fvsEntryId, fdsName, name, plid, portletId, userId);
 	}
 
 	/**

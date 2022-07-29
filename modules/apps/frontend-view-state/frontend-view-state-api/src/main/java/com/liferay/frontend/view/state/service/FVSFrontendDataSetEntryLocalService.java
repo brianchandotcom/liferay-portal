@@ -79,7 +79,7 @@ public interface FVSFrontendDataSetEntryLocalService
 		FVSFrontendDataSetEntry fvsFrontendDataSetEntry);
 
 	public FVSFrontendDataSetEntry addFVSFrontendDataSetEntry(
-			String fdsName, long fvsEntryId, String name, long plid,
+			long fvsEntryId, String fdsName, String name, long plid,
 			String portletId, long userId)
 		throws PortalException;
 

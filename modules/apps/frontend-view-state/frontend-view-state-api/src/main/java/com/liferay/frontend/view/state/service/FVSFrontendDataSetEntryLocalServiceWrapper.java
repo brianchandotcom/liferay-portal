@@ -62,12 +62,12 @@ public class FVSFrontendDataSetEntryLocalServiceWrapper
 	@Override
 	public com.liferay.frontend.view.state.model.FVSFrontendDataSetEntry
 			addFVSFrontendDataSetEntry(
-				String fdsName, long fvsEntryId, String name, long plid,
+				long fvsEntryId, String fdsName, String name, long plid,
 				String portletId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fvsFrontendDataSetEntryLocalService.addFVSFrontendDataSetEntry(
-			fdsName, fvsEntryId, name, plid, portletId, userId);
+			fvsEntryId, fdsName, name, plid, portletId, userId);
 	}
 
 	/**

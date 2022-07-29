@@ -45,7 +45,7 @@ public class ERUserLocalServiceImpl extends ERUserLocalServiceBaseImpl {
 			boolean autoPassword, String password1, String password2,
 			boolean autoScreenName, String screenName, String emailAddress,
 			Locale locale, String firstName, String middleName, String lastName,
-			long prefixId, long suffixId, boolean male, int birthdayMonth,
+			long prefixListTypeId, long suffixListTypeId, boolean male, int birthdayMonth,
 			int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds,
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
@@ -59,7 +59,7 @@ public class ERUserLocalServiceImpl extends ERUserLocalServiceBaseImpl {
 			user = _userLocalService.addUser(
 				creatorUserId, companyId, autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, locale, firstName,
-				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+				middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
 				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
 				roleIds, userGroupIds, sendEmail, serviceContext);
 
@@ -83,8 +83,8 @@ public class ERUserLocalServiceImpl extends ERUserLocalServiceBaseImpl {
 				user.getReminderQueryQuestion(), user.getReminderQueryAnswer(),
 				screenName, emailAddress, hasPortrait, null,
 				user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
-				user.getComments(), firstName, middleName, lastName, prefixId,
-				suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+				user.getComments(), firstName, middleName, lastName, prefixListTypeId,
+				suffixListTypeId, male, birthdayMonth, birthdayDay, birthdayYear,
 				contact.getSmsSn(), contact.getFacebookSn(),
 				contact.getJabberSn(), contact.getSkypeSn(),
 				contact.getTwitterSn(), jobTitle, groupIds, organizationIds,

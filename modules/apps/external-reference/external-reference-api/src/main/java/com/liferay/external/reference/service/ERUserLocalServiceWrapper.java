@@ -40,8 +40,8 @@ public class ERUserLocalServiceWrapper
 			boolean autoPassword, String password1, String password2,
 			boolean autoScreenName, String screenName, String emailAddress,
 			java.util.Locale locale, String firstName, String middleName,
-			String lastName, long prefixId, long suffixId, boolean male,
-			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String lastName, long prefixListTypeId, long suffixListTypeId,
+			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
 			String jobTitle, long[] groupIds, long[] organizationIds,
 			long[] roleIds,
 			java.util.List<com.liferay.portal.kernel.model.UserGroupRole>
@@ -53,10 +53,10 @@ public class ERUserLocalServiceWrapper
 		return _erUserLocalService.addOrUpdateUser(
 			externalReferenceCode, creatorUserId, companyId, autoPassword,
 			password1, password2, autoScreenName, screenName, emailAddress,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupRoles, userGroupIds, sendEmail,
-			serviceContext);
+			locale, firstName, middleName, lastName, prefixListTypeId,
+			suffixListTypeId, male, birthdayMonth, birthdayDay, birthdayYear,
+			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
+			userGroupIds, sendEmail, serviceContext);
 	}
 
 	/**

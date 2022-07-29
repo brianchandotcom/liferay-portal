@@ -20,11 +20,13 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -91,7 +93,7 @@ public class PortletRenderUtil {
 			URLType.CSS);
 
 		for (String url : urls) {
-			_writeCSSPath(new PrintWriter(writer, true), url);
+			_writeCSSPath(new PrintWriter(writer, true), url, null);
 		}
 	}
 
@@ -129,7 +131,15 @@ public class PortletRenderUtil {
 			URLType.CSS);
 
 		for (String url : urls) {
-			_writeCSSPath(new PrintWriter(writer, true), url);
+			_writeCSSPath(
+				new PrintWriter(writer, true), url,
+				HashMapBuilder.put(
+					"data-senna-track", "temporary"
+				).put(
+					"id",
+					HtmlUtil.escapeAttribute(
+						StringUtil.toHexString(url.hashCode()))
+				).build());
 		}
 	}
 
@@ -444,10 +454,25 @@ public class PortletRenderUtil {
 			visitedURLs);
 	}
 
-	private static void _writeCSSPath(PrintWriter printWriter, String cssPath) {
+	private static void _writeCSSPath(
+		PrintWriter printWriter, String cssPath,
+		Map<String, String> attributes) {
+
 		printWriter.print("<link href=\"");
 		printWriter.print(HtmlUtil.escape(cssPath));
-		printWriter.println("\" rel=\"stylesheet\" type=\"text/css\" />");
+		printWriter.println("\" rel=\"stylesheet\" type=\"text/css\"");
+
+		if (attributes != null) {
+			for (Map.Entry<String, String> entry : attributes.entrySet()) {
+				printWriter.print(StringPool.SPACE);
+				printWriter.print(entry.getKey());
+				printWriter.print("=\"");
+				printWriter.print(HtmlUtil.escapeAttribute(entry.getValue()));
+				printWriter.print(StringPool.QUOTE);
+			}
+		}
+
+		printWriter.println(" />");
 	}
 
 	private static void _writeJavaScriptPath(
@@ -495,7 +520,7 @@ public class PortletRenderUtil {
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		for (String cssPath : cssPaths) {
-			_writeCSSPath(printWriter, cssPath);
+			_writeCSSPath(printWriter, cssPath, null);
 		}
 
 		for (String javaScriptPath : javaScriptPaths) {

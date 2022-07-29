@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ObjectDefinitionPermissionUtil {
 
 	public static boolean hasModelResourcePermission(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			ObjectDefinition objectDefinition, long objectEntryId,
 			ObjectEntryService objectEntryService, String actionId)
 		throws PortalException {
 
@@ -34,7 +34,16 @@ public class ObjectDefinitionPermissionUtil {
 		}
 
 		return objectEntryService.hasModelResourcePermission(
-			objectDefinition.getObjectDefinitionId(), objectEntry.getId(),
+			objectDefinition.getObjectDefinitionId(), objectEntryId, actionId);
+	}
+
+	public static boolean hasModelResourcePermission(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			ObjectEntryService objectEntryService, String actionId)
+		throws PortalException {
+
+		return hasModelResourcePermission(
+			objectDefinition, objectEntry.getId(), objectEntryService,
 			actionId);
 	}
 

@@ -3540,14 +3540,7 @@ public abstract class BaseBuild implements Build {
 
 		setStatus("running");
 
-		if (parentBuild != null) {
-			fromCompletedBuild = parentBuild.isFromCompletedBuild();
-		}
-		else {
-			String consoleText = getConsoleText();
-
-			fromCompletedBuild = consoleText.contains("stop-current-job:");
-		}
+		fromCompletedBuild = isFromCompletedBuild();
 	}
 
 	protected void setInvocationURL(String invocationURL) {

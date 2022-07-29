@@ -630,6 +630,26 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
+	public boolean isFromCompletedBuild() {
+		Build parentBuild = getParentBuild();
+
+		if (parentBuild != null) {
+			return parentBuild.isFromCompletedBuild();
+		}
+
+		String consoleText = getConsoleText();
+
+		if (consoleText.contains("stop-current-job:") ||
+			consoleText.contains(
+				"com.liferay.jenkins.results.parser.BuildLauncher teardown")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isUniqueFailure() {
 		return true;
 	}

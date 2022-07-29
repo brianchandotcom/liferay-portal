@@ -195,7 +195,7 @@ export default function QuestionRow({
 						{'- ' +
 							dateToInternationalHuman(
 								question.dateModified,
-								context.locale.language
+								Liferay.ThemeDisplay.getBCP47LanguageId()
 							)}
 					</span>
 				</div>

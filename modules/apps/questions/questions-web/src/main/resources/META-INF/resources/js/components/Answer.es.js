@@ -38,7 +38,6 @@ export default withRouter(
 		answer,
 		answerChange,
 		canMarkAsAnswer,
-		context,
 		deleteAnswer,
 		editable = true,
 		match: {url},
@@ -108,7 +107,7 @@ export default withRouter(
 								{lang.sub(Liferay.Language.get('answered-x'), [
 									`- ${dateToInternationalHuman(
 										answer.dateCreated,
-										context.locale.language
+										Liferay.ThemeDisplay.getBCP47LanguageId()
 									)}`,
 								])}
 							</span>

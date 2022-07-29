@@ -69,18 +69,14 @@ public class FlagsEntryServiceImpl extends FlagsEntryServiceBaseImpl {
 		_messageBus.sendMessage(DestinationNames.FLAGS, message);
 
 		if (className.equals("com.liferay.message.boards.model.MBMessage")) {
-			if (contentTitle.contains(
-					MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE)) {
-
+			MBMessage mbMessage = _mbMessageService.getMessage(classPK);
+			if (mbMessage.getMessageId() == mbMessage.getRootMessageId()){
 				_messageBoardSuspiciousActivityLocalService.
-					addOrUpdateSuspiciousActivityByMessage(classPK, reason);
-			}
-			else {
-				MBMessage mbMessage = _mbMessageService.getMessage(classPK);
-
-				_messageBoardSuspiciousActivityLocalService.
-					addOrUpdateSuspiciousActivityByThread(
+					addOrUpdateThreadSuspiciousActivity(
 						reason, mbMessage.getThreadId());
+			}else{
+				_messageBoardSuspiciousActivityLocalService.
+					addOrUpdateMessageSuspiciousActivity(classPK, reason);
 			}
 	}
 

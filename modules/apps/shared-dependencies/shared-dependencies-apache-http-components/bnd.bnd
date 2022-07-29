@@ -1,0 +1,30 @@
+Bundle-Name: Liferay Shared Dependencies Apache Http Components
+Bundle-SymbolicName: com.liferay.shared.dependencies.apache.http.components
+Bundle-Version: 1.0.0
+-exportcontents:\
+	org.apache.http,\
+	org.apache.http.auth,\
+	org.apache.http.client,\
+	org.apache.http.client.config,\
+	org.apache.http.client.entity,\
+	org.apache.http.client.methods,\
+	org.apache.http.client.protocol,\
+	org.apache.http.client.utils,\
+	org.apache.http.concurrent,\
+	org.apache.http.config,\
+	org.apache.http.conn,\
+	org.apache.http.conn.routing,\
+	org.apache.http.conn.socket,\
+	org.apache.http.conn.ssl,\
+	org.apache.http.cookie,\
+	org.apache.http.entity,\
+	org.apache.http.entity.mime,\
+	org.apache.http.entity.mime.content,\
+	org.apache.http.impl.client,\
+	org.apache.http.impl.conn,\
+	org.apache.http.impl.cookie,\
+	org.apache.http.message,\
+	org.apache.http.params,\
+	org.apache.http.pool,\
+	org.apache.http.protocol,\
+	org.apache.http.util

@@ -690,7 +690,7 @@ definition {
 	And user does not has permission to System Settings
 	When user navigates to 'Instance Settings'
 	Then the warning informs to contact system administrator"
-	@ignore
+	@ignore = "true"
 	@priority = "3"
 	test ViewAssignRoleBySegmentDisabledWarningUserWithoutsPermissionToSystemSettings {
 		property test.name.skip.portal.instance = "SegmentationDisabled#ViewAssignRoleBySegmentDisabledWarningUserWithoutsPermissionToSystemSettings";
@@ -1250,7 +1250,7 @@ definition {
 	And user does not has permission to System Settings
 	When user navigates to 'Instance Settings'
 	Then the warning informs to contact system administrator"
-	@ignore
+	@ignore = "true"
 	@priority = "3"
 	test ViewSegmentationDisabledWarningUserWithoutsPermissionToSystemSettings {
 		property test.name.skip.portal.instance = "SegmentationDisabled#ViewSegmentationDisabledWarningUserWithoutsPermissionToSystemSettings";

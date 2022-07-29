@@ -43,6 +43,12 @@ public class ObjectFieldBuilder {
 		return this;
 	}
 
+	public ObjectFieldBuilder dbTableName(String dbTableName) {
+		_objectField.setDBTableName(dbTableName);
+
+		return this;
+	}
+
 	public ObjectFieldBuilder dbType(String dbType) {
 		_objectField.setDBType(dbType);
 

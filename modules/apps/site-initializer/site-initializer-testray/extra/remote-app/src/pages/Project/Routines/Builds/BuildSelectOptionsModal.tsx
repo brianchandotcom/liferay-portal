@@ -114,7 +114,7 @@ const BuildSelectOptionModal: React.FC<FormModalComponent> = ({
 						<ClayLayout.Col className="mt-5">
 							<ClayButtonWithIcon
 								displayType="secondary"
-								onClick={() => append({})}
+								onClick={() => append({} as any)}
 								symbol="plus"
 							/>
 

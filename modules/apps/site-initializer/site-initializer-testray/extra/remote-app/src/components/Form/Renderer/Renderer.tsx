@@ -13,7 +13,6 @@
  */
 
 import Form from '..';
-import {ApolloQueryResult} from '@apollo/client';
 import React, {useEffect, useState} from 'react';
 
 import i18n from '../../../i18n';
@@ -56,10 +55,7 @@ const Renderer: React.FC<RendererProps> = ({
 	);
 
 	const fetchQueries = (
-		gqlQueries: (
-			| RendererFields
-			| (() => Promise<ApolloQueryResult<any>>)
-		)[][]
+		gqlQueries: (RendererFields | (() => Promise<any>))[][]
 	) => {
 		Promise.allSettled(
 			gqlQueries.map(([, query]) => (query as any)())

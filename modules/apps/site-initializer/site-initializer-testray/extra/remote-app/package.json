@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@apollo/client": "^3.6.6",
 		"@clayui/alert": "^3.56.0",
 		"@clayui/autocomplete": "^3.58.0",
 		"@clayui/button": "^3.56.0",
@@ -21,11 +20,8 @@
 		"@clayui/tabs": "^3.58.0",
 		"@clayui/tooltip": "^3.58.0",
 		"@hookform/resolvers": "^2.8.8",
-		"apollo-link-rest": "^0.9.0-rc.1",
 		"classnames": "^2.3.1",
 		"dayjs": "^1.11.1",
-		"graphql": "^16.4.0",
-		"graphql-anywhere": "^4.2.7",
 		"react": "^18.1.0",
 		"react-dom": "^18.1.0",
 		"react-hook-form": "^7.30.0",

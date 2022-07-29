@@ -12,14 +12,12 @@
  * details.
  */
 
-import {ApolloProvider} from '@apollo/client';
 import {Root, createRoot} from 'react-dom/client';
 import {SWRConfig} from 'swr';
 
 import TestrayRouter from './TestrayRouter';
 import AccountContextProvider from './context/AccountContext';
 import ClayIconProvider from './context/ClayIconProvider';
-import apolloClient from './graphql/apolloClient';
 
 import './styles/index.scss';
 import SWRCacheProvider from './services/SWRCacheProvider';
@@ -33,21 +31,19 @@ class Testray extends HTMLElement {
 			this.root = createRoot(this);
 
 			this.root.render(
-				<ApolloProvider client={apolloClient}>
-					<SWRConfig
-						value={{
-							fetcher,
-							provider: SWRCacheProvider,
-							revalidateOnFocus: false,
-						}}
-					>
-						<AccountContextProvider>
-							<ClayIconProvider>
-								<TestrayRouter />
-							</ClayIconProvider>
-						</AccountContextProvider>
-					</SWRConfig>
-				</ApolloProvider>
+				<SWRConfig
+					value={{
+						fetcher,
+						provider: SWRCacheProvider,
+						revalidateOnFocus: false,
+					}}
+				>
+					<AccountContextProvider>
+						<ClayIconProvider>
+							<TestrayRouter />
+						</ClayIconProvider>
+					</AccountContextProvider>
+				</SWRConfig>
 			);
 		}
 	}

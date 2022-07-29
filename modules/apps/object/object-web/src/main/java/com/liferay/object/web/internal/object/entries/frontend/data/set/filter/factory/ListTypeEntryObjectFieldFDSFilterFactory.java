@@ -24,7 +24,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.ListTypeEntryAutocompleteFDSFilter;
-import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.ObjectEntryStatusCheckBoxFDSFilter;
+import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.ObjectEntryStatusSelectionFDSFilter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -65,7 +65,7 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 					0L, locale, objectViewFilterColumn);
 			}
 
-			return new ObjectEntryStatusCheckBoxFDSFilter(preloadedData);
+			return new ObjectEntryStatusSelectionFDSFilter(preloadedData);
 		}
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(

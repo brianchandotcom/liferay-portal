@@ -14,56 +14,54 @@
 
 package com.liferay.frontend.data.set.sample.web.internal.filter;
 
-import com.liferay.frontend.data.set.filter.BaseCheckBoxFDSFilter;
-import com.liferay.frontend.data.set.filter.CheckBoxFDSFilterItem;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marko Cikos
+ * @author Javier de Arcos
  */
 @Component(
 	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
 	service = FDSFilter.class
 )
-public class ColorCheckBoxFDSFilter extends BaseCheckBoxFDSFilter {
-
-	@Override
-	public List<CheckBoxFDSFilterItem> getCheckBoxFDSFilterItems(
-		Locale locale) {
-
-		return ListUtil.fromArray(
-			new CheckBoxFDSFilterItem("Blue", "Blue"),
-			new CheckBoxFDSFilterItem("Green", "Green"),
-			new CheckBoxFDSFilterItem("Red", "Red"),
-			new CheckBoxFDSFilterItem("Yellow", "Yellow"));
-	}
+public class StatusSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getId() {
-		return "color";
+		return "status";
 	}
 
 	@Override
 	public String getLabel() {
-		return "color";
+		return "status";
 	}
 
 	@Override
-	public Map<String, Object> getPreloadedData() {
-		return HashMapBuilder.<String, Object>put(
-			"exclude", false
-		).put(
-			"itemsValues", new String[] {"Blue", "Green", "Yellow"}
-		).build();
+	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
+		Locale locale) {
+
+		return ListUtil.fromArray(
+			new SelectionFDSFilterItem(
+				WorkflowConstants.getStatusLabel(
+					WorkflowConstants.STATUS_APPROVED),
+				WorkflowConstants.STATUS_APPROVED),
+			new SelectionFDSFilterItem(
+				WorkflowConstants.getStatusLabel(
+					WorkflowConstants.STATUS_DRAFT),
+				WorkflowConstants.STATUS_DRAFT),
+			new SelectionFDSFilterItem(
+				WorkflowConstants.getStatusLabel(
+					WorkflowConstants.STATUS_PENDING),
+				WorkflowConstants.STATUS_PENDING));
 	}
 
 }

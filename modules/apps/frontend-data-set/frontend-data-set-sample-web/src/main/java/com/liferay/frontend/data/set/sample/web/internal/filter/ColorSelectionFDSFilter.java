@@ -14,54 +14,56 @@
 
 package com.liferay.frontend.data.set.sample.web.internal.filter;
 
-import com.liferay.frontend.data.set.filter.BaseCheckBoxFDSFilter;
-import com.liferay.frontend.data.set.filter.CheckBoxFDSFilterItem;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Javier de Arcos
+ * @author Marko Cikos
  */
 @Component(
 	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
 	service = FDSFilter.class
 )
-public class StatusCheckBoxFDSFilter extends BaseCheckBoxFDSFilter {
-
-	@Override
-	public List<CheckBoxFDSFilterItem> getCheckBoxFDSFilterItems(
-		Locale locale) {
-
-		return ListUtil.fromArray(
-			new CheckBoxFDSFilterItem(
-				WorkflowConstants.getStatusLabel(
-					WorkflowConstants.STATUS_APPROVED),
-				WorkflowConstants.STATUS_APPROVED),
-			new CheckBoxFDSFilterItem(
-				WorkflowConstants.getStatusLabel(
-					WorkflowConstants.STATUS_DRAFT),
-				WorkflowConstants.STATUS_DRAFT),
-			new CheckBoxFDSFilterItem(
-				WorkflowConstants.getStatusLabel(
-					WorkflowConstants.STATUS_PENDING),
-				WorkflowConstants.STATUS_PENDING));
-	}
+public class ColorSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getId() {
-		return "status";
+		return "color";
 	}
 
 	@Override
 	public String getLabel() {
-		return "status";
+		return "color";
+	}
+
+	@Override
+	public Map<String, Object> getPreloadedData() {
+		return HashMapBuilder.<String, Object>put(
+			"exclude", false
+		).put(
+			"itemsValues", new String[] {"Blue", "Green", "Yellow"}
+		).build();
+	}
+
+	@Override
+	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
+		Locale locale) {
+
+		return ListUtil.fromArray(
+			new SelectionFDSFilterItem("Blue", "Blue"),
+			new SelectionFDSFilterItem("Green", "Green"),
+			new SelectionFDSFilterItem("Red", "Red"),
+			new SelectionFDSFilterItem("Yellow", "Yellow"));
 	}
 
 }

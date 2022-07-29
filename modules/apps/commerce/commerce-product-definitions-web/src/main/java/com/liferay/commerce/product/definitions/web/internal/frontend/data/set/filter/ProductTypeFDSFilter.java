@@ -17,9 +17,9 @@ package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.
 import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
-import com.liferay.frontend.data.set.filter.BaseRadioFDSFilter;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
-import com.liferay.frontend.data.set.filter.RadioFDSFilterItem;
+import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_DEFINITIONS,
 	service = FDSFilter.class
 )
-public class ProductTypeFDSFilter extends BaseRadioFDSFilter {
+public class ProductTypeFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getId() {
@@ -49,16 +49,24 @@ public class ProductTypeFDSFilter extends BaseRadioFDSFilter {
 	}
 
 	@Override
-	public List<RadioFDSFilterItem> getRadioFDSFilterItems(Locale locale) {
-		List<RadioFDSFilterItem> radioFDSFilterItems = new ArrayList<>();
+	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
+		Locale locale) {
+
+		List<SelectionFDSFilterItem> selectionFDSFilterItems =
+			new ArrayList<>();
 
 		for (CPType cpType : _cpTypeServicesTracker.getCPTypes()) {
-			radioFDSFilterItems.add(
-				new RadioFDSFilterItem(
+			selectionFDSFilterItems.add(
+				new SelectionFDSFilterItem(
 					cpType.getLabel(locale), cpType.getName()));
 		}
 
-		return radioFDSFilterItems;
+		return selectionFDSFilterItems;
+	}
+
+	@Override
+	public boolean isMultiple() {
+		return false;
 	}
 
 	@Reference

@@ -20,9 +20,9 @@ import com.liferay.commerce.product.options.web.internal.constants.CommerceOptio
 import com.liferay.commerce.product.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
-import com.liferay.frontend.data.set.filter.BaseRadioFDSFilter;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
-import com.liferay.frontend.data.set.filter.RadioFDSFilterItem;
+import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + CommerceOptionFDSNames.OPTIONS,
 	service = FDSFilter.class
 )
-public class CommerceOptionFieldTypeFDSFilter extends BaseRadioFDSFilter {
+public class CommerceOptionFieldTypeFDSFilter extends BaseSelectionFDSFilter {
 
 	public String getDDMFormFieldTypeLabel(
 		DDMFormFieldType ddmFormFieldType, Locale locale) {
@@ -107,17 +107,25 @@ public class CommerceOptionFieldTypeFDSFilter extends BaseRadioFDSFilter {
 	}
 
 	@Override
-	public List<RadioFDSFilterItem> getRadioFDSFilterItems(Locale locale) {
-		List<RadioFDSFilterItem> radioFDSFilterItems = new ArrayList<>();
+	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
+		Locale locale) {
+
+		List<SelectionFDSFilterItem> selectionFDSFilterItems =
+			new ArrayList<>();
 
 		for (DDMFormFieldType ddmFormFieldType : getDDMFormFieldTypes()) {
-			radioFDSFilterItems.add(
-				new RadioFDSFilterItem(
+			selectionFDSFilterItems.add(
+				new SelectionFDSFilterItem(
 					getDDMFormFieldTypeLabel(ddmFormFieldType, locale),
 					ddmFormFieldType.getName()));
 		}
 
-		return radioFDSFilterItems;
+		return selectionFDSFilterItems;
+	}
+
+	@Override
+	public boolean isMultiple() {
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

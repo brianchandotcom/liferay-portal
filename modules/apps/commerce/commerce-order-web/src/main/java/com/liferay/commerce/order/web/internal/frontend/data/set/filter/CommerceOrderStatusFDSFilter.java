@@ -17,9 +17,9 @@ package com.liferay.commerce.order.web.internal.frontend.data.set.filter;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
-import com.liferay.frontend.data.set.filter.BaseCheckBoxFDSFilter;
-import com.liferay.frontend.data.set.filter.CheckBoxFDSFilterItem;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,25 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ALL_ORDERS,
 	service = FDSFilter.class
 )
-public class CommerceOrderStatusFDSFilter extends BaseCheckBoxFDSFilter {
-
-	@Override
-	public List<CheckBoxFDSFilterItem> getCheckBoxFDSFilterItems(
-		Locale locale) {
-
-		List<CheckBoxFDSFilterItem> checkBoxFDSFilterItems = new ArrayList<>();
-
-		for (CommerceOrderStatus commerceOrderStatus :
-				_commerceOrderStatusRegistry.getCommerceOrderStatuses()) {
-
-			checkBoxFDSFilterItems.add(
-				new CheckBoxFDSFilterItem(
-					commerceOrderStatus.getLabel(locale),
-					commerceOrderStatus.getKey()));
-		}
-
-		return checkBoxFDSFilterItems;
-	}
+public class CommerceOrderStatusFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {
@@ -69,6 +51,25 @@ public class CommerceOrderStatusFDSFilter extends BaseCheckBoxFDSFilter {
 	@Override
 	public String getLabel() {
 		return "order-status";
+	}
+
+	@Override
+	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
+		Locale locale) {
+
+		List<SelectionFDSFilterItem> selectionFDSFilterItems =
+			new ArrayList<>();
+
+		for (CommerceOrderStatus commerceOrderStatus :
+				_commerceOrderStatusRegistry.getCommerceOrderStatuses()) {
+
+			selectionFDSFilterItems.add(
+				new SelectionFDSFilterItem(
+					commerceOrderStatus.getLabel(locale),
+					commerceOrderStatus.getKey()));
+		}
+
+		return selectionFDSFilterItems;
 	}
 
 	@Reference

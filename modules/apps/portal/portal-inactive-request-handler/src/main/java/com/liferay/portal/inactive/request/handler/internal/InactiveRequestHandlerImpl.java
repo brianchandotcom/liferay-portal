@@ -17,7 +17,7 @@ package com.liferay.portal.inactive.request.handler.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
@@ -75,7 +75,7 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		String message = LanguageUtil.get(
+		String message = _language.get(
 			_portal.getLocale(httpServletRequest), messageKey,
 			StringPool.BLANK);
 
@@ -135,6 +135,9 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 		InactiveRequestHandlerImpl.class);
 
 	private String _content = StringPool.BLANK;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

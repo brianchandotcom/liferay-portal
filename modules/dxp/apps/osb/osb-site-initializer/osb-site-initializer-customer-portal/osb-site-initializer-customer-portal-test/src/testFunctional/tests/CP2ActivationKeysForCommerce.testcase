@@ -117,17 +117,9 @@ definition {
 			CustomerPortal.assertPageTitle(title = "${pageTitle}");
 		}
 
-		task ("Assert DropDown list of LES subscription is populated") {
+		//"Assert DropDown list of LES subscription is populated"
 
-			// Macro to assert DropDown
-
-		}
-
-		task ("Assert Subscription Start and End Date Time Option is populated") {
-
-			// Macro to assert start and end date
-
-		}
+		//"Assert Subscription Start and End Date Time Option is populated"
 
 		task ("Assert that project has DPX 7.1") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.1");
@@ -161,17 +153,9 @@ definition {
 			CustomerPortal.assertPageTitle(title = "${pageTitle}");
 		}
 
-		task ("Assert DropDown list of LES subscription is populated") {
+		//"Assert DropDown list of LES subscription is populated")
 
-			// Macro to assert DropDown
-
-		}
-
-		task ("Assert Subscription Start and End Date Time Option is populated") {
-
-			// Macro to assert start and end date
-
-		}
+		//"Assert Subscription Start and End Date Time Option is populated")
 	}
 
 	@description = "Verify that when the DXP version of the project is below 7.3, clicking on subscriptions the user can select from a drop-down list their LES subscriptions."
@@ -197,11 +181,7 @@ definition {
 			CustomerPortal.assertPageTitle(title = "${pageTitle}");
 		}
 
-		task ("Assert DropDown list of LES subscription") {
-
-			// Assert DropDown list of LES subscription
-
-		}
+		//"Assert DropDown list of LES subscription")
 
 		task ("Go to Customer Portal") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -223,11 +203,7 @@ definition {
 			CustomerPortal.assertPageTitle(title = "${pageTitle}");
 		}
 
-		task ("Assert DropDown list of LES subscription") {
-
-			// Assert DropDown list of LES subscription
-
-		}
+		//"Assert DropDown list of LES subscription"
 
 		task ("Go to Customer Portal") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -249,11 +225,7 @@ definition {
 			CustomerPortal.assertPageTitle(title = "${pageTitle}");
 		}
 
-		task ("Assert DropDown list of LES subscription") {
-
-			// Assert DropDown list of LES subscription
-
-		}
+		//"Assert DropDown list of LES subscription"
 	}
 
 }

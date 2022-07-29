@@ -329,7 +329,7 @@ public class FragmentEntryConfigurationParserImpl
 			return getFieldValue(
 				fragmentConfigurationField, locale,
 				configurationValuesJSONObject.getString(
-					fragmentConfigurationField.getName()));
+					fragmentConfigurationField.getName(), null));
 		}
 		catch (Exception exception) {
 			return fragmentConfigurationField.getDefaultValue();

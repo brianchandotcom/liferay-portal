@@ -66,41 +66,40 @@ public class CalendarBookingUpgradeProcess extends UpgradeProcess {
 				Calendar endTimeJCalendar = JCalendarUtil.getJCalendar(
 					resultSet.getLong("endTime"), user.getTimeZone());
 
-				if (_isMidnight(startTimeJCalendar) &&
-					_isLastHour(endTimeJCalendar)) {
+				if (!_isMidnight(startTimeJCalendar) &&
+					!_isLastHour(endTimeJCalendar)) {
 
-					Calendar startTimeUTCJCalendar = JCalendarUtil.getJCalendar(
-						startTimeJCalendar.get(Calendar.YEAR),
-						startTimeJCalendar.get(Calendar.MONTH),
-						startTimeJCalendar.get(Calendar.DATE),
-						startTimeJCalendar.get(Calendar.HOUR_OF_DAY),
-						startTimeJCalendar.get(Calendar.MINUTE),
-						startTimeJCalendar.get(Calendar.SECOND),
-						startTimeJCalendar.get(Calendar.MILLISECOND),
-						_utcTimeZone);
-
-					Calendar endTimeUTCJCalendar = JCalendarUtil.getJCalendar(
-						endTimeJCalendar.get(Calendar.YEAR),
-						endTimeJCalendar.get(Calendar.MONTH),
-						endTimeJCalendar.get(Calendar.DATE),
-						endTimeJCalendar.get(Calendar.HOUR_OF_DAY),
-						endTimeJCalendar.get(Calendar.MINUTE),
-						endTimeJCalendar.get(Calendar.SECOND),
-						endTimeJCalendar.get(Calendar.MILLISECOND),
-						_utcTimeZone);
-
-					updatePreparedStatement.setLong(
-						1, startTimeUTCJCalendar.getTimeInMillis());
-					updatePreparedStatement.setLong(
-						2, endTimeUTCJCalendar.getTimeInMillis());
-
-					long calendarBookingId = resultSet.getLong(
-						"calendarBookingId");
-
-					updatePreparedStatement.setLong(3, calendarBookingId);
-
-					updatePreparedStatement.addBatch();
+					continue;
 				}
+
+				Calendar startTimeUTCJCalendar = JCalendarUtil.getJCalendar(
+					startTimeJCalendar.get(Calendar.YEAR),
+					startTimeJCalendar.get(Calendar.MONTH),
+					startTimeJCalendar.get(Calendar.DATE),
+					startTimeJCalendar.get(Calendar.HOUR_OF_DAY),
+					startTimeJCalendar.get(Calendar.MINUTE),
+					startTimeJCalendar.get(Calendar.SECOND),
+					startTimeJCalendar.get(Calendar.MILLISECOND), _utcTimeZone);
+
+				Calendar endTimeUTCJCalendar = JCalendarUtil.getJCalendar(
+					endTimeJCalendar.get(Calendar.YEAR),
+					endTimeJCalendar.get(Calendar.MONTH),
+					endTimeJCalendar.get(Calendar.DATE),
+					endTimeJCalendar.get(Calendar.HOUR_OF_DAY),
+					endTimeJCalendar.get(Calendar.MINUTE),
+					endTimeJCalendar.get(Calendar.SECOND),
+					endTimeJCalendar.get(Calendar.MILLISECOND), _utcTimeZone);
+
+				updatePreparedStatement.setLong(
+					1, startTimeUTCJCalendar.getTimeInMillis());
+				updatePreparedStatement.setLong(
+					2, endTimeUTCJCalendar.getTimeInMillis());
+
+				long calendarBookingId = resultSet.getLong("calendarBookingId");
+
+				updatePreparedStatement.setLong(3, calendarBookingId);
+
+				updatePreparedStatement.addBatch();
 			}
 
 			updatePreparedStatement.executeBatch();

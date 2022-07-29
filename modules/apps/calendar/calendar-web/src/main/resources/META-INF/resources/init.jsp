@@ -228,18 +228,11 @@ if (calendarDisplayContext != null) {
 
 TimeZone userTimeZone = TimeZone.getTimeZone(timeZoneId);
 
-Format dateFormatLongDate = FastDateFormatFactoryUtil.getDate(FastDateFormatConstants.LONG, locale, userTimeZone);
-
-Format dateFormatTime = null;
+Format longDateFormat = FastDateFormatFactoryUtil.getDate(FastDateFormatConstants.LONG, locale, userTimeZone);
 
 boolean useIsoTimeFormat = timeFormat.equals("24-hour") || (timeFormat.equals("locale") && !DateUtil.isFormatAmPm(locale));
 
-if (useIsoTimeFormat) {
-	dateFormatTime = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", locale, userTimeZone);
-}
-else {
-	dateFormatTime = FastDateFormatFactoryUtil.getSimpleDateFormat("hh:mm a", locale, userTimeZone);
-}
+Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(useIsoTimeFormat ? "HH:mm" : "hh:mm a", locale, userTimeZone);
 %>
 
 <%@ include file="/init-ext.jsp" %>

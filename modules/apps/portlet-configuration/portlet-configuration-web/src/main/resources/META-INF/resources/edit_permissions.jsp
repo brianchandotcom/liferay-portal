@@ -187,10 +187,11 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 													<%= (checked || indeterminate) ? "checked" : StringPool.BLANK %>
 													<%= disabled ? "disabled" : StringPool.BLANK %>
 													<%= indeterminate ? "value=\"indeterminate\"" : StringPool.BLANK %>
-													class="custom-control-input"
+													class="custom-control-input <%= Validator.isNotNull(preselectedMsg) ? "lfr-portal-tooltip" : StringPool.BLANK %>"
 													id="<%= inputId %>"
 													name="<%= inputName %>"
 													type="checkbox"
+													title="<%= dataMessage %>"
 												/><span class="custom-control-label"></span
 											>
 											</label>

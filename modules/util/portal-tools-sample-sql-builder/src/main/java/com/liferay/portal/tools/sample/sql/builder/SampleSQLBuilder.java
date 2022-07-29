@@ -57,7 +57,7 @@ public class SampleSQLBuilder {
 
 		// Generic
 
-		File tempDir = new File(BenchmarksPropsValues.OUTPUT_DIR, "temp");
+		File tempDir = new File(_OUTPUT_DIR, "temp");
 
 		tempDir.mkdirs();
 
@@ -73,7 +73,7 @@ public class SampleSQLBuilder {
 
 			if (BenchmarksPropsValues.OUTPUT_MERGE) {
 				File sqlFile = new File(
-					BenchmarksPropsValues.OUTPUT_DIR,
+					_OUTPUT_DIR,
 					"sample-" + BenchmarksPropsValues.DB_TYPE + ".sql");
 
 				FileUtil.delete(sqlFile);
@@ -81,8 +81,7 @@ public class SampleSQLBuilder {
 				mergeSQL(tempDir, sqlFile);
 			}
 			else {
-				File outputDir = new File(
-					BenchmarksPropsValues.OUTPUT_DIR, "output");
+				File outputDir = new File(_OUTPUT_DIR, "output");
 
 				FileUtil.deltree(outputDir);
 
@@ -239,14 +238,13 @@ public class SampleSQLBuilder {
 
 		Thread thread = new Thread(
 			() -> {
-				try (CSVFileWriter csvFileWriter = new CSVFileWriter();
+				try (CSVFileWriter csvFileWriter = new CSVFileWriter(
+						_OUTPUT_DIR);
 					Writer sampleSQLWriter = new UnsyncTeeWriter(
 						new UnsyncBufferedWriter(
 							charPipe.getWriter(), _WRITER_BUFFER_SIZE),
 						createFileWriter(
-							new File(
-								BenchmarksPropsValues.OUTPUT_DIR,
-								"sample.sql")))) {
+							new File(_OUTPUT_DIR, "sample.sql")))) {
 
 					FreeMarkerUtil.process(
 						BenchmarksPropsValues.SCRIPT,
@@ -329,6 +327,8 @@ public class SampleSQLBuilder {
 
 		insertSQLWriter.write(insertSQL);
 	}
+
+	private static final String _OUTPUT_DIR = System.getProperty("user.dir");
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 

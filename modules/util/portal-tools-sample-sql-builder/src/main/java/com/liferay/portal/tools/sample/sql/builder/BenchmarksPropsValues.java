@@ -239,9 +239,6 @@ public class BenchmarksPropsValues {
 	public static final String[] OUTPUT_CSV_FILE_NAMES = StringUtil.split(
 		PropertiesHolder._get(BenchmarksPropsKeys.OUTPUT_CSV_FILE_NAMES));
 
-	public static final String OUTPUT_DIR = PropertiesHolder._get(
-		BenchmarksPropsKeys.OUTPUT_DIR);
-
 	public static final boolean OUTPUT_MERGE = GetterUtil.getBoolean(
 		PropertiesHolder._get(BenchmarksPropsKeys.OUTPUT_MERGE));
 

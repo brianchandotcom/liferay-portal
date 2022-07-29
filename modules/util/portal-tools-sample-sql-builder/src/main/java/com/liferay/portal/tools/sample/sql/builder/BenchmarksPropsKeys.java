@@ -176,8 +176,6 @@ public interface BenchmarksPropsKeys {
 	public static final String OUTPUT_CSV_FILE_NAMES =
 		"sample.sql.output.csv.file.names";
 
-	public static final String OUTPUT_DIR = "sample.sql.output.dir";
-
 	public static final String OUTPUT_MERGE = "sample.sql.output.merge";
 
 	public static final String SCRIPT = "sample.sql.script";

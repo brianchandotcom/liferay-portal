@@ -83,7 +83,7 @@ public class SampleSQLBuilderTest {
 			SystemProperties.get(SystemProperties.TMP_DIR),
 			String.valueOf(System.currentTimeMillis()));
 
-		_initProperties(properties, tempDir.getAbsolutePath());
+		_initProperties(properties);
 
 		File tempPropertiesFile = File.createTempFile("test", ".properties");
 
@@ -92,6 +92,8 @@ public class SampleSQLBuilderTest {
 
 			System.setProperty(
 				"sample-sql-properties", tempPropertiesFile.getAbsolutePath());
+
+			System.setProperty("user.dir", tempDir.getAbsolutePath());
 
 			new SampleSQLBuilder();
 
@@ -124,7 +126,7 @@ public class SampleSQLBuilderTest {
 		return classLoader.getResources("META-INF/sql/tables.sql");
 	}
 
-	private void _initProperties(Properties properties, String outputDir) {
+	private void _initProperties(Properties properties) {
 		properties.put(
 			BenchmarksPropsKeys.COMMERCE_LAYOUT_EXCLUDED_PORTLETS,
 			StringPool.BLANK);
@@ -208,7 +210,6 @@ public class SampleSQLBuilderTest {
 				"commerceOrder,commerceProduct,cpDefinition,documentLibrary,",
 				"dynamicDataList,fragment,layout,mbCategory,mbThread,",
 				"repository,user,wiki"));
-		properties.put(BenchmarksPropsKeys.OUTPUT_DIR, outputDir);
 		properties.put(BenchmarksPropsKeys.OUTPUT_MERGE, "true");
 		properties.put(
 			BenchmarksPropsKeys.SCRIPT,

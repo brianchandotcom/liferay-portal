@@ -31,8 +31,8 @@ import java.util.Map;
  */
 public class CSVFileWriter implements AutoCloseable {
 
-	public CSVFileWriter() throws FileNotFoundException {
-		File outputDir = new File(BenchmarksPropsValues.OUTPUT_DIR);
+	public CSVFileWriter(String csvFileOutputDir) throws FileNotFoundException {
+		File outputDir = new File(csvFileOutputDir);
 
 		outputDir.mkdirs();
 

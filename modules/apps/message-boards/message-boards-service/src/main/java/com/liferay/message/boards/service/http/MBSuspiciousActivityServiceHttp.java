@@ -51,15 +51,15 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class MBSuspiciousActivityServiceHttp {
 
 	public static com.liferay.message.boards.model.MBSuspiciousActivity
-			addOrUpdateSuspiciousActivityByMessage(
+			addOrUpdateMessageSuspiciousActivity(
 				HttpPrincipal httpPrincipal, long messageId, String reason)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBSuspiciousActivityServiceUtil.class,
-				"addOrUpdateSuspiciousActivityByMessage",
-				_addOrUpdateSuspiciousActivityByMessageParameterTypes0);
+				"addOrUpdateMessageSuspiciousActivity",
+				_addOrUpdateMessageSuspiciousActivityParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, messageId, reason);
@@ -94,15 +94,15 @@ public class MBSuspiciousActivityServiceHttp {
 	}
 
 	public static com.liferay.message.boards.model.MBSuspiciousActivity
-			addOrUpdateSuspiciousActivityByThread(
+			addOrUpdateThreadSuspiciousActivity(
 				HttpPrincipal httpPrincipal, String reason, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBSuspiciousActivityServiceUtil.class,
-				"addOrUpdateSuspiciousActivityByThread",
-				_addOrUpdateSuspiciousActivityByThreadParameterTypes1);
+				"addOrUpdateThreadSuspiciousActivity",
+				_addOrUpdateThreadSuspiciousActivityParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, reason, threadId);
@@ -341,11 +341,11 @@ public class MBSuspiciousActivityServiceHttp {
 		MBSuspiciousActivityServiceHttp.class);
 
 	private static final Class<?>[]
-		_addOrUpdateSuspiciousActivityByMessageParameterTypes0 = new Class[] {
+		_addOrUpdateMessageSuspiciousActivityParameterTypes0 = new Class[] {
 			long.class, String.class
 		};
 	private static final Class<?>[]
-		_addOrUpdateSuspiciousActivityByThreadParameterTypes1 = new Class[] {
+		_addOrUpdateThreadSuspiciousActivityParameterTypes1 = new Class[] {
 			String.class, long.class
 		};
 	private static final Class<?>[] _deleteSuspiciousActivityParameterTypes2 =

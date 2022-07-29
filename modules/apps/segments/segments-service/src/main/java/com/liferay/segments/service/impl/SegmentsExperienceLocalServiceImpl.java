@@ -16,7 +16,7 @@ package com.liferay.segments.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -74,7 +74,7 @@ public class SegmentsExperienceLocalServiceImpl
 			layout.getPlid(),
 			Collections.singletonMap(
 				LocaleUtil.getSiteDefault(),
-				LanguageUtil.get(
+				_language.get(
 					LocaleUtil.getSiteDefault(), "default-experience-name")),
 			0, true, new UnicodeProperties(true), serviceContext);
 	}
@@ -722,6 +722,9 @@ public class SegmentsExperienceLocalServiceImpl
 					" already exists");
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

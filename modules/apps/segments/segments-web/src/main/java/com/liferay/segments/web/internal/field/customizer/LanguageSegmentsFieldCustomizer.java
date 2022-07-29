@@ -14,7 +14,7 @@
 
 package com.liferay.segments.web.internal.field.customizer;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo García
@@ -56,14 +57,14 @@ public class LanguageSegmentsFieldCustomizer
 
 	@Override
 	public List<Field.Option> getOptions(Locale locale) {
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+		Set<Locale> availableLocales = _language.getAvailableLocales();
 
 		Stream<Locale> stream = availableLocales.stream();
 
 		return stream.map(
 			availableLocale -> new Field.Option(
 				availableLocale.getDisplayName(locale),
-				LanguageUtil.getLanguageId(availableLocale))
+				_language.getLanguageId(availableLocale))
 		).collect(
 			Collectors.toList()
 		);
@@ -71,5 +72,8 @@ public class LanguageSegmentsFieldCustomizer
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
 		"languageId");
+
+	@Reference
+	private Language _language;
 
 }

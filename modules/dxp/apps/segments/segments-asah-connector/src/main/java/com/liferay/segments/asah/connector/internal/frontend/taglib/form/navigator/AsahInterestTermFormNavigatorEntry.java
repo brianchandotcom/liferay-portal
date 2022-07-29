@@ -21,7 +21,7 @@ import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -75,7 +75,7 @@ public class AsahInterestTermFormNavigatorEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "content-recommendation");
+		return _language.get(resourceBundle, "content-recommendation");
 	}
 
 	@Override
@@ -149,5 +149,8 @@ public class AsahInterestTermFormNavigatorEntry
 
 	@Reference
 	private AssetListEntryService _assetListEntryService;
+
+	@Reference
+	private Language _language;
 
 }

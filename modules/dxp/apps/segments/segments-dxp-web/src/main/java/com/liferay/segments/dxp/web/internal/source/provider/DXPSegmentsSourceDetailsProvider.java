@@ -14,7 +14,7 @@
 
 package com.liferay.segments.dxp.web.internal.source.provider;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.source.provider.SegmentsSourceDetailsProvider;
 
@@ -45,8 +45,11 @@ public class DXPSegmentsSourceDetailsProvider
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "source.dxp");
+		return _language.get(locale, "source.dxp");
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.segments.dxp.web)")
 	private ServletContext _servletContext;

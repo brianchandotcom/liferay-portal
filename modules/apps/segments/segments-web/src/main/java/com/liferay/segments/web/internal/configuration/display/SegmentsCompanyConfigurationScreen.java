@@ -15,7 +15,7 @@
 package com.liferay.segments.web.internal.configuration.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
@@ -56,7 +56,7 @@ public class SegmentsCompanyConfigurationScreen implements ConfigurationScreen {
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "segments-service-configuration-name");
+		return _language.get(locale, "segments-service-configuration-name");
 	}
 
 	@Override
@@ -97,6 +97,9 @@ public class SegmentsCompanyConfigurationScreen implements ConfigurationScreen {
 				new HashMapDictionary<String, Object>());
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

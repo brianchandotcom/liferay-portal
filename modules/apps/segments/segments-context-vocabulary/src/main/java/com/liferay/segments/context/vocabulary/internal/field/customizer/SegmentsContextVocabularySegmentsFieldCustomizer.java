@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -77,7 +77,7 @@ public class SegmentsContextVocabularySegmentsFieldCustomizer
 
 	@Override
 	public String getLabel(String fieldName, Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			locale, "field." + CamelCaseUtil.fromCamelCase(fieldName));
 	}
 
@@ -144,5 +144,8 @@ public class SegmentsContextVocabularySegmentsFieldCustomizer
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 }

@@ -20,7 +20,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
@@ -295,7 +295,7 @@ public class EntityModelFieldMapper {
 				segmentsFieldCustomizer.getSelectEntity(portletRequest));
 		}
 
-		String fieldLabel = LanguageUtil.get(
+		String fieldLabel = _language.get(
 			resourceBundle, "field." + CamelCaseUtil.fromCamelCase(fieldName));
 
 		return new Field(fieldName, fieldLabel, fieldType);
@@ -332,6 +332,9 @@ public class EntityModelFieldMapper {
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

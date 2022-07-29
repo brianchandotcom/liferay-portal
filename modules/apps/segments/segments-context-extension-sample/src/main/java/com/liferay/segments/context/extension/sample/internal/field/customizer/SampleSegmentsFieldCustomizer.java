@@ -14,7 +14,7 @@
 
 package com.liferay.segments.context.extension.sample.internal.field.customizer;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
@@ -24,6 +24,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo García
@@ -56,10 +57,13 @@ public class SampleSegmentsFieldCustomizer implements SegmentsFieldCustomizer {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "sample-field-label");
+		return _language.get(resourceBundle, "sample-field-label");
 	}
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
 		"sample");
+
+	@Reference
+	private Language _language;
 
 }

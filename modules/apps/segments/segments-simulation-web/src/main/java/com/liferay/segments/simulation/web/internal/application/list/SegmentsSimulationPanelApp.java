@@ -16,7 +16,7 @@ package com.liferay.segments.simulation.web.internal.application.list;
 
 import com.liferay.application.list.BaseJSPPanelApp;
 import com.liferay.application.list.PanelApp;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -68,7 +68,7 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "segments");
+		return _language.get(resourceBundle, "segments");
 	}
 
 	@Override
@@ -129,6 +129,9 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsSimulationPanelApp.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

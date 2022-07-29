@@ -14,7 +14,7 @@
 
 package com.liferay.segments.web.internal.source.provider;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.source.provider.SegmentsSourceDetailsProvider;
 
@@ -42,8 +42,11 @@ public class DefaultSegmentsSourceDetailsProvider
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "source.ce");
+		return _language.get(locale, "source.ce");
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.segments.web)")
 	private ServletContext _servletContext;

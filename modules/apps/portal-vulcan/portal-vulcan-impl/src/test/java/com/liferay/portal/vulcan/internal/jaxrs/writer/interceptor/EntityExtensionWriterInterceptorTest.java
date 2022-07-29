@@ -23,10 +23,7 @@ import com.liferay.portal.vulcan.internal.extension.EntityExtensionThreadLocal;
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.EntityExtensionHandlerContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.extension.ExtendedEntity;
 
-import java.io.Serializable;
-
 import java.util.Collections;
-import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Providers;
@@ -61,10 +58,9 @@ public class EntityExtensionWriterInterceptorTest {
 
 	@Test
 	public void testAroundWrite() throws Exception {
-		Map<String, Serializable> extendedProperties = Collections.singletonMap(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		EntityExtensionThreadLocal.setExtendedProperties(extendedProperties);
+		EntityExtensionThreadLocal.setExtendedProperties(
+			Collections.singletonMap(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
 
 		Mockito.when(
 			_company.getCompanyId()

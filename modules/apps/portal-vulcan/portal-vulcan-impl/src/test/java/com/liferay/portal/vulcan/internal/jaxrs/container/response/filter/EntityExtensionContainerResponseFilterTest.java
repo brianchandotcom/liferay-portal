@@ -171,10 +171,9 @@ public class EntityExtensionContainerResponseFilterTest {
 			null
 		);
 
-		Map<String, Serializable> extendedProperties = Collections.singletonMap(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		EntityExtensionThreadLocal.setExtendedProperties(extendedProperties);
+		EntityExtensionThreadLocal.setExtendedProperties(
+			Collections.singletonMap(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
 
 		_entityExtensionContainerResponseFilter.filter(
 			_containerRequestContext, _containerResponseContext);

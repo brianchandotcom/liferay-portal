@@ -10,22 +10,6 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	macro gotoDocumentURL {
-		var key_dmDocumentTitle = "${dmDocumentTitle}";
-
-		DMDocument.gotoEntry(dmDocumentTitle = "${dmDocumentTitle}");
-
-		DMDocument.expandInfo();
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY",
-			value1 = "Test Test");
-
-		ClickNoError(locator1 = "DocumentsAndMediaDocument#DETAILS_URL");
-
-		Pause(locator1 = "5000");
-	}
-
 	macro viewConfigurationXSLContent {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

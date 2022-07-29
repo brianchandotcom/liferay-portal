@@ -39,7 +39,7 @@ definition {
 				ddmStructureId = "${ddmStructureId}",
 				label = "Text",
 				name = "Text",
-				priority = "1.0",
+				priority = "1.1",
 				title = "Web Content 2");
 			var responseToParse3 = HeadlessWebcontentAPI.createStructuredContentDraft(
 				data = "Text",
@@ -77,15 +77,15 @@ definition {
 	test CanFilterEqualToPriorityValuesSortedByPriorityAscendingByDefault {
 		property portal.acceptance = "true";
 
-		task ("When web contents are filtered with 1.0 priority and sorted with default priority") {
+		task ("When web contents are filtered with greater than 1.0 priority and sorted with default priority") {
 			var response = HeadlessWebcontentAPI.filterAndSortAdminStructuredContent(
-				filtervalue = "priority%20eq%201.0",
+				filtervalue = "priority%20gt%201.0",
 				sortvalue = "priority");
 		}
 
 		task ("Then the response body only includes items with priority 1.0") {
 			HeadlessWebcontentAPI.assertTitleFieldWithCorrectName(
-				expectedTitleName = "Web Content 1,Web Content 2",
+				expectedTitleName = "Web Content 2,Web Content 3",
 				responseToParse = "${response}");
 		}
 	}
@@ -117,7 +117,7 @@ definition {
 
 		task ("Then the response body only includes items with priority greater than 0.99") {
 			HeadlessWebcontentAPI.assertTitleFieldWithCorrectName(
-				expectedTitleName = "Web Content 3,Web Content 1,Web Content 2",
+				expectedTitleName = "Web Content 3,Web Content 2,Web Content 1",
 				responseToParse = "${response}");
 		}
 	}
@@ -134,7 +134,7 @@ definition {
 
 		task ("Then the response body only includes items without priority 1.0") {
 			HeadlessWebcontentAPI.assertTitleFieldWithCorrectName(
-				expectedTitleName = "Web Content 4,Web Content 3",
+				expectedTitleName = "Web Content 4,Web Content 2,Web Content 3",
 				responseToParse = "${response}");
 		}
 	}

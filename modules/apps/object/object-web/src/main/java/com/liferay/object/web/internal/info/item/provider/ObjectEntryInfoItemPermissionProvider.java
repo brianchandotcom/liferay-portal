@@ -15,9 +15,16 @@
 package com.liferay.object.web.internal.info.item.provider;
 
 import com.liferay.info.exception.InfoItemPermissionException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.web.internal.util.ObjectDefinitionPermissionUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
@@ -26,13 +33,25 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 public class ObjectEntryInfoItemPermissionProvider
 	implements InfoItemPermissionProvider<ObjectEntry> {
 
+	public ObjectEntryInfoItemPermissionProvider(
+		ObjectDefinition objectDefinition,
+		ObjectEntryService objectEntryService) {
+
+		_objectDefinition = objectDefinition;
+		_objectEntryService = objectEntryService;
+	}
+
 	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker,
 			InfoItemReference infoItemReference, String actionId)
 		throws InfoItemPermissionException {
 
-		return false;
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
+		return _hasPermission(actionId, classPKInfoItemIdentifier.getClassPK());
 	}
 
 	@Override
@@ -41,7 +60,28 @@ public class ObjectEntryInfoItemPermissionProvider
 			String actionId)
 		throws InfoItemPermissionException {
 
-		return false;
+		return _hasPermission(actionId, objectEntry.getObjectEntryId());
 	}
+
+	private boolean _hasPermission(String actionId, long objectEntryId) {
+		try {
+			return ObjectDefinitionPermissionUtil.hasModelResourcePermission(
+				_objectDefinition, objectEntryId, _objectEntryService,
+				actionId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return false;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryInfoItemPermissionProvider.class);
+
+	private final ObjectDefinition _objectDefinition;
+	private final ObjectEntryService _objectEntryService;
 
 }

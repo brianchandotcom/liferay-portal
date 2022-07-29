@@ -142,9 +142,9 @@ public class FVSFrontendDataSetEntryPersistenceTest {
 
 		newFVSFrontendDataSetEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newFVSFrontendDataSetEntry.setFdsName(RandomTestUtil.randomString());
-
 		newFVSFrontendDataSetEntry.setFvsEntryId(RandomTestUtil.nextLong());
+
+		newFVSFrontendDataSetEntry.setFdsName(RandomTestUtil.randomString());
 
 		newFVSFrontendDataSetEntry.setName(RandomTestUtil.randomString());
 
@@ -187,11 +187,11 @@ public class FVSFrontendDataSetEntryPersistenceTest {
 			Time.getShortTimestamp(
 				newFVSFrontendDataSetEntry.getModifiedDate()));
 		Assert.assertEquals(
-			existingFVSFrontendDataSetEntry.getFdsName(),
-			newFVSFrontendDataSetEntry.getFdsName());
-		Assert.assertEquals(
 			existingFVSFrontendDataSetEntry.getFvsEntryId(),
 			newFVSFrontendDataSetEntry.getFvsEntryId());
+		Assert.assertEquals(
+			existingFVSFrontendDataSetEntry.getFdsName(),
+			newFVSFrontendDataSetEntry.getFdsName());
 		Assert.assertEquals(
 			existingFVSFrontendDataSetEntry.getName(),
 			newFVSFrontendDataSetEntry.getName());
@@ -264,7 +264,7 @@ public class FVSFrontendDataSetEntryPersistenceTest {
 			"FVSFrontendDataSetEntry", "mvccVersion", true, "uuid", true,
 			"fvsFrontendDataSetEntryId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"fdsName", true, "fvsEntryId", true, "name", true, "plid", true,
+			"fvsEntryId", true, "fdsName", true, "name", true, "plid", true,
 			"portletId", true);
 	}
 
@@ -526,9 +526,9 @@ public class FVSFrontendDataSetEntryPersistenceTest {
 
 		fvsFrontendDataSetEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		fvsFrontendDataSetEntry.setFdsName(RandomTestUtil.randomString());
-
 		fvsFrontendDataSetEntry.setFvsEntryId(RandomTestUtil.nextLong());
+
+		fvsFrontendDataSetEntry.setFdsName(RandomTestUtil.randomString());
 
 		fvsFrontendDataSetEntry.setName(RandomTestUtil.randomString());
 

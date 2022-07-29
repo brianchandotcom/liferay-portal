@@ -206,6 +206,20 @@ public interface FVSFrontendDataSetEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the fvs entry ID of this fvs frontend data set entry.
+	 *
+	 * @return the fvs entry ID of this fvs frontend data set entry
+	 */
+	public long getFvsEntryId();
+
+	/**
+	 * Sets the fvs entry ID of this fvs frontend data set entry.
+	 *
+	 * @param fvsEntryId the fvs entry ID of this fvs frontend data set entry
+	 */
+	public void setFvsEntryId(long fvsEntryId);
+
+	/**
 	 * Returns the fds name of this fvs frontend data set entry.
 	 *
 	 * @return the fds name of this fvs frontend data set entry
@@ -219,20 +233,6 @@ public interface FVSFrontendDataSetEntryModel
 	 * @param fdsName the fds name of this fvs frontend data set entry
 	 */
 	public void setFdsName(String fdsName);
-
-	/**
-	 * Returns the fvs entry ID of this fvs frontend data set entry.
-	 *
-	 * @return the fvs entry ID of this fvs frontend data set entry
-	 */
-	public long getFvsEntryId();
-
-	/**
-	 * Sets the fvs entry ID of this fvs frontend data set entry.
-	 *
-	 * @param fvsEntryId the fvs entry ID of this fvs frontend data set entry
-	 */
-	public void setFvsEntryId(long fvsEntryId);
 
 	/**
 	 * Returns the name of this fvs frontend data set entry.

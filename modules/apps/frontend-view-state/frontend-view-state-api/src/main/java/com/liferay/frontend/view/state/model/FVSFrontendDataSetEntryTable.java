@@ -57,12 +57,12 @@ public class FVSFrontendDataSetEntryTable
 	public final Column<FVSFrontendDataSetEntryTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<FVSFrontendDataSetEntryTable, String> fdsName =
-		createColumn(
-			"fdsName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<FVSFrontendDataSetEntryTable, Long> fvsEntryId =
 		createColumn(
 			"fvsEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FVSFrontendDataSetEntryTable, String> fdsName =
+		createColumn(
+			"fdsName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<FVSFrontendDataSetEntryTable, String> name =
 		createColumn("name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<FVSFrontendDataSetEntryTable, Long> plid = createColumn(

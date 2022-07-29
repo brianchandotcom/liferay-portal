@@ -53,10 +53,10 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="fvsEntryId" type="long" />
 		<field name="fdsName" type="String">
 			<hint name="max-length">200</hint>
 		</field>
-		<field name="fvsEntryId" type="long" />
 		<field name="name" type="String">
 			<hint name="max-length">200</hint>
 		</field>

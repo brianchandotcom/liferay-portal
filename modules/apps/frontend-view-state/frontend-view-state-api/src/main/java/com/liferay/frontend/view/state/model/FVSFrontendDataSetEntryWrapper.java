@@ -54,8 +54,8 @@ public class FVSFrontendDataSetEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("fdsName", getFdsName());
 		attributes.put("fvsEntryId", getFvsEntryId());
+		attributes.put("fdsName", getFdsName());
 		attributes.put("name", getName());
 		attributes.put("plid", getPlid());
 		attributes.put("portletId", getPortletId());
@@ -114,16 +114,16 @@ public class FVSFrontendDataSetEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String fdsName = (String)attributes.get("fdsName");
-
-		if (fdsName != null) {
-			setFdsName(fdsName);
-		}
-
 		Long fvsEntryId = (Long)attributes.get("fvsEntryId");
 
 		if (fvsEntryId != null) {
 			setFvsEntryId(fvsEntryId);
+		}
+
+		String fdsName = (String)attributes.get("fdsName");
+
+		if (fdsName != null) {
+			setFdsName(fdsName);
 		}
 
 		String name = (String)attributes.get("name");

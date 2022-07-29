@@ -47,8 +47,8 @@ create table FVSFrontendDataSetEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	fdsName VARCHAR(200) null,
 	fvsEntryId LONG,
+	fdsName VARCHAR(200) null,
 	name VARCHAR(200) null,
 	plid LONG,
 	portletId VARCHAR(200) null

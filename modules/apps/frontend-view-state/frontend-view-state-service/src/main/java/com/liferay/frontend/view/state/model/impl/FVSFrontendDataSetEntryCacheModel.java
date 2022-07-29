@@ -96,10 +96,10 @@ public class FVSFrontendDataSetEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", fdsName=");
-		sb.append(fdsName);
 		sb.append(", fvsEntryId=");
 		sb.append(fvsEntryId);
+		sb.append(", fdsName=");
+		sb.append(fdsName);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", plid=");
@@ -151,14 +151,14 @@ public class FVSFrontendDataSetEntryCacheModel
 			fvsFrontendDataSetEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		fvsFrontendDataSetEntryImpl.setFvsEntryId(fvsEntryId);
+
 		if (fdsName == null) {
 			fvsFrontendDataSetEntryImpl.setFdsName("");
 		}
 		else {
 			fvsFrontendDataSetEntryImpl.setFdsName(fdsName);
 		}
-
-		fvsFrontendDataSetEntryImpl.setFvsEntryId(fvsEntryId);
 
 		if (name == null) {
 			fvsFrontendDataSetEntryImpl.setName("");
@@ -194,9 +194,9 @@ public class FVSFrontendDataSetEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		fdsName = objectInput.readUTF();
 
 		fvsEntryId = objectInput.readLong();
+		fdsName = objectInput.readUTF();
 		name = objectInput.readUTF();
 
 		plid = objectInput.readLong();
@@ -230,14 +230,14 @@ public class FVSFrontendDataSetEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(fvsEntryId);
+
 		if (fdsName == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(fdsName);
 		}
-
-		objectOutput.writeLong(fvsEntryId);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -264,8 +264,8 @@ public class FVSFrontendDataSetEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String fdsName;
 	public long fvsEntryId;
+	public String fdsName;
 	public String name;
 	public long plid;
 	public String portletId;

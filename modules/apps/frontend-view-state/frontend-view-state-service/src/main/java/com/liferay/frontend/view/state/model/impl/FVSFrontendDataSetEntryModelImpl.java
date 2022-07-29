@@ -76,8 +76,8 @@ public class FVSFrontendDataSetEntryModelImpl
 		{"fvsFrontendDataSetEntryId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"fdsName", Types.VARCHAR},
-		{"fvsEntryId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"modifiedDate", Types.TIMESTAMP}, {"fvsEntryId", Types.BIGINT},
+		{"fdsName", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"plid", Types.BIGINT}, {"portletId", Types.VARCHAR}
 	};
 
@@ -93,15 +93,15 @@ public class FVSFrontendDataSetEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("fdsName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fvsEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("fdsName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FVSFrontendDataSetEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fvsFrontendDataSetEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fdsName VARCHAR(200) null,fvsEntryId LONG,name VARCHAR(200) null,plid LONG,portletId VARCHAR(200) null)";
+		"create table FVSFrontendDataSetEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fvsFrontendDataSetEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fvsEntryId LONG,fdsName VARCHAR(200) null,name VARCHAR(200) null,plid LONG,portletId VARCHAR(200) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table FVSFrontendDataSetEntry";
@@ -326,17 +326,17 @@ public class FVSFrontendDataSetEntryModelImpl
 			(BiConsumer<FVSFrontendDataSetEntry, Date>)
 				FVSFrontendDataSetEntry::setModifiedDate);
 		attributeGetterFunctions.put(
-			"fdsName", FVSFrontendDataSetEntry::getFdsName);
-		attributeSetterBiConsumers.put(
-			"fdsName",
-			(BiConsumer<FVSFrontendDataSetEntry, String>)
-				FVSFrontendDataSetEntry::setFdsName);
-		attributeGetterFunctions.put(
 			"fvsEntryId", FVSFrontendDataSetEntry::getFvsEntryId);
 		attributeSetterBiConsumers.put(
 			"fvsEntryId",
 			(BiConsumer<FVSFrontendDataSetEntry, Long>)
 				FVSFrontendDataSetEntry::setFvsEntryId);
+		attributeGetterFunctions.put(
+			"fdsName", FVSFrontendDataSetEntry::getFdsName);
+		attributeSetterBiConsumers.put(
+			"fdsName",
+			(BiConsumer<FVSFrontendDataSetEntry, String>)
+				FVSFrontendDataSetEntry::setFdsName);
 		attributeGetterFunctions.put("name", FVSFrontendDataSetEntry::getName);
 		attributeSetterBiConsumers.put(
 			"name",
@@ -533,6 +533,20 @@ public class FVSFrontendDataSetEntryModelImpl
 	}
 
 	@Override
+	public long getFvsEntryId() {
+		return _fvsEntryId;
+	}
+
+	@Override
+	public void setFvsEntryId(long fvsEntryId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_fvsEntryId = fvsEntryId;
+	}
+
+	@Override
 	public String getFdsName() {
 		if (_fdsName == null) {
 			return "";
@@ -558,20 +572,6 @@ public class FVSFrontendDataSetEntryModelImpl
 	@Deprecated
 	public String getOriginalFdsName() {
 		return getColumnOriginalValue("fdsName");
-	}
-
-	@Override
-	public long getFvsEntryId() {
-		return _fvsEntryId;
-	}
-
-	@Override
-	public void setFvsEntryId(long fvsEntryId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_fvsEntryId = fvsEntryId;
 	}
 
 	@Override
@@ -741,8 +741,8 @@ public class FVSFrontendDataSetEntryModelImpl
 		fvsFrontendDataSetEntryImpl.setUserName(getUserName());
 		fvsFrontendDataSetEntryImpl.setCreateDate(getCreateDate());
 		fvsFrontendDataSetEntryImpl.setModifiedDate(getModifiedDate());
-		fvsFrontendDataSetEntryImpl.setFdsName(getFdsName());
 		fvsFrontendDataSetEntryImpl.setFvsEntryId(getFvsEntryId());
+		fvsFrontendDataSetEntryImpl.setFdsName(getFdsName());
 		fvsFrontendDataSetEntryImpl.setName(getName());
 		fvsFrontendDataSetEntryImpl.setPlid(getPlid());
 		fvsFrontendDataSetEntryImpl.setPortletId(getPortletId());
@@ -773,10 +773,10 @@ public class FVSFrontendDataSetEntryModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		fvsFrontendDataSetEntryImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		fvsFrontendDataSetEntryImpl.setFdsName(
-			this.<String>getColumnOriginalValue("fdsName"));
 		fvsFrontendDataSetEntryImpl.setFvsEntryId(
 			this.<Long>getColumnOriginalValue("fvsEntryId"));
+		fvsFrontendDataSetEntryImpl.setFdsName(
+			this.<String>getColumnOriginalValue("fdsName"));
 		fvsFrontendDataSetEntryImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
 		fvsFrontendDataSetEntryImpl.setPlid(
@@ -906,6 +906,8 @@ public class FVSFrontendDataSetEntryModelImpl
 			fvsFrontendDataSetEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		fvsFrontendDataSetEntryCacheModel.fvsEntryId = getFvsEntryId();
+
 		fvsFrontendDataSetEntryCacheModel.fdsName = getFdsName();
 
 		String fdsName = fvsFrontendDataSetEntryCacheModel.fdsName;
@@ -913,8 +915,6 @@ public class FVSFrontendDataSetEntryModelImpl
 		if ((fdsName != null) && (fdsName.length() == 0)) {
 			fvsFrontendDataSetEntryCacheModel.fdsName = null;
 		}
-
-		fvsFrontendDataSetEntryCacheModel.fvsEntryId = getFvsEntryId();
 
 		fvsFrontendDataSetEntryCacheModel.name = getName();
 
@@ -1038,8 +1038,8 @@ public class FVSFrontendDataSetEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _fdsName;
 	private long _fvsEntryId;
+	private String _fdsName;
 	private String _name;
 	private long _plid;
 	private String _portletId;
@@ -1082,8 +1082,8 @@ public class FVSFrontendDataSetEntryModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("fdsName", _fdsName);
 		_columnOriginalValues.put("fvsEntryId", _fvsEntryId);
+		_columnOriginalValues.put("fdsName", _fdsName);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("plid", _plid);
 		_columnOriginalValues.put("portletId", _portletId);
@@ -1126,9 +1126,9 @@ public class FVSFrontendDataSetEntryModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("fdsName", 256L);
+		columnBitmasks.put("fvsEntryId", 256L);
 
-		columnBitmasks.put("fvsEntryId", 512L);
+		columnBitmasks.put("fdsName", 512L);
 
 		columnBitmasks.put("name", 1024L);
 

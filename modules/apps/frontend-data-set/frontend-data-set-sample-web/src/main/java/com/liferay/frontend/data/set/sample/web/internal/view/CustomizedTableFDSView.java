@@ -55,6 +55,8 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 		).add(
 			"color", "color"
 		).add(
+			"size", "size"
+		).add(
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"status")

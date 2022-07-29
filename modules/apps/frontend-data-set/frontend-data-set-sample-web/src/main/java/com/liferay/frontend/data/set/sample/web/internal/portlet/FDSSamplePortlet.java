@@ -134,6 +134,9 @@ public class FDSSamplePortlet extends MVCPortlet {
 						false),
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, false, null, "Color", "color",
+						false),
+					ObjectFieldUtil.createObjectField(
+						"Text", "String", true, false, null, "Size", "size",
 						false)));
 
 		objectDefinition =
@@ -141,6 +144,9 @@ public class FDSSamplePortlet extends MVCPortlet {
 				user.getUserId(), objectDefinition.getObjectDefinitionId());
 
 		String[] colors = {"Blue", "Green", "Red", "Yellow"};
+		String[] sizes = {
+			"Tiny", "Small", "Medium", "Large", "Huge", "Gargantuan"
+		};
 
 		Calendar calendar = Calendar.getInstance();
 
@@ -156,6 +162,8 @@ public class FDSSamplePortlet extends MVCPortlet {
 					"date", calendar.getTime()
 				).put(
 					"description", "This is a description for sample " + i + "."
+				).put(
+					"size", sizes[i % 6]
 				).put(
 					"title", "Sample" + i
 				).build(),

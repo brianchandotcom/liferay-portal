@@ -25,17 +25,37 @@ html#{$cadmin-selector} #{$selector} {
 			will-change: padding-left, padding-right;
 			z-index: 1;
 
+			&#{$selector}-old {
+				&#{$selector}--with-sidebar {
+					padding-left: 0;
+					padding-right: $sidebarButtonWidth;
+				}
+
+				&#{$selector}--with-sidebar-open {
+					#{$selector}__label-width {
+						left: unset;
+						right: $sidebarButtonWidth + $sidebarContentWidth;
+					}
+
+					@include media-breakpoint-up(sm) {
+						padding-right: $sidebarButtonWidth +
+							$sidebarContentWidth;
+						padding-left: 0;
+					}
+				}
+			}
+
 			&#{$selector}--with-sidebar {
-				padding-right: $sidebarButtonWidth;
+				padding-left: $sidebarButtonWidth;
 			}
 
 			&#{$selector}--with-sidebar-open {
 				#{$selector}__label-width {
-					right: $sidebarButtonWidth + $sidebarContentWidth;
+					left: $sidebarButtonWidth + $sidebarContentWidth;
 				}
 
 				@include media-breakpoint-up(sm) {
-					padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+					padding-left: $sidebarButtonWidth + $sidebarContentWidth;
 				}
 			}
 		}

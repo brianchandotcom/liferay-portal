@@ -177,6 +177,10 @@ export default function Sidebar() {
 		}
 
 		wrapper.classList.add('page-editor__wrapper');
+		if (!Liferay.FeatureFlags['LPS-153452']) {
+			wrapper.classList.add('page-editor__wrapper-old');
+		}
+
 		wrapper.classList.toggle('page-editor__wrapper--padded', sidebarOpen);
 
 		return () => {
@@ -224,7 +228,14 @@ export default function Sidebar() {
 	return (
 		<ReactPortal className="cadmin">
 			<div
-				className="page-editor__sidebar page-editor__theme-adapter-forms"
+				className={classNames(
+					'page-editor__sidebar page-editor__theme-adapter-forms',
+					{
+						'page-editor__sidebar-old': !Liferay.FeatureFlags[
+							'LPS-153452'
+						],
+					}
+				)}
 				ref={dropClearRef}
 			>
 				<div

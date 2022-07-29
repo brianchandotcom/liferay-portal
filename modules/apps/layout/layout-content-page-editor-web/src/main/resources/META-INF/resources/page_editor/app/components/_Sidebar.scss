@@ -18,14 +18,54 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 					var(--change-tracking-indicator-height, 0px)
 			)
 	);
+	left: 0;
 	position: fixed;
-	right: 0;
 	top: calc(
 		var(--control-menu-height) + var(--toolbar-height) +
 			var(--change-tracking-indicator-height, 0px)
 	);
 	/* stylelint-enable */
 	z-index: $sidebarZIndex;
+}
+
+html#{$cadmin-selector} .cadmin .page-editor__item-configuration-sidebar {
+	@include sidebar;
+	background: $cadmin-white;
+	border-left: 1px solid $cadmin-secondary-l3;
+	right: 0;
+	width: $sidebarContentWidth;
+}
+
+html#{$cadmin-selector}
+	body.open
+	.cadmin
+	.page-editor__sidebar:not(.page-editor__sidebar-old) {
+	left: $product-menu-width;
+}
+
+html#{$cadmin-selector} .cadmin .page-editor__sidebar {
+	@include sidebar;
+	left: 0;
+
+	transition: left ease $defaultTransitionDuration,
+		right ease $defaultTransitionDuration;
+
+	&.page-editor__sidebar-old {
+		left: unset;
+		right: 0;
+
+		.page-editor__sidebar__content {
+			left: unset;
+			right: $sidebarButtonWidth;
+
+			border-left: 1px solid $cadmin-secondary-l3;
+			border-right: none;
+
+			&:not(.page-editor__sidebar__content--open) {
+				transform: translateX(100%);
+			}
+		}
+	}
 
 	&__buttons {
 		background-color: $cadmin-gray-200;
@@ -80,7 +120,7 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 
 	&__content {
 		background-color: $cadmin-white;
-		border-left: 1px solid $cadmin-secondary-l3;
+		border-right: 1px solid $cadmin-secondary-l3;
 		display: flex;
 		flex-direction: column;
 		/* stylelint-disable */
@@ -92,10 +132,10 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 				)
 		);
 		/* stylelint-enable */
+		left: $sidebarButtonWidth;
 		overflow-x: hidden;
 		position: fixed;
-		right: $sidebarButtonWidth;
-		transform: translateX(100%);
+		transform: translateX(-100%);
 		transition: transform ease $defaultTransitionDuration;
 		width: $sidebarContentWidth;
 		z-index: $zIndexContent;
@@ -126,15 +166,40 @@ html#{$cadmin-selector} body {
 }
 
 html#{$cadmin-selector} .page-editor__wrapper {
-	padding-right: $sidebarButtonWidth;
+	padding-left: $sidebarButtonWidth;
 	position: relative;
 	transition: padding-left ease $defaultTransitionDuration,
 		padding-right ease $defaultTransitionDuration;
 	will-change: padding-left, padding-right;
 
+	&.page-editor__wrapper-old {
+		padding-left: 0;
+		padding-right: $sidebarButtonWidth;
+
+		&.page-editor__wrapper--padded {
+			@include media-breakpoint-up(sm) {
+				padding-left: 0;
+				padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+			}
+		}
+	}
+
 	&--padded {
 		@include media-breakpoint-up(sm) {
-			padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+			padding-left: $sidebarButtonWidth + $sidebarContentWidth;
+		}
+	}
+}
+
+html#{$cadmin-selector} {
+	body.open .page-editor__wrapper#wrapper {
+		padding-left: $product-menu-width + $sidebarButtonWidth;
+
+		&--padded {
+			@include media-breakpoint-up(sm) {
+				padding-left: $product-menu-width + $sidebarButtonWidth +
+					$sidebarContentWidth;
+			}
 		}
 	}
 }

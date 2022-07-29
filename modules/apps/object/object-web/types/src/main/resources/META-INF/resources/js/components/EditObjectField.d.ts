@@ -26,6 +26,7 @@ export default function EditObjectField({
 	objectFieldTypes,
 	objectName,
 	readOnly,
+	workflowStatusJSONArray,
 }: IProps): JSX.Element;
 interface IProps {
 	forbiddenChars: string[];
@@ -38,5 +39,6 @@ interface IProps {
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 	readOnly: boolean;
+	workflowStatusJSONArray: LabelValueObject[];
 }
 export {};

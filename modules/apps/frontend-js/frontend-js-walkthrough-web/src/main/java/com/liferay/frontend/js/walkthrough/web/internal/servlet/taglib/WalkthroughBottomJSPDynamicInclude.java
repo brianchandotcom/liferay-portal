@@ -83,13 +83,9 @@ public class WalkthroughBottomJSPDynamicInclude implements DynamicInclude {
 		String resolvedModuleName = _npmResolver.resolveModuleName(
 			"@liferay/frontend-js-walkthrough-web/index");
 
-		Group siteGroup = themeDisplay.getSiteGroup();
-
 		scriptData.append(
 			null,
-			StringBundler.concat(
-				"WalkthroughRender.default(", steps, ",'",
-				siteGroup.getFriendlyURL(), "')"),
+			StringBundler.concat("WalkthroughRender.default(", steps, ")"),
 			resolvedModuleName + " as WalkthroughRender",
 			ScriptData.ModulesType.ES6);
 

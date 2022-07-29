@@ -143,23 +143,46 @@ function findLongestMatch(currentLayoutRelativeURL, pagesArray) {
 		.sort((a, b) => (a.length > b.length ? -1 : 1))[0];
 }
 
+function removeStartingSlash(path) {
+	return path.replace('/', '');
+}
+
+/**
+ * When receiving layoutRelativeURL, it contains parts we should use later, like the following example:
+ * > themeDisplay.getLayoutRelativeURL()
+ * > '/web/fiona/home'
+ * We should take `'/web/fiona/'` from this URL because it can be used to be added as
+ * a prefix for navigation stuff like `next` and `previous` and when matching the page.
+ * So, people can provide paths in JSON without needing to specify the site name(/web/fiona in this case).
+ * @param {String} currentPage
+ * @returns {String} a string containg the path without the page URL
+ */
+function getSitePrefix(currentPage) {
+	const currentDXPLayoutRelativeURL = removeStartingSlash(
+		themeDisplay.getLayoutRelativeURL()
+	).split('/');
+
+	const firstPagePath = removeStartingSlash(currentPage.split('/')[0]);
+
+	return currentDXPLayoutRelativeURL
+		.slice(
+			0,
+			currentDXPLayoutRelativeURL.findIndex(
+				(path) => path === firstPagePath
+			)
+		)
+		.join('/');
+}
+
 const Step = ({
 	closeOnClickOutside,
 	closeable,
 	currentStep,
 	onCurrentStep,
 	pages,
-	siteGroupFriendlyURL,
 	skippable,
 	steps,
 }) => {
-
-	/**
-	 * Given a page url like:
-	 * `http://localhost:8080/web/fiona/home`, it will give us `web/fiona`
-	 */
-	const SITE_PREFIX_PATH = `/web${siteGroupFriendlyURL}`;
-
 	const popoverRef = useRef(null);
 
 	const hotspotRef = useRef(null);
@@ -318,14 +341,14 @@ const Step = ({
 
 	useObserveRect(align, popoverRef?.current);
 
-	const currentLayoutRelativeURL = themeDisplay
-		.getLayoutRelativeURL()
-		.replace(SITE_PREFIX_PATH, '');
+	const currentLayoutRelativeURL = themeDisplay.getLayoutRelativeURL();
 
 	const currentPage = useMemo(
 		() => findLongestMatch(currentLayoutRelativeURL, Object.keys(pages)),
 		[pages, currentLayoutRelativeURL]
 	);
+
+	const SITE_PREFIX_PATH = `/${getSitePrefix(currentPage)}`;
 
 	if (!pages[currentPage]?.includes(id)) {
 		return null;
@@ -469,7 +492,6 @@ const Walkthrough = ({
 	closeOnClickOutside,
 	closeable,
 	pages,
-	siteGroupFriendlyURL,
 	skippable,
 	steps,
 }) => {
@@ -491,7 +513,6 @@ const Walkthrough = ({
 			currentStep={currentStepIndex}
 			onCurrentStep={setCurrentStepIndex}
 			pages={pages}
-			siteGroupFriendlyURL={siteGroupFriendlyURL}
 			skippable={skippable}
 			steps={steps}
 		/>

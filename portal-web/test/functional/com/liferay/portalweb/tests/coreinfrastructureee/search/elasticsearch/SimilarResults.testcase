@@ -116,6 +116,50 @@ definition {
 	}
 
 	@priority = "4"
+	test AssertDisplayWithMBMessages {
+		for (var count : list "1,2,3") {
+			JSONMBMessage.addMessage(
+				groupName = "Guest",
+				threadBody = "Thread Body",
+				threadSubject = "Thread Subject ${count}");
+		}
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Similar Results Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Similar Results");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Message Boards");
+
+		Navigator.gotoPage(pageName = "Similar Results Page");
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		MessageboardsThread.gotoCP(threadSubject = "Thread Subject 1");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Thread Subject 2",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Thread Subject 3",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+	}
+
+	@priority = "4"
 	test AssertMatchesAssetType {
 		for (var count : list "1,2,3") {
 			JSONBlog.addEntry(

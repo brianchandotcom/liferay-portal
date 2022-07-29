@@ -34,14 +34,17 @@ public class GradleBuildFile {
 		_source = source;
 	}
 
-	public void deleteDependencies(List<GradleDependency> dependencies) {
+	public void deleteGradleDependencies(
+		List<GradleDependency> gradleDependencies) {
+
 		List<String> lines = getSourceLines();
 
-		dependencies.sort(GradleDependency.COMPARATOR_LAST_LINE_NUMBER_DESC);
+		gradleDependencies.sort(
+			GradleDependency.COMPARATOR_LAST_LINE_NUMBER_DESC);
 
-		for (GradleDependency dependency : dependencies) {
-			int lineNumber = dependency.getLineNumber();
-			int lastLineNumber = dependency.getLastLineNumber();
+		for (GradleDependency gradleDependency : gradleDependencies) {
+			int lineNumber = gradleDependency.getLineNumber();
+			int lastLineNumber = gradleDependency.getLastLineNumber();
 
 			for (int i = lastLineNumber; i >= lineNumber; i--) {
 				lines.remove(i - 1);
@@ -51,34 +54,35 @@ public class GradleBuildFile {
 		_saveSource(lines);
 	}
 
-	public void deleteDependency(String group, String name) {
-		deleteDependency(null, group, name);
+	public void deleteGradleDependency(String group, String name) {
+		deleteGradleDependency(null, group, name);
 	}
 
-	public void deleteDependency(
+	public void deleteGradleDependency(
 		String configuration, String group, String name) {
 
-		List<GradleDependency> dependencies = getDependencies();
+		List<GradleDependency> gradleDependencies = getGradleDependencies();
 
-		ListIterator<GradleDependency> listIterator = dependencies.listIterator(
-			dependencies.size());
+		ListIterator<GradleDependency> listIterator =
+			gradleDependencies.listIterator(gradleDependencies.size());
 
 		List<String> lines = getSourceLines();
 
 		while (listIterator.hasPrevious()) {
-			GradleDependency dependency = listIterator.previous();
+			GradleDependency gradleDependency = listIterator.previous();
 
 			if ((configuration != null) &&
-				!Objects.equals(configuration, dependency.getConfiguration())) {
+				!Objects.equals(
+					configuration, gradleDependency.getConfiguration())) {
 
 				continue;
 			}
 
-			if (Objects.equals(group, dependency.getGroup()) &&
-				Objects.equals(name, dependency.getName())) {
+			if (Objects.equals(group, gradleDependency.getGroup()) &&
+				Objects.equals(name, gradleDependency.getName())) {
 
-				for (int i = dependency.getLastLineNumber();
-					 i >= dependency.getLineNumber(); i--) {
+				for (int i = gradleDependency.getLastLineNumber();
+					 i >= gradleDependency.getLineNumber(); i--) {
 
 					lines.remove(i - 1);
 				}
@@ -88,23 +92,23 @@ public class GradleBuildFile {
 		_saveSource(lines);
 	}
 
-	public List<GradleDependency> getDependencies() {
+	public List<GradleDependency> getGradleDependencies() {
 		GradleBuildFileVisitor buildFileVisitor = _walkAST();
 
-		return buildFileVisitor.getDependencies();
+		return buildFileVisitor.getGradleDependencies();
 	}
 
-	public List<GradleDependency> getDependencies(String configuration) {
+	public List<GradleDependency> getGradleDependencies(String configuration) {
 		GradleBuildFileVisitor buildFileVisitor = _walkAST();
 
-		List<GradleDependency> dependencies =
-			buildFileVisitor.getDependencies();
+		List<GradleDependency> gradleDependencies =
+			buildFileVisitor.getGradleDependencies();
 
-		Stream<GradleDependency> stream = dependencies.stream();
+		Stream<GradleDependency> stream = gradleDependencies.stream();
 
 		return stream.filter(
-			dependency -> Objects.equals(
-				configuration, dependency.getConfiguration())
+			gradleDependency -> Objects.equals(
+				configuration, gradleDependency.getConfiguration())
 		).collect(
 			Collectors.toList()
 		);
@@ -122,10 +126,10 @@ public class GradleBuildFile {
 		);
 	}
 
-	public void insertDependency(GradleDependency dependency) {
+	public void insertGradleDependency(GradleDependency dependency) {
 		GradleBuildFileVisitor buildFileVisitor = _walkAST();
 
-		for (GradleDependency dep : buildFileVisitor.getDependencies()) {
+		for (GradleDependency dep : buildFileVisitor.getGradleDependencies()) {
 			if (dep.equals(dependency)) {
 				return;
 			}
@@ -150,16 +154,16 @@ public class GradleBuildFile {
 		_saveSource(lines);
 	}
 
-	public void insertDependency(
+	public void insertGradleDependency(
 		String configuration, String group, String name) {
 
-		insertDependency(configuration, group, name, null);
+		insertGradleDependency(configuration, group, name, null);
 	}
 
-	public void insertDependency(
+	public void insertGradleDependency(
 		String configuration, String group, String name, String version) {
 
-		insertDependency(
+		insertGradleDependency(
 			new GradleDependency(configuration, group, name, version));
 	}
 

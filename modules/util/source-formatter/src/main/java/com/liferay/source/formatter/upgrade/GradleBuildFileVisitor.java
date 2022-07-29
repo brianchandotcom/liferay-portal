@@ -35,16 +35,16 @@ import org.codehaus.groovy.ast.stmt.BlockStatement;
  */
 public class GradleBuildFileVisitor extends CodeVisitorSupport {
 
-	public List<GradleDependency> getDependencies() {
-		return _dependencies;
-	}
-
 	public int getDependenciesLastLineNumber() {
 		return _dependenciesLastLineNumber;
 	}
 
 	public int getDependenciesLineNumber() {
 		return _dependenciesLineNumber;
+	}
+
+	public List<GradleDependency> getGradleDependencies() {
+		return _gradleDependencies;
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 					_configuration, parts[0], parts[1], parts[2],
 					_methodCallLineNumber, _methodCallLastLineNumber);
 
-				_dependencies.add(dependency);
+				_gradleDependencies.add(dependency);
 			}
 		}
 
@@ -126,7 +126,7 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 				keyValues.get("version"), _methodCallLineNumber,
 				_methodCallLastLineNumber);
 
-			_dependencies.add(dependency);
+			_gradleDependencies.add(dependency);
 		}
 
 		super.visitMapExpression(mapExpression);
@@ -173,9 +173,10 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 	}
 
 	private String _configuration;
-	private final List<GradleDependency> _dependencies = new ArrayList<>();
 	private int _dependenciesLastLineNumber = -1;
 	private int _dependenciesLineNumber = -1;
+	private final List<GradleDependency> _gradleDependencies =
+		new ArrayList<>();
 	private boolean _inDependencies;
 	private int _methodCallLastLineNumber = -1;
 	private int _methodCallLineNumber = -1;

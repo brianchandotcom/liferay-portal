@@ -50,6 +50,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -537,7 +539,20 @@ public class SalesforceObjectEntryManagerImpl
 
 				if (Objects.equals(
 						objectField.getBusinessType(),
-						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+						ObjectFieldConstants.BUSINESS_TYPE_INTEGER) ||
+					Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER)) {
+
+					if (value instanceof BigDecimal) {
+						BigDecimal bigDecimalValue = (BigDecimal)value;
+
+						value = bigDecimalValue.toBigInteger();
+					}
+				}
+				else if (Objects.equals(
+							objectField.getBusinessType(),
+							ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 					ListTypeEntry listTypeEntry =
 						_listTypeEntryLocalService.fetchListTypeEntry(

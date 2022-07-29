@@ -38,7 +38,7 @@ public class FVSFrontendDataSetEntryLocalServiceImpl
 
 	@Override
 	public FVSFrontendDataSetEntry addFVSFrontendDataSetEntry(
-			String fdsName, long fvsEntryId, String name, long plid,
+			long fvsEntryId, String fdsName, String name, long plid,
 			String portletId, long userId)
 		throws PortalException {
 
@@ -52,8 +52,8 @@ public class FVSFrontendDataSetEntryLocalServiceImpl
 		fvsFrontendDataSetEntry.setUserId(user.getUserId());
 		fvsFrontendDataSetEntry.setUserName(user.getFullName());
 
-		fvsFrontendDataSetEntry.setFdsName(fdsName);
 		fvsFrontendDataSetEntry.setFvsEntryId(fvsEntryId);
+		fvsFrontendDataSetEntry.setFdsName(fdsName);
 		fvsFrontendDataSetEntry.setName(name);
 		fvsFrontendDataSetEntry.setPlid(plid);
 		fvsFrontendDataSetEntry.setPortletId(portletId);

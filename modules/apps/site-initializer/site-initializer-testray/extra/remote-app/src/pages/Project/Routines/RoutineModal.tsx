@@ -21,10 +21,7 @@ import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalComponent} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
-import {
-	createRoutine,
-	updateRoutine,
-} from '../../../services/rest/TestrayRoutine';
+import {createRoutine, updateRoutine} from '../../../services/rest';
 
 type RoutineForm = {
 	autoanalyze: boolean;

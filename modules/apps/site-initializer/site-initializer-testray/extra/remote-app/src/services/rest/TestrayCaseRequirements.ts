@@ -12,7 +12,7 @@
  * details.
  */
 
-import {APIResponse, TestrayRequirementCase} from '../../graphql/queries';
+import {APIResponse, TestrayRequirementCase} from './types';
 
 const nestedFields =
 	'nestedFields=case.component,requirement.component.team&nestedFieldsDepth=3';

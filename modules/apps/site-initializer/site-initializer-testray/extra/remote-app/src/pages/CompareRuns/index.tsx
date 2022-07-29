@@ -18,8 +18,8 @@ import Container from '../../components/Layout/Container';
 import QATable from '../../components/Table/QATable';
 import TableChart from '../../components/TableChart';
 import useTableChartData from '../../data/useTableChartData';
-import {TestrayRun} from '../../graphql/queries/testrayRun';
 import i18n from '../../i18n';
+import {TestrayRun} from '../../services/rest';
 
 const CompareRunDetails: React.FC<{runs: TestrayRun[]}> = ({runs = []}) => {
 	const {colors, columns, data} = useTableChartData();

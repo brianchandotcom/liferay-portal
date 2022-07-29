@@ -26,44 +26,7 @@ export * from './testrayProject';
 export * from './testrayRequirement';
 export * from './testrayRequirementCase';
 export * from './testrayRoutine';
-export * from './testrayShared';
 export * from './testraySuite';
 export * from './testraySuiteCase';
 export * from './testrayTask';
 export * from './testrayTeam';
-
-export type CType<ObjectKey extends string, Query = any> = {
-	c: {
-		[key in ObjectKey]: Query;
-	};
-};
-
-export type FacetAggregation = {
-	facets: {
-		facetCriteria: string;
-		facetValues: {
-			numberOfOccurrences: number;
-			term: string;
-		}[];
-	}[];
-};
-
-export type FacetAggregationQuery<ObjectKey extends string> = {
-	[key in ObjectKey]: FacetAggregation;
-};
-
-export type APIResponse<Query = any> = {
-	items: Query[];
-	lastPage: number;
-	page: number;
-	pageSize: number;
-	totalCount: number;
-};
-
-export type TypePagination<ObjectKey extends string, Query = any> = {
-	[key in ObjectKey]: APIResponse<Query>;
-};
-
-export type CTypePagination<ObjectKey extends string, Query = any> = {
-	c: TypePagination<ObjectKey, Query>;
-};

@@ -22,10 +22,7 @@ import ProgressBar from '../../../components/ProgressBar';
 import useBuildHistory from '../../../data/useBuildHistory';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';
-import {
-	buildsResource,
-	getBuildsTransformData,
-} from '../../../services/rest/TestrayBuild';
+import {buildsResource, getBuildsTransformData} from '../../../services/rest';
 import {BUILD_STATUS} from '../../../util/constants';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';

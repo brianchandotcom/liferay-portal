@@ -20,6 +20,7 @@ const deleteResource = (resource: RequestInfo) => {
 
 export {deleteResource};
 
+export * from './LiferayUserAccounts';
 export * from './TestrayBuild';
 export * from './TestrayCase';
 export * from './TestrayCaseRequirements';
@@ -35,4 +36,4 @@ export * from './TestrayRun';
 export * from './TestraySuite';
 export * from './TestraySuiteCases';
 export * from './TestrayTask';
-export * from './TestrayUserAccounts';
+export * from './types';

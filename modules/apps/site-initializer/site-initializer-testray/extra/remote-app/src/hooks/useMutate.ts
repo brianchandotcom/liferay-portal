@@ -14,7 +14,7 @@
 
 import {KeyedMutator, MutatorOptions} from 'swr';
 
-import {APIResponse} from '../graphql/queries';
+import {APIResponse} from '../services/rest';
 
 const useMutate = () => {
 	return {

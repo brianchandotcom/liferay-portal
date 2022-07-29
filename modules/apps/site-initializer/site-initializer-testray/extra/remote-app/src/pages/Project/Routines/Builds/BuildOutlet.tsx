@@ -23,11 +23,12 @@ import {
 import {useFetch} from '../../../../hooks/useFetch';
 import useHeader from '../../../../hooks/useHeader';
 import i18n from '../../../../i18n';
-import {getTasksTransformData, tasksResource} from '../../../../services/rest';
 import {
 	getBuildQuery,
 	getBuildTransformData,
-} from '../../../../services/rest/TestrayBuild';
+	getTasksTransformData,
+	tasksResource,
+} from '../../../../services/rest';
 import BuildAlertBar from './BuildAlertBar';
 import BuildOverview from './BuildOverview';
 

@@ -18,10 +18,10 @@ import {Outlet, useNavigate} from 'react-router-dom';
 
 import CompareRunDetails from '.';
 import Container from '../../components/Layout/Container';
-import {TestrayRun} from '../../graphql/queries/testrayRun';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
 import fetcher from '../../services/fetcher';
+import {TestrayRun} from '../../services/rest';
 import useCompareRuns from './useCompareRuns';
 
 const COMPARE_RUNS_ROOT_PATH = '/compare-runs';

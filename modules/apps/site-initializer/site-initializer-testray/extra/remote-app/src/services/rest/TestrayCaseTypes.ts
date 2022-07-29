@@ -15,15 +15,6 @@
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
 
-export type TestrayCaseType = {
-	dateCreated: string;
-	dateModified: string;
-	externalReferenceCode: string;
-	id: number;
-	name: string;
-	status: string;
-};
-
 type CaseType = typeof yupSchema.caseType.__outputType;
 
 const adapter = ({name}: CaseType) => ({

@@ -15,19 +15,6 @@
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
 
-type TestraySuite = {
-	caseParameters: string;
-	creator: {
-		name: string;
-	};
-	dateCreated: string;
-	dateModified: string;
-	description: string;
-	id: number;
-	name: string;
-	type: string;
-};
-
 type Suite = typeof yupSchema.suite.__outputType & {projectId: number};
 
 const adapter = ({
@@ -52,7 +39,5 @@ const createSuite = (suite: Suite) => fetcher.post('/suites', adapter(suite));
 
 const updateSuite = (id: number, suite: Suite) =>
 	fetcher.put(`/suites/${id}`, adapter(suite));
-
-export type {TestraySuite};
 
 export {createSuite, updateSuite};

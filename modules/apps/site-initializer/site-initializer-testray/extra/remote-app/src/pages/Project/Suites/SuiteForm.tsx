@@ -21,13 +21,14 @@ import {useOutletContext, useParams} from 'react-router-dom';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
-import {TestrayCase, TestraySuite} from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
 import useFormActions from '../../../hooks/useFormActions';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 import {
+	TestrayCase,
+	TestraySuite,
 	createSuite,
 	createSuiteCaseBatch,
 	updateSuite,

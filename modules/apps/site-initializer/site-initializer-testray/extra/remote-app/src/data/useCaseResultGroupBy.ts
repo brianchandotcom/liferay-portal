@@ -14,8 +14,8 @@
 
 import {useCallback, useMemo} from 'react';
 
-import {APIResponse, FacetAggregation, TestrayBuild} from '../graphql/queries';
 import {useFetch} from '../hooks/useFetch';
+import {APIResponse, FacetAggregation, TestrayBuild} from '../services/rest';
 import {Statuses, TEST_STATUS, chartColors} from '../util/constants';
 import {searchUtil} from '../util/search';
 

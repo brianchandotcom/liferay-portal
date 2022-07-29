@@ -13,7 +13,7 @@
  */
 
 import {BoxItem} from '../../../components/Form/DualListBox';
-import {TestraySuite} from '../../../graphql/queries';
+import {TestraySuite} from '../../../services/rest';
 import {SearchBuilder, searchUtil} from '../../../util/search';
 import {
 	State as CaseParameter,
@@ -23,8 +23,7 @@ import {
 const getCaseParameters = (testraySuite: TestraySuite): CaseParameter => {
 	try {
 		return JSON.parse(testraySuite.caseParameters);
-	}
-	catch (error) {
+	} catch (error) {
 		return CaseParameterInitialState;
 	}
 };

@@ -16,11 +16,10 @@ import {useCallback, useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 
 import EmptyState from '../../components/EmptyState';
-import {APIResponse} from '../../graphql/queries';
 import {useFetch} from '../../hooks/useFetch';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
-import {TestrayProject} from '../../services/rest';
+import {APIResponse, TestrayProject} from '../../services/rest';
 
 const ProjectOutlet = () => {
 	const {projectId, ...otherParams} = useParams();

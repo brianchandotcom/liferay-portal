@@ -12,9 +12,9 @@
  * details.
  */
 
-import {APIResponse, TestrayCase} from '../../graphql/queries';
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
+import {APIResponse, TestrayCase} from './types';
 
 type Case = typeof yupSchema.case.__outputType & {projectId: number};
 

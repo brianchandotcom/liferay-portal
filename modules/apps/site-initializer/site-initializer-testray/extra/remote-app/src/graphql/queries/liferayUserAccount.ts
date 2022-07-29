@@ -15,7 +15,11 @@
 import {gql} from '@apollo/client';
 
 import {liferayUserAccountFragment} from '../fragments';
-import {Role} from './liferayRole';
+
+export type Role = {
+	id: number;
+	name: string;
+};
 
 export type UserAccount = {
 	additionalName: string;

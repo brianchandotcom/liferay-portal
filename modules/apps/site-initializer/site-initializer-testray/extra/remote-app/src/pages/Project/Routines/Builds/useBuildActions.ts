@@ -14,13 +14,15 @@
 
 import {useNavigate} from 'react-router-dom';
 
-import {TestrayBuild} from '../../../../graphql/queries';
 import useFormModal from '../../../../hooks/useFormModal';
 import useMutate from '../../../../hooks/useMutate';
 import i18n from '../../../../i18n';
 import {Security} from '../../../../security';
-import {deleteResource} from '../../../../services/rest';
-import {updateBuild} from '../../../../services/rest/TestrayBuild';
+import {
+	TestrayBuild,
+	deleteResource,
+	updateBuild,
+} from '../../../../services/rest';
 import {Action} from '../../../../types';
 
 const useBuildActions = () => {

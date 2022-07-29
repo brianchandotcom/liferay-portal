@@ -12,17 +12,11 @@
  * details.
  */
 
-import {APIResponse} from '../../graphql/queries';
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
+import {APIResponse, TestrayRoutine} from './types';
 
 type Routine = typeof yupSchema.routine.__outputType & {projectId: number};
-
-type TestrayRoutine = {
-	dateCreated: string;
-	id: number;
-	name: string;
-};
 
 const adapter = (routine: Routine) => ({
 	autoanalyze: routine.autoanalyze,
@@ -40,7 +34,5 @@ const getRoutinesTransformData = (response: APIResponse<TestrayRoutine>) => ({
 	...response,
 	items: response?.items,
 });
-
-export type {TestrayRoutine};
 
 export {createRoutine, updateRoutine, getRoutinesTransformData};

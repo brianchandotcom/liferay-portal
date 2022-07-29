@@ -21,11 +21,11 @@ import {
 } from 'react-router-dom';
 
 import Loading from '../../../components/Loading';
-import {TestrayProject} from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
 import {useFetch} from '../../../hooks/useFetch';
 import i18n from '../../../i18n';
 import {
+	TestrayProject,
 	getRequirementQuery,
 	getRequirementTransformData,
 } from '../../../services/rest';

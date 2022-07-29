@@ -14,12 +14,11 @@
 
 import {useNavigate} from 'react-router-dom';
 
-import {TestrayCase} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
 import {Security} from '../../../security';
-import {deleteResource} from '../../../services/rest';
+import {TestrayCase, deleteResource} from '../../../services/rest';
 import {Action} from '../../../types';
 
 const useCaseActions = () => {

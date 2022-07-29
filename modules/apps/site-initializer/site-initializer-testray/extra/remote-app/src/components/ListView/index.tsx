@@ -29,9 +29,9 @@ import ListViewContextProvider, {
 	ListViewContextProviderProps,
 	ListViewTypes,
 } from '../../context/ListViewContext';
-import {APIResponse} from '../../graphql/queries';
 import {useFetch} from '../../hooks/useFetch';
 import i18n from '../../i18n';
+import {APIResponse} from '../../services/rest';
 import {SortDirection} from '../../types';
 import {PAGINATION} from '../../util/constants';
 import {SearchBuilder} from '../../util/search';

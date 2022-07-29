@@ -12,14 +12,7 @@
  * details.
  */
 
-import {TestrayCase, TestrayRequirement} from '../../graphql/queries';
 import fetcher from '../fetcher';
-
-type TestrayRequirementCase = {
-	case: TestrayCase;
-	id: number;
-	requirement: TestrayRequirement;
-};
 
 const nestedFieldsParam =
 	'nestedFields=component,team.project&nestedFieldsDepth=2';
@@ -63,7 +56,5 @@ const createRequirementCaseBatch = (
 		)
 	);
 };
-
-export type {TestrayRequirementCase};
 
 export {createRequirementCaseBatch, requirementsCasesResource};

@@ -12,9 +12,11 @@
  * details.
  */
 
-import {APIResponse, TestrayBuild} from '../../graphql/queries';
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
+import {APIResponse} from './types';
+
+import type {TestrayBuild} from './types';
 
 type Build = typeof yupSchema.build.__outputType & {projectId: number};
 

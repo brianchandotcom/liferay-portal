@@ -18,10 +18,15 @@ import {BoxItem} from '../../../components/Form/DualListBox';
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView';
 import QATable from '../../../components/Table/QATable';
-import {APIResponse, TestrayCase, TestraySuite} from '../../../graphql/queries';
-import {TestraySuiteCase} from '../../../graphql/queries/testraySuiteCase';
 import i18n from '../../../i18n';
-import {casesResource, suitesCasesResource} from '../../../services/rest';
+import {
+	APIResponse,
+	TestrayCase,
+	TestraySuite,
+	TestraySuiteCase,
+	casesResource,
+	suitesCasesResource,
+} from '../../../services/rest';
 import dayjs from '../../../util/date';
 import useSuiteCaseFilter, {getCaseParameters} from './useSuiteCaseFilter';
 import useSuiteCasesActions from './useSuiteCasesActions';
@@ -32,7 +37,7 @@ const transformData = (isSmartSuite: boolean) => (
 	let items: TestraySuiteCase[] = (response?.items as any) || [];
 
 	if (isSmartSuite) {
-		items = (items as TestrayCase[]).map((testrayCase) => ({
+		items = (items as any[]).map((testrayCase) => ({
 			...testrayCase,
 			case: {
 				...testrayCase,
@@ -41,7 +46,7 @@ const transformData = (isSmartSuite: boolean) => (
 			id: testrayCase.id,
 		}));
 	} else {
-		items = items.map((suiteCase: TestraySuiteCase) => ({
+		items = (items as any[]).map((suiteCase) => ({
 			...suiteCase,
 			case: suiteCase.r_caseToSuitesCases_c_case
 				? {

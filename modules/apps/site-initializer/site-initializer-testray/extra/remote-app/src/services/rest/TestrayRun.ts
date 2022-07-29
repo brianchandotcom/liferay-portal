@@ -12,23 +12,7 @@
  * details.
  */
 
-import {APIResponse, TestrayBuild} from '../../graphql/queries';
-
-export type TestrayRun = {
-	build: TestrayBuild;
-	dateCreated: string;
-	dateModified: string;
-	description: string;
-	environmentHash: string;
-	externalReferenceCode: string;
-	externalReferencePK: string;
-	externalReferenceType: string;
-	id: number;
-	jenkinsJobKey: string;
-	name: string;
-	number: string;
-	status: string;
-};
+import {APIResponse, TestrayRun} from './types';
 
 const getRunTransformData = (
 	response: APIResponse<TestrayRun>

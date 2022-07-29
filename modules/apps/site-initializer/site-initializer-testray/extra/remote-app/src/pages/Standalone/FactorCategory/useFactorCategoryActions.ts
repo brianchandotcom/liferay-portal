@@ -12,12 +12,11 @@
  * details.
  */
 
-import {TestrayFactorCategory} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
 import {Security} from '../../../security';
-import {deleteResource} from '../../../services/rest';
+import {TestrayFactorCategory, deleteResource} from '../../../services/rest';
 import {Action} from '../../../types';
 
 const useFactorCategoryActions = () => {

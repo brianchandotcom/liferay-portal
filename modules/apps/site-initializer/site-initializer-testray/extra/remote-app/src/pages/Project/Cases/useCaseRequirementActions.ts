@@ -14,11 +14,12 @@
 
 import {useState} from 'react';
 
-import {TestrayCase, TestrayRequirementCase} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
 import {
+	TestrayCase,
+	TestrayRequirementCase,
 	createRequirementCaseBatch,
 	deleteResource,
 } from '../../../services/rest';

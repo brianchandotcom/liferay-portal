@@ -28,7 +28,7 @@ import useCaseResultGroupBy from '../../data/useCaseResultGroupBy';
 import {useFetch} from '../../hooks/useFetch';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
-import {getTaskQuery} from '../../services/rest/TestrayTask';
+import {getTaskQuery} from '../../services/rest';
 import {
 	SUBTASK_STATUS,
 	StatusesProgressScore,

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {APIResponse, TestrayTask} from '../../graphql/queries';
+import {APIResponse, TestrayTask} from './types';
 
 const nestedFieldsParam =
 	'nestedFields=build.project,build.routine&nestedFieldsDepth=2';
@@ -51,4 +51,3 @@ export {
 	getTaskTransformData,
 	getTasksTransformData,
 };
-export type {TestrayTask};

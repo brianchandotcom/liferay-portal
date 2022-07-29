@@ -12,11 +12,11 @@
  * details.
  */
 
-import {APIResponse, TestrayCaseResult} from '../../graphql/queries';
 import CaseResult from '../../pages/Project/Routines/Builds/Inner/CaseResult';
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
 import {Liferay} from '../liferay';
+import {APIResponse, TestrayCaseResult} from './types';
 
 type CaseResult = typeof yupSchema.caseResult.__outputType;
 

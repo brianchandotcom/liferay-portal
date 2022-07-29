@@ -16,11 +16,6 @@ import {gql} from '@apollo/client';
 
 import {liferayRoleFragment} from '../fragments';
 
-export type Role = {
-	id: number;
-	name: string;
-};
-
 export const getLiferayRoles = gql`
 	${liferayRoleFragment}
 

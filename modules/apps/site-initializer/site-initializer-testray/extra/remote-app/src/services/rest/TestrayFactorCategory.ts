@@ -15,15 +15,6 @@
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
 
-type TestrayFactorCategory = {
-	dateCreated: string;
-	dateModified: string;
-	externalReferenceCode: string;
-	id: number;
-	name: string;
-	status: string;
-};
-
 type FactorCategory = typeof yupSchema.factorCategory.__outputType;
 
 const adapter = ({id, name}: FactorCategory) => ({
@@ -36,7 +27,5 @@ const createFactorCategory = (factorcategory: FactorCategory) =>
 
 const updateFactorCategory = (id: number, factorcategory: FactorCategory) =>
 	fetcher.put(`/factorcategories/${id}`, adapter(factorcategory));
-
-export type {TestrayFactorCategory};
 
 export {createFactorCategory, updateFactorCategory};

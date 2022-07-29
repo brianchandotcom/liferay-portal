@@ -15,8 +15,8 @@
 
 import {ReactNode, createContext, useEffect, useReducer} from 'react';
 
-import {UserAccount} from '../graphql/queries';
 import {useFetch} from '../hooks/useFetch';
+import {UserAccount} from '../services/rest';
 import {ActionMap} from '../types';
 
 type InitialState = {

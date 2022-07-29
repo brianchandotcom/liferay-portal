@@ -12,15 +12,7 @@
  * details.
  */
 
-import {TestrayCase} from '../../graphql/queries';
 import fetcher from '../fetcher';
-import {TestraySuite} from './TestraySuite';
-
-type TestraySuiteCase = {
-	case: TestrayCase;
-	id: number;
-	suite: TestraySuite;
-};
 
 const nestedFieldsParam =
 	'nestedFields=case.component,suite&nestedFieldsDepth=2';
@@ -59,7 +51,5 @@ const createSuiteCaseBatch = (suites: {caseId: number; suiteId: number}[]) => {
 		)
 	);
 };
-
-export type {TestraySuiteCase};
 
 export {createSuiteCaseBatch, suitesCasesResource};

@@ -17,10 +17,10 @@ import {useState} from 'react';
 
 import Form from '../../components/Form';
 import Container from '../../components/Layout/Container';
-import {TestrayCaseType} from '../../graphql/queries';
 import {useFetch} from '../../hooks/useFetch';
 import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
+import {TestrayCaseType} from '../../services/rest';
 import {searchUtil} from '../../util/search';
 import {UserListView} from '../Manage/User';
 import TestflowAssignUserModal from './modal';

@@ -23,13 +23,9 @@ import {useFetch} from '../../../hooks/useFetch';
 import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
-import {
-	createUserAccount,
-	updateUserAccount,
-} from '../../../services/rest/TestrayUserAccounts';
+import {createUserAccount, updateUserAccount} from '../../../services/rest';
 
-type userFormDefault = {
-	__typename?: any;
+type UserFormDefault = {
 	alternateName: string;
 	emailAddress: string;
 	familyName: string;
@@ -62,16 +58,15 @@ const UserForm = () => {
 		register,
 		setValue,
 		watch,
-	} = useForm<userFormDefault>({
+	} = useForm<UserFormDefault>({
 		defaultValues: userId ? currentUser : {},
 		resolver: yupResolver(yupSchema.user),
 	});
 
-	const _onSubmit = (form: userFormDefault) => {
+	const _onSubmit = (form: UserFormDefault) => {
 		delete form.password;
 		delete form.repassword;
 		delete form.roles;
-		delete form.__typename;
 		delete form.roleBriefs;
 
 		onSubmit(

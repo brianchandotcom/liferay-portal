@@ -12,9 +12,9 @@
  * details.
  */
 
-import {APIResponse, TestrayRequirement} from '../../graphql/queries';
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
+import {APIResponse, TestrayRequirement} from './types';
 
 type Requirement = typeof yupSchema.requirement.__outputType & {
 	projectId: number;

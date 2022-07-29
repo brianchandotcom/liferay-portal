@@ -18,12 +18,12 @@ import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView';
 import StatusBadge from '../../../components/StatusBadge';
 import QATable from '../../../components/Table/QATable';
-import {TestrayCase} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import {
+	TestrayCase,
 	caseResultResource,
 	getCaseResultTransformData,
-} from '../../../services/rest/TestrayCaseResult';
+} from '../../../services/rest';
 import {getStatusLabel} from '../../../util/constants';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';

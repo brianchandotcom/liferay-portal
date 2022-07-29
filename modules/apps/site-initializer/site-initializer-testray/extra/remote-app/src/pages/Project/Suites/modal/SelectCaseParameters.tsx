@@ -18,15 +18,15 @@ import DualListBox, {
 	BoxItem,
 	Boxes,
 } from '../../../../components/Form/DualListBox';
+import {useFetch} from '../../../../hooks/useFetch';
+import i18n from '../../../../i18n';
 import {
 	APIResponse,
 	TestrayCaseType,
 	TestrayComponent,
 	TestrayRequirement,
 	TestrayTeam,
-} from '../../../../graphql/queries';
-import {useFetch} from '../../../../hooks/useFetch';
-import i18n from '../../../../i18n';
+} from '../../../../services/rest';
 
 const onMapDefault = ({id, name}: any) => ({
 	label: name,

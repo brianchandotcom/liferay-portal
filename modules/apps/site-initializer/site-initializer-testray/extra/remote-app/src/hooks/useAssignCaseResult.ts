@@ -14,9 +14,9 @@
 
 import {KeyedMutator} from 'swr';
 
-import {TestrayCaseResult} from '../graphql/queries';
 import fetcher from '../services/fetcher';
 import {Liferay} from '../services/liferay';
+import {TestrayCaseResult} from '../services/rest';
 import {TEST_STATUS} from '../util/constants';
 
 const useAssignCaseResult = (mutate?: KeyedMutator<any>) => {

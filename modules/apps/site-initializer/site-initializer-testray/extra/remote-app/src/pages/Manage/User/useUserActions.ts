@@ -14,10 +14,10 @@
 
 import {useNavigate} from 'react-router-dom';
 
-import {UserAccount} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import {Security} from '../../../security';
+import {UserAccount} from '../../../services/rest';
 import {Action} from '../../../types';
 
 const useUserActions = () => {

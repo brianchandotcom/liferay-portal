@@ -12,19 +12,9 @@
  * details.
  */
 
-import {APIResponse} from '../../graphql/queries';
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
-
-type TestrayProject = {
-	creator: {
-		name: string;
-	};
-	dateCreated: string;
-	description: string;
-	id: number;
-	name: string;
-};
+import {APIResponse, TestrayProject} from './types';
 
 type Project = typeof yupSchema.project.__outputType;
 

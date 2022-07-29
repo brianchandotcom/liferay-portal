@@ -20,17 +20,17 @@ import DualListBox, {
 	Boxes,
 } from '../../../components/Form/DualListBox';
 import Modal from '../../../components/Modal';
+import {withVisibleContent} from '../../../hoc/withVisibleContent';
+import {useFetch} from '../../../hooks/useFetch';
+import {FormModalOptions} from '../../../hooks/useFormModal';
+import i18n from '../../../i18n';
 import {
 	APIResponse,
 	TestrayCaseType,
 	TestrayComponent,
 	TestrayRequirement,
 	TestrayTeam,
-} from '../../../graphql/queries';
-import {withVisibleContent} from '../../../hoc/withVisibleContent';
-import {useFetch} from '../../../hooks/useFetch';
-import {FormModalOptions} from '../../../hooks/useFormModal';
-import i18n from '../../../i18n';
+} from '../../../services/rest';
 
 type SuiteCasesModalProps = {
 	modal: FormModalOptions;

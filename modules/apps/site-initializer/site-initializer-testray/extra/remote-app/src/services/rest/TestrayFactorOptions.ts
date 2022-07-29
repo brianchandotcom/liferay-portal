@@ -12,19 +12,9 @@
  * details.
  */
 
-import {APIResponse} from '../../graphql/queries';
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
-import {TestrayFactorCategory} from './TestrayFactorCategory';
-
-export type TestrayFactorOptions = {
-	dateCreated: string;
-	dateModified: string;
-	factorCategory?: TestrayFactorCategory;
-	id: number;
-	name: string;
-	r_factorCategoryToOptions_c_factorCategory: TestrayFactorCategory;
-};
+import {APIResponse, TestrayFactorOptions} from './types';
 
 type FactorOption = typeof yupSchema.factorOption.__outputType;
 
@@ -73,3 +63,5 @@ export {
 	getFactorOptionTransformData,
 	getFactorOptionsTransformData,
 };
+
+export type {TestrayFactorOptions};

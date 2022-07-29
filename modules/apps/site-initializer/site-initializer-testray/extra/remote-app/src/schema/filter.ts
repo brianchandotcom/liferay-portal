@@ -13,15 +13,15 @@
  */
 
 import {RendererFields} from '../components/Form/Renderer';
+import i18n from '../i18n';
 import {
 	TestrayCaseType,
 	TestrayComponent,
 	TestrayProductVersion,
+	TestrayRun,
 	TestrayTeam,
 	UserAccount,
-} from '../graphql/queries';
-import {TestrayRun} from '../graphql/queries/testrayRun';
-import i18n from '../i18n';
+} from '../services/rest';
 
 export type Filters = {
 	[key: string]: RendererFields[];

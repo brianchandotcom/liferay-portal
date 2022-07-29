@@ -22,14 +22,14 @@ import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView';
 import MarkdownPreview from '../../../components/Markdown';
 import QATable from '../../../components/Table/QATable';
-import {
-	TestrayRequirement,
-	TestrayRequirementCase,
-} from '../../../graphql/queries';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';
-import {getRequirementQuery} from '../../../services/rest';
+import {
+	TestrayRequirement,
+	TestrayRequirementCase,
+	getRequirementQuery,
+} from '../../../services/rest';
 import {DescriptionType} from '../../../types';
 import {searchUtil} from '../../../util/search';
 import RequirementCaseLinkModal from './RequirementCaseLinkModal';

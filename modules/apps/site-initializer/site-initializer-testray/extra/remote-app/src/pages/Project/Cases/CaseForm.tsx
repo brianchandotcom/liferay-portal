@@ -21,19 +21,20 @@ import {KeyedMutator} from 'swr';
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
+import {useHeader} from '../../../hooks';
+import {useFetch} from '../../../hooks/useFetch';
+import useFormActions from '../../../hooks/useFormActions';
+import i18n from '../../../i18n';
+import yupSchema, {yupResolver} from '../../../schema/yup';
 import {
 	APIResponse,
 	TestrayCase,
 	TestrayCaseType,
 	TestrayComponent,
 	TestrayProject,
-} from '../../../graphql/queries';
-import {useHeader} from '../../../hooks';
-import {useFetch} from '../../../hooks/useFetch';
-import useFormActions from '../../../hooks/useFormActions';
-import i18n from '../../../i18n';
-import yupSchema, {yupResolver} from '../../../schema/yup';
-import {createCase, updateCase} from '../../../services/rest';
+	createCase,
+	updateCase,
+} from '../../../services/rest';
 import {DescriptionType} from '../../../types';
 
 type CaseFormData = {

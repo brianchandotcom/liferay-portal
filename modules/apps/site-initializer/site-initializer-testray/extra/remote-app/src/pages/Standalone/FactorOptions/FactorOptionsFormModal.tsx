@@ -25,7 +25,7 @@ import {
 	createFactorOption,
 	getFactorOptionsTransformData,
 	updateFactorOption,
-} from '../../../services/rest/TestrayFactorOptions';
+} from '../../../services/rest';
 
 type FactorOptionsForm = {
 	factorCategoryId: string;

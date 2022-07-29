@@ -21,12 +21,12 @@ import {KeyedMutator} from 'swr';
 import Form from '../../../../../../components/Form';
 import Footer from '../../../../../../components/Form/Footer';
 import Container from '../../../../../../components/Layout/Container';
-import {TestrayCaseResult} from '../../../../../../graphql/queries';
 import useFormActions from '../../../../../../hooks/useFormActions';
 import i18n from '../../../../../../i18n';
 import yupSchema from '../../../../../../schema/yup';
 import {Liferay} from '../../../../../../services/liferay';
 import {
+	TestrayCaseResult,
 	createCaseResult,
 	updateCaseResult,
 } from '../../../../../../services/rest';

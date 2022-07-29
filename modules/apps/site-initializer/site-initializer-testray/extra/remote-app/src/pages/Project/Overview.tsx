@@ -16,8 +16,8 @@ import {useOutletContext} from 'react-router-dom';
 
 import Container from '../../components/Layout/Container';
 import QATable from '../../components/Table/QATable';
-import {TestrayProject} from '../../graphql/queries';
 import i18n from '../../i18n';
+import {TestrayProject} from '../../services/rest';
 import dayjs from '../../util/date';
 
 const Overview = () => {

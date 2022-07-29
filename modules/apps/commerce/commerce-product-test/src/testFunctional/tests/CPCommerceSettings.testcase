@@ -30,8 +30,8 @@ definition {
 
 		while (IsElementPresent(locator1 = "CommerceEntry#ROW_VERTICAL_ELLIPSIS")) {
 			CommerceProducts.deleteEntries(
-				countries = "true",
-				deleteMessage = "Are you sure you want to delete the selected countries?");
+				deleteMessage = "Are you sure you want to delete the selected countries?",
+				trashIcon = "false");
 		}
 
 		AssertElementNotPresent(locator1 = "CommerceEntry#ROW_VERTICAL_ELLIPSIS");

@@ -67,6 +67,7 @@ definition {
 	@description = "This is a test for LPS-151157. The page creator could configure the Checkbox fragment."
 	@priority = "5"
 	test ConfigureCheckbox {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Checkbox#ConfigureCheckbox";
 
 		task ("Given a page creator has a Form Container mapped to an entity with boolean field") {

@@ -171,6 +171,7 @@ definition {
 	@description = "This is a test for LPS-155168. The user could submit Text verification of Simple Captcha via pressing enter at view mode. The user could see error message when validation fail."
 	@priority = "5"
 	test SubmitTextVerificationViaPressingEnter {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CaptchaFragment#SubmitTextVerificationViaPressingEnter";
 
 		task ("Given a site member has a content page with a Captcha inside Form Container") {
@@ -228,6 +229,7 @@ definition {
 	@description = "This is a test for LPS-155168. The user could submit Verification of reCaptcha at view mode."
 	@priority = "5"
 	test SubmitVerificationOfReCaptcha {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CaptchaFragment#SubmitVerificationOfReCaptcha";
 
 		task ("Given a site member has a content page with a reCaptcha and a Submit Button inside Form Container") {

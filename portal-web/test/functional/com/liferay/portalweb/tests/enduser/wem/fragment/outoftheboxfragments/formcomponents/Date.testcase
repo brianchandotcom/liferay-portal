@@ -67,6 +67,7 @@ definition {
 	@description = "This is a test for LPS-151158 and LPS-155502. The page creator could configure the Date fragment. View the behaviors of Help Text and Label."
 	@priority = "5"
 	test ConfigureDate {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Date#ConfigureDate";
 
 		task ("Given a page creator has a Form Container mapped to an entity with date field") {

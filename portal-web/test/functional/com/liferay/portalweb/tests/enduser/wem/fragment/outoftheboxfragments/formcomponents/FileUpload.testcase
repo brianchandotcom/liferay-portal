@@ -140,6 +140,7 @@ definition {
 	@description = "This is a test for LPS-155170. File Upload fragment could map to attachment type object."
 	@priority = "5"
 	test CanAddFileFromComputerAndDMInMappedObject {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FileUpload#CanAddFileFromComputerAndDMInMappedObject";
 
 		task ("Given a content page has a File Upload fragment mapped to Attachment field") {

@@ -254,6 +254,7 @@ definition {
 	@description = "This is a test for LPS-154568 and LPS-155167. The page designer can map a Form Container to Object field with relationship on custom object. There is an input search when the mapped field has more than 10 items and the max number of precharged options is 10."
 	@priority = "5"
 	test MapRelationshipWithCustomObject {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SelectFromList#MapRelationshipWithCustomObject";
 
 		task ("Given a page designer has a mapped Form Container to an Object with relationship on custom object") {

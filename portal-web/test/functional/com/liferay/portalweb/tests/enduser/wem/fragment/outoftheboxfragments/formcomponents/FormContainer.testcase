@@ -142,6 +142,7 @@ definition {
 	@description = "This is a test for LPS-151867 and LPS-149984. The page editor could add Form Container fragment from Form Components set to page. The page editor could map entity to Form Container in content page."
 	@priority = "5"
 	test MapEntityToFormContainerInContentPage {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FormContainer#MapEntityToFormContainerInContentPage";
 
 		task ("Given a page creator has a content page") {
@@ -192,6 +193,7 @@ definition {
 	@description = "This is a test for LPS-149984. The page editor could map entity to Form Container in display page template."
 	@priority = "5"
 	test MapEntityToFormContainerInDisplayPageTemplate {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FormContainer#MapEntityToFormContainerInDisplayPageTemplate";
 		property testray.component.names = "Display Pages,Fragments";
 
@@ -248,6 +250,7 @@ definition {
 	@description = "This is a test for LPS-155529. The page designer can submit a Form Container with embedded success message."
 	@priority = "5"
 	test SubmitFormContainerWithEmbeddedSuccessMessage {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FormContainer#SubmitFormContainerWithEmbeddedSuccessMessage";
 
 		task ("Given a page designer has a Form Container on content page") {

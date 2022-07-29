@@ -458,7 +458,7 @@ definition {
 	}
 
 	macro deleteEntries {
-		if (isSet(countries)) {
+		if (isSet(trashIcon) && ("${trashIcon}" == "false")) {
 			Click.clickNoMouseOverNoWaitForVisible(locator1 = "AppBuilder#CHECKBOX");
 
 			if (IsElementPresent(locator1 = "TableViewBuilder#CLEAR_SEARCH")) {

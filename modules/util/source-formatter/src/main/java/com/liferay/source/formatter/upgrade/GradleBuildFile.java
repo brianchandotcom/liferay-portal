@@ -34,14 +34,15 @@ public class GradleBuildFile {
 		_source = source;
 	}
 
-	public void deleteDependencies(List<GradleDependency> dependencies) {
+	public void deleteDependencies(List<GradleDependency> gradleDependencies) {
 		List<String> lines = getSourceLines();
 
-		dependencies.sort(GradleDependency.COMPARATOR_LAST_LINE_NUMBER_DESC);
+		gradleDependencies.sort(
+			GradleDependency.COMPARATOR_LAST_LINE_NUMBER_DESC);
 
-		for (GradleDependency dependency : dependencies) {
-			int lineNumber = dependency.getLineNumber();
-			int lastLineNumber = dependency.getLastLineNumber();
+		for (GradleDependency gradleDependency : gradleDependencies) {
+			int lineNumber = gradleDependency.getLineNumber();
+			int lastLineNumber = gradleDependency.getLastLineNumber();
 
 			for (int i = lastLineNumber; i >= lineNumber; i--) {
 				lines.remove(i - 1);
@@ -58,27 +59,28 @@ public class GradleBuildFile {
 	public void deleteDependency(
 		String configuration, String group, String name) {
 
-		List<GradleDependency> dependencies = getDependencies();
+		List<GradleDependency> gradleDependencies = getDependencies();
 
-		ListIterator<GradleDependency> listIterator = dependencies.listIterator(
-			dependencies.size());
+		ListIterator<GradleDependency> listIterator =
+			gradleDependencies.listIterator(gradleDependencies.size());
 
 		List<String> lines = getSourceLines();
 
 		while (listIterator.hasPrevious()) {
-			GradleDependency dependency = listIterator.previous();
+			GradleDependency gradleDependency = listIterator.previous();
 
 			if ((configuration != null) &&
-				!Objects.equals(configuration, dependency.getConfiguration())) {
+				!Objects.equals(
+					configuration, gradleDependency.getConfiguration())) {
 
 				continue;
 			}
 
-			if (Objects.equals(group, dependency.getGroup()) &&
-				Objects.equals(name, dependency.getName())) {
+			if (Objects.equals(group, gradleDependency.getGroup()) &&
+				Objects.equals(name, gradleDependency.getName())) {
 
-				for (int i = dependency.getLastLineNumber();
-					 i >= dependency.getLineNumber(); i--) {
+				for (int i = gradleDependency.getLastLineNumber();
+					 i >= gradleDependency.getLineNumber(); i--) {
 
 					lines.remove(i - 1);
 				}
@@ -97,14 +99,14 @@ public class GradleBuildFile {
 	public List<GradleDependency> getDependencies(String configuration) {
 		GradleBuildFileVisitor buildFileVisitor = _walkAST();
 
-		List<GradleDependency> dependencies =
+		List<GradleDependency> gradleDependencies =
 			buildFileVisitor.getDependencies();
 
-		Stream<GradleDependency> stream = dependencies.stream();
+		Stream<GradleDependency> stream = gradleDependencies.stream();
 
 		return stream.filter(
-			dependency -> Objects.equals(
-				configuration, dependency.getConfiguration())
+			gradleDependency -> Objects.equals(
+				configuration, gradleDependency.getConfiguration())
 		).collect(
 			Collectors.toList()
 		);

@@ -39,8 +39,8 @@
 			{
 				"name": "Github",
 				"type": "url",
-				"url": false,
-				"useNewTab": "https://github.com"
+				"url": "https://github.com",
+				"useNewTab": false
 			}
 		],
 		"name": "Privacy Navigation"

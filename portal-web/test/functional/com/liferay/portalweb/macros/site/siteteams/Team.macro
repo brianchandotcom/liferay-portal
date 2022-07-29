@@ -48,13 +48,13 @@ definition {
 		else {
 			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
-			Pause(locator1 = "5000");
-
 			LexiconCard.checkCardCheckbox(card = "${userScreenName}");
 
-			Pause(locator1 = "5000");
-
 			SelectFrameTop();
+
+			WaitForElementPresent(
+				key_text = "Add",
+				locator1 = "Button#ANY_ENABLED");
 
 			Button.clickAdd();
 
@@ -101,7 +101,9 @@ definition {
 
 			SelectFrameTop();
 
-			Pause(locator1 = "3000");
+			WaitForElementPresent(
+				key_text = "Add",
+				locator1 = "Button#ANY_ENABLED");
 
 			Button.clickAdd();
 

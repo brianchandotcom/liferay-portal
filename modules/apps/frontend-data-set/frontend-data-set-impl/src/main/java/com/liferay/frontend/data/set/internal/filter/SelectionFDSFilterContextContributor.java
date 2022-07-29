@@ -14,10 +14,10 @@
 
 package com.liferay.frontend.data.set.internal.filter;
 
-import com.liferay.frontend.data.set.filter.BaseRadioFDSFilter;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
-import com.liferay.frontend.data.set.filter.RadioFDSFilterItem;
+import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -35,49 +35,54 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Marco Leo
+ * @author Marko Cikos
  */
 @Component(
-	property = "frontend.data.set.filter.type=radio",
+	property = "frontend.data.set.filter.type=selection",
 	service = FDSFilterContextContributor.class
 )
-public class RadioFDSFilterContextContributor
+public class SelectionFDSFilterContextContributor
 	implements FDSFilterContextContributor {
 
 	@Override
 	public Map<String, Object> getFDSFilterContext(
 		FDSFilter fdsFilter, Locale locale) {
 
-		if (fdsFilter instanceof BaseRadioFDSFilter) {
-			return _serialize((BaseRadioFDSFilter)fdsFilter, locale);
+		if (fdsFilter instanceof BaseSelectionFDSFilter) {
+			return _serialize((BaseSelectionFDSFilter)fdsFilter, locale);
 		}
 
 		return Collections.emptyMap();
 	}
 
 	private Map<String, Object> _serialize(
-		BaseRadioFDSFilter baseRadioFDSFilter, Locale locale) {
+		BaseSelectionFDSFilter baseSelectionFDSFilter, Locale locale) {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		List<RadioFDSFilterItem> radioFDSFilterItems =
-			baseRadioFDSFilter.getRadioFDSFilterItems(locale);
+		List<SelectionFDSFilterItem> selectionFDSFilterItems =
+			baseSelectionFDSFilter.getSelectionFDSFilterItems(locale);
 
-		for (RadioFDSFilterItem radioFDSFilterItem : radioFDSFilterItems) {
+		for (SelectionFDSFilterItem selectionFDSFilterItem :
+				selectionFDSFilterItems) {
+
 			jsonArray.put(
 				JSONUtil.put(
 					"label",
-					_language.get(resourceBundle, radioFDSFilterItem.getLabel())
+					_language.get(
+						resourceBundle, selectionFDSFilterItem.getLabel())
 				).put(
-					"value", radioFDSFilterItem.getValue()
+					"value", selectionFDSFilterItem.getValue()
 				));
 		}
 
 		return HashMapBuilder.<String, Object>put(
 			"items", jsonArray
+		).put(
+			"multiple", baseSelectionFDSFilter.isMultiple()
 		).build();
 	}
 

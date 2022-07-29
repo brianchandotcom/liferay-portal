@@ -14,7 +14,12 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import {ClayCheckbox, ClayToggle} from '@clayui/form';
+import {
+	ClayCheckbox,
+	ClayRadio,
+	ClayRadioGroup,
+	ClayToggle,
+} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -72,27 +77,19 @@ const getOdataString = ({entityFieldType, id, selectedData}) => {
 		}, '');
 	}
 };
-function CheckboxesFilter({
+
+const SelectionFilter = ({
 	entityFieldType,
 	id,
 	items,
+	multiple,
 	selectedData,
 	setFilter,
-}) {
+}) => {
 	const [itemsValues, setItemsValues] = useState(
 		selectedData?.itemsValues || []
 	);
 	const [exclude, setExclude] = useState(selectedData?.exclude || false);
-
-	function selectCheckbox(selected) {
-		if (itemsValues.includes(selected)) {
-			return setItemsValues(
-				itemsValues.filter((value) => value !== selected)
-			);
-		}
-
-		return setItemsValues(itemsValues.concat(selected));
-	}
 
 	useEffect(() => {
 		setItemsValues(selectedData?.itemsValues || []);
@@ -143,26 +140,34 @@ function CheckboxesFilter({
 			<ClayDropDown.Divider />
 			<ClayDropDown.Caption>
 				<div className="inline-scroller mb-n2 mx-n2 px-2">
-					{items.map((item, i) => {
-						let checked = false;
-
-						if (itemsValues) {
-							checked = itemsValues.reduce(
-								(acc, element) => acc || element === item.value,
-								false
-							);
-						}
-
-						return (
-							<ClayCheckbox
-								aria-label={item.label}
-								checked={checked}
-								key={i}
-								label={item.label}
-								onChange={() => selectCheckbox(item.value)}
-							/>
-						);
-					})}
+					{multiple ? (
+						<MultipleSelectionItems
+							items={items}
+							itemsValues={itemsValues}
+							onChange={(itemValue) => {
+								if (itemsValues.includes(itemValue)) {
+									setItemsValues(
+										itemsValues.filter(
+											(value) => value !== itemValue
+										)
+									);
+								}
+								else {
+									setItemsValues(
+										itemsValues.concat(itemValue)
+									);
+								}
+							}}
+						/>
+					) : (
+						<SingleSelectionItems
+							items={items}
+							itemsValues={itemsValues}
+							onChange={(itemValue) => {
+								setItemsValues([itemValue]);
+							}}
+						/>
+					)}
 				</div>
 			</ClayDropDown.Caption>
 			<ClayDropDown.Divider />
@@ -208,9 +213,49 @@ function CheckboxesFilter({
 			</ClayDropDown.Caption>
 		</>
 	);
-}
+};
 
-CheckboxesFilter.propTypes = {
+const MultipleSelectionItems = ({items, itemsValues, onChange}) => {
+	return items.map((item) => {
+		let checked = false;
+
+		if (itemsValues) {
+			checked = itemsValues.reduce(
+				(acc, element) => acc || element === item.value,
+				false
+			);
+		}
+
+		return (
+			<ClayCheckbox
+				aria-label={item.label}
+				checked={checked}
+				key={item.value}
+				label={item.label}
+				onChange={() => onChange(item.value)}
+			/>
+		);
+	});
+};
+
+const SingleSelectionItems = ({items, itemsValues, onChange}) => {
+	return (
+		<ClayRadioGroup
+			onChange={onChange}
+			value={itemsValues?.length && itemsValues[0]}
+		>
+			{items.map((item) => (
+				<ClayRadio
+					key={item.value}
+					label={item.label}
+					value={item.value}
+				/>
+			))}
+		</ClayRadioGroup>
+	);
+};
+
+SelectionFilter.propTypes = {
 	entityFieldType: PropTypes.string,
 	id: PropTypes.string.isRequired,
 	items: PropTypes.arrayOf(
@@ -219,6 +264,7 @@ CheckboxesFilter.propTypes = {
 			value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		})
 	),
+	multiple: PropTypes.bool,
 	selectedData: PropTypes.shape({
 		exclude: PropTypes.bool,
 		itemsValues: PropTypes.arrayOf(
@@ -228,4 +274,4 @@ CheckboxesFilter.propTypes = {
 };
 
 export {getSelectedItemsLabel, getOdataString};
-export default CheckboxesFilter;
+export default SelectionFilter;

@@ -15,11 +15,11 @@
 package com.liferay.frontend.data.set.filter;
 
 /**
- * @author Marco Leo
+ * @author Marko Cikos
  */
-public class CheckBoxFDSFilterItem {
+public class SelectionFDSFilterItem {
 
-	public CheckBoxFDSFilterItem(String label, Object value) {
+	public SelectionFDSFilterItem(String label, Object value) {
 		_label = label;
 		_value = value;
 	}

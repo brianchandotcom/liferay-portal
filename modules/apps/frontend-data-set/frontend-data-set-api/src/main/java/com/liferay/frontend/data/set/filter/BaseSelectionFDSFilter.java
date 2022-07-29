@@ -21,21 +21,25 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * @author Marco Leo
+ * @author Marko Cikos
  */
-public abstract class BaseRadioFDSFilter implements FDSFilter {
-
-	public abstract List<RadioFDSFilterItem> getRadioFDSFilterItems(
-		Locale locale);
+public abstract class BaseSelectionFDSFilter implements FDSFilter {
 
 	public ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 	}
 
+	public abstract List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
+		Locale locale);
+
 	@Override
 	public String getType() {
-		return "radio";
+		return "selection";
+	}
+
+	public boolean isMultiple() {
+		return true;
 	}
 
 }

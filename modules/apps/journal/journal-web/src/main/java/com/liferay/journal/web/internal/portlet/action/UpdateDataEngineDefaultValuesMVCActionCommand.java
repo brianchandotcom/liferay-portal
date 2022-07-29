@@ -43,9 +43,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -166,6 +168,71 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 		}
 		else {
 			layoutUuid = null;
+		}
+
+		int displayDateMonth = ParamUtil.getInteger(
+			uploadPortletRequest, "displayDateMonth");
+		int displayDateDay = ParamUtil.getInteger(
+			uploadPortletRequest, "displayDateDay");
+		int displayDateYear = ParamUtil.getInteger(
+			uploadPortletRequest, "displayDateYear");
+		int displayDateHour = ParamUtil.getInteger(
+			uploadPortletRequest, "displayDateHour");
+		int displayDateMinute = ParamUtil.getInteger(
+			uploadPortletRequest, "displayDateMinute");
+		int displayDateAmPm = ParamUtil.getInteger(
+			uploadPortletRequest, "displayDateAmPm");
+
+		if (displayDateAmPm == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		int expirationDateMonth = ParamUtil.getInteger(
+			uploadPortletRequest, "expirationDateMonth");
+		int expirationDateDay = ParamUtil.getInteger(
+			uploadPortletRequest, "expirationDateDay");
+		int expirationDateYear = ParamUtil.getInteger(
+			uploadPortletRequest, "expirationDateYear");
+		int expirationDateHour = ParamUtil.getInteger(
+			uploadPortletRequest, "expirationDateHour");
+		int expirationDateMinute = ParamUtil.getInteger(
+			uploadPortletRequest, "expirationDateMinute");
+		int expirationDateAmPm = ParamUtil.getInteger(
+			uploadPortletRequest, "expirationDateAmPm");
+
+		boolean neverExpire = ParamUtil.getBoolean(
+			uploadPortletRequest, "neverExpire", displayDateYear == 0);
+
+		if (!PropsValues.SCHEDULER_ENABLED) {
+			neverExpire = true;
+		}
+
+		if (expirationDateAmPm == Calendar.PM) {
+			expirationDateHour += 12;
+		}
+
+		int reviewDateMonth = ParamUtil.getInteger(
+			uploadPortletRequest, "reviewDateMonth");
+		int reviewDateDay = ParamUtil.getInteger(
+			uploadPortletRequest, "reviewDateDay");
+		int reviewDateYear = ParamUtil.getInteger(
+			uploadPortletRequest, "reviewDateYear");
+		int reviewDateHour = ParamUtil.getInteger(
+			uploadPortletRequest, "reviewDateHour");
+		int reviewDateMinute = ParamUtil.getInteger(
+			uploadPortletRequest, "reviewDateMinute");
+		int reviewDateAmPm = ParamUtil.getInteger(
+			uploadPortletRequest, "reviewDateAmPm");
+
+		boolean neverReview = ParamUtil.getBoolean(
+			uploadPortletRequest, "neverReview", displayDateYear == 0);
+
+		if (!PropsValues.SCHEDULER_ENABLED) {
+			neverReview = true;
+		}
+
+		if (reviewDateAmPm == Calendar.PM) {
+			reviewDateHour += 12;
 		}
 
 		boolean indexable = ParamUtil.getBoolean(

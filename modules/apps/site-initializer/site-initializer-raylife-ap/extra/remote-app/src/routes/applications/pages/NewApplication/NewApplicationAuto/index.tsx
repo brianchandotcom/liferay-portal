@@ -267,7 +267,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 							</ClayButton>
 						)}
 
-						{state.currentStep < 3 && (
+						{state.currentStep <= 2 && (
 							<ClayButton
 								className="text-uppercase"
 								disabled={!state.isAbleToNextStep}

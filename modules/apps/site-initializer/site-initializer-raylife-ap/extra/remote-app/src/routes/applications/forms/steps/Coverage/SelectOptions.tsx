@@ -56,7 +56,7 @@ export const propertyDamageOptions = [
 		value: '$300,000',
 	},
 ];
-export const underinsuredInjuredOptions = [
+export const uninsuredOrUnderinsuredMBIOptions = [
 	{
 		label: '',
 		value: '',
@@ -78,7 +78,7 @@ export const underinsuredInjuredOptions = [
 		value: '$100,000 / $300,000',
 	},
 ];
-export const uninsuredDamageOptions = [
+export const uninsuredOrUnderinsuredMPDOptions = [
 	{
 		label: '',
 		value: '',

@@ -81,6 +81,9 @@ public class CalendarBookingUpgradeProcess extends UpgradeProcess {
 					startTimeJCalendar.get(Calendar.SECOND),
 					startTimeJCalendar.get(Calendar.MILLISECOND), _utcTimeZone);
 
+				updatePreparedStatement.setLong(
+					1, startTimeUTCJCalendar.getTimeInMillis());
+
 				Calendar endTimeUTCJCalendar = JCalendarUtil.getJCalendar(
 					endTimeJCalendar.get(Calendar.YEAR),
 					endTimeJCalendar.get(Calendar.MONTH),
@@ -90,8 +93,6 @@ public class CalendarBookingUpgradeProcess extends UpgradeProcess {
 					endTimeJCalendar.get(Calendar.SECOND),
 					endTimeJCalendar.get(Calendar.MILLISECOND), _utcTimeZone);
 
-				updatePreparedStatement.setLong(
-					1, startTimeUTCJCalendar.getTimeInMillis());
 				updatePreparedStatement.setLong(
 					2, endTimeUTCJCalendar.getTimeInMillis());
 

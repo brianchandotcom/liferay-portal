@@ -133,12 +133,12 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 		if ("${target}" == "Blank") {
-			Check.checkToggleSwitchAndPause(
+			Check.checkToggleSwitch(
 				checkboxName = "Open in a new tab.",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 		else if ("${target}" == "Self") {
-			Uncheck.uncheckToggleSwitchAndPause(
+			Uncheck.uncheckToggleSwitch(
 				checkboxName = "Open in a new tab.",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}

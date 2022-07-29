@@ -131,8 +131,7 @@ public class AuthVerifierFilter extends BasePortalFilter {
 				AuthVerifierPipeline.class.getName(),
 				new AuthVerifierPipeline(
 					_buildAuthVerifierConfigurations(_initParametersMap),
-					PortalUtil.getPathContext(
-						servletContext.getContextPath())));
+					servletContext.getContextPath()));
 		}
 	}
 

@@ -840,7 +840,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
-		task("Given a Minium site with a Commerce Account with a buyer user") {
+		task ("Given a Minium site with a Commerce Account with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 			CommerceEntry.addAccountEntryUser(
@@ -857,7 +857,7 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task("When products are added to the cart") {
+		task ("When products are added to the cart") {
 			ApplicationsMenu.gotoSite(site = "Minium");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
@@ -867,12 +867,12 @@ definition {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 			FrontStore.addInitializerProductToCart(
-			productName = "U-Joint",
-			productQuantity = "3");
+				productName = "U-Joint",
+				productQuantity = "3");
 
 			FrontStore.addInitializerProductToCart(
-			productName = "Torque Converters",
-			productQuantity = "1");
+				productName = "Torque Converters",
+				productQuantity = "1");
 		}
 
 		task ("Then as an admin, the user is able to empty the cart by using the Remove All Items button in the mini cart") {
@@ -963,36 +963,73 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
-		// TODO Review
+		task ("Given a Minium site with a Commerce Account with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		task ("When products are added to the cart") {
+			ApplicationsMenu.gotoSite(site = "Minium");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test");
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
-		FrontStore.addInitializerProductToCart(
-			productName = "U-Joint",
-			productQuantity = "3");
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "3");
 
-		FrontStore.addInitializerProductToCart(
-			productName = "Torque Converters",
-			productQuantity = "1");
+			FrontStore.addInitializerProductToCart(
+				productName = "Torque Converters",
+				productQuantity = "1");
+		}
 
-		CommerceNavigator.gotoMiniCart();
+		task ("Then as an admin, the user is able to remove an item from the cart by clicking on the delete button") {
+			CommerceNavigator.gotoMiniCart();
 
-		Click(
-			key_cartItemSku = "MIN55859",
-			locator1 = "CommerceAccelerators#MINI_CART_REMOVE_ITEM");
+			CommerceAccelerators.removeSingleItemViaMiniCart(key_cartItemSku = "MIN55859");
 
-		AssertElementNotPresent(
-			key_cartItemSku = "MIN55859",
-			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
-			value1 = "Torque Converters");
+			AssertElementNotPresent(
+				key_cartItemSku = "MIN55859",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
+				value1 = "Torque Converters");
+		}
+
+		task ("and as a buyer, the user is able to remove an item from the cart by clicking on the delete button") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "Torque Converters",
+				productQuantity = "1");
+
+			CommerceNavigator.gotoMiniCart();
+
+			CommerceAccelerators.removeSingleItemViaMiniCart(key_cartItemSku = "MIN55859");
+
+			AssertElementNotPresent(
+				key_cartItemSku = "MIN55859",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
+				value1 = "Torque Converters");
+		}
 	}
 
 	@description = "COMMERCE-7736, As a buyer, I want to be able to view product details for more than one item in the cart"

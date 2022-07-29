@@ -20,4 +20,10 @@ definition {
 		}
 	}
 
+	macro removeSingleItemViaMiniCart {
+		Click(
+			key_cartItemSku = "${key_cartItemSku}",
+			locator1 = "CommerceAccelerators#MINI_CART_REMOVE_ITEM");
+	}
+
 }

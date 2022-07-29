@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useEffect, useMemo} from 'react';
+import {useEffect} from 'react';
 import {
 	Outlet,
 	useLocation,
@@ -38,11 +38,9 @@ const RequirementsOutlet = () => {
 	const {pathname} = useLocation();
 	const basePath = `/project/${projectId}/cases/${caseId}`;
 
-	const {data, loading} = useFetch(getRequirementQuery(requirementId));
-
-	const testrayRequirement = useMemo(
-		() => getRequirementTransformData(data),
-		[data]
+	const {data: testrayRequirement, loading} = useFetch(
+		getRequirementQuery(requirementId),
+		getRequirementTransformData
 	);
 
 	const {setHeading, setTabs} = useHeader({

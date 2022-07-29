@@ -20,7 +20,10 @@ import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView';
 import {TestrayCase, TestrayRequirementCase} from '../../../graphql/queries';
 import i18n from '../../../i18n';
-import {caseRequirementsResource} from '../../../services/rest/TestrayCaseRequirements';
+import {
+	caseRequirementsResource,
+	getCasesRequerimentsTransformData,
+} from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
 import CaseRequirementLinkModal from './CaseRequirementLinkModal';
 import useCaseRequirementActions from './useCaseRequirementActions';
@@ -131,9 +134,7 @@ const CaseRequirement = () => {
 					navigateTo: ({requirement}: TestrayRequirementCase) =>
 						`/project/${projectId}/requirements/${requirement.id}`,
 				}}
-				transformData={(data) => {
-					return data?.items;
-				}}
+				transformData={getCasesRequerimentsTransformData}
 				variables={{
 					filter: searchUtil.eq('caseId', testrayCase.id),
 				}}

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useEffect, useMemo} from 'react';
+import {useEffect} from 'react';
 import {
 	Outlet,
 	useLocation,
@@ -35,8 +35,10 @@ const CaseOutlet = () => {
 
 	const {setHeading, setTabs} = useHeader();
 
-	const {data, mutate: mutateCase} = useFetch(getCaseQuery(caseId as string));
-	const testrayCase = useMemo(() => getCaseTransformData(data), [data]);
+	const {data: testrayCase, mutate: mutateCase} = useFetch(
+		getCaseQuery(caseId as string),
+		getCaseTransformData
+	);
 
 	useEffect(() => {
 		if (testrayCase && testrayProject) {

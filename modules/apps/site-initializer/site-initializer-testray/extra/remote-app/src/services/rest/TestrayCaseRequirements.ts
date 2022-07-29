@@ -12,57 +12,69 @@
  * details.
  */
 
-import {TestrayRequirementCase} from '../../graphql/queries';
+import {APIResponse, TestrayRequirementCase} from '../../graphql/queries';
 
 const nestedFields =
 	'nestedFields=case.component,requirement.component.team&nestedFieldsDepth=3';
 
 const caseRequirementsResource = `/requirementscaseses?${nestedFields}`;
 
-const caseRequerimentsTransformData = (
+const getCaseRequerimentsTransformData = (
 	caseRequirements: any
 ): TestrayRequirementCase => {
 	return {
 		...caseRequirements,
 		case: caseRequirements?.r_caseToRequirementsCases_c_case
 			? {
-					...caseRequirements.r_caseToRequirementsCases_c_case,
-					component: caseRequirements.r_caseToRequirementsCases_c_case
-						.r_componentToCases_c_component
+					...caseRequirements?.r_caseToRequirementsCases_c_case,
+					component: caseRequirements
+						?.r_caseToRequirementsCases_c_case
+						?.r_componentToCases_c_component
 						? {
 								...caseRequirements
-									.r_caseToRequirementsCases_c_case
-									.r_componentToCases_c_component,
+									?.r_caseToRequirementsCases_c_case
+									?.r_componentToCases_c_component,
 						  }
 						: null,
 			  }
 			: null,
-		requirement: caseRequirements.r_requiremenToRequirementsCases_c_requirement
+		requirement: caseRequirements?.r_requiremenToRequirementsCases_c_requirement
 			? {
-					...caseRequirements.r_requiremenToRequirementsCases_c_requirement,
+					...caseRequirements?.r_requiremenToRequirementsCases_c_requirement,
 					component: caseRequirements
-						.r_requiremenToRequirementsCases_c_requirement
-						.r_componentToRequirements_c_component
+						?.r_requiremenToRequirementsCases_c_requirement
+						?.r_componentToRequirements_c_component
 						? {
 								...caseRequirements
-									.r_requiremenToRequirementsCases_c_requirement
-									.r_componentToRequirements_c_component,
+									?.r_requiremenToRequirementsCases_c_requirement
+									?.r_componentToRequirements_c_component,
 								team: caseRequirements
-									.r_requiremenToRequirementsCases_c_requirement
-									.r_componentToRequirements_c_component
-									.r_teamToComponents_c_team
+									?.r_requiremenToRequirementsCases_c_requirement
+									?.r_componentToRequirements_c_component
+									?.r_teamToComponents_c_team
 									? {
 											...caseRequirements
-												.r_requiremenToRequirementsCases_c_requirement
-												.r_componentToRequirements_c_component
-												.r_teamToComponents_c_team,
+												?.r_requiremenToRequirementsCases_c_requirement
+												?.r_componentToRequirements_c_component
+												?.r_teamToComponents_c_team,
 									  }
 									: null,
 						  }
 						: null,
 			  }
-			: null,
+			: {},
 	};
 };
 
-export {caseRequirementsResource, caseRequerimentsTransformData};
+const getCasesRequerimentsTransformData = (
+	response: APIResponse<TestrayRequirementCase>
+) => ({
+	...response,
+	items: response?.items?.map(getCaseRequerimentsTransformData),
+});
+
+export {
+	caseRequirementsResource,
+	getCaseRequerimentsTransformData,
+	getCasesRequerimentsTransformData,
+};

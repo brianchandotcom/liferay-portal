@@ -65,7 +65,9 @@ export function LengthField({field, onValueSelect, value}) {
 
 	return (
 		<ClayForm.Group>
-			<label htmlFor={inputId}>{field.label}</label>
+			<label className={field.icon ? 'sr-only' : null} htmlFor={inputId}>
+				{field.label}
+			</label>
 
 			<Field
 				field={field}
@@ -168,6 +170,7 @@ const Field = ({
 				<ClayInput
 					aria-label={field.label}
 					id={id}
+					insetBefore={Boolean(field.icon)}
 					onBlur={() => {
 						handleValueSelect();
 					}}
@@ -179,6 +182,17 @@ const Field = ({
 					type={nextUnit === CUSTOM ? 'text' : 'number'}
 					value={nextValue}
 				/>
+
+				{field.icon ? (
+					<ClayInput.GroupInsetItem before className="pl-2 pr-3 py-2">
+						<ClayIcon
+							className="lfr-portal-tooltip"
+							data-title={field.label}
+							small
+							symbol={field.icon}
+						/>
+					</ClayInput.GroupInsetItem>
+				) : null}
 			</ClayInput.GroupItem>
 
 			<ClayInput.GroupItem append shrink>

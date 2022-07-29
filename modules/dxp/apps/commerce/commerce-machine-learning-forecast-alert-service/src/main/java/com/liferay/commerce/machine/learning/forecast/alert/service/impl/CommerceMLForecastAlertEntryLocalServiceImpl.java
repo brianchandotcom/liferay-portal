@@ -17,6 +17,7 @@ package com.liferay.commerce.machine.learning.forecast.alert.service.impl;
 import com.liferay.commerce.machine.learning.forecast.alert.constants.CommerceMLForecastAlertConstants;
 import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry;
 import com.liferay.commerce.machine.learning.forecast.alert.service.base.CommerceMLForecastAlertEntryLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
@@ -26,9 +27,16 @@ import com.liferay.portal.kernel.search.IndexableType;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Riccardo Ferrari
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry",
+	service = AopService.class
+)
 public class CommerceMLForecastAlertEntryLocalServiceImpl
 	extends CommerceMLForecastAlertEntryLocalServiceBaseImpl {
 

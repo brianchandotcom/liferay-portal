@@ -21,19 +21,29 @@ import com.liferay.commerce.machine.learning.forecast.alert.constants.CommerceML
 import com.liferay.commerce.machine.learning.forecast.alert.constants.CommerceMLForecastAlertConstants;
 import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry;
 import com.liferay.commerce.machine.learning.forecast.alert.service.base.CommerceMLForecastAlertEntryServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceMLForecastAlertEntry"
+	},
+	service = AopService.class
+)
 public class CommerceMLForecastAlertEntryServiceImpl
 	extends CommerceMLForecastAlertEntryServiceBaseImpl {
 
@@ -164,14 +174,12 @@ public class CommerceMLForecastAlertEntryServiceImpl
 			commerceAccounts, CommerceAccount::getCommerceAccountId);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				CommerceMLForecastAlertEntryServiceImpl.class,
-				"_portletResourcePermission",
-				CommerceMLForecastAlertConstants.RESOURCE_NAME);
-
-	@ServiceReference(type = CommerceAccountLocalService.class)
+	@Reference
 	private CommerceAccountLocalService _commerceAccountLocalService;
+
+	@Reference(
+		target = "(resource.name=" + CommerceMLForecastAlertConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

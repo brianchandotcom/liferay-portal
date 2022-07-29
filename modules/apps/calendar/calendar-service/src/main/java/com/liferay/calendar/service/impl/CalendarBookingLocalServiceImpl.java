@@ -1942,13 +1942,11 @@ public class CalendarBookingLocalServiceImpl
 	}
 
 	protected TimeZone getTimeZone(Calendar calendar, boolean allDay) {
-		TimeZone timeZone = calendar.getTimeZone();
-
 		if (allDay) {
-			timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
+			return TimeZoneUtil.getTimeZone(StringPool.UTC);
 		}
 
-		return timeZone;
+		return calendar.getTimeZone();
 	}
 
 	protected List<String> getUnmodifiedAttributesNames(

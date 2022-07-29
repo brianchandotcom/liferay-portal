@@ -3,8 +3,6 @@ definition {
 	macro configureBreadcrumb {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		Pause(locator1 = "3000");
-
 		if (isSet(checkSetupName)) {
 			for (var checkSetupName : list "${checkSetupName}") {
 				var key_checkSetupName = "${checkSetupName}";
@@ -27,12 +25,14 @@ definition {
 				value1 = "${selectAdtType}");
 		}
 
-		Pause(locator1 = "3000");
-
 		if ("${configureWithoutSave}" == "true") {
 			echo("Configuring Breadcrumb without saving to check bug.");
 		}
 		else {
+			WaitForElementPresent(
+				key_text = "Save",
+				locator1 = "Button#ANY_ENABLED");
+
 			PortletEntry.save();
 		}
 

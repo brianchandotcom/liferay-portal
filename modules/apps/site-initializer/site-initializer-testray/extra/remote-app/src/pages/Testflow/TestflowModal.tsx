@@ -60,7 +60,6 @@ const TestflowForm = () => {
 		<>
 			<Form.AutoComplete
 				label="Project"
-				objectName="projects"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
 				resource="/projects"
 				transformData={getProjectsTransformData}
@@ -68,7 +67,6 @@ const TestflowForm = () => {
 
 			<Form.AutoComplete
 				label="Routine"
-				objectName="routines"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
 				resource="/routines"
 				transformData={getRoutinesTransformData}
@@ -76,7 +74,6 @@ const TestflowForm = () => {
 
 			<Form.AutoComplete
 				label="Build"
-				objectName="builds"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
 				resource={buildsResource}
 				transformData={getBuildsTransformData}

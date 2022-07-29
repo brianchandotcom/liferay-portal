@@ -18,10 +18,10 @@ import {Outlet, useNavigate} from 'react-router-dom';
 
 import CompareRunDetails from '.';
 import Container from '../../components/Layout/Container';
-import client from '../../graphql/apolloClient';
-import {TestrayRun, getRun} from '../../graphql/queries/testrayRun';
+import {TestrayRun} from '../../graphql/queries/testrayRun';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
+import fetcher from '../../services/fetcher';
 import useCompareRuns from './useCompareRuns';
 
 const COMPARE_RUNS_ROOT_PATH = '/compare-runs';
@@ -69,14 +69,12 @@ const CompareRunsOutlet: React.FC = () => {
 	useEffect(() => {
 		if (runA && runB) {
 			Promise.allSettled([
-				client.query({query: getRun, variables: {runId: runA}}),
-				client.query({query: getRun, variables: {runId: runB}}),
+				fetcher(`/runs/${runA}`),
+				fetcher(`/runs/${runB}`),
 			])
 				.then((runs) =>
 					runs.map((run) =>
-						run.status === 'fulfilled'
-							? run.value.data.run
-							: run.reason
+						run.status === 'fulfilled' ? run.value : run.reason
 					)
 				)
 				.then(setRuns);

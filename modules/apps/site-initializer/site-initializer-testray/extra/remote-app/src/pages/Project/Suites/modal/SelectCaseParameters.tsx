@@ -59,7 +59,6 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 	const {data: requirements} = useFetch<APIResponse<TestrayRequirement>>(
 		'/requirements?fields=id,name'
 	);
-
 	const {data: teams} = useFetch<APIResponse<TestrayTeam>>(
 		'/teams?fields=id,name'
 	);

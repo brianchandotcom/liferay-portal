@@ -35,10 +35,6 @@ const transformData = <T = any>(response: any): T[] => {
 	return response?.items || [];
 };
 
-const transformCData = <T = any>(response: any): T[] => {
-	return response?.items || [];
-};
-
 const dataToOptions = <T = any>(
 	entries: T[],
 	transformAction?: (entry: T) => {label: string; value: number}
@@ -71,7 +67,7 @@ const baseFilters: Filter = {
 		name: 'caseType',
 		resource: '/casetypes?fields=id,name',
 		transformData(item) {
-			return dataToOptions(transformCData<TestrayCaseType>(item));
+			return dataToOptions(transformData<TestrayCaseType>(item));
 		},
 		type: 'multiselect',
 	},
@@ -80,7 +76,7 @@ const baseFilters: Filter = {
 		name: 'component',
 		resource: '/components?fields=id,name',
 		transformData(item) {
-			return dataToOptions(transformCData<TestrayComponent>(item));
+			return dataToOptions(transformData<TestrayComponent>(item));
 		},
 		type: 'select',
 	},
@@ -95,7 +91,7 @@ const baseFilters: Filter = {
 		name: 'productVersion',
 		resource: '/productversions?fields=id,name',
 		transformData(item) {
-			return dataToOptions(transformCData<TestrayProductVersion>(item));
+			return dataToOptions(transformData<TestrayProductVersion>(item));
 		},
 		type: 'select',
 	},
@@ -104,7 +100,7 @@ const baseFilters: Filter = {
 		name: 'run',
 		resource: '/runs?fields=id,name',
 		transformData(item) {
-			return dataToOptions(transformCData<TestrayRun>(item));
+			return dataToOptions(transformData<TestrayRun>(item));
 		},
 		type: 'select',
 	},
@@ -114,7 +110,7 @@ const baseFilters: Filter = {
 		options: [{label: 'Solutions', value: 'solutions'}],
 		resource: '/teams?fields=id,name',
 		transformData(item) {
-			return dataToOptions(transformCData<TestrayTeam>(item));
+			return dataToOptions(transformData<TestrayTeam>(item));
 		},
 		type: 'select',
 	},

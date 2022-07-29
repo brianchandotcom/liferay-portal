@@ -45,7 +45,8 @@ const transformData = (isSmartSuite: boolean) => (
 			},
 			id: testrayCase.id,
 		}));
-	} else {
+	}
+	else {
 		items = (items as any[]).map((suiteCase) => ({
 			...suiteCase,
 			case: suiteCase.r_caseToSuitesCases_c_case

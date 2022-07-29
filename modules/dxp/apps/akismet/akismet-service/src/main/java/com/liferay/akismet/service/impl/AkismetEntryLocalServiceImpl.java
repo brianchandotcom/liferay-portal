@@ -16,15 +16,22 @@ package com.liferay.akismet.service.impl;
 
 import com.liferay.akismet.model.AkismetEntry;
 import com.liferay.akismet.service.base.AkismetEntryLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jamie Sammons
  */
+@Component(
+	property = "model.class.name=com.liferay.akismet.model.AkismetEntry",
+	service = AopService.class
+)
 public class AkismetEntryLocalServiceImpl
 	extends AkismetEntryLocalServiceBaseImpl {
 
@@ -76,7 +83,7 @@ public class AkismetEntryLocalServiceImpl
 		return akismetEntryPersistence.update(akismetEntry);
 	}
 
-	@ServiceReference(type = ClassNameLocalService.class)
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 }

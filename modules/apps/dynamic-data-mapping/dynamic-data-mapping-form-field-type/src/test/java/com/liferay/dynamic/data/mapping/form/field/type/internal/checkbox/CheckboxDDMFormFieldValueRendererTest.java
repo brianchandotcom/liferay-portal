@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -94,6 +95,9 @@ public class CheckboxDDMFormFieldValueRendererTest {
 
 		checkboxDDMFormFieldValueRenderer.checkboxDDMFormFieldValueAccessor =
 			new CheckboxDDMFormFieldValueAccessor();
+
+		ReflectionTestUtil.setFieldValue(
+			checkboxDDMFormFieldValueRenderer, "_language", language);
 
 		return checkboxDDMFormFieldValueRenderer;
 	}

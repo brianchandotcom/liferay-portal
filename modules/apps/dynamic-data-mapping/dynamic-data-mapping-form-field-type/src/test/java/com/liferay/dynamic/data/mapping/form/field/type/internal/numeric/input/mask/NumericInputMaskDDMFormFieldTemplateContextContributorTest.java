@@ -59,6 +59,9 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributorTest
 
 		_setUpJSONFactory();
 		_setUpJSONFactoryUtil();
+
+		_setUpLanguage();
+
 		_setUpLanguageUtil();
 		_setUpPortal();
 	}
@@ -193,10 +196,8 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributorTest
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
-	private void _setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		Language language = Mockito.mock(Language.class);
+	private void _setUpLanguage() {
+		language = Mockito.mock(Language.class);
 
 		Mockito.when(
 			language.get(Mockito.any(ResourceBundle.class), Mockito.eq("none"))
@@ -215,6 +216,14 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributorTest
 		).thenReturn(
 			"en_US"
 		);
+
+		ReflectionTestUtil.setFieldValue(
+			_numericInputMaskDDMFormFieldTemplateContextContributor,
+			"_language", language);
+	}
+
+	private void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(language);
 	}

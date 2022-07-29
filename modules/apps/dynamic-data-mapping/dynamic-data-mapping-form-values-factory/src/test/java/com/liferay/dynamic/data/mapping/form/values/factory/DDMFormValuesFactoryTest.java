@@ -88,7 +88,10 @@ public class DDMFormValuesFactoryTest {
 		setUpDDMFormValuesFactoryServiceTrackerMap();
 		setUpDDMFormValuesJSONSerializer();
 		setUpJSONFactoryUtil();
-		setUpLanguageUtil();
+
+		_setUpLanguage();
+		_setUpLanguageUtil();
+
 		setUpLocaleThreadLocal();
 		setUpLocaleUtil();
 	}
@@ -1051,7 +1054,25 @@ public class DDMFormValuesFactoryTest {
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
-	protected void setUpLanguageUtil() {
+	protected void setUpLocaleThreadLocal() {
+		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
+		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.BRAZIL);
+	}
+
+	protected void setUpLocaleUtil() {
+		LocaleUtil localeUtil = ReflectionTestUtil.getFieldValue(
+			LocaleUtil.class, "_localeUtil");
+
+		Map<String, Locale> locales = ReflectionTestUtil.getFieldValue(
+			localeUtil, "_locales");
+
+		locales.clear();
+
+		locales.put("en_US", LocaleUtil.US);
+		locales.put("pt_BR", LocaleUtil.BRAZIL);
+	}
+
+	private void _setUpLanguage() {
 		Set<Locale> availableLocales = new HashSet<>(
 			Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.US));
 
@@ -1073,27 +1094,14 @@ public class DDMFormValuesFactoryTest {
 			"pt_BR"
 		);
 
+		ReflectionTestUtil.setFieldValue(
+			_ddmFormValuesFactory, "_language", _language);
+	}
+
+	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(_language);
-	}
-
-	protected void setUpLocaleThreadLocal() {
-		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
-		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.BRAZIL);
-	}
-
-	protected void setUpLocaleUtil() {
-		LocaleUtil localeUtil = ReflectionTestUtil.getFieldValue(
-			LocaleUtil.class, "_localeUtil");
-
-		Map<String, Locale> locales = ReflectionTestUtil.getFieldValue(
-			localeUtil, "_locales");
-
-		locales.clear();
-
-		locales.put("en_US", LocaleUtil.US);
-		locales.put("pt_BR", LocaleUtil.BRAZIL);
 	}
 
 	private final DDMFormValuesFactory _ddmFormValuesFactory =

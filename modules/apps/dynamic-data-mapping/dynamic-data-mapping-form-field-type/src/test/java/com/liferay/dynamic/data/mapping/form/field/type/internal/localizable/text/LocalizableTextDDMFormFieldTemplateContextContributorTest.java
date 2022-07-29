@@ -166,7 +166,7 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 
 	private void _setUpLanguage() {
 		ReflectionTestUtil.setFieldValue(
-			_localizableTextDDMFormFieldTemplateContextContributor, "language",
+			_localizableTextDDMFormFieldTemplateContextContributor, "_language",
 			language);
 
 		Mockito.when(

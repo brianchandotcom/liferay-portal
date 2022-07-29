@@ -31,6 +31,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -46,6 +47,8 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -65,6 +68,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 		super.setUp();
 
 		_setUpDDMFormValuesJSONDeserializer();
+		_setUpLanguage();
 	}
 
 	@Test
@@ -389,6 +393,19 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesDeserializer, "_serviceTrackerMap",
 			ProxyFactory.newDummyInstance(ServiceTrackerMap.class));
+	}
+
+	private void _setUpLanguage() {
+		Language language = Mockito.mock(Language.class);
+
+		Mockito.when(
+			language.isAvailableLocale(Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_ddmFormValuesDeserializer, "_language", language);
 	}
 
 	private void _testBooleanDDMFormFieldValueValues(

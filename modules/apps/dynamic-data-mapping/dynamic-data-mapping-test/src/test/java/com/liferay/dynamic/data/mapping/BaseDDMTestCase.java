@@ -671,6 +671,9 @@ public abstract class BaseDDMTestCase {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(language);
+
+		ReflectionTestUtil.setFieldValue(
+			ddmFormValuesJSONDeserializer, "_language", language);
 	}
 
 	protected void setUpLanguageUtil(Map<String, String> languageKeys) {
@@ -687,6 +690,9 @@ public abstract class BaseDDMTestCase {
 		);
 
 		languageUtil.setLanguage(language);
+
+		ReflectionTestUtil.setFieldValue(
+			ddmFormValuesJSONDeserializer, "_language", language);
 	}
 
 	protected void setUpLocaleUtil() {

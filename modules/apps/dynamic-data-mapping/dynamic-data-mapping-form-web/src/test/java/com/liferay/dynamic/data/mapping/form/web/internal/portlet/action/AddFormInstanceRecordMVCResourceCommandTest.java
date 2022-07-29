@@ -64,7 +64,8 @@ public class AddFormInstanceRecordMVCResourceCommandTest {
 		_setUpAddFormInstanceRecordMVCResourceCommand();
 		_setUpDDMFormInstance();
 		_setUpPropsUtil();
-		setUpLanguageUtil();
+		_setUpLanguage();
+		_setUpLanguageUtil();
 	}
 
 	@Test
@@ -136,12 +137,6 @@ public class AddFormInstanceRecordMVCResourceCommandTest {
 		Assert.assertTrue(Objects.equals(ddmFormValues1, ddmFormValues2));
 	}
 
-	protected static void setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(_language);
-	}
-
 	private static void _setUpAddFormInstanceRecordMVCResourceCommand() {
 		_addFormInstanceRecordMVCResourceCommand =
 			new AddFormInstanceRecordMVCResourceCommand();
@@ -166,6 +161,17 @@ public class AddFormInstanceRecordMVCResourceCommandTest {
 		).thenReturn(
 			_ddmStructure
 		);
+	}
+
+	private static void _setUpLanguage() {
+		ReflectionTestUtil.setFieldValue(
+			_addFormInstanceRecordMVCResourceCommand, "_language", _language);
+	}
+
+	private static void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(_language);
 	}
 
 	private static void _setUpPropsUtil() {

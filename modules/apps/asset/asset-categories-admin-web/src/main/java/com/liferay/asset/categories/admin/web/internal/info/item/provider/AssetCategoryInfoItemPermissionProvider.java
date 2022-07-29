@@ -16,11 +16,15 @@ package com.liferay.asset.categories.admin.web.internal.info.item.provider;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.info.exception.InfoItemPermissionException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
@@ -35,7 +39,8 @@ public class AssetCategoryInfoItemPermissionProvider
 			String actionId)
 		throws InfoItemPermissionException {
 
-		return false;
+		return _hasPermission(
+			permissionChecker, assetCategory.getCategoryId(), actionId);
 	}
 
 	@Override
@@ -44,7 +49,32 @@ public class AssetCategoryInfoItemPermissionProvider
 			InfoItemReference infoItemReference, String actionId)
 		throws InfoItemPermissionException {
 
-		return false;
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
+		return _hasPermission(
+			permissionChecker, classPKInfoItemIdentifier.getClassPK(),
+			actionId);
 	}
+
+	private boolean _hasPermission(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws InfoItemPermissionException {
+
+		try {
+			return _assetCategoryModelResourcePermission.contains(
+				permissionChecker, classPK, actionId);
+		}
+		catch (PortalException portalException) {
+			throw new InfoItemPermissionException(classPK, portalException);
+		}
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.asset.kernel.model.AssetCategory)"
+	)
+	private ModelResourcePermission<AssetCategory>
+		_assetCategoryModelResourcePermission;
 
 }

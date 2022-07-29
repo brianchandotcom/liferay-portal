@@ -152,7 +152,7 @@ definition {
 
 		Clustering.waitForNodeShutdown(nodePort = "9080");
 
-		WaitForConsoleTextPresent(value1 = "Shutting down current node as it is the latest one");
+		WaitForConsoleTextPresent(value1 = "Finished shutting down overloaded nodes");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Shutting down current node as it is the latest one",

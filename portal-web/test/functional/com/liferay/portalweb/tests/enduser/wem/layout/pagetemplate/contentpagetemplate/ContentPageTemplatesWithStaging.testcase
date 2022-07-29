@@ -204,7 +204,7 @@ definition {
 		task ("Configure the styles of Button") {
 			PageEditor.gotoStyle(fragmentName = "Button");
 
-			PageEditor.configureFragment(alignment = "Center");
+			PageEditor.configureFragment(alignment = "Align Center");
 
 			PageEditor.viewFragmentStyle(
 				alignment = "center",

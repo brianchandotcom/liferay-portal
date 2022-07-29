@@ -76,7 +76,7 @@ definition {
 		PageEditor.gotoStyle(fragmentName = "Paragraph");
 
 		PageEditor.configureFragment(
-			alignment = "Right",
+			alignment = "Align Right",
 			textColor = "Warning");
 
 		PageEditor.addWidget(

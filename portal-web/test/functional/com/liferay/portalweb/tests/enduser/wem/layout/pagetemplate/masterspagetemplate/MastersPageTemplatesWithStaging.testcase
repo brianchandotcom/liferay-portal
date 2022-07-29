@@ -181,7 +181,7 @@ definition {
 
 		PageEditor.gotoStyle(fragmentName = "Heading");
 
-		PageEditor.configureFragment(alignment = "Center");
+		PageEditor.configureFragment(alignment = "Align Center");
 
 		PageEditor.gotoDuplicate(fragmentName = "Container");
 

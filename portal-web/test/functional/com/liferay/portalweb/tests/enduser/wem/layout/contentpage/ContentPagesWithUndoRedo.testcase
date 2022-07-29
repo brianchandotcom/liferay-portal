@@ -54,7 +54,7 @@ definition {
 		task ("Configure the style of Button") {
 			PageEditor.gotoStyle(fragmentName = "Button");
 
-			PageEditor.configureFragment(alignment = "Center");
+			PageEditor.configureFragment(alignment = "Align Center");
 		}
 
 		task ("Duplicate the Button fragment") {
@@ -151,7 +151,7 @@ definition {
 		task ("Configure the style of Heading") {
 			PageEditor.gotoStyle(fragmentName = "Heading");
 
-			PageEditor.configureFragment(alignment = "Center");
+			PageEditor.configureFragment(alignment = "Align Center");
 		}
 
 		task ("Duplicate the Tabs fragment") {
@@ -813,7 +813,7 @@ definition {
 		task ("Configure the style of Button") {
 			PageEditor.gotoStyle(fragmentName = "Button");
 
-			PageEditor.configureFragment(alignment = "Center");
+			PageEditor.configureFragment(alignment = "Align Center");
 		}
 
 		task ("Duplicate the Button") {
@@ -910,7 +910,7 @@ definition {
 		task ("Configure the style of Heading") {
 			PageEditor.gotoStyle(fragmentName = "Heading");
 
-			PageEditor.configureFragment(alignment = "Center");
+			PageEditor.configureFragment(alignment = "Align Center");
 
 			PageEditor.viewFragmentStyle(
 				alignment = "center",

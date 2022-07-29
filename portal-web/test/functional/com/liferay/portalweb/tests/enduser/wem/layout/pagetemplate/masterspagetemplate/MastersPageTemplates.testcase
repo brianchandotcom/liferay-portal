@@ -70,7 +70,7 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Button");
 
 			PageEditor.configureFragment(
-				alignment = "Center",
+				alignment = "Align Center",
 				backgroundColor = "Gray 300");
 
 			PageEditor.viewFragmentStyle(

@@ -356,7 +356,7 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Heading");
 
 			PageEditor.configureFragment(
-				alignment = "Center",
+				alignment = "Align Center",
 				textColor = "Danger");
 
 			PageEditor.gotoConfiguration(fragmentName = "Heading");

@@ -300,7 +300,7 @@ definition {
 				deviceType = "Tablet",
 				fragmentName = "Heading");
 
-			PageEditor.configureFragment(alignment = "Center");
+			PageEditor.configureFragment(alignment = "Align Center");
 
 			PageEditor.switchViewport(deviceType = "Landscape Phone");
 
@@ -308,7 +308,7 @@ definition {
 				deviceType = "Landscape Phone",
 				fragmentName = "Heading");
 
-			PageEditor.configureFragment(alignment = "Right");
+			PageEditor.configureFragment(alignment = "Align Right");
 
 			PageEditor.switchViewport(deviceType = "Portrait Phone");
 

@@ -74,7 +74,7 @@ definition {
 
 			PageEditor.gotoStyle(fragmentName = "Button");
 
-			PageEditor.configureFragment(alignment = "Center");
+			PageEditor.configureFragment(alignment = "Align Center");
 		}
 
 		task ("View the Button styles") {
@@ -194,7 +194,7 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Card");
 
 			PageEditor.configureFragment(
-				alignment = "Center",
+				alignment = "Align Center",
 				borderRadius = "Border Radius Small",
 				boxShadow = "Box Shadow Large",
 				marginBottom = "5");
@@ -250,7 +250,7 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Heading");
 
 			PageEditor.configureFragment(
-				alignment = "Right",
+				alignment = "Align Right",
 				marginBottom = "2",
 				marginLeft = "2",
 				marginRight = "2",
@@ -347,7 +347,7 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Image");
 
 			PageEditor.configureFragment(
-				alignment = "Center",
+				alignment = "Align Center",
 				marginBottom = "2");
 		}
 
@@ -447,7 +447,7 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Paragraph");
 
 			PageEditor.configureFragment(
-				alignment = "Right",
+				alignment = "Align Right",
 				textColor = "Warning");
 		}
 

@@ -35,7 +35,7 @@ long endTime = calendarBooking.getEndTime();
 
 java.util.Calendar endTimeJCalendar = JCalendarUtil.getJCalendar(endTime, userTimeZone);
 
-Format utcDateFormatLongDate = FastDateFormatFactoryUtil.getDate(FastDateFormatConstants.LONG, locale, TimeZone.getTimeZone(StringPool.UTC));
+Format utcLongDateFormat = FastDateFormatFactoryUtil.getDate(FastDateFormatConstants.LONG, locale, TimeZone.getTimeZone(StringPool.UTC));
 
 Format utcTimeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(useIsoTimeFormat ? "HH:mm" : "hh:mm a", locale, TimeZone.getTimeZone(StringPool.UTC));
 
@@ -70,7 +70,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 						<c:choose>
 							<c:when test="<%= calendarBooking.isAllDay() %>">
 								<dd>
-									<%= utcDateFormatLongDate.format(startTimeJCalendar.getTime()) + ", " + utcTimeFormat.format(startTimeJCalendar.getTime()) %>
+									<%= utcLongDateFormat.format(startTimeJCalendar.getTime()) + ", " + utcTimeFormat.format(startTimeJCalendar.getTime()) %>
 								</dd>
 							</c:when>
 							<c:otherwise>
@@ -87,7 +87,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 						<c:choose>
 							<c:when test="<%= calendarBooking.isAllDay() %>">
 								<dd>
-									<%= utcDateFormatLongDate.format(endTimeJCalendar.getTime()) + ", " + utcTimeFormat.format(endTimeJCalendar.getTime()) %>
+									<%= utcLongDateFormat.format(endTimeJCalendar.getTime()) + ", " + utcTimeFormat.format(endTimeJCalendar.getTime()) %>
 								</dd>
 							</c:when>
 							<c:otherwise>

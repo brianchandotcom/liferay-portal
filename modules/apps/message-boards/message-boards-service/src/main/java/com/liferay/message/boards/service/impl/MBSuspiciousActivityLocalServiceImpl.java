@@ -41,8 +41,8 @@ public class MBSuspiciousActivityLocalServiceImpl
 	extends MBSuspiciousActivityLocalServiceBaseImpl {
 
 	@Override
-	public MBSuspiciousActivity addOrUpdateSuspiciousActivityByMessage(
-		 long messageId, String reason, long userId)
+	public MBSuspiciousActivity addOrUpdateMessageSuspiciousActivity(
+			long messageId, String reason, long userId)
 		throws PortalException {
 
 		MBSuspiciousActivity suspiciousActivity =
@@ -80,8 +80,8 @@ public class MBSuspiciousActivityLocalServiceImpl
 
 
 	@Override
-	public MBSuspiciousActivity addOrUpdateSuspiciousActivityByThread(
-		String reason, long threadId, long userId)
+	public MBSuspiciousActivity addOrUpdateThreadSuspiciousActivity(
+			String reason, long threadId, long userId)
 		throws PortalException {
 
 		MBSuspiciousActivity suspiciousActivity =

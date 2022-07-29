@@ -78,14 +78,9 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		String message = null;
+		String message = LanguageUtil.get(locale, messageKey, StringPool.BLANK);
 
-		String value = LanguageUtil.get(locale, messageKey, StringPool.BLANK);
-
-		if (Validator.isNotNull(value)) {
-			message = LanguageUtil.get(locale, messageKey);
-		}
-		else {
+		if (Validator.isNull(message)){
 			message = HtmlUtil.escape(messageKey);
 		}
 

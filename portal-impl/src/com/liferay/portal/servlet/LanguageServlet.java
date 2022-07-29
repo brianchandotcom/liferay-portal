@@ -126,7 +126,7 @@ public class LanguageServlet extends HttpServlet {
 
 		String localeValue = LanguageUtil.get(locale, key, StringPool.BLANK);
 
-		if (!Validator.isNotNull(localeValue)) {
+		if (Validator.isNull(localeValue)) {
 			httpServletResponse.setDateHeader(HttpHeaders.EXPIRES, 0);
 			httpServletResponse.setHeader(
 				HttpHeaders.CACHE_CONTROL,

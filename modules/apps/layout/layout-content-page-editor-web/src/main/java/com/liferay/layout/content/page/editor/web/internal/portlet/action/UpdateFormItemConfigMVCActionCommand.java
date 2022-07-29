@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -319,7 +320,8 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			JSONFactoryUtil.createJSONArray();
 
 		for (String itemId :
-				formStyledLayoutStructureItem.getChildrenItemIds()) {
+				ListUtil.copy(
+					formStyledLayoutStructureItem.getChildrenItemIds())) {
 
 			layoutStructure.markLayoutStructureItemForDeletion(
 				itemId, Collections.emptyList());

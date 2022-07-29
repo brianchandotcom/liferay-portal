@@ -156,8 +156,7 @@ public class CalendarServiceUpgradeStepRegistrator
 				"CalendarResource"));
 
 		registry.register(
-			"4.2.0", "4.2.1",
-			new CalendarBookingUpgradeProcess(_userLocalService));
+			"4.2.0", "4.2.1", new CalendarBookingUpgradeProcess());
 	}
 
 	@Reference

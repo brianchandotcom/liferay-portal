@@ -369,7 +369,7 @@ definition {
 
 		Panel.expandPanel(panel = "Friendly URL");
 
-		Type.typePause(
+		Type(
 			inputFieldId = "friendlyURL",
 			locator1 = "TextInput#INPUT_ID",
 			value1 = "${friendlyURL}");
@@ -1201,7 +1201,7 @@ definition {
 	macro editFriendlyURL {
 		Panel.expandPanel(panel = "Friendly URL");
 
-		Type.typePause(
+		Type(
 			inputFieldId = "friendlyURL",
 			locator1 = "TextInput#INPUT_ID",
 			value1 = "${webContentFriendlyURL}");
@@ -1620,7 +1620,7 @@ definition {
 	macro saveAsDraftViaAP {
 		Button.clickSaveAsDraft();
 
-		Pause(locator1 = "5000");
+		Alert.viewSuccessMessage();
 
 		Refresh();
 

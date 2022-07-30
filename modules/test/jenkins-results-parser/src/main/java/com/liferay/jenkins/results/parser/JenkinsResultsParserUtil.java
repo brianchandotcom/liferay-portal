@@ -1673,43 +1673,33 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getDistPortalBundlesBuildURL(String portalBranchName) {
-		try {
-			JSONObject jobJSONObject = toJSONObject(
-				_getDistPortalJobURL(portalBranchName) +
-					"/api/json?tree=builds[number]",
-				false);
+		int lastCompletedBuildNumber =
+			JenkinsAPIUtil.getLastCompletedBuildNumber(
+				_getDistPortalJobURL(portalBranchName));
 
-			JSONArray buildsJSONArray = jobJSONObject.getJSONArray("builds");
+		Pattern distPortalBundleFileNamesPattern =
+			_getDistPortalBundleFileNamesPattern(portalBranchName);
 
-			Pattern distPortalBundleFileNamesPattern =
-				_getDistPortalBundleFileNamesPattern(portalBranchName);
+		int buildNumber = lastCompletedBuildNumber;
 
-			for (int i = 0; i < buildsJSONArray.length(); i++) {
-				JSONObject buildJSONObject = buildsJSONArray.optJSONObject(i);
+		while (buildNumber > Math.max(0, lastCompletedBuildNumber - 10)) {
+			String distPortalBundlesBuildURL = combine(
+				_getDistPortalBundlesURL(portalBranchName), "/",
+				String.valueOf(lastCompletedBuildNumber), "/");
 
-				if (buildJSONObject == null) {
-					continue;
-				}
+			try {
+				Matcher matcher = distPortalBundleFileNamesPattern.matcher(
+					toString(distPortalBundlesBuildURL, false));
 
-				String distPortalBundlesBuildURL = combine(
-					_getDistPortalBundlesURL(portalBranchName), "/",
-					String.valueOf(buildJSONObject.getInt("number")), "/");
-
-				try {
-					Matcher matcher = distPortalBundleFileNamesPattern.matcher(
-						toString(distPortalBundlesBuildURL, false));
-
-					if (matcher.find()) {
-						return distPortalBundlesBuildURL;
-					}
-				}
-				catch (IOException ioException) {
-					System.out.println("WARNING: " + ioException.getMessage());
+				if (matcher.find()) {
+					return distPortalBundlesBuildURL;
 				}
 			}
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+			catch (IOException ioException) {
+				System.out.println("WARNING: " + ioException.getMessage());
+			}
+
+			buildNumber--;
 		}
 
 		return null;

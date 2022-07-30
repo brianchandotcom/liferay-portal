@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -210,8 +211,14 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 		try {
 			if (Objects.equals(
-					ddmFormFieldValue.getType(), DDMFormFieldType.DATE) ||
-				Objects.equals(ddmFormFieldValue.getType(), "date")) {
+					ddmFormFieldValue.getType(), DDMFormFieldType.CHECKBOX) ||
+				Objects.equals(ddmFormFieldValue.getType(), "boolean")) {
+
+				return GetterUtil.getBoolean(valueString);
+			}
+			else if (Objects.equals(
+						ddmFormFieldValue.getType(), DDMFormFieldType.DATE) ||
+					 Objects.equals(ddmFormFieldValue.getType(), "date")) {
 
 				if (Validator.isNull(valueString)) {
 					return null;

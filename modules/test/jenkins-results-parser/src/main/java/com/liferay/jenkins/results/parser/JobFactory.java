@@ -531,6 +531,7 @@ public class JobFactory {
 		}
 
 		if (jobName.startsWith("test-portal-testsuite-upstream-controller(") ||
+			jobName.equals("test-poshi-release") ||
 			jobName.equals("test-results-consistency-report-controller") ||
 			jobName.startsWith(
 				"test-qa-websites-functional-daily-controller(") ||

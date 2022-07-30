@@ -49,7 +49,8 @@ public class BuildDataFactory {
 				runID, jobName, buildURL);
 		}
 		else if (jobName.contains("portal") ||
-				 jobName.contains("root-cause-analysis-tool")) {
+				 jobName.contains("root-cause-analysis-tool") ||
+				 jobName.equals("test-poshi-release")) {
 
 			return new PortalTopLevelBuildData(runID, jobName, buildURL);
 		}

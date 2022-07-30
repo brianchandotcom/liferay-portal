@@ -42,6 +42,11 @@ public class BuildRunnerFactory {
 				(PortalBatchBuildData)buildData);
 		}
 
+		if (jobName.equals("test-poshi-release")) {
+			buildRunner = new PoshiReleasePortalTopLevelBuildRunner(
+				(PortalTopLevelBuildData)buildData);
+		}
+
 		if (jobName.startsWith("test-portal-testsuite-upstream-controller(")) {
 			Matcher matcher = _jobNamePattern.matcher(jobName);
 

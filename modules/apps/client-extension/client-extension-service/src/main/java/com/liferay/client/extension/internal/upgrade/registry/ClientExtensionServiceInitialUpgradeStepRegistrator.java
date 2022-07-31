@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -42,24 +44,33 @@ public class ClientExtensionServiceInitialUpgradeStepRegistrator
 						_releaseLocalService.fetchRelease(
 							"com.liferay.remote.app.service");
 
-					if (remoteAppRelease == null) {
-						return;
+					if (remoteAppRelease != null) {
+						Release clientExtensionRelease =
+							_releaseLocalService.fetchRelease(
+								"com.liferay.client.extension.service");
+
+						clientExtensionRelease.setSchemaVersion(
+							remoteAppRelease.getSchemaVersion());
+
+						_releaseLocalService.updateRelease(
+							clientExtensionRelease);
+
+						_releaseLocalService.deleteRelease(remoteAppRelease);
 					}
 
-					Release clientExtensionRelease =
-						_releaseLocalService.fetchRelease(
-							"com.liferay.client.extension.service");
-
-					clientExtensionRelease.setSchemaVersion(
-						remoteAppRelease.getSchemaVersion());
-
-					_releaseLocalService.updateRelease(clientExtensionRelease);
-
-					_releaseLocalService.deleteRelease(remoteAppRelease);
+					_componentContext.enableComponent(
+						ClientExtensionUpgradeStepRegistrator.class.getName());
 				}
 
 			});
 	}
+
+	@Activate
+	protected void activate(ComponentContext componentContext) {
+		_componentContext = componentContext;
+	}
+
+	private ComponentContext _componentContext;
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;

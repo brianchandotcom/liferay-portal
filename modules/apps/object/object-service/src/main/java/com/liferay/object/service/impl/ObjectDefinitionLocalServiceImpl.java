@@ -25,6 +25,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.NoSuchObjectFieldException;
+import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedObjectFieldIdException;
 import com.liferay.object.exception.ObjectDefinitionActiveException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
@@ -1043,7 +1044,8 @@ public class ObjectDefinitionLocalServiceImpl
 		boolean originalActive = objectDefinition.isActive();
 
 		_validateAccountEntryRestrictedObjectFieldId(
-			accountEntryRestrictedObjectFieldId, accountEntryRestricted);
+			accountEntryRestrictedObjectFieldId, accountEntryRestricted,
+			objectDefinition);
 		_validateObjectFieldId(objectDefinition, descriptionObjectFieldId);
 		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
 		_validateActive(objectDefinition, active);
@@ -1166,13 +1168,25 @@ public class ObjectDefinitionLocalServiceImpl
 
 	private void _validateAccountEntryRestrictedObjectFieldId(
 			long accountEntryRestrictedObjectFieldId,
-			boolean accountEntryRestricted)
-		throws ObjectDefinitionAccountEntryRestrictedObjectFieldIdException {
+			boolean accountEntryRestricted, ObjectDefinition objectDefinition)
+		throws ObjectDefinitionAccountEntryRestrictedException,
+			   ObjectDefinitionAccountEntryRestrictedObjectFieldIdException {
 
 		if (accountEntryRestricted &&
 			(accountEntryRestrictedObjectFieldId == 0)) {
 
 			throw new ObjectDefinitionAccountEntryRestrictedObjectFieldIdException();
+		}
+
+		if (objectDefinition.isApproved() &&
+			((accountEntryRestricted !=
+				objectDefinition.isAccountEntryRestricted()) ||
+			 (accountEntryRestrictedObjectFieldId !=
+				 objectDefinition.getAccountEntryRestrictedObjectFieldId()))) {
+
+			throw new ObjectDefinitionAccountEntryRestrictedException(
+				"It is not allowed to update the account restriction of a " +
+					"published object");
 		}
 	}
 

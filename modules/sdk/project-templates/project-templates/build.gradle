@@ -79,7 +79,7 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.portlet.provider", version: "1.0.173"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.portlet.toolbar.contributor", version: "1.0.173"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.rest", version: "1.0.175"
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.rest.builder", version: "1.0.83"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.rest.builder", version: "1.0.84"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service", version: "1.0.172"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service.builder", version: "1.0.174"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service.wrapper", version: "1.0.171"

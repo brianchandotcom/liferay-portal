@@ -563,7 +563,7 @@ definition {
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Segments",
-			configurationName = "Segments Analytics Cloud",
+			configurationName = "Analytics Cloud Segments",
 			configurationScope = "System Scope");
 
 		if (IsElementPresent(locator1 = "SystemSettings#SAVE_BUTTON_SEGMENTS_AC")) {

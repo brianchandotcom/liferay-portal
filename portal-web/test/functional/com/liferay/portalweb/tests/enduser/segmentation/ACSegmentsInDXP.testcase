@@ -15,11 +15,9 @@ definition {
 		}
 
 		task ("Take token from Analytics Cloud") {
-			AnalyticsCloud.loginAnalyticsCloud(
-				emailAddress = "test@liferay.com",
-				password = "test");
+			ACUtils.launchAC();
 
-			AnalyticsCloud.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
 		}
 
 		task ("Go to DXP portal, login and create site") {
@@ -58,11 +56,15 @@ definition {
 		task ("Go to Segments and add a new segment") {
 			ACNavigation.goToSegments();
 
-			ACSegments.createStaticSegment();
+			ACSegments.createDynamicSegment();
 
-			ACUtils.setItemName(itemName = "Static Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
-			ACSegments.addStaticMember(tableMember = "Test Test");
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "email");
+
+			ACSegments.editTextCriterion(textInput = "test@liferay.com");
 
 			ACSegments.saveSegment();
 		}
@@ -99,6 +101,8 @@ definition {
 	then I don't see the edit action"
 	@priority = "3"
 	test CheckNotEditableSegmentFromACAtDXP {
+		property test.name.skip.portal.instance = "ACSegmentsInDXP#CheckNotEditableSegmentFromACAtDXP";
+
 		task ("Update Segments Analytics Cloud in System Settings") {
 			Segmentation.updateACSegmentSystemSettings();
 		}
@@ -111,7 +115,7 @@ definition {
 				portlet = "Segments");
 
 			Click.waitForMenuToggleJSClick(
-				key_tableEntry = "Static Segment Test",
+				key_tableEntry = "Dynamic Segment Test",
 				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 			AssertElementNotPresent(
@@ -124,6 +128,7 @@ definition {
 	@priority = "5"
 	test DefaultInstanceNotSynchronizedWithAC {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ACSegmentsInDXP#DefaultInstanceNotSynchronizedWithAC";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
 			Segmentation.updateACSegmentSystemSettings();
@@ -166,7 +171,7 @@ definition {
 				portlet = "Segments");
 
 			AssertElementNotPresent(
-				key_tableEntry = "Static Segment Test",
+				key_tableEntry = "Dynamic Segment Test",
 				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 		}
 	}
@@ -187,6 +192,9 @@ definition {
 	Then in the next sync time, the segment will appear again"
 	@priority = "4"
 	test PersistSegmentFromACAtDXP {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ACSegmentsInDXP#PersistSegmentFromACAtDXP";
+
 		task ("Change 'Check Interval' at Segment Analytics Cloud in System Settings") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -195,7 +203,7 @@ definition {
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Segments",
-				configurationName = "Segments Analytics Cloud",
+				configurationName = "Analytics Cloud Segments",
 				configurationScope = "System Scope");
 
 			if (IsElementPresent(locator1 = "SystemSettings#SAVE_BUTTON_SEGMENTS_AC")) {
@@ -222,15 +230,15 @@ definition {
 				portlet = "Segments");
 
 			AssertElementPresent(
-				key_tableEntry = "Static Segment Test",
+				key_tableEntry = "Dynamic Segment Test",
 				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 		}
 
-		task ("Delete Static Segment Test") {
-			Segmentation.deleteSegment(entry = "Static Segment Test");
+		task ("Delete Dynamic Segment Test") {
+			Segmentation.deleteSegment(entry = "Dynamic Segment Test");
 
 			AssertElementNotPresent(
-				key_tableEntry = "Static Segment Test",
+				key_tableEntry = "Dynamic Segment Test",
 				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 		}
 
@@ -242,7 +250,7 @@ definition {
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Segments",
-				configurationName = "Segments Analytics Cloud",
+				configurationName = "Analytics Cloud Segments",
 				configurationScope = "System Scope");
 
 			AssertElementPresent(
@@ -265,7 +273,7 @@ definition {
 				portlet = "Segments");
 
 			AssertElementPresent(
-				key_tableEntry = "Static Segment Test",
+				key_tableEntry = "Dynamic Segment Test",
 				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 		}
 	}
@@ -274,6 +282,7 @@ definition {
 	@priority = "5"
 	test RedirectToSegmentPageAC {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ACSegmentsInDXP#RedirectToSegmentPageAC";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
 			Segmentation.updateACSegmentSystemSettings();
@@ -287,7 +296,7 @@ definition {
 				portlet = "Segments");
 
 			Click(
-				key_tableEntry = "Static Segment Test",
+				key_tableEntry = "Dynamic Segment Test",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
 		}
 
@@ -298,7 +307,7 @@ definition {
 				emailAddress = "test@liferay.com",
 				password = "test");
 
-			ACUtils.assertPageTitle(pageTitle = "Static Segment Test");
+			ACUtils.assertPageTitle(pageTitle = "Dynamic Segment Test");
 		}
 	}
 
@@ -306,6 +315,7 @@ definition {
 	@priority = "4"
 	test RedirectToSegmentPageErrorAC {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ACSegmentsInDXP#RedirectToSegmentPageErrorAC";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
 			Segmentation.updateACSegmentSystemSettings();
@@ -319,7 +329,7 @@ definition {
 				portlet = "Segments");
 
 			AssertElementPresent(
-				key_tableEntry = "Static Segment Test",
+				key_tableEntry = "Dynamic Segment Test",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
 		}
 
@@ -332,9 +342,9 @@ definition {
 
 			ACNavigation.goToSegments();
 
-			ACSegments.deleteSegment(searchTerm = "Static Segment Test");
+			ACSegments.deleteSegment(searchTerm = "Dynamic Segment Test");
 
-			ACSegments.viewDeletedSegmentName(searchTerm = "Static Segment Test");
+			ACSegments.viewDeletedSegmentName(searchTerm = "Dynamic Segment Test");
 		}
 
 		task ("Go back to DXP and update Segments Analytics Cloud") {
@@ -355,7 +365,7 @@ definition {
 				portlet = "Segments");
 
 			Click(
-				key_tableEntry = "Static Segment Test",
+				key_tableEntry = "Dynamic Segment Test",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
 		}
 
@@ -385,6 +395,7 @@ definition {
 	@priority = "4"
 	test ShoudNotRedirectToSegmentPageAC {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ACSegmentsInDXP#ShoudNotRedirectToSegmentPageAC";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
 			Segmentation.updateACSegmentSystemSettings();
@@ -402,7 +413,7 @@ definition {
 				portlet = "Segments");
 
 			AssertElementNotPresent(
-				key_segmentName = "Static Segment Test",
+				key_segmentName = "Dynamic Segment Test",
 				locator1 = "Segmentation#CLICKABLE_SEGMENT_NAME");
 		}
 

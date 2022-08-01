@@ -116,7 +116,7 @@ public class AuthVerifierPipelineTest {
 	}
 
 	@Test
-	public void testVerifyRequestWithContextPathAndPortalPathContextAndPortalProxyPath()
+	public void testVerifyRequestWithContextPathNotAffectedByPortalProxyPath()
 		throws PortalException {
 
 		String contextPath = "/abc";

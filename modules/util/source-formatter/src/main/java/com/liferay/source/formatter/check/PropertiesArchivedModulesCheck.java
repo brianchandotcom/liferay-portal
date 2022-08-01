@@ -133,7 +133,7 @@ public class PropertiesArchivedModulesCheck extends BaseFileCheck {
 			return _archivedModuleDirectoryNames;
 		}
 
-		File modulesDir = new File(portalDir, "modules");
+		File modulesDir = new File(portalDir, "modules/apps/archived");
 
 		Files.walkFileTree(
 			modulesDir.toPath(), EnumSet.noneOf(FileVisitOption.class), 15,

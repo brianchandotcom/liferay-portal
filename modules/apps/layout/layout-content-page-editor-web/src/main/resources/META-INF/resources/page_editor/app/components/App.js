@@ -41,6 +41,7 @@ import {DragAndDropContextProvider} from '../utils/drag-and-drop/useDragAndDrop'
 import CommonStylesManager from './CommonStylesManager';
 import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
 import DragPreview from './DragPreview';
+import ItemConfigurationSidebar from './ItemConfigurationSidebar';
 import LayoutViewport from './LayoutViewport';
 import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
@@ -114,6 +115,12 @@ export default function App({state}) {
 
 											<StyleBookContextProvider>
 												<Sidebar />
+
+												{Liferay.FeatureFlags[
+													'LPS-153452'
+												] && (
+													<ItemConfigurationSidebar />
+												)}
 											</StyleBookContextProvider>
 										</GlobalContextProvider>
 									</StyleErrorsContextProvider>

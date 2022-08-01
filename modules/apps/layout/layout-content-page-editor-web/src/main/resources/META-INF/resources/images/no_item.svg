@@ -1,0 +1,260 @@
+<svg fill="none" height="120" width="120" xmlns="http://www.w3.org/2000/svg">
+	<circle cx="60" cy="60" fill="#F1F2F5" r="60" />
+	<circle cx="108.696" cy="60.696" fill="#CDCED9" r=".696" />
+	<circle cx="7.696" cy="71.696" fill="#CDCED9" r=".696" />
+	<circle cx="30.696" cy="97.696" fill="#CDCED9" r=".696" />
+	<circle cx="10.696" cy="37.696" fill="#CDCED9" r=".696" />
+	<circle cx="112.696" cy="76.696" fill="#CDCED9" r=".696" />
+	<circle cx="78.696" cy="100.696" fill="#CDCED9" r=".696" />
+	<circle cx="64.696" cy="113.696" fill="#CDCED9" r=".696" />
+	<circle cx="33.696" cy="16.696" fill="#CDCED9" r=".696" />
+	<circle cx="52.696" cy="20.696" fill="#CDCED9" r=".696" />
+	<circle cx="82.696" cy="19.696" fill="#CDCED9" r=".696" />
+	<path clip-rule="evenodd" d="M66.786 7.464a.464.464 0 1 0-.929 0v.465a.929.929 0 0 1-.928.928h-.465a.464.464 0 0 0 0 .929h.465c.513 0 .928.416.928.928v.464a.464.464 0 1 0 .929 0v-.464c0-.512.415-.928.928-.928h.465a.464.464 0 0 0 0-.929h-.465a.929.929 0 0 1-.928-.928v-.465ZM91.786 99.464a.464.464 0 0 0-.929 0v.465a.928.928 0 0 1-.928.928h-.465a.465.465 0 0 0 0 .929h.465c.513 0 .928.416.928.928v.464a.465.465 0 1 0 .929 0v-.464c0-.512.415-.928.928-.928h.464a.464.464 0 0 0 0-.929h-.464a.928.928 0 0 1-.928-.928v-.465ZM46.786 107.464a.464.464 0 0 0-.929 0v.465a.928.928 0 0 1-.928.928h-.465a.465.465 0 0 0 0 .929h.465c.513 0 .928.416.928.928v.464a.465.465 0 1 0 .929 0v-.464c0-.512.415-.928.928-.928h.464a.464.464 0 0 0 0-.929h-.464a.928.928 0 0 1-.928-.928v-.465ZM111.786 44.464a.464.464 0 0 0-.929 0v.465a.928.928 0 0 1-.928.928h-.464a.464.464 0 1 0 0 .929h.464c.513 0 .928.416.928.928v.464a.465.465 0 0 0 .929 0v-.464c0-.512.415-.928.928-.928h.465a.464.464 0 0 0 0-.929h-.465a.929.929 0 0 1-.928-.928v-.465ZM8.786 53.464a.464.464 0 0 0-.929 0v.465a.929.929 0 0 1-.928.928h-.465a.464.464 0 0 0 0 .929h.465c.513 0 .928.416.928.928v.464a.464.464 0 0 0 .929 0v-.464c0-.512.415-.928.928-.928h.464a.464.464 0 1 0 0-.929h-.464a.928.928 0 0 1-.928-.928v-.465Z" fill="#A7A9BC" fill-rule="evenodd" />
+	<rect fill="#fff" height="64" rx="6" width="88" x="16" y="27" />
+	<path clip-rule="evenodd" d="M98 30H22a3 3 0 0 0-3 3v52a3 3 0 0 0 3 3h76a3 3 0 0 0 3-3V33a3 3 0 0 0-3-3Zm-76-3a6 6 0 0 0-6 6v52a6 6 0 0 0 6 6h76a6 6 0 0 0 6-6V33a6 6 0 0 0-6-6H22Z" fill="#6B6C7E" fill-rule="evenodd" />
+	<rect
+		fill="#fff"
+		height="2.01"
+		rx="1.005"
+		stroke="#6B6C7E"
+		stroke-width="2.01"
+		width="24.984"
+		x="48.005"
+		y="96.995"
+	/>
+	<rect
+		fill="#E7E7ED"
+		height="76"
+		rx="3.394"
+		transform="rotate(-90 22 47)"
+		width="14"
+		x="22"
+		y="47"
+	/>
+	<rect
+		fill="#E7E7ED"
+		height="76"
+		rx="3.327"
+		transform="rotate(-90 22 85)"
+		width="14"
+		x="22"
+		y="85"
+	/>
+	<rect
+		fill="#CDCED9"
+		height="36"
+		rx="3.327"
+		transform="rotate(-90 22 68)"
+		width="18"
+		x="22"
+		y="68"
+	/>
+	<rect
+		fill="#E7E7ED"
+		height="37"
+		rx="2"
+		transform="rotate(-90 61 54)"
+		width="4"
+		x="61"
+		y="54"
+	/>
+	<rect
+		fill="#E7E7ED"
+		height="37"
+		rx="2"
+		transform="rotate(-90 61 61)"
+		width="4"
+		x="61"
+		y="61"
+	/>
+	<rect
+		fill="#E7E7ED"
+		height="37"
+		rx="2"
+		transform="rotate(-90 61 68)"
+		width="4"
+		x="61"
+		y="68"
+	/>
+	<mask
+		height="12"
+		id="a"
+		maskUnits="userSpaceOnUse"
+		style="mask-type:alpha"
+		width="10"
+		x="38"
+		y="58"
+	>
+		<path d="M40.54 69.242a.655.655 0 0 1-1.188-.32l-.91-10.206a.655.655 0 0 1 1.046-.584l8.048 6.029c.489.366.256 1.144-.353 1.18l-3.75.226a.655.655 0 0 0-.497.276l-2.396 3.398Z" fill="#6B6C7E" />
+	</mask>
+	<g mask="url(#a)">
+		<path d="M37 58h11.52v11.52H37z" fill="#6B6C7E" />
+	</g>
+	<circle cx="60" cy="60" fill="#F1F2F5" r="60" />
+	<circle cx="108.75" cy="60.75" fill="#CDCED9" r=".75" />
+	<circle cx="11.75" cy="74.75" fill="#CDCED9" r=".75" />
+	<circle cx="27.75" cy="92.75" fill="#CDCED9" r=".75" />
+	<circle cx="10.75" cy="37.75" fill="#CDCED9" r=".75" />
+	<circle cx="112.75" cy="76.75" fill="#CDCED9" r=".75" />
+	<circle cx="92.75" cy="92.75" fill="#CDCED9" r=".75" />
+	<circle cx="60.75" cy="113.75" fill="#CDCED9" r=".75" />
+	<circle cx="31.75" cy="13.75" fill="#CDCED9" r=".75" />
+	<circle cx="52.75" cy="18.75" fill="#CDCED9" r=".75" />
+	<circle cx="84.75" cy="15.75" fill="#CDCED9" r=".75" />
+	<path clip-rule="evenodd" d="M66.4 7.4a.4.4 0 0 0-.8 0v.4a.8.8 0 0 1-.8.8h-.4a.4.4 0 0 0 0 .8h.4a.8.8 0 0 1 .8.8v.4a.4.4 0 0 0 .8 0v-.4a.8.8 0 0 1 .8-.8h.4a.4.4 0 0 0 0-.8h-.4a.8.8 0 0 1-.8-.8v-.4ZM83.4 103.4a.4.4 0 1 0-.8 0v.4a.8.8 0 0 1-.8.8h-.4a.4.4 0 1 0 0 .8h.4a.8.8 0 0 1 .8.8v.4a.4.4 0 1 0 .8 0v-.4a.8.8 0 0 1 .8-.8h.4a.4.4 0 1 0 0-.8h-.4a.8.8 0 0 1-.8-.8v-.4ZM41.4 100.4a.4.4 0 1 0-.8 0v.4a.8.8 0 0 1-.8.8h-.4a.4.4 0 1 0 0 .8h.4a.8.8 0 0 1 .8.8v.4a.4.4 0 1 0 .8 0v-.4a.8.8 0 0 1 .8-.8h.4a.4.4 0 1 0 0-.8h-.4a.8.8 0 0 1-.8-.8v-.4ZM109.4 41.4a.4.4 0 1 0-.8 0v.4a.8.8 0 0 1-.8.8h-.4a.4.4 0 1 0 0 .8h.4a.8.8 0 0 1 .8.8v.4a.4.4 0 1 0 .8 0v-.4a.8.8 0 0 1 .8-.8h.4a.4.4 0 1 0 0-.8h-.4a.8.8 0 0 1-.8-.8v-.4ZM12.4 54.4a.4.4 0 0 0-.8 0v.4a.8.8 0 0 1-.8.8h-.4a.4.4 0 0 0 0 .8h.4a.8.8 0 0 1 .8.8v.4a.4.4 0 0 0 .8 0v-.4a.8.8 0 0 1 .8-.8h.4a.4.4 0 0 0 0-.8h-.4a.8.8 0 0 1-.8-.8v-.4Z" fill="#A7A9BC" fill-rule="evenodd" />
+	<path clip-rule="evenodd" d="M50 91a2 2 0 1 0 0 4h20a2 2 0 1 0 0-4H50Z" fill="#6B6C7E" fill-rule="evenodd" />
+	<path d="M20 32a8 8 0 0 1 8-8h64a8 8 0 0 1 8 8v44a8 8 0 0 1-8 8H28a8 8 0 0 1-8-8V32Z" fill="#fff" />
+	<path clip-rule="evenodd" d="M92 27H28a5 5 0 0 0-5 5v44a5 5 0 0 0 5 5h64a5 5 0 0 0 5-5V32a5 5 0 0 0-5-5Zm-64-3a8 8 0 0 0-8 8v44a8 8 0 0 0 8 8h64a8 8 0 0 0 8-8V32a8 8 0 0 0-8-8H28Z" fill="#6B6C7E" fill-rule="evenodd" />
+	<rect
+		fill="#E7E7ED"
+		height="66"
+		rx="4"
+		transform="rotate(-90 27 45)"
+		width="14"
+		x="27"
+		y="45"
+	/>
+	<rect
+		fill="#E7E7ED"
+		height="66"
+		rx="4"
+		transform="rotate(-90 27 77)"
+		width="8"
+		x="27"
+		y="77"
+	/>
+	<rect
+		fill="#CDCED9"
+		height="31"
+		rx="4"
+		transform="rotate(-90 27 66)"
+		width="18"
+		x="27"
+		y="66"
+	/>
+	<rect
+		fill="#E7E7ED"
+		height="32"
+		rx="2"
+		transform="rotate(-90 61 52)"
+		width="4"
+		x="61"
+		y="52"
+	/>
+	<rect
+		fill="#E7E7ED"
+		height="32"
+		rx="2"
+		transform="rotate(-90 61 59)"
+		width="4"
+		x="61"
+		y="59"
+	/>
+	<rect
+		fill="#E7E7ED"
+		height="32"
+		rx="2"
+		transform="rotate(-90 61 66)"
+		width="4"
+		x="61"
+		y="66"
+	/>
+	<mask
+		height="12"
+		id="b"
+		maskUnits="userSpaceOnUse"
+		style="mask-type:alpha"
+		width="10"
+		x="39"
+		y="56"
+	>
+		<path d="M41.54 67.242a.655.655 0 0 1-1.188-.32l-.91-10.206a.655.655 0 0 1 1.046-.584l8.048 6.029c.489.366.256 1.143-.353 1.18l-3.75.225a.655.655 0 0 0-.497.277l-2.396 3.398Z" fill="#6B6C7E" />
+	</mask>
+	<g mask="url(#b)">
+		<path d="M38 56h11.52v11.52H38z" fill="#6B6C7E" />
+	</g>
+	<circle cx="60" cy="60" fill="#F1F2F5" r="60" />
+	<circle cx="108.75" cy="60.75" fill="#CDCED9" r=".75" />
+	<circle cx="11.75" cy="74.75" fill="#CDCED9" r=".75" />
+	<circle cx="27.75" cy="92.75" fill="#CDCED9" r=".75" />
+	<circle cx="10.75" cy="37.75" fill="#CDCED9" r=".75" />
+	<circle cx="112.75" cy="76.75" fill="#CDCED9" r=".75" />
+	<circle cx="92.75" cy="92.75" fill="#CDCED9" r=".75" />
+	<circle cx="60.75" cy="113.75" fill="#CDCED9" r=".75" />
+	<circle cx="31.75" cy="13.75" fill="#CDCED9" r=".75" />
+	<circle cx="52.75" cy="18.75" fill="#CDCED9" r=".75" />
+	<circle cx="84.75" cy="15.75" fill="#CDCED9" r=".75" />
+	<path clip-rule="evenodd" d="M66.4 7.4a.4.4 0 0 0-.8 0v.4a.8.8 0 0 1-.8.8h-.4a.4.4 0 0 0 0 .8h.4a.8.8 0 0 1 .8.8v.4a.4.4 0 0 0 .8 0v-.4a.8.8 0 0 1 .8-.8h.4a.4.4 0 0 0 0-.8h-.4a.8.8 0 0 1-.8-.8v-.4ZM83.4 103.4a.4.4 0 1 0-.8 0v.4a.8.8 0 0 1-.8.8h-.4a.4.4 0 1 0 0 .8h.4a.8.8 0 0 1 .8.8v.4a.4.4 0 1 0 .8 0v-.4a.8.8 0 0 1 .8-.8h.4a.4.4 0 1 0 0-.8h-.4a.8.8 0 0 1-.8-.8v-.4ZM41.4 100.4a.4.4 0 1 0-.8 0v.4a.8.8 0 0 1-.8.8h-.4a.4.4 0 1 0 0 .8h.4a.8.8 0 0 1 .8.8v.4a.4.4 0 1 0 .8 0v-.4a.8.8 0 0 1 .8-.8h.4a.4.4 0 1 0 0-.8h-.4a.8.8 0 0 1-.8-.8v-.4ZM109.4 41.4a.4.4 0 1 0-.8 0v.4a.8.8 0 0 1-.8.8h-.4a.4.4 0 1 0 0 .8h.4a.8.8 0 0 1 .8.8v.4a.4.4 0 1 0 .8 0v-.4a.8.8 0 0 1 .8-.8h.4a.4.4 0 1 0 0-.8h-.4a.8.8 0 0 1-.8-.8v-.4ZM12.4 54.4a.4.4 0 0 0-.8 0v.4a.8.8 0 0 1-.8.8h-.4a.4.4 0 0 0 0 .8h.4a.8.8 0 0 1 .8.8v.4a.4.4 0 0 0 .8 0v-.4a.8.8 0 0 1 .8-.8h.4a.4.4 0 0 0 0-.8h-.4a.8.8 0 0 1-.8-.8v-.4Z" fill="#A7A9BC" fill-rule="evenodd" />
+	<path clip-rule="evenodd" d="M50 91a2 2 0 1 0 0 4h20a2 2 0 1 0 0-4H50Z" fill="#6B6C7E" fill-rule="evenodd" />
+	<path d="M20 32a8 8 0 0 1 8-8h64a8 8 0 0 1 8 8v44a8 8 0 0 1-8 8H28a8 8 0 0 1-8-8V32Z" fill="#fff" />
+	<path clip-rule="evenodd" d="M92 27H28a5 5 0 0 0-5 5v44a5 5 0 0 0 5 5h64a5 5 0 0 0 5-5V32a5 5 0 0 0-5-5Zm-64-3a8 8 0 0 0-8 8v44a8 8 0 0 0 8 8h64a8 8 0 0 0 8-8V32a8 8 0 0 0-8-8H28Z" fill="#6B6C7E" fill-rule="evenodd" />
+	<rect
+		fill="#E7E7ED"
+		height="66"
+		rx="4"
+		transform="rotate(-90 27 41)"
+		width="10"
+		x="27"
+		y="41"
+	/>
+	<rect
+		fill="#E7E7ED"
+		height="66"
+		rx="4"
+		transform="rotate(-90 27 77)"
+		width="10"
+		x="27"
+		y="77"
+	/>
+	<rect
+		fill="#CDCED9"
+		height="31"
+		rx="4"
+		transform="rotate(-90 27 63)"
+		width="18"
+		x="27"
+		y="63"
+	/>
+	<rect
+		fill="#E7E7ED"
+		height="32"
+		rx="2"
+		transform="rotate(-90 61 49)"
+		width="4"
+		x="61"
+		y="49"
+	/>
+	<rect
+		fill="#E7E7ED"
+		height="32"
+		rx="2"
+		transform="rotate(-90 61 56)"
+		width="4"
+		x="61"
+		y="56"
+	/>
+	<rect
+		fill="#E7E7ED"
+		height="32"
+		rx="2"
+		transform="rotate(-90 61 63)"
+		width="4"
+		x="61"
+		y="63"
+	/>
+	<mask
+		height="12"
+		id="c"
+		maskUnits="userSpaceOnUse"
+		style="mask-type:alpha"
+		width="10"
+		x="39"
+		y="54"
+	>
+		<path d="M41.54 65.242a.655.655 0 0 1-1.188-.32l-.91-10.206a.655.655 0 0 1 1.046-.584l8.048 6.029c.489.366.256 1.143-.353 1.18l-3.75.225a.655.655 0 0 0-.497.277l-2.396 3.398Z" fill="#6B6C7E" />
+	</mask>
+	<g mask="url(#c)">
+		<path d="M38 54h11.52v11.52H38z" fill="#6B6C7E" />
+	</g>
+</svg>

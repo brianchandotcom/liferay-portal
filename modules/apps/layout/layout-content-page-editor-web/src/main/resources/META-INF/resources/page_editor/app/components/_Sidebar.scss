@@ -8,7 +8,7 @@ $changeTrackingBarHeight: 23px;
 $zIndexButtons: 1;
 $zIndexContent: 0;
 
-html#{$cadmin-selector} .cadmin .page-editor__sidebar {
+@mixin sidebar {
 	display: flex;
 	/* stylelint-disable */
 	height: calc(
@@ -18,7 +18,6 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 					var(--change-tracking-indicator-height, 0px)
 			)
 	);
-	left: 0;
 	position: fixed;
 	top: calc(
 		var(--control-menu-height) + var(--toolbar-height) +

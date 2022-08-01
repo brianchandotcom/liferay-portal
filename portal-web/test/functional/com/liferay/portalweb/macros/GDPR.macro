@@ -263,7 +263,7 @@ definition {
 
 			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS");
 
-			AssertClick.assertPartialTextClickAt(
+			WaitForElementPresent(
 				locator1 = "MenuItem#DOWNLOAD",
 				value1 = "Download");
 		}

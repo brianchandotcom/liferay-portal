@@ -9,16 +9,16 @@
 			{
 				"name": "Test URL",
 				"type": "url",
-				"url": false,
-				"useNewTab": "https://test.com"
+				"url": "https://test.com",
+				"useNewTab": false
 			},
 			{
 				"menuItems": [
 					{
 						"name": "Other Test URL",
 						"type": "url",
-						"url": false,
-						"useNewTab": "https://other.test.com"
+						"url": "https://other.test.com",
+						"useNewTab": false
 					}
 				],
 				"name": "Other Links",

@@ -1428,11 +1428,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-152906: Given a Blogs Asset at Content Dashboard
+	When the user accesses the its information panel
+	Then the share button must be present"
+	@ignore = "true"
+	@priority = "4"
+	test CheckShareButtonIsPresentForBlogs {
+		task ("Create a Blog Entry asset") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Navigate to the content Dashboard and the user accesses the Blog Asset information panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			ContentDashboard.openInfoPanelByDropdownMenu();
+		}
+
+		task ("Check if the share button is not present at info panel") {
+			AssertElementPresent(
+				key_text = "Share",
+				locator1 = "Button#ANY");
+		}
+	}
+
 	@description = "LPS-152906: Given the Info panel of the Content Dashboard
 	When the user accesses the Web Content information panel
 	Then share button must not be present for Web Content"
 	@ignore = "true"
-	@priority = "5"
+	@priority = "4"
 	test CheckShareButtonNotPresentForWebContent {
 		task ("Create a Web Content and set a Display Page") {
 			JSONWebcontent.addWebContent(

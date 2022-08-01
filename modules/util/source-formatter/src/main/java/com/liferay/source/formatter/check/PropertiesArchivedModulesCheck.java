@@ -60,6 +60,10 @@ public class PropertiesArchivedModulesCheck extends BaseFileCheck {
 		List<String> archivedModuleDirectoryNames =
 			_getArchivedModuleDirectoryNames();
 
+		if (archivedModuleDirectoryNames.isEmpty()) {
+			return content;
+		}
+
 		Properties properties = new Properties();
 
 		properties.load(new StringReader(content));
@@ -119,7 +123,13 @@ public class PropertiesArchivedModulesCheck extends BaseFileCheck {
 
 		_archivedModuleDirectoryNames = new ArrayList<>();
 
-		File modulesDir = new File(getPortalDir(), "modules");
+		File portalDir = getPortalDir();
+
+		if (portalDir == null) {
+			return _archivedModuleDirectoryNames;
+		}
+
+		File modulesDir = new File(portalDir, "modules");
 
 		Files.walkFileTree(
 			modulesDir.toPath(), EnumSet.noneOf(FileVisitOption.class), 15,

@@ -18,6 +18,12 @@
 	font-weight: 700;
 }
 
+.dashboard-sales-container .bb-chart-arcs-title {
+	dominant-baseline: central;
+	font-size: 24px;
+	font-weight: 700;
+}
+
 .donut-chart-container .donut-chart-tooltip {
 	border: 1px solid #55c2ff;
 	color: #55c2ff;

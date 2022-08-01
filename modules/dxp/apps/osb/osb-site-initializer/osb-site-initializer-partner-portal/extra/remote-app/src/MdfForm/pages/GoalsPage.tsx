@@ -9,19 +9,24 @@
  * distribution rights of the Software.
  */
 
-import {ClayRadio} from '@clayui/form';
 import {Form, Formik} from 'formik';
 import {useState} from 'react';
 
 import Button from '../../components/Button';
 import CheckBoxList from '../../components/CheckBoxList';
 import InputText from '../../components/InputText';
-import Radio from '../../components/Radio/Radio';
+import Radio from '../../components/Radio';
 import Select from '../../components/Select';
 import LIST_TYPE_ENTRIES from '../../constants/listTypeEntries';
 import {useGetListTypeDefinitions} from '../../services/list-type-definitions/useGetListTypeDefinitions';
 
-const GoalsPage: any = () => {
+const GoalsPage: any = ({
+	setGeneralObject,
+	setStep,
+}: {
+	setGeneralObject: any;
+	setStep: any;
+}) => {
 	const businessSalesGoalPicklist = useGetListTypeDefinitions(
 		LIST_TYPE_ENTRIES.businessSalesGoals
 	);
@@ -40,40 +45,41 @@ const GoalsPage: any = () => {
 
 	const handleOnSubmit = (
 		formData: any,
+		setGeneralObject: any,
 		updateCheckBusines: any,
 		updateGoalsTarget: any,
 		updateTargetAudience: any
 	) => {
 		const createForm = {
+			activities: [],
 			...formData,
 			businessSalesGoals: updateCheckBusines,
 			goalsTargetMarket: updateGoalsTarget,
 			targetAudienceRole: updateTargetAudience,
 		};
 
-		// eslint-disable-next-line no-console
-		console.log(`fim`, createForm);
+		setGeneralObject(createForm);
 	};
 
 	const optionsCompanyName = [
 		{
-			label: 'Deathray Parent-A*',
-			value: 'Deathray Parent-A*',
+			key: 'Deathray Parent-A*',
+			name: 'Deathray Parent-A*',
 		},
 		{
-			label: 'Deathray Parent-B*',
-			value: 'Deathray Parent-B*',
+			key: 'Deathray Parent-B*',
+			name: 'Deathray Parent-B*',
 		},
 	];
 
 	const optionsCountry = [
 		{
-			label: 'US',
-			value: 'US',
+			key: 'US',
+			name: 'US',
 		},
 		{
-			label: 'BR',
-			value: 'BR',
+			key: 'BR',
+			name: 'BR',
 		},
 	];
 
@@ -81,7 +87,6 @@ const GoalsPage: any = () => {
 		<Formik
 			initialValues={{
 				additionalOptions: '',
-				businessPlanId: '',
 				businessSalesGoals: '',
 				businessSalesGoalsOther: '',
 				companyName: 'Deathray Parent-A*',
@@ -93,10 +98,13 @@ const GoalsPage: any = () => {
 			onSubmit={(formData) => {
 				handleOnSubmit(
 					formData,
+					setGeneralObject,
 					updateCheckBusines,
 					updateGoalsTarget,
 					updateTargetAudience
 				);
+
+				setStep(1);
 			}}
 		>
 			{(formik) => (
@@ -144,20 +152,6 @@ const GoalsPage: any = () => {
 									<div className="form-group-item">
 										<InputText
 											className="form-control shadow-none"
-											label="Business Plan ID"
-											name="businessPlanId"
-											onChange={formik.handleChange}
-											placeholder="Business Plan ID"
-											type="text"
-											value={formik.values.businessPlanId}
-										/>
-									</div>
-								</div>
-
-								<div className="form-group-autofit">
-									<div className="form-group-item">
-										<InputText
-											className="form-control shadow-none"
 											label="Provide a name and short description
 											of the overall campaign"
 											name="provideNameAndDescription"
@@ -185,6 +179,8 @@ const GoalsPage: any = () => {
 												availableItems={
 													businessSalesGoalPicklist
 												}
+												hasRule={true}
+												maxCheckedItems={3}
 												setCheckBox={
 													setUpdateCheckBusines
 												}
@@ -224,6 +220,8 @@ const GoalsPage: any = () => {
 													availableItems={
 														goalsTargetMarketPicklist
 													}
+													hasRule={true}
+													maxCheckedItems={3}
 													setCheckBox={
 														setUpdateGoalsTarget
 													}
@@ -241,7 +239,7 @@ const GoalsPage: any = () => {
 										</label>
 
 										<div className="border border-light mb-2 p-3 rounded">
-											<ClayRadio
+											<Radio
 												checked={
 													formik.values
 														.additionalOptions ===
@@ -300,6 +298,8 @@ const GoalsPage: any = () => {
 												availableItems={
 													targetAudienceRolePicklist
 												}
+												hasRule={false}
+												maxCheckedItems={3}
 												setCheckBox={
 													setUpdateTargetAudience
 												}
@@ -312,27 +312,33 @@ const GoalsPage: any = () => {
 							<div className="d-flex">
 								<div className="mr-auto p-2">
 									<Button
+										className=""
 										displayType="unstyled"
 										icon=""
 										label="Save as Draft"
+										onClick={() => {}}
 										type="button"
 									/>
 								</div>
 
 								<div className="p-2">
 									<Button
+										className=""
 										displayType="secondary"
 										icon=""
 										label="Cancel"
+										onClick={() => {}}
 										type="button"
 									/>
 								</div>
 
 								<div className="p-2">
 									<Button
+										className=""
 										displayType="primary"
 										icon=""
 										label="Continue"
+										onClick={() => {}}
 										type="submit"
 									/>
 								</div>

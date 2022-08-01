@@ -9,10 +9,37 @@
  * distribution rights of the Software.
  */
 
+import {useState} from 'react';
+
+import ActivitiesForm from './pages/ActivitiesForm';
+import ActivitiesList from './pages/ActivitiesList';
 import GoalsPage from './pages/GoalsPage';
+import {STEP_TYPES} from './utils/constants/stepType';
 
 const MdfForm = () => {
-	return <GoalsPage />;
+	const [step, setStep] = useState<any>(STEP_TYPES.goalsPage);
+	const [generalObject, setGeneralObject] = useState<any>();
+	const StepLayout = {
+		[STEP_TYPES.activitiesList]: (
+			<ActivitiesList generalObject={generalObject} setStep={setStep} />
+		),
+		[STEP_TYPES.goalsPage]: (
+			<GoalsPage
+				generalObject={generalObject}
+				setGeneralObject={setGeneralObject}
+				setStep={setStep}
+			/>
+		),
+		[STEP_TYPES.activitiesForm]: (
+			<ActivitiesForm
+				generalObject={generalObject}
+				setGeneralObject={setGeneralObject}
+				setStep={setStep}
+			/>
+		),
+	};
+
+	return StepLayout[step];
 };
 
 export default MdfForm;

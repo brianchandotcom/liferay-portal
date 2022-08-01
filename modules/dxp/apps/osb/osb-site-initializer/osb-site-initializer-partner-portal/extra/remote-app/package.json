@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/button": "^3.65.0",
+		"@clayui/card": "^3.67.0",
 		"@clayui/css": "^3.65.2",
 		"@clayui/date-picker": "^3.67.0",
 		"@clayui/form": "^3.67.0",

@@ -67,16 +67,20 @@ definition {
 	}
 
 	macro checkEachCookiesSavedValue {
-		for (var cookieName : list "${cookieNameListWithTrueValue}") {
-			CookieHelper._checkSelectedCookieValue(
-				cookieName = "${cookieName}",
-				expectedCookieValue = "true");
+		if (isSet(cookieNameListWithTrueValue)) {
+			for (var cookieName : list "${cookieNameListWithTrueValue}") {
+				CookieHelper._checkSelectedCookieValue(
+					cookieName = "${cookieName}",
+					expectedCookieValue = "true");
+			}
 		}
 
-		for (var cookieName : list "${cookieNameListWithFalseValue}") {
-			CookieHelper._checkSelectedCookieValue(
-				cookieName = "${cookieName}",
-				expectedCookieValue = "false");
+		if (isSet(cookieNameListWithFalseValue)) {
+			for (var cookieName : list "${cookieNameListWithFalseValue}") {
+				CookieHelper._checkSelectedCookieValue(
+					cookieName = "${cookieName}",
+					expectedCookieValue = "false");
+			}
 		}
 	}
 

@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>IMPORT_PREVIEW</td>
-	<td>//div[contains(@class,'import-mapping-table')]//tr[@class]/td[@class]/label[contains(text(),'${key_destinationField}')]/parent::td//following-sibling::td[2][contains(text(),'${key_previewField}')]</td>
+	<td>//div[contains(@class,'import-mapping-table')]//tr[@class]/td[@class]/label[contains(text(),'${key_destinationField}')]/parent::td//following-sibling::td[2][contains(.,'${key_previewField}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,12 +62,12 @@
 </tr>
 <tr>
 	<td>PREVIEW_ENTRY</td>
-	<td>//div[@class="modal-content"]//tr/td[normalize-space(text())='${key_entryName}']</td>
+	<td>//div[@class="modal-content"]//tr/td[contains(.,'${key_entryName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_ENTRY_FIELD</td>
-	<td>//div[@class="modal-content"]//tr/td[normalize-space(text())='${key_entryName}']//following-sibling::td[normalize-space(text())='${key_previewField}'] | //div[@class="modal-content"]//tr/td[normalize-space(text())='${key_entryName}']//preceding-sibling::td[normalize-space(text())='${key_previewField}']</td>
+	<td>//div[@class="modal-content"]//tr/td[contains(.,'${key_entryName}')]//following-sibling::td[contains(.,'${key_previewField}')] | //div[@class="modal-content"]//tr/td[contains(.,'${key_entryName}')]//preceding-sibling::td[contains(.,'${key_previewField}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -468,7 +468,7 @@ definition {
 		ClickNoError(locator1 = "Button#TRASH_ENABLED");
 
 		if (isSet(deleteMessage)) {
-				Confirm(value1 = "${deleteMessage}");
+			Confirm(value1 = "${deleteMessage}");
 		}
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");

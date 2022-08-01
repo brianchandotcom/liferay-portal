@@ -160,7 +160,7 @@ public class MockLiferayPortletRenderResponse
 
 	@Override
 	public LiferayPortletURL createRenderURL(String portletName) {
-		return null;
+		return new MockLiferayPortletURL();
 	}
 
 	@Override

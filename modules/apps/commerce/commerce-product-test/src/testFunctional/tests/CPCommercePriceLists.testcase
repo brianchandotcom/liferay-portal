@@ -2311,7 +2311,7 @@ definition {
 		AssertTextEquals.assertPartialText(
 			key_cartItemSku = "MIN55861",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
-			value1 = "$ 10.00");
+			value1 = "$ 30.00");
 	}
 
 	@description = "This is a test for COMMERCE-6228. Check that an expired entity is not considered in the price calculation"

@@ -1862,6 +1862,18 @@ public class GraphQLServletExtender {
 		graphQLObjectTypeBuilder = new GraphQLObjectType.Builder();
 
 		graphQLTypes.put(
+			"FileEntry",
+			graphQLObjectTypeBuilder.name(
+				"FileEntry"
+			).field(
+				_addField(Scalars.GraphQLLong, "id")
+			).field(
+				_addField(Scalars.GraphQLString, "name")
+			).build());
+
+		graphQLObjectTypeBuilder = new GraphQLObjectType.Builder();
+
+		graphQLTypes.put(
 			"ListEntry",
 			graphQLObjectTypeBuilder.name(
 				"ListEntry"

@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.Collections;
 import java.util.Map;
 
 import javax.validation.ValidationException;
@@ -78,7 +79,7 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			String.class, RandomTestUtil.randomString(),
+			Collections.singleton(String.class), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.DATE_TIME, defaultPropertyValidator,
@@ -114,6 +115,9 @@ public class DefaultPropertyValidatorTest {
 
 		defaultPropertyValidator.validate(
 			propertyDefinition, RandomTestUtil.randomDouble());
+
+		defaultPropertyValidator.validate(
+			propertyDefinition, RandomTestUtil.randomFloat());
 	}
 
 	@Test
@@ -150,7 +154,7 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			String.class, RandomTestUtil.randomString(),
+			Collections.singleton(String.class), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.DATE_TIME, defaultPropertyValidator,
@@ -166,9 +170,9 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			TestInvalidClass.class, RandomTestUtil.randomString(),
+			Collections.singleton(TestInvalidClass.class),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.MULTIPLE_ELEMENT,
 			defaultPropertyValidator, RandomTestUtil.randomBoolean());
 
@@ -183,9 +187,9 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			TestInvalidClass.class, RandomTestUtil.randomString(),
+			Collections.singleton(TestInvalidClass.class),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.SINGLE_ELEMENT,
 			defaultPropertyValidator, RandomTestUtil.randomBoolean());
 
@@ -218,6 +222,9 @@ public class DefaultPropertyValidatorTest {
 			RandomTestUtil.randomBoolean());
 
 		defaultPropertyValidator.validate(
+			propertyDefinition, RandomTestUtil.randomInt());
+
+		defaultPropertyValidator.validate(
 			propertyDefinition, RandomTestUtil.randomLong());
 	}
 
@@ -227,9 +234,9 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			TestClass.class, RandomTestUtil.randomString(),
+			Collections.singleton(TestClass.class),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.MULTIPLE_ELEMENT,
 			defaultPropertyValidator, RandomTestUtil.randomBoolean());
 
@@ -259,9 +266,9 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			TestClass.class, RandomTestUtil.randomString(),
+			Collections.singleton(TestClass.class),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.SINGLE_ELEMENT,
 			defaultPropertyValidator, RandomTestUtil.randomBoolean());
 

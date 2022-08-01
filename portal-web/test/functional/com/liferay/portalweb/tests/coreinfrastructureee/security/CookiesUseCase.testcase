@@ -81,4 +81,38 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-159221 TC-1. Verifying that Cookies are not saved until End-User sets them via Cookie Banner."
+	@priority = "5"
+	test VerifyingExplicitCookieWorfklow {
+		property test.name.skip.portal.instance = "CookiesUseCase#VerifyingExplicitCookieWorfklow";
+
+		task ("Given: Cookie preference handling is saved with Explicit Consent mode enabled.") {
+			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithCookieConsent();
+
+			CookieBanner.verifyCookieBannerIsPresent();
+		}
+
+		task ("Then: Cookies are saved with false as value except the NECESSARY coookie.") {
+			CookieHelper.checkEachCookiesSavedValue(
+				cookieNameListWithFalseValue = "CONSENT_TYPE_PERSONALIZATION,CONSENT_TYPE_FUNCTIONAL,CONSENT_TYPE_PERFORMANCE",
+				cookieNameListWithTrueValue = "CONSENT_TYPE_NECESSARY");
+		}
+	}
+
+	@description = "This is a use case for LPS-159221 TC-2. Verifying that Cookies are saved beforehand with true as value, and we didn't show the Cookie Banner."
+	@priority = "5"
+	test VerifyingImplicitCookieWorfklow {
+		property test.name.skip.portal.instance = "CookiesUseCase#VerifyingImplicitCookieWorfklow";
+
+		task ("Given: Cookie preference handling is saved with Explicit Consent mode is disabled.") {
+			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithoutCookieConsent();
+
+			CookieBanner.verifyCookieBannerIsNotPresent();
+		}
+
+		task ("Then: Cookies are saved with true as value.") {
+			CookieHelper.checkEachCookiesSavedValue(cookieNameListWithTrueValue = "CONSENT_TYPE_NECESSARY,CONSENT_TYPE_PERSONALIZATION,CONSENT_TYPE_FUNCTIONAL,CONSENT_TYPE_PERFORMANCE");
+		}
+	}
+
 }

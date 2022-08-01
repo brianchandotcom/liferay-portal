@@ -12,8 +12,25 @@
  * details.
  */
 
-import ListView, {ListViewProps} from './ListView';
+import {ReactElement} from 'react';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {SWRConfig} from 'swr';
 
-export type {ListViewProps};
+type PageWrapperProps = {
+	children: ReactElement;
+	fetcher: () => any;
+};
 
-export default ListView;
+const PageWrapper: React.FC<PageWrapperProps> = ({children, fetcher}) => {
+	return (
+		<SWRConfig value={{fetcher}}>
+			<BrowserRouter>
+				<Routes>
+					<Route element={children} path="/" />
+				</Routes>
+			</BrowserRouter>
+		</SWRConfig>
+	);
+};
+
+export default PageWrapper;

@@ -18,7 +18,13 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import {FieldArray, withFormik} from 'formik';
-import {debounce, fetch, openConfirmModal, openModal, openToast} from 'frontend-js-web';
+import {
+	debounce,
+	fetch,
+	openConfirmModal,
+	openModal,
+	openToast,
+} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 

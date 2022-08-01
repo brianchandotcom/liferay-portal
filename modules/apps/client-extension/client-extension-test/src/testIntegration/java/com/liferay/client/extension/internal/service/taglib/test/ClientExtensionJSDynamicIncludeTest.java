@@ -65,7 +65,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Víctor Galán
  */
 @RunWith(Arquillian.class)
-public class ClientExtensionTopJSDynamicIncludeTest {
+public class ClientExtensionJSDynamicIncludeTest {
 
 	@ClassRule
 	@Rule

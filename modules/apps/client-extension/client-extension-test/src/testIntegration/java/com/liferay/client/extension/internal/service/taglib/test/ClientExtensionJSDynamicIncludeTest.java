@@ -79,7 +79,7 @@ public class ClientExtensionJSDynamicIncludeTest {
 
 	@Test
 	public void testGlobalJSClientExtensionEntriesAreAdded() throws Exception {
-		_testGlobalJSClientExtensionEntriesAreAdded();
+		_testGlobalJSClientExtensionEntriesAreAdded(_dynamicInclude, "head");
 	}
 
 	private ClientExtensionEntry _addGlobalJSClientExtension(String url)
@@ -148,7 +148,8 @@ public class ClientExtensionJSDynamicIncludeTest {
 		return value.replaceAll("[\n\t]", StringPool.BLANK);
 	}
 
-	private void _testGlobalJSClientExtensionEntriesAreAdded()
+	private void _testGlobalJSClientExtensionEntriesAreAdded(
+			DynamicInclude dynamicInclude, String scriptLocation)
 		throws Exception {
 
 		String layoutSetGlobalJSURL = _getRandomURL();
@@ -162,7 +163,7 @@ public class ClientExtensionJSDynamicIncludeTest {
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
-				"scriptLocation", "head"
+				"scriptLocation", scriptLocation
 			).build();
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
@@ -214,7 +215,7 @@ public class ClientExtensionJSDynamicIncludeTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_dynamicInclude.include(
+		dynamicInclude.include(
 			_getMockHttpServletRequest(layout), mockHttpServletResponse,
 			StringPool.BLANK);
 

@@ -39,12 +39,12 @@ public class ServletResponseUtilContentLengthTest {
 
 	@Test
 	public void testContentLength() throws Exception {
-		_assertContentLength(_INPUTSTREAM_LENGTH);
-		_assertContentLength(_INPUTSTREAM_LENGTH + 1);
-		_assertContentLength(_INPUTSTREAM_LENGTH - 1);
+		_testContentLength(_INPUTSTREAM_LENGTH);
+		_testContentLength(_INPUTSTREAM_LENGTH + 1);
+		_testContentLength(_INPUTSTREAM_LENGTH - 1);
 	}
 
-	private void _assertContentLength(int contentLength) throws Exception {
+	private void _testContentLength(int contentLength) throws Exception {
 		String content = StringUtil.randomString(_INPUTSTREAM_LENGTH);
 
 		MockHttpServletResponse mockHttpServletResponse =

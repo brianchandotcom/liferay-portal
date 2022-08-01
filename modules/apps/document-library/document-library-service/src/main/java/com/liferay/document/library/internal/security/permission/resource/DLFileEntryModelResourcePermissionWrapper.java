@@ -43,8 +43,6 @@ import com.liferay.sharing.security.permission.resource.SharingModelResourcePerm
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Preston Crary
@@ -155,10 +153,7 @@ public class DLFileEntryModelResourcePermissionWrapper
 	@Reference(target = "(resource.name=" + DLConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
+	@Reference
 	private SharingModelResourcePermissionConfigurator
 		_sharingModelResourcePermissionConfigurator;
 

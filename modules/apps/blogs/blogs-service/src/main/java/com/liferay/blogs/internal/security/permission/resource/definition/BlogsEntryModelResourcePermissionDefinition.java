@@ -34,8 +34,6 @@ import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Preston Crary
@@ -94,11 +92,8 @@ public class BlogsEntryModelResourcePermissionDefinition
 	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile SharingModelResourcePermissionConfigurator
+	@Reference
+	private SharingModelResourcePermissionConfigurator
 		_sharingModelResourcePermissionConfigurator;
 
 	@Reference

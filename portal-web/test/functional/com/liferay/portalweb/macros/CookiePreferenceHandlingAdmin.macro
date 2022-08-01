@@ -9,6 +9,28 @@ definition {
 		CookiePreferenceHandlingAdmin.saveConfiguration();
 	}
 
+	@description = "Enable Cookie Preference handling with Explicit cookie setting Enabled"
+	macro enablePreferenceHandlingWithCookieConsent {
+		CookieNavigator.gotoSiteSettings(portlet = "Preference Handling");
+
+		FormFields.enableCheckbox(fieldName = "Enabled");
+
+		FormFields.enableCheckbox(fieldName = "Explicit Cookie Consent Mode");
+
+		CookiePreferenceHandlingAdmin.saveConfiguration();
+	}
+
+	@description = "Disable Cookie Preference handling with Explicit cookie setting Disabled"
+	macro enablePreferenceHandlingWithoutCookieConsent {
+		CookieNavigator.gotoSiteSettings(portlet = "Preference Handling");
+
+		FormFields.enableCheckbox(fieldName = "Enabled");
+
+		FormFields.disableCheckbox(fieldName = "Explicit Cookie Consent Mode");
+
+		CookiePreferenceHandlingAdmin.saveConfiguration();
+	}
+
 	macro saveConfiguration {
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			AssertClick.assertTextClickNoMouseOver(

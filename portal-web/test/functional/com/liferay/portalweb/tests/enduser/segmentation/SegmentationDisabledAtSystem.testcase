@@ -1,0 +1,172 @@
+@component-name = "portal-segmentation"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Segmentation";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Segmentation.resetSegmentationAtSystemSettings();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "LPS-152541 Add an alert to Segments Service in Instance Settings when those configurations are disabled in System Settings"
+	@priority = "4"
+	test CheckAssignRolesDisabledAlertAtInstanceSettings {
+		task ("Given the 'Assign Roles by Segments' is disabled at System Settings") {
+			Segmentation.disableConfigurationAtSystemSettings(checkLabel = "Enable Assign Roles by Segment");
+		}
+
+		task ("When user navigates to Segmentation at Instance Settings") {
+			Segmentation.gotoSegmeentsService(key_portlet = "Instance Settings");
+		}
+
+		task ("Then should see an alert informing that is disabled and how to re-enable it") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "Assign roles by segment is disabled in System Settings. To enable, go to System Settings.");
+
+			AssertElementPresent(
+				key_fieldLabel = "Enable Assign Roles by Segment",
+				locator1 = "FormFields#FIELD_DISABLED_TEXT");
+		}
+	}
+
+	@description = "LPS-152541 Add an alert to Segments Service in Instance Settings when those configurations are disabled in System Settings"
+	@priority = "4"
+	test CheckSegmentationDisabledAlertAtInstanceSettings {
+		task ("Given the 'Enable Segmentation' is disabled at System Settings") {
+			Segmentation.disableConfigurationAtSystemSettings(checkLabel = "Enable Segmentation");
+		}
+
+		task (" When user navigates to Segmentation at Instance Settings") {
+			Segmentation.gotoSegmeentsService(key_portlet = "Instance Settings");
+		}
+
+		task ("Then should see an alert informing that is disabled and how to re-enable it") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "Segmentation is disabled in System Settings. To enable, go to System Settings.");
+
+			AssertElementPresent(
+				key_fieldLabel = "Enable Segmentation",
+				locator1 = "FormFields#FIELD_DISABLED_TEXT");
+		}
+	}
+
+	@description = "LPS-152542: Add breadcrumbs to Instance Settings alerts"
+	@priority = "3"
+	test ViewAssignRoleBySegmentDisabledWarningUserWithoutsPermissionToSystemSettings {
+		property test.name.skip.portal.instance = "SegmentationDisabled#ViewAssignRoleBySegmentDisabledWarningUserWithoutsPermissionToSystemSettings";
+
+		task ("Given the 'Assign Roles by Segments' is disabled at System Settings") {
+			Segmentation.disableConfigurationAtSystemSettings(checkLabel = "Enable Assign Roles by Segment");
+		}
+
+		task ("And user does not has permission to System Settings") {
+			task ("Create an second instance") {
+				HeadlessPortalInstanceAPI.addPortalInstance(
+					domain = "tango.com",
+					portalInstanceId = "tango.com",
+					virtualHost = "tango.com");
+			}
+
+			task ("Login at the second instance") {
+				User.logoutPG();
+
+				User.viewLoggedOutPG();
+
+				User.firstLoginUI(
+					password = "test",
+					specificURL = "http://tango.com:8080",
+					userEmailAddress = "test@tango.com");
+			}
+		}
+
+		task ("When user navigates to 'Instance Settings'") {
+			Segmentation.gotoSegmeentsService(key_portlet = "Instance Settings");
+		}
+
+		task ("Then the warning informs to contact system administrator") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "Assign roles by segment is disabled in System Settings.");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "administrator to enable it.");
+		}
+
+		task ("Return to first Instance") {
+			User.logoutPG();
+
+			User.firstLoginUI();
+		}
+	}
+
+	@description = "LPS-152542: Add breadcrumbs to Instance Settings alerts"
+	@priority = "3"
+	test ViewSegmentationDisabledWarningUserWithoutsPermissionToSystemSettings {
+		property test.name.skip.portal.instance = "SegmentationDisabled#ViewSegmentationDisabledWarningUserWithoutsPermissionToSystemSettings";
+
+		task ("Given 'Segmentation' is disabled at System Settings") {
+			Segmentation.disableConfigurationAtSystemSettings(checkLabel = "Enable Segmentation");
+		}
+
+		task ("And user does not has permission to System Settings") {
+			task ("Create an second instance") {
+				HeadlessPortalInstanceAPI.addPortalInstance(
+					domain = "tango.com",
+					portalInstanceId = "tango.com",
+					virtualHost = "tango.com");
+			}
+
+			task ("Login at the second instance") {
+				User.logoutPG();
+
+				User.viewLoggedOutPG();
+
+				User.firstLoginUI(
+					password = "test",
+					specificURL = "http://tango.com:8080",
+					userEmailAddress = "test@tango.com");
+			}
+		}
+
+		task ("When user navigates to 'Instance Settings'") {
+			Segmentation.gotoSegmeentsService(key_portlet = "Instance Settings");
+		}
+
+		task ("Then the warning informs to contact system administrator") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "administrator to enable it.");
+		}
+
+		task ("Return to first Instance") {
+			User.logoutPG();
+
+			User.firstLoginUI();
+		}
+	}
+
+}

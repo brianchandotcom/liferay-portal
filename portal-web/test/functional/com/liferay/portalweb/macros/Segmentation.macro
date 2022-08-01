@@ -237,21 +237,24 @@ definition {
 	}
 
 	macro disableConfigurationAtSystemSettings {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Segments",
-			configurationName = "Segments Service",
-			configurationScope = "System Scope");
+		Segmentation.gotoSegmeentsService(key_portlet = "System Settings");
 
 		if (!(isSet(checkLabel))) {
-			var checkLabel = "Enable Segmentation";
+			var checkLabel = "Enable Segmentation,Enable Assign Roles by Segment";
 		}
 
-		Segmentation.disableCheckbox(key_checkLabel = "${checkLabel}");
+		for (var label : list "${checkLabel}") {
+			FormFields.disableCheckbox(fieldName = "${label}");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro disableSegmentationAtInstanceSettings {
@@ -265,15 +268,7 @@ definition {
 	}
 
 	macro disableSegmentationAtSystemSettings {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Segments",
-			configurationName = "Segments Service",
-			configurationScope = "System Scope");
+		Segmentation.gotoSegmeentsService(key_portlet = "System Settings");
 
 		FormFields.disableCheckbox(fieldName = "Enable Segmentation");
 

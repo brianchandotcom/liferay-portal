@@ -292,14 +292,13 @@ public class PortletRenderUtilTest {
 		Set<String> expectedSet = new HashSet<>(expected);
 
 		for (String actualString : actual) {
-			if (!expectedSet.remove(actualString)) {
-				Assert.fail("Found unexpected string " + actualString);
-			}
+			Assert.assertTrue(
+				"Actual string is expected " + actualString,
+				expectedSet.remove(actualString));
 		}
 
-		if (!expectedSet.isEmpty()) {
-			Assert.fail("Missing expected strings " + expectedSet);
-		}
+		Assert.assertTrue(
+			"No expected strings remain " + expectedSet, expectedSet.isEmpty());
 	}
 
 	private void _setUpMocks(boolean fastLoad, String pathContext) {

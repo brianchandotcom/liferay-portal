@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.Map;
+import java.util.Set;
 
 import javax.validation.ValidationException;
 
@@ -39,7 +40,7 @@ public class DefaultPropertyValidator implements PropertyValidator {
 
 		boolean valid = false;
 
-		Class<?> clazz = propertyDefinition.getPropertyClass();
+		Set<Class<?>> classes = propertyDefinition.getPropertyClasses();
 
 		PropertyDefinition.PropertyType propertyType =
 			propertyDefinition.getPropertyType();
@@ -66,11 +67,11 @@ public class DefaultPropertyValidator implements PropertyValidator {
 
 			Class<?> propertyValueClass = propertyValue.getClass();
 
-			if ((clazz != null) && propertyValueClass.isArray()) {
+			if ((classes != null) && propertyValueClass.isArray()) {
 				valid = true;
 
 				for (Object object : (Object[])propertyValue) {
-					if (ObjectMapperUtil.readValue(clazz, object) == null) {
+					if (!_isReadable(classes, object)) {
 						valid = false;
 
 						break;
@@ -81,14 +82,20 @@ public class DefaultPropertyValidator implements PropertyValidator {
 		else if (propertyType ==
 					PropertyDefinition.PropertyType.SINGLE_ELEMENT) {
 
-			if ((clazz != null) && (propertyValue instanceof Map) &&
-				(ObjectMapperUtil.readValue(clazz, propertyValue) != null)) {
+			if ((classes != null) && (propertyValue instanceof Map) &&
+				_isReadable(classes, propertyValue)) {
 
 				valid = true;
 			}
 		}
-		else if ((clazz != null) && clazz.isInstance(propertyValue)) {
-			valid = true;
+		else if (classes != null) {
+			for (Class<?> clazz : classes) {
+				if (clazz.isInstance(propertyValue)) {
+					valid = true;
+
+					break;
+				}
+			}
 		}
 
 		if (!valid) {
@@ -98,6 +105,16 @@ public class DefaultPropertyValidator implements PropertyValidator {
 					propertyDefinition.getPropertyName(),
 					"\" is invalid for property type ", propertyType));
 		}
+	}
+
+	private boolean _isReadable(Set<Class<?>> classes, Object object) {
+		for (Class<?> clazz : classes) {
+			if (ObjectMapperUtil.readValue(clazz, object) != null) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

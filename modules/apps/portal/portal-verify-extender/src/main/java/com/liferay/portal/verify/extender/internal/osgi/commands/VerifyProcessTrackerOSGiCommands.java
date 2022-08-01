@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
@@ -46,12 +45,10 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.felix.service.command.Descriptor;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -204,8 +201,6 @@ public class VerifyProcessTrackerOSGiCommands {
 				new VerifyServiceTrackerMapListener();
 		}
 
-		_serviceRegistrations = new ConcurrentHashMap<>();
-
 		_verifyProcesses = ServiceTrackerMapFactory.openMultiValueMap(
 			_bundleContext, VerifyProcess.class, null,
 			new PropertyServiceReferenceMapper<String, VerifyProcess>(
@@ -217,17 +212,6 @@ public class VerifyProcessTrackerOSGiCommands {
 	@Deactivate
 	protected void deactivate() {
 		_verifyProcesses.close();
-
-		for (Map.Entry<String, ServiceRegistration<Object>>
-				serviceRegistrationEntry : _serviceRegistrations.entrySet()) {
-
-			ServiceRegistration<Object> serviceRegistration =
-				serviceRegistrationEntry.getValue();
-
-			serviceRegistration.unregister();
-		}
-
-		_serviceRegistrations = null;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -286,10 +270,6 @@ public class VerifyProcessTrackerOSGiCommands {
 				verifyProcessName);
 
 			if ((release != null) && !force && release.isVerified()) {
-				if (!_serviceRegistrations.containsKey(verifyProcessName)) {
-					_registerMarkerObject(verifyProcessName);
-				}
-
 				return;
 			}
 
@@ -326,8 +306,6 @@ public class VerifyProcessTrackerOSGiCommands {
 				release.setState(ReleaseConstants.STATE_GOOD);
 
 				releaseLocalService.updateRelease(release);
-
-				_registerMarkerObject(verifyProcessName);
 			}
 			else {
 				release.setVerified(false);
@@ -390,17 +368,6 @@ public class VerifyProcessTrackerOSGiCommands {
 		return verifyProcesses;
 	}
 
-	private void _registerMarkerObject(String verifyProcessName) {
-		ServiceRegistration<Object> serviceRegistration =
-			_bundleContext.registerService(
-				Object.class, new Object(),
-				HashMapDictionaryBuilder.put(
-					"verify.process.name", verifyProcessName
-				).build());
-
-		_serviceRegistrations.put(verifyProcessName, serviceRegistration);
-	}
-
 	private void _runAllVerifiersWithFactory(
 		OutputStreamContainerFactory outputStreamContainerFactory,
 		boolean force) {
@@ -419,7 +386,6 @@ public class VerifyProcessTrackerOSGiCommands {
 		VerifyProcessTrackerOSGiCommands.class);
 
 	private BundleContext _bundleContext;
-	private Map<String, ServiceRegistration<Object>> _serviceRegistrations;
 	private ServiceTrackerMap<String, List<VerifyProcess>> _verifyProcesses;
 
 	private class AllVerifiersRunnable implements Runnable {

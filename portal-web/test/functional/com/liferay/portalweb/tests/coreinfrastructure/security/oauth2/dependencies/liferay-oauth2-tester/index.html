@@ -1,0 +1,239 @@
+<html>
+<head>
+	<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" rel="stylesheet" />
+
+	<script crossorigin="anonymous" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script crossorigin="anonymous" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+
+	<link href="custom.css" rel="stylesheet" />
+
+	<script src="auth.js" type="text/javascript"></script>
+
+	<title>Liferay - OAuth2 Tester</title>
+<script>
+
+</script>
+</head>
+
+<body>
+	<div class="row">
+		<div class="col-8">
+			<h1>Liferay OAuth2 Tester</h1>
+
+			<div class="message">You must configure in your Liferay Portal an OAuth2 Application and set<br />
+				<ul>
+					<li>callback: <u><i><span id="callbackURI"></span>?url=YOUR_LIFERAY_URL&client_id=YOUR_CLIENT_ID</i></u></li>
+					<li>scope: <i>everything.read.userprofile</i></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="col-4">
+			<a href="pkce" class="btn btn-info">Use PKCE Authorization Code Grant Flow</a>
+		</div>
+	</div>
+
+	<div aria-hidden="true" class="fade modal" id="modal" role="dialog" tabindex="-1">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			<div class="modal-header">
+				<h5>Insert the following data:</h5>
+			</div>
+
+			<div class="modal-body">
+				<form id="modalForm">
+					<div class="form-row">
+						<label for="modalLiferayUrl">Liferay URL:</label>
+
+						<input class="form-control" id="modalLiferayUrl" name="modalLiferayUrl" required="required" type="text" value="http://localhost:8080" />
+					</div>
+
+					<div class="form-row">
+						<label for="modalClientId">Client ID:</label>
+
+						<input class="form-control" id="modalClientId" name="modalClientId" required="required" type="text" />
+					</div>
+
+					<div class="form-row">
+						<label for="modalClientSecret">Client Secret:</label>
+
+						<input class="form-control" id="modalClientSecret" name="modalClientSecret" required="required" type="password" />
+					</div>
+				</form>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-primary" onclick="copyModalData();">Continue</button>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion">
+		<div class="card">
+		<div class="card-header" id="auth">
+				<div class="form-row">
+					<div class="col-6"><h2 id="step1"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">1. Obtain Liferay Authorization</button></h2></div>
+					<div class="col-6 alignRight"><button id="haveToken" data-toggle="modal" data-target="#modal" class="btn btn-warning">I already have a Token</button></div>
+				</div>
+			</div>
+
+		<div aria-labelledby="auth" class="collapse show" data-parent="#accordion" id="collapseOne">
+		<form id="authForm">
+			<div class="form-group">
+						<label for="liferayUrl">Liferay Portal URL:</label>
+
+			<input class="form-control" id="liferayUrl" name="liferayUrl" required="required" type="text" value="http://localhost:8080" />
+					</div>
+			<div class="form-row">
+		<div class="col-6">
+							<label for="service">OAuth2 Authentication URL:</label>
+
+		<input class="form-control" id="authorizeUrl" name="authorizeUrl" type="text" value="/o/oauth2/authorize" />
+						</div>
+		<div class="col-6">
+							<label for="clientId">Client ID:</label>
+			<input class="form-control" id="clientId" name="clientId" required="required" type="text" />
+						</div>
+					</div>
+		   		</form>
+
+				<button class="btn btn-primary" id="getAuthorizationCode" onclick="getAuthorizationCode();">Authorize My Application</button>
+			</div>
+		</div>
+
+<div class="card">
+		<div class="card-header" id="tokenTab">
+		<h2 id="step2">
+					<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">2. Obtain OAuth2 Token</button>
+				</h2>
+			</div>
+
+		<div aria-labelledby="tokenTab" class="collapse" data-parent="#accordion" id="collapseTwo">
+		<form id="tokenForm">
+		<div class="form-row">
+		<div class="col-6">
+						<label for="tokenLiferayUrl">Liferay URL:</label>
+
+		<input class="form-control" disabled="disabled" id="tokenLiferayUrl" name="tokenLiferayUrl" type="text" />
+					</div>
+		<div class="col-6">
+						<label for="tokenClientId">Client ID:</label>
+
+		<input class="form-control" disabled="disabled" id="tokenClientId" name="tokenClientId" type="text" />
+					</div>
+				</div>
+
+				<div class="form-row">
+		<div class="col-6">
+					   	<label for="code">Auth Code:</label>
+
+		<input class="form-control" disabled="disabled" id="code" name="code" type="text" />
+					</div>
+		<div class="col-6">
+						<label for="service">OAuth2 Token URL:</label>
+
+		<input class="form-control" id="tokenUrl" name="tokenUrl" required="required" type="text" value="/o/oauth2/token" />
+					</div>
+				</div>
+		<div class="form-group">
+					<label for="clientSecretId">Client Secret ID:</label>
+
+		<input class="form-control" id="clientSecretId" name="clientSecretId" required="required" type="password" />
+				</div>
+				</form>
+
+				<button id="getToken" class="btn btn-primary" onclick="getToken();">Obtain OAuth2 Access</button>
+			</div>
+		</div>
+
+		<div class="card">
+		<div class="card-header" id="apio">
+				<h2>
+				 	<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">3. Request</button>
+				 </h2>
+			</div>
+
+		<div aria-labelledby="apio" class="collapse" data-parent="#accordion" id="collapseThree">
+			<form id="requestForm">
+			<div class="form-row">
+			<div class="col-6">
+						<label for="service">URL:</label>
+
+			<input class="form-control" id="url" name="url" required="required" type="text" value="http://localhost:8080/api/jsonws/user/get-current-user" />
+					 </div>
+			<div class="col-2">
+						<label for="type">Method:</label>
+
+			<select class="form-control" id="methodType" name="methodType" onchange="checkMethod(event)">
+						   <option value="DELETE">DELETE</option>
+						   <option selected="selected" value="GET">GET</option>
+						   <option value="POST">POST</option>
+						   <option value="PUT">PUT</option>
+						</select>
+					 </div>
+			<div class="col-4">
+						<label for="type">Content-Type:</label>
+
+			<select class="form-control" id="contentType" name="contentType">
+						   <option selected="selected"value="application/json">application/json</option>
+						   <option value="application/x-www-form-urlencoded">x-www-form-urlencoded</option>
+						</select>
+					 </div>
+				  </div>
+				<br />
+			<div id="parametersList">
+			<div class="row" id="param0">
+						<div class="col"><input type="text" id="paramName0" placeholder="Name" class="form-control form-control-sm" /></div>
+						<div class="col"><input type="text" id="paramValue0" placeholder="Value" class="form-control form-control-sm" /></div>
+					 </div>
+				  </div>
+				<br />
+				  <button id="addParameter" class="btn btn-success btn-sm">Add another parameter</button><br />
+
+				<br />
+			<div class="row">
+			<div class="col-6">
+						<button id="getApioCustom" class="btn btn-primary" onclick="request(event, $('#service').val());">Launch Request</button>
+					 </div>
+			<div class="col-6">
+						<label for="token">Access Token: </label>
+			<input class="form-control form-control-sm" id="token" name="token" type="text" />
+					 </div>
+				  </div>
+				<div class="row">
+					<div class="col-6"></div>
+			<div class="col-6">
+						  <button id="refreshTokenButton" class="btn btn-warning btn-sm" onclick="refreshAccessToken(event);">Refresh Token</button>
+						  <button id="introspectTokenButton" class="btn btn-warning btn-sm" onclick="introspectAccessToken(event);">Introspect Access Token</button>
+					   </div>
+				  </div>
+				<div class="row">
+						<div class="col-6"></div>
+						<div class="col-6">
+							<label for="refreshToken">Refresh Token: </label>
+							<input class="form-control form-control-sm" id="refreshToken" name="refreshToken" type="text" />
+						</div>
+				  </div>
+				<div class="row">
+						<div class="col-6"></div>
+						<div class="col-6">
+							<button id="introspectRefreshTokenButton" class="btn btn-warning btn-sm" onclick="introspectRefreshToken(event);">Introspect Refresh Token</button>
+						</div>
+					 </div>
+					<div class="row">
+						<div class="col-12"><h5>Request Result: </h5></div>
+						<div class="col-12" id="result">
+
+						</div>
+					 </div>
+				  </div>
+
+			   </form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -49,22 +49,24 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.mock.web.MockHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
 public class
-SharingCollaboratorsFileEntryContentDashboardItemActionProviderTest {
+	SharingCollaboratorsFileEntryContentDashboardItemActionProviderTest {
 
 	@ClassRule
 	@Rule

@@ -42,10 +42,3 @@ html#{$cadmin-selector} .cadmin .page-editor__drag-preview {
 		}
 	}
 }
-
-html#{$cadmin-selector}
-	body.invalid-drop
-	.cadmin
-	.page-editor__drag-preview__content {
-	border-color: $cadmin-danger-l1;
-}

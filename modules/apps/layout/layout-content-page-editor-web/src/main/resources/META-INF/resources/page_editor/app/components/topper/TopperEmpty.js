@@ -46,6 +46,8 @@ function TopperEmpty({children, item}) {
 	const dropContainerId = useDropContainerId();
 	const isDroppable = useIsDroppable();
 
+	const isValidDrop = isDroppable && isOverTarget;
+
 	return React.Children.map(realChildren, (child) => {
 		if (!child) {
 			return child;
@@ -57,16 +59,15 @@ function TopperEmpty({children, item}) {
 					...child.props,
 					className: classNames(child.props.className, {
 						'drag-over-bottom':
-							isOverTarget &&
+							isValidDrop &&
 							targetPosition === TARGET_POSITIONS.BOTTOM,
 						'drag-over-middle':
-							isOverTarget &&
+							isValidDrop &&
 							targetPosition === TARGET_POSITIONS.MIDDLE,
 						'drag-over-top':
-							isOverTarget &&
+							isValidDrop &&
 							targetPosition === TARGET_POSITIONS.TOP,
 						'drop-container': dropContainerId === item.itemId,
-						'not-droppable': !isDroppable,
 						'page-editor__topper': true,
 					}),
 					ref: (node) => {

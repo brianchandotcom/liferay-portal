@@ -62,8 +62,6 @@ html#{$cadmin-selector} {
 	}
 
 	.page-editor__topper {
-		--drag-over-color: #{$cadmin-primary-l1};
-
 		position: relative;
 
 		&:after {
@@ -94,10 +92,6 @@ html#{$cadmin-selector} {
 			opacity: 0.5;
 		}
 
-		&.not-droppable {
-			--drag-over-color: #{$cadmin-danger-l1};
-		}
-
 		&__content .alert {
 			font-family: $cadmin-font-family-base;
 		}
@@ -113,24 +107,24 @@ html#{$cadmin-selector} {
 		}
 
 		&.drag-over-bottom:after {
-			border-bottom: $dragOverWidth solid var(--drag-over-color);
+			border-bottom: $dragOverWidth solid $cadmin-primary-l1;
 		}
 
 		// For left and right, we use box-shadow instead of border because border is
 		// automatically inverted in rtl, and we don't want that behavior here
 
 		&.drag-over-left:after {
-			box-shadow: inset $dragOverWidth 0 0 0 var(--drag-over-color);
+			box-shadow: inset $dragOverWidth 0 0 0 $cadmin-primary-l1;
 			transition: none;
 		}
 
 		&.drag-over-right:after {
-			box-shadow: inset (-$dragOverWidth) 0 0 0 var(--drag-over-color);
+			box-shadow: inset (-$dragOverWidth) 0 0 0 $cadmin-primary-l1;
 			transition: none;
 		}
 
 		&.drag-over-top:after {
-			border-top: $dragOverWidth solid var(--drag-over-color);
+			border-top: $dragOverWidth solid $cadmin-primary-l1;
 		}
 
 		&.drag-over-bottom.page-editor__col {
@@ -139,7 +133,7 @@ html#{$cadmin-selector} {
 			}
 
 			&:before {
-				border-bottom: $dragOverWidth solid var(--drag-over-color);
+				border-bottom: $dragOverWidth solid $cadmin-primary-l1;
 			}
 		}
 
@@ -149,7 +143,7 @@ html#{$cadmin-selector} {
 			}
 
 			&:before {
-				border-top: $dragOverWidth solid var(--drag-over-color);
+				border-top: $dragOverWidth solid $cadmin-primary-l1;
 			}
 		}
 
@@ -159,26 +153,26 @@ html#{$cadmin-selector} {
 		&.drag-over-middle.page-editor__col.empty:before,
 		&.drag-over-middle.page-editor__collection-item:before,
 		&.drag-over-middle .page-editor__collection__message {
-			box-shadow: inset 0 0 0 $dragOverWidth var(--drag-over-color);
+			box-shadow: inset 0 0 0 $dragOverWidth $cadmin-primary-l1;
 		}
 
 		&.drag-over-middle
 			> .page-editor__topper__content
 			> .page-editor__container
 			> :last-child:after {
-			box-shadow: inset (-$dragOverWidth) 0 0 0 var(--drag-over-color);
+			box-shadow: inset (-$dragOverWidth) 0 0 0 $cadmin-primary-l1;
 			transition: none;
 		}
 
 		&.drag-over-middle.page-editor__col
 			> .page-editor__col__border
 			> :last-child:after {
-			border-bottom: $dragOverWidth solid var(--drag-over-color);
+			border-bottom: $dragOverWidth solid $cadmin-primary-l1;
 		}
 
 		&.drag-over-middle .page-editor__no-fragments-state {
 			border: none;
-			box-shadow: inset 0 0 0 $dragOverWidth var(--drag-over-color);
+			box-shadow: inset 0 0 0 $dragOverWidth $cadmin-primary-l1;
 
 			.page-editor__no-fragments-state__message {
 				color: $cadmin-gray-400;

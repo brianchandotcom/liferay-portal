@@ -99,6 +99,7 @@ function TopperContent({
 	const isDroppable = useIsDroppable();
 
 	const isDropContainer = dropContainerId === item.itemId;
+	const isValidDrop = isDroppable && isOverTarget;
 
 	const isHighlighted =
 		(item.type === LAYOUT_DATA_ITEM_TYPES.row ||
@@ -165,20 +166,19 @@ function TopperContent({
 			className={classNames(className, 'page-editor__topper', {
 				'active': isActive,
 				'drag-over-bottom':
-					isOverTarget && targetPosition === TARGET_POSITIONS.BOTTOM,
+					isValidDrop && targetPosition === TARGET_POSITIONS.BOTTOM,
 				'drag-over-left':
-					isOverTarget && targetPosition === TARGET_POSITIONS.LEFT,
+					isValidDrop && targetPosition === TARGET_POSITIONS.LEFT,
 				'drag-over-middle':
-					isOverTarget && targetPosition === TARGET_POSITIONS.MIDDLE,
+					isValidDrop && targetPosition === TARGET_POSITIONS.MIDDLE,
 				'drag-over-right':
-					isOverTarget && targetPosition === TARGET_POSITIONS.RIGHT,
+					isValidDrop && targetPosition === TARGET_POSITIONS.RIGHT,
 				'drag-over-top':
-					isOverTarget && targetPosition === TARGET_POSITIONS.TOP,
+					isValidDrop && targetPosition === TARGET_POSITIONS.TOP,
 				'dragged': isDraggingSource,
 				'drop-container': isDropContainer,
 				'highlighted': isHighlighted,
 				'hovered': isHovered,
-				'not-droppable': !isDroppable,
 			})}
 			onClick={(event) => {
 				event.stopPropagation();

@@ -319,15 +319,6 @@ export function DragAndDropContextProvider({children}) {
 		return throttle(reducerDispatch, 100);
 	}, [reducerDispatch]);
 
-	useEffect(() => {
-		if (!state.droppable) {
-			document.body.classList.add('invalid-drop');
-		}
-		else {
-			document.body.classList.remove('invalid-drop');
-		}
-	}, [state.droppable]);
-
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 
 	const dragAndDropContext = useMemo(

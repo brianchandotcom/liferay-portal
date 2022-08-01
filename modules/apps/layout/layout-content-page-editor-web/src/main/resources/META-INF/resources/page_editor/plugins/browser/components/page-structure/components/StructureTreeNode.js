@@ -57,7 +57,6 @@ import {
 	initialDragDrop,
 	useDragItem,
 	useDropTarget,
-	useIsDroppable,
 } from '../../../../../app/utils/drag-and-drop/useDragAndDrop';
 import {formIsMapped} from '../../../../../app/utils/formIsMapped';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
@@ -230,8 +229,6 @@ function StructureTreeNodeContent({
 		computeHover
 	);
 
-	const isDroppable = useIsDroppable();
-
 	const {handlerRef, isDraggingSource} = useDragItem(
 		{...item, fragmentEntryType},
 		(parentItemId, position) =>
@@ -310,7 +307,6 @@ function StructureTreeNodeContent({
 				'dragged': isDraggingSource,
 				'font-weight-semi-bold':
 					node.activable && node.itemType !== ITEM_TYPES.editable,
-				'not-droppable': !isDroppable,
 				'page-editor__page-structure__tree-node--active': isActive,
 				'page-editor__page-structure__tree-node--hovered': isHovered,
 				'page-editor__page-structure__tree-node--mapped': isMapped,

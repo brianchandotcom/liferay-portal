@@ -150,7 +150,7 @@ public class
 	}
 
 	@Test
-	public void testIsShowWihoutPermissions() throws Exception {
+	public void testIsShowWithoutPermissions() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		try {

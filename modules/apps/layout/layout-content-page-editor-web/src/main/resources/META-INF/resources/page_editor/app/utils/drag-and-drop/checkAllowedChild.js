@@ -15,6 +15,7 @@
 import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {formIsMapped} from '../formIsMapped';
+import {hasFormParent} from '../hasFormParent';
 
 const LAYOUT_DATA_CHECK_ALLOWED_CHILDREN = {
 	[LAYOUT_DATA_ITEM_TYPES.root]: (child) =>
@@ -88,25 +89,11 @@ export default function checkAllowedChild(child, parent, layoutDataRef) {
 	if (child.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 		if (
 			child.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input &&
-			!hasFormParent(parent, layoutDataRef)
+			!hasFormParent(parent, layoutDataRef.current)
 		) {
 			return false;
 		}
 	}
 
 	return LAYOUT_DATA_CHECK_ALLOWED_CHILDREN[parent.type](child, parent);
-}
-
-function hasFormParent(item, layoutDataRef) {
-	if (item.type === LAYOUT_DATA_ITEM_TYPES.form) {
-		return true;
-	}
-
-	const parent = layoutDataRef.current?.items?.[item.parentId];
-
-	if (!parent) {
-		return false;
-	}
-
-	return hasFormParent(parent, layoutDataRef);
 }

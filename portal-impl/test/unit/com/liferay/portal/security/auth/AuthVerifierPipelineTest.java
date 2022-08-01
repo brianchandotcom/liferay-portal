@@ -116,25 +116,6 @@ public class AuthVerifierPipelineTest {
 	}
 
 	@Test
-	public void testVerifyRequestWithContextPathAndPortalPathContext()
-		throws PortalException {
-
-		String contextPath = "/abc";
-		String includeURLs = StringBundler.concat(
-			_BASE_URL, "/regular/*,", _BASE_URL, "/legacy*");
-
-		String requestURI = contextPath + _BASE_URL + "/regular/Hello";
-
-		AuthVerifierResult.State expectedState =
-			AuthVerifierResult.State.SUCCESS;
-
-		String portalUtilPathContext = PortalUtil.getPathContext(contextPath);
-
-		_assertAuthVerifierResult(
-			portalUtilPathContext, includeURLs, requestURI, expectedState);
-	}
-
-	@Test
 	public void testVerifyRequestWithContextPathAndPortalPathContextAndPortalProxyPath()
 		throws PortalException {
 

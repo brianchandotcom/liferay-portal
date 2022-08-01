@@ -228,4 +228,34 @@ definition {
 		//"Assert DropDown list of LES subscription"
 	}
 
+	@description = "Verify that the active subscription terms with the list of dates, is as follows (Dec 01, 2020 - Dec 01, 2021)."
+	@priority = "4"
+	test SetTheDateFormatOfTheActivationList {
+		property portal.upstream = "quarantine";
+
+		//"Reason: Not eble to reproduce scenario without OKTA workaround.""
+
+		task ("Assert that project has DPX 7.2") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+		}
+
+		task ("Assert Access to Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
+
+		//"Select DropDown list of LES subscription"
+
+		CP2DataUtil.generateStaticFullStartAndEndDate();
+
+		//"Assert DateTime format"
+	}
+
 }

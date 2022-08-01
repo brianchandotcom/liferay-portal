@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "verify.process.name=com.liferay.portal.security.service.access.policy.service",
-	service = VerifyProcess.class
+	service = {SAPServiceVerifyProcess.class, VerifyProcess.class}
 )
 @Deprecated
 public class SAPServiceVerifyProcess extends VerifyProcess {

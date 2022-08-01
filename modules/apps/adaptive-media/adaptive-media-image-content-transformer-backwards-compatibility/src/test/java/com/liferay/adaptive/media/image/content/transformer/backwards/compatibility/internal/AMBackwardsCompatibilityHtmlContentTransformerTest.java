@@ -19,10 +19,15 @@ import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -62,8 +67,28 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 			_fileEntry
 		);
 
+		Mockito.when(
+			_fileEntryFriendlyURLResolver.resolveFriendlyURL(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			Optional.ofNullable(_fileEntry)
+		);
+
+		Mockito.when(
+			_groupLocalService.fetchFriendlyURLGroup(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			_group
+		);
+
 		ReflectionTestUtil.setFieldValue(
 			_contentTransformer, "_dlAppLocalService", _dlAppLocalService);
+		ReflectionTestUtil.setFieldValue(
+			_contentTransformer, "_fileEntryFriendlyURLResolver",
+			_fileEntryFriendlyURLResolver);
+
+		ReflectionTestUtil.setFieldValue(
+			_contentTransformer, "_groupLocalService", _groupLocalService);
 	}
 
 	@Test
@@ -71,6 +96,15 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 		Assert.assertEquals(
 			ContentTransformerContentTypes.HTML,
 			_contentTransformer.getContentTransformerContentType());
+	}
+
+	@Test
+	public void testReplacesFriendlyURLImageTagsWithDoubleQuotes()
+		throws Exception {
+
+		Assert.assertEquals(
+			_CONTENT_PREFIX + "[REPLACED]" + _CONTENT_SUFFIX,
+			_contentTransformer.transform(_CONTENT_WITH_IMAGE_FRIENDLY_URL));
 	}
 
 	@Test
@@ -167,6 +201,11 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 			"/1710bfe2-2b7c-1f69-f8b7-23ff6bd5dd4b?t=1506075653544' />",
 			_CONTENT_SUFFIX);
 
+	private static final String _CONTENT_WITH_IMAGE_FRIENDLY_URL =
+		StringBundler.concat(
+			_CONTENT_PREFIX, "<img src=\"/documents/d/site_name/sample\" />",
+			_CONTENT_SUFFIX);
+
 	private static final String _LEGACY_CONTENT_WITH_IMAGE_AND_SINGLE_QUOTES =
 		StringBundler.concat(
 			_CONTENT_PREFIX, "<img src='/documents/20138/0/sample.jpg?t=",
@@ -180,5 +219,10 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 	private final DLAppLocalService _dlAppLocalService = Mockito.mock(
 		DLAppLocalService.class);
 	private final FileEntry _fileEntry = Mockito.mock(FileEntry.class);
+	private final FileEntryFriendlyURLResolver _fileEntryFriendlyURLResolver =
+		Mockito.mock(FileEntryFriendlyURLResolver.class);
+	private final Group _group = Mockito.mock(Group.class);
+	private final GroupLocalService _groupLocalService = Mockito.mock(
+		GroupLocalService.class);
 
 }

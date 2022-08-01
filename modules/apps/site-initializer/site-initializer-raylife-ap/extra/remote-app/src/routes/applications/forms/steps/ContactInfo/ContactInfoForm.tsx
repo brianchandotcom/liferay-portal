@@ -655,7 +655,11 @@ const ContactInfo = () => {
 					<span className="text-danger-darken-1">*</span>
 				</div>
 
-				<ClayRadioGroup className="ml-3" inline>
+				<ClayRadioGroup
+					className="ml-3"
+					defaultValue={form.ownership}
+					inline
+				>
 					<ClayRadio
 						label="Rent"
 						onClick={() => handleChangeField('ownership', 'rent')}

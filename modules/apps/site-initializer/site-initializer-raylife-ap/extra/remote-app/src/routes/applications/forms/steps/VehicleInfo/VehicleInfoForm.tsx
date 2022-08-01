@@ -42,7 +42,7 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 	const [_makeOptions, setMakeOptions] = useState<any[]>([]);
 	const [_yearsOptions, setYearsOptions] = useState<any[]>([]);
 	const [_model, setModel] = useState<string>('');
-	const [_year, setYear] = useState<string>('');
+	const [year, setYear] = useState<string>('');
 
 	enum dropdownAlign {
 		topCenter = 0,
@@ -206,7 +206,7 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 			<div className="row">
 				<div
 					className={classNames(
-						'col filled form-condensed form-group',
+						'col-12 col-lg-4 col-md-12 col-sm-12 filled form-condensed form-group',
 						{
 							'has-error': hasError.year,
 						}
@@ -215,11 +215,13 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 					<ClayDropDownWithItems
 						alignmentByViewport={true}
 						alignmentPosition={dropdownAlign.bottomCenter}
-						items={_yearsOptions}
+						items={_yearsOptions.filter((yearOption) => {
+							return yearOption.label.includes(year);
+						})}
 						onSearchValueChange={(value) => {
 							setYear(value);
 						}}
-						searchValue={form[formNumber - 1].year}
+						searchValue={year}
 						searchable={true}
 						trigger={
 							<div className="d-flex select-years text-neutral-10">
@@ -250,7 +252,7 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 
 				<div
 					className={classNames(
-						'col filled form-condensed form-group',
+						'col-12 col-lg-4 col-md-12 col-sm-12 filled form-condensed form-group',
 						{
 							'has-error': hasError.make,
 						}
@@ -267,7 +269,7 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 							handleChangeField('make', value, id);
 							setHasError({
 								...hasError,
-								make: value === '' ? true : false,
+								make: value === '',
 							});
 						}}
 						value={form[formNumber - 1].make}
@@ -291,7 +293,7 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 					{hasError.make && <ErrorMessage />}
 				</div>
 
-				<div className="col filled form-condensed form-group">
+				<div className="col-12 col-lg-4 col-md-12 col-sm-12 filled form-condensed form-group">
 					<ClaySelect
 						aria-label="Select Label"
 						className="bg-neutral-0 font-weight-bold model pl-0 text-paragraph-sm text-uppercase"
@@ -304,7 +306,7 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 							handleChangeField('model', value, id);
 							setHasError({
 								...hasError,
-								model: value === '' ? true : false,
+								model: value === '',
 							});
 						}}
 						value={form[formNumber - 1].model}
@@ -328,7 +330,7 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 			<div className="row">
 				<div
 					className={classNames(
-						'col filled form-condensed form-group',
+						'col-12 col-lg-4 col-md-12 col-sm-12 filled form-condensed form-group',
 						{
 							'has-error': hasError.primaryUsage,
 						}
@@ -345,7 +347,7 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 							handleChangeField('primaryUsage', value, id);
 							setHasError({
 								...hasError,
-								primaryUsage: value === '' ? true : false,
+								primaryUsage: value === '',
 							});
 						}}
 						value={form[formNumber - 1].primaryUsage}
@@ -372,7 +374,7 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 
 				<div
 					className={classNames(
-						'col filled form-condensed form-group',
+						'col-12 col-lg-4 col-md-12 col-sm-12 filled form-condensed form-group',
 						{
 							'has-error':
 								hasError.annualMileage ||
@@ -393,7 +395,7 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 							handleChangeField('annualMileage', value, id);
 							setHasError({
 								...hasError,
-								annualMileage: value === '' ? true : false,
+								annualMileage: value === '',
 							});
 						}}
 						required
@@ -416,7 +418,7 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 
 				<div
 					className={classNames(
-						'col filled form-condensed form-group',
+						'col-12 col-lg-4 col-md-12 col-sm-12 filled form-condensed form-group',
 						{
 							'has-error': hasError.ownership,
 						}
@@ -433,7 +435,7 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 							handleChangeField('ownership', value, id);
 							setHasError({
 								...hasError,
-								ownership: value === '' ? true : false,
+								ownership: value === '',
 							});
 						}}
 						value={form[formNumber - 1].ownership}

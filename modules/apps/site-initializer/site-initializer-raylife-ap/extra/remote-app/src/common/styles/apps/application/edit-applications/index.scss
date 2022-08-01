@@ -23,8 +23,16 @@
 
 .select-years {
 	.select-style {
-		color: #5f6167;
-		cursor: pointer;
+		color: #5f6167 !important;
+		cursor: pointer !important;
+	}
+}
+
+.has-error {
+	.select-years {
+		select {
+			border-color: #ea6136 !important;
+		}
 	}
 }
 

@@ -163,7 +163,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 						<h5>New Application</h5>
 
 						{state.hasFormChanges && (
-							<ChangeStatusMessage text="Unsave Changes" />
+							<ChangeStatusMessage text="Unsaved Changes" />
 						)}
 
 						{!state.hasFormChanges && !saveChanges && (

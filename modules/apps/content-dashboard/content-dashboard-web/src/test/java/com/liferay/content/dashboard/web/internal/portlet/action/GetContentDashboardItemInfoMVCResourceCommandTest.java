@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -52,6 +53,7 @@ import com.liferay.portal.util.PortalImpl;
 
 import java.io.ByteArrayOutputStream;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -119,6 +121,74 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		ContentDashboardItem<?> contentDashboardItem =
 			new ContentDashboardItemBuilder(
 				"className", 12345L
+			).withContentDashboardItemAction(
+				new ContentDashboardItemAction() {
+
+					@Override
+					public String getIcon() {
+						return "sharing";
+					}
+
+					@Override
+					public String getLabel(Locale locale) {
+						return "sharing";
+					}
+
+					@Override
+					public String getName() {
+						return "sharing";
+					}
+
+					@Override
+					public Type getType() {
+						return Type.SHARING_BUTTON;
+					}
+
+					@Override
+					public String getURL() {
+						return "http://sharing_button";
+					}
+
+					@Override
+					public String getURL(Locale locale) {
+						return getURL();
+					}
+
+				}
+			).withContentDashboardItemAction(
+				new ContentDashboardItemAction() {
+
+					@Override
+					public String getIcon() {
+						return "collaborators";
+					}
+
+					@Override
+					public String getLabel(Locale locale) {
+						return "collaborators";
+					}
+
+					@Override
+					public String getName() {
+						return "collaborators";
+					}
+
+					@Override
+					public Type getType() {
+						return Type.SHARING_COLLABORATORS;
+					}
+
+					@Override
+					public String getURL() {
+						return "http://sharing_collaborators";
+					}
+
+					@Override
+					public String getURL(Locale locale) {
+						return getURL();
+					}
+
+				}
 			).withSubtype(
 				"subType"
 			).withUser(
@@ -177,6 +247,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		Assert.assertEquals(
 			contentDashboardItem.getDescription(LocaleUtil.US),
 			jsonObject.getString("description"));
+
+		Assert.assertNotNull(jsonObject.getString("fetchSharingButtonURL"));
+		Assert.assertNotNull(
+			jsonObject.getString("fetchSharingCollaboratorsURL"));
 
 		JSONArray tagsJSONArray = jsonObject.getJSONArray("tags");
 
@@ -249,6 +323,65 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		Assert.assertEquals(
 			expectedVersionJSONObject.toString(),
 			actualVersionJSONObject.toString());
+	}
+
+	@Test
+	public void testServeResourceWithoutSharingButtonAction() throws Exception {
+		ContentDashboardItem<?> contentDashboardItem =
+			new ContentDashboardItemBuilder(
+				"className", 12345L
+			).build();
+
+		_initGetContentDashboardItemInfoMVCResourceCommand(
+			contentDashboardItem, null);
+
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new MockLiferayResourceResponse();
+
+		_getContentDashboardItemInfoMVCResourceCommand.serveResource(
+			_getMockLiferayResourceRequest(contentDashboardItem),
+			mockLiferayResourceResponse);
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			(ByteArrayOutputStream)
+				mockLiferayResourceResponse.getPortletOutputStream();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			new String(byteArrayOutputStream.toByteArray()));
+
+		Assert.assertEquals(
+			StringPool.BLANK, jsonObject.getString("fetchSharingButtonURL"));
+	}
+
+	@Test
+	public void testServeResourceWithoutSharingCollaboratorsAction()
+		throws Exception {
+
+		ContentDashboardItem<?> contentDashboardItem =
+			new ContentDashboardItemBuilder(
+				"className", 12345L
+			).build();
+
+		_initGetContentDashboardItemInfoMVCResourceCommand(
+			contentDashboardItem, null);
+
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new MockLiferayResourceResponse();
+
+		_getContentDashboardItemInfoMVCResourceCommand.serveResource(
+			_getMockLiferayResourceRequest(contentDashboardItem),
+			mockLiferayResourceResponse);
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			(ByteArrayOutputStream)
+				mockLiferayResourceResponse.getPortletOutputStream();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			new String(byteArrayOutputStream.toByteArray()));
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			jsonObject.getString("fetchSharingCollaboratorsURL"));
 	}
 
 	@Test
@@ -539,7 +672,15 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 						HttpServletRequest httpServletRequest,
 						ContentDashboardItemAction.Type... types) {
 
-					return Collections.emptyList();
+					Stream<ContentDashboardItemAction> stream =
+						_contentDashboardItemActions.stream();
+
+					return stream.filter(
+						contentDashboardItemAction -> ArrayUtil.contains(
+							types, contentDashboardItemAction.getType())
+					).collect(
+						Collectors.toList()
+					);
 				}
 
 				@Override
@@ -652,6 +793,14 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			};
 		}
 
+		public ContentDashboardItemBuilder withContentDashboardItemAction(
+			ContentDashboardItemAction contentDashboardAction) {
+
+			_contentDashboardItemActions.add(contentDashboardAction);
+
+			return this;
+		}
+
 		public ContentDashboardItemBuilder withSubtype(String subtype) {
 			_subtype = subtype;
 
@@ -666,6 +815,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		private final String _className;
 		private final long _classPK;
+		private List<ContentDashboardItemAction> _contentDashboardItemActions =
+			new ArrayList<>();
 		private String _subtype;
 		private User _user;
 

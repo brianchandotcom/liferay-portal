@@ -15,11 +15,22 @@
 package com.liferay.commerce.internal.upgrade.v4_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Alec Sloan
  */
 public class CommerceOrderItemUpgradeProcess extends UpgradeProcess {
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceOrderItem", "promoPrice DECIMAL(30,16)"),
+			this
+		};
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {

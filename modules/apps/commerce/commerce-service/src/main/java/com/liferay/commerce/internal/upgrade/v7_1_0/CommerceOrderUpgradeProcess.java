@@ -15,12 +15,23 @@
 package com.liferay.commerce.internal.upgrade.v7_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Riccardo Alberti
  * @author Alessio Antonio Rendina
  */
 public class CommerceOrderUpgradeProcess extends UpgradeProcess {
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceOrder", "commerceOrderTypeId LONG"),
+			this
+		};
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {

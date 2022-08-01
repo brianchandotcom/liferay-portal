@@ -16,11 +16,23 @@ package com.liferay.asset.list.internal.upgrade.v1_3_0;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Eudaldo Alonso
  */
 public class AssetListEntryUpgradeProcess extends UpgradeProcess {
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"AssetListEntry", "assetEntrySubtype VARCHAR(255) null",
+				"assetEntryType VARCHAR(255) null"),
+			this
+		};
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {

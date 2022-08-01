@@ -54,10 +54,7 @@ public class ChangeTrackingServiceUpgradeStepRegistrator
 		registry.register("2.2.0", "2.3.0", new UpgradeCompanyId());
 
 		registry.register(
-			"2.3.0", "2.4.0",
-			UpgradeProcessFactory.addColumns(
-				"CTCollection", "schemaVersionId LONG"),
-			new CTSchemaVersionUpgradeProcess());
+			"2.3.0", "2.4.0", new CTSchemaVersionUpgradeProcess());
 
 		registry.register(
 			"2.4.0", "2.5.0",

@@ -71,10 +71,7 @@ public class CalendarServiceUpgradeStepRegistrator
 				"CalendarBooking", "description", "TEXT null"));
 
 		registry.register(
-			"1.0.0", "1.0.1",
-			UpgradeProcessFactory.addColumns(
-				"CalendarBooking", "vEventUid STRING null"),
-			new CalendarBookingUpgradeProcess());
+			"1.0.0", "1.0.1", new CalendarBookingUpgradeProcess());
 
 		registry.register("1.0.1", "1.0.2", new CalendarUpgradeProcess());
 

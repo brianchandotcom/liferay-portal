@@ -15,6 +15,8 @@
 package com.liferay.commerce.shipping.engine.fixed.internal.upgrade.v2_3_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -22,6 +24,15 @@ import com.liferay.portal.kernel.util.StringUtil;
  * @author Luca Pellizzon
  */
 public class CommerceShippingFixedOptionUpgradeProcess extends UpgradeProcess {
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceShippingFixedOption", "key_ VARCHAR(75)"),
+			this
+		};
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {

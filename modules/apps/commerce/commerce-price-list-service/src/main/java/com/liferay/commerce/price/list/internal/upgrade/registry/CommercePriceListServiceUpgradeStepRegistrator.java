@@ -75,30 +75,10 @@ public class CommercePriceListServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.0.0", "2.1.0",
-			UpgradeProcessFactory.addColumns(
-				"CommercePriceEntry", "discountDiscovery BOOLEAN",
-				"discountLevel1 DECIMAL(30,16)",
-				"discountLevel2 DECIMAL(30,16)",
-				"discountLevel3 DECIMAL(30,16)",
-				"discountLevel4 DECIMAL(30,16)", "bulkPricing BOOLEAN",
-				"displayDate DATE", "expirationDate DATE", "status INTEGER",
-				"statusByUserId LONG", "statusByUserName VARCHAR(75)",
-				"statusDate DATE"),
 			new com.liferay.commerce.price.list.internal.upgrade.v2_1_0.
 				CommercePriceEntryUpgradeProcess(),
-			UpgradeProcessFactory.addColumns(
-				"CommercePriceList", "type_ VARCHAR(75)",
-				"catalogBasePriceList BOOLEAN"),
 			new com.liferay.commerce.price.list.internal.upgrade.v2_1_0.
 				CommercePriceListUpgradeProcess(),
-			UpgradeProcessFactory.addColumns(
-				"CommerceTierPriceEntry", "discountDiscovery BOOLEAN",
-				"discountLevel1 DECIMAL(30,16)",
-				"discountLevel2 DECIMAL(30,16)",
-				"discountLevel3 DECIMAL(30,16)",
-				"discountLevel4 DECIMAL(30,16)", "displayDate DATE",
-				"expirationDate DATE", "status INTEGER", "statusByUserId LONG",
-				"statusByUserName VARCHAR(75)", "statusDate DATE"),
 			new com.liferay.commerce.price.list.internal.upgrade.v2_1_0.
 				CommerceTierPriceEntryUpgradeProcess(),
 			CommercePriceListChannelRelTable.create(),
@@ -106,8 +86,6 @@ public class CommercePriceListServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.1.0", "2.1.1",
-			UpgradeProcessFactory.addColumns(
-				"CommercePriceList", "netPrice BOOLEAN"),
 			new com.liferay.commerce.price.list.internal.upgrade.v2_1_1.
 				CommercePriceListUpgradeProcess());
 

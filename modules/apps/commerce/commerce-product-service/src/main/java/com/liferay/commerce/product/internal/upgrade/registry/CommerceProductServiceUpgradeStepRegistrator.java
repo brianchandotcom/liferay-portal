@@ -95,8 +95,6 @@ public class CommerceProductServiceUpgradeStepRegistrator
 				"CPDefinition", "CProductId LONG", "version INTEGER"),
 			CProductTable.create(), new CProductUpgradeProcess(),
 			new CPFriendlyURLEntryUpgradeProcess(_classNameLocalService),
-			UpgradeProcessFactory.addColumns(
-				"CPInstance", "CPInstanceUuid VARCHAR(75)"),
 			new CPInstanceUpgradeProcess());
 
 		registry.register("1.3.0", "1.4.0", new DummyUpgradeProcess());
@@ -113,11 +111,7 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			new CPDefinitionTrashEntriesUpgradeProcess(_classNameLocalService));
 
 		registry.register(
-			"1.6.0", "1.7.0",
-			UpgradeProcessFactory.addColumns(
-				"CPDefinition", "accountGroupFilterEnabled BOOLEAN",
-				"channelFilterEnabled BOOLEAN"),
-			new CPDefinitionFiltersUpgradeProcess());
+			"1.6.0", "1.7.0", new CPDefinitionFiltersUpgradeProcess());
 
 		registry.register(
 			"1.7.0", "1.8.0",
@@ -179,13 +173,7 @@ public class CommerceProductServiceUpgradeStepRegistrator
 				"deliveryMaxSubscriptionCycles LONG"));
 
 		registry.register(
-			"2.1.0", "2.2.0",
-			UpgradeProcessFactory.addColumns(
-				"CPDefinitionOptionValueRel", "CPInstanceUuid VARCHAR(75)",
-				"CProductId LONG", "quantity INTEGER", "price DECIMAL(30, 16)"),
-			UpgradeProcessFactory.addColumns(
-				"CPDefinitionOptionRel", "priceType VARCHAR(75)"),
-			new CPDefinitionOptionValueRelUpgradeProcess());
+			"2.1.0", "2.2.0", new CPDefinitionOptionValueRelUpgradeProcess());
 
 		registry.register(
 			"2.2.0", "2.2.1",
@@ -195,11 +183,7 @@ public class CommerceProductServiceUpgradeStepRegistrator
 		registry.register("2.2.1", "2.2.2", new DummyUpgradeProcess());
 
 		registry.register(
-			"2.2.2", "2.3.0",
-			UpgradeProcessFactory.addColumns(
-				"CommerceChannel", "priceDisplayType VARCHAR(75)",
-				"discountsTargetNetPrice BOOLEAN"),
-			new CommerceChannelUpgradeProcess());
+			"2.2.2", "2.3.0", new CommerceChannelUpgradeProcess());
 
 		registry.register(
 			"2.3.0", "2.4.0",

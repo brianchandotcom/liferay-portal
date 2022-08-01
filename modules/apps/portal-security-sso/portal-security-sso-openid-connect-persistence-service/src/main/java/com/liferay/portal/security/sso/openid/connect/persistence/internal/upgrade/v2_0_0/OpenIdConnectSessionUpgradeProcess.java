@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -43,6 +45,19 @@ public class OpenIdConnectSessionUpgradeProcess extends UpgradeProcess {
 		ConfigurationAdmin configurationAdmin) {
 
 		_configurationAdmin = configurationAdmin;
+	}
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"OpenIdConnectSession",
+				"authServerWellKnownURI VARCHAR(256) null",
+				"clientId VARCHAR(256) null"),
+			this,
+			UpgradeProcessFactory.dropColumns(
+				"OpenIdConnectSession", "configurationPid", "providerName")
+		};
 	}
 
 	@Override

@@ -16,6 +16,8 @@ package com.liferay.commerce.product.internal.upgrade.v2_3_0;
 
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Riccardo Alberti
@@ -29,6 +31,16 @@ public class CommerceChannelUpgradeProcess extends UpgradeProcess {
 				CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE + "'");
 
 		runSQL("update CommerceChannel set discountsTargetNetPrice = [$TRUE$]");
+	}
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceChannel", "priceDisplayType VARCHAR(75)",
+				"discountsTargetNetPrice BOOLEAN"),
+			this
+		};
 	}
 
 }

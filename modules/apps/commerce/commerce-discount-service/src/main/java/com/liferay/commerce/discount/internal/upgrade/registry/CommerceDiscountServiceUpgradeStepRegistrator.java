@@ -66,14 +66,9 @@ public class CommerceDiscountServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.1.0", "2.2.0",
-			UpgradeProcessFactory.addColumns(
-				"CommerceDiscount", "level VARCHAR(75)",
-				"rulesConjunction BOOLEAN"),
 			new com.liferay.commerce.discount.internal.upgrade.v2_2_0.
 				CommerceDiscountUpgradeProcess(),
 			CommerceDiscountAccountRelTable.create(),
-			UpgradeProcessFactory.addColumns(
-				"CommerceDiscountRule", "name VARCHAR(75)"),
 			new CommerceDiscountRuleNameUpgradeProcess(),
 			com.liferay.commerce.discount.internal.upgrade.v2_2_0.util.
 				CommerceDiscountCommerceAccountGroupRelTable.create());
@@ -85,8 +80,6 @@ public class CommerceDiscountServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.3.0", "2.4.0",
-			UpgradeProcessFactory.addColumns(
-				"CommerceDiscount", "limitationTimesPerAccount INTEGER"),
 			new com.liferay.commerce.discount.internal.upgrade.v2_4_0.
 				CommerceDiscountUpgradeProcess());
 

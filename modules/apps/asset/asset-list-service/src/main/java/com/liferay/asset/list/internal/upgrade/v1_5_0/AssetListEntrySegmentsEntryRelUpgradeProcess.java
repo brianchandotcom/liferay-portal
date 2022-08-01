@@ -15,12 +15,24 @@
 package com.liferay.asset.list.internal.upgrade.v1_5_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Yurena Cabrera
  */
 public class AssetListEntrySegmentsEntryRelUpgradeProcess
 	extends UpgradeProcess {
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"AssetListEntrySegmentsEntryRel",
+				"priority INTEGER default 0 not null"),
+			this
+		};
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {

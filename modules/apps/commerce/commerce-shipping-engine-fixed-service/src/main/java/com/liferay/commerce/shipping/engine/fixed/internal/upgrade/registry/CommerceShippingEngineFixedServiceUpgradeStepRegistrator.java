@@ -75,10 +75,7 @@ public class CommerceShippingEngineFixedServiceUpgradeStepRegistrator
 			CommerceShippingFixedOptionQualifierTable.create());
 
 		registry.register(
-			"2.2.0", "2.3.0",
-			UpgradeProcessFactory.addColumns(
-				"CommerceShippingFixedOption", "key_ VARCHAR(75)"),
-			new CommerceShippingFixedOptionUpgradeProcess());
+			"2.2.0", "2.3.0", new CommerceShippingFixedOptionUpgradeProcess());
 
 		registry.register("2.3.0", "2.4.0", new DummyUpgradeStep());
 

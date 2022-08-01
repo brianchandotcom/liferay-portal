@@ -15,11 +15,22 @@
 package com.liferay.calendar.internal.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Bryan Engler
  */
 public class CalendarBookingUpgradeProcess extends UpgradeProcess {
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CalendarBooking", "vEventUid STRING null"),
+			this
+		};
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {

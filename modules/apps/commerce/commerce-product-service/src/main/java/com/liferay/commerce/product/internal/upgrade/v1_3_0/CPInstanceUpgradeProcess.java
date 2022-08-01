@@ -15,12 +15,23 @@
 package com.liferay.commerce.product.internal.upgrade.v1_3_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Ethan Bustad
  * @author Alessio Antonio Rendina
  */
 public class CPInstanceUpgradeProcess extends UpgradeProcess {
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CPInstance", "CPInstanceUuid VARCHAR(75)"),
+			this
+		};
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {

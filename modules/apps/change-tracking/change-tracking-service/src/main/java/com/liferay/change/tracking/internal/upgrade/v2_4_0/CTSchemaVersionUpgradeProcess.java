@@ -16,12 +16,23 @@ package com.liferay.change.tracking.internal.upgrade.v2_4_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
  * @author Preston Crary
  */
 public class CTSchemaVersionUpgradeProcess extends UpgradeProcess {
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CTCollection", "schemaVersionId LONG"),
+			this
+		};
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {

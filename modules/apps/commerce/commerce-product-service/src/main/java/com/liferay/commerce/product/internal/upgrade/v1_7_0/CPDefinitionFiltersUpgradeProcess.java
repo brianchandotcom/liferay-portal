@@ -15,11 +15,23 @@
 package com.liferay.commerce.product.internal.upgrade.v1_7_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Alec Sloan
  */
 public class CPDefinitionFiltersUpgradeProcess extends UpgradeProcess {
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CPDefinition", "accountGroupFilterEnabled BOOLEAN",
+				"channelFilterEnabled BOOLEAN"),
+			this
+		};
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {

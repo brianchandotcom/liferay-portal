@@ -18,11 +18,25 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.internal.upgrade.v2_2_0.util.CPDefinitionOptionRelTable;
 import com.liferay.commerce.product.internal.upgrade.v2_2_0.util.CPDefinitionOptionValueRelTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Marco Leo
  */
 public class CPDefinitionOptionValueRelUpgradeProcess extends UpgradeProcess {
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CPDefinitionOptionValueRel", "CPInstanceUuid VARCHAR(75)",
+				"CProductId LONG", "quantity INTEGER", "price DECIMAL(30, 16)"),
+			UpgradeProcessFactory.addColumns(
+				"CPDefinitionOptionRel", "priceType VARCHAR(75)"),
+			this
+		};
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {

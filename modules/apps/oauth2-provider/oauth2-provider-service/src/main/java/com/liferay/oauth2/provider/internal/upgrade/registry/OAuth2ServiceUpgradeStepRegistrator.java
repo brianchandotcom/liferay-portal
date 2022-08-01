@@ -89,12 +89,7 @@ public class OAuth2ServiceUpgradeStepRegistrator
 
 		registry.register(
 			"4.0.1", "4.1.0",
-			UpgradeProcessFactory.addColumns(
-				"OAuth2Application",
-				"clientAuthenticationMethod VARCHAR(75) null"),
-			new OAuth2ApplicationClientAuthenticationMethodUpgradeProcess(),
-			UpgradeProcessFactory.addColumns(
-				"OAuth2Application", "jwks VARCHAR(3999) null"));
+			new OAuth2ApplicationClientAuthenticationMethodUpgradeProcess());
 
 		registry.register(
 			"4.1.0", "4.2.0",

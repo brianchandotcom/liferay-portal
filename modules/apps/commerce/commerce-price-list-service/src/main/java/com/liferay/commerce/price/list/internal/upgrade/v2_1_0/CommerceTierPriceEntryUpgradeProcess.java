@@ -15,6 +15,8 @@
 package com.liferay.commerce.price.list.internal.upgrade.v2_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
@@ -32,6 +34,21 @@ public class CommerceTierPriceEntryUpgradeProcess extends UpgradeProcess {
 		runSQL("update CommerceTierPriceEntry set statusByUserId = userId");
 		runSQL("update CommerceTierPriceEntry set statusByUserName = userName");
 		runSQL("update CommerceTierPriceEntry set statusDate = modifiedDate");
+	}
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceTierPriceEntry", "discountDiscovery BOOLEAN",
+				"discountLevel1 DECIMAL(30,16)",
+				"discountLevel2 DECIMAL(30,16)",
+				"discountLevel3 DECIMAL(30,16)",
+				"discountLevel4 DECIMAL(30,16)", "displayDate DATE",
+				"expirationDate DATE", "status INTEGER", "statusByUserId LONG",
+				"statusByUserName VARCHAR(75)", "statusDate DATE"),
+			this
+		};
 	}
 
 }

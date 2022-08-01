@@ -124,7 +124,6 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 			"1.3.5", "2.0.0",
 			new com.liferay.knowledge.base.internal.upgrade.v2_0_0.
 				UpgradeClassNames(),
-			UpgradeProcessFactory.addColumns("KBComment", "status INTEGER"),
 			new com.liferay.knowledge.base.internal.upgrade.v2_0_0.
 				KBCommentUpgradeProcess(),
 			new com.liferay.knowledge.base.internal.upgrade.v2_0_0.

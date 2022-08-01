@@ -16,11 +16,21 @@ package com.liferay.commerce.internal.upgrade.v4_3_0;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Alec Sloan
  */
 public class CommerceOrderDateUpgradeProcess extends UpgradeProcess {
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns("CommerceOrder", "orderDate DATE"),
+			this
+		};
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {

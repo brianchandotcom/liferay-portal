@@ -16,11 +16,21 @@ package com.liferay.knowledge.base.internal.upgrade.v2_0_0;
 
 import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Adolfo Pérez
  */
 public class KBCommentUpgradeProcess extends UpgradeProcess {
+
+	@Override
+	public UpgradeStep[] getUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns("KBComment", "status INTEGER"),
+			this
+		};
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {

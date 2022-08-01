@@ -19,7 +19,6 @@ import com.liferay.asset.list.internal.upgrade.v1_4_0.AssetListEntryUsageUpgrade
 import com.liferay.asset.list.internal.upgrade.v1_5_0.AssetListEntrySegmentsEntryRelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,21 +52,13 @@ public class AssetListServiceUpgradeStepRegistrator
 				"AssetListEntry", "AssetListEntryAssetEntryRel",
 				"AssetListEntrySegmentsEntryRel", "AssetListEntryUsage"));
 
-		registry.register(
-			"1.2.0", "1.3.0",
-			UpgradeProcessFactory.addColumns(
-				"AssetListEntry", "assetEntrySubtype VARCHAR(255) null",
-				"assetEntryType VARCHAR(255) null"),
-			new AssetListEntryUpgradeProcess());
+		registry.register("1.2.0", "1.3.0", new AssetListEntryUpgradeProcess());
 
 		registry.register(
 			"1.3.0", "1.4.0", new AssetListEntryUsageUpgradeProcess());
 
 		registry.register(
 			"1.4.0", "1.5.0",
-			UpgradeProcessFactory.addColumns(
-				"AssetListEntrySegmentsEntryRel",
-				"priority INTEGER default 0 not null"),
 			new AssetListEntrySegmentsEntryRelUpgradeProcess());
 	}
 

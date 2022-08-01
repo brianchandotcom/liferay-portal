@@ -149,8 +149,6 @@ public class CommerceServiceUpgradeStepRegistrator
 		registry.register(
 			"4.0.0", "4.1.0",
 			new CommerceAddressUpgradeProcess(_classNameLocalService),
-			UpgradeProcessFactory.addColumns(
-				"CommerceOrderItem", "promoPrice DECIMAL(30,16)"),
 			new com.liferay.commerce.internal.upgrade.v4_1_0.
 				CommerceOrderItemUpgradeProcess(),
 			new com.liferay.commerce.internal.upgrade.v4_1_0.
@@ -177,9 +175,7 @@ public class CommerceServiceUpgradeStepRegistrator
 				"CommerceOrderItem", "printedNote", "STRING null"));
 
 		registry.register(
-			"4.2.1", "4.3.0",
-			UpgradeProcessFactory.addColumns("CommerceOrder", "orderDate DATE"),
-			new CommerceOrderDateUpgradeProcess());
+			"4.2.1", "4.3.0", new CommerceOrderDateUpgradeProcess());
 
 		registry.register(
 			"4.3.0", "4.4.0",
@@ -291,8 +287,6 @@ public class CommerceServiceUpgradeStepRegistrator
 
 		registry.register(
 			"7.0.0", "7.1.0",
-			UpgradeProcessFactory.addColumns(
-				"CommerceOrder", "commerceOrderTypeId LONG"),
 			new com.liferay.commerce.internal.upgrade.v7_1_0.
 				CommerceOrderUpgradeProcess());
 

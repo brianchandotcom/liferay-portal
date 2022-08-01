@@ -842,6 +842,30 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
+	@description = "This is a use case for LPS-159181. Assert user can add widget to its private site page."
+	@priority = "4"
+	test CanAddWidgettoMyDashbaordPage {
+		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
+
+		Portlet.addPG(portletName = "Calendar");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
+
+		Portlet.viewDefaultTitle(portletName = "Calendar");
+	}
+
+	@description = "This is a use case for LPS-159181. Assert user can add widget to its public site page."
+	@priority = "4"
+	test CanAddWidgettoMyProfilePage {
+		Navigator.gotoPersonalSite();
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoPersonalSite();
+
+		Portlet.viewDefaultTitle(portletName = "Asset Publisher");
+	}
+
 	@priority = "3"
 	test CanBulkActivateUsers {
 		for (var userNum : list "1,2,3,4,5") {

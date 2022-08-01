@@ -22,7 +22,7 @@ export default function PageStructureSidebar() {
 		<div className="page-editor__page-structure">
 			<StructureTree />
 
-			<ItemConfiguration />
+			{!Liferay.FeatureFlags['LPS-153452'] && <ItemConfiguration />}
 		</div>
 	);
 }

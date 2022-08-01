@@ -18,9 +18,14 @@ import classNames from 'classnames';
 import React from 'react';
 
 import {config} from '../config/index';
+import {useActiveItemId, useActiveItemType} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
+import ItemConfiguration from './ItemConfiguration';
 
 export default function ItemConfigurationSidebar() {
+	const activeItemId = useActiveItemId();
+	const activeItemType = useActiveItemType();
+
 	const itemConfigurationOpen = useSelector(
 		(state) => state.sidebar.itemConfigurationOpen
 	);
@@ -35,8 +40,14 @@ export default function ItemConfigurationSidebar() {
 					}
 				)}
 			>
-				<div className="p-4 text-center">
+				{activeItemId ? (
+					<ItemConfiguration
+						activeItemId={activeItemId}
+						activeItemType={activeItemType}
+					/>
+				) : (
 					<ClayEmptyState
+						className="p-5"
 						description={Liferay.Language.get(
 							'select-a-page-element-to-activate-this-panel'
 						)}
@@ -44,7 +55,7 @@ export default function ItemConfigurationSidebar() {
 						small
 						title={Liferay.Language.get('no-selection-yet')}
 					/>
-				</div>
+				)}
 			</div>
 		</ReactPortal>
 	);

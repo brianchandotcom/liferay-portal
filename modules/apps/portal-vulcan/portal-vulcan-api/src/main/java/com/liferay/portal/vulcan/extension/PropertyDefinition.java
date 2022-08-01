@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.extension;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.extension.validation.DefaultPropertyValidator;
 import com.liferay.portal.vulcan.extension.validation.PropertyValidator;
 
@@ -22,6 +23,7 @@ import java.math.BigDecimal;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Carlos Correa
@@ -29,12 +31,12 @@ import java.util.Map;
 public class PropertyDefinition {
 
 	public PropertyDefinition(
-		Class<?> propertyClass, String propertyClassDescription,
+		Set<Class<?>> propertyClasses, String propertyClassDescription,
 		String propertyClassName, String propertyDescription,
 		String propertyName, PropertyType propertyType,
 		PropertyValidator propertyValidator, boolean required) {
 
-		_propertyClass = propertyClass;
+		_propertyClasses = propertyClasses;
 		_propertyClassDescription = propertyClassDescription;
 		_propertyClassName = propertyClassName;
 		_propertyDescription = propertyDescription;
@@ -53,7 +55,7 @@ public class PropertyDefinition {
 		_propertyType = propertyType;
 		_required = required;
 
-		_propertyClass = _propertyTypeClasses.get(propertyType);
+		_propertyClasses = _propertyTypeClasses.get(propertyType);
 		_propertyValidator = new DefaultPropertyValidator();
 	}
 
@@ -68,15 +70,15 @@ public class PropertyDefinition {
 		_propertyValidator = propertyValidator;
 		_required = required;
 
-		_propertyClass = _propertyTypeClasses.get(propertyType);
-	}
-
-	public Class<?> getPropertyClass() {
-		return _propertyClass;
+		_propertyClasses = _propertyTypeClasses.get(propertyType);
 	}
 
 	public String getPropertyClassDescription() {
 		return _propertyClassDescription;
+	}
+
+	public Set<Class<?>> getPropertyClasses() {
+		return _propertyClasses;
 	}
 
 	public String getPropertyClassName() {
@@ -120,25 +122,25 @@ public class PropertyDefinition {
 
 	}
 
-	private static final Map<PropertyType, Class<?>> _propertyTypeClasses =
-		HashMapBuilder.<PropertyType, Class<?>>put(
-			PropertyType.BIG_DECIMAL, BigDecimal.class
-		).<PropertyType, Class<?>>put(
-			PropertyType.BOOLEAN, Boolean.class
-		).<PropertyType, Class<?>>put(
-			PropertyType.DECIMAL, Float.class
-		).<PropertyType, Class<?>>put(
-			PropertyType.DOUBLE, Double.class
-		).<PropertyType, Class<?>>put(
-			PropertyType.INTEGER, Integer.class
-		).<PropertyType, Class<?>>put(
-			PropertyType.LONG, Long.class
-		).<PropertyType, Class<?>>put(
-			PropertyType.TEXT, String.class
+	private static final Map<PropertyType, Set<Class<?>>> _propertyTypeClasses =
+		HashMapBuilder.<PropertyType, Set<Class<?>>>put(
+			PropertyType.BIG_DECIMAL, SetUtil.fromArray(BigDecimal.class)
+		).<PropertyType, Set<Class<?>>>put(
+			PropertyType.BOOLEAN, SetUtil.fromArray(Boolean.class)
+		).<PropertyType, Set<Class<?>>>put(
+			PropertyType.DECIMAL, SetUtil.fromArray(Float.class)
+		).<PropertyType, Set<Class<?>>>put(
+			PropertyType.DOUBLE, SetUtil.fromArray(Double.class, Float.class)
+		).<PropertyType, Set<Class<?>>>put(
+			PropertyType.INTEGER, SetUtil.fromArray(Integer.class)
+		).<PropertyType, Set<Class<?>>>put(
+			PropertyType.LONG, SetUtil.fromArray(Integer.class, Long.class)
+		).<PropertyType, Set<Class<?>>>put(
+			PropertyType.TEXT, SetUtil.fromArray(String.class)
 		).build();
 
-	private final Class<?> _propertyClass;
 	private String _propertyClassDescription;
+	private final Set<Class<?>> _propertyClasses;
 	private String _propertyClassName;
 	private List<PropertyDefinition> _propertyDefinitions;
 	private final String _propertyDescription;

@@ -302,24 +302,6 @@ public class ObjectEntryOpenAPIResourceImpl
 	}
 
 	private DTOProperty _getDTOProperty(ObjectField objectField) {
-		if (objectField.getListTypeDefinitionId() != 0) {
-			DTOProperty dtoProperty = new DTOProperty(
-				Collections.singletonMap("x-parent-map", "properties"),
-				objectField.getName(), ListEntry.class.getSimpleName());
-
-			dtoProperty.setDTOProperties(
-				Arrays.asList(
-					new DTOProperty(
-						Collections.singletonMap("x-parent-map", "properties"),
-						"key", String.class.getSimpleName()),
-					new DTOProperty(
-						Collections.singletonMap("x-parent-map", "properties"),
-						"name", String.class.getSimpleName())));
-			dtoProperty.setRequired(objectField.isRequired());
-
-			return dtoProperty;
-		}
-
 		if (Objects.equals(
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
@@ -333,6 +315,24 @@ public class ObjectEntryOpenAPIResourceImpl
 					new DTOProperty(
 						Collections.singletonMap("x-parent-map", "properties"),
 						"id", Long.class.getSimpleName()),
+					new DTOProperty(
+						Collections.singletonMap("x-parent-map", "properties"),
+						"name", String.class.getSimpleName())));
+			dtoProperty.setRequired(objectField.isRequired());
+
+			return dtoProperty;
+		}
+
+		if (objectField.getListTypeDefinitionId() != 0) {
+			DTOProperty dtoProperty = new DTOProperty(
+				Collections.singletonMap("x-parent-map", "properties"),
+				objectField.getName(), ListEntry.class.getSimpleName());
+
+			dtoProperty.setDTOProperties(
+				Arrays.asList(
+					new DTOProperty(
+						Collections.singletonMap("x-parent-map", "properties"),
+						"key", String.class.getSimpleName()),
 					new DTOProperty(
 						Collections.singletonMap("x-parent-map", "properties"),
 						"name", String.class.getSimpleName())));

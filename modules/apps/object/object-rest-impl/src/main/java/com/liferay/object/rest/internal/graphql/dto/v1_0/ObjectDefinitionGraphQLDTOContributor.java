@@ -97,7 +97,15 @@ public class ObjectDefinitionGraphQLDTOContributor
 				objectDefinition.getObjectDefinitionId());
 
 		for (ObjectField objectField : objectFields) {
-			if (objectField.getListTypeDefinitionId() != 0) {
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				graphQLDTOProperties.add(
+					GraphQLDTOProperty.of(
+						objectField.getName(), FileEntry.class));
+			}
+			else if (objectField.getListTypeDefinitionId() != 0) {
 				graphQLDTOProperties.add(
 					GraphQLDTOProperty.of(
 						objectField.getName(), ListEntry.class));
@@ -118,14 +126,6 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 				relationshipGraphQLDTOProperties.add(
 					GraphQLDTOProperty.of(relationshipName, Map.class));
-			}
-			else if (Objects.equals(
-						objectField.getBusinessType(),
-						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
-
-				graphQLDTOProperties.add(
-					GraphQLDTOProperty.of(
-						objectField.getName(), FileEntry.class));
 			}
 			else {
 				graphQLDTOProperties.add(

@@ -14,14 +14,27 @@
 
 import ClayEmptyState from '@clayui/empty-state';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
+import classNames from 'classnames';
 import React from 'react';
 
 import {config} from '../config/index';
+import {useSelector} from '../contexts/StoreContext';
 
 export default function ItemConfigurationSidebar() {
+	const itemConfigurationOpen = useSelector(
+		(state) => state.sidebar.itemConfigurationOpen
+	);
+
 	return (
 		<ReactPortal className="cadmin">
-			<div className="page-editor__item-configuration-sidebar">
+			<div
+				className={classNames(
+					'page-editor__item-configuration-sidebar',
+					{
+						[`page-editor__item-configuration-sidebar--open`]: itemConfigurationOpen,
+					}
+				)}
+			>
 				<div className="p-4 text-center">
 					<ClayEmptyState
 						description={Liferay.Language.get(

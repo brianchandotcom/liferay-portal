@@ -32,7 +32,14 @@ html#{$cadmin-selector} .cadmin .page-editor__item-configuration-sidebar {
 	background: $cadmin-white;
 	border-left: 1px solid $cadmin-secondary-l3;
 	right: 0;
+	transition: transform ease $defaultTransitionDuration;
 	width: $sidebarContentWidth;
+
+	transform: translateX(100%);
+
+	&--open {
+		transform: translateX(0);
+	}
 }
 
 html#{$cadmin-selector}
@@ -183,18 +190,24 @@ html#{$cadmin-selector} .page-editor__wrapper {
 		}
 	}
 
-	&--padded {
+	&--padded-start {
 		@include media-breakpoint-up(sm) {
 			padding-left: $sidebarButtonWidth + $sidebarContentWidth;
+		}
+	}
+
+	&--padded-end {
+		@include media-breakpoint-up(sm) {
+			padding-right: $sidebarContentWidth;
 		}
 	}
 }
 
 html#{$cadmin-selector} {
-	body.open .page-editor__wrapper#wrapper {
+	body.open .page-editor__wrapper#wrapper:not(.page-editor__wrapper-old) {
 		padding-left: $product-menu-width + $sidebarButtonWidth;
 
-		&--padded {
+		.page-editor__wrapper--padded-start {
 			@include media-breakpoint-up(sm) {
 				padding-left: $product-menu-width + $sidebarButtonWidth +
 					$sidebarContentWidth;

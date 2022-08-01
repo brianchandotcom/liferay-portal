@@ -14,8 +14,13 @@
 
 import {SWITCH_SIDEBAR_PANEL} from './types';
 
-export default function switchSidebarPanel({sidebarOpen, sidebarPanelId}) {
+export default function switchSidebarPanel({
+	itemConfigurationOpen = true,
+	sidebarOpen,
+	sidebarPanelId,
+}) {
 	return {
+		itemConfigurationOpen,
 		sidebarOpen,
 		sidebarPanelId,
 		type: SWITCH_SIDEBAR_PANEL,

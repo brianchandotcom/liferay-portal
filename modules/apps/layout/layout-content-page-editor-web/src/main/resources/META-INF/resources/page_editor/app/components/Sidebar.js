@@ -78,6 +78,7 @@ export default function Sidebar() {
 
 	const panels = useSelector(selectAvailablePanels(config.panels));
 	const sidebarOpen = store.sidebar.open;
+	const itemConfigurationOpen = store.sidebar.itemConfigurationOpen;
 	const {panel, sidebarPanelId} = getActivePanelData({
 		panelId: store.sidebar.panelId,
 		panels,
@@ -149,6 +150,7 @@ export default function Sidebar() {
 			const onHandleSidebar = (open) => {
 				dispatch(
 					Actions.switchSidebarPanel({
+						itemConfigurationOpen: open,
 						sidebarOpen: open,
 					})
 				);
@@ -177,17 +179,31 @@ export default function Sidebar() {
 		}
 
 		wrapper.classList.add('page-editor__wrapper');
+
 		if (!Liferay.FeatureFlags['LPS-153452']) {
 			wrapper.classList.add('page-editor__wrapper-old');
+			wrapper.classList.toggle(
+				'page-editor__wrapper--padded',
+				sidebarOpen
+			);
 		}
 
-		wrapper.classList.toggle('page-editor__wrapper--padded', sidebarOpen);
+		wrapper.classList.toggle(
+			'page-editor__wrapper--padded-start',
+			sidebarOpen
+		);
+		wrapper.classList.toggle(
+			'page-editor__wrapper--padded-end',
+			itemConfigurationOpen
+		);
 
 		return () => {
 			wrapper.classList.remove('page-editor__wrapper');
 			wrapper.classList.remove('page-editor__wrapper--padded');
+			wrapper.classList.remove('page-editor__wrapper--padded-start');
+			wrapper.classList.remove('page-editor__wrapper--padded-end');
 		};
-	}, [sidebarOpen]);
+	}, [sidebarOpen, itemConfigurationOpen]);
 
 	const SidebarPanel = useLazy(
 		useCallback(({instance}) => {

@@ -26,6 +26,10 @@ html#{$cadmin-selector} #{$selector} {
 			z-index: 1;
 
 			&#{$selector}-old {
+				#{$selector}__label-width {
+					right: $sidebarButtonWidth;
+				}
+
 				&#{$selector}--with-sidebar {
 					padding-left: 0;
 					padding-right: $sidebarButtonWidth;
@@ -51,11 +55,21 @@ html#{$cadmin-selector} #{$selector} {
 
 			&#{$selector}--with-sidebar-open {
 				#{$selector}__label-width {
-					left: $sidebarButtonWidth + $sidebarContentWidth;
+					right: $sidebarContentWidth;
 				}
 
 				@include media-breakpoint-up(sm) {
 					padding-left: $sidebarButtonWidth + $sidebarContentWidth;
+				}
+			}
+
+			&#{$selector}--with-item-configuration-open {
+				#{$selector}__label-width {
+					right: $sidebarContentWidth;
+				}
+
+				@include media-breakpoint-up(sm) {
+					padding-right: $sidebarContentWidth;
 				}
 			}
 		}
@@ -86,7 +100,7 @@ html#{$cadmin-selector} #{$selector} {
 	#{$selector}__label-width {
 		margin-top: 12px;
 		position: absolute;
-		right: $sidebarButtonWidth;
+		right: 0;
 		z-index: 1;
 
 		span {

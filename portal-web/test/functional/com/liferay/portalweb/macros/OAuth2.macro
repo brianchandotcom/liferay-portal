@@ -189,10 +189,10 @@ definition {
 
 	macro authorizeMyApplication {
 		if ("${newTab}" == "true") {
-			Open.openInTheNewTab(locator1 = "http://martamedio.com/oauth2-tester/");
+			Open.openInTheNewTab(locator1 = "https://localhost:8443/oauth2-tester/");
 		}
 		else {
-			Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+			Navigator.openSpecificURL(url = "https://localhost:8443/oauth2-tester/");
 		}
 
 		if (isSet(portalURL)) {
@@ -247,7 +247,7 @@ definition {
 	}
 
 	macro authorizePKCEApplication {
-		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/pkce/");
+		Navigator.openSpecificURL(url = "https://localhost:8443/oauth2-tester/pkce/");
 
 		if (isSet(portalURL)) {
 			Type(

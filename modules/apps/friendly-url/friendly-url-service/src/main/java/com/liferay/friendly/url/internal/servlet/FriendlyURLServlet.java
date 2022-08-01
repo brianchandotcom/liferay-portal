@@ -91,6 +91,7 @@ import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -138,12 +139,15 @@ public class FriendlyURLServlet extends HttpServlet {
 					0, layoutFriendlyURL.length() - 1);
 			}
 
-			if (redirectEntryLocalService != null) {
+			RedirectEntryLocalService currentRedirectEntryLocalService =
+				redirectEntryLocalService;
+
+			if (currentRedirectEntryLocalService != null) {
 				HttpServletRequest originalHttpServletRequest =
 					portal.getOriginalServletRequest(httpServletRequest);
 
 				RedirectEntry redirectEntry =
-					redirectEntryLocalService.fetchRedirectEntry(
+					currentRedirectEntryLocalService.fetchRedirectEntry(
 						group.getGroupId(),
 						_normalizeFriendlyURL(
 							originalHttpServletRequest.getRequestURI()),
@@ -151,7 +155,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 				if (redirectEntry == null) {
 					redirectEntry =
-						redirectEntryLocalService.fetchRedirectEntry(
+						currentRedirectEntryLocalService.fetchRedirectEntry(
 							group.getGroupId(),
 							_normalizeFriendlyURL(layoutFriendlyURL), true);
 				}
@@ -352,8 +356,11 @@ public class FriendlyURLServlet extends HttpServlet {
 				return new Redirect(redirect);
 			}
 
-			if (redirectNotFoundTracker != null) {
-				redirectNotFoundTracker.trackURL(
+			RedirectNotFoundTracker currentRedirectNotFoundTracker =
+				redirectNotFoundTracker;
+
+			if (currentRedirectNotFoundTracker != null) {
+				currentRedirectNotFoundTracker.trackURL(
 					group, _normalizeFriendlyURL(layoutFriendlyURL));
 			}
 
@@ -669,15 +676,17 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	protected RedirectEntryLocalService redirectEntryLocalService;
+	protected volatile RedirectEntryLocalService redirectEntryLocalService;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	protected RedirectNotFoundTracker redirectNotFoundTracker;
+	protected volatile RedirectNotFoundTracker redirectNotFoundTracker;
 
 	@Reference
 	protected SiteFriendlyURLLocalService siteFriendlyURLLocalService;

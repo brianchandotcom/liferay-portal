@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration;
 import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
@@ -38,7 +37,6 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMTemplateLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPersistence;
-import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -89,6 +87,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -1942,15 +1941,6 @@ public class DDMTemplateLocalServiceImpl
 	private DDMTemplateVersionPersistence _ddmTemplateVersionPersistence;
 
 	@Reference
-	private DDMXML _ddmXML;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference
 	private ImageLocalService _imageLocalService;
 
 	@Reference
@@ -1961,9 +1951,11 @@ public class DDMTemplateLocalServiceImpl
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
+	private volatile SiteConnectedGroupGroupProvider
+		_siteConnectedGroupGroupProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

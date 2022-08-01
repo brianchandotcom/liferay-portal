@@ -120,6 +120,7 @@ import java.util.regex.Pattern;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -2249,9 +2250,11 @@ public class DDMStructureLocalServiceImpl
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
+	private volatile SiteConnectedGroupGroupProvider
+		_siteConnectedGroupGroupProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -15,6 +15,7 @@
 package com.liferay.object.web.internal.object.definitions.display.context.util;
 
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -26,41 +27,42 @@ import java.util.Locale;
  */
 public class LocalizedJSONArrayUtil {
 
-	public static JSONArray getDateOperatorsJSONArray(Locale locale) {
+	public static JSONObject getFilterOperatorsJSONObject(Locale locale) {
 		return JSONUtil.put(
+			"dateOperators",
 			JSONUtil.put(
-				"label", LanguageUtil.get(locale, "range")
-			).put(
-				"value", "range"
-			));
-	}
-
-	public static JSONArray getNumericOperatorsJSONArray(Locale locale) {
-		return JSONUtil.putAll(
-			JSONUtil.put(
-				"label", LanguageUtil.get(locale, "equals-to")
-			).put(
-				"value", "eq"
-			),
-			JSONUtil.put(
-				"label", LanguageUtil.get(locale, "not-equals-to")
-			).put(
-				"value", "ne"
-			));
-	}
-
-	public static JSONArray getPicklistOperatorsJSONArray(Locale locale) {
-		return JSONUtil.putAll(
-			JSONUtil.put(
-				"label", LanguageUtil.get(locale, "excludes")
-			).put(
-				"value", "excludes"
-			),
-			JSONUtil.put(
-				"label", LanguageUtil.get(locale, "includes")
-			).put(
-				"value", "includes"
-			));
+				JSONUtil.put(
+					"label", LanguageUtil.get(locale, "range")
+				).put(
+					"value", "range"
+				))
+		).put(
+			"numericOperators",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"label", LanguageUtil.get(locale, "equals-to")
+				).put(
+					"value", "eq"
+				),
+				JSONUtil.put(
+					"label", LanguageUtil.get(locale, "not-equals-to")
+				).put(
+					"value", "ne"
+				))
+		).put(
+			"picklistOperators",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"label", LanguageUtil.get(locale, "excludes")
+				).put(
+					"value", "excludes"
+				),
+				JSONUtil.put(
+					"label", LanguageUtil.get(locale, "includes")
+				).put(
+					"value", "includes"
+				))
+		);
 	}
 
 	public static JSONArray getWorkflowStatusJSONArray(Locale locale) {

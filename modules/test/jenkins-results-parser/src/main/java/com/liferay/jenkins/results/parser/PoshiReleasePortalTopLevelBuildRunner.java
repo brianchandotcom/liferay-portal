@@ -175,10 +175,6 @@ public class PoshiReleasePortalTopLevelBuildRunner
 			workspaceGitRepository.getDirectory(),
 			".m2-tmp/com/liferay/com.liferay.gradle.plugins.poshi.runner");
 
-		if (!sourceCacheDir.exists()) {
-			throw new RuntimeException(sourceCacheDir + " does not exist.");
-		}
-
 		File targetCacheDir = new File(
 			gitWorkingDirectory.getWorkingDirectory(),
 			".m2-tmp/com/liferay/com.liferay.gradle.plugins.poshi.runner");
@@ -189,16 +185,13 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 		String fileContent = JenkinsResultsParserUtil.read(file);
 
-		String gradlePluginsPoshiRunnerVersion = getBuildParameter(
-			"GRADLE_PLUGINS_POSHI_RUNNER_VERSION");
-
 		JenkinsResultsParserUtil.write(
 			file,
 			fileContent.replaceAll(
 				"([\\s]*)(.*\"com\\.liferay\\.gradle\\.plugins\\.defaults\".*)",
 				"$1$2$1classpath group: \"com.liferay\", name: " +
 					"\"com.liferay.gradle.plugins.poshi.runner\", version: \"" +
-						gradlePluginsPoshiRunnerVersion + "\""));
+						getGradlePluginsPoshiRunnerVersion() + "\""));
 	}
 
 	protected PoshiReleasePortalTopLevelBuildRunner(
@@ -241,6 +234,36 @@ public class PoshiReleasePortalTopLevelBuildRunner
 		catch (IOException ioException) {
 			throw new RuntimeException(
 				"Unable to create pull request", ioException);
+		}
+	}
+
+	protected String getGradlePluginsPoshiRunnerVersion() {
+		if (_gradlePluginsPoshiRunnerVersion != null) {
+			return _gradlePluginsPoshiRunnerVersion;
+		}
+
+		Workspace workspace = getWorkspace();
+
+		WorkspaceGitRepository primaryWorkspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		File bndFile = new File(
+			primaryWorkspaceGitRepository.getDirectory(),
+			"modules/sdk/gradle-plugins-poshi-runner/bnd.bnd");
+
+		try {
+			String fileContent = JenkinsResultsParserUtil.read(bndFile);
+
+			Matcher matcher = _bundleVersionPattern.matcher(fileContent);
+
+			matcher.find();
+
+			_gradlePluginsPoshiRunnerVersion = matcher.group(1);
+
+			return _gradlePluginsPoshiRunnerVersion;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -349,6 +372,22 @@ public class PoshiReleasePortalTopLevelBuildRunner
 	protected void preparePoshiPortalPullRequests() {
 		Workspace workspace = getWorkspace();
 
+		WorkspaceGitRepository primaryWorkspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		File jarFile = new File(
+			primaryWorkspaceGitRepository.getDirectory(),
+			".m2-tmp/com/liferay/com.liferay.gradle.plugins.poshi.runner/" +
+				getGradlePluginsPoshiRunnerVersion() +
+					"/com.liferay.gradle.plugins.poshi.runner-" +
+						getGradlePluginsPoshiRunnerVersion() + ".jar");
+
+		if (!jarFile.exists()) {
+			throw new RuntimeException(
+				"Poshi Runner Gradle Plugin cached jar does not exist: " +
+					jarFile);
+		}
+
 		for (WorkspaceGitRepository workspaceGitRepository :
 				workspace.getWorkspaceGitRepositories()) {
 
@@ -372,7 +411,6 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 	@Override
 	protected void validateBuildParameters() {
-		_validateBuildParameterGradlePluginsPoshiRunnerVersion();
 		_validateBuildParameterPortalGitHubURL();
 	}
 
@@ -421,19 +459,6 @@ public class PoshiReleasePortalTopLevelBuildRunner
 			_NAME_BUILD_PARAMETER_PORTAL_MASTER_CI_TEST_SUITE);
 	}
 
-	private void _validateBuildParameterGradlePluginsPoshiRunnerVersion() {
-		String gradlePluginsPoshiRunnerVersion = getBuildParameter(
-			_NAME_BUILD_PARAMETER_GRADLE_PLUGINS_POSHI_RUNNER_VERSION);
-
-		if ((gradlePluginsPoshiRunnerVersion == null) ||
-			gradlePluginsPoshiRunnerVersion.isEmpty()) {
-
-			failBuildRunner(
-				_NAME_BUILD_PARAMETER_GRADLE_PLUGINS_POSHI_RUNNER_VERSION +
-					" is null");
-		}
-	}
-
 	private void _validateBuildParameterPortalGitHubURL() {
 		String portalGitHubURL = _getPortalGitHubURL();
 
@@ -462,10 +487,6 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 	private static final String _DEFAULT_CI_TEST_SUITE = "poshi-release";
 
-	private static final String
-		_NAME_BUILD_PARAMETER_GRADLE_PLUGINS_POSHI_RUNNER_VERSION =
-			"GRADLE_PLUGINS_POSHI_RUNNER_VERSION";
-
 	private static final String _NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL =
 		"PORTAL_GITHUB_URL";
 
@@ -473,10 +494,13 @@ public class PoshiReleasePortalTopLevelBuildRunner
 		_NAME_BUILD_PARAMETER_PORTAL_MASTER_CI_TEST_SUITE =
 			"PORTAL_MASTER_CI_TEST_SUITE";
 
+	private static final Pattern _bundleVersionPattern = Pattern.compile(
+		"Bundle-Version:[\\s]*(.*)");
 	private static final Pattern _gitHubURLPattern = Pattern.compile(
 		"https://github.com/(?<username>[^/]+)/(?<repository>[^/]+)/" +
 			"(commits|tree)/(?<branch>[^/]+)");
 
+	private String _gradlePluginsPoshiRunnerVersion;
 	private final Map<String, PullRequest> _pullRequests = new HashMap<>();
 	private final Map<GitWorkingDirectory, RemoteGitBranch> _remoteGitBranches =
 		new HashMap<>();

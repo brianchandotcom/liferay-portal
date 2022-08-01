@@ -12,11 +12,10 @@
  * details.
  */
 
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {getResponsiveConfig} from './getResponsiveConfig';
 import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
-import {isRequiredFormField} from './isRequiredFormField';
+import {isRequiredFormInput} from './isRequiredFormInput';
 
 function getDescendantIds(layoutData, itemId) {
 	const item = layoutData.items[itemId];
@@ -67,15 +66,10 @@ export default function hasRequiredInputChild({
 			return false;
 		}
 
-		const {inputFieldId, inputRequired} =
-			fragmentEntryLinks[item.config.fragmentEntryLinkId].editableValues[
-				FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-			] || {};
-
 		return (
 			(!checkHidden ||
 				isItemHidden(layoutData, descendantId, selectedViewportSize)) &&
-			(inputRequired || isRequiredFormField(inputFieldId, formFields))
+			isRequiredFormInput(item, fragmentEntryLinks, formFields)
 		);
 	});
 }

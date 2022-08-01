@@ -47,34 +47,28 @@ public class ServletResponseUtilContentLengthTest {
 	private void _assertContentLength(int contentLength) throws Exception {
 		String content = StringUtil.randomString(_INPUTSTREAM_LENGTH);
 
-		try {
-			ServletResponseUtil.write(
-				_mockHttpServletResponse,
-				new ByteArrayInputStream(content.getBytes()), contentLength);
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
+		ServletResponseUtil.write(
+			mockHttpServletResponse,
+			new ByteArrayInputStream(content.getBytes()), contentLength);
+
+		Assert.assertEquals(
+			String.valueOf(contentLength),
+			mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_LENGTH));
+
+		if (contentLength >= _INPUTSTREAM_LENGTH) {
 			Assert.assertEquals(
-				String.valueOf(contentLength),
-				_mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_LENGTH));
-
-			if (contentLength >= _INPUTSTREAM_LENGTH) {
-				Assert.assertEquals(
-					content, _mockHttpServletResponse.getContentAsString());
-			}
-			else {
-				Assert.assertEquals(
-					content.substring(0, contentLength),
-					_mockHttpServletResponse.getContentAsString());
-			}
+				content, mockHttpServletResponse.getContentAsString());
 		}
-		finally {
-			_mockHttpServletResponse.setCommitted(false);
-			_mockHttpServletResponse.reset();
+		else {
+			Assert.assertEquals(
+				content.substring(0, contentLength),
+				mockHttpServletResponse.getContentAsString());
 		}
 	}
 
 	private static final int _INPUTSTREAM_LENGTH = 10;
-
-	private final MockHttpServletResponse _mockHttpServletResponse =
-		new MockHttpServletResponse();
 
 }

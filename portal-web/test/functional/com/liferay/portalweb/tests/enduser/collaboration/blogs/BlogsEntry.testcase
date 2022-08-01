@@ -867,7 +867,9 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
-		Portlet.startServer();
+		Portlet.startServer(
+			deleteLiferayHome = "false",
+			keepOsGiState = "true");
 
 		Navigator.openURL();
 
@@ -967,7 +969,9 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
-		Portlet.startServer();
+		Portlet.startServer(
+			deleteLiferayHome = "false",
+			keepOsGiState = "true");
 
 		Navigator.openURL();
 

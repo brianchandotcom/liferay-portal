@@ -55,15 +55,3 @@ export function formatDateRangeObject(dateRangeObject) {
 		)}`;
 	}
 }
-
-export function convertObjectDateToIsoString(objDate, direction) {
-	const time = direction === 'from' ? [0, 0, 0, 0] : [23, 59, 59, 999];
-	const date = new Date(
-		objDate.year,
-		objDate.month - 1,
-		objDate.day,
-		...time
-	);
-
-	return date.toISOString();
-}

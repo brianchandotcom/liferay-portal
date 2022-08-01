@@ -19,33 +19,70 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {
-	convertObjectDateToIsoString,
 	formatDateObject,
 	formatDateRangeObject,
 	getDateFromDateString,
 } from '../../../utils/dates';
 
+const getIsoString = ({direction, entityFieldType, objectDate}) => {
+	const timestamp = Date.UTC(
+		objectDate.year,
+		objectDate.month - 1,
+		objectDate.day
+	);
+
+	const date = new Date(timestamp);
+
+	if (direction === 'from') {
+		date.setUTCHours(0, 0, 0, 0);
+	}
+	else {
+		date.setUTCHours(23, 59, 59, 999);
+	}
+
+	const dateISOString = date.toISOString();
+
+	if (entityFieldType === 'date') {
+		return dateISOString.split('T')[0];
+	}
+
+	return dateISOString;
+};
+
 const getSelectedItemsLabel = ({selectedData}) => {
 	return formatDateRangeObject(selectedData);
 };
 
-const getOdataString = ({id, selectedData}) => {
+const getOdataString = ({entityFieldType, id, selectedData}) => {
 	const {from, to} = selectedData;
 
+	const fromIsoString =
+		from &&
+		getIsoString({direction: 'from', entityFieldType, objectDate: from});
+
+	const toIsoString =
+		to && getIsoString({direction: 'to', entityFieldType, objectDate: to});
+
 	if (from && to) {
-		return `${id} ge ${convertObjectDateToIsoString(
-			from,
-			'from'
-		)}) and (${id} le ${convertObjectDateToIsoString(to, 'to')}`;
+		return `${id} ge ${fromIsoString}) and (${id} le ${toIsoString}`;
 	}
 	if (from) {
-		return `${id} ge ${convertObjectDateToIsoString(from, 'from')}`;
+		return `${id} ge ${fromIsoString}`;
 	}
 	if (to) {
-		return `${id} le ${convertObjectDateToIsoString(to, 'to')}`;
+		return `${id} le ${toIsoString}`;
 	}
 };
-function DateRangeFilter({id, max, min, placeholder, selectedData, setFilter}) {
+
+const DateRangeFilter = ({
+	entityFieldType,
+	id,
+	max,
+	min,
+	placeholder,
+	selectedData,
+	setFilter,
+}) => {
 	const [fromValue, setFromValue] = useState(
 		selectedData?.from && formatDateObject(selectedData.from)
 	);
@@ -144,6 +181,7 @@ function DateRangeFilter({id, max, min, placeholder, selectedData, setFilter}) {
 								active: true,
 								id,
 								odataFilterString: getOdataString({
+									entityFieldType,
 									id,
 									selectedData: newSelectedData,
 								}),
@@ -167,7 +205,7 @@ function DateRangeFilter({id, max, min, placeholder, selectedData, setFilter}) {
 			</ClayDropDown.Caption>
 		</>
 	);
-}
+};
 
 const dateShape = PropTypes.shape({
 	day: PropTypes.number,

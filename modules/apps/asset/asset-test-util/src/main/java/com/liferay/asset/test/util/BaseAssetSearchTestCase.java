@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -1332,28 +1333,25 @@ public abstract class BaseAssetSearchTestCase {
 			String[] titles, String[] orderedTitles)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			_group1, serviceContext);
-
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		BaseModel<?>[] baseModels = new BaseModel[titles.length];
+		for (String title : titles) {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
-		for (int i = 0; i < titles.length; i++) {
-			long start = System.currentTimeMillis();
+			serviceContext.setCreateDate(new Date());
 
-			baseModels[i] = addBaseModel(
-				parentBaseModel, titles[i], serviceContext);
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			long remainingMillis = 2000 - (System.currentTimeMillis() - start);
-
-			if (remainingMillis > 0) {
-				Thread.sleep(remainingMillis);
+			try {
+				addBaseModel(
+					getParentBaseModel(_group1, serviceContext), title,
+					serviceContext);
+			}
+			finally {
+				ServiceContextThreadLocal.popServiceContext();
 			}
 		}
 

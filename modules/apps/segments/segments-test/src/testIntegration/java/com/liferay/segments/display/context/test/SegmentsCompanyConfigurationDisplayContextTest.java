@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -38,17 +37,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -63,31 +55,6 @@ public class SegmentsCompanyConfigurationDisplayContextTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() throws InvalidSyntaxException {
-		Bundle bundle = FrameworkUtil.getBundle(
-			SegmentsCompanyConfigurationDisplayContextTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		ServiceReference<?>[] serviceReferences =
-			bundleContext.getServiceReferences(
-				"com.liferay.segments.web.internal.configuration.display." +
-					"SegmentsCompanyConfigurationScreen",
-				"(component.name=com.liferay.segments.web.internal." +
-					"configuration.display." +
-						"SegmentsCompanyConfigurationScreen)");
-
-		if (ArrayUtil.isEmpty(serviceReferences)) {
-			throw new IllegalStateException(
-				"Unable to get reference to " +
-					"SegmentsCompanyConfigurationScreen");
-		}
-
-		_configurationScreen = (ConfigurationScreen)bundleContext.getService(
-			serviceReferences[0]);
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -150,12 +117,13 @@ public class SegmentsCompanyConfigurationDisplayContextTest {
 		return themeDisplay;
 	}
 
-	private static ConfigurationScreen _configurationScreen;
-
 	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject(filter = "component.name=*.SegmentsCompanyConfigurationScreen")
+	private ConfigurationScreen _configurationScreen;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -16,10 +16,7 @@ package com.liferay.segments.web.internal.configuration.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.web.internal.display.context.SegmentsCompanyConfigurationDisplayContext;
 
@@ -32,8 +29,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -41,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  * @author Stefan Tanasie
  */
-@Component(immediate = true, service = SegmentsCompanyConfigurationScreen.class)
+@Component(immediate = true, service = ConfigurationScreen.class)
 public class SegmentsCompanyConfigurationScreen implements ConfigurationScreen {
 
 	@Override
@@ -86,15 +81,6 @@ public class SegmentsCompanyConfigurationScreen implements ConfigurationScreen {
 		catch (Exception exception) {
 			throw new IOException(
 				"Unable to render /segments_configuration.jsp", exception);
-		}
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152541"))) {
-			bundleContext.registerService(
-				ConfigurationScreen.class, this,
-				new HashMapDictionary<String, Object>());
 		}
 	}
 

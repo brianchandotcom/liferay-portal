@@ -79,6 +79,78 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 
 	@Test
 	public void testGlobalJSClientExtensionEntriesAreAdded() throws Exception {
+		_testGlobalJSClientExtensionEntriesAreAdded();
+	}
+
+	private ClientExtensionEntry _addGlobalJSClientExtension(String url)
+		throws Exception {
+
+		ClientExtensionEntry clientExtensionEntry =
+			_clientExtensionEntryLocalService.addClientExtensionEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				StringPool.BLANK,
+				Collections.singletonMap(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				StringPool.BLANK, StringPool.BLANK,
+				ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"url", url
+				).buildString());
+
+		_clientExtensionEntries.add(clientExtensionEntry);
+
+		return clientExtensionEntry;
+	}
+
+	private String _getExpected(
+			String layoutGlobalJSURL, String layoutSetGlobalJSURL,
+			String masterLayoutGlobalJSURL)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		return StringUtil.replace(
+			StringUtil.read(
+				clazz.getClassLoader(),
+				"com/liferay/client/extension/internal/service/taglib/test" +
+					"/dependencies/global_js_client_extensions_expected.html"),
+			"[$", "$]",
+			HashMapBuilder.put(
+				"LAYOUT_GLOBAL_JS_URL", layoutGlobalJSURL
+			).put(
+				"LAYOUT_SET_GLOBAL_JS_URL", layoutSetGlobalJSURL
+			).put(
+				"MASTER_LAYOUT_GLOBAL_JS_URL", masterLayoutGlobalJSURL
+			).build());
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest(Layout layout) {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setLayout(layout);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
+	}
+
+	private String _getRandomURL() {
+		return "http://" + RandomTestUtil.randomString() + ".com";
+	}
+
+	private String _normalize(String value) {
+		return value.replaceAll("[\n\t]", StringPool.BLANK);
+	}
+
+	private void _testGlobalJSClientExtensionEntriesAreAdded()
+		throws Exception {
+
 		String layoutSetGlobalJSURL = _getRandomURL();
 
 		ClientExtensionEntry layoutSetGlobalJSClientExtensionEntry =
@@ -152,72 +224,6 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 					layoutGlobalJSURL, layoutSetGlobalJSURL,
 					masterLayoutGlobalJSURL)),
 			_normalize(mockHttpServletResponse.getContentAsString()));
-	}
-
-	private ClientExtensionEntry _addGlobalJSClientExtension(String url)
-		throws Exception {
-
-		ClientExtensionEntry clientExtensionEntry =
-			_clientExtensionEntryLocalService.addClientExtensionEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				StringPool.BLANK,
-				Collections.singletonMap(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-				StringPool.BLANK, StringPool.BLANK,
-				ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"url", url
-				).buildString());
-
-		_clientExtensionEntries.add(clientExtensionEntry);
-
-		return clientExtensionEntry;
-	}
-
-	private String _getExpected(
-			String layoutGlobalJSURL, String layoutSetGlobalJSURL,
-			String masterLayoutGlobalJSURL)
-		throws Exception {
-
-		Class<?> clazz = getClass();
-
-		return StringUtil.replace(
-			StringUtil.read(
-				clazz.getClassLoader(),
-				"com/liferay/client/extension/internal/service/taglib/test" +
-					"/dependencies/global_js_client_extensions_expected.html"),
-			"[$", "$]",
-			HashMapBuilder.put(
-				"LAYOUT_GLOBAL_JS_URL", layoutGlobalJSURL
-			).put(
-				"LAYOUT_SET_GLOBAL_JS_URL", layoutSetGlobalJSURL
-			).put(
-				"MASTER_LAYOUT_GLOBAL_JS_URL", masterLayoutGlobalJSURL
-			).build());
-	}
-
-	private MockHttpServletRequest _getMockHttpServletRequest(Layout layout) {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setLayout(layout);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return mockHttpServletRequest;
-	}
-
-	private String _getRandomURL() {
-		return "http://" + RandomTestUtil.randomString() + ".com";
-	}
-
-	private String _normalize(String value) {
-		return value.replaceAll("[\n\t]", StringPool.BLANK);
 	}
 
 	@DeleteAfterTestRun

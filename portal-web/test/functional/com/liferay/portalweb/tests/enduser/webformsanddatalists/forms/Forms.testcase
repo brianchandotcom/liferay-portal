@@ -252,7 +252,7 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "0");
 
-		Pause(locator1 = "60000");
+		WaitForElementPresent(locator1 = "Form#SAVE_NOTIFICATION");
 
 		Form.viewSaveNotification();
 
@@ -302,6 +302,8 @@ definition {
 
 		Form.closeSidebar();
 
+		// Pausing 60 seconds to check no autosave due to changing the default autosave interval. See LPS-159468
+
 		Pause(locator1 = "60000");
 
 		FormsAdminNavigator.gotoBack();
@@ -317,6 +319,8 @@ definition {
 		Form.editFieldLabelMetal(fieldValue = "Text Field Will Be Saved");
 
 		Form.closeSidebar();
+
+		// Pausing 120 seconds due to autosave interval set to two minutes. LPS-159468
 
 		Pause(locator1 = "120000");
 
@@ -438,7 +442,7 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Text");
 
-		Pause(locator1 = "60000");
+		WaitForElementPresent(locator1 = "Form#SAVE_NOTIFICATION");
 
 		Form.viewSaveNotification();
 
@@ -2174,9 +2178,11 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "0");
 
-		Pause(locator1 = "60000");
+		WaitForElementPresent(locator1 = "Form#SAVE_NOTIFICATION");
 
-		Form.viewSaveNotification();
+		// Pausing 60 seconds due to autosave interval set to one minute. See LPS-159468
+
+		Pause(locator1 = "60000");
 
 		FormsAdminNavigator.gotoBack();
 

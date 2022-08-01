@@ -890,15 +890,13 @@ definition {
 			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
 			successPageTitle = "Thank you.");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
 
 		FormsAdminNavigator.gotoViewEntries();
 
 		FormsAdmin.viewFormEntryWorkflowStatus(formEntryWorkflowStatus = "Pending");
+
+		// Pausing 120 seconds due to LPS-159468
 
 		Pause(locator1 = "120000");
 

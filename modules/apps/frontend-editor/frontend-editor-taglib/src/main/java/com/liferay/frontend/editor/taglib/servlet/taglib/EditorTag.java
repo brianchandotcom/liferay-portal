@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -517,10 +516,6 @@ public class EditorTag extends BaseValidatorTagSupport {
 	}
 
 	private String _getResolvedEditorName() {
-		if (!BrowserSnifferUtil.isRtf(getRequest())) {
-			return "simple";
-		}
-
 		if (Validator.isNull(_editorName)) {
 			return _EDITOR_WYSIWYG_DEFAULT;
 		}

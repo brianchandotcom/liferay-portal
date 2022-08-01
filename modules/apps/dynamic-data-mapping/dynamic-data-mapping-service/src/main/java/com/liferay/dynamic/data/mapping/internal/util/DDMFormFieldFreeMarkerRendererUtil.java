@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.internal.util;
 
 import com.liferay.portal.kernel.editor.Editor;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -38,10 +37,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class DDMFormFieldFreeMarkerRendererUtil {
 
 	public static Editor getEditor(HttpServletRequest httpServletRequest) {
-		if (!BrowserSnifferUtil.isRtf(httpServletRequest)) {
-			return _editors.get("simple");
-		}
-
 		if (Validator.isNull(_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT) ||
 			!_editors.containsKey(_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT)) {
 

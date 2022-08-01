@@ -281,6 +281,16 @@ public class ObjectEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_ERC_ODI() throws Exception {
+		_persistence.countByC_ERC_ODI(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextLong());
+
+		_persistence.countByC_ERC_ODI(0L, "null", 0L);
+
+		_persistence.countByC_ERC_ODI(0L, (String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ObjectEntry newObjectEntry = addObjectEntry();
 
@@ -601,6 +611,22 @@ public class ObjectEntryPersistenceTest {
 			ReflectionTestUtil.invoke(
 				objectEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
+
+		Assert.assertEquals(
+			Long.valueOf(objectEntry.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				objectEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			objectEntry.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				objectEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(objectEntry.getObjectDefinitionId()),
+			ReflectionTestUtil.<Long>invoke(
+				objectEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "objectDefinitionId"));
 	}
 
 	protected ObjectEntry addObjectEntry() throws Exception {

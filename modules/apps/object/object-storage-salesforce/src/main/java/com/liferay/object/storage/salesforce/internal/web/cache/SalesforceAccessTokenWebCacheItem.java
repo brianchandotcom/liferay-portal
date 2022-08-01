@@ -14,7 +14,7 @@
 
 package com.liferay.object.storage.salesforce.internal.web.cache;
 
-import com.liferay.object.storage.salesforce.internal.configuration.SalesforceConfiguration;
+import com.liferay.object.storage.salesforce.configuration.SalesforceConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

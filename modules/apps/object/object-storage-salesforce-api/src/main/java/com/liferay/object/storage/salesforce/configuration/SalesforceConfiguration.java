@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.storage.salesforce.internal.configuration;
+package com.liferay.object.storage.salesforce.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "third-party", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.object.storage.salesforce.internal.configuration.SalesforceConfiguration",
+	id = "com.liferay.object.storage.salesforce.configuration.SalesforceConfiguration",
 	localization = "content/Language", name = "salesforce-configuration-name"
 )
 public interface SalesforceConfiguration {

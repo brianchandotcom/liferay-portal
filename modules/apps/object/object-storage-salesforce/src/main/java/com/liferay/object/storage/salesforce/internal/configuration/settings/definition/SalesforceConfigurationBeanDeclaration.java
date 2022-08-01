@@ -14,7 +14,7 @@
 
 package com.liferay.object.storage.salesforce.internal.configuration.settings.definition;
 
-import com.liferay.object.storage.salesforce.internal.configuration.SalesforceConfiguration;
+import com.liferay.object.storage.salesforce.configuration.SalesforceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

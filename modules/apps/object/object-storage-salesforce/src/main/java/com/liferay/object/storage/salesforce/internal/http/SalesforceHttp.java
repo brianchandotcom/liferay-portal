@@ -15,7 +15,7 @@
 package com.liferay.object.storage.salesforce.internal.http;
 
 import com.liferay.object.rest.manager.exception.ObjectEntryManagerHttpException;
-import com.liferay.object.storage.salesforce.internal.configuration.SalesforceConfiguration;
+import com.liferay.object.storage.salesforce.configuration.SalesforceConfiguration;
 import com.liferay.object.storage.salesforce.internal.web.cache.SalesforceAccessTokenWebCacheItem;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;

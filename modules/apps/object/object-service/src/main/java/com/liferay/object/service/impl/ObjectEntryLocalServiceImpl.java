@@ -2047,14 +2047,31 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry, serviceContext);
 	}
 
+	private void _updateExternalReferenceCode(
+			String externalReferenceCode, ObjectEntry objectEntry)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			externalReferenceCode = String.valueOf(
+				objectEntry.getObjectEntryId());
+		}
+
+		_validateExternalReferenceCode(
+			objectEntry.getCompanyId(), externalReferenceCode,
+			objectEntry.getObjectDefinitionId(),
+			objectEntry.getObjectEntryId());
+
+		objectEntry.setExternalReferenceCode(externalReferenceCode);
+	}
+
 	private void _updateSystemFieldValues(
 			ObjectEntry objectEntry, Map<String, Serializable> values)
 		throws PortalException {
 
 		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
 			if (StringUtil.equals(entry.getKey(), "externalReferenceCode")) {
-				objectEntry.setExternalReferenceCode(
-					String.valueOf(entry.getValue()));
+				_updateExternalReferenceCode(
+					String.valueOf(entry.getValue()), objectEntry);
 			}
 		}
 	}
@@ -2203,6 +2220,22 @@ public class ObjectEntryLocalServiceImpl
 				"The account entry ", accountEntryId,
 				" does not exist or the user ", userId,
 				" does not belong to it"));
+	}
+
+	private void _validateExternalReferenceCode(
+			long companyId, String externalReferenceCode,
+			long objectDefinitionId, long objectEntryId)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryPersistence.fetchByC_ERC_ODI(
+			companyId, externalReferenceCode, objectDefinitionId);
+
+		if ((objectEntry != null) &&
+			(objectEntry.getObjectEntryId() != objectEntryId)) {
+
+			throw new ObjectEntryValuesException.MustNotBeDuplicate(
+				externalReferenceCode);
+		}
 	}
 
 	private void _validateFileExtension(

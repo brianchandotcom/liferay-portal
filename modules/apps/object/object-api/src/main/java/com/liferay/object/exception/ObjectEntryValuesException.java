@@ -212,6 +212,14 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
+	public static class MustNotBeDuplicate extends ObjectEntryValuesException {
+
+		public MustNotBeDuplicate(String value) {
+			super("Duplicate value " + value);
+		}
+
+	}
+
 	public static class OneToOneConstraintViolation
 		extends ObjectEntryValuesException {
 

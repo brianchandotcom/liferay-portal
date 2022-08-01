@@ -46,6 +46,16 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 	public void write(Collection<PortletData> portletDatas, Writer writer)
 		throws IOException {
 
+		String rawCode = _computeRawCode(portletDatas);
+
+		if (!Validator.isBlank(rawCode)) {
+			writer.write("<script type=\"text/javascript\">\n");
+
+			writer.write(rawCode);
+
+			writer.write("\n</script>");
+		}
+
 		writer.write("<script type=\"module\">\n");
 
 		// Write ES prolog
@@ -120,7 +130,8 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 
 		// Write actual JS code
 
-		writer.write(_computeCode(amdRequireMap, esImportMap, portletDatas));
+		writer.write(
+			_computeNonrawCode(amdRequireMap, esImportMap, portletDatas));
 
 		// Write AUI epilog
 
@@ -198,7 +209,51 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 		return auiUseSet;
 	}
 
-	private String _computeCode(
+	private Map<ESImport, ESImport> _computeESImportMap(
+		Collection<PortletData> portletDatas,
+		Map<String, Integer> usedVariables) {
+
+		Map<ESImport, ESImport> esImportMap = new HashMap<>();
+
+		for (PortletData portletData : portletDatas) {
+			for (JSFragment jsFragment : portletData.getJSFragments()) {
+				Collection<ESImport> esImports = jsFragment.getESImports();
+
+				if ((esImports == null) || esImports.isEmpty()) {
+					continue;
+				}
+
+				for (ESImport esImport : esImports) {
+					if (esImportMap.containsKey(esImport)) {
+						continue;
+					}
+
+					String variable = esImport.getAlias();
+
+					if (usedVariables.containsKey(variable)) {
+						int index = usedVariables.get(variable);
+
+						usedVariables.put(variable, index + 1);
+
+						variable += index;
+					}
+					else {
+						usedVariables.put(variable, 0);
+					}
+
+					esImportMap.put(
+						esImport,
+						new ESImport(
+							esImport.getSymbol(), variable,
+							esImport.getModule()));
+				}
+			}
+		}
+
+		return esImportMap;
+	}
+
+	private String _computeNonrawCode(
 		Map<AMDRequire, AMDRequire> amdRequireMap,
 		Map<ESImport, ESImport> esImportMap,
 		Collection<PortletData> portletDatas) {
@@ -209,7 +264,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 			for (JSFragment jsFragment : portletData.getJSFragments()) {
 				String code = jsFragment.getCode();
 
-				if (Validator.isNull(code)) {
+				if (Validator.isNull(code) || jsFragment.isRaw()) {
 					continue;
 				}
 
@@ -286,48 +341,23 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 		return sb.toString();
 	}
 
-	private Map<ESImport, ESImport> _computeESImportMap(
-		Collection<PortletData> portletDatas,
-		Map<String, Integer> usedVariables) {
-
-		Map<ESImport, ESImport> esImportMap = new HashMap<>();
+	private String _computeRawCode(Collection<PortletData> portletDatas) {
+		StringBundler sb = new StringBundler();
 
 		for (PortletData portletData : portletDatas) {
 			for (JSFragment jsFragment : portletData.getJSFragments()) {
-				Collection<ESImport> esImports = jsFragment.getESImports();
+				String code = jsFragment.getCode();
 
-				if ((esImports == null) || esImports.isEmpty()) {
+				if (Validator.isNull(code) || !jsFragment.isRaw()) {
 					continue;
 				}
 
-				for (ESImport esImport : esImports) {
-					if (esImportMap.containsKey(esImport)) {
-						continue;
-					}
-
-					String variable = esImport.getAlias();
-
-					if (usedVariables.containsKey(variable)) {
-						int index = usedVariables.get(variable);
-
-						usedVariables.put(variable, index + 1);
-
-						variable += index;
-					}
-					else {
-						usedVariables.put(variable, 0);
-					}
-
-					esImportMap.put(
-						esImport,
-						new ESImport(
-							esImport.getSymbol(), variable,
-							esImport.getModule()));
-				}
+				sb.append(code);
+				sb.append("\n");
 			}
 		}
 
-		return esImportMap;
+		return sb.toString();
 	}
 
 }

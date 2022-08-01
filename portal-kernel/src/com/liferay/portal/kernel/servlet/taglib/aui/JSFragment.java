@@ -73,6 +73,16 @@ public class JSFragment {
 		return _esImports;
 	}
 
+	public boolean isRaw() {
+		if (_amdRequires.isEmpty() && _auiUses.isEmpty() &&
+			_esImports.isEmpty()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private final List<AMDRequire> _amdRequires = new ArrayList<>();
 	private final List<String> _auiUses = new ArrayList<>();
 	private final String _code;

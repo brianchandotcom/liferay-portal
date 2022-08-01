@@ -25,6 +25,7 @@ export type FacetAggregation = {
 };
 
 export type APIResponse<Query = any> = {
+	actions: Object;
 	items: Query[];
 	lastPage: number;
 	page: number;

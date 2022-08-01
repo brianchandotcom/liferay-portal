@@ -26,6 +26,10 @@ function changeResource(resource: RequestInfo) {
 			resource.toString().includes(headlessAdminUserAPI)
 	);
 
+	if (resource.toString().startsWith('http')) {
+		return resource;
+	}
+
 	if (isHeadlessAdminUserAPI) {
 		return `${liferayHost}/o/headless-admin-user/v1.0${resource}`;
 	}

@@ -115,7 +115,7 @@ const Subtasks = () => {
 				</div>
 			</Container>
 
-			<Container className="mt-5" title="Tests">
+			<Container className="mt-5" title={i18n.translate('tests')}>
 				<ListView
 					managementToolbarProps={{
 						visible: false,

@@ -57,6 +57,27 @@ public class NavigationMenuItem implements Cloneable, Serializable {
 
 	protected String[] availableLanguages;
 
+	public String getContentURL() {
+		return contentURL;
+	}
+
+	public void setContentURL(String contentURL) {
+		this.contentURL = contentURL;
+	}
+
+	public void setContentURL(
+		UnsafeSupplier<String, Exception> contentURLUnsafeSupplier) {
+
+		try {
+			contentURL = contentURLUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String contentURL;
+
 	public Creator getCreator() {
 		return creator;
 	}

@@ -91,6 +91,20 @@ public class NavigationMenuItemSerDes {
 			sb.append("]");
 		}
 
+		if (navigationMenuItem.getContentURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(navigationMenuItem.getContentURL()));
+
+			sb.append("\"");
+		}
+
 		if (navigationMenuItem.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -312,6 +326,15 @@ public class NavigationMenuItemSerDes {
 				String.valueOf(navigationMenuItem.getAvailableLanguages()));
 		}
 
+		if (navigationMenuItem.getContentURL() == null) {
+			map.put("contentURL", null);
+		}
+		else {
+			map.put(
+				"contentURL",
+				String.valueOf(navigationMenuItem.getContentURL()));
+		}
+
 		if (navigationMenuItem.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -451,6 +474,12 @@ public class NavigationMenuItemSerDes {
 				if (jsonParserFieldValue != null) {
 					navigationMenuItem.setAvailableLanguages(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "contentURL")) {
+				if (jsonParserFieldValue != null) {
+					navigationMenuItem.setContentURL(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {

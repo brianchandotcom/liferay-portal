@@ -97,6 +97,36 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
+	@Schema(description = "The navigation menu item's content API REST URL.")
+	public String getContentURL() {
+		return contentURL;
+	}
+
+	public void setContentURL(String contentURL) {
+		this.contentURL = contentURL;
+	}
+
+	@JsonIgnore
+	public void setContentURL(
+		UnsafeSupplier<String, Exception> contentURLUnsafeSupplier) {
+
+		try {
+			contentURL = contentURLUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The navigation menu item's content API REST URL."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String contentURL;
+
 	@Schema(description = "The navigation menu item's creator.")
 	@Valid
 	public Creator getCreator() {
@@ -548,6 +578,20 @@ public class NavigationMenuItem implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (contentURL != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(contentURL));
+
+			sb.append("\"");
 		}
 
 		if (creator != null) {

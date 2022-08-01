@@ -458,34 +458,20 @@ definition {
 	}
 
 	macro deleteEntries {
-		if (isSet(trashIcon) && ("${trashIcon}" == "false")) {
-			Click.clickNoMouseOverNoWaitForVisible(locator1 = "AppBuilder#CHECKBOX");
-
-			if (IsElementPresent(locator1 = "TableViewBuilder#CLEAR_SEARCH")) {
-				ClickNoError(locator1 = "TableViewBuilder#CLEAR_SEARCH");
-			}
-			else {
-				ClickNoError(locator1 = "Button#DELETE");
-			}
-
-			if (isSet(deleteMessage)) {
-				Confirm(value1 = "${deleteMessage}");
-			}
+		if (IsElementPresent(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX")) {
+			Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
 		}
 		else {
-			Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
-
-			if (IsElementPresent(locator1 = "Button#TRASH_ENABLED")) {
-				ClickNoError(locator1 = "Button#TRASH_ENABLED");
-			}
-			else {
-				ClickNoError(locator1 = "Button#DELETE");
-			}
-
-			if (isSet(deleteMessage)) {
-				Confirm(value1 = "${deleteMessage}");
-			}
+			Click.clickNoMouseOverNoWaitForVisible(locator1 = "AppBuilder#CHECKBOX");
 		}
+
+		ClickNoError(locator1 = "Button#TRASH_ENABLED");
+
+		if (isSet(deleteMessage)) {
+				Confirm(value1 = "${deleteMessage}");
+		}
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro deleteProductsEntry {

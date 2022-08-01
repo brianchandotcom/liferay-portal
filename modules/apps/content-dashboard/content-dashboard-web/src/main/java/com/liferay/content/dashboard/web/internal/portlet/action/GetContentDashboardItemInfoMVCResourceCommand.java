@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -316,10 +315,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		ContentDashboardItem contentDashboardItem,
 		HttpServletRequest httpServletRequest) {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152906"))) {
-			return null;
-		}
-
 		List<ContentDashboardItemAction> contentDashboardItemActions =
 			contentDashboardItem.getContentDashboardItemActions(
 				httpServletRequest,
@@ -338,10 +333,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 	private String _getFetchSharingCollaboratorsURL(
 		ContentDashboardItem contentDashboardItem,
 		HttpServletRequest httpServletRequest) {
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153687"))) {
-			return null;
-		}
 
 		List<ContentDashboardItemAction> contentDashboardItemActions =
 			contentDashboardItem.getContentDashboardItemActions(

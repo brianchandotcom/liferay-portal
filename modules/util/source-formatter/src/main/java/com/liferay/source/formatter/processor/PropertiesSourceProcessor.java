@@ -43,7 +43,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			"**/liferay-plugin-package.properties", "**/portal.properties",
 			"**/portal-ext.properties", "**/portlet.properties",
 			"**/poshi.properties", "**/service.properties",
-			"**/source-formatter.properties"
+			"**/source-formatter.properties", "**/test.properties"
 		};
 	}
 

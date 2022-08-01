@@ -20,6 +20,7 @@ export declare function ModalAddFilter({
 	disableDateValues,
 	editingFilter,
 	editingObjectFieldName,
+	filterOperators,
 	header,
 	objectFields,
 	observer,
@@ -32,6 +33,7 @@ interface IProps {
 	disableDateValues?: boolean;
 	editingFilter: boolean;
 	editingObjectFieldName: string;
+	filterOperators: TFilterOperators;
 	header: string;
 	objectFields: ObjectField[];
 	observer: any;

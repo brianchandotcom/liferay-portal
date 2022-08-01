@@ -41,6 +41,7 @@ export declare enum TYPES {
 declare const initialState: TState;
 interface IViewContextProviderProps extends React.HTMLAttributes<HTMLElement> {
 	value: {
+		filterOperators: TFilterOperators;
 		isViewOnly: boolean;
 		objectViewId: string;
 		workflowStatusJSONArray: TWorkflowStatus[];

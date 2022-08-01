@@ -77,6 +77,7 @@ export type TObjectView = {
 };
 
 export type TState = {
+	filterOperators: TFilterOperators;
 	isViewOnly: boolean;
 	objectFields: ObjectField[];
 	objectView: TObjectView;

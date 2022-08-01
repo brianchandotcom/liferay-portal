@@ -71,6 +71,7 @@ export declare type TObjectView = {
 	objectViewSortColumns: TObjectViewSortColumn[];
 };
 export declare type TState = {
+	filterOperators: TFilterOperators;
 	isViewOnly: boolean;
 	objectFields: ObjectField[];
 	objectView: TObjectView;

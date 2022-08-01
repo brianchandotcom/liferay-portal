@@ -170,6 +170,12 @@ interface IItem extends LabelValueObject {
 	checked?: boolean;
 }
 
+type TFilterOperators = {
+	dateOperators: LabelValueObject[];
+	numericOperators: LabelValueObject[];
+	picklistOperators: LabelValueObject[];
+};
+
 type ObjectFieldSettingName =
 	| 'acceptedFileExtensions'
 	| 'fileSource'

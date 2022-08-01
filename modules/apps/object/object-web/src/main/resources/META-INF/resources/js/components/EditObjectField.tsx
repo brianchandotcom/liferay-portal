@@ -50,6 +50,7 @@ const languages = Liferay.Language.available;
 const languageLabels = Object.values(languages);
 
 export default function EditObjectField({
+	filterOperators,
 	forbiddenChars,
 	forbiddenLastChars,
 	forbiddenNames,
@@ -616,6 +617,7 @@ export default function EditObjectField({
 					currentFilters={[]}
 					editingFilter={editingFilter}
 					editingObjectFieldName={editingObjectFieldName}
+					filterOperators={filterOperators}
 					header={Liferay.Language.get('filter')}
 					objectFields={
 						objectFields?.filter((objectField) => {
@@ -949,6 +951,7 @@ interface IMaxLengthPropertiesProps {
 }
 
 interface IProps {
+	filterOperators: TFilterOperators;
 	forbiddenChars: string[];
 	forbiddenLastChars: string[];
 	forbiddenNames: string[];

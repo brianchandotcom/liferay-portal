@@ -21,7 +21,7 @@ import ViewContext, {TYPES} from '../context';
 
 export function FilterScreen() {
 	const [
-		{objectFields, objectView, workflowStatusJSONArray},
+		{filterOperators, objectFields, objectView, workflowStatusJSONArray},
 		dispatch,
 	] = useContext(ViewContext);
 
@@ -120,6 +120,7 @@ export function FilterScreen() {
 					disableDateValues
 					editingFilter={editingFilter}
 					editingObjectFieldName={editingObjectFieldName}
+					filterOperators={filterOperators}
 					header={Liferay.Language.get('new-filter')}
 					objectFields={
 						editingFilter

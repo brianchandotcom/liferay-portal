@@ -691,6 +691,7 @@ const viewReducer = (state: TState, action: TAction) => {
 
 interface IViewContextProviderProps extends React.HTMLAttributes<HTMLElement> {
 	value: {
+		filterOperators: TFilterOperators;
 		isViewOnly: boolean;
 		objectViewId: string;
 		workflowStatusJSONArray: TWorkflowStatus[];

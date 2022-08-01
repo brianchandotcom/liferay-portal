@@ -30,12 +30,6 @@ import React, {
 	useState,
 } from 'react';
 
-import {
-	DATE_OPERATORS,
-	NUMERIC_OPERATORS,
-	PICKLIST_OPERATORS,
-} from '../utils/filterOperators';
-
 import './ModalAddFilter.scss';
 
 const REQUIRED_MSG = Liferay.Language.get('required');
@@ -46,6 +40,7 @@ export function ModalAddFilter({
 	disableDateValues,
 	editingFilter,
 	editingObjectFieldName,
+	filterOperators,
 	header,
 	objectFields,
 	observer,
@@ -95,7 +90,7 @@ export function ModalAddFilter({
 		const valuesArray =
 			definition && filterType ? definition[filterType] : null;
 
-		const editingFilterType = PICKLIST_OPERATORS.find(
+		const editingFilterType = filterOperators.picklistOperators.find(
 			(filterType) => filterType.value === currentFilterColumn?.filterType
 		);
 
@@ -138,7 +133,7 @@ export function ModalAddFilter({
 		const valuesArray =
 			definition && filterType ? definition[filterType] : null;
 
-		const editingFilterType = PICKLIST_OPERATORS.find(
+		const editingFilterType = filterOperators.picklistOperators.find(
 			(filterType) => filterType.value === currentFilterColumn?.filterType
 		);
 
@@ -384,8 +379,8 @@ export function ModalAddFilter({
 						options={
 							selectedFilterBy?.businessType === 'Integer' ||
 							selectedFilterBy?.businessType === 'LongInteger'
-								? NUMERIC_OPERATORS
-								: PICKLIST_OPERATORS
+								? filterOperators.numericOperators
+								: filterOperators.picklistOperators
 						}
 						required
 						value={selectedFilterType?.label ?? ''}
@@ -400,7 +395,7 @@ export function ModalAddFilter({
 							onChange={(target: LabelValueObject) =>
 								setSelectedFilterType(target)
 							}
-							options={DATE_OPERATORS}
+							options={filterOperators.dateOperators}
 							required
 							value={selectedFilterType?.label ?? ''}
 						/>
@@ -511,6 +506,7 @@ interface IProps {
 	disableDateValues?: boolean;
 	editingFilter: boolean;
 	editingObjectFieldName: string;
+	filterOperators: TFilterOperators;
 	header: string;
 	objectFields: ObjectField[];
 	observer: any;

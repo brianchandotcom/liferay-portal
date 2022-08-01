@@ -16,6 +16,7 @@
 
 import './EditObjectField.scss';
 export default function EditObjectField({
+	filterOperators,
 	forbiddenChars,
 	forbiddenLastChars,
 	forbiddenNames,
@@ -29,6 +30,7 @@ export default function EditObjectField({
 	workflowStatusJSONArray,
 }: IProps): JSX.Element;
 interface IProps {
+	filterOperators: TFilterOperators;
 	forbiddenChars: string[];
 	forbiddenLastChars: string[];
 	forbiddenNames: string[];

@@ -204,6 +204,7 @@ const Field = ({
 							displayType="secondary"
 							id={triggerId}
 							small
+							title={Liferay.Language.get('select-units')}
 						>
 							{nextUnit === CUSTOM ? (
 								<ClayIcon symbol="code" />

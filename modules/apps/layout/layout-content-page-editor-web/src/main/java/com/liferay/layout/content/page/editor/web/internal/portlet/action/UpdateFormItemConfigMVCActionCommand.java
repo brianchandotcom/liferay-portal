@@ -71,6 +71,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.TreeSet;
 
@@ -204,7 +205,8 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 			if (fragmentEntry == null) {
 				missingInputTypes.add(
-					infoFieldType.getLabel(themeDisplay.getLocale()));
+					_getFragmentEntryLabel(
+						infoFieldType, themeDisplay.getLocale()));
 
 				continue;
 			}
@@ -273,6 +275,38 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return null;
+	}
+
+	private String _getFragmentEntryLabel(
+		InfoFieldType infoFieldType, Locale locale) {
+
+		if (infoFieldType instanceof BooleanInfoFieldType) {
+			return _language.get(locale, "checkbox");
+		}
+
+		if (infoFieldType instanceof DateInfoFieldType) {
+			return _language.get(locale, "date");
+		}
+
+		if (infoFieldType instanceof FileInfoFieldType) {
+			return _language.get(locale, "file-upload");
+		}
+
+		if (infoFieldType instanceof NumberInfoFieldType) {
+			return _language.get(locale, "numeric-input");
+		}
+
+		if (infoFieldType instanceof RelationshipInfoFieldType ||
+			infoFieldType instanceof SelectInfoFieldType) {
+
+			return _language.get(locale, "select-from-list");
+		}
+
+		if (infoFieldType instanceof TextInfoFieldType) {
+			return _language.get(locale, "text-input");
+		}
+
+		return infoFieldType.getLabel(locale);
 	}
 
 	private List<InfoField<?>> _getInfoFields(

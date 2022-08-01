@@ -33,6 +33,11 @@ import org.osgi.service.component.annotations.Component;
 public class CustomizedDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
+	public String getEntityFieldType() {
+		return "date";
+	}
+
+	@Override
 	public String getId() {
 		return "date";
 	}

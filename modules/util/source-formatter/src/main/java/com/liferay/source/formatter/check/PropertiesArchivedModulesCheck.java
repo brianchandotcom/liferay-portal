@@ -88,17 +88,21 @@ public class PropertiesArchivedModulesCheck extends BaseFileCheck {
 				value, StringPool.COMMA);
 
 			for (String propertyValue : propertyValues) {
-				if (!propertyValue.startsWith("**/")) {
-					continue;
+				String moduleName = StringPool.BLANK;
+
+				if (propertyValue.startsWith("**/")) {
+					int x = propertyValue.indexOf(CharPool.SLASH, 3);
+
+					if (x == -1) {
+						continue;
+					}
+
+					moduleName = propertyValue.substring(3, x);
 				}
-
-				int x = propertyValue.indexOf(CharPool.SLASH, 3);
-
-				if (x == -1) {
-					continue;
+				else if (propertyValue.startsWith("apps/archived/")) {
+					moduleName = propertyValue.replaceFirst(
+						"apps/archived/(.+?)/.*", "$1");
 				}
-
-				String moduleName = propertyValue.substring(3, x);
 
 				if (archivedModuleDirectoryNames.contains(moduleName)) {
 					addMessage(

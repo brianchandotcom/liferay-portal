@@ -285,7 +285,6 @@ definition {
 				PageEditor.addFragmentToFormContainer(
 					collectionName = "Form Components",
 					fragmentName = "Submit Button",
-					height = "Tall",
 					targetFragmentName = "CAPTCHA");
 
 				AssertElementPresent(locator1 = "IFrame#RECAPTCHA");

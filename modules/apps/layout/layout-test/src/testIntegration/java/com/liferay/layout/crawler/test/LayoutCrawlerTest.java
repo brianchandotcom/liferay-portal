@@ -222,7 +222,7 @@ public class LayoutCrawlerTest {
 				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK,
 				JSONUtil.put(
-					"instanceid", StringUtil.randomString()
+					"instanceId", StringUtil.randomString()
 				).put(
 					"portletId", AssetPublisherPortletKeys.RECENT_CONTENT
 				).toString(),

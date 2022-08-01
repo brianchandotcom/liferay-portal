@@ -779,16 +779,6 @@ definition {
 
 	}
 
-	@description = "This is a test for COMMERCE-6195. CreateCategoryDisplayPage"
-	@ignore = "true"
-	@priority = "3"
-	test CreateCategoryDisplayPage {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6195 CreateCategoryDisplayPage
-
-	}
-
 	test CreateNewChannel {
 		property portal.acceptance = "false";
 
@@ -969,68 +959,6 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	@description = "This is a test for COMMERCE-6197. CreateProductDisplayPage"
-	@priority = "3"
-	test CreateProductDisplayPage {
-		property portal.acceptance = "false";
-
-		// TODO Review
-
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
-
-		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
-
-		Click(locator1 = "Button#PLUS");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.click(button = "Select Product");
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Click(locator1 = "Button#CHOOSE");
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Click(locator1 = "Button#CHOOSE");
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Click(locator1 = "Treeview#NODE_COLLAPSED");
-
-		Click(
-			key_nodeName = "Login",
-			locator1 = "Treeview#NODE_ITEM");
-
-		SelectFrameTop();
-
-		Click(locator1 = "Button#DONE");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.clickSave();
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
-
-		SelectFrameTop();
-
-		AssertElementPresent(
-			key_entryName = "ABS Sensor",
-			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
-	}
-
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -1181,50 +1109,6 @@ definition {
 			key_fieldLabel = "Company Code",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "Test");
-	}
-
-	@description = "This is a test for COMMERCE-6275. EditCategoryDisplayPage"
-	@priority = "3"
-	test EditCategoryDisplayPage {
-		property portal.acceptance = "false";
-
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
-
-		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Category Display Pages");
-
-		CommerceChannels.createCategoryDisplayPage(
-			page = "Login",
-			vocabulary = "Brake System");
-
-		Alert.viewSuccessMessage();
-
-		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
-
-		SelectFrame.selectFrameTop();
-
-		AssertElementPresent(
-			key_entryName = "Brake System",
-			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
-
-		CommerceChannels.editCategoryDisplayPage(
-			key_card = "Catalog",
-			name = "Brake System",
-			tabName = "Private+Pages");
-
-		Alert.viewSuccessMessage();
-
-		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
-
-		SelectFrame.selectFrameTop();
-
-		AssertElementPresent(
-			key_productName = "Brake System",
-			key_value = "Catalog",
-			locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
 	}
 
 	@description = "This is a test for COMMERCE-6122. EditConfigurationRemoteTaxCalculation"
@@ -1478,130 +1362,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@description = "This is a test for COMMERCE-6274. EditProductDisplayPage"
-	@priority = "3"
-	test EditProductDisplayPage {
-		property portal.acceptance = "Intern Test";
-
-		// TODO Review
-
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
-
-		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
-
-		Click(locator1 = "Button#PLUS");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.click(button = "Select Product");
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Click(
-			key_siteName = "ABS Sensor",
-			locator1 = "CommerceNavigation#CHOOSE_SITE_BUTTON");
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Click(locator1 = "Button#CHOOSE");
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Click(locator1 = "Treeview#NODE_COLLAPSED");
-
-		Click(
-			key_nodeName = "Login",
-			locator1 = "Treeview#NODE_ITEM");
-
-		SelectFrameTop();
-
-		Click(locator1 = "Button#DONE");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-
-		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
-
-		SelectFrameTop();
-
-		AssertElementPresent(
-			key_entryName = "ABS Sensor",
-			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
-
-		ClickNoError(
-			key_value = "ABS Sensor",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		CommerceEntry.clickNoError(menuItem = "Delete");
-
-		Alert.viewSuccessMessage();
-
-		Click(locator1 = "Button#PLUS");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.click(button = "Select Product");
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Click(
-			key_siteName = "Ball Joints",
-			locator1 = "CommerceNavigation#CHOOSE_SITE_BUTTON");
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Click(locator1 = "Button#CHOOSE");
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Click(locator1 = "Treeview#NODE_COLLAPSED");
-
-		Click(
-			key_nodeName = "Login",
-			locator1 = "Treeview#NODE_ITEM");
-
-		SelectFrameTop();
-
-		Click(locator1 = "Button#DONE");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-
-		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
-
-		SelectFrameTop();
-
-		AssertElementPresent(
-			key_entryName = "Ball Joints",
-			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
-
-		AssertElementNotPresent(
-			key_entryName = "ABS Sensor",
-			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
-	}
-
 	@description = "Verify users can configure payment method eligibility to specific payment terms."
 	@priority = "3"
 	test PaymentMethodEligibleForSpecificPaymentTerms {
@@ -1697,68 +1457,6 @@ definition {
 				productUnitPrice = "24",
 				shippingMethod = "Standard");
 		}
-	}
-
-	@description = "This is a test for COMMERCE-6198. RemoveCategoryDisplayPage"
-	@priority = "3"
-	test RemoveCategoryDisplayPage {
-		property portal.acceptance = "false";
-
-		// TODO Review
-
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
-
-		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Category Display Pages");
-
-		Click(locator1 = "Button#PLUS");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Click(locator1 = "Button#SELECT");
-
-		AssetCategorization.selectCategory(categoryName = "Brake System");
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Click(
-			key_text = "Done",
-			locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-		Click(locator1 = "Button#CHOOSE");
-
-		SelectFrame.selectFrameNoLoading(
-			key_title = "Select Category Display Page",
-			locator1 = "IFrame#MODAL_ANY");
-
-		Click(locator1 = "Treeview#NODE_COLLAPSED");
-
-		Click(
-			key_nodeName = "Login",
-			locator1 = "Treeview#NODE_ITEM");
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.clickSave();
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		Refresh();
-
-		Click(
-			locator1 = "Icon#SVG_ELLIPSIS",
-			value1 = "Brake System");
-
-		MenuItem.clickNoError(menuItem = "Delete");
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	@description = "This is a test for COMMERCE-6270. RemoveNotificationQueue"
@@ -1900,74 +1598,6 @@ definition {
 		AssertElementNotPresent(
 			key_value = "Test Notification Template",
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
-	}
-
-	@description = "This is a test for COMMERCE-6196. RemoveProductDisplayPage"
-	@priority = "3"
-	test RemoveProductDisplayPage {
-		property portal.acceptance = "false";
-
-		// TODO Review
-
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
-
-		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
-
-		Click(locator1 = "Button#PLUS");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.click(button = "Select Product");
-
-		SelectFrame.selectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Button.click(button = "Choose");
-
-		SelectFrame.selectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.click(button = "Choose");
-
-		SelectFrame.selectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Click(locator1 = "Treeview#NODE_COLLAPSED");
-
-		Click(
-			key_nodeName = "Login",
-			locator1 = "Treeview#NODE_ITEM");
-
-		SelectFrame.selectFrameTop();
-
-		Button.clickDone();
-
-		SelectFrame.selectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-
-		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
-
-		SelectFrame.selectFrameTop();
-
-		ClickNoError(
-			key_value = "ABS Sensor",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		ClickNoError(
-			filterOption = "Delete",
-			locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
 	@description = "This is a test for COMMERCE-6114. RemoveShippingOptionFlatRate"

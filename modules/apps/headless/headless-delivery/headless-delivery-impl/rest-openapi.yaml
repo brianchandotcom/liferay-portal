@@ -3106,6 +3106,11 @@ components:
                         type: string
                     readOnly: true
                     type: array
+                contentURL:
+                    # @review
+                    description:
+                        The navigation menu item's content API REST URL.
+                    type: string
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"

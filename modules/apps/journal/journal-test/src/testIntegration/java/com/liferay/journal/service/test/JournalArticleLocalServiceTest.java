@@ -650,7 +650,8 @@ public class JournalArticleLocalServiceTest {
 					LocaleUtil.US, title
 				).build(),
 				null, content, ddmStructure.getStructureKey(),
-				ddmTemplate.getTemplateKey(), null, true, false, null, null,
+				ddmTemplate.getTemplateKey(), null, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+				0, true, 0, 0, 0, 0, 0, true, true, false, null, null,
 				serviceContext);
 
 		return new Tuple(article, ddmStructure);

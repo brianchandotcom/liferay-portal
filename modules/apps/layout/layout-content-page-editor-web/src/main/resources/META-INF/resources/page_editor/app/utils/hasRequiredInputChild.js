@@ -15,8 +15,8 @@
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {getResponsiveConfig} from './getResponsiveConfig';
-import {isFormRequiredField} from './isFormRequiredField';
 import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
+import {isRequiredFormField} from './isRequiredFormField';
 
 function getDescendantIds(layoutData, itemId) {
 	const item = layoutData.items[itemId];
@@ -75,7 +75,7 @@ export default function hasRequiredInputChild({
 		return (
 			(!checkHidden ||
 				isItemHidden(layoutData, descendantId, selectedViewportSize)) &&
-			(inputRequired || isFormRequiredField(inputFieldId, formFields))
+			(inputRequired || isRequiredFormField(inputFieldId, formFields))
 		);
 	});
 }

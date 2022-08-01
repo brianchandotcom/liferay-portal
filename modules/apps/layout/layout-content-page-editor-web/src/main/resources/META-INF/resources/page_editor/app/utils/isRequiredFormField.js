@@ -12,7 +12,7 @@
  * details.
  */
 
-export function isFormRequiredField(fieldId, formFields) {
+export function isRequiredFormField(fieldId, formFields) {
 	if (!fieldId || !formFields) {
 		return false;
 	}

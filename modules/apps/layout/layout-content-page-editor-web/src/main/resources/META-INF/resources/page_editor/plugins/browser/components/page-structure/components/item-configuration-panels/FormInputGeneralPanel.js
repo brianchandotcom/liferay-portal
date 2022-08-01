@@ -34,7 +34,7 @@ import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSe
 import FormService from '../../../../../../app/services/FormService';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
 import {CACHE_KEYS} from '../../../../../../app/utils/cache';
-import {isFormRequiredField} from '../../../../../../app/utils/isFormRequiredField';
+import {isRequiredFormField} from '../../../../../../app/utils/isRequiredFormField';
 import {setIn} from '../../../../../../app/utils/setIn';
 import useCache from '../../../../../../app/utils/useCache';
 import Collapse from '../../../../../../common/components/Collapse';
@@ -55,7 +55,7 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 	const fields = [];
 
 	if (configurationValues[FIELD_ID_CONFIGURATION_KEY]) {
-		const isRequiredField = isFormRequiredField(
+		const isRequiredField = isRequiredFormField(
 			configurationValues[FIELD_ID_CONFIGURATION_KEY],
 			formFields
 		);

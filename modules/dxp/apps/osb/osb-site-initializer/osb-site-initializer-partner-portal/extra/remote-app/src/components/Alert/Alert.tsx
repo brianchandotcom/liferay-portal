@@ -14,19 +14,19 @@ import ClayIcon from '@clayui/icon';
 
 import getIconSpriteMap from '../../utils/getIconSpriteMap';
 
-type AlertProps = {
-	closeAlert: boolean;
+type props = {
+	closeAlert: any;
 	displayType: string | any;
 	setShowAlert: Function;
 	title: string;
 };
 
-const Alert = ({closeAlert, displayType, setShowAlert, title}: AlertProps) => {
+const Alert = ({closeAlert, setShowAlert, ...props}: props) => {
 	return (
 		<ClayAlert
-			displayType={displayType}
+			className="border-primary text-primary"
 			spritemap={getIconSpriteMap()}
-			title={title}
+			{...props}
 		>
 			No entries were found
 			{closeAlert && (

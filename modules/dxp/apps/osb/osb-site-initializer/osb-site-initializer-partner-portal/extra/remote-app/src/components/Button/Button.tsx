@@ -14,7 +14,14 @@ import ClayIcon, {ClayIconSpriteContext} from '@clayui/icon';
 
 import getIconSpriteMap from '../../utils/getIconSpriteMap';
 
-type Props = {displayType: string; icon: string; label: string; type: string};
+type Props = {
+	className: string;
+	displayType: string;
+	icon: string;
+	label: string;
+	onClick: any;
+	type: string;
+};
 
 const Button = ({icon, label, ...props}: Props) => {
 	return (

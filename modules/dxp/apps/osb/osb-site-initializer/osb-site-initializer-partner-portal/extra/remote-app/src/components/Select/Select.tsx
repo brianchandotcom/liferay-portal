@@ -27,9 +27,9 @@ const Select = ({label, options, ...props}: Props) => {
 			<ClaySelect {...props}>
 				{options.map((item: any) => (
 					<ClaySelect.Option
-						key={item.value}
-						label={item.label}
-						value={item.value}
+						key={item.key}
+						label={item.name}
+						value={item.key}
 					/>
 				))}
 			</ClaySelect>

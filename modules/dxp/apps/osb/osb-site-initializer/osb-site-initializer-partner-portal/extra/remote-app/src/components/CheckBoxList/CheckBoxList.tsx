@@ -15,10 +15,17 @@ import CheckBox from '../CheckBox/CheckBox';
 
 type Props = {
 	availableItems: any;
+	hasRule: boolean;
+	maxCheckedItems: number;
 	setCheckBox: any;
 };
 
-const CheckBoxList = ({availableItems, setCheckBox}: Props) => {
+const CheckBoxList = ({
+	availableItems,
+	hasRule,
+	maxCheckedItems,
+	setCheckBox,
+}: Props) => {
 	const [checkedItems, setCheckedItems] = useState<any[]>([]);
 
 	const handleSelectedCheckbox = (checkedItem: string, setCheckBox: any) => {
@@ -28,8 +35,13 @@ const CheckBoxList = ({availableItems, setCheckBox}: Props) => {
 			);
 		}
 
-		setCheckedItems([...checkedItems, checkedItem]);
-		setCheckBox([...checkedItems, checkedItem]);
+		if (
+			(hasRule && checkedItems.length + 1 <= maxCheckedItems) ||
+			!hasRule
+		) {
+			setCheckedItems([...checkedItems, checkedItem]);
+			setCheckBox([...checkedItems, checkedItem]);
+		}
 	};
 
 	return (

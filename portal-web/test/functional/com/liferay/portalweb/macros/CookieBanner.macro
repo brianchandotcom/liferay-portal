@@ -63,6 +63,14 @@ definition {
 		CookieConsentPanel.verifyAllElementsArePresent();
 	}
 
+	macro verifyCookieBannerIsNotPresent {
+		WaitForElementNotPresent(locator1 = "CookieBanner#COOKIES_BANNER");
+	}
+
+	macro verifyCookieBannerIsPresent {
+		WaitForElementPresent(locator1 = "CookieBanner#COOKIES_BANNER");
+	}
+
 	@description = "Verify that customized texts are present"
 	macro verifyCustomTextsArePresent {
 		Variables.assertDefined(parameterList = "${key_text}");

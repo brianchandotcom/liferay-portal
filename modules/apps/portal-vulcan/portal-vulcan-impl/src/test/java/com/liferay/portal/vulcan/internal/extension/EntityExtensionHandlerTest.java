@@ -68,7 +68,7 @@ public class EntityExtensionHandlerTest {
 
 		Mockito.when(
 			_mockedExtensionProvider1.getExtendedProperties(
-				Mockito.anyLong(), Mockito.any())
+				Mockito.anyLong(), Mockito.anyString(), Mockito.any())
 		).thenReturn(
 			testMap1
 		);
@@ -78,7 +78,7 @@ public class EntityExtensionHandlerTest {
 
 		Mockito.when(
 			_mockedExtensionProvider2.getExtendedProperties(
-				Mockito.anyLong(), Mockito.any())
+				Mockito.anyLong(), Mockito.anyString(), Mockito.any())
 		).thenReturn(
 			testMap2
 		);
@@ -89,13 +89,15 @@ public class EntityExtensionHandlerTest {
 		Mockito.verify(
 			_mockedExtensionProvider1
 		).getExtendedProperties(
-			Mockito.eq(_COMPANY_ID), Mockito.eq(_OBJECT)
+			Mockito.eq(_COMPANY_ID), Mockito.eq(_CLASS_NAME),
+			Mockito.eq(_OBJECT)
 		);
 
 		Mockito.verify(
 			_mockedExtensionProvider2
 		).getExtendedProperties(
-			Mockito.eq(_COMPANY_ID), Mockito.eq(_OBJECT)
+			Mockito.eq(_COMPANY_ID), Mockito.eq(_CLASS_NAME),
+			Mockito.eq(_OBJECT)
 		);
 
 		Assert.assertEquals(
@@ -238,7 +240,7 @@ public class EntityExtensionHandlerTest {
 		);
 
 		_entityExtensionHandler.setExtendedProperties(
-			_COMPANY_ID, _OBJECT, testExtendedProperties);
+			_COMPANY_ID, _USER_ID, _OBJECT, testExtendedProperties);
 
 		Mockito.verify(
 			_mockedExtensionProvider1
@@ -255,14 +257,16 @@ public class EntityExtensionHandlerTest {
 		Mockito.verify(
 			_mockedExtensionProvider1
 		).setExtendedProperties(
-			Mockito.eq(_COMPANY_ID), Mockito.eq(_OBJECT),
+			Mockito.eq(_COMPANY_ID), Mockito.eq(_USER_ID),
+			Mockito.eq(_CLASS_NAME), Mockito.eq(_OBJECT),
 			Mockito.eq(Collections.singletonMap(propertyName1, propertyValue1))
 		);
 
 		Mockito.verify(
 			_mockedExtensionProvider2
 		).setExtendedProperties(
-			Mockito.eq(_COMPANY_ID), Mockito.eq(_OBJECT),
+			Mockito.eq(_COMPANY_ID), Mockito.eq(_USER_ID),
+			Mockito.eq(_CLASS_NAME), Mockito.eq(_OBJECT),
 			Mockito.eq(Collections.singletonMap(propertyName2, propertyValue2))
 		);
 	}
@@ -661,6 +665,8 @@ public class EntityExtensionHandlerTest {
 	private static final long _COMPANY_ID = 11111;
 
 	private static final Object _OBJECT = new Object();
+
+	private static final long _USER_ID = RandomTestUtil.randomLong();
 
 	private EntityExtensionHandler _entityExtensionHandler;
 	private final ExtensionProvider _mockedExtensionProvider1 = Mockito.mock(

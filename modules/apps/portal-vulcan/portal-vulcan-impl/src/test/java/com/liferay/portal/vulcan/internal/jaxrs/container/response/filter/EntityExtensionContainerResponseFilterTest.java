@@ -15,11 +15,12 @@
 package com.liferay.portal.vulcan.internal.jaxrs.container.response.filter;
 
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
 import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
-import com.liferay.portal.vulcan.internal.extension.EntityExtensionThreadLocal;
 
 import java.io.Serializable;
 
@@ -61,6 +62,8 @@ public class EntityExtensionContainerResponseFilterTest {
 			_entityExtensionContainerResponseFilter, "_company", _company);
 		ReflectionTestUtil.setFieldValue(
 			_entityExtensionContainerResponseFilter, "_providers", _providers);
+		ReflectionTestUtil.setFieldValue(
+			_entityExtensionContainerResponseFilter, "_user", _user);
 	}
 
 	@Test
@@ -101,7 +104,8 @@ public class EntityExtensionContainerResponseFilterTest {
 		).when(
 			_entityExtensionHandler
 		).setExtendedProperties(
-			Mockito.anyLong(), Mockito.any(), Mockito.anyMap()
+			Mockito.anyLong(), Mockito.anyLong(), Mockito.any(),
+			Mockito.anyMap()
 		);
 
 		Mockito.when(
@@ -109,6 +113,14 @@ public class EntityExtensionContainerResponseFilterTest {
 				Mockito.any(Class.class), Mockito.any(MediaType.class))
 		).thenReturn(
 			_contextResolver
+		);
+
+		Long userId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_user.getUserId()
+		).thenReturn(
+			userId
 		);
 
 		Map<String, Serializable> extendedProperties = Collections.singletonMap(
@@ -144,7 +156,7 @@ public class EntityExtensionContainerResponseFilterTest {
 		Mockito.verify(
 			_entityExtensionHandler
 		).setExtendedProperties(
-			companyId, _TEST_ENTITY, extendedProperties
+			companyId, userId, _TEST_ENTITY, extendedProperties
 		);
 
 		Mockito.verifyNoMoreInteractions(_entityExtensionHandler);
@@ -222,6 +234,9 @@ public class EntityExtensionContainerResponseFilterTest {
 
 	@Mock
 	private Providers _providers;
+
+	@Mock
+	private User _user;
 
 	private static class TestEntity {
 	}

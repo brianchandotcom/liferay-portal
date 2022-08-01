@@ -21,10 +21,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -263,66 +261,20 @@ public class Log4jConfigUtilTest {
 		}
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
-	public void testGetCompanyLogDirectory() throws Exception {
-		long companyId = CompanyThreadLocal.getCompanyId();
+	public void testGetCompanyLogDirectoryWithDisabled() throws Exception {
+		PropsTestUtil.setProps(PropsKeys.COMPANY_LOG_ENABLED, "false");
 
-		if (!GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.COMPANY_LOG_ENABLED))) {
+		_testGetCompanyLogDirectory(false);
+	}
 
-			Assert.assertNull(
-				Log4jConfigUtil.getCompanyLogDirectory(companyId));
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@Test
+	public void testGetCompanyLogDirectoryWithEnabled() throws Exception {
+		PropsTestUtil.setProps(PropsKeys.COMPANY_LOG_ENABLED, "true");
 
-			return;
-		}
-
-		String loggerName = StringUtil.randomString();
-
-		Log4jConfigUtil.configureLog4J(
-			_generateXMLConfigurationContent(loggerName, _INFO));
-
-		Assert.assertNull(Log4jConfigUtil.getCompanyLogDirectory(companyId));
-
-		File tempLogFileDir = null;
-
-		try {
-			Path path = Files.createTempDirectory(
-				Log4jConfigUtilTest.class.getName());
-
-			tempLogFileDir = path.toFile();
-
-			String tempLogFileDirPath = StringUtil.replace(
-				tempLogFileDir.getPath(), CharPool.BACK_SLASH,
-				CharPool.FORWARD_SLASH);
-
-			String filePattern = "liferay-@company.id@.%d{yyyy-MM-dd}.xml.log";
-
-			Log4jConfigUtil.configureLog4J(
-				_generateCompanyLogRoutingAppenderConfigurationContent(
-					"COMPANY_LOG_ROUTING_TEXT_FILE",
-					StringBundler.concat(
-						tempLogFileDirPath, CharPool.FORWARD_SLASH,
-						filePattern),
-					loggerName, _INFO));
-
-			Logger logger = (Logger)LogManager.getLogger(loggerName);
-
-			logger.info("Test message");
-
-			Assert.assertEquals(
-				"Company log directory should be " + tempLogFileDirPath,
-				tempLogFileDirPath,
-				Log4jConfigUtil.getCompanyLogDirectory(companyId));
-		}
-		finally {
-			if (tempLogFileDir != null) {
-				for (File file : tempLogFileDir.listFiles()) {
-					file.delete();
-				}
-
-				tempLogFileDir.delete();
-			}
-		}
+		_testGetCompanyLogDirectory(true);
 	}
 
 	@Test
@@ -608,6 +560,64 @@ public class Log4jConfigUtilTest {
 		sb.append("</Logger></Loggers></Configuration>");
 
 		return sb.toString();
+	}
+
+	private void _testGetCompanyLogDirectory(boolean enabled) throws Exception {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		String loggerName = StringUtil.randomString();
+
+		Log4jConfigUtil.configureLog4J(
+			_generateXMLConfigurationContent(loggerName, _INFO));
+
+		Assert.assertNull(Log4jConfigUtil.getCompanyLogDirectory(companyId));
+
+		File tempLogFileDir = null;
+
+		try {
+			Path path = Files.createTempDirectory(
+				Log4jConfigUtilTest.class.getName());
+
+			tempLogFileDir = path.toFile();
+
+			String tempLogFileDirPath = StringUtil.replace(
+				tempLogFileDir.getPath(), CharPool.BACK_SLASH,
+				CharPool.FORWARD_SLASH);
+
+			String filePattern = "liferay-@company.id@.%d{yyyy-MM-dd}.xml.log";
+
+			Log4jConfigUtil.configureLog4J(
+				_generateCompanyLogRoutingAppenderConfigurationContent(
+					"COMPANY_LOG_ROUTING_TEXT_FILE",
+					StringBundler.concat(
+						tempLogFileDirPath, CharPool.FORWARD_SLASH,
+						filePattern),
+					loggerName, _INFO));
+
+			Logger logger = (Logger)LogManager.getLogger(loggerName);
+
+			logger.info("Test message");
+
+			if (enabled) {
+				Assert.assertEquals(
+					"Company log directory should be " + tempLogFileDirPath,
+					tempLogFileDirPath,
+					Log4jConfigUtil.getCompanyLogDirectory(companyId));
+			}
+			else {
+				Assert.assertNull(
+					Log4jConfigUtil.getCompanyLogDirectory(companyId));
+			}
+		}
+		finally {
+			if (tempLogFileDir != null) {
+				for (File file : tempLogFileDir.listFiles()) {
+					file.delete();
+				}
+
+				tempLogFileDir.delete();
+			}
+		}
 	}
 
 	private static final String _ALL = "ALL";

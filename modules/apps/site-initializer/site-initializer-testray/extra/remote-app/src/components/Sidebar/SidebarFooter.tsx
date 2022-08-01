@@ -19,11 +19,11 @@ import {useContext} from 'react';
 
 import {AccountContext} from '../../context/AccountContext';
 import i18n from '../../i18n';
-import ForwardIcon from '../../images/ForwardIcon';
+import {ForwardIcon} from '../../images';
 import {Liferay} from '../../services/liferay';
 import Avatar from '../Avatar';
 import DropDown from '../DropDown';
-import ToolTip from '../Tooltip';
+import Tooltip from '../Tooltip';
 import useSidebarActions from './useSidebarActions';
 
 type SidebarProps = {
@@ -40,7 +40,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 			<div className="divider divider-full" />
 
 			<div className="d-flex justify-content-end">
-				<ToolTip
+				<Tooltip
 					position="right"
 					title={expanded ? undefined : i18n.translate('expand')}
 				>
@@ -51,7 +51,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 							})}
 						/>
 					</div>
-				</ToolTip>
+				</Tooltip>
 			</div>
 
 			<DropDown
@@ -59,7 +59,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 				position={Align.RightBottom}
 				trigger={
 					<div>
-						<ToolTip
+						<Tooltip
 							position="right"
 							title={
 								expanded ? undefined : i18n.translate('manage')
@@ -79,7 +79,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 									{i18n.translate('manage')}
 								</span>
 							</div>
-						</ToolTip>
+						</Tooltip>
 					</div>
 				}
 			/>
@@ -105,7 +105,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 				position={Align.RightBottom}
 				trigger={
 					<div>
-						<ToolTip
+						<Tooltip
 							position="right"
 							title={
 								expanded
@@ -121,7 +121,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 									url={myUserAccount?.image}
 								/>
 							</div>
-						</ToolTip>
+						</Tooltip>
 					</div>
 				}
 			/>

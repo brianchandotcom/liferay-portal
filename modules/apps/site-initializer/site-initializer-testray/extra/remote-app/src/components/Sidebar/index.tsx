@@ -21,9 +21,8 @@ import {Link, useLocation} from 'react-router-dom';
 
 import useLocalStorage from '../../hooks/useLocalStorage';
 import i18n from '../../i18n';
-import TestrayIcon from '../../images/testray-icon';
-import TestrayIconBrand from '../../images/testray-icon-brand';
-import ToolTip from '../Tooltip';
+import {TestrayIcon, TestrayIconBrand} from '../../images';
+import Tooltip from '../Tooltip';
 import CompareRun from './CompareRuns';
 import SidebarFooter from './SidebarFooter';
 import SidebarItem from './SidebarItem';
@@ -55,13 +54,13 @@ const Sidebar = () => {
 					size="lg"
 					trigger={
 						<div>
-							<ToolTip
+							<Tooltip
 								position="right"
 								ref={tooltipRef}
 								title={
-									!expanded
-										? i18n.translate('compare-runs')
-										: undefined
+									expanded
+										? undefined
+										: i18n.translate('compare-runs')
 								}
 							>
 								<div
@@ -82,7 +81,7 @@ const Sidebar = () => {
 										{i18n.translate('compare-runs')}
 									</span>
 								</div>
-							</ToolTip>
+							</Tooltip>
 						</div>
 					}
 				>

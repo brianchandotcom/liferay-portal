@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 
 import i18n from '../../i18n';
-import ToolTip from '../Tooltip';
+import Tooltip from '../Tooltip';
 
 type SidebarItemProps = {
 	active?: boolean;
@@ -41,9 +41,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 		: ({children, ...props}: any) => <div {...props}>{children}</div>;
 
 	return (
-		<ToolTip
+		<Tooltip
 			position="right"
-			title={!expanded ? i18n.translate(label) : undefined}
+			title={expanded ? undefined : i18n.translate(label)}
 		>
 			<LinkComponent
 				className={classNames(
@@ -67,7 +67,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 					{label}
 				</span>
 			</LinkComponent>
-		</ToolTip>
+		</Tooltip>
 	);
 };
 

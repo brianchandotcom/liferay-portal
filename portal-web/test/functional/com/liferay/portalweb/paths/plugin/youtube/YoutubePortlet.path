@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIDEO_PROGRESS_BAR</td>
+	<td>//div[contains(@class,'ytp-progress-bar') and contains(@aria-valuetext,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIDEO_TITLE</td>
 	<td>//div/a[contains(@class,'ytp-title-link')]</td>
 	<td></td>

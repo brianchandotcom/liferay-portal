@@ -1,0 +1,23 @@
+body{
+    width: 90%;
+    margin: 3%;
+}
+
+#collapseOne, #collapseTwo, #collapseThree{
+	margin: 2%;
+}
+
+#collapseTwo, #collapseThree, #parametersList, #addParameter{
+	display: none;
+}
+
+#parametersList>div {
+    margin: 1%;
+}
+.message{
+	font-size: 12px;
+}
+
+.alignRight{
+    text-align: right;
+}

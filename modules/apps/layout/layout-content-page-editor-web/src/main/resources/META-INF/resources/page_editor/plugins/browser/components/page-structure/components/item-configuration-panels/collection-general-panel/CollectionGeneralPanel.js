@@ -158,7 +158,9 @@ export function CollectionGeneralPanel({item}) {
 						'if-you-change-the-collection-you-unlink-the-collection-filter'
 					)}\n\n${Liferay.Language.get('do-you-want-to-continue')}`,
 					onConfirm: (isConfirmed) => {
-						callback(isConfirmed);
+						if (isConfirmed) {
+							callback(isConfirmed);
+						}
 					},
 				});
 			}

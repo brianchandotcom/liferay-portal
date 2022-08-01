@@ -25,6 +25,7 @@ definition {
 	@description = "This is a use case for LPS-129398. User can authorize external application multiple times without any user session, when remember device is chosen."
 	@priority = "4"
 	test ApplicationCanBeAuthorizedWithoutUserSession {
+		property oauth2.local.enabled = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCanBeAuthorizedWithoutUserSession";
 
@@ -35,12 +36,12 @@ definition {
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
 					baseURL = "https://localhost:8443",
-					callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
+					callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
 					clientProfile = "Web Application",
 					clientSecret = "defaultsecret${count}",
-					websiteURL = "http://www.liferay.com");
+					websiteURL = "https://localhost:8443");
 			}
 		}
 
@@ -87,6 +88,7 @@ definition {
 	@description = "This is a use case for LPS-126597. User can authorize external application multiple times with remember device option. After the first authorization flow login is not needed."
 	@priority = "5"
 	test ApplicationCanBeAuthorizedWithRememberDeviceEnabled {
+		property oauth2.local.enabled = "true";
 		property portal.acceptance = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCanBeAuthorizedWithRememberDeviceEnabled";
@@ -97,11 +99,12 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				checkboxCheckList = "Remember Device",
 				clientId = "abc123",
 				clientProfile = "Web Application",
-				clientSecret = "abc123");
+				clientSecret = "abc123",
+				websiteURL = "https://localhost:8443");
 		}
 
 		task ("Authorize my application with remember device option checked") {
@@ -126,6 +129,7 @@ definition {
 	@description = "This is a use case for LPS-145191 TC-1:Liferay will not issue an access token back to the client when configure OAuth 2 Application as Client Secret JWT without the client sending client info in JWT."
 	@priority = "4"
 	test ApplicationCannotBeAuthorizedWithClientSecretJWTWithoutJWTAssertion {
+		property oauth2.local.enabled = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCannotBeAuthorizedWithClientSecretJWTWithoutJWTAssertion";
 
@@ -135,11 +139,12 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientAuthenticationMethod = "Client Secret JWT",
 				clientId = "abc123",
 				clientProfile = "Web Application",
-				clientSecret = "abc123");
+				clientSecret = "abc123",
+				websiteURL = "https://localhost:8443");
 		}
 
 		task ("Authorize application") {
@@ -237,6 +242,7 @@ definition {
 	@description = "This is a use case for LPS-145191 TC-2:Liferay will not issue an access token back to the client when configure OAuth 2 Application as Private Key JWT without the client sending client info in JWT."
 	@priority = "4"
 	test ApplicationCannotBeAuthorizedWithPrivateKeyJWTWithoutJWTAssertion {
+		property oauth2.local.enabled = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCannotBeAuthorizedWithPrivateKeyJWTWithoutJWTAssertion";
 
@@ -246,11 +252,12 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientAuthenticationMethod = "Private Key JWT",
 				clientId = "abc123",
 				clientProfile = "Web Application",
-				clientSecret = "abc123");
+				clientSecret = "abc123",
+				websiteURL = "https://localhost:8443");
 		}
 
 		task ("Check the content of JSON Web Key Set doesn't disappear") {
@@ -428,6 +435,7 @@ definition {
 	@description = "This is a use case for LPS-129397 TC-1: User can revoke authorization via kebab menu on	the OAuth 2 administration page."
 	@priority = "5"
 	test AuthorizationCanBeRevokedViaKebabMenu {
+		property oauth2.local.enabled = "true";
 		property portal.acceptance = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#AuthorizationCanBeRevokedViaKebabMenu";
@@ -438,11 +446,11 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=default''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default''',
 				clientId = "default",
 				clientProfile = "Web Application",
 				clientSecret = "defaultsecret",
-				websiteURL = "http://localhost:8080");
+				websiteURL = "https://localhost:8443");
 		}
 
 		task ("Verify that the created application is in the first row and the Revoke button is not present") {
@@ -483,6 +491,7 @@ definition {
 	@description = "This is a use case for LPS-129397 TC-2: User can revoke authorizations from a trusted application via kebab menu on the OAuth 2 administration page."
 	@priority = "3"
 	test AuthorizationCanBeRevokedViaKebabMenuWithTrustedDevice {
+		property oauth2.local.enabled = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#AuthorizationCanBeRevokedViaKebabMenuWithTrustedDevice";
 
@@ -492,12 +501,12 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=default''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default''',
 				checkboxCheckList = "Trusted Application",
 				clientId = "default",
 				clientProfile = "Web Application",
 				clientSecret = "defaultsecret",
-				websiteURL = "http://localhost:8080");
+				websiteURL = "https://localhost:8443");
 		}
 
 		task ("Verify that the application has 0 authorizations at OAuth 2 admin and the Revoke button is not present") {
@@ -878,6 +887,7 @@ definition {
 	@description = "This is a use case for LPS-105156. Authorized application should be automatically removed from the User's connect table when it is expired."
 	@priority = "4"
 	test ExpiredAuthorizationShouldBeRemovedFromTable {
+		property oauth2.local.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config:com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration.config";
 		property osgi.module.configurations = "access.token.expires.in=&quot;30&quot;${line.separator}refresh.token.expires.in=&quot;60&quot;:oauth2.expired.authorizations.afterlife.duration=&quot;30&quot;${line.separator}oauth2.expired.authorizations.check.interval=&quot;30&quot;";
 		property portal.ssl.enabled = "true";
@@ -889,9 +899,10 @@ definition {
 
 			OAuth2.addApplication(
 				applicationName = "Test Expired Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=${clientId}''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientId = "abc123",
-				clientSecret = "abc123");
+				clientSecret = "abc123",
+				websiteURL = "https://localhost:8443");
 		}
 
 		task ("Edit scopes") {
@@ -1069,6 +1080,7 @@ definition {
 	@description = "This is a use case for LRQA-47381. User can authorize external applications."
 	test ExternalApplicationCanBeAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property oauth2.local.enabled = "true";
 		property portal.acceptance = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeAuthorized";
@@ -1079,16 +1091,18 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientId = "abc123",
 				clientProfile = "Web Application",
-				clientSecret = "abc123");
+				clientSecret = "abc123",
+				websiteURL = "https://localhost:8443");
 		}
 
 		task ("Authorize the new external application") {
 			OAuth2.authorizeMyApplication(
 				clientId = "abc123",
-				clientSecret = "abc123");
+				clientSecret = "abc123",
+				portalURL = "https://localhost:8443");
 		}
 
 		task ("Launch request") {
@@ -1100,6 +1114,7 @@ definition {
 	@priority = "3"
 	test ExternalApplicationCanBeTrustedAndAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property oauth2.local.enabled = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeTrustedAndAuthorized";
 
@@ -1109,11 +1124,12 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				checkboxCheckList = "Trusted Application",
 				clientId = "abc123",
 				clientProfile = "Web Application",
-				clientSecret = "abc123");
+				clientSecret = "abc123",
+				websiteURL = "https://localhost:8443");
 		}
 
 		task ("Authorize the new external application") {
@@ -1625,6 +1641,7 @@ definition {
 	@priority = "4"
 	test RefreshTokenTimeCanBeSetExpiredAndRenewed {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property oauth2.local.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config";
 		property osgi.module.configurations = "access.token.expires.in=&quot;8&quot;";
 		property portal.ssl.enabled = "true";
@@ -1636,10 +1653,11 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientId = "abc123",
 				clientProfile = "Web Application",
-				clientSecret = "abc123");
+				clientSecret = "abc123",
+				websiteURL = "https://localhost:8443");
 		}
 
 		task ("Authorize application") {
@@ -1664,6 +1682,7 @@ definition {
 	@description = "This is a use case for LPS-129395. Remember device option should be visible in OAuth 2 admin page if it was set in the application settings."
 	@priority = "5"
 	test RememberDeviceExternalPropertyShouldBeVisible {
+		property oauth2.local.enabled = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#RememberDeviceExternalPropertyShouldBeVisible";
 
@@ -1674,9 +1693,10 @@ definition {
 
 			OAuth2.addApplication(
 				applicationName = "Remember Device Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				checkboxCheckList = "Remember Device",
-				clientProfile = "Web Application");
+				clientProfile = "Web Application",
+				websiteURL = "https://localhost:8443");
 		}
 
 		task ("Verify application was added and has the 'Remember Device' external option") {
@@ -1691,6 +1711,7 @@ definition {
 	@description = "This is a use case for LPS-129398. User can authorize multiple external applications which have the remember device option checked."
 	@priority = "4"
 	test RememberDeviceShouldWorkWithMultipleAuthorizations {
+		property oauth2.local.enabled = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#RememberDeviceShouldWorkWithMultipleAuthorizations";
 
@@ -1701,12 +1722,12 @@ definition {
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
 					baseURL = "https://localhost:8443",
-					callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
+					callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
 					clientProfile = "Web Application",
 					clientSecret = "defaultsecret${count}",
-					websiteURL = "http://www.liferay.com");
+					websiteURL = "https://localhost:8443");
 			}
 		}
 
@@ -1751,6 +1772,7 @@ definition {
 	@description = "This is a use case for LPS-129397 TC-3: User can evoke authorizations via new kebab menu option in OAuth 2 application's row when the device is remembered."
 	@priority = "3"
 	test RevokeAuthorizationViaKebabMenuWithRememberDevice {
+		property oauth2.local.enabled = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#RevokeAuthorizationViaKebabMenuWithRememberDevice";
 
@@ -1760,12 +1782,12 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=default''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default''',
 				checkboxCheckList = "Remember Device",
 				clientId = "default",
 				clientProfile = "Web Application",
 				clientSecret = "defaultsecret",
-				websiteURL = "http://localhost:8080");
+				websiteURL = "https://localhost:8443");
 		}
 
 		task ("Verify My Application has 0 authorizations at OAuth 2 admin") {
@@ -1944,6 +1966,7 @@ definition {
 	@description = "This is a use case for LPS-130869. OAuth2 token introspection should work with empty client secret for PKCE application."
 	@priority = "4"
 	test TokenIntrospectionShouldWorkWithEmptyClientSecretForPKCE {
+		property oauth2.local.enabled = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#TokenIntrospectionShouldWorkWithEmptyClientSecretForPKCE";
 
@@ -1953,13 +1976,14 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''http://martamedio.com/oauth2-tester/pkce/?url=https://localhost:8443&client_id=pkce''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/pkce/?url=https://localhost:8443&client_id=pkce''',
 				checkboxCheckList = "Token Introspection",
 				checkboxUncheckList = "Authorization Code,Client Credentials,JWT_BEARER,Resource Owner Password Credentials",
 				clientAuthenticationMethod = "None",
 				clientId = "pkce",
 				clientProfile = "Other",
-				clientSecret = "");
+				clientSecret = "",
+				websiteURL = "https://localhost:8443");
 		}
 
 		task ("When: Authorize PKCE application") {
@@ -1974,6 +1998,7 @@ definition {
 	@description = "This is a use case for LPS-129395. External applications have trusted label in OAuth 2 admin page when they are created with the trusted device option."
 	@priority = "5"
 	test TrustedExternalPropertyShouldBeVisible {
+		property oauth2.local.enabled = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#TrustedExternalPropertyShouldBeVisible";
 
@@ -1984,9 +2009,10 @@ definition {
 
 			OAuth2.addApplication(
 				applicationName = "Trusted Application",
-				callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				checkboxCheckList = "Trusted Application",
-				clientProfile = "Web Application");
+				clientProfile = "Web Application",
+				websiteURL = "https://localhost:8443");
 		}
 
 		task ("Verify application was added") {

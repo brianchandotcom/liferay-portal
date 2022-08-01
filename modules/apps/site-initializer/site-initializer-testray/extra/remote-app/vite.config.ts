@@ -15,22 +15,17 @@
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig} from 'vite';
-import {UserConfigExport as VitestConfigExport} from 'vitest/config';
+import {UserConfigExport} from 'vitest/config';
 
 export default defineConfig({
 	build: {assetsDir: 'static', outDir: 'build'},
 	plugins: [react()],
+	server: {
+		port: 3000,
+	},
 	test: {
 		coverage: {
 			all: true,
-			exclude: [
-				path.resolve(__dirname),
-				'src/graphql/fragments',
-				path.resolve(__dirname),
-				'src/graphql/queries',
-				path.resolve(__dirname),
-				'src/graphql/mutations',
-			],
 			include: [path.resolve(__dirname), 'src'],
 		},
 		environment: 'jsdom',
@@ -39,4 +34,4 @@ export default defineConfig({
 		include: ['**/(*.)?{test,spec}.{ts,tsx}'],
 		setupFiles: ['./src/setupTests.ts'],
 	},
-} as VitestConfigExport);
+} as UserConfigExport);

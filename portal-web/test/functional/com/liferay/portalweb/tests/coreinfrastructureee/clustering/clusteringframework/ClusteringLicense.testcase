@@ -36,6 +36,8 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "This current node is within the licensed node count and will not be automatically deactivated nor shut down after the grace period expires.");
 
+		Clustering.waitForNodeShutdown(nodePort = "10080");
+
 		Navigator.openSpecificURL(url = "http://localhost:10080");
 
 		Alert.viewErrorMessage(errorMessage = "exceeded the maximum number of cluster nodes");

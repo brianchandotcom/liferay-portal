@@ -293,18 +293,12 @@ public class PortletRenderUtilTest {
 
 		for (String actualString : actual) {
 			if (!expectedSet.remove(actualString)) {
-				System.err.println("EXPECTED: " + expected);
-				System.err.println("ACTUAL:   " + actual);
-
-				Assert.fail("Found unexpected string: " + actualString);
+				Assert.fail("Found unexpected string " + actualString);
 			}
 		}
 
 		if (!expectedSet.isEmpty()) {
-			System.err.println("EXPECTED: " + expected);
-			System.err.println("ACTUAL:   " + actual);
-
-			Assert.fail("Missing expected strings: " + expectedSet);
+			Assert.fail("Missing expected strings " + expectedSet);
 		}
 	}
 

@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
@@ -193,7 +194,7 @@ public class KBAdminNavigationDisplayContext {
 				).put(
 					"key", "article"
 				).put(
-					"navigationItems", _getKBArticleNavigationJSONArray(0)
+					"navigationItems", _getKBArticleNavigationJSONArray()
 				).put(
 					"title",
 					LanguageUtil.get(
@@ -263,6 +264,30 @@ public class KBAdminNavigationDisplayContext {
 		}
 
 		return verticalNavigationItems;
+	}
+
+	private JSONArray _getKBArticleNavigationJSONArray()
+		throws PortalException {
+
+		return JSONUtil.put(
+			JSONUtil.put(
+				"children",
+				_getKBArticleNavigationJSONArray(
+					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+			).put(
+				"href",
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/view.jsp"
+				).buildString()
+			).put(
+				"id", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID
+			).put(
+				"name", _themeDisplay.translate("home")
+			).put(
+				"type", "folder"
+			));
 	}
 
 	private JSONArray _getKBArticleNavigationJSONArray(long parentFolderId)

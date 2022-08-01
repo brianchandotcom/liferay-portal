@@ -201,6 +201,7 @@ const BaseActionsInfo = ({
 						const {value: newValue} = target;
 						setPriority(newValue);
 					}}
+					onWheel={(event) => event.target.blur()}
 					type="number"
 					value={priority}
 				/>

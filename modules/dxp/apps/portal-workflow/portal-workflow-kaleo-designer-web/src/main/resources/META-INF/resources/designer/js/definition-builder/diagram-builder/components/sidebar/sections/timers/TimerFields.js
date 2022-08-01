@@ -86,6 +86,7 @@ const TimerFields = ({
 				<ClayInput
 					min="0"
 					onChange={({target}) => setTimerValue(target.value)}
+					onWheel={(event) => event.target.blur()}
 					step="1"
 					type="number"
 					value={timerValue}

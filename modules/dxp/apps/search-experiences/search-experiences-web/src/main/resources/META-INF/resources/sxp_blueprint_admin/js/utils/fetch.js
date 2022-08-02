@@ -14,7 +14,7 @@ import {fetch} from 'frontend-js-web';
 import {DEFAULT_ERROR} from './constants';
 import {openErrorToast} from './toasts';
 
-const DEFAULT_HEADERS = new Headers({
+export const DEFAULT_HEADERS = new Headers({
 	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 	'Content-Type': 'application/json',

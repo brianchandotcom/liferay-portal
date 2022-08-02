@@ -133,15 +133,33 @@ export function removeBrackets(value) {
 }
 
 /**
- * Function to remove duplicates in an array.
+ * Removes any duplicate items in an array. If 'property' is provided,
+ * it removes duplicate object items with the same property.
  *
- * @param {Array} items Array of items with repeated values
- * @return {Array}
+ * @param {Array} array An array of items
+ * @param {string=} property Name of the property to compare
+ * @returns {Array}
  */
-export function removeDuplicates(items) {
-	return items.filter(
-		(item, position, self) => self.indexOf(item) === position
-	);
+export function removeDuplicates(array, property) {
+	if (!property) {
+		return array.filter(
+			(item, position, self) => self.indexOf(item) === position
+		);
+	}
+
+	const uniqueArray = [];
+
+	array.forEach((item1) => {
+		if (
+			uniqueArray.findIndex(
+				(item2) => item2[property] === item1[property]
+			) === -1
+		) {
+			uniqueArray.push(item1);
+		}
+	});
+
+	return uniqueArray;
 }
 
 /**
@@ -321,6 +339,14 @@ export function getConfigurationEntry({sxpElement, uiConfigurationValues}) {
 						initialConfigValue.map((item) => item.value)
 					);
 				}
+				else if (config.type === INPUT_TYPES.CATEGORY_SELECTOR) {
+					configValue =
+						config.typeOptions?.format === 'array'
+							? JSON.stringify(
+									initialConfigValue.map((item) => item.id)
+							  )
+							: initialConfigValue[0]?.id || '';
+				}
 				else if (config.type === INPUT_TYPES.FIELD_MAPPING) {
 					const {
 						boost,
@@ -433,6 +459,8 @@ export function getConfigurationEntry({sxpElement, uiConfigurationValues}) {
 				const key =
 					typeof configValue === 'number' ||
 					config.type === INPUT_TYPES.ITEM_SELECTOR ||
+					(config.type === INPUT_TYPES.CATEGORY_SELECTOR &&
+						config.typeOptions?.format === 'array') ||
 					config.type === INPUT_TYPES.FIELD_MAPPING_LIST ||
 					config.type === INPUT_TYPES.JSON ||
 					config.type === INPUT_TYPES.MULTISELECT
@@ -511,6 +539,10 @@ export function getDefaultValue(item) {
 		case INPUT_TYPES.ITEM_SELECTOR:
 			return Array.isArray(itemValue)
 				? itemValue.filter((item) => item.label && item.value)
+				: [];
+		case INPUT_TYPES.CATEGORY_SELECTOR:
+			return Array.isArray(itemValue)
+				? itemValue.filter((item) => item.name && item.id)
 				: [];
 		case INPUT_TYPES.JSON:
 			return typeof itemValue === 'object'

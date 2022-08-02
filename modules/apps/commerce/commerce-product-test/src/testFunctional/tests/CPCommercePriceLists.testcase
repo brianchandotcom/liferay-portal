@@ -2120,34 +2120,27 @@ definition {
 	@description = "This is a test for COMMERCE-6223. Tier Price Entry expiration management"
 	@priority = "3"
 	test ViewExpiredTierPriceEntry {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommerceTierPriceEntryConfiguration.config";
+		property osgi.module.configurations = "checkInterval=&quot;1&quot;";
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommercePriceLists#ViewExpiredTierPriceEntry";
 
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		Click(
-			key_text = "Pricing",
-			locator1 = "Link#ANY");
-
-		Click(
-			key_text = "Tier Price Entries",
-			locator1 = "Link#ANY");
-
-		Type(
-			key_text = "Check Interval",
-			locator1 = "TextInput#ANY",
-			value1 = "1");
-
-		Button.clickSave();
-
-		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			accountType = "Business",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "true",
+			requireReset = "false",
+			userEmailAddress = "buyer@liferay.com",
+			userFirstName = "Buyer",
+			userLastName = "User",
+			userRole = "Buyer",
+			userScreenName = "buyeruser",
+			userSiteMembership = "Minium");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Pricing",
@@ -2192,7 +2185,7 @@ definition {
 
 		SelectFrameTop();
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		var timeString = selenium.getElementValue("TextInput#DATE_TIME_PRICE_LISTS");
 
@@ -2269,16 +2262,6 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
-
-		FrontStore.addInitializerProductToCart(
-			productName = "U-Joint",
-			productQuantity = "1");
-
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "10");
@@ -2290,23 +2273,23 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
 			value1 = "$ 10.00");
 
-		Click(locator1 = "Icon#DELETE");
+		while (IsElementPresent(key_cartItemSku = "MIN55861", key_productPrice = "10.00", locator1 = "CommerceAccelerators#MINI_CART_ITEM_LIST_PRICE_VALUE") && (maxIterations = "40")) {
+			Button.click(button = "Remove All Items");
 
-		// We need this pause in order to wait for a Tier Price to expire
+			Button.click(button = "Yes");
 
-		Pause(locator1 = "120000");
+			AssertElementNotPresent(
+				key_cartItemSku = "MIN55861",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU");
 
-		Refresh();
+			Refresh();
 
-		FrontStore.addInitializerProductToCart(
-			productName = "U-Joint",
-			productQuantity = "1");
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "10");
 
-		FrontStore.addInitializerProductToCart(
-			productName = "U-Joint",
-			productQuantity = "10");
-
-		CommerceNavigator.gotoMiniCart();
+			CommerceNavigator.gotoMiniCart();
+		}
 
 		AssertTextEquals.assertPartialText(
 			key_cartItemSku = "MIN55861",

@@ -26,6 +26,7 @@ export * from './TestrayCase';
 export * from './TestrayCaseRequirements';
 export * from './TestrayCaseResult';
 export * from './TestrayCaseTypes';
+export * from './TestrayComponent';
 export * from './TestrayFactorCategory';
 export * from './TestrayFactorOptions';
 export * from './TestrayProject';

@@ -60,13 +60,8 @@ public class NotificationsViewPortletProvider
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + NotificationsPortletKeys.NOTIFICATIONS + ")",
-		unbind = "-"
+		target = "(&(javax.portlet.name=" + NotificationsPortletKeys.NOTIFICATIONS + ")(!(depot.panel.app.wrapper=*)))"
 	)
-	protected void setPanelApp(PanelApp panelApp) {
-		_panelApp = panelApp;
-	}
-
 	private PanelApp _panelApp;
 
 }

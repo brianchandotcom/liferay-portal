@@ -13,7 +13,7 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
@@ -25,6 +25,8 @@ import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleB
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useActiveItemId} from '../../contexts/ControlsContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';
+import {useSelector} from '../../contexts/StoreContext';
+import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import isNullOrUndefined from '../../utils/isNullOrUndefined';
 import {useId} from '../../utils/useId';
@@ -87,6 +89,7 @@ export function SelectField({
 					field={field}
 					onValueSelect={onValueSelect}
 					options={getOptions(validValues)}
+					tokenValues={tokenValues}
 					value={
 						isNullOrUndefined(value) ? field.defaultValue : value
 					}
@@ -347,9 +350,17 @@ const AdvancedSelectField = ({
 	field,
 	onValueSelect,
 	options,
+	tokenValues,
 	value,
 }) => {
+	const canDetachTokenValues = useSelector(selectCanDetachTokenValues);
 	const helpTextId = useId();
+	const triggerId = useId();
+
+	const [active, setActive] = useState(false);
+	const [isTokenValue, setIsTokenValue] = useState(
+		Boolean(tokenValues[value])
+	);
 	const [nextValue, setNextValue] = useControlledState(value);
 
 	const handleSelectChange = (event) => {
@@ -376,13 +387,63 @@ const AdvancedSelectField = ({
 			/>
 
 			{value ? (
-				<ClayButtonWithIcon
-					className="border-0 ml-1"
-					displayType="secondary"
-					small
-					symbol="chain-broken"
-					title={Liferay.Language.get('detach-token')}
-				/>
+				isTokenValue && canDetachTokenValues ? (
+					<ClayButtonWithIcon
+						className="border-0 ml-1"
+						displayType="secondary"
+						onClick={() => setIsTokenValue(false)}
+						small
+						symbol="chain-broken"
+						title={Liferay.Language.get('detach-token')}
+					/>
+				) : (
+					<ClayDropDown
+						active={active}
+						alignmentPosition={Align.BottomRight}
+						menuElementAttrs={{
+							containerProps: {
+								className: 'cadmin',
+							},
+						}}
+						onActiveChange={setActive}
+						trigger={
+							<ClayButtonWithIcon
+								aria-expanded={active}
+								aria-haspopup="true"
+								className="border-0 ml-1"
+								displayType="secondary"
+								id={triggerId}
+								small
+								symbol="theme"
+								title={Liferay.Language.get(
+									'value-from-stylebook'
+								)}
+							/>
+						}
+					>
+						<ClayDropDown.ItemList aria-labelledby={triggerId}>
+							{options.map(({label, value}) => {
+								if (!value) {
+									return;
+								}
+
+								return (
+									<ClayDropDown.Item
+										key={value}
+										onClick={() => {
+											setActive(false);
+											setIsTokenValue(true);
+											setNextValue(value);
+											onValueSelect(field.name, value);
+										}}
+									>
+										{label}
+									</ClayDropDown.Item>
+								);
+							})}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+				)
 			) : null}
 
 			{field.description ? (

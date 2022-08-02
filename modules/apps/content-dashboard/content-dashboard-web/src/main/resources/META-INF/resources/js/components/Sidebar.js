@@ -28,7 +28,7 @@ const SidebarBody = ({children, className}) => {
 	);
 };
 
-const SidebarHeader = ({title}) => {
+const SidebarHeader = ({children, title}) => {
 	const {onClose} = useContext(SidebarContext);
 
 	return (
@@ -40,6 +40,10 @@ const SidebarHeader = ({title}) => {
 				>
 					<p className="font-weight-bold mb-0 pr-2">{title}</p>
 				</ClayLayout.ContentCol>
+
+				{children && (
+					<ClayLayout.ContentCol>{children}</ClayLayout.ContentCol>
+				)}
 
 				<ClayLayout.ContentCol>
 					<ClayButtonWithIcon

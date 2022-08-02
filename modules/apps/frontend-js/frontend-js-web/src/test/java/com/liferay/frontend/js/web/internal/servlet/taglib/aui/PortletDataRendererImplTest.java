@@ -118,6 +118,7 @@ public class PortletDataRendererImplTest {
 
 		portletData.add(
 			new JSFragment(
+				null,
 				Arrays.asList(
 					new AMDRequire("_Var"), new AMDRequire("1Var"),
 					new AMDRequire("*Var"), new AMDRequire("/Var")),
@@ -140,6 +141,7 @@ public class PortletDataRendererImplTest {
 
 		portletData.add(
 			new JSFragment(
+				null,
 				Arrays.asList(
 					new AMDRequire("var"), new AMDRequire("V ar"),
 					new AMDRequire("va*r"), new AMDRequire("var/")),
@@ -164,7 +166,7 @@ public class PortletDataRendererImplTest {
 
 		portletData.add(
 			new JSFragment(
-				Arrays.asList(new AMDRequire("var!")), null, "content"));
+				null, Arrays.asList(new AMDRequire("var!")), null, "content"));
 
 		CharArrayWriter writer = new CharArrayWriter();
 
@@ -183,7 +185,7 @@ public class PortletDataRendererImplTest {
 
 		portletData1.add(
 			new JSFragment(
-				Arrays.asList(new AMDRequire("frontend-js-web")),
+				null, Arrays.asList(new AMDRequire("frontend-js-web")),
 				Arrays.asList(
 					new ESImport("openDialog", "frontend-js-web"),
 					new ESImport(
@@ -193,7 +195,7 @@ public class PortletDataRendererImplTest {
 
 		portletData1.add(
 			new JSFragment(
-				Arrays.asList(new AMDRequire("frontend-js-web")),
+				null, Arrays.asList(new AMDRequire("frontend-js-web")),
 				Arrays.asList(
 					new ESImport("openDialog", "frontend-js-web"),
 					new ESImport(
@@ -205,6 +207,7 @@ public class PortletDataRendererImplTest {
 
 		portletData2.add(
 			new JSFragment(
+				null,
 				Arrays.asList(
 					new AMDRequire("frontend-js-web"), new AMDRequire("react")),
 				Arrays.asList(

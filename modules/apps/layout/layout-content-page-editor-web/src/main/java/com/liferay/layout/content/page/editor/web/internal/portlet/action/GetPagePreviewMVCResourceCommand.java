@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -44,8 +45,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsWebKeys;
-
-import java.util.Locale;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -79,8 +78,26 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay currentThemeDisplay =
+			(ThemeDisplay)resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)currentThemeDisplay.clone();
+
+		long selPlid = ParamUtil.getLong(resourceRequest, "selPlid");
+
+		if (selPlid > 0) {
+			Layout layout = _layoutLocalService.fetchLayout(selPlid);
+
+			themeDisplay.setLayout(layout);
+
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			themeDisplay.setLayoutSet(layoutSet);
+			themeDisplay.setLookAndFeel(
+				layoutSet.getTheme(), layoutSet.getColorScheme());
+
+			themeDisplay.setPlid(layout.getPlid());
+		}
 
 		if (!LayoutPermissionUtil.containsLayoutUpdatePermission(
 				PermissionCheckerFactoryUtil.create(themeDisplay.getRealUser()),
@@ -91,14 +108,11 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 			return;
 		}
 
-		Locale currentLocale = themeDisplay.getLocale();
-
 		long[] currentSegmentsExperienceIds = GetterUtil.getLongValues(
 			resourceRequest.getAttribute(
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS));
 		boolean currentPortletDecorate = GetterUtil.getBoolean(
 			resourceRequest.getAttribute(WebKeys.PORTLET_DECORATE));
-		User currentUser = (User)resourceRequest.getAttribute(WebKeys.USER);
 
 		try {
 			long segmentsExperienceId = ParamUtil.getLong(
@@ -141,6 +155,9 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(resourceRequest);
 
+			httpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
+
 			if (Validator.isNotNull(className) && (classPK > 0)) {
 				_includeInfoItemObjects(className, classPK, httpServletRequest);
 			}
@@ -176,9 +193,8 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceRequest.setAttribute(
 				WebKeys.PORTLET_DECORATE, currentPortletDecorate);
 
-			themeDisplay.setLocale(currentLocale);
-			themeDisplay.setSignedIn(true);
-			themeDisplay.setUser(currentUser);
+			resourceRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, currentThemeDisplay);
 		}
 	}
 
@@ -215,6 +231,9 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

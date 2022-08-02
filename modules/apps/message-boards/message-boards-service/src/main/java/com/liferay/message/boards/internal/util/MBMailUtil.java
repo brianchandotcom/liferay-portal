@@ -16,7 +16,6 @@ package com.liferay.message.boards.internal.util;
 
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessage;
-import com.liferay.petra.mail.JavaMailUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -71,7 +71,7 @@ public class MBMailUtil {
 				bytes = s.getBytes();
 			}
 			else if (partContent instanceof InputStream) {
-				bytes = JavaMailUtil.getBytes(part);
+				bytes = FileUtil.getBytes(part.getInputStream());
 			}
 
 			mbMailMessage.addBytes(part.getFileName(), bytes);

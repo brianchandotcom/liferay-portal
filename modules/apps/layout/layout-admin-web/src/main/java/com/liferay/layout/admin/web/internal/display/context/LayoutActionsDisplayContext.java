@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,8 +31,11 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -39,6 +43,7 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,6 +74,27 @@ public class LayoutActionsDisplayContext {
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "configure"));
+						}
+					).add(
+						() -> GetterUtil.getBoolean(
+							PropsUtil.get("feature.flag.LPS-153452")),
+						dropdownItem -> {
+							String previewLayoutURL = _getPreviewLayoutURL(
+								layout);
+
+							dropdownItem.setData(
+								HashMapBuilder.<String, Object>put(
+									"page-editor-layout-preview-base-url",
+									previewLayoutURL
+								).build());
+							dropdownItem.setHref(previewLayoutURL);
+
+							dropdownItem.setIcon("shortcut");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest,
+									"preview-in-a-new-tab"));
+							dropdownItem.setTarget("_blank");
 						}
 					).add(
 						() -> _isShowPermissionsAction(layout),
@@ -195,6 +221,24 @@ public class LayoutActionsDisplayContext {
 			String.valueOf(layout.getPlid()),
 			LiferayWindowState.POP_UP.toString(), null,
 			_themeDisplay.getRequest());
+	}
+
+	private String _getPreviewLayoutURL(Layout layout) {
+		ResourceURL getPreviewLayoutURL =
+			(ResourceURL)PortalUtil.getControlPanelPortletURL(
+				_httpServletRequest, _themeDisplay.getScopeGroup(),
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET, 0, 0,
+				PortletRequest.RESOURCE_PHASE);
+
+		getPreviewLayoutURL.setResourceID(
+			"/layout_content_page_editor/get_page_preview");
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		getPreviewLayoutURL.setParameter(
+			"selPlid", String.valueOf(draftLayout.getPlid()));
+
+		return getPreviewLayoutURL.toString();
 	}
 
 	private boolean _isShowConfigureAction(Layout layout)

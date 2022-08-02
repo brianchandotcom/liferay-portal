@@ -15,6 +15,7 @@
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {navigate} from 'frontend-js-web';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const ITEM_TYPES_SYMBOL = {
@@ -75,3 +76,17 @@ export default function NavigationPanel({items, selectedItemId}) {
 		</ClayTreeView>
 	);
 }
+
+const itemShape = {
+	href: PropTypes.string.isRequired,
+	id: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
+	type: PropTypes.oneOf(Object.keys(ITEM_TYPES_SYMBOL)).isRequired,
+};
+
+itemShape.children = PropTypes.arrayOf(PropTypes.shape(itemShape));
+
+NavigationPanel.propTypes = {
+	items: PropTypes.arrayOf(PropTypes.shape(itemShape)),
+	selectedItemId: PropTypes.string,
+};

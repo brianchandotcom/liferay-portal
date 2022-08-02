@@ -114,8 +114,8 @@ public class CommerceAccountGroupRelServiceImpl
 	}
 
 	@Override
-	public int getCommerceAccountGroupRelsCount(String className, long classPK)
-		throws PortalException {
+	public int getCommerceAccountGroupRelsCount(
+		String className, long classPK) {
 
 		return commerceAccountGroupRelLocalService.
 			getCommerceAccountGroupRelsCount(className, classPK);

@@ -332,8 +332,8 @@ public class CommerceAccountGroupLocalServiceImpl
 	}
 
 	@Override
-	public int searchCommerceAccountsGroupCount(long companyId, String keywords)
-		throws PortalException {
+	public int searchCommerceAccountsGroupCount(
+		long companyId, String keywords) {
 
 		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
 			_accountGroupLocalService.searchAccountGroups(

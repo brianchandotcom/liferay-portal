@@ -476,4 +476,30 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
+	@priority = "4"
+	test MessageErrorIsThrownWhenMethodNotImplemented {
+		property portal.acceptance = "true";
+
+		task ("When in batch engine I invoke non existent POST batch to create a SitePage") {
+			var importTaskId = ImportTask.getIdOfUpdateSitePageBatchEngineImportTask();
+		}
+
+		task ("Then I receive executeStatus: failed") {
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+
+			TestUtils.assertEquals(
+				actual = "${executeStatus}",
+				expected = "FAILED");
+		}
+
+		task ("And Then the task returns an error message") {
+			var errorMessage = ImportTask.getErrorMessageOfImportTaskById(importTaskId = "${importTaskId}");
+
+			TestUtils.assertEquals(
+				actual = "${errorMessage}",
+				expected = "java.lang.UnsupportedOperationException: This method needs to be implemented");
+		}
+	}
+
 }

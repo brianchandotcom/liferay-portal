@@ -26,4 +26,42 @@ definition {
 		return "${importTaskStatus}";
 	}
 
+	macro getErrorMessageOfImportTaskById {
+		var response = ImportTask._getImportTaskById(importTaskId = "${importTaskId}");
+
+		var errorMessage = JSONUtil.getWithJSONPath("${response}", "$.errorMessage");
+
+		return "${errorMessage}";
+	}
+
+	macro getIdOfUpdateSitePageBatchEngineImportTask {
+		var response = ImportTask._updateSitePage();
+
+		var importTaskId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+		return "${importTaskId}";
+	}
+
+	macro _updateSitePage {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			groupName = "Guest",
+			site = "true");
+
+		var curl = '''
+			${portalURL}/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.delivery.dto.v1_0.SitePage \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+            -d [
+				{
+					"title": "this is my title"
+				}
+				]
+			''';
+
+		var curl = JSONCurlUtil.put("${curl}");
+
+		return "${curl}";
+	}
 }

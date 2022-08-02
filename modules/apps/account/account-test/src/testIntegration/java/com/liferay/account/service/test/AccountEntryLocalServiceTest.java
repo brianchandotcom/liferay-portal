@@ -29,9 +29,18 @@ import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.object.constants.ObjectValidationRuleConstants;
+import com.liferay.object.exception.ObjectValidationRuleEngineException;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectValidationRuleLocalService;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
@@ -75,6 +84,7 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 
 /**
@@ -134,6 +144,67 @@ public class AccountEntryLocalServiceTest {
 		_accountEntryLocalService.deleteAccountEntry(accountEntry);
 
 		Assert.assertNull(accountEntry.getAccountEntryGroup());
+	}
+
+	@Test
+	public void testAccountEntryObjectValidations() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), AccountEntry.class.getName());
+
+		Class<?> clazz = getClass();
+
+		_objectValidationRuleLocalService.addObjectValidationRule(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
+			LocalizedMapUtil.getLocalizedMap("This name is not available"),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			com.liferay.portal.kernel.util.StringUtil.read(
+				clazz,
+				StringBundler.concat(
+					"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
+					testName.getMethodName(), ".groovy")));
+
+		try {
+			_accountEntryLocalService.addAccountEntry(
+				TestPropsValues.getUserId(),
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, "name unavailable",
+				RandomTestUtil.randomString(), null, null, null, null,
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			String message = modelListenerException.getMessage();
+
+			Assert.assertTrue(message.contains("This name is not available"));
+
+			Assert.assertTrue(
+				modelListenerException.getCause() instanceof
+					ObjectValidationRuleEngineException);
+		}
+
+		AccountEntry accountEntry = _addAccountEntry();
+
+		accountEntry.setName("name unavailable");
+
+		try {
+			_accountEntryLocalService.updateAccountEntry(accountEntry);
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			String message = modelListenerException.getMessage();
+
+			Assert.assertTrue(message.contains("This name is not available"));
+
+			Assert.assertTrue(
+				modelListenerException.getCause() instanceof
+					ObjectValidationRuleEngineException);
+		}
 	}
 
 	@Test
@@ -903,6 +974,9 @@ public class AccountEntryLocalServiceTest {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	@Rule
+	public TestName testName = new TestName();
+
 	private long[] _addAccountEntries() throws Exception {
 		return _addAccountEntries(WorkflowConstants.STATUS_APPROVED);
 	}
@@ -1243,6 +1317,12 @@ public class AccountEntryLocalServiceTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;

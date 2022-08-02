@@ -14,9 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.localizable.text;
 
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -50,6 +52,16 @@ public class LocalizableTextDDMFormFieldValueAccessorTest {
 			_localizableTextDDMFormFieldValueAccessor.isEmpty(
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
 					"localizableText", new UnlocalizedValue("{}")),
+				LocaleUtil.US));
+
+		LocalizedValue localizedValue = new LocalizedValue();
+
+		localizedValue.addString(LocaleUtil.US, StringPool.BLANK);
+
+		Assert.assertTrue(
+			_localizableTextDDMFormFieldValueAccessor.isEmpty(
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					"localizableText", localizedValue),
 				LocaleUtil.US));
 	}
 

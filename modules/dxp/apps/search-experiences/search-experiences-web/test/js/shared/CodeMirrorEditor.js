@@ -100,6 +100,7 @@ describe('CodeMirrorEditor', () => {
 		);
 
 		expect(list.map(({displayText}) => displayText)).toEqual([
+			'categorySelector',
 			'date',
 			'fieldMapping',
 			'fieldMappingList',

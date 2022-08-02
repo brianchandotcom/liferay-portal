@@ -378,6 +378,41 @@ describe('utils', () => {
 			).toEqual([]);
 		});
 
+		it('gets default value for categorySelector', () => {
+			expect(
+				getDefaultValue({
+					defaultValue: [{id: '101237', name: 'USA'}],
+					helpText: 'Select category',
+					label: 'Category',
+					name: 'category_id',
+					type: 'categorySelector',
+				})
+			).toEqual([{id: '101237', name: 'USA'}]);
+		});
+
+		it('gets default value for incorrect categorySelector', () => {
+			expect(
+				getDefaultValue({
+					defaultValue: [{label: 'incorrect', value: 'incorrect'}],
+					helpText: 'Select category',
+					label: 'Category',
+					name: 'category_id',
+					type: 'categorySelector',
+				})
+			).toEqual([]);
+		});
+
+		it('gets default value for empty categorySelector', () => {
+			expect(
+				getDefaultValue({
+					helpText: 'Select category',
+					label: 'Category',
+					name: 'category_id',
+					type: 'categorySelector',
+				})
+			).toEqual([]);
+		});
+
 		it('gets default value for multiselect', () => {
 			expect(
 				getDefaultValue({
@@ -862,6 +897,77 @@ describe('utils', () => {
 				})
 			).toEqual({
 				role: ['20107'],
+			});
+		});
+
+		it('gets configurationEntry of categorySelector', () => {
+			expect(
+				getConfigurationEntry({
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								category_id: '${configuration.category_id}',
+							},
+							uiConfiguration: {
+								fieldSets: [
+									{
+										fields: [
+											{
+												label: 'Category',
+												name: 'category_id',
+												type: 'categorySelector',
+											},
+										],
+									},
+								],
+							},
+						},
+					},
+					uiConfigurationValues: {
+						category_id: [
+							{id: '20107', name: 'America', site: '30219'},
+						],
+					},
+				})
+			).toEqual({
+				category_id: '20107',
+			});
+		});
+
+		it('gets configurationEntry of categorySelector with multiple typeOption', () => {
+			expect(
+				getConfigurationEntry({
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								category_id: '${configuration.category_id}',
+							},
+							uiConfiguration: {
+								fieldSets: [
+									{
+										fields: [
+											{
+												label: 'Category',
+												name: 'category_id',
+												type: 'categorySelector',
+												typeOptions: {
+													format: 'array',
+												},
+											},
+										],
+									},
+								],
+							},
+						},
+					},
+					uiConfigurationValues: {
+						category_id: [
+							{id: '20107', name: 'America', site: '30219'},
+						],
+					},
+				})
+			).toEqual({
+				category_id: ['20107'],
 			});
 		});
 

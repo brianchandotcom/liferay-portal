@@ -126,8 +126,8 @@ public class MembershipPolicyTestUtil {
 		String firstName = "UserServiceTest";
 		String middleName = StringPool.BLANK;
 		String lastName = "UserServiceTest";
-		long prefixId = 0;
-		long suffixId = 0;
+		long prefixListTypeId = 0;
+		long suffixListTypeId = 0;
 		boolean male = true;
 		int birthdayMonth = Calendar.JANUARY;
 		int birthdayDay = 1;
@@ -138,7 +138,7 @@ public class MembershipPolicyTestUtil {
 		return UserServiceUtil.addUser(
 			TestPropsValues.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
 			birthdayDay, birthdayYear, jobTitle, siteIds, organizationIds,
 			roleIds, userGroupIds, sendMail, new ServiceContext());
 	}
@@ -178,8 +178,8 @@ public class MembershipPolicyTestUtil {
 		String firstName = "UserServiceTest";
 		String middleName = StringPool.BLANK;
 		String lastName = "UserServiceTest";
-		long prefixId = 0;
-		long suffixId = 0;
+		long prefixListTypeId = 0;
+		long suffixListTypeId = 0;
 		boolean male = true;
 		int birthdayMonth = Calendar.JANUARY;
 		int birthdayDay = 1;
@@ -202,7 +202,7 @@ public class MembershipPolicyTestUtil {
 			userId, oldPassword, newPassword1, newPassword2, passwordReset,
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, false, null, languageId, timeZoneId, greeting,
-			comments, firstName, middleName, lastName, prefixId, suffixId, male,
+			comments, firstName, middleName, lastName, prefixListTypeId, suffixListTypeId, male,
 			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
 			jabberSn, skypeSn, twitterSn, jobTitle, siteIds, organizationIds,
 			roleIds, userGroupRoles, userGroupIds, addresses, emailAddresses,

@@ -656,8 +656,8 @@ public class AccountEntryUserRelLocalServiceTest {
 		return _accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntryId, TestPropsValues.getUserId(), _userInfo.screenName,
 			_userInfo.emailAddress, _userInfo.locale, _userInfo.firstName,
-			_userInfo.middleName, _userInfo.lastName, _userInfo.prefixId,
-			_userInfo.suffixId, null, null);
+			_userInfo.middleName, _userInfo.lastName, _userInfo.prefixListTypeId,
+			_userInfo.suffixListTypeId, null, null);
 	}
 
 	private AccountEntryUserRel _addPersonTypeAccountEntryUserRel(
@@ -671,7 +671,7 @@ public class AccountEntryUserRelLocalServiceTest {
 				accountEntryId, TestPropsValues.getUserId(),
 				userInfo.screenName, userInfo.emailAddress, userInfo.locale,
 				userInfo.firstName, userInfo.middleName, userInfo.lastName,
-				userInfo.prefixId, userInfo.suffixId, null, null);
+				userInfo.prefixListTypeId, userInfo.suffixListTypeId, null, null);
 	}
 
 	private void _assertPersonTypeAccountEntryUser(
@@ -777,10 +777,10 @@ public class AccountEntryUserRelLocalServiceTest {
 		public String lastName = RandomTestUtil.randomString();
 		public Locale locale = LocaleThreadLocal.getDefaultLocale();
 		public String middleName = RandomTestUtil.randomString();
-		public long prefixId = 0;
+		public long prefixListTypeId = 0;
 		public String screenName = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
-		public long suffixId = 0;
+		public long suffixListTypeId = 0;
 
 	}
 

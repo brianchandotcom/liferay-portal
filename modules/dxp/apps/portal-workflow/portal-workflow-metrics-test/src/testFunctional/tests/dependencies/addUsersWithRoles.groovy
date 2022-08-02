@@ -25,8 +25,8 @@ String emailAddress = i + "user@liferay.com";
 String firstName = i + "user";
 String middleName = "";
 String lastName = "user" + i;
-long prefixId = 0;
-long suffixId = 0;
+long prefixListTypeId = 0;
+long suffixListTypeId = 0;
 boolean male = true;
 int birthdayMonth = 1;
 int birthdayDay = 1;
@@ -42,7 +42,7 @@ long[] groudIds = [groupId];
 groupUser = com.liferay.portal.kernel.service.UserLocalServiceUtil.addUser(
 	0L, companyId, autoPassword, password, password,
 	false, screenName, emailAddress, java.util.Locale.US, firstName,
-	middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+	middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
 	birthdayDay, birthdayYear, jobTitle, groudIds,organizationIds,
 	roleIds, userGroupIds, sendMail, serviceContext);
 

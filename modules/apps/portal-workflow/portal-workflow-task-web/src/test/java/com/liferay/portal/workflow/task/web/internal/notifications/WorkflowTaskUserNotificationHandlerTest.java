@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventWrapper;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -84,10 +83,10 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		Language language = Mockito.mock(Language.class);
 
 		ReflectionTestUtil.setFieldValue(
-			LanguageUtil.class, "_language", language);
+			_workflowTaskUserNotificationHandler, "_language", language);
 
 		Mockito.when(
-			LanguageUtil.format(
+			language.format(
 				Mockito.any(Locale.class),
 				Mockito.eq("notification-for-x-was-deactivated"),
 				Mockito.anyString(), Mockito.eq(false))

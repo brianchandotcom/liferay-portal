@@ -428,7 +428,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 					previousFormStyledLayoutStructureItem.getClassNameId(),
 					formStyledLayoutStructureItem.getClassNameId()) ||
 				 !Objects.equals(
-					 previousFormStyledLayoutStructureItem.getClassNameId(),
+					 previousFormStyledLayoutStructureItem.getClassTypeId(),
 					 formStyledLayoutStructureItem.getClassTypeId()))) {
 
 				removedLayoutStructureItemsJSONArray =

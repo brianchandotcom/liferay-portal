@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "org.mozilla", name: "rhino", version: "1.7R4"
+	compileInclude group: "org.mozilla", name: "rhino", version: "1.7.14"
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

@@ -64,6 +64,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.InternetHeaders;
 import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 /**
@@ -593,5 +594,27 @@ public class MailEngine {
 	private static final AtomicLong _lastResetTime = new AtomicLong();
 	private static final Map<Long, AtomicLong> _mailMessageCounts =
 		new ConcurrentHashMap<>();
+
+	private static class LiferayMimeMessage extends MimeMessage {
+
+		@Override
+		protected void updateMessageID() throws MessagingException {
+			String[] messageIds = getHeader("Message-ID");
+
+			if (ArrayUtil.isNotEmpty(messageIds)) {
+
+				// Keep current value
+
+				return;
+			}
+
+			super.updateMessageID();
+		}
+
+		private LiferayMimeMessage(Session session) {
+			super(session);
+		}
+
+	}
 
 }

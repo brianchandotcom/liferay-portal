@@ -360,7 +360,7 @@
 																												},
 																												{
 																													"fieldName": "siteKey",
-																													"fieldValue": "[$SITE_ENTRY_NAME$]"
+																													"fieldValue": "[$GROUP_KEY$]"
 																												}
 																											]
 																										}
@@ -1017,20 +1017,24 @@
 																						"fragmentLink": {
 																							"value": {
 																								"href": {
-																									"value_i18n": {
-																										"ar_SA": "/c/portal/login",
-																										"ca_ES": "/c/portal/login",
-																										"de_DE": "/c/portal/login",
-																										"en_US": "/c/portal/login",
-																										"es_ES": "/c/portal/login",
-																										"fi_FI": "/c/portal/login",
-																										"fr_FR": "/c/portal/login",
-																										"hu_HU": "/c/portal/login",
-																										"ja_JP": "/c/portal/login",
-																										"nl_NL": "/c/portal/login",
-																										"pt_BR": "/c/portal/login",
-																										"sv_SE": "/c/portal/login",
-																										"zh_CN": "/c/portal/login"
+																									"mapping": {
+																										"itemReference": {
+																											"className": "com.liferay.portal.kernel.model.Layout",
+																											"fields": [
+																												{
+																													"fieldName": "friendlyURL",
+																													"fieldValue": "/home"
+																												},
+																												{
+																													"fieldName": "privatePage",
+																													"fieldValue": "false"
+																												},
+																												{
+																													"fieldName": "siteKey",
+																													"fieldValue": "[$GROUP_KEY$]"
+																												}
+																											]
+																										}
 																									}
 																								}
 																							}

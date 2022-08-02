@@ -1,0 +1,23 @@
+[
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.journal.model.JournalFolder",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "SUBSCRIBE",
+		"primKey": "0",
+		"resourceName": "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+		"roleName": "User",
+		"scope": "1"
+	}
+]

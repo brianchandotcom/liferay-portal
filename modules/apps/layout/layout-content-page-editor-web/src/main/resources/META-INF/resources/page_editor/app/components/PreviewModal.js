@@ -26,7 +26,7 @@ import {useSelector} from '../contexts/StoreContext';
 import selectLanguageId from '../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import {useId} from '../utils/useId';
-import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
+import {DisplayPagePreviewItemSelectorContent} from './DisplayPagePreviewItemSelector';
 import Translation from './Translation';
 import ViewportSizeSelector from './ViewportSizeSelector';
 
@@ -161,7 +161,7 @@ const PreviewModal = ({observer}) => {
 
 					<div className="justify-content-end page-editor__preview-modal__part pr-3">
 						{config.layoutType === LAYOUT_TYPES.display ? (
-							<DisplayPagePreviewItemSelector />
+							<DisplayPagePreviewItemSelectorContent />
 						) : null}
 					</div>
 				</div>

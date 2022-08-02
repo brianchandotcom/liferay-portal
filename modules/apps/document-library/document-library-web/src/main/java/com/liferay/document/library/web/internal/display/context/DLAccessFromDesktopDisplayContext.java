@@ -74,7 +74,8 @@ public class DLAccessFromDesktopDisplayContext {
 	}
 
 	public String getWebDAVHelpMessage() {
-		return LanguageUtil.get(_httpServletRequest, "webdav-help");
+		return LanguageUtil.format(
+			_httpServletRequest, "webdav-help", _WEBDAV_HELP_ARTICLE, false);
 	}
 
 	public String getWebDAVURL() throws PortalException {
@@ -96,6 +97,10 @@ public class DLAccessFromDesktopDisplayContext {
 
 		return "portlet_image_gallery_display_folder_action";
 	}
+
+	private static final String _WEBDAV_HELP_ARTICLE =
+		"https://help.liferay.com/hc/en-us/articles" +
+			"/360028720352-Desktop-Access-to-Documents-and-Media";
 
 	private final DLRequestHelper _dlRequestHelper;
 	private final HttpServletRequest _httpServletRequest;

@@ -22,11 +22,6 @@ long countryId = ParamUtil.getLong(request, "countryId");
 Country country = CountryLocalServiceUtil.fetchCountry(countryId);
 
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
-
-renderResponse.setTitle((country == null) ? LanguageUtil.get(request, "add-country") : LanguageUtil.format(request, "edit-x", country.getName(locale), false));
 %>
 
 <portlet:actionURL name="/address/edit_country" var="editCountryURL" />

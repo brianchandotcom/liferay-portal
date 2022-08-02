@@ -29,9 +29,7 @@ definition {
 	@description = "Verify that a structure with the boolean field can be created."
 	@priority = "5"
 	test CanBeCreated {
-
 		property portal.acceptance = "true";
-		
 
 		NavItem.gotoStructures();
 
@@ -48,7 +46,6 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "Structure 1");
 
 		FormFields.viewBooleanField(fieldValue = "Boolean");
-
 	}
 
 	@description = "Verify that a structure with the boolean field can be deleted."
@@ -91,7 +88,6 @@ definition {
 	@priority = "5"
 	test CanBeDuplicated {
 		property portal.acceptance = "true";
-		
 
 		NavItem.gotoStructures();
 
@@ -152,6 +148,181 @@ definition {
 		FormFields.viewBooleanField(fieldValue = "Test Boolean Field");
 	}
 
+	@description = "Verify that a structure with the boolean field can be Required."
+	@priority = "5"
+	test CanBeRequired {
+		property portal.acceptance = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Structure 1");
+
+		DEBuilder.addField(
+			fieldLabel = "Boolean",
+			fieldName = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
+
+		Check.checkToggleSwitch(
+			checkboxName = "Required Field",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure 1");
+
+		PortletEntry.inputTitle(title = "Web Content 1");
+
+		AssertElementPresent(locator1 = "Icon#ASTERISK");
+
+		Button.clickPublish();
+
+		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
+
+		FormFields.enableCheckbox(fieldName = "Boolean");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content 1");
+
+		FormFields.viewCheckboxLabel(
+			fieldLabel = "Boolean",
+			fieldName = "Boolean");
+	}
+
+	@description = "Verify that a structure with the boolean field can be set to show as a switch."
+	@priority = "5"
+	test CanBeSetToShowAsASwitch {
+		property portal.acceptance = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Structure 1");
+
+		DEBuilder.addField(
+			fieldLabel = "Boolean",
+			fieldName = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
+
+		FormFields.enableSwitch(fieldName = "Show as a Switch");
+
+		FormFields.viewSwitch(fieldName = "Boolean");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure 1");
+
+		PortletEntry.inputTitle(title = "Web Content 1");
+
+		FormFields.viewSwitch(fieldName = "Boolean");
+
+		FormFields.enableSwitch(fieldName = "Boolean");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content 1");
+
+		FormFields.viewSwitchChecked(fieldName = "Boolean");
+	}
+
+	@description = "Verify that a structure with more than one boolean field can be save and if the entries are stored correctly."
+	@priority = "5"
+	test CanBeSubmittedAndCheckEntries {
+		property portal.acceptance = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Structure 1");
+
+		DEBuilder.addField(
+			fieldLabel = "Boolean 1",
+			fieldName = "Boolean");
+
+		DEBuilder.addField(
+			fieldLabel = "Boolean 2",
+			fieldName = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean 1");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean 2");
+
+		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
+
+		FormFields.enableSwitch(fieldName = "Show as a Switch");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure 1");
+
+		PortletEntry.inputTitle(title = "Web Content 1");
+
+		FormFields.viewSwitch(fieldName = "Boolean 1");
+
+		FormFields.viewCheckboxLabel(
+			fieldLabel = "Boolean 2",
+			fieldName = "Boolean 2");
+
+		FormFields.enableCheckbox(fieldName = "Boolean 2");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content 1");
+
+		DEBuilder.viewToggleSwitchNotChecked(portalSetting = "Boolean");
+
+		FormsAdmin.viewCheckboxEntry(
+			fieldName = "Boolean",
+			fieldValue = "Boolean 2");
+	}
+
+	@description = "Verify that a structure with the boolean field having a help text can be added."
+	@priority = "5"
+	test HelpTextCanBeAdded {
+		property portal.acceptance = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Structure 1");
+
+		DEBuilder.addField(
+			fieldLabel = "Boolean",
+			fieldName = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
+
+		DEBuilder.editHelpTextField(
+			fieldHelpText = "Test Boolean Help Text",
+			fieldLabel = "Help Text");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Boolean",
+			fieldValue = "Test Boolean Help Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure 1");
+
+		PortletEntry.inputTitle(title = "Web Content 1");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Test Boolean Help Text",
+			fieldName = "Boolean");
+	}
 
 	@description = "Verify that the boolean field can have its label edited."
 	@priority = "5"
@@ -217,137 +388,6 @@ definition {
 		DEBuilder.assertBooleanFieldReference(
 			fieldLabel = "Boolean",
 			fieldReference = "BooleanField1234");
-	}
-
-	@description = "Verify that a structure with the boolean field can be set to show as a switch."
-	@priority = "5"
-	test CanBeSetToShowAsASwitch {
-		property portal.acceptance = "true";
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "Structure 1");
-
-		DEBuilder.addField(
-			fieldLabel = "Boolean",
-			fieldName = "Boolean");
-
-		FormFields.viewBooleanField(fieldValue = "Boolean");
-
-		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
-
-		FormFields.enableSwitch(fieldName = "Show as a Switch");
-
-		FormFields.viewSwitch(fieldName = "Boolean");
-
-		WebContentStructures.saveCP();
-
-		NavItem.gotoWebContent();
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure 1");
-
-		PortletEntry.inputTitle(title = "Web Content 1");
-
-		FormFields.viewSwitch(fieldName = "Boolean");
-
-		FormFields.enableSwitch(fieldName = "Boolean");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content 1");
-
-		FormFields.viewSwitchChecked(fieldName = "Boolean");
-	}
-
-	@description = "Verify that a structure with the boolean field having a help text can be added."
-	@priority = "5"
-	test HelpTextCanBeAdded {
-		property portal.acceptance = "true";
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "Structure 1");
-
-		DEBuilder.addField(
-			fieldLabel = "Boolean",
-			fieldName = "Boolean");
-
-		FormFields.viewBooleanField(fieldValue = "Boolean");
-
-		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
-
-		DEBuilder.editHelpTextField(
-			fieldHelpText = "Test Boolean Help Text",
-			fieldLabel = "Help Text");
-
-		FormViewBuilder.assertHelpTextPresent(
-			fieldName = "Boolean",
-			fieldValue = "Test Boolean Help Text");
-
-		WebContentStructures.saveCP();
-
-		NavItem.gotoWebContent();
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure 1");
-
-		PortletEntry.inputTitle(title = "Web Content 1");
-
-		FormFields.viewFieldHelpText(
-			fieldHelpText = "Test Boolean Help Text",
-			fieldName = "Boolean");
-	}
-
-	@description = "Verify that a structure with more than one boolean field can be save and if the entries are stored correctly."
-	@priority = "5"
-	test CanBeSubmittedAndCheckEntries {
-		property portal.acceptance = "true";
-	
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "Structure 1");
-
-		DEBuilder.addField(
-			fieldLabel = "Boolean 1",
-			fieldName = "Boolean");
-
-		DEBuilder.addField(
-			fieldLabel = "Boolean 2",
-			fieldName = "Boolean");
-
-		FormFields.viewBooleanField(fieldValue = "Boolean 1");
-
-		FormFields.viewBooleanField(fieldValue = "Boolean 2");
-
-		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
-
-		FormFields.enableSwitch(fieldName = "Show as a Switch");
-
-		WebContentStructures.saveCP();
-
-		NavItem.gotoWebContent();
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure 1");
-
-		PortletEntry.inputTitle(title = "Web Content 1");
-
-		FormFields.viewSwitch(fieldName = "Boolean 1");
-
-		FormFields.viewCheckboxLabel(
-			fieldLabel = "Boolean 2",
-			fieldName = "Boolean 2");
-
-		FormFields.enableCheckbox(fieldName = "Boolean 2");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content 1");
-
-		DEBuilder.viewToggleSwitchNotChecked(portalSetting = "Boolean");
-
-		FormsAdmin.viewCheckboxEntry(
-			fieldName = "Boolean",
-			fieldValue = "Boolean 2");
 	}
 
 }

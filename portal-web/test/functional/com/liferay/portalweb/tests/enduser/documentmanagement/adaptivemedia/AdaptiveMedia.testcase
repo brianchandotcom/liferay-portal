@@ -514,12 +514,42 @@ definition {
 	}
 
 	@description = "This test covers LPS-136280. It validates that an image can be adapted in a web content after it is updated."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ImageVariantsAreGeneratedAfterEditingWebContentWithImage {
+		property portal.acceptance = "false";
 
-		// TODO LPS-149586
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			embedImage = "true",
+			navTab = "Documents and Media",
+			siteName = "Guest",
+			uploadFileName = "high_resolution_photo.jpg",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Home");
+
+		Search.searchCP(searchTerm = "Test");
+
+		Search.gotoResultAssetViaTitle(searchAssetTitle = "WC WebContent Title");
+
+		for (var imageVariantContent : list "(max-width:300px),(max-width:1000px) and (min-width:300px)") {
+			AssertElementPresent(
+				key_mediaContent = "${imageVariantContent}",
+				locator1 = "AdaptiveMedia#IMAGE_VARIANT_SOURCE_TAG");
+		}
 	}
 
 }

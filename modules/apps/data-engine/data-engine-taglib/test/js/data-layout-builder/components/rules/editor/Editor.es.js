@@ -193,6 +193,13 @@ describe('Editor', () => {
 							return document.querySelector('.option-selected');
 						});
 
+						await waitFor(() => {
+							return document
+								.querySelectorAll('.timeline-item')[1]
+								.querySelectorAll('.ddm-field')[0]
+								.querySelector('.option-selected');
+						});
+
 						const fieldLeft = document
 							.querySelectorAll('.timeline-item')[1]
 							.querySelectorAll('.ddm-field')[0]

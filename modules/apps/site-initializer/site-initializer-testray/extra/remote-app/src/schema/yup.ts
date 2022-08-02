@@ -49,6 +49,12 @@ const yupSchema = {
 	caseType: yup.object({
 		name: yup.string().required(),
 	}),
+	component: yup.object({
+		id: yup.string(),
+		name: yup.string().required(),
+		projectId: yup.string(),
+		teamId: yup.string(),
+	}),
 	factorCategory: yup.object({
 		id: yup.string(),
 		name: yup.string().required(),
@@ -76,6 +82,11 @@ const yupSchema = {
 				i18n.translate('password-can-only-contain-latin-letters')
 			),
 	}),
+	productVersion: yup.object({
+		id: yup.string(),
+		name: yup.string().required(),
+		projectId: yup.string(),
+	}),
 	project: yup.object({
 		description: yup.string().notRequired(),
 		id: yup.string().notRequired(),
@@ -102,6 +113,11 @@ const yupSchema = {
 		id: yup.string(),
 		name: yup.string().required(),
 		smartSuite: yup.string(),
+	}),
+	team: yup.object({
+		id: yup.string(),
+		name: yup.string().required(),
+		projectId: yup.string(),
 	}),
 	user: yup.object({
 		alternateName: yup.string().required(),

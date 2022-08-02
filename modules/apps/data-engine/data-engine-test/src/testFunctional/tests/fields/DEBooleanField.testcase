@@ -152,4 +152,37 @@ definition {
 		FormFields.viewBooleanField(fieldValue = "Test Boolean Field");
 	}
 
+
+	@description = "Verify that the boolean field can have its label edited."
+	@priority = "5"
+	test LabelCanBeEdited {
+		property portal.acceptance = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Structure 1");
+
+		DEBuilder.addField(
+			fieldLabel = "Boolean",
+			fieldName = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure 1");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Boolean",
+			fieldFieldLabelEdit = "Test Boolean Field");
+
+		FormFields.viewBooleanField(fieldValue = "Test Boolean Field");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure 1");
+
+		FormFields.viewBooleanField(fieldValue = "Test Boolean Field");
+	}
+
 }

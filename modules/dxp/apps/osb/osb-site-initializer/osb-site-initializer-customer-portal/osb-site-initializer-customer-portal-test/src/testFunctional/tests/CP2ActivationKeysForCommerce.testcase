@@ -40,6 +40,45 @@ definition {
 		PortalInstances.tearDownCP();
 	}
 
+	@description = "Verify that after clicking the 'Download Key' button the user downloads the appropriate Commerce license"
+	@priority = "4"
+	test CanDownloadTheKeyWhenASubscriptionIsSelected {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not eble to reproduce scenario without OKTA workaround.""
+
+		task ("Assert that project has DPX 7.2") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+		}
+
+		task ("Assert Access to Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
+
+		// "Select DropDown list of LES subscription"
+
+		CP2DataUtil.generateStaticFullStartAndEndDate();
+
+		// "Select DateTime format"
+		// Select an active subscription term
+		// Assert that Download button is active
+
+		Button.click(button = "Download Key");
+
+		Alert.viewSuccessMessage();
+
+		//Alert.viewErrorMessage(errorMessage = "Unable to download key, please try again.");
+
+	}
+
 	@description = "LPS-146072 - Verify that when selecting the 'Commerce' product the 'Activation Keys' page opens"
 	@priority = "4"
 	test CanViewActivationKeysPage {
@@ -128,244 +167,6 @@ definition {
 		}
 	}
 
-	@description = "Verify that once a subscription is selected, the next drop-down is populated with a list of start and end dates."
-	@priority = "4"
-	test CanViewListOfStartAndEndDatesActiveSubscriptionTerms {
-		property portal.upstream = "quarantine";
-
-		// Reason: Not eble to reproduce scenario without OKTA workaround.
-
-		task ("Assert that project has DPX 7.2") {
-			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-
-			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
-		}
-
-		task ("Assert Access Commerce Activation Key Page") {
-			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
-
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
-		}
-
-		//"Assert DropDown list of LES subscription is populated"
-
-		//"Assert Subscription Start and End Date Time Option is populated"
-
-		task ("Assert that project has DPX 7.1") {
-			CustomerPortal.enterOnProject(title = "Test Account QA 7.1");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-
-			CP2ActivationKeys.assertDropDownSelection(option = "7.1");
-		}
-
-		task ("Assert Access Commerce Activation Key Page") {
-			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
-
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
-		}
-
-		task ("Assert that project has DPX 7.1") {
-			CustomerPortal.enterOnProject(title = "Test Account QA 7.0");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-
-			CP2ActivationKeys.assertDropDownSelection(option = "7.0");
-		}
-
-		task ("Assert Access Commerce Activation Key Page") {
-			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
-
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
-		}
-
-		//"Assert DropDown list of LES subscription is populated")
-
-		//"Assert Subscription Start and End Date Time Option is populated")
-	}
-
-	@description = "Verify that when the DXP version of the project is below 7.3, clicking on subscriptions the user can select from a drop-down list their LES subscriptions."
-	@priority = "5"
-	test CanViewTheDropdownListWhenTheVersionIsLowerThanTheCurrentOne {
-		property portal.upstream = "quarantine";
-
-		// Reason: Not eble to reproduce scenario without OKTA workaround.
-
-		task ("Assert that project has DPX 7.2") {
-			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-
-			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
-		}
-
-		task ("Assert Access to Commerce Activation Key Page") {
-			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
-
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
-		}
-
-		//"Assert DropDown list of LES subscription")
-
-		task ("Go to Customer Portal") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("Assert that project has DPX 7.1") {
-			CustomerPortal.enterOnProject(title = "Test Account QA 7.1");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-
-			CP2ActivationKeys.assertDropDownSelection(option = "7.1");
-		}
-
-		task ("Assert Access to Commerce Activation Key Page") {
-			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
-
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
-		}
-
-		//"Assert DropDown list of LES subscription"
-
-		task ("Go to Customer Portal") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("Assert that project has DPX 7.0") {
-			CustomerPortal.enterOnProject(title = "Test Account QA 7.0");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-
-			CP2ActivationKeys.assertDropDownSelection(option = "7.0");
-		}
-
-		task ("Assert Access to Commerce Activation Key Page") {
-			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
-
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
-		}
-
-		//"Assert DropDown list of LES subscription"
-	}
-
-	@description = "Verify that the active subscription terms with the list of dates, is as follows (Dec 01, 2020 - Dec 01, 2021)."
-	@priority = "4"
-	test SetTheDateFormatOfTheActivationList {
-		property portal.upstream = "quarantine";
-
-		//"Reason: Not eble to reproduce scenario without OKTA workaround.""
-
-		task ("Assert that project has DPX 7.2") {
-			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-
-			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
-		}
-
-		task ("Assert Access to Commerce Activation Key Page") {
-			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
-
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
-		}
-
-		//"Select DropDown list of LES subscription"
-
-		CP2DataUtil.generateStaticFullStartAndEndDate();
-
-		//"Assert DateTime format"
-	}
-
-	@description = "Verify that after choosing a subscription the 'Download Key' button is enabled."
-	@priority = "4"
-	test SelectingASubscriptionTheDownloadSearchButtonIsEnabled {
-		property portal.upstream = "quarantine";
-
-		//"Reason: Not eble to reproduce scenario without OKTA workaround.""
-
-		task ("Assert that project has DPX 7.2") {
-			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-
-			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
-		}
-
-		task ("Assert Access to Commerce Activation Key Page") {
-			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
-
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
-		}
-
-		//"Select DropDown list of LES subscription"
-
-		CP2DataUtil.generateStaticFullStartAndEndDate();
-
-		// "Select DateTime format"
-
-		// Select an active subscription term
-
-		// Assert that Download button is active
-	}
-
-	@description = "Verify that after clicking the 'Download Key' button the user downloads the appropriate Commerce license"
-	@priority = "4"
-	test CanDownloadTheKeyWhenASubscriptionIsSelected {
-		property portal.upstream = "quarantine";
-
-		//"Reason: Not eble to reproduce scenario without OKTA workaround.""
-
-		task ("Assert that project has DPX 7.2") {
-			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-
-			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
-		}
-
-		task ("Assert Access to Commerce Activation Key Page") {
-			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
-
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
-		}
-
-		//"Select DropDown list of LES subscription"
-
-		CP2DataUtil.generateStaticFullStartAndEndDate();
-
-		// "Select DateTime format"
-
-		// Select an active subscription term
-
-		// Assert that Download button is active
-
-		Button.click(button = "Download Key");
-
-		Alert.viewSuccessMessage();
-
-		//Alert.viewErrorMessage(errorMessage = "Unable to download key, please try again.");
-	}
-
 	test CanViewActivationTextWhenTheVersionHasNoValue {
 		task ("Assert that project has DPX 7.4") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
@@ -416,6 +217,204 @@ definition {
 
 			CP2ActivationKeys.assertInstructionsTable(textList = "${instructions}");
 		}
+	}
+
+	@description = "Verify that once a subscription is selected, the next drop-down is populated with a list of start and end dates."
+	@priority = "4"
+	test CanViewListOfStartAndEndDatesActiveSubscriptionTerms {
+		property portal.upstream = "quarantine";
+
+		// Reason: Not eble to reproduce scenario without OKTA workaround.
+
+		task ("Assert that project has DPX 7.2") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+		}
+
+		task ("Assert Access Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
+
+		// "Assert DropDown list of LES subscription is populated"
+		// "Assert Subscription Start and End Date Time Option is populated"
+
+		task ("Assert that project has DPX 7.1") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.1");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.1");
+		}
+
+		task ("Assert Access Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
+
+		task ("Assert that project has DPX 7.1") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.0");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.0");
+		}
+
+		task ("Assert Access Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
+
+		// "Assert DropDown list of LES subscription is populated")
+		// "Assert Subscription Start and End Date Time Option is populated")
+
+	}
+
+	@description = "Verify that when the DXP version of the project is below 7.3, clicking on subscriptions the user can select from a drop-down list their LES subscriptions."
+	@priority = "5"
+	test CanViewTheDropdownListWhenTheVersionIsLowerThanTheCurrentOne {
+		property portal.upstream = "quarantine";
+
+		// Reason: Not eble to reproduce scenario without OKTA workaround.
+
+		task ("Assert that project has DPX 7.2") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+		}
+
+		task ("Assert Access to Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
+
+		// "Assert DropDown list of LES subscription")
+
+		task ("Go to Customer Portal") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Assert that project has DPX 7.1") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.1");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.1");
+		}
+
+		task ("Assert Access to Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
+
+		// "Assert DropDown list of LES subscription"
+
+		task ("Go to Customer Portal") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Assert that project has DPX 7.0") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.0");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.0");
+		}
+
+		task ("Assert Access to Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
+
+		// "Assert DropDown list of LES subscription"
+
+	}
+
+	@description = "Verify that after choosing a subscription the 'Download Key' button is enabled."
+	@priority = "4"
+	test SelectingASubscriptionTheDownloadSearchButtonIsEnabled {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not eble to reproduce scenario without OKTA workaround.""
+
+		task ("Assert that project has DPX 7.2") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+		}
+
+		task ("Assert Access to Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
+
+		// "Select DropDown list of LES subscription"
+
+		CP2DataUtil.generateStaticFullStartAndEndDate();
+
+		// "Select DateTime format"
+		// Select an active subscription term
+		// Assert that Download button is active
+
+	}
+
+	@description = "Verify that the active subscription terms with the list of dates, is as follows (Dec 01, 2020 - Dec 01, 2021)."
+	@priority = "4"
+	test SetTheDateFormatOfTheActivationList {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not eble to reproduce scenario without OKTA workaround.""
+
+		task ("Assert that project has DPX 7.2") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+		}
+
+		task ("Assert Access to Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
+
+		// "Select DropDown list of LES subscription"
+
+		CP2DataUtil.generateStaticFullStartAndEndDate();
+
+		// "Assert DateTime format"
+
 	}
 
 }

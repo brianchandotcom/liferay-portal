@@ -33,6 +33,10 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 
 <liferay-asset:asset-tags-error />
 
+<label class="control-label">
+	<liferay-ui:message key="categorization" />
+</label>
+
 <div class="form-group">
 	<liferay-asset:asset-categories-selector
 		className="<%= Organization.class.getName() %>"

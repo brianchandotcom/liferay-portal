@@ -220,6 +220,54 @@ definition {
 		}
 	}
 
+	@description = "LPS-147851. Assert the order button can display the correct icons"
+	@priority = "4"
+	test OrderButtonRenderOrder {
+		task ("And clicks on the order button") {
+			Click(
+				key_filter = "Order",
+				locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_FILTER_OR_ORDER",
+				value1 = "Order");
+		}
+
+		task ("And selects the descending order") {
+			Click(
+				key_item = "Descending",
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM",
+				value1 = "Descending");
+		}
+
+		task ("Then the order icon will be displayed accordingly") {
+			Navigator.gotoNavTab(navTab = "Management Toolbars");
+
+			AssertElementPresent(
+				key_text = "order-list-down",
+				locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_ANY_ICON");
+		}
+
+		task ("And clicks on the order button") {
+			Click(
+				key_filter = "Order",
+				locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_FILTER_OR_ORDER",
+				value1 = "Order");
+		}
+
+		task ("And when selects the ascending order") {
+			Click(
+				key_item = "Ascending",
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM",
+				value1 = "Ascending");
+		}
+
+		task ("Then the order icon will be displayed accordingly") {
+			Navigator.gotoNavTab(navTab = "Management Toolbars");
+
+			AssertElementPresent(
+				key_text = "order-list-up",
+				locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_ANY_ICON");
+		}
+	}
+
 	@description = "LPS-147849. Assert the filter and order buttons are independent dropdowns"
 	@priority = "5"
 	test RendersIndependentFilterAndOrderButtons {

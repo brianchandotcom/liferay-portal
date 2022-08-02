@@ -374,6 +374,14 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
+	macro viewAccountRestrictedFieldIsRequiredOnEntries {
+		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "${relationshipName}");
+
+		Button.clickSave();
+
+		Alert.viewRequiredField();
+	}
+
 	macro viewEmptyFieldTable {
 		AssertElementPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE");
 	}

@@ -71,12 +71,12 @@ public class FlagsEntryServiceImpl extends FlagsEntryServiceBaseImpl {
 			MBMessage mbMessage = _mbMessageService.getMessage(classPK);
 
 			if (mbMessage.getMessageId() == mbMessage.getRootMessageId()) {
-				_messageBoardSuspiciousActivityLocalService.
+				_mbSuspiciousActivityService.
 					addOrUpdateThreadSuspiciousActivity(
 						reason, mbMessage.getThreadId());
 			}
 			else {
-				_messageBoardSuspiciousActivityLocalService.
+				_mbSuspiciousActivityService.
 					addOrUpdateMessageSuspiciousActivity(classPK, reason);
 			}
 		}
@@ -86,8 +86,7 @@ public class FlagsEntryServiceImpl extends FlagsEntryServiceBaseImpl {
 	private MBMessageService _mbMessageService;
 
 	@Reference
-	private MBSuspiciousActivityService
-		_messageBoardSuspiciousActivityLocalService;
+	private MBSuspiciousActivityService _mbSuspiciousActivityService;
 
 	@Reference
 	private MessageBus _messageBus;

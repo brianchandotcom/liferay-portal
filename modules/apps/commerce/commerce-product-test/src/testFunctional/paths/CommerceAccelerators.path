@@ -480,6 +480,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINI_CART_ITEM_LIST_PRICE_VALUE</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../../../..//span[@class='price-value' and contains(.,'$ ${key_productPrice}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_CART_ITEM_ERROR_THE_PRODUCT_QUANTITY_IS_NOT_VALID</td>
 	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../../../../div[contains(@class,'mini-cart-item-errors')]//div[text()='The product quantity is not valid.']</td>
 	<td></td>

@@ -785,53 +785,101 @@ definition {
 			value1 = "3");
 	}
 
-	@description = "COMMERCE-6333. As a buyer, I want to edit the quantity of an item in the mini-cart using it's quantity selector and I want to view the changes applied to the mini-cart summary"
+	@description = "COMMERCE-6333. As a buyer, I want to edit the quantity of an item in the mini-cart using the quantity selector and I want to view the changes applied to the mini-cart summary"
 	@priority = "3"
 	test EditCartItemQuantityFromMiniCart {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
 
-		// TODO Review
+		task ("Given a Commerce account with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		task ("When a product is added to the cart") {
+			ApplicationsMenu.gotoSite(site = "Minium");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
-		FrontStore.addInitializerProductToCart(
-			productName = "U-Joint",
-			productQuantity = "1");
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
 
-		CommerceNavigator.gotoMiniCart();
+		task ("Then as an admin and a buyer, the user is able to edit the quantity of the item in the mini cart") {
+			CommerceNavigator.gotoMiniCart();
 
-		Type(
-			key_cartItemSku = "MIN55861",
-			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-			value1 = "3");
+			CommerceNavigator.editMiniCartItemQuantity(
+				cartItemSku = "MIN55861",
+				productQuantity = "3");
 
-		AssertTextEquals(
-			key_summaryTableItem = "Quantity",
-			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
-			value1 = "3");
+			AssertTextEquals(
+				key_summaryTableItem = "Quantity",
+				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+				value1 = "3");
 
-		AssertTextEquals(
-			key_summaryTableItem = "Subtotal",
-			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
-			value1 = "$ 72.00");
+			AssertTextEquals(
+				key_summaryTableItem = "Subtotal",
+				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+				value1 = "$ 72.00");
 
-		AssertTextEquals(
-			key_summaryTableItem = "Order Discount",
-			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
-			value1 = "$ 0.00");
+			AssertTextEquals(
+				key_summaryTableItem = "Order Discount",
+				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+				value1 = "$ 0.00");
 
-		AssertTextEquals(
-			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_TOTAL",
-			value1 = "$ 72.00");
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_TOTAL",
+				value1 = "$ 72.00");
+
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+
+			CommerceNavigator.editMiniCartItemQuantity(
+				cartItemSku = "MIN55861",
+				productQuantity = "2");
+
+			AssertTextEquals(
+				key_summaryTableItem = "Quantity",
+				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+				value1 = "2");
+
+			AssertTextEquals(
+				key_summaryTableItem = "Subtotal",
+				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+				value1 = "$ 48.00");
+
+			AssertTextEquals(
+				key_summaryTableItem = "Order Discount",
+				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+				value1 = "$ 0.00");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_TOTAL",
+				value1 = "$ 48.00");
+		}
 	}
 
 	@description = "COMMERCE-6330. As a buyer, I want to be able to empty my open cart after clicking on 'Remove All Items'(Yes/No)"

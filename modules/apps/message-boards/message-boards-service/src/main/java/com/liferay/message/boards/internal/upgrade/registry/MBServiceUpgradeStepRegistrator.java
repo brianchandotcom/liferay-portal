@@ -136,8 +136,9 @@ public class MBServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			});
 
 		registry.register("6.2.0", "6.3.0", MBSuspiciousActivityTable.create());
-		registry.register("6.3.0", "6.3.1",
-			new MBSuspiciousActivityUpgradeProcess());
+
+		registry.register(
+			"6.3.0", "6.3.1", new MBSuspiciousActivityUpgradeProcess());
 	}
 
 	@Reference

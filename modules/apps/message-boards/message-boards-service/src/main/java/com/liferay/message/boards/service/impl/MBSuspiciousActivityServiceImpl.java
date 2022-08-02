@@ -43,7 +43,7 @@ public class MBSuspiciousActivityServiceImpl
 
 		return mbSuspiciousActivityLocalService.
 			addOrUpdateMessageSuspiciousActivity(
-				getUserId(),messageId, reason);
+				getUserId(), messageId, reason);
 	}
 
 
@@ -53,8 +53,7 @@ public class MBSuspiciousActivityServiceImpl
 		throws PortalException {
 
 		return mbSuspiciousActivityLocalService.
-			addOrUpdateThreadSuspiciousActivity(
-				getUserId(),reason, threadId);
+			addOrUpdateThreadSuspiciousActivity(getUserId(), reason, threadId);
 	}
 
 	@Override

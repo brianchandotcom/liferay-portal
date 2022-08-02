@@ -35,4 +35,40 @@ definition {
 
 	}
 
+	@description = "Verify that a structure with the boolean field can be deleted."
+	@priority = "5"
+	test CanBeDeleted {
+		property portal.acceptance = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Boolean Structure");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Boolean",
+			fieldName = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Boolean Structure");
+
+		Click(
+			key_text = "Boolean",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Delete");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Boolean Structure");
+
+		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Boolean");
+	}
+
 }

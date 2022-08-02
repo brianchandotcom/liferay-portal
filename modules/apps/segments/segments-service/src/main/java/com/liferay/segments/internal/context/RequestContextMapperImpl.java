@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.BooleanEntityField;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -57,7 +58,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -176,6 +176,11 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_serviceRegistration = bundleContext.registerService(
+			EntityModel.class, _contextEntityModel,
+			MapUtil.singletonDictionary(
+				"entity.model.name", ContextEntityModel.NAME));
+
 		_requestContextContributorServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, RequestContextContributor.class,
@@ -186,15 +191,9 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 
 	@Deactivate
 	protected void deactivate() {
-		for (ServiceRegistration<?> serviceRegistration :
-				_serviceRegistrations.values()) {
-
-			serviceRegistration.unregister();
-		}
-
-		_serviceRegistrations.clear();
-
 		_requestContextContributorServiceTrackerMap.close();
+
+		_serviceRegistration.unregister();
 	}
 
 	private String[] _getCookies(HttpServletRequest httpServletRequest) {
@@ -241,15 +240,15 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 	@Reference
 	private BrowserSniffer _browserSniffer;
 
+	private final ContextEntityModel _contextEntityModel =
+		new ContextEntityModel(Collections.emptyList());
+
 	@Reference
 	private Portal _portal;
 
 	private ServiceTrackerMap<String, RequestContextContributor>
 		_requestContextContributorServiceTrackerMap;
-	private final Map
-		<ServiceReference<RequestContextContributor>,
-		 ServiceRegistration<EntityModel>> _serviceRegistrations =
-			new ConcurrentHashMap<>();
+	private ServiceRegistration<EntityModel> _serviceRegistration;
 
 	private class RequestContextContributorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -269,8 +268,12 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 			List<EntityField> customEntityFields = _addCustomEntityField(
 				requestContextContributorKey, requestContextContributorType);
 
-			_register(
-				_bundleContext, new ContextEntityModel(customEntityFields));
+			Map<String, EntityField> entityFieldsMap =
+				_contextEntityModel.getEntityFieldsMap();
+
+			entityFieldsMap.put(
+				"customContext",
+				new ComplexEntityField("customContext", customEntityFields));
 
 			return _bundleContext.getService(serviceReference);
 		}
@@ -297,8 +300,12 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 			List<EntityField> customEntityFields = _removeCustomEntityField(
 				requestContextContributorKey);
 
-			_register(
-				_bundleContext, new ContextEntityModel(customEntityFields));
+			Map<String, EntityField> entityFieldsMap =
+				_contextEntityModel.getEntityFieldsMap();
+
+			entityFieldsMap.put(
+				"customContext",
+				new ComplexEntityField("customContext", customEntityFields));
 
 			_bundleContext.ungetService(serviceReference);
 		}
@@ -307,9 +314,6 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 			BundleContext bundleContext) {
 
 			_bundleContext = bundleContext;
-
-			_register(
-				bundleContext, new ContextEntityModel(Collections.emptyList()));
 		}
 
 		private List<EntityField> _addCustomEntityField(
@@ -351,20 +355,6 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 			return new ArrayList<>(_customEntityFields.values());
 		}
 
-		private void _register(
-			BundleContext bundleContext,
-			ContextEntityModel contextEntityModel) {
-
-			if (_serviceRegistration != null) {
-				_serviceRegistration.unregister();
-			}
-
-			_serviceRegistration = bundleContext.registerService(
-				EntityModel.class, contextEntityModel,
-				MapUtil.singletonDictionary(
-					"entity.model.name", ContextEntityModel.NAME));
-		}
-
 		private List<EntityField> _removeCustomEntityField(
 			String requestContextContributorKey) {
 
@@ -376,7 +366,6 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 		private final BundleContext _bundleContext;
 		private final Map<String, EntityField> _customEntityFields =
 			new HashMap<>();
-		private ServiceRegistration<EntityModel> _serviceRegistration;
 
 	}
 

@@ -27,6 +27,7 @@ import com.liferay.segments.context.Context;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Provides the entity data model for the context that segments users.
@@ -38,43 +39,46 @@ public class ContextEntityModel implements EntityModel {
 	public static final String NAME = "Context";
 
 	public ContextEntityModel(List<EntityField> customEntityFields) {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new BooleanEntityField(
-				Context.SIGNED_IN, locale -> Context.SIGNED_IN),
-			new CollectionEntityField(
+		_entityFieldsMap = new ConcurrentHashMap<>(
+			EntityModel.toEntityFieldsMap(
+				new BooleanEntityField(
+					Context.SIGNED_IN, locale -> Context.SIGNED_IN),
+				new CollectionEntityField(
+					new StringEntityField(
+						Context.COOKIES, locale -> Context.COOKIES)),
+				new CollectionEntityField(
+					new StringEntityField(
+						Context.REQUEST_PARAMETERS,
+						locale -> Context.REQUEST_PARAMETERS)),
+				new ComplexEntityField("customContext", customEntityFields),
+				new DateEntityField(
+					Context.LOCAL_DATE, locale -> Context.LOCAL_DATE,
+					locale -> Context.LOCAL_DATE),
+				new DateTimeEntityField(
+					Context.LAST_SIGN_IN_DATE_TIME,
+					locale -> Context.LAST_SIGN_IN_DATE_TIME,
+					locale -> Context.LAST_SIGN_IN_DATE_TIME),
+				new DoubleEntityField(
+					Context.DEVICE_SCREEN_RESOLUTION_HEIGHT,
+					locale -> Context.DEVICE_SCREEN_RESOLUTION_HEIGHT),
+				new DoubleEntityField(
+					Context.DEVICE_SCREEN_RESOLUTION_WIDTH,
+					locale -> Context.DEVICE_SCREEN_RESOLUTION_WIDTH),
 				new StringEntityField(
-					Context.COOKIES, locale -> Context.COOKIES)),
-			new CollectionEntityField(
+					Context.BROWSER, locale -> Context.BROWSER),
 				new StringEntityField(
-					Context.REQUEST_PARAMETERS,
-					locale -> Context.REQUEST_PARAMETERS)),
-			new ComplexEntityField("customContext", customEntityFields),
-			new DateEntityField(
-				Context.LOCAL_DATE, locale -> Context.LOCAL_DATE,
-				locale -> Context.LOCAL_DATE),
-			new DateTimeEntityField(
-				Context.LAST_SIGN_IN_DATE_TIME,
-				locale -> Context.LAST_SIGN_IN_DATE_TIME,
-				locale -> Context.LAST_SIGN_IN_DATE_TIME),
-			new DoubleEntityField(
-				Context.DEVICE_SCREEN_RESOLUTION_HEIGHT,
-				locale -> Context.DEVICE_SCREEN_RESOLUTION_HEIGHT),
-			new DoubleEntityField(
-				Context.DEVICE_SCREEN_RESOLUTION_WIDTH,
-				locale -> Context.DEVICE_SCREEN_RESOLUTION_WIDTH),
-			new StringEntityField(Context.BROWSER, locale -> Context.BROWSER),
-			new StringEntityField(
-				Context.DEVICE_BRAND, locale -> Context.DEVICE_BRAND),
-			new StringEntityField(
-				Context.DEVICE_MODEL, locale -> Context.DEVICE_MODEL),
-			new StringEntityField(Context.HOSTNAME, locale -> Context.HOSTNAME),
-			new StringEntityField(
-				Context.LANGUAGE_ID, locale -> Context.LANGUAGE_ID),
-			new StringEntityField(
-				Context.REFERRER_URL, locale -> Context.REFERRER_URL),
-			new StringEntityField(Context.URL, locale -> Context.URL),
-			new StringEntityField(
-				Context.USER_AGENT, locale -> Context.USER_AGENT));
+					Context.DEVICE_BRAND, locale -> Context.DEVICE_BRAND),
+				new StringEntityField(
+					Context.DEVICE_MODEL, locale -> Context.DEVICE_MODEL),
+				new StringEntityField(
+					Context.HOSTNAME, locale -> Context.HOSTNAME),
+				new StringEntityField(
+					Context.LANGUAGE_ID, locale -> Context.LANGUAGE_ID),
+				new StringEntityField(
+					Context.REFERRER_URL, locale -> Context.REFERRER_URL),
+				new StringEntityField(Context.URL, locale -> Context.URL),
+				new StringEntityField(
+					Context.USER_AGENT, locale -> Context.USER_AGENT)));
 	}
 
 	@Override

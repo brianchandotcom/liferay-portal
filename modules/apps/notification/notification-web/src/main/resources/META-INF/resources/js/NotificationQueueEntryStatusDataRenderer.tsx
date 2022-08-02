@@ -16,7 +16,38 @@ import classNames from 'classnames';
 import React from 'react';
 
 export function NotificationQueueEntryStatusDataRenderer({value}: IProps) {
-	return (
+	const getStatusInfo = (status: number) => {
+		switch (status) {
+			case 0:
+				return {
+					className: 'label-danger',
+					label: Liferay.Language.get('failed'),
+				};
+			case 1:
+				return {
+					className: 'label-success',
+					label: Liferay.Language.get('sent'),
+				};
+			case 2:
+				return {
+					className: 'label-warning',
+					label: Liferay.Language.get('unsent'),
+				};
+			default:
+				return null;
+		}
+	};
+
+	const statusInfo =
+		typeof value === 'number' && Liferay.FeatureFlags['LPS-159052']
+			? getStatusInfo(value)
+			: null;
+
+	return statusInfo ? (
+		<strong className={`label ${statusInfo.className}`}>
+			{statusInfo.label}
+		</strong>
+	) : (
 		<strong
 			className={classNames('label', {
 				'label-danger': !value,
@@ -31,5 +62,5 @@ export function NotificationQueueEntryStatusDataRenderer({value}: IProps) {
 }
 
 interface IProps {
-	value: boolean;
+	value: boolean | number;
 }

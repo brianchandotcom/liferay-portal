@@ -18,6 +18,6 @@ export declare function NotificationQueueEntryStatusDataRenderer({
 	value,
 }: IProps): JSX.Element;
 interface IProps {
-	value: boolean;
+	value: boolean | number;
 }
 export {};

@@ -78,7 +78,6 @@ public class MBSuspiciousActivityLocalServiceImpl
 			suspiciousActivity);
 	}
 
-
 	@Override
 	public MBSuspiciousActivity addOrUpdateThreadSuspiciousActivity(
 			long userId, String reason, long threadId)
@@ -93,8 +92,7 @@ public class MBSuspiciousActivityLocalServiceImpl
 			suspiciousActivity = mbSuspiciousActivityPersistence.create(
 				suspiciousActivityId);
 
-			MBThread thread = _mbThreadPersistence.findByPrimaryKey(
-				threadId);
+			MBThread thread = _mbThreadPersistence.findByPrimaryKey(threadId);
 
 			suspiciousActivity.setGroupId(thread.getGroupId());
 

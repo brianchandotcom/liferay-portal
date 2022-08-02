@@ -46,7 +46,6 @@ public class MBSuspiciousActivityServiceImpl
 				getUserId(), messageId, reason);
 	}
 
-
 	@Override
 	public MBSuspiciousActivity addOrUpdateThreadSuspiciousActivity(
 			String reason, long threadId)

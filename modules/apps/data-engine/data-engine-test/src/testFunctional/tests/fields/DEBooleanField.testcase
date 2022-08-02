@@ -27,11 +27,27 @@ definition {
 	}
 
 	@description = "Verify that a structure with the boolean field can be created."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCreated {
 
-		// TODO LPS-157521 CanBeCreated pending implementation
+		property portal.acceptance = "true";
+		
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Structure 1");
+
+		DEBuilder.addField(
+			fieldLabel = "Boolean",
+			fieldName = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure 1");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
 
 	}
 

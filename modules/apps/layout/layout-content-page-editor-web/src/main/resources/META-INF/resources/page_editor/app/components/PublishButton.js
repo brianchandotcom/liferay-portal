@@ -16,7 +16,6 @@ import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {MISSING_FIELD_DATA} from '../config/constants/formModalData';
 import {config} from '../config/index';
 import {useHasStyleErrors} from '../contexts/StyleErrorsContext';
 import openWarningModal from '../utils/openWarningModal';
@@ -50,7 +49,15 @@ export default function PublishButton({canPublish, formRef, label, onPublish}) {
 								if (result) {
 									openWarningModal({
 										action: onPublish,
-										...MISSING_FIELD_DATA,
+										actionLabel: Liferay.Language.get(
+											'publish'
+										),
+										message: Liferay.Language.get(
+											'this-page-contains-one-or-several-forms-with-a-missing-or-hidden-form-components'
+										),
+										title: Liferay.Language.get(
+											'required-form-components'
+										),
 									});
 								}
 								else {

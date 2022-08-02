@@ -151,6 +151,12 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro viewToggleSwitchNotChecked {
+		AssertNotChecked.assertNotCheckedNotVisible(
+			key_toggleSwitchLabel = "${portalSetting}",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+	}
+
 	macro assertDeleteIsDisabled {
 		AssertElementPresent(
 			key_text = "Delete",

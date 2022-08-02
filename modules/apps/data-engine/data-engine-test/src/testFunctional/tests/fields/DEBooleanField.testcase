@@ -297,4 +297,57 @@ definition {
 			fieldName = "Boolean");
 	}
 
+	@description = "Verify that a structure with more than one boolean field can be save and if the entries are stored correctly."
+	@priority = "5"
+	test CanBeSubmittedAndCheckEntries {
+		property portal.acceptance = "true";
+	
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Structure 1");
+
+		DEBuilder.addField(
+			fieldLabel = "Boolean 1",
+			fieldName = "Boolean");
+
+		DEBuilder.addField(
+			fieldLabel = "Boolean 2",
+			fieldName = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean 1");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean 2");
+
+		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
+
+		FormFields.enableSwitch(fieldName = "Show as a Switch");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure 1");
+
+		PortletEntry.inputTitle(title = "Web Content 1");
+
+		FormFields.viewSwitch(fieldName = "Boolean 1");
+
+		FormFields.viewCheckboxLabel(
+			fieldLabel = "Boolean 2",
+			fieldName = "Boolean 2");
+
+		FormFields.enableCheckbox(fieldName = "Boolean 2");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content 1");
+
+		DEBuilder.viewToggleSwitchNotChecked(portalSetting = "Boolean");
+
+		FormsAdmin.viewCheckboxEntry(
+			fieldName = "Boolean",
+			fieldValue = "Boolean 2");
+	}
+
 }

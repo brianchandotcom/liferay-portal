@@ -28,11 +28,13 @@ import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -503,6 +505,9 @@ public abstract class BaseDBProcess implements DBProcess {
 		List<Future<Void>> futures = new ArrayList<>();
 
 		try {
+			boolean notificationEnabled = NotificationThreadLocal.isEnabled();
+			boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
 			long companyId = CompanyThreadLocal.getCompanyId();
 
 			T next = null;
@@ -512,6 +517,9 @@ public abstract class BaseDBProcess implements DBProcess {
 
 				Future<Void> future = executorService.submit(
 					() -> {
+						NotificationThreadLocal.setEnabled(notificationEnabled);
+						WorkflowThreadLocal.setEnabled(workflowEnabled);
+
 						try (SafeCloseable safeCloseable =
 								CompanyThreadLocal.lock(companyId)) {
 

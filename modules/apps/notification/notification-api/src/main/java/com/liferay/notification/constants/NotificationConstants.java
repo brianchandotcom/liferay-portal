@@ -21,4 +21,10 @@ public class NotificationConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.notification";
 
+	public static final int STATUS_FAILED = 0;
+
+	public static final int STATUS_SENT = 1;
+
+	public static final int STATUS_UNSENT = 2;
+
 }

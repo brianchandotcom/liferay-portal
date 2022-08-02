@@ -310,18 +310,10 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 			String upstreamBranchName = entry.getKey();
 
-			if (upstreamBranchName.equals("master")) {
-				invocationParameters.put(
-					"CI_TEST_SUITE", _getPortalMasterCITestSuite());
-				invocationParameters.put(
-					"JENKINS_JOB_VARIANT", _getPortalMasterCITestSuite());
-			}
-			else {
-				invocationParameters.put(
-					"CI_TEST_SUITE", _DEFAULT_CI_TEST_SUITE);
-				invocationParameters.put(
-					"JENKINS_JOB_VARIANT", _DEFAULT_CI_TEST_SUITE);
-			}
+			invocationParameters.put(
+				"CI_TEST_SUITE", _getCITestSuite(upstreamBranchName));
+			invocationParameters.put(
+				"JENKINS_JOB_VARIANT", _getCITestSuite(upstreamBranchName));
 
 			PullRequest pullRequest = entry.getValue();
 
@@ -405,13 +397,17 @@ public class PoshiReleasePortalTopLevelBuildRunner
 	}
 
 	@Override
-	protected void setUpWorkspace() {
-		super.setUpWorkspace();
-	}
-
-	@Override
 	protected void validateBuildParameters() {
 		_validateBuildParameterPortalGitHubURL();
+	}
+
+	private String _getCITestSuite(String upstreamBranchName) {
+		if (upstreamBranchName.equals("master")) {
+			return getBuildParameter(
+				_NAME_BUILD_PARAMETER_PORTAL_MASTER_CI_TEST_SUITE);
+		}
+
+		return _DEFAULT_CI_TEST_SUITE;
 	}
 
 	private String _getGitHubBranchName(String parameterName) {
@@ -452,11 +448,6 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 	private String _getPortalGitHubURL() {
 		return getBuildParameter(_NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL);
-	}
-
-	private String _getPortalMasterCITestSuite() {
-		return getBuildParameter(
-			_NAME_BUILD_PARAMETER_PORTAL_MASTER_CI_TEST_SUITE);
 	}
 
 	private void _validateBuildParameterPortalGitHubURL() {

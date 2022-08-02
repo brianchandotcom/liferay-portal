@@ -37,8 +37,6 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 
 	return (
 		<div className="cursor-pointer testray-sidebar-footer">
-			<div className="divider divider-full" />
-
 			<div className="d-flex justify-content-end">
 				<Tooltip
 					position="right"
@@ -83,6 +81,8 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 					</div>
 				}
 			/>
+
+			<div className="divider divider-full" />
 
 			<DropDown
 				items={[

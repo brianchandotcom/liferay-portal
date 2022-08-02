@@ -17,7 +17,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
@@ -48,20 +48,15 @@ export function BuilderScreen({
 	title,
 }: IProps) {
 	const [query, setQuery] = useState('');
-	const [filteredItems, setFilteredItems] = useState(objectColumns);
 
-	useEffect(() => {
-		setFilteredItems(objectColumns);
-	}, [objectColumns]);
-
-	const newFilteredItems = filteredItems.filter(
+	const filteredItems = objectColumns.filter(
 		(objectColumns: TBuilderScreenColumn) =>
 			objectColumns?.fieldLabel
 				?.toLowerCase()
 				.includes(query.toLowerCase())
 	);
 
-	const tableItems = query ? newFilteredItems : objectColumns;
+	const tableItems = query ? filteredItems : objectColumns;
 
 	return (
 		<Card title={title}>

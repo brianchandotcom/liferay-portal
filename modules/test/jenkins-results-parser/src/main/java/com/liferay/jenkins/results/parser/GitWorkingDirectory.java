@@ -422,25 +422,44 @@ public class GitWorkingDirectory {
 			String senderUserName, String title)
 		throws IOException {
 
-		JSONObject requestJSONObject = new JSONObject();
+		int maxRetries = 2;
 
-		requestJSONObject.put("base", _upstreamBranchName);
-		requestJSONObject.put("body", body);
-		requestJSONObject.put(
-			"head", senderUserName + ":" + pullRequestBranchName);
-		requestJSONObject.put("title", title);
+		for (int i = 0; i <= maxRetries; i++) {
+			try {
+				JSONObject requestJSONObject = new JSONObject();
 
-		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
-			_gitRepositoryName, receiverUserName, "pulls");
+				requestJSONObject.put("base", _upstreamBranchName);
+				requestJSONObject.put("body", body);
+				requestJSONObject.put(
+					"head", senderUserName + ":" + pullRequestBranchName);
+				requestJSONObject.put("title", title);
 
-		JSONObject responseJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			url, requestJSONObject.toString());
+				String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+					_gitRepositoryName, receiverUserName, "pulls");
 
-		String pullRequestURL = responseJSONObject.getString("html_url");
+				JSONObject responseJSONObject =
+					JenkinsResultsParserUtil.toJSONObject(
+						url, requestJSONObject.toString());
 
-		System.out.println("Created a pull request at " + pullRequestURL);
+				String pullRequestURL = responseJSONObject.getString(
+					"html_url");
 
-		return pullRequestURL;
+				System.out.println(
+					"Created a pull request at " + pullRequestURL);
+
+				return pullRequestURL;
+			}
+			catch (IOException ioException) {
+				if (i == maxRetries) {
+					throw new RuntimeException(
+						"Unable to create pull request", ioException);
+				}
+
+				ioException.printStackTrace();
+			}
+		}
+
+		return "";
 	}
 
 	public void deleteLocalGitBranch(LocalGitBranch localGitBranch) {

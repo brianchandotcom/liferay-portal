@@ -28,10 +28,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -90,6 +92,9 @@ public abstract class UpgradeProcess
 	public void upgrade() throws UpgradeException {
 		long start = System.currentTimeMillis();
 
+		boolean notificationEnabled = NotificationThreadLocal.isEnabled();
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
 		String message = "Completed upgrade process ";
 
 		String info =
@@ -105,6 +110,9 @@ public abstract class UpgradeProcess
 
 			process(
 				companyId -> {
+					NotificationThreadLocal.setEnabled(false);
+					WorkflowThreadLocal.setEnabled(false);
+
 					String companyInfo = info;
 
 					if (Validator.isNotNull(companyId)) {
@@ -125,6 +133,9 @@ public abstract class UpgradeProcess
 		}
 		finally {
 			this.connection = null;
+
+			NotificationThreadLocal.setEnabled(notificationEnabled);
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

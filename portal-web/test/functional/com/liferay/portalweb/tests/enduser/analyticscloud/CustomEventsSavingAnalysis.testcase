@@ -294,7 +294,7 @@ definition {
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10558 | Test Summary: Viewing newly created analysis report"
 	@priority = "5"
 	test CanCreateAnalysisReport {
-		var attributeName = "category";
+		var attributeNameList = "category,url";
 		var filterName = "like";
 
 		task ("Fill fields and create custom event") {
@@ -322,7 +322,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
 		}
 
 		task ("Add the filter to analysis") {
@@ -357,7 +357,7 @@ definition {
 
 		task ("Check that the analysis dashboard contains the event,attribute and filter") {
 			ACEventAnalysis.viewAnalysisDashboard(
-				attributeNameList = "${attributeName}",
+				attributeNameList = "${attributeNameList}",
 				eventName = "${customEventName}",
 				filterNameList = "${filterName}");
 		}

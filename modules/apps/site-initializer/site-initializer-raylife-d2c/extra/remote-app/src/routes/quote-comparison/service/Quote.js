@@ -20,7 +20,7 @@ const applicationId = localStorage.getItem('raylife-application-id');
 
 export async function getQuotes() {
 	const response = await axios.get(
-		`${headlessRaylifeQuoteAPI}/?search=r_applicationToQuotes_c_raylifeApplicationId eq ${applicationId}`
+		`${headlessRaylifeQuoteAPI}/?filter=raylifeApplicationId eq '${applicationId}'`
 	);
 
 	return response.data;

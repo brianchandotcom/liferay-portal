@@ -21,6 +21,7 @@ html#{$cadmin-selector} .cadmin {
 			grid-area: 1 / 1 / 2 / 2;
 		}
 
+		label.page-editor__input-with-icon__label-icon,
 		#{$prefix} label#{$prefix}__label-icon {
 			font-size: $font-size-sm;
 		}

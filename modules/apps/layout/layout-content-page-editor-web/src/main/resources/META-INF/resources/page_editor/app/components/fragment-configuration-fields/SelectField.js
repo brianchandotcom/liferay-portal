@@ -14,7 +14,11 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {
+	ClayCheckbox,
+	ClayInput,
+	ClaySelectWithOption,
+} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -377,21 +381,42 @@ const AdvancedSelectField = ({
 				'has-value': value,
 			})}
 		>
-			<SingleSelectWithIcon
-				disabled={disabled}
-				field={field}
-				helpTextId={helpTextId}
-				onChange={handleSelectChange}
-				options={options}
-				value={nextValue}
-			/>
+			{isTokenValue ? (
+				<SingleSelectWithIcon
+					disabled={disabled}
+					field={field}
+					helpTextId={helpTextId}
+					onChange={handleSelectChange}
+					options={options}
+					value={nextValue}
+				/>
+			) : (
+				<InputWithIcon
+					field={field}
+					onBlur={(event) => {
+						if (!event.target.value) {
+							return;
+						}
+
+						onValueSelect(field.name, event.target.value);
+					}}
+					onChange={(event) => {
+						setNextValue(event.target.value);
+					}}
+					value={nextValue}
+				/>
+			)}
 
 			{value ? (
 				isTokenValue && canDetachTokenValues ? (
 					<ClayButtonWithIcon
 						className="border-0 ml-1"
 						displayType="secondary"
-						onClick={() => setIsTokenValue(false)}
+						onClick={() => {
+							setIsTokenValue(false);
+							setNextValue(tokenValues[value].value);
+							onValueSelect(field.name, tokenValues[value].value);
+						}}
 						small
 						symbol="chain-broken"
 						title={Liferay.Language.get('detach-token')}
@@ -452,6 +477,44 @@ const AdvancedSelectField = ({
 				</div>
 			) : null}
 		</div>
+	);
+};
+
+const InputWithIcon = ({field, onBlur, onChange, value}) => {
+	const inputId = useId();
+
+	return (
+		<ClayInput.Group>
+			<ClayInput.GroupItem>
+				<ClayInput
+					aria-label={field.label}
+					id={inputId}
+					insetBefore={Boolean(field.icon)}
+					onBlur={onBlur}
+					onChange={onChange}
+					sizing="sm"
+					value={value}
+				/>
+
+				{field.icon ? (
+					<ClayInput.GroupInsetItem before>
+						<label
+							className="mb-0 page-editor__input-with-icon__label-icon pl-1 pr-3 text-center"
+							htmlFor={inputId}
+						>
+							<ClayIcon
+								className="lfr-portal-tooltip"
+								data-title={field.label}
+								small
+								symbol={field.icon}
+							/>
+
+							<span className="sr-only">{field.label}</span>
+						</label>
+					</ClayInput.GroupInsetItem>
+				) : null}
+			</ClayInput.GroupItem>
+		</ClayInput.Group>
 	);
 };
 

@@ -53,8 +53,6 @@ public class MBMailUtil {
 
 		Object partContent = _getPartContent(part);
 
-		String contentType = StringUtil.toLowerCase(part.getContentType());
-
 		if ((part.getDisposition() != null) &&
 			StringUtil.equalsIgnoreCase(
 				part.getDisposition(), MimeMessage.ATTACHMENT)) {
@@ -87,6 +85,9 @@ public class MBMailUtil {
 				}
 			}
 			else if (partContent instanceof String) {
+				String contentType = StringUtil.toLowerCase(
+					part.getContentType());
+
 				String messageBody = SanitizerUtil.sanitize(
 					0, 0, 0, MBMessage.class.getName(), 0, contentType,
 					Sanitizer.MODE_ALL, (String)partContent,

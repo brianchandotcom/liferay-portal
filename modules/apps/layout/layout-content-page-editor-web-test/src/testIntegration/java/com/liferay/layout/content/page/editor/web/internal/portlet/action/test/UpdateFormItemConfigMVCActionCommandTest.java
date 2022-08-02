@@ -248,6 +248,69 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		}
 	}
 
+	@Test
+	public void testUpdateFormItemConfigMVCActionCommandNoMappingChange()
+		throws Exception {
+
+		InfoField<?>[] infoFields = _getInfoFields();
+
+		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
+				new ComponentEnablerTemporarySwapper(
+					"com.liferay.fragment.collection.contributor.inputs",
+					"com.liferay.fragment.collection.contributor.inputs." +
+						"InputsFragmentCollectionContributor",
+					true);
+			MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoFields)
+						).build(),
+						_editPageInfoItemCapability);
+			PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper("feature.flag.LPS-157738", false)) {
+
+			long classNameId = _portal.getClassNameId(
+				MockObject.class.getName());
+
+			long segmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid());
+
+			JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
+				_layout, String.valueOf(classNameId), "0", segmentsExperienceId,
+				false, infoFields);
+
+			String formItemId = jsonObject.getString("addedItemId");
+
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+				_getMockLiferayPortletActionRequest(
+					JSONUtil.put(
+						"successMessage",
+						JSONUtil.put(
+							"message",
+							JSONUtil.put(
+								LocaleUtil.toLanguageId(
+									LocaleUtil.getMostRelevantLocale()),
+								RandomTestUtil.randomString()))
+					).toString(),
+					formItemId, _layout, segmentsExperienceId);
+
+			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+
+			_assertUpdateFormStyledLayoutStructureItemConfigJSONObject(
+				updateFormJSONObject, 0, StringPool.BLANK, StringPool.BLANK, 0);
+
+			_assertFormStyledLayoutStructureItem(
+				classNameId, infoFields.length, formItemId, infoFields, false);
+		}
+	}
+
 	private void _assertFormStyledLayoutStructureItem(
 			long expectedClassNameId, int expectedChildrenSize,
 			String formItemId, InfoField<?>[] infoFields, boolean submitButton)

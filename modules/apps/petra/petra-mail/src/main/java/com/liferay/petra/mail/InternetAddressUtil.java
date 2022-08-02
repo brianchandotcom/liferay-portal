@@ -16,62 +16,15 @@ package com.liferay.petra.mail;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.mail.Address;
 import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 
 /**
  * @author Alexander Chow
  * @see    com.liferay.util.mail.InternetAddressUtil
  */
 public class InternetAddressUtil {
-
-	public static String toString(Address address) {
-		InternetAddress internetAddress = (InternetAddress)address;
-
-		if (internetAddress != null) {
-			StringBundler sb = new StringBundler(5);
-
-			String personal = internetAddress.getPersonal();
-			String emailAddress = internetAddress.getAddress();
-
-			if (Validator.isNotNull(personal)) {
-				sb.append(personal);
-				sb.append(StringPool.SPACE);
-				sb.append(StringPool.LESS_THAN);
-				sb.append(emailAddress);
-				sb.append(StringPool.GREATER_THAN);
-			}
-			else {
-				sb.append(emailAddress);
-			}
-
-			return sb.toString();
-		}
-
-		return StringPool.BLANK;
-	}
-
-	public static String toString(Address[] addresses) {
-		if (ArrayUtil.isEmpty(addresses)) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler((addresses.length * 2) - 1);
-
-		for (int i = 0; i < (addresses.length - 1); i++) {
-			sb.append(toString(addresses[i]));
-			sb.append(StringPool.COMMA);
-		}
-
-		sb.append(toString(addresses[addresses.length - 1]));
-
-		return sb.toString();
-	}
 
 	public static void validateAddress(Address address)
 		throws AddressException {

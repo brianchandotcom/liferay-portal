@@ -578,6 +578,28 @@ definition {
 		Accounts.viewAssignee(assigneeName = "userfn");
 	}
 
+	@description = "This is a use case for LPS-157661. It asserts that can add an account with an avatar."
+	@priority = "3"
+	test CanAddAccountWithAvatar {
+		Accounts.openAccountsAdmin();
+
+		Accounts.addBusinessAccount(
+			accountLogo = "marketplace_icon.png",
+			accountName = "Business Account Name");
+
+		AssertVisible(
+			key_imageName = "account_entry_logo",
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_PROFILE_IMAGE");
+
+		Accounts.openAccountsAdmin();
+
+		Accounts.gotoEdit(accountName = "Business Account Name");
+
+		AssertVisible(
+			key_imageName = "account_entry_logo",
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_PROFILE_IMAGE");
+	}
+
 	@description = "This test adds and removes a user assignee to an Owned or account specific role."
 	@priority = "4"
 	test CanAddAndRemoveAssigneeToAnOwnedAccountRole {

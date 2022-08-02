@@ -444,7 +444,7 @@ definition {
 	@description = "LPS-135400 - Verify it is possible to add a relation with an entry through the Relationship field"
 	@priority = "5"
 	test CanAddRelationOnRelationshipField {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141652",
@@ -468,7 +468,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141652");
 
-		for (var fieldEntry : list "A,B") {
+		for (var fieldEntry : list "A") {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "customObjectField",
 				objectName = "CustomObject141652",
@@ -515,13 +515,13 @@ definition {
 
 		ObjectPortlet.selectRelationshipFieldEntry(
 			entry = "",
-			newEntry = "Entry B");
+			newEntry = "Entry A");
 
 		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject141652");
 
-		ObjectPortlet.viewEntryDetails(entry = "Entry B");
+		ObjectPortlet.viewEntryDetails(entry = "Entry A");
 
 		ObjectPortlet.gotoRelationshipTab();
 

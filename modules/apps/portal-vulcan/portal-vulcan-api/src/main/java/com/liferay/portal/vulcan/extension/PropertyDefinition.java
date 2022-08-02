@@ -124,11 +124,15 @@ public class PropertyDefinition {
 
 	private static final Map<PropertyType, Set<Class<?>>> _propertyTypeClasses =
 		HashMapBuilder.<PropertyType, Set<Class<?>>>put(
-			PropertyType.BIG_DECIMAL, SetUtil.fromArray(BigDecimal.class)
+			PropertyType.BIG_DECIMAL,
+			SetUtil.fromArray(
+				BigDecimal.class, Integer.class, Double.class, Float.class,
+				Long.class)
 		).<PropertyType, Set<Class<?>>>put(
 			PropertyType.BOOLEAN, SetUtil.fromArray(Boolean.class)
 		).<PropertyType, Set<Class<?>>>put(
-			PropertyType.DECIMAL, SetUtil.fromArray(Float.class)
+			PropertyType.DECIMAL,
+			SetUtil.fromArray(Float.class, Integer.class, Long.class)
 		).<PropertyType, Set<Class<?>>>put(
 			PropertyType.DOUBLE, SetUtil.fromArray(Double.class, Float.class)
 		).<PropertyType, Set<Class<?>>>put(

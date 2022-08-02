@@ -60,6 +60,7 @@ import javax.mail.Part;
 import javax.mail.SendFailedException;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.InternetHeaders;
 import javax.mail.internet.MimeBodyPart;
@@ -158,26 +159,26 @@ public class MailEngine {
 		}
 
 		try {
-			InternetAddressUtil.validateAddress(from);
+			_validateAddress(from);
 
 			if (ArrayUtil.isNotEmpty(to)) {
-				InternetAddressUtil.validateAddresses(to);
+				_validateAddresses(to);
 			}
 
 			if (ArrayUtil.isNotEmpty(cc)) {
-				InternetAddressUtil.validateAddresses(cc);
+				_validateAddresses(cc);
 			}
 
 			if (ArrayUtil.isNotEmpty(bcc)) {
-				InternetAddressUtil.validateAddresses(bcc);
+				_validateAddresses(bcc);
 			}
 
 			if (ArrayUtil.isNotEmpty(replyTo)) {
-				InternetAddressUtil.validateAddresses(replyTo);
+				_validateAddresses(replyTo);
 			}
 
 			if (ArrayUtil.isNotEmpty(bulkAddresses)) {
-				InternetAddressUtil.validateAddresses(bulkAddresses);
+				_validateAddresses(bulkAddresses);
 			}
 
 			Session session = null;
@@ -535,6 +536,37 @@ public class MailEngine {
 			if (_isThrowsExceptionOnFailure()) {
 				throw new MailEngineException(messagingException);
 			}
+		}
+	}
+
+	private static void _validateAddress(Address address)
+		throws AddressException {
+
+		if (address == null) {
+			throw new AddressException("Email address is null");
+		}
+
+		String addressString = address.toString();
+
+		for (char c : addressString.toCharArray()) {
+			if ((c == CharPool.NEW_LINE) || (c == CharPool.RETURN)) {
+				throw new AddressException(
+					StringBundler.concat(
+						"Email address ", addressString,
+						" is invalid because it contains line breaks"));
+			}
+		}
+	}
+
+	private static void _validateAddresses(Address[] addresses)
+		throws AddressException {
+
+		if (addresses == null) {
+			throw new AddressException();
+		}
+
+		for (Address internetAddress : addresses) {
+			_validateAddress(internetAddress);
 		}
 	}
 

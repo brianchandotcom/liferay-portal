@@ -264,24 +264,16 @@ definition {
 		return "${response}";
 	}
 
-	macro getBlogPostingsIdList {
-		var response = BlogPostingAPI._getBlogPostings();
-
-		var idList = JSONUtil.getWithJSONPath("${response}", "$.items.[*].id");
-
-		return "${idList}";
-	}
-
 	macro deleteAllBlogPostings {
 		var numberOfItems = BlogPostingAPI.getNumberOfBlogPostingsCreated();
 
-		if("${numberOfItems}" != "0"){
+		if ("${numberOfItems}" != "0") {
 			var blogPostingIdsList = BlogPostingAPI.getBlogPostingsIdList();
-
 			var body = ListUtil.newList();
 
 			for (var blogPostingId : list "${blogPostingIdsList}") {
 				var value = '''{"id":${blogPostingId}}''';
+
 				ListUtil.add("${body}", "${value}");
 			}
 
@@ -316,6 +308,31 @@ definition {
 	}
 
 	macro getBlogPostings {
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			groupName = "Guest",
+			site = "true");
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
+	macro getBlogPostingsIdList {
+		var response = BlogPostingAPI._getBlogPostings();
+
+		var idList = JSONUtil.getWithJSONPath("${response}", "$.items.[*].id");
+
+		return "${idList}";
+	}
+
+	macro _getBlogPostings {
 		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",

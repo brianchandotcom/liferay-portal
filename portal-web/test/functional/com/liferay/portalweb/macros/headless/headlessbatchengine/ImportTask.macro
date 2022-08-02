@@ -18,12 +18,25 @@ definition {
 		return "${curl}";
 	}
 
-	macro getStatusOfImportTaskById {
-		var response = ImportTask._getImportTaskById(importTaskId = "${importTaskId}");
+	macro _updateSitePage {
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			groupName = "Guest",
+			site = "true");
+		var curl = '''
+			${portalURL}/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.delivery.dto.v1_0.SitePage \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+            -d [
+				{
+					"title": "this is my title"
+				}
+				]
+			''';
 
-		var importTaskStatus = JSONUtil.getWithJSONPath("${response}", "$.executeStatus");
+		var curl = JSONCurlUtil.put("${curl}");
 
-		return "${importTaskStatus}";
+		return "${curl}";
 	}
 
 	macro getErrorMessageOfImportTaskById {
@@ -42,26 +55,12 @@ definition {
 		return "${importTaskId}";
 	}
 
-	macro _updateSitePage {
-		var portalURL = JSONCompany.getPortalURL();
+	macro getStatusOfImportTaskById {
+		var response = ImportTask._getImportTaskById(importTaskId = "${importTaskId}");
 
-		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-			groupName = "Guest",
-			site = "true");
+		var importTaskStatus = JSONUtil.getWithJSONPath("${response}", "$.executeStatus");
 
-		var curl = '''
-			${portalURL}/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.delivery.dto.v1_0.SitePage \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json \
-            -d [
-				{
-					"title": "this is my title"
-				}
-				]
-			''';
-
-		var curl = JSONCurlUtil.put("${curl}");
-
-		return "${curl}";
+		return "${importTaskStatus}";
 	}
+
 }

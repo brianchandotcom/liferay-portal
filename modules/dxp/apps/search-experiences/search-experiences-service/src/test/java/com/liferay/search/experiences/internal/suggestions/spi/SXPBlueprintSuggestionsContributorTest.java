@@ -108,6 +108,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 		_setUpAssetEntryLocalService();
 		_setUpLayoutLocalService();
 		_setUpPortalUtil();
+		_setUpSearchContext();
 		_setUpSearcher(1L);
 		_setUpSearchHits(_setUpDocument("testField"));
 		_setUpSearchRequestBuilderFactory();
@@ -126,8 +127,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 			_sxpBlueprintSuggestionsContributor.
 				getSuggestionsContributorResults(
 					_setUpliferayPortletRequest(),
-					_setUpLiferayPortletResponse(),
-					Mockito.mock(SearchContext.class),
+					_setUpLiferayPortletResponse(), _searchContext,
 					_suggestionsContributorConfiguration));
 
 		Mockito.verify(
@@ -144,6 +144,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 		_setUpAssetEntryLocalService();
 		_setUpLayoutLocalService();
 		_setUpPortalUtil();
+		_setUpSearchContext();
 		_setUpSearcher(1L);
 		_setUpSearchHits(_setUpDocument(RandomTestUtil.randomString()));
 		_setUpSearchRequestBuilderFactory();
@@ -162,8 +163,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 			_sxpBlueprintSuggestionsContributor.
 				getSuggestionsContributorResults(
 					_setUpliferayPortletRequest(),
-					_setUpLiferayPortletResponse(),
-					Mockito.mock(SearchContext.class),
+					_setUpLiferayPortletResponse(), _searchContext,
 					_suggestionsContributorConfiguration));
 
 		Mockito.verify(
@@ -176,6 +176,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 	@Test
 	public void testSearchHitsWithZeroTotalHits() {
 		_setUpSearchRequestBuilderFactory();
+		_setUpSearchContext();
 		_setUpSearcher(0L);
 		_setUpSuggestionsContributorConfiguration(null);
 
@@ -183,8 +184,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 			_sxpBlueprintSuggestionsContributor.
 				getSuggestionsContributorResults(
 					Mockito.mock(LiferayPortletRequest.class),
-					Mockito.mock(LiferayPortletResponse.class),
-					Mockito.mock(SearchContext.class),
+					Mockito.mock(LiferayPortletResponse.class), _searchContext,
 					_suggestionsContributorConfiguration));
 
 		Mockito.verify(
@@ -200,12 +200,13 @@ public class SXPBlueprintSuggestionsContributorTest {
 
 	@Test
 	public void testSuggestionsContributorConfigurationWithNullAttributes() {
+		_setUpSearchContext();
+
 		Assert.assertNull(
 			_sxpBlueprintSuggestionsContributor.
 				getSuggestionsContributorResults(
 					Mockito.mock(LiferayPortletRequest.class),
-					Mockito.mock(LiferayPortletResponse.class),
-					Mockito.mock(SearchContext.class),
+					Mockito.mock(LiferayPortletResponse.class), _searchContext,
 					_suggestionsContributorConfiguration));
 
 		Mockito.verify(
@@ -312,6 +313,22 @@ public class SXPBlueprintSuggestionsContributorTest {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(portal);
+	}
+
+	private void _setUpSearchContext() {
+		Mockito.doReturn(
+			"test"
+		).when(
+			_searchContext
+		).getKeywords();
+
+		Mockito.doReturn(
+			"test"
+		).when(
+			_searchContext
+		).getAttribute(
+			Mockito.anyString()
+		);
 	}
 
 	private void _setUpSearcher(long totalHits) {
@@ -514,6 +531,9 @@ public class SXPBlueprintSuggestionsContributorTest {
 
 	@Mock
 	private LayoutLocalService _layoutLocalService;
+
+	@Mock
+	private SearchContext _searchContext;
 
 	@Mock
 	private Searcher _searcher;

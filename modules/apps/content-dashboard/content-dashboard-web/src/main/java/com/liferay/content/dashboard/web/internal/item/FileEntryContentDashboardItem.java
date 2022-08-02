@@ -277,6 +277,7 @@ public class FileEntryContentDashboardItem
 		return _fileEntry.getModifiedDate();
 	}
 
+	@Override
 	public Preview getPreview() {
 		return new Preview(
 			_getDownloadURL(), _getPreviewImageURL(), _getViewURL());

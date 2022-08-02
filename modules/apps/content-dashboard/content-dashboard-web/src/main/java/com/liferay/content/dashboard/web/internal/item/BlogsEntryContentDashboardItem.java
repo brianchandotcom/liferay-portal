@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -264,7 +266,7 @@ public class BlogsEntryContentDashboardItem
 
 	@Override
 	public Preview getPreview() {
-		return Preview.EMPTY;
+		return new Preview(null, _getPreviewImageURL(), null);
 	}
 
 	@Override
@@ -341,6 +343,33 @@ public class BlogsEntryContentDashboardItem
 		List<Version> versions = getVersions(locale);
 
 		return versions.get(versions.size() - 1);
+	}
+
+	private String _getPreviewImageURL() {
+		return Optional.ofNullable(
+			ServiceContextThreadLocal.getServiceContext()
+		).map(
+			ServiceContext::getLiferayPortletRequest
+		).map(
+			portletRequest -> {
+				List<ContentDashboardItemAction> contentDashboardItemActions =
+					getContentDashboardItemActions(
+						_portal.getHttpServletRequest(portletRequest),
+						ContentDashboardItemAction.Type.PREVIEW_IMAGE);
+
+				Stream<ContentDashboardItemAction> stream =
+					contentDashboardItemActions.stream();
+
+				return stream.findAny(
+				).map(
+					ContentDashboardItemAction::getURL
+				).orElse(
+					null
+				);
+			}
+		).orElse(
+			null
+		);
 	}
 
 	private ContentDashboardItemAction _toContentDashboardItemAction(

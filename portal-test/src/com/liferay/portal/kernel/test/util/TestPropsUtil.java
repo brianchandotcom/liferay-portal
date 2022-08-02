@@ -106,7 +106,12 @@ public class TestPropsUtil {
 		"digital.signature.account.base.uri", "digital.signature.api.accountId",
 		"digital.signature.api.username", "digital.signature.integration.key",
 		"digital.signature.rsa.private.key",
-		"digital.signature.site.settings.strategy");
+		"digital.signature.site.settings.strategy",
+		"object.storage.salesforce.consumer.key",
+		"object.storage.salesforce.consumer.secret",
+		"object.storage.salesforce.login.url",
+		"object.storage.salesforce.password",
+		"object.storage.salesforce.username");
 	private static final TestPropsUtil _testPropsUtil = new TestPropsUtil();
 
 	private final Properties _props = new Properties();

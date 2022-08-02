@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -26,10 +27,16 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.runtime.ServiceComponentRuntime;
+import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
 
 /**
  * @author Lourdes Fernández Besada
@@ -63,5 +70,68 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		filter = "mvc.command.name=/layout_content_page_editor/update_form_item_config"
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private ServiceComponentRuntime _serviceComponentRuntime;
+
+	private class ComponentEnablerTemporarySwapper implements AutoCloseable {
+
+		public ComponentEnablerTemporarySwapper(
+			String bundleSymbolicName, String componentClassName,
+			boolean enabled) {
+
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			ComponentDescriptionDTO componentDescriptionDTO = null;
+
+			for (Bundle bundle : bundleContext.getBundles()) {
+				String symbolicName = bundle.getSymbolicName();
+
+				if (symbolicName.startsWith(bundleSymbolicName)) {
+					componentDescriptionDTO =
+						_serviceComponentRuntime.getComponentDescriptionDTO(
+							bundle, componentClassName);
+
+					break;
+				}
+			}
+
+			Assert.assertNotNull(componentDescriptionDTO);
+
+			_componentDescriptionDTO = componentDescriptionDTO;
+
+			_componentEnabled = _serviceComponentRuntime.isComponentEnabled(
+				_componentDescriptionDTO);
+
+			if (enabled) {
+				_serviceComponentRuntime.enableComponent(
+					_componentDescriptionDTO);
+			}
+			else {
+				_serviceComponentRuntime.disableComponent(
+					_componentDescriptionDTO);
+			}
+		}
+
+		@Override
+		public void close() throws Exception {
+			if (_componentDescriptionDTO == null) {
+				return;
+			}
+
+			if (_componentEnabled) {
+				_serviceComponentRuntime.enableComponent(
+					_componentDescriptionDTO);
+			}
+			else {
+				_serviceComponentRuntime.disableComponent(
+					_componentDescriptionDTO);
+			}
+		}
+
+		private final ComponentDescriptionDTO _componentDescriptionDTO;
+		private final boolean _componentEnabled;
+
+	}
 
 }

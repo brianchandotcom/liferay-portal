@@ -31,6 +31,8 @@ definition {
 	@priority = "5"
 	test LearningToRankSmoke {
 		property elasticsearch.ltr.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration.config";
+		property osgi.module.configurations = "enableSuggestionsEndpoint=B&quot;false&quot;";
 		property remote.elasticsearch.enabled = "true";
 		property search.environment.suite.exclude = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#LearningToRankSmoke";

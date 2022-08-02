@@ -16,11 +16,11 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {openToast} from 'frontend-js-web';
 import React, {useMemo, useRef, useState} from 'react';
 
 import SaveFragmentCompositionModal from '../../../../../app/components/SaveFragmentCompositionModal';
 import hasDropZoneChild from '../../../../../app/components/layout-data-items/hasDropZoneChild';
-import {REQUIRED_FIELD_DATA} from '../../../../../app/config/constants/formModalData';
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {useSelectItem} from '../../../../../app/contexts/ControlsContext';
@@ -35,7 +35,10 @@ import canBeDuplicated from '../../../../../app/utils/canBeDuplicated';
 import canBeRemoved from '../../../../../app/utils/canBeRemoved';
 import canBeRenamed from '../../../../../app/utils/canBeRenamed';
 import canBeSaved from '../../../../../app/utils/canBeSaved';
-import openWarningModal from '../../../../../app/utils/openWarningModal';
+import {
+	FORM_ERROR_TYPES,
+	getFormValidationData,
+} from '../../../../../app/utils/getFormValidationData';
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
@@ -129,28 +132,23 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 		) {
 			items.push({
 				action: () => {
+					updateItemStyle({
+						dispatch,
+						itemId: item.itemId,
+						segmentsExperienceId,
+						selectedViewportSize,
+						styleName: 'display',
+						styleValue: isHidden ? 'block' : 'none',
+					});
+
 					if (hasRequiredChild()) {
-						openWarningModal({
-							action: () =>
-								updateItemStyle({
-									dispatch,
-									itemId: item.itemId,
-									segmentsExperienceId,
-									selectedViewportSize,
-									styleName: 'display',
-									styleValue: isHidden ? 'block' : 'none',
-								}),
-							...REQUIRED_FIELD_DATA,
+						const {message} = getFormValidationData({
+							type: FORM_ERROR_TYPES.hiddenFragment,
 						});
-					}
-					else {
-						updateItemStyle({
-							dispatch,
-							itemId: item.itemId,
-							segmentsExperienceId,
-							selectedViewportSize,
-							styleName: 'display',
-							styleValue: isHidden ? 'block' : 'none',
+
+						openToast({
+							message,
+							type: 'warning',
 						});
 					}
 				},

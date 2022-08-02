@@ -14,19 +14,20 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
-import {REQUIRED_FIELD_DATA} from '../../config/constants/formModalData';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelectItem} from '../../contexts/ControlsContext';
-import {useDispatch, useSelector} from '../../contexts/StoreContext';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
+import {useSelector} from '../../contexts/StoreContext';
+import {
+	FORM_ERROR_TYPES,
+	getFormValidationData,
+} from '../../utils/getFormValidationData';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
-import hideFragment from '../../utils/hideFragment';
-import openWarningModal from '../../utils/openWarningModal';
 import useHasRequiredChild from '../../utils/useHasRequiredChild';
 import hasDropZoneChild from '../layout-data-items/hasDropZoneChild';
 
@@ -59,8 +60,6 @@ export function HideFragmentField({
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
-	const dispatch = useDispatch();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const hasRequiredChild = useHasRequiredChild(item.itemId);
 	const selectItem = useSelectItem();
 
@@ -105,24 +104,18 @@ export function HideFragmentField({
 									: customValues.unchecked;
 							}
 
-							const isHidden =
-								item.config.styles.display === 'none';
+							setNextValue(eventValue);
+							onValueSelect(field.name, eventValue);
 
-							if (!isHidden && hasRequiredChild()) {
-								openWarningModal({
-									action: () =>
-										hideFragment({
-											dispatch,
-											itemId: item.itemId,
-											segmentsExperienceId,
-											selectedViewportSize,
-										}),
-									...REQUIRED_FIELD_DATA,
+							if (eventValue && hasRequiredChild()) {
+								const {message} = getFormValidationData({
+									type: FORM_ERROR_TYPES.hiddenFragment,
 								});
-							}
-							else {
-								setNextValue(eventValue);
-								onValueSelect(field.name, eventValue);
+
+								openToast({
+									message,
+									type: 'warning',
+								});
 							}
 						}}
 					/>

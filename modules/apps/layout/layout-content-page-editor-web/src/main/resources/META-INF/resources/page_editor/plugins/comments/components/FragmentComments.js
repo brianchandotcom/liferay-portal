@@ -42,13 +42,10 @@ export default function FragmentComments({fragmentEntryLink}) {
 
 	return (
 		<>
-			<SidebarPanelHeader
-				className="comments-sidebar-title"
-				padded={false}
-			>
+			<SidebarPanelHeader>
 				<ClayButton
 					borderless
-					className="mx-1 text-dark"
+					className="mr-3 p-0 text-dark"
 					displayType="secondary"
 					onClick={() => selectItem(null)}
 					small

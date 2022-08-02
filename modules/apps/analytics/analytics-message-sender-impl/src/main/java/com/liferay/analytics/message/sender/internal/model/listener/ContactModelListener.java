@@ -70,8 +70,8 @@ public class ContactModelListener extends BaseEntityModelListener<Contact> {
 		"emailAddress", "employeeNumber", "employeeStatusId", "facebookSn",
 		"firstName", "hoursOfOperation", "jabberSn", "jobClass", "jobTitle",
 		"lastName", "male", "middleName", "modifiedDate", "parentContactId",
-		"prefixListTypeId", "skypeSn", "smsSn", "suffixListTypeId", "twitterSn", "userId",
-		"userName");
+		"prefixListTypeId", "skypeSn", "smsSn", "suffixListTypeId", "twitterSn",
+		"userId", "userName");
 
 	@Reference
 	private ContactLocalService _contactLocalService;

@@ -112,9 +112,10 @@ public class OpenIdConnectUserInfoProcessorImpl
 		user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			userInfo.getMiddleName(), lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+			userInfo.getMiddleName(), lastName, prefixListTypeId,
+			suffixListTypeId, male, birthdayMonth, birthdayDay, birthdayYear,
+			jobTitle, groupIds, organizationIds, roleIds, userGroupIds,
+			sendEmail, serviceContext);
 
 		user = _userLocalService.updatePasswordReset(user.getUserId(), false);
 

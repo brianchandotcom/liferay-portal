@@ -1868,14 +1868,14 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			ldapUser.getTimeZoneId(), ldapUser.getGreeting(),
 			ldapUser.getComments(), ldapUser.getFirstName(),
 			ldapUser.getMiddleName(), ldapUser.getLastName(),
-			ldapUser.getPrefixListTypeId(), ldapUser.getSuffixListTypeId(), ldapUser.isMale(),
-			birthdayMonth, birthdayDay, birthdayYear, ldapUser.getSmsSn(),
-			ldapUser.getFacebookSn(), ldapUser.getJabberSn(),
-			ldapUser.getSkypeSn(), ldapUser.getTwitterSn(),
-			ldapUser.getJobTitle(), ldapUser.getGroupIds(),
-			ldapUser.getOrganizationIds(), ldapUser.getRoleIds(),
-			ldapUser.getUserGroupRoles(), ldapUser.getUserGroupIds(),
-			serviceContext);
+			ldapUser.getPrefixListTypeId(), ldapUser.getSuffixListTypeId(),
+			ldapUser.isMale(), birthdayMonth, birthdayDay, birthdayYear,
+			ldapUser.getSmsSn(), ldapUser.getFacebookSn(),
+			ldapUser.getJabberSn(), ldapUser.getSkypeSn(),
+			ldapUser.getTwitterSn(), ldapUser.getJobTitle(),
+			ldapUser.getGroupIds(), ldapUser.getOrganizationIds(),
+			ldapUser.getRoleIds(), ldapUser.getUserGroupRoles(),
+			ldapUser.getUserGroupIds(), serviceContext);
 
 		if (user.getStatus() != ldapUser.getStatus()) {
 			user = _userLocalService.updateStatus(

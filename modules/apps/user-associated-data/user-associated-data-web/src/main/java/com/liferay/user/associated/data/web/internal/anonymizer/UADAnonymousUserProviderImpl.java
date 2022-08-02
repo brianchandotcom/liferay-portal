@@ -105,8 +105,9 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 		User anonymousUser = _userLocalService.addUser(
 			creatorUserId, companyId, false, randomString, randomString, false,
 			screenName, emailAddress, locale, firstName, middleName, lastName,
-			prefixListTypeId, suffixListTypeId, true, birthdayMonth, birthdayDay, birthdayYear,
-			jobTitle, null, null, null, null, false, null);
+			prefixListTypeId, suffixListTypeId, true, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, null, null, null, null, false,
+			null);
 
 		anonymousUser.setComments(
 			StringBundler.concat(

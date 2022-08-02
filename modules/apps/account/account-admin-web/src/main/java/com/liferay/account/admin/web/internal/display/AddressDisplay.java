@@ -55,6 +55,10 @@ public class AddressDisplay {
 		return _city;
 	}
 
+	public long getListTypeId() {
+		return _listTypeId;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -75,10 +79,6 @@ public class AddressDisplay {
 			new AggregateResourceBundle(
 				resourceBundle, PortalUtil.getResourceBundle(locale)),
 			_type);
-	}
-
-	public long getListTypeId() {
-		return _listTypeId;
 	}
 
 	public String getZip() {
@@ -123,11 +123,11 @@ public class AddressDisplay {
 
 	private final long _addressId;
 	private final String _city;
+	private final long _listTypeId;
 	private final String _name;
 	private final Region _region;
 	private final String _street;
 	private final String _type;
-	private final long _listTypeId;
 	private final String _zip;
 
 }

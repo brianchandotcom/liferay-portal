@@ -149,7 +149,8 @@ public class PortalUpgradeProcessRegistryImpl
 
 			});
 
-		upgradeProcesses.put(new Version(17, 0, 0), new UpgradeListTypeIdColumnNames());
+		upgradeProcesses.put(
+			new Version(17, 0, 0), new UpgradeListTypeIdColumnNames());
 	}
 
 }

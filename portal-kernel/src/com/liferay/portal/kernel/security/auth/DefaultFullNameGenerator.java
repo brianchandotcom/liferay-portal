@@ -64,14 +64,16 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		long prefixListTypeId, long suffixListTypeId) {
 
 		String fullName = buildLocalizedFullName(
-			firstName, middleName, lastName, locale, prefixListTypeId, suffixListTypeId, false);
+			firstName, middleName, lastName, locale, prefixListTypeId,
+			suffixListTypeId, false);
 
 		if (!isFullNameTooLong(fullName)) {
 			return fullName;
 		}
 
 		fullName = buildLocalizedFullName(
-			firstName, middleName, lastName, locale, prefixListTypeId, suffixListTypeId, true);
+			firstName, middleName, lastName, locale, prefixListTypeId,
+			suffixListTypeId, true);
 
 		if (!isFullNameTooLong(fullName)) {
 			return fullName;
@@ -171,7 +173,8 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 		if (prefixListTypeId != 0) {
 			try {
-				ListType listType = ListTypeServiceUtil.getListType(suffixListTypeId);
+				ListType listType = ListTypeServiceUtil.getListType(
+					suffixListTypeId);
 
 				String prefix = listType.getName();
 
@@ -193,7 +196,8 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 		if (suffixListTypeId != 0) {
 			try {
-				ListType listType = ListTypeServiceUtil.getListType(suffixListTypeId);
+				ListType listType = ListTypeServiceUtil.getListType(
+					suffixListTypeId);
 
 				String suffix = listType.getName();
 

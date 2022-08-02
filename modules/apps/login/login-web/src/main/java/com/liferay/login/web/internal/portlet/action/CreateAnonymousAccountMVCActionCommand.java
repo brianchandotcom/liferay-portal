@@ -256,9 +256,10 @@ public class CreateAnonymousAccountMVCActionCommand
 		User user = _userService.updateIncompleteUser(
 			themeDisplay.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
-			themeDisplay.getLocale(), firstName, middleName, lastName, prefixListTypeId,
-			suffixListTypeId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			updateUserInformation, sendEmail, serviceContext);
+			themeDisplay.getLocale(), firstName, middleName, lastName,
+			prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, updateUserInformation,
+			sendEmail, serviceContext);
 
 		return JSONUtil.put(
 			"userStatus",
@@ -320,10 +321,10 @@ public class CreateAnonymousAccountMVCActionCommand
 		User user = _userService.addUser(
 			themeDisplay.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
-			themeDisplay.getLocale(), firstName, null, lastName, prefixListTypeId,
-			suffixListTypeId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
-			serviceContext);
+			themeDisplay.getLocale(), firstName, null, lastName,
+			prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
 
 		_userLocalService.updateStatus(
 			user.getUserId(), WorkflowConstants.STATUS_INCOMPLETE,

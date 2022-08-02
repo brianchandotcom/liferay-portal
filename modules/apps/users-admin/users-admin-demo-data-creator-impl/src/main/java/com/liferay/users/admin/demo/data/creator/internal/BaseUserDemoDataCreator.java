@@ -207,8 +207,8 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		return userLocalService.addUser(
 			UserConstants.USER_ID_DEFAULT, companyId, autoPassword, password1,
 			password2, autoScreenName, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			firstName, middleName, lastName, prefixListTypeId, suffixListTypeId,
+			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendMail,
 			new ServiceContext());
 	}

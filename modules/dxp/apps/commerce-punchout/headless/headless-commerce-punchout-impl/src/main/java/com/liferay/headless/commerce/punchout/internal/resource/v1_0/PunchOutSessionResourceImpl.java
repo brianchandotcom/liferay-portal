@@ -250,9 +250,9 @@ public class PunchOutSessionResourceImpl
 		com.liferay.portal.kernel.model.User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, email, locale, firstName, middleName,
-			lastName, prefixListTypeId, suffixListTypeId, false, birthdayMonth, birthdayDay,
-			birthdayYear, jobTitle, new long[] {groupId}, organizationIds,
-			roleIds, userGroupIds, sendEmail,
+			lastName, prefixListTypeId, suffixListTypeId, false, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, new long[] {groupId},
+			organizationIds, roleIds, userGroupIds, sendEmail,
 			_serviceContextHelper.getServiceContext(groupId));
 
 		user = _userLocalService.updateLastLogin(

@@ -109,7 +109,8 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 
 	@Override
 	public EmailAddress updateEmailAddress(
-			long emailAddressId, String address, long listTypeId, boolean primary)
+			long emailAddressId, String address, long listTypeId,
+			boolean primary)
 		throws PortalException {
 
 		EmailAddress emailAddress = emailAddressPersistence.findByPrimaryKey(

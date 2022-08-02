@@ -353,7 +353,8 @@ public class ContactsUtil {
 		long prefixListTypeId = contact.getPrefixListTypeId();
 
 		if (prefixListTypeId > 0) {
-			ListType listType = ListTypeServiceUtil.getListType(prefixListTypeId);
+			ListType listType = ListTypeServiceUtil.getListType(
+				prefixListTypeId);
 
 			sb.append(listType.getName());
 		}
@@ -363,7 +364,8 @@ public class ContactsUtil {
 		long suffixListTypeId = contact.getSuffixListTypeId();
 
 		if (suffixListTypeId > 0) {
-			ListType listType = ListTypeServiceUtil.getListType(suffixListTypeId);
+			ListType listType = ListTypeServiceUtil.getListType(
+				suffixListTypeId);
 
 			sb.append(listType.getName());
 		}

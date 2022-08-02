@@ -220,10 +220,10 @@ public class CompanySampleDataGenerationTest {
 			User user = _userLocalService.addUser(
 				0, companyId, false, "test", "test", false, screenName,
 				emailAddress, LocaleUtil.US, firstName, middleName, lastName,
-				prefixListTypeId, suffixListTypeId, male, birthdayMonth, birthdayDay,
-				birthdayYear, jobTitle, new long[] {groupId}, organizationIds,
-				new long[] {role.getRoleId()}, userGroupIds, sendEmail,
-				_getServiceContext(companyId));
+				prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+				birthdayDay, birthdayYear, jobTitle, new long[] {groupId},
+				organizationIds, new long[] {role.getRoleId()}, userGroupIds,
+				sendEmail, _getServiceContext(companyId));
 
 			user.setLoginDate(new Date());
 			user.setLastLoginDate(new Date());

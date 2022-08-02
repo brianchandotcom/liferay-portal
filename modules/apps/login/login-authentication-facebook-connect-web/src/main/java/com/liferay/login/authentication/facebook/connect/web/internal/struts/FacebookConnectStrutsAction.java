@@ -257,9 +257,9 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 		User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, serviceContext);
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
 		user = _userLocalService.updateLastLogin(
 			user.getUserId(), user.getLoginIP());

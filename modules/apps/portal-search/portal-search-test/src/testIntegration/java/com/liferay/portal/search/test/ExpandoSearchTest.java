@@ -371,10 +371,10 @@ public class ExpandoSearchTest {
 		User user = _userLocalService.addUser(
 			creatorUserId, TestPropsValues.getCompanyId(), autoPassword,
 			password1, password2, autoScreenName, screenName, emailAddress,
-			locale, firstName, middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			new long[] {TestPropsValues.getGroupId()}, organizationIds, roleIds,
-			userGroupIds, sendMail, serviceContext);
+			locale, firstName, middleName, lastName, prefixListTypeId,
+			suffixListTypeId, male, birthdayMonth, birthdayDay, birthdayYear,
+			jobTitle, new long[] {TestPropsValues.getGroupId()},
+			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
 
 		_users.add(user);
 

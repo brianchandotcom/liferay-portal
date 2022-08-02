@@ -24,14 +24,19 @@ public class UpgradeListTypeIdColumnNames extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		alterColumnName("Address", "typeId", "listTypeId LONG");
+
 		alterColumnName("Phone", "typeId", "listTypeId LONG");
+
 		alterColumnName("EmailAddress", "typeId", "listTypeId LONG");
+
 		alterColumnName("Website", "typeId", "listTypeId LONG");
+
 		alterColumnName("Contact_", "prefixId", "prefixListTypeId LONG");
 		alterColumnName("Contact_", "suffixId", "suffixListTypeId LONG");
-		alterColumnName("Organization_", "statusId", "statusListTypeId LONG");
-		alterColumnName("OrgLabor", "typeId", "listTypeId LONG");
 
+		alterColumnName("Organization_", "statusId", "statusListTypeId LONG");
+
+		alterColumnName("OrgLabor", "typeId", "listTypeId LONG");
 	}
 
 }

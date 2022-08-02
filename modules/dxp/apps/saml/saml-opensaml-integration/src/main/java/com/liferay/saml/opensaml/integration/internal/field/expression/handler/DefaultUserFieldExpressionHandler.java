@@ -193,8 +193,8 @@ public class DefaultUserFieldExpressionHandler
 			password2, autoScreenName, newUser.getScreenName(),
 			newUser.getEmailAddress(), serviceContext.getLocale(),
 			newUser.getFirstName(), newUser.getMiddleName(),
-			newUser.getLastName(), prefixListTypeId, suffixListTypeId, male, birthdayMonth,
-			birthdayDay, birthdayYear, newUser.getJobTitle(),
+			newUser.getLastName(), prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, newUser.getJobTitle(),
 			newUser.getGroupIds(), newUser.getOrganizationIds(),
 			newUser.getRoleIds(), newUser.getUserGroupIds(), sendEmail,
 			serviceContext);

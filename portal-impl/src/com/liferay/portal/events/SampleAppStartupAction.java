@@ -91,9 +91,9 @@ public class SampleAppStartupAction extends SimpleAction {
 		User paulUser = UserLocalServiceUtil.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, serviceContext);
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -108,9 +108,9 @@ public class SampleAppStartupAction extends SimpleAction {
 		User janeUser = UserLocalServiceUtil.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, serviceContext);
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

@@ -138,9 +138,10 @@ public class MembershipPolicyTestUtil {
 		return UserServiceUtil.addUser(
 			TestPropsValues.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, siteIds, organizationIds,
-			roleIds, userGroupIds, sendMail, new ServiceContext());
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, siteIds,
+			organizationIds, roleIds, userGroupIds, sendMail,
+			new ServiceContext());
 	}
 
 	public static UserGroup addUserGroup() throws Exception {
@@ -202,11 +203,12 @@ public class MembershipPolicyTestUtil {
 			userId, oldPassword, newPassword1, newPassword2, passwordReset,
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, false, null, languageId, timeZoneId, greeting,
-			comments, firstName, middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
-			jabberSn, skypeSn, twitterSn, jobTitle, siteIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, addresses, emailAddresses,
-			phones, websites, announcementsDelivers, new ServiceContext());
+			comments, firstName, middleName, lastName, prefixListTypeId,
+			suffixListTypeId, male, birthdayMonth, birthdayDay, birthdayYear,
+			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, siteIds,
+			organizationIds, roleIds, userGroupRoles, userGroupIds, addresses,
+			emailAddresses, phones, websites, announcementsDelivers,
+			new ServiceContext());
 	}
 
 	protected static Map<String, Serializable> addExpandoMap(Class<?> clazz)

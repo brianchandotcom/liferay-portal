@@ -258,8 +258,8 @@ public class OrganizationLocalServiceImpl
 	@Override
 	public Organization addOrganization(
 			long userId, long parentOrganizationId, String name, String type,
-			long regionId, long countryId, long statusListTypeId, String comments,
-			boolean site, ServiceContext serviceContext)
+			long regionId, long countryId, long statusListTypeId,
+			String comments, boolean site, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Organization
@@ -413,8 +413,9 @@ public class OrganizationLocalServiceImpl
 	public Organization addOrUpdateOrganization(
 			String externalReferenceCode, long userId,
 			long parentOrganizationId, String name, String type, long regionId,
-			long countryId, long statusListTypeId, String comments, boolean hasLogo,
-			byte[] logoBytes, boolean site, ServiceContext serviceContext)
+			long countryId, long statusListTypeId, String comments,
+			boolean hasLogo, byte[] logoBytes, boolean site,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -440,8 +441,9 @@ public class OrganizationLocalServiceImpl
 		else {
 			organization = updateOrganization(
 				user.getCompanyId(), organization.getOrganizationId(),
-				parentOrganizationId, name, type, regionId, countryId, statusListTypeId,
-				comments, hasLogo, logoBytes, site, serviceContext);
+				parentOrganizationId, name, type, regionId, countryId,
+				statusListTypeId, comments, hasLogo, logoBytes, site,
+				serviceContext);
 		}
 
 		return organization;
@@ -2000,8 +2002,8 @@ public class OrganizationLocalServiceImpl
 	public Organization updateOrganization(
 			long companyId, long organizationId, long parentOrganizationId,
 			String name, String type, long regionId, long countryId,
-			long statusListTypeId, String comments, boolean hasLogo, byte[] logoBytes,
-			boolean site, ServiceContext serviceContext)
+			long statusListTypeId, String comments, boolean hasLogo,
+			byte[] logoBytes, boolean site, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Organization

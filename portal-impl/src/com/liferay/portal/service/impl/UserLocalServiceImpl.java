@@ -309,9 +309,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		User defaultAdminUser = addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, serviceContext);
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
 		updateEmailAddressVerified(defaultAdminUser.getUserId(), true);
 
@@ -644,9 +644,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			boolean autoPassword, String password1, String password2,
 			boolean autoScreenName, String screenName, String emailAddress,
 			Locale locale, String firstName, String middleName, String lastName,
-			long prefixListTypeId, long suffixListTypeId, boolean male, int birthdayMonth,
-			int birthdayDay, int birthdayYear, String jobTitle,
-			boolean sendEmail, ServiceContext serviceContext)
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userPersistence.fetchByC_ERC(
@@ -656,9 +656,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user = addUserWithWorkflow(
 				creatorUserId, companyId, autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, locale, firstName,
-				middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
-				birthdayDay, birthdayYear, jobTitle, new long[0], new long[0],
-				new long[0], new long[0], sendEmail, serviceContext);
+				middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+				birthdayMonth, birthdayDay, birthdayYear, jobTitle, new long[0],
+				new long[0], new long[0], new long[0], sendEmail,
+				serviceContext);
 
 			user.setExternalReferenceCode(externalReferenceCode);
 
@@ -678,12 +679,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user.getReminderQueryQuestion(), user.getReminderQueryAnswer(),
 				screenName, emailAddress, hasPortrait, null,
 				user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
-				user.getComments(), firstName, middleName, lastName, prefixListTypeId,
-				suffixListTypeId, male, birthdayMonth, birthdayDay, birthdayYear,
-				contact.getSmsSn(), contact.getFacebookSn(),
-				contact.getJabberSn(), contact.getSkypeSn(),
-				contact.getTwitterSn(), jobTitle, user.getGroupIds(),
-				user.getOrganizationIds(), user.getRoleIds(),
+				user.getComments(), firstName, middleName, lastName,
+				prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+				birthdayDay, birthdayYear, contact.getSmsSn(),
+				contact.getFacebookSn(), contact.getJabberSn(),
+				contact.getSkypeSn(), contact.getTwitterSn(), jobTitle,
+				user.getGroupIds(), user.getOrganizationIds(),
+				user.getRoleIds(),
 				_userGroupRoleLocalService.getUserGroupRoles(user.getUserId()),
 				user.getUserGroupIds(), serviceContext);
 		}
@@ -891,11 +893,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long creatorUserId, long companyId, boolean autoPassword,
 			String password1, String password2, boolean autoScreenName,
 			String screenName, String emailAddress, Locale locale,
-			String firstName, String middleName, String lastName, long prefixListTypeId,
-			long suffixListTypeId, boolean male, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds, long[] userGroupIds,
-			boolean sendEmail, ServiceContext serviceContext)
+			String firstName, String middleName, String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -917,9 +920,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return addUserWithWorkflow(
 				creatorUserId, companyId, autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, locale, firstName,
-				middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
-				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-				roleIds, userGroupIds, sendEmail, serviceContext);
+				middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+				birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+				organizationIds, roleIds, userGroupIds, sendEmail,
+				serviceContext);
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
@@ -1043,11 +1047,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long creatorUserId, long companyId, boolean autoPassword,
 			String password1, String password2, boolean autoScreenName,
 			String screenName, String emailAddress, Locale locale,
-			String firstName, String middleName, String lastName, long prefixListTypeId,
-			long suffixListTypeId, boolean male, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds, long[] userGroupIds,
-			boolean sendEmail, ServiceContext serviceContext)
+			String firstName, String middleName, String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// User
@@ -4418,10 +4423,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long creatorUserId, long companyId, boolean autoPassword,
 			String password1, String password2, boolean autoScreenName,
 			String screenName, String emailAddress, Locale locale,
-			String firstName, String middleName, String lastName, long prefixListTypeId,
-			long suffixListTypeId, boolean male, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, boolean updateUserInformation,
-			boolean sendEmail, ServiceContext serviceContext)
+			String firstName, String middleName, String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, boolean updateUserInformation, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = getUserByEmailAddress(companyId, emailAddress);
@@ -5143,11 +5149,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String screenName, String emailAddress, boolean hasPortrait,
 			byte[] portraitBytes, String languageId, String timeZoneId,
 			String greeting, String comments, String firstName,
-			String middleName, String lastName, long prefixListTypeId, long suffixListTypeId,
-			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
-			String smsSn, String facebookSn, String jabberSn, String skypeSn,
-			String twitterSn, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds,
+			String middleName, String lastName, long prefixListTypeId,
+			long suffixListTypeId, boolean male, int birthdayMonth,
+			int birthdayDay, int birthdayYear, String smsSn, String facebookSn,
+			String jabberSn, String skypeSn, String twitterSn, String jobTitle,
+			long[] groupIds, long[] organizationIds, long[] roleIds,
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 			ServiceContext serviceContext)
 		throws PortalException {

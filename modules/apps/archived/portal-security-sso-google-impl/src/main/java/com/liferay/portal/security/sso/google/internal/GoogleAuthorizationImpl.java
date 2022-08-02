@@ -240,9 +240,10 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 		User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, new ServiceContext());
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail,
+			new ServiceContext());
 
 		user = _userLocalService.updateGoogleUserId(
 			user.getUserId(), googleUserId);

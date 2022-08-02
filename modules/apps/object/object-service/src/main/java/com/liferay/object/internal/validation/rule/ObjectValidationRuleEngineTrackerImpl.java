@@ -19,6 +19,8 @@ import com.liferay.object.validation.rule.ObjectValidationRuleEngineTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +64,14 @@ public class ObjectValidationRuleEngineTrackerImpl
 
 					ObjectValidationRuleEngine objectValidationRuleEngine =
 						bundleContext.getService(serviceReference);
+
+					if (GetterUtil.getBoolean(
+							PropsUtil.get("block-groovy-scripts")) &&
+						(objectValidationRuleEngine instanceof
+							GroovyObjectValidationRuleEngineImpl)) {
+
+						return;
+					}
 
 					emitter.emit(objectValidationRuleEngine.getName());
 				}

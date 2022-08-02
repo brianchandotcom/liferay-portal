@@ -51,6 +51,7 @@ const HEADERS = [
 	},
 	{
 		key: 'email',
+		type: 'email',
 		value: 'Email Adress',
 	},
 	{
@@ -82,7 +83,10 @@ type TableContent = {[keys: string]: string};
 
 const ApplicationsTable = () => {
 	const [applications, setApplications] = useState<TableContent[]>([]);
-	const [active, setActive] = useState(5);
+	const [totalCount, setTotalCount] = useState<number>(0);
+	const [pageSize, setPageSize] = useState<number>(5);
+	const [totalPages, setTotalPages] = useState<number>(0);
+	const [active, setActive] = useState(1);
 
 	const handleDeleteApplication = (externalReferenceCode: string) => {
 		deleteApplicationByExternalReferenceCode(externalReferenceCode);
@@ -92,6 +96,7 @@ const ApplicationsTable = () => {
 		);
 
 		setApplications(filteredApplications);
+		setTotalCount(totalCount - 1);
 	};
 
 	const handleEditApplication = (externalReferenceCode: string) => {
@@ -123,7 +128,8 @@ const ApplicationsTable = () => {
 
 					applicationsList.push({
 						applicationCreateDate: formatDate(
-							new Date(applicationCreateDate)
+							new Date(applicationCreateDate),
+							true
 						),
 						email,
 						externalReferenceCode,
@@ -134,15 +140,21 @@ const ApplicationsTable = () => {
 					});
 				}
 			);
-
 			setApplications(applicationsList);
+
+			const totalCount = results?.data?.totalCount;
+			setTotalCount(totalCount);
+
+			const totalPages = Math.ceil(totalCount / pageSize);
+			setTotalPages(totalPages);
 		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [pageSize]);
+
+	const title = `Applications (${totalCount})`;
 
 	return (
 		<div className="px-3 ray-dashboard-recent-applications">
-			<Header className="mb-5 pt-3" title="Applications (123)" />
+			<Header className="mb-5 pt-3" title={title} />
 
 			<Table
 				actions={[
@@ -166,39 +178,52 @@ const ApplicationsTable = () => {
 						items={[
 							{
 								label: '5',
-								onClick: () => {},
+								onClick: () => {
+									setPageSize(5);
+								},
 							},
 							{
 								label: '10',
-								onClick: () => {},
+								onClick: () => {
+									setPageSize(10);
+								},
 							},
 							{
 								label: '20',
-								onClick: () => {},
+								onClick: () => {
+									setPageSize(20);
+								},
 							},
 							{
 								label: '30',
-								onClick: () => {},
+								onClick: () => {
+									setPageSize(30);
+								},
 							},
 							{
 								label: '50',
-								onClick: () => {},
+								onClick: () => {
+									setPageSize(50);
+								},
 							},
 							{
 								label: '75',
-								onClick: () => {},
+								onClick: () => {
+									setPageSize(75);
+								},
 							},
 						]}
 						trigger={
 							<ClayButton displayType="unstyled">
-								10 Entries
+								{pageSize}
+								Entries
 								<ClayIcon symbol="caret-double-l" />
 							</ClayButton>
 						}
 					/>
 
 					<ClayPaginationBar.Results>
-						Showing 31 to 60 of 438 entries.
+						Showing ## to ## of {totalCount} entries.
 					</ClayPaginationBar.Results>
 				</ClayPaginationBar>
 
@@ -206,7 +231,7 @@ const ApplicationsTable = () => {
 					active={active}
 					ellipsisBuffer={2}
 					onActiveChange={setActive}
-					totalPages={20}
+					totalPages={totalPages}
 				/>
 			</div>
 		</div>

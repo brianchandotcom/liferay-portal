@@ -1,5 +1,27 @@
 definition {
 
+	macro assertCompanyLogIsolated {
+		var logContent = CompanyLogging.downloadCompanyLog(portalInstanceName = "${portalInstanceName}");
+
+		CompanyLogging.assertCompanyLogContent(
+			logContent = "${logContent}",
+			portalInstanceName = "${portalInstanceName}");
+
+		var companyTitles = JSONCompany.getAllCompanyNames();
+
+		var companyTitles = ListUtil.newListFromString("${companyTitles}");
+
+		ListUtil.remove("${companyTitles}", "${portalInstanceName}");
+
+		for (var companyTitle : list "${companyTitles}") {
+			var companyId = JSONCompany.getCompanyIdByName(portalInstanceName = "${companyTitle}");
+
+			if (contains("${logContent}", "companyId=${companyId}")) {
+				fail("The ${portalInstanceName} company log file contains logs from the ${companyTitle} company");
+			}
+		}
+	}
+
 	macro assertNoLogDownloaded {
 		DownloadTempFile();
 

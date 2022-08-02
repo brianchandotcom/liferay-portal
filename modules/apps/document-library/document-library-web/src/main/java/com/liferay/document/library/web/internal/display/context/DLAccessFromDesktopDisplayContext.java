@@ -18,6 +18,7 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -98,9 +99,10 @@ public class DLAccessFromDesktopDisplayContext {
 		return "portlet_image_gallery_display_folder_action";
 	}
 
-	private static final String _WEBDAV_HELP_ARTICLE =
-		"https://help.liferay.com/hc/en-us/articles" +
-			"/360028720352-Desktop-Access-to-Documents-and-Media";
+	private static final String _WEBDAV_HELP_ARTICLE = StringBundler.concat(
+		"https://learn.liferay.com/dxp/latest/en/content-authoring-and-manage",
+		"ment/documents-and-media/publishing-and-sharing/accessing-documents-",
+		"with-webdav.html");
 
 	private final DLRequestHelper _dlRequestHelper;
 	private final HttpServletRequest _httpServletRequest;

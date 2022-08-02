@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -89,6 +90,7 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 
 import java.io.Serializable;
 
@@ -1597,6 +1599,11 @@ public class ObjectEntryLocalServiceTest {
 
 	@Test
 	public void testUpdateObjectEntry() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-158821", "true"
+			).build());
+
 		_assertCount(0);
 
 		ObjectEntry objectEntry = _addObjectEntry(
@@ -1958,6 +1965,15 @@ public class ObjectEntryLocalServiceTest {
 					"characters for object field \"firstName\"",
 				objectEntryValuesException.getMessage());
 		}
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158821"))) {
+			_testUpdateExternalReferenceCode();
+		}
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-158821", "false"
+			).build());
 	}
 
 	@Test
@@ -2173,6 +2189,113 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	private void _testUpdateExternalReferenceCode() throws Exception {
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"firstName", "John"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		Assert.assertNotNull(
+			ReflectionTestUtil.getFieldValue(objectEntry1, "_values"));
+		Assert.assertEquals(
+			String.valueOf(objectEntry1.getObjectEntryId()),
+			objectEntry1.getExternalReferenceCode());
+
+		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode", "newExternalReferenceCode"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			"newExternalReferenceCode",
+			objectEntry1.getExternalReferenceCode());
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "matthew@liferay.com"
+			).put(
+				"firstName", "Matthew"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey2"
+			).build());
+
+		try {
+			objectEntry2 = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry2.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"externalReferenceCode", "newExternalReferenceCode"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+		}
+		catch (ObjectEntryValuesException.MustNotBeDuplicate
+					objectEntryValuesException) {
+
+			Assert.assertEquals(
+				"Duplicate value newExternalReferenceCode",
+				objectEntryValuesException.getMessage());
+		}
+
+		objectEntry2 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry2.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode", ""
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			String.valueOf(objectEntry2.getObjectEntryId()),
+			objectEntry2.getExternalReferenceCode());
+
+		objectEntry2 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry2.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode",
+				String.valueOf(objectEntry1.getObjectEntryId())
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		try {
+			objectEntry1 = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"externalReferenceCode", ""
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+		}
+		catch (ObjectEntryValuesException.MustNotBeDuplicate
+					objectEntryValuesException) {
+
+			Assert.assertEquals(
+				"Duplicate value " +
+					String.valueOf(objectEntry1.getObjectEntryId()),
+				objectEntryValuesException.getMessage());
+		}
+
+		int randomInt = RandomTestUtil.randomInt();
+
+		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode", randomInt
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			String.valueOf(randomInt), objectEntry1.getExternalReferenceCode());
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry1.getObjectEntryId());
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry2.getObjectEntryId());
 	}
 
 	private void _testUpdateStatus() throws Exception {

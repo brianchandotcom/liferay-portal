@@ -704,7 +704,7 @@ public class StringBundlerTest {
 		String propertyKey =
 			StringBundler.class.getName() + ".threadlocal.buffer.limit";
 
-		String propertyValue = System.getProperty(propertyKey);
+		String propertyValue = SystemProperties.get(propertyKey);
 
 		System.setProperty(propertyKey, String.valueOf(threadLocalBufferLimit));
 
@@ -775,7 +775,7 @@ public class StringBundlerTest {
 		String propertyKey =
 			StringBundler.class.getName() + ".threadlocal.buffer.limit";
 
-		String propertyValue = System.getProperty(propertyKey);
+		String propertyValue = SystemProperties.get(propertyKey);
 
 		System.setProperty(propertyKey, String.valueOf(Integer.MAX_VALUE));
 
@@ -788,7 +788,7 @@ public class StringBundlerTest {
 		String propertyKey =
 			StringBundler.class.getName() + ".threadlocal.buffer.limit";
 
-		String propertyValue = System.getProperty(propertyKey);
+		String propertyValue = SystemProperties.get(propertyKey);
 
 		System.clearProperty(propertyKey);
 
@@ -801,7 +801,7 @@ public class StringBundlerTest {
 		String propertyKey =
 			StringBundler.class.getName() + ".threadlocal.buffer.limit";
 
-		String propertyValue = System.getProperty(propertyKey);
+		String propertyValue = SystemProperties.get(propertyKey);
 
 		System.setProperty(propertyKey, "0");
 
@@ -816,7 +816,7 @@ public class StringBundlerTest {
 		String propertyKey =
 			StringBundler.class.getName() + ".threadlocal.buffer.limit";
 
-		String propertyValue = System.getProperty(propertyKey);
+		String propertyValue = SystemProperties.get(propertyKey);
 
 		System.setProperty(propertyKey, String.valueOf(threadLocalBufferLimit));
 

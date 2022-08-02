@@ -215,7 +215,7 @@ public class ServiceProxyFactory {
 	}
 
 	private static final long _TIMEOUT = GetterUtil.getLong(
-		System.getProperty(ServiceProxyFactory.class.getName() + ".timeout"),
+		SystemProperties.get(ServiceProxyFactory.class.getName() + ".timeout"),
 		60000);
 
 	private static final Log _log = LogFactoryUtil.getLog(

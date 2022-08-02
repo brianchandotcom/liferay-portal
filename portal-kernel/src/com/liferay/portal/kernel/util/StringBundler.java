@@ -329,7 +329,7 @@ public class StringBundler implements Serializable {
 
 	static {
 		int threadLocalBufferLimit = GetterUtil.getInteger(
-			System.getProperty(
+			SystemProperties.get(
 				StringBundler.class.getName() + ".threadlocal.buffer.limit"),
 			Integer.MAX_VALUE);
 

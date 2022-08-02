@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.security;
 
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.security.SecureRandom;
 
@@ -117,7 +118,7 @@ public class SecureRandomUtil {
 
 	static {
 		int bufferSize = GetterUtil.getInteger(
-			System.getProperty(
+			SystemProperties.get(
 				SecureRandomUtil.class.getName() + ".buffer.size"));
 
 		if (bufferSize < _MIN_BUFFER_SIZE) {

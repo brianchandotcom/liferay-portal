@@ -37,10 +37,11 @@ import java.nio.channels.FileChannel;
 public class StreamUtil {
 
 	public static final int BUFFER_SIZE = GetterUtil.getInteger(
-		System.getProperty(StreamUtil.class.getName() + ".buffer.size"), 8192);
+		SystemProperties.get(StreamUtil.class.getName() + ".buffer.size"),
+		8192);
 
 	public static final boolean FORCE_TIO = GetterUtil.getBoolean(
-		System.getProperty(StreamUtil.class.getName() + ".force.tio"));
+		SystemProperties.get(StreamUtil.class.getName() + ".force.tio"));
 
 	public static void cleanUp(boolean quiet, Closeable... closeables) {
 		IOException ioException1 = null;

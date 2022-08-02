@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.io;
 
 import com.liferay.petra.lang.ClassResolverUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,7 +69,7 @@ public class ProtectedObjectInputStream extends ObjectInputStream {
 
 	static {
 		String[] restrictedClassNames = StringUtil.split(
-			System.getProperty(
+			SystemProperties.get(
 				ProtectedObjectInputStream.class.getName() +
 					".restricted.class.names"));
 

@@ -365,11 +365,23 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		DMFolder.addPG(
+		JSONFolder.addFolder(
 			dmFolderDescription = "Folder 1",
-			dmFolderName = "Folder 1");
+			dmFolderName = "Folder 1",
+			groupName = "Site Name");
 
-		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.doc");
+		for (var entryCount : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}",
+				groupName = "Site Name",
+				mimeType = "application/msword",
+				sourceFileName = "Document_${entryCount}.doc");
+		}
+
+		Navigator.openSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2");
 

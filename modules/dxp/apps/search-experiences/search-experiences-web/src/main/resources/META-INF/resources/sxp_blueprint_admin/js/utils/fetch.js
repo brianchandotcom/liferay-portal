@@ -20,8 +20,8 @@ const DEFAULT_HEADERS_OBJECT = {
 	'Content-Type': 'application/json',
 };
 
-const DEFAULT_HEADERS = new Headers(DEFAULT_HEADERS_OBJECT);
-const DEFAULT_METHOD = 'GET';
+export const DEFAULT_HEADERS = new Headers(DEFAULT_HEADERS_OBJECT);
+export const DEFAULT_METHOD = 'GET';
 
 /**
  * A wrapper around frontend-js-web's `fetch` function with commonly used

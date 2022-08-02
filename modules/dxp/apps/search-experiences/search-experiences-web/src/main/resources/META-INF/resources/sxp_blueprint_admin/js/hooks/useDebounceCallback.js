@@ -9,18 +9,11 @@
  * distribution rights of the Software.
  */
 
-export const INPUT_TYPES = {
-	CATEGORY_SELECTOR: 'categorySelector',
-	DATE: 'date',
-	FIELD_MAPPING: 'fieldMapping',
-	FIELD_MAPPING_LIST: 'fieldMappingList',
-	ITEM_SELECTOR: 'itemSelector',
-	JSON: 'json',
-	KEYWORDS: 'keywords',
-	MULTISELECT: 'multiselect',
-	NUMBER: 'number',
-	SEARCHABLE_TYPE: 'searchableType',
-	SELECT: 'select',
-	SLIDER: 'slider',
-	TEXT: 'text',
-};
+import {cancelDebounce, debounce} from 'frontend-js-web';
+import {useRef} from 'react';
+
+export default function useDebounceCallback(callback, milliseconds) {
+	const callbackRef = useRef(debounce(callback, milliseconds));
+
+	return [callbackRef.current, () => cancelDebounce(callbackRef.current)];
+}

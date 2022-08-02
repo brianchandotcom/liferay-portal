@@ -40,6 +40,7 @@ import NumberInput from './NumberInput';
 import SelectInput from './SelectInput';
 import SliderInput from './SliderInput';
 import TextInput from './TextInput';
+import CategorySelectorInput from './category_selector_input/index';
 
 /**
  * Converts the searchable types to be compatible with ClaySelect options prop.
@@ -173,6 +174,19 @@ function SXPElement({
 						id={inputId}
 						itemType={typeOptions.itemType}
 						label={config.label}
+						name={inputName}
+						setFieldTouched={setFieldTouched}
+						setFieldValue={setFieldValue}
+						value={uiConfigurationValues[config.name]}
+					/>
+				);
+			case INPUT_TYPES.CATEGORY_SELECTOR:
+				return (
+					<CategorySelectorInput
+						disabled={disabled}
+						id={inputId}
+						label={config.label}
+						multiple={typeOptions.format === 'array'}
 						name={inputName}
 						setFieldTouched={setFieldTouched}
 						setFieldValue={setFieldValue}

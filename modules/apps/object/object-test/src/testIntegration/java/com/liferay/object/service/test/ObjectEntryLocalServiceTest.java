@@ -562,10 +562,8 @@ public class ObjectEntryLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"isEmailAddress(emailAddress)");
 
-		ObjectEntry objectEntry = null;
-
 		try {
-			objectEntry = _addObjectEntry(
+			_addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
 					"emailAddress", RandomTestUtil.randomString()
 				).put(
@@ -583,7 +581,7 @@ public class ObjectEntryLocalServiceTest {
 				message.contains("Field must be an email address"));
 		}
 
-		objectEntry = _addObjectEntry(
+		ObjectEntry objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddress", "john@liferay.com"
 			).put(
@@ -627,7 +625,7 @@ public class ObjectEntryLocalServiceTest {
 				"equals(lastName, middleName)");
 
 		try {
-			objectEntry = _addObjectEntry(
+			_addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
 					"emailAddress", "john@liferay.com"
 				).put(
@@ -691,7 +689,7 @@ public class ObjectEntryLocalServiceTest {
 					testName.getMethodName(), ".groovy")));
 
 		try {
-			objectEntry = _addObjectEntry(
+			_addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
 					"birthday", "2010-12-25"
 				).put(

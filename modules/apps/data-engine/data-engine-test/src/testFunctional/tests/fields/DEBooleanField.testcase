@@ -185,4 +185,38 @@ definition {
 		FormFields.viewBooleanField(fieldValue = "Test Boolean Field");
 	}
 
+	@description = "Verify that the boolean field reference can be edited."
+	@priority = "5"
+	test ReferenceCanBeEdited {
+		property portal.acceptance = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Structure 1");
+
+		DEBuilder.addField(
+			fieldLabel = "Boolean",
+			fieldName = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		DEBuilder.editBooleanFieldReference(
+			fieldLabel = "Boolean",
+			fieldReference = "BooleanField1234");
+
+		DEBuilder.assertBooleanFieldReference(
+			fieldLabel = "Boolean",
+			fieldReference = "BooleanField1234");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure 1");
+
+		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
+
+		DEBuilder.assertBooleanFieldReference(
+			fieldLabel = "Boolean",
+			fieldReference = "BooleanField1234");
+	}
+
 }

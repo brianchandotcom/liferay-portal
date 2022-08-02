@@ -481,7 +481,7 @@
 		width: 225,
 	};
 
-	<portlet:namespace />colorPicker = new Liferay.SimpleColorPicker({
+	window.<portlet:namespace />colorPicker = new Liferay.SimpleColorPicker({
 		on: {
 			colorChange: function (event) {
 				var instance = this;

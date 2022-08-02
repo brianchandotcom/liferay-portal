@@ -296,7 +296,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 							<label for="<%= webDavURLInputId %>">
 								<liferay-ui:message key='<%= TextFormatter.format("webDavURL", TextFormatter.K) %>' />
 
-								<liferay-ui:icon-help message='<%= LanguageUtil.get(request, "webdav-help") %>' />
+								<liferay-ui:icon-help message='<%= LanguageUtil.get(request, "webdav-help-tooltip") %>' />
 							</label>
 
 							<div class="input-group input-group-sm">

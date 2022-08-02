@@ -116,7 +116,7 @@ definition {
 		task ("Verify that console outputs the correct clientIP when reading of the X-Forwarded-For http header") {
 			var ipAddress = PropsUtil.get("ip.address");
 
-			var curl = '''http://localhost:8080/home?SM_USER=test@liferay.com -H 'X-Forwarded-For: ${ipAddress}' ''';
+			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Forwarded-For: ${ipAddress}' ''';
 
 			echo("## * Read of the X-Forwarded-For http header:");
 

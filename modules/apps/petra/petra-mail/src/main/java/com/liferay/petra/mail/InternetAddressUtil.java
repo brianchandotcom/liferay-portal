@@ -20,60 +20,15 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.mail.Address;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-
-import org.apache.commons.validator.routines.EmailValidator;
 
 /**
  * @author Alexander Chow
  * @see    com.liferay.util.mail.InternetAddressUtil
  */
 public class InternetAddressUtil {
-
-	public static boolean contains(
-		InternetAddress[] internetAddresses, String emailAddress) {
-
-		if ((internetAddresses != null) && Validator.isNotNull(emailAddress)) {
-			for (InternetAddress internetAddress : internetAddresses) {
-				if (emailAddress.equals(internetAddress.getAddress())) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	public static boolean isValid(String emailAddress) {
-		EmailValidator emailValidator = EmailValidator.getInstance();
-
-		return emailValidator.isValid(emailAddress);
-	}
-
-	public static InternetAddress[] removeEntry(
-		Address[] addresses, String emailAddress) {
-
-		InternetAddress[] internetAddresses = (InternetAddress[])addresses;
-
-		if ((internetAddresses == null) || Validator.isNull(emailAddress)) {
-			return internetAddresses;
-		}
-
-		List<InternetAddress> list = new ArrayList<>();
-
-		for (InternetAddress internetAddress : internetAddresses) {
-			if (!emailAddress.equals(internetAddress.getAddress())) {
-				list.add(internetAddress);
-			}
-		}
-
-		return list.toArray(new InternetAddress[0]);
-	}
 
 	public static String toString(Address address) {
 		InternetAddress internetAddress = (InternetAddress)address;

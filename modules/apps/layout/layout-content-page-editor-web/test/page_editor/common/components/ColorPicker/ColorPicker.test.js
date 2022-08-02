@@ -231,7 +231,7 @@ describe('ColorPicker', () => {
 			fireEvent.change(getByRole('combobox'), {
 				target: {value: 'gre'},
 			});
-			fireEvent.click(getByRole('option'));
+			fireEvent.click(getByRole('menuitem'));
 
 			expect(getByTitle('detach-token')).toBeInTheDocument();
 			expect(getByLabelText('Green')).toBeInTheDocument();
@@ -247,7 +247,7 @@ describe('ColorPicker', () => {
 				target: {value: 'gree'},
 			});
 
-			expect(getByRole('option')).toBeDisabled();
+			expect(getByRole('menuitem')).toBeDisabled();
 		});
 
 		it('disables autocomplete dropdown options when the tokens are mutually referenced', async () => {
@@ -266,7 +266,7 @@ describe('ColorPicker', () => {
 				target: {value: 'blu'},
 			});
 
-			getAllByRole('option').forEach((option) =>
+			getAllByRole('menuitem').forEach((option) =>
 				expect(option).toBeDisabled()
 			);
 		});

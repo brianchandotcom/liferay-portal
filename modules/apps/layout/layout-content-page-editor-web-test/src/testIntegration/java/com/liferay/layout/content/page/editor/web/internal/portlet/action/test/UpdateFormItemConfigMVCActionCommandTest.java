@@ -176,28 +176,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				mockLiferayPortletActionRequest,
 				new MockLiferayPortletActionResponse());
 
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				_layoutPageTemplateStructureLocalService.
-					fetchLayoutPageTemplateStructure(
-						_group.getGroupId(), _layout.getPlid());
-
-			LayoutStructure layoutStructure = LayoutStructure.of(
-				layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
-
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-				(FormStyledLayoutStructureItem)
-					layoutStructure.getLayoutStructureItem(formItemId);
-
-			Assert.assertEquals(
-				classNameId, formStyledLayoutStructureItem.getClassNameId());
-			Assert.assertEquals(
-				0, formStyledLayoutStructureItem.getClassTypeId());
-
-			List<String> childrenItemIds =
-				formStyledLayoutStructureItem.getChildrenItemIds();
-
-			Assert.assertEquals(
-				childrenItemIds.toString(), 0, childrenItemIds.size());
+			_assertFormStyledLayoutStructureItem(
+				classNameId, 0, formItemId, new InfoField<?>[0], false);
 		}
 	}
 
@@ -252,55 +232,68 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				mockLiferayPortletActionRequest,
 				new MockLiferayPortletActionResponse());
 
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				_layoutPageTemplateStructureLocalService.
-					fetchLayoutPageTemplateStructure(
-						_group.getGroupId(), _layout.getPlid());
+			_assertFormStyledLayoutStructureItem(
+				classNameId, infoFields.length + 1, formItemId, infoFields,
+				true);
+		}
+	}
 
-			LayoutStructure layoutStructure = LayoutStructure.of(
-				layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+	private void _assertFormStyledLayoutStructureItem(
+			long expectedClassNameId, int expectedChildrenSize,
+			String formItemId, InfoField<?>[] infoFields, boolean submitButton)
+		throws PortalException {
 
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-				(FormStyledLayoutStructureItem)
-					layoutStructure.getLayoutStructureItem(formItemId);
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), _layout.getPlid());
 
-			Assert.assertEquals(
-				classNameId, formStyledLayoutStructureItem.getClassNameId());
-			Assert.assertEquals(
-				0, formStyledLayoutStructureItem.getClassTypeId());
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
 
-			List<String> childrenItemIds =
-				formStyledLayoutStructureItem.getChildrenItemIds();
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItem(formItemId);
 
-			Assert.assertEquals(
-				childrenItemIds.toString(), infoFields.length + 1,
-				childrenItemIds.size());
+		Assert.assertEquals(
+			expectedClassNameId,
+			formStyledLayoutStructureItem.getClassNameId());
+		Assert.assertEquals(0, formStyledLayoutStructureItem.getClassTypeId());
 
-			for (int i = 0; i < infoFields.length; i++) {
-				InfoField<?> infoField = infoFields[i];
+		List<String> childrenItemIds =
+			formStyledLayoutStructureItem.getChildrenItemIds();
 
-				FragmentStyledLayoutStructureItem
-					fragmentStyledLayoutStructureItem =
-						(FragmentStyledLayoutStructureItem)
-							layoutStructure.getLayoutStructureItem(
-								childrenItemIds.get(i));
+		Assert.assertEquals(
+			childrenItemIds.toString(), expectedChildrenSize,
+			childrenItemIds.size());
 
-				_assertFragmentEntry(
-					infoField.getUniqueId(),
-					_getExpectedRendererKey(infoField.getInfoFieldType()),
-					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
-			}
+		for (int i = 0; i < infoFields.length; i++) {
+			InfoField<?> infoField = infoFields[i];
 
 			FragmentStyledLayoutStructureItem
 				fragmentStyledLayoutStructureItem =
 					(FragmentStyledLayoutStructureItem)
 						layoutStructure.getLayoutStructureItem(
-							childrenItemIds.get(infoFields.length));
+							childrenItemIds.get(i));
 
 			_assertFragmentEntry(
-				StringPool.BLANK, "INPUTS-submit-button",
+				infoField.getUniqueId(),
+				_getExpectedRendererKey(infoField.getInfoFieldType()),
 				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
 		}
+
+		if (!submitButton) {
+			return;
+		}
+
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItem(
+					childrenItemIds.get(infoFields.length));
+
+		_assertFragmentEntry(
+			StringPool.BLANK, "INPUTS-submit-button",
+			fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
 	}
 
 	private void _assertFragmentEntry(

@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>SERVICE_PROVIDER_CONNECTION_NAME</td>
-	<td>//td[contains(@class,'first')]//a[contains(.,'${spEntityId}')]</td>
+	<td>//td[contains(@class,'name')]//a[text()='${spEntityId}']</td>
 	<td></td>
 </tr>
 <tr>

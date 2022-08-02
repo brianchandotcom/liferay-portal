@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>IDENTITY_PROVIDER_CONNECTION_NAME</td>
-	<td>//td[contains(@class,'first')]//a[contains(.,'${idpEntityId}')]</td>
+	<td>//td[contains(@class,'name')]//a[text()='${idpEntityId}']</td>
 	<td></td>
 </tr>
 <tr>

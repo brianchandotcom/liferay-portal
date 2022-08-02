@@ -24,7 +24,8 @@ public class MBSuspiciousActivityUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		alterColumnName(
-			"MBSuspiciousActivity", "type", "reason VARCHAR(255) null");
+			"MBSuspiciousActivity", "type_", "reason VARCHAR(75) null");
+		alterColumnType("MBSuspiciousActivity", "reason", "VARCHAR(255)");
 		alterTableDropColumn("MBSuspiciousActivity", "description");
 	}
 

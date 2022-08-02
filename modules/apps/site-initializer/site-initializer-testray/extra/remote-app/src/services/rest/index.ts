@@ -29,6 +29,7 @@ export * from './TestrayCaseTypes';
 export * from './TestrayComponent';
 export * from './TestrayFactorCategory';
 export * from './TestrayFactorOptions';
+export * from './TestrayProductVersion';
 export * from './TestrayProject';
 export * from './TestrayRequirement';
 export * from './TestrayRequirementCase';

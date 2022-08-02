@@ -138,6 +138,8 @@ export type TestrayFactorOptions = {
 export type TestrayProductVersion = {
 	id: number;
 	name: string;
+	project?: TestrayProject;
+	r_projectToProductVersions_c_project?: TestrayProject;
 };
 
 export type TestrayProject = {
@@ -225,6 +227,8 @@ export type TestrayTeam = {
 	externalReferenceCode: string;
 	id: number;
 	name: string;
+	project?: TestrayProject;
+	r_projectToTeams_c_project?: TestrayProject;
 };
 
 export type TestrayComponent = {
@@ -234,6 +238,8 @@ export type TestrayComponent = {
 	id: number;
 	name: string;
 	originationKey: string;
+	project?: TestrayProject;
+	r_projectToComponents_c_project?: TestrayProject;
 	r_teamToComponents_c_team?: TestrayTeam;
 	status: string;
 	team?: TestrayTeam;

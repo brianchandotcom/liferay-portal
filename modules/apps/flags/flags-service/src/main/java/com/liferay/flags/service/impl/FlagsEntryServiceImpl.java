@@ -16,7 +16,6 @@ package com.liferay.flags.service.impl;
 
 import com.liferay.flags.internal.messaging.FlagsRequest;
 import com.liferay.flags.service.base.FlagsEntryServiceBaseImpl;
-import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBSuspiciousActivityService;
@@ -70,14 +69,17 @@ public class FlagsEntryServiceImpl extends FlagsEntryServiceBaseImpl {
 
 		if (className.equals("com.liferay.message.boards.model.MBMessage")) {
 			MBMessage mbMessage = _mbMessageService.getMessage(classPK);
-			if (mbMessage.getMessageId() == mbMessage.getRootMessageId()){
+
+			if (mbMessage.getMessageId() == mbMessage.getRootMessageId()) {
 				_messageBoardSuspiciousActivityLocalService.
 					addOrUpdateThreadSuspiciousActivity(
 						reason, mbMessage.getThreadId());
-			}else{
+			}
+			else {
 				_messageBoardSuspiciousActivityLocalService.
 					addOrUpdateMessageSuspiciousActivity(classPK, reason);
 			}
+		}
 	}
 
 	@Reference
@@ -89,9 +91,5 @@ public class FlagsEntryServiceImpl extends FlagsEntryServiceBaseImpl {
 
 	@Reference
 	private MessageBus _messageBus;
-
-	@Reference
-	private MBSuspiciousActivityService
-		_messageBoardSuspiciousActivityLocalService;
 
 }

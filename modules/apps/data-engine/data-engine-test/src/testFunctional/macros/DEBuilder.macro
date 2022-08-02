@@ -90,6 +90,17 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro editHelpTextField {
+		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
+
+		Type(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldHelpText}");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro addFieldsetNestedToBuilder {
 		Navigator.gotoSidebarTab(tabName = "Builder");
 

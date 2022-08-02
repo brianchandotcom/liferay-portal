@@ -87,4 +87,39 @@ definition {
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Boolean");
 	}
 
+	@description = "Verify that a structure with the boolean field can be duplicated."
+	@priority = "5"
+	test CanBeDuplicated {
+		property portal.acceptance = "true";
+		
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Structure 1");
+
+		DEBuilder.addField(
+			fieldLabel = "Boolean",
+			fieldName = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		DEBuilder.editHelpTextField(
+			fieldHelpText = "Help Text Test",
+			fieldLabel = "Help Text");
+
+		DataEngine.duplicate(fieldsGroupLabel = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Copy of Boolean");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Boolean",
+			fieldValue = "Help Text Test");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Copy of Boolean",
+			fieldValue = "Help Text Test");
+	}
+
 }

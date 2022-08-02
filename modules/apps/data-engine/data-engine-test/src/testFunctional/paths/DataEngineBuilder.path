@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_BODY</td>
+	<td>//div[contains(@class,'ddm')]//div[contains(@draggable,'true')][1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_CONTAINER_IN_MODAL_INDEXED</td>
 	<td>xpath=(//div[contains(@class,'modal-dialog')]//div[contains(@class,'ddm-field-container')])[${index}]</td>
 	<td></td>

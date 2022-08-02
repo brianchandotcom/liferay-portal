@@ -110,6 +110,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -277,13 +278,19 @@ public class ServicePreAction extends Action {
 			long userId, long groupId)
 		throws Exception {
 
+		Map<Locale, String> nameMap = Collections.singletonMap(
+			LocaleUtil.getSiteDefault(),
+			PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_NAME);
+
+		Map<Locale, String> friendlyURLMap = Collections.singletonMap(
+			LocaleUtil.getSiteDefault(),
+			_getFriendlyURL(
+				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_FRIENDLY_URL));
+
 		Layout layout = LayoutLocalServiceUtil.addLayout(
 			userId, groupId, true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_NAME, StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
-			_getFriendlyURL(
-				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_FRIENDLY_URL),
-			new ServiceContext());
+			nameMap, null, null, null, null, LayoutConstants.TYPE_PORTLET,
+			StringPool.BLANK, false, friendlyURLMap, new ServiceContext());
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -352,13 +359,19 @@ public class ServicePreAction extends Action {
 			long userId, long groupId)
 		throws Exception {
 
+		Map<Locale, String> nameMap = Collections.singletonMap(
+			LocaleUtil.getSiteDefault(),
+			PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_NAME);
+
+		Map<Locale, String> friendlyURLMap = Collections.singletonMap(
+			LocaleUtil.getSiteDefault(),
+			_getFriendlyURL(
+				PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_FRIENDLY_URL));
+
 		Layout layout = LayoutLocalServiceUtil.addLayout(
 			userId, groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_NAME, StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
-			_getFriendlyURL(
-				PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_FRIENDLY_URL),
-			new ServiceContext());
+			nameMap, null, null, null, null, LayoutConstants.TYPE_PORTLET,
+			StringPool.BLANK, false, friendlyURLMap, new ServiceContext());
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

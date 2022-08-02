@@ -299,7 +299,7 @@ public class KBAdminNavigationDisplayContext {
 		List<Object> kbObjects = KBFolderServiceUtil.getKBFoldersAndKBArticles(
 			_themeDisplay.getScopeGroupId(), parentFolderId,
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new KBObjectsTitleComparator<Object>());
+			new KBObjectsTitleComparator<Object>(true));
 
 		for (Object kbObject : kbObjects) {
 			JSONObject articleNavigationJSONObject =

@@ -271,7 +271,7 @@ definition {
 		DataEngine.addRepeatableField(fieldLabel = "Basic Web Content");
 
 		SelectFrame.selectFrameNoLoading(
-			key_fieldLabel = "content",
+			key_fieldLabel = "Content",
 			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 		AssertTextEquals(
@@ -282,7 +282,7 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(
 			index = "2",
-			key_fieldLabel = "content",
+			key_fieldLabel = "Content",
 			locator1 = "CKEditor#ANY_BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 		AssertTextEquals(

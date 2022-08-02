@@ -1189,11 +1189,11 @@ definition {
 
 		task ("View content is still shown") {
 			WaitForElementPresent(
-				key_fieldLabel = "content",
+				key_fieldLabel = "Content",
 				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 			SelectFrame.selectFrameNoLoading(
-				key_fieldLabel = "content",
+				key_fieldLabel = "Content",
 				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 			AssertTextEquals(

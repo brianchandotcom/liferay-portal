@@ -15,6 +15,11 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.BooleanInfoFieldType;
@@ -35,8 +40,10 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -58,7 +65,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.props.test.util.PropsTemporarySwapper;
@@ -192,6 +201,160 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		}
 	}
 
+	@Test
+	public void testUpdateFormItemConfigMVCActionCommandMappingFormFFEnabled()
+		throws Exception {
+
+		InfoField<?>[] infoFields = _getInfoFields();
+
+		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
+				new ComponentEnablerTemporarySwapper(
+					"com.liferay.fragment.collection.contributor.inputs",
+					"com.liferay.fragment.collection.contributor.inputs." +
+						"InputsFragmentCollectionContributor",
+					true);
+			MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoFields)
+						).build(),
+						_editPageInfoItemCapability);
+			PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper("feature.flag.LPS-157738", true)) {
+
+			long segmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid());
+
+			JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
+				_layout, "{}", LayoutDataItemTypeConstants.TYPE_FORM,
+				segmentsExperienceId);
+
+			long classNameId = _portal.getClassNameId(
+				MockObject.class.getName());
+
+			String formItemId = jsonObject.getString("addedItemId");
+
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+				_getMockLiferayPortletActionRequest(
+					JSONUtil.put(
+						"classNameId", classNameId
+					).put(
+						"classTypeId", "0"
+					).toString(),
+					formItemId, _layout, segmentsExperienceId);
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					fetchLayoutPageTemplateStructure(
+						_group.getGroupId(), _layout.getPlid());
+
+			LayoutStructure layoutStructure = LayoutStructure.of(
+				layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+				(FormStyledLayoutStructureItem)
+					layoutStructure.getLayoutStructureItem(formItemId);
+
+			Assert.assertEquals(
+				classNameId, formStyledLayoutStructureItem.getClassNameId());
+			Assert.assertEquals(
+				0, formStyledLayoutStructureItem.getClassTypeId());
+
+			List<String> childrenItemIds =
+				formStyledLayoutStructureItem.getChildrenItemIds();
+
+			Assert.assertEquals(
+				childrenItemIds.toString(), infoFields.length + 1,
+				childrenItemIds.size());
+
+			for (int i = 0; i < infoFields.length; i++) {
+				InfoField<?> infoField = infoFields[i];
+
+				FragmentStyledLayoutStructureItem
+					fragmentStyledLayoutStructureItem =
+						(FragmentStyledLayoutStructureItem)
+							layoutStructure.getLayoutStructureItem(
+								childrenItemIds.get(i));
+
+				_assertFragmentEntry(
+					infoField.getUniqueId(),
+					_getExpectedRendererKey(infoField.getInfoFieldType()),
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+			}
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)
+						layoutStructure.getLayoutStructureItem(
+							childrenItemIds.get(infoFields.length));
+
+			_assertFragmentEntry(
+				StringPool.BLANK, "INPUTS-submit-button",
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+		}
+	}
+
+	private void _assertFragmentEntry(
+			String expectedInputFieldId, String expectedRendererKey,
+			long fragmentEntryLinkId)
+		throws PortalException {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				fragmentEntryLinkId);
+
+		String inputFieldId = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getEditableValues(),
+				new FragmentConfigurationField(
+					"inputFieldId", "string", "", false, "text"),
+				LocaleUtil.getMostRelevantLocale()));
+
+		Assert.assertEquals(expectedInputFieldId, inputFieldId);
+
+		Assert.assertEquals(
+			expectedRendererKey, fragmentEntryLink.getRendererKey());
+	}
+
+	private String _getExpectedRendererKey(InfoFieldType infoFieldType) {
+		if (infoFieldType instanceof BooleanInfoFieldType) {
+			return "INPUTS-checkbox";
+		}
+
+		if (infoFieldType instanceof DateInfoFieldType) {
+			return "INPUTS-date-input";
+		}
+
+		if (infoFieldType instanceof FileInfoFieldType) {
+			return "INPUTS-file-upload";
+		}
+
+		if (infoFieldType instanceof NumberInfoFieldType) {
+			return "INPUTS-numeric-input";
+		}
+
+		if (infoFieldType instanceof RelationshipInfoFieldType ||
+			infoFieldType instanceof SelectInfoFieldType) {
+
+			return "INPUTS-select-from-list";
+		}
+
+		if (infoFieldType instanceof TextInfoFieldType) {
+			return "INPUTS-text-input";
+		}
+
+		return null;
+	}
+
 	private <T extends InfoFieldType> InfoField<T> _getInfoField(
 		T infoFieldTypeInstance) {
 
@@ -275,6 +438,16 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 	@Inject
 	private EditPageInfoItemCapability _editPageInfoItemCapability;
+
+	@Inject
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Inject
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

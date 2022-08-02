@@ -222,7 +222,7 @@ definition {
 
 	@description = "LPS-147851. Assert the order button can display the correct icons"
 	@priority = "4"
-	test OrderButtonRenderOrder {
+	test OrderButtonCanDisplayCorrectOrderIcons {
 		task ("And clicks on the order button") {
 			Click(
 				key_filter = "Order",

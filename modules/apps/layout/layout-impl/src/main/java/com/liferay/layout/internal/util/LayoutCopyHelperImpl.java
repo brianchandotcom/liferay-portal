@@ -931,10 +931,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 				_consumer.accept(_targetLayout);
 
-				// Copy classedModelUsages after copying the structure
-
-				_copyLayoutClassedModelUsages(_sourceLayout, _targetLayout);
-
 				List<String> portletIds = _getLayoutPortletIds(
 					_sourceLayout, _sourceSegmentsExperiencesIds);
 
@@ -944,6 +940,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_copyPortletPreferences(
 					portletIds, _sourceLayout, _targetLayout);
 			}
+
+			// Copy classedModelUsages after copying the structure
+
+			_copyLayoutClassedModelUsages(_sourceLayout, _targetLayout);
 
 			_sites.copyExpandoBridgeAttributes(_sourceLayout, _targetLayout);
 			_sites.copyPortletSetups(_sourceLayout, _targetLayout);

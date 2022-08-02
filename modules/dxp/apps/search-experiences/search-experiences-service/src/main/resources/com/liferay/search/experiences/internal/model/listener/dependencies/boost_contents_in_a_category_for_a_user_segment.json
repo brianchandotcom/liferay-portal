@@ -38,9 +38,9 @@
 				{
 					"fields": [
 						{
-							"label": "Asset Category ID",
+							"label": "Asset Category Name (ID)",
 							"name": "asset_category_id",
-							"type": "number"
+							"type": "categorySelector"
 						},
 						{
 							"label": "User Segment IDs",

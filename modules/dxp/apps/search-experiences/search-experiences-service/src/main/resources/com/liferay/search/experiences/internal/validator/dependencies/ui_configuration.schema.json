@@ -8,6 +8,18 @@
 					"if": {
 						"properties": {
 							"type": {
+								"const": "categorySelector"
+							}
+						}
+					},
+					"then": {
+						"$ref": "#/definitions/fieldCategorySelector"
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
 								"const": "date"
 							}
 						}
@@ -137,6 +149,7 @@
 				},
 				"type": {
 					"enum": [
+						"categorySelector",
 						"date",
 						"fieldMapping",
 						"fieldMappingList",
@@ -167,6 +180,32 @@
 				"name",
 				"type"
 			]
+		},
+		"fieldCategorySelector": {
+			"properties": {
+				"defaultValue": {
+					"items": {
+						"properties": {
+							"id": {
+								"type": "string"
+							},
+							"name": {
+								"type": "string"
+							}
+						},
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"typeOptions": {
+					"properties": {
+						"format": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				}
+			}
 		},
 		"fieldDate": {
 			"properties": {

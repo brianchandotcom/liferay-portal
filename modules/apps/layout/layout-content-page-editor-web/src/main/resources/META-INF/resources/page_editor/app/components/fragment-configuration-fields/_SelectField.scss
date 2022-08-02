@@ -3,37 +3,45 @@
 $prefix: '.page-editor__single-select-with-icon';
 
 html#{$cadmin-selector} .cadmin {
-	#{$prefix} {
-		display: grid;
-		gap: 4px;
-		grid-template-columns: 32px auto;
-		place-items: stretch;
-	}
+	.page-editor__select-field {
+		&.has-value {
+			display: grid;
+			gap: 4px;
+			grid-template-columns: auto 32px;
+		}
 
-	#{$prefix}__label-icon {
-		grid-area: 1 / 1 / 2 / 2;
-	}
+		#{$prefix} {
+			display: grid;
+			gap: 4px;
+			grid-template-columns: 32px auto;
+			place-items: stretch;
+		}
 
-	#{$prefix} label#{$prefix}__label-icon {
-		font-size: $font-size-sm;
-	}
+		#{$prefix}__label-icon {
+			grid-area: 1 / 1 / 2 / 2;
+		}
 
-	#{$prefix}__select,
-	#{$prefix}__label {
-		grid-area: 1 / 2 / 2 / 3;
-	}
+		#{$prefix} label#{$prefix}__label-icon {
+			font-size: $font-size-sm;
+		}
 
-	#{$prefix}__select {
-		opacity: 0;
-		z-index: 1;
-	}
+		#{$prefix}__select,
+		#{$prefix}__label {
+			grid-area: 1 / 2 / 2 / 3;
+		}
 
-	#{$prefix}:hover,
-	#{$prefix}:focus-within {
-		background-color: $cadmin-gray-100;
-	}
+		#{$prefix}__select {
+			opacity: 0;
+			z-index: 1;
+		}
 
-	#{$prefix}:focus-within {
-		box-shadow: $btn-focus-box-shadow;
+		#{$prefix}:hover,
+		#{$prefix}:focus-within {
+			background-color: $cadmin-gray-100;
+		}
+
+		#{$prefix}:focus-within {
+			box-shadow: $btn-focus-box-shadow;
+		}
 	}
 }

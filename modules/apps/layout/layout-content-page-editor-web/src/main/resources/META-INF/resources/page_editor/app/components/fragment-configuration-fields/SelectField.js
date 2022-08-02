@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -82,7 +82,7 @@ export function SelectField({
 					}
 				/>
 			) : field.icon && Liferay.FeatureFlags['LPS-143206'] ? (
-				<SingleSelectWithIcon
+				<AdvancedSelectField
 					disabled={disabled}
 					field={field}
 					onValueSelect={onValueSelect}
@@ -246,18 +246,16 @@ const SingleSelect = ({disabled, field, onValueSelect, options, value}) => {
 const SingleSelectWithIcon = ({
 	disabled,
 	field,
-	onValueSelect,
+	helpTextId,
+	onChange,
 	options,
 	value,
 }) => {
 	const activeItemId = useActiveItemId();
-
 	const globalContext = useGlobalContext();
-	const helpTextId = useId();
 	const inputId = useId();
 
 	const [defaultOptionComputedValue, setDefaultComputedValue] = useState('');
-	const [nextValue, setNextValue] = useControlledState(value);
 
 	const defaultOptionLabel = useMemo(
 		() =>
@@ -266,7 +264,7 @@ const SingleSelectWithIcon = ({
 	);
 
 	const selectedOptionLabel = useMemo(() => {
-		if (nextValue === field.defaultValue) {
+		if (value === field.defaultValue) {
 			if (defaultOptionComputedValue) {
 				return `${defaultOptionLabel} · ${defaultOptionComputedValue}`;
 			}
@@ -275,24 +273,16 @@ const SingleSelectWithIcon = ({
 		}
 
 		return (
-			options.find((option) => option.value === nextValue)?.label ||
+			options.find((option) => option.value === value)?.label ||
 			defaultOptionLabel
 		);
 	}, [
 		defaultOptionComputedValue,
 		defaultOptionLabel,
 		field.defaultValue,
-		nextValue,
 		options,
+		value,
 	]);
-
-	const handleChange = (event) => {
-		const nextValue =
-			event.target.options[event.target.selectedIndex].value;
-
-		setNextValue(nextValue);
-		onValueSelect(field.name, nextValue);
-	};
 
 	useEffect(() => {
 		if (!field.cssProperty) {
@@ -315,7 +305,7 @@ const SingleSelectWithIcon = ({
 	}, [activeItemId, field.cssProperty, globalContext]);
 
 	return (
-		<div className="btn btn-unstyled p-0 page-editor__single-select-with-icon">
+		<div className="btn btn-unstyled m-0 p-0 page-editor__single-select-with-icon">
 			<label
 				className="mb-0 page-editor__single-select-with-icon__label-icon px-1 py-2 text-center"
 				htmlFor={inputId}
@@ -334,9 +324,9 @@ const SingleSelectWithIcon = ({
 				className="page-editor__single-select-with-icon__select"
 				disabled={Boolean(disabled)}
 				id={inputId}
-				onChange={handleChange}
+				onChange={onChange}
 				options={options}
-				value={nextValue}
+				value={value}
 			/>
 
 			<div
@@ -348,6 +338,52 @@ const SingleSelectWithIcon = ({
 			>
 				<span>{selectedOptionLabel}</span>
 			</div>
+		</div>
+	);
+};
+
+const AdvancedSelectField = ({
+	disabled,
+	field,
+	onValueSelect,
+	options,
+	value,
+}) => {
+	const helpTextId = useId();
+	const [nextValue, setNextValue] = useControlledState(value);
+
+	const handleSelectChange = (event) => {
+		const nextValue =
+			event.target.options[event.target.selectedIndex].value;
+
+		setNextValue(nextValue);
+		onValueSelect(field.name, nextValue);
+	};
+
+	return (
+		<div
+			className={classNames('page-editor__select-field', {
+				'has-value': value,
+			})}
+		>
+			<SingleSelectWithIcon
+				disabled={disabled}
+				field={field}
+				helpTextId={helpTextId}
+				onChange={handleSelectChange}
+				options={options}
+				value={nextValue}
+			/>
+
+			{value ? (
+				<ClayButtonWithIcon
+					className="border-0 ml-1"
+					displayType="secondary"
+					small
+					symbol="chain-broken"
+					title={Liferay.Language.get('detach-token')}
+				/>
+			) : null}
 
 			{field.description ? (
 				<div className="mt-1 small text-secondary" id={helpTextId}>

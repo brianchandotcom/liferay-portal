@@ -191,6 +191,25 @@ definition {
 		return "${curl}";
 	}
 
+	macro _deleteBlogPostingsBatch {
+		Variables.assertDefined(parameterList = "${body}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			groupName = "Guest",
+			site = "true");
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/blog-postings/batch \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+			-d ${body}
+		''';
+
+		var curl = JSONCurlUtil.delete("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _getFieldValueOfExistingBlogPosting {
 		Variables.assertDefined(parameterList = "${response},${fieldName}");
 
@@ -245,13 +264,34 @@ definition {
 		return "${response}";
 	}
 
+	macro getBlogPostingsIdList {
+		var response = BlogPostingAPI._getBlogPostings();
+
+		var idList = JSONUtil.getWithJSONPath("${response}", "$.items.[*].id");
+
+		return "${idList}";
+	}
+
 	macro deleteAllBlogPostings {
-		var response = BlogPostingAPI.getBlogPostings();
+		var numberOfItems = BlogPostingAPI.getNumberOfBlogPostingsCreated();
 
-		var blogPostingIdsList = JSONUtil.getWithJSONPath("${response}", "$.items.[*].id");
+		if("${numberOfItems}" != "0"){
+			var blogPostingIdsList = BlogPostingAPI.getBlogPostingsIdList();
 
-		for (var blogPostingId : list "${blogPostingIdsList}") {
-			BlogPostingAPI._deleteBlogPosting(blogPostingId = "${blogPostingId}");
+			var body = ListUtil.newList();
+
+			for (var blogPostingId : list "${blogPostingIdsList}") {
+				var value = '''{"id":${blogPostingId}}''';
+				ListUtil.add("${body}", "${value}");
+			}
+
+			BlogPostingAPI._deleteBlogPostingsBatch(body = "${body}");
+
+			var actualNumberOfBlogPostings = BlogPostingAPI.getNumberOfBlogPostingsCreated();
+
+			TestUtils.assertEquals(
+				actual = "${actualNumberOfBlogPostings}",
+				expected = "0");
 		}
 	}
 

@@ -190,7 +190,7 @@ const SidebarPanelInfoView = ({
 						)}
 					</div>
 
-					{preview && preview.url && (
+					{preview && preview.imageURL && (
 						<Preview
 							compressed={!!hasActions}
 							imageURL={preview.imageURL}

@@ -16,6 +16,7 @@ package com.liferay.portal.cluster.multiple.sample.web.internal;
 
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.io.Serializable;
 
@@ -27,7 +28,7 @@ public class ClusterSampleData implements Serializable {
 	public ClusterSampleData() {
 		_computerName = PortalUtil.getComputerName();
 		_data = StringUtil.randomString(20);
-		_liferayHome = System.getProperty("liferay.home");
+		_liferayHome = SystemProperties.get("liferay.home");
 		_timestamp = System.currentTimeMillis();
 	}
 

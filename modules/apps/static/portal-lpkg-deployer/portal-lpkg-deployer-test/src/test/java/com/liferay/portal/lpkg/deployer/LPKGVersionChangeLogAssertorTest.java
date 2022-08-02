@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lpkg.deployer;
 
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.File;
@@ -45,7 +46,7 @@ public class LPKGVersionChangeLogAssertorTest {
 
 	@Test
 	public void testUpgradeLog() throws IOException {
-		String liferayHome = System.getProperty("liferay.home");
+		String liferayHome = SystemProperties.get("liferay.home");
 
 		Assert.assertNotNull(
 			"Missing system property \"liferay.home\"", liferayHome);

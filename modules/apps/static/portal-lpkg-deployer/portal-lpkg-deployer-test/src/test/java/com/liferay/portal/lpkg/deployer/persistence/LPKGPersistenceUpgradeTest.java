@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lpkg.deployer.persistence;
 
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.lpkg.deployer.test.util.LPKGTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -40,7 +41,7 @@ public class LPKGPersistenceUpgradeTest {
 
 	@Test
 	public void testLPKGPersistenceUpgrade() throws Exception {
-		String liferayHome = System.getProperty("liferay.home");
+		String liferayHome = SystemProperties.get("liferay.home");
 
 		Assert.assertNotNull(
 			"Missing system property \"liferay.home\"", liferayHome);

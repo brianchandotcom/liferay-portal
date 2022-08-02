@@ -16,6 +16,7 @@ package com.liferay.portal.lpkg.deployer;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.io.IOException;
 
@@ -44,7 +45,7 @@ public abstract class LPKGVersionChangeTestCase {
 			int majorDelta, int minorDelta, int microDelta)
 		throws IOException {
 
-		String liferayHome = System.getProperty("liferay.home");
+		String liferayHome = SystemProperties.get("liferay.home");
 
 		Assert.assertNotNull(
 			"Missing system property \"liferay.home\"", liferayHome);

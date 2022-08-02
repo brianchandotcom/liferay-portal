@@ -121,6 +121,10 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		return _dlFileVersion.getCreateDate();
 	}
 
+	public long getCTCollectionId() {
+		return _dlFileVersion.getCtCollectionId();
+	}
+
 	@Override
 	public String getDescription() {
 		return _dlFileVersion.getDescription();

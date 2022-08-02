@@ -15,7 +15,10 @@
 package com.liferay.portlet.documentlibrary.messaging;
 
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 
 /**
  * @author Alexander Chow
@@ -27,8 +30,33 @@ public class PDFProcessorMessageListener extends BaseProcessorMessageListener {
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		PDFProcessorUtil.generateImages(
-			sourceFileVersion, destinationFileVersion);
+		if (CTCollectionThreadLocal.isProductionMode() ||
+			!(destinationFileVersion instanceof LiferayFileVersion)) {
+
+			PDFProcessorUtil.generateImages(
+				sourceFileVersion, destinationFileVersion);
+
+			return;
+		}
+
+		LiferayFileVersion liferayFileVersion =
+			(LiferayFileVersion)destinationFileVersion;
+
+		long ctCollectionId = liferayFileVersion.getCTCollectionId();
+
+		if (ctCollectionId == CTCollectionThreadLocal.getCTCollectionId()) {
+			PDFProcessorUtil.generateImages(
+				sourceFileVersion, destinationFileVersion);
+		}
+		else {
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollectionId)) {
+
+				PDFProcessorUtil.generateImages(
+					sourceFileVersion, destinationFileVersion);
+			}
+		}
 	}
 
 }

@@ -284,6 +284,10 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			String formItemId = jsonObject.getString("addedItemId");
 
+			_assertFormStyledLayoutStructureItem(
+				classNameId, infoFields.length, formItemId, infoFields, false,
+				false);
+
 			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 				_getMockLiferayPortletActionRequest(
 					JSONUtil.put(

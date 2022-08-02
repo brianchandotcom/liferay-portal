@@ -1486,64 +1486,119 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
 
-		// TODO Review
+		task ("Given a Minium site with a Commerce Account with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+			ApplicationsMenu.gotoSite(site = "Minium");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
+		}
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		task ("When adding a product to the cart") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
-		Type(
-			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-			value1 = "U-Joint");
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "3");
 
-		Click(locator1 = "Button#SUBMIT");
+			CommerceNavigator.searchEntry(entryName = "Hoses");
 
-		FrontStore.addInitializerProductToCart(
-			productName = "U-Joint",
-			productQuantity = "3");
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Hoses");
 
-		Type(
-			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-			value1 = "Hoses");
+			FrontStore.addToCartFromProductDetails(
+				optionNamesAndValues = "Package Quantity:24",
+				productName = "Hoses",
+				productSku = "MIN93022B");
+		}
 
-		Click(locator1 = "Button#SUBMIT");
+		task ("Then as an admin, the user is able to view the item details in the mini cart") {
+			Notifications.viewBadgeCount(notificationCount = "2");
 
-		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Hoses");
+			CommerceNavigator.gotoMiniCart();
 
-		Click(locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PACKAGE_QUANTITY");
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#MINI_CART_RESUME",
+				value1 = "2 Products");
 
-		Click(
-			key_selectValue = "24",
-			locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
+			FrontStore.viewMiniCart(
+				cartItemNames = "Hoses",
+				cartItemOption = "24",
+				cartItemPriceValues = "120",
+				cartItemQuantities = "1",
+				cartItemSkUs = "MIN93022B");
 
-		Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+			FrontStore.viewMiniCart(
+				cartItemNames = "U-Joint",
+				cartItemPriceValues = "24",
+				cartItemQuantities = "3",
+				cartItemSkUs = "MIN55861");
 
-		Notifications.viewBadgeCount(notificationCount = "2");
+			CommerceNavigator.gotoMiniCart();
 
-		Click(locator1 = "CommerceAccelerators#MINI_CART_BUTTON");
+			Button.click(button = "Remove All Items");
 
-		AssertTextEquals(
-			locator1 = "CommerceAccelerators#MINI_CART_RESUME",
-			value1 = "2 Products");
+			Button.click(button = "Yes");
+		}
 
-		FrontStore.viewMiniCart(
-			cartItemNames = "Hoses",
-			cartItemOption = "24",
-			cartItemPriceValues = "120",
-			cartItemQuantities = "1",
-			cartItemSkUs = "MIN93022B");
+		task ("Then as a buyer, the user is able to view the item details in the mini cart") {
+			User.logoutPG();
 
-		FrontStore.viewMiniCart(
-			cartItemNames = "U-Joint",
-			cartItemPriceValues = "24",
-			cartItemQuantities = "3",
-			cartItemSkUs = "MIN55861");
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "3");
+
+			CommerceNavigator.searchEntry(entryName = "Hoses");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Hoses");
+
+			FrontStore.addToCartFromProductDetails(
+				optionNamesAndValues = "Package Quantity:24",
+				productName = "Hoses",
+				productSku = "MIN93022B");
+
+			Notifications.viewBadgeCount(notificationCount = "2");
+
+			CommerceNavigator.gotoMiniCart();
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#MINI_CART_RESUME",
+				value1 = "2 Products");
+
+			FrontStore.viewMiniCart(
+				cartItemNames = "Hoses",
+				cartItemOption = "24",
+				cartItemPriceValues = "120",
+				cartItemQuantities = "1",
+				cartItemSkUs = "MIN93022B");
+
+			FrontStore.viewMiniCart(
+				cartItemNames = "U-Joint",
+				cartItemPriceValues = "24",
+				cartItemQuantities = "3",
+				cartItemSkUs = "MIN55861");
+		}
 	}
 
 	@description = "COMMERCE-6653. As a buyer, I want to see the list price updating on the mini-cart item when changing product quantity, if bulk price is set"

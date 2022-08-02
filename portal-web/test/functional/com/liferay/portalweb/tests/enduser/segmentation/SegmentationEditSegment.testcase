@@ -83,9 +83,10 @@ definition {
 				checkboxName = "",
 				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
 
-			Segmentation.viewSegment(
-				criterion = "select-input",
-				value = "Power User");
+			AssertValue(
+				key_criterion = "select-input",
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "Power User");
 		}
 
 		task ("Assert the segment cannot be edited with the toggle off") {
@@ -132,9 +133,10 @@ definition {
 		task ("Assert segment edited") {
 			Segmentation.editSegment(entry = "EditSegmentUserByCountry Test");
 
-			Segmentation.viewSegment(
-				criterion = "options",
-				value = "china");
+			AssertValue(
+				key_criterion = "options",
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "china");
 		}
 	}
 
@@ -169,9 +171,10 @@ definition {
 		task ("Assert segment edited") {
 			Segmentation.editSegment(entry = "EditSegmentUserByRegion Test");
 
-			Segmentation.viewSegment(
-				criterion = "options",
-				value = "madrid");
+			AssertValue(
+				key_criterion = "options",
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "madrid");
 		}
 	}
 
@@ -204,7 +207,9 @@ definition {
 		task ("Assert segment edited") {
 			Segmentation.editSegment(entry = "EditSegmentUserBySessionURL Test");
 
-			Segmentation.viewSegment(propertyField = "http://localhost:8080");
+			AssertValue(
+				locator1 = "Segmentation#PROPERTY_FIELD",
+				value1 = "http://localhost:8080");
 		}
 	}
 
@@ -246,9 +251,10 @@ definition {
 		task ("Assert segment edited") {
 			Segmentation.editSegment(entry = "EditSegmentUserByUserTag Test");
 
-			Segmentation.viewSegment(
-				criterion = "select-input",
-				value = "tagname");
+			AssertValue(
+				key_criterion = "select-input",
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "tagname");
 		}
 	}
 
@@ -275,7 +281,9 @@ definition {
 		task ("Assert segment edited") {
 			Segmentation.editSegment(entry = "EditSegmentUserEmailAddressContainsToEquals Test");
 
-			Segmentation.viewSegment(criterionInputOption = "eq");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT",
+				value1 = "eq");
 		}
 	}
 

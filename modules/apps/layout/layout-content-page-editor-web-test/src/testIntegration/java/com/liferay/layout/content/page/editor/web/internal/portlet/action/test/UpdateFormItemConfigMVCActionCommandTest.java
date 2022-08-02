@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -80,6 +81,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -126,6 +128,89 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testUpdateFormItemConfigMVCActionCommandFragmentEntryNotAvailable()
+		throws Exception {
+
+		String expectedFieldTypeLabel = RandomTestUtil.randomString();
+		InfoField<?>[] availableFragmentEntryInfoFields = _getInfoFields();
+
+		InfoFieldType infoFieldType = new InfoFieldType() {
+
+			@Override
+			public String getLabel(Locale locale) {
+				return expectedFieldTypeLabel;
+			}
+
+			@Override
+			public String getName() {
+				return RandomTestUtil.randomString();
+			}
+
+		};
+
+		InfoField<?>[] allInfoFields = ArrayUtil.append(
+			availableFragmentEntryInfoFields, _getInfoField(infoFieldType));
+
+		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
+				new ComponentEnablerTemporarySwapper(
+					_BUNDLE_SYMBOLIC_NAME, _COMPONENT_CLASS_NAME, true);
+			MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(allInfoFields)
+						).build(),
+						_editPageInfoItemCapability);
+			PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper("feature.flag.LPS-157738", true)) {
+
+			long segmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid());
+
+			JSONObject addItemJSONObject =
+				ContentLayoutTestUtil.addItemToLayout(
+					_layout, "{}", LayoutDataItemTypeConstants.TYPE_FORM,
+					segmentsExperienceId);
+
+			long classNameId = _portal.getClassNameId(
+				MockObject.class.getName());
+
+			String formItemId = addItemJSONObject.getString("addedItemId");
+
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+				_getMockLiferayPortletActionRequest(
+					JSONUtil.put(
+						"classNameId", classNameId
+					).put(
+						"classTypeId", "0"
+					).toString(),
+					formItemId, _layout, segmentsExperienceId);
+
+			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+
+			_assertUpdateFormStyledLayoutStructureItemConfigJSONObject(
+				updateFormJSONObject,
+				availableFragmentEntryInfoFields.length + 1, StringPool.BLANK,
+				_language.format(
+					_portal.getSiteDefaultLocale(_group),
+					"some-fragments-are-missing.-x-fields-do-not-have-an-" +
+						"associated-fragment",
+					expectedFieldTypeLabel),
+				0);
+
+			_assertFormStyledLayoutStructureItem(
+				classNameId, availableFragmentEntryInfoFields.length + 1,
+				formItemId, availableFragmentEntryInfoFields, true, true);
+		}
 	}
 
 	@Test

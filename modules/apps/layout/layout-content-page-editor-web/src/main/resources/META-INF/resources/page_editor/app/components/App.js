@@ -41,6 +41,7 @@ import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
 import DragPreview from './DragPreview';
 import ItemConfigurationSidebar from './ItemConfigurationSidebar';
 import LayoutViewport from './LayoutViewport';
+import PreviewURL from './PreviewURL';
 import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
@@ -73,6 +74,8 @@ export default function App({state}) {
 			<PortetConfigurationListener />
 
 			<URLParser />
+
+			<PreviewURL />
 
 			<ControlsProvider>
 				<CollectionActiveItemContextProvider>

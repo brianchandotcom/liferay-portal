@@ -172,11 +172,13 @@ public class KBAdminNavigationDisplayContext {
 				portletDisplay.getId(), KBActionKeys.VIEW)) {
 
 			boolean active = false;
+			JSONArray navigationItemsJSONArray = null;
 
 			if (!mvcPath.equals("/admin/view_suggestions.jsp") &&
 				!mvcPath.equals("/admin/view_templates.jsp")) {
 
 				active = true;
+				navigationItemsJSONArray = _getKBArticleNavigationJSONArray();
 			}
 
 			verticalNavigationItems.add(
@@ -194,7 +196,7 @@ public class KBAdminNavigationDisplayContext {
 				).put(
 					"key", "article"
 				).put(
-					"navigationItems", _getKBArticleNavigationJSONArray()
+					"navigationItems", navigationItemsJSONArray
 				).put(
 					"title",
 					LanguageUtil.get(

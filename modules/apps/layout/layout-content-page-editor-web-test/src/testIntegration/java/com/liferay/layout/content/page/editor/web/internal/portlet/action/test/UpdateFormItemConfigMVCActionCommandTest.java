@@ -122,6 +122,10 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		_segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
+
 		_prepareServiceContext();
 	}
 
@@ -168,14 +172,10 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			PropsTemporarySwapper propsTemporarySwapper =
 				new PropsTemporarySwapper("feature.flag.LPS-157738", true)) {
 
-			long segmentsExperienceId =
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid());
-
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
 					_layout, "{}", LayoutDataItemTypeConstants.TYPE_FORM,
-					segmentsExperienceId);
+					_segmentsExperienceId);
 
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());
@@ -189,7 +189,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 					).put(
 						"classTypeId", "0"
 					).toString(),
-					formItemId, _layout, segmentsExperienceId);
+					formItemId, _layout);
 
 			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
 				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
@@ -233,14 +233,10 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			PropsTemporarySwapper propsTemporarySwapper =
 				new PropsTemporarySwapper("feature.flag.LPS-157738", true)) {
 
-			long segmentsExperienceId =
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid());
-
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
 					_layout, "{}", LayoutDataItemTypeConstants.TYPE_FORM,
-					segmentsExperienceId);
+					_segmentsExperienceId);
 
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());
@@ -254,7 +250,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 					).put(
 						"classTypeId", "0"
 					).toString(),
-					formItemId, _layout, segmentsExperienceId);
+					formItemId, _layout);
 
 			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
 				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
@@ -295,13 +291,9 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			PropsTemporarySwapper propsTemporarySwapper =
 				new PropsTemporarySwapper("feature.flag.LPS-157738", false)) {
 
-			long segmentsExperienceId =
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid());
-
 			JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
 				_layout, "{}", LayoutDataItemTypeConstants.TYPE_FORM,
-				segmentsExperienceId);
+				_segmentsExperienceId);
 
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());
@@ -315,7 +307,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 					).put(
 						"classTypeId", "0"
 					).toString(),
-					formItemId, _layout, segmentsExperienceId);
+					formItemId, _layout);
 
 			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
 				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
@@ -351,14 +343,10 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			PropsTemporarySwapper propsTemporarySwapper =
 				new PropsTemporarySwapper("feature.flag.LPS-157738", true)) {
 
-			long segmentsExperienceId =
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid());
-
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
 					_layout, "{}", LayoutDataItemTypeConstants.TYPE_FORM,
-					segmentsExperienceId);
+					_segmentsExperienceId);
 
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());
@@ -372,7 +360,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 					).put(
 						"classTypeId", "0"
 					).toString(),
-					formItemId, _layout, segmentsExperienceId);
+					formItemId, _layout);
 
 			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
 				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
@@ -413,13 +401,9 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());
 
-			long segmentsExperienceId =
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid());
-
 			JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
-				_layout, String.valueOf(classNameId), "0", segmentsExperienceId,
-				false, infoFields);
+				_layout, String.valueOf(classNameId), "0",
+				_segmentsExperienceId, false, infoFields);
 
 			String formItemId = jsonObject.getString("addedItemId");
 
@@ -438,7 +422,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 									LocaleUtil.getMostRelevantLocale()),
 								RandomTestUtil.randomString()))
 					).toString(),
-					formItemId, _layout, segmentsExperienceId);
+					formItemId, _layout);
 
 			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
 				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
@@ -478,13 +462,9 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());
 
-			long segmentsExperienceId =
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid());
-
 			JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
-				_layout, String.valueOf(classNameId), "0", segmentsExperienceId,
-				false, infoFields);
+				_layout, String.valueOf(classNameId), "0",
+				_segmentsExperienceId, false, infoFields);
 
 			String formItemId = jsonObject.getString("addedItemId");
 
@@ -499,7 +479,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 					).put(
 						"classTypeId", "0"
 					).toString(),
-					formItemId, _layout, segmentsExperienceId);
+					formItemId, _layout);
 
 			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
 				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
@@ -696,8 +676,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			String itemConfig, String formItemId, Layout layout,
-			long segmentsExperienceId)
+			String itemConfig, String formItemId, Layout layout)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -707,7 +686,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter("itemConfig", itemConfig);
 		mockLiferayPortletActionRequest.addParameter("itemId", formItemId);
 		mockLiferayPortletActionRequest.addParameter(
-			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
+			"segmentsExperienceId", String.valueOf(_segmentsExperienceId));
 
 		mockLiferayPortletActionRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST,
@@ -784,6 +763,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 	@Inject
 	private Portal _portal;
+
+	private long _segmentsExperienceId;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

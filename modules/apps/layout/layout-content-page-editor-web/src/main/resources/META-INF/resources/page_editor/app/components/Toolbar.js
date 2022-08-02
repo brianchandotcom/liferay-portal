@@ -286,19 +286,21 @@ function ToolbarBody({className}) {
 
 				<li className="nav-item">
 					<ul className="navbar-nav">
-						<li className="nav-item">
-							<ClayButtonWithIcon
-								className="btn btn-secondary"
-								displayType="secondary"
-								onClick={() => setOpenPreviewModal(true)}
-								small
-								symbol="view"
-								title={Liferay.Language.get('preview')}
-								type="button"
-							>
-								{Liferay.Language.get('preview')}
-							</ClayButtonWithIcon>
-						</li>
+						{Liferay.FeatureFlags['LPS-153452'] ? null : (
+							<li className="nav-item">
+								<ClayButtonWithIcon
+									className="btn btn-secondary"
+									displayType="secondary"
+									onClick={() => setOpenPreviewModal(true)}
+									small
+									symbol="view"
+									title={Liferay.Language.get('preview')}
+									type="button"
+								>
+									{Liferay.Language.get('preview')}
+								</ClayButtonWithIcon>
+							</li>
+						)}
 
 						{config.layoutType === LAYOUT_TYPES.content && (
 							<li className="nav-item">
@@ -334,7 +336,7 @@ function ToolbarBody({className}) {
 				</li>
 			</ul>
 
-			{openPreviewModal && (
+			{!Liferay.FeatureFlags['LPS-153452'] && openPreviewModal && (
 				<PreviewModal observer={observerPreviewModal} />
 			)}
 		</ClayLayout.ContainerFluid>

@@ -54,9 +54,11 @@ definition {
 				sourceFileName = "Document_${entryCount}.doc");
 		}
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1");
 
-		Click(locator1 = "Icon#EDIT_TAGS");
+		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
 		DMDocument.editTags(tagName = "newtag");
 
@@ -91,7 +93,7 @@ definition {
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1.doc,Document_2.doc");
 
-		Click(locator1 = "Icon#EDIT_TAGS");
+		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
 		DMDocument.editTags(
 			itemNumber = "2",
@@ -199,7 +201,7 @@ definition {
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_2,Document_4");
 
-		Click(locator1 = "Icon#EDIT_TAGS");
+		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
 		DMDocument.editTags(
 			itemNumber = "2",
@@ -216,7 +218,7 @@ definition {
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_2,Document_4");
 
-		Click(locator1 = "Icon#EDIT_TAGS");
+		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
 		DMDocument.editTags(
 			itemNumber = "2",
@@ -251,7 +253,7 @@ definition {
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1");
 
-		Click(locator1 = "Icon#EDIT_TAGS");
+		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
 		DMDocument.editTags(tagName = "one");
 
@@ -259,7 +261,7 @@ definition {
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_2");
 
-		Click(locator1 = "Icon#EDIT_TAGS");
+		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
 		DMDocument.editTags(tagName = "two");
 
@@ -267,13 +269,13 @@ definition {
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_3");
 
-		Click(locator1 = "Icon#EDIT_TAGS");
+		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
 		DMDocument.editTags(tagName = "three");
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_3");
 
-		Click(locator1 = "Icon#EDIT_TAGS");
+		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
 		DMDocument.editTags(
 			editAction = "Replace",
@@ -309,7 +311,7 @@ definition {
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2");
 
-		Click(locator1 = "Icon#EDIT_TAGS");
+		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
 		DMDocument.editTags(
 			editAction = "Replace",
@@ -430,7 +432,7 @@ definition {
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2,Document_3,Document_4");
 
-		Click(locator1 = "Icon#EDIT_TAGS");
+		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
 		SelectFrame(value1 = "relative=top");
 

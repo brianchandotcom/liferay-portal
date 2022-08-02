@@ -1,10 +1,11 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
+	property custom.properties = "upgrade.database.auto.run=false";
 	property osgi.modules.includes = "frontend-data-set-sample-web";
-	property portal.acceptance = "false";
-	property portal.release = "false";
-	property portal.upstream = "quarantine";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
 	property testray.component.names = "Frontend Dataset";
 	property testray.main.component.name = "User Interface";
 

@@ -21,6 +21,7 @@ import com.liferay.mail.kernel.model.SMTPAccount;
 import com.liferay.mail.kernel.service.MailServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -124,7 +125,7 @@ public class MailEngine {
 			InternetAddress[] replyTo, String messageId, String inReplyTo,
 			List<FileAttachment> fileAttachments, SMTPAccount smtpAccount,
 			InternetHeaders internetHeaders)
-		throws MailEngineException {
+		throws PortalException {
 
 		long startTime = System.currentTimeMillis();
 
@@ -311,18 +312,18 @@ public class MailEngine {
 
 			_send(session, message, bulkAddresses, batchSize);
 		}
-		catch (MailEngineException mailEngineException) {
-			throw mailEngineException;
+		catch (PortalException portalException) {
+			throw portalException;
 		}
 		catch (SendFailedException sendFailedException) {
 			_log.error(sendFailedException);
 
 			if (_isThrowsExceptionOnFailure()) {
-				throw new MailEngineException(sendFailedException);
+				throw new PortalException(sendFailedException);
 			}
 		}
 		catch (Exception exception) {
-			throw new MailEngineException(exception);
+			throw new PortalException(exception);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -332,9 +333,7 @@ public class MailEngine {
 		}
 	}
 
-	public static void send(MailMessage mailMessage)
-		throws MailEngineException {
-
+	public static void send(MailMessage mailMessage) throws PortalException {
 		send(
 			mailMessage.getFrom(), mailMessage.getTo(), mailMessage.getCC(),
 			mailMessage.getBCC(), mailMessage.getBulkAddresses(),
@@ -427,7 +426,7 @@ public class MailEngine {
 	private static void _send(
 			Session session, Message message, InternetAddress[] bulkAddresses,
 			int batchSize)
-		throws MailEngineException {
+		throws PortalException {
 
 		if ((_DATA_LIMIT_MAIL_MESSAGE_MAX_PERIOD > 0) &&
 			(_DATA_LIMIT_MAIL_MESSAGE_MAX_COUNT > 0)) {
@@ -448,7 +447,7 @@ public class MailEngine {
 			if (mailMessageCount.incrementAndGet() >
 					_DATA_LIMIT_MAIL_MESSAGE_MAX_COUNT) {
 
-				throw new MailEngineException(
+				throw new PortalException(
 					"Unable to exceed maximum number of allowed mail messages");
 			}
 		}
@@ -535,7 +534,7 @@ public class MailEngine {
 			}
 
 			if (_isThrowsExceptionOnFailure()) {
-				throw new MailEngineException(messagingException);
+				throw new PortalException(messagingException);
 			}
 		}
 	}

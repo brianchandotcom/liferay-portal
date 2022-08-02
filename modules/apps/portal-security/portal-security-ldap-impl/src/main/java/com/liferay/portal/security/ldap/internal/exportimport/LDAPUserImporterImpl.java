@@ -1672,10 +1672,10 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			if (propertyName.equals("male")) {
 				mappingPropertyName = ContactConverterKeys.GENDER;
 			}
-			else if (propertyName.equals("prefixId")) {
+			else if (propertyName.equals("prefixListTypeId")) {
 				mappingPropertyName = ContactConverterKeys.PREFIX;
 			}
-			else if (propertyName.equals("suffixId")) {
+			else if (propertyName.equals("suffixListTypeId")) {
 				mappingPropertyName = ContactConverterKeys.SUFFIX;
 			}
 
@@ -1868,7 +1868,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			ldapUser.getTimeZoneId(), ldapUser.getGreeting(),
 			ldapUser.getComments(), ldapUser.getFirstName(),
 			ldapUser.getMiddleName(), ldapUser.getLastName(),
-			ldapUser.getPrefixId(), ldapUser.getSuffixId(), ldapUser.isMale(),
+			ldapUser.getPrefixListTypeId(), ldapUser.getSuffixListTypeId(), ldapUser.isMale(),
 			birthdayMonth, birthdayDay, birthdayYear, ldapUser.getSmsSn(),
 			ldapUser.getFacebookSn(), ldapUser.getJabberSn(),
 			ldapUser.getSkypeSn(), ldapUser.getTwitterSn(),
@@ -1942,7 +1942,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	private static final String[] _CONTACT_PROPERTY_NAMES = {
 		"birthday", "employeeNumber", "facebookSn", "jabberSn", "male",
-		"prefixId", "skypeSn", "smsSn", "suffixId", "twitterSn"
+		"prefixListTypeId", "skypeSn", "smsSn", "suffixListTypeId", "twitterSn"
 	};
 
 	private static final String _IMPORT_BY_GROUP = "group";

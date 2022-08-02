@@ -405,10 +405,10 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			user, actionRequest, "middleName");
 		String lastName = BeanParamUtil.getString(
 			user, actionRequest, "lastName");
-		long prefixId = BeanParamUtil.getInteger(
-			contact, actionRequest, "prefixId");
-		long suffixId = BeanParamUtil.getInteger(
-			contact, actionRequest, "suffixId");
+		long prefixListTypeId = BeanParamUtil.getInteger(
+			contact, actionRequest, "prefixListTypeId");
+		long suffixListTypeId = BeanParamUtil.getInteger(
+			contact, actionRequest, "suffixListTypeId");
 		boolean male = BeanParamUtil.getBoolean(
 			user, actionRequest, "male", true);
 
@@ -435,7 +435,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			user.getUserId(), oldPassword, null, null, user.isPasswordReset(),
 			null, null, screenName, emailAddress, !deleteLogo, portraitBytes,
 			languageId, user.getTimeZoneId(), user.getGreeting(), comments,
-			firstName, middleName, lastName, prefixId, suffixId, male,
+			firstName, middleName, lastName, prefixListTypeId, suffixListTypeId, male,
 			birthdayMonth, birthdayDay, birthdayYear, contact.getSmsSn(),
 			contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(), jobTitle, null, null,
@@ -505,8 +505,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String middleName = ParamUtil.getString(actionRequest, "middleName");
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
-		long prefixId = ParamUtil.getInteger(actionRequest, "prefixId");
-		long suffixId = ParamUtil.getInteger(actionRequest, "suffixId");
+		long prefixListTypeId = ParamUtil.getInteger(actionRequest, "prefixListTypeId");
+		long suffixListTypeId = ParamUtil.getInteger(actionRequest, "suffixListTypeId");
 		boolean male = ParamUtil.getBoolean(actionRequest, "male", true);
 		int birthdayMonth = ParamUtil.getInteger(
 			actionRequest, "birthdayMonth");
@@ -523,7 +523,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		User user = _userService.addUser(
 			themeDisplay.getCompanyId(), true, null, null, autoScreenName,
 			screenName, emailAddress, LocaleUtil.fromLanguageId(languageId),
-			firstName, middleName, lastName, prefixId, suffixId, male,
+			firstName, middleName, lastName, prefixListTypeId, suffixListTypeId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, null,
 			organizationIds, null, null, new ArrayList<Address>(),
 			new ArrayList<EmailAddress>(), new ArrayList<Phone>(),
@@ -570,15 +570,15 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(
 			actionRequest);
 
-		long prefixId = _getListTypeId(
+		long prefixListTypeId = _getListTypeId(
 			actionRequest, "prefixValue", ListTypeConstants.CONTACT_PREFIX);
 
-		dynamicActionRequest.setParameter("prefixId", String.valueOf(prefixId));
+		dynamicActionRequest.setParameter("prefixListTypeId", String.valueOf(prefixListTypeId));
 
-		long suffixId = _getListTypeId(
+		long suffixListTypeId = _getListTypeId(
 			actionRequest, "suffixValue", ListTypeConstants.CONTACT_SUFFIX);
 
-		dynamicActionRequest.setParameter("suffixId", String.valueOf(suffixId));
+		dynamicActionRequest.setParameter("suffixListTypeId", String.valueOf(suffixListTypeId));
 
 		return dynamicActionRequest;
 	}

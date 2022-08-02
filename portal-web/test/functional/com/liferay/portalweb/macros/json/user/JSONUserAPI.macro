@@ -31,8 +31,8 @@ definition {
 				-d firstName=${userFirstName} \
 				-d middleName= \
 				-d lastName=${userLastName} \
-				-d prefixId=0 \
-				-d suffixId=0 \
+				-d prefixListTypeId=0 \
+				-d suffixListTypeId=0 \
 				-d male=true \
 				-d birthdayMonth=${birthdayMonth} \
 				-d birthdayDay=${birthdayDay} \
@@ -393,8 +393,8 @@ definition {
 				-d firstName=${userFirstName} \
 				-d middleName= \
 				-d lastName=${userLastName} \
-				-d prefixId=0 \
-				-d suffixId=0 \
+				-d prefixListTypeId=0 \
+				-d suffixListTypeId=0 \
 				-d male=true \
 				-d birthdayMonth=${birthdayMonth} \
 				-d birthdayDay=${birthdayDay} \

@@ -77,8 +77,8 @@ public class AddressDisplay {
 			_type);
 	}
 
-	public long getTypeId() {
-		return _typeId;
+	public long getListTypeId() {
+		return _listTypeId;
 	}
 
 	public String getZip() {
@@ -97,7 +97,7 @@ public class AddressDisplay {
 			"billing-and-shipping",
 			AccountEntry.class.getName() + ListTypeConstants.ADDRESS);
 
-		_typeId = listType.getListTypeId();
+		_listTypeId = listType.getListTypeId();
 
 		_zip = StringPool.BLANK;
 	}
@@ -109,7 +109,7 @@ public class AddressDisplay {
 		_region = address.getRegion();
 		_street = address.getStreet1();
 		_type = _getType(address);
-		_typeId = address.getListTypeId();
+		_listTypeId = address.getListTypeId();
 		_zip = address.getZip();
 	}
 
@@ -127,7 +127,7 @@ public class AddressDisplay {
 	private final Region _region;
 	private final String _street;
 	private final String _type;
-	private final long _typeId;
+	private final long _listTypeId;
 	private final String _zip;
 
 }

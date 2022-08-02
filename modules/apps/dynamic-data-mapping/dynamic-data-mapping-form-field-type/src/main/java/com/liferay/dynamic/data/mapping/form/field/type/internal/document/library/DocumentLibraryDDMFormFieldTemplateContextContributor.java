@@ -187,8 +187,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				DDMFormConstants.DDM_FORM_DEFAULT_USER_FIRST_NAME;
 			String middleName = StringPool.BLANK;
 			String lastName = DDMFormConstants.DDM_FORM_DEFAULT_USER_LAST_NAME;
-			long prefixId = 0;
-			long suffixId = 0;
+			long prefixListTypeId = 0;
+			long suffixListTypeId = 0;
 			boolean male = true;
 			int birthdayMonth = Calendar.JANUARY;
 			int birthdayDay = 1;
@@ -204,7 +204,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			User user = _userLocalService.addUser(
 				creatorUserId, companyId, autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, locale, firstName,
-				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+				middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
 				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
 				roleIds, userGroupIds, sendEmail, serviceContext);
 

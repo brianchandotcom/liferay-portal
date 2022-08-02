@@ -109,8 +109,8 @@ public class UserBlueprintImpl implements UserBlueprint {
 	}
 
 	@Override
-	public long getPrefixId() {
-		return _prefixId;
+	public long getPrefixListTypeId() {
+		return _prefixListTypeId;
 	}
 
 	@Override
@@ -129,8 +129,8 @@ public class UserBlueprintImpl implements UserBlueprint {
 	}
 
 	@Override
-	public long getSuffixId() {
-		return _suffixId;
+	public long getSuffixListTypeId() {
+		return _suffixListTypeId;
 	}
 
 	@Override
@@ -316,12 +316,12 @@ public class UserBlueprintImpl implements UserBlueprint {
 		_organizationIds = userBlueprintImpl._organizationIds;
 		_password1 = userBlueprintImpl._password1;
 		_password2 = userBlueprintImpl._password2;
-		_prefixId = userBlueprintImpl._prefixId;
+		_prefixListTypeId = userBlueprintImpl._prefixListTypeId;
 		_roleIds = userBlueprintImpl._roleIds;
 		_screenName = userBlueprintImpl._screenName;
 		_sendMail = userBlueprintImpl._sendMail;
 		_serviceContext = userBlueprintImpl._serviceContext;
-		_suffixId = userBlueprintImpl._suffixId;
+		_suffixListTypeId = userBlueprintImpl._suffixListTypeId;
 		_userGroupIds = userBlueprintImpl._userGroupIds;
 		_userId = userBlueprintImpl._userId;
 	}
@@ -346,12 +346,12 @@ public class UserBlueprintImpl implements UserBlueprint {
 	private long[] _organizationIds;
 	private String _password1;
 	private String _password2;
-	private long _prefixId;
+	private long _prefixListTypeId;
 	private long[] _roleIds;
 	private String _screenName;
 	private boolean _sendMail;
 	private ServiceContext _serviceContext;
-	private long _suffixId;
+	private long _suffixListTypeId;
 	private long[] _userGroupIds;
 	private long _userId;
 

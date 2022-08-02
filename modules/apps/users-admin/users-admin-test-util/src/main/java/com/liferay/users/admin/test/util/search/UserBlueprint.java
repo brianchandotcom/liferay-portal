@@ -57,7 +57,7 @@ public interface UserBlueprint {
 
 	public String getPassword2();
 
-	public long getPrefixId();
+	public long getPrefixListTypeId();
 
 	public long[] getRoleIds();
 
@@ -65,7 +65,7 @@ public interface UserBlueprint {
 
 	public ServiceContext getServiceContext();
 
-	public long getSuffixId();
+	public long getSuffixListTypeId();
 
 	public long[] getUserGroupIds();
 

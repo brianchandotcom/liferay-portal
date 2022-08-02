@@ -91,8 +91,8 @@ public class OpenIdConnectUserInfoProcessorImpl
 
 		Locale locale = company.getLocale();
 
-		long prefixId = 0;
-		long suffixId = 0;
+		long prefixListTypeId = 0;
+		long suffixListTypeId = 0;
 		boolean male = true;
 		int birthdayMonth = Calendar.JANUARY;
 		int birthdayDay = 1;
@@ -112,7 +112,7 @@ public class OpenIdConnectUserInfoProcessorImpl
 		user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			userInfo.getMiddleName(), lastName, prefixId, suffixId, male,
+			userInfo.getMiddleName(), lastName, prefixListTypeId, suffixListTypeId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 

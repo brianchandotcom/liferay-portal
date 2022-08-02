@@ -523,7 +523,7 @@ public class UserSearchFixture {
 				userBlueprint.getScreenName(), userBlueprint.getEmailAddress(),
 				userBlueprint.getLocale(), userBlueprint.getFirstName(),
 				userBlueprint.getMiddleName(), userBlueprint.getLastName(),
-				userBlueprint.getPrefixId(), userBlueprint.getSuffixId(),
+				userBlueprint.getPrefixListTypeId(), userBlueprint.getSuffixListTypeId(),
 				userBlueprint.isMale(), userBlueprint.getBirthdayMonth(),
 				userBlueprint.getBirthdayDay(), userBlueprint.getBirthdayYear(),
 				userBlueprint.getJobTitle(), userBlueprint.getGroupIds(),

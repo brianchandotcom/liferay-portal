@@ -176,8 +176,8 @@ public class DefaultUserFieldExpressionHandler
 		String password1 = null;
 		String password2 = null;
 		boolean autoScreenName = false;
-		int prefixId = 0;
-		int suffixId = 0;
+		int prefixListTypeId = 0;
+		int suffixListTypeId = 0;
 		boolean male = true;
 		int birthdayMonth = Calendar.JANUARY;
 		int birthdayDay = 1;
@@ -193,7 +193,7 @@ public class DefaultUserFieldExpressionHandler
 			password2, autoScreenName, newUser.getScreenName(),
 			newUser.getEmailAddress(), serviceContext.getLocale(),
 			newUser.getFirstName(), newUser.getMiddleName(),
-			newUser.getLastName(), prefixId, suffixId, male, birthdayMonth,
+			newUser.getLastName(), prefixListTypeId, suffixListTypeId, male, birthdayMonth,
 			birthdayDay, birthdayYear, newUser.getJobTitle(),
 			newUser.getGroupIds(), newUser.getOrganizationIds(),
 			newUser.getRoleIds(), newUser.getUserGroupIds(), sendEmail,

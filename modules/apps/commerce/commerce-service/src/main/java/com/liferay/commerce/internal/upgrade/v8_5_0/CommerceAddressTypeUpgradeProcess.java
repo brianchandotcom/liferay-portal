@@ -65,8 +65,8 @@ public class CommerceAddressTypeUpgradeProcess extends UpgradeProcess {
 
 		runSQL(
 			StringBundler.concat(
-				"update Address set listTypeId = ", newListTypeId, " where lisTypeId = ",
-				oldListTypeId));
+				"update Address set listTypeId = ", newListTypeId,
+				" where listTypeId = ", oldListTypeId));
 	}
 
 	private final ListTypeLocalService _listTypeLocalService;

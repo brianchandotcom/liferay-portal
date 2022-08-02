@@ -350,20 +350,20 @@ public class ContactsUtil {
 		sb.append(user.getMiddleName());
 		sb.append(StringPool.SEMICOLON);
 
-		long prefixId = contact.getPrefixListTypeId();
+		long prefixListTypeId = contact.getPrefixListTypeId();
 
-		if (prefixId > 0) {
-			ListType listType = ListTypeServiceUtil.getListType(prefixId);
+		if (prefixListTypeId > 0) {
+			ListType listType = ListTypeServiceUtil.getListType(prefixListTypeId);
 
 			sb.append(listType.getName());
 		}
 
 		sb.append(StringPool.SEMICOLON);
 
-		long suffixId = contact.getSuffixListTypeId();
+		long suffixListTypeId = contact.getSuffixListTypeId();
 
-		if (suffixId > 0) {
-			ListType listType = ListTypeServiceUtil.getListType(suffixId);
+		if (suffixListTypeId > 0) {
+			ListType listType = ListTypeServiceUtil.getListType(suffixListTypeId);
 
 			sb.append(listType.getName());
 		}

@@ -33,7 +33,7 @@ definition {
 				-d type=${organizationType} \
 				-d regionId=0 \
 				-d countryId=0 \
-				-d statusId=12017 \
+				-d statusListTypeId=12017 \
 				-d comments= \
 				-d site=${organizationSite}
 		''';

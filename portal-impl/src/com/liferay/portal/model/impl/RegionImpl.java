@@ -39,6 +39,17 @@ public class RegionImpl extends RegionBaseImpl {
 	}
 
 	@Override
+	public String getTitle(String languageId, boolean useDefault) {
+		String title = super.getTitle(languageId, useDefault);
+
+		if (Validator.isNotNull(title)) {
+			return title;
+		}
+
+		return getName();
+	}
+
+	@Override
 	public String getTitleCurrentLanguageId() {
 		return _titleCurrentLanguageId;
 	}

@@ -290,4 +290,41 @@ definition {
 		// Assert that Download button is active
 	}
 
+	@description = "Verify that after clicking the 'Download Key' button the user downloads the appropriate Commerce license"
+	@priority = "4"
+	test CanDownloadTheKeyWhenASubscriptionIsSelected {
+
+		task ("Assert that project has DPX 7.2") {
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+		}
+
+		task ("Assert Access to Commerce Activation Key Page") {
+			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
+
+		//"Select DropDown list of LES subscription"
+
+		CP2DataUtil.generateStaticFullStartAndEndDate();
+
+		// "Select DateTime format"
+
+		// Select an active subscription term
+
+		// Assert that Download button is active
+
+		Button.click(button = "Download Key");
+
+		Alert.viewSuccessMessage();
+
+		//Alert.viewErrorMessage(errorMessage = "Unable to download key, please try again.");
+	}
+
 }

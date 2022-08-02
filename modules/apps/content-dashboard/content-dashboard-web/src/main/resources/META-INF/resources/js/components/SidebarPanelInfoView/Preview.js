@@ -46,14 +46,14 @@ const Preview = ({compressed, imageURL, title, url}) => {
 
 Preview.defaultProps = {
 	compressed: false,
-	viewURL: null,
+	url: null,
 };
 
 Preview.propTypes = {
 	compressed: PropTypes.bool,
 	imageURL: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
-	viewURL: PropTypes.string,
+	url: PropTypes.string,
 };
 
 export default Preview;

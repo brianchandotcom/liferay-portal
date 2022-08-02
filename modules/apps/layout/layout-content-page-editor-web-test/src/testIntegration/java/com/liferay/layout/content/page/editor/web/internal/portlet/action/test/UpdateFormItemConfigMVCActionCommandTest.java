@@ -135,10 +135,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
 				new ComponentEnablerTemporarySwapper(
-					"com.liferay.fragment.collection.contributor.inputs",
-					"com.liferay.fragment.collection.contributor.inputs." +
-						"InputsFragmentCollectionContributor",
-					true);
+					_BUNDLE_SYMBOLIC_NAME, _COMPONENT_CLASS_NAME, true);
 			MockInfoServiceRegistrationHolder
 				mockInfoServiceRegistrationHolder =
 					new MockInfoServiceRegistrationHolder(
@@ -194,10 +191,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
 				new ComponentEnablerTemporarySwapper(
-					"com.liferay.fragment.collection.contributor.inputs",
-					"com.liferay.fragment.collection.contributor.inputs." +
-						"InputsFragmentCollectionContributor",
-					true);
+					_BUNDLE_SYMBOLIC_NAME, _COMPONENT_CLASS_NAME, true);
 			MockInfoServiceRegistrationHolder
 				mockInfoServiceRegistrationHolder =
 					new MockInfoServiceRegistrationHolder(
@@ -256,10 +250,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
 				new ComponentEnablerTemporarySwapper(
-					"com.liferay.fragment.collection.contributor.inputs",
-					"com.liferay.fragment.collection.contributor.inputs." +
-						"InputsFragmentCollectionContributor",
-					true);
+					_BUNDLE_SYMBOLIC_NAME, _COMPONENT_CLASS_NAME, true);
 			MockInfoServiceRegistrationHolder
 				mockInfoServiceRegistrationHolder =
 					new MockInfoServiceRegistrationHolder(
@@ -539,6 +530,13 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
+
+	private static final String _BUNDLE_SYMBOLIC_NAME =
+		"com.liferay.fragment.collection.contributor.inputs";
+
+	private static final String _COMPONENT_CLASS_NAME =
+		"com.liferay.fragment.collection.contributor.inputs." +
+			"InputsFragmentCollectionContributor";
 
 	private Company _company;
 

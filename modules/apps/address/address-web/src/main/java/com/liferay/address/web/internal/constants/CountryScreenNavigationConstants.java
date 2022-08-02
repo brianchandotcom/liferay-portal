@@ -21,6 +21,8 @@ public class CountryScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_DETAILS = "details";
 
+	public static final String CATEGORY_KEY_REGIONS = "regions";
+
 	public static final String SCREEN_NAVIGATION_KEY_COUNTRY =
 		"edit.country.form";
 

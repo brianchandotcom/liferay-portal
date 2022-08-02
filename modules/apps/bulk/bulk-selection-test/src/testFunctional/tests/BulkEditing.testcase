@@ -45,7 +45,14 @@ definition {
 	@description = "This test adds a tag for a single document via management toolbar"
 	@priority = "4"
 	test AddTagToSingleAsset {
-		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.jpeg,Document_2.docx");
+		for (var entryCount : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}",
+				groupName = "Guest",
+				mimeType = "application/msword",
+				sourceFileName = "Document_${entryCount}.doc");
+		}
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1");
 

@@ -152,7 +152,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 				targetTagNameSelect.value
 			);
 
-			Liferay.Util.openConfirm({
+			Liferay.Util.openConfirmModal({
 				message: mergeText,
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {

@@ -113,7 +113,7 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 						'<liferay-ui:message key="are-you-sure-you-want-to-create-this-vocabulary-with-public-visibility" />';
 				}
 
-				Liferay.Util.openConfirm({
+				Liferay.Util.openConfirmModal({
 					message:
 						message +
 						' \n\n<liferay-ui:message key="the-action-of-setting-a-vocabulary-either-with-internal-or-public-visibility-cannot-be-reversed" />',

@@ -150,7 +150,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 
 	<aui:script>
 		function <portlet:namespace />deleteCommerceCountries() {
-			Liferay.Util.openConfirm({
+			Liferay.Util.openConfirmModal({
 				message:
 					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-countries" />',
 				onConfirm: (isConfirmed) => {

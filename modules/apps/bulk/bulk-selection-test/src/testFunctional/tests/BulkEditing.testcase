@@ -118,7 +118,14 @@ definition {
 	@description = "This test covers LPS-94956. It ensures that users can delete common category tags by using the bulk append action."
 	@priority = "5"
 	test DeleteCommonCategoryTags {
-		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
+		for (var entryCount : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}",
+				groupName = "Guest",
+				mimeType = "application/msword",
+				sourceFileName = "Document_${entryCount}.doc");
+		}
 
 		for (var categoryName : list "Books,Plants,Pets") {
 			JSONCategory.addCategory(
@@ -174,7 +181,14 @@ definition {
 			title = "Books",
 			vocabularyName = "Vocabulary Name");
 
-		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
+		for (var entryCount : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}",
+				groupName = "Guest",
+				mimeType = "application/msword",
+				sourceFileName = "Document_${entryCount}.doc");
+		}
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

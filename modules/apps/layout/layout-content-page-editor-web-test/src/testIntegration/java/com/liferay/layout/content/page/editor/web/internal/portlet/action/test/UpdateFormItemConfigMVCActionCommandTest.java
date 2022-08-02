@@ -182,7 +182,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				updateFormJSONObject, 0, StringPool.BLANK, StringPool.BLANK, 0);
 
 			_assertFormStyledLayoutStructureItem(
-				classNameId, 0, formItemId, new InfoField<?>[0], false);
+				classNameId, 0, formItemId, new InfoField<?>[0], true, false);
 		}
 	}
 
@@ -244,7 +244,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			_assertFormStyledLayoutStructureItem(
 				classNameId, infoFields.length + 1, formItemId, infoFields,
-				true);
+				true, true);
 		}
 	}
 
@@ -307,13 +307,15 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				updateFormJSONObject, 0, StringPool.BLANK, StringPool.BLANK, 0);
 
 			_assertFormStyledLayoutStructureItem(
-				classNameId, infoFields.length, formItemId, infoFields, false);
+				classNameId, infoFields.length, formItemId, infoFields, false,
+				false);
 		}
 	}
 
 	private void _assertFormStyledLayoutStructureItem(
 			long expectedClassNameId, int expectedChildrenSize,
-			String formItemId, InfoField<?>[] infoFields, boolean submitButton)
+			String formItemId, InfoField<?>[] infoFields,
+			boolean assertRendererKey, boolean submitButton)
 		throws PortalException {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -352,7 +354,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			_assertFragmentEntry(
 				infoField.getUniqueId(),
 				_getExpectedRendererKey(infoField.getInfoFieldType()),
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
+				assertRendererKey);
 		}
 
 		if (!submitButton) {
@@ -366,12 +369,13 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 		_assertFragmentEntry(
 			StringPool.BLANK, "INPUTS-submit-button",
-			fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+			fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
+			assertRendererKey);
 	}
 
 	private void _assertFragmentEntry(
 			String expectedInputFieldId, String expectedRendererKey,
-			long fragmentEntryLinkId)
+			long fragmentEntryLinkId, boolean assertRendererKey)
 		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
@@ -386,6 +390,10 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				LocaleUtil.getMostRelevantLocale()));
 
 		Assert.assertEquals(expectedInputFieldId, inputFieldId);
+
+		if (!assertRendererKey) {
+			return;
+		}
 
 		Assert.assertEquals(
 			expectedRendererKey, fragmentEntryLink.getRendererKey());

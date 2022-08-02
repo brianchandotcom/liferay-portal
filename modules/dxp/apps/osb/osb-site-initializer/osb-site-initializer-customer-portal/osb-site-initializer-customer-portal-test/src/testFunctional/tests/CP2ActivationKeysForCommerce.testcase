@@ -295,6 +295,8 @@ definition {
 	@description = "Verify that after choosing a subscription the 'Download Key' button is enabled."
 	@priority = "4"
 	test SelectingASubscriptionTheDownloadSearchButtonIsEnabled {
+		property portal.upstream = "quarantine";
+
 		//"Reason: Not eble to reproduce scenario without OKTA workaround.""
 
 		task ("Assert that project has DPX 7.2") {
@@ -327,6 +329,9 @@ definition {
 	@description = "Verify that after clicking the 'Download Key' button the user downloads the appropriate Commerce license"
 	@priority = "4"
 	test CanDownloadTheKeyWhenASubscriptionIsSelected {
+		property portal.upstream = "quarantine";
+
+		//"Reason: Not eble to reproduce scenario without OKTA workaround.""
 
 		task ("Assert that project has DPX 7.2") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");

@@ -2327,6 +2327,8 @@ log.sanitizer.enabled=false</echo>
 
 							<antcall target="prepare-portal-test-digital-signature-properties" />
 
+							<antcall target="prepare-portal-test-object-storage-salesforce-properties" />
+
 							<ant dir="portal-test" inheritAll="false" target="deploy" />
 
 							<setup-test-batch-testable-tomcat test.portal.bundle.version="@{test.portal.bundle.version}" />

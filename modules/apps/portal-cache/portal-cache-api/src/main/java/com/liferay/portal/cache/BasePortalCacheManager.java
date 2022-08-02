@@ -380,7 +380,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			sb.append("sharded ");
 		}
 		else {
-			sb.append("non-sharded ");
+			sb.append("nonsharded ");
 		}
 
 		sb.append("portal cache, cause a ");
@@ -389,7 +389,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			sb.append("sharded ");
 		}
 		else {
-			sb.append("non-sharded ");
+			sb.append("nonsharded ");
 		}
 
 		sb.append("portal cache with same name exists.");

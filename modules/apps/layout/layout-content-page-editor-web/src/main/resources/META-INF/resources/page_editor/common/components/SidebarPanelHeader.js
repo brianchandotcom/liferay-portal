@@ -12,26 +12,37 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function SidebarPanelHeader({padded = true, ...props}) {
+import {switchSidebarPanel} from '../../app/actions/index';
+import {useDispatch} from '../../app/contexts/StoreContext';
+
+export default function SidebarPanelHeader({children}) {
+	const dispatch = useDispatch();
+
 	return (
-		<h1
-			{...props}
+		<div
 			className={classNames(
-				'page-editor__sidebar__panel-header',
-				'align-items-center',
-				'd-flex',
-				{
-					'light': true,
-					[props.className]: !!props.className,
-					'pt-2': padded,
-					'px-3': padded,
-				}
+				'align-items-center d-flex justify-content-between my-3 pl-3 pr-2 page-editor__sidebar__panel-header'
 			)}
-		/>
+		>
+			<h1 className="flex-grow-1 mb-0 mr-1 text-3">{children}</h1>
+
+			{Liferay.FeatureFlags['LPS-153452'] && (
+				<ClayButtonWithIcon
+					displayType="unstyled"
+					onClick={() => {
+						dispatch(switchSidebarPanel({sidebarOpen: false}));
+					}}
+					small
+					symbol="times"
+					title={Liferay.Language.get('close')}
+				/>
+			)}
+		</div>
 	);
 }
 

@@ -361,6 +361,44 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-154744. TC4-1: The OIDC user is assigned the regular role which contains multiple spaces given through the property."
+	@priority = "4"
+	test MultipleSpacesRoleNameCanBeAssignedToOIDCUser {
+		property custom.properties = "open.id.connect.user.info.processor.impl.issuer=https://dev-5081331.okta.com${line.separator}open.id.connect.user.info.processor.impl.regular.role=My Custom Regular Role";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+		property test.name.skip.portal.instance = "OpenIDConnect#MultipleSpacesRoleNameCanBeAssignedToOIDCUser";
+
+		var userEmailAddress = PropsUtil.get("openid.provider.okta.test.account.email.address");
+		var userPassword = PropsUtil.get("openid.provider.okta.test.account.password");
+
+		task ("Given: Set up OKTA OIDC Provider") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~Okta.config");
+		}
+
+		task ("And: Add a regular role which contains multiple spaces") {
+			JSONRole.addRegularRole(
+				roleKey = "My Custom Regular Role",
+				roleTitle = "My Custom Regular Role");
+		}
+
+		task ("When: Login with OpenID Connect") {
+			User.logoutPG();
+
+			User.loginUserWithOpenIDConnectEnabledPG(
+				userEmailAddress = "${userEmailAddress}",
+				userPassword = "${userPassword}");
+		}
+
+		task ("Then: Multiple spaces role name can be assigned to OKTA user") {
+			MyAccount.openMyAccountAdmin();
+
+			User.viewUserInfomationRolesCP(roleTitle = "My Custom Regular Role");
+		}
+	}
+
 	@description = "This is a use case for LPS-105151 and LPS-139642 TC-9: Users could login with instance-level configured OpenID Connect provider."
 	@priority = "4"
 	test OpenIDConnectOnInstanceLevelSmoke {

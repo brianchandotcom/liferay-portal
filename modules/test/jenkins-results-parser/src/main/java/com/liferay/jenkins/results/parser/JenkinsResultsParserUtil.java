@@ -5001,6 +5001,12 @@ public class JenkinsResultsParserUtil {
 	protected static String initCacheURL() {
 		String cacheDirPath = System.getenv("CACHE_DIR");
 
+		if ((cacheDirPath == null) &&
+			(System.getenv("JENKINS_GITHUB_URL") != null)) {
+
+			cacheDirPath = "/opt/dev/projects/github";
+		}
+
 		if (cacheDirPath != null) {
 			File cacheDir = new File(cacheDirPath);
 

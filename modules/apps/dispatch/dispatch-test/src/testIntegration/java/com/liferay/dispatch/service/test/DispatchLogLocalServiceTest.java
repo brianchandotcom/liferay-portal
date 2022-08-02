@@ -219,7 +219,7 @@ public class DispatchLogLocalServiceTest {
 
 		_assertLatestStartDate(dispatchLog, dispatchLogs);
 
-		_dispatchLogLocalService.fetchLatestDispatchLog(
+		dispatchLog = _dispatchLogLocalService.fetchLatestDispatchLog(
 			dispatchTrigger.getDispatchTriggerId(),
 			DispatchTaskStatus.SUCCESSFUL);
 
@@ -423,7 +423,7 @@ public class DispatchLogLocalServiceTest {
 
 			Assert.assertTrue(
 				"Latest dispatch log start date",
-				currentStartDate.getTime() > startDate.getTime());
+				currentStartDate.getTime() >= startDate.getTime());
 		}
 	}
 

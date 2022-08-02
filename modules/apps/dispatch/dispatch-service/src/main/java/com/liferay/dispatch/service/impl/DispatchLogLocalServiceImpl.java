@@ -103,7 +103,9 @@ public class DispatchLogLocalServiceImpl
 	@Override
 	public DispatchLog fetchLatestDispatchLog(long dispatchTriggerId) {
 		return dispatchLogPersistence.fetchByDispatchTriggerId_First(
-			dispatchTriggerId, null);
+			dispatchTriggerId,
+			OrderByComparatorFactoryUtil.create(
+				DispatchLogModelImpl.TABLE_NAME, "startDate", "false"));
 	}
 
 	@Override

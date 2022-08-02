@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -125,6 +126,68 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testUpdateFormItemConfigMVCActionCommandInputsFragmentCollectionProviderNotAvailable()
+		throws Exception {
+
+		InfoField<?>[] infoFields = _getInfoFields();
+
+		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
+				new ComponentEnablerTemporarySwapper(
+					_BUNDLE_SYMBOLIC_NAME, _COMPONENT_CLASS_NAME, false);
+			MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoFields)
+						).build(),
+						_editPageInfoItemCapability);
+			PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper("feature.flag.LPS-157738", true)) {
+
+			long segmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid());
+
+			JSONObject addItemJSONObject =
+				ContentLayoutTestUtil.addItemToLayout(
+					_layout, "{}", LayoutDataItemTypeConstants.TYPE_FORM,
+					segmentsExperienceId);
+
+			long classNameId = _portal.getClassNameId(
+				MockObject.class.getName());
+
+			String formItemId = addItemJSONObject.getString("addedItemId");
+
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+				_getMockLiferayPortletActionRequest(
+					JSONUtil.put(
+						"classNameId", classNameId
+					).put(
+						"classTypeId", "0"
+					).toString(),
+					formItemId, _layout, segmentsExperienceId);
+
+			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+
+			_assertUpdateFormStyledLayoutStructureItemConfigJSONObject(
+				updateFormJSONObject, 0, StringPool.BLANK,
+				_language.get(
+					_portal.getSiteDefaultLocale(_group),
+					"your-form-could-not-be-loaded-because-fragments-are-not-" +
+						"available"),
+				0);
+
+			_assertFormStyledLayoutStructureItem(
+				classNameId, 0, formItemId, new InfoField<?>[0], true, false);
+		}
 	}
 
 	@Test
@@ -619,6 +682,9 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private Language _language;
 
 	private Layout _layout;
 

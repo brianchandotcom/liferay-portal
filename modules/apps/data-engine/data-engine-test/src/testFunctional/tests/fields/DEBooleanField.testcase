@@ -219,4 +219,44 @@ definition {
 			fieldReference = "BooleanField1234");
 	}
 
+	@description = "Verify that a structure with the boolean field can be set to show as a switch."
+	@priority = "5"
+	test CanBeSetToShowAsASwitch {
+		property portal.acceptance = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Structure 1");
+
+		DEBuilder.addField(
+			fieldLabel = "Boolean",
+			fieldName = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
+
+		FormFields.enableSwitch(fieldName = "Show as a Switch");
+
+		FormFields.viewSwitch(fieldName = "Boolean");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure 1");
+
+		PortletEntry.inputTitle(title = "Web Content 1");
+
+		FormFields.viewSwitch(fieldName = "Boolean");
+
+		FormFields.enableSwitch(fieldName = "Boolean");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content 1");
+
+		FormFields.viewSwitchChecked(fieldName = "Boolean");
+	}
+
 }

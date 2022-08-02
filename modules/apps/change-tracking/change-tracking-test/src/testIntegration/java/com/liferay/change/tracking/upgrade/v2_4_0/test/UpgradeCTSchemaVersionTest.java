@@ -112,8 +112,8 @@ public class UpgradeCTSchemaVersionTest {
 			}
 
 			if (dbInspector.hasColumn("CTCollection", "schemaVersionId")) {
-				db.runSQL(
-					"alter table CTCollection drop column schemaVersionId");
+				db.alterTableDropColumn(
+					connection, "CTCollection", "schemaVersionId");
 			}
 		}
 

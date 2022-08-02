@@ -13,20 +13,33 @@
  */
 
 import useFormModal from '../../hooks/useFormModal';
+import useModalContext from '../../hooks/useModalContext';
 import useMutate from '../../hooks/useMutate';
 import i18n from '../../i18n';
 import {Security} from '../../security';
 import {TestrayProject, deleteResource} from '../../services/rest';
 import {Action} from '../../types';
+import ComponentsModal from '../Standalone/Components/ComponentsModal';
 
 const useProjectActions = () => {
 	const formModal = useFormModal();
 	const {removeItemFromList} = useMutate();
+	const {onOpenModal} = useModalContext();
+
 	const modal = formModal.modal;
 
 	const actions: Action[] = [
 		{
-			action: (item: TestrayProject) => modal.open(item),
+			action: (project: TestrayProject) =>
+				onOpenModal({
+					body: <ComponentsModal projectId={project.id} />,
+					size: 'full-screen',
+					title: `${i18n.translate('components')} - ${project.name}`,
+				}),
+			name: i18n.translate('manage-components'),
+		},
+		{
+			action: (project: TestrayProject) => modal.open(project),
 			name: i18n.translate('edit'),
 			permission: 'UPDATE',
 		},

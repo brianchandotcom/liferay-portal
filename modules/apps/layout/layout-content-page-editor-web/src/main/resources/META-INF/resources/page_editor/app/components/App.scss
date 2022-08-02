@@ -19,10 +19,10 @@
 @import 'Translation';
 @import 'ViewportSizeSelector';
 
+@import 'fragment-configuration-fields/AdvancedSelectField';
 @import 'fragment-configuration-fields/CSSClassSelectorField';
 @import 'fragment-configuration-fields/CustomCSSField';
 @import 'fragment-configuration-fields/HideFromSearchField';
-@import 'fragment-configuration-fields/SelectField';
 @import 'fragment-configuration-fields/TargetCollectionsField';
 
 @import 'fragment-content/FragmentContent';

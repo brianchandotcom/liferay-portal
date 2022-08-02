@@ -13,7 +13,6 @@
  */
 
 import ClayChart from '@clayui/charts';
-import ClayIcon from '@clayui/icon';
 import React, {useEffect, useRef} from 'react';
 
 import ClayIconProvider from '../../context/ClayIconProvider';
@@ -22,11 +21,9 @@ import './index.css';
 
 const DonutChart = ({
 	chartData,
-	dateUntilGoal,
-	goalValue,
 	hasLegend = false,
 	height = 190,
-	salesValue,
+	LegendElement = () => null,
 	showLabel = false,
 	showLegend = false,
 	title = '',
@@ -74,7 +71,9 @@ const DonutChart = ({
 					}}
 				/>
 
-				{!hasLegend ? (
+				<LegendElement />
+
+				{!hasLegend && (
 					<div className="d-flex legend-container">
 						{chartData?.columns?.map((column, index) => (
 							<div
@@ -100,22 +99,6 @@ const DonutChart = ({
 								</span>
 							</div>
 						))}
-					</div>
-				) : (
-					<div className="d-flex donut-chart-legend flex-column h-100 justify-content-end ml-5 mt-5">
-						<div className="donut-chart-screen font-weight-bolder h5">
-							{salesValue}
-						</div>
-
-						<div className="font-weight-normal mb-2 text-neutral-8 text-paragraph-sm">
-							{`Goal ${goalValue}`}
-						</div>
-
-						<div className="font-weight-bolder text-danger text-paragraph-sm">
-							<ClayIcon className="mr-1" symbol="time" />
-
-							{dateUntilGoal}
-						</div>
 					</div>
 				)}
 			</div>

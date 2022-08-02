@@ -457,22 +457,12 @@
 																									{
 																										"definition": {
 																											"fragment": {
-																												"key": "fake-content"
+																												"key": "dashboard-sales"
 																											},
 																											"fragmentConfig": {
-																												"fakeContentId": "fake content",
-																												"height": "257px"
+																												"textColor": ""
 																											},
 																											"fragmentFields": [
-																											],
-																											"fragmentViewports": [
-																												{
-																													"fragmentViewportStyle": {
-																														"marginBottom": "4",
-																														"paddingBottom": "0"
-																													},
-																													"id": "landscapeMobile"
-																												}
 																											],
 																											"indexed": true
 																										},
@@ -535,6 +525,9 @@
 																											},
 																											"fragmentFields": [
 																											],
+																											"fragmentStyle": {
+																												"height": "267px"
+																											},
 																											"indexed": true
 																										},
 																										"type": "Fragment"

@@ -17,7 +17,6 @@ package com.liferay.object.service;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -336,7 +335,7 @@ public interface ObjectValidationRuleLocalService
 	public ObjectValidationRule updateObjectValidationRule(
 		ObjectValidationRule objectValidationRule);
 
-	@CTAware(onProduction = true)
+	@Transactional(readOnly = true)
 	public void validate(BaseModel<?> baseModel, long objectDefinitionId)
 		throws PortalException;
 

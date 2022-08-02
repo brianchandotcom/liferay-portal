@@ -240,7 +240,7 @@ definition {
 
 					CKEditor.addContentInWebContent(
 						content = "Web Content Content Edit",
-						fieldLabel = "content");
+						fieldLabel = "Content");
 
 					PortletEntry.publish();
 				}

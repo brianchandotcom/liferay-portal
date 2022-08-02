@@ -149,7 +149,7 @@ definition {
 		else {
 			CKEditor.addContentInWebContent(
 				content = "${webContentContentEdit}",
-				fieldLabel = "content");
+				fieldLabel = "Content");
 		}
 
 		PortletEntry.publish();

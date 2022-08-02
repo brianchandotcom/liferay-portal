@@ -38,6 +38,76 @@ public class PortletDataRendererImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testAMDCodeIsWrappedInIIFE() throws Exception {
+		PortletDataRendererImpl portletDataRendererImpl =
+			new PortletDataRendererImpl();
+
+		PortletData portletData = new PortletData();
+
+		portletData.add(
+			new JSFragment(
+				null, Arrays.asList(new AMDRequire("frontend-js-web")), null,
+				"content"));
+
+		CharArrayWriter writer = new CharArrayWriter();
+
+		portletDataRendererImpl.write(Arrays.asList(portletData), writer);
+
+		String code = writer.toString();
+
+		Assert.assertTrue(
+			"AMD code is correctly wrapped in IIFE",
+			code.contains("(function() {\ncontent\n})();"));
+	}
+
+	@Test
+	public void testAUICodeIsWrappedInIIFE() throws Exception {
+		PortletDataRendererImpl portletDataRendererImpl =
+			new PortletDataRendererImpl();
+
+		PortletData portletData = new PortletData();
+
+		portletData.add(
+			new JSFragment(
+				Arrays.asList("aui-use-1", "aui-use-2"), null, null,
+				"content"));
+
+		CharArrayWriter writer = new CharArrayWriter();
+
+		portletDataRendererImpl.write(Arrays.asList(portletData), writer);
+
+		String code = writer.toString();
+
+		Assert.assertTrue(
+			"AUI code is correctly wrapped in IIFE",
+			code.contains("(function() {\ncontent\n})();"));
+	}
+
+	@Test
+	public void testESCodeIsWrappedInBlock() throws Exception {
+		PortletDataRendererImpl portletDataRendererImpl =
+			new PortletDataRendererImpl();
+
+		PortletData portletData = new PortletData();
+
+		portletData.add(
+			new JSFragment(
+				null, null,
+				Arrays.asList(new ESImport("openDialog", "frontend-js-web")),
+				"content"));
+
+		CharArrayWriter writer = new CharArrayWriter();
+
+		portletDataRendererImpl.write(Arrays.asList(portletData), writer);
+
+		String code = writer.toString();
+
+		Assert.assertTrue(
+			"ES code is correctly wrapped in block",
+			code.contains("{\ncontent\n}\n"));
+	}
+
+	@Test
 	public void testGenerateVariableReplacesInvalidFirstCharacter()
 		throws Exception {
 
@@ -167,22 +237,23 @@ public class PortletDataRendererImplTest {
 			"First JS fragment is correctly rendered",
 			code.contains(
 				StringBundler.concat(
-					"{\n", "const myOpenDialog = openDialog;\n", "content1\n",
-					"}\n")));
+					"(function() {\n", "const myOpenDialog = openDialog;\n",
+					"content1\n", "})();\n")));
 
 		Assert.assertTrue(
 			"Second JS fragment is correctly rendered",
 			code.contains(
 				StringBundler.concat(
-					"{\n", "const myOpenDialog2 = openDialog;\n", "content2\n",
-					"}\n")));
+					"(function() {\n", "const myOpenDialog2 = openDialog;\n",
+					"content2\n", "})();\n")));
 
 		Assert.assertTrue(
 			"Third JS fragment is correctly rendered",
 			code.contains(
 				StringBundler.concat(
-					"{\n", "const react = react0;\n",
-					"const myOpenDialog2 = openDialog;\n", "content3\n", "}")));
+					"(function() {\n", "const react = react0;\n",
+					"const myOpenDialog2 = openDialog;\n", "content3\n",
+					"})();\n")));
 	}
 
 	protected void assertVariables(String code, String... variables) {

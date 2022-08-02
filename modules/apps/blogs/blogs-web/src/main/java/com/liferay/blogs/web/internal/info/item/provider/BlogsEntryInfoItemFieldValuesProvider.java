@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.ArrayList;
@@ -127,8 +128,11 @@ public class BlogsEntryInfoItemFieldValuesProvider
 						BlogsEntryInfoItemFields.smallImageInfoField,
 						smallWebImage));
 
+				String coverImageURL = blogsEntry.getCoverImageURL(
+					themeDisplay);
+
 				WebImage coverWebImage = new WebImage(
-					blogsEntry.getCoverImageURL(themeDisplay),
+					coverImageURL,
 					new InfoItemReference(
 						FileEntry.class.getName(),
 						new ClassPKInfoItemIdentifier(
@@ -140,6 +144,19 @@ public class BlogsEntryInfoItemFieldValuesProvider
 					new InfoFieldValue<>(
 						BlogsEntryInfoItemFields.coverImageInfoField,
 						coverWebImage));
+
+				if (Validator.isNotNull(coverImageURL)) {
+					blogsEntryFieldValues.add(
+						new InfoFieldValue<>(
+							BlogsEntryInfoItemFields.previewImageInfoField,
+							coverWebImage));
+				}
+				else {
+					blogsEntryFieldValues.add(
+						new InfoFieldValue<>(
+							BlogsEntryInfoItemFields.previewImageInfoField,
+							smallWebImage));
+				}
 			}
 
 			blogsEntryFieldValues.add(

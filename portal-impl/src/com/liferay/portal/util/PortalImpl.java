@@ -196,6 +196,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -318,14 +319,14 @@ public class PortalImpl implements Portal {
 
 		// Computer name
 
-		String computerName = System.getProperty("env.COMPUTERNAME");
+		String computerName = SystemProperties.get("env.COMPUTERNAME");
 
 		if (Validator.isNull(computerName)) {
-			computerName = System.getProperty("env.HOST");
+			computerName = SystemProperties.get("env.HOST");
 		}
 
 		if (Validator.isNull(computerName)) {
-			computerName = System.getProperty("env.HOSTNAME");
+			computerName = SystemProperties.get("env.HOSTNAME");
 		}
 
 		if (Validator.isNull(computerName)) {

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.io.File;
 import java.io.FileReader;
@@ -102,7 +103,7 @@ public class TCKtoJUnitConverter {
 		}
 
 		String hostname = GetterUtil.getString(
-			System.getProperty("env.USERDOMAIN"));
+			SystemProperties.get("env.USERDOMAIN"));
 
 		hostname = StringUtil.toLowerCase(hostname);
 

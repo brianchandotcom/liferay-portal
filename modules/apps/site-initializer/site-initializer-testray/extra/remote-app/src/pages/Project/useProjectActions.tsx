@@ -20,6 +20,8 @@ import {Security} from '../../security';
 import {TestrayProject, deleteResource} from '../../services/rest';
 import {Action} from '../../types';
 import ComponentsModal from '../Standalone/Components/ComponentsModal';
+import ProductVersionModal from '../Standalone/ProductVersions/ProductVersionModal';
+import TeamsModal from '../Standalone/Teams/TeamsModal';
 
 const useProjectActions = () => {
 	const formModal = useFormModal();
@@ -37,6 +39,26 @@ const useProjectActions = () => {
 					title: `${i18n.translate('components')} - ${project.name}`,
 				}),
 			name: i18n.translate('manage-components'),
+		},
+		{
+			action: (project: TestrayProject) =>
+				onOpenModal({
+					body: <TeamsModal projectId={project.id} />,
+					size: 'full-screen',
+					title: `${i18n.translate('teams')} - ${project.name}`,
+				}),
+			name: i18n.translate('manage-teams'),
+		},
+		{
+			action: (project: TestrayProject) =>
+				onOpenModal({
+					body: <ProductVersionModal projectId={project.id} />,
+					size: 'full-screen',
+					title: `${i18n.translate('product-version')} - ${
+						project.name
+					}`,
+				}),
+			name: i18n.translate('manage-product-versions'),
 		},
 		{
 			action: (project: TestrayProject) => modal.open(project),

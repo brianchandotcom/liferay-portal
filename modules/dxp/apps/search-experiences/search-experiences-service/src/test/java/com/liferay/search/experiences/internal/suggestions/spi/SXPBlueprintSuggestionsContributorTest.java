@@ -61,7 +61,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -126,7 +125,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 			suggestionsContributorResults,
 			_sxpBlueprintSuggestionsContributor.
 				getSuggestionsContributorResults(
-					_setUpliferayPortletRequest(),
+					_setUpLiferayPortletRequest(),
 					_setUpLiferayPortletResponse(), _searchContext,
 					_suggestionsContributorConfiguration));
 
@@ -162,7 +161,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 			suggestionsContributorResults,
 			_sxpBlueprintSuggestionsContributor.
 				getSuggestionsContributorResults(
-					_setUpliferayPortletRequest(),
+					_setUpLiferayPortletRequest(),
 					_setUpLiferayPortletResponse(), _searchContext,
 					_suggestionsContributorConfiguration));
 
@@ -258,7 +257,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 		);
 	}
 
-	private LiferayPortletRequest _setUpliferayPortletRequest() {
+	private LiferayPortletRequest _setUpLiferayPortletRequest() {
 		LiferayPortletRequest liferayPortletRequest = Mockito.mock(
 			LiferayPortletRequest.class);
 
@@ -302,7 +301,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 
 		Mockito.doAnswer(
 			invocation -> new String[] {
-				invocation.getArgumentAt(0, String.class), StringPool.BLANK
+				invocation.getArgument(0, String.class), StringPool.BLANK
 			}
 		).when(
 			portal
@@ -351,7 +350,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 		).when(
 			_searcher
 		).search(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 	}
 
@@ -429,7 +428,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 		).when(
 			assetRendererFactory
 		).getAssetRenderer(
-			Matchers.anyLong()
+			Mockito.anyLong()
 		);
 
 		Mockito.doReturn(

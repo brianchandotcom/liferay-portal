@@ -200,6 +200,26 @@
 		<td>//span[contains(@class,'actions collapse-icon-${key_closedOrOpen}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>ACCOUNT_RESTRICTED_FIELD</td>
+		<td>//select[contains(@id,'accountEntryRestrictedObjectFieldId')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TOGGLE_ACCOUNT_RESTRICTION</td>
+		<td>//input[contains(@class,'field toggle-switch-check') and contains(@id,'accountEntryRestricted')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TOGGLE_ACCOUNT_RESTRICTION_DISABLED</td>
+		<td>//input[contains(@class,'field disabled toggle-switch-check') and contains(@id,'accountEntryRestricted')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ACCOUNT_RESTRICTED_FIELD_DISABLED</td>
+		<td>//select[contains(@id,'accountEntryRestrictedObjectFieldId') and contains(@class,'disabled')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

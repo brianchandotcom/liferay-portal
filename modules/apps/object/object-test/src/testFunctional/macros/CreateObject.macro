@@ -22,6 +22,10 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro assertAccountRestrictedFieldDisabled {
+		AssertElementPresent(locator1 = "CreateObject#ACCOUNT_RESTRICTED_FIELD_DISABLED");
+	}
+
 	macro assertAddedEntryRelationshipIsDisplayed {
 		LexiconEntry.gotoAdd();
 
@@ -318,6 +322,10 @@ definition {
 		MenuItem.clickNoError(menuItem = "Delete");
 	}
 
+	macro desactiveToogleAccountRestriction {
+		Uncheck.uncheckToggleSwitch(locator1 = "CreateObject#TOGGLE_ACCOUNT_RESTRICTION");
+	}
+
 	macro editLabel {
 		Type(
 			locator1 = "CreateObject#OBJECT_LABEL",
@@ -397,6 +405,10 @@ definition {
 		Click(
 			key_labelName = "${labelName}",
 			locator1 = "CreateObject#VIEW_OBJECT");
+	}
+
+	macro viewToogleAccountRestrictionDisabled {
+		AssertElementPresent(locator1 = "CreateObject#TOGGLE_ACCOUNT_RESTRICTION_DISABLED");
 	}
 
 	macro withdrawObjectTask {

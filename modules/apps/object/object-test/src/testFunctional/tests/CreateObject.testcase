@@ -1472,6 +1472,60 @@ definition {
 		ObjectAdmin.assertNoResultsWereFound();
 	}
 
+	@description = "LPS-151877 - Verify that when the admin user deletes the relationship between Account and the Object, the Account Restriction is disabled and the admin user can edit the Object"
+	@priority = "4"
+	test CanDisableAccountRestriction {
+		task ("Add Custom Object (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 156824",
+				objectName = "CustomObject156824",
+				pluralLabelName = "Custom Objects 156824");
+		}
+
+		task ("Add Relationship Account to Custom Object (via API)") {
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "AccountEntry",
+				objectName_2 = "CustomObject156824",
+				relationshipLabel = "RelationshipAccount",
+				relationshipName = "relationshipAccount",
+				relationshipType = "oneToMany");
+		}
+
+		task ("Go to Custom Object and active Account Restriction") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156824");
+
+			CreateObject.activeToogleAccountRestriction();
+
+			CreateObject.selectAccountRestrictedField(accountRestrictedField = "RelationshipAccount");
+
+			CreateObject.saveObject();
+		}
+
+		task ("Go to Relationship tab and delete Relationship") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Account");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			ObjectAdmin.deleteRelationshipViaUI(
+				relationshipLabel = "RelationshipAccount",
+				relationshipName = "relationshipAccount");
+		}
+
+		task ("Go to Custom Object and assert that it's not possible to select Account Restriction") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156824");
+
+			CreateObject.assertAccountRestrictedFieldDisabled();
+
+			CreateObject.viewToogleAccountRestrictionDisabled();
+		}
+	}
+
 	@description = "LPS-135390 - Verify it is not possible to add an Object without the Add Object Definition permission"
 	@priority = "5"
 	test CannotAddObjectWithoutAddPermission {

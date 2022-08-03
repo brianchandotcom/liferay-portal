@@ -14,10 +14,14 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.model.CompanyConstants;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import java.net.URL;
 
@@ -97,7 +101,7 @@ public class SystemProperties {
 				URL url = enumeration.nextElement();
 
 				try (InputStream inputStream = url.openStream()) {
-					properties.load(inputStream);
+					_load(inputStream, properties);
 				}
 
 				if (urls != null) {
@@ -119,7 +123,7 @@ public class SystemProperties {
 				URL url = enumeration.nextElement();
 
 				try (InputStream inputStream = url.openStream()) {
-					properties.load(inputStream);
+					_load(inputStream, properties);
 				}
 
 				if (urls != null) {
@@ -188,6 +192,40 @@ public class SystemProperties {
 		System.setProperty(key, value);
 
 		_properties.put(key, value);
+	}
+
+	private static void _load(InputStream inputStream, Properties properties)
+		throws IOException {
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new InputStreamReader(inputStream))) {
+
+			String line = null;
+			StringBundler sb = new StringBundler();
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = line.trim();
+
+				// Comment line, Empty line or "\"
+
+				if (line.startsWith(StringPool.POUND) || line.isEmpty() ||
+					line.equals(StringPool.BACK_SLASH)) {
+
+					continue;
+				}
+
+				sb.append(line);
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			if (sb.index() != 0) {
+				try (UnsyncStringReader unsyncStringReader =
+						new UnsyncStringReader(sb.toString())) {
+
+					properties.load(unsyncStringReader);
+				}
+			}
+		}
 	}
 
 	private static final Map<String, String> _properties =

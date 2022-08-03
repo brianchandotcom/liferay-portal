@@ -15,8 +15,12 @@
 package com.liferay.portal.vulcan.util;
 
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.net.URI;
 
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -27,32 +31,21 @@ import javax.ws.rs.core.UriInfo;
 public class UriInfoUtil {
 
 	public static String getAbsolutePath(UriInfo uriInfo) {
-		if (_isHttpsEnabled()) {
-			UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
-
-			return String.valueOf(
-				uriBuilder.scheme(
-					"https"
-				).build());
-		}
-
-		return String.valueOf(uriInfo.getAbsolutePath());
+		return String.valueOf(
+			_updateParameters(
+				uriInfo.getAbsolutePathBuilder()
+			).build());
 	}
 
 	public static String getBasePath(UriInfo uriInfo) {
-		UriBuilder uriBuilder = getBaseUriBuilder(uriInfo);
-
-		return String.valueOf(uriBuilder.build());
+		return String.valueOf(
+			getBaseUriBuilder(
+				uriInfo
+			).build());
 	}
 
 	public static UriBuilder getBaseUriBuilder(UriInfo uriInfo) {
-		if (_isHttpsEnabled()) {
-			UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
-
-			return uriBuilder.scheme("https");
-		}
-
-		return uriInfo.getBaseUriBuilder();
+		return _updateParameters(uriInfo.getBaseUriBuilder());
 	}
 
 	private static boolean _isHttpsEnabled() {
@@ -64,6 +57,20 @@ public class UriInfoUtil {
 		}
 
 		return false;
+	}
+
+	private static UriBuilder _updateParameters(UriBuilder uriBuilder) {
+		if (!Validator.isBlank(PortalUtil.getPathContext())) {
+			URI uri = uriBuilder.build();
+
+			uriBuilder.replacePath(PortalUtil.getPathContext(uri.getPath()));
+		}
+
+		if (_isHttpsEnabled()) {
+			uriBuilder.scheme(Http.HTTPS);
+		}
+
+		return uriBuilder;
 	}
 
 }

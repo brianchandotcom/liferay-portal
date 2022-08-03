@@ -12,12 +12,10 @@
  * details.
  */
 
-import ClayAutocomplete from '@clayui/autocomplete';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayColorPicker from '@clayui/color-picker';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -76,7 +74,6 @@ export function ColorPicker({
 	const setStyleError = useSetStyleError();
 	const styleErrors = useStyleErrors();
 
-	const [activeAutocomplete, setActiveAutocomplete] = useState(false);
 	const [activeDropdownColorPicker, setActiveDropdownColorPicker] = useState(
 		false
 	);
@@ -94,7 +91,6 @@ export function ColorPicker({
 		value: styleErrors[activeItemId]?.[field.name]?.value,
 	});
 	const inputRef = useRef(null);
-	const listboxRef = useRef(null);
 	const [tokenLabel, setTokenLabel] = usePropsFirst(
 		value ? tokenValues[value]?.label : defaultTokenLabel,
 		{forceProp: clearedValue}
@@ -110,10 +106,6 @@ export function ColorPicker({
 				token.name === field.name ||
 				editedTokenValues?.[token.name]?.name === field.name,
 		}));
-
-	const filteredTokenValues = tokenColorValues.filter((token) =>
-		token.label.toLowerCase().includes(color)
-	);
 
 	tokenColorValues.forEach(
 		({
@@ -214,46 +206,7 @@ export function ColorPicker({
 			deleteStyleError(field.name, activeItemId);
 		}
 
-		setActiveAutocomplete(value.length > 1 && filteredTokenValues.length);
 		setColor(value);
-	};
-
-	const onClickAutocompleteItem = ({label, name, value}) => {
-		setActiveAutocomplete(false);
-		onSetValue(value, label, name);
-	};
-
-	const onKeydownAutocompleteItem = (event) => {
-		if (event.key === 'Tab') {
-			event.preventDefault();
-			event.stopPropagation();
-
-			setActiveAutocomplete(false);
-			onBlurAutocompleteInput({target: inputRef.current});
-
-			if (event.shiftKey) {
-				inputRef.current.focus();
-			}
-			else {
-				buttonsRef.current.querySelector('button').focus();
-			}
-		}
-	};
-
-	const onKeydownAutocompleteInput = (event) => {
-		if (event.key === 'Tab') {
-			if (activeAutocomplete) {
-				onBlurAutocompleteInput(event);
-				setActiveAutocomplete(false);
-			}
-
-			if (!event.shiftKey) {
-				event.preventDefault();
-				event.stopPropagation();
-
-				buttonsRef.current.querySelector('button').focus();
-			}
-		}
 	};
 
 	return (
@@ -266,10 +219,7 @@ export function ColorPicker({
 				aria-labelledby={labelId}
 				className={classNames('page-editor__color-picker', {
 					'has-error': error.value,
-					'hovered':
-						activeAutocomplete ||
-						activeColorPicker ||
-						activeDropdownColorPicker,
+					'hovered': activeColorPicker || activeDropdownColorPicker,
 				})}
 			>
 				{tokenLabel ? (
@@ -330,82 +280,22 @@ export function ColorPicker({
 							</ClayInput.GroupItem>
 
 							<ClayInput.GroupItem append>
-								<FocusScope>
-									<ClayAutocomplete>
-										<ClayAutocomplete.Input
-											aria-autocomplete="list"
-											aria-controls={`${inputId}_listbox`}
-											aria-expanded={activeAutocomplete}
-											aria-invalid={error.label}
-											className="page-editor__color-picker__autocomplete__input"
-											id={inputId}
-											onBlur={(event) => {
-												if (!activeAutocomplete) {
-													onBlurAutocompleteInput(
-														event
-													);
-												}
-											}}
-											onChange={onChangeAutocompleteInput}
-											onKeyDown={
-												onKeydownAutocompleteInput
-											}
-											ref={inputRef}
-											role="combobox"
-											value={
-												error.value ||
-												(color.startsWith('#')
-													? color.toUpperCase()
-													: color)
-											}
-										/>
-
-										<ClayAutocomplete.DropDown
-											active={
-												activeAutocomplete &&
-												filteredTokenValues.length
-											}
-											closeOnClickOutside={true}
-											onSetActive={setActiveAutocomplete}
-										>
-											<ul
-												className="list-unstyled"
-												id={`${inputId}_listbox`}
-												ref={listboxRef}
-												role="listbox"
-											>
-												{filteredTokenValues.map(
-													(token, index) => (
-														<ClayAutocomplete.Item
-															aria-posinset={
-																index
-															}
-															disabled={
-																token.disabled
-															}
-															key={token.name}
-															onClick={() =>
-																onClickAutocompleteItem(
-																	token
-																)
-															}
-															onKeyDown={
-																onKeydownAutocompleteItem
-															}
-															onMouseDown={(
-																event
-															) =>
-																event.preventDefault()
-															}
-															role="option"
-															value={token.label}
-														/>
-													)
-												)}
-											</ul>
-										</ClayAutocomplete.DropDown>
-									</ClayAutocomplete>
-								</FocusScope>
+								<ClayInput
+									aria-invalid={error.label}
+									aria-label={field.label}
+									className="page-editor__color-picker__autocomplete__input"
+									id={inputId}
+									onBlur={onBlurAutocompleteInput}
+									onChange={onChangeAutocompleteInput}
+									ref={inputRef}
+									sizing="sm"
+									value={
+										error.value ||
+										(color.startsWith('#')
+											? color.toUpperCase()
+											: color)
+									}
+								/>
 							</ClayInput.GroupItem>
 						</ClayInput.Group>
 					</ClayInput.GroupItem>

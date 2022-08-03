@@ -982,6 +982,10 @@
 			<category name="Naming Conventions" />
 			<description name="Checks if the file name of `.jsp` or `.jspf` follows the naming conventions." />
 		</check>
+		<check name="JSPGetStaticResourceURLCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks calls to `PortalUtil.getStaticResourceURL` and `getContextPath` without `getPathProxy`." />
+		</check>
 		<check name="JSPIllegalSyntaxCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds incorrect use of `System.out.print`, `console.log` or `debugger.*` in `.jsp` files." />
@@ -1033,10 +1037,6 @@
 		<check name="JSPSessionKeysCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that messages send to `SessionsErrors` or `SessionMessages` follow naming conventions." />
-		</check>
-		<check name="JSPStaticResourceURLCheck">
-			<category name="Bug Prevention" />
-			<description name="Checks calls to `PortalUtil.getStaticResourceURL` and `getContextPath` without `getPathProxy`." />
 		</check>
 		<check name="JSPStylingCheck">
 			<category name="Styling" />

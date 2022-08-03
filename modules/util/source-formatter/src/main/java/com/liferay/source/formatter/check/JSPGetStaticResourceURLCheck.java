@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 /**
  * @author Qi Zhang
  */
-public class JSPStaticResourceURLCheck extends BaseFileCheck {
+public class JSPGetStaticResourceURLCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

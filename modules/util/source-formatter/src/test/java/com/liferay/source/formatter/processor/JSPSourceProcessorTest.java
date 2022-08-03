@@ -67,6 +67,11 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testGetStaticResourceURL() throws Exception {
+		test("GetStaticResourceURL.testjsp");
+	}
+
+	@Test
 	public void testIncorrectEmptyLine() throws Exception {
 		test("IncorrectEmptyLine.testjsp");
 	}
@@ -106,11 +111,6 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testSortTagAttributes() throws Exception {
 		test("SortTagAttributes.testjsp");
-	}
-
-	@Test
-	public void testStaticResourceURL() throws Exception {
-		test("StaticResourceURL.testjsp");
 	}
 
 }

@@ -67,6 +67,27 @@ public class PortletRegistryImpl implements PortletRegistry {
 
 		List<String> portletIds = new ArrayList<>();
 
+		if (fragmentEntryLink.isTypePortlet()) {
+			try {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
+
+				String portletId = jsonObject.getString("portletId");
+
+				if (Validator.isNotNull(portletId)) {
+					String instanceId = jsonObject.getString("instanceId");
+
+					portletIds.add(
+						PortletIdCodec.encode(portletId, instanceId));
+				}
+			}
+			catch (PortalException portalException) {
+				_log.error("Unable to get portlet IDs", portalException);
+			}
+
+			return portletIds;
+		}
+
 		Document document = Jsoup.parseBodyFragment(
 			fragmentEntryLink.getHtml());
 
@@ -97,22 +118,6 @@ public class PortletRegistryImpl implements PortletRegistry {
 				fragmentEntryLink.getNamespace() + element.attr("id"));
 
 			portletIds.add(portletId);
-		}
-
-		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				fragmentEntryLink.getEditableValues());
-
-			String portletId = jsonObject.getString("portletId");
-
-			if (Validator.isNotNull(portletId)) {
-				String instanceId = jsonObject.getString("instanceId");
-
-				portletIds.add(PortletIdCodec.encode(portletId, instanceId));
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error("Unable to get portlet IDs", portalException);
 		}
 
 		return portletIds;

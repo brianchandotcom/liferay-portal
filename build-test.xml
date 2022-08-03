@@ -10725,6 +10725,18 @@ ${update.properties}</echo>
 			</else>
 		</if>
 
+		<get-testcase-property property.name="log.spring.bean.override.enabled" />
+
+		<if>
+			<equals arg1="${log.spring.bean.override.enabled}" arg2="true" />
+			<then>
+				<property name="spring.bean.override.log.level"><![CDATA[<Logger level="INFO" name="com.liferay.spring.bean.override" />]]></property>
+			</then>
+			<else>
+				<property name="${spring.bean.override.log.level}" value="" />
+			</else>
+		</if>
+
 		<local name="invoker.filter.helper.log.level" />
 
 		<if>
@@ -10759,6 +10771,8 @@ ${update.properties}</echo>
 		<Logger level="${release.local.service.impl.log.level}" name="com.liferay.portal.service.impl.ReleaseLocalServiceImpl" />
 
 		<Logger level="${dialect.detector.log.level}" name="com.liferay.portal.spring.hibernate.DialectDetector" />
+
+		${spring.bean.override.log.level}
 
 		<Logger level="ERROR" name="com.zaxxer.hikari.pool.PoolBase" />
 

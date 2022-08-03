@@ -20,6 +20,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {LengthField} from '../../../common/components/LengthField';
 import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useActiveItemId} from '../../contexts/ControlsContext';
@@ -68,6 +69,12 @@ export function AdvancedSelectField({
 					helpTextId={helpTextId}
 					onChange={handleSelectChange}
 					options={options}
+					value={nextValue}
+				/>
+			) : field.typeOptions?.showLengthField ? (
+				<LengthField
+					field={field}
+					onValueSelect={onValueSelect}
 					value={nextValue}
 				/>
 			) : (

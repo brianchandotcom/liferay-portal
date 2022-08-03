@@ -35,9 +35,7 @@ export function SelectField({
 }) {
 	const {tokenValues} = useStyleBook();
 
-	const validValues = field.typeOptions
-		? field.typeOptions.validValues
-		: field.validValues;
+	const validValues = field.typeOptions?.validValues || field.validValues;
 
 	const multiSelect = field.typeOptions?.multiSelect ?? false;
 

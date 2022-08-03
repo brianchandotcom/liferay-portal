@@ -1,7 +1,7 @@
 @import 'cadmin-variables';
 
 html#{$cadmin-selector} .cadmin .page-editor__length-field {
-	&__button {
+	&__button.btn {
 		border-bottom-left-radius: 0;
 		border-top-left-radius: 0;
 		font-size: 0.75rem;

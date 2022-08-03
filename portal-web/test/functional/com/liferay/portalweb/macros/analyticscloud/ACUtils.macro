@@ -604,6 +604,12 @@ definition {
 		}
 	}
 
+	macro executeJSInBrowserConsole {
+		var javaScript = "${javaScriptCode}";
+
+		var javaScriptItem = selenium.getEval("${javaScript}");
+	}
+
 	macro getEventPropertyValue {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
 

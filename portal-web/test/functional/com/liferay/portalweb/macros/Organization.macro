@@ -419,15 +419,9 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Current");
 
-		AssertTextEquals(
-			key_userScreenName = "${userScreenName}",
-			locator1 = "UsersAndOrganizationsAssignUsers#USER_TABLE_USER_NAME",
-			value1 = "${userFirstName} ${userLastName}");
+		LexiconEntry.viewEntryName(rowEntry = "${userFirstName} ${userLastName}");
 
-		AssertTextEquals(
-			key_userScreenName = "${userScreenName}",
-			locator1 = "UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME",
-			value1 = "${userScreenName}");
+		LexiconEntry.viewEntryName(rowEntry = "${userScreenName}");
 
 		IFrame.selectTopFrame();
 
@@ -734,9 +728,7 @@ definition {
 						locator1 = "UsersAndOrganizationsOrganization#MENU_ASSIGN_USERS",
 						value1 = "Assign Users");
 
-					AssertClick(
-						locator1 = "UsersAndOrganizationsAssignUsers#CURRENT_TAB",
-						value1 = "Current");
+					Navigator.gotoNavTab(navTab = "Current");
 
 					if ((IsElementPresent(locator1 = "Checkbox#SELECT_ALL")) && (IsVisible(locator1 = "Checkbox#SELECT_ALL"))) {
 						Uncheck(locator1 = "Checkbox#SELECT_ALL");
@@ -750,9 +742,7 @@ definition {
 							value1 = "No users were found.");
 					}
 
-					AssertClick.assertPartialTextClickAt(
-						locator1 = "UsersAndOrganizationsAssignUsers#BACK",
-						value1 = "Back");
+					Navigator.gotoBack();
 
 					AssertClickNoError(
 						locator1 = "UsersAndOrganizationsOrganization#MENU_DELETE",

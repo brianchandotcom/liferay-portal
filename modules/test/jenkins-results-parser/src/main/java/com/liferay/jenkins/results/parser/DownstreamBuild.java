@@ -412,7 +412,7 @@ public class DownstreamBuild extends BaseBuild {
 		durationNamesElement.addAttribute("style", "display: none;");
 
 		Element durationNamesDataElement = Dom4JUtil.getNewElement(
-			"td", durationNamesElement, "Name");
+			"th", durationNamesElement, "Name");
 
 		String style = JenkinsResultsParserUtil.combine(
 			"text-indent: ",
@@ -433,16 +433,16 @@ public class DownstreamBuild extends BaseBuild {
 			overheadIncluded = true;
 		}
 
-		Dom4JUtil.getNewElement("td", durationNamesElement, "Actual");
-		Dom4JUtil.getNewElement("td", durationNamesElement, "Predicted");
-		Dom4JUtil.getNewElement("td", durationNamesElement, "+/-");
+		Dom4JUtil.getNewElement("th", durationNamesElement, "Duration");
+		Dom4JUtil.getNewElement("th", durationNamesElement, "Duration (est)");
+		Dom4JUtil.getNewElement("th", durationNamesElement, "Duration (+/-)");
 
 		if (overheadIncluded) {
+			Dom4JUtil.getNewElement("th", durationNamesElement, "Overhead");
 			Dom4JUtil.getNewElement(
-				"td", durationNamesElement, "Actual Overhead");
+				"th", durationNamesElement, "Overhead (est)");
 			Dom4JUtil.getNewElement(
-				"td", durationNamesElement, "Predicted Overhead");
-			Dom4JUtil.getNewElement("td", durationNamesElement, "+/-");
+				"th", durationNamesElement, "Overhead (+/-)");
 		}
 
 		jenkinsReportTableRowElements.add(durationNamesElement);
@@ -454,7 +454,7 @@ public class DownstreamBuild extends BaseBuild {
 		durationValuesElement.addAttribute("style", "display: none;");
 
 		Element durationValuesDataElement = Dom4JUtil.getNewElement(
-			"td", durationValuesElement, "Full Build");
+			"th", durationValuesElement, "Full Build");
 
 		durationValuesDataElement.addAttribute("style", style);
 
@@ -599,7 +599,7 @@ public class DownstreamBuild extends BaseBuild {
 		durationNamesElement.addAttribute("style", "display: none;");
 
 		Element durationNamesDataElement = Dom4JUtil.getNewElement(
-			"td", durationNamesElement, "Name");
+			"th", durationNamesElement, "Name");
 
 		String style = JenkinsResultsParserUtil.combine(
 			"text-indent: ",
@@ -607,13 +607,12 @@ public class DownstreamBuild extends BaseBuild {
 
 		durationNamesDataElement.addAttribute("style", style);
 
-		Dom4JUtil.getNewElement("td", durationNamesElement, "Actual");
-		Dom4JUtil.getNewElement("td", durationNamesElement, "Predicted");
-		Dom4JUtil.getNewElement("td", durationNamesElement, "+/-");
-		Dom4JUtil.getNewElement("td", durationNamesElement, "Actual Overhead");
-		Dom4JUtil.getNewElement(
-			"td", durationNamesElement, "Predicted Overhead");
-		Dom4JUtil.getNewElement("td", durationNamesElement, "+/-");
+		Dom4JUtil.getNewElement("th", durationNamesElement, "Duration");
+		Dom4JUtil.getNewElement("th", durationNamesElement, "Duration (est)");
+		Dom4JUtil.getNewElement("th", durationNamesElement, "Duration (+/-)");
+		Dom4JUtil.getNewElement("th", durationNamesElement, "Overhead");
+		Dom4JUtil.getNewElement("th", durationNamesElement, "Overhead (est)");
+		Dom4JUtil.getNewElement("th", durationNamesElement, "Overhead (+/-)");
 
 		jenkinsReportTableRowElements.add(durationNamesElement);
 

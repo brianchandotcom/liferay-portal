@@ -1421,8 +1421,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 		Element buildTimeElement = Dom4JUtil.getNewElement(
 			"th", null, "Build Time");
 
-		Element predictedBuildTimeElement = Dom4JUtil.getNewElement(
-			"th", null, "Predicted Build Time");
+		Element estimatedBuildTimeElement = Dom4JUtil.getNewElement(
+			"th", null, "Build Time (est)");
 
 		Element diffBuildTimeElement = Dom4JUtil.getNewElement(
 			"th", null, "Build Time (+/-)");
@@ -1436,7 +1436,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 		Dom4JUtil.addToElement(
 			tableColumnHeaderElement, nameElement, consoleElement,
 			testReportElement, startTimeElement, buildTimeElement,
-			predictedBuildTimeElement, diffBuildTimeElement, statusElement,
+			estimatedBuildTimeElement, diffBuildTimeElement, statusElement,
 			resultElement);
 
 		return tableColumnHeaderElement;

@@ -3012,7 +3012,7 @@ public abstract class BaseBuild implements Build {
 				cellElementTagName, null,
 				JenkinsResultsParserUtil.toDurationString(duration)));
 
-		String predictedDurationString = "n/a";
+		String estimatedDurationString = "n/a";
 		String diffDurationString = "n/a";
 
 		if (this instanceof DownstreamBuild) {
@@ -3020,7 +3020,7 @@ public abstract class BaseBuild implements Build {
 
 			long averageDuration = downstreamBuild.getAverageDuration();
 
-			predictedDurationString = JenkinsResultsParserUtil.toDurationString(
+			estimatedDurationString = JenkinsResultsParserUtil.toDurationString(
 				averageDuration);
 			diffDurationString = getDiffDurationString(
 				duration - averageDuration);
@@ -3029,7 +3029,7 @@ public abstract class BaseBuild implements Build {
 		Dom4JUtil.addToElement(
 			buildInfoElement,
 			Dom4JUtil.getNewElement(
-				cellElementTagName, null, predictedDurationString));
+				cellElementTagName, null, estimatedDurationString));
 
 		Dom4JUtil.addToElement(
 			buildInfoElement,

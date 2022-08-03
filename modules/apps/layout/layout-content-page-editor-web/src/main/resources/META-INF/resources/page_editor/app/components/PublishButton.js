@@ -18,14 +18,18 @@ import React, {useState} from 'react';
 
 import {config} from '../config/index';
 import {useHasStyleErrors} from '../contexts/StyleErrorsContext';
-import openWarningModal from '../utils/openWarningModal';
-import useIsSomeFormIncomplete from '../utils/useIsSomeFormIncomplete';
+import useCheckFormsValidity from '../utils/useCheckFormsValidity';
+import {FormValidationModal} from './FormValidationModal';
 import {StyleErrorsModal} from './StyleErrorsModal';
 
 export default function PublishButton({canPublish, formRef, label, onPublish}) {
 	const hasStyleErrors = useHasStyleErrors();
-	const isSomeFormIncomplete = useIsSomeFormIncomplete();
+	const checkFormsValidity = useCheckFormsValidity();
+
 	const [openStyleErrorsModal, setOpenStyleErrorsModal] = useState(false);
+	const [openFormValidationModal, setOpenFormValidationModal] = useState(
+		false
+	);
 
 	return (
 		<>
@@ -45,23 +49,12 @@ export default function PublishButton({canPublish, formRef, label, onPublish}) {
 							setOpenStyleErrorsModal(true);
 						}
 						else {
-							isSomeFormIncomplete().then((result) => {
-								if (result) {
-									openWarningModal({
-										action: onPublish,
-										actionLabel: Liferay.Language.get(
-											'publish'
-										),
-										message: Liferay.Language.get(
-											'this-page-contains-one-or-several-forms-with-a-missing-or-hidden-form-components'
-										),
-										title: Liferay.Language.get(
-											'required-form-components'
-										),
-									});
+							checkFormsValidity().then((valid) => {
+								if (valid) {
+									onPublish();
 								}
 								else {
-									onPublish();
+									setOpenFormValidationModal(true);
 								}
 							});
 						}
@@ -75,6 +68,13 @@ export default function PublishButton({canPublish, formRef, label, onPublish}) {
 			{openStyleErrorsModal && hasStyleErrors && (
 				<StyleErrorsModal
 					onCloseModal={() => setOpenStyleErrorsModal(false)}
+					onPublish={onPublish}
+				/>
+			)}
+
+			{openFormValidationModal && (
+				<FormValidationModal
+					onCloseModal={() => setOpenFormValidationModal(false)}
 					onPublish={onPublish}
 				/>
 			)}

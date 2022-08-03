@@ -173,13 +173,21 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 				/>
 
 				{field.icon ? (
-					<ClayInput.GroupInsetItem before className="pl-2 pr-3 py-2">
-						<ClayIcon
-							className="lfr-portal-tooltip"
-							data-title={field.label}
-							small
-							symbol={field.icon}
-						/>
+					<ClayInput.GroupInsetItem before>
+						<label
+							className="mb-0 page-editor__input-with-icon__label-icon pl-1 pr-3 text-center"
+							htmlFor={id}
+						>
+							<ClayIcon
+								className="lfr-portal-tooltip"
+								data-title={field.label}
+								small
+								symbol={field.icon}
+							/>
+
+							<span className="sr-only">{field.label}</span>
+						</label>
+						
 					</ClayInput.GroupInsetItem>
 				) : null}
 			</ClayInput.GroupItem>

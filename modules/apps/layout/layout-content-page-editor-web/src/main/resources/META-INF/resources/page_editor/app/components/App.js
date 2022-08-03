@@ -42,13 +42,13 @@ export default function App({state}) {
 
 	return (
 		<StoreContextProvider initialState={initialState} reducer={reducer}>
-			<AppHooks />
-
 			<ControlsProvider>
 				<CollectionActiveItemContextProvider>
 					<DragAndDropContextProvider>
 						<EditableProcessorContextProvider>
 							<DisplayPagePreviewItemContextProvider>
+								<AppHooks />
+
 								<WidgetsContextProvider>
 									<DisplayPagePreviewItemSelector dark />
 

@@ -27,15 +27,19 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,6 +49,11 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class KBArticleStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testExportedKBArticleClassNameIdEqualsZero() throws Exception {

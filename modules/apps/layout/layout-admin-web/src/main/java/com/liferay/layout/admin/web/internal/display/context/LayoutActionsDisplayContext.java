@@ -239,7 +239,11 @@ public class LayoutActionsDisplayContext {
 		getPreviewLayoutURL.setResourceID(
 			"/layout_content_page_editor/get_page_preview");
 
-		Layout draftLayout = layout.fetchDraftLayout();
+		Layout draftLayout = layout;
+
+		if (!layout.isDraftLayout()) {
+			draftLayout = layout.fetchDraftLayout();
+		}
 
 		getPreviewLayoutURL.setParameter(
 			"selPlid", String.valueOf(draftLayout.getPlid()));
@@ -248,6 +252,10 @@ public class LayoutActionsDisplayContext {
 	}
 
 	private boolean _isContentLayout(Layout layout) {
+		if (_contentLayout != null) {
+			return _contentLayout;
+		}
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.
 				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
@@ -259,10 +267,13 @@ public class LayoutActionsDisplayContext {
 		}
 
 		if (layoutPageTemplateEntry == null) {
-			return true;
+			_contentLayout = true;
+		}
+		else {
+			_contentLayout = false;
 		}
 
-		return false;
+		return _contentLayout;
 	}
 
 	private boolean _isShowConfigureAction(Layout layout)
@@ -313,6 +324,7 @@ public class LayoutActionsDisplayContext {
 			ActionKeys.PERMISSIONS);
 	}
 
+	private Boolean _contentLayout;
 	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 

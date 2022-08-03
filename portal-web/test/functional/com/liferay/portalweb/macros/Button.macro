@@ -9,10 +9,15 @@ definition {
 	macro clickAdd {
 		Button.click(button = "Add");
 
-		SelectFrameTop();
+		if (IsElementPresent(locator1 = "Home#LOADING_ANIMATION")) {
+			SelectFrameTop();
+		}
+		else {
+			SelectFrameTop();
 
-		if (IsElementPresent(locator1 = "Modal#MODAL_SHOW")) {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			if (IsElementPresent(locator1 = "Modal#MODAL_SHOW")) {
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			}
 		}
 	}
 

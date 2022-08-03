@@ -206,18 +206,24 @@ public class AggregationObjectFieldBusinessType
 				_objectDefinitionLocalService.fetchObjectDefinition(
 					objectRelationship.getObjectDefinitionId2());
 
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				objectDefinition.getObjectDefinitionId(),
-				GetterUtil.getString(
-					objectFieldSettingsValuesMap.get("objectFieldName")));
+			if (!Objects.equals(function, "COUNT")) {
+				ObjectField objectField =
+					_objectFieldLocalService.getObjectField(
+						objectDefinition.getObjectDefinitionId(),
+						GetterUtil.getString(
+							objectFieldSettingsValuesMap.get(
+								"objectFieldName")));
 
-			if (!ArrayUtil.contains(
-					_NUMERIC_BUSINESS_TYPES, objectField.getBusinessType())) {
+				if (!ArrayUtil.contains(
+						_NUMERIC_BUSINESS_TYPES,
+						objectField.getBusinessType())) {
 
-				throw new ObjectFieldSettingValueException.InvalidValue(
-					objectFieldName, "objectFieldName",
-					GetterUtil.getString(
-						objectFieldSettingsValuesMap.get("objectFieldName")));
+					throw new ObjectFieldSettingValueException.InvalidValue(
+						objectFieldName, "objectFieldName",
+						GetterUtil.getString(
+							objectFieldSettingsValuesMap.get(
+								"objectFieldName")));
+				}
 			}
 
 			_validateObjectFilters(

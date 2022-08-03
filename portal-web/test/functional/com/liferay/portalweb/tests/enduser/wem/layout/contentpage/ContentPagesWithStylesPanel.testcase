@@ -36,6 +36,69 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-136279. View the styles of color selectors."
+	@priority = "4"
+	test ViewStylesOfColorInputs {
+		task ("Given a page designer has a Heading fragment on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page designer accesses to the Styles panel of Heading") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+		}
+
+		task ("Then the page designer sees the styles of color selectors") {
+			task ("View the Inherited · computed value shown in Text Color, Background Color and Border Color selectors") {
+				AssertTextEquals(
+					key_fieldLabel = "Text Color",
+					locator1 = "Button#COLOR_PICKER",
+					value1 = "Inherited · rgb(39, 40, 51)");
+
+				AssertTextEquals(
+					key_fieldLabel = "Background Color",
+					locator1 = "Button#COLOR_PICKER",
+					value1 = "Inherited · rgba(0, 0, 0, 0)");
+
+				AssertTextEquals(
+					key_fieldLabel = "Border Color",
+					locator1 = "Button#COLOR_PICKER",
+					value1 = "Inherited · rgb(39, 40, 51)");
+			}
+
+			task ("View the tooltip shown when hover on icon of selectors") {
+				MouseOver(
+					key_fieldLabel = "Text Color",
+					locator1 = "Icon#COLOR_PICKER_ICON");
+
+				AssertVisible(
+					key_content = "Text Color",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+				MouseOver(
+					key_fieldLabel = "Text Color",
+					locator1 = "Icon#COLOR_PICKER_ICON");
+
+				AssertVisible(
+					key_content = "Background Color",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+				MouseOver(
+					key_fieldLabel = "Border Color",
+					locator1 = "Icon#COLOR_PICKER_ICON");
+
+				AssertVisible(
+					key_content = "Border Color",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-136279. View the styles of Font Family, Font Weight, Font Size, Border Radius and Shadow selectors."
 	@priority = "4"
 	test ViewStylesOfSelectInputs {

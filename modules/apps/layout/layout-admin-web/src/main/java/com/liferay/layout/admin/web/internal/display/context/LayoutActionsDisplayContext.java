@@ -68,9 +68,7 @@ public class LayoutActionsDisplayContext {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() ->
-							_isContentLayout(layout) &&
-							_isShowConfigureAction(layout),
+						() -> _isShowConfigureAction(layout),
 						dropdownItem -> {
 							dropdownItem.setHref(
 								_getConfigureLayoutURL(layout));

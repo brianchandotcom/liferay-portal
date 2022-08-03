@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,7 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -153,21 +152,19 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 		String httpHeaderSecureXFrameOptionsKey =
 			"http.header.secure.x.frame.options";
 
-		Properties properties = PropertiesUtil.getProperties(
-			SystemProperties.getProperties(),
+		Map<String, String> properties = SystemProperties.getProperties(
 			httpHeaderSecureXFrameOptionsKey.concat(StringPool.PERIOD), true);
 
 		List<KeyValuePair> xFrameOptionKVPs = new ArrayList<>(
 			properties.size());
 
-		List<String> propertyNames = new ArrayList<>(
-			properties.stringPropertyNames());
+		List<String> propertyNames = new ArrayList<>(properties.keySet());
 
 		propertyNames.sort(
 			Comparator.comparingInt(GetterUtil::getIntegerStrict));
 
 		for (String propertyName : propertyNames) {
-			String propertyValue = properties.getProperty(propertyName);
+			String propertyValue = properties.get(propertyName);
 
 			String[] propertyValueParts = StringUtil.split(
 				propertyValue, CharPool.PIPE);

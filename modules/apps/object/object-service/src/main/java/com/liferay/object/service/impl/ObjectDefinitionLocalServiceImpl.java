@@ -39,6 +39,7 @@ import com.liferay.object.exception.RequiredObjectDefinitionException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTableFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryTable;
@@ -878,14 +879,16 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _createTable(
-		String dbTableName, ObjectDefinition objectDefinition) {
+			String dbTableName, ObjectDefinition objectDefinition)
+		throws PortalException {
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			new DynamicObjectDefinitionTable(
-				objectDefinition,
-				_objectFieldPersistence.findByODI_DTN(
-					objectDefinition.getObjectDefinitionId(), dbTableName),
-				dbTableName);
+			DynamicObjectDefinitionTableFactory.
+				createDynamicObjectDefinitionTable(
+					objectDefinition,
+					_objectFieldPersistence.findByODI_DTN(
+						objectDefinition.getObjectDefinitionId(), dbTableName),
+					dbTableName);
 
 		runSQL(dynamicObjectDefinitionTable.getCreateTableSQL());
 	}

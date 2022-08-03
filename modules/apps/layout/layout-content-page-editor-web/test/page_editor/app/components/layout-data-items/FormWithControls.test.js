@@ -35,10 +35,6 @@ jest.mock(
 		config: {
 			formTypes: [
 				{
-					label: 'None',
-					value: '0',
-				},
-				{
 					label: 'Type',
 					subtypes: [
 						{
@@ -152,5 +148,26 @@ describe('FormWithControls', () => {
 		);
 
 		expect(screen.queryByText('Form Child')).not.toBeInTheDocument();
+	});
+
+	it('allows selecting content type if it is not mapped', () => {
+		render(
+			<StoreMother.Component>
+				<FormWithControls
+					item={{
+						children: [],
+						config: {
+							classNameId: '0',
+							classTypeId: '0',
+						},
+						itemId: 'form',
+						type: LAYOUT_DATA_ITEM_TYPES.form,
+					}}
+				/>
+			</StoreMother.Component>
+		);
+
+		expect(screen.getByText('Type')).toBeInTheDocument();
+		expect(screen.getByText('map-your-form')).toBeInTheDocument();
 	});
 });

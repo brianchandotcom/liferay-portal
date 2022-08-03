@@ -13,4 +13,5 @@ export const STEP_TYPES = {
 	activitiesForm: 2,
 	activitiesList: 1,
 	goalsPage: 0,
+	reviewForm: 3,
 };

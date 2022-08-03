@@ -54,18 +54,16 @@ const ActivitiesForm: any = ({
 		setStep: any,
 		updateLeadFollowStrategy: any
 	) => {
-		generalObject.activities.push(formData);
-
 		const createForm = {
-			...generalObject,
+			...formData,
+			leadFollowStrategy: updateLeadFollowStrategy,
 		};
 
-		// eslint-disable-next-line no-console
-		console.log(`updateLeadFollowStrategy=`, updateLeadFollowStrategy);
+		generalObject.activities.push(createForm);
 
 		// eslint-disable-next-line no-console
-		console.log(`createForm=`, createForm);
-		setGeneralObject(createForm);
+		console.log(`createForm=`, generalObject);
+		setGeneralObject(generalObject);
 		setStep(1);
 	};
 

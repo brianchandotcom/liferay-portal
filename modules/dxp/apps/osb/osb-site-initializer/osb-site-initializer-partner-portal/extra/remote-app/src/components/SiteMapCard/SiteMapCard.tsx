@@ -45,6 +45,7 @@ const SiteMapCard = ({visit, ...props}: Props) => {
 					key={i}
 				>
 					<ClayMultiStepNav.Title>{title}</ClayMultiStepNav.Title>
+
 					<ClayMultiStepNav.Indicator complete={complete} />
 				</ClayMultiStepNav.Item>
 			))}

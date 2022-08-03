@@ -14,6 +14,7 @@ import {useState} from 'react';
 import ActivitiesForm from './pages/ActivitiesForm';
 import ActivitiesList from './pages/ActivitiesList';
 import GoalsPage from './pages/GoalsPage';
+import ReviewForm from './pages/ReviewForm';
 import {STEP_TYPES} from './utils/constants/stepType';
 
 const MdfForm = () => {
@@ -36,6 +37,9 @@ const MdfForm = () => {
 				setGeneralObject={setGeneralObject}
 				setStep={setStep}
 			/>
+		),
+		[STEP_TYPES.reviewForm]: (
+			<ReviewForm generalObject={generalObject} setStep={setStep} />
 		),
 	};
 

@@ -68,13 +68,6 @@ const GoalsPage: any = ({
 		updateCheckGoalsTarget: any,
 		updateCheckTargetAudience: any
 	) => {
-		// eslint-disable-next-line no-console
-		console.log(`updateCheckBusines=`, updateCheckBusines);
-		// eslint-disable-next-line no-console
-		console.log(`updateCheckGoalsTarget=`, updateCheckGoalsTarget);
-		// eslint-disable-next-line no-console
-		console.log(`updateCheckTargetAudience=`, updateCheckTargetAudience);
-
 		if (!updateCheckBusines || !updateCheckBusines.length) {
 			setCheckBusinesError(true);
 

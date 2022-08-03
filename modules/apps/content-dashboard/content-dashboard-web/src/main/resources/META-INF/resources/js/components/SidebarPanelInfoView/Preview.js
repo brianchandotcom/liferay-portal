@@ -26,18 +26,24 @@ const Preview = ({compressed, imageURL, title, url}) => {
 		>
 			{imageURL && (
 				<figure className="document-preview-figure mb-2">
-					<a
-						className="align-items-center c-focus-inset d-flex h-100"
-						href={url}
-						target="_blank"
-					>
-						<img alt={title} src={imageURL} />
+					{url ? (
+						<a
+							className="align-items-center c-focus-inset d-flex h-100"
+							href={url}
+							target="_blank"
+						>
+							<img alt={title} src={imageURL} />
 
-						<ClayIcon
-							className="document-preview-icon"
-							symbol="shortcut"
-						/>
-					</a>
+							<ClayIcon
+								className="document-preview-icon"
+								symbol="shortcut"
+							/>
+						</a>
+					) : (
+						<div className="align-items-center d-flex h-100">
+							<img alt={title} src={imageURL} />
+						</div>
+					)}
 				</figure>
 			)}
 		</div>

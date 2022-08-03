@@ -226,9 +226,9 @@ definition {
 		task ("Go to Content Dashboard and check the author's avatar and name in the Info panel") {
 			ContentDashboard.openInfoPanelByDropdownMenu();
 
-			AssertElementPresent(
-				assetAuthor = "Test Test",
-				locator1 = "ContentDashboard#INFO_PANEL_AUTHOR");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#INFO_PANEL_AUTHOR",
+				value1 = "Test Test");
 
 			AssertElementPresent(locator1 = "ContentDashboard#INFO_PANEL_AVATAR");
 		}

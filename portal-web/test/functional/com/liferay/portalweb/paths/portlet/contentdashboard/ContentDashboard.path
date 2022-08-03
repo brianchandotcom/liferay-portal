@@ -296,7 +296,7 @@
 </tr>
 <tr>
 	<td>INFO_PANEL_AUTHOR</td>
-	<td>//span[contains(@class,'text-secondary') and contains (.,'${assetAuthor}')]</td>
+	<td>//*[contains(@class,'component-title username')]</td>
 	<td></td>
 </tr>
 <tr>

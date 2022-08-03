@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.login.AuthLoginGroupSettingsUtil;
@@ -280,7 +281,9 @@ public class ServicePreAction extends Action {
 
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			LocaleUtil.getSiteDefault(),
-			PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_NAME);
+			LanguageUtil.get(
+				LocaleUtil.getSiteDefault(),
+				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_NAME));
 		Map<Locale, String> friendlyURLMap = Collections.singletonMap(
 			LocaleUtil.getSiteDefault(),
 			_getFriendlyURL(
@@ -360,7 +363,9 @@ public class ServicePreAction extends Action {
 
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			LocaleUtil.getSiteDefault(),
-			PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_NAME);
+			LanguageUtil.get(
+				LocaleUtil.getSiteDefault(),
+				PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_NAME));
 		Map<Locale, String> friendlyURLMap = Collections.singletonMap(
 			LocaleUtil.getSiteDefault(),
 			_getFriendlyURL(

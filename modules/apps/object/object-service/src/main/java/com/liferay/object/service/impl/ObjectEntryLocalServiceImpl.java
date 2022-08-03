@@ -14,9 +14,6 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -35,7 +32,6 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectFieldException;
-import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
@@ -77,7 +73,6 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -191,7 +186,6 @@ public class ObjectEntryLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		_validateAccountEntry(userId, objectDefinition, values);
 		_validateGroupId(groupId, objectDefinition.getScope());
 
 		User user = _userLocalService.getUser(userId);
@@ -967,7 +961,6 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		_validateAccountEntry(userId, objectDefinition, values);
 		_validateValues(
 			user.isDefaultUser(), objectEntry.getObjectDefinitionId(),
 			objectDefinition.getPortletId(), serviceContext, userId, values);
@@ -2177,48 +2170,6 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private void _validateAccountEntry(
-			long userId, ObjectDefinition objectDefinition,
-			Map<String, Serializable> values)
-		throws PortalException {
-
-		if (!objectDefinition.isAccountEntryRestricted()) {
-			return;
-		}
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectDefinition.getAccountEntryRestrictedObjectFieldId());
-
-		if (!values.containsKey(objectField.getName())) {
-			return;
-		}
-
-		List<AccountEntry> accountEntries =
-			_accountEntryLocalService.getUserAccountEntries(
-				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
-				new String[] {
-					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
-				},
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		long accountEntryId = GetterUtil.getLong(
-			values.get(objectField.getName()));
-
-		for (AccountEntry accountEntry : accountEntries) {
-			if (accountEntryId == accountEntry.getAccountEntryId()) {
-				return;
-			}
-		}
-
-		throw new ObjectDefinitionAccountEntryRestrictedException(
-			StringBundler.concat(
-				"The account entry ", accountEntryId,
-				" does not exist or the user ", userId,
-				" does not belong to it"));
-	}
-
 	private void _validateExternalReferenceCode(
 			long companyId, String externalReferenceCode,
 			long objectDefinitionId, long objectEntryId)
@@ -2562,9 +2513,6 @@ public class ObjectEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryLocalServiceImpl.class);
-
-	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -226,8 +227,7 @@ public class DefaultObjectEntryManagerImpl
 	public Page<ObjectEntry> getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination, String search, Sort[] sorts)
+			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
 
 		long groupId = getGroupId(objectDefinition, scopeKey);
@@ -795,8 +795,7 @@ public class DefaultObjectEntryManagerImpl
 	@Reference(
 		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
 	)
-	private ExpressionConvert<com.liferay.portal.kernel.search.filter.Filter>
-		_expressionConvert;
+	private ExpressionConvert<Filter> _expressionConvert;
 
 	@Reference
 	private FilterParserProvider _filterParserProvider;

@@ -14,6 +14,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {fireEvent, render} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {StoreContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
@@ -113,7 +114,7 @@ describe('ColorPicker', () => {
 
 		fireEvent.click(getByTitle('clear-selection'));
 
-		expect(baseElement.querySelector('input').value).toBe('#ABCABC');
+		expect(baseElement.querySelector('input')).toHaveValue('#ABCABC');
 	});
 
 	describe('When the value is an existing token', () => {
@@ -140,7 +141,7 @@ describe('ColorPicker', () => {
 			fireEvent.click(getByTitle('detach-token'));
 
 			expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
-			expect(baseElement.querySelector('input').value).toBe('#9BE169');
+			expect(baseElement.querySelector('input')).toHaveValue('#9BE169');
 			expect(
 				baseElement.querySelector('.clay-color-picker')
 			).toBeInTheDocument();
@@ -194,7 +195,7 @@ describe('ColorPicker', () => {
 			});
 
 			expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
-			expect(baseElement.querySelector('input').value).toBe('#FFB46E');
+			expect(baseElement.querySelector('input')).toHaveValue('#FFB46E');
 			expect(
 				baseElement.querySelector('.clay-color-picker')
 			).toBeInTheDocument();
@@ -233,7 +234,7 @@ describe('ColorPicker', () => {
 
 			onTypeValue(input, '');
 
-			expect(input.value).toBe('#444444');
+			expect(input).toHaveValue('#444444');
 		});
 
 		it('sets the previous value when the input value is an invalid hexcolor', async () => {
@@ -244,7 +245,7 @@ describe('ColorPicker', () => {
 
 			onTypeValue(input, '#44');
 
-			expect(input.value).toBe('#444444');
+			expect(input).toHaveValue('#444444');
 		});
 
 		it('takes a 6-digit hexcolor even if the input value has more digits', async () => {
@@ -255,7 +256,7 @@ describe('ColorPicker', () => {
 
 			onTypeValue(input, '#55555555555');
 
-			expect(input.value).toBe('#555555');
+			expect(input).toHaveValue('#555555');
 		});
 
 		it('converts the 3-digit hexcolor to a 6-digit hexcolor', async () => {
@@ -266,7 +267,7 @@ describe('ColorPicker', () => {
 
 			onTypeValue(baseElement.querySelector('input'), '#abc');
 
-			expect(input.value).toBe('#AABBCC');
+			expect(input).toHaveValue('#AABBCC');
 		});
 
 		describe('Input errors', () => {

@@ -81,9 +81,7 @@ const renderColorPicker = ({
 	);
 
 const onTypeValue = (input, value) => {
-	fireEvent.change(input, {
-		target: {value},
-	});
+	userEvent.type(input, value);
 
 	fireEvent.blur(input);
 };
@@ -102,7 +100,7 @@ describe('ColorPicker', () => {
 
 		const {getByTitle} = renderColorPicker({onValueSelect});
 
-		fireEvent.click(getByTitle('clear-selection'));
+		userEvent.click(getByTitle('clear-selection'));
 
 		expect(onValueSelect).toBeCalledWith('Color Picker', null);
 	});
@@ -112,7 +110,7 @@ describe('ColorPicker', () => {
 			field: {...FIELD, defaultValue: '#abcabc'},
 		});
 
-		fireEvent.click(getByTitle('clear-selection'));
+		userEvent.click(getByTitle('clear-selection'));
 
 		expect(baseElement.querySelector('input')).toHaveValue('#ABCABC');
 	});
@@ -128,7 +126,7 @@ describe('ColorPicker', () => {
 		it('shows action buttons when the color picker is clicked', async () => {
 			const {baseElement, getByLabelText} = renderColorPicker({});
 
-			fireEvent.click(getByLabelText('Green'));
+			userEvent.click(getByLabelText('Green'));
 
 			expect(baseElement.querySelector(COLOR_PICKER_CLASS)).toHaveClass(
 				'hovered'
@@ -138,7 +136,7 @@ describe('ColorPicker', () => {
 		it('change to input color picker when detach token button is clicked', async () => {
 			const {baseElement, getByTitle} = renderColorPicker({});
 
-			fireEvent.click(getByTitle('detach-token'));
+			userEvent.click(getByTitle('detach-token'));
 
 			expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
 			expect(baseElement.querySelector('input')).toHaveValue('#9BE169');
@@ -164,7 +162,7 @@ describe('ColorPicker', () => {
 				value: '#fff',
 			});
 
-			fireEvent.click(getByTitle('value-from-stylebook'));
+			userEvent.click(getByTitle('value-from-stylebook'));
 
 			expect(getByTitle('Orange')).toBeDisabled();
 		});
@@ -181,7 +179,7 @@ describe('ColorPicker', () => {
 				value: '#fff',
 			});
 
-			fireEvent.click(getByTitle('value-from-stylebook'));
+			userEvent.click(getByTitle('value-from-stylebook'));
 
 			expect(getByTitle('Orange')).toBeDisabled();
 			expect(getByTitle('Blue')).toBeDisabled();
@@ -206,8 +204,8 @@ describe('ColorPicker', () => {
 				value: '#fff',
 			});
 
-			fireEvent.click(getByTitle('value-from-stylebook'));
-			fireEvent.click(getByTitle('Blue'));
+			userEvent.click(getByTitle('value-from-stylebook'));
+			userEvent.click(getByTitle('Blue'));
 
 			expect(getByTitle('detach-token')).toBeInTheDocument();
 			expect(getByLabelText('Blue')).toBeInTheDocument();
@@ -294,7 +292,7 @@ describe('ColorPicker', () => {
 
 				onTypeValue(baseElement.querySelector('input'), 'prim');
 
-				fireEvent.click(getByTitle('clear-selection'));
+				userEvent.click(getByTitle('clear-selection'));
 
 				expect(
 					queryByText('this-token-does-not-exist')

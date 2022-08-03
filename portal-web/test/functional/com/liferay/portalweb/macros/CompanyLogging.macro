@@ -1,5 +1,13 @@
 definition {
 
+	macro assertCompanyLogContent {
+		var companyId = JSONCompany.getCompanyIdByName(portalInstanceName = "${portalInstanceName}");
+
+		if (!(contains("${logContent}", "companyId=${companyId}"))) {
+			fail("The ${portalInstanceName} company log file content does not match the expected log content.");
+		}
+	}
+
 	macro assertCompanyLogIsolated {
 		var logContent = CompanyLogging.downloadCompanyLog(portalInstanceName = "${portalInstanceName}");
 

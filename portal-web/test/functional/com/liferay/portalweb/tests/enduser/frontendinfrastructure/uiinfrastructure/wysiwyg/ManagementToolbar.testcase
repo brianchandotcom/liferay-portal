@@ -181,45 +181,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-147850. Assert the order button can sort results by descending order"
-	@priority = "5"
-	test OrderButtonCanSortOptionsByDescending {
-		task ("When the user opens any section with the management toolbar") {
-
-			// Using tags as workaround until LPS-150056
-
-			JSONAssettag.addTag(
-				groupName = "Guest",
-				tagName = "a");
-
-			JSONAssettag.addTag(
-				groupName = "Guest",
-				tagName = "b");
-
-			Tag.openTagsAdmin(siteURLKey = "guest");
-		}
-
-		task ("And clicks on the order button") {
-			Click(
-				key_filter = "Order",
-				locator1 = "ManagementBar#FILTER_OR_ORDER",
-				value1 = "Order");
-		}
-
-		task ("Then the user can select one item to order the results") {
-			AssertClick(
-				key_item = "Descending",
-				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM",
-				value1 = "Descending");
-		}
-
-		task ("And the results are displayed accordingly to the selected option") {
-			AssertElementPresent(locator1 = "xpath=(//*[@data-qa-id='row'][1]//*[contains(.,'b')])");
-
-			AssertElementPresent(locator1 = "xpath=(//*[@data-qa-id='row'][2]//*[contains(.,'a')])");
-		}
-	}
-
 	@description = "LPS-147851. Assert the order button can display the correct icons"
 	@priority = "4"
 	test OrderButtonCanDisplayCorrectOrderIcons {
@@ -265,6 +226,45 @@ definition {
 			AssertElementPresent(
 				key_text = "order-list-up",
 				locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_ANY_ICON");
+		}
+	}
+
+	@description = "LPS-147850. Assert the order button can sort results by descending order"
+	@priority = "5"
+	test OrderButtonCanSortOptionsByDescending {
+		task ("When the user opens any section with the management toolbar") {
+
+			// Using tags as workaround until LPS-150056
+
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "a");
+
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "b");
+
+			Tag.openTagsAdmin(siteURLKey = "guest");
+		}
+
+		task ("And clicks on the order button") {
+			Click(
+				key_filter = "Order",
+				locator1 = "ManagementBar#FILTER_OR_ORDER",
+				value1 = "Order");
+		}
+
+		task ("Then the user can select one item to order the results") {
+			AssertClick(
+				key_item = "Descending",
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM",
+				value1 = "Descending");
+		}
+
+		task ("And the results are displayed accordingly to the selected option") {
+			AssertElementPresent(locator1 = "xpath=(//*[@data-qa-id='row'][1]//*[contains(.,'b')])");
+
+			AssertElementPresent(locator1 = "xpath=(//*[@data-qa-id='row'][2]//*[contains(.,'a')])");
 		}
 	}
 

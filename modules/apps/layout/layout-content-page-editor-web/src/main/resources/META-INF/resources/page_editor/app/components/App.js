@@ -21,6 +21,7 @@ import {CollectionActiveItemContextProvider} from '../contexts/CollectionActiveI
 import {ControlsProvider} from '../contexts/ControlsContext';
 import {DisplayPagePreviewItemContextProvider} from '../contexts/DisplayPagePreviewItemContext';
 import {EditableProcessorContextProvider} from '../contexts/EditableProcessorContext';
+import {FormValidationContextProvider} from '../contexts/FormValidationContext';
 import {GlobalContextProvider} from '../contexts/GlobalContext';
 import {StoreContextProvider} from '../contexts/StoreContext';
 import {StyleErrorsContextProvider} from '../contexts/StyleErrorsContext';
@@ -55,25 +56,27 @@ export default function App({state}) {
 									<DragPreview />
 
 									<StyleErrorsContextProvider>
-										<Toolbar />
+										<FormValidationContextProvider>
+											<Toolbar />
 
-										<ShortcutManager />
+											<ShortcutManager />
 
-										<GlobalContextProvider>
-											<CommonStylesManager />
+											<GlobalContextProvider>
+												<CommonStylesManager />
 
-											<LayoutViewport />
+												<LayoutViewport />
 
-											<StyleBookContextProvider>
-												<Sidebar />
+												<StyleBookContextProvider>
+													<Sidebar />
 
-												{Liferay.FeatureFlags[
-													'LPS-153452'
-												] && (
-													<ItemConfigurationSidebar />
-												)}
-											</StyleBookContextProvider>
-										</GlobalContextProvider>
+													{Liferay.FeatureFlags[
+														'LPS-153452'
+													] && (
+														<ItemConfigurationSidebar />
+													)}
+												</StyleBookContextProvider>
+											</GlobalContextProvider>
+										</FormValidationContextProvider>
 									</StyleErrorsContextProvider>
 								</WidgetsContextProvider>
 							</DisplayPagePreviewItemContextProvider>

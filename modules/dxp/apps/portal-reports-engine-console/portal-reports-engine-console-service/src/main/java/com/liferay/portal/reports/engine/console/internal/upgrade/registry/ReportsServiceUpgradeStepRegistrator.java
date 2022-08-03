@@ -15,7 +15,6 @@
 package com.liferay.portal.reports.engine.console.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1.UpgradeKernelPackage;
 import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1.UpgradeLastPublishDate;
@@ -35,31 +34,24 @@ public class ReportsServiceUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		try {
-			BaseUpgradeServiceModuleRelease baseUpgradeServiceModuleRelease =
-				new BaseUpgradeServiceModuleRelease() {
+		registry.register(
+			"0.0.1", "0.0.2",
+			new BaseUpgradeServiceModuleRelease() {
 
-					@Override
-					protected String getNewBundleSymbolicName() {
-						return "com.liferay.portal.reports.engine.console." +
-							"service";
-					}
+				@Override
+				protected String getNewBundleSymbolicName() {
+					return "com.liferay.portal.reports.engine.console.service";
+				}
 
-					@Override
-					protected String getOldBundleSymbolicName() {
-						return "reports-portlet";
-					}
+				@Override
+				protected String getOldBundleSymbolicName() {
+					return "reports-portlet";
+				}
 
-				};
-
-			baseUpgradeServiceModuleRelease.upgrade();
-		}
-		catch (UpgradeException upgradeException) {
-			throw new RuntimeException(upgradeException);
-		}
+			});
 
 		registry.register(
-			"0.0.1", "1.0.0",
+			"0.0.2", "1.0.0",
 			new com.liferay.portal.reports.engine.console.internal.upgrade.
 				v1_0_0.ReportDefinitionUpgradeProcess(),
 			new com.liferay.portal.reports.engine.console.internal.upgrade.

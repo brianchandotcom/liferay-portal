@@ -265,13 +265,10 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 		String cohortName = buildData.getCohortName();
 
-		String mostAvailableMasterURL =
-			JenkinsResultsParserUtil.getMostAvailableMasterURL(
-				"http://" + cohortName + ".liferay.com", 1);
-
 		return JenkinsResultsParserUtil.combine(
-			mostAvailableMasterURL, "/job/",
-			jobName.replaceAll("-controller\\(.*\\)", ""));
+			JenkinsResultsParserUtil.getMostAvailableMasterURL(
+				"http://" + cohortName + ".liferay.com", 1),
+			"/job/", jobName.replaceAll("-controller\\(.*\\)", ""));
 	}
 
 	protected void invokeDownstreamBuilds() {

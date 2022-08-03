@@ -43,7 +43,7 @@ export function AdvancedSelectField({
 
 	const [active, setActive] = useState(false);
 	const [isTokenValue, setIsTokenValue] = useState(
-		Boolean(tokenValues[value])
+		Boolean(tokenValues[value] || !value)
 	);
 	const [nextValue, setNextValue] = useControlledState(value);
 

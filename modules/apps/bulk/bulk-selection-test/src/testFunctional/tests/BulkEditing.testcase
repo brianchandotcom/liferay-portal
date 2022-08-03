@@ -463,27 +463,10 @@ definition {
 
 		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
-		SelectFrame(value1 = "relative=top");
-
-		AssertTextEquals(
-			locator1 = "Modal#HEADER",
-			value1 = "Edit Tags");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Modal#BODY",
-			value1 = "You are editing the common tags for 4 items. Select edit or replace current tags.");
-
-		Click(locator1 = "Modal#BODY");
-
-		Type(
-			locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
-			value1 = "tagone");
-
-		Button.clickSave();
-
-		SelectFrame(value1 = "relative=top");
-
-		Alert.viewSuccessMessageText(successMessage = "Changes Saved");
+		DMDocument.editTags(
+			itemNumber = "4",
+			multipleDocuments = "true",
+			tagName = "tagone");
 
 		for (var key_dmDocumentTitle : list "Document_1,Document_2,Document_3,Document_4") {
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");

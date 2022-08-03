@@ -23,16 +23,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-		}
+		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
+		PortalInstances.tearDownCP();
 	}
 
 	@description = "LPS-144412 - Verify if the user can open the drop-down filter and select Active Status"

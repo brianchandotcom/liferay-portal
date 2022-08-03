@@ -15,6 +15,7 @@ import {Liferay} from '../services/liferay';
 
 export default function getIconSpriteMap() {
 	const pathThemeImages = Liferay.ThemeDisplay.getPathThemeImages();
+
 	if (pathThemeImages) {
 		return `${pathThemeImages}/clay/icons.svg`;
 	}

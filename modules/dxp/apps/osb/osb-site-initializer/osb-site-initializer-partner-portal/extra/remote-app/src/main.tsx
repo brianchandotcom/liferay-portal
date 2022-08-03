@@ -9,10 +9,12 @@
  * distribution rights of the Software.
  */
 
+import {ClayIconSpriteContext} from '@clayui/icon';
 import React from 'react';
 import {Root, createRoot} from 'react-dom/client';
 
 import App from './App';
+import getIconSpriteMap from './utils/getIconSpriteMap';
 
 class PartnerPortalRemoteAppComponent extends HTMLElement {
 	private root: Root | undefined;
@@ -23,7 +25,9 @@ class PartnerPortalRemoteAppComponent extends HTMLElement {
 
 			this.root.render(
 				<React.StrictMode>
-					<App />
+					<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
+						<App />
+					</ClayIconSpriteContext.Provider>
 				</React.StrictMode>
 			);
 		}

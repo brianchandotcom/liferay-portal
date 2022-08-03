@@ -158,7 +158,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	}
 
 	@Override
-	public Response deleteProduct(Long id) throws Exception {
+	public void deleteProduct(Long id) throws Exception {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
 
@@ -169,14 +169,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		_cpDefinitionService.deleteCPDefinition(
 			cpDefinition.getCPDefinitionId());
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
-	public Response deleteProductByExternalReferenceCode(
+	public void deleteProductByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception {
 
@@ -193,10 +189,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		_cpDefinitionService.deleteCPDefinition(
 			cpDefinition.getCPDefinitionId());
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override

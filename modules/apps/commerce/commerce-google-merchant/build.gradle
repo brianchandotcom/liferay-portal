@@ -7,7 +7,7 @@ dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.2"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.2"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.2.2"
-	compileOnly group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.2.3"
+	compileOnly group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.2.6"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.codehaus.woodstox", name: "stax2-api", version: "4.2.1"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"

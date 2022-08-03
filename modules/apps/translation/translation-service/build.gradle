@@ -4,7 +4,7 @@ buildService {
 }
 
 dependencies {
-	compileInclude group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.2.3"
+	compileInclude group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.2.6"
 	compileInclude group: "com.ibm.icu", name: "icu4j", version: "65.1"
 	compileInclude group: "net.sf.okapi", name: "okapi-core", version: "1.42.0"
 	compileInclude group: "net.sf.okapi.filters", name: "okapi-filter-autoxliff", version: "1.42.0"

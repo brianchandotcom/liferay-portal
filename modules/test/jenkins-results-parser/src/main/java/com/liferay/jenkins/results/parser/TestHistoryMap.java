@@ -49,7 +49,8 @@ public class TestHistoryMap {
 			TopLevelBuildReport topLevelBuildReport =
 				testrayBuild.getTopLevelBuildReport();
 
-			if (JenkinsResultsParserUtil.isNullOrEmpty(
+			if ((topLevelBuildReport == null) ||
+				JenkinsResultsParserUtil.isNullOrEmpty(
 					topLevelBuildReport.getResult())) {
 
 				continue;

@@ -331,7 +331,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 						layoutDisplayPageObjectProvider.getClassNameId()),
 					infoItemIdentifier.getInfoItemServiceFilter());
 
-		infoItemIdentifier.setVersion(InfoItemIdentifier.VERSION_LATEST);
+		infoItemIdentifier.setVersion(version);
 
 		return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
 	}

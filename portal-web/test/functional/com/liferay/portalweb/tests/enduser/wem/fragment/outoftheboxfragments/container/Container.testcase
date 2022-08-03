@@ -1139,6 +1139,101 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-154980. Lower the opacity of the rest of the layout elements when a container is hovered to drop inside a fragment."
+	@priority = "3"
+	test ViewLowerOpacityOfRestOfLayoutElementsWhenDraggingFragmentOverContainer {
+		task ("Given a page creator has three Containers on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container",
+				targetFragmentName = "Container");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container",
+				index = "2",
+				targetFragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				navTab = "Fragments");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Tabs",
+				navTab = "Fragments",
+				position = "3");
+		}
+
+		task ("When the page creator dragging a new HTML fragment over the second Container") {
+			DragOver(
+				key_collectionName = "Basic Components",
+				key_elementType = "Container",
+				key_fragmentName = "HTML",
+				key_position = "2",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#CONTAINER_CONTAINER");
+		}
+
+		task ("Then the opacity of rest Containers is lower than the second Container's") {
+			AssertCssValue(
+				locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-container')])[2]",
+				locator2 = "opacity",
+				value1 = "1");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'lfr-layout-structure-item-basic-component-button')]",
+				locator2 = "opacity",
+				value1 = "0.5");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'lfr-layout-structure-item-basic-component-tabs')]",
+				locator2 = "opacity",
+				value1 = "0.5");
+		}
+
+		task ("When the page creator dragging a new Paragraph fragment over the Tabs fragment inside the third Container") {
+			Refresh();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			DragOver(
+				index = "1",
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Paragraph",
+				key_targetFragmentName = "Tabs",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
+				ratio = "9 / 8");
+		}
+
+		task ("Then the opacity of rest Containers is lower than the third Container's") {
+			AssertCssValue(
+				locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-container')])[3]",
+				locator2 = "opacity",
+				value1 = "1");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'lfr-layout-structure-item-basic-component-button')]",
+				locator2 = "opacity",
+				value1 = "0.5");
+
+			AssertCssValue(
+				locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-container')])[2]",
+				locator2 = "opacity",
+				value1 = "0.5");
+		}
+	}
+
 	@description = "This is a test for LPS-107285. When the Container with Heading fragment is duplicated, the mapped content should also be duplicated."
 	@priority = "4"
 	test ViewMappedContentDuplicatedInDuplicatedContainerWithHeading {

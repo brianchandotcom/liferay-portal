@@ -1289,11 +1289,11 @@ components:
                     type: integer
                 subscriptionType:
                     enum:
-                        - day
-                        - month
-                        - week
-                        - year
-                    example: month
+                        - daily
+                        - monthly
+                        - weekly
+                        - yearly
+                    example: monthly
                     type: string
                 subscriptionTypeSettings:
                     additionalProperties:
@@ -5391,8 +5391,9 @@ paths:
                   style: simple
             responses:
                 204:
-                    description:
-                        No content
+                    content:
+                        application/json: {}
+                        application/xml: {}
                 401:
                     content:
                         application/json:
@@ -8285,8 +8286,9 @@ paths:
                   style: simple
             responses:
                 204:
-                    description:
-                        No content
+                    content:
+                        application/json: {}
+                        application/xml: {}
                 401:
                     content:
                         application/json:

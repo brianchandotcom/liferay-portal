@@ -582,14 +582,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testStaticResourceURL() throws Exception {
-		test("StaticResourceURL.testjava",
-			 "Should add 'PortalUtil.getPathProxy()' before " +
-			 	"'portlet.getContextPath'.",
-			 31);
-	}
-
-	@Test
 	public void testThrowsSystemException() throws Exception {
 		test("ThrowsSystemException.testjava");
 	}

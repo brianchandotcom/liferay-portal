@@ -777,6 +777,8 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Products");
 
+		WaitForPageLoad();
+
 		for (var product : list "U-Joint,Mount,Shock Absorber") {
 			CommerceRelations.assignSingleRelationToProductsEntry(
 				entryName = "${product}",
@@ -1319,6 +1321,8 @@ definition {
 		CommerceNavigator.gotoEntry(entryName = "Test Price List");
 
 		CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+		WaitForPageLoad();
 
 		CommerceRelations.assignSingleRelationToProductsEntry(
 			entryName = "default",

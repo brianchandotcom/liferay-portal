@@ -102,7 +102,7 @@ definition {
 	}
 
 	macro assignSingleRelationToProductsEntry {
-		var searchTerm = '''"${entryName}"''';
+		var searchTerm = '''"${entryName}''';
 
 		Type(
 			key_title = "${title}",

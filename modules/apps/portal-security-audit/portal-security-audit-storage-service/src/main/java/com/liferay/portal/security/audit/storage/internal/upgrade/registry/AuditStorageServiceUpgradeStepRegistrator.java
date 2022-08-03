@@ -16,7 +16,6 @@ package com.liferay.portal.security.audit.storage.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.security.audit.storage.internal.upgrade.v1_0_1.util.AuditEventTable;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -33,35 +32,26 @@ public class AuditStorageServiceUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		try {
-			BaseUpgradeServiceModuleRelease baseUpgradeServiceModuleRelease =
-				new BaseUpgradeServiceModuleRelease() {
+		registry.register(
+			"0.0.1", "1.0.0",
+			new BaseUpgradeServiceModuleRelease() {
 
-					@Override
-					protected String getNamespace() {
-						return "Audit";
-					}
+				@Override
+				protected String getNamespace() {
+					return "Audit";
+				}
 
-					@Override
-					protected String getNewBundleSymbolicName() {
-						return "com.liferay.portal.security.audit.storage." +
-							"service";
-					}
+				@Override
+				protected String getNewBundleSymbolicName() {
+					return "com.liferay.portal.security.audit.storage.service";
+				}
 
-					@Override
-					protected String getOldBundleSymbolicName() {
-						return "audit-portlet";
-					}
+				@Override
+				protected String getOldBundleSymbolicName() {
+					return "audit-portlet";
+				}
 
-				};
-
-			baseUpgradeServiceModuleRelease.upgrade();
-		}
-		catch (UpgradeException upgradeException) {
-			throw new RuntimeException(upgradeException);
-		}
-
-		registry.register("0.0.1", "1.0.0", new DummyUpgradeStep());
+			});
 
 		registry.register(
 			"1.0.0", "1.0.1",

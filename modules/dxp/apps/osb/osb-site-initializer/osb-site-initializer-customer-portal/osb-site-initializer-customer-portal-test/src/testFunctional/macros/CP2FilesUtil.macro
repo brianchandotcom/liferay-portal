@@ -1,7 +1,7 @@
 definition {
 
-    macro assertDownloadedFileIsPresent {
-        var tempDir = PropsUtil.get("output.dir.name");
+	macro assertDownloadedFileIsPresent {
+		var tempDir = PropsUtil.get("output.dir.name");
 
 		var downloadedFilePath = "${tempDir}/${downloadedFileName}";
 
@@ -9,8 +9,10 @@ definition {
 
 		if ("${fileExists}" == "true") {
 			echo("File named ${downloadedFileName} was downloaded.");
-		} else {
-            fail("Files named ${downloadedFileName} and ${downloadedInvertedFileName} NOT FOUND in folder ${tempDir}!");
-        }
-    }
+		}
+		else {
+			fail("Files named ${downloadedFileName} and ${downloadedInvertedFileName} NOT FOUND in folder ${tempDir}!");
+		}
+	}
+
 }

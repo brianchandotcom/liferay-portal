@@ -102,7 +102,7 @@ public class MailEngineTest {
 			}
 			catch (Throwable throwable) {
 				Assert.assertEquals(
-					"Unable to exceed maximum number of allowed mail messages",
+					"com.liferay.portal.kernel.exception.PortalException: Unable to exceed maximum number of allowed mail messages",
 					throwable.getMessage());
 			}
 
@@ -119,7 +119,7 @@ public class MailEngineTest {
 			}
 			catch (Throwable throwable) {
 				Assert.assertEquals(
-					"Unable to exceed maximum number of allowed mail messages",
+					"com.liferay.portal.kernel.exception.PortalException: Unable to exceed maximum number of allowed mail messages",
 					throwable.getMessage());
 			}
 		}
@@ -166,10 +166,14 @@ public class MailEngineTest {
 				PropsKeys.DATA_LIMIT_MAIL_MESSAGE_MAX_PERIOD,
 				String.valueOf(maxMailMessagePeriod));
 
+			Class<?> innerClass = MailEngine.class.getDeclaredClasses()[0];
+
 			ClassLoader classLoader = new ReloadURLClassLoader(
-				MailEngine.class);
+				MailEngine.class, innerClass);
 
 			Class<?> clazz = classLoader.loadClass(MailEngine.class.getName());
+
+			classLoader.loadClass(innerClass.getName());
 
 			_sendMethod = ReflectionUtil.getDeclaredMethod(
 				clazz, "send", MailMessage.class);

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaLongLinesCheck" files="src/testIntegration/java/com/liferay/portal/util/mail/test/MailEngineTest\.java" />
+	</source-check>
+</suppressions>

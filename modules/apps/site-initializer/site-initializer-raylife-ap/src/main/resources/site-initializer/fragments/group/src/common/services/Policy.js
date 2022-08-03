@@ -56,24 +56,24 @@ export function getPolicies() {
 
 export function getSixMonthsAgoPolicies() {
 	return axios.get(
-		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and startDate le ${currentDate} and startDate ge ${sixMonthsAgoDate[0]}-${sixMonthsAgoDate[1]}-01&pageSize=200`
+		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and (startDate le ${currentDate} and startDate ge ${sixMonthsAgoDate[0]}-${sixMonthsAgoDate[1]}-01)&pageSize=200`
 	);
 }
 
 export function getLastYearSixMonthsPolicies() {
 	return axios.get(
-		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and startDate le ${oneYearAgoDate} and startDate ge ${lastYearSixMonthsAgoPeriod[0]}-${lastYearSixMonthsAgoPeriod[1]}-01&pageSize=200`
+		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and (startDate le ${oneYearAgoDate} and startDate ge ${lastYearSixMonthsAgoPeriod[0]}-${lastYearSixMonthsAgoPeriod[1]}-01)&pageSize=200`
 	);
 }
 
 export function getPoliciesUntilCurrentMonth() {
 	return axios.get(
-		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and startDate le ${currentDate} and startDate ge ${currentYear}-01-01&pageSize=200`
+		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and (startDate le ${currentDate} and startDate ge ${currentYear}-01-01)&pageSize=200`
 	);
 }
 
 export function getPoliciesUntilCurrentMonthLastYear() {
 	return axios.get(
-		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and startDate le ${oneYearAgoDate} and startDate ge ${lastYear}-01-01&pageSize=200`
+		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and (startDate le ${oneYearAgoDate} and startDate ge ${lastYear}-01-01)&pageSize=200`
 	);
 }

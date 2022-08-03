@@ -13,6 +13,8 @@
  */
 
 import {ClaySelect} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 import LineChart from '../../../common/components/line-chart';
@@ -24,7 +26,25 @@ import {
 } from '../../../common/services';
 import {CONSTANTS} from '../../../common/utils/constants';
 
+const PERIOD = {
+	SIX_MONTH: '2',
+	THIS_MONTH: '1',
+	YTD: '3',
+};
+
 export default function () {
+	const [selectedFilterDate, setSelectedFilterDate] = useState('1');
+	const [currentMonthData, setCurrentMonthData] = useState([]);
+	const [sixMonthData, setSixMonthData] = useState([]);
+	const [firstUntilCurrentData, setFirstUntilCurrentData] = useState([]);
+	const [sixMonthTotalCommission, setSixMonthTotalCommission] = useState();
+	const [yoyTotalCommission, setYoyTotalCommission] = useState();
+	const [yoyLastYearCommission, setYoyLastYearCommission] = useState();
+	const [
+		lastYearSixMonthCommission,
+		setLastYearSixMonthCommission,
+	] = useState();
+
 	function getTime(date, months) {
 		date.setMonth(date.getMonth() + months);
 
@@ -36,229 +56,232 @@ export default function () {
 	}
 
 	const currentDateFilter = getArrayOfFormatDate(getTime(new Date(), 0));
-
 	const currentMonth = currentDateFilter[0];
-
 	const sixMonthsAgoFilter = getArrayOfFormatDate(getTime(new Date(), -5));
-
 	const dateSixMonthsAgo = `${sixMonthsAgoFilter[0]} ${sixMonthsAgoFilter[2]}`;
-
 	const dateCurrentDate = `${currentDateFilter[0]} ${currentDateFilter[2]}`;
 
-	const [selectedFilterDate, setSelectedFilterDate] = useState('1');
-	const [currentMonthData, setCurrentMonthData] = useState([]);
+	function populateCommissions(policiesResult, policiesArray) {
+		policiesResult.forEach((policy) => {
+			const month = new Date(policy?.startDate)
+				.toGMTString()
+				.split(' ')[2];
 
-	const [sixMonthData, setSixMonthData] = useState([]);
-	const [firstUntilCurrentData, setFirstUntilCurrentData] = useState([]);
+			policiesArray.forEach((policyElement) => {
+				if (month in policyElement) {
+					policyElement[month] += policy?.commission;
+				}
+			});
+		});
 
-	const [sixMonthTotalCommission, setSixMonthTotalCommission] = useState();
-	const [yoyTotalCommission, setYoyTotalCommission] = useState();
-	const [yoyLastYearCommission, setYoyLastYearCommission] = useState();
-	const [
-		lastYearSixMonthCommission,
-		setLastYearSixMonthCommission,
-	] = useState();
+		return policiesArray;
+	}
+
+	const getSixMonthsCommission = (response, sixMonthsAgoArray) => {
+		const sixMonthsResult = response?.data?.items;
+		const sixMonthsAgo = populateCommissions(
+			sixMonthsResult,
+			sixMonthsAgoArray
+		);
+
+		return getCommissionValues(sixMonthsAgo);
+	};
+
+	function getCommissionValues(arrayOfObjects) {
+		const valuesArray = arrayOfObjects.map((values) => {
+			return Object.values(values)[0];
+		});
+
+		return valuesArray;
+	}
+
+	function sumCommissionsPerMonth(comissionsArray) {
+		const totalCommission = comissionsArray.reduce(
+			(commissionSum, commission) => commissionSum + commission,
+			0
+		);
+
+		return totalCommission;
+	}
+
+	function sumTotalCommissions(totalCommissionsArray) {
+		const totalValue = totalCommissionsArray
+			.map((values) => {
+				return Object.values(values)[0];
+			})
+			.reduce(
+				(commissionSum, commission) => commissionSum + commission,
+				0
+			);
+
+		return totalValue;
+	}
+
+	function setCommissionName(finalArray) {
+		return finalArray.unshift('Commission');
+	}
 
 	useEffect(() => {
-		Promise.allSettled([
-			getSixMonthsAgoPolicies(),
-			getLastYearSixMonthsPolicies(),
-			getPoliciesUntilCurrentMonth(),
-			getPoliciesUntilCurrentMonthLastYear(),
-		]).then((results) => {
-			const [
-				sixMonthsPoliciesResult,
-				lastYearSixMonthsPolicies,
-				policiesUntilCurrentMonthPolices,
-				policiesUntilCurrentMonthLastYear,
-			] = results;
+		const sixMonthsAgoArray = [];
+		const lastSixMonthsAgoArray = [];
+		const firstUntilCurrentArray = [];
+		const lastYearFirstUntilCurrentArray = [];
 
-			const sixMonthsAgoArray = [];
-			const lastSixMonthsAgoArray = [];
-			const firstUntilCurrentArray = [];
-			const lastYearFirstUntilCurrentArray = [];
+		const numberOfMonths = 12;
+		const maxIndexOfMonthsArray = 11;
+		const thisMonthTimePeriod = 1;
+		const sixMonthsTimePeriod = 5;
+		const indexOfCurrentMonth = new Date().getMonth();
 
-			const numberOfMonths = 12;
-			const maxIndexOfMonthsArray = 11;
-			const thisMonthTimePeriod = 1;
-			const sixMonthsTimePeriod = 5;
-			const indexOfCurrentMonth = new Date().getMonth();
+		let indexBaseMonth = indexOfCurrentMonth - sixMonthsTimePeriod;
 
-			function populateCommissions(policiesResult, policiesArray) {
-				policiesResult.forEach((policy) => {
-					const month = new Date(policy?.startDate)
-						.toGMTString()
-						.split(' ')[2];
+		indexBaseMonth =
+			indexBaseMonth < 0
+				? numberOfMonths + indexBaseMonth
+				: indexBaseMonth;
 
-					policiesArray.forEach((policyElement) => {
-						if (month in policyElement) {
-							policyElement[month] += policy?.commission;
-						}
-					});
-				});
+		let month = 0;
 
-				return policiesArray;
+		for (let count = 0; count <= sixMonthsTimePeriod; count++) {
+			const sixMonthsFilter = {};
+			const sixMonthsAgoFilter = {};
+
+			if (!count) {
+				month = indexBaseMonth;
+			}
+			if (month > maxIndexOfMonthsArray) {
+				month = 0;
 			}
 
-			function getCommissionValues(arrayOfObjects) {
-				const valuesArray = arrayOfObjects.map((values) => {
-					return Object.values(values)[0];
-				});
+			sixMonthsFilter[CONSTANTS.MONTHS_ABREVIATIONS[month]] = 0;
+			sixMonthsAgoFilter[CONSTANTS.MONTHS_ABREVIATIONS[month]] = 0;
+			sixMonthsAgoArray[count] = sixMonthsFilter;
+			lastSixMonthsAgoArray[count] = sixMonthsAgoFilter;
+			month++;
+		}
 
-				return valuesArray;
-			}
+		let monthposition = 0;
 
-			function sumCommissionsPerMonth(comissionsArray) {
-				const totalCommission = comissionsArray.reduce(
-					(commissionSum, commission) => commissionSum + commission,
-					0
+		for (let count = 0; count <= indexOfCurrentMonth; count++) {
+			const firstUntilCurrentFilter = {};
+			const LastsixMonthsAgoFilter = {};
+
+			firstUntilCurrentFilter[
+				CONSTANTS.MONTHS_ABREVIATIONS[monthposition]
+			] = 0;
+			LastsixMonthsAgoFilter[
+				CONSTANTS.MONTHS_ABREVIATIONS[monthposition]
+			] = 0;
+			firstUntilCurrentArray[count] = firstUntilCurrentFilter;
+			lastYearFirstUntilCurrentArray[count] = LastsixMonthsAgoFilter;
+			monthposition++;
+		}
+
+		if (selectedFilterDate === PERIOD.THIS_MONTH) {
+			getSixMonthsAgoPolicies().then((response) => {
+				const sixMonthsCommission = getSixMonthsCommission(
+					response,
+					sixMonthsAgoArray
 				);
 
-				return totalCommission;
-			}
+				const sixMonthsCommissionLenght =
+					sixMonthsCommission.length - 1;
 
-			function sumTotalCommissions(totalCommissionsArray) {
-				const totalValue = totalCommissionsArray
-					.map((values) => {
-						return Object.values(values)[0];
-					})
-					.reduce(
-						(commissionSum, commission) =>
-							commissionSum + commission,
-						0
+				const thisMonthFilterCommission = [
+					sixMonthsCommission[
+						sixMonthsCommissionLenght - thisMonthTimePeriod
+					],
+					sixMonthsCommission[sixMonthsCommissionLenght],
+				];
+
+				setCommissionName(thisMonthFilterCommission);
+				setCommissionName(sixMonthsCommission);
+
+				setSixMonthData(sixMonthsCommission);
+
+				setCurrentMonthData(thisMonthFilterCommission);
+			});
+		}
+
+		if (selectedFilterDate === PERIOD.SIX_MONTH) {
+			getLastYearSixMonthsPolicies().then((response) => {
+				const lastYearSixMonthsResult = response?.data?.items;
+
+				const lastSixMonthsAgo = populateCommissions(
+					lastYearSixMonthsResult,
+					lastSixMonthsAgoArray
+				);
+
+				const lastYearSixMonthsCommission = sumTotalCommissions(
+					lastSixMonthsAgo
+				);
+
+				setLastYearSixMonthCommission(lastYearSixMonthsCommission);
+
+				getSixMonthsAgoPolicies().then((response) => {
+					const totalSixMonthsCommissionValue = sumCommissionsPerMonth(
+						getSixMonthsCommission(response, sixMonthsAgoArray)
 					);
 
-				return totalValue;
-			}
+					setSixMonthTotalCommission(totalSixMonthsCommissionValue);
+				});
+			});
+		}
 
-			function setCommissionName(finalArray) {
-				return finalArray.unshift('Commission');
-			}
+		if (selectedFilterDate === PERIOD.YTD) {
+			getPoliciesUntilCurrentMonth().then((response) => {
+				const firstUntilCurrentResult = response?.data?.items;
 
-			let indexBaseMonth = indexOfCurrentMonth - sixMonthsTimePeriod;
+				const firstUntilCurrent = populateCommissions(
+					firstUntilCurrentResult,
+					firstUntilCurrentArray
+				);
 
-			indexBaseMonth =
-				indexBaseMonth < 0
-					? numberOfMonths + indexBaseMonth
-					: indexBaseMonth;
+				const firstUntilCurrentCommission = getCommissionValues(
+					firstUntilCurrent
+				);
 
-			let month = 0;
+				const totalFirstCurrentCommissionValue = sumCommissionsPerMonth(
+					firstUntilCurrentCommission
+				);
 
-			for (let count = 0; count <= sixMonthsTimePeriod; count++) {
-				const sixMonthsFilter = {};
-				const sixMonthsAgoFilter = {};
+				setCommissionName(firstUntilCurrentCommission);
+				setFirstUntilCurrentData(firstUntilCurrentCommission);
+				setYoyTotalCommission(totalFirstCurrentCommissionValue);
 
-				if (!count) {
-					month = indexBaseMonth;
-				}
-				if (month > maxIndexOfMonthsArray) {
-					month = 0;
-				}
+				getPoliciesUntilCurrentMonthLastYear().then((response) => {
+					const firstUntilCurrentLastYearResult =
+						response?.data?.items;
 
-				sixMonthsFilter[CONSTANTS.MONTHS_ABREVIATIONS[month]] = 0;
-				sixMonthsAgoFilter[CONSTANTS.MONTHS_ABREVIATIONS[month]] = 0;
-				sixMonthsAgoArray[count] = sixMonthsFilter;
-				lastSixMonthsAgoArray[count] = sixMonthsAgoFilter;
-				month++;
-			}
+					const lastYearFirstUntilCurrent = populateCommissions(
+						firstUntilCurrentLastYearResult,
+						lastYearFirstUntilCurrentArray
+					);
 
-			let monthposition = 0;
+					const YoyCommision = sumTotalCommissions(
+						lastYearFirstUntilCurrent
+					);
 
-			for (let count = 0; count <= indexOfCurrentMonth; count++) {
-				const firstUntilCurrentFilter = {};
-				const LastsixMonthsAgoFilter = {};
+					setYoyLastYearCommission(YoyCommision);
+				});
+			});
+		}
 
-				firstUntilCurrentFilter[
-					CONSTANTS.MONTHS_ABREVIATIONS[monthposition]
-				] = 0;
-				LastsixMonthsAgoFilter[
-					CONSTANTS.MONTHS_ABREVIATIONS[monthposition]
-				] = 0;
-				firstUntilCurrentArray[count] = firstUntilCurrentFilter;
-				lastYearFirstUntilCurrentArray[count] = LastsixMonthsAgoFilter;
-				monthposition++;
-			}
-
-			const sixMonthsResult = sixMonthsPoliciesResult?.value?.data?.items;
-			const lastYearSixMonthsResult =
-				lastYearSixMonthsPolicies?.value?.data?.items;
-			const firstUntilCurrentResult =
-				policiesUntilCurrentMonthPolices?.value?.data?.items;
-			const firstUntilCurrentLastYearResult =
-				policiesUntilCurrentMonthLastYear?.value?.data?.items;
-
-			populateCommissions(
-				firstUntilCurrentResult,
-				firstUntilCurrentArray
-			);
-
-			populateCommissions(
-				firstUntilCurrentLastYearResult,
-				lastYearFirstUntilCurrentArray
-			);
-
-			populateCommissions(sixMonthsResult, sixMonthsAgoArray);
-
-			populateCommissions(lastYearSixMonthsResult, lastSixMonthsAgoArray);
-
-			const sixMonthsCommission = getCommissionValues(sixMonthsAgoArray);
-
-			const lastYearSixMonthsCommission = sumTotalCommissions(
-				lastSixMonthsAgoArray
-			);
-
-			const totalSixMonthsCommissionValue = sumCommissionsPerMonth(
-				sixMonthsCommission
-			);
-
-			const firstUntilCurrentCommission = getCommissionValues(
-				firstUntilCurrentArray
-			);
-
-			const YoyCommision = sumTotalCommissions(
-				lastYearFirstUntilCurrentArray
-			);
-
-			const totalFirstCurrentCommissionValue = sumCommissionsPerMonth(
-				firstUntilCurrentCommission
-			);
-
-			const sixMonthsCommissionLenght = sixMonthsCommission.length - 1;
-
-			const thisMonthFilterCommission = [
-				sixMonthsCommission[
-					sixMonthsCommissionLenght - thisMonthTimePeriod
-				],
-				sixMonthsCommission[sixMonthsCommissionLenght],
-			];
-
-			setCommissionName(thisMonthFilterCommission);
-			setCommissionName(sixMonthsCommission);
-			setCommissionName(firstUntilCurrentCommission);
-
-			setSixMonthData(sixMonthsCommission);
-			setSixMonthTotalCommission(totalSixMonthsCommissionValue);
-			setCurrentMonthData(thisMonthFilterCommission);
-			setLastYearSixMonthCommission(lastYearSixMonthsCommission);
-			setFirstUntilCurrentData(firstUntilCurrentCommission);
-			setYoyTotalCommission(totalFirstCurrentCommissionValue);
-			setYoyLastYearCommission(YoyCommision);
-		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [selectedFilterDate]);
 
 	const options = [
 		{
 			label: 'This Month',
-			value: '1',
+			value: PERIOD.THIS_MONTH,
 		},
 		{
 			label: '6 MO',
-			value: '2',
+			value: PERIOD.SIX_MONTH,
 		},
 		{
 			label: 'YTD',
-			value: '3',
+			value: PERIOD.YTD,
 		},
 	];
 
@@ -316,10 +339,50 @@ export default function () {
 	const commissionValue = getData()[0]?.commissionValue;
 	const getPeriod = getData()[0]?.period;
 
+	const buildLegend = () => (
+		<div className="d-flex dashboard-commission-legend flex-column h-100 justify-content-end mt-5">
+			<div className="font-weight-normal mb-2 text-neutral-8 text-paragraph-sm">
+				{getDataDate}
+			</div>
+
+			<div className="dashboard-commission-screen font-weight-bolder h5 mb-3">
+				{new Intl.NumberFormat('en-US', {
+					currency: 'USD',
+					style: 'currency',
+				}).format(commissionValue)}
+			</div>
+
+			<div
+				className={classNames('text-paragraph-sm font-weight-bolder', {
+					'line-chart-icon-success-color': commissionPercentual >= 0,
+					'text-danger': commissionPercentual < 0,
+				})}
+			>
+				{commissionPercentual > 0 && <ClayIcon symbol="caret-top" />}
+
+				{commissionPercentual === 0 && <ClayIcon symbol="hr" />}
+
+				{commissionPercentual < 0 && <ClayIcon symbol="caret-bottom" />}
+
+				{getPeriod === 1
+					? `${
+							commissionPercentual === Infinity
+								? `NaN`
+								: commissionPercentual
+					  }% MoM`
+					: `${
+							commissionPercentual === Infinity
+								? `NaN`
+								: commissionPercentual
+					  }% YoY`}
+			</div>
+		</div>
+	);
+
 	return (
 		<div className="d-flex dashboard-commission-container flex-column flex-shrink-0 pb-4 pt-3 px-3">
 			<div className="align-items-center d-flex dashboard-commission-header justify-content-between">
-				<div className="dashboard-commission-title font-weight-bolder h4">
+				<div className="dashboard-commission-title font-weight-bolder h4 mb-0">
 					Commission
 				</div>
 
@@ -342,13 +405,7 @@ export default function () {
 			</div>
 
 			{!!chartData.columns.length && currentMonthData && (
-				<LineChart
-					chartData={chartData}
-					getDataDate={getDataDate}
-					getPeriod={getPeriod}
-					percentual={commissionPercentual}
-					value={commissionValue}
-				/>
+				<LineChart LegendElement={buildLegend} chartData={chartData} />
 			)}
 
 			{!chartData.columns.length && loadData && (

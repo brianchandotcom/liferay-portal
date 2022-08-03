@@ -13,8 +13,6 @@
  */
 
 import ClayChart from '@clayui/charts';
-import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
 import React from 'react';
 
 import ClayIconProvider from '../../../common/context/ClayIconProvider';
@@ -25,16 +23,13 @@ const LineChart = ({
 	axispaddingleft = 0.1,
 	axispaddingright = 0.5,
 	chartData,
-	percentual,
-	value,
-	getDataDate,
-	getPeriod,
 	height = 150,
 	patternColor = ['#4BC286'],
 	pointRadius = 1.5,
 	showaxisx = false,
 	showaxisy = false,
 	width = 200,
+	LegendElement = () => null,
 }) => {
 	return (
 		<ClayIconProvider>
@@ -82,43 +77,7 @@ const LineChart = ({
 					/>
 				)}
 
-				<div className="d-flex flex-column h-100 justify-content-end line-chart-legend mt-5">
-					<div className="font-weight-normal mb-2 text-neutral-8 text-paragraph-sm">
-						{getDataDate}
-					</div>
-
-					<div className="font-weight-bolder h5 line-chart-screen mb-3">
-						{new Intl.NumberFormat('en-US', {
-							currency: 'USD',
-							style: 'currency',
-						}).format(value)}
-					</div>
-
-					<div
-						className={classNames(
-							'text-paragraph-sm font-weight-bolder',
-							{
-								'line-chart-icon-success-color':
-									percentual >= 0,
-								'text-danger': percentual < 0,
-							}
-						)}
-					>
-						{percentual > 0 && <ClayIcon symbol="caret-top" />}
-
-						{percentual === 0 && <ClayIcon symbol="hr" />}
-
-						{percentual < 0 && <ClayIcon symbol="caret-bottom" />}
-
-						{getPeriod === 1
-							? `${
-									percentual === Infinity ? `NaN` : percentual
-							  }% MoM`
-							: `${
-									percentual === Infinity ? `NaN` : percentual
-							  }% YoY`}
-					</div>
-				</div>
+				<LegendElement />
 			</div>
 		</ClayIconProvider>
 	);

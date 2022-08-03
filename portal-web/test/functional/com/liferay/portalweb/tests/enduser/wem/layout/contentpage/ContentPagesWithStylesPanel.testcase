@@ -1,0 +1,138 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-143206=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-136279. View the styles of Font Family, Font Weight, Font Size, Border Radius and Shadow selectors."
+	@priority = "4"
+	test ViewStylesOfSelectInputs {
+		task ("Given a page designer has a Heading fragment on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page designer accesses to the Styles panel of Heading") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+		}
+
+		task ("Then the page designer sees the styles of Font Family, Font Weight, Font Size, Border Radius and Shadow selectors") {
+			task ("View the Font Family, Font Weight, Font Size, Border Radius and Shadow selectors use icon") {
+				for (var fieldName : list "font-family,bold,font-size,corner-radius,shadow") {
+					AssertElementPresent(
+						key_text = "${fieldName}",
+						locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON");
+				}
+			}
+
+			task ("View the Inherited · computed value is shown in the Font Family, Font Weight and Font Size selectors by default") {
+				AssertTextEquals(
+					key_text = "font-family",
+					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
+					value1 = "Inherited · system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;");
+
+				AssertTextEquals(
+					key_text = "bold",
+					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
+					value1 = "Inherited · 400");
+
+				AssertTextEquals(
+					key_text = "font-size",
+					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
+					value1 = "Inherited · 14px");
+			}
+
+			task ("View the Default · computed value is shown in Border Radius and Shadow selectors by default") {
+				AssertTextEquals(
+					key_text = "corner-radius",
+					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
+					value1 = "Default · 0px");
+
+				AssertTextEquals(
+					key_text = "shadow",
+					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
+					value1 = "Default · none");
+			}
+
+			task ("View the tooltip shown when hover on icon of selectors") {
+				MouseOver(
+					key_text = "font-family",
+					locator1 = "Icon#ANY");
+
+				AssertVisible(
+					key_content = "Font Family",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+				MouseOver(
+					key_text = "bold",
+					locator1 = "Icon#ANY");
+
+				AssertVisible(
+					key_content = "Font Weight",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+				MouseOver(
+					key_text = "font-size",
+					locator1 = "Icon#ANY");
+
+				AssertVisible(
+					key_content = "Font Size",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+				MouseOver(
+					key_text = "corner-radius",
+					locator1 = "Icon#ANY");
+
+				AssertVisible(
+					key_content = "Border Radius",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+				MouseOver(
+					key_text = "shadow",
+					locator1 = "Icon#ANY");
+
+				AssertVisible(
+					key_content = "Shadow",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+			}
+		}
+	}
+
+}

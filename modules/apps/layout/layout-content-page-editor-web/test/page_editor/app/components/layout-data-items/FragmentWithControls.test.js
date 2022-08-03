@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, queryByText, render} from '@testing-library/react';
+import {act, queryByText, render} from '@testing-library/react';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -104,7 +104,13 @@ const renderFragment = ({
 };
 
 describe('FragmentWithControls', () => {
-	afterEach(cleanup);
+	beforeEach(() => {
+		const wrapper = document.createElement('div');
+
+		wrapper.id = 'wrapper';
+
+		document.body.appendChild(wrapper);
+	});
 
 	it('does not allow deleting or duplicating the fragment if user has no permissions', async () => {
 		await act(async () => {

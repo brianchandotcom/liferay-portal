@@ -63,22 +63,6 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 		setActivePanel(productMenuOpen ? BLANK : currentItem.key);
 	}, [productMenuOpen, parentContainer, currentItem]);
 
-	const onIconClick = (event, item) => {
-		if (item.key !== currentItem.key) {
-			event.preventDefault();
-
-			navigate(item.href);
-		}
-	};
-
-	const onActiveChange = () => {
-		setActivePanel(activePanel ? BLANK : currentItem.key);
-
-		if (productMenuOpen) {
-			productMenu.hide();
-		}
-	};
-
 	useEffect(() => {
 		if (activePanel) {
 			parentContainer.classList.add(CSS_EXPANDED);
@@ -87,6 +71,14 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 			parentContainer.classList.remove(CSS_EXPANDED);
 		}
 	}, [activePanel, parentContainer]);
+
+	const onActiveChange = () => {
+		setActivePanel(activePanel ? BLANK : currentItem.key);
+
+		if (productMenuOpen) {
+			productMenu.hide();
+		}
+	};
 
 	const VerticalBarPanels = {
 		article: NavigationPanel,
@@ -108,7 +100,11 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 							data-tooltip-align="right"
 							displayType="unstyled"
 							onClick={(event) => {
-								onIconClick(event, item);
+								if (item.key !== currentItem.key) {
+									event.preventDefault();
+
+									navigate(item.href);
+								}
 							}}
 							symbol={item.icon}
 							title={Liferay.Language.get(item.title)}

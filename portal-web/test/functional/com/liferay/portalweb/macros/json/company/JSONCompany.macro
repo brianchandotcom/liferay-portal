@@ -37,6 +37,17 @@ definition {
 		return "${companyId}";
 	}
 
+	macro getCompanyIdByName {
+		if ("${portalInstanceName}" == "liferay.com") {
+			var companyId = JSONCompany.getCompanyId();
+		}
+		else {
+			var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+		}
+
+		return "${companyId}";
+	}
+
 	macro getCompanyIdNoSelenium {
 		if (!(isSet(portalInstanceName))) {
 			var portalInstanceName = JSONCompany.getPortalInstanceNameNoSelenium();

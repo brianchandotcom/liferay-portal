@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -419,6 +420,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 	private JSONObject _getSubscribeJSONObject(
 		ContentDashboardItem contentDashboardItem,
 		HttpServletRequest httpServletRequest) {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158043"))) {
+			return null;
+		}
 
 		return Optional.ofNullable(
 			_getSubscribeContentDashboardItemActionJSONObject(

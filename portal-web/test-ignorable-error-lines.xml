@@ -57,11 +57,19 @@
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="">
+			<contains></contains>
+			<matches>Email .* will be ignored because it is included in mail.send.blacklist</matches>
+		</ignore-error>
+		<ignore-error description="">
 			<contains>INFO:</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="">
 			<contains>No theme found for specified theme id userdashboard_WAR_userdashboardtheme</contains>
+			<matches></matches>
+		</ignore-error>
+		<ignore-error description="">
+			<contains>Skipping email because the sender is not specified</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-22821">

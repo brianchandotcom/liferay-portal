@@ -784,6 +784,54 @@ definition {
 			phoneNumber = "+81 3-5456-5796");
 	}
 
+	@description = "Use case for LPS-149125. This test asserts that regular users are displayed in Account Admin when selecting users for an account"
+	@priority = "4"
+	test CanAddRegularUserViaAssignUser {
+		task ("Given there is a regular user added in Users Admin and a business account,") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+		}
+
+		task ("When a user selects a user to add to an account via Account Admin") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.assignUsers(
+				accountName = "Account Name",
+				assigneeName = "userfn");
+		}
+
+		task ("Then the regular user is displayed and can be assigned to the account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+			Accounts.viewAssignee(assigneeName = "userfn");
+		}
+
+		task ("and the account is displayed in the Memberships tab in Edit User page") {
+			User.openUsersAdmin();
+
+			UserNavigator.gotoUser(userScreenName = "usersn");
+
+			UserNavigator.gotoMemberships();
+
+			AssertElementPresent(
+				key_accountName = "Account Name",
+				locator1 = "UsersAndOrganizationsEditUser#ACCOUNTS_TABLE_ACCOUNT_NAMES");
+		}
+	}
+
 	@description = "This test assigns an existing user to account through the Users tab"
 	@priority = "4"
 	test CanAssignExistingUserToAccount {

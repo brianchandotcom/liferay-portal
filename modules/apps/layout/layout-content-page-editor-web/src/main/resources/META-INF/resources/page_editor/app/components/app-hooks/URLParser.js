@@ -14,11 +14,11 @@
 
 import {useCallback, useEffect} from 'react';
 
-import switchSidebarPanel from '../actions/switchSidebarPanel';
-import {HIGHLIGHTED_COMMENT_ID_KEY} from '../config/constants/highlightedCommentIdKey';
-import {useSelectItem} from '../contexts/ControlsContext';
-import {useDispatch, useSelector} from '../contexts/StoreContext';
-import getFragmentItem from '../utils/getFragmentItem';
+import switchSidebarPanel from '../../actions/switchSidebarPanel';
+import {HIGHLIGHTED_COMMENT_ID_KEY} from '../../config/constants/highlightedCommentIdKey';
+import {useSelectItem} from '../../contexts/ControlsContext';
+import {useDispatch, useSelector} from '../../contexts/StoreContext';
+import getFragmentItem from '../../utils/getFragmentItem';
 
 export default function URLParser() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);

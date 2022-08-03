@@ -15,12 +15,12 @@
 import {addParams} from 'frontend-js-web';
 import {useEffect} from 'react';
 
-import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
-import {config} from '../config/index';
-import {useDisplayPagePreviewItem} from '../contexts/DisplayPagePreviewItemContext';
-import {useSelector} from '../contexts/StoreContext';
-import selectLanguageId from '../selectors/selectLanguageId';
-import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
+import {LAYOUT_TYPES} from '../../config/constants/layoutTypes';
+import {config} from '../../config/index';
+import {useDisplayPagePreviewItem} from '../../contexts/DisplayPagePreviewItemContext';
+import {useSelector} from '../../contexts/StoreContext';
+import selectLanguageId from '../../selectors/selectLanguageId';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 
 export default function PreviewURL() {
 	const displayPagePreviewItem = useDisplayPagePreviewItem();

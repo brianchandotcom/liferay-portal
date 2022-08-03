@@ -13,57 +13,37 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo} from 'react';
+import React from 'react';
 
 import {StyleBookContextProvider} from '../../plugins/page-design-options/hooks/useStyleBook';
 import {INIT} from '../actions/types';
-import updatePageContents from '../actions/updatePageContents';
-import {config} from '../config/index';
 import {CollectionActiveItemContextProvider} from '../contexts/CollectionActiveItemContext';
 import {ControlsProvider} from '../contexts/ControlsContext';
 import {DisplayPagePreviewItemContextProvider} from '../contexts/DisplayPagePreviewItemContext';
 import {EditableProcessorContextProvider} from '../contexts/EditableProcessorContext';
 import {GlobalContextProvider} from '../contexts/GlobalContext';
-import {
-	StoreContextProvider,
-	useDispatch,
-	useSelector,
-} from '../contexts/StoreContext';
+import {StoreContextProvider} from '../contexts/StoreContext';
 import {StyleErrorsContextProvider} from '../contexts/StyleErrorsContext';
 import {WidgetsContextProvider} from '../contexts/WidgetsContext';
 import {reducer} from '../reducers/index';
-import selectLanguageId from '../selectors/selectLanguageId';
-import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
-import InfoItemService from '../services/InfoItemService';
 import {DragAndDropContextProvider} from '../utils/drag-and-drop/useDragAndDrop';
 import CommonStylesManager from './CommonStylesManager';
 import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
 import DragPreview from './DragPreview';
 import ItemConfigurationSidebar from './ItemConfigurationSidebar';
 import LayoutViewport from './LayoutViewport';
-import PreviewURL from './PreviewURL';
 import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
-import URLParser from './URLParser';
-
-const DEFAULT_SESSION_LENGTH = 60 * 1000;
+import BackURL from './app-hooks/BackURL';
+import ExtendSession from './app-hooks/ExtendSession';
+import LanguageDirection from './app-hooks/LanguageDirection';
+import PortletConfigurationListener from './app-hooks/PortletConfigurationListener';
+import PreviewURL from './app-hooks/PreviewURL';
+import URLParser from './app-hooks/URLParser';
 
 export default function App({state}) {
 	const initialState = reducer(state, {type: INIT});
-
-	useEffect(() => {
-		if (Liferay.Session && config.autoExtendSessionEnabled) {
-			const sessionLength =
-				Liferay.Session.get('sessionLength') || DEFAULT_SESSION_LENGTH;
-
-			const interval = setInterval(() => {
-				Liferay.Session.extend();
-			}, sessionLength / 2);
-
-			return () => clearInterval(interval);
-		}
-	}, []);
 
 	return (
 		<StoreContextProvider initialState={initialState} reducer={reducer}>
@@ -71,11 +51,13 @@ export default function App({state}) {
 
 			<LanguageDirection />
 
-			<PortetConfigurationListener />
+			<PortletConfigurationListener />
 
 			<URLParser />
 
 			<PreviewURL />
+
+			<ExtendSession />
 
 			<ControlsProvider>
 				<CollectionActiveItemContextProvider>
@@ -120,96 +102,4 @@ export default function App({state}) {
 
 App.propTypes = {
 	state: PropTypes.object.isRequired,
-};
-
-const BackURL = () => {
-	const [backLinkElement, backLinkURL] = useMemo(() => {
-		const backLinkElement = document.querySelector('.lfr-back-link');
-
-		try {
-			return [backLinkElement, new URL(backLinkElement?.href)];
-		}
-		catch (error) {
-			return [];
-		}
-	}, []);
-
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-
-	useEffect(() => {
-		if (backLinkElement && backLinkURL && segmentsExperienceId) {
-			backLinkURL.searchParams.set(
-				'segmentsExperienceId',
-				segmentsExperienceId
-			);
-			backLinkElement.href = backLinkURL.toString();
-
-			const currentURL = new URL(window.location.href);
-
-			if (currentURL.searchParams.has('p_l_back_url')) {
-				currentURL.searchParams.set(
-					'p_l_back_url',
-					backLinkURL.toString()
-				);
-
-				window.history.replaceState(
-					null,
-					document.title,
-					currentURL.toString()
-				);
-			}
-		}
-	}, [backLinkElement, backLinkURL, segmentsExperienceId]);
-
-	return null;
-};
-
-const LanguageDirection = () => {
-	const languageId = useSelector(selectLanguageId);
-
-	useEffect(() => {
-		const currentLanguageDirection = Liferay.Language.direction[languageId];
-		const wrapper = document.getElementById('wrapper');
-
-		if (wrapper) {
-			wrapper.dir = currentLanguageDirection;
-			wrapper.lang = languageId;
-		}
-	}, [languageId]);
-
-	return null;
-};
-
-const PAGE_CONTENTS_AWARE_PORTLET_IDS = [
-	'com_liferay_journal_content_web_portlet_JournalContentPortlet',
-	'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
-];
-
-const PortetConfigurationListener = () => {
-	const dispatch = useDispatch();
-
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-
-	useEffect(() => {
-		const onEditConfiguration = ({portletId}) => {
-			if (PAGE_CONTENTS_AWARE_PORTLET_IDS.includes(portletId)) {
-				InfoItemService.getPageContents({
-					onNetworkStatus: dispatch,
-					segmentsExperienceId,
-				}).then((pageContents) => {
-					dispatch(
-						updatePageContents({
-							pageContents,
-						})
-					);
-				});
-			}
-		};
-
-		Liferay.on('editConfiguration', onEditConfiguration);
-
-		return () => Liferay.detach('editConfiguration', onEditConfiguration);
-	}, [dispatch, segmentsExperienceId]);
-
-	return null;
 };

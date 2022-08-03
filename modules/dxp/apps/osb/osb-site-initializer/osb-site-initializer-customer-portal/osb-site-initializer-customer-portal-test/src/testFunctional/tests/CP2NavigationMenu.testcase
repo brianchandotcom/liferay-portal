@@ -23,16 +23,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-		}
+		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
+		PortalInstances.tearDownCP();
 	}
 
 	@description = "LPS-143811 - Verify if Analytics Cloud option is showing under Product Activation."
@@ -40,12 +35,11 @@ definition {
 	test IsAnalyticsCloudOptionAvailable {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Click(
-			locator1 = "CP2LiferayContact#PROJECT_CARD",
-			status = "Expired",
-			title = "Test Account 03");
+		CustomerPortal.enterOnProject(
+			title = "Test Account 03",
+			status = "Expired");
 
-		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+		CP2NavigationMenu.goToProductActivation();
 
 		AssertElementPresent(
 			key_text = "Analytics Cloud",
@@ -57,12 +51,9 @@ definition {
 	test IsCommerceOptionAvailable {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Click(
-			locator1 = "CP2LiferayContact#PROJECT_CARD",
-			status = "Active",
-			title = "Test Account 04");
+		CustomerPortal.enterOnProject(title = "Test Account 04");
 
-		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+		CP2NavigationMenu.goToProductActivation();
 
 		AssertElementPresent(
 			key_text = "Commerce",
@@ -74,12 +65,9 @@ definition {
 	test IsDXPCloudOptionAvailable {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Click(
-			locator1 = "CP2LiferayContact#PROJECT_CARD",
-			status = "Active",
-			title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
-		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+		CP2NavigationMenu.goToProductActivation();
 
 		AssertElementPresent(
 			key_text = "DXP Cloud",
@@ -91,12 +79,9 @@ definition {
 	test IsDXPOptionAvailable {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Click(
-			locator1 = "CP2LiferayContact#PROJECT_CARD",
-			status = "Active",
-			title = "Test Account 02");
+		CustomerPortal.enterOnProject(title = "Test Account 02");
 
-		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+		CP2NavigationMenu.goToProductActivation();
 
 		AssertElementPresent(
 			key_text = "DXP",
@@ -108,12 +93,9 @@ definition {
 	test IsEnterpriseSearchOptionAvailable {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Click(
-			locator1 = "CP2LiferayContact#PROJECT_CARD",
-			status = "Active",
-			title = "Test Account 06");
+		CustomerPortal.enterOnProject(title = "Test Account 06");
 
-		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+		CP2NavigationMenu.goToProductActivation();
 
 		AssertElementPresent(
 			key_text = "Enterprise Search",
@@ -125,10 +107,7 @@ definition {
 	test IsOverviewMenuDisplayed {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Click(
-			locator1 = "CP2LiferayContact#PROJECT_CARD",
-			status = "Active",
-			title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
 		AssertElementPresent(locator1 = "CP2NavigationMenu#OVERVIEW");
 	}
@@ -138,12 +117,9 @@ definition {
 	test IsPortalOptionAvailable {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Click(
-			locator1 = "CP2LiferayContact#PROJECT_CARD",
-			status = "Active",
-			title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
-		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+		CP2NavigationMenu.goToProductActivation();
 
 		AssertElementPresent(
 			key_text = "Portal",
@@ -156,10 +132,7 @@ definition {
 	test IsTeamMembersMenuDisplayed {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Click(
-			locator1 = "CP2LiferayContact#PROJECT_CARD",
-			status = "Active",
-			title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
 		AssertElementPresent(locator1 = "CP2NavigationMenu#TEAM_MEMBERS");
 	}

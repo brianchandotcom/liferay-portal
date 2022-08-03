@@ -79,6 +79,8 @@ definition {
 
 		Alert.viewSuccessMessage();
 
+		CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "Document_1.xml");
+
 		//Alert.viewErrorMessage(errorMessage = "Unable to download key, please try again.");
 
 	}

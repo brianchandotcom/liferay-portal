@@ -19,7 +19,6 @@ import React, {useState} from 'react';
 export default function PermissionsCheckbox({
 	checked: initialChecked,
 	componentId: _componentId,
-	cssClass,
 	indeterminate: initialIndeterminate,
 	locale: _locale,
 	portletId: _portletId,
@@ -39,7 +38,6 @@ export default function PermissionsCheckbox({
 	return (
 		<ClayCheckbox
 			checked={checked}
-			className={cssClass}
 			indeterminate={indeterminate}
 			inline
 			onChange={() => {
@@ -58,6 +56,5 @@ export default function PermissionsCheckbox({
 
 PermissionsCheckbox.propTypes = {
 	checked: PropTypes.bool,
-	cssClass: PropTypes.string,
 	indeterminate: PropTypes.bool,
 };

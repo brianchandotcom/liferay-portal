@@ -2749,12 +2749,15 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected String getDiffDurationString(long diffDuration) {
-		String diffDurationPrefix = "+";
+		String diffDurationPrefix = "";
 
 		if (diffDuration < 0) {
 			diffDurationPrefix = "-";
 
 			diffDuration *= -1;
+		}
+		else if (diffDuration > 0) {
+			diffDurationPrefix = "+";
 		}
 
 		return JenkinsResultsParserUtil.combine(

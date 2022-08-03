@@ -25,12 +25,7 @@ import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtensionTypeConfigurer;
-import com.liferay.gradle.plugins.workspace.internal.client.extension.CustomElementTypeConfigurer;
-import com.liferay.gradle.plugins.workspace.internal.client.extension.GlobalCSSTypeConfigurer;
-import com.liferay.gradle.plugins.workspace.internal.client.extension.GlobalJSTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeCSSTypeConfigurer;
-import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeFaviconTypeConfigurer;
-import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeJSTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.task.CreateClientExtensionConfigTask;
 import com.liferay.petra.string.StringBundler;
@@ -90,16 +85,7 @@ public class ClientExtensionProjectConfigurator
 		super(settings);
 
 		_clientExtensionConfigurers.put(
-			"customElement", new CustomElementTypeConfigurer());
-		_clientExtensionConfigurers.put(
-			"globalCSS", new GlobalCSSTypeConfigurer());
-		_clientExtensionConfigurers.put(
-			"globalJS", new GlobalJSTypeConfigurer());
-		_clientExtensionConfigurers.put(
 			"themeCSS", new ThemeCSSTypeConfigurer());
-		_clientExtensionConfigurers.put(
-			"themeFavicon", new ThemeFaviconTypeConfigurer());
-		_clientExtensionConfigurers.put("themeJS", new ThemeJSTypeConfigurer());
 
 		_defaultRepositoryEnabled = GradleUtil.getProperty(
 			settings,
@@ -373,6 +359,27 @@ public class ClientExtensionProjectConfigurator
 
 				zip.from(createClientExtensionConfigTaskProvider);
 			});
+
+		zipTaskProvider.configure(
+			zip -> zip.into(
+				new Callable<String>() {
+
+					@Override
+					public String call() throws Exception {
+						return "static";
+					}
+
+				},
+				new Closure<Void>(zip) {
+
+					@SuppressWarnings("unused")
+					public void doCall(CopySpec copySpec) {
+						copySpec.from(project.file("src"));
+						copySpec.include("**/*");
+						copySpec.setIncludeEmptyDirs(false);
+					}
+
+				}));
 	}
 
 	private void _configureTaskClean(Project project) {

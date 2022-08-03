@@ -19,9 +19,13 @@ runGradleTest {
 
 		Project sampleThemeCSSProject = project(":sample-theme-css")
 
-		File distFile = new File(sampleThemeCSSProject.projectDir, "dist/sample-theme-css.zip")
+		FileTree sampleThemeCSSZipFileTree = zipTree(sampleThemeCSSProject.file("dist/sample-theme-css.zip"))
 
-		assert distFile.exists()
+		File imgFile = sampleThemeCSSZipFileTree.files.find {
+			it.name == "paper.gif"
+		}
+
+		assert imgFile.exists()
 
 		Project sampleThemeFaviconProject = project(":sample-theme-favicon")
 

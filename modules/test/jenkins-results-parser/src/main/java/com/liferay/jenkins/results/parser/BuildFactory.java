@@ -134,11 +134,6 @@ public class BuildFactory {
 				url, (TopLevelBuild)parentBuild);
 		}
 
-		if (jobName.startsWith("test-portal-acceptance-pullrequest")) {
-			return new PullRequestPortalTopLevelBuild(
-				url, (TopLevelBuild)parentBuild);
-		}
-
 		if (jobName.startsWith("test-plugins-acceptance-pullrequest")) {
 			return new PullRequestPluginsTopLevelBuild(
 				url, (TopLevelBuild)parentBuild);
@@ -156,6 +151,11 @@ public class BuildFactory {
 
 		if (jobName.equals("test-portal-app-release")) {
 			return new PortalAppReleaseTopLevelBuild(
+				url, (TopLevelBuild)parentBuild);
+		}
+
+		if (jobName.startsWith("test-portal-acceptance-pullrequest")) {
+			return new PullRequestPortalTopLevelBuild(
 				url, (TopLevelBuild)parentBuild);
 		}
 

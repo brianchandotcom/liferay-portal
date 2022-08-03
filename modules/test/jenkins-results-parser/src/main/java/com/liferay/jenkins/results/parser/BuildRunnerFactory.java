@@ -33,16 +33,9 @@ public class BuildRunnerFactory {
 			buildRunner = new RootCauseAnalysisToolTopLevelBuildRunner(
 				(PortalTopLevelBuildData)buildData);
 		}
-		else if (jobName.equals("root-cause-analysis-tool-batch")) {
+
+		if (jobName.equals("root-cause-analysis-tool-batch")) {
 			buildRunner = new RootCauseAnalysisBatchBuildRunner(
-				(PortalBatchBuildData)buildData);
-		}
-		else if (jobName.equals("test-poshi-release")) {
-			buildRunner = new PoshiReleasePortalTopLevelBuildRunner(
-				(PortalTopLevelBuildData)buildData);
-		}
-		else if (jobName.contains("-batch")) {
-			buildRunner = new DefaultPortalBatchBuildRunner(
 				(PortalBatchBuildData)buildData);
 		}
 
@@ -60,6 +53,11 @@ public class BuildRunnerFactory {
 			}
 		}
 
+		if (jobName.equals("test-poshi-release")) {
+			buildRunner = new PoshiReleasePortalTopLevelBuildRunner(
+				(PortalTopLevelBuildData)buildData);
+		}
+
 		if (jobName.startsWith(
 				"test-qa-websites-functional-daily-controller") ||
 			jobName.startsWith(
@@ -71,6 +69,11 @@ public class BuildRunnerFactory {
 		if (jobName.startsWith("test-results-consistency-report-controller")) {
 			buildRunner = new TestResultsConsistencyReportControllerBuildRunner(
 				(BaseBuildData)buildData);
+		}
+
+		if (jobName.contains("-batch")) {
+			buildRunner = new DefaultPortalBatchBuildRunner(
+				(PortalBatchBuildData)buildData);
 		}
 
 		if (buildRunner == null) {

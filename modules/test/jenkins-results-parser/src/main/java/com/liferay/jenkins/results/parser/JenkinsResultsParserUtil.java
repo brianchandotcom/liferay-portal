@@ -2915,7 +2915,11 @@ public class JenkinsResultsParserUtil {
 			return null;
 		}
 
-		String command = combine("ssh root@", hostname, " date +%s");
+		String command = "date +%s";
+
+		if (!hostname.equals(getHostName(""))) {
+			command = combine("ssh root@", hostname, " date +%s");
+		}
 
 		try {
 			Process process = executeBashCommands(

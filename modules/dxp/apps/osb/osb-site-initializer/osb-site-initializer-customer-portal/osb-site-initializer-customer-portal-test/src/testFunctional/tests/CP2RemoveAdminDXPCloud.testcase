@@ -27,16 +27,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		CustomerPortal.customerPortalTearDown();
+	
+		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-		}
+		PortalInstances.tearDownCP();
 	}
 
 	@description = "LPS-150058 - Verify if the user is allowed to remove the additional admin(s) added before continuing"

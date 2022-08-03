@@ -145,7 +145,7 @@ export function ColorPicker({
 		}
 	};
 
-	const onBlurAutocompleteInput = ({target}) => {
+	const onBlurInput = ({target}) => {
 		if (value.toLowerCase() === target.value.toLowerCase()) {
 			return;
 		}
@@ -200,7 +200,7 @@ export function ColorPicker({
 		}
 	};
 
-	const onChangeAutocompleteInput = ({target: {value}}) => {
+	const onChangeInput = ({target: {value}}) => {
 		if (error.value) {
 			setError({label: null, value: null});
 			deleteStyleError(field.name, activeItemId);
@@ -285,8 +285,8 @@ export function ColorPicker({
 									aria-label={field.label}
 									className="page-editor__color-picker__autocomplete__input"
 									id={inputId}
-									onBlur={onBlurAutocompleteInput}
-									onChange={onChangeAutocompleteInput}
+									onBlur={onBlurInput}
+									onChange={onChangeInput}
 									ref={inputRef}
 									sizing="sm"
 									value={

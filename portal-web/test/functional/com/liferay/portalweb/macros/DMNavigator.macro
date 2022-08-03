@@ -176,6 +176,12 @@ definition {
 			value1 = "Home");
 	}
 
+	macro gotoItemViaManagementBar {
+		if ("${item}" == "Edit Tags") {
+			Click(locator1 = "Icon#EDIT_TAGS");
+		}
+	}
+
 	macro gotoMetadataSets {
 		Navigator.gotoNavItem(navItem = "Metadata Sets");
 	}

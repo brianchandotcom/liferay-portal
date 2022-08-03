@@ -665,6 +665,9 @@
 				"name": "fontSize",
 				"responsive": false,
 				"type": "select",
+				"typeOptions": {
+					"showLengthField": true
+				},
 				"validValues": [
 					{
 						"label": "inherited",
@@ -782,6 +785,9 @@
 				"name": "borderRadius",
 				"responsive": false,
 				"type": "select",
+				"typeOptions": {
+					"showLengthField": true
+				},
 				"validValues": [
 					{
 						"label": "default",

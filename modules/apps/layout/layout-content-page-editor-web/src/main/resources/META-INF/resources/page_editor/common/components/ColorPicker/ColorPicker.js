@@ -283,7 +283,7 @@ export function ColorPicker({
 								<ClayInput
 									aria-invalid={error.label}
 									aria-label={field.label}
-									className="page-editor__color-picker__autocomplete__input"
+									className="page-editor__color-picker__input"
 									id={inputId}
 									onBlur={onBlurInput}
 									onChange={onChangeInput}

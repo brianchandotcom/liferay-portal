@@ -6,8 +6,7 @@
 html#{$cadmin-selector} {
 	.cadmin {
 		.page-editor__color-picker {
-			> .input-group-item
-				.form-control.page-editor__color-picker__autocomplete__input {
+			> .input-group-item .form-control.page-editor__color-picker__input {
 				border-radius: 0 4px 4px 0;
 				font-weight: 600;
 				transition: none;
@@ -29,7 +28,7 @@ html#{$cadmin-selector} {
 
 			&:not(.hovered) > .input-group-item > .input-group {
 				&:not(:hover):not(:focus-within) {
-					.form-control.page-editor__color-picker__autocomplete__input {
+					.form-control.page-editor__color-picker__input {
 						background-color: transparent;
 						border-color: transparent;
 					}

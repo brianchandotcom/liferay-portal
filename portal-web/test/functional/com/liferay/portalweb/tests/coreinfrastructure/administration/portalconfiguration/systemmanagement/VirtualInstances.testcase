@@ -41,6 +41,49 @@ definition {
 		PortalInstances.viewCP(virtualHost = "www.able.com");
 	}
 
+	@description = "This automates LPS-157752. It asserts that email settings can be configured in a Virtual Instance."
+	@priority = "4"
+	test CanConfigureEmailSettingsInVirtualInstance {
+		property test.name.skip.portal.instance = "VirtualInstances#CanConfigureEmailSettingsInVirtualInstance";
+
+		task ("Given a new Virtual Instance is created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+		}
+
+		task ("When a user makes changes to email settings in the Virtual Instance and saves") {
+			PortalSettings.gotoConfiguration(
+				baseURL = "http://www.able.com:8080",
+				configurationCategory = "Email",
+				configurationName = "Mail Settings",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.editText(
+				fieldName = "pop3Port",
+				fieldValue = "995");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the new configuration should now be displayed") {
+			FormFields.viewTextValue(
+				fieldName = "pop3Port",
+				fieldValue = "995");
+		}
+	}
+
 	@priority = "5"
 	test DeletePortalInstance {
 		property test.name.skip.portal.instance = "VirtualInstances#DeletePortalInstance";

@@ -1,18 +1,18 @@
 definition {
 
-    macro convertDay {
+	macro convertDay {
 		var day = DateUtil.getDate("${days}");
 
-        var length = StringUtil.length("${day}");
+		var length = StringUtil.length("${day}");
 
-        if ("${length}" == "1") {
-            var day = "0${day}";
-        }
+		if ("${length}" == "1") {
+			var day = "0${day}";
+		}
 
-        return "${day}";
-    }
+		return "${day}";
+	}
 
-    macro convertMouth {
+	macro convertMouth {
 		var month = DateUtil.getMonth("${days}");
 
 		if ("${month}" == "1") {
@@ -52,28 +52,19 @@ definition {
 			var month = "Dec";
 		}
 
-        return "${month}";
-    }
+		return "${month}";
+	}
 
 	macro generateStaticFullStartAndEndDate {
 		var startDay = CP2DataUtil.convertDay(days = "0");
-
 		var startMonth = CP2DataUtil.convertMouth(days = "0");
-
 		var startYear = DateUtil.getYear("0");
-
 		var originalEndDay = CP2DataUtil.convertDay(days = "335");
-
 		var originalEndMonth = CP2DataUtil.convertMouth(days = "335");
-
 		var originalEndYear = DateUtil.getYear("335");
-
 		var endDay = CP2DataUtil.convertDay(days = "365");
-
 		var endMonth = CP2DataUtil.convertMouth(days = "365");
-
 		var endYear = DateUtil.getYear("365");
-
 		static var staticFullStartDate = "${startMonth} ${startDay}, ${startYear}";
 		static var staticFullOriginalEndDate = "${originalEndMonth} ${originalEndDay}, ${originalEndYear}";
 		static var staticFullEndDate = "${endMonth} ${endDay}, ${endYear}";

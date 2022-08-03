@@ -30,7 +30,7 @@ definition {
 		CustomerPortal.customerPortalTearDown();
 
 		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-		
+
 		PortalInstances.tearDownCP();
 	}
 

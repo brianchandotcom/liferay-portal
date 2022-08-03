@@ -224,7 +224,6 @@ definition {
 		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
 
 		CustomerPortal.deleteCPObject(title = "Account Flag");
-
 	}
 
 }

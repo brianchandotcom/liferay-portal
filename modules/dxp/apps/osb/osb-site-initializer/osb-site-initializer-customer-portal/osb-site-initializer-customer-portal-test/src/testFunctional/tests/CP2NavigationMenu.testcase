@@ -36,8 +36,8 @@ definition {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(
-			title = "Test Account 03",
-			status = "Expired");
+			status = "Expired",
+			title = "Test Account 03");
 
 		CP2NavigationMenu.goToProductActivation();
 

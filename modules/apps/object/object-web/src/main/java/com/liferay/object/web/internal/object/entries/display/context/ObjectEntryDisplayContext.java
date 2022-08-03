@@ -605,8 +605,17 @@ public class ObjectEntryDisplayContext {
 					continue;
 				}
 
-				ddmForm.addDDMFormField(
-					_getDDMFormField(objectField, readOnly));
+				if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+
+					ddmForm.addDDMFormField(
+						_getDDMFormField(objectField, true));
+				}
+				else {
+					ddmForm.addDDMFormField(
+						_getDDMFormField(objectField, readOnly));
+				}
 			}
 		}
 		else {
@@ -910,8 +919,18 @@ public class ObjectEntryDisplayContext {
 					_objectFieldNames.put(
 						objectLayoutColumn.getObjectFieldId(),
 						objectField.getName());
-					nestedDDMFormFields.add(
-						_getDDMFormField(objectField, readOnly));
+
+					if (Objects.equals(
+							objectField.getBusinessType(),
+							ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+
+						nestedDDMFormFields.add(
+							_getDDMFormField(objectField, true));
+					}
+					else {
+						nestedDDMFormFields.add(
+							_getDDMFormField(objectField, readOnly));
+					}
 				}
 			}
 		}

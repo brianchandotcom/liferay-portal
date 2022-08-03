@@ -68,7 +68,7 @@ public interface ProductResource {
 	public Response postProductBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Response deleteProductByExternalReferenceCode(
+	public void deleteProductByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
@@ -84,7 +84,7 @@ public interface ProductResource {
 			String externalReferenceCode, String catalogExternalReferenceCode)
 		throws Exception;
 
-	public Response deleteProduct(Long id) throws Exception;
+	public void deleteProduct(Long id) throws Exception;
 
 	public Response deleteProductBatch(
 			Long id, String callbackURL, Object object)

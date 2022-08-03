@@ -1022,16 +1022,18 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteProductByExternalReferenceCode(
+	public boolean deleteProductByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_productResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productResource ->
 				productResource.deleteProductByExternalReferenceCode(
 					externalReferenceCode));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -1064,11 +1066,13 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteProduct(@GraphQLName("id") Long id) throws Exception {
-		return _applyComponentServiceObjects(
+	public boolean deleteProduct(@GraphQLName("id") Long id) throws Exception {
+		_applyVoidComponentServiceObjects(
 			_productResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productResource -> productResource.deleteProduct(id));
+
+		return true;
 	}
 
 	@GraphQLField

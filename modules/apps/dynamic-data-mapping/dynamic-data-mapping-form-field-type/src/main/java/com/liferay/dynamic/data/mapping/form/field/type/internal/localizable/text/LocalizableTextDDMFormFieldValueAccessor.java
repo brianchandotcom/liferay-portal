@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
-import java.util.Set;
 import java.util.function.IntFunction;
 
 import org.osgi.service.component.annotations.Component;
@@ -88,9 +87,7 @@ public class LocalizableTextDDMFormFieldValueAccessor
 			return true;
 		}
 
-		Set<String> jsonObjectKeys = jsonObject.keySet();
-
-		for (String key : jsonObjectKeys) {
+		for (String key : jsonObject.keySet()) {
 			if (Validator.isNotNull(jsonObject.getString(key))) {
 				return false;
 			}

@@ -251,14 +251,12 @@ definition {
 			project = "Test Account 01");
 
 		AssertElementPresent(
-			date = "Mar 31, 2021 - Mar 30, 2025",
+			date = "Invalid Date - Invalid Date",
 			locator1 = "CP2DXPCloudSetup#CARD_DATES");
 
 		AssertElementPresent(
 			key_status = "Not Activated",
 			locator1 = "CP2DXPCloudSetup#STATUS_CARD");
-
-		AssertElementPresent(locator1 = "CP2DXPCloudSetup#FINISH_ACTIVATION");
 	}
 
 	macro viewDisasterRegionList {

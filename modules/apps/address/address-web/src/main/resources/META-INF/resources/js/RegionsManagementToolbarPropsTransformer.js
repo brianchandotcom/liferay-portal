@@ -18,7 +18,9 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteRegions = (itemData) => {
 		if (
 			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-delete-the-selected-regions'
+				)
 			)
 		) {
 			const form = document.getElementById(`${portletNamespace}fm`);
@@ -26,7 +28,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			if (form) {
 				postForm(form, {
 					data: {
-						countryIds: getCheckedCheckboxes(
+						regionIds: getCheckedCheckboxes(
 							form,
 							`${portletNamespace}allRowIds`
 						),

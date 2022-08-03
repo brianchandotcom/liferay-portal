@@ -18,7 +18,9 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteCountries = (itemData) => {
 		if (
 			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-delete-the-selected-countries'
+				)
 			)
 		) {
 			const form = document.getElementById(`${portletNamespace}fm`);

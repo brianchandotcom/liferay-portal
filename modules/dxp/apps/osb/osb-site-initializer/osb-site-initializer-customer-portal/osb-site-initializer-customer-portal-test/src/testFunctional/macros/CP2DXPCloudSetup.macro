@@ -134,7 +134,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Objects");
 
-		CustomerPortal.viewCPObjectCustomInfo(index = "13");
+		CustomerPortal.viewCPObjectCustomInfo(index = "14");
 
 		CreateObject.checkToggleActive();
 

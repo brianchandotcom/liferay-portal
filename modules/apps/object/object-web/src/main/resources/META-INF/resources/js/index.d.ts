@@ -147,7 +147,19 @@ type ObjectFieldFilterSetting = {
 					| ObjectFieldDateRangeFilterSettings
 					| undefined;
 		  }
+		| ExcludesFilterOperator
+		| IncludesFilterOperator
 		| string;
+};
+
+type ExcludesFilterOperator = {
+	not: {
+		in: string[] | number[];
+	};
+};
+
+type IncludesFilterOperator = {
+	in: string[] | number[];
 };
 
 type ObjectFieldDateRangeFilterSettings = {

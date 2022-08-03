@@ -281,6 +281,40 @@ export default function EditObjectField({
 						},
 					];
 				}
+				else if (
+					objectFieldBusinessType === 'Picklist' ||
+					objectFieldName === 'status'
+				) {
+					let picklistJson:
+						| ExcludesFilterOperator
+						| IncludesFilterOperator;
+
+					if (filterType === 'excludes') {
+						picklistJson = {
+							not: {
+								in: valueList?.map(({value}) => value) as
+									| string[]
+									| number[],
+							},
+						};
+					}
+					else {
+						picklistJson = {
+							in: valueList?.map(({value}) => value) as
+								| string[]
+								| number[],
+						};
+					}
+
+					newFilterValues = [
+						...(filter.value as ObjectFieldFilterSetting[]),
+						{
+							filterBy: objectFieldName,
+							filterType,
+							json: picklistJson,
+						},
+					];
+				}
 				else {
 					newFilterValues = [
 						...(filter.value as ObjectFieldFilterSetting[]),
@@ -316,6 +350,26 @@ export default function EditObjectField({
 				});
 			}
 		}
+	};
+
+	const getPicklistFilterJSONValues = (
+		filterType: string,
+		parsedFilter: ObjectFieldFilterSetting
+	) => {
+		let picklistFilterValues: string[] | number[] = [];
+
+		if (filterType === 'includes') {
+			picklistFilterValues = (parsedFilter.json as IncludesFilterOperator)[
+				'in'
+			];
+		}
+		else {
+			picklistFilterValues = (parsedFilter.json as ExcludesFilterOperator)[
+				'not'
+			]['in'];
+		}
+
+		return picklistFilterValues;
 	};
 
 	useEffect(() => {
@@ -397,11 +451,10 @@ export default function EditObjectField({
 							}
 
 							if (objectField.businessType === 'Picklist') {
-								const picklistFilterValues: string[] =
-
-									// @ts-ignore
-
-									parsedFilter.json[filterType];
+								const picklistFilterValues = getPicklistFilterJSONValues(
+									filterType,
+									parsedFilter
+								) as string[];
 
 								const picklistValueList: LabelValueObject[] = picklistFilterValues.map(
 									(picklistFilterValue) => {
@@ -422,11 +475,10 @@ export default function EditObjectField({
 							}
 
 							if (objectField.name === 'status') {
-								const statusFilterValues: number[] =
-
-									// @ts-ignore
-
-									parsedFilter.json[filterType];
+								const statusFilterValues = getPicklistFilterJSONValues(
+									filterType,
+									parsedFilter
+								) as number[];
 
 								const workflowStatusValueList = statusFilterValues.map(
 									(statusValue) => {

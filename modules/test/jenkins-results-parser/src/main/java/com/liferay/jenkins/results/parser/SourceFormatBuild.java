@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.FormatFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.PoshiValidationFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
@@ -221,6 +222,7 @@ public class SourceFormatBuild
 	@Override
 	protected FailureMessageGenerator[] getFailureMessageGenerators() {
 		return new FailureMessageGenerator[] {
+			new FormatFailureMessageGenerator(),
 			new PoshiValidationFailureMessageGenerator(),
 			new RebaseFailureMessageGenerator(),
 			new SourceFormatFailureMessageGenerator(),

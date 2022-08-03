@@ -26,6 +26,7 @@ definition {
 	@priority = "4"
 	test AddBlueprintInNonRootContext {
 		property portal.context = "liferay";
+		property search.environment.suite.exclude = "true";
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "Blueprints#AddBlueprintInNonRootContext";

@@ -40,12 +40,14 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.LiferayPortletUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -351,6 +353,15 @@ public class KBAdminNavigationDisplayContext {
 		}
 
 		return articleNavigationJSONArray;
+	}
+
+	public boolean isProductMenuOpen() {
+		String productMenuState = SessionClicks.get(
+			_httpServletRequest,
+			"com.liferay.product.navigation.product.menu.web_productMenuState",
+			"closed");
+
+		return Objects.equals(productMenuState, "open");
 	}
 
 	private final HttpServletRequest _httpServletRequest;

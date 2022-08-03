@@ -107,13 +107,13 @@ describe('ColorPicker', () => {
 	});
 
 	it('clears the value and sets the default value of the field if it exists', async () => {
-		const {getByRole, getByTitle} = renderColorPicker({
+		const {baseElement, getByTitle} = renderColorPicker({
 			field: {...FIELD, defaultValue: '#abcabc'},
 		});
 
 		fireEvent.click(getByTitle('clear-selection'));
 
-		expect(getByRole('combobox').value).toBe('#ABCABC');
+		expect(baseElement.querySelector('input').value).toBe('#ABCABC');
 	});
 
 	describe('When the value is an existing token', () => {
@@ -134,13 +134,13 @@ describe('ColorPicker', () => {
 			);
 		});
 
-		it('change to autocomplete color picker when detach token button is clicked', async () => {
-			const {baseElement, getByRole, getByTitle} = renderColorPicker({});
+		it('change to input color picker when detach token button is clicked', async () => {
+			const {baseElement, getByTitle} = renderColorPicker({});
 
 			fireEvent.click(getByTitle('detach-token'));
 
 			expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
-			expect(getByRole('combobox').value).toBe('#9BE169');
+			expect(baseElement.querySelector('input').value).toBe('#9BE169');
 			expect(
 				baseElement.querySelector('.clay-color-picker')
 			).toBeInTheDocument();
@@ -189,12 +189,12 @@ describe('ColorPicker', () => {
 
 	describe('When the value is an hexadecimal', () => {
 		it('renders the autocomplete color picker', () => {
-			const {baseElement, getByRole, getByTitle} = renderColorPicker({
+			const {baseElement, getByTitle} = renderColorPicker({
 				value: '#ffb46e',
 			});
 
 			expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
-			expect(getByRole('combobox').value).toBe('#FFB46E');
+			expect(baseElement.querySelector('input').value).toBe('#FFB46E');
 			expect(
 				baseElement.querySelector('.clay-color-picker')
 			).toBeInTheDocument();
@@ -213,69 +213,23 @@ describe('ColorPicker', () => {
 		});
 
 		it('sets a token if the written value is an existing token', async () => {
-			const {getByLabelText, getByRole, getByTitle} = renderColorPicker({
-				value: '#fff',
-			});
-
-			onTypeValue(getByRole('combobox'), 'green');
-
-			expect(getByTitle('detach-token')).toBeInTheDocument();
-			expect(getByLabelText('Green')).toBeInTheDocument();
-		});
-
-		it('sets a token when the value is selected from the autocomplete dropdown', async () => {
-			const {getByLabelText, getByRole, getByTitle} = renderColorPicker({
-				value: '#fff',
-			});
-
-			fireEvent.change(getByRole('combobox'), {
-				target: {value: 'gre'},
-			});
-			fireEvent.click(getByRole('menuitem'));
-
-			expect(getByTitle('detach-token')).toBeInTheDocument();
-			expect(getByLabelText('Green')).toBeInTheDocument();
-		});
-
-		it('disables autocomplete dropdown option when the token references itself', async () => {
-			const {getByRole} = renderColorPicker({
-				field: {...FIELD, name: 'green'},
-				value: '#fff',
-			});
-
-			fireEvent.change(getByRole('combobox'), {
-				target: {value: 'gree'},
-			});
-
-			expect(getByRole('menuitem')).toBeDisabled();
-		});
-
-		it('disables autocomplete dropdown options when the tokens are mutually referenced', async () => {
-			const {getAllByRole, getByRole} = renderColorPicker({
-				editedTokenValues: {
-					darkBlue: {
-						name: 'blue',
-						value: '#ffb46e',
-					},
-				},
-				field: {...FIELD, name: 'blue'},
-				value: '#fff',
-			});
-
-			fireEvent.change(getByRole('combobox'), {
-				target: {value: 'blu'},
-			});
-
-			getAllByRole('menuitem').forEach((option) =>
-				expect(option).toBeDisabled()
+			const {baseElement, getByLabelText, getByTitle} = renderColorPicker(
+				{
+					value: '#fff',
+				}
 			);
+
+			onTypeValue(baseElement.querySelector('input'), 'green');
+
+			expect(getByTitle('detach-token')).toBeInTheDocument();
+			expect(getByLabelText('Green')).toBeInTheDocument();
 		});
 
 		it('sets the previous value when the input value is removed', async () => {
-			const {getByRole} = renderColorPicker({
+			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
-			const input = getByRole('combobox');
+			const input = baseElement.querySelector('input');
 
 			onTypeValue(input, '');
 
@@ -283,10 +237,10 @@ describe('ColorPicker', () => {
 		});
 
 		it('sets the previous value when the input value is an invalid hexcolor', async () => {
-			const {getByRole} = renderColorPicker({
+			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
-			const input = getByRole('combobox');
+			const input = baseElement.querySelector('input');
 
 			onTypeValue(input, '#44');
 
@@ -294,10 +248,10 @@ describe('ColorPicker', () => {
 		});
 
 		it('takes a 6-digit hexcolor even if the input value has more digits', async () => {
-			const {getByRole} = renderColorPicker({
+			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
-			const input = getByRole('combobox');
+			const input = baseElement.querySelector('input');
 
 			onTypeValue(input, '#55555555555');
 
@@ -305,23 +259,23 @@ describe('ColorPicker', () => {
 		});
 
 		it('converts the 3-digit hexcolor to a 6-digit hexcolor', async () => {
-			const {getByRole} = renderColorPicker({
+			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
-			const input = getByRole('combobox');
+			const input = baseElement.querySelector('input');
 
-			onTypeValue(input, '#abc');
+			onTypeValue(baseElement.querySelector('input'), '#abc');
 
 			expect(input.value).toBe('#AABBCC');
 		});
 
 		describe('Input errors', () => {
 			it('renders an error when the written token does not exist', async () => {
-				const {getByRole, getByText} = renderColorPicker({
+				const {baseElement, getByText} = renderColorPicker({
 					value: '#fff',
 				});
 
-				onTypeValue(getByRole('combobox'), 'prim');
+				onTypeValue(baseElement.querySelector('input'), 'prim');
 
 				expect(
 					getByText('this-token-does-not-exist')
@@ -329,11 +283,15 @@ describe('ColorPicker', () => {
 			});
 
 			it('Clears an error when the clear selection button is clicked', async () => {
-				const {getByRole, getByTitle, queryByText} = renderColorPicker({
+				const {
+					baseElement,
+					getByTitle,
+					queryByText,
+				} = renderColorPicker({
 					value: '#fff',
 				});
 
-				onTypeValue(getByRole('combobox'), 'prim');
+				onTypeValue(baseElement.querySelector('input'), 'prim');
 
 				fireEvent.click(getByTitle('clear-selection'));
 
@@ -343,12 +301,12 @@ describe('ColorPicker', () => {
 			});
 
 			it('renders an error when the written token is the same that the name field', async () => {
-				const {getByRole, getByText} = renderColorPicker({
+				const {baseElement, getByText} = renderColorPicker({
 					field: {...FIELD, name: 'orange'},
 					value: '#fff',
 				});
 
-				onTypeValue(getByRole('combobox'), 'orange');
+				onTypeValue(baseElement.querySelector('input'), 'orange');
 
 				expect(
 					getByText('tokens-cannot-reference-itself')
@@ -356,7 +314,7 @@ describe('ColorPicker', () => {
 			});
 
 			it('renders an error when two tokens are mutually referenced', async () => {
-				const {getByRole, getByText} = renderColorPicker({
+				const {baseElement, getByText} = renderColorPicker({
 					editedTokenValues: {
 						blue: {
 							name: 'orange',
@@ -367,7 +325,7 @@ describe('ColorPicker', () => {
 					value: '#fff',
 				});
 
-				onTypeValue(getByRole('combobox'), 'blue');
+				onTypeValue(baseElement.querySelector('input'), 'blue');
 
 				expect(
 					getByText('tokens-cannot-be-mutually-referenced')

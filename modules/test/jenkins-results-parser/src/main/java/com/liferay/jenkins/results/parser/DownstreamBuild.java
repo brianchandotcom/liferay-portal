@@ -595,9 +595,11 @@ public class DownstreamBuild extends BaseBuild {
 
 		Dom4JUtil.getNewElement("td", durationNamesElement, "Actual");
 		Dom4JUtil.getNewElement("td", durationNamesElement, "Predicted");
+		Dom4JUtil.getNewElement("td", durationNamesElement, "+/-");
 		Dom4JUtil.getNewElement("td", durationNamesElement, "Actual Overhead");
 		Dom4JUtil.getNewElement(
 			"td", durationNamesElement, "Predicted Overhead");
+		Dom4JUtil.getNewElement("td", durationNamesElement, "+/-");
 
 		jenkinsReportTableRowElements.add(durationNamesElement);
 
@@ -610,9 +612,10 @@ public class DownstreamBuild extends BaseBuild {
 
 			TestClassResult testClassResult = null;
 
-			String durationString = "n/a";
-			String overheadDurationString = "n/a";
 			String testClassName = null;
+
+			long duration = 0L;
+			long overheadDuration = 0L;
 
 			if (testClass instanceof JUnitTestClass) {
 				JUnitTestClass jUnitTestClass = (JUnitTestClass)testClass;
@@ -622,11 +625,8 @@ public class DownstreamBuild extends BaseBuild {
 				testClassResult = getTestClassResult(testClassName);
 
 				if (testClassResult != null) {
-					durationString = JenkinsResultsParserUtil.toDurationString(
-						testClassResult.getDuration());
-					overheadDurationString =
-						JenkinsResultsParserUtil.toDurationString(
-							testClassResult.getOverheadDuration());
+					duration = testClassResult.getDuration();
+					overheadDuration = testClassResult.getOverheadDuration();
 				}
 			}
 			else if (testClass instanceof FunctionalTestClass) {
@@ -650,12 +650,8 @@ public class DownstreamBuild extends BaseBuild {
 							continue;
 						}
 
-						durationString =
-							JenkinsResultsParserUtil.toDurationString(
-								testResult.getDuration());
-						overheadDurationString =
-							JenkinsResultsParserUtil.toDurationString(
-								testResult.getOverheadDuration());
+						duration = testResult.getDuration();
+						overheadDuration = testResult.getOverheadDuration();
 
 						break;
 					}
@@ -675,18 +671,32 @@ public class DownstreamBuild extends BaseBuild {
 
 			durationValuesDataElement.addAttribute("style", style);
 
+			long averageDuration = testClass.getAverageDuration();
+
 			Dom4JUtil.getNewElement(
-				"td", durationValuesElement, durationString);
+				"td", durationValuesElement,
+				JenkinsResultsParserUtil.toDurationString(duration));
+			Dom4JUtil.getNewElement(
+				"td", durationValuesElement,
+				JenkinsResultsParserUtil.toDurationString(averageDuration));
+			Dom4JUtil.getNewElement(
+				"td", durationValuesElement,
+				_getDiffDurationString(duration - averageDuration));
+
+			long averageOverheadDuration =
+				testClass.getAverageOverheadDuration();
+
+			Dom4JUtil.getNewElement(
+				"td", durationValuesElement,
+				JenkinsResultsParserUtil.toDurationString(overheadDuration));
 			Dom4JUtil.getNewElement(
 				"td", durationValuesElement,
 				JenkinsResultsParserUtil.toDurationString(
-					testClass.getAverageDuration()));
-			Dom4JUtil.getNewElement(
-				"td", durationValuesElement, overheadDurationString);
+					averageOverheadDuration));
 			Dom4JUtil.getNewElement(
 				"td", durationValuesElement,
-				JenkinsResultsParserUtil.toDurationString(
-					testClass.getAverageOverheadDuration()));
+				_getDiffDurationString(
+					overheadDuration - averageOverheadDuration));
 
 			jenkinsReportTableRowElements.add(durationValuesElement);
 		}

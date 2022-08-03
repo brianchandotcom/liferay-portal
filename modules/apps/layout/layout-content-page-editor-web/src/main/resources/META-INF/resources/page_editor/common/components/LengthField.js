@@ -181,13 +181,11 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 							<ClayIcon
 								className="lfr-portal-tooltip"
 								data-title={field.label}
-								small
 								symbol={field.icon}
 							/>
 
 							<span className="sr-only">{field.label}</span>
 						</label>
-						
 					</ClayInput.GroupInsetItem>
 				) : null}
 			</ClayInput.GroupItem>

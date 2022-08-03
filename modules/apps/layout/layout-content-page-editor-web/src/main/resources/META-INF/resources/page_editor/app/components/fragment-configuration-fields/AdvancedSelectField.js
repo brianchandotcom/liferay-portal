@@ -291,7 +291,6 @@ const InputWithIcon = ({field, onBlur, onChange, value}) => {
 							<ClayIcon
 								className="lfr-portal-tooltip"
 								data-title={field.label}
-								small
 								symbol={field.icon}
 							/>
 

@@ -20,6 +20,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSubscriptionC
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 /**
  * @author Alessio Antonio Rendina
@@ -49,7 +50,11 @@ public class ProductSubscriptionConfigurationUtil {
 			GetterUtil.get(
 				productSubscriptionConfiguration.getLength(),
 				cpDefinition.getSubscriptionLength()),
-			subscriptionTypeValue, null,
+			subscriptionTypeValue,
+			UnicodePropertiesBuilder.create(
+				productSubscriptionConfiguration.getSubscriptionTypeSettings(),
+				true
+			).build(),
 			GetterUtil.get(
 				productSubscriptionConfiguration.getNumberOfLength(),
 				cpDefinition.getMaxSubscriptionCycles()),

@@ -480,6 +480,77 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-154980. Can drag and drop a fragment outside the container."
+	@priority = "3"
+	test DragAndDropFragmentFromContainerToOutside {
+		task ("Given a page creator has two Containers on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.editLayoutContainer(
+				containerWidth = "Fixed Width",
+				width = "200px");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container",
+				targetFragmentName = "Container");
+		}
+
+		task ("When the page creator drags and drops the second Container into the first one") {
+			PageEditor.clickConfigurableField(
+				fragmentName = "Container",
+				index = "2");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_dragFragmentName = "Container",
+				key_elementType = "Container",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT_HEADER_DRAG_HANDLER",
+				locator2 = "PageEditor#CONTAINER_CONTAINER");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Then the page creator sees the second Container inside the first one") {
+			AssertElementPresent(
+				key_elementHeader = "//div[@aria-label='Container']",
+				key_elementType = "Container",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
+
+		task ("When the page creator drags and drops the second Container outside the first one") {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				index = "1",
+				key_dragFragmentName = "Container",
+				key_targetFragmentName = "Container",
+				locator1 = "Fragment#FRAGMENT_HEADER_DRAG_HANDLER",
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Then the page creator sees the second Container outside the first one") {
+			AssertElementNotPresent(
+				key_elementHeader = "//div[@aria-label='Container']",
+				key_elementType = "Container",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+			PageEditor.viewFragment(fragmentName = "Container");
+
+			PageEditor.viewFragment(
+				fragmentName = "Container",
+				position = "2");
+		}
+	}
+
 	@description = "This is a test for LPS-107285. When duplicate the Container with the Grid, the Grid should also be duplicated."
 	@priority = "5"
 	test DuplicateContainerWithGrid {

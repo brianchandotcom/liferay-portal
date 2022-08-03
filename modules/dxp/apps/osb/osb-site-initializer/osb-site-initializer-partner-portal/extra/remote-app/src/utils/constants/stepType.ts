@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-export const STEP_TYPES = {
-	activitiesForm: 2,
-	activitiesList: 1,
-	goalsPage: 0,
-	reviewForm: 3,
-};
+export enum stepType {
+	ACTIVITY = 'activity',
+	ACTIVITIES = 'activities',
+	GOALS = 'goals',
+	REVIEW = 'review',
+}

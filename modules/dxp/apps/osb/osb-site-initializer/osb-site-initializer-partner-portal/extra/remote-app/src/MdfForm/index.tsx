@@ -11,34 +11,34 @@
 
 import {useState} from 'react';
 
+import {stepType} from '../utils/constants/stepType';
 import ActivitiesForm from './pages/ActivitiesForm';
 import ActivitiesList from './pages/ActivitiesList';
 import GoalsPage from './pages/GoalsPage';
 import ReviewForm from './pages/ReviewForm';
-import {STEP_TYPES} from './utils/constants/stepType';
 
 const MdfForm = () => {
-	const [step, setStep] = useState<any>(STEP_TYPES.goalsPage);
+	const [step, setStep] = useState<stepType>(stepType.GOALS);
 	const [generalObject, setGeneralObject] = useState<any>();
 	const StepLayout = {
-		[STEP_TYPES.activitiesList]: (
+		[stepType.ACTIVITIES]: (
 			<ActivitiesList generalObject={generalObject} setStep={setStep} />
 		),
-		[STEP_TYPES.goalsPage]: (
+		[stepType.GOALS]: (
 			<GoalsPage
 				generalObject={generalObject}
 				setGeneralObject={setGeneralObject}
 				setStep={setStep}
 			/>
 		),
-		[STEP_TYPES.activitiesForm]: (
+		[stepType.ACTIVITY]: (
 			<ActivitiesForm
 				generalObject={generalObject}
 				setGeneralObject={setGeneralObject}
 				setStep={setStep}
 			/>
 		),
-		[STEP_TYPES.reviewForm]: (
+		[stepType.REVIEW]: (
 			<ReviewForm generalObject={generalObject} setStep={setStep} />
 		),
 	};

@@ -324,17 +324,16 @@ public class PendingCommerceOrderItemFDSDataProvider
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
+		Map<Long, List<CommerceOrderValidatorResult>>
+			commerceOrderValidatorResultMap =
+				_getCommerceOrderValidatorResultMap(commerceOrderItems, locale);
+
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 			CommerceOrderItemPrice commerceOrderItemPrice =
 				_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
 					commerceOrder.getCommerceCurrency(), commerceOrderItem);
-
-			Map<Long, List<CommerceOrderValidatorResult>>
-				commerceOrderValidatorResultMap =
-					_getCommerceOrderValidatorResultMap(
-						commerceOrderItems, locale);
 
 			orderItems.add(
 				new OrderItem(

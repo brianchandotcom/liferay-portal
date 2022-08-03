@@ -23,16 +23,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-		}
+		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
+		PortalInstances.tearDownCP();
 	}
 
 	@description = "LPS-143375 - Verify if Liferay Contact displays Liferay Contact's email."
@@ -40,10 +35,7 @@ definition {
 	test IsContactEmailDisplayed {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Click(
-			locator1 = "CP2LiferayContact#PROJECT_CARD",
-			status = "Active",
-			title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
 		AssertTextEquals(
 			locator1 = "CP2LiferayContact#DISPLAY_CONTACT",
@@ -56,10 +48,7 @@ definition {
 	test IsContactNameDisplayed {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Click(
-			locator1 = "CP2LiferayContact#PROJECT_CARD",
-			status = "Active",
-			title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
 		AssertElementPresent(locator1 = "CP2LiferayContact#CONTACT_NAME");
 	}
@@ -69,10 +58,7 @@ definition {
 	test IsContactRoleDisplayed {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Click(
-			locator1 = "CP2LiferayContact#PROJECT_CARD",
-			status = "Active",
-			title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
 		AssertTextEquals(
 			locator1 = "CP2LiferayContact#DISPLAY_CONTACT",

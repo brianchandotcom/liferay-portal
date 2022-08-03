@@ -19,6 +19,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,7 +68,9 @@ public class LayoutActionsDisplayContext {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> _isShowConfigureAction(layout),
+						() ->
+							_isContentLayout(layout) &&
+							_isShowConfigureAction(layout),
 						dropdownItem -> {
 							dropdownItem.setHref(
 								_getConfigureLayoutURL(layout));
@@ -97,7 +101,9 @@ public class LayoutActionsDisplayContext {
 							dropdownItem.setTarget("_blank");
 						}
 					).add(
-						() -> _isShowPermissionsAction(layout),
+						() ->
+							_isContentLayout(layout) &&
+							_isShowPermissionsAction(layout),
 						dropdownItem -> {
 							dropdownItem.putData("action", "permissionLayout");
 							dropdownItem.putData(
@@ -115,7 +121,9 @@ public class LayoutActionsDisplayContext {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> _isShowDeleteAction(layout),
+						() ->
+							_isContentLayout(layout) &&
+							_isShowDeleteAction(layout),
 						dropdownItem -> {
 							dropdownItem.putData("action", "deleteLayout");
 							dropdownItem.putData(
@@ -239,6 +247,24 @@ public class LayoutActionsDisplayContext {
 			"selPlid", String.valueOf(draftLayout.getPlid()));
 
 		return getPreviewLayoutURL.toString();
+	}
+
+	private boolean _isContentLayout(Layout layout) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+		}
+
+		if (layoutPageTemplateEntry == null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isShowConfigureAction(Layout layout)

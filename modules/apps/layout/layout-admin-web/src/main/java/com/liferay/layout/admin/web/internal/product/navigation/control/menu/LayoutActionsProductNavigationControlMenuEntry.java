@@ -16,7 +16,6 @@ package com.liferay.layout.admin.web.internal.product.navigation.control.menu;
 
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutActionsDisplayContext;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -103,7 +102,6 @@ public class LayoutActionsProductNavigationControlMenuEntry
 			httpServletRequest, "p_l_mode", Constants.VIEW);
 
 		if (!layoutMode.equals(Constants.EDIT) || layout.isTypeControlPanel() ||
-			!_isContentLayout(layout) ||
 			isEmbeddedPersonalApplicationLayout(layout) ||
 			!(themeDisplay.isShowLayoutTemplatesIcon() ||
 			  themeDisplay.isShowPageSettingsIcon())) {
@@ -128,24 +126,6 @@ public class LayoutActionsProductNavigationControlMenuEntry
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
-	}
-
-	private boolean _isContentLayout(Layout layout) {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
-
-		if (layoutPageTemplateEntry == null) {
-			layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
-		}
-
-		if (layoutPageTemplateEntry == null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Reference

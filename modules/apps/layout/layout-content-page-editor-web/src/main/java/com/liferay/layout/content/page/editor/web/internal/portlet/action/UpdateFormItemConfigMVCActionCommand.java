@@ -184,7 +184,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
-		Collection<String> missingFragmentEntryLabels = new TreeSet<>();
+		Collection<String> missingInputTypes = new TreeSet<>();
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
@@ -204,7 +204,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 					_getFragmentEntryKey(infoFieldType));
 
 			if (fragmentEntry == null) {
-				missingFragmentEntryLabels.add(
+				missingInputTypes.add(
 					_getFragmentEntryLabel(
 						infoFieldType, themeDisplay.getLocale()));
 
@@ -223,7 +223,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 				"INPUTS-submit-button");
 
 		if (fragmentEntry == null) {
-			missingFragmentEntryLabels.add(
+			missingInputTypes.add(
 				_language.get(themeDisplay.getLocale(), "submit-button"));
 		}
 		else {
@@ -234,14 +234,14 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay));
 		}
 
-		if (!missingFragmentEntryLabels.isEmpty()) {
+		if (!missingInputTypes.isEmpty()) {
 			jsonObject.put(
 				"errorMessage",
 				_language.format(
 					themeDisplay.getLocale(),
 					"some-fragments-are-missing.-x-could-not-be-added-to-" +
 						"your-form-because-they-are-not-available",
-					StringUtil.merge(missingFragmentEntryLabels)));
+					StringUtil.merge(missingInputTypes)));
 		}
 
 		return addedFragmentEntryLinks;

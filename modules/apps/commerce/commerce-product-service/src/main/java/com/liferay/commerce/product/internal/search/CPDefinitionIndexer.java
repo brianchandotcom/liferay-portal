@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 
 import java.io.Serializable;
 
@@ -856,6 +857,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			document.addNumber(CPField.BASE_PRICE, lowestPrice);
 		}
 
+		_expandoBridgeIndexer.addAttributes(
+			document, cpDefinition.getExpandoBridge());
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + cpDefinition + " indexed successfully");
 		}
@@ -997,6 +1001,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private ExpandoBridgeIndexer _expandoBridgeIndexer;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

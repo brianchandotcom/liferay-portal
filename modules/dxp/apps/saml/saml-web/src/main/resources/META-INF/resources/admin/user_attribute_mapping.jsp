@@ -98,7 +98,7 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 </aui:fieldset>
 
 <script>
-	<portlet:namespace />evaluateAttributeMappingRows = function () {
+	function <portlet:namespace />evaluateAttributeMappingRows() {
 		document.querySelector(
 			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
 		).value = '';
@@ -114,7 +114,8 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 				)
 			);
 	};
-	<portlet:namespace />evaluateAttributeMappingRow = function (
+
+	function <portlet:namespace />evaluateAttributeMappingRow(
 		row,
 		userIdentifierExpressionIsAttributeMapping,
 		event

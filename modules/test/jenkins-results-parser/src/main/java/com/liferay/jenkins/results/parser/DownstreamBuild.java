@@ -412,7 +412,7 @@ public class DownstreamBuild extends BaseBuild {
 		durationNamesElement.addAttribute("style", "display: none;");
 
 		Element durationNamesDataElement = Dom4JUtil.getNewElement(
-			"td", durationNamesElement);
+			"td", durationNamesElement, "Name");
 
 		String style = JenkinsResultsParserUtil.combine(
 			"text-indent: ",
@@ -585,7 +585,7 @@ public class DownstreamBuild extends BaseBuild {
 		durationNamesElement.addAttribute("style", "display: none;");
 
 		Element durationNamesDataElement = Dom4JUtil.getNewElement(
-			"td", durationNamesElement);
+			"td", durationNamesElement, "Name");
 
 		String style = JenkinsResultsParserUtil.combine(
 			"text-indent: ",

@@ -1816,6 +1816,9 @@ public class ObjectEntryLocalServiceImpl
 							result[i] = _getValue(
 								resultSet, columnName, scalar.getSQLType());
 
+							if (result[i] == null) {
+								result[i] = "0";
+							}
 						}
 
 

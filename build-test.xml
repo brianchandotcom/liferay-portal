@@ -2990,18 +2990,11 @@ include-and-override=portal-liferay-online-limit.properties</echo>
 						<replacevalue>jdbc.write</replacevalue>
 					</replace>
 
-					<replace
-						file="${test.app.server.classes.portal.dir}/portal-ext.properties"
-					>
-						<replacetoken>lportal</replacetoken>
-						<replacevalue>lportal1</replacevalue>
-					</replace>
-
 					<echo append="true" file="${test.app.server.classes.portal.dir}/portal-ext.properties">
 jdbc.read.driverClassName=${database.driver}
 jdbc.read.url=${database.url}
-jdbc.read.username=${database.username}
-jdbc.read.password=${database.password}</echo>
+jdbc.read.username=read_only_user
+jdbc.read.password=password</echo>
 				</then>
 				<elseif>
 					<equals arg1="${configure.read.write.database}" arg2="jndi" />
@@ -3015,7 +3008,7 @@ jdbc.read.password=${database.password}</echo>
 							<replacevalue>
 								<![CDATA[
 									<Context>
-										<ResourceLink name="jdbc/LiferayWritePool" global="jdbc/LiferayWritePool" type="javax.sql.DataSource" />
+										<ResourceLink name="jdbc/LiferayReadPool" global="jdbc/LiferayReadPool" type="javax.sql.DataSource" />
 								]]>
 							</replacevalue>
 						</replace>
@@ -3034,11 +3027,11 @@ jdbc.read.password=${database.password}</echo>
 											maxActive="40"
 											maxIdle="20"
 											maxWait="1000"
-											name="jdbc/LiferayWritePool"
-											password="${database.password}"
+											name="jdbc/LiferayReadPool"
+											password="password"
 											type="javax.sql.DataSource"
-											url="jdbc:mysql://${database.host}/lportal1?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false&amp;serverTimezone=GMT&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true"
-											username="${database.username}"
+											url="jdbc:mysql://${database.host}/lportal?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false&amp;serverTimezone=GMT&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true"
+											username="read_only_user"
 										/>
 								]]>
 							</replacevalue>
@@ -3048,11 +3041,11 @@ jdbc.read.password=${database.password}</echo>
 							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
 						>
 							<replacetoken>jdbc.default.jndi.name=</replacetoken>
-							<replacevalue>jdbc.read.jndi.name=jdbc/LiferayPool</replacevalue>
+							<replacevalue>jdbc.write.jndi.name=jdbc/LiferayPool</replacevalue>
 						</replace>
 
 						<echo append="true" file="${test.app.server.classes.portal.dir}/portal-ext.properties">
-jdbc.write.jndi.name=jdbc/LiferayWritePool</echo>
+jdbc.read.jndi.name=jdbc/LiferayReadPool</echo>
 					</then>
 				</elseif>
 			</if>
@@ -8243,6 +8236,21 @@ create database lportal${databases.size} encoding = 'UNICODE';</echo>
 							tofile="create.sql"
 						/>
 					</else>
+				</if>
+
+				<get-testcase-property property.name="configure.read.write.database" />
+
+				<if>
+					<isset property="configure.read.write.database" />
+					<then>
+						<echo append="true" file="create.sql">
+							<![CDATA[
+								create user 'read_only_user'@'%' identified BY 'password';
+								grant select ON *.* TO 'read_only_user'@'%';
+								flush privileges;
+							]]>
+						</echo>
+					</then>
 				</if>
 
 				<get-database-property property.name="database.device.name" />

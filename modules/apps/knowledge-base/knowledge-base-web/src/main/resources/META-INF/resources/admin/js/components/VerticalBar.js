@@ -30,11 +30,11 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 	const [productMenuOpen, setProductMenuOpen] = useState(false);
 	const [activePanel, setActivePanel] = useState();
 
-	useEffect(() => {
-		const productMenu = Liferay.SideNavigation.instance(
-			document.querySelector('.product-menu-toggle')
-		);
+	const productMenu = Liferay.SideNavigation.instance(
+		document.querySelector('.product-menu-toggle')
+	);
 
+	useEffect(() => {
 		if (productMenu) {
 			setProductMenuOpen(productMenu.visible());
 
@@ -57,7 +57,7 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 				productMenuCloseListener.removeListener();
 			};
 		}
-	}, []);
+	}, [productMenu]);
 
 	useEffect(() => {
 		setActivePanel(productMenuOpen ? BLANK : currentItem.key);
@@ -74,8 +74,9 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 	const onActiveChange = () => {
 		setActivePanel(activePanel ? BLANK : currentItem.key);
 
-		// TODO hide product menu
-
+		if (productMenuOpen) {
+			productMenu.hide();
+		}
 	};
 
 	useEffect(() => {

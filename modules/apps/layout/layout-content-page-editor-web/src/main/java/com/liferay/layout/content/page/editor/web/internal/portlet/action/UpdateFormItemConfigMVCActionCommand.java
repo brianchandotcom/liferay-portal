@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -183,7 +182,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
-		Collection<String> missingInputTypes = new TreeSet<>();
+		TreeSet<String> missingInputTypes = new TreeSet<>();
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 

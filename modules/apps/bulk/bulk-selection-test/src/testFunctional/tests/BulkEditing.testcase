@@ -448,7 +448,16 @@ definition {
 	@description = "This test covers LPS-89636. It saves tags without clicking Enter or adding a Comma."
 	@priority = "4"
 	test SaveTags {
-		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt");
+		for (var entryCount : list "1,2,3,4") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${entryCount}.jpg");
+		}
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2,Document_3,Document_4");
 

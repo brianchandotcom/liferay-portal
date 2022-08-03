@@ -20,6 +20,7 @@ import React, {useEffect, useState} from 'react';
 import NavigationPanel from './NavigationPanel';
 
 const CSS_EXPANDED = 'expanded';
+const BLANK = '';
 
 const VerticalNavigationBar = ({items, parentContainerId}) => {
 	const parentContainer = document.getElementById(parentContainerId);
@@ -27,6 +28,7 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 	const currentItem = items.find((item) => item.active);
 
 	const [productMenuOpen, setProductMenuOpen] = useState(false);
+	const [activePanel, setActivePanel] = useState();
 
 	useEffect(() => {
 		const productMenu = Liferay.SideNavigation.instance(
@@ -58,13 +60,8 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 	}, []);
 
 	useEffect(() => {
-		if (productMenuOpen) {
-			parentContainer.classList.remove(CSS_EXPANDED);
-		}
-		else {
-			parentContainer.classList.add(CSS_EXPANDED);
-		}
-	}, [productMenuOpen, parentContainer]);
+		setActivePanel(productMenuOpen ? BLANK : currentItem.key);
+	}, [productMenuOpen, parentContainer, currentItem]);
 
 	const onIconClick = (event, item) => {
 		if (item.key !== currentItem.key) {
@@ -72,10 +69,23 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 
 			navigate(item.href);
 		}
-		else {
-			parentContainer.classList.toggle(CSS_EXPANDED);
-		}
 	};
+
+	const onActiveChange = () => {
+		setActivePanel(activePanel ? BLANK : currentItem.key);
+
+		// TODO hide product menu
+
+	};
+
+	useEffect(() => {
+		if (activePanel) {
+			parentContainer.classList.add(CSS_EXPANDED);
+		}
+		else {
+			parentContainer.classList.remove(CSS_EXPANDED);
+		}
+	}, [activePanel, parentContainer]);
 
 	const VerticalBarPanels = {
 		article: NavigationPanel,
@@ -86,7 +96,8 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 	return (
 		<VerticalBar
 			absolute
-			active={productMenuOpen ? undefined : currentItem.key}
+			active={activePanel}
+			onActiveChange={onActiveChange}
 			position="left"
 		>
 			<VerticalBar.Bar displayType="light" items={items}>

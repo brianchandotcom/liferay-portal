@@ -146,6 +146,34 @@ this-is-a-language-key=This is a language key''',
 		}
 	}
 
+	@description = "This test asserts that error message when importing a language key with overlength value."
+	@priority = "3"
+	test CannotImportTranslationsWithMoreThan1000Characters {
+		task ("When upload a language key with more than 1000 characters") {
+			Portlet.gotoPortletOptions(portletOption = "Import Translations");
+
+			UploadDependencyFile.uploadFile(fileName = "language_key_with_more_than_1000_characters.properties");
+
+			Button.clickSave();
+		}
+
+		task ("Then assert the error message and the language key was not uploaded") {
+			Alert.viewRequestFailedToComplete();
+
+			Alert.viewErrorMessage(errorMessage = "Error: Keys longer than 1000 characters are not allowed.");
+
+			AssertConsoleTextNotPresent(value1 = "Data truncation");
+
+			LanguageOverride.openLanguageOverridePortlet();
+
+			Search.searchCP(searchTerm = "newkey");
+
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "0 Results for &quot;newkey&quot;");
+		}
+	}
+
 	@description = "This test asserts that the File Upload field is required in Import Translations page."
 	@priority = "4"
 	test CanViewFileUploadFieldIsRequired {

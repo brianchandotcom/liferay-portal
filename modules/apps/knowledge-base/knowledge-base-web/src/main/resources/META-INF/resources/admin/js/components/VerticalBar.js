@@ -15,6 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {VerticalBar} from '@clayui/core';
 import {navigate} from 'frontend-js-web';
+import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import NavigationPanel from './NavigationPanel';
@@ -137,6 +138,19 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 			</VerticalBar.Content>
 		</VerticalBar>
 	);
+};
+
+const itemShape = {
+	active: PropTypes.bool,
+	href: PropTypes.string.isRequired,
+	icon: PropTypes.string.isRequired,
+	key: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+};
+
+VerticalNavigationBar.propTypes = {
+	items: PropTypes.arrayOf(PropTypes.shape(itemShape)),
+	parentContainerId: PropTypes.string.isRequired,
 };
 
 export default VerticalNavigationBar;

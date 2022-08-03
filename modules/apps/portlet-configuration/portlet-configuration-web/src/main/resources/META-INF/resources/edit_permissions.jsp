@@ -197,26 +197,24 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 											</label>
 										</div>
 
-										<c:if test="<%= indeterminate %>">
-											<react:component
-												module="js/PermissionsCheckbox"
-												props='<%=
-													HashMapBuilder.<String, Object>put(
-														"checked", checked
-													).put(
-														"disabled", disabled
-													).put(
-														"id", inputId
-													).put(
-														"indeterminate", indeterminate
-													).put(
-														"name", inputName
-													).put(
-														"title", dataMessage
-													).build()
-												%>'
-											/>
-										</c:if>
+										<react:component
+											module="js/PermissionsCheckbox"
+											props='<%=
+												HashMapBuilder.<String, Object>put(
+													"checked", checked
+												).put(
+													"disabled", disabled
+												).put(
+													"id", inputId
+												).put(
+													"indeterminate", indeterminate
+												).put(
+													"name", inputName
+												).put(
+													"title", dataMessage
+												).build()
+											%>'
+										/>
 									</div>
 								</c:when>
 								<c:otherwise>

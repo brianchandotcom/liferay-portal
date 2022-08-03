@@ -33,11 +33,15 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		PortalInstances.tearDownCP();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 	}
 
 	@description = "Verify that after clicking the 'Download Key' button the user downloads the appropriate Commerce license"

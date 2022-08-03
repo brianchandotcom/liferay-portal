@@ -4,9 +4,13 @@ definition {
 	function dragOver {
 		WaitForSPARefresh();
 
+		if (contains("${ratio}", "ratio")) {
+			var ratio = "2";
+		}
+
 		var javaScript = '''
 Simulate = {
-	dragOver: async function(source, target) {
+	dragOver: async function(source, target, ratio) {
 		const dataTransfer = new DataTransfer();
 
 		const dispatchEvent = async(type, element) => {
@@ -17,7 +21,7 @@ Simulate = {
 				{
 					bubbles: true,
 					clientX: rect.left + (rect.width / 2),
-					clientY: rect.top + (rect.height / 2),
+					clientY: rect.top + (rect.height / (ratio)),
 					dataTransfer: dataTransfer,
 					relatedTarget: element
 				});
@@ -33,7 +37,7 @@ Simulate = {
 	}
 };
 
-Simulate.dragOver(arguments[0], arguments[1]);
+Simulate.dragOver(arguments[0], arguments[1], ${ratio});
 		''';
 
 		selenium.executeJavaScript("${javaScript}", "${locator1}", "${locator2}");

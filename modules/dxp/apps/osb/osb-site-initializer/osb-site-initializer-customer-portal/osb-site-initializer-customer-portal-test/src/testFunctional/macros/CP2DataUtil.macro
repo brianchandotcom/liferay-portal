@@ -1,0 +1,94 @@
+definition {
+
+    macro convertDay {
+		var day = DateUtil.getDate("${days}");
+
+        var length = StringUtil.length("${day}");
+
+        if ("${length}" == "1") {
+            var day = "0${day}";
+        }
+
+        return "${day}";
+    }
+
+    macro convertMouth {
+		var month = DateUtil.getMonth("${days}");
+
+		if ("${month}" == "1") {
+			var month = "Jan";
+		}
+		else if ("${month}" == "2") {
+			var month = "Feb";
+		}
+		else if ("${month}" == "3") {
+			var month = "Mar";
+		}
+		else if ("${month}" == "4") {
+			var month = "Apr";
+		}
+		else if ("${month}" == "5") {
+			var month = "May";
+		}
+		else if ("${month}" == "6") {
+			var month = "Jun";
+		}
+		else if ("${month}" == "7") {
+			var month = "Jul";
+		}
+		else if ("${month}" == "8") {
+			var month = "Aug";
+		}
+		else if ("${month}" == "9") {
+			var month = "Sep";
+		}
+		else if ("${month}" == "10") {
+			var month = "Oct";
+		}
+		else if ("${month}" == "11") {
+			var month = "Nov";
+		}
+		else if ("${month}" == "12") {
+			var month = "Dec";
+		}
+
+        return "${month}";
+    }
+
+	macro generateStaticFullStartAndEndDate {
+		var startDay = CP2DataUtil.convertDay(days = "0");
+
+		var startMonth = CP2DataUtil.convertMouth(days = "0");
+
+		var startYear = DateUtil.getYear("0");
+
+		var originalEndDay = CP2DataUtil.convertDay(days = "335");
+
+		var originalEndMonth = CP2DataUtil.convertMouth(days = "335");
+
+		var originalEndYear = DateUtil.getYear("335");
+
+		var endDay = CP2DataUtil.convertDay(days = "365");
+
+		var endMonth = CP2DataUtil.convertMouth(days = "365");
+
+		var endYear = DateUtil.getYear("365");
+
+		static var staticFullStartDate = "${startMonth} ${startDay}, ${startYear}";
+		static var staticFullOriginalEndDate = "${originalEndMonth} ${originalEndDay}, ${originalEndYear}";
+		static var staticFullEndDate = "${endMonth} ${endDay}, ${endYear}";
+
+		return "${staticFullStartDate}";
+
+		return "${staticFullOriginalEndDate}";
+
+		return "${staticFullEndDate}";
+
+		echo("${staticFullStartDate}");
+
+		echo("${staticFullOriginalEndDate}");
+
+		echo("${staticFullEndDate}");
+	}
+
+}

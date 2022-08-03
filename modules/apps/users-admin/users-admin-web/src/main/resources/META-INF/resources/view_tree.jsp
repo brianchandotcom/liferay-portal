@@ -192,7 +192,7 @@ if (organization != null) {
 		<portlet:namespace />deleteOrganizations(organizationsRedirect);
 	}
 
-	<portlet:namespace />doDeleteOrganizations = function (
+	function <portlet:namespace />doDeleteOrganizations(
 		organizationIds,
 		organizationsRedirect
 	) {

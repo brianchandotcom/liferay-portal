@@ -3074,6 +3074,20 @@ definition {
 				PageEditor.waitForAutoSave();
 			}
 
+			if (isSet(width)) {
+				Type(
+					key_borderBottom = "Frame",
+					key_fieldLabel = "Width",
+					locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD",
+					value1 = "${width}");
+
+				Click(
+					key_sidebarButton = "Browser",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+				PageEditor.waitForAutoSave();
+			}
+
 			if ("${link}" == "Mapped URL") {
 				Select(
 					key_fieldLabel = "Link",

@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.filter.ExpressionConvert;
-import com.liferay.portal.odata.filter.Filter;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
@@ -393,10 +392,8 @@ public class DefaultObjectEntryManagerImpl
 					OrderByExpressionUtil.getOrderByExpressions(
 						objectDefinition.getObjectDefinitionId(),
 						_objectFieldLocalService, sorts)),
-				values -> getObjectEntry(
-					dtoConverterContext, objectDefinition,
-					GetterUtil.getLong(
-						values.get(objectDefinition.getPKObjectFieldName())))),
+				values -> _getObjectEntry(
+					dtoConverterContext, objectDefinition, values)),
 			pagination,
 			_objectEntryLocalService.getValuesListCount(
 				objectDefinition.getObjectDefinitionId(), groupId,
@@ -585,6 +582,24 @@ public class DefaultObjectEntryManagerImpl
 
 	private String _getObjectEntriesPermissionName(long objectDefinitionId) {
 		return ObjectConstants.RESOURCE_NAME + "#" + objectDefinitionId;
+	}
+
+	private ObjectEntry _getObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, Map<String, Serializable> values)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry objectEntry =
+			_objectEntryService.getObjectEntry(
+				GetterUtil.getLong(
+					values.get(objectDefinition.getPKObjectFieldName())));
+
+		objectEntry.setValues(values);
+
+		_checkObjectEntryObjectDefinitionId(objectDefinition, objectEntry);
+
+		return _toObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry);
 	}
 
 	private String _getObjectEntryPermissionName(long objectDefinitionId) {

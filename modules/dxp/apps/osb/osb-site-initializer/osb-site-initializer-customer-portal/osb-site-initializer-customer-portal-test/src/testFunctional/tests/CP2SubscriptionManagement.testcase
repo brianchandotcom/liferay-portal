@@ -23,16 +23,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-		}
+		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		
+		PortalInstances.tearDownCP();
 	}
 
 	@description = "LPS-147029 - Verify that the cards Subscriptions displays (Product logo - Subscription - Instance Size - Start Date - End Date)"
@@ -90,8 +85,8 @@ definition {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(
-			status = "Future",
-			title = "Test Account 05");
+			title = "Test Account 05",
+			status = "Future");
 
 		AssertElementNotPresent(locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR1");
 	}
@@ -106,7 +101,7 @@ definition {
 
 		CustomerPortal.enterOnProject(title = "Test Account 06");
 
-		CustomerPortal.viewSubscriptionManagementTab(productTab = "DXP Cloud,DXP,Commerce,Enterprise Search");
+		CustomerPortal.viewSubscriptionManagementTab(productTab = "DXP Cloud,Commerce,Enterprise Search");
 	}
 
 	@description = "LPS-147022 - Verify if when the user doesn't have a subscription then a tab will not be shown"

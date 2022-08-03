@@ -452,7 +452,7 @@ public class DownstreamBuild extends BaseBuild {
 			JenkinsResultsParserUtil.toDurationString(averageDuration));
 		Dom4JUtil.getNewElement(
 			"td", durationValuesElement,
-			_getDiffDurationString(duration - averageDuration));
+			getDiffDurationString(duration - averageDuration));
 
 		long overheadDuration = getOverheadDuration();
 		long averageOverheadDuration = getAverageOverheadDuration();
@@ -465,7 +465,7 @@ public class DownstreamBuild extends BaseBuild {
 			JenkinsResultsParserUtil.toDurationString(averageOverheadDuration));
 		Dom4JUtil.getNewElement(
 			"td", durationValuesElement,
-			_getDiffDurationString(overheadDuration - averageOverheadDuration));
+			getDiffDurationString(overheadDuration - averageOverheadDuration));
 
 		jenkinsReportTableRowElements.add(durationValuesElement);
 
@@ -519,7 +519,7 @@ public class DownstreamBuild extends BaseBuild {
 				averageBuildTestDurations));
 		Dom4JUtil.getNewElement(
 			"td", durationValuesElement,
-			_getDiffDurationString(
+			getDiffDurationString(
 				totalBuildTestDurations - averageBuildTestDurations));
 		Dom4JUtil.getNewElement(
 			"td", testDurationsValuesElement,
@@ -531,7 +531,7 @@ public class DownstreamBuild extends BaseBuild {
 				averageBuildTestOverheadDurations));
 		Dom4JUtil.getNewElement(
 			"td", durationValuesElement,
-			_getDiffDurationString(
+			getDiffDurationString(
 				totalBuildTestOverheadDurations -
 					averageBuildTestOverheadDurations));
 
@@ -681,7 +681,7 @@ public class DownstreamBuild extends BaseBuild {
 				JenkinsResultsParserUtil.toDurationString(averageDuration));
 			Dom4JUtil.getNewElement(
 				"td", durationValuesElement,
-				_getDiffDurationString(duration - averageDuration));
+				getDiffDurationString(duration - averageDuration));
 
 			long averageOverheadDuration =
 				testClass.getAverageOverheadDuration();
@@ -695,7 +695,7 @@ public class DownstreamBuild extends BaseBuild {
 					averageOverheadDuration));
 			Dom4JUtil.getNewElement(
 				"td", durationValuesElement,
-				_getDiffDurationString(
+				getDiffDurationString(
 					overheadDuration - averageOverheadDuration));
 
 			jenkinsReportTableRowElements.add(durationValuesElement);
@@ -742,20 +742,6 @@ public class DownstreamBuild extends BaseBuild {
 		}
 
 		return testResultGitHubElements;
-	}
-
-	private String _getDiffDurationString(long diffDuration) {
-		String diffDurationPrefix = "+";
-
-		if (diffDuration < 0) {
-			diffDurationPrefix = "-";
-
-			diffDuration *= -1;
-		}
-
-		return JenkinsResultsParserUtil.combine(
-			diffDurationPrefix,
-			JenkinsResultsParserUtil.toDurationString(diffDuration));
 	}
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =

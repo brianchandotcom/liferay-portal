@@ -2748,6 +2748,20 @@ public abstract class BaseBuild implements Build {
 		return _buildURLMultiPattern;
 	}
 
+	protected String getDiffDurationString(long diffDuration) {
+		String diffDurationPrefix = "+";
+
+		if (diffDuration < 0) {
+			diffDurationPrefix = "-";
+
+			diffDuration *= -1;
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			diffDurationPrefix,
+			JenkinsResultsParserUtil.toDurationString(diffDuration));
+	}
+
 	protected int getDownstreamBuildCountByResult(String result) {
 		List<Build> downstreamBuilds = getDownstreamBuilds(null);
 
@@ -2987,11 +3001,37 @@ public abstract class BaseBuild implements Build {
 						new Date(startTime), getJenkinsReportTimeZoneName())));
 		}
 
+		long duration = getDuration();
+
 		Dom4JUtil.addToElement(
 			buildInfoElement,
 			Dom4JUtil.getNewElement(
 				cellElementTagName, null,
-				JenkinsResultsParserUtil.toDurationString(getDuration())));
+				JenkinsResultsParserUtil.toDurationString(duration)));
+
+		String predictedDurationString = "n/a";
+		String diffDurationString = "n/a";
+
+		if (this instanceof DownstreamBuild) {
+			DownstreamBuild downstreamBuild = (DownstreamBuild)this;
+
+			long averageDuration = downstreamBuild.getAverageDuration();
+
+			predictedDurationString = JenkinsResultsParserUtil.toDurationString(
+				averageDuration);
+			diffDurationString = getDiffDurationString(
+				duration - averageDuration);
+		}
+
+		Dom4JUtil.addToElement(
+			buildInfoElement,
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null, predictedDurationString));
+
+		Dom4JUtil.addToElement(
+			buildInfoElement,
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null, diffDurationString));
 
 		String status = getStatus();
 

@@ -420,13 +420,30 @@ public class DownstreamBuild extends BaseBuild {
 
 		durationNamesDataElement.addAttribute("style", style);
 
+		boolean overheadIncluded = false;
+
+		String batchName = getBatchName();
+
+		if (batchName.startsWith("function") ||
+			batchName.startsWith("integration") ||
+			batchName.startsWith("modules-integration") ||
+			batchName.startsWith("modules-unit") ||
+			batchName.startsWith("unit")) {
+
+			overheadIncluded = true;
+		}
+
 		Dom4JUtil.getNewElement("td", durationNamesElement, "Actual");
 		Dom4JUtil.getNewElement("td", durationNamesElement, "Predicted");
 		Dom4JUtil.getNewElement("td", durationNamesElement, "+/-");
-		Dom4JUtil.getNewElement("td", durationNamesElement, "Actual Overhead");
-		Dom4JUtil.getNewElement(
-			"td", durationNamesElement, "Predicted Overhead");
-		Dom4JUtil.getNewElement("td", durationNamesElement, "+/-");
+
+		if (overheadIncluded) {
+			Dom4JUtil.getNewElement(
+				"td", durationNamesElement, "Actual Overhead");
+			Dom4JUtil.getNewElement(
+				"td", durationNamesElement, "Predicted Overhead");
+			Dom4JUtil.getNewElement("td", durationNamesElement, "+/-");
+		}
 
 		jenkinsReportTableRowElements.add(durationNamesElement);
 
@@ -454,29 +471,26 @@ public class DownstreamBuild extends BaseBuild {
 			"td", durationValuesElement,
 			getDiffDurationString(duration - averageDuration));
 
-		long overheadDuration = getOverheadDuration();
-		long averageOverheadDuration = getAverageOverheadDuration();
+		if (overheadIncluded) {
+			long overheadDuration = getOverheadDuration();
+			long averageOverheadDuration = getAverageOverheadDuration();
 
-		Dom4JUtil.getNewElement(
-			"td", durationValuesElement,
-			JenkinsResultsParserUtil.toDurationString(overheadDuration));
-		Dom4JUtil.getNewElement(
-			"td", durationValuesElement,
-			JenkinsResultsParserUtil.toDurationString(averageOverheadDuration));
-		Dom4JUtil.getNewElement(
-			"td", durationValuesElement,
-			getDiffDurationString(overheadDuration - averageOverheadDuration));
+			Dom4JUtil.getNewElement(
+				"td", durationValuesElement,
+				JenkinsResultsParserUtil.toDurationString(overheadDuration));
+			Dom4JUtil.getNewElement(
+				"td", durationValuesElement,
+				JenkinsResultsParserUtil.toDurationString(
+					averageOverheadDuration));
+			Dom4JUtil.getNewElement(
+				"td", durationValuesElement,
+				getDiffDurationString(
+					overheadDuration - averageOverheadDuration));
+		}
 
 		jenkinsReportTableRowElements.add(durationValuesElement);
 
-		String batchName = getBatchName();
-
-		if (!batchName.startsWith("function") &&
-			!batchName.startsWith("integration") &&
-			!batchName.startsWith("modules-integration") &&
-			!batchName.startsWith("modules-unit") &&
-			!batchName.startsWith("unit")) {
-
+		if (!overheadIncluded) {
 			return jenkinsReportTableRowElements;
 		}
 

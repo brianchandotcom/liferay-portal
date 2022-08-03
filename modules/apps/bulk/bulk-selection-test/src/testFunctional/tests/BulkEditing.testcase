@@ -389,21 +389,15 @@ definition {
 			bulkSelection = "2 of 3 Selected",
 			dmFolderName = "Folder 1");
 
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
+		for (var key_dmDocumentTitle : list "Document_1,Document_2") {
+			Navigator.openSitePage(
+				pageName = "Documents and Media Page",
+				siteName = "Site Name");
 
-		DMNavigator.gotoFolder(dmFolderName = "Folder 1");
+			DMNavigator.gotoFolder(dmFolderName = "Folder 1");
 
-		DMDocument.viewPG(dmDocumentTitle = "Document_1");
-
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "Folder 1");
-
-		DMDocument.viewPG(dmDocumentTitle = "Document_2");
+			DMDocument.viewPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+		}
 	}
 
 	@description = "This test covers LPS-94994. It ensures that users can edit category tags by using the bulk append action."

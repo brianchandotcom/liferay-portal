@@ -252,7 +252,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 					' input:checked[name=<%= liferayPortletResponse.getNamespace() + "grant-" + GrantType.AUTHORIZATION_CODE_PKCE.name() %>]'
 			).size() > 0
 		);
-	};
+	}
 
 	function <portlet:namespace />generateRandomSecret() {
 		Liferay.Util.fetch(
@@ -274,11 +274,11 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 					response
 				);
 			});
-	};
+	}
 
 	function <portlet:namespace />getSelectedClientProfile() {
 		return A.one('#<portlet:namespace />clientProfile option:selected');
-	};
+	}
 
 	function <portlet:namespace />isClientCredentialsSectionRequired() {
 		var selectedClientProfile = <portlet:namespace />getSelectedClientProfile();
@@ -290,7 +290,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 					' input:checked[name=<%= liferayPortletResponse.getNamespace() + "grant-" + GrantType.CLIENT_CREDENTIALS.name() %>]'
 			).size() > 0
 		);
-	};
+	}
 
 	function <portlet:namespace />isConfidentialClientRequired() {
 		var selectedClientProfile = <portlet:namespace />getSelectedClientProfile();
@@ -302,7 +302,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 					' input:checked[data-issupportsconfidentialclients="true"][data-issupportspublicclients="false"]'
 			).size() > 0
 		);
-	};
+	}
 
 	function <portlet:namespace />isRedirectURIRequired() {
 		var selectedClientProfile = <portlet:namespace />getSelectedClientProfile();
@@ -314,9 +314,9 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 					' input:checked[data-isredirect="true"]'
 			).size() > 0
 		);
-	};
+	}
 
-	function <portlet:namespace />requiredRedirectURIs() {
+	window.<portlet:namespace />requiredRedirectURIs = function() {
 		var grantTypesNodeList = A.all(
 			'#<portlet:namespace />allowedGrantTypes .allowedGrantType'
 		)._nodes;
@@ -348,17 +348,14 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		}
 
 		<portlet:namespace />updateRedirectURIs(redirectURIs);
-	};
+	}
 
-	function <portlet:namespace />setControlEqualTo(
-		targetControlId,
-		srcControlId
-	) {
+	window.<portlet:namespace />setControlEqualTo = function(targetControlId, srcControlId) {
 		var targetControl = A.one('#<portlet:namespace />' + targetControlId);
 		var srcControl = A.one('#<portlet:namespace />' + srcControlId);
 
 		<portlet:namespace />updateComponent(targetControl, srcControl.val());
-	};
+	}
 
 	function <portlet:namespace />showEditClientIdModal() {
 		var bodyContentDiv = A.one('#<portlet:namespace />edit-client-id-modal');
@@ -373,7 +370,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			applyField,
 			populateFieldClientId
 		);
-	};
+	}
 
 	function <portlet:namespace />showEditClientSecretModal() {
 		var bodyContentDiv = A.one(
@@ -392,7 +389,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			applyField,
 			populateFieldClientSecret
 		);
-	};
+	}
 
 	function <portlet:namespace />showModal(
 		title,
@@ -447,9 +444,9 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		]);
 
 		modal.show();
-	};
+	}
 
-	function <portlet:namespace />updateAdminOptionsApplicationSection() {
+	window.<portlet:namespace />updateAdminOptionsApplicationSection = function() {
 		var rememberApplicationSection = A.one(
 			'#<portlet:namespace />rememberDeviceSection'
 		);
@@ -476,7 +473,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			rememberApplicationSection.hide();
 			trustedApplicationSection.hide();
 		}
-	};
+	}
 
 	function <portlet:namespace />updateAllowedGrantTypes(clientProfile) {
 		A.all('#<portlet:namespace />allowedGrantTypes .allowedGrantType').hide();
@@ -488,7 +485,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		<portlet:namespace />requiredRedirectURIs();
 		<portlet:namespace />updateAdminOptionsApplicationSection();
 		<portlet:namespace />updateClientCredentialsSection();
-	};
+	}
 
 	function <portlet:namespace />updateClientCredentialsSection() {
 		var clientCredentialsSection = A.one(
@@ -508,13 +505,13 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			allowedGrantTypesSection.addClass('col-lg-12');
 			allowedGrantTypesSection.removeClass('col-lg-7');
 		}
-	};
+	}
 
 	function <portlet:namespace />updateComponent(component, newValue) {
 		component.val(newValue);
 		component.simulate('keyup');
 		component.simulate('change');
-	};
+	}
 
 	function <portlet:namespace />updatePadlock(
 		padlockId,
@@ -530,7 +527,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			padlock.one('div.open').hide();
 			padlock.one('div.closed').show();
 		}
-	};
+	}
 
 	function <portlet:namespace />updateRedirectURIs(required) {
 		var redirectURIsNode = document.getElementById(
@@ -550,7 +547,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 				}
 			}
 		}
-	};
+	}
 
 	var clientProfile = A.one('#<portlet:namespace />clientProfile');
 

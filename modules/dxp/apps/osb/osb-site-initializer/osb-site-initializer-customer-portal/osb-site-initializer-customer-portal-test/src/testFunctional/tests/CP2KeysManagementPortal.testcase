@@ -10,7 +10,27 @@ definition {
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
 	var testSiteTamplate = "Liferay OSB Site Initializer Customer Portal";
-	var pageTitle = "Activation Keys";
+	var testAccount = "Test Account QA 7.4";
+	var testUser = "Test Test";
+
+    setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Go to Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.waitCP20PageToLoad(title = "${testUser}");
+		}
+	}
+
 
 
 

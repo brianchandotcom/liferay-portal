@@ -23,16 +23,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-		}
+		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
+		PortalInstances.tearDownCP();
 	}
 
 	@description = "LPS-144906 - Verify if when Hide button is clicked by user, the Quick Links panel collapses"
@@ -63,8 +58,8 @@ definition {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(
-			status = "Expired",
-			title = "Test Account 03");
+			title = "Test Account 03",
+			status = "Expired");
 
 		CP2NavigationMenu.goToProductActivation();
 
@@ -135,8 +130,8 @@ definition {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(
-			status = "Expired",
-			title = "Test Account 03");
+			title = "Test Account 03",
+			status = "Expired");
 
 		CustomerPortal.notViewProduct(productTab = "DXP,DXP Cloud");
 

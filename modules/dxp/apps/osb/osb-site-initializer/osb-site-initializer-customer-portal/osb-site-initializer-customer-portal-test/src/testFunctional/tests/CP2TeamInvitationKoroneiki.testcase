@@ -27,16 +27,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		CustomerPortal.customerPortalTearDown();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-		}
+		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		
+		PortalInstances.tearDownCP();
 	}
 
 	@description = "LPS-148181 - Verify if when the user types a email at Invite Your Team Members the same email appears at Accounts - Details - Project that you are testing"

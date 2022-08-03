@@ -511,7 +511,7 @@ definition {
 		CKEditor.addEntryExternalURL(
 			displayText = "${page2URL}",
 			entryExternalURL = "${entryExternalURL}",
-			fieldLabel = "content");
+			fieldLabel = "Content");
 
 		PortletEntry.publish();
 

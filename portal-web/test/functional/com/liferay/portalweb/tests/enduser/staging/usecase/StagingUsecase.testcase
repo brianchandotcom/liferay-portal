@@ -1124,7 +1124,7 @@ definition {
 		CKEditor.addEntryExternalURL(
 			displayText = "${webContentFeedURL}",
 			entryExternalURL = "${entryExternalURL}",
-			fieldLabel = "content");
+			fieldLabel = "Content");
 
 		Button.clickPublish();
 

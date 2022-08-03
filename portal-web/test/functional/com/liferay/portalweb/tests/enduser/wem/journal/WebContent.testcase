@@ -1341,7 +1341,7 @@ definition {
 			CKEditor.addTextWithLink(
 				displayText = "Web Content Content",
 				entryExternalURL = "/web/test-site-name/test-page-name",
-				fieldLabel = "content",
+				fieldLabel = "Content",
 				pageName = "Test Page Name");
 		}
 	}

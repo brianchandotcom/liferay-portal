@@ -262,7 +262,7 @@ definition {
 		CKEditor.addEntryExternalURL(
 			displayText = "${editDocumentURL}",
 			entryExternalURL = "${entryExternalURL}",
-			fieldLabel = "content");
+			fieldLabel = "Content");
 
 		Button.clickPublish();
 
@@ -2239,7 +2239,7 @@ definition {
 		CKEditor.addEntryExternalURL(
 			displayText = "${dmDocumentURL}",
 			entryExternalURL = "${entryExternalURL}",
-			fieldLabel = "content");
+			fieldLabel = "Content");
 
 		PortletEntry.publish();
 	}

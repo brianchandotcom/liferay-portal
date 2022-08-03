@@ -422,9 +422,11 @@ public class DownstreamBuild extends BaseBuild {
 
 		Dom4JUtil.getNewElement("td", durationNamesElement, "Actual");
 		Dom4JUtil.getNewElement("td", durationNamesElement, "Predicted");
+		Dom4JUtil.getNewElement("td", durationNamesElement, "+/-");
 		Dom4JUtil.getNewElement("td", durationNamesElement, "Actual Overhead");
 		Dom4JUtil.getNewElement(
 			"td", durationNamesElement, "Predicted Overhead");
+		Dom4JUtil.getNewElement("td", durationNamesElement, "+/-");
 
 		jenkinsReportTableRowElements.add(durationNamesElement);
 
@@ -439,19 +441,31 @@ public class DownstreamBuild extends BaseBuild {
 
 		durationValuesDataElement.addAttribute("style", style);
 
+		long duration = getDuration();
+		long averageDuration = getAverageDuration();
+
 		Dom4JUtil.getNewElement(
 			"td", durationValuesElement,
-			JenkinsResultsParserUtil.toDurationString(getDuration()));
+			JenkinsResultsParserUtil.toDurationString(duration));
 		Dom4JUtil.getNewElement(
 			"td", durationValuesElement,
-			JenkinsResultsParserUtil.toDurationString(getAverageDuration()));
+			JenkinsResultsParserUtil.toDurationString(averageDuration));
 		Dom4JUtil.getNewElement(
 			"td", durationValuesElement,
-			JenkinsResultsParserUtil.toDurationString(getOverheadDuration()));
+			_getDiffDurationString(duration - averageDuration));
+
+		long overheadDuration = getOverheadDuration();
+		long averageOverheadDuration = getAverageOverheadDuration();
+
 		Dom4JUtil.getNewElement(
 			"td", durationValuesElement,
-			JenkinsResultsParserUtil.toDurationString(
-				getAverageOverheadDuration()));
+			JenkinsResultsParserUtil.toDurationString(overheadDuration));
+		Dom4JUtil.getNewElement(
+			"td", durationValuesElement,
+			JenkinsResultsParserUtil.toDurationString(averageOverheadDuration));
+		Dom4JUtil.getNewElement(
+			"td", durationValuesElement,
+			_getDiffDurationString(overheadDuration - averageOverheadDuration));
 
 		jenkinsReportTableRowElements.add(durationValuesElement);
 
@@ -504,6 +518,10 @@ public class DownstreamBuild extends BaseBuild {
 			JenkinsResultsParserUtil.toDurationString(
 				averageBuildTestDurations));
 		Dom4JUtil.getNewElement(
+			"td", durationValuesElement,
+			_getDiffDurationString(
+				totalBuildTestDurations - averageBuildTestDurations));
+		Dom4JUtil.getNewElement(
 			"td", testDurationsValuesElement,
 			JenkinsResultsParserUtil.toDurationString(
 				totalBuildTestOverheadDurations));
@@ -511,6 +529,11 @@ public class DownstreamBuild extends BaseBuild {
 			"td", testDurationsValuesElement,
 			JenkinsResultsParserUtil.toDurationString(
 				averageBuildTestOverheadDurations));
+		Dom4JUtil.getNewElement(
+			"td", durationValuesElement,
+			_getDiffDurationString(
+				totalBuildTestOverheadDurations -
+					averageBuildTestOverheadDurations));
 
 		jenkinsReportTableRowElements.add(testDurationsValuesElement);
 
@@ -709,6 +732,20 @@ public class DownstreamBuild extends BaseBuild {
 		}
 
 		return testResultGitHubElements;
+	}
+
+	private String _getDiffDurationString(long diffDuration) {
+		String diffDurationPrefix = "+";
+
+		if (diffDuration < 0) {
+			diffDurationPrefix = "-";
+
+			diffDuration *= -1;
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			diffDurationPrefix,
+			JenkinsResultsParserUtil.toDurationString(diffDuration));
 	}
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =

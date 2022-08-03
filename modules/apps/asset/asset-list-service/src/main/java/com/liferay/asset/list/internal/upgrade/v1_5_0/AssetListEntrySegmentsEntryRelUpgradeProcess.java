@@ -25,20 +25,19 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcess
 	extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"AssetListEntrySegmentsEntryRel",
-				"priority INTEGER default 0 not null"),
-			this
-		};
-	}
-
-	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			"update AssetListEntrySegmentsEntryRel set priority = 1 where " +
 				"segmentsEntryId = 0");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"AssetListEntrySegmentsEntryRel",
+				"priority INTEGER default 0 not null")
+		};
 	}
 
 }

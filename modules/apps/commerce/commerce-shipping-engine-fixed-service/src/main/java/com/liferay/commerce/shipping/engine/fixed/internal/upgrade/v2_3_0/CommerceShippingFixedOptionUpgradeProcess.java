@@ -26,21 +26,20 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class CommerceShippingFixedOptionUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"CommerceShippingFixedOption", "key_ VARCHAR(75)"),
-			this
-		};
-	}
-
-	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			StringBundler.concat(
 				"update CommerceShippingFixedOption set key_ = CONCAT('",
 				StringUtil.randomString(3),
 				"', CAST_TEXT(commerceShippingFixedOptionId))"));
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceShippingFixedOption", "key_ VARCHAR(75)")
+		};
 	}
 
 }

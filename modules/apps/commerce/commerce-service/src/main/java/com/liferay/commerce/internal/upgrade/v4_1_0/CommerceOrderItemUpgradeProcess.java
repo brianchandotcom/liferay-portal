@@ -24,19 +24,18 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 public class CommerceOrderItemUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"CommerceOrderItem", "promoPrice DECIMAL(30,16)"),
-			this
-		};
-	}
-
-	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			"update CommerceOrderItem set promoPrice = finalPrice + " +
 				"discountAmount");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceOrderItem", "promoPrice DECIMAL(30,16)")
+		};
 	}
 
 }

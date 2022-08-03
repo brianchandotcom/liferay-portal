@@ -27,18 +27,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 public class CPDefinitionOptionValueRelUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"CPDefinitionOptionValueRel", "CPInstanceUuid VARCHAR(75)",
-				"CProductId LONG", "quantity INTEGER", "price DECIMAL(30, 16)"),
-			UpgradeProcessFactory.addColumns(
-				"CPDefinitionOptionRel", "priceType VARCHAR(75)"),
-			this
-		};
-	}
-
-	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			String.format(
@@ -50,6 +38,17 @@ public class CPDefinitionOptionValueRelUpgradeProcess extends UpgradeProcess {
 			String.format(
 				"update %s set price = 0",
 				CPDefinitionOptionValueRelTable.TABLE_NAME));
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CPDefinitionOptionValueRel", "CPInstanceUuid VARCHAR(75)",
+				"CProductId LONG", "quantity INTEGER", "price DECIMAL(30, 16)"),
+			UpgradeProcessFactory.addColumns(
+				"CPDefinitionOptionRel", "priceType VARCHAR(75)")
+		};
 	}
 
 }

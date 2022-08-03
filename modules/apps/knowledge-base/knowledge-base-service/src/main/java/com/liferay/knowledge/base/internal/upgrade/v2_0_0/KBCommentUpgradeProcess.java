@@ -25,18 +25,17 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 public class KBCommentUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns("KBComment", "status INTEGER"),
-			this
-		};
-	}
-
-	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			"update KBComment set status = " +
 				KBCommentConstants.STATUS_COMPLETED + " where status is NULL");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns("KBComment", "status INTEGER")
+		};
 	}
 
 }

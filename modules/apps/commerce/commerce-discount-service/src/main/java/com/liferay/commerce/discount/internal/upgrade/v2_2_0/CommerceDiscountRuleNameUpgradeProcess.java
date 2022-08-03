@@ -24,17 +24,16 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 public class CommerceDiscountRuleNameUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"CommerceDiscountRule", "name VARCHAR(75)"),
-			this
-		};
+	protected void doUpgrade() throws Exception {
+		runSQL("update CommerceDiscountRule set name = type_");
 	}
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		runSQL("update CommerceDiscountRule set name = type_");
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceDiscountRule", "name VARCHAR(75)")
+		};
 	}
 
 }

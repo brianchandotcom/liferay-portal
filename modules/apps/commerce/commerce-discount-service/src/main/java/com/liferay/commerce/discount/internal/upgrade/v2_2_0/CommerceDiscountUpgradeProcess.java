@@ -24,18 +24,17 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 public class CommerceDiscountUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"CommerceDiscount", "level VARCHAR(75)",
-				"rulesConjunction BOOLEAN"),
-			this
-		};
+	protected void doUpgrade() throws Exception {
+		runSQL("update CommerceDiscount set rulesConjunction = [$TRUE$]");
 	}
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		runSQL("update CommerceDiscount set rulesConjunction = [$TRUE$]");
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceDiscount", "level VARCHAR(75)",
+				"rulesConjunction BOOLEAN")
+		};
 	}
 
 }

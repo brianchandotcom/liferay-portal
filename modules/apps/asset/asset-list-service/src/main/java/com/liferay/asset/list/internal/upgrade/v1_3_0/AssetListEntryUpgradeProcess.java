@@ -25,20 +25,19 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 public class AssetListEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"AssetListEntry", "assetEntrySubtype VARCHAR(255) null",
-				"assetEntryType VARCHAR(255) null"),
-			this
-		};
-	}
-
-	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			"update AssetListEntry set assetEntryType = '" +
 				AssetEntry.class.getName() + "'");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"AssetListEntry", "assetEntrySubtype VARCHAR(255) null",
+				"assetEntryType VARCHAR(255) null")
+		};
 	}
 
 }

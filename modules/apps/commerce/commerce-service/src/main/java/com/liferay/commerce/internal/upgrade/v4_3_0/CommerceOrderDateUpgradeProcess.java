@@ -25,18 +25,17 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 public class CommerceOrderDateUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns("CommerceOrder", "orderDate DATE"),
-			this
-		};
-	}
-
-	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			"update CommerceOrder set orderDate = createDate where " +
 				"orderStatus <> " + CommerceOrderConstants.ORDER_STATUS_OPEN);
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns("CommerceOrder", "orderDate DATE")
+		};
 	}
 
 }

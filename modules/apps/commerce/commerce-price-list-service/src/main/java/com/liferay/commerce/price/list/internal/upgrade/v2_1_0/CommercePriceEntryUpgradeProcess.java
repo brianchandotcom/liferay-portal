@@ -37,7 +37,7 @@ public class CommercePriceEntryUpgradeProcess extends UpgradeProcess {
 	}
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
+	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
 				"CommercePriceEntry", "discountDiscovery BOOLEAN",
@@ -47,8 +47,7 @@ public class CommercePriceEntryUpgradeProcess extends UpgradeProcess {
 				"discountLevel4 DECIMAL(30,16)", "bulkPricing BOOLEAN",
 				"displayDate DATE", "expirationDate DATE", "status INTEGER",
 				"statusByUserId LONG", "statusByUserName VARCHAR(75)",
-				"statusDate DATE"),
-			this
+				"statusDate DATE")
 		};
 	}
 

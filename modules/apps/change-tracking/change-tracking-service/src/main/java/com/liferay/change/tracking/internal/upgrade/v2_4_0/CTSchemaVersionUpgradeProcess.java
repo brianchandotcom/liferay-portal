@@ -26,15 +26,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 public class CTSchemaVersionUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"CTCollection", "schemaVersionId LONG"),
-			this
-		};
-	}
-
-	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL("update CTCollection set schemaVersionId = 0");
 
@@ -53,6 +44,14 @@ public class CTSchemaVersionUpgradeProcess extends UpgradeProcess {
 		runSQL(
 			"update CTPreferences set ctCollectionId = 0, " +
 				"previousCtCollectionId = 0");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CTCollection", "schemaVersionId LONG")
+		};
 	}
 
 }

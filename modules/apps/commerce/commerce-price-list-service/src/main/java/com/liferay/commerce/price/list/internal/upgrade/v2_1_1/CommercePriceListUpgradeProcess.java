@@ -29,11 +29,10 @@ public class CommercePriceListUpgradeProcess extends UpgradeProcess {
 	}
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
+	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
-				"CommercePriceList", "netPrice BOOLEAN"),
-			this
+				"CommercePriceList", "netPrice BOOLEAN")
 		};
 	}
 

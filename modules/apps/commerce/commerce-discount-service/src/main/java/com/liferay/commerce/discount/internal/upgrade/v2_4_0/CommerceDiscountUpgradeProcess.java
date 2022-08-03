@@ -24,17 +24,16 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 public class CommerceDiscountUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"CommerceDiscount", "limitationTimesPerAccount INTEGER"),
-			this
-		};
+	protected void doUpgrade() throws Exception {
+		runSQL("update CommerceDiscount set limitationTimesPerAccount = 0");
 	}
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		runSQL("update CommerceDiscount set limitationTimesPerAccount = 0");
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceDiscount", "limitationTimesPerAccount INTEGER")
+		};
 	}
 
 }

@@ -25,17 +25,16 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 public class CPInstanceUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"CPInstance", "CPInstanceUuid VARCHAR(75)"),
-			this
-		};
+	protected void doUpgrade() throws Exception {
+		runSQL("update CPInstance set CPInstanceUuid = uuid_");
 	}
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		runSQL("update CPInstance set CPInstanceUuid = uuid_");
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CPInstance", "CPInstanceUuid VARCHAR(75)")
+		};
 	}
 
 }

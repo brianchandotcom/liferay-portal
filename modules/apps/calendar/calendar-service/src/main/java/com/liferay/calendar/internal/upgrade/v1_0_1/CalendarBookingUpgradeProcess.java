@@ -24,19 +24,18 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 public class CalendarBookingUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"CalendarBooking", "vEventUid STRING null"),
-			this
-		};
-	}
-
-	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			"update CalendarBooking set vEventUid = uuid_ where vEventUid is " +
 				"null or vEventUid = ''");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CalendarBooking", "vEventUid STRING null")
+		};
 	}
 
 }

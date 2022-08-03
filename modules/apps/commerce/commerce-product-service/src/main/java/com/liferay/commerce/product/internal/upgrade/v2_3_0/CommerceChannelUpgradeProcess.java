@@ -34,12 +34,11 @@ public class CommerceChannelUpgradeProcess extends UpgradeProcess {
 	}
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
+	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
 				"CommerceChannel", "priceDisplayType VARCHAR(75)",
-				"discountsTargetNetPrice BOOLEAN"),
-			this
+				"discountsTargetNetPrice BOOLEAN")
 		};
 	}
 

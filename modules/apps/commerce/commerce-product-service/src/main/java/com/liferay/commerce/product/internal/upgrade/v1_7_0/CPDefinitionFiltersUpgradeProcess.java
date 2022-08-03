@@ -24,18 +24,17 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 public class CPDefinitionFiltersUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"CPDefinition", "accountGroupFilterEnabled BOOLEAN",
-				"channelFilterEnabled BOOLEAN"),
-			this
-		};
+	protected void doUpgrade() throws Exception {
+		runSQL("update CPDefinition set channelFilterEnabled = [$TRUE$]");
 	}
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		runSQL("update CPDefinition set channelFilterEnabled = [$TRUE$]");
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CPDefinition", "accountGroupFilterEnabled BOOLEAN",
+				"channelFilterEnabled BOOLEAN")
+		};
 	}
 
 }

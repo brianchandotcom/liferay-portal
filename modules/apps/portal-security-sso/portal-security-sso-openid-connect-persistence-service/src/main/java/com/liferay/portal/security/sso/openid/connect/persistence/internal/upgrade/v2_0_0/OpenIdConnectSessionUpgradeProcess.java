@@ -48,19 +48,6 @@ public class OpenIdConnectSessionUpgradeProcess extends UpgradeProcess {
 	}
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"OpenIdConnectSession",
-				"authServerWellKnownURI VARCHAR(256) null",
-				"clientId VARCHAR(256) null"),
-			this,
-			UpgradeProcessFactory.dropColumns(
-				"OpenIdConnectSession", "configurationPid", "providerName")
-		};
-	}
-
-	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select openIdConnectSessionId, configurationPid from " +
@@ -89,6 +76,24 @@ public class OpenIdConnectSessionUpgradeProcess extends UpgradeProcess {
 				}
 			}
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns(
+				"OpenIdConnectSession", "configurationPid", "providerName")
+		};
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"OpenIdConnectSession",
+				"authServerWellKnownURI VARCHAR(256) null",
+				"clientId VARCHAR(256) null")
+		};
 	}
 
 	private String _generateLocalWellKnownURI(

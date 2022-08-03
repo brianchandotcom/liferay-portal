@@ -25,19 +25,18 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"CommerceOrder", "commerceOrderTypeId LONG"),
-			this
-		};
-	}
-
-	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			"update CommerceOrder set commerceOrderTypeId = 0 where " +
 				"commerceOrderTypeId is NULL");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceOrder", "commerceOrderTypeId LONG")
+		};
 	}
 
 }

@@ -25,18 +25,6 @@ public class OAuth2ApplicationClientAuthenticationMethodUpgradeProcess
 	extends UpgradeProcess {
 
 	@Override
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"OAuth2Application",
-				"clientAuthenticationMethod VARCHAR(75) null"),
-			UpgradeProcessFactory.addColumns(
-				"OAuth2Application", "jwks VARCHAR(3999) null"),
-			this
-		};
-	}
-
-	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			"update OAuth2Application set clientAuthenticationMethod = " +
@@ -45,6 +33,17 @@ public class OAuth2ApplicationClientAuthenticationMethodUpgradeProcess
 		runSQL(
 			"update OAuth2Application set clientAuthenticationMethod = " +
 				"'none' where (clientSecret is null OR clientSecret = '')");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"OAuth2Application",
+				"clientAuthenticationMethod VARCHAR(75) null"),
+			UpgradeProcessFactory.addColumns(
+				"OAuth2Application", "jwks VARCHAR(3999) null")
+		};
 	}
 
 }

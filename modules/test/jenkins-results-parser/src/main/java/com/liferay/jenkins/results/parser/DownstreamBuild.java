@@ -532,7 +532,7 @@ public class DownstreamBuild extends BaseBuild {
 			JenkinsResultsParserUtil.toDurationString(
 				averageBuildTestDurations));
 		Dom4JUtil.getNewElement(
-			"td", durationValuesElement,
+			"td", testDurationsValuesElement,
 			getDiffDurationString(
 				totalBuildTestDurations - averageBuildTestDurations));
 		Dom4JUtil.getNewElement(
@@ -544,7 +544,7 @@ public class DownstreamBuild extends BaseBuild {
 			JenkinsResultsParserUtil.toDurationString(
 				averageBuildTestOverheadDurations));
 		Dom4JUtil.getNewElement(
-			"td", durationValuesElement,
+			"td", testDurationsValuesElement,
 			getDiffDurationString(
 				totalBuildTestOverheadDurations -
 					averageBuildTestOverheadDurations));

@@ -2,6 +2,7 @@ $toolbarHeight: 112px;
 $sidebarButtonHeight: $sidebarButtonWidth;
 $desktopToolbarHeight: 64px;
 $changeTrackingBarHeight: 23px;
+$toolbarBorders: 2px;
 
 // z-indexes for children of page-editor-sidebar (which is a stacking context).
 
@@ -177,6 +178,15 @@ html#{$cadmin-selector} .page-editor__wrapper {
 	transition: padding-left ease $defaultTransitionDuration,
 		padding-right ease $defaultTransitionDuration;
 	will-change: padding-left, padding-right;
+	max-height: calc(
+		100vh -
+			(
+				var(--control-menu-height) + var(--toolbar-height) +
+					var(--change-tracking-indicator-height, 0px) + #{$toolbarBorders}
+			)
+	);
+	/* stylelint-enable */
+	overflow: auto;
 
 	&.page-editor__wrapper-old {
 		padding-left: 0;

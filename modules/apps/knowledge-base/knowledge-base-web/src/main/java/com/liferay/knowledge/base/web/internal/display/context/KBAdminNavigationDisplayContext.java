@@ -82,8 +82,8 @@ public class KBAdminNavigationDisplayContext {
 				portletDisplay.getId(), KBActionKeys.VIEW),
 			NavigationItemBuilder.setActive(
 				() -> {
-					if (!mvcPath.equals("/admin/view_suggestions.jsp") &&
-						!mvcPath.equals("/admin/view_templates.jsp")) {
+					if (!mvcPath.equals("/admin/view_kb_suggestions.jsp") &&
+						!mvcPath.equals("/admin/view_kb_templates.jsp")) {
 
 						return true;
 					}
@@ -105,7 +105,7 @@ public class KBAdminNavigationDisplayContext {
 				themeDisplay.getScopeGroupId(), KBActionKeys.VIEW_KB_TEMPLATES),
 			NavigationItemBuilder.setActive(
 				() -> {
-					if (mvcPath.equals("/admin/view_templates.jsp")) {
+					if (mvcPath.equals("/admin/view_kb_templates.jsp")) {
 						return true;
 					}
 
@@ -115,7 +115,7 @@ public class KBAdminNavigationDisplayContext {
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
 				).setMVCPath(
-					"/admin/view_templates.jsp"
+					"/admin/view_kb_templates.jsp"
 				).buildString()
 			).setLabel(
 				LanguageUtil.get(_httpServletRequest, "templates")
@@ -126,7 +126,7 @@ public class KBAdminNavigationDisplayContext {
 				themeDisplay.getScopeGroupId(), KBActionKeys.VIEW_SUGGESTIONS),
 			NavigationItemBuilder.setActive(
 				() -> {
-					if (mvcPath.equals("/admin/view_suggestions.jsp")) {
+					if (mvcPath.equals("/admin/view_kb_suggestions.jsp")) {
 						return true;
 					}
 
@@ -136,7 +136,7 @@ public class KBAdminNavigationDisplayContext {
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
 				).setMVCPath(
-					"/admin/view_suggestions.jsp"
+					"/admin/view_kb_suggestions.jsp"
 				).buildString()
 			).setLabel(
 				LanguageUtil.get(_httpServletRequest, "suggestions")
@@ -163,8 +163,8 @@ public class KBAdminNavigationDisplayContext {
 
 			boolean active = false;
 
-			if (!mvcPath.equals("/admin/view_suggestions.jsp") &&
-				!mvcPath.equals("/admin/view_templates.jsp")) {
+			if (!mvcPath.equals("/admin/view_kb_suggestions.jsp") &&
+				!mvcPath.equals("/admin/view_kb_templates.jsp")) {
 
 				active = true;
 			}
@@ -197,7 +197,7 @@ public class KBAdminNavigationDisplayContext {
 
 			boolean active = false;
 
-			if (mvcPath.equals("/admin/view_templates.jsp")) {
+			if (mvcPath.equals("/admin/view_kb_templates.jsp")) {
 				active = true;
 			}
 
@@ -209,7 +209,7 @@ public class KBAdminNavigationDisplayContext {
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setMVCPath(
-						"/admin/view_templates.jsp"
+						"/admin/view_kb_templates.jsp"
 					).buildString()
 				).put(
 					"icon", "page-template"
@@ -227,7 +227,7 @@ public class KBAdminNavigationDisplayContext {
 
 			boolean active = false;
 
-			if (mvcPath.equals("/admin/view_suggestions.jsp")) {
+			if (mvcPath.equals("/admin/view_kb_suggestions.jsp")) {
 				active = true;
 			}
 
@@ -239,7 +239,7 @@ public class KBAdminNavigationDisplayContext {
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setMVCPath(
-						"/admin/view_suggestions.jsp"
+						"/admin/view_kb_suggestions.jsp"
 					).buildString()
 				).put(
 					"icon", "message"

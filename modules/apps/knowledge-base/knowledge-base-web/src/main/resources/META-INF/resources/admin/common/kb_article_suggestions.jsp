@@ -133,9 +133,9 @@ if (ratingsType == null) {
 
 				kbSuggestionListDisplayContext.populateResultsAndTotal(kbCommentsSearchContainer);
 
-				request.setAttribute("view_suggestions.jsp-resultRowSplitter", new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle));
+				request.setAttribute("view_kb_suggestions.jsp-resultRowSplitter", new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle));
 
-				request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
+				request.setAttribute("view_kb_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
 				%>
 
 				<liferay-util:include page="/admin/common/view_kb_suggestions_by_status.jsp" servletContext="<%= application %>" />

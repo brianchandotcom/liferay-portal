@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-		"path=/admin/view_folders.jsp"
+		"path=/admin/view_kb_folders.jsp"
 	},
 	service = PortletConfigurationIcon.class
 )

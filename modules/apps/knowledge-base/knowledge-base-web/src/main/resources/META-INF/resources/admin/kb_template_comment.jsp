@@ -17,7 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-KBComment kbComment = (KBComment)request.getAttribute("template_comment.jsp-kb_comment");
+KBComment kbComment = (KBComment)request.getAttribute("kb_template_comment.jsp-kb_comment");
 %>
 
 <div class="kb-template-comment">

@@ -96,7 +96,7 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
-			"/admin/view_suggestions.jsp"
+			"/admin/view_kb_suggestions.jsp"
 		).buildString();
 	}
 

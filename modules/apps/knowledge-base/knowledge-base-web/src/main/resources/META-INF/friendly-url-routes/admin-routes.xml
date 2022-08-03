@@ -9,22 +9,22 @@
 	</route>
 	<route>
 		<pattern>/articles</pattern>
-		<implicit-parameter name="mvcPath">/admin/view_articles.jsp</implicit-parameter>
+		<implicit-parameter name="mvcPath">/admin/view_kb_articles.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/folders</pattern>
-		<implicit-parameter name="mvcPath">/admin/view_folders.jsp</implicit-parameter>
+		<implicit-parameter name="mvcPath">/admin/view_kb_folders.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/templates</pattern>
-		<implicit-parameter name="mvcPath">/admin/view_templates.jsp</implicit-parameter>
+		<implicit-parameter name="mvcPath">/admin/view_kb_templates.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/suggestions</pattern>
-		<implicit-parameter name="mvcPath">/admin/view_suggestions.jsp</implicit-parameter>
+		<implicit-parameter name="mvcPath">/admin/view_kb_suggestions.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>

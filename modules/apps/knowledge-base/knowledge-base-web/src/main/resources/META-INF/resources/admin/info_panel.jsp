@@ -67,7 +67,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 				<div class="autofit-col">
 					<ul class="autofit-padded-no-gutters autofit-row">
 						<li class="autofit-col">
-							<liferay-util:include page="/admin/folder_action.jsp" servletContext="<%= application %>" />
+							<liferay-util:include page="/admin/kb_folder_action.jsp" servletContext="<%= application %>" />
 						</li>
 					</ul>
 				</div>
@@ -136,7 +136,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 								<liferay-util:include page="/admin/subscribe.jsp" servletContext="<%= application %>" />
 							</li>
 							<li class="autofit-col">
-								<liferay-util:include page="/admin/article_action.jsp" servletContext="<%= application %>" />
+								<liferay-util:include page="/admin/kb_article_action.jsp" servletContext="<%= application %>" />
 							</li>
 						</ul>
 					</c:if>

@@ -57,7 +57,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 
 <clay:container-fluid>
 	<liferay-portlet:renderURL varImpl="searchURL">
-		<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
+		<portlet:param name="mvcPath" value="/admin/view_kb_templates.jsp" />
 	</liferay-portlet:renderURL>
 
 	<aui:form action="<%= searchURL %>" method="get" name="fm">
@@ -116,7 +116,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp
-						path="/admin/template_action.jsp"
+						path="/admin/kb_template_action.jsp"
 					/>
 				</liferay-ui:search-container-row>
 

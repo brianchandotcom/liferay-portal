@@ -86,7 +86,7 @@ public class KBAdminViewDisplayContext {
 				PortletURLBuilder.create(
 					PortletURLUtil.clone(portletURL, _liferayPortletResponse)
 				).setMVCPath(
-					"/admin/view_folders.jsp"
+					"/admin/view_kb_folders.jsp"
 				).setParameter(
 					"parentResourceClassNameId", parentResourceClassNameId
 				).setParameter(

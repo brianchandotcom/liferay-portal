@@ -40,7 +40,7 @@ KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BAS
 <div class="kb-entity-body">
 	<%= kbTemplate.getContent() %>
 
-	<liferay-util:include page="/admin/template_comments.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/admin/kb_template_comments.jsp" servletContext="<%= application %>" />
 </div>
 
 <c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>

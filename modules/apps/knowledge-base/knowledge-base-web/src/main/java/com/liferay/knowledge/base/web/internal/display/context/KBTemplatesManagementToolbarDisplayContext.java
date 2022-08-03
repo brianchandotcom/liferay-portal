@@ -148,7 +148,7 @@ public class KBTemplatesManagementToolbarDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
-			"/admin/view_templates.jsp"
+			"/admin/view_kb_templates.jsp"
 		).buildPortletURL();
 	}
 
@@ -181,7 +181,7 @@ public class KBTemplatesManagementToolbarDisplayContext {
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
 			).setMVCPath(
-				"/admin/view_templates.jsp"
+				"/admin/view_kb_templates.jsp"
 			).buildPortletURL());
 
 		String keywords = _getKeywords();
@@ -213,7 +213,7 @@ public class KBTemplatesManagementToolbarDisplayContext {
 		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
 		).setMVCPath(
-			"/admin/view_templates.jsp"
+			"/admin/view_kb_templates.jsp"
 		).buildPortletURL();
 	}
 

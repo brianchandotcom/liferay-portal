@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-		"path=/admin/view_template.jsp"
+		"path=/admin/view_kb_template.jsp"
 	},
 	service = PortletConfigurationIcon.class
 )
@@ -66,7 +66,7 @@ public class DeleteKBTemplatePortletConfigurationIcon
 		).setActionName(
 			"/knowledge_base/delete_kb_template"
 		).setMVCPath(
-			"/admin/view_template.jsp"
+			"/admin/view_kb_template.jsp"
 		).setRedirect(
 			_portal.getControlPanelPortletURL(
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,

@@ -31,7 +31,7 @@ KBTemplate kbTemplate = (KBTemplate)row.getObject();
 >
 	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, KBActionKeys.VIEW) %>">
 		<liferay-portlet:renderURL var="viewURL">
-			<portlet:param name="mvcPath" value="/admin/common/view_template.jsp" />
+			<portlet:param name="mvcPath" value="/admin/view_kb_template.jsp" />
 			<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
 		</liferay-portlet:renderURL>
 

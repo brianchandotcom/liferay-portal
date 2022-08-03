@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-		"path=/admin/view_template.jsp"
+		"path=/admin/view_kb_template.jsp"
 	},
 	service = PortletConfigurationIcon.class
 )
@@ -66,7 +66,7 @@ public class PrintKBTemplatePortletConfigurationIcon
 						portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 						PortletRequest.RENDER_PHASE)
 				).setMVCPath(
-					"/admin/print_template.jsp"
+					"/admin/print_kb_template.jsp"
 				).setParameter(
 					"kbTemplateId",
 					() -> {

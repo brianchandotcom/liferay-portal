@@ -50,7 +50,7 @@ public class ViewArticleMVCRenderCommand implements MVCRenderCommand {
 		String rootPortletId = _getRootPortletId(renderRequest);
 
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
-			return "/admin/view_article.jsp";
+			return "/admin/view_kb_article.jsp";
 		}
 
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE)) {

@@ -195,8 +195,7 @@ public class ManageLayoutProductNavigationControlMenuEntry
 		String mode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
 
-		if (layout.isDraftLayout() && layout.isTypeContent() &&
-			(layoutPageTemplateEntry == null) &&
+		if ((layout.isTypeContent() || layout.isTypeAssetDisplay()) &&
 			Objects.equals(mode, Constants.EDIT)) {
 
 			return false;

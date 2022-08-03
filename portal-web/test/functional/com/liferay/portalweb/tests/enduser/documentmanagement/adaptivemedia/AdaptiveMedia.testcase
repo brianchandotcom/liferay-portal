@@ -518,9 +518,9 @@ definition {
 	test ImageVariantsAreGeneratedAfterEditingWebContentWithImage {
 		property portal.acceptance = "false";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		WebContentNavigator.gotoAddCP();
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		WebContent.addCP(
 			embedImage = "true",

@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>SELECT_ALL_CHECKBOX</td>
-	<td>//div/label/input[@data-testid='select-all-checkbox']</td>
+	<td>//div/label/input[@data-testid='select-all-checkbox' and not(@disabled)]</td>
 	<td></td>
 </tr>
 <tr>

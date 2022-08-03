@@ -71,10 +71,9 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 			if (upgradeStep instanceof UpgradeProcess) {
 				UpgradeProcess upgradeProcess = (UpgradeProcess)upgradeStep;
 
-				UpgradeStep[] upgradeStepsArray =
-					upgradeProcess.getUpgradeSteps();
+				for (UpgradeStep upgradeStepInner :
+						upgradeProcess.getUpgradeSteps()) {
 
-				for (UpgradeStep upgradeStepInner : upgradeStepsArray) {
 					upgradeStepsList.add(upgradeStepInner);
 				}
 			}

@@ -351,7 +351,17 @@ public class PoshiValidation {
 			List<PoshiElement> childPoshiElements =
 				poshiElement.toPoshiElements(poshiElement.elements());
 
-			if (childPoshiElements.size() < 2) {
+			Element parentElement = poshiElement.getParent();
+
+			String parentElementName = parentElement.getName();
+
+			int childElementCount = 2;
+
+			if (parentElementName.equals("while")) {
+				childElementCount = 1;
+			}
+
+			if (childPoshiElements.size() < childElementCount) {
 				_exceptions.add(
 					new PoshiElementException(
 						poshiElement, "Too few child elements"));

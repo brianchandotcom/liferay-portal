@@ -1556,6 +1556,8 @@ definition {
 	@description = "This ensures that an external video in the Blogs content field can be rendered correctly after moving it to a folder."
 	@priority = "4"
 	test CanViewInlineVideoAfterMovingToFolder {
+		property portal.acceptance = "false";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		VideoShortcut.addCP(

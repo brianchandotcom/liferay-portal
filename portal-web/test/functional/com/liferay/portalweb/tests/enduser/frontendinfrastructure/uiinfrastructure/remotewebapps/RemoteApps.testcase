@@ -159,14 +159,28 @@ definition {
 		}
 
 		task ("Given a Custom Element with relative path URLs") {
+			task ("create es-element files in Documents") {
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentTitle = "index",
+					groupName = "Guest",
+					mimeType = "text/javascript",
+					sourceFileName = "index.js");
+
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentTitle = "main",
+					groupName = "Guest",
+					mimeType = "text/css",
+					sourceFileName = "main.css");
+			}
+
 			RemoteApps.goToRemoteAppsPortlet();
 
 			RemoteApps.addCustomElementAllFields(
-				entryCssurl = "es-element/main.css",
+				entryCssurl = "/documents/d/guest/main",
 				entryHtmlName = "es-element",
 				entryName = "ES Element",
 				entryProperties = "test-data-user=QAuser",
-				entryURL = "es-element/index.js");
+				entryURL = "/documents/d/guest/index");
 
 			RemoteApps.viewTableEntries(
 				entryName = "ES Element",
@@ -195,7 +209,7 @@ definition {
 			AssertAttributeValue(
 				attribute1 = "src",
 				locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_MODULE_SCRIPT",
-				value1 = "${portalURL}/es-element/index.js");
+				value1 = "${portalURL}/documents/d/guest/index");
 		}
 	}
 

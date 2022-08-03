@@ -1,0 +1,9 @@
+* {
+  margin: 0;
+}
+.navbar {
+  background: blue;
+  height: 6rem;
+  color: white;
+  font-size: 3rem;
+}

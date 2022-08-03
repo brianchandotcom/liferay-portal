@@ -1590,6 +1590,140 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-154530. View custom values matches in spacing on page editor."
+	@priority = "4"
+	test ViewValuesMatchesInSpacingOnPageEditor {
+		task ("Given a page designer has a content page with default and custom style books") {
+			task ("Add a style book") {
+				StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+				StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+			}
+
+			task ("Add unit values on Spacing") {
+				StyleBooks.selectForm(formName = "Spacing");
+
+				StyleBooks.expandSection(sectionName = "Spacing");
+
+				var i = "0";
+
+				for (var tokenValue : list "1em,2em,3em,Auto") {
+					Type(
+						key_fieldLabel = "Spacer ${i}",
+						locator1 = "TextInput#GENERIC_TEXT_INPUT",
+						value1 = "${tokenValue}");
+
+					StyleBooks.clickManagementBar();
+
+					StyleBooks.waitForAutoSave();
+
+					var i = ${i} + 1;
+				}
+
+				StyleBooks.clickPublish();
+			}
+
+			task ("Add a Heading fragment to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+			}
+		}
+
+		task ("When the page designer selects dropdown menu of spacing on styles") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+
+			Click(
+				ariaLabel = "Margin Top",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		}
+
+		task ("Then the page designer can see default values on dropdown menu") {
+			var i = "0";
+
+			for (var tokenValue : list "0,0.25rem,0.5rem,1rem") {
+				AssertTextEquals(
+					key_tokenName = "Spacer ${i}",
+					locator1 = "MenuItem#SPACING_VALUE",
+					value1 = "${tokenValue}");
+
+				var i = ${i} + 1;
+			}
+		}
+
+		task ("When the page designer applies the new style book to content page") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Style Book");
+
+			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");
+		}
+
+		task ("Then the page designer can see custom values on dropdown menu of spacing") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+
+			Click(
+				ariaLabel = "Margin Top",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			var i = "0";
+
+			for (var tokenValue : list "1em,2em,3em,Auto") {
+				AssertTextEquals(
+					key_tokenName = "Spacer ${i}",
+					locator1 = "MenuItem#SPACING_VALUE",
+					value1 = "${tokenValue}");
+
+				var i = ${i} + 1;
+			}
+		}
+
+		task ("When the page designer selects Auto in spacing") {
+			DropdownMenuItem.click(menuItem = "Spacer 3");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Then the page designer can see auto style on heading fragment at edit mode") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Heading",
+				marginTop = "3");
+		}
+
+		task ("When the page designer opens the dropdown menu of marging top on spacing") {
+			Click(
+				ariaLabel = "Margin Top",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		}
+
+		task ("Then te page designer can see Spacer 3 is shown as selected") {
+			AssertCssValue(
+				ariaLabel = "Set Margin Top to 3",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+		}
+
+		task ("When the page designer accesses published content page at view mode") {
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer can see auto style on heading fragment at view mode") {
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "heading",
+				styleName = "marginTop",
+				styleValue = "3");
+		}
+	}
+
 	@description = "LPS-147400. Collection Display and Collection Filter have width and display configuration."
 	@priority = "3"
 	test ViewWidthAndHideOfCollectionFilterAndCollectionDisplayAndCollectionFilterCanBeHidden {

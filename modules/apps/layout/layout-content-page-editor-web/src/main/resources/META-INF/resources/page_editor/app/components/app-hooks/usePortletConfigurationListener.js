@@ -24,7 +24,7 @@ const PAGE_CONTENTS_AWARE_PORTLET_IDS = [
 	'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
 ];
 
-export default function PortletConfigurationListener() {
+export default function usePortletConfigurationListener() {
 	const dispatch = useDispatch();
 
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -49,6 +49,4 @@ export default function PortletConfigurationListener() {
 
 		return () => Liferay.detach('editConfiguration', onEditConfiguration);
 	}, [dispatch, segmentsExperienceId]);
-
-	return null;
 }

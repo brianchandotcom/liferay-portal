@@ -22,7 +22,7 @@ import {useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 
-export default function PreviewURL() {
+export default function usePreviewURL() {
 	const displayPagePreviewItem = useDisplayPagePreviewItem();
 	const languageId = useSelector(selectLanguageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -59,6 +59,4 @@ export default function PreviewURL() {
 			)
 		);
 	}, [displayPagePreviewItem, languageId, segmentsExperienceId]);
-
-	return null;
 }

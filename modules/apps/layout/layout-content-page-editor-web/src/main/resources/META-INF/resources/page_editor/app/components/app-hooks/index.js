@@ -12,23 +12,20 @@
  * details.
  */
 
-import {useEffect} from 'react';
+import useBackURL from './useBackURL';
+import useExtendSession from './useExtendSession';
+import useLanguageDirection from './useLanguageDirection';
+import usePortletConfigurationListener from './usePortletConfigurationListener';
+import usePreviewURL from './usePreviewURL';
+import useURLParser from './useURLParser';
 
-import {useSelector} from '../../contexts/StoreContext';
-import selectLanguageId from '../../selectors/selectLanguageId';
-
-export default function LanguageDirection() {
-	const languageId = useSelector(selectLanguageId);
-
-	useEffect(() => {
-		const currentLanguageDirection = Liferay.Language.direction[languageId];
-		const wrapper = document.getElementById('wrapper');
-
-		if (wrapper) {
-			wrapper.dir = currentLanguageDirection;
-			wrapper.lang = languageId;
-		}
-	}, [languageId]);
+export default function AppHooks() {
+	useBackURL();
+	useExtendSession();
+	useLanguageDirection();
+	usePortletConfigurationListener();
+	usePreviewURL();
+	useURLParser();
 
 	return null;
 }

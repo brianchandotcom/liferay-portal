@@ -17,7 +17,7 @@ import {useEffect, useMemo} from 'react';
 import {useSelector} from '../../contexts/StoreContext';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 
-export default function BackURL() {
+export default function useBackURL() {
 	const [backLinkElement, backLinkURL] = useMemo(() => {
 		const backLinkElement = document.querySelector('.lfr-back-link');
 
@@ -55,6 +55,4 @@ export default function BackURL() {
 			}
 		}
 	}, [backLinkElement, backLinkURL, segmentsExperienceId]);
-
-	return null;
 }

@@ -35,29 +35,14 @@ import LayoutViewport from './LayoutViewport';
 import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
-import BackURL from './app-hooks/BackURL';
-import ExtendSession from './app-hooks/ExtendSession';
-import LanguageDirection from './app-hooks/LanguageDirection';
-import PortletConfigurationListener from './app-hooks/PortletConfigurationListener';
-import PreviewURL from './app-hooks/PreviewURL';
-import URLParser from './app-hooks/URLParser';
+import AppHooks from './app-hooks/index';
 
 export default function App({state}) {
 	const initialState = reducer(state, {type: INIT});
 
 	return (
 		<StoreContextProvider initialState={initialState} reducer={reducer}>
-			<BackURL />
-
-			<LanguageDirection />
-
-			<PortletConfigurationListener />
-
-			<URLParser />
-
-			<PreviewURL />
-
-			<ExtendSession />
+			<AppHooks />
 
 			<ControlsProvider>
 				<CollectionActiveItemContextProvider>

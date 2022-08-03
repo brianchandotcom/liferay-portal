@@ -20,7 +20,7 @@ import {useSelectItem} from '../../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import getFragmentItem from '../../utils/getFragmentItem';
 
-export default function URLParser() {
+export default function useURLParser() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
 	const dispatch = useDispatch();
@@ -89,6 +89,4 @@ export default function URLParser() {
 			});
 		}
 	}, [selectFragment]);
-
-	return null;
 }

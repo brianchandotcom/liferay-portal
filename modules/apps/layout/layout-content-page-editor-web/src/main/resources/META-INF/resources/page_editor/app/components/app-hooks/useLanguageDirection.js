@@ -14,23 +14,19 @@
 
 import {useEffect} from 'react';
 
-import {config} from '../../config/index';
+import {useSelector} from '../../contexts/StoreContext';
+import selectLanguageId from '../../selectors/selectLanguageId';
 
-const DEFAULT_SESSION_LENGTH = 60 * 1000;
+export default function useLanguageDirection() {
+	const languageId = useSelector(selectLanguageId);
 
-export default function ExtendSession() {
 	useEffect(() => {
-		if (Liferay.Session && config.autoExtendSessionEnabled) {
-			const sessionLength =
-				Liferay.Session.get('sessionLength') || DEFAULT_SESSION_LENGTH;
+		const currentLanguageDirection = Liferay.Language.direction[languageId];
+		const wrapper = document.getElementById('wrapper');
 
-			const interval = setInterval(() => {
-				Liferay.Session.extend();
-			}, sessionLength / 2);
-
-			return () => clearInterval(interval);
+		if (wrapper) {
+			wrapper.dir = currentLanguageDirection;
+			wrapper.lang = languageId;
 		}
-	}, []);
-
-	return null;
+	}, [languageId]);
 }

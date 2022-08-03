@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -315,9 +314,9 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			Map<String, String[]> params)
 		throws NoSuchInfoItemException {
 
-		long classPK = _getVersionClassPK(params);
+		String version = _getVersion(params);
 
-		if (classPK <= 0) {
+		if (Validator.isNull(version)) {
 			return layoutDisplayPageObjectProvider.getDisplayObject();
 		}
 
@@ -474,14 +473,14 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		return StringPool.BLANK;
 	}
 
-	private long _getVersionClassPK(Map<String, String[]> params) {
+	private String _getVersion(Map<String, String[]> params) {
 		String[] versions = params.get("version");
 
 		if (ArrayUtil.isEmpty(versions)) {
-			return 0;
+			return StringPool.BLANK;
 		}
 
-		return GetterUtil.getLong(versions[0]);
+		return versions[0];
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

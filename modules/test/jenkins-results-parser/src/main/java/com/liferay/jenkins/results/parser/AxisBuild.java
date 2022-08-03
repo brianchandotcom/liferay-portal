@@ -26,6 +26,7 @@ import com.liferay.jenkins.results.parser.failure.message.generator.PMDFailureMe
 import com.liferay.jenkins.results.parser.failure.message.generator.PluginFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.PluginGitIDFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.SemanticVersioningFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.ServiceBuilderFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormatFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.StartupFailureMessageGenerator;
 
@@ -608,6 +609,7 @@ public class AxisBuild extends BaseBuild {
 			new PluginFailureMessageGenerator(),
 			new PluginGitIDFailureMessageGenerator(),
 			new SemanticVersioningFailureMessageGenerator(),
+			new ServiceBuilderFailureMessageGenerator(),
 			new SourceFormatFailureMessageGenerator(),
 			new StartupFailureMessageGenerator(),
 			//

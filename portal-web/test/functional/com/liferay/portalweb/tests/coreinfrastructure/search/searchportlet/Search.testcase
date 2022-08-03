@@ -2639,7 +2639,7 @@ definition {
 		IFrame.closeFrame();
 
 		AssetPublisherPortlet.configureAssetDisplayOrderPG(
-			fieldNameOrder = "content",
+			fieldNameOrder = "Content",
 			sortOrder = "Ascending");
 
 		IFrame.closeFrame();

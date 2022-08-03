@@ -78,6 +78,9 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 				accessControlContext);
 
 			if (accessToken == null) {
+				authVerifierResult.setState(
+					AuthVerifierResult.State.INVALID_CREDENTIALS);
+
 				return authVerifierResult;
 			}
 

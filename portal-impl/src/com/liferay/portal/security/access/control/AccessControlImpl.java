@@ -108,8 +108,10 @@ public class AccessControlImpl implements AccessControl {
 			authVerifierResult = authVerifierPipeline.verifyRequest(
 				accessControlContext);
 
-			if (authVerifierResult.getState() !=
-					AuthVerifierResult.State.SUCCESS) {
+			if ((authVerifierResult.getState() !=
+					AuthVerifierResult.State.SUCCESS) &&
+				(authVerifierResult.getState() !=
+					AuthVerifierResult.State.INVALID_CREDENTIALS)) {
 
 				AuthVerifierPipeline portalAuthVerifierPipeline =
 					AuthVerifierPipeline.getPortalAuthVerifierPipeline();

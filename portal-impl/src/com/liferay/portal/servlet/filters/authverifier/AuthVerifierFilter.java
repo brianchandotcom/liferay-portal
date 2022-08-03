@@ -176,6 +176,9 @@ public class AuthVerifierFilter extends BasePortalFilter {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Result state does not allow us to continue");
 			}
+
+			httpServletResponse.sendError(
+				HttpServletResponse.SC_UNAUTHORIZED, "Invalid credentials");
 		}
 		else if (state == AuthVerifierResult.State.NOT_APPLICABLE) {
 			_log.error("Invalid state " + state);

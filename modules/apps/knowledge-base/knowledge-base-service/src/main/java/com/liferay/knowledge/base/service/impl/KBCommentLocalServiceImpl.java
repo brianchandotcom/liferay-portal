@@ -19,6 +19,7 @@ import com.liferay.knowledge.base.constants.AdminActivityKeys;
 import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.exception.KBCommentContentException;
+import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.internal.util.AdminSubscriptionSenderFactory;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
@@ -27,6 +28,7 @@ import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBTemplateLocalService;
 import com.liferay.knowledge.base.service.base.KBCommentLocalServiceBaseImpl;
 import com.liferay.knowledge.base.util.comparator.KBCommentCreateDateComparator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -453,6 +455,24 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 			return;
 		}
 
+		KBArticle kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
+			kbComment.getClassPK(), WorkflowConstants.STATUS_APPROVED);
+
+		if (kbArticle == null) {
+			KBTemplate kbTemplate = _kbTemplateLocalService.fetchKBTemplate(
+				kbComment.getClassPK());
+
+			if (kbTemplate != null) {
+				return;
+			}
+
+			throw new NoSuchArticleException(
+				StringBundler.concat(
+					"No KBArticle exists with the key {resourcePrimKey=",
+					kbComment.getClassPK(), ", status=",
+					WorkflowConstants.STATUS_APPROVED, "}"));
+		}
+
 		String fromName = kbGroupServiceConfiguration.emailFromName();
 		String fromAddress = kbGroupServiceConfiguration.emailFromAddress();
 
@@ -460,9 +480,6 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 			kbComment.getStatus(), kbGroupServiceConfiguration);
 		String body = getEmailKBArticleSuggestionNotificationBody(
 			kbComment.getStatus(), kbGroupServiceConfiguration);
-
-		KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
-			kbComment.getClassPK(), WorkflowConstants.STATUS_APPROVED);
 
 		String kbArticleContent = StringUtil.replace(
 			kbArticle.getContent(), new String[] {"href=\"/", "src=\"/"},

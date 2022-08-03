@@ -68,6 +68,7 @@ definition {
 	@priority = "4"
 	test HypersonicToMySQL {
 		property database.types = "mysql";
+		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "SetupWizard#HypersonicToMySQL";
 
 		SetupWizard.configurePG(

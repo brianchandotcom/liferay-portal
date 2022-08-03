@@ -1,0 +1,19 @@
+html#{$cadmin-selector} {
+	.page-editor__form-validation-modal {
+		font-size: 16px;
+
+		.modal-body {
+			color: $cadmin-secondary;
+
+			.panel-header {
+				border-bottom: 1px solid $cadmin-secondary-l2;
+				border-radius: 0;
+			}
+
+			.panel-header,
+			.panel-body {
+				padding-left: 0;
+			}
+		}
+	}
+}

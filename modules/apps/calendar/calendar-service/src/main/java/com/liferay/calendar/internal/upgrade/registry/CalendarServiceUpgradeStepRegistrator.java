@@ -14,7 +14,6 @@
 
 package com.liferay.calendar.internal.upgrade.registry;
 
-import com.liferay.calendar.internal.upgrade.v1_0_1.CalendarBookingUpgradeProcess;
 import com.liferay.calendar.internal.upgrade.v1_0_2.CalendarUpgradeProcess;
 import com.liferay.calendar.internal.upgrade.v1_0_4.UpgradeClassNames;
 import com.liferay.calendar.internal.upgrade.v1_0_5.CalendarResourceUpgradeProcess;
@@ -71,7 +70,9 @@ public class CalendarServiceUpgradeStepRegistrator
 				"CalendarBooking", "description", "TEXT null"));
 
 		registry.register(
-			"1.0.0", "1.0.1", new CalendarBookingUpgradeProcess());
+			"1.0.0", "1.0.1",
+			new com.liferay.calendar.internal.upgrade.v1_0_1.
+				CalendarBookingUpgradeProcess());
 
 		registry.register("1.0.1", "1.0.2", new CalendarUpgradeProcess());
 

@@ -215,7 +215,12 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 
 			article = _journalArticleService.updateArticleDefaultValues(
 				groupId, articleId, titleMap, descriptionMap, content,
-				ddmStructureKey, ddmTemplateKey, layoutUuid, indexable,
+				ddmStructureKey, ddmTemplateKey, layoutUuid, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+				reviewDateHour, reviewDateMinute, neverReview, indexable,
 				smallImage, smallImageURL, smallFile, serviceContext);
 		}
 

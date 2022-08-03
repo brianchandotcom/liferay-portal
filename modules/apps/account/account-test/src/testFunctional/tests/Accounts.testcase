@@ -97,6 +97,66 @@ definition {
 		}
 	}
 
+	@description = "This test assigns an account role to a regular user via Account Admin and asserts that it displays in Users Admin edit user page."
+	@priority = "3"
+	test AccountRoleDisplaysInUsersAdmin {
+		task ("Given a regular user is added to a business account") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.assignUsers(
+				accountName = "Account Name",
+				assigneeName = "userfn");
+		}
+
+		task ("When an account role is assigned to a regular user through Account Admin") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Assign Roles",
+				rowEntry = "userfn userln");
+
+			SelectFrame(
+				key_title = "Assign Roles",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Check(
+				key_tableEntry = "Account Administrator",
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+			SelectFrameTop();
+
+			Button.click(button = "Done");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the role is also displayed in Users Admin") {
+			User.openUsersAdmin();
+
+			UserNavigator.gotoUser(userScreenName = "usersn");
+
+			UserNavigator.gotoMemberships();
+
+			AssertElementPresent(
+				key_accountName = "Account Name",
+				locator1 = "UsersAndOrganizationsEditUser#ACCOUNTS_TABLE_ACCOUNT_NAMES");
+
+			AssertElementPresent(
+				key_accountRole = "Account Administrator",
+				locator1 = "UsersAndOrganizationsEditUser#ACCOUNTS_TABLE_ACCOUNT_ROLES");
+		}
+	}
+
 	@description = "This is a use case for LPS-101893. It asserts all accounts display properly across pages."
 	@priority = "4"
 	test AccountsDisplayWhenChangingPagination {

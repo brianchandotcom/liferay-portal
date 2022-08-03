@@ -2566,6 +2566,166 @@ definition {
 		CreateObject.assertCustomObjectNotPresent(labelName = "Custom Object 71");
 	}
 
+	@description = "LPS-151877 - Verify that, when adding a new Object, the admin user is able to restrict users to only see entries from an account that they are part of"
+	@priority = "5"
+	test CanOnlySeeEntriesFromAccount {
+		property portal.acceptance = "true";
+
+		task ("Add Accounts and Users related itself (via API)") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Public Account",
+				accountEntryType = "Business");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Public Account",
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Private Account",
+				accountEntryType = "Business");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Private Account",
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
+		}
+
+		task ("Add Custom Object (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+		}
+
+		task ("Add Relationship Account to Custom Object (via API)") {
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "AccountEntry",
+				objectName_2 = "CustomObject",
+				relationshipLabel = "RelationshipAccount",
+				relationshipName = "relationshipAccount",
+				relationshipType = "oneToMany");
+		}
+
+		task ("Go to Account and change title field") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Account");
+
+			CreateObject.selectTitleField(fieldLabel = "Name");
+
+			CreateObject.saveObject();
+		}
+
+		task ("Go to Custom Object and active Account Restriction") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			CreateObject.activeToogleAccountRestriction();
+
+			CreateObject.selectAccountRestrictedField(accountRestrictedField = "RelationshipAccount");
+
+			Button.clickPublish();
+		}
+
+		task ("Define Regular Role for new User") {
+			JSONRole.addRegularRole(
+				roleKey = "Regular Role",
+				roleTitle = "Regular Role");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Regular Role",
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Regular Role",
+				userEmailAddress = "userea2@liferay.com");
+
+			Role.openRolesAdmin();
+
+			Role.definePermissionCP(
+				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+				permissionDefinitionValue = "",
+				permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
+				permissionNavigationValue = "Custom Objects",
+				roleTitle = "Regular Role",
+				roleType = "Regular");
+
+			Role.openRolesAdmin();
+
+			Role.definePermissionCP(
+				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_RESOURCE_PERMISSIONS_VIEW_CHECKBOX",
+				permissionDefinitionValue = "",
+				permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
+				permissionNavigationValue = "Custom Objects",
+				roleTitle = "Regular Role",
+				roleType = "Regular");
+
+			Role.openRolesAdmin();
+
+			Role.definePermissionCP(
+				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX",
+				permissionDefinitionValue = "",
+				permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
+				permissionNavigationValue = "Custom Objects",
+				roleTitle = "Regular Role",
+				roleType = "Regular");
+		}
+
+		task ("Logout and go to another User") {
+			Navigator.openURL();
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+		}
+
+		task ("Go to Custom Object entries and assert that it's possible to view only Public Account") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.assertRelationshipEntrySearchResultsNotPresent(entry = "Private Account");
+
+			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Public Account");
+
+			Button.clickSave();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.viewEntry(entry = "Public Account");
+		}
+
+		task ("Logout and go to another User") {
+			Navigator.openURL();
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea2@liferay.com",
+				userLoginFullName = "userfn2 userln2");
+		}
+
+		task ("Go to Custom Object entries and assert that it's possible to view only Public Account") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.assertRelationshipEntrySearchResultsNotPresent(entry = "Public Account");
+
+			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Private Account");
+
+			Button.clickSave();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.viewEntry(entry = "Private Account");
+		}
+	}
+
 	@description = "LPS-135549 - Verify it is possible to Publish a Custom Object"
 	@priority = "5"
 	test CanPublishCustomObject {

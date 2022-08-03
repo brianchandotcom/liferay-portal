@@ -17,7 +17,7 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {useId} from '../../app/utils/useId';
 import useControlledState from '../../core/hooks/useControlledState';
@@ -39,7 +39,6 @@ const UNITS = ['px', '%', 'em', 'rem', 'vw', 'vh', CUSTOM];
 
 export function LengthField({field, onValueSelect, value}) {
 	const inputId = useId();
-	const isCustomRef = useRef(false);
 
 	const initialValue = useMemo(() => {
 		if (!value) {
@@ -69,11 +68,10 @@ export function LengthField({field, onValueSelect, value}) {
 				{field.label}
 			</label>
 
-			<Field
+			<LengthInput
 				field={field}
 				id={inputId}
 				initialValue={initialValue}
-				isCustomRef={isCustomRef}
 				onValueSelect={onValueSelect}
 				value={value}
 			/>
@@ -87,14 +85,7 @@ LengthField.propTypes = {
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
-const Field = ({
-	field,
-	id,
-	initialValue,
-	isCustomRef,
-	onValueSelect,
-	value,
-}) => {
+const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 	const [active, setActive] = useState(false);
 	const [nextValue, setNextValue] = useControlledState(initialValue.value);
 	const [nextUnit, setNextUnit] = useState(initialValue.unit);
@@ -103,8 +94,6 @@ const Field = ({
 	const handleUnitSelect = (unit) => {
 		setActive(false);
 		setNextUnit(unit);
-
-		isCustomRef.current = unit === CUSTOM;
 
 		if (!nextValue) {
 			return;

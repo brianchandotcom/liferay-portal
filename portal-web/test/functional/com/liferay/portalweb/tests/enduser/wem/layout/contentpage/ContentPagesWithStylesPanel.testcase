@@ -198,4 +198,72 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-136279. The text align should be indicated by align icon."
+	@priority = "4"
+	test ViewStylesOfTextAlignButtons {
+		task ("Given a page designer has a Heading fragment on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page designer accesses to the Styles panel of Heading") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+		}
+
+		task ("Then the page designer sees the styles of text align buttons") {
+			task ("View the align left, align center, align right and align justify icons are shown in Text section") {
+				for (var fieldName : list "align-left,align-center,align-right,align-justify") {
+					AssertVisible(
+						key_text = "${fieldName}",
+						locator1 = "PageEditor#TEXT_ALIGN_ICON");
+				}
+			}
+
+			task ("View the align left icon is selected") {
+				AssertVisible(
+					key_text = "align-left",
+					locator1 = "PageEditor#ACTIVE_TEXT_ALIGN_ICON");
+			}
+
+			task ("View the tooltip shown when hover on icon of text align") {
+				MouseOver(
+					key_text = "align-left",
+					locator1 = "PageEditor#TEXT_ALIGN_ICON");
+
+				AssertVisible(
+					key_content = "Align Left",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+				MouseOver(
+					key_text = "align-center",
+					locator1 = "PageEditor#TEXT_ALIGN_ICON");
+
+				AssertVisible(
+					key_content = "Align Center",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+				MouseOver(
+					key_text = "align-right",
+					locator1 = "PageEditor#TEXT_ALIGN_ICON");
+
+				AssertVisible(
+					key_content = "Align Right",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+				MouseOver(
+					key_text = "align-justify",
+					locator1 = "PageEditor#TEXT_ALIGN_ICON");
+
+				AssertVisible(
+					key_content = "Justify",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+			}
+		}
+	}
+
 }

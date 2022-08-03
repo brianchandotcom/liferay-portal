@@ -149,7 +149,7 @@ definition {
 		// AC Bug ticket: LRAC-11185
 
 		var sidebarList1 = "Sites,Recursos,Eventos,Segmentos,Contas,Indivíduos,Testes";
-		var sidebarList2 = "Sites,Assets,Events,Segments,Accounts,Individuals,Tests";
+		var sidebarList2 = "Sites,Assets,Events,Segments,Individuals,Tests";
 
 		task ("Switch to property in AC") {
 			ACUtils.launchAC();

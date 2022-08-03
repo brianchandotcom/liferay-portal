@@ -794,6 +794,8 @@ definition {
 	test CheckAllMessageWhenHasPropertyNoDataSource {
 		property test.name.skip.portal.instance = "EmptyState#CheckAllMessageWhenHasPropertyNoDataSource";
 
+		// Accounts and Salesforce tests are no longer possible to run after this one from LRAC-11571
+
 		task ("Close the onboarding modal") {
 			ACUtils.closeModal();
 		}
@@ -854,15 +856,13 @@ definition {
 			}
 		}
 
-		task ("Navigate to accounts page") {
-			ACNavigation.goToSidebarOption(sidebarOption = "accounts");
-		}
-
-		task ("Check the empty page status message and the connect button") {
-			ACUtils.viewGenericText(textValueList = "No Accounts Synced from Data Sources,Connect a data source to get started.,Access our documentation to learn more.");
-
-			ACUtils.viewGenericButton(buttonName = "Connect Data Source");
-		}
+		//task ("Navigate to accounts page") {
+		//	ACNavigation.goToSidebarOption(sidebarOption = "accounts");
+		//}
+		//task ("Check the empty page status message and the connect button") {
+		//	ACUtils.viewGenericText(textValueList = "No Accounts Synced from Data Sources,Connect a data source to get started.,Access our documentation to learn more.");
+		//	ACUtils.viewGenericButton(buttonName = "Connect Data Source");
+		//}
 
 		for (var pageName : list "event-analysis,segments") {
 			task ("Navigate to AC pages") {
@@ -1544,7 +1544,7 @@ definition {
 			AssertElementPresent(locator1 = "TextInput#NO_PROPERTIES_AVAILABLE_TEXT");
 		}
 
-		for (var pageName : list "sites,assets,event-analysis,segments,accounts,individuals,tests") {
+		for (var pageName : list "sites,assets,event-analysis,segments,individuals,tests") {
 			task ("Navigate to AC pages") {
 				ACNavigation.goToSidebarOption(sidebarOption = "${pageName}");
 			}
@@ -1618,7 +1618,7 @@ definition {
 		}
 
 		task ("Check search messages with no results found") {
-			for (var pageName : list "assets,event-analysis,segments,accounts,tests") {
+			for (var pageName : list "assets,event-analysis,segments,tests") {
 				ACNavigation.goToSidebarOption(sidebarOption = "${pageName}");
 
 				ACUtils.searchBar(searchItem = "empty state");

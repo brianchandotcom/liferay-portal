@@ -196,6 +196,9 @@ definition {
 	}
 
 	macro assertCanChooseDataSourceOptions {
+
+		// Accounts and Salesforce tests are no longer possible to run after this one from LRAC-11571
+
 		Click(
 			key_sourceType = "Liferay DXP",
 			locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
@@ -204,15 +207,13 @@ definition {
 
 		Click(locator1 = "ACUtils#MODAL_CLOSE_BUTTON");
 
-		Click(
-			key_sourceType = "Salesforce",
-			locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
-
-		ACUtils.assertItemsName(itemList = "Configure Salesforce");
-
-		Click(
-			key_breadcrumbName = "Add Data Source",
-			locator1 = "BreadcrumbPortlet#BREADCRUMB_PAGE");
+		//Click(
+		//	key_sourceType = "Salesforce",
+		//	locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
+		//ACUtils.assertItemsName(itemList = "Configure Salesforce");
+		//Click(
+		//	key_breadcrumbName = "Add Data Source",
+		//	locator1 = "BreadcrumbPortlet#BREADCRUMB_PAGE");
 
 		Click(
 			key_sourceType = "CSV File",

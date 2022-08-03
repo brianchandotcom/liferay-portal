@@ -46,6 +46,7 @@ definition {
 	@description = "Publications test in a non-root portal context."
 	@priority = "4"
 	test CreatePublicationsInNonRootContext {
+		property app.server.types = "tomcat";
 		property portal.context = "liferay";
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";

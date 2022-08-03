@@ -277,11 +277,7 @@ export default function EditObjectField({
 						{
 							filterBy: objectFieldName,
 							filterType,
-							json: {
-								[filterType as string]: value
-									? value
-									: dateJson,
-							},
+							json: dateJson,
 						},
 					];
 				}
@@ -379,11 +375,7 @@ export default function EditObjectField({
 								objectField.businessType === 'Date' &&
 								parsedFilter.filterType === 'range'
 							) {
-								const dateRangeFilterValues: ObjectFieldDateRangeFilterSettings =
-
-									// @ts-ignore
-
-									parsedFilter.json[filterType];
+								const dateRangeFilterValues = parsedFilter.json as ObjectFieldDateRangeFilterSettings;
 
 								const aggregationFilterDateRangeValues: LabelValueObject[] = [
 									{

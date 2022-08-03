@@ -392,7 +392,7 @@ public class SXPBlueprintSuggestionsContributor
 					_getSuggestion(
 						fieldNames, includeAssetSearchSummary, includeAssetURL,
 						layout, liferayPortletRequest, liferayPortletResponse,
-						searchContext, searchHit, null, true));
+						searchContext, searchHit, StringPool.BLANK, true));
 
 				continue;
 			}

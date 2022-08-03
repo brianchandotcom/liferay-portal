@@ -166,7 +166,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 					_suggestionsContributorConfiguration));
 
 		Mockito.verify(
-			_suggestionBuilder, Mockito.times(2)
+			_suggestionBuilder, Mockito.times(1)
 		).text(
 			Mockito.anyString()
 		);

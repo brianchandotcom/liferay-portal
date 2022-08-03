@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Spring Bean Override
+Bundle-SymbolicName: com.liferay.spring.bean.override
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.spring.bean.override

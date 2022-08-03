@@ -192,7 +192,6 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 				currentSegmentsExperienceIds);
 			resourceRequest.setAttribute(
 				WebKeys.PORTLET_DECORATE, currentPortletDecorate);
-
 			resourceRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, currentThemeDisplay);
 		}

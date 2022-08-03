@@ -330,11 +330,7 @@ definition {
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
 				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~Okta.config");
 
-			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
-
-			AssertElementPresent(
-				key_rowIndexNumber = "1",
-				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
+			OAuthClient.viewOAuthClient();
 		}
 
 		task ("When: Add virtual instance and login at able.com") {
@@ -351,13 +347,7 @@ definition {
 		}
 
 		task ("Then: Verify that the OAuth client should display on the virtual instance") {
-			OAuthClient.openOAuthClientAdmin(
-				baseURL = "http://www.able.com:8080",
-				navbar = "Clients");
-
-			AssertElementPresent(
-				key_rowIndexNumber = "1",
-				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
+			OAuthClient.viewOAuthClient(baseURL = "http://www.able.com:8080");
 		}
 	}
 

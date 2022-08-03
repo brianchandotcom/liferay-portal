@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
@@ -56,10 +56,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -127,7 +127,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			commerceSubscriptionEntryPersistence.create(
 				commerceSubscriptionEntryId);
 
-		commerceSubscriptionEntry.setUuid(PortalUUIDUtil.generate());
+		commerceSubscriptionEntry.setUuid(_portalUUID.generate());
 		commerceSubscriptionEntry.setGroupId(groupId);
 		commerceSubscriptionEntry.setCompanyId(user.getCompanyId());
 		commerceSubscriptionEntry.setUserId(user.getUserId());
@@ -531,7 +531,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 					SUBSCRIPTION_STATUS_INACTIVE) {
 
 			commerceSubscriptionEntry.setNextIterationDate(
-				PortalUtil.getDate(
+				_portal.getDate(
 					nextIterationDateMonth, nextIterationDateDay,
 					nextIterationDateYear, nextIterationDateHour,
 					nextIterationDateMinute, user.getTimeZone(),
@@ -554,7 +554,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 					SUBSCRIPTION_STATUS_INACTIVE) {
 
 			commerceSubscriptionEntry.setDeliveryNextIterationDate(
-				PortalUtil.getDate(
+				_portal.getDate(
 					deliveryNextIterationDateMonth,
 					deliveryNextIterationDateDay, deliveryNextIterationDateYear,
 					deliveryNextIterationDateHour,
@@ -726,7 +726,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				commerceSubscriptionEntries = null;
 
 				Indexer<CommerceSubscriptionEntry> indexer =
-					IndexerRegistryUtil.getIndexer(
+					_indexerRegistry.getIndexer(
 						CommerceSubscriptionEntry.class);
 
 				long companyId = GetterUtil.getLong(
@@ -747,7 +747,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		throws PortalException {
 
 		Indexer<CommerceSubscriptionEntry> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(
+			_indexerRegistry.nullSafeGetIndexer(
 				CommerceSubscriptionEntry.class);
 
 		for (int i = 0; i < 10; i++) {
@@ -831,6 +831,15 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 	@Reference
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private UserLocalService _userLocalService;

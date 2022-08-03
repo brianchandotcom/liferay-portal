@@ -75,7 +75,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
@@ -88,7 +88,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -845,7 +845,7 @@ public class CommerceOrderItemLocalServiceImpl
 			int requestedDeliveryDateYear)
 		throws PortalException {
 
-		Date requestedDeliveryDate = PortalUtil.getDate(
+		Date requestedDeliveryDate = _portal.getDate(
 			requestedDeliveryDateMonth, requestedDeliveryDateDay,
 			requestedDeliveryDateYear);
 
@@ -1779,7 +1779,7 @@ public class CommerceOrderItemLocalServiceImpl
 		throws PortalException {
 
 		Indexer<CommerceOrderItem> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommerceOrderItem.class);
+			_indexerRegistry.nullSafeGetIndexer(CommerceOrderItem.class);
 
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
@@ -2342,7 +2342,13 @@ public class CommerceOrderItemLocalServiceImpl
 	private ExpandoRowLocalService _expandoRowLocalService;
 
 	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
 	private JsonHelper _jsonHelper;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

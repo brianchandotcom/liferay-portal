@@ -37,7 +37,7 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -51,7 +51,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
@@ -65,7 +65,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -409,9 +409,8 @@ public class CommerceShipmentLocalServiceImpl
 			SearchContext searchContext)
 		throws PortalException {
 
-		Indexer<CommerceShipment> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(
-				CommerceShipment.class.getName());
+		Indexer<CommerceShipment> indexer = _indexerRegistry.nullSafeGetIndexer(
+			CommerceShipment.class.getName());
 
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext);
@@ -433,9 +432,8 @@ public class CommerceShipmentLocalServiceImpl
 	public long searchCommerceShipmentsCount(SearchContext searchContext)
 		throws PortalException {
 
-		Indexer<CommerceShipment> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(
-				CommerceShipment.class.getName());
+		Indexer<CommerceShipment> indexer = _indexerRegistry.nullSafeGetIndexer(
+			CommerceShipment.class.getName());
 
 		return indexer.searchCount(searchContext);
 	}
@@ -747,8 +745,8 @@ public class CommerceShipmentLocalServiceImpl
 									commerceShipment.getCommerceShipmentId(),
 									LocaleUtil.getSiteDefault(), null, null));
 
-							return JSONFactoryUtil.createJSONObject(
-								JSONFactoryUtil.looseSerializeDeep(object));
+							return _jsonFactory.createJSONObject(
+								_jsonFactory.looseSerializeDeep(object));
 						}
 					).put(
 						"commerceShipmentId",
@@ -817,8 +815,8 @@ public class CommerceShipmentLocalServiceImpl
 			if (commerceShipment == null) {
 				commerceShipments = null;
 
-				Indexer<CommerceShipment> indexer =
-					IndexerRegistryUtil.getIndexer(CommerceShipment.class);
+				Indexer<CommerceShipment> indexer = _indexerRegistry.getIndexer(
+					CommerceShipment.class);
 
 				long companyId = GetterUtil.getLong(
 					document.get(Field.COMPANY_ID));
@@ -845,7 +843,7 @@ public class CommerceShipmentLocalServiceImpl
 			return null;
 		}
 
-		return PortalUtil.getDate(
+		return _portal.getDate(
 			dateMonth, dateDay, dateYear, dateHour, dateMinute, timeZone,
 			clazz);
 	}
@@ -936,6 +934,15 @@ public class CommerceShipmentLocalServiceImpl
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

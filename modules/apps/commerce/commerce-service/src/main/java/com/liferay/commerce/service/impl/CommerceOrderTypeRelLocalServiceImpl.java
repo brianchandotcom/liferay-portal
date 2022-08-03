@@ -35,7 +35,7 @@ import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -244,7 +244,7 @@ public class CommerceOrderTypeRelLocalServiceImpl
 		throws PortalException {
 
 		Indexer<CommerceOrderType> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommerceOrderType.class);
+			_indexerRegistry.nullSafeGetIndexer(CommerceOrderType.class);
 
 		indexer.reindex(CommerceOrderType.class.getName(), commerceOrderTypeId);
 	}
@@ -268,6 +268,9 @@ public class CommerceOrderTypeRelLocalServiceImpl
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private UserLocalService _userLocalService;

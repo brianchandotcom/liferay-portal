@@ -66,7 +66,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -85,12 +85,12 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.search.SortFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -102,7 +102,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -280,7 +280,7 @@ public class CommerceOrderLocalServiceImpl
 
 		commerceOrder.setManuallyAdjusted(false);
 
-		Date orderDate = PortalUtil.getDate(
+		Date orderDate = _portal.getDate(
 			orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
 			orderDateMinute, user.getTimeZone(), null);
 
@@ -355,7 +355,7 @@ public class CommerceOrderLocalServiceImpl
 
 			User user = _userLocalService.getUser(serviceContext.getUserId());
 
-			Date orderDate = PortalUtil.getDate(
+			Date orderDate = _portal.getDate(
 				orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
 				orderDateMinute, user.getTimeZone(), null);
 
@@ -1052,7 +1052,7 @@ public class CommerceOrderLocalServiceImpl
 			SearchContext searchContext)
 		throws PortalException {
 
-		Indexer<CommerceOrder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<CommerceOrder> indexer = _indexerRegistry.nullSafeGetIndexer(
 			CommerceOrder.class.getName());
 
 		for (int i = 0; i < 10; i++) {
@@ -1074,7 +1074,7 @@ public class CommerceOrderLocalServiceImpl
 	public long searchCommerceOrdersCount(SearchContext searchContext)
 		throws PortalException {
 
-		Indexer<CommerceOrder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<CommerceOrder> indexer = _indexerRegistry.nullSafeGetIndexer(
 			CommerceOrder.class.getName());
 
 		return indexer.searchCount(searchContext);
@@ -1487,7 +1487,7 @@ public class CommerceOrderLocalServiceImpl
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		Date requestedDeliveryDate = PortalUtil.getDate(
+		Date requestedDeliveryDate = _portal.getDate(
 			requestedDeliveryDateMonth, requestedDeliveryDateDay,
 			requestedDeliveryDateYear, requestedDeliveryDateHour,
 			requestedDeliveryDateMinute, user.getTimeZone(),
@@ -1516,7 +1516,7 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrderId);
 
 		commerceOrder.setOrderDate(
-			PortalUtil.getDate(
+			_portal.getDate(
 				orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
 				orderDateMinute, user.getTimeZone(),
 				CommerceOrderDateException.class));
@@ -1775,7 +1775,7 @@ public class CommerceOrderLocalServiceImpl
 		searchContext.setGroupIds(new long[] {commerceChannelGroupId});
 		searchContext.setKeywords(keywords);
 		searchContext.setSorts(
-			SortFactoryUtil.getSort(
+			_sortFactory.getSort(
 				CommerceOrder.class, Sort.LONG_TYPE, Field.CREATE_DATE,
 				"DESC"));
 		searchContext.setStart(start);
@@ -1804,7 +1804,7 @@ public class CommerceOrderLocalServiceImpl
 			if (commerceOrder == null) {
 				commerceOrders = null;
 
-				Indexer<CommerceOrder> indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<CommerceOrder> indexer = _indexerRegistry.getIndexer(
 					CommerceOrder.class);
 
 				long companyId = GetterUtil.getLong(
@@ -1881,7 +1881,7 @@ public class CommerceOrderLocalServiceImpl
 									commerceOrder.getCommerceOrderId(),
 									LocaleUtil.getSiteDefault(), null, null));
 
-							return JSONFactoryUtil.createJSONObject(
+							return _jsonFactory.createJSONObject(
 								object.toString());
 						}
 					).put(
@@ -2306,7 +2306,19 @@ public class CommerceOrderLocalServiceImpl
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private JsonHelper _jsonHelper;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private SortFactory _sortFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

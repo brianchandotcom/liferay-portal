@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>DROPDOWN_MENU_ITEM_SPECIFIC</td>
-	<td>xpath=(//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li[@role='none' and ancestor::*[@role='group']] | //ul[contains(@class,'dropdown-menu') and contains(@class,'show')]//p[contains(@class,'list-group-title')])[${index}]</td>
+	<td>xpath=(//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li[@role='none' and ancestor::*[@role='group']] | //ul[contains(@class,'dropdown-menu') and contains(@class,'show')]//p[contains(@class,'list-group-title')] | //div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li[@role='option'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

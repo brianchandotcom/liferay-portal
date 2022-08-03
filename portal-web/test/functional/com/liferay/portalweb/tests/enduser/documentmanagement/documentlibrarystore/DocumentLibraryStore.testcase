@@ -288,4 +288,63 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test S3ConnectionDoesNotLeakWhenServingFileAsStream {
+		property aws.store.enabled = "true";
+		property test.name.skip.portal.instance = "DocumentLibraryStore#S3StoreHTTPConnections";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		ServerAdministration.openServerAdmin();
+
+		var script = '''
+			import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+			import com.liferay.document.library.kernel.store.DLStoreUtil;
+ 
+			List fileEntries = DLFileEntryLocalServiceUtil.getFileEntries(0,1);
+ 
+			fileEntries.each { fileEntry ->
+				(1..20).each {
+					try {
+						InputStream is = DLStoreUtil.getFileAsStream(fileEntry.getCompanyId(), fileEntry.getRepositoryId(), fileEntry.getName())
+					} 
+					catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		''';
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		AssertConsoleTextNotPresent(value1 = "ConnectionPoolTimeoutException");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		DMDocument.viewEditCP(
+			dmDocumentTitleEdit = "DM Document Title Edit",
+			dmDocumentVersionNumber = "1.1");
+	}
+
 }

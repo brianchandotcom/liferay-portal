@@ -38,8 +38,6 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 
 			CustomFields.tearDownCP();
-
-			JSONUser.tearDownNonAdminUsers();
 		}
 
 		ACUtils.tearDownAC();

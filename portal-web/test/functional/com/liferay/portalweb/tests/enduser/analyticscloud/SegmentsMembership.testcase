@@ -66,8 +66,6 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
-		JSONUser.tearDownNonAdminUsers();
-
 		ACUtils.tearDownAC();
 	}
 

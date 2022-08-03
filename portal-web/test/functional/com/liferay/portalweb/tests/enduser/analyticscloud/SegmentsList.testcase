@@ -40,8 +40,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 
-		JSONUser.tearDownNonAdminUsers();
-
 		ACUtils.tearDownAC();
 	}
 

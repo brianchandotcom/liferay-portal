@@ -927,6 +927,16 @@
 	<td>//div[label[normalize-space(text())='${fieldLabel}']]//span[contains(@class,'label-item')][normalize-space()='${itemName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TEXT_ALIGN_ICON</td>
+	<td>//div[contains(@class,'page-editor__collapse')][button[normalize-space()='Text']]//button[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVE_TEXT_ALIGN_ICON</td>
+	<td>//div[contains(@class,'page-editor__collapse')][button[normalize-space()='Text']]//button[@aria-pressed='true'][*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -146,7 +146,7 @@ public class ProductSubscriptionConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long numberOfLength;
 
-	@Schema(example = "month")
+	@Schema(example = "monthly")
 	@Valid
 	public SubscriptionType getSubscriptionType() {
 		return subscriptionType;
@@ -316,7 +316,7 @@ public class ProductSubscriptionConfiguration implements Serializable {
 	@GraphQLName("SubscriptionType")
 	public static enum SubscriptionType {
 
-		DAY("day"), MONTH("month"), WEEK("week"), YEAR("year");
+		DAILY("daily"), MONTHLY("monthly"), WEEKLY("weekly"), YEARLY("yearly");
 
 		@JsonCreator
 		public static SubscriptionType create(String value) {

@@ -15,13 +15,19 @@
 package com.liferay.object.util;
 
 import com.liferay.object.model.ObjectFilter;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Marcela Cunha
@@ -47,6 +53,58 @@ public class ObjectFilterUtil {
 		}
 
 		return jsonArray;
+	}
+
+	public static List<String> getODataFilters(
+		List<ObjectFilter> objectFilters) {
+
+		// TODO Create filterParser classes for each one of filter types
+		// and use tracker or registry to get them
+
+		List<String> oDataFilters = new ArrayList<>();
+
+		if (objectFilters == null) {
+			return oDataFilters;
+		}
+
+		for (ObjectFilter objectFilter : objectFilters) {
+			Map<String, Object> objectFilterMap = ObjectMapperUtil.readValue(
+				Map.class, objectFilter.getJSON());
+
+			if (objectFilterMap == null) {
+				continue;
+			}
+
+			Set<String> operators = objectFilterMap.keySet();
+
+			for (String operator : operators) {
+				Object object = objectFilterMap.get(operator);
+
+				if (object instanceof Object[]) {
+					String[] values = TransformUtil.transform(
+						(Object[])object,
+						value -> StringBundler.concat(
+							StringPool.APOSTROPHE, value,
+							StringPool.APOSTROPHE),
+						String.class);
+
+					StringBundler sb = new StringBundler(values.length + 2);
+
+					sb.append(StringPool.OPEN_PARENTHESIS);
+					sb.append(ArrayUtil.toString(values, StringPool.BLANK));
+					sb.append(StringPool.CLOSE_PARENTHESIS);
+
+					object = sb.toString();
+				}
+
+				oDataFilters.add(
+					StringBundler.concat(
+						objectFilter.getFilterBy(), StringPool.SPACE, operator,
+						StringPool.SPACE, object));
+			}
+		}
+
+		return oDataFilters;
 	}
 
 }

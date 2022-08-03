@@ -291,7 +291,7 @@ definition {
 
 		SelectFrame(locator1 = "DocumentsAndMedia#CONFIGURATION_IFRAME");
 
-		AssertElementPresent.pauseAssertVisible(locator1 = "Checkbox#SHOW_ACTIONS_CHECKBOX");
+		AssertElementPresent(locator1 = "Checkbox#SHOW_ACTIONS_CHECKBOX");
 
 		Check(locator1 = "Checkbox#SHOW_ACTIONS_CHECKBOX");
 

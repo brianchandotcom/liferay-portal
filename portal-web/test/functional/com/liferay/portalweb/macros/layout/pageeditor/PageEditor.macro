@@ -3628,7 +3628,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	macro gotoCommentList {
-		Click.pauseClickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BACK");
+		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BACK");
 
 		AssertTextEquals(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_LIST_TITLE",

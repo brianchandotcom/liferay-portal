@@ -76,9 +76,9 @@ definition {
 		}
 
 		if (isSet(embedVideo)) {
-			WaitForLiferayEvent.initializeLiferayEventLog();
+			WaitForPageLoad();
 
-			Click.pauseClickAt(locator1 = "CKEditor#TOOLBAR_VIDEO_BUTTON");
+			Click(locator1 = "CKEditor#TOOLBAR_VIDEO_BUTTON");
 
 			if ("${navTab}" == "Documents and Media") {
 				ItemSelector.addVideoFromDM(
@@ -1054,9 +1054,9 @@ definition {
 		}
 
 		if (isSet(embedVideo)) {
-			WaitForLiferayEvent.initializeLiferayEventLog();
+			WaitForPageLoad();
 
-			Click.pauseClickAt(locator1 = "CKEditor#TOOLBAR_VIDEO_BUTTON");
+			Click(locator1 = "CKEditor#TOOLBAR_VIDEO_BUTTON");
 
 			if ("${navTab}" == "Documents and Media") {
 				ItemSelector.addVideoFromDM(
@@ -1084,9 +1084,11 @@ definition {
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
+			LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
+
 			var key_webContentTitle = "${webContentTitleEdit}";
 
-			AssertElementPresent.pauseAssertVisible(locator1 = "WC#ENTRY_LIST_THUMBNAIL");
+			AssertElementPresent(locator1 = "WC#ENTRY_LIST_THUMBNAIL");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "WC#ENTRY_LIST_TITLE",
@@ -1797,7 +1799,9 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "WC#ENTRY_LIST_THUMBNAIL_GENERIC")) {
+		LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
+
+		if (IsElementPresent(locator1 = "WC#ENTRY_LIST_THUMBNAIL_GENERIC")) {
 			PortletEntry.selectAll();
 
 			Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
@@ -2014,17 +2018,23 @@ definition {
 	macro viewDisplayStyleCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
-		AssertElementPresent.pauseAssertVisible(
+		LexiconEntry.viewActiveDisplayStyle(displayStyle = "cards");
+
+		AssertElementPresent(
 			key_webContentTitle = "${webContentTitle}",
 			locator1 = "WC#ENTRY_CARDS_THUMBNAIL");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		AssertElementPresent.pauseAssertVisible(
+		LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
+
+		AssertElementPresent(
 			key_webContentTitle = "${webContentTitle}",
 			locator1 = "WC#ENTRY_LIST_THUMBNAIL");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		LexiconEntry.viewActiveDisplayStyle(displayStyle = "table");
 
 		AssertElementPresent(
 			key_webContentTitle = "${webContentTitle}",

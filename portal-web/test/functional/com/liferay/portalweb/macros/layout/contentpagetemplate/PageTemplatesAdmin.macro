@@ -92,7 +92,9 @@ definition {
 	}
 
 	macro configureWidgetPageTemplateLayout {
-		Click.pauseClickAt(locator1 = "ControlMenu#EDIT_COG");
+		WaitForPageLoad();
+
+		Click(locator1 = "ControlMenu#EDIT_COG");
 
 		Click(
 			key_card = "${columnName}",

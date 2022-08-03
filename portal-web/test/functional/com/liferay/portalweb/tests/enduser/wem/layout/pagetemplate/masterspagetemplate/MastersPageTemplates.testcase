@@ -908,7 +908,7 @@ definition {
 		}
 
 		task ("Assert can change master from Blank to custom master") {
-			Click.pauseClickAt(locator1 = "ControlMenu#EDIT_COG");
+			Click(locator1 = "ControlMenu#EDIT_COG");
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
@@ -957,7 +957,9 @@ definition {
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
-			Click.pauseClickAt(locator1 = "ControlMenu#EDIT_COG");
+			WaitForPageLoad();
+
+			Click(locator1 = "ControlMenu#EDIT_COG");
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 

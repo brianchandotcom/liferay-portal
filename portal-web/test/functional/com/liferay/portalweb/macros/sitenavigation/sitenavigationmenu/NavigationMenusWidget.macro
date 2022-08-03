@@ -5,7 +5,11 @@ definition {
 			locator1 = "Radio#ANY",
 			radioLabel = "Choose Menu");
 
-		Click.pauseClickAt(locator1 = "Button#SELECT");
+		WaitForElementPresent(
+			key_text = "Select",
+			locator1 = "Button#ANY_ENABLED");
+
+		Click(locator1 = "Button#SELECT");
 
 		WaitForElementPresent(
 			locator1 = "Modal#HEADER",

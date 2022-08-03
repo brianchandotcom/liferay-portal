@@ -206,7 +206,11 @@ definition {
 				locator1 = "TextInput#INPUT_ID",
 				value1 = "${templateName}");
 
-			AssertClick.pauseAssertTextClickAt(
+			WaitForElementPresent(
+				key_text = "Publish",
+				locator1 = "Button#ANY_ENABLED");
+
+			AssertClick(
 				locator1 = "Button#PUBLISH",
 				value1 = "Publish");
 

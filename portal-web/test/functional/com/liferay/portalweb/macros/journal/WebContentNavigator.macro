@@ -127,7 +127,9 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		AssertElementPresent.pauseAssertVisible(locator1 = "WC#ENTRY_LIST_THUMBNAIL");
+		LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
+
+		AssertElementPresent(locator1 = "WC#ENTRY_LIST_THUMBNAIL");
 
 		if ("${translationStatus}" == "true") {
 			AssertTextEquals(

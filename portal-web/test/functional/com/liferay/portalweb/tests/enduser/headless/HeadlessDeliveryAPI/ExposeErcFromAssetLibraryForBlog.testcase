@@ -10,14 +10,13 @@ definition {
 
 		User.firstLoginPG();
 
-        task ("Given blog post is created") {
+		task ("Given blog post is created") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
+				externalReferenceCode = "Erc",
 				groupName = "Guest",
-				title = "Blogs Title",
-                externalReferenceCode = "Erc");	
-        }
-
+				title = "Blogs Title");
+		}
 	}
 
 	tearDown {
@@ -26,29 +25,29 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 	}
 
 	@description = "Creates a comment in a blog posting with a custom external reference code"
 	@priority = "4"
 	test canCreateCommentWithCustomExternalReferenceCode {
 		property portal.acceptance = "true";
-		
+
 		task ("When with POST request I create a comment with a custom external reference code") {
 			var response = HeadlessBlog.getAllBlogsPostingId();
-			
-			var putComment  = HeadlessBlog.postBlogsPostingComment(
+
+			var putComment = HeadlessBlog.postBlogsPostingComment(
 				blogsPostingId = "${response}",
-				CommentExternalReferenceCode = "ercComment",
+				commentExternalReferenceCode = "ercComment",
 				textComment = "CommentOne");
-        }
+		}
 
 		task ("Then I can see the custom external reference code in the body response") {
 			var commentsFromBlogsPosting = HeadlessBlog.getBlogsPostingComment(blogsPostingId = "${response}");
-			
+
 			HeadlessBlog.assertCommentERCWithCorrectValue(
 				expectedCommentERCValue = "ercComment",
 				response = "${commentsFromBlogsPosting}");
 		}
-    }
+	}
+
 }

@@ -13,10 +13,12 @@
  */
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {useSetFormValidations} from '../contexts/FormValidationContext';
 import {useGlobalContext} from '../contexts/GlobalContext';
 import {useSelectorRef} from '../contexts/StoreContext';
 import FormService from '../services/FormService';
 import {CACHE_KEYS, getCacheItem, getCacheKey} from './cache';
+import {FORM_ERROR_TYPES} from './getFormErrorDescription';
 import hasRequiredInputChild from './hasRequiredInputChild';
 import hasVisibleSubmitChild from './hasVisibleSubmitChild';
 import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
@@ -30,9 +32,23 @@ function getFormItems(layoutData) {
 	);
 }
 
-export default function useIsSomeFormIncomplete() {
+function addError(validations, formItem, type) {
+	const formValidation = validations.get(formItem.itemId);
+	const errors = formValidation ? formValidation.errors : [];
+	const nextFormErrors = [...errors, type];
+
+	validations.set(formItem.itemId, {
+		classNameId: formItem.config.classNameId,
+		errors: nextFormErrors,
+	});
+}
+
+export default function useCheckFormsValidity() {
 	const globalContext = useGlobalContext();
 	const stateRef = useSelectorRef((state) => state);
+	const setValidations = useSetFormValidations();
+
+	const validations = new Map();
 
 	return () => {
 		const {
@@ -44,16 +60,14 @@ export default function useIsSomeFormIncomplete() {
 		const forms = getFormItems(layoutData);
 
 		if (!forms.length) {
-			return Promise.resolve(false);
-		}
-
-		if (
-			forms.some(
-				(form) => !hasVisibleSubmitChild(form.itemId, globalContext)
-			)
-		) {
 			return Promise.resolve(true);
 		}
+
+		forms.forEach((form) => {
+			if (!hasVisibleSubmitChild(form.itemId, globalContext)) {
+				addError(validations, form, FORM_ERROR_TYPES.missingSubmit);
+			}
+		});
 
 		const promises = forms.map((form) => {
 			const {
@@ -84,17 +98,35 @@ export default function useIsSomeFormIncomplete() {
 			return promise;
 		});
 
-		return Promise.all(promises).then((forms) =>
-			forms.some(({fields, itemId}) =>
-				hasRequiredInputChild({
-					checkHidden: true,
-					formFields: fields,
-					fragmentEntryLinks,
-					itemId,
-					layoutData,
-					selectedViewportSize,
-				})
-			)
-		);
+		return Promise.all(promises).then((forms) => {
+			forms.forEach(({fields, itemId}) => {
+				const formItem = layoutData.items[itemId];
+
+				if (
+					hasRequiredInputChild({
+						checkHidden: true,
+						formFields: fields,
+						fragmentEntryLinks,
+						itemId,
+						layoutData,
+						selectedViewportSize,
+					})
+				) {
+					addError(
+						validations,
+						formItem,
+						FORM_ERROR_TYPES.hiddenFields
+					);
+				}
+			});
+
+			if (validations.size) {
+				setValidations(Array.from(validations.values()));
+
+				return false;
+			}
+
+			return true;
+		});
 	};
 }

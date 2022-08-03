@@ -57,6 +57,7 @@ import {
 	initialDragDrop,
 	useDragItem,
 	useDropTarget,
+	useIsDroppable,
 } from '../../../../../app/utils/drag-and-drop/useDragAndDrop';
 import {formIsMapped} from '../../../../../app/utils/formIsMapped';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
@@ -242,6 +243,10 @@ function StructureTreeNodeContent({
 			)
 	);
 
+	const isDroppable = useIsDroppable();
+
+	const isValidDrop = isDroppable && isOverTarget;
+
 	const onEditName = (nextName) => {
 		const trimmedName = nextName?.trim();
 
@@ -299,11 +304,11 @@ function StructureTreeNodeContent({
 			aria-selected={isActive}
 			className={classNames('page-editor__page-structure__tree-node', {
 				'drag-over-bottom':
-					isOverTarget && targetPosition === TARGET_POSITIONS.BOTTOM,
+					isValidDrop && targetPosition === TARGET_POSITIONS.BOTTOM,
 				'drag-over-middle':
-					isOverTarget && targetPosition === TARGET_POSITIONS.MIDDLE,
+					isValidDrop && targetPosition === TARGET_POSITIONS.MIDDLE,
 				'drag-over-top':
-					isOverTarget && targetPosition === TARGET_POSITIONS.TOP,
+					isValidDrop && targetPosition === TARGET_POSITIONS.TOP,
 				'dragged': isDraggingSource,
 				'font-weight-semi-bold':
 					node.activable && node.itemType !== ITEM_TYPES.editable,

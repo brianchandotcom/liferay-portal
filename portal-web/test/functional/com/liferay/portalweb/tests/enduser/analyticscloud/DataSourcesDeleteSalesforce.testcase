@@ -25,8 +25,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8856 | Test Summary: Cancel Creating a Salesforce Data Source"
+	@ignore = "true"
 	@priority = "2"
 	test CancelCreatingSalesforceDataSource {
+
+		// Accounts and Salesforce tests are no longer possible to run after this one from LRAC-11571
+
 		ACNavigation.goToSettings();
 
 		ACSettings.addSalesforceAndCancel(

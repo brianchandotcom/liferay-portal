@@ -160,4 +160,14 @@ definition {
 		WaitForVisible(locator1 = "Button#PLUS");
 	}
 
+	macro viewOAuthClient {
+		OAuthClient.openOAuthClientAdmin(
+			baseURL = "${baseURL}",
+			navbar = "Clients");
+
+		while (IsElementNotPresent(key_rowIndexNumber = "1", locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N") && (maxIterations = "10")) {
+			Refresh();
+		}
+	}
+
 }

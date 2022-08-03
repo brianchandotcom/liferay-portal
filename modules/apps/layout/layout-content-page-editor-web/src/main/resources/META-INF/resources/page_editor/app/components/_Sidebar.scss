@@ -173,11 +173,12 @@ html#{$cadmin-selector} body {
 }
 
 html#{$cadmin-selector} .page-editor__wrapper {
-	padding-left: $sidebarButtonWidth;
+	margin-left: $sidebarButtonWidth;
 	position: relative;
-	transition: padding-left ease $defaultTransitionDuration,
-		padding-right ease $defaultTransitionDuration;
-	will-change: padding-left, padding-right;
+	transition: margin-left ease $defaultTransitionDuration,
+		margin-right ease $defaultTransitionDuration;
+	will-change: margin-left, margin-right;
+	/* stylelint-disable */
 	max-height: calc(
 		100vh -
 			(
@@ -189,39 +190,44 @@ html#{$cadmin-selector} .page-editor__wrapper {
 	overflow: auto;
 
 	&.page-editor__wrapper-old {
-		padding-left: 0;
-		padding-right: $sidebarButtonWidth;
+		margin-left: 0;
+		margin-right: $sidebarButtonWidth;
 
 		&.page-editor__wrapper--padded {
 			@include media-breakpoint-up(sm) {
-				padding-left: 0;
-				padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+				margin-left: 0;
+				margin-right: $sidebarButtonWidth + $sidebarContentWidth;
 			}
 		}
 	}
 
 	&--padded-start {
 		@include media-breakpoint-up(sm) {
-			padding-left: $sidebarButtonWidth + $sidebarContentWidth;
+			margin-left: $sidebarButtonWidth + $sidebarContentWidth;
 		}
 	}
 
 	&--padded-end {
 		@include media-breakpoint-up(sm) {
-			padding-right: $sidebarContentWidth;
+			margin-right: $sidebarContentWidth;
 		}
 	}
 }
 
 html#{$cadmin-selector} {
-	body.open .page-editor__wrapper#wrapper:not(.page-editor__wrapper-old) {
-		padding-left: $product-menu-width + $sidebarButtonWidth;
+	body.open .page-editor__wrapper#wrapper {
+		&:not(.page-editor__wrapper-old) {
+			margin-left: $product-menu-width + $sidebarButtonWidth;
 
-		.page-editor__wrapper--padded-start {
-			@include media-breakpoint-up(sm) {
-				padding-left: $product-menu-width + $sidebarButtonWidth +
-					$sidebarContentWidth;
+			.page-editor__wrapper--padded-start {
+				@include media-breakpoint-up(sm) {
+					margin-left: $product-menu-width + $sidebarButtonWidth +
+						$sidebarContentWidth;
+				}
 			}
 		}
+
+		margin-left: $product-menu-width;
+		padding-left: 0;
 	}
 }

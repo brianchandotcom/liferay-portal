@@ -19,10 +19,10 @@ html#{$cadmin-selector} #{$selector} {
 			left: 0;
 			position: absolute;
 			top: 0;
-			transition: padding-left ease $defaultTransitionDuration,
-				padding-right ease $defaultTransitionDuration;
+			transition: margin-left ease $defaultTransitionDuration,
+				margin-right ease $defaultTransitionDuration;
 			width: 100%;
-			will-change: padding-left, padding-right;
+			will-change: margin-left, margin-right;
 			z-index: 1;
 
 			&#{$selector}-old {
@@ -31,8 +31,8 @@ html#{$cadmin-selector} #{$selector} {
 				}
 
 				&#{$selector}--with-sidebar {
-					padding-left: 0;
-					padding-right: $sidebarButtonWidth;
+					margin-left: 0;
+					margin-right: $sidebarButtonWidth;
 				}
 
 				&#{$selector}--with-sidebar-open {
@@ -42,15 +42,14 @@ html#{$cadmin-selector} #{$selector} {
 					}
 
 					@include media-breakpoint-up(sm) {
-						padding-right: $sidebarButtonWidth +
-							$sidebarContentWidth;
-						padding-left: 0;
+						margin-left: 0;
+						margin-right: $sidebarButtonWidth + $sidebarContentWidth;
 					}
 				}
 			}
 
 			&#{$selector}--with-sidebar {
-				padding-left: $sidebarButtonWidth;
+				margin-left: $sidebarButtonWidth;
 			}
 
 			&#{$selector}--with-sidebar-open {
@@ -59,7 +58,7 @@ html#{$cadmin-selector} #{$selector} {
 				}
 
 				@include media-breakpoint-up(sm) {
-					padding-left: $sidebarButtonWidth + $sidebarContentWidth;
+					margin-left: $sidebarButtonWidth + $sidebarContentWidth;
 				}
 			}
 
@@ -69,7 +68,7 @@ html#{$cadmin-selector} #{$selector} {
 				}
 
 				@include media-breakpoint-up(sm) {
-					padding-right: $sidebarContentWidth;
+					margin-right: $sidebarContentWidth;
 				}
 			}
 		}

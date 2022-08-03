@@ -2124,8 +2124,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 		{
 			new CITestSuiteValidationFailureMessageGenerator(),
 			new CompileFailureMessageGenerator(),
-			new GitLPushFailureMessageGenerator(),
 			new FormatFailureMessageGenerator(),
+			new GitLPushFailureMessageGenerator(),
 			new JenkinsRegenFailureMessageGenerator(),
 			new JenkinsSourceFormatFailureMessageGenerator(),
 			new InvalidGitCommitSHAFailureMessageGenerator(),

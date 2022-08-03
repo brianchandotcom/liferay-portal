@@ -28,10 +28,10 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.internal.petra.sql.dsl.expression.OrderByExpressionUtil;
-import com.liferay.object.rest.internal.petra.sql.dsl.expression.PredicateUtil;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -414,7 +414,7 @@ public class DefaultObjectEntryManagerImpl
 		return getObjectEntries(
 			companyId, objectDefinition, scopeKey, aggregation,
 			dtoConverterContext, pagination,
-			PredicateUtil.toPredicate(
+			_filterPredicateFactory.create(
 				_filterParserProvider, filterString,
 				objectDefinition.getObjectDefinitionId(),
 				_objectFieldLocalService),
@@ -785,6 +785,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private FilterParserProvider _filterParserProvider;
+
+	@Reference
+	private FilterPredicateFactory _filterPredicateFactory;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

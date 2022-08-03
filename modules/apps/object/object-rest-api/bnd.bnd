@@ -7,4 +7,5 @@ Export-Package:\
 	com.liferay.object.rest.manager.exception,\
 	com.liferay.object.rest.manager.v1_0,\
 	com.liferay.object.rest.openapi.v1_0,\
+	com.liferay.object.rest.petra.sql.dsl.expression,\
 	com.liferay.object.rest.resource.v1_0

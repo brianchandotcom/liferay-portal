@@ -20,6 +20,7 @@ definition {
 			content = "${content}",
 			coverImageId = "${coverImageId}",
 			description = "${description}",
+			externalReferenceCode = "${externalReferenceCode}",
 			groupId = "${groupId}",
 			subtitle = "${subtitle}",
 			title = "${title}",
@@ -28,6 +29,50 @@ definition {
 			viewableBy = "${viewableBy}");
 
 		return "${entryId}";
+	}
+
+	macro getAllBlogsPostingId {
+		var response = HeadlessBlogAPI._getAllBlogsPostingId();
+
+		var blogsPostingId = JSONUtil.getWithJSONPath("${response}", "$..['items'][?(@.creator)].id");
+
+		return "${blogsPostingId}";
+	}
+
+	macro postBlogsPostingComment {
+		Variables.assertDefined(parameterList = "${blogsPostingId},${textComment}");
+
+		if (!(isSet(CommentExternalReferenceCode))) {
+			var CommentExternalReferenceCode = "";
+		}
+
+		if (!(isSet(parentCommentId))) {
+			var parentCommentId = "0";
+		}
+
+		var response = HeadlessBlogAPI._postBlogsPostingComment(
+			blogsPostingId = "${blogsPostingId}",
+			CommentExternalReferenceCode = "${CommentExternalReferenceCode}",
+			parentCommentId = "${parentCommentId}",
+			textComment = "${textComment}");
+
+		return "${response}";
+	}
+
+	macro getBlogsPostingComment {
+		Variables.assertDefined(parameterList = "${blogsPostingId}");
+
+		var commentsFromBlogsPosting = HeadlessBlogAPI._getBlogsPostingComment(blogsPostingId = "${blogsPostingId}");
+
+		return "${commentsFromBlogsPosting}";
+	}
+
+	macro assertCommentERCWithCorrectValue {
+		var actualCommentERCValue = JSONUtil.getWithJSONPath("${response}", "$..['items'][?(@.creator)].externalReferenceCode");
+
+		TestUtils.assertEquals(
+			actual = "${actualCommentERCValue}",
+			expected = "${expectedCommentERCValue}");
 	}
 
 }

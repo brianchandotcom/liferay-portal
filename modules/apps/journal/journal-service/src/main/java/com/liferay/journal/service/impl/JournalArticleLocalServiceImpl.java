@@ -6291,8 +6291,14 @@ public class JournalArticleLocalServiceImpl
 			long userId, long groupId, String articleId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String content, String ddmStructureKey, String ddmTemplateKey,
-			String layoutUuid, boolean indexable, boolean smallImage,
-			String smallImageURL, File smallImageFile,
+			String layoutUuid, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+			int reviewDateDay, int reviewDateYear, int reviewDateHour,
+			int reviewDateMinute, boolean neverReview, boolean indexable,
+			boolean smallImage, String smallImageURL, File smallImageFile,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -6312,6 +6318,27 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
+		Date displayDate = _portal.getDate(
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, user.getTimeZone(), null);
+
+		Date expirationDate = null;
+		Date reviewDate = null;
+
+		if (!neverExpire) {
+			expirationDate = _portal.getDate(
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, user.getTimeZone(),
+				ArticleExpirationDateException.class);
+		}
+
+		if (!neverReview) {
+			reviewDate = _portal.getDate(
+				reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
+				reviewDateMinute, user.getTimeZone(),
+				ArticleReviewDateException.class);
+		}
+
 		JournalArticle article = getArticle(groupId, articleId);
 
 		serviceContext.validateModifiedDate(
@@ -6323,8 +6350,9 @@ public class JournalArticleLocalServiceImpl
 
 		validate(
 			user.getCompanyId(), groupId, article.getClassNameId(), titleMap,
-			content, ddmStructureKey, ddmTemplateKey, null, null, smallImage,
-			smallImageURL, smallImageFile, smallImageBytes, serviceContext);
+			content, ddmStructureKey, ddmTemplateKey, displayDate,
+			expirationDate, smallImage, smallImageURL, smallImageFile,
+			smallImageBytes, serviceContext);
 
 		_updateArticleLocalizedFields(
 			article.getCompanyId(), article.getId(), titleMap, descriptionMap);
@@ -6337,6 +6365,9 @@ public class JournalArticleLocalServiceImpl
 		article.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
 
 		article.setLayoutUuid(layoutUuid);
+		article.setDisplayDate(displayDate);
+		article.setExpirationDate(expirationDate);
+		article.setReviewDate(reviewDate);
 		article.setIndexable(indexable);
 		article.setSmallImage(smallImage);
 

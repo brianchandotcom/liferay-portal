@@ -17,6 +17,7 @@ import {ClayInput} from '@clayui/form';
 
 type Props = {
 	className: any;
+	disabled: any;
 	label: string;
 	name: string;
 	onChange: any;

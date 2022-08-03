@@ -17,7 +17,9 @@ import CheckBoxList from '../../components/CheckBoxList';
 import InputText from '../../components/InputText';
 import Radio from '../../components/Radio';
 import Select from '../../components/Select';
+import SiteMapCard from '../../components/SiteMapCard';
 import LIST_TYPE_ENTRIES from '../../constants/listTypeEntries';
+import {useGetUserAccounts} from '../../services/headless-admin-user/useGetUserAccounts';
 import {useGetListTypeDefinitions} from '../../services/list-type-definitions/useGetListTypeDefinitions';
 
 const GoalsPage: any = ({
@@ -39,49 +41,76 @@ const GoalsPage: any = ({
 		LIST_TYPE_ENTRIES.targetAudienceRole
 	);
 
+	const companyName = useGetUserAccounts();
+
+	const country = useGetListTypeDefinitions(LIST_TYPE_ENTRIES.country);
+
 	const [updateCheckBusines, setUpdateCheckBusines] = useState();
-	const [updateGoalsTarget, setUpdateGoalsTarget] = useState();
-	const [updateTargetAudience, setUpdateTargetAudience] = useState();
+	const [checkBusinesError, setCheckBusinesError] = useState(false);
+
+	const [updateCheckGoalsTarget, setUpdateCheckGoalsTarget] = useState();
+	const [checkGoalsTargetError, setCheckGoalsTargetError] = useState(false);
+
+	const [
+		updateCheckTargetAudience,
+		setUpdateCheckTargetAudience,
+	] = useState();
+	const [checkTargetAudienceError, setCheckTargetAudienceError] = useState();
 
 	const handleOnSubmit = (
 		formData: any,
 		setGeneralObject: any,
+		setStep: any,
+		setCheckBusinesError: any,
+		setCheckGoalsTargetError: any,
+		setCheckTargetAudienceError: any,
 		updateCheckBusines: any,
-		updateGoalsTarget: any,
-		updateTargetAudience: any
+		updateCheckGoalsTarget: any,
+		updateCheckTargetAudience: any
 	) => {
+		// eslint-disable-next-line no-console
+		console.log(`updateCheckBusines=`, updateCheckBusines);
+		// eslint-disable-next-line no-console
+		console.log(`updateCheckGoalsTarget=`, updateCheckGoalsTarget);
+		// eslint-disable-next-line no-console
+		console.log(`updateCheckTargetAudience=`, updateCheckTargetAudience);
+
+		if (!updateCheckBusines || !updateCheckBusines.length) {
+			setCheckBusinesError(true);
+
+			return;
+		} else {
+			setCheckBusinesError(false);
+		}
+
+		if (!updateCheckGoalsTarget || !updateCheckGoalsTarget.length) {
+			setCheckGoalsTargetError(true);
+
+			return;
+		} else {
+			setCheckGoalsTargetError(false);
+		}
+
+		if (!updateCheckTargetAudience || !updateCheckTargetAudience.length) {
+			setCheckTargetAudienceError(true);
+
+			return;
+		} else {
+			setCheckTargetAudienceError(false);
+		}
+
 		const createForm = {
 			activities: [],
 			...formData,
 			businessSalesGoals: updateCheckBusines,
-			goalsTargetMarket: updateGoalsTarget,
-			targetAudienceRole: updateTargetAudience,
+			goalsTargetMarket: updateCheckGoalsTarget,
+			targetAudienceRole: updateCheckTargetAudience,
 		};
 
 		setGeneralObject(createForm);
+
+		setStep(1);
 	};
-
-	const optionsCompanyName = [
-		{
-			key: 'Deathray Parent-A*',
-			name: 'Deathray Parent-A*',
-		},
-		{
-			key: 'Deathray Parent-B*',
-			name: 'Deathray Parent-B*',
-		},
-	];
-
-	const optionsCountry = [
-		{
-			key: 'US',
-			name: 'US',
-		},
-		{
-			key: 'BR',
-			name: 'BR',
-		},
-	];
 
 	return (
 		<Formik
@@ -90,7 +119,7 @@ const GoalsPage: any = ({
 				businessSalesGoals: '',
 				businessSalesGoalsOther: '',
 				companyName: 'Deathray Parent-A*',
-				country: 'US',
+				country: '',
 				goalsTargetMarket: '',
 				provideNameAndDescription: '',
 				targetAudienceRole: '',
@@ -99,16 +128,23 @@ const GoalsPage: any = ({
 				handleOnSubmit(
 					formData,
 					setGeneralObject,
+					setStep,
+					setCheckBusinesError,
+					setCheckGoalsTargetError,
+					setCheckTargetAudienceError,
 					updateCheckBusines,
-					updateGoalsTarget,
-					updateTargetAudience
+					updateCheckGoalsTarget,
+					updateCheckTargetAudience
 				);
-
-				setStep(1);
 			}}
 		>
 			{(formik) => (
-				<div>
+				<div className="align-items-start d-flex justify-content-center">
+					<SiteMapCard
+						className="border-1 flex-column m-5 nav shadow-lg sheet sheet-lg"
+						visit={0}
+					></SiteMapCard>
+
 					<Form onSubmit={formik.handleSubmit}>
 						<div className="border-0 mt-5 shadow-lg sheet sheet-lg">
 							<div className="sheet-section">
@@ -128,8 +164,7 @@ const GoalsPage: any = ({
 											label="Company Name"
 											name="companyName"
 											onChange={formik.handleChange}
-											options={optionsCompanyName}
-											value={formik.values.companyName}
+											options={companyName}
 										/>
 									</div>
 
@@ -138,8 +173,7 @@ const GoalsPage: any = ({
 											label="Country"
 											name="country"
 											onChange={formik.handleChange}
-											options={optionsCountry}
-											value={formik.values.country}
+											options={country}
 										/>
 									</div>
 								</div>
@@ -152,6 +186,7 @@ const GoalsPage: any = ({
 									<div className="form-group-item">
 										<InputText
 											className="form-control shadow-none"
+											disabled={false}
 											label="Provide a name and short description
 											of the overall campaign"
 											name="provideNameAndDescription"
@@ -179,26 +214,19 @@ const GoalsPage: any = ({
 												availableItems={
 													businessSalesGoalPicklist
 												}
+												formik={formik}
+												hasOther={false}
 												hasRule={true}
 												maxCheckedItems={3}
 												setCheckBox={
 													setUpdateCheckBusines
 												}
 											/>
-
-											<InputText
-												className="form-control shadow-none"
-												label=""
-												name="businessSalesGoalsOther"
-												onChange={formik.handleChange}
-												placeholder="Input"
-												type="text"
-												value={
-													formik.values
-														.businessSalesGoalsOther
-												}
-											/>
 										</div>
+
+										{checkBusinesError && (
+											<div>Required</div>
+										)}
 									</div>
 								</div>
 
@@ -220,14 +248,20 @@ const GoalsPage: any = ({
 													availableItems={
 														goalsTargetMarketPicklist
 													}
+													formik={formik}
+													hasOther={false}
 													hasRule={true}
 													maxCheckedItems={3}
 													setCheckBox={
-														setUpdateGoalsTarget
+														setUpdateCheckGoalsTarget
 													}
 												/>
 											</>
 										</div>
+
+										{checkGoalsTargetError && (
+											<div>Required</div>
+										)}
 									</div>
 								</div>
 
@@ -298,13 +332,19 @@ const GoalsPage: any = ({
 												availableItems={
 													targetAudienceRolePicklist
 												}
+												formik={formik}
+												hasOther={false}
 												hasRule={false}
 												maxCheckedItems={3}
 												setCheckBox={
-													setUpdateTargetAudience
+													setUpdateCheckTargetAudience
 												}
 											/>
 										</div>
+
+										{checkTargetAudienceError && (
+											<div>Required</div>
+										)}
 									</div>
 								</div>
 							</div>

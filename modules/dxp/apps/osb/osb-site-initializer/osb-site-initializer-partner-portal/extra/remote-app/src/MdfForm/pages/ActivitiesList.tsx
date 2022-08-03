@@ -15,6 +15,7 @@ import {useState} from 'react';
 
 import Alert from '../../components/Alert';
 import Button from '../../components/Button';
+import SiteMapCard from '../../components/SiteMapCard';
 
 const ActivitiesList: any = ({
 	generalObject,
@@ -40,7 +41,12 @@ const ActivitiesList: any = ({
 			}}
 		>
 			{(formik) => (
-				<div>
+				<div className="align-items-start d-flex justify-content-center">
+					<SiteMapCard
+						className="border-1 flex-column m-5 nav shadow-lg sheet sheet-lg"
+						visit={1}
+					></SiteMapCard>
+
 					<Form onSubmit={formik.handleSubmit}>
 						<div className="border-0 mt-5 shadow-lg sheet sheet-lg">
 							<div>
@@ -70,42 +76,42 @@ const ActivitiesList: any = ({
 									/>
 								</div>
 							) : (
-								!!generalObject.activities.length && (
-									<div>
-										<ClayCard>
-											<ClayCard.Body>
-												<div className="mb-4 sheet-header">
-													<h6 className="text-secondary">
-														Insurance Industry Lead
-														Gen (1157074)
-													</h6>
+								!!generalObject.activities.length &&
+								generalObject.activities.map(
+									(key: any, items: any) => (
+										<>
+											<ClayCard>
+												<ClayCard.Body>
+													<div className="mb-4 sheet-header">
+														<h6 className="text-secondary">
+															Insurance Industry
+															Lead Gen (1157074)
+														</h6>
 
-													<h2>
-														{
-															generalObject
-																.activities[0]
-																.activityName
-														}
-														(1987659)
-													</h2>
+														<h2>
+															{items.activityName}
+															(1987659)
+														</h2>
 
-													<div className="bd-highlight d-flex mb-3">
-														<div className="bd-highlight mr-auto">
-															<h5 className="text-secondary">
-																MDF Requested:
-															</h5>
-														</div>
+														<div className="bd-highlight d-flex mb-3">
+															<div className="bd-highlight mr-auto">
+																<h5 className="text-secondary">
+																	MDF
+																	Requested:
+																</h5>
+															</div>
 
-														<div className="bd-highlight">
-															<h5 className="text-secondary">
-																$1,250.00
-															</h5>
+															<div className="bd-highlight">
+																<h5 className="text-secondary">
+																	$1,250.00
+																</h5>
+															</div>
 														</div>
 													</div>
-												</div>
-											</ClayCard.Body>
-										</ClayCard>
-									</div>
+												</ClayCard.Body>
+											</ClayCard>
+										</>
+									)
 								)
 							)}
 

@@ -14,16 +14,14 @@ import {useEffect, useState} from 'react';
 import LIFERAY_APIS from '../../constants/liferayAPIs';
 import {Liferay} from '../liferay';
 
-const useGetListTypeDefinitions = (filter: string) => {
+const useGetTypeOfActivity = (filter?: string) => {
 	const [reponseData, setReponseData] = useState<any[]>([]);
 
 	useEffect(() => {
-		const getListTypeDefinitions = async () => {
+		const getTypeOfActivities = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			const response = await fetch(
-				`/o/${
-					LIFERAY_APIS.headlessAdminListType
-				}/list-type-definitions${
+				`/o/${LIFERAY_APIS.typeOfActivities}${
 					filter ? `?filter=name eq '${filter}'` : ``
 				}`,
 				{
@@ -37,13 +35,13 @@ const useGetListTypeDefinitions = (filter: string) => {
 			const data = await response.json();
 
 			if (data) {
-				setReponseData(data.items[0].listTypeEntries);
+				setReponseData(data.items);
 			}
 		};
 
-		getListTypeDefinitions();
+		getTypeOfActivities();
 	}, [filter]);
 
 	return reponseData;
 };
-export {useGetListTypeDefinitions};
+export {useGetTypeOfActivity};

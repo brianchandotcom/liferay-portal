@@ -16,7 +16,6 @@ type Props = {
 	name: string;
 	onChange: any;
 	options: any;
-	value: any;
 };
 
 const Select = ({label, options, ...props}: Props) => {
@@ -25,7 +24,7 @@ const Select = ({label, options, ...props}: Props) => {
 			<label>{label}</label>
 
 			<ClaySelect {...props}>
-				{options.map((item: any) => (
+				{options.map((item: any, _: any) => (
 					<ClaySelect.Option
 						key={item.key}
 						label={item.name}

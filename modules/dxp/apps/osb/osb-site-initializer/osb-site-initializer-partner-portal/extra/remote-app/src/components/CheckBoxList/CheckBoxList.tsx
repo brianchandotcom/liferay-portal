@@ -9,12 +9,15 @@
  * distribution rights of the Software.
  */
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import CheckBox from '../CheckBox/CheckBox';
+import InputText from '../InputText';
 
 type Props = {
 	availableItems: any;
+	formik: any;
+	hasOther: boolean;
 	hasRule: boolean;
 	maxCheckedItems: number;
 	setCheckBox: any;
@@ -22,13 +25,16 @@ type Props = {
 
 const CheckBoxList = ({
 	availableItems,
+	formik,
+	hasOther,
 	hasRule,
 	maxCheckedItems,
 	setCheckBox,
 }: Props) => {
 	const [checkedItems, setCheckedItems] = useState<any[]>([]);
+	const [disableOther, setDisableOther] = useState<boolean>(true);
 
-	const handleSelectedCheckbox = (checkedItem: string, setCheckBox: any) => {
+	const handleSelectedCheckbox = (checkedItem: string) => {
 		if (checkedItems.includes(checkedItem)) {
 			return setCheckedItems(
 				checkedItems.filter((item) => item !== checkedItem)
@@ -40,9 +46,12 @@ const CheckBoxList = ({
 			!hasRule
 		) {
 			setCheckedItems([...checkedItems, checkedItem]);
-			setCheckBox([...checkedItems, checkedItem]);
 		}
 	};
+
+	useEffect(() => {
+		setCheckBox(checkedItems);
+	}, [checkedItems, setCheckBox]);
 
 	return (
 		<div>
@@ -51,12 +60,36 @@ const CheckBoxList = ({
 					checked={checkedItems.includes(value.key)}
 					key={index}
 					label={value.name}
-					onChange={() =>
-						handleSelectedCheckbox(value.key, setCheckBox)
-					}
+					onChange={() => handleSelectedCheckbox(value.key)}
 					readOnly
 				/>
 			))}
+
+			{hasOther && (
+				<div>
+					<CheckBox
+						checked={checkedItems.includes('other')}
+						key={Object.keys(availableItems).length + 1}
+						label="Other"
+						onChange={() => {
+							setDisableOther(checkedItems.includes('other'));
+							handleSelectedCheckbox('other');
+						}}
+						readOnly
+					/>
+
+					<InputText
+						className="form-control shadow-none"
+						disabled={disableOther}
+						label=""
+						name="businessSalesGoalsOther"
+						onChange={formik.handleChange}
+						placeholder="Input"
+						type="text"
+						value={formik.values.businessSalesGoalsOther}
+					/>
+				</div>
+			)}
 		</div>
 	);
 };

@@ -10,5 +10,7 @@
  */
 const LIFERAY_APIS = {
 	headlessAdminListType: 'headless-admin-list-type/v1.0',
+	headlessAdminUser: 'headless-admin-user/v1.0',
+	typeOfActivities: 'c/typeofactivities/',
 };
 export default LIFERAY_APIS;

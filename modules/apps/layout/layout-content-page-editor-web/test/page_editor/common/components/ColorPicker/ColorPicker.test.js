@@ -65,7 +65,7 @@ const renderColorPicker = ({
 	value = 'green',
 	field = FIELD,
 	editedTokenValues = {},
-}) =>
+} = {}) =>
 	render(
 		<StoreContextProvider initialState={{}} reducer={(state) => state}>
 			<StyleErrorsContextProvider>
@@ -88,7 +88,7 @@ const onTypeValue = (input, value) => {
 
 describe('ColorPicker', () => {
 	it('renders the ColorPicker', () => {
-		const {baseElement} = renderColorPicker({});
+		const {baseElement} = renderColorPicker();
 
 		expect(
 			baseElement.querySelector(`${COLOR_PICKER_CLASS}`)
@@ -117,14 +117,14 @@ describe('ColorPicker', () => {
 
 	describe('When the value is an existing token', () => {
 		it('renders the dropdown color picker', () => {
-			const {getByLabelText, getByTitle} = renderColorPicker({});
+			const {getByLabelText, getByTitle} = renderColorPicker();
 
 			expect(getByTitle('detach-token')).toBeInTheDocument();
 			expect(getByLabelText('Green')).toBeInTheDocument();
 		});
 
 		it('shows action buttons when the color picker is clicked', async () => {
-			const {baseElement, getByLabelText} = renderColorPicker({});
+			const {baseElement, getByLabelText} = renderColorPicker();
 
 			userEvent.click(getByLabelText('Green'));
 
@@ -134,7 +134,7 @@ describe('ColorPicker', () => {
 		});
 
 		it('change to input color picker when detach token button is clicked', async () => {
-			const {baseElement, getByTitle} = renderColorPicker({});
+			const {baseElement, getByTitle} = renderColorPicker();
 
 			userEvent.click(getByTitle('detach-token'));
 

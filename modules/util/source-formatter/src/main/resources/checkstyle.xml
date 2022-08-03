@@ -842,6 +842,11 @@
 			<message key="method.call.deprecated" value="Method ''{0}'' has been deprecated in version ''{1}''" />
 			<message key="type.call.deprecated" value="Type ''{0}'' has been deprecated in version ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.UpgradeRegistryParameterCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Simply registry parameter when it's a simple add column." />
+			<message key="parameter.can.simply" value="Parameter ''{0}'' can be replaced by 'UpgradeStepFactory' " />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.UpgradeRemovedAPICheck">
 			<property name="category" value="Upgrade" />
 			<property name="description" value="Finds cases where calls are made to removed API after an upgrade." />

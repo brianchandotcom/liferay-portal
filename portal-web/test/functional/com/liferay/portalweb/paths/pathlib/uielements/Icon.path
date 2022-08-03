@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLOR_PICKER_ICON</td>
+	<td>//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div//div[contains(@class,'color-picker')]//button[contains(@class,'color-picker__selector')]//span[contains(@class,'rounded-circle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CURRENT_DISPLAY_STYLE</td>
 	<td>//ul[@class='navbar-nav'][2]//li[contains(@class,'nav-item')]//button[contains(@class,'dropdown-toggle') and contains(@class,'nav-link-monospaced')]</td>
 	<td></td>

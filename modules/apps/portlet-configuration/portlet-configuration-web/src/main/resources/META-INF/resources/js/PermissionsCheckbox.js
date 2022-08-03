@@ -16,54 +16,41 @@ import {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-const CHECKBOX_DEFAULT_VALUE = 'on';
-
-const CHECKBOX_STATUS = {
-	checked: 'checked',
-	indeterminate: 'indeterminate',
-	unchecked: 'unchecked',
-};
-
 export default function PermissionsCheckbox({
-	checked,
+	checked: initialChecked,
 	componentId: _componentId,
 	cssClass,
-	indeterminate,
-	indeterminateValue = 'indeterminate',
+	indeterminate: initialIndeterminate,
 	locale: _locale,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
-	value,
 	...otherProps
 }) {
-	const [checkboxStatus, setCheckboxStatus] = useState(
-		indeterminate
-			? CHECKBOX_STATUS.indeterminate
-			: checked
-			? CHECKBOX_STATUS.checked
-			: CHECKBOX_STATUS.unchecked
+	const [checked, setChecked] = useState(
+		Boolean(initialChecked || initialIndeterminate)
+	);
+	const [indeterminate, setIndeterminate] = useState(
+		Boolean(initialIndeterminate)
+	);
+	const [value, setValue] = useState(
+		initialIndeterminate ? 'indeterminate' : ''
 	);
 
 	return (
 		<ClayCheckbox
-			checked={checkboxStatus !== CHECKBOX_STATUS.unchecked}
+			checked={checked}
 			className={cssClass}
-			indeterminate={checkboxStatus === CHECKBOX_STATUS.indeterminate}
+			indeterminate={indeterminate}
 			inline
 			onChange={() => {
-				setCheckboxStatus((checkboxStatus) =>
-					checkboxStatus === CHECKBOX_STATUS.unchecked
-						? CHECKBOX_STATUS.checked
-						: CHECKBOX_STATUS.unchecked
-				);
+				setChecked((prevCheckedState) => !prevCheckedState);
+
+				if (indeterminate) {
+					setIndeterminate(false);
+					setValue('');
+				}
 			}}
-			value={
-				checkboxStatus === CHECKBOX_STATUS.indeterminate
-					? indeterminateValue
-					: value
-					? value
-					: CHECKBOX_DEFAULT_VALUE
-			}
+			value={value}
 			{...otherProps}
 		/>
 	);
@@ -73,6 +60,4 @@ PermissionsCheckbox.propTypes = {
 	checked: PropTypes.bool,
 	cssClass: PropTypes.string,
 	indeterminate: PropTypes.bool,
-	indeterminateValue: PropTypes.string,
-	value: PropTypes.string,
 };

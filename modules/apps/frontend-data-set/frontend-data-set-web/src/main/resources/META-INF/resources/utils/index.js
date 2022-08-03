@@ -246,6 +246,10 @@ export async function loadData(
 		);
 	}
 
+	if (themeDisplay.isImpersonated()) {
+		url.searchParams.append('doAsUserId', themeDisplay.getUserId());
+	}
+
 	url.searchParams.append('page', page);
 	url.searchParams.append('pageSize', delta);
 

@@ -199,8 +199,14 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 
 			article = _journalArticleService.addArticleDefaultValues(
 				groupId, classNameId, classPK, titleMap, descriptionMap,
-				content, ddmStructureKey, ddmTemplateKey, layoutUuid, indexable,
-				smallImage, smallImageURL, smallFile, serviceContext);
+				content, ddmStructureKey, ddmTemplateKey, layoutUuid,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, reviewDateMonth,
+				reviewDateDay, reviewDateYear, reviewDateHour, reviewDateMinute,
+				neverReview, indexable, smallImage, smallImageURL, smallFile,
+				serviceContext);
 		}
 		else if (actionName.equals(
 					"/journal/update_data_engine_default_values")) {

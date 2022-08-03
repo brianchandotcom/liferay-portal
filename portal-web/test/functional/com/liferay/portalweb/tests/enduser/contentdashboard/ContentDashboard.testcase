@@ -216,16 +216,13 @@ definition {
 				groupName = "Test Site Name");
 		}
 
-		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+		task ("When the info panel of a blog is open") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.openInfoPanelByDropdownMenu();
 		}
 
-		task ("Go to Content Dashboard and check the author's avatar and name in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
-
+		task ("Then the blog author's avatar and name are shown") {
 			AssertTextPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_AUTHOR",
 				value1 = "Test Test");

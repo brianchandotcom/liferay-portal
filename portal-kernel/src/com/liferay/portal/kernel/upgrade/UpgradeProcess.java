@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -80,8 +81,10 @@ public abstract class UpgradeProcess
 		return 0;
 	}
 
-	public UpgradeStep[] getUpgradeSteps() {
-		return new UpgradeStep[] {this};
+	public final UpgradeStep[] getUpgradeSteps() {
+		return ArrayUtil.append(
+			getPreUpgradeSteps(), new UpgradeStep[] {this},
+			getPostUpgradeSteps());
 	}
 
 	public void upgrade() throws UpgradeException {
@@ -300,6 +303,14 @@ public abstract class UpgradeProcess
 		}
 
 		return _portalIndexesSQL.get(tableName);
+	}
+
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[0];
+	}
+
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[0];
 	}
 
 	/**

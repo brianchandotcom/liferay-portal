@@ -231,14 +231,28 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay));
 		}
 
-		if (!missingInputTypes.isEmpty()) {
+		if (missingInputTypes.size() == 1) {
 			jsonObject.put(
 				"errorMessage",
 				_language.format(
 					themeDisplay.getLocale(),
-					"some-fragments-are-missing.-x-could-not-be-added-to-" +
-						"your-form-because-they-are-not-available",
-					StringUtil.merge(missingInputTypes)));
+					"some-fragments-are-missing.-x-fields-do-not-have-a-" +
+						"fragment-associated",
+					missingInputTypes.first()));
+		}
+		else if (missingInputTypes.size() > 1) {
+			jsonObject.put(
+				"errorMessage",
+				_language.format(
+					themeDisplay.getLocale(),
+					"some-fragments-are-missing.-x-and-x-fields-do-not-have-" +
+						"a-fragment-associated",
+					new String[] {
+						StringUtil.merge(
+							missingInputTypes.headSet(missingInputTypes.last()),
+							StringPool.COMMA_AND_SPACE),
+						missingInputTypes.last()
+					}));
 		}
 
 		return addedFragmentEntryLinks;

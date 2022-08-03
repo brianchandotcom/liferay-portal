@@ -35,6 +35,85 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-154530. The page designer can add negative values on spacing from style books."
+	@priority = "4"
+	test AddNegativeValueOnSpacing {
+		task ("Given a page designer has a content page with selected custom style books") {
+			task ("Add a style book") {
+				StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+				StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+			}
+
+			task ("Add negative value on Spacing") {
+				StyleBooks.selectForm(formName = "Spacing");
+
+				StyleBooks.expandSection(sectionName = "Spacing");
+
+				Type(
+					key_fieldLabel = "Spacer 1",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = "-32px");
+
+				StyleBooks.clickManagementBar();
+
+				StyleBooks.waitForAutoSave();
+
+				StyleBooks.clickPublish();
+			}
+
+			task ("Add a Button fragment to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Button");
+			}
+
+			task ("Apply the new style book to content page") {
+				PageEditor.gotoTab(tabName = "Page Design Options");
+
+				Navigator.gotoNavTab(navTab = "Style Book");
+
+				StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");
+			}
+		}
+
+		task ("When the page designer selects a negative value on spacing") {
+			PageEditor.gotoStyle(fragmentName = "Button");
+
+			PageEditor.configureFragment(marginTop = "1");
+		}
+
+		task ("Then the page designer can see negative style on button fragment at edit mode") {
+			AssertCssValue(
+				index = "1",
+				key_fragmentName = "Button",
+				locator1 = "Fragment#FRAGMENT_LABEL",
+				locator2 = "margin-top",
+				value1 = "-32px");
+		}
+
+		task ("When the page designer accesses published content page at view mode") {
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer can see negative style on button fragment at view mode") {
+			AssertCssValue(
+				fragmentName = "layout-content",
+				index = "1",
+				locator1 = "PageEditor#COMMON_STYLES_CLASS",
+				locator2 = "margin-top",
+				value1 = "-32px");
+		}
+	}
+
 	@description = "Users can only edit content pages in edit mode."
 	@priority = "5"
 	test CannotEditInViewMode {

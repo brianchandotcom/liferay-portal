@@ -410,6 +410,11 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 					(FormStyledLayoutStructureItem)
 						layoutStructure.getLayoutStructureItem(formItemId);
 
+			long previousClassNameId =
+				previousFormStyledLayoutStructureItem.getClassNameId();
+			long previousClassTypeId =
+				previousFormStyledLayoutStructureItem.getClassTypeId();
+
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 				(FormStyledLayoutStructureItem)layoutStructure.updateItemConfig(
 					JSONFactoryUtil.createJSONObject(itemConfig), formItemId);
@@ -426,10 +431,10 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 					PropsUtil.get("feature.flag.LPS-157738")) &&
 				(!Objects.equals(
 					formStyledLayoutStructureItem.getClassNameId(),
-					previousFormStyledLayoutStructureItem.getClassNameId()) ||
+					previousClassNameId) ||
 				 !Objects.equals(
 					 formStyledLayoutStructureItem.getClassTypeId(),
-					 previousFormStyledLayoutStructureItem.getClassTypeId()))) {
+					 previousClassTypeId))) {
 
 				removedLayoutStructureItemsJSONArray =
 					_removeLayoutStructureItemsJSONArray(

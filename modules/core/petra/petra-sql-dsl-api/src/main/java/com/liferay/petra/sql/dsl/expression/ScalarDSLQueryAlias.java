@@ -21,9 +21,9 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
  */
 public interface ScalarDSLQueryAlias<T> extends Expression<T> {
 
-	public Class<T> getJavaType();
-
 	public DSLQuery getDSLQuery();
+
+	public Class<T> getJavaType();
 
 	public String getName();
 

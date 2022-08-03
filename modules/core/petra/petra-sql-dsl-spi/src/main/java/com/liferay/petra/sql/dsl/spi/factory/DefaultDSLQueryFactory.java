@@ -49,6 +49,14 @@ public class DefaultDSLQueryFactory implements DSLQueryFactory {
 	}
 
 	@Override
+	public <T> Expression<T> scalarSubdSLQuery(
+		DSLQuery dslQuery, Class<T> javaType, String name, int sqlType) {
+
+		return new DefaultScalarDSLQueryAlias<>(
+			dslQuery, javaType, name, sqlType);
+	}
+
+	@Override
 	public FromStep select() {
 		return _SELECT_STAR;
 	}
@@ -71,11 +79,6 @@ public class DefaultDSLQueryFactory implements DSLQueryFactory {
 	@Override
 	public <T extends Table<T>> FromStep selectDistinct(Table<T> table) {
 		return new Select(true, Collections.singleton(new TableStar(table)));
-	}
-
-	@Override
-	public <T> Expression<T> scalarSubDSLQuery(DSLQuery dslQuery, Class<T> javaType, String name, int sqlType){
-		return new DefaultScalarDSLQueryAlias<>(dslQuery, javaType, name, sqlType);
 	}
 
 	private static final FromStep _SELECT_COUNT_STAR_COUNT_VALUE = new Select(

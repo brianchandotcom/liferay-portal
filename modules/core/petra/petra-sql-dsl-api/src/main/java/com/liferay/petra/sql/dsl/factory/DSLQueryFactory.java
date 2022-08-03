@@ -28,6 +28,9 @@ public interface DSLQueryFactory {
 
 	public FromStep countDistinct(Expression<?> expression);
 
+	public <T> Expression<T> scalarSubdSLQuery(
+		DSLQuery dslQuery, Class<T> javaType, String name, int sqlType);
+
 	public FromStep select();
 
 	public FromStep select(Expression<?>... expressions);
@@ -37,7 +40,5 @@ public interface DSLQueryFactory {
 	public FromStep selectDistinct(Expression<?>... expressions);
 
 	public <T extends Table<T>> FromStep selectDistinct(Table<T> table);
-
-	public <T> Expression<T> scalarSubDSLQuery(DSLQuery dslQuery,  Class<T> javaType, String name, int sqlType);
 
 }

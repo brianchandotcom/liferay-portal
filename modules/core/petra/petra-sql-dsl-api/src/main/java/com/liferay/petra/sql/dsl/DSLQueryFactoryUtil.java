@@ -35,6 +35,13 @@ public class DSLQueryFactoryUtil {
 		return _DSL_QUERY_FACTORY.countDistinct(expression);
 	}
 
+	public static <T> Expression<T> scalarSubdSLQuery(
+		DSLQuery dslQuery, Class<T> javaType, String name, int sqlType) {
+
+		return _DSL_QUERY_FACTORY.scalarSubdSLQuery(
+			dslQuery, javaType, name, sqlType);
+	}
+
 	public static FromStep select() {
 		return _DSL_QUERY_FACTORY.select();
 	}
@@ -53,10 +60,6 @@ public class DSLQueryFactoryUtil {
 
 	public static <T extends Table<T>> FromStep selectDistinct(Table<T> table) {
 		return _DSL_QUERY_FACTORY.selectDistinct(table);
-	}
-
-	public static <T> Expression<T> scalarSubDSLQuery(DSLQuery dslQuery,  Class<T> javaType, String name, int sqlType) {
-		return _DSL_QUERY_FACTORY.scalarSubDSLQuery(dslQuery, javaType, name, sqlType);
 	}
 
 	private static final DSLQueryFactory _DSL_QUERY_FACTORY;

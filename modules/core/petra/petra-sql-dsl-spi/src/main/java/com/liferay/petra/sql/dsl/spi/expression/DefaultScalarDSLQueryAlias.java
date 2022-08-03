@@ -25,9 +25,12 @@ import java.util.function.Consumer;
  * @author Marco Leo
  */
 public class DefaultScalarDSLQueryAlias<T>
-	extends BaseASTNode implements ScalarDSLQueryAlias<T>, DefaultExpression<T> {
+	extends BaseASTNode
+	implements DefaultExpression<T>, ScalarDSLQueryAlias<T> {
 
-	public DefaultScalarDSLQueryAlias(DSLQuery dslQuery, Class<T> javaType, String name, int sqlType) {
+	public DefaultScalarDSLQueryAlias(
+		DSLQuery dslQuery, Class<T> javaType, String name, int sqlType) {
+
 		_dslQuery = dslQuery;
 		_javaType = javaType;
 		_name = name;
@@ -35,8 +38,23 @@ public class DefaultScalarDSLQueryAlias<T>
 	}
 
 	@Override
+	public DSLQuery getDSLQuery() {
+		return _dslQuery;
+	}
+
+	@Override
 	public Class<T> getJavaType() {
 		return _javaType;
+	}
+
+	@Override
+	public String getName() {
+		return _name;
+	}
+
+	@Override
+	public int getSQLType() {
+		return _sqlType;
 	}
 
 	@Override
@@ -50,25 +68,9 @@ public class DefaultScalarDSLQueryAlias<T>
 		consumer.accept(") as " + _name);
 	}
 
-	@Override
-	public int getSQLType() {
-		return _sqlType;
-	}
-
-	@Override
-	public DSLQuery getDSLQuery() {
-		return _dslQuery;
-	}
-
-	@Override
-	public String getName() {
-		return _name;
-	}
-
-
-	private final Class<T> _javaType;
-	private final int _sqlType;
 	private final DSLQuery _dslQuery;
+	private final Class<T> _javaType;
 	private final String _name;
+	private final int _sqlType;
 
 }

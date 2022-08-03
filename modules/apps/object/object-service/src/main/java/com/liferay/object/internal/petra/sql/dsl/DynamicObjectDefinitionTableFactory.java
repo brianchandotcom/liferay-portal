@@ -216,7 +216,7 @@ public class DynamicObjectDefinitionTableFactory {
 			}
 
 			dynamicObjectDefinitionTable.addSelectExpression(
-				DSLQueryFactoryUtil.scalarSubDSLQuery(
+				DSLQueryFactoryUtil.scalarSubdSLQuery(
 					joinStep.where(predicate),
 					DynamicObjectDefinitionTable.getJavaClass(
 						objectField.getDBType()),

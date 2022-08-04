@@ -17,7 +17,7 @@ definition {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
-		task ("Upload two JavaScript extension files to Documents and Media") {
+		task ("Upload six JavaScript extension files to Documents and Media") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Text Color",
 				groupName = "Test Site Name",
@@ -29,18 +29,54 @@ definition {
 				groupName = "Test Site Name",
 				mimeType = "application/javascript",
 				sourceFileName = "InnerText.js");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Font Family",
+				groupName = "Test Site Name",
+				mimeType = "application/javascript",
+				sourceFileName = "FontFamily.js");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Font Size",
+				groupName = "Test Site Name",
+				mimeType = "application/javascript",
+				sourceFileName = "FontSize.js");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Font Weight",
+				groupName = "Test Site Name",
+				mimeType = "application/javascript",
+				sourceFileName = "FontWeight.js");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Margin Top",
+				groupName = "Test Site Name",
+				mimeType = "application/javascript",
+				sourceFileName = "MarginTop.js");
 		}
 
-		task ("Get the latest version URL of two documents") {
+		task ("Get the latest version URL of six documents") {
 			var firstURL = JSONDocument.getLatestVersionURL(
 				dmDocumentTitle = "Text Color",
 				groupName = "Test Site Name");
 			var secondURL = JSONDocument.getLatestVersionURL(
 				dmDocumentTitle = "Inner Text",
 				groupName = "Test Site Name");
+			var thirdURL = JSONDocument.getLatestVersionURL(
+				dmDocumentTitle = "Font Family",
+				groupName = "Test Site Name");
+			var fourthURL = JSONDocument.getLatestVersionURL(
+				dmDocumentTitle = "Font Size",
+				groupName = "Test Site Name");
+			var fifthURL = JSONDocument.getLatestVersionURL(
+				dmDocumentTitle = "Font Weight",
+				groupName = "Test Site Name");
+			var sixthURL = JSONDocument.getLatestVersionURL(
+				dmDocumentTitle = "Margin Top",
+				groupName = "Test Site Name");
 		}
 
-		task ("Add two remote apps for JavaScript extension") {
+		task ("Add six remote apps for JavaScript extension") {
 			JSONRemoteApp.addRemoteAppEntry(
 				name = "TextColor",
 				type = "globalJS",
@@ -50,6 +86,26 @@ definition {
 				name = "InnerText",
 				type = "globalJS",
 				url = "${secondURL}");
+
+			JSONRemoteApp.addRemoteAppEntry(
+				name = "FontFamily",
+				type = "globalJS",
+				url = "${thirdURL}");
+
+			JSONRemoteApp.addRemoteAppEntry(
+				name = "FontSize",
+				type = "globalJS",
+				url = "${fourthURL}");
+
+			JSONRemoteApp.addRemoteAppEntry(
+				name = "FontWeight",
+				type = "globalJS",
+				url = "${fifthURL}");
+
+			JSONRemoteApp.addRemoteAppEntry(
+				name = "MarginTop",
+				type = "globalJS",
+				url = "${sixthURL}");
 		}
 	}
 
@@ -66,7 +122,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-153655. The site designer could add JavaScript extension to page, page template, and group of pages."
+	@description = "This is a test for LPS-153655 and LPS-153658. The site designer could add JavaScript extension to page, page template, and group of pages. The site designer could add a JavaScript Extension to Page Head or Page Bottom."
 	@priority = "5"
 	test AddJavaScriptExtension {
 		task ("Given a site designer has a widget page") {
@@ -94,11 +150,11 @@ definition {
 
 		task ("Then the site designer could add a JavaScript Extension to widget page") {
 			PagesAdmin.addJavaScriptExtensions(
-				extensionNameList = "InnerText",
-				insertion = "In Page Bottom");
+				extensionNameList = "FontFamily",
+				insertion = "In Page Head");
 
 			AssertVisible(
-				key_tableEntry = "InnerText",
+				key_tableEntry = "FontFamily",
 				locator1 = "LexiconTable#TABLE_ENTRY");
 
 			PortletEntry.save();
@@ -109,7 +165,10 @@ definition {
 				menuItem = "View",
 				pageName = "Test Page Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Welcome");
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "font-family",
+				value1 = "&quot;Times New Roman&quot;");
 		}
 
 		task ("Given a site designer has a content page template") {
@@ -217,7 +276,10 @@ definition {
 				menuItem = "View",
 				pageName = "Test Page Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Welcome");
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "font-family",
+				value1 = "&quot;Times New Roman&quot;");
 		}
 	}
 

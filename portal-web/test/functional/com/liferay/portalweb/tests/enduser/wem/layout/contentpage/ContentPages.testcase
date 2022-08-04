@@ -1689,9 +1689,12 @@ definition {
 		}
 
 		task ("Then the page designer can see auto style on heading fragment at edit mode") {
-			PageEditor.viewFragmentStyle(
-				fragmentName = "Heading",
-				marginTop = "3");
+			AssertCssValue(
+				index = "1",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_LABEL",
+				locator2 = "margin-top",
+				value1 = "0px");
 		}
 
 		task ("When the page designer opens the dropdown menu of marging top on spacing") {
@@ -1717,10 +1720,12 @@ definition {
 		}
 
 		task ("Then the page designer can see auto style on heading fragment at view mode") {
-			ContentPages.viewFragmentCommonStyle(
-				fragmentName = "heading",
-				styleName = "marginTop",
-				styleValue = "3");
+			AssertCssValue(
+				fragmentName = "layout-content",
+				index = "1",
+				locator1 = "PageEditor#COMMON_STYLES_CLASS",
+				locator2 = "margin-top",
+				value1 = "0px");
 		}
 	}
 

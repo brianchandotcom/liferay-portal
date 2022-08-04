@@ -71,21 +71,6 @@ public abstract class BasePropMethodImpl implements Method {
 		return SAXReaderUtil.createQName(name, WebDAVUtil.DAV_URI);
 	}
 
-	protected void addResponse(String href, Element multistatusElement)
-		throws Exception {
-
-		Element responseElement = DocUtil.add(
-			multistatusElement, createQName("response"));
-
-		DocUtil.add(responseElement, createQName("href"), href);
-
-		Element propstatElement = DocUtil.add(
-			responseElement, createQName("propstat"));
-
-		DocUtil.add(
-			propstatElement, createQName("status"), "HTTP/1.1 404 Not Found");
-	}
-
 	protected void addResponse(
 			WebDAVRequest webDAVRequest, Resource resource, Set<QName> props,
 			Element multistatus)

@@ -273,9 +273,7 @@ definition {
 	macro moveToRecycleBinCP {
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Bookmarks");
+		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
 
 		AssertTextEquals(
 			key_assetName = "${folderName}",
@@ -290,11 +288,7 @@ definition {
 	}
 
 	macro tearDownCP {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Bookmarks");
+		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
 
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
 			PortletEntry.selectAll();

@@ -143,7 +143,6 @@ definition {
 	@priority = "5"
 	@uitest
 	test ConfigureEmbeddedAndPanelPage {
-		property osgi.app.includes = "bookmarks";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 

@@ -457,8 +457,6 @@ definition {
 
 	@priority = "4"
 	test GroupScopePermissionCheck {
-		property osgi.app.includes = "bookmarks";
-		property portal.release = "false";
 		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#GroupScopePermissionCheck";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -1030,9 +1028,6 @@ definition {
 
 	@priority = "4"
 	test SiteRoleBookmarksInlinePermissions {
-		property osgi.app.includes = "bookmarks";
-		property portal.release = "false";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ApplicationsMenu.gotoPortlet(

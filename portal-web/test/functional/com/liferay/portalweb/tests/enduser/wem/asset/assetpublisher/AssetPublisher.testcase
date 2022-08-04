@@ -195,7 +195,6 @@ definition {
 	@description = "Add a bookmarks entry via Asset Publisher."
 	@priority = "4"
 	test AddBookmarksEntryViaAssetPublisher {
-		property portal.release = "false";
 		property testray.component.names = "Asset Publisher,Bookmarks";
 
 		task ("Change Asset Link Behavior to Show Full Content") {
@@ -764,8 +763,6 @@ definition {
 	@description = "Select the Bookmarks Entry as asset type."
 	@priority = "4"
 	test SelectBookmarksEntryAsAssetType {
-		property portal.release = "false";
-
 		task ("Select the Bookmarks Entry in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -868,7 +865,6 @@ definition {
 	@description = "View bookmarks entry in Asset Publisher with different display templates."
 	@priority = "4"
 	test ViewBookmarksEntryInAssetPublisherWithDifferentDisplayTemplates {
-		property portal.release = "false";
 		property testray.component.names = "Asset Publisher,Bookmarks,Content and Display Templates";
 
 		task ("Add a bookmarks entry") {

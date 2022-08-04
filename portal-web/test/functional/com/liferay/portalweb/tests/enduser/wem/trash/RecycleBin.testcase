@@ -165,8 +165,6 @@ definition {
 	@description = "Restore bookmark subfolder and bookmark from recycle bin."
 	@priority = "3"
 	test RecycleBinBookmarks {
-		property portal.release = "false";
-
 		task ("Add bookmarks widget to page") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Site Name",

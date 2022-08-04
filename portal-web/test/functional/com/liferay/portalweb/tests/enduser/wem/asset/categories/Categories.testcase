@@ -243,8 +243,6 @@ definition {
 	@description = "Add a vocabulary for Bookmarks Entry."
 	@priority = "3"
 	test AddVocabularyForBookmarksEntry {
-		property portal.release = "false";
-
 		task ("Add a vocabulary for Bookmarks Entry") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 

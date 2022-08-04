@@ -1866,7 +1866,6 @@ definition {
 	@priority = "5"
 	test ImportCorruptedFile {
 		property portal.acceptance = "true";
-		property portal.release = "false";
 
 		Navigator.openURL();
 

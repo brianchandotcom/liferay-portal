@@ -2075,8 +2075,6 @@ definition {
 	@description = "This test changes pagination and assert entries display properly."
 	@priority = "2"
 	test PaginationWorksInNewDataExport {
-		property portal.release = "false";
-
 		task ("Bring up the New Data Export page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",

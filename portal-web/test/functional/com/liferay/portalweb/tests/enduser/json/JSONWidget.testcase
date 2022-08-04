@@ -30,8 +30,6 @@ definition {
 	@description = "Add widgets to differents columns in a widget page via JSON."
 	@priority = "5"
 	test AddWidgetsToDifferentColumns {
-		property osgi.app.includes = "bookmarks";
-
 		task ("Add seven widgets to first column") {
 			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Category Filter,Documents and Media") {
 				JSONLayout.addWidgetToPublicLayout(
@@ -66,7 +64,6 @@ definition {
 	@description = "Add different types of widget to private page via JSON."
 	@priority = "5"
 	test AddWidgetsToPrivateLayout {
-		property osgi.app.includes = "bookmarks";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add a private page") {
@@ -98,8 +95,6 @@ definition {
 	@description = "Add different types of widget to public page via JSON."
 	@priority = "5"
 	test AddWidgetsToPublicLayout {
-		property osgi.app.includes = "bookmarks";
-
 		task ("Add different types of widget to public page") {
 			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Category Filter,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Menu Display,Related Assets,Search Results,Site Map,Sites Directory,Tag Filter,Type Facet,Web Content Display,Wiki") {
 				JSONLayout.addWidgetToPublicLayout(

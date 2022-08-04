@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -42,8 +43,10 @@ public class ClientExtensionWebUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
+		registry.register("0.0.0", "2.0.0", new DummyUpgradeProcess());
+
 		registry.register(
-			"0.0.0", "1.0.0",
+			"0.0.1", "1.0.0",
 			new BasePortletIdUpgradeProcess() {
 
 				@Override

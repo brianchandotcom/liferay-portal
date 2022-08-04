@@ -16,6 +16,7 @@ package com.liferay.message.boards.moderation.internal.upgrade.registry;
 
 import com.liferay.message.boards.moderation.internal.upgrade.v1_0_0.MBModerationWorkflowDefinitionUpgradeProcess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
@@ -32,8 +33,10 @@ public class MBModerationUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeProcess());
+
 		registry.register(
-			"0.0.0", "1.0.0",
+			"0.0.1", "1.0.0",
 			new MBModerationWorkflowDefinitionUpgradeProcess(
 				_companyLocalService, _workflowDefinitionManager));
 	}

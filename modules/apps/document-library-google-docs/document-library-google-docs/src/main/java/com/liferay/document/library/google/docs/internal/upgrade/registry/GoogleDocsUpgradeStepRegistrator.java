@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -36,8 +37,10 @@ public class GoogleDocsUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
+		registry.register("0.0.0", "2.0.0", new DummyUpgradeProcess());
+
 		registry.register(
-			"0.0.0", "1.0.0",
+			"0.0.1", "1.0.0",
 			new DLFileEntryTypeNameUpgradeProcess(
 				_dlFileEntryTypeLocalService));
 

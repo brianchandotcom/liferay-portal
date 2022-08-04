@@ -17,6 +17,7 @@ package com.liferay.commerce.product.content.web.internal.upgrade.registry;
 import com.liferay.commerce.product.content.web.internal.upgrade.v1_0_0.PortletPreferenceValueUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,8 +39,10 @@ public class CommerceProductContentWebUpgradeStepRegistrator
 					"started");
 		}
 
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeProcess());
+
 		registry.register(
-			"0.0.0", "1.0.0", new PortletPreferenceValueUpgradeProcess());
+			"0.0.1", "1.0.0", new PortletPreferenceValueUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

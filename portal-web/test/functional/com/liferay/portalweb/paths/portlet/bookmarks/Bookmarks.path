@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>PARENT_FOLDER_PANEL</td>
-	<td>//div[contains(@id,'parent-folderTitle')]//a[contains(.,'Parent Folder')]</td>
+	<td>//div[contains(@class,'panel-group')]//a[contains(.,'Parent Folder')]</td>
 	<td></td>
 </tr>
 <tr>

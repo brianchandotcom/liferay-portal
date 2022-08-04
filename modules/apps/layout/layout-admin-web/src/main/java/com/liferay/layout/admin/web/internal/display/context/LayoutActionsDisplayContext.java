@@ -39,10 +39,15 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.manager.SegmentsExperienceManager;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceURL;
@@ -54,11 +59,16 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LayoutActionsDisplayContext {
 
-	public LayoutActionsDisplayContext(HttpServletRequest httpServletRequest) {
+	public LayoutActionsDisplayContext(
+		HttpServletRequest httpServletRequest,
+		SegmentsExperienceLocalService segmentsExperienceLocalService) {
+
 		_httpServletRequest = httpServletRequest;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_segmentsExperienceLocalService = segmentsExperienceLocalService;
 	}
 
 	public List<DropdownItem> getDropdownItems() {
@@ -248,7 +258,43 @@ public class LayoutActionsDisplayContext {
 		getPreviewLayoutURL.setParameter(
 			"selPlid", String.valueOf(draftLayout.getPlid()));
 
+		getPreviewLayoutURL.setParameter(
+			"segmentsExperienceId",
+			String.valueOf(_getSegmentsExperienceId(draftLayout)));
+
 		return getPreviewLayoutURL.toString();
+	}
+
+	private long _getSegmentsExperienceId(Layout layout) {
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		// LPS-131416
+
+		long segmentsExperienceId = GetterUtil.getLong(
+			unicodeProperties.getProperty("segmentsExperienceId"), -1);
+
+		if (segmentsExperienceId != -1) {
+			segmentsExperienceId = Optional.ofNullable(
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					segmentsExperienceId)
+			).map(
+				SegmentsExperience::getSegmentsExperienceId
+			).orElse(
+				-1L
+			);
+		}
+
+		if (segmentsExperienceId == -1) {
+			SegmentsExperienceManager segmentsExperienceManager =
+				new SegmentsExperienceManager(_segmentsExperienceLocalService);
+
+			segmentsExperienceId =
+				segmentsExperienceManager.getSegmentsExperienceId(
+					_httpServletRequest);
+		}
+
+		return segmentsExperienceId;
 	}
 
 	private boolean _isContentLayout(Layout layout) {
@@ -326,6 +372,8 @@ public class LayoutActionsDisplayContext {
 
 	private Boolean _contentLayout;
 	private final HttpServletRequest _httpServletRequest;
+	private final SegmentsExperienceLocalService
+		_segmentsExperienceLocalService;
 	private final ThemeDisplay _themeDisplay;
 
 }

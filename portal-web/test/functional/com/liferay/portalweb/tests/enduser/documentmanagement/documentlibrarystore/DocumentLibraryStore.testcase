@@ -267,7 +267,11 @@ definition {
 
 		var filesBeforeReIndex = FileUtil.listFiles("${s3TempDir}");
 
-		AssertConsoleTextNotPresent(value1 = "Temp Folder before Reindex: \[\]");
+		echo("S3 temp directory files before reindex: ${filesBeforeReIndex}.");
+
+		if ("${filesBeforeReIndex}" == "") {
+			fail("The S3 directory is empty at ${s3TempDir}.");
+		}
 
 		SearchAdministration.executeReindex();
 

@@ -18,6 +18,7 @@ import com.liferay.expando.constants.ExpandoPortletKeys;
 import com.liferay.expando.kernel.exception.ColumnNameException;
 import com.liferay.expando.kernel.exception.ColumnTypeException;
 import com.liferay.expando.kernel.exception.DuplicateColumnNameException;
+import com.liferay.expando.kernel.exception.MustInformDefaultLocaleException;
 import com.liferay.expando.kernel.exception.NoSuchColumnException;
 import com.liferay.expando.kernel.exception.ValueDataException;
 import com.liferay.expando.kernel.model.ExpandoBridge;
@@ -120,10 +121,8 @@ public class ExpandoPortlet extends MVCPortlet {
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
 
-		expandoBridge.addAttribute(name, type);
-
-		expandoBridge.setAttributeDefault(
-			name, _getDefaultValue(actionRequest, type));
+		expandoBridge.addAttribute(
+			name, type, _getDefaultValue(actionRequest, type));
 
 		_updateProperties(actionRequest, expandoBridge, name);
 	}
@@ -163,14 +162,13 @@ public class ExpandoPortlet extends MVCPortlet {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		int type = ParamUtil.getInteger(actionRequest, "type");
-
-		Serializable defaultValue = _getDefaultValue(actionRequest, type);
-
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
 
-		expandoBridge.setAttributeDefault(name, defaultValue);
+		expandoBridge.setAttributeDefault(
+			name,
+			_getDefaultValue(
+				actionRequest, ParamUtil.getInteger(actionRequest, "type")));
 
 		_updateProperties(actionRequest, expandoBridge, name);
 	}
@@ -186,6 +184,9 @@ public class ExpandoPortlet extends MVCPortlet {
 				renderRequest, ColumnTypeException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, DuplicateColumnNameException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest,
+				MustInformDefaultLocaleException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, ValueDataException.class.getName())) {
 
@@ -208,6 +209,7 @@ public class ExpandoPortlet extends MVCPortlet {
 		if (throwable instanceof ColumnNameException ||
 			throwable instanceof ColumnTypeException ||
 			throwable instanceof DuplicateColumnNameException ||
+			throwable instanceof MustInformDefaultLocaleException ||
 			throwable instanceof NoSuchColumnException ||
 			throwable instanceof PrincipalException ||
 			throwable instanceof ValueDataException) {

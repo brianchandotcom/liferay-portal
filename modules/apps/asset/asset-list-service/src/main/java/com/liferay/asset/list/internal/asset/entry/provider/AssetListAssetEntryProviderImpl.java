@@ -388,10 +388,14 @@ public class AssetListAssetEntryProviderImpl
 				}
 			}
 			else {
+				long ddmStructureId = classTypeIds[0];
+
 				assetEntryQuery.setAttribute(
 					"ddmStructureFieldName",
 					DDMIndexerUtil.encodeName(
-						classTypeIds[0], ddmStructureFieldName,
+						ddmStructureId,
+						_getFieldReference(
+							ddmStructureId, ddmStructureFieldName),
 						LocaleUtil.getMostRelevantLocale()));
 			}
 

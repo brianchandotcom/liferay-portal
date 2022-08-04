@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.web.internal.upgrade.registry;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
@@ -22,6 +23,7 @@ import com.liferay.change.tracking.web.internal.upgrade.v1_0_3.PublicationsConfi
 import com.liferay.change.tracking.web.internal.upgrade.v1_0_4.PublicationsRolePermissionsUpgradeProcess;
 import com.liferay.change.tracking.web.internal.upgrade.v1_0_5.PublicationsAdminRoleNameUpgradeProcess;
 import com.liferay.change.tracking.web.internal.upgrade.v1_0_7.PublicationsEnabledUpgradeProcess;
+import com.liferay.change.tracking.web.internal.upgrade.v1_0_8.CleanUpPDFPreviews;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -44,7 +46,7 @@ public class PublicationsWebUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.7", new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.8", new DummyUpgradeStep());
 
 		registry.register(
 			"0.0.1", "1.0.1",
@@ -101,10 +103,18 @@ public class PublicationsWebUpgradeStepRegistrator
 			"1.0.6", "1.0.7",
 			new PublicationsEnabledUpgradeProcess(
 				_ctPreferencesLocalService, _ctSettingsConfigurationHelper));
+
+		registry.register(
+			"1.0.7", "1.0.8",
+			new CleanUpPDFPreviews(
+				_ctCollectionLocalService, _ctEntryLocalService));
 	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

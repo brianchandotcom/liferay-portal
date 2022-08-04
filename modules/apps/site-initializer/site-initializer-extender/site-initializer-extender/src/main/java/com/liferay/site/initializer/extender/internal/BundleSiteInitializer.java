@@ -3835,17 +3835,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _setResourcePermissions(
-			long companyId, String name, String primKey, JSONArray jsonArray)
+			long companyId, String name, String primKey, JSONArray permissionsJSONArray)
 		throws Exception {
 
-		if (jsonArray == null) {
-			jsonArray = JSONFactoryUtil.createJSONArray(
+		if (permissionsJSONArray == null) {
+			permissionsJSONArray = JSONFactoryUtil.createJSONArray(
 				"[{\"actionIds\": [\"VIEW\"], \"roleName\": \"Site Member\"," +
 					"\"scope\": 4}]");
 		}
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+		for (int i = 0; i < permissionsJSONArray.length(); i++) {
+			JSONObject jsonObject = permissionsJSONArray.getJSONObject(i);
 
 			int scope = jsonObject.getInt("scope");
 

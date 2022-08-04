@@ -1,0 +1,10 @@
+{
+	"pageElement": {
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "test-master-page"
+		}
+	}
+}

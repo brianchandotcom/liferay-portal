@@ -1,0 +1,26 @@
+{
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Test Public Permissions Layout"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"UPDATE_LAYOUT_CONTENT",
+				"VIEW"
+			],
+			"roleName": "Site Member",
+			"scope": 4
+		}
+	],
+	"priority": 0,
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

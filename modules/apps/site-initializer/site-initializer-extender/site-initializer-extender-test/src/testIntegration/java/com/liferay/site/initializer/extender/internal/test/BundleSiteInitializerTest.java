@@ -101,6 +101,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
@@ -110,6 +111,7 @@ import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -1178,6 +1180,46 @@ public class BundleSiteInitializerTest {
 			"Test Public Layout",
 			publicLayout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("content", publicLayout.getType());
+
+		Layout publicPermissionsLayout =
+			_layoutLocalService.getLayoutByFriendlyURL(
+				group.getGroupId(), false, "/test-public-permissions-layout");
+
+		Role guestRole = _roleLocalService.getRole(
+			publicLayout.getCompanyId(), RoleConstants.GUEST);
+
+		boolean hasGuestViewPermission =
+			_resourcePermissionLocalService.hasResourcePermission(
+				publicPermissionsLayout.getCompanyId(),
+				publicPermissionsLayout.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(publicPermissionsLayout.getPlid()),
+				guestRole.getRoleId(), ActionKeys.VIEW);
+
+		Assert.assertFalse(hasGuestViewPermission);
+
+		Role siteMemberRole = _roleLocalService.getRole(
+			publicLayout.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		boolean hasSiteMemberViewPermission =
+			_resourcePermissionLocalService.hasResourcePermission(
+				publicPermissionsLayout.getCompanyId(),
+				publicPermissionsLayout.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(publicPermissionsLayout.getPlid()),
+				siteMemberRole.getRoleId(), ActionKeys.VIEW);
+
+		Assert.assertTrue(hasSiteMemberViewPermission);
+
+		boolean hasSiteMemberUpdateLayoutContentPermission =
+			_resourcePermissionLocalService.hasResourcePermission(
+				publicPermissionsLayout.getCompanyId(),
+				publicPermissionsLayout.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(publicPermissionsLayout.getPlid()),
+				siteMemberRole.getRoleId(), ActionKeys.UPDATE_LAYOUT_CONTENT);
+
+		Assert.assertTrue(hasSiteMemberUpdateLayoutContentPermission);
 
 		List<Layout> publicChildLayouts = publicLayout.getAllChildren();
 

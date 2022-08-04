@@ -64,7 +64,8 @@ PortletURL portletURL = PortletURLBuilder.create(
 								"dispatchTriggerId", dispatchTrigger.getDispatchTriggerId()
 							).buildPortletURL()
 						%>'
-						property="name"
+						name="name"
+						value="<%= HtmlUtil.escape(dispatchTrigger.getName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

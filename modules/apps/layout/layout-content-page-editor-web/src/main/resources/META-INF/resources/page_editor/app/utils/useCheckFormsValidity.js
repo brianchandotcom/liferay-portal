@@ -111,6 +111,21 @@ export default function useCheckFormsValidity() {
 						FORM_ERROR_TYPES.hiddenFields
 					);
 				}
+
+				if (
+					hasUnmappedRequiredField(
+						itemId,
+						fragmentEntryLinks,
+						fields,
+						layoutData
+					)
+				) {
+					addError(
+						validations,
+						formItem,
+						FORM_ERROR_TYPES.missingFields
+					);
+				}
 			});
 
 			if (validations.size) {
@@ -170,4 +185,35 @@ function hasUnmappedInputChild(formId, fragmentEntryLinks, layoutData) {
 
 		return !inputFieldId;
 	});
+}
+
+function hasUnmappedRequiredField(
+	formId,
+	fragmentEntryLinks,
+	fields,
+	layoutData
+) {
+	const descendantIds = getDescendantIds(layoutData, formId);
+
+	const requiredFields = fields
+		.flatMap((fieldSet) => fieldSet.fields)
+		.filter((field) => field.required);
+
+	return requiredFields.some(
+		(field) =>
+			!descendantIds.some((descendantId) => {
+				const item = layoutData.items[descendantId];
+
+				if (item.type !== LAYOUT_DATA_ITEM_TYPES.fragment) {
+					return false;
+				}
+
+				const {inputFieldId} =
+					fragmentEntryLinks[item.config.fragmentEntryLinkId]
+						.editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR] ||
+					{};
+
+				return inputFieldId === field.key;
+			})
+	);
 }

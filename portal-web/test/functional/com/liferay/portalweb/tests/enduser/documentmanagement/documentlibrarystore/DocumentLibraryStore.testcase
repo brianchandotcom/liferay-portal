@@ -263,15 +263,15 @@ definition {
 		var displayDateMonth = DateUtil.getFormattedCurrentDate("MM", "UTC");
 		var displayDateYear = DateUtil.getFormattedCurrentDate("yyyy", "UTC");
 
-		var folderBeforeReIndex = FileUtil.listFiles("${tempDir}/liferay/s3/${displayDateYear}/${displayDateMonth}/${displayDateDay}/${displayDateHour}");
+		var s3TempDir = "${tempDir}/liferay/s3/${displayDateYear}/${displayDateMonth}/${displayDateDay}/${displayDateHour}";
 
-		echo("Temp Folder before Reindex: ${folderBeforeReIndex}");
+		var filesBeforeReIndex = FileUtil.listFiles("${s3TempDir}");
 
 		AssertConsoleTextNotPresent(value1 = "Temp Folder before Reindex: \[\]");
 
 		SearchAdministration.executeReindex();
 
-		var folderAfterReIndex = FileUtil.listFiles("${tempDir}/liferay/s3/${displayDateYear}/${displayDateMonth}/${displayDateDay}/${displayDateHour}");
+		var filesAfterReIndex = FileUtil.listFiles("${s3TempDir}");
 
 		echo("Temp Folder after Reindex: ${folderAfterReIndex}");
 

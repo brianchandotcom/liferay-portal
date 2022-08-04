@@ -283,6 +283,77 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153658. The site designer could add same JavaScript Extension to Page Head or Page Bottom of different pages."
+	@priority = "4"
+	test AddSameJavaScriptExtensionToPageHeadOrPageBottomOfDifferentPages {
+		task ("Given a site designer has two content pages") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}",
+					type = "content");
+			}
+		}
+
+		task ("When the site designer add a JavaScript extension to page bottom of the first content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "FontFamily",
+				insertion = "In Page Head");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the site designer could add the same JavaScript extension to page head of the second content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "FontFamily",
+				insertion = "In Page Bottom");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "font-family",
+				value1 = "&quot;Times New Roman&quot;");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
+
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "font-family",
+				value1 = "&quot;Times New Roman&quot;");
+		}
+	}
+
 	@description = "This is a test for LPS-153655. The site designer could change JavaScript extension selection to an inheritor page from page template."
 	@priority = "5"
 	test ChangeJavaScriptExtensionOfInheritorPage {

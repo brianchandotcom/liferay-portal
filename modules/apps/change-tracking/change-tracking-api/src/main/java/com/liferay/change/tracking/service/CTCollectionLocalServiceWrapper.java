@@ -161,6 +161,26 @@ public class CTCollectionLocalServiceWrapper
 	}
 
 	@Override
+	public void discardCTEntries(
+			long ctCollectionId, long modelClassNameId, long modelClassPK,
+			boolean force)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_ctCollectionLocalService.discardCTEntries(
+			ctCollectionId, modelClassNameId, modelClassPK, force);
+	}
+
+	@Override
+	public void discardCTEntry(
+			long ctCollectionId, long modelClassNameId, long modelClassPK,
+			boolean force)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_ctCollectionLocalService.discardCTEntry(
+			ctCollectionId, modelClassNameId, modelClassPK, force);
+	}
+
+	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _ctCollectionLocalService.dslQuery(dslQuery);
 	}

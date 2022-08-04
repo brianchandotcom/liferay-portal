@@ -117,7 +117,7 @@ public class WikiPageAttachmentResourceTest
 		throws Exception {
 
 		return wikiPageAttachmentResource.postWikiPageWikiPageAttachment(
-			_wikiPage.getPageId(), randomWikiPageAttachment(),
+			_wikiPage.getResourcePrimKey(), randomWikiPageAttachment(),
 			getMultipartFiles());
 	}
 
@@ -127,13 +127,13 @@ public class WikiPageAttachmentResourceTest
 		throws Exception {
 
 		return wikiPageAttachmentResource.postWikiPageWikiPageAttachment(
-			_wikiPage.getPageId(), randomWikiPageAttachment(),
+			_wikiPage.getResourcePrimKey(), randomWikiPageAttachment(),
 			getMultipartFiles());
 	}
 
 	@Override
 	protected Long testGetWikiPageWikiPageAttachmentsPage_getWikiPageId() {
-		return _wikiPage.getPageId();
+		return _wikiPage.getResourcePrimKey();
 	}
 
 	@Override

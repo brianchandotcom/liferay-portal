@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" package-path="com.liferay.oauth2.provider">
 	<namespace>OAuthTwo</namespace>
-	<entity local-service="true" name="OAuth2Application" remote-service="true">
+	<entity external-reference-code="company" local-service="true" name="OAuth2Application" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

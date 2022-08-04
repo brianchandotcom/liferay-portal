@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.web.internal.util;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.content.dashboard.web.internal.constants.ContentDashboardConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -50,10 +51,14 @@ public class ContentDashboardUtil {
 
 		AssetVocabulary audienceAssetVocabulary =
 			AssetVocabularyLocalServiceUtil.fetchGroupVocabulary(
-				themeDisplay.getCompanyGroupId(), "audience");
+				themeDisplay.getCompanyGroupId(),
+				ContentDashboardConstants.DefaultInternalAssetVocabularyName.
+					AUDIENCE.toString());
 		AssetVocabulary stageAssetVocabulary =
 			AssetVocabularyLocalServiceUtil.fetchGroupVocabulary(
-				themeDisplay.getCompanyGroupId(), "stage");
+				themeDisplay.getCompanyGroupId(),
+				ContentDashboardConstants.DefaultInternalAssetVocabularyName.
+					STAGE.toString());
 
 		return new long[] {
 			audienceAssetVocabulary.getVocabularyId(),

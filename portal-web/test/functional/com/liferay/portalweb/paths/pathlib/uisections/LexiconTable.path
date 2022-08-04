@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GROUPED_TABLE_ENTRY</td>
+	<td>//tr[normalize-space()='${key_groupHeader}']//following-sibling::tr[td[normalize-space()='${key_tableEntry}']]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_CHECKBOX</td>
 	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//input[@type='checkbox']</td>
 	<td></td>

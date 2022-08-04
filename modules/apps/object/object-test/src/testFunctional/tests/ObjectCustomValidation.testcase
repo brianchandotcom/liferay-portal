@@ -56,7 +56,7 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField != 'Allowed Entry')");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField != 'Allowed Entry')");
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
 
@@ -105,7 +105,7 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField != 'Allowed Entry')");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField != 'Allowed Entry')");
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
 
@@ -130,7 +130,7 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Allowed Entry')");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Allowed Entry')");
 
 		Button.clickSave();
 
@@ -177,7 +177,7 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField != 'Allowed Entry')");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField != 'Allowed Entry')");
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
 
@@ -202,7 +202,7 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Decline Update Entry')");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Decline Update Entry')");
 
 		Button.clickSave();
 
@@ -281,7 +281,7 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Decline Entry')");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Decline Entry')");
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
 
@@ -345,7 +345,7 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Decline Entry')");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Decline Entry')");
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
 
@@ -399,7 +399,7 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField < 18)");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField < 18)");
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
 
@@ -545,7 +545,7 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Decline Entry')");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Decline Entry')");
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
 
@@ -607,7 +607,7 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == &quot;Invalid Entry&quot;)");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == &quot;Invalid Entry&quot;)");
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
@@ -672,7 +672,7 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == &quot;Invalid Entry&quot;)");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == &quot;Invalid Entry&quot;)");
 
 		Button.clickSave();
 

@@ -41,7 +41,7 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>INSERT_GROOVY_SCRIPT_ON_VALIDATION</td>
+		<td>INSERT_SCRIPT_ON_VALIDATION</td>
 		<td>//div[contains(@class,'lfr-objects__editor')]/div[contains(@class,'CodeMirror')]</td>
 		<td></td>
 	</tr>

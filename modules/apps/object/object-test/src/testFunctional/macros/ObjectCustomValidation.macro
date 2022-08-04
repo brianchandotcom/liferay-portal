@@ -64,10 +64,10 @@ definition {
 			locator1 = "NavTab#TAB_LINK");
 	}
 
-	macro insertGroovyScript {
+	macro insertScriptOnValidation {
 		Type.typeCodeMirrorEditorNoError(
-			locator1 = "ObjectCustomValidation#INSERT_GROOVY_SCRIPT_ON_VALIDATION",
-			value1 = "${groovyScript}");
+			locator1 = "ObjectCustomValidation#INSERT_SCRIPT_ON_VALIDATION",
+			value1 = "${scriptValidation}");
 	}
 
 	macro viewActiveTabOnCustomValidation {

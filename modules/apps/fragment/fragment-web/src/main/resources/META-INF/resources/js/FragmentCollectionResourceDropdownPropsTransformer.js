@@ -48,6 +48,6 @@ export default function propsTransformer({actions, ...props}) {
 
 	return {
 		...props,
-		actions: actions.map(transformAction),
+		actions: (actions || []).map(transformAction),
 	};
 }

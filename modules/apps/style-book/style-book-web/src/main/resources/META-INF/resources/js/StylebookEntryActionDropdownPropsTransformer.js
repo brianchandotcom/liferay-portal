@@ -116,7 +116,7 @@ export default function propsTransformer({
 
 	return {
 		...otherProps,
-		actions: actions.map((item) => {
+		actions: (actions || []).map((item) => {
 			return {
 				...item,
 				items: item.items?.map((child) => {

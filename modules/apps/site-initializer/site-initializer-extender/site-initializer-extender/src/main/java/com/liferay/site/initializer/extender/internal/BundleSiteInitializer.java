@@ -3834,7 +3834,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			documentsStringUtilReplaceValues, true, serviceContext);
 	}
 
-	private void _updatePermissions(
+	private void _setResourcePermissions(
 			long companyId, String name, String primKey, JSONArray jsonArray)
 		throws Exception {
 

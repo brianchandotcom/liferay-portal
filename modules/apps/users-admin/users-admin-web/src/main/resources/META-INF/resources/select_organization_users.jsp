@@ -87,13 +87,8 @@ SearchContainer<User> userSearchContainer = selectOrganizationUsersManagementToo
 				</c:when>
 				<c:when test='<%= displayStyle.equals("icon") %>'>
 					<liferay-ui:search-container-column-text>
-						<liferay-frontend:user-vertical-card
-							actionJspServletContext="<%= application %>"
-							resultRow="<%= row %>"
-							rowChecker="<%= userSearchContainer.getRowChecker() %>"
-							subtitle="<%= user2.getScreenName() %>"
-							title="<%= user2.getFullName() %>"
-							userId="<%= user2.getUserId() %>"
+						<clay:user-card
+							userCard="<%= new UserVerticalCard(renderRequest, userSearchContainer.getRowChecker(), user2) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

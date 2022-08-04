@@ -33,19 +33,9 @@
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
-
-		<%
-		row.setCssClass("card-page-item card-page-item-asset selectable");
-		%>
-
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:user-vertical-card
-				actionJspServletContext="<%= application %>"
-				resultRow="<%= row %>"
-				rowChecker="<%= userSearchContainer.getRowChecker() %>"
-				subtitle="<%= user2.getScreenName() %>"
-				title="<%= user2.getFullName() %>"
-				userId="<%= user2.getUserId() %>"
+			<clay:user-card
+				userCard="<%= new UserVerticalCard(renderRequest, userSearchContainer.getRowChecker(), user2) %>"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>

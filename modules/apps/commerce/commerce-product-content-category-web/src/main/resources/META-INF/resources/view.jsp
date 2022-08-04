@@ -55,7 +55,7 @@ assetCategoryList.add(assetCategory);
 			<div class="container-fluid">
 				<h1 class="category-title"><%= HtmlUtil.escape(assetCategory.getTitle(languageId)) %></h1>
 
-				<p class="category-description"><%= HtmlUtil.escape(assetCategory.getDescription(languageId)) %></p>
+				<p class="category-description"><%= HtmlUtil.stripHtml(assetCategory.getDescription(languageId)) %></p>
 			</div>
 		</div>
 	</c:if>

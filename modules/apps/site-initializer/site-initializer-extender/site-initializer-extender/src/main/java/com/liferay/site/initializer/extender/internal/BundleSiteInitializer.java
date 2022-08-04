@@ -3712,17 +3712,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		for (int i = 0; i < permissionsJSONArray.length(); i++) {
-			JSONObject jsonObject = permissionsJSONArray.getJSONObject(i);
+			JSONObject permissionsJSONObject =
+				permissionsJSONArray.getJSONObject(i);
 
-			int scope = jsonObject.getInt("scope");
+			int scope = permissionsJSONObject.getInt("scope");
 
-			String roleName = jsonObject.getString("roleName");
+			String roleName = permissionsJSONObject.getString("roleName");
 
 			Role role = _roleLocalService.getRole(companyId, roleName);
 
 			String[] actionIds = new String[0];
 
-			JSONArray actionIdsJSONArray = jsonObject.getJSONArray("actionIds");
+			JSONArray actionIdsJSONArray = permissionsJSONObject.getJSONArray(
+				"actionIds");
 
 			if (actionIdsJSONArray != null) {
 				for (int j = 0; j < actionIdsJSONArray.length(); j++) {

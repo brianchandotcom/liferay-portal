@@ -87,7 +87,7 @@ AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvide
 						</h2>
 
 						<span class="text-default">
-							<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>
+							<%= HtmlUtil.stripHtml(curCategory.getDescription(locale)) %>
 						</span>
 						<span class="text-default">
 							<liferay-ui:message arguments="<%= subcategoriesCount %>" key="x-subcategories" />
@@ -137,7 +137,7 @@ AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvide
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand table-cell-minw-200"
 								name="description"
-								value="<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>"
+								value="<%= HtmlUtil.stripHtml(curCategory.getDescription(locale)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

@@ -32,24 +32,24 @@ export default function propsTransformer({
 							const form = document.getElementById(
 								`${portletNamespace}fm`
 							);
-		
+
 							if (!form) {
 								return;
 							}
-		
+
 							form.setAttribute('method', 'post');
-		
+
 							const inputElement = document.getElementById(
 								`${portletNamespace}${inputId}`
 							);
-		
+
 							if (inputElement) {
 								inputElement.setAttribute('value', inputValue);
 							}
-		
+
 							submitForm(form, deleteEntriesURL);
 						}
-					} 
+					},
 				});
 			}
 		},

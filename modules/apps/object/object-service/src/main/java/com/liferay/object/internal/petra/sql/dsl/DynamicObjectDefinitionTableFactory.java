@@ -15,6 +15,7 @@
 package com.liferay.object.internal.petra.sql.dsl;
 
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
@@ -171,31 +172,6 @@ public class DynamicObjectDefinitionTableFactory {
 						relatedObjectDefinition.getObjectDefinitionId()),
 					relatedObjectDefinition.getExtensionDBTableName());
 
-			ObjectField relatedField = _objectFieldLocalService.getObjectField(
-				relationship.getObjectFieldId2());
-
-			Column<DynamicObjectDefinitionTable, Long>
-				relatedObjectDefinitionColumn =
-					(Column<DynamicObjectDefinitionTable, Long>)
-						_objectFieldLocalService.getColumn(
-							relatedObjectDefinition.getObjectDefinitionId(),
-							relatedField.getName());
-
-			Predicate predicate = relatedObjectDefinitionColumn.eq(
-				dynamicObjectDefinitionTable.getPrimaryKeyColumn());
-
-			List<String> oDataFilters = ObjectFilterUtil.getODataFilters(
-				(List<ObjectFilter>)objectFieldSettingsValuesMap.get(
-					"filters"));
-
-			for (String oDataFilter : oDataFilters) {
-				predicate = predicate.and(
-					_filterPredicateFactory.create(
-						_filterParserProvider, oDataFilter,
-						relatedObjectDefinition.getObjectDefinitionId(),
-						_objectFieldLocalService));
-			}
-
 			JoinStep joinStep = DSLQueryFactoryUtil.select(
 				expression
 			).from(
@@ -213,6 +189,69 @@ public class DynamicObjectDefinitionTableFactory {
 					ObjectEntryTable.INSTANCE,
 					ObjectEntryTable.INSTANCE.objectEntryId.eq(
 						relatedObjectDefinitionTable.getPrimaryKeyColumn()));
+			}
+
+			Predicate predicate = null;
+
+			if (Objects.equals(
+					relationship.getType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+				ObjectField relatedField =
+					_objectFieldLocalService.getObjectField(
+						relationship.getObjectFieldId2());
+
+				Column<DynamicObjectDefinitionTable, Long>
+					relatedObjectDefinitionColumn =
+						(Column<DynamicObjectDefinitionTable, Long>)
+							_objectFieldLocalService.getColumn(
+								relatedObjectDefinition.getObjectDefinitionId(),
+								relatedField.getName());
+
+				predicate = relatedObjectDefinitionColumn.eq(
+					dynamicObjectDefinitionTable.getPrimaryKeyColumn());
+			}
+			else if (Objects.equals(
+						relationship.getType(),
+						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+				DynamicObjectRelationshipMappingTable
+					dynamicObjectRelationshipMappingTable =
+						new DynamicObjectRelationshipMappingTable(
+							objectDefinition.getPKObjectFieldDBColumnName(),
+							relatedObjectDefinition.
+								getPKObjectFieldDBColumnName(),
+							relationship.getDBTableName());
+
+				Column<DynamicObjectRelationshipMappingTable, Long>
+					primaryKeyColumn1 =
+						dynamicObjectRelationshipMappingTable.
+							getPrimaryKeyColumn1();
+
+				Column<DynamicObjectRelationshipMappingTable, Long>
+					primaryKeyColumn2 =
+						dynamicObjectRelationshipMappingTable.
+							getPrimaryKeyColumn2();
+
+				joinStep = joinStep.innerJoinON(
+					dynamicObjectRelationshipMappingTable,
+					primaryKeyColumn2.eq(
+						relatedObjectDefinitionTable.getPrimaryKeyColumn()));
+
+				predicate = primaryKeyColumn1.eq(
+					dynamicObjectDefinitionTable.getPrimaryKeyColumn());
+			}
+
+			List<String> oDataFilters = ObjectFilterUtil.getODataFilters(
+				(List<ObjectFilter>)objectFieldSettingsValuesMap.get(
+					"filters"));
+
+			for (String oDataFilter : oDataFilters) {
+				predicate = predicate.and(
+					_filterPredicateFactory.create(
+						_filterParserProvider, oDataFilter,
+						relatedObjectDefinition.getObjectDefinitionId(),
+						_objectFieldLocalService));
 			}
 
 			dynamicObjectDefinitionTable.addSelectExpression(

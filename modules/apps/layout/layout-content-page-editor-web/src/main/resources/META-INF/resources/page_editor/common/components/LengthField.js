@@ -63,7 +63,7 @@ export function LengthField({field, onValueSelect, value}) {
 	}, [value]);
 
 	return (
-		<ClayForm.Group>
+		<ClayForm.Group className="mb-0">
 			<label className={field.icon ? 'sr-only' : null} htmlFor={inputId}>
 				{field.label}
 			</label>

@@ -3834,6 +3834,41 @@ public class BundleSiteInitializer implements SiteInitializer {
 			documentsStringUtilReplaceValues, true, serviceContext);
 	}
 
+	private void _updatePermissions(
+			long companyId, String name, String primKey, JSONArray jsonArray)
+		throws Exception {
+
+		if (jsonArray == null) {
+			jsonArray = JSONFactoryUtil.createJSONArray(
+				"[{\"actionIds\": [\"VIEW\"], \"roleName\": \"Site Member\"," +
+					"\"scope\": 4}]");
+		}
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			int scope = jsonObject.getInt("scope");
+
+			String roleName = jsonObject.getString("roleName");
+
+			Role role = _roleLocalService.getRole(companyId, roleName);
+
+			String[] actionIds = new String[0];
+
+			JSONArray actionIdsJSONArray = jsonObject.getJSONArray("actionIds");
+
+			if (actionIdsJSONArray != null) {
+				for (int j = 0; j < actionIdsJSONArray.length(); j++) {
+					actionIds = ArrayUtil.append(
+						actionIds, actionIdsJSONArray.getString(j));
+				}
+			}
+
+			_resourcePermissionLocalService.setResourcePermissions(
+				companyId, name, scope, primKey, role.getRoleId(), actionIds);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BundleSiteInitializer.class);
 

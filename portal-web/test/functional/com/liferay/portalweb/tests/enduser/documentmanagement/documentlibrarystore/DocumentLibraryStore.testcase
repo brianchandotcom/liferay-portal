@@ -241,10 +241,11 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This is a use case for LPS-122233."
 	@priority = "3"
-	test ReIndexingWithAWSS3Store {
+	test ReIndexingDoesNotAddNewS3StoreCacheFiles {
 		property aws.store.enabled = "true";
-		property test.name.skip.portal.instance = "DocumentLibraryStore#ReIndexingWithAWSS3Store";
+		property test.name.skip.portal.instance = "DocumentLibraryStore#ReIndexingDoesNotAddNewS3StoreCacheFiles";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

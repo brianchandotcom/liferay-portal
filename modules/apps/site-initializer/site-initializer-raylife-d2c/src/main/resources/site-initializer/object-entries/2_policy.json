@@ -9,7 +9,7 @@
 			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-001$]",
 			"startDate": "2021-01-01T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "600.00"
 		},
 		{
 			"commission": "973.00",
@@ -20,7 +20,7 @@
 			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-002$]",
 			"startDate": "2021-01-15T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "850.00"
 		},
 		{
 			"commission": "912.00",
@@ -31,7 +31,7 @@
 			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-003$]",
 			"startDate": "2021-02-01T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "900.00"
 		},
 		{
 			"commission": "935.00",
@@ -42,7 +42,7 @@
 			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-004$]",
 			"startDate": "2021-02-15T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "800.00"
 		},
 		{
 			"commission": "532.00",
@@ -53,7 +53,7 @@
 			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
 			"startDate": "2021-03-01T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "700.00"
 		},
 		{
 			"commission": "1146.00",
@@ -64,7 +64,7 @@
 			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-006$]",
 			"startDate": "2021-03-15T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "300.00"
 		},
 		{
 			"commission": "1232.00",
@@ -75,7 +75,7 @@
 			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-001$]",
 			"startDate": "2021-04-01T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "4000.00"
 		},
 		{
 			"commission": "747.00",
@@ -86,7 +86,7 @@
 			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-002$]",
 			"startDate": "2021-04-15T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "3000.00"
 		},
 		{
 			"commission": "652.00",
@@ -97,7 +97,7 @@
 			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-003$]",
 			"startDate": "2021-05-01T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "1000.00"
 		},
 		{
 			"commission": "765.00",
@@ -108,7 +108,7 @@
 			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-004$]",
 			"startDate": "2021-05-15T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "1100.00"
 		},
 		{
 			"commission": "832.00",
@@ -119,108 +119,82 @@
 			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
 			"startDate": "2021-12-01T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "1400.00"
 		},
 		{
+			"boundDate": "2022-01-06T00:00:00Z",
 			"commission": "734.00",
-			"endDate": "2022-03-03T00:00:00Z",
+			"endDate": "2022-01-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-012",
 			"policyOwnerName": "test 12",
 			"policyStatus": "executed",
 			"productName": "Professional Liability",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-006$]",
-			"startDate": "2021-12-15T00:00:00Z",
-			"termPremium": "123.00"
+			"startDate": "2022-01-15T00:00:00Z",
+			"termPremium": "1300.00"
 		},
 		{
+			"boundDate": "2022-01-06T00:00:00Z",
+			"commission": "734.00",
+			"endDate": "2022-01-03T00:00:00Z",
+			"externalReferenceCode": "RAYPOL-012",
+			"policyOwnerName": "test 12",
+			"policyStatus": "executed",
+			"productName": "Professional Liability",
+			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-006$]",
+			"startDate": "2022-01-15T00:00:00Z",
+			"termPremium": "1300.00"
+		},
+		{
+			"boundDate": "2022-01-06T00:00:00Z",
 			"commission": "854.00",
-			"endDate": "2022-03-03T00:00:00Z",
+			"endDate": "2022-01-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-013",
 			"policyOwnerName": "test 13",
 			"policyStatus": "executed",
 			"productName": "Professional Liability",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-001$]",
 			"startDate": "2022-01-01T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "900.00"
 		},
 		{
+			"boundDate": "2022-02-06T00:00:00Z",
 			"commission": "1134.00",
-			"endDate": "2022-03-03T00:00:00Z",
+			"endDate": "2022-02-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-014",
 			"policyOwnerName": "test 14",
 			"policyStatus": "executed",
 			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-002$]",
-			"startDate": "2022-01-15T00:00:00Z",
-			"termPremium": "123.00"
+			"startDate": "2022-02-15T00:00:00Z",
+			"termPremium": "500.00"
 		},
 		{
+			"boundDate": "2022-02-06T00:00:00Z",
 			"commission": "1052.00",
-			"endDate": "2022-03-03T00:00:00Z",
+			"endDate": "2022-02-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-015",
 			"policyOwnerName": "test 15",
 			"policyStatus": "executed",
 			"productName": "Professional Liability",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-003$]",
 			"startDate": "2022-02-01T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "5000.00"
 		},
 		{
+			"boundDate": "2022-02-06T00:00:00Z",
 			"commission": "978.00",
-			"endDate": "2022-03-03T00:00:00Z",
+			"endDate": "2022-02-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-016",
 			"policyOwnerName": "test 16",
 			"policyStatus": "executed",
 			"productName": "Professional Liability",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-004$]",
 			"startDate": "2022-02-15T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "100.00"
 		},
 		{
-			"commission": "1134.00",
-			"endDate": "2022-03-03T00:00:00Z",
-			"externalReferenceCode": "RAYPOL-017",
-			"policyOwnerName": "test 17",
-			"policyStatus": "executed",
-			"productName": "Business Owners Policy",
-			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
-			"startDate": "2022-03-01T00:00:00Z",
-			"termPremium": "123.00"
-		},
-		{
-			"commission": "851.00",
-			"endDate": "2022-03-03T00:00:00Z",
-			"externalReferenceCode": "RAYPOL-018",
-			"policyOwnerName": "test 18",
-			"policyStatus": "executed",
-			"productName": "Business Owners Policy",
-			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-006$]",
-			"startDate": "2022-03-15T00:00:00Z",
-			"termPremium": "123.00"
-		},
-		{
-			"commission": "978.00",
-			"endDate": "2022-03-03T00:00:00Z",
-			"externalReferenceCode": "RAYPOL-019",
-			"policyOwnerName": "test 19",
-			"policyStatus": "executed",
-			"productName": "Business Owners Policy",
-			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-001$]",
-			"startDate": "2022-04-01T00:00:00Z",
-			"termPremium": "123.00"
-		},
-		{
-			"commission": "1256.00",
-			"endDate": "2022-03-03T00:00:00Z",
-			"externalReferenceCode": "RAYPOL-020",
-			"policyOwnerName": "test 20",
-			"policyStatus": "declined",
-			"productName": "Professional Liability",
-			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-002$]",
-			"startDate": "2022-04-15T00:00:00Z",
-			"termPremium": "123.00"
-		},
-		{
+			"boundDate": "2022-03-06T00:00:00Z",
 			"commission": "976.00",
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-021",
@@ -228,10 +202,11 @@
 			"policyStatus": "renewed",
 			"productName": "General Liability",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-003$]",
-			"startDate": "2022-05-01T00:00:00Z",
-			"termPremium": "123.00"
+			"startDate": "2022-03-01T00:00:00Z",
+			"termPremium": "2000.00"
 		},
 		{
+			"boundDate": "2022-03-06T00:00:00Z",
 			"commission": "1263.00",
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-022",
@@ -239,10 +214,83 @@
 			"policyStatus": "inApplication",
 			"productName": "Business Owners Policy",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-004$]",
-			"startDate": "2022-05-15T00:00:00Z",
-			"termPremium": "123.00"
+			"startDate": "2022-03-15T00:00:00Z",
+			"termPremium": "3000.00"
 		},
 		{
+			"boundDate": "2022-04-06T00:00:00Z",
+			"commission": "1134.00",
+			"endDate": "2022-04-03T00:00:00Z",
+			"externalReferenceCode": "RAYPOL-017",
+			"policyOwnerName": "test 17",
+			"policyStatus": "executed",
+			"productName": "Business Owners Policy",
+			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
+			"startDate": "2022-04-01T00:00:00Z",
+			"termPremium": "1000.00"
+		},
+		{
+			"boundDate": "2022-04-06T00:00:00Z",
+			"commission": "851.00",
+			"endDate": "2022-04-03T00:00:00Z",
+			"externalReferenceCode": "RAYPOL-018",
+			"policyOwnerName": "test 18",
+			"policyStatus": "executed",
+			"productName": "Business Owners Policy",
+			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-006$]",
+			"startDate": "2022-04-15T00:00:00Z",
+			"termPremium": "1200.00"
+		},
+		{
+			"boundDate": "2022-04-06T00:00:00Z",
+			"commission": "978.00",
+			"endDate": "2022-04-03T00:00:00Z",
+			"externalReferenceCode": "RAYPOL-019",
+			"policyOwnerName": "test 19",
+			"policyStatus": "executed",
+			"productName": "Business Owners Policy",
+			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-001$]",
+			"startDate": "2022-04-01T00:00:00Z",
+			"termPremium": "1200.00"
+		},
+		{
+			"boundDate": "2022-04-06T00:00:00Z",
+			"commission": "1256.00",
+			"endDate": "2022-04-03T00:00:00Z",
+			"externalReferenceCode": "RAYPOL-020",
+			"policyOwnerName": "test 20",
+			"policyStatus": "declined",
+			"productName": "Professional Liability",
+			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-002$]",
+			"startDate": "2022-04-15T00:00:00Z",
+			"termPremium": "1000.00"
+		},
+		{
+			"boundDate": "2022-05-06T00:00:00Z",
+			"commission": "1200.00",
+			"endDate": "2023-05-06T00:00:00Z",
+			"externalReferenceCode": "RAYPOL-023",
+			"policyOwnerName": "test 23",
+			"policyStatus": "expired",
+			"productName": "Workers Compensation",
+			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
+			"startDate": "2022-05-06T00:00:00Z",
+			"termPremium": "5000.00"
+		},
+		{
+			"boundDate": "2022-05-06T00:00:00Z",
+			"commission": "1200.00",
+			"endDate": "2023-05-06T00:00:00Z",
+			"externalReferenceCode": "RAYPOL-023",
+			"policyOwnerName": "test 23",
+			"policyStatus": "expired",
+			"productName": "Workers Compensation",
+			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
+			"startDate": "2022-05-06T00:00:00Z",
+			"termPremium": "1000.00"
+		},
+		{
+			"boundDate": "2022-06-06T00:00:00Z",
 			"commission": "1200.00",
 			"endDate": "2023-06-06T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-023",
@@ -251,7 +299,67 @@
 			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
 			"startDate": "2022-06-06T00:00:00Z",
-			"termPremium": "123.00"
+			"termPremium": "5000.00"
+		},
+		{
+			"boundDate": "2022-06-06T00:00:00Z",
+			"commission": "1200.00",
+			"endDate": "2023-06-06T00:00:00Z",
+			"externalReferenceCode": "RAYPOL-023",
+			"policyOwnerName": "test 23",
+			"policyStatus": "expired",
+			"productName": "Workers Compensation",
+			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
+			"startDate": "2022-06-06T00:00:00Z",
+			"termPremium": "1000.00"
+		},
+		{
+			"boundDate": "2022-07-06T00:00:00Z",
+			"commission": "2000.00",
+			"endDate": "2023-07-03T00:00:00Z",
+			"externalReferenceCode": "RAYPOL-024",
+			"policyOwnerName": "test 24",
+			"policyStatus": "executed",
+			"productName": "Business Owners Policy",
+			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-004$]",
+			"startDate": "2022-07-15T00:00:00Z",
+			"termPremium": "5000"
+		},
+		{
+			"boundDate": "2022-07-06T00:00:00Z",
+			"commission": "1200.00",
+			"endDate": "2023-07-06T00:00:00Z",
+			"externalReferenceCode": "RAYPOL-025",
+			"policyOwnerName": "test 25",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
+			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
+			"startDate": "2022-07-06T00:00:00Z",
+			"termPremium": "3000"
+		},
+		{
+			"boundDate": "2022-08-06T00:00:00Z",
+			"commission": "2000.00",
+			"endDate": "2023-08-03T00:00:00Z",
+			"externalReferenceCode": "RAYPOL-024",
+			"policyOwnerName": "test 24",
+			"policyStatus": "executed",
+			"productName": "Business Owners Policy",
+			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-004$]",
+			"startDate": "2022-08-15T00:00:00Z",
+			"termPremium": "5000"
+		},
+		{
+			"boundDate": "2022-08-06T00:00:00Z",
+			"commission": "1200.00",
+			"endDate": "2023-08-06T00:00:00Z",
+			"externalReferenceCode": "RAYPOL-025",
+			"policyOwnerName": "test 25",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
+			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
+			"startDate": "2022-08-06T00:00:00Z",
+			"termPremium": "3000"
 		}
 	],
 	"objectDefinitionName": "RaylifePolicy"

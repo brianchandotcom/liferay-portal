@@ -52,6 +52,7 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 				<c:when test='<%= Objects.equals(editSiteTeamAssignmentsUsersDisplayContext.getDisplayStyle(), "icon") %>'>
 					<liferay-ui:search-container-column-text>
 						<clay:user-card
+							propsTransformer="js/UserDropdownDefaultPropsTransformer"
 							userCard="<%= new UserUserCard(user2, editSiteTeamAssignmentsUsersDisplayContext.getTeamId(), renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>
 					</liferay-ui:search-container-column-text>

@@ -44,7 +44,7 @@ definition {
 
 	@description = "This test adds a tag for a single document via management toolbar"
 	@priority = "4"
-	test AddTagToSingleAsset {
+	test CanAddTagToSingleAsset {
 		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -73,51 +73,9 @@ definition {
 			searchAssetType = "Document");
 	}
 
-	@description = "This test covers LPS-91749. It ensures that a user can edit tags by using the bulk append action for checked out document files."
-	@priority = "4"
-	test CanEditAndAppendTagForCheckedOutFiles {
-		for (var entryCount : list "1,2") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${entryCount}.doc",
-				groupName = "Guest",
-				mimeType = "application/msword",
-				sourceFileName = "Document_${entryCount}.doc");
-		}
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.selectDocuments(dmDocumentTitle = "Document_1.doc,Document_2.doc");
-
-		DMDocument.checkoutViaManagementBar();
-
-		DMDocument.selectDocuments(dmDocumentTitle = "Document_1.doc,Document_2.doc");
-
-		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
-
-		DMDocument.editTags(
-			itemNumber = "2",
-			multipleDocuments = "true",
-			tagName = "newtag");
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "Document_1.doc",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.viewTagInfo(tagName = "newtag");
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "Document_2.doc",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.viewTagInfo(tagName = "newtag");
-	}
-
 	@description = "This test covers LPS-94956. It ensures that users can delete common category tags by using the bulk append action."
 	@priority = "5"
-	test DeleteCommonCategoryTags {
+	test CanDeleteCommonCategoryTags {
 		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -169,7 +127,7 @@ definition {
 
 	@description = "This test covers LPS-94955. It ensures that users can edit category tags by using the bulk append action."
 	@priority = "5"
-	test EditAndAppendCategoryTags {
+	test CanEditAndAppendCategoryTags {
 		property portal.acceptance = "true";
 
 		JSONCategory.addVocabulary(
@@ -208,9 +166,51 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-91749. It ensures that a user can edit tags by using the bulk append action for checked out document files."
+	@priority = "4"
+	test CanEditAndAppendTagForCheckedOutFiles {
+		for (var entryCount : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}.doc",
+				groupName = "Guest",
+				mimeType = "application/msword",
+				sourceFileName = "Document_${entryCount}.doc");
+		}
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1.doc,Document_2.doc");
+
+		DMDocument.checkoutViaManagementBar();
+
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1.doc,Document_2.doc");
+
+		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
+
+		DMDocument.editTags(
+			itemNumber = "2",
+			multipleDocuments = "true",
+			tagName = "newtag");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewTagInfo(tagName = "newtag");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_2.doc",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewTagInfo(tagName = "newtag");
+	}
+
 	@description = "This test edits tags by using the bulk append action."
 	@priority = "4"
-	test EditAndAppendTags {
+	test CanEditAndAppendTags {
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt");
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_2,Document_4");
@@ -262,7 +262,7 @@ definition {
 
 	@description = "This test edits tags by using the bulk append action, also covers LPS-91586."
 	@priority = "4"
-	test EditAndReplaceTags {
+	test CanEditAndReplaceTags {
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt");
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1");
@@ -344,7 +344,7 @@ definition {
 
 	@description = "This test selects multiple documents and moves them into one folder."
 	@priority = "5"
-	test MoveDocumentsToFolder {
+	test CanMoveDocumentsToFolder {
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -402,7 +402,7 @@ definition {
 
 	@description = "This test covers LPS-94994. It ensures that users can edit category tags by using the bulk append action."
 	@priority = "5"
-	test ReplaceUncommonCategoryTags {
+	test CanReplaceUncommonCategoryTags {
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
 
 		for (var categoryName : list "Books,Plants,Pets,Furniture") {
@@ -447,7 +447,7 @@ definition {
 
 	@description = "This test covers LPS-89636. It saves tags without clicking Enter or adding a Comma."
 	@priority = "4"
-	test SaveTags {
+	test CanSaveTags {
 		for (var entryCount : list "1,2,3,4") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -477,39 +477,9 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	@refactordone
-	test SingleDocumentSelectionDoesNotCheckAllEntries {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document1 Title",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document2 Title",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
-
-		AssertElementPresent(locator1 = "Checkbox#SELECT_ALL_CHECKBOX_TICK");
-
-		DMDocument.uncheckDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
-
-		AssertElementNotPresent(locator1 = "Checkbox#SELECT_ALL_CHECKBOX_TICK");
-	}
-
 	@description = "This test covers LPS-91524. It asserts that the Edit Tags icon is disabled when workflow is enabled. "
 	@priority = "4"
-	test ViewEditTagsIconWithWorkflow {
+	test CanViewEditTagsIconWithWorkflow {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -543,6 +513,36 @@ definition {
 		DMDocument.selectDocuments(dmDocumentTitle = "DM Document 1 in Folder,DM Document 2 in Folder");
 
 		AssertElementPresent(locator1 = "Icon#EDIT_TAGS_DISABLED");
+	}
+
+	@priority = "4"
+	@refactordone
+	test SingleDocumentSelectionDoesNotCheckAllEntries {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document1 Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document2 Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
+
+		AssertElementPresent(locator1 = "Checkbox#SELECT_ALL_CHECKBOX_TICK");
+
+		DMDocument.uncheckDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
+
+		AssertElementNotPresent(locator1 = "Checkbox#SELECT_ALL_CHECKBOX_TICK");
 	}
 
 }

@@ -58,7 +58,7 @@ definition {
 
 		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField != 'Allowed Entry')");
 
-		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
 		Button.clickSave();
 
@@ -107,7 +107,7 @@ definition {
 
 		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField != 'Allowed Entry')");
 
-		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
 		Button.clickSave();
 
@@ -179,7 +179,7 @@ definition {
 
 		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField != 'Allowed Entry')");
 
-		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
 		Button.clickSave();
 
@@ -283,7 +283,7 @@ definition {
 
 		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Decline Entry')");
 
-		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
 		Button.clickSave();
 
@@ -347,7 +347,7 @@ definition {
 
 		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Decline Entry')");
 
-		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
 		Button.clickSave();
 
@@ -401,7 +401,7 @@ definition {
 
 		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField < 18)");
 
-		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
 		Button.clickSave();
 
@@ -547,7 +547,7 @@ definition {
 
 		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Decline Entry')");
 
-		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
 		ObjectCustomValidation.gotoTab(tabName = "Basic Info");
 

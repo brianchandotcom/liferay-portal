@@ -538,4 +538,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153658. The inherited JavaScript extensions from Pages should be read-only mode and keep insertion configuration."
+	@priority = "4"
+	test ViewInheritedJavaScriptExtensionFromPages {
+		task ("Given a site designer has the Pages with a JavaScript extension") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			WaitForPageLoad();
+
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Configuration");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "FontFamily",
+				insertion = "In Page Head");
+
+			PortletEntry.save();
+		}
+
+		task ("When the site designer adds a page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Then the site designer could see the inherited JavaScript extension on the Advanced settings of page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			AssertVisible(
+				key_groupHeader = "Page Head JS Extensions",
+				key_tableEntry = "FontFamily",
+				locator1 = "LexiconTable#GROUPED_TABLE_ENTRY");
+
+			LexiconTable.viewTableEntryInfo(
+				index = "3",
+				tableEntry = "FontFamily",
+				tableEntryInfo = "From Pages");
+
+			AssertNotEditable(
+				key_tableEntry = "FontFamily",
+				locator1 = "LexiconTable#TABLE_ENTRY_SELECT_FIELD");
+		}
+	}
+
 }

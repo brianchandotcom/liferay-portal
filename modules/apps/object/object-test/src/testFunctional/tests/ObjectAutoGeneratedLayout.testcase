@@ -67,7 +67,7 @@ definition {
 	@description = "LPS-147658 - Verify it is possible to submit an empty value for a Date field and it will be correctly displayed on the Layout"
 	@priority = "5"
 	test CanDisplayEmptyDateValue {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147870",
@@ -363,8 +363,6 @@ definition {
 	@description = "LPS-143065 - Verify that when the user click on the file name, the file can be viewed"
 	@priority = "4"
 	test CanViewFile {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151576",
 			objectName = "CustomObject151576",

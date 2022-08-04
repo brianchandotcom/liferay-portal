@@ -384,11 +384,18 @@ public class AssetListAssetEntryProviderImpl
 							_getFieldReference(
 								ddmStructure, ddmStructureFieldName),
 							LocaleUtil.getMostRelevantLocale()));
-
-					assetEntryQuery.setAttribute(
-						"ddmStructureFieldValue", ddmStructureFieldValue);
 				}
 			}
+			else {
+				assetEntryQuery.setAttribute(
+					"ddmStructureFieldName",
+					DDMIndexerUtil.encodeName(
+						classTypeIds[0], ddmStructureFieldName,
+						LocaleUtil.getMostRelevantLocale()));
+			}
+
+			assetEntryQuery.setAttribute(
+				"ddmStructureFieldValue", ddmStructureFieldValue);
 		}
 
 		String orderByColumn1 = GetterUtil.getString(

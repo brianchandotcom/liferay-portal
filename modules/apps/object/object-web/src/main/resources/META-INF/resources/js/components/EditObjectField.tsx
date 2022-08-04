@@ -369,9 +369,9 @@ export default function EditObjectField({
 								value:
 									objectField.businessType === 'Integer' ||
 									objectField.businessType === 'LongInteger'
-										? // @ts-ignore
-
-										  parsedFilter.json[filterType]
+										? (parsedFilter.json as {
+												[key: string]: string;
+										  })[filterType]
 										: undefined,
 							};
 

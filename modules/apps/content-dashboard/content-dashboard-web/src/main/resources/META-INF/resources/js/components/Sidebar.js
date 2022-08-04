@@ -48,10 +48,12 @@ const SidebarHeader = ({children, title}) => {
 				<ClayLayout.ContentCol>
 					<ClayButtonWithIcon
 						aria-label="Close"
-						className="mt-n2 text-secondary"
+						className="text-secondary"
+						data-tooltip-align="bottom"
 						displayType="unstyled"
 						onClick={onClose}
 						symbol="times"
+						title={Liferay.Language.get('close')}
 					/>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
@@ -59,12 +61,7 @@ const SidebarHeader = ({children, title}) => {
 	);
 };
 
-const Sidebar = ({
-	children,
-	fetchSidebarPanelData,
-	onClose = noop,
-	open = true,
-}) => {
+const Sidebar = ({children, fetchData, onClose = noop, open = true}) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const delay = useTimeout();
@@ -94,7 +91,7 @@ const Sidebar = ({
 			<div className="content-dashboard sidebar sidebar-light sidebar-sm">
 				<SidebarContext.Provider
 					value={{
-						fetchSidebarPanelData,
+						fetchData,
 						onClose,
 					}}
 				>

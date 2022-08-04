@@ -148,7 +148,7 @@ const SidebarPanel = React.forwardRef(
 
 		return (
 			<Sidebar
-				fetchSidebarPanelData={() => getData(fetchURL)}
+				fetchData={() => getData(fetchURL)}
 				onClose={onCloseHandle}
 				open={state.isOpen}
 			>

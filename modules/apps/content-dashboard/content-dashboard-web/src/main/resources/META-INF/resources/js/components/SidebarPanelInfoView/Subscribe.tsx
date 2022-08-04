@@ -19,7 +19,7 @@ import React, {useContext} from 'react';
 const {SidebarContext} = require('../Sidebar');
 
 const Subscribe = ({icon, label, url}: IProps) => {
-	const {fetchSidebarPanelData} = useContext(SidebarContext);
+	const {fetchData} = useContext(SidebarContext);
 
 	const handleSubscribe = async (): Promise<void> => {
 		try {
@@ -29,7 +29,7 @@ const Subscribe = ({icon, label, url}: IProps) => {
 				throw new Error(`Failed to fetch ${url}`);
 			}
 
-			await fetchSidebarPanelData();
+			await fetchData();
 
 			openToast({
 				message: Liferay.Language.get(
@@ -53,6 +53,8 @@ const Subscribe = ({icon, label, url}: IProps) => {
 	return (
 		<ClayButtonWithIcon
 			borderless
+			className="mr-2"
+			data-tooltip-align="bottom"
 			displayType="secondary"
 			onClick={handleSubscribe}
 			symbol={icon}

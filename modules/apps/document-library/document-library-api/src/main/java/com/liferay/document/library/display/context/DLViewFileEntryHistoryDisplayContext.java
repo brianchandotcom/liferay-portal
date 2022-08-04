@@ -16,7 +16,6 @@ package com.liferay.document.library.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 
 import java.util.List;
 
@@ -26,4 +25,5 @@ import java.util.List;
 public interface DLViewFileEntryHistoryDisplayContext extends DLDisplayContext {
 
 	public List<DropdownItem> getActionDropdownItems() throws PortalException;
+
 }

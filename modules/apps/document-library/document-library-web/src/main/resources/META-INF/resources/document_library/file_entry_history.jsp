@@ -64,7 +64,6 @@
 					dropdownItems="<%= dlViewFileEntryHistoryDisplayContext.getActionDropdownItems() %>"
 					propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"
 				/>
-
 			</clay:content-col>
 		</li>
 

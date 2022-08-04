@@ -50,19 +50,12 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 		String upstreamBranchName = gitWorkingDirectory.getUpstreamBranchName();
 
-		String distPortalBundlesBuildURL =
-			JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(
-				upstreamBranchName);
-
-		String distPortalBundlesBuildSHA = JenkinsResultsParserUtil.toString(
-			distPortalBundlesBuildURL + "/git-hash");
-
-		distPortalBundlesBuildSHA = distPortalBundlesBuildSHA.trim();
-
 		LocalGitBranch pullRequestLocalGitBranch =
 			gitWorkingDirectory.createLocalGitBranch(
 				upstreamBranchName + "-temp-pr-" + System.currentTimeMillis(),
-				true, distPortalBundlesBuildSHA);
+				true,
+				_getDistPortalBundlesBuildSHA(
+					gitWorkingDirectory.getUpstreamBranchName()));
 
 		gitWorkingDirectory.checkoutLocalGitBranch(pullRequestLocalGitBranch);
 
@@ -301,56 +294,69 @@ public class PoshiReleasePortalTopLevelBuildRunner
 				sb.append(
 					JenkinsResultsParserUtil.getBuildProperty(
 						"jenkins.authentication.token"));
+
+				Map<String, String> invocationParameters = new HashMap<>();
+
+				String upstreamBranchName = entry.getKey();
+
+				invocationParameters.put(
+					"CI_TEST_SUITE", _getCITestSuite(upstreamBranchName));
+				invocationParameters.put(
+					"GITHUB_UPSTREAM_BRANCH_NAME", upstreamBranchName);
+				invocationParameters.put(
+					"GITHUB_UPSTREAM_BRANCH_SHA",
+					_getDistPortalBundlesBuildSHA(upstreamBranchName));
+				invocationParameters.put(
+					"JENKINS_JOB_VARIANT", _getCITestSuite(upstreamBranchName));
+				invocationParameters.put(
+					"PORTAL_BUNDLES_DIST_URL",
+					JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(
+						upstreamBranchName));
+
+				PullRequest pullRequest = entry.getValue();
+
+				invocationParameters.put(
+					"GITHUB_PULL_REQUEST_NUMBER", pullRequest.getNumber());
+				invocationParameters.put(
+					"GITHUB_RECEIVER_USERNAME",
+					pullRequest.getReceiverUsername());
+				invocationParameters.put(
+					"GITHUB_SENDER_BRANCH_NAME",
+					pullRequest.getSenderBranchName());
+				invocationParameters.put(
+					"GITHUB_SENDER_BRANCH_SHA", pullRequest.getSenderSHA());
+				invocationParameters.put(
+					"GITHUB_SENDER_USERNAME", pullRequest.getSenderUsername());
+
+				invocationParameters.put(
+					"JENKINS_GITHUB_BRANCH_NAME",
+					_getGitHubBranchName("JENKINS_GITHUB_URL"));
+				invocationParameters.put(
+					"JENKINS_GITHUB_BRANCH_USERNAME",
+					_getGitHubBranchUsername("JENKINS_GITHUB_URL"));
+				invocationParameters.put(
+					"JENKINS_TOP_LEVEL_BUILD_URL", buildData.getBuildURL());
+
+				for (Map.Entry<String, String> invocationParameter :
+						invocationParameters.entrySet()) {
+
+					String invocationParameterValue =
+						invocationParameter.getValue();
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(
+							invocationParameterValue)) {
+
+						continue;
+					}
+
+					sb.append("&");
+					sb.append(invocationParameter.getKey());
+					sb.append("=");
+					sb.append(invocationParameterValue);
+				}
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);
-			}
-
-			Map<String, String> invocationParameters = new HashMap<>();
-
-			String upstreamBranchName = entry.getKey();
-
-			invocationParameters.put(
-				"CI_TEST_SUITE", _getCITestSuite(upstreamBranchName));
-			invocationParameters.put(
-				"JENKINS_JOB_VARIANT", _getCITestSuite(upstreamBranchName));
-
-			PullRequest pullRequest = entry.getValue();
-
-			invocationParameters.put(
-				"GITHUB_PULL_REQUEST_NUMBER", pullRequest.getNumber());
-			invocationParameters.put(
-				"GITHUB_RECEIVER_USERNAME", pullRequest.getReceiverUsername());
-
-			invocationParameters.put(
-				"JENKINS_GITHUB_BRANCH_NAME",
-				_getGitHubBranchName("JENKINS_GITHUB_URL"));
-			invocationParameters.put(
-				"JENKINS_GITHUB_BRANCH_USERNAME",
-				_getGitHubBranchUsername("JENKINS_GITHUB_URL"));
-			invocationParameters.put(
-				"JENKINS_TOP_LEVEL_BUILD_URL", buildData.getBuildURL());
-			invocationParameters.put(
-				"PORTAL_BUNDLES_DIST_URL",
-				JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(
-					upstreamBranchName));
-
-			for (Map.Entry<String, String> invocationParameter :
-					invocationParameters.entrySet()) {
-
-				String invocationParameterValue =
-					invocationParameter.getValue();
-
-				if (JenkinsResultsParserUtil.isNullOrEmpty(
-						invocationParameterValue)) {
-
-					continue;
-				}
-
-				sb.append("&");
-				sb.append(invocationParameter.getKey());
-				sb.append("=");
-				sb.append(invocationParameterValue);
 			}
 
 			topLevelBuild.addDownstreamBuilds(sb.toString());
@@ -408,6 +414,19 @@ public class PoshiReleasePortalTopLevelBuildRunner
 		}
 
 		return _DEFAULT_CI_TEST_SUITE;
+	}
+
+	private String _getDistPortalBundlesBuildSHA(String upstreamBranchName)
+		throws IOException {
+
+		String distPortalBundlesBuildURL =
+			JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(
+				upstreamBranchName);
+
+		String distPortalBundlesBuildSHA = JenkinsResultsParserUtil.toString(
+			distPortalBundlesBuildURL + "/git-hash");
+
+		return distPortalBundlesBuildSHA.trim();
 	}
 
 	private String _getGitHubBranchName(String parameterName) {

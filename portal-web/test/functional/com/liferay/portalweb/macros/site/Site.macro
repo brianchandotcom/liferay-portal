@@ -1302,8 +1302,6 @@ definition {
 
 		Button.clickAdd();
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 		if ("${siteNameInvalid}" == "Duplicate") {
 			Alert.viewErrorMessage(errorMessage = "Please enter a unique name.");
 		}

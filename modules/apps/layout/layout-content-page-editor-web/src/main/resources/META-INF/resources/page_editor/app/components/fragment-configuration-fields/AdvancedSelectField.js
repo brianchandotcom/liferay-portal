@@ -28,6 +28,7 @@ import {useGlobalContext} from '../../contexts/GlobalContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
+import isNullOrUndefined from '../../utils/isNullOrUndefined';
 import {useId} from '../../utils/useId';
 
 export function AdvancedSelectField({
@@ -43,8 +44,8 @@ export function AdvancedSelectField({
 	const triggerId = useId();
 
 	const [active, setActive] = useState(false);
-	const [isTokenValue, setIsTokenValue] = useState(
-		Boolean(tokenValues[value] || !value)
+	const [isTokenValueOrInherited, setIsTokenValueOrInherited] = useState(
+		!isNullOrUndefined(tokenValues[value]) || !value
 	);
 	const [nextValue, setNextValue] = useControlledState(value);
 
@@ -62,7 +63,7 @@ export function AdvancedSelectField({
 				'has-value': value,
 			})}
 		>
-			{isTokenValue ? (
+			{isTokenValueOrInherited ? (
 				<SingleSelectWithIcon
 					disabled={disabled}
 					field={field}
@@ -95,12 +96,12 @@ export function AdvancedSelectField({
 			)}
 
 			{value ? (
-				isTokenValue && canDetachTokenValues ? (
+				isTokenValueOrInherited && canDetachTokenValues ? (
 					<ClayButtonWithIcon
 						className="border-0 mb-0 ml-1"
 						displayType="secondary"
 						onClick={() => {
-							setIsTokenValue(false);
+							setIsTokenValueOrInherited(false);
 							setNextValue(tokenValues[value].value);
 							onValueSelect(field.name, tokenValues[value].value);
 						}}
@@ -142,7 +143,7 @@ export function AdvancedSelectField({
 										key={value}
 										onClick={() => {
 											setActive(false);
-											setIsTokenValue(true);
+											setIsTokenValueOrInherited(true);
 											setNextValue(value);
 											onValueSelect(field.name, value);
 										}}

@@ -150,6 +150,7 @@ public class NotificationQueueEntryResourceImpl
 				priority = serviceBuilderNotificationQueueEntry.getPriority();
 				sent = serviceBuilderNotificationQueueEntry.getSent();
 				sentDate = serviceBuilderNotificationQueueEntry.getSentDate();
+				status = serviceBuilderNotificationQueueEntry.getStatus();
 				subject = serviceBuilderNotificationQueueEntry.getSubject();
 				to = serviceBuilderNotificationQueueEntry.getTo();
 				toName = serviceBuilderNotificationQueueEntry.getToName();

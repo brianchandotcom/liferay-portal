@@ -1532,9 +1532,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 			type, null, jsonObject.getBoolean("hidden"),
 			jsonObject.getBoolean("system"), friendlyURLMap, serviceContext);
 
+		long layoutPlid = layout.getPlid();
+
+		_setResourcePermissions(
+			layout.getCompanyId(), layout.getModelClassName(),
+			String.valueOf(layoutPlid), jsonObject.getJSONArray("permissions"));
+
 		if (jsonObject.has("priority")) {
 			layout = _layoutLocalService.updatePriority(
-				layout.getPlid(), jsonObject.getInt("priority"));
+				layoutPlid, jsonObject.getInt("priority"));
 		}
 
 		Map<String, Layout> layouts = HashMapBuilder.put(

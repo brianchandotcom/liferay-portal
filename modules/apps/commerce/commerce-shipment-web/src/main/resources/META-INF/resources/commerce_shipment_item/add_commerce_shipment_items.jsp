@@ -26,6 +26,7 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 
 <commerce-ui:modal-content
 	contentCssClasses="p-0"
+	redirect="<%= redirect %>"
 	showSubmitButton="<%= true %>"
 	title='<%= LanguageUtil.get(request, "add-shipment-items") %>'
 >

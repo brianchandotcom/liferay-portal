@@ -1260,6 +1260,10 @@
 		</check>
 	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">
+		<check name="PropertiesArchivedModulesCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds `test.batch.class.names.includes` property value pointing to archived modules in `test.properties`." />
+		</check>
 		<check name="PropertiesCommentsCheck">
 			<category name="Styling" />
 			<description name="Validates comments in `.properties` files." />
@@ -1353,10 +1357,6 @@
 
 		<!-- Liferay Source Checks -->
 
-		<check name="PropertiesArchivedModulesCheck">
-			<category name="Bug Prevention" />
-			<description name="Finds `test.batch.class.names.includes` property value pointing to archived modules in `test.properties`." />
-		</check>
 		<check name="PropertiesBuildIncludeDirsCheck">
 			<category name="Bug Prevention" />
 			<description name="Verifies property value of `build.include.dirs` in `build.properties`." />

@@ -120,8 +120,6 @@ export function AdvancedSelectField({
 						onActiveChange={setActive}
 						trigger={
 							<ClayButtonWithIcon
-								aria-expanded={active}
-								aria-haspopup="true"
 								className="border-0 ml-1"
 								displayType="secondary"
 								id={triggerId}

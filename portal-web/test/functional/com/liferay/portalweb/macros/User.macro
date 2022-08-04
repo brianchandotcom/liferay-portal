@@ -1791,38 +1791,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro editUserOrganizationCP {
-		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
-
-		UserNavigator.gotoOrganizations();
-
-		var key_orgName = "${orgName}";
-
-		AssertClick(
-			locator1 = "UsersAndOrganizationsEditUser#ORGANIZATIONS_SELECT_LINK",
-			value1 = "Select");
-
-		SelectFrame(locator1 = "UsersAndOrganizationsSelectOrganization#SELECT_ORGANIZATION_IFRAME");
-
-		Search.searchCP(searchTerm = "${orgName}");
-
-		AssertTextEquals(
-			locator1 = "ContentRow#ORGANIZATION_TABLE_NAME",
-			value1 = "${orgName}");
-
-		AssertClick(
-			locator1 = "UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_CHOOSE_BUTTON",
-			value1 = "Choose");
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertTextEquals(
-			locator1 = "ContentRow#ORGANIZATION_TABLE_NAME",
-			value1 = "${orgName}");
-
-		PortletEntry.save();
-	}
-
 	macro editUserSiteCP {
 		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
 

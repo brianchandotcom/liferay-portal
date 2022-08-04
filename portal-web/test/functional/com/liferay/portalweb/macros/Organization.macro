@@ -664,38 +664,6 @@ definition {
 			value1 = "${orgName}");
 	}
 
-	macro selectParentOrganizationCP {
-		var key_orgName = "${orgName}";
-
-		LexiconEntry.openEntryMenu(rowEntry = "${orgName}");
-
-		MenuItem.click(menuItem = "Edit");
-
-		AssertClick(
-			locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_SELECT_BUTTON",
-			value1 = "Select");
-
-		SelectFrame(locator1 = "UsersAndOrganizationsSelectOrganization#SELECT_ORGANIZATION_IFRAME");
-
-		AssertTextEquals(
-			locator1 = "ContentRow#ORGANIZATION_TABLE_NAME",
-			value1 = "${orgName}");
-
-		var key_orgName = "${parentOrgName}";
-
-		AssertClick(
-			locator1 = "UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_CHOOSE_BUTTON",
-			value1 = "Choose");
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_NAME",
-			value1 = "${parentOrgName}");
-
-		PortletEntry.save();
-	}
-
 	macro tearDownCP {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

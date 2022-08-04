@@ -550,6 +550,18 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	@Override
+	public WikiPage getPageByResourcePrimKey(long resourcePrimKey)
+		throws PortalException {
+
+		WikiPage page = wikiPageLocalService.getPage(resourcePrimKey);
+
+		_wikiPageModelResourcePermission.check(
+			getPermissionChecker(), page, ActionKeys.VIEW);
+
+		return page;
+	}
+
+	@Override
 	public List<WikiPage> getPages(
 			long groupId, long nodeId, boolean head, int status, int start,
 			int end, OrderByComparator<WikiPage> orderByComparator)

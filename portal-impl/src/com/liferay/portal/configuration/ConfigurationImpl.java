@@ -347,7 +347,11 @@ public class ConfigurationImpl
 
 			if (companyId > CompanyConstants.SYSTEM) {
 				info += StringBundler.concat(
-					" for {companyId=", companyId, ", webId=", webId, "}");
+					" for {companyId=", companyId, ", webId=", webId, "}\n",
+					"Company specific properties for company with webId=",
+					webId,
+					" can be overwrritten by setting the environment variable ",
+					"LIFERAY_PROPS_BY_COMPANY_", companyId);
 			}
 
 			System.out.println(info);

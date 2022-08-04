@@ -279,8 +279,7 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public Preview getPreview() {
-		return new Preview(
-			_getDownloadURL(), _getPreviewImageURL(), _getViewURL());
+		return new Preview(_getPreviewImageURL(), _getViewURL());
 	}
 
 	@Override
@@ -398,32 +397,6 @@ public class FileEntryContentDashboardItem
 					getContentDashboardItemActions(
 						_portal.getHttpServletRequest(portletRequest),
 						ContentDashboardItemAction.Type.PREVIEW);
-
-				if (!contentDashboardItemActions.isEmpty()) {
-					ContentDashboardItemAction contentDashboardItemAction =
-						contentDashboardItemActions.get(0);
-
-					return contentDashboardItemAction.getURL();
-				}
-
-				return null;
-			}
-		).orElse(
-			null
-		);
-	}
-
-	private String _getDownloadURL() {
-		return Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).map(
-			ServiceContext::getLiferayPortletRequest
-		).map(
-			portletRequest -> {
-				List<ContentDashboardItemAction> contentDashboardItemActions =
-					getContentDashboardItemActions(
-						_portal.getHttpServletRequest(portletRequest),
-						ContentDashboardItemAction.Type.DOWNLOAD);
 
 				if (!contentDashboardItemActions.isEmpty()) {
 					ContentDashboardItemAction contentDashboardItemAction =

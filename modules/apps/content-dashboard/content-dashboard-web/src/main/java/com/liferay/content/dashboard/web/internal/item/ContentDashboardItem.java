@@ -113,16 +113,11 @@ public interface ContentDashboardItem<T> {
 
 	public static class Preview {
 
-		public static final Preview EMPTY = new Preview(null, null, null);
+		public static final Preview EMPTY = new Preview(null, null);
 
-		public Preview(String downloadURL, String imageURL, String url) {
-			_downloadURL = downloadURL;
+		public Preview(String imageURL, String url) {
 			_imageURL = imageURL;
 			_url = url;
-		}
-
-		public String getDownloadURL() {
-			return _downloadURL;
 		}
 
 		public String getImageURL() {
@@ -135,15 +130,12 @@ public interface ContentDashboardItem<T> {
 
 		public JSONObject toJSONObject() {
 			return JSONUtil.put(
-				"downloadURL", getDownloadURL()
-			).put(
 				"imageURL", getImageURL()
 			).put(
 				"url", getUrl()
 			);
 		}
 
-		private final String _downloadURL;
 		private final String _imageURL;
 		private final String _url;
 

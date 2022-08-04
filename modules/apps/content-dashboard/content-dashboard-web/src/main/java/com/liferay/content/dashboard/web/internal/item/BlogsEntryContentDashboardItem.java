@@ -266,7 +266,7 @@ public class BlogsEntryContentDashboardItem
 
 	@Override
 	public Preview getPreview() {
-		return new Preview(null, _getPreviewImageURL(), null);
+		return new Preview(_getPreviewImageURL(), null);
 	}
 
 	@Override

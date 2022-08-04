@@ -14486,6 +14486,14 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
+		<get-testcase-property property.name="oauth2.local.enabled" />
+		<if>
+			<istrue value="${oauth2.local.enabled}" />
+			<then>
+				<ant antfile="build-test-oauth2.xml" target="prepare-oauth2-tester" />
+			</then>
+		</if>
+
 		<if>
 			<equals arg1="${functional.test.type}" arg2="analytics-cloud" />
 			<then>

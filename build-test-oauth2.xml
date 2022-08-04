@@ -22,4 +22,14 @@
 			todir="${liferay.home}/osgi/configs"
 		/>
 	</target>
+
+	<target name="prepare-oauth2-tester">
+		<copy
+			todir="${app.server.dir}/webapps/oauth2-tester"
+		>
+			<fileset
+				dir="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies/liferay-oauth2-tester"
+			/>
+		</copy>
+	</target>
 </project>

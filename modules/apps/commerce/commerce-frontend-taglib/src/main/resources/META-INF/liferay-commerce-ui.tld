@@ -334,6 +334,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>redirect</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>showCancelButton</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

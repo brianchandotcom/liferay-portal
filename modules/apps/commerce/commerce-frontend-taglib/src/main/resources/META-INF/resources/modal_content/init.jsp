@@ -37,6 +37,7 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%
 String contentCssClasses = (String)request.getAttribute("liferay-commerce:modal-content:contentCssClasses");
+String redirect = (String)request.getAttribute("liferay-commerce:modal-content:redirect");
 boolean showCancelButton = (boolean)request.getAttribute("liferay-commerce:modal-content:showCancelButton");
 boolean showSubmitButton = (boolean)request.getAttribute("liferay-commerce:modal-content:showSubmitButton");
 String submitButtonLabel = (String)request.getAttribute("liferay-commerce:modal-content:submitButtonLabel");

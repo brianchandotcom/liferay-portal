@@ -472,7 +472,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-153655. Page should inherit the JavaScript extension from master page."
+	@description = "This is a test for LPS-153655 and LPS-153658. Page should inherit the JavaScript extension from master page. The inherited JavaScript extensions from master should be read-only mode and keep insertion configuration."
 	@priority = "4"
 	test ViewInheritedJavaScriptExtensionFromMasterPage {
 		task ("Given a site designer has a master page with a JavaScript extension") {
@@ -523,8 +523,14 @@ definition {
 			Panel.expandPanel(panel = "JavaScript");
 
 			AssertVisible(
+				key_groupHeader = "Page bottom JS extensions",
 				key_tableEntry = "InnerText",
-				locator1 = "LexiconTable#TABLE_ENTRY");
+				locator1 = "LexiconTable#GROUPED_TABLE_ENTRY");
+
+			LexiconTable.viewTableEntryInfo(
+				index = "3",
+				tableEntry = "InnerText",
+				tableEntryInfo = "From Master");
 
 			AssertNotEditable(
 				key_tableEntry = "InnerText",

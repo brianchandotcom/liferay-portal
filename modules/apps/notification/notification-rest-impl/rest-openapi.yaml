@@ -33,6 +33,9 @@ components:
                     format: date
                     readOnly: true
                     type: string
+                status:
+                    format: int32
+                    type: integer
                 subject:
                     type: string
                 to:

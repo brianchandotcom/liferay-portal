@@ -59,7 +59,12 @@ const SidebarHeader = ({children, title}) => {
 	);
 };
 
-const Sidebar = ({children, onClose = noop, open = true}) => {
+const Sidebar = ({
+	children,
+	fetchSidebarPanelData,
+	onClose = noop,
+	open = true,
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const delay = useTimeout();
@@ -87,7 +92,12 @@ const Sidebar = ({children, onClose = noop, open = true}) => {
 	return (
 		<div className="cadmin">
 			<div className="content-dashboard sidebar sidebar-light sidebar-sm">
-				<SidebarContext.Provider value={{onClose}}>
+				<SidebarContext.Provider
+					value={{
+						fetchSidebarPanelData,
+						onClose,
+					}}
+				>
 					{children}
 				</SidebarContext.Provider>
 			</div>

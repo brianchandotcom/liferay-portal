@@ -14,9 +14,13 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {fetch, openToast} from 'frontend-js-web';
-import React from 'react';
+import React, {useContext} from 'react';
+
+const {SidebarContext} = require('../Sidebar');
 
 const Subscribe = ({icon, label, url}: IProps) => {
+	const {fetchSidebarPanelData} = useContext(SidebarContext);
+
 	const handleSubscribe = async (): Promise<void> => {
 		try {
 			const {ok}: Response = await fetch(url);
@@ -24,6 +28,8 @@ const Subscribe = ({icon, label, url}: IProps) => {
 			if (!ok) {
 				throw new Error(`Failed to fetch ${url}`);
 			}
+
+			await fetchSidebarPanelData();
 
 			openToast({
 				message: Liferay.Language.get(

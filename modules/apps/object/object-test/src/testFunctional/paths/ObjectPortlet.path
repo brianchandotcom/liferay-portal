@@ -200,6 +200,11 @@
 		<td>//input[contains(@placeholder,'__/__/____')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>ENTRY_FIELD_GENERIC</td>
+		<td>//div[contains(@data-field-name,'ObjectDefinitionsPortlet') and contains(label,'${key_customField}')]//input[1]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

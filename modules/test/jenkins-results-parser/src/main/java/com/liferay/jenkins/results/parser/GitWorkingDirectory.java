@@ -459,15 +459,7 @@ public class GitWorkingDirectory {
 
 		};
 
-		try {
-			retryable.executeWithRetries();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(
-				"Unable to create pull request", exception);
-		}
-
-		return "";
+		return retryable.executeWithRetries();
 	}
 
 	public void deleteLocalGitBranch(LocalGitBranch localGitBranch) {

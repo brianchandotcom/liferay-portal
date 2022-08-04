@@ -172,12 +172,16 @@ public class DispatchMessageListenerTest {
 
 			if (overlapAllowed) {
 				Assert.assertTrue(
-					"Dispatch log execution order", difference > 0);
+					String.format(
+						"Dispatch log end at %s before next start at %s",
+						currentDispatchLog.getEndDate(),
+						nextDispatchLog.getStartDate()),
+					difference > 0);
 			}
 			else {
 				Assert.assertTrue(
 					String.format(
-						"Dispatch log end at %s before next start at %s in %s",
+						"Dispatch log end at %s after next start at %s in %s",
 						currentDispatchLog.getEndDate(),
 						nextDispatchLog.getStartDate(),
 						sortedDispatchLogs.toString()),

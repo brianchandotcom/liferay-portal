@@ -332,7 +332,7 @@
 </tr>
 <tr>
 	<td>MERGE_WITH_PARENT_FOLDER</td>
-	<td>//label[contains(.,'Merge with Parent Folder')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Merge with Parent Folder')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

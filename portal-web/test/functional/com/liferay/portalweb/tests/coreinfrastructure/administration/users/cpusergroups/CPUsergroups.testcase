@@ -243,7 +243,9 @@ definition {
 			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ID_1",
 			value1 = "usersn");
 
-		AssertNotVisible(locator1 = "UsersAndOrganizationsAssignOrganizationalRoles#USER_TABLE_SCREEN_NAME_2");
+		AssertNotVisible(
+			index = "2",
+			locator1 = "LexiconTable#TABLE_ROW");
 	}
 
 	@priority = "5"

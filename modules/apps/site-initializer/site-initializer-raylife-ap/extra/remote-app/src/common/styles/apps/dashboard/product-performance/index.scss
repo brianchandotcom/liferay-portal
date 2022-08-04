@@ -1,0 +1,23 @@
+.ray-dashboard-product-performance {
+	.header-row {
+		border-bottom: 1px solid hsl(209, 36%, 85%);
+		height: 62px;
+
+		.product-performance-select {
+			border-color: $color-neutral-white;
+			width: 85px;
+		}
+
+		.general-filter:focus {
+			box-shadow: none !important;
+		}
+
+		@media screen and (min-width: $breakpoint-tablet) and (max-width: 1163px) {
+			height: 90px;
+		}
+	}
+
+	.left-container {
+		border-right: 1px solid hsl(209, 36%, 85%);
+	}
+}

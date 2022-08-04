@@ -22,6 +22,7 @@ import NewApplicationAutoContextProvider from './routes/applications/context/New
 import Applications from './routes/applications/pages/Applications';
 import NewApplication from './routes/applications/pages/NewApplication';
 import Claims from './routes/claims/pages/Claims';
+import ProductPerformance from './routes/dashboard/pages/ProductPerformance';
 import RecentApplications from './routes/dashboard/pages/RecentApplications';
 import Policies from './routes/policies/pages/Policies';
 import Reports from './routes/reports/pages/Reports';
@@ -37,6 +38,10 @@ const DirectToCustomer: React.FC<Props> = ({route}) => {
 
 	if (routeEntry === 'recent-applications') {
 		return <RecentApplications />;
+	}
+
+	if (routeEntry === 'product-performance') {
+		return <ProductPerformance />;
 	}
 
 	if (routeEntry === 'applications') {

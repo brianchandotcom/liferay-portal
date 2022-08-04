@@ -211,26 +211,19 @@ definition {
 	@description = "This test edits tags by using the bulk append action."
 	@priority = "4"
 	test CanEditAndAppendTags {
-		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt");
-
-		DMDocument.selectDocuments(dmDocumentTitle = "Document_2,Document_4");
-
-		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
-
-		DMDocument.editTags(
-			itemNumber = "2",
-			multipleDocuments = "true",
-			tagName = "tagone");
-
-		for (var key_dmDocumentTitle : list "Document_2,Document_4") {
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
-
-			DMDocument.viewTagInfo(tagName = "tagone");
-
-			Navigator.gotoPage(pageName = "Documents and Media Page");
+		for (var entryCount : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				assetTagNames = "tagone",
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}",
+				groupName = "Guest",
+				mimeType = "application/msword",
+				sourceFileName = "Document_${entryCount}.doc");
 		}
 
-		DMDocument.selectDocuments(dmDocumentTitle = "Document_2,Document_4");
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2");
 
 		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
@@ -239,53 +232,29 @@ definition {
 			multipleDocuments = "true",
 			tagName = "tagtwo");
 
-		for (var key_dmDocumentTitle : list "Document_2,Document_4") {
+		for (var key_dmDocumentTitle : list "Document_1,Document_2") {
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
 
 			DMDocument.viewTagInfo(tagName = "tagone,tagtwo");
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}
-
-		for (var key_searchTerm : list "tagone,tagtwo") {
-			SearchPortlets.searchEmbedded(searchTerm = "${key_searchTerm}");
-
-			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "Document_2",
-				searchAssetType = "Document");
-
-			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "Document_4",
-				searchAssetType = "Document");
-		}
 	}
 
 	@description = "This test edits tags by using the bulk append action, also covers LPS-91586."
 	@priority = "4"
 	test CanEditAndReplaceTags {
-		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt");
+		for (var entryCount : list "1,2,3") {
+			JSONDocument.addFileWithUploadedFile(
+				assetTagNames = "Tag${entryCount}",
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}",
+				groupName = "Guest",
+				mimeType = "application/msword",
+				sourceFileName = "Document_${entryCount}.doc");
+		}
 
-		DMDocument.selectDocuments(dmDocumentTitle = "Document_1");
-
-		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
-
-		DMDocument.editTags(tagName = "one");
-
-		DMDocument.unselectDocuments(dmDocumentTitle = "Document_1");
-
-		DMDocument.selectDocuments(dmDocumentTitle = "Document_2");
-
-		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
-
-		DMDocument.editTags(tagName = "two");
-
-		DMDocument.unselectDocuments(dmDocumentTitle = "Document_2");
-
-		DMDocument.selectDocuments(dmDocumentTitle = "Document_3");
-
-		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
-
-		DMDocument.editTags(tagName = "three");
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_3");
 
@@ -295,30 +264,14 @@ definition {
 			editAction = "Replace",
 			itemNumber = "2",
 			multipleDocuments = "true",
-			tagName = "four");
+			tagName = "newTag");
 
 		for (var key_dmDocumentTitle : list "Document_1,Document_3") {
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
 
-			DMDocument.viewTagInfo(tagName = "four");
+			DMDocument.viewTagInfo(tagName = "newTag");
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
-		}
-
-		SearchPortlets.searchEmbedded(searchTerm = "four");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Document_1",
-			searchAssetType = "Document");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Document_3",
-			searchAssetType = "Document");
-
-		for (var key_searchTerm : list "one,three") {
-			SearchPortlets.searchEmbedded(searchTerm = "${key_searchTerm}");
-
-			SearchResultPortlet.viewNoSearchResults(searchTerm = "${key_searchTerm}");
 		}
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");

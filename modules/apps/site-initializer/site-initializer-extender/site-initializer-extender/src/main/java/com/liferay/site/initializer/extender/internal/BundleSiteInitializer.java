@@ -3839,9 +3839,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		throws Exception {
 
 		if (permissionsJSONArray == null) {
-			permissionsJSONArray = JSONFactoryUtil.createJSONArray(
-				"[{\"actionIds\": [\"VIEW\"], \"roleName\": \"Site Member\"," +
-					"\"scope\": 4}]");
+			return;
 		}
 
 		for (int i = 0; i < permissionsJSONArray.length(); i++) {

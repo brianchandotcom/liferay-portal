@@ -70,7 +70,8 @@ public class WikiPageAttachmentResourceImpl
 			Long wikiPageId)
 		throws Exception {
 
-		WikiPage wikiPage = _wikiPageService.getPageByPageId(wikiPageId);
+		WikiPage wikiPage = _wikiPageService.getPageByResourcePrimKey(
+			wikiPageId);
 
 		return Page.of(
 			transform(
@@ -83,7 +84,8 @@ public class WikiPageAttachmentResourceImpl
 			Long wikiPageId, MultipartBody multipartBody)
 		throws Exception {
 
-		WikiPage wikiPage = _wikiPageService.getPageByPageId(wikiPageId);
+		WikiPage wikiPage = _wikiPageService.getPageByResourcePrimKey(
+			wikiPageId);
 
 		_wikiPageModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), wikiPage,

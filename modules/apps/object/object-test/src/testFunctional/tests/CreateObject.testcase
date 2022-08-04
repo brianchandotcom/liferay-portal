@@ -1712,38 +1712,6 @@ definition {
 		ObjectPortlet.assertDeleteEntryButtonNotPresent(entry = "Custom Object 42");
 	}
 
-	@description = "LPS-135400 - Verify it is not possible to delete a Relationship when an Object is published"
-	@priority = "5"
-	test CannotDeleteRelationshipWhenPublished {
-		property portal.acceptance = "quarantine";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 44",
-			objectName = "CustomObject44",
-			pluralLabelName = "Custom Objects 44");
-
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject44",
-			objectName_2 = "CustomObject44",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
-			relationshipType = "oneToMany");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject44");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 44");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		AssertElementNotPresent(locator1 = "ObjectAdmin#KEBAB_MENU");
-
-		AssertElementNotPresent(
-			key_kebabOption = "Delete",
-			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
-	}
-
 	@description = "LPS-135549 - Verify it is not possible to leave the Field Name field blank"
 	@priority = "4"
 	test CannotLeaveFieldNameBlank {

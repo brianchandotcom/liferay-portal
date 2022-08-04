@@ -40,10 +40,6 @@ public class MBModerationWorkflowDefinitionUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (StartupHelperUtil.isDBNew()) {
-			return;
-		}
-
 		_companyLocalService.forEachCompanyId(
 			companyId -> updateMBModerationWorkflowDefinition(companyId));
 	}

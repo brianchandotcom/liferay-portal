@@ -64,9 +64,13 @@ public class OAuth2ApplicationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(53);
 
-		sb.append("{oAuth2ApplicationId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
+		sb.append(", oAuth2ApplicationId=");
 		sb.append(oAuth2ApplicationId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -123,6 +127,21 @@ public class OAuth2ApplicationCacheModel
 	public OAuth2Application toEntityModel() {
 		OAuth2ApplicationImpl oAuth2ApplicationImpl =
 			new OAuth2ApplicationImpl();
+
+		if (uuid == null) {
+			oAuth2ApplicationImpl.setUuid("");
+		}
+		else {
+			oAuth2ApplicationImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			oAuth2ApplicationImpl.setExternalReferenceCode("");
+		}
+		else {
+			oAuth2ApplicationImpl.setExternalReferenceCode(
+				externalReferenceCode);
+		}
 
 		oAuth2ApplicationImpl.setOAuth2ApplicationId(oAuth2ApplicationId);
 		oAuth2ApplicationImpl.setCompanyId(companyId);
@@ -254,6 +273,9 @@ public class OAuth2ApplicationCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
+
 		oAuth2ApplicationId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -290,6 +312,20 @@ public class OAuth2ApplicationCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeLong(oAuth2ApplicationId);
 
 		objectOutput.writeLong(companyId);
@@ -403,6 +439,8 @@ public class OAuth2ApplicationCacheModel
 		objectOutput.writeBoolean(trustedApplication);
 	}
 
+	public String uuid;
+	public String externalReferenceCode;
 	public long oAuth2ApplicationId;
 	public long companyId;
 	public long userId;

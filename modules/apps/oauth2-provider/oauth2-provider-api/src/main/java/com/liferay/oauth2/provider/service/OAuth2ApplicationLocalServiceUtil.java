@@ -278,10 +278,58 @@ public class OAuth2ApplicationLocalServiceUtil {
 		return getService().fetchOAuth2Application(companyId, clientId);
 	}
 
+	/**
+	 * Returns the o auth2 application with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the o auth2 application's external reference code
+	 * @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
+	 */
+	public static OAuth2Application
+		fetchOAuth2ApplicationByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return getService().fetchOAuth2ApplicationByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchOAuth2ApplicationByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	public static OAuth2Application fetchOAuth2ApplicationByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return getService().fetchOAuth2ApplicationByReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the o auth2 application with the matching UUID and company.
+	 *
+	 * @param uuid the o auth2 application's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
+	 */
+	public static OAuth2Application fetchOAuth2ApplicationByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().fetchOAuth2ApplicationByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static
@@ -311,6 +359,38 @@ public class OAuth2ApplicationLocalServiceUtil {
 			NoSuchOAuth2ApplicationException {
 
 		return getService().getOAuth2Application(companyId, clientId);
+	}
+
+	/**
+	 * Returns the o auth2 application with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the o auth2 application's external reference code
+	 * @return the matching o auth2 application
+	 * @throws PortalException if a matching o auth2 application could not be found
+	 */
+	public static OAuth2Application getOAuth2ApplicationByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getOAuth2ApplicationByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the o auth2 application with the matching UUID and company.
+	 *
+	 * @param uuid the o auth2 application's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching o auth2 application
+	 * @throws PortalException if a matching o auth2 application could not be found
+	 */
+	public static OAuth2Application getOAuth2ApplicationByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getOAuth2ApplicationByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	/**

@@ -33,6 +33,12 @@ public class OAuth2ApplicationTable extends BaseTable<OAuth2ApplicationTable> {
 	public static final OAuth2ApplicationTable INSTANCE =
 		new OAuth2ApplicationTable();
 
+	public final Column<OAuth2ApplicationTable, String> uuid = createColumn(
+		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<OAuth2ApplicationTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<OAuth2ApplicationTable, Long> oAuth2ApplicationId =
 		createColumn(
 			"oAuth2ApplicationId", Long.class, Types.BIGINT,

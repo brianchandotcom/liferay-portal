@@ -16,6 +16,7 @@ package com.liferay.oauth2.provider.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationModel;
 import com.liferay.petra.string.StringBundler;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -71,6 +73,7 @@ public class OAuth2ApplicationModelImpl
 	public static final String TABLE_NAME = "OAuth2Application";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
 		{"oAuth2ApplicationId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -92,6 +95,8 @@ public class OAuth2ApplicationModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("oAuth2ApplicationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -119,7 +124,7 @@ public class OAuth2ApplicationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OAuth2Application (oAuth2ApplicationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,oA2AScopeAliasesId LONG,allowedGrantTypes VARCHAR(128) null,clientAuthenticationMethod VARCHAR(75) null,clientCredentialUserId LONG,clientCredentialUserName VARCHAR(75) null,clientId VARCHAR(75) null,clientProfile INTEGER,clientSecret VARCHAR(75) null,description STRING null,features STRING null,homePageURL STRING null,iconFileEntryId LONG,jwks VARCHAR(3999) null,name VARCHAR(75) null,privacyPolicyURL STRING null,redirectURIs STRING null,rememberDevice BOOLEAN,trustedApplication BOOLEAN)";
+		"create table OAuth2Application (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,oAuth2ApplicationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,oA2AScopeAliasesId LONG,allowedGrantTypes VARCHAR(128) null,clientAuthenticationMethod VARCHAR(75) null,clientCredentialUserId LONG,clientCredentialUserName VARCHAR(75) null,clientId VARCHAR(75) null,clientProfile INTEGER,clientSecret VARCHAR(75) null,description STRING null,features STRING null,homePageURL STRING null,iconFileEntryId LONG,jwks VARCHAR(3999) null,name VARCHAR(75) null,privacyPolicyURL STRING null,redirectURIs STRING null,rememberDevice BOOLEAN,trustedApplication BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table OAuth2Application";
 
@@ -148,11 +153,23 @@ public class OAuth2ApplicationModelImpl
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 8L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OAUTH2APPLICATIONID_COLUMN_BITMASK = 4L;
+	public static final long OAUTH2APPLICATIONID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -267,6 +284,17 @@ public class OAuth2ApplicationModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<OAuth2Application, ?>>();
 
+		attributeGetterFunctions.put("uuid", OAuth2Application::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid",
+			(BiConsumer<OAuth2Application, String>)OAuth2Application::setUuid);
+		attributeGetterFunctions.put(
+			"externalReferenceCode",
+			OAuth2Application::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<OAuth2Application, String>)
+				OAuth2Application::setExternalReferenceCode);
 		attributeGetterFunctions.put(
 			"oAuth2ApplicationId", OAuth2Application::getOAuth2ApplicationId);
 		attributeSetterBiConsumers.put(
@@ -414,6 +442,64 @@ public class OAuth2ApplicationModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -915,6 +1001,12 @@ public class OAuth2ApplicationModelImpl
 		_trustedApplication = trustedApplication;
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(OAuth2Application.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -972,6 +1064,9 @@ public class OAuth2ApplicationModelImpl
 		OAuth2ApplicationImpl oAuth2ApplicationImpl =
 			new OAuth2ApplicationImpl();
 
+		oAuth2ApplicationImpl.setUuid(getUuid());
+		oAuth2ApplicationImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		oAuth2ApplicationImpl.setOAuth2ApplicationId(getOAuth2ApplicationId());
 		oAuth2ApplicationImpl.setCompanyId(getCompanyId());
 		oAuth2ApplicationImpl.setUserId(getUserId());
@@ -1011,6 +1106,10 @@ public class OAuth2ApplicationModelImpl
 		OAuth2ApplicationImpl oAuth2ApplicationImpl =
 			new OAuth2ApplicationImpl();
 
+		oAuth2ApplicationImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		oAuth2ApplicationImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		oAuth2ApplicationImpl.setOAuth2ApplicationId(
 			this.<Long>getColumnOriginalValue("oAuth2ApplicationId"));
 		oAuth2ApplicationImpl.setCompanyId(
@@ -1136,6 +1235,26 @@ public class OAuth2ApplicationModelImpl
 	public CacheModel<OAuth2Application> toCacheModel() {
 		OAuth2ApplicationCacheModel oAuth2ApplicationCacheModel =
 			new OAuth2ApplicationCacheModel();
+
+		oAuth2ApplicationCacheModel.uuid = getUuid();
+
+		String uuid = oAuth2ApplicationCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			oAuth2ApplicationCacheModel.uuid = null;
+		}
+
+		oAuth2ApplicationCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			oAuth2ApplicationCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			oAuth2ApplicationCacheModel.externalReferenceCode = null;
+		}
 
 		oAuth2ApplicationCacheModel.oAuth2ApplicationId =
 			getOAuth2ApplicationId();
@@ -1382,6 +1501,8 @@ public class OAuth2ApplicationModelImpl
 
 	}
 
+	private String _uuid;
+	private String _externalReferenceCode;
 	private long _oAuth2ApplicationId;
 	private long _companyId;
 	private long _userId;
@@ -1437,6 +1558,9 @@ public class OAuth2ApplicationModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("oAuth2ApplicationId", _oAuth2ApplicationId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1472,6 +1596,7 @@ public class OAuth2ApplicationModelImpl
 	static {
 		Map<String, String> attributeNames = new HashMap<>();
 
+		attributeNames.put("uuid_", "uuid");
 		attributeNames.put(
 			"oA2AScopeAliasesId", "oAuth2ApplicationScopeAliasesId");
 
@@ -1489,53 +1614,57 @@ public class OAuth2ApplicationModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("oAuth2ApplicationId", 1L);
+		columnBitmasks.put("uuid_", 1L);
 
-		columnBitmasks.put("companyId", 2L);
+		columnBitmasks.put("externalReferenceCode", 2L);
 
-		columnBitmasks.put("userId", 4L);
+		columnBitmasks.put("oAuth2ApplicationId", 4L);
 
-		columnBitmasks.put("userName", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("createDate", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("modifiedDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("oA2AScopeAliasesId", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("allowedGrantTypes", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("clientAuthenticationMethod", 256L);
+		columnBitmasks.put("oA2AScopeAliasesId", 256L);
 
-		columnBitmasks.put("clientCredentialUserId", 512L);
+		columnBitmasks.put("allowedGrantTypes", 512L);
 
-		columnBitmasks.put("clientCredentialUserName", 1024L);
+		columnBitmasks.put("clientAuthenticationMethod", 1024L);
 
-		columnBitmasks.put("clientId", 2048L);
+		columnBitmasks.put("clientCredentialUserId", 2048L);
 
-		columnBitmasks.put("clientProfile", 4096L);
+		columnBitmasks.put("clientCredentialUserName", 4096L);
 
-		columnBitmasks.put("clientSecret", 8192L);
+		columnBitmasks.put("clientId", 8192L);
 
-		columnBitmasks.put("description", 16384L);
+		columnBitmasks.put("clientProfile", 16384L);
 
-		columnBitmasks.put("features", 32768L);
+		columnBitmasks.put("clientSecret", 32768L);
 
-		columnBitmasks.put("homePageURL", 65536L);
+		columnBitmasks.put("description", 65536L);
 
-		columnBitmasks.put("iconFileEntryId", 131072L);
+		columnBitmasks.put("features", 131072L);
 
-		columnBitmasks.put("jwks", 262144L);
+		columnBitmasks.put("homePageURL", 262144L);
 
-		columnBitmasks.put("name", 524288L);
+		columnBitmasks.put("iconFileEntryId", 524288L);
 
-		columnBitmasks.put("privacyPolicyURL", 1048576L);
+		columnBitmasks.put("jwks", 1048576L);
 
-		columnBitmasks.put("redirectURIs", 2097152L);
+		columnBitmasks.put("name", 2097152L);
 
-		columnBitmasks.put("rememberDevice", 4194304L);
+		columnBitmasks.put("privacyPolicyURL", 4194304L);
 
-		columnBitmasks.put("trustedApplication", 8388608L);
+		columnBitmasks.put("redirectURIs", 8388608L);
+
+		columnBitmasks.put("rememberDevice", 16777216L);
+
+		columnBitmasks.put("trustedApplication", 33554432L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

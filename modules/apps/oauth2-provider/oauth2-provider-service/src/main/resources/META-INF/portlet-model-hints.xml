@@ -2,6 +2,8 @@
 
 <model-hints>
 	<model name="com.liferay.oauth2.provider.model.OAuth2Application">
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="oAuth2ApplicationId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

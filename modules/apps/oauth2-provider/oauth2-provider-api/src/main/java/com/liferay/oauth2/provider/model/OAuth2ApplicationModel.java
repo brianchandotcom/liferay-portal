@@ -15,9 +15,9 @@
 package com.liferay.oauth2.provider.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 
 import java.util.Date;
 
@@ -36,7 +36,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface OAuth2ApplicationModel
-	extends AuditedModel, BaseModel<OAuth2Application>, ShardedModel {
+	extends BaseModel<OAuth2Application>, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +57,38 @@ public interface OAuth2ApplicationModel
 	 * @param primaryKey the primary key of this o auth2 application
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this o auth2 application.
+	 *
+	 * @return the uuid of this o auth2 application
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this o auth2 application.
+	 *
+	 * @param uuid the uuid of this o auth2 application
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this o auth2 application.
+	 *
+	 * @return the external reference code of this o auth2 application
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this o auth2 application.
+	 *
+	 * @param externalReferenceCode the external reference code of this o auth2 application
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the o auth2 application ID of this o auth2 application.

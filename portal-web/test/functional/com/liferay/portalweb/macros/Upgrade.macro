@@ -1086,11 +1086,10 @@ definition {
 
 			DisplayPageTemplate.clickPencilItem(item = "Edit Webcontent Title");
 
-			PortletEntry.inputTitle(title = "Webcontent Title Edit");
-
-			CKEditor.addContentInWebContent(
-				content = "Webcontent Content Edit",
-				fieldLabel = "content");
+			WebContent.addWithStructureCP(
+				webContentRichText = "Webcontent Content Edit",
+				webContentRichTextFieldLabel = "content",
+				webContentTitle = "Webcontent Title Edit");
 
 			PortletEntry.publish();
 

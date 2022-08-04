@@ -16,7 +16,9 @@ package com.liferay.address.web.internal.portlet.action;
 
 import com.liferay.address.web.internal.constants.AddressPortletKeys;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.DuplicateRegionException;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
+import com.liferay.portal.kernel.exception.RegionCodeException;
 import com.liferay.portal.kernel.exception.RegionNameException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Region;
@@ -118,7 +120,10 @@ public class EditRegionMVCActionCommand
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (throwable instanceof RegionNameException) {
+			else if (throwable instanceof DuplicateRegionException ||
+					 throwable instanceof RegionCodeException ||
+					 throwable instanceof RegionNameException) {
+
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 

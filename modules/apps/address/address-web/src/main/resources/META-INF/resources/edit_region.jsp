@@ -39,6 +39,8 @@ renderResponse.setTitle((region == null) ? LanguageUtil.get(request, "add-region
 	<aui:input name="countryId" type="hidden" value='<%= ParamUtil.getString(request, "countryId") %>' />
 	<aui:input name="regionId" type="hidden" value="<%= String.valueOf(regionId) %>" />
 
+	<liferay-ui:error exception="<%= DuplicateRegionException.class %>" message="the-region-code-is-already-used" />
+	<liferay-ui:error exception="<%= RegionCodeException.class %>" message="please-enter-a-valid-region-code" />
 	<liferay-ui:error exception="<%= RegionNameException.class %>" message="please-enter-a-valid-name" />
 
 	<aui:model-context bean="<%= region %>" model="<%= Region.class %>" />

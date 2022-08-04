@@ -23,10 +23,6 @@ public class PortletIdUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (StartupHelperUtil.isDBNew()) {
-			return;
-		}
-
 		_deletePortletId();
 		_deletePortletPreferences();
 		_deleteResourceAction();

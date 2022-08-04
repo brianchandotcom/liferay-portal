@@ -22,7 +22,7 @@ const ManageCollaborators = ({
 	const elementRef = useRef<HTMLDivElement>(document.createElement('div'));
 
 	useEffect(() => {
-		const fetchButton = async () => {
+		const fetchButton = async (): Promise<void> => {
 			try {
 				const response: Response = await fetch(
 					fetchSharingCollaboratorsURL
@@ -39,6 +39,10 @@ const ManageCollaborators = ({
 			}
 			catch (error: unknown) {
 				onError();
+
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
 			}
 		};
 

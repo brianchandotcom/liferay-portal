@@ -20,7 +20,6 @@ import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.configuration.ConfigurationImpl;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -249,8 +248,8 @@ public class PropsUtil {
 
 					webId = company.getWebId();
 				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
+				catch (Exception exception) {
+					_log.error(exception);
 				}
 
 				configuration = new ConfigurationImpl(

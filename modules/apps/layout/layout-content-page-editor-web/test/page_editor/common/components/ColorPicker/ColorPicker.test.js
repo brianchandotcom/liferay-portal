@@ -95,7 +95,7 @@ describe('ColorPicker', () => {
 		).toBeInTheDocument();
 	});
 
-	it('clears the value and sets "default"', async () => {
+	it('clears the value and sets "default"', () => {
 		const onValueSelect = jest.fn();
 
 		const {getByTitle} = renderColorPicker({onValueSelect});
@@ -105,7 +105,7 @@ describe('ColorPicker', () => {
 		expect(onValueSelect).toBeCalledWith('Color Picker', null);
 	});
 
-	it('clears the value and sets the default value of the field if it exists', async () => {
+	it('clears the value and sets the default value of the field if it exists', () => {
 		const {baseElement, getByTitle} = renderColorPicker({
 			field: {...FIELD, defaultValue: '#abcabc'},
 		});
@@ -123,7 +123,7 @@ describe('ColorPicker', () => {
 			expect(getByLabelText('Green')).toBeInTheDocument();
 		});
 
-		it('shows action buttons when the color picker is clicked', async () => {
+		it('shows action buttons when the color picker is clicked', () => {
 			const {baseElement, getByLabelText} = renderColorPicker();
 
 			userEvent.click(getByLabelText('Green'));
@@ -133,7 +133,7 @@ describe('ColorPicker', () => {
 			);
 		});
 
-		it('change to input color picker when detach token button is clicked', async () => {
+		it('change to input color picker when detach token button is clicked', () => {
 			const {baseElement, getByTitle} = renderColorPicker();
 
 			userEvent.click(getByTitle('detach-token'));
@@ -156,7 +156,7 @@ describe('ColorPicker', () => {
 			).not.toBeInTheDocument();
 		});
 
-		it('disabled the color when the token references itself', async () => {
+		it('disabled the color when the token references itself', () => {
 			const {getByTitle} = renderColorPicker({
 				field: {...FIELD, name: 'orange'},
 				value: '#fff',
@@ -167,7 +167,7 @@ describe('ColorPicker', () => {
 			expect(getByTitle('Orange')).toBeDisabled();
 		});
 
-		it('disables the colors when the tokens are mutually referenced', async () => {
+		it('disables the colors when the tokens are mutually referenced', () => {
 			const {getByTitle} = renderColorPicker({
 				editedTokenValues: {
 					orange: {
@@ -199,7 +199,7 @@ describe('ColorPicker', () => {
 			).toBeInTheDocument();
 		});
 
-		it('change to dropdown color picker when value from stylebook button is clicked', async () => {
+		it('change to dropdown color picker when value from stylebook button is clicked', () => {
 			const {getByLabelText, getByTitle} = renderColorPicker({
 				value: '#fff',
 			});
@@ -211,7 +211,7 @@ describe('ColorPicker', () => {
 			expect(getByLabelText('Blue')).toBeInTheDocument();
 		});
 
-		it('sets a token if the written value is an existing token', async () => {
+		it('sets a token if the written value is an existing token', () => {
 			const {baseElement, getByLabelText, getByTitle} = renderColorPicker(
 				{
 					value: '#fff',
@@ -224,7 +224,7 @@ describe('ColorPicker', () => {
 			expect(getByLabelText('Green')).toBeInTheDocument();
 		});
 
-		it('sets the previous value when the input value is removed', async () => {
+		it('sets the previous value when the input value is removed', () => {
 			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
@@ -235,7 +235,7 @@ describe('ColorPicker', () => {
 			expect(input).toHaveValue('#444444');
 		});
 
-		it('sets the previous value when the input value is an invalid hexcolor', async () => {
+		it('sets the previous value when the input value is an invalid hexcolor', () => {
 			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
@@ -246,7 +246,7 @@ describe('ColorPicker', () => {
 			expect(input).toHaveValue('#444444');
 		});
 
-		it('takes a 6-digit hexcolor even if the input value has more digits', async () => {
+		it('takes a 6-digit hexcolor even if the input value has more digits', () => {
 			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
@@ -257,7 +257,7 @@ describe('ColorPicker', () => {
 			expect(input).toHaveValue('#555555');
 		});
 
-		it('converts the 3-digit hexcolor to a 6-digit hexcolor', async () => {
+		it('converts the 3-digit hexcolor to a 6-digit hexcolor', () => {
 			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
@@ -269,7 +269,7 @@ describe('ColorPicker', () => {
 		});
 
 		describe('Input errors', () => {
-			it('renders an error when the written token does not exist', async () => {
+			it('renders an error when the written token does not exist', () => {
 				const {baseElement, getByText} = renderColorPicker({
 					value: '#fff',
 				});
@@ -281,7 +281,7 @@ describe('ColorPicker', () => {
 				).toBeInTheDocument();
 			});
 
-			it('Clears an error when the clear selection button is clicked', async () => {
+			it('Clears an error when the clear selection button is clicked', () => {
 				const {
 					baseElement,
 					getByTitle,
@@ -299,7 +299,7 @@ describe('ColorPicker', () => {
 				).not.toBeInTheDocument();
 			});
 
-			it('renders an error when the written token is the same that the name field', async () => {
+			it('renders an error when the written token is the same that the name field', () => {
 				const {baseElement, getByText} = renderColorPicker({
 					field: {...FIELD, name: 'orange'},
 					value: '#fff',
@@ -312,7 +312,7 @@ describe('ColorPicker', () => {
 				).toBeInTheDocument();
 			});
 
-			it('renders an error when two tokens are mutually referenced', async () => {
+			it('renders an error when two tokens are mutually referenced', () => {
 				const {baseElement, getByText} = renderColorPicker({
 					editedTokenValues: {
 						blue: {

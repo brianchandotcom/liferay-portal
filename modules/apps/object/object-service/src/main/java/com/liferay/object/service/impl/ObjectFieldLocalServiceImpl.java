@@ -870,10 +870,6 @@ public class ObjectFieldLocalServiceImpl
 			return;
 		}
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152677"))) {
-			throw new UnsupportedOperationException();
-		}
-
 		if (!Objects.equals(
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, businessType)) {
 

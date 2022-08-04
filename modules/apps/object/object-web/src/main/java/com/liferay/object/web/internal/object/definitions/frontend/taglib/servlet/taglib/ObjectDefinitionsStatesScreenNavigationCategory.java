@@ -22,8 +22,6 @@ import com.liferay.object.web.internal.object.definitions.display.context.Object
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -74,10 +72,6 @@ public class ObjectDefinitionsStatesScreenNavigationCategory
 
 	@Override
 	public boolean isVisible(User user, ObjectDefinition objectDefinition) {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152677"))) {
-			return false;
-		}
-
 		return !objectDefinition.isSystem();
 	}
 

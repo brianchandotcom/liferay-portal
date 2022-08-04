@@ -136,29 +136,6 @@ public class ObjectFieldResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152677"))) {
-			return _toObjectField(
-				_objectFieldService.addCustomObjectField(
-					objectField.getListTypeDefinitionId(), objectDefinitionId,
-					objectField.getBusinessTypeAsString(),
-					ObjectFieldUtil.getDBType(
-						objectField.getDBTypeAsString(),
-						objectField.getTypeAsString()),
-					null, objectField.getIndexed(),
-					objectField.getIndexedAsKeyword(),
-					objectField.getIndexedLanguageId(),
-					LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
-					objectField.getName(), objectField.getRequired(), false,
-					transformToList(
-						objectField.getObjectFieldSettings(),
-						objectFieldSetting ->
-							ObjectFieldSettingUtil.toObjectFieldSetting(
-								objectField.getBusinessTypeAsString(),
-								objectFieldSetting,
-								_objectFieldSettingLocalService,
-								_objectFilterLocalService))));
-		}
-
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
 				objectField.getListTypeDefinitionId(), objectDefinitionId,
@@ -171,7 +148,7 @@ public class ObjectFieldResourceImpl
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
 				objectField.getName(), objectField.getRequired(),
-				objectField.getState(),
+				GetterUtil.getBoolean(objectField.getState()),
 				transformToList(
 					objectField.getObjectFieldSettings(),
 					objectFieldSetting ->
@@ -194,30 +171,6 @@ public class ObjectFieldResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152677"))) {
-			return _toObjectField(
-				_objectFieldService.updateObjectField(
-					objectFieldId, objectField.getExternalReferenceCode(),
-					objectField.getListTypeDefinitionId(),
-					objectField.getBusinessTypeAsString(),
-					ObjectFieldUtil.getDBType(
-						objectField.getDBTypeAsString(),
-						objectField.getTypeAsString()),
-					null, objectField.getIndexed(),
-					objectField.getIndexedAsKeyword(),
-					objectField.getIndexedLanguageId(),
-					LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
-					objectField.getName(), objectField.getRequired(), false,
-					transformToList(
-						objectField.getObjectFieldSettings(),
-						objectFieldSetting ->
-							ObjectFieldSettingUtil.toObjectFieldSetting(
-								objectField.getBusinessTypeAsString(),
-								objectFieldSetting,
-								_objectFieldSettingLocalService,
-								_objectFilterLocalService))));
-		}
-
 		return _toObjectField(
 			_objectFieldService.updateObjectField(
 				objectFieldId, objectField.getExternalReferenceCode(),
@@ -231,7 +184,7 @@ public class ObjectFieldResourceImpl
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
 				objectField.getName(), objectField.getRequired(),
-				objectField.getState(),
+				GetterUtil.getBoolean(objectField.getState()),
 				transformToList(
 					objectField.getObjectFieldSettings(),
 					objectFieldSetting ->

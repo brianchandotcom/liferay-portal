@@ -179,28 +179,16 @@ export default function ObjectFieldFormBase({
 				? values.indexedLanguageId ?? defaultLanguageId
 				: null;
 
-		if (Liferay.FeatureFlags['LPS-152677']) {
-			setValues({
-				DBType: option.dbType,
-				businessType: option.businessType,
-				defaultValue: '',
-				indexedAsKeyword,
-				indexedLanguageId,
-				listTypeDefinitionId: 0,
-				objectFieldSettings,
-				state: false,
-			});
-		}
-		else {
-			setValues({
-				DBType: option.dbType,
-				businessType: option.businessType,
-				indexedAsKeyword,
-				indexedLanguageId,
-				listTypeDefinitionId: 0,
-				objectFieldSettings,
-			});
-		}
+		setValues({
+			DBType: option.dbType,
+			businessType: option.businessType,
+			defaultValue: '',
+			indexedAsKeyword,
+			indexedLanguageId,
+			listTypeDefinitionId: 0,
+			objectFieldSettings,
+			state: false,
+		});
 	};
 
 	return (
@@ -260,22 +248,13 @@ export default function ObjectFieldFormBase({
 					error={errors.listTypeDefinitionId}
 					label={Liferay.Language.get('picklist')}
 					onChange={({target: {value}}) => {
-						if (Liferay.FeatureFlags['LPS-152677']) {
-							setValues({
-								defaultValue: '',
-								listTypeDefinitionId: Number(
-									pickLists[Number(value)].id
-								),
-								state: false,
-							});
-						}
-						else {
-							setValues({
-								listTypeDefinitionId: Number(
-									pickLists[Number(value)].id
-								),
-							});
-						}
+						setValues({
+							defaultValue: '',
+							listTypeDefinitionId: Number(
+								pickLists[Number(value)].id
+							),
+							state: false,
+						});
 					}}
 					options={pickLists.map(({name}) => name)}
 					required
@@ -300,33 +279,31 @@ export default function ObjectFieldFormBase({
 					/>
 				)}
 
-				{Liferay.FeatureFlags['LPS-152677'] &&
-					picklistBusinessType &&
-					validListTypeDefinitionId && (
-						<ClayToggle
-							disabled={disabled}
-							label={Liferay.Language.get('mark-as-state')}
-							name="state"
-							onToggle={async (state) => {
-								if (state) {
-									setValues({required: state, state});
-									setPickListItems(
-										await API.getPickListItems(
-											values.listTypeDefinitionId!
-										)
-									);
-								}
-								else {
-									setValues({
-										defaultValue: '',
-										required: state,
-										state,
-									});
-								}
-							}}
-							toggled={values.state}
-						/>
-					)}
+				{picklistBusinessType && validListTypeDefinitionId && (
+					<ClayToggle
+						disabled={disabled}
+						label={Liferay.Language.get('mark-as-state')}
+						name="state"
+						onToggle={async (state) => {
+							if (state) {
+								setValues({required: state, state});
+								setPickListItems(
+									await API.getPickListItems(
+										values.listTypeDefinitionId!
+									)
+								);
+							}
+							else {
+								setValues({
+									defaultValue: '',
+									required: state,
+									state,
+								});
+							}
+						}}
+						toggled={values.state}
+					/>
+				)}
 			</ClayForm.Group>
 
 			{values.state && (
@@ -506,11 +483,7 @@ export function useObjectFieldForm({
 				errors.listTypeDefinitionId = REQUIRED_MSG;
 			}
 
-			if (
-				Liferay.FeatureFlags['LPS-152677'] &&
-				field.state &&
-				!field.defaultValue
-			) {
+			if (field.state && !field.defaultValue) {
 				errors.defaultValue = REQUIRED_MSG;
 			}
 		}

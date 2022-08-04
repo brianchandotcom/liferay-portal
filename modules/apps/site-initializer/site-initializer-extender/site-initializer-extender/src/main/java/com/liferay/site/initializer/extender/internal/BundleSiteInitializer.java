@@ -3702,6 +3702,40 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return StringUtil.replace(s, oldSubs, newSubs);
 	}
 
+	private void _setResourcePermissions(
+			long companyId, String name, String primKey,
+			JSONArray permissionsJSONArray)
+		throws Exception {
+
+		if (permissionsJSONArray == null) {
+			return;
+		}
+
+		for (int i = 0; i < permissionsJSONArray.length(); i++) {
+			JSONObject jsonObject = permissionsJSONArray.getJSONObject(i);
+
+			int scope = jsonObject.getInt("scope");
+
+			String roleName = jsonObject.getString("roleName");
+
+			Role role = _roleLocalService.getRole(companyId, roleName);
+
+			String[] actionIds = new String[0];
+
+			JSONArray actionIdsJSONArray = jsonObject.getJSONArray("actionIds");
+
+			if (actionIdsJSONArray != null) {
+				for (int j = 0; j < actionIdsJSONArray.length(); j++) {
+					actionIds = ArrayUtil.append(
+						actionIds, actionIdsJSONArray.getString(j));
+				}
+			}
+
+			_resourcePermissionLocalService.setResourcePermissions(
+				companyId, name, scope, primKey, role.getRoleId(), actionIds);
+		}
+	}
+
 	private Layout _updateDraftLayout(
 			Layout draftLayout, JSONObject settingsJSONObject)
 		throws Exception {
@@ -3838,39 +3872,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			documentsStringUtilReplaceValues, false, serviceContext);
 		_updateLayoutSet(
 			documentsStringUtilReplaceValues, true, serviceContext);
-	}
-
-	private void _setResourcePermissions(
-			long companyId, String name, String primKey, JSONArray permissionsJSONArray)
-		throws Exception {
-
-		if (permissionsJSONArray == null) {
-			return;
-		}
-
-		for (int i = 0; i < permissionsJSONArray.length(); i++) {
-			JSONObject jsonObject = permissionsJSONArray.getJSONObject(i);
-
-			int scope = jsonObject.getInt("scope");
-
-			String roleName = jsonObject.getString("roleName");
-
-			Role role = _roleLocalService.getRole(companyId, roleName);
-
-			String[] actionIds = new String[0];
-
-			JSONArray actionIdsJSONArray = jsonObject.getJSONArray("actionIds");
-
-			if (actionIdsJSONArray != null) {
-				for (int j = 0; j < actionIdsJSONArray.length(); j++) {
-					actionIds = ArrayUtil.append(
-						actionIds, actionIdsJSONArray.getString(j));
-				}
-			}
-
-			_resourcePermissionLocalService.setResourcePermissions(
-				companyId, name, scope, primKey, role.getRoleId(), actionIds);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

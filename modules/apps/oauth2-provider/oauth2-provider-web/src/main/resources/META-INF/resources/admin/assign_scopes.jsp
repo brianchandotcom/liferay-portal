@@ -285,7 +285,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 			});
 	};
 
-	function <portlet:namespace />recalculateAll() {
+	window.<portlet:namespace />recalculateAll = function() {
 		A.all('input[name="<portlet:namespace />scopeAliases"]').each(function () {
 			<portlet:namespace />recalculateDependants(this);
 		});
@@ -293,7 +293,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 
 	var <portlet:namespace />stickyScopeAliases = [];
 
-	function <portlet:namespace />changeScopeAliasStickyStatus(
+	window.<portlet:namespace />changeScopeAliasStickyStatus = function(
 		scopeAlias,
 		sticky
 	) {
@@ -313,7 +313,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 		}
 	};
 
-	function <portlet:namespace />getArrayIndexOfStickyScopeAlias(scopeAlias) {
+	window.<portlet:namespace />getArrayIndexOfStickyScopeAlias = function(scopeAlias) {
 		for (var i = 0; i < <portlet:namespace />stickyScopeAliases.length; i++) {
 			if (<portlet:namespace />stickyScopeAliases[i] == scopeAlias) {
 				return i;

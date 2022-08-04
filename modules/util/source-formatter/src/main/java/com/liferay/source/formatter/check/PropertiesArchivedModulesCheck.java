@@ -33,6 +33,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Enumeration;
 import java.util.List;
@@ -127,13 +128,11 @@ public class PropertiesArchivedModulesCheck extends BaseFileCheck {
 
 		_archivedModuleDirectoryNames = new ArrayList<>();
 
-		File portalDir = getPortalDir();
+		File modulesDir = new File(getPortalDir(), "modules/apps/archived");
 
-		if (portalDir == null) {
-			return _archivedModuleDirectoryNames;
+		if (!modulesDir.exists()) {
+			return Collections.emptyList();
 		}
-
-		File modulesDir = new File(portalDir, "modules/apps/archived");
 
 		Files.walkFileTree(
 			modulesDir.toPath(), EnumSet.noneOf(FileVisitOption.class), 15,

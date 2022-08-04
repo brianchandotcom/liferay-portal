@@ -124,6 +124,10 @@ definition {
 			CustomerPortal.assertPageTitle(title = "${pageTitle}");
 		}
 
+		task ("Go to Customer Portal") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
 		task ("Assert that project has DPX 7.2") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
 
@@ -140,6 +144,10 @@ definition {
 			CustomerPortal.assertPageTitle(title = "${pageTitle}");
 		}
 
+		task ("Go to Customer Portal") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
 		task ("Assert that project has DPX 7.1") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.1");
 
@@ -154,6 +162,10 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
 			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+		}
+
+		task ("Go to Customer Portal") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("Assert that project has DPX 7.0") {

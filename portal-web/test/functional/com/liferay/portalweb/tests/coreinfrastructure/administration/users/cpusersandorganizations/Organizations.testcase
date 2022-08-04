@@ -999,14 +999,7 @@ definition {
 
 		Search.clearSearchResult();
 
-		AssertTextEquals(
-			key_roleTitle = "Organization Administrator",
-			locator1 = "UsersAndOrganizationsAssignOrganizationalRoles#ROLE_TITLE",
-			value1 = "Organization Administrator");
-
-		Click(
-			key_roleTitle = "Organization Administrator",
-			locator1 = "UsersAndOrganizationsAssignOrganizationalRoles#ROLE_TITLE");
+		LexiconTable.clickTableEntryTitle(tableEntry = "Organization Administrator");
 
 		Navigator.gotoNavItem(navItem = "Available");
 

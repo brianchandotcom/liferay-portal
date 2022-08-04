@@ -389,14 +389,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertTextEquals(
-			key_roleTitle = "${roleTitle}",
-			locator1 = "UsersAndOrganizationsAssignOrganizationalRoles#ROLE_TITLE",
-			value1 = "${roleTitle}");
-
-		Click(
-			key_roleTitle = "${roleTitle}",
-			locator1 = "UsersAndOrganizationsAssignOrganizationalRoles#ROLE_TITLE");
+		LexiconTable.clickTableEntryTitle(tableEntry = "${roleTitle}");
 
 		Navigator.gotoNavItem(navItem = "Available");
 

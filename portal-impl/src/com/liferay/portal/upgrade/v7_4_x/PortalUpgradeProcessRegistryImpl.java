@@ -171,6 +171,30 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(16, 1, 1), new UpgradeGroupType());
+
+		upgradeVersionTreeMap.put(
+			new Version(16, 1, 2),
+			UpgradeModulesFactory.create(
+				new String[] {
+					"com.liferay.analytics.settings.web",
+					"com.liferay.client.extension.web",
+					"com.liferay.commerce.image.service",
+					"com.liferay.commerce.product.content.web",
+					"com.liferay.document.library.google.docs",
+					"com.liferay.dynamic.data.mapping.form.web",
+					"com.liferay.image.impl",
+					"com.liferay.journal.image.service",
+					"com.liferay.message.boards.moderation",
+					"com.liferay.monitoring.web",
+					"com.liferay.portal.configuration.persistence.impl",
+					"com.liferay.portal.search.elasticsearch.monitoring.web",
+					"com.liferay.portal.security.ldap.impl",
+					"com.liferay.portal.security.sso.token.impl",
+					"com.liferay.push.notifications.web",
+					"com.liferay.saml.addon.keep.alive.web",
+					"com.liferay.saml.impl", "com.liferay.saml.web"
+				},
+				null));
 	}
 
 }

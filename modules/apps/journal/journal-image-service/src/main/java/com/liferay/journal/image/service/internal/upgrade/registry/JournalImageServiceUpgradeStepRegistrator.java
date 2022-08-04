@@ -17,6 +17,7 @@ package com.liferay.journal.image.service.internal.upgrade.registry;
 import com.liferay.image.upgrade.ImageCompanyIdUpgradeProcess;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,8 +34,10 @@ public class JournalImageServiceUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeProcess());
+
 		registry.register(
-			"0.0.0", "1.0.0",
+			"0.0.1", "1.0.0",
 			new ImageCompanyIdUpgradeProcess<>(
 				_journalArticleLocalService::getActionableDynamicQuery,
 				JournalArticle::getCompanyId, JournalArticle::getSmallImageId));

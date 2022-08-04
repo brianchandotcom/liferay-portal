@@ -15,6 +15,7 @@
 package com.liferay.saml.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -41,8 +42,10 @@ public class SamlImplUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeProcess());
+
 		registry.register(
-			"0.0.0", "0.0.1",
+			"0.0.1", "0.0.2",
 			new SamlConfigurationPreferencesUpgradeProcess(
 				_configurationAdmin, _props),
 			new SamlKeyStorePropertiesUpgradeProcess(
@@ -52,7 +55,7 @@ public class SamlImplUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				_samlProviderConfigurationHelper));
 
 		registry.register(
-			"0.0.1", "1.0.0",
+			"0.0.2", "1.0.0",
 			new SamlIdpSsoSessionMaxAgePropertyUpgradeProcess(
 				_configurationAdmin, _props));
 	}

@@ -346,6 +346,14 @@ public class WikiPageServiceWrapper
 	}
 
 	@Override
+	public com.liferay.wiki.model.WikiPage getPageByResourcePrimKey(
+			long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _wikiPageService.getPageByResourcePrimKey(resourcePrimKey);
+	}
+
+	@Override
 	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 			long groupId, long nodeId, boolean head, int status, int start,
 			int end,

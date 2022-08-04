@@ -310,6 +310,12 @@ public class WikiPageServiceUtil {
 		return getService().getPageByPageId(pageId);
 	}
 
+	public static WikiPage getPageByResourcePrimKey(long resourcePrimKey)
+		throws PortalException {
+
+		return getService().getPageByResourcePrimKey(resourcePrimKey);
+	}
+
 	public static List<WikiPage> getPages(
 			long groupId, long nodeId, boolean head, int status, int start,
 			int end, OrderByComparator<WikiPage> orderByComparator)

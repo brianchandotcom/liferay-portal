@@ -223,6 +223,10 @@ public interface WikiPageService extends BaseService {
 	public WikiPage getPageByPageId(long pageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPage getPageByResourcePrimKey(long resourcePrimKey)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getPages(
 			long groupId, long nodeId, boolean head, int status, int start,
 			int end, OrderByComparator<WikiPage> orderByComparator)

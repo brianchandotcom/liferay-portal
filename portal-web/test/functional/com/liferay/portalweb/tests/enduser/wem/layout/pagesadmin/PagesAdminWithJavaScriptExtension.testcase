@@ -947,4 +947,161 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153658. View the loading order of applied JavaScript Extensions to page."
+	@priority = "4"
+	test ViewLoadingOrderOfAppliedJavaScriptExtensions {
+		task ("Given a site designer has a page with multiple JavaScript extensions") {
+			task ("Add JavaScript extensions and embedded JavaScript to Pages") {
+				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+				WaitForPageLoad();
+
+				Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+				DropdownMenuItem.click(menuItem = "Configuration");
+
+				WaitForPageLoad();
+
+				Navigator.gotoNavTab(navTab = "Advanced");
+
+				Panel.expandPanel(panel = "JavaScript");
+
+				PagesAdmin.addJavaScriptExtensions(
+					extensionNameList = "FontFamily",
+					insertion = "In Page Head");
+
+				PagesAdmin.addJavaScriptExtensions(
+					extensionNameList = "TextColor",
+					insertion = "In Page Bottom");
+
+				var javaScript = '''document.evaluate("//*[@data-qa-id='headerTitle']", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.style.textAlign = "right";''';
+
+				Type(
+					key_text = "javascript",
+					locator1 = "TextArea#ANY",
+					value1 = "${javaScript}");
+
+				PortletEntry.save();
+			}
+
+			task ("Add JavaScript extensions and embedded JavaScript to a master page") {
+				JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+					groupName = "Test Site Name",
+					masterPageTemplateEntryName = "Master Page Template");
+
+				MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+				MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Master Page Template");
+
+				PageEditor.gotoTab(tabName = "Page Design Options");
+
+				Click(locator1 = "PageEditor#MORE_LINK");
+
+				Navigator.gotoNavTab(navTab = "Advanced");
+
+				PagesAdmin.addJavaScriptExtensions(
+					extensionNameList = "FontSize",
+					insertion = "In Page Head");
+
+				PagesAdmin.addJavaScriptExtensions(
+					extensionNameList = "InnerText",
+					insertion = "In Page Bottom");
+
+				var javaScript = '''document.body.style.backgroundColor = "olive";''';
+
+				Type(
+					key_text = "javascript",
+					locator1 = "TextArea#ANY",
+					value1 = "${javaScript}");
+
+				PortletEntry.save();
+
+				Navigator.gotoBack();
+
+				Button.click(button = "Publish Master");
+
+				Alert.viewSuccessMessage();
+			}
+
+			task ("Add JavaScript extensions and embedded JavaScript to a content page based on master page") {
+				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+				ContentPages.addPage(
+					masterLayoutName = "Master Page Template",
+					pageName = "Test Page Name");
+
+				PageEditor.gotoTab(tabName = "Page Design Options");
+
+				Click(locator1 = "PageEditor#MORE_LINK");
+
+				Navigator.gotoNavTab(navTab = "Advanced");
+
+				Panel.expandPanel(panel = "JavaScript");
+
+				PagesAdmin.addJavaScriptExtensions(
+					extensionNameList = "FontWeight",
+					insertion = "In Page Head");
+
+				PagesAdmin.addJavaScriptExtensions(
+					extensionNameList = "MarginTop",
+					insertion = "In Page Bottom");
+
+				var javaScript = '''document.body.style.marginBottom = "1px";''';
+
+				Type(
+					key_text = "javascript",
+					locator1 = "TextArea#ANY",
+					value1 = "${javaScript}");
+
+				PortletEntry.save();
+
+				Navigator.gotoBack();
+
+				PageEditor.assertFragmentSidebarLoaded();
+			}
+		}
+
+		task ("When the site designer accesses to view source page") {
+			var currentURL = Navigator.getCurrentURL();
+
+			Navigator.openSpecificURL(url = "view-source:${currentURL}");
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the site designer could see the loading order of JavaScript extensions") {
+			var n = "1";
+
+			for (var extensionName : list "font-family,font-size,font-weight,text-color,inner-text,margin-top") {
+				AssertTextEquals.assertPartialText(
+					locator1 = "xpath=(//a[contains(@class,'html-resource-link')][contains(@href,'documents/d/test-site-name')])[${n}]",
+					value1 = "${extensionName}");
+
+				var n = ${n} + 1;
+			}
+
+			var fontWeight = selenium.getElementValue("//tr[td[contains(@class,'line-content')][contains(.,'/font-weight')]]/td[contains(@class,'line-number')]");
+			var pages = selenium.getElementValue("//tr[td[contains(@class,'line-content')][contains(.,'textAlign = \"right\"')]]/td[contains(@class,'line-number')]");
+			var master = selenium.getElementValue("//tr[td[contains(@class,'line-content')][contains(.,'backgroundColor = \"olive\"')]]/td[contains(@class,'line-number')]");
+			var contentPage = selenium.getElementValue("//tr[td[contains(@class,'line-content')][contains(.,'marginBottom = \"1px\"')]]/td[contains(@class,'line-number')]");
+			var textColor = selenium.getElementValue("//tr[td[contains(@class,'line-content')][contains(.,'/text-color')]]/td[contains(@class,'line-number')]");
+
+			TestUtils.isLessThan(
+				actual = "${fontWeight}",
+				expected = "${pages}");
+
+			TestUtils.isLessThan(
+				actual = "${pages}",
+				expected = "${master}");
+
+			TestUtils.isLessThan(
+				actual = "${master}",
+				expected = "${contentPage}");
+
+			TestUtils.isLessThan(
+				actual = "${contentPage}",
+				expected = "${textColor}");
+		}
+	}
+
 }

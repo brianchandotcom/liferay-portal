@@ -522,8 +522,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 	}
 
 	private LayoutDisplayPageObjectProvider<?>
-			_getLayoutDisplayPageObjectProvider(JournalArticle journalArticle)
-		throws PortalException {
+		_getLayoutDisplayPageObjectProvider(JournalArticle journalArticle) {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderTracker.

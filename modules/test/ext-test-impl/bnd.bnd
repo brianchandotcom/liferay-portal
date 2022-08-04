@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Ext Test Implementation
+Bundle-SymbolicName: com.liferay.ext.test.impl
+Bundle-Version: 1.0.0

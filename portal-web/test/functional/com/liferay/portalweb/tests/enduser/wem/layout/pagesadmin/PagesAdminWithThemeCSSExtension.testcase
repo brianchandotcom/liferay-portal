@@ -225,7 +225,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-153653. The site designer could change theme CSS extension selection to an inheritor page."
+	@description = "This is a test for LPS-153653 and LPS-153658. The site designer could change theme CSS extension selection to an inheritor page. View the inherited theme CSS extension from master."
 	@priority = "5"
 	test ChangeThemeCSSExtensionOfInheritorPage {
 		task ("Given a site designer has a content page template with a theme CSS extension") {

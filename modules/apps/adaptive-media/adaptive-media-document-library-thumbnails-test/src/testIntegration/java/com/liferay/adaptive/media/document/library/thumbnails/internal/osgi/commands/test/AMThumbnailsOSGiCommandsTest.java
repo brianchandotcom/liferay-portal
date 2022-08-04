@@ -26,6 +26,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.DLProcessor;
+import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -49,8 +50,10 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.documentlibrary.util.ImageProcessorImpl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -72,6 +75,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.runtime.ServiceComponentRuntime;
 import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
 import org.osgi.util.promise.Promise;
@@ -237,6 +241,19 @@ public class AMThumbnailsOSGiCommandsTest {
 			componentDescriptionDTO);
 
 		promise.getValue();
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			AMThumbnailsOSGiCommandsTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			new String[] {
+				DLProcessor.class.getName(), ImageProcessor.class.getName()
+			},
+			new ImageProcessorImpl(),
+			MapUtil.singletonDictionary(
+				"type", DLProcessorConstants.IMAGE_PROCESSOR));
 	}
 
 	private static void _disableDocumentLibraryAM() throws Exception {
@@ -257,6 +274,8 @@ public class AMThumbnailsOSGiCommandsTest {
 	}
 
 	private static void _enableAMThumbnails() throws Exception {
+		_serviceRegistration.unregister();
+
 		Class<?> clazz = _dlProcessor.getClass();
 
 		ComponentDescriptionDTO componentDescriptionDTO =
@@ -382,6 +401,8 @@ public class AMThumbnailsOSGiCommandsTest {
 
 	@Inject
 	private static ServiceComponentRuntime _serviceComponentRuntime;
+
+	private static ServiceRegistration<?> _serviceRegistration;
 
 	private Company _company;
 	private Group _group;

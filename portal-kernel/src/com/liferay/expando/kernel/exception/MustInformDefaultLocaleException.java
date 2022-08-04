@@ -16,23 +16,31 @@ package com.liferay.expando.kernel.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-/**
- * @author Brian Wing Shun Chan
- */
-public class ValueDataException extends PortalException {
+import java.util.Locale;
 
-	public ValueDataException() {
+/**
+ * @author Cristina Rodríguez
+ */
+public class MustInformDefaultLocaleException extends PortalException {
+
+	public MustInformDefaultLocaleException() {
 	}
 
-	public ValueDataException(String msg) {
+	public MustInformDefaultLocaleException(Locale locale) {
+		super(
+			"A value for the default locale (" + locale.getLanguage() +
+				") must be defined");
+	}
+
+	public MustInformDefaultLocaleException(String msg) {
 		super(msg);
 	}
 
-	public ValueDataException(String msg, Throwable throwable) {
+	public MustInformDefaultLocaleException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public ValueDataException(Throwable throwable) {
+	public MustInformDefaultLocaleException(Throwable throwable) {
 		super(throwable);
 	}
 

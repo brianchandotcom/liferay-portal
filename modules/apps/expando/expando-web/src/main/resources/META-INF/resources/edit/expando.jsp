@@ -117,8 +117,8 @@ else {
 
 <liferay-ui:error exception="<%= ColumnTypeException.class %>" message="please-select-a-valid-type" />
 <liferay-ui:error exception="<%= DuplicateColumnNameException.class %>" message="please-enter-a-unique-name" />
+<liferay-ui:error exception="<%= MustInformDefaultLocaleException.class %>" message="please-enter-a-value-also-for-default-locale" />
 <liferay-ui:error exception="<%= ValueDataException.class %>" message="please-enter-a-valid-value" />
-<liferay-ui:error exception="<%= ValueDataException.MustInformDefaultLocale.class %>" message="please-enter-a-value-also-for-default-locale" />
 
 <portlet:actionURL name='<%= (expandoColumn == null) ? "addExpando" : "updateExpando" %>' var="editExpandoURL">
 	<portlet:param name="mvcPath" value="/edit/expando.jsp" />

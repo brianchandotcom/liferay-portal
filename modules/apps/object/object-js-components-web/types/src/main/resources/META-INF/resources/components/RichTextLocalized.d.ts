@@ -35,7 +35,7 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 		translated: string;
 		untranslated: string;
 	};
-	editorConfig: string;
+	editorConfig: object;
 	helpMessage?: string;
 	label: string;
 	onSelectedLocaleChange: (val: IItem) => void;

@@ -370,7 +370,7 @@ export default function EditNotificationTemplate({
 
 interface IProps {
 	baseResourceURL: string;
-	editorConfig: string;
+	editorConfig: object;
 	notificationTemplateId: number;
 }
 

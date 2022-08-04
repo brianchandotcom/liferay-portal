@@ -22,7 +22,7 @@ export default function EditNotificationTemplate({
 }: IProps): JSX.Element;
 interface IProps {
 	baseResourceURL: string;
-	editorConfig: string;
+	editorConfig: object;
 	notificationTemplateId: number;
 }
 export declare type TNotificationTemplate = {

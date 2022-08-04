@@ -477,8 +477,6 @@ definition {
 		Open.openRedirect(locator1 = "${portalURL}/web/site-name/test-page-name?previewCTCollectionId=${ctCollectionId2}");
 
 		Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
-
-		AssertConsoleTextPresent(value1 = "A class com.liferay.change.tracking.exception.NoSuchCollectionException");
 	}
 
 	@description = "This is the use case for LPS-158789."
@@ -520,8 +518,6 @@ definition {
 		Open.openRedirect(locator1 = "${portalURL}/web/site-name/test-page-name?previewCTCollectionId=${ctCollectionId}");
 
 		Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
-
-		AssertConsoleTextPresent(value1 = "A class com.liferay.portal.kernel.exception.PortalException");
 	}
 
 	@description = "LPS-136380 - Add localization for translated titles and content."
@@ -1225,8 +1221,6 @@ definition {
 		Open.openRedirect(locator1 = "${portalURL}/web/site-name/test-page-name?previewCTCollectionId=${ctCollectionId}");
 
 		Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
-
-		AssertConsoleTextPresent(value1 = "A class com.liferay.portal.kernel.security.auth.PrincipalException");
 	}
 
 	@description = "Assert Publications change details on Display Data Parents and Children Tabs"

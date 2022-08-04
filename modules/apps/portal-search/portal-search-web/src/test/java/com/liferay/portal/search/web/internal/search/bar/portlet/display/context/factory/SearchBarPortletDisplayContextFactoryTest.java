@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.portlet.preferences.PortletPreferencesLookup;
@@ -500,6 +501,17 @@ public class SearchBarPortletDisplayContextFactoryTest {
 			searchResponse
 		);
 
+		searchBarPortletDisplayContextFactory = Mockito.spy(
+			searchBarPortletDisplayContextFactory);
+
+		Mockito.doReturn(
+			_searchSuggestionsCompanyConfiguration
+		).when(
+			searchBarPortletDisplayContextFactory
+		).getSearchSuggestionsCompanyConfiguration(
+			0
+		);
+
 		return searchBarPortletDisplayContextFactory;
 	}
 
@@ -586,6 +598,9 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		Mockito.mock(PortletSharedSearchRequest.class);
 	private final SearchBarPrecedenceHelper _searchBarPrecedenceHelper =
 		Mockito.mock(SearchBarPrecedenceHelper.class);
+	private final SearchSuggestionsCompanyConfiguration
+		_searchSuggestionsCompanyConfiguration = Mockito.mock(
+			SearchSuggestionsCompanyConfiguration.class);
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

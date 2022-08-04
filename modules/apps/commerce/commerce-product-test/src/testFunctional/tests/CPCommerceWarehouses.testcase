@@ -1004,7 +1004,9 @@ definition {
 			key_toggleSwitchLabel = "${commerceChannel2}",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		Button.clickSave();
+		Button.click(button = "Save");
+
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
 		Click(
 			key_metadataSetName = "United States - Northeast",
@@ -1020,7 +1022,9 @@ definition {
 			key_toggleSwitchLabel = "${commerceChannel1}",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		Button.clickSave();
+		Button.click(button = "Save");
+
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 

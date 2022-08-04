@@ -231,7 +231,11 @@ definition {
 				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 		}
 
-		Button.clickSubmitButton();
+		Button.click(button = "Submit");
+
+		Refresh();
+
+		SelectFrameTop();
 
 		for (var productSku : list "${productSkuList}") {
 			WaitForPageLoad();

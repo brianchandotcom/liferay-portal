@@ -89,7 +89,7 @@ definition {
 		}
 
 		task ("And the Sales Manager edit the fields on the page") {
-			WaitForPageLoad();
+			Refresh();
 
 			CommerceEntry.clickEntryDropdownMenuItem(
 				entryName = "Terms and Condition Entry",

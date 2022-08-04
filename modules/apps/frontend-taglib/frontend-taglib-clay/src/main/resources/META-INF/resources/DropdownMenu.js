@@ -30,6 +30,7 @@ export default function DropdownMenu({
 	items,
 	label,
 	locale: _locale,
+	menuProps,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
 	...otherProps
@@ -41,6 +42,7 @@ export default function DropdownMenu({
 					'dropdown-action': actionsDropdown,
 				})}
 				items={normalizeDropdownItems(items) || []}
+				menuElementAttrs={menuProps}
 				trigger={
 					<ClayButton
 						className={classNames(cssClass, {

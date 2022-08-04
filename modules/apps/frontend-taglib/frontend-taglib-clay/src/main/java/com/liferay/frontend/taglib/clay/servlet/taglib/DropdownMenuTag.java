@@ -53,8 +53,16 @@ public class DropdownMenuTag extends ButtonTag {
 		return _dropdownItems;
 	}
 
+	public Map<String, String> getMenuProps() {
+		return _menuProps;
+	}
+
 	public void setDropdownItems(List<DropdownItem> dropdownItems) {
 		_dropdownItems = dropdownItems;
+	}
+
+	public void setMenuProps(Map<String, String> menuProps) {
+		_menuProps = menuProps;
 	}
 
 	@Override
@@ -64,6 +72,7 @@ public class DropdownMenuTag extends ButtonTag {
 		_buttonType = null;
 		_dropdownItems = null;
 		_empty = null;
+		_menuProps = null;
 	}
 
 	@Override
@@ -78,6 +87,7 @@ public class DropdownMenuTag extends ButtonTag {
 	@Override
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
 		props.put("items", _dropdownItems);
+		props.put("menuProps", _menuProps);
 
 		return super.prepareProps(props);
 	}
@@ -87,5 +97,6 @@ public class DropdownMenuTag extends ButtonTag {
 	private String _buttonType;
 	private List<DropdownItem> _dropdownItems;
 	private Boolean _empty;
+	private Map<String, String> _menuProps;
 
 }

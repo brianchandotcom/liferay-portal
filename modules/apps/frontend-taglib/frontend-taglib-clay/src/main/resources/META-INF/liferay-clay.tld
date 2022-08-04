@@ -579,6 +579,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>menuProps</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>monospaced</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

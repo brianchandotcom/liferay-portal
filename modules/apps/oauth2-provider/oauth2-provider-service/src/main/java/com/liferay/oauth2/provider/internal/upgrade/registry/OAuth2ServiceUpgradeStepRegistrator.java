@@ -20,6 +20,8 @@ import com.liferay.oauth2.provider.internal.upgrade.v4_0_1.OAuth2ApplicationAllo
 import com.liferay.oauth2.provider.internal.upgrade.v4_1_0.OAuth2ApplicationClientAuthenticationMethodUpgradeProcess;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 
@@ -89,6 +91,32 @@ public class OAuth2ServiceUpgradeStepRegistrator
 		registry.register(
 			"4.0.1", "4.1.0",
 			new OAuth2ApplicationClientAuthenticationMethodUpgradeProcess());
+
+		registry.register(
+			"4.1.0", "4.2.0",
+			new BaseUuidUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"OAuth2Application", "oAuth2ApplicationId"}
+					};
+				}
+
+			});
+
+		registry.register(
+			"4.2.0", "4.2.1",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"OAuth2Application", "oAuth2ApplicationId"}
+					};
+				}
+
+			});
 	}
 
 	@Reference

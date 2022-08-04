@@ -13,23 +13,9 @@
  */
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {getDescendantIds} from './getDescendantIds';
 import {getResponsiveConfig} from './getResponsiveConfig';
-import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
 import {isRequiredFormInput} from './isRequiredFormInput';
-
-function getDescendantIds(layoutData, itemId) {
-	const item = layoutData.items[itemId];
-
-	const descendantIds = [...item.children];
-
-	item.children.forEach((childId) => {
-		if (!isLayoutDataItemDeleted(layoutData, childId)) {
-			descendantIds.push(...getDescendantIds(layoutData, childId));
-		}
-	});
-
-	return descendantIds;
-}
 
 function isItemHidden(layoutData, itemId, selectedViewportSize) {
 	const item = layoutData?.items[itemId];

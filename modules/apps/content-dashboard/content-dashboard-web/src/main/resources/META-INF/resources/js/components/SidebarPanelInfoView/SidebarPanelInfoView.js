@@ -54,6 +54,7 @@ const SidebarPanelInfoView = ({
 	classPK,
 	createDate,
 	description,
+	downloadURL,
 	clipboard,
 	languageTag = 'en',
 	modifiedDate,
@@ -95,7 +96,7 @@ const SidebarPanelInfoView = ({
 
 	const showClipboard = clipboard && Object.keys(clipboard).length !== 0;
 
-	const hasActions = preview?.downloadURL || fetchSharingButtonURL;
+	const hasActions = downloadURL || fetchSharingButtonURL;
 
 	const handleError = useCallback(() => {
 		setError(true);
@@ -201,10 +202,10 @@ const SidebarPanelInfoView = ({
 
 					{hasActions && (
 						<div className="sidebar-section">
-							{preview?.downloadURL && (
+							{downloadURL && (
 								<ClayLink
 									className="btn btn-primary"
-									href={preview?.downloadURL}
+									href={downloadURL}
 								>
 									{Liferay.Language.get('download')}
 								</ClayLink>

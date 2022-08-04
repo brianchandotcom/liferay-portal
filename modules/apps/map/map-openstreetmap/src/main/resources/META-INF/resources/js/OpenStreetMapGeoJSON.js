@@ -18,7 +18,7 @@ import GeoJSONBase from '@liferay/map-common/js/GeoJSONBase';
  * OpenStreetMapGeoJSONBase
  * @review
  */
-class OpenStreetMapGeoJSONBase extends GeoJSONBase {
+export default class OpenStreetMapGeoJSONBase extends GeoJSONBase {
 
 	/**
 	 * Creates a new map geojson parser using OpenStreetMap's API
@@ -81,6 +81,3 @@ class OpenStreetMapGeoJSONBase extends GeoJSONBase {
 		};
 	}
 }
-
-export default OpenStreetMapGeoJSONBase;
-export {OpenStreetMapGeoJSONBase};

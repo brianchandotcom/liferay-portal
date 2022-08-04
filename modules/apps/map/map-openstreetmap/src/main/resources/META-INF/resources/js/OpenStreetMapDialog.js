@@ -11,23 +11,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-import State, {Config} from 'metal-state';
-
 /**
  * OpenStreetMapDialog
  * @review
  */
-class OpenStreetMapDialog extends State {
+export default class OpenStreetMapDialog {
 
 	/**
 	 * Creates a new map dialog using OpenStreetMap's API
-	 * @param  {Array} args List of arguments to be passed to State
 	 * @review
 	 */
-	constructor(...args) {
-		super(...args);
-
+	constructor() {
 		this._dialog = L.popup({
 			className: 'leaflet-popup',
 			minWidth: 400,
@@ -50,22 +44,3 @@ class OpenStreetMapDialog extends State {
 		this._dialog.openOn(this.map);
 	}
 }
-
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-OpenStreetMapDialog.STATE = {
-
-	/**
-	 * Map used for creating the dialog content
-	 * @review
-	 * @type {Object}
-	 */
-	map: Config.object(),
-};
-
-export default OpenStreetMapDialog;
-export {OpenStreetMapDialog};

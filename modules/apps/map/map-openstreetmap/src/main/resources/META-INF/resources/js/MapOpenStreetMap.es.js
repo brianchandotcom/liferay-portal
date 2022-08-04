@@ -15,10 +15,10 @@
 import MapBase from '@liferay/map-common/js/MapBase.es';
 import {Config} from 'metal-state';
 
-import OpenStreetMapDialog from './OpenStreetMapDialog.es';
-import OpenStreetMapGeoJSON from './OpenStreetMapGeoJSON.es';
-import OpenStreetMapGeocoder from './OpenStreetMapGeocoder.es';
-import OpenStreetMapMarker from './OpenStreetMapMarker.es';
+import OpenStreetMapDialog from './OpenStreetMapDialog';
+import OpenStreetMapGeoJSON from './OpenStreetMapGeoJSON';
+import OpenStreetMapGeocoder from './OpenStreetMapGeocoder';
+import OpenStreetMapMarker from './OpenStreetMapMarker';
 
 /**
  * MapOpenStreetMap

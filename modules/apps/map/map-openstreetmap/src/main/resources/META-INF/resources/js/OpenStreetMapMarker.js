@@ -18,7 +18,7 @@ import MarkerBase from '@liferay/map-common/js/MarkerBase';
  * OpenStreetMapMarker
  * @review
  */
-class OpenStreetMapMarker extends MarkerBase {
+export default class OpenStreetMapMarker extends MarkerBase {
 
 	/**
 	 * @inheritDoc
@@ -85,6 +85,3 @@ class OpenStreetMapMarker extends MarkerBase {
 		}
 	}
 }
-
-export default OpenStreetMapMarker;
-export {OpenStreetMapMarker};

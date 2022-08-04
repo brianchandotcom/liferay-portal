@@ -12,12 +12,12 @@
  * details.
  */
 
-import State from 'metal-state';
+const OPEN_STREET_MAP_URL = '//nominatim.openstreetmap.org/';
 
 /**
  * OpenStreetMapGeocoder
  */
-class OpenStreetMapGeocoder extends State {
+export default class OpenStreetMapGeocoder {
 
 	/**
 	 * Handles the server response of a successfull address forward
@@ -107,8 +107,7 @@ class OpenStreetMapGeocoder extends State {
  * @see OpenStreetMapGeocoder.forward()
  * @type {string}
  */
-OpenStreetMapGeocoder.TPL_FORWARD_GEOCODING_URL =
-	'//nominatim.openstreetmap.org/search?format=json&json_callback={callback}&q={query}';
+OpenStreetMapGeocoder.TPL_FORWARD_GEOCODING_URL = `${OPEN_STREET_MAP_URL}search?format=json&json_callback={callback}&q={query}`;
 
 /**
  * Url template used for OpenStreetMapGeocoder.reverse() method
@@ -116,8 +115,4 @@ OpenStreetMapGeocoder.TPL_FORWARD_GEOCODING_URL =
  * @see OpenStreetMapGeocoder.reverse()
  * @type {string}
  */
-OpenStreetMapGeocoder.TPL_REVERSE_GEOCODING_URL =
-	'//nominatim.openstreetmap.org/reverse?format=json&json_callback={callback}&lat={lat}&lon={lng}';
-
-export default OpenStreetMapGeocoder;
-export {OpenStreetMapGeocoder};
+OpenStreetMapGeocoder.TPL_REVERSE_GEOCODING_URL = `${OPEN_STREET_MAP_URL}reverse?format=json&json_callback={callback}&lat={lat}&lon={lng}`;

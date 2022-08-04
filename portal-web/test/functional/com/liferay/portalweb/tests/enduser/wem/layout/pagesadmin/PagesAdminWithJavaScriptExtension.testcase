@@ -543,6 +543,286 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153658. The site designer could configure the load attribute of JavaScript Extension."
+	@priority = "5"
+	test ConfigureLoadAttributeOfJavaScriptExtension {
+		task ("Given a site designer has a page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("When the site designer adds a JavaScript extension to page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "FontSize",
+				insertion = "In Page Head");
+		}
+
+		task ("Then the site designer could configure the load attribute of JavaScript extension") {
+			Select(
+				key_tableEntry = "FontSize",
+				locator1 = "LexiconTable#TABLE_ENTRY_SELECT_FIELD",
+				value1 = "async");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Test Page Name");
+
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "font-size",
+				value1 = "20px");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			Select(
+				key_tableEntry = "FontSize",
+				locator1 = "LexiconTable#TABLE_ENTRY_SELECT_FIELD",
+				value1 = "defer");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Test Page Name");
+
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "font-size",
+				value1 = "20px");
+		}
+
+		task ("Given a site designer has a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Page Template Name",
+				pageTemplateType = "Content Page Template");
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("When the site designer adds a JavaScript extension to content page template") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "FontSize",
+				insertion = "In Page Head");
+		}
+
+		task ("Then the site designer could configure the load attribute of JavaScript extension") {
+			Select(
+				key_tableEntry = "FontSize",
+				locator1 = "LexiconTable#TABLE_ENTRY_SELECT_FIELD",
+				value1 = "async");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "font-size",
+				value1 = "20px");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			Select(
+				key_tableEntry = "FontSize",
+				locator1 = "LexiconTable#TABLE_ENTRY_SELECT_FIELD",
+				value1 = "defer");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "font-size",
+				value1 = "20px");
+		}
+
+		task ("Given a site designer has a master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Master Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Master Page Template");
+		}
+
+		task ("When the site designer adds a JavaScript extension to master page") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "FontSize",
+				insertion = "In Page Head");
+		}
+
+		task ("Then the site designer could configure the load attribute of JavaScript extension") {
+			Select(
+				key_tableEntry = "FontSize",
+				locator1 = "LexiconTable#TABLE_ENTRY_SELECT_FIELD",
+				value1 = "async");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "font-size",
+				value1 = "20px");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Select(
+				key_tableEntry = "FontSize",
+				locator1 = "LexiconTable#TABLE_ENTRY_SELECT_FIELD",
+				value1 = "defer");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "font-size",
+				value1 = "20px");
+		}
+
+		task ("Given a site designer accesses to the Advanced settings of Pages") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			WaitForPageLoad();
+
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Configuration");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+		}
+
+		task ("When the site designer adds a JavaScript extension to Pages") {
+			Panel.expandPanel(panel = "JavaScript");
+
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "FontSize",
+				insertion = "In Page Head");
+		}
+
+		task ("Then the site designer could configure the load attribute of JavaScript extension") {
+			Select(
+				key_tableEntry = "FontSize",
+				locator1 = "LexiconTable#TABLE_ENTRY_SELECT_FIELD",
+				value1 = "async");
+
+			PortletEntry.save();
+
+			ContentPages.addPage(pageName = "Content Page Name");
+
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "font-size",
+				value1 = "20px");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			WaitForPageLoad();
+
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Configuration");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			Select(
+				key_tableEntry = "FontSize",
+				locator1 = "LexiconTable#TABLE_ENTRY_SELECT_FIELD",
+				value1 = "defer");
+
+			PortletEntry.save();
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "font-size",
+				value1 = "20px");
+		}
+	}
+
 	@description = "This is a test for LPS-153655 and LPS-153658. Page should inherit the JavaScript extension from master page. The inherited JavaScript extensions from master should be read-only mode and keep insertion configuration."
 	@priority = "4"
 	test ViewInheritedJavaScriptExtensionFromMasterPage {

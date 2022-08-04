@@ -34,6 +34,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -97,51 +98,102 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			CommerceUtil.getCommerceAccountId(commerceContext),
 			commerceContext.getCommerceChannelGroupId(), cpDefinitionId);
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		hideDefaultErrorMessage(actionRequest);
+		hideDefaultSuccessMessage(actionRequest);
 
 		try {
 			CPInstance cpInstance = _cpInstanceHelper.fetchCPInstance(
 				cpDefinitionId, ddmFormValues);
 
-			if (cpInstance != null) {
-				jsonObject.put(
-					"cpInstanceExist", true
-				).put(
-					"cpInstanceId", cpInstance.getCPInstanceId()
-				).put(
-					"gtin", cpInstance.getGtin()
-				).put(
-					"manufacturerPartNumber",
-					cpInstance.getManufacturerPartNumber()
-				).put(
-					"sku", cpInstance.getSku()
-				);
+			JSONObject jsonObject = JSONUtil.put(
+				"cpInstanceExist",
+				() -> {
+					if (cpInstance == null) {
+						return false;
+					}
 
-				String incomingQuantityLabel =
-					_cpContentHelper.getIncomingQuantityLabel(
+					return true;
+				}
+			).put(
+				"cpInstanceId",
+				() -> {
+					if (cpInstance == null) {
+						return null;
+					}
+
+					return cpInstance.getCPInstanceId();
+				}
+			).put(
+				"displayDiscountLevels",
+				() -> {
+					if (cpInstance == null) {
+						return null;
+					}
+
+					CommercePriceConfiguration commercePriceConfiguration =
+						_configurationProvider.getConfiguration(
+							CommercePriceConfiguration.class,
+							new SystemSettingsLocator(
+								CommerceConstants.SERVICE_NAME_COMMERCE_PRICE));
+
+					return commercePriceConfiguration.displayDiscountLevels();
+				}
+			).put(
+				"gtin",
+				() -> {
+					if (cpInstance == null) {
+						return null;
+					}
+
+					return cpInstance.getGtin();
+				}
+			).put(
+				"incomingQuantityLabel",
+				() -> {
+					if (cpInstance == null) {
+						return null;
+					}
+
+					return _cpContentHelper.getIncomingQuantityLabel(
 						themeDisplay.getRequest(), cpInstance.getSku());
+				}
+			).put(
+				"manufacturerPartNumber",
+				() -> {
+					if (cpInstance == null) {
+						return null;
+					}
 
-				jsonObject.put("incomingQuantityLabel", incomingQuantityLabel);
+					return cpInstance.getManufacturerPartNumber();
+				}
+			).put(
+				"prices",
+				() -> {
+					if (cpInstance == null) {
+						return null;
+					}
 
-				CommercePriceConfiguration commercePriceConfiguration =
-					_configurationProvider.getConfiguration(
-						CommercePriceConfiguration.class,
-						new SystemSettingsLocator(
-							CommerceConstants.SERVICE_NAME_COMMERCE_PRICE));
-
-				jsonObject.put(
-					"displayDiscountLevels",
-					commercePriceConfiguration.displayDiscountLevels()
-				).put(
-					"prices",
-					_jsonFactory.createJSONObject(
+					return _jsonFactory.createJSONObject(
 						_OBJECT_MAPPER.writeValueAsString(
 							_productHelper.getPriceModel(
 								cpInstance.getCPInstanceId(), quantity,
 								commerceContext, ddmFormValues,
-								themeDisplay.getLocale())))
-				);
+								themeDisplay.getLocale())));
+				}
+			).put(
+				"sku",
+				() -> {
+					if (cpInstance == null) {
+						return null;
+					}
 
+					return cpInstance.getSku();
+				}
+			).put(
+				"success", true
+			);
+
+			if (cpInstance != null) {
 				List<CPContentContributor> cpContentContributors =
 					_cpContentContributorRegistry.getCPContentContributors();
 
@@ -161,26 +213,20 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 					}
 				}
 			}
-			else {
-				jsonObject.put("cpInstanceExist", false);
-			}
 
-			jsonObject.put("success", true);
+			writeJSON(actionResponse, jsonObject);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 
-			jsonObject.put(
-				"error", exception.getMessage()
-			).put(
-				"success", false
-			);
+			writeJSON(
+				actionResponse,
+				JSONUtil.put(
+					"error", exception.getMessage()
+				).put(
+					"success", false
+				));
 		}
-
-		hideDefaultErrorMessage(actionRequest);
-		hideDefaultSuccessMessage(actionRequest);
-
-		writeJSON(actionResponse, jsonObject);
 	}
 
 	protected void writeJSON(ActionResponse actionResponse, Object object)

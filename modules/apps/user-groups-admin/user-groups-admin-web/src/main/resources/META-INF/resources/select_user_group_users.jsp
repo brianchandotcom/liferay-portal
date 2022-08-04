@@ -30,21 +30,6 @@ else {
 
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUsers");
 
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem entriesNavigationItem = new NavigationItem();
-
-entriesNavigationItem.setActive(true);
-entriesNavigationItem.setLabel(LanguageUtil.get(request, "users"));
-
-navigationItems.add(entriesNavigationItem);
-%>
-
-<clay:navigation-bar
-	navigationItems="<%= navigationItems %>"
-/>
-
-<%
 EditUserGroupAssignmentsManagementToolbarDisplayContext editUserGroupAssignmentsManagementToolbarDisplayContext = new EditUserGroupAssignmentsManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle, "/select_user_group_users.jsp");
 
 LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();

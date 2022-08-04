@@ -28,7 +28,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.admin.kernel.util.PortalMyAccountApplicationType" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -78,8 +77,7 @@ page import="com.liferay.user.groups.admin.web.internal.display.context.SelectUs
 page import="com.liferay.user.groups.admin.web.internal.display.context.ViewUserGroupsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.LinkedHashMap" %><%@
+<%@ page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@

@@ -450,7 +450,7 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		for (var entryCount : list "1,2,3,4") {
+		for (var entryCount : list "1,2") {
 			DMDocument.addWithWorkflowCP(
 				dmDocumentDescription = "DM Document 1 in Folder",
 				dmDocumentFile = "Document_${entryCount}.jpg",

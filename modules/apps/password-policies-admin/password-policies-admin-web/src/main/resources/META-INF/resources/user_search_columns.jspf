@@ -52,12 +52,8 @@
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("icon") %>'>
 			<liferay-ui:search-container-column-text>
-				<liferay-frontend:user-vertical-card
-					resultRow="<%= row %>"
-					rowChecker="<%= memberSearchContainer.getRowChecker() %>"
-					subtitle="<%= user2.getScreenName() %>"
-					title="<%= name %>"
-					userId="<%= user2.getUserId() %>"
+				<clay:user-card
+					userCard="<%= new UserVerticalCard(renderRequest, memberSearchContainer.getRowChecker(), user2) %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</c:when>

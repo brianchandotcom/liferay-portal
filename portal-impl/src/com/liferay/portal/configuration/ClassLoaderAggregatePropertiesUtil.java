@@ -26,7 +26,8 @@ import com.liferay.portal.kernel.util.SystemProperties;
 public class ClassLoaderAggregatePropertiesUtil {
 
 	public static ClassLoaderAggregateProperties create(
-		ClassLoader classLoader, String webId, String componentName) {
+		ClassLoader classLoader, long companyId, String webId,
+		String componentName) {
 
 		SystemProperties.set("base.path", ".");
 
@@ -42,7 +43,8 @@ public class ClassLoaderAggregatePropertiesUtil {
 		}
 
 		EnvPropertiesUtil.loadEnvOverrides(
-			_ENV_OVERRIDE_PREFIX, classLoaderAggregateProperties::setProperty);
+			_ENV_OVERRIDE_PREFIX, companyId,
+			classLoaderAggregateProperties::setProperty);
 
 		return classLoaderAggregateProperties;
 	}

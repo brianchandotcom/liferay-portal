@@ -32,7 +32,8 @@ import java.util.function.BiConsumer;
 public class EnvPropertiesUtil {
 
 	public static void loadEnvOverrides(
-		String envPrefix, BiConsumer<String, String> biConsumer) {
+		String envPrefix, long companyId,
+		BiConsumer<String, String> biConsumer) {
 
 		Map<String, String> env = System.getenv();
 

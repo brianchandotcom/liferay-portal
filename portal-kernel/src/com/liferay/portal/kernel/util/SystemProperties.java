@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.model.CompanyConstants;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -172,7 +174,8 @@ public class SystemProperties {
 		PropertiesUtil.fromProperties(properties, _properties);
 
 		EnvPropertiesUtil.loadEnvOverrides(
-			SYSTEM_ENV_OVERRIDE_PREFIX, SystemProperties::set);
+			SYSTEM_ENV_OVERRIDE_PREFIX, CompanyConstants.SYSTEM,
+			SystemProperties::set);
 
 		if (urls != null) {
 			for (URL url : urls) {

@@ -53,7 +53,8 @@ public class ConfigurationImpl
 		ClassLoader classLoader, String name, long companyId, String webId) {
 
 		_classLoaderAggregateProperties =
-			ClassLoaderAggregatePropertiesUtil.create(classLoader, webId, name);
+			ClassLoaderAggregatePropertiesUtil.create(
+				classLoader, companyId, webId, name);
 
 		printSources(companyId, webId);
 	}

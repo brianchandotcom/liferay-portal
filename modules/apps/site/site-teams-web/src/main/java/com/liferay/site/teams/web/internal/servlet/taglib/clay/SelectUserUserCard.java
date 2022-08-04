@@ -17,6 +17,7 @@ package com.liferay.site.teams.web.internal.servlet.taglib.clay;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseUserCard;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.taglib.util.LexiconUtil;
 
 import javax.portlet.RenderRequest;
 
@@ -29,6 +30,11 @@ public class SelectUserUserCard extends BaseUserCard {
 		User user, RenderRequest renderRequest, RowChecker rowChecker) {
 
 		super(user, renderRequest, rowChecker);
+	}
+
+	@Override
+	public String getUserColorClass() {
+		return "sticker-user-icon " + LexiconUtil.getUserColorCssClass(user);
 	}
 
 }

@@ -16,6 +16,7 @@ package com.liferay.journal.web.internal.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
@@ -391,7 +392,18 @@ public class JournalArticleAssetRenderer
 		Layout layout = _article.getLayout();
 
 		if (layout == null) {
-			return noSuchEntryRedirect;
+			AssetRendererFactory<JournalArticle> assetRendererFactory =
+				getAssetRendererFactory();
+
+			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+				getClassName(), getClassPK());
+
+			layout = _getArticleLayout(
+				assetEntry.getLayoutUuid(), assetEntry.getGroupId());
+
+			if (layout == null) {
+				return noSuchEntryRedirect;
+			}
 		}
 
 		String friendlyURL = JournalHelperUtil.createURLPattern(
@@ -563,6 +575,22 @@ public class JournalArticleAssetRenderer
 			portletRequestModel, themeDisplay);
 	}
 
+	private Layout _getArticleLayout(String layoutUuid, long groupId) {
+		if (Validator.isNull(layoutUuid)) {
+			return null;
+		}
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layoutUuid, groupId, false);
+
+		if (layout == null) {
+			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layoutUuid, groupId, true);
+		}
+
+		return layout;
+	}
+
 	private String _getHitLayoutURL(
 			String noSuchEntryRedirect, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -613,7 +641,11 @@ public class JournalArticleAssetRenderer
 		AssetRendererFactory<JournalArticle> assetRendererFactory =
 			getAssetRendererFactory();
 
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			getClassName(), getClassPK());
+
 		if (Validator.isNull(article.getLayoutUuid()) &&
+			Validator.isNull(assetEntry.getLayoutUuid()) &&
 			!AssetDisplayPageUtil.hasAssetDisplayPage(
 				groupId,
 				assetRendererFactory.getAssetEntry(

@@ -138,6 +138,9 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"description", contentDashboardItem.getDescription(locale)
 				).put(
+					"downloadURL",
+					_getDownloadURL(contentDashboardItem, httpServletRequest)
+				).put(
 					"fetchSharingButtonURL",
 					_getFetchSharingButtonURL(
 						contentDashboardItem, httpServletRequest)
@@ -309,6 +312,24 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 
 				return first;
 			});
+	}
+
+	private String _getDownloadURL(
+		ContentDashboardItem contentDashboardItem,
+		HttpServletRequest httpServletRequest) {
+
+		List<ContentDashboardItemAction> contentDashboardItemActions =
+			contentDashboardItem.getContentDashboardItemActions(
+				httpServletRequest, ContentDashboardItemAction.Type.DOWNLOAD);
+
+		if (ListUtil.isNotEmpty(contentDashboardItemActions)) {
+			ContentDashboardItemAction contentDashboardItemAction =
+				contentDashboardItemActions.get(0);
+
+			return contentDashboardItemAction.getURL();
+		}
+
+		return null;
 	}
 
 	private String _getFetchSharingButtonURL(

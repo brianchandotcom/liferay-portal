@@ -14,6 +14,7 @@
 
 package com.liferay.saml.addon.keep.alive.web.internal.upgrade.registry;
 
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.saml.addon.keep.alive.web.internal.upgrade.v1_0_0.PortletIdUpgradeProcess;
 
@@ -28,7 +29,9 @@ public class SamlAddonKeepAliveWebUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.0", new PortletIdUpgradeProcess());
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeProcess());
+
+		registry.register("0.0.1", "1.0.0", new PortletIdUpgradeProcess());
 	}
 
 }

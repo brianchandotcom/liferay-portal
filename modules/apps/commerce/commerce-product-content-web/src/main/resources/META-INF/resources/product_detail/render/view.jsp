@@ -110,7 +110,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 				<p class="my-2 <%= hideCssClass %>" data-text-cp-instance-sku>
 					<span class="font-weight-semi-bold">
-						<%= LanguageUtil.get(request, "sku-colon") %>
+						<liferay-ui:message arguments="<%= StringPool.BLANK %>" key="sku-x" />
 					</span>
 					<span>
 						<%= (cpSku == null) ? StringPool.BLANK : HtmlUtil.escape(cpSku.getSku()) %>
@@ -130,7 +130,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 				<p class="my-2 <%= hideCssClass %>" data-text-cp-instance-gtin>
 					<span class="font-weight-semi-bold">
-						<%= LanguageUtil.get(request, "gtin-colon") %>
+						<liferay-ui:message arguments="<%= StringPool.BLANK %>" key="gtin-x" />
 					</span>
 					<span>
 						<%= (cpSku == null) ? StringPool.BLANK : HtmlUtil.escape(cpSku.getGtin()) %>

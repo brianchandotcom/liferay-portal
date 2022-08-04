@@ -38,11 +38,11 @@ public class CPMediaImpl implements CPMedia {
 		_downloadURL = defaultURL;
 
 		_id = fileEntry.getFileEntryId();
-		_url = defaultURL;
-		_thumbnailURL = defaultURL;
 		_mimeType = fileEntry.getMimeType();
-		_title = fileEntry.getTitle();
 		_size = 0;
+		_thumbnailURL = defaultURL;
+		_title = fileEntry.getTitle();
+		_url = defaultURL;
 	}
 
 	public CPMediaImpl(long groupId) throws PortalException {
@@ -52,10 +52,10 @@ public class CPMediaImpl implements CPMedia {
 
 		_id = 0;
 		_mimeType = null;
+		_size = 0;
 		_thumbnailURL = defaultURL;
 		_title = null;
 		_url = defaultURL;
-		_size = 0;
 	}
 
 	public CPMediaImpl(

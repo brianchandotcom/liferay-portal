@@ -26,6 +26,7 @@ LayoutActionsDisplayContext layoutActionsDisplayContext = (LayoutActionsDisplayC
 		displayType="unstyled"
 		dropdownItems="<%= layoutActionsDisplayContext.getDropdownItems() %>"
 		icon="ellipsis-v"
+		menuProps='<%= HashMapBuilder.put("className", "cadmin").build() %>'
 		monospaced="<%= true %>"
 		propsTransformer="js/LayoutActionDropdownPropsTransformer"
 		small="<%= true %>"

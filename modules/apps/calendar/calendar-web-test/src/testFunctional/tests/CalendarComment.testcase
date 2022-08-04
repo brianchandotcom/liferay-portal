@@ -92,7 +92,6 @@ definition {
 			user = "Test Test");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test AddToEventRegular {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -120,7 +119,6 @@ definition {
 			user = "Test Test");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test AddToEventRepeating {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

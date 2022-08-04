@@ -193,7 +193,6 @@ definition {
 			calendarName = "${siteName}");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test CanViewCommentFromImportedCalendar {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

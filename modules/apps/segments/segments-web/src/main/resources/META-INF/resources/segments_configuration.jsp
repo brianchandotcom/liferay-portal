@@ -19,10 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
 if (Validator.isNull(redirect)) {
-	redirect = portletURL.toString();
+	redirect = currentURL;
 }
 
 SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayContext = (SegmentsCompanyConfigurationDisplayContext)request.getAttribute(SegmentsCompanyConfigurationDisplayContext.class.getName());
@@ -64,6 +62,8 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 	</h2>
 
 	<aui:form action="<%= segmentsCompanyConfigurationDisplayContext.getBindConfigurationActionURL() %>" cssClass="mt-3" method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+
 		<c:if test="<%= !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>">
 			<clay:alert
 				cssClass="c-my-4"

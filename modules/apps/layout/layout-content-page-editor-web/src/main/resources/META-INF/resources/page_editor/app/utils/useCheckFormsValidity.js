@@ -12,12 +12,15 @@
  * details.
  */
 
+import {FRAGMENT_ENTRY_TYPES} from '../config/constants/fragmentEntryTypes';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useSetFormValidations} from '../contexts/FormValidationContext';
 import {useGlobalContext} from '../contexts/GlobalContext';
 import {useSelectorRef} from '../contexts/StoreContext';
 import FormService from '../services/FormService';
 import {CACHE_KEYS, getCacheItem, getCacheKey} from './cache';
+import {getDescendantIds} from './getDescendantIds';
 import {FORM_ERROR_TYPES} from './getFormErrorDescription';
 import hasRequiredInputChild from './hasRequiredInputChild';
 import hasVisibleSubmitChild from './hasVisibleSubmitChild';
@@ -46,6 +49,16 @@ export default function useCheckFormsValidity() {
 		forms.forEach((form) => {
 			if (!hasVisibleSubmitChild(form.itemId, globalContext)) {
 				addError(validations, form, FORM_ERROR_TYPES.missingSubmit);
+			}
+
+			if (
+				hasUnmappedInputChild(
+					form.itemId,
+					fragmentEntryLinks,
+					layoutData
+				)
+			) {
+				addError(validations, form, FORM_ERROR_TYPES.missingFragments);
 			}
 		});
 
@@ -129,4 +142,32 @@ function getFormItems(layoutData) {
 			item.config.classNameId !== '0' &&
 			!isLayoutDataItemDeleted(layoutData, item.itemId)
 	);
+}
+
+function hasUnmappedInputChild(formId, fragmentEntryLinks, layoutData) {
+	const descendantIds = getDescendantIds(layoutData, formId);
+
+	return descendantIds.some((descendantId) => {
+		const item = layoutData.items[descendantId];
+
+		if (item.type !== LAYOUT_DATA_ITEM_TYPES.fragment) {
+			return false;
+		}
+
+		const fragmentEntryLink =
+			fragmentEntryLinks[item.config.fragmentEntryLinkId];
+
+		if (
+			fragmentEntryLink.fragmentEntryType !== FRAGMENT_ENTRY_TYPES.input
+		) {
+			return false;
+		}
+
+		const {inputFieldId} =
+			fragmentEntryLink.editableValues[
+				FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+			] || {};
+
+		return !inputFieldId;
+	});
 }

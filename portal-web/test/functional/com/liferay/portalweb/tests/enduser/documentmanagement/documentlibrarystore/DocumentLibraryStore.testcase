@@ -259,9 +259,9 @@ definition {
 
 		var tempDir = PropsUtil.get("app.server.temp.dir");
 		var displayDateHour = DateUtil.getFormattedCurrentDate("HH", "UTC");
-		var displayDateDay = DateUtil.getFormattedCurrentDate("dd");
-		var displayDateMonth = DateUtil.getFormattedCurrentDate("MM");
-		var displayDateYear = DateUtil.getFormattedCurrentDate("yyyy");
+		var displayDateDay = DateUtil.getFormattedCurrentDate("dd", "UTC");
+		var displayDateMonth = DateUtil.getFormattedCurrentDate("MM", "UTC");
+		var displayDateYear = DateUtil.getFormattedCurrentDate("yyyy", "UTC");
 
 		var folderBeforeReIndex = FileUtil.listFiles("${tempDir}/liferay/s3/${displayDateYear}/${displayDateMonth}/${displayDateDay}/${displayDateHour}");
 

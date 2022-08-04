@@ -104,6 +104,7 @@ export {default as fetch} from './liferay/util/fetch.es';
 export {default as focusFormField} from './liferay/util/focus_form_field';
 export {default as getPortletId} from './liferay/util/get_portlet_id';
 export {default as getOpener} from './liferay/util/get_opener';
+export {default as getTop} from './liferay/util/get_top';
 export {default as getWindow} from './liferay/util/get_window';
 export {default as inBrowserView} from './liferay/util/in_browser_view';
 export {default as isObject} from './liferay/util/is_object';

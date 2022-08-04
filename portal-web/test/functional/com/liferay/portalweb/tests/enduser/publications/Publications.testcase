@@ -773,6 +773,7 @@ definition {
 
 	@priority = "4"
 	test IsBrowserHistoryPreserved {
+		property app.server.types = "jboss,tomcat,websphere,wildfly";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "Publications#IsBrowserHistoryPreserved";
 

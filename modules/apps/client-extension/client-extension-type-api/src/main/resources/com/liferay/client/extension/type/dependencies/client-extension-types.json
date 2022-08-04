@@ -216,5 +216,33 @@
 				"type": "string"
 			}
 		]
+	},
+	{
+		"description": "This is a description.",
+		"name": "themeJS",
+		"properties": [
+			{
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"default": "https://www.liferay.com",
+				"name": "sourceCodeURL",
+				"type": "string"
+			},
+			{
+				"name": "type",
+				"type": "string"
+			},
+			{
+				"default": "",
+				"name": "url",
+				"type": "string"
+			}
+		]
 	}
 ]

@@ -1468,15 +1468,46 @@ public class BundleSiteInitializer implements SiteInitializer {
 				siteDefaultLocale, jsonObject.getString("friendlyURL"));
 		}
 
-		Layout layout = _layoutLocalService.addLayout(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			jsonObject.getBoolean("private"), parentLayoutId, nameMap,
-			SiteInitializerUtil.toMap(jsonObject.getString("title_i18n")),
-			SiteInitializerUtil.toMap(jsonObject.getString("description_i18n")),
-			SiteInitializerUtil.toMap(jsonObject.getString("keywords_i18n")),
-			SiteInitializerUtil.toMap(jsonObject.getString("robots_i18n")),
-			type, null, jsonObject.getBoolean("hidden"),
-			jsonObject.getBoolean("system"), friendlyURLMap, serviceContext);
+		String friendlyURL = StringUtil.toLowerCase(
+			"/" + _replace(nameMap.get(siteDefaultLocale), " ", "-"));
+
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			serviceContext.getScopeGroupId(), jsonObject.getBoolean("private"),
+			friendlyURL);
+
+		if (layout == null) {
+			layout = _layoutLocalService.addLayout(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				jsonObject.getBoolean("private"), parentLayoutId, nameMap,
+				SiteInitializerUtil.toMap(jsonObject.getString("title_i18n")),
+				SiteInitializerUtil.toMap(
+					jsonObject.getString("description_i18n")),
+				SiteInitializerUtil.toMap(
+					jsonObject.getString("keywords_i18n")),
+				SiteInitializerUtil.toMap(jsonObject.getString("robots_i18n")),
+				type, null, jsonObject.getBoolean("hidden"),
+				jsonObject.getBoolean("system"), friendlyURLMap,
+				serviceContext);
+		}
+		else {
+
+			URL url = _servletContext.getResource(parentResourcePath + "/logo.png");
+
+			layout = _layoutLocalService.updateLayout(
+				serviceContext.getScopeGroupId(),
+				jsonObject.getBoolean("private"), layout.getLayoutId(),
+				parentLayoutId, nameMap,
+				SiteInitializerUtil.toMap(jsonObject.getString("title_i18n")),
+				SiteInitializerUtil.toMap(
+					jsonObject.getString("description_i18n")),
+				SiteInitializerUtil.toMap(
+					jsonObject.getString("keywords_i18n")),
+				SiteInitializerUtil.toMap(jsonObject.getString("robots_i18n")),
+				type, jsonObject.getBoolean("hidden"), friendlyURLMap, layout.getIconImage(),
+				FileUtil.getBytes(url.openStream()), layout.getStyleBookEntryId(),
+				layout.getFaviconFileEntryId(), layout.getMasterLayoutPlid(),
+				serviceContext);
+		}
 
 		_setResourcePermissions(
 			layout.getCompanyId(), layout.getModelClassName(),

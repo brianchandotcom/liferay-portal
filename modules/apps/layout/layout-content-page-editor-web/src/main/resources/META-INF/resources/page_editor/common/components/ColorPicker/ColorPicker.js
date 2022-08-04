@@ -209,6 +209,12 @@ export function ColorPicker({
 		setColor(value);
 	};
 
+	const onKeyDownInput = (event) => {
+		if (event.key === 'Enter') {
+			onBlurInput(event);
+		}
+	};
+
 	return (
 		<ClayForm.Group small>
 			<label className={classNames({'sr-only': !showLabel})} id={labelId}>
@@ -287,6 +293,7 @@ export function ColorPicker({
 									id={inputId}
 									onBlur={onBlurInput}
 									onChange={onChangeInput}
+									onKeyDown={onKeyDownInput}
 									ref={inputRef}
 									sizing="sm"
 									value={

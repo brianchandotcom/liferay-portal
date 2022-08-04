@@ -336,6 +336,34 @@ public class NotificationQueueEntry implements Serializable {
 	protected Date sentDate;
 
 	@Schema
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	@JsonIgnore
+	public void setStatus(
+		UnsafeSupplier<Integer, Exception> statusUnsafeSupplier) {
+
+		try {
+			status = statusUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer status;
+
+	@Schema
 	public String getSubject() {
 		return subject;
 	}
@@ -598,6 +626,16 @@ public class NotificationQueueEntry implements Serializable {
 			sb.append(liferayToJSONDateFormat.format(sentDate));
 
 			sb.append("\"");
+		}
+
+		if (status != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append(status);
 		}
 
 		if (subject != null) {

@@ -979,6 +979,14 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (notificationQueueEntry.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("subject", additionalAssertFieldName)) {
 				if (notificationQueueEntry.getSubject() == null) {
 					valid = false;
@@ -1209,6 +1217,17 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				if (!Objects.deepEquals(
 						notificationQueueEntry1.getSentDate(),
 						notificationQueueEntry2.getSentDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationQueueEntry1.getStatus(),
+						notificationQueueEntry2.getStatus())) {
 
 					return false;
 				}
@@ -1453,6 +1472,12 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("status")) {
+			sb.append(String.valueOf(notificationQueueEntry.getStatus()));
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("subject")) {
 			sb.append("'");
 			sb.append(String.valueOf(notificationQueueEntry.getSubject()));
@@ -1541,6 +1566,7 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				priority = RandomTestUtil.randomDouble();
 				sent = RandomTestUtil.randomBoolean();
 				sentDate = RandomTestUtil.nextDate();
+				status = RandomTestUtil.randomInt();
 				subject = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				to = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				toName = StringUtil.toLowerCase(RandomTestUtil.randomString());

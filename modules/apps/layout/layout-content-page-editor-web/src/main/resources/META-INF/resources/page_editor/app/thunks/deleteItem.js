@@ -137,7 +137,11 @@ function findPortletIds(itemId, layoutData, fragmentEntryLinks) {
 function maybeShowAlert(layoutData, itemId, fragmentEntryLinks) {
 	const item = layoutData?.items?.[itemId];
 
-	if (!item || !hasFormParent(item, layoutData)) {
+	if (
+		!item ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.form ||
+		!hasFormParent(item, layoutData)
+	) {
 		return null;
 	}
 

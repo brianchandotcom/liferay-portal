@@ -84,7 +84,7 @@ export default function SearchBar({
 		},
 		variables: {
 			currentURL: window.location.href,
-			destinationFriendlyURL: !searchURL.trim().length
+			destinationFriendlyURL: searchURL.trim().length
 				? searchURL
 				: '/search',
 			groupId: Liferay.ThemeDisplay.getScopeGroupId(),

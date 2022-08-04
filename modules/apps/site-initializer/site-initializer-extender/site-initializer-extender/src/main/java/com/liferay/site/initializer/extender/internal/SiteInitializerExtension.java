@@ -42,6 +42,7 @@ import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -115,6 +116,8 @@ public class SiteInitializerExtension {
 		ListTypeDefinitionResource.Factory listTypeDefinitionResourceFactory,
 		ListTypeEntryResource listTypeEntryResource,
 		ListTypeEntryResource.Factory listTypeEntryResourceFactory,
+		NotificationTemplateResource.Factory
+			notificationTemplateResourceFactory,
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -162,12 +165,12 @@ public class SiteInitializerExtension {
 			layoutPageTemplateStructureLocalService, layoutSetLocalService,
 			listTypeDefinitionResource, listTypeDefinitionResourceFactory,
 			listTypeEntryResource, listTypeEntryResourceFactory,
-			objectActionLocalService, objectDefinitionLocalService,
-			objectDefinitionResourceFactory, objectRelationshipResourceFactory,
-			objectEntryLocalService, organizationLocalService,
-			organizationResourceFactory, portal, resourceActionLocalService,
-			resourcePermissionLocalService, roleLocalService,
-			sapEntryLocalService, settingsFactory,
+			notificationTemplateResourceFactory, objectActionLocalService,
+			objectDefinitionLocalService, objectDefinitionResourceFactory,
+			objectRelationshipResourceFactory, objectEntryLocalService,
+			organizationLocalService, organizationResourceFactory, portal,
+			resourceActionLocalService, resourcePermissionLocalService,
+			roleLocalService, sapEntryLocalService, settingsFactory,
 			siteNavigationMenuItemLocalService,
 			siteNavigationMenuItemTypeRegistry, siteNavigationMenuLocalService,
 			structuredContentFolderResourceFactory, styleBookEntryZipProcessor,

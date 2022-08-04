@@ -42,6 +42,7 @@ import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -133,7 +134,8 @@ public class SiteInitializerExtender
 				_layoutPageTemplateStructureLocalService,
 				_layoutSetLocalService, _listTypeDefinitionResource,
 				_listTypeDefinitionResourceFactory, _listTypeEntryResource,
-				_listTypeEntryResourceFactory, _objectActionLocalService,
+				_listTypeEntryResourceFactory,
+				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectRelationshipResourceFactory, _objectEntryLocalService,
 				_organizationLocalService, _organizationResourceFactory,
@@ -241,7 +243,8 @@ public class SiteInitializerExtender
 				_layoutPageTemplateStructureLocalService,
 				_layoutSetLocalService, _listTypeDefinitionResource,
 				_listTypeDefinitionResourceFactory, _listTypeEntryResource,
-				_listTypeEntryResourceFactory, _objectActionLocalService,
+				_listTypeEntryResourceFactory,
+				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectRelationshipResourceFactory, _objectEntryLocalService,
 				_organizationLocalService, _organizationResourceFactory,
@@ -366,6 +369,10 @@ public class SiteInitializerExtender
 
 	@Reference
 	private ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
+
+	@Reference
+	private NotificationTemplateResource.Factory
+		_notificationTemplateResourceFactory;
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;

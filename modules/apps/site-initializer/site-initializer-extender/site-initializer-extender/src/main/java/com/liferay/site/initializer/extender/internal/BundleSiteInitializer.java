@@ -76,6 +76,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
+import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
@@ -230,6 +232,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ListTypeDefinitionResource.Factory listTypeDefinitionResourceFactory,
 		ListTypeEntryResource listTypeEntryResource,
 		ListTypeEntryResource.Factory listTypeEntryResourceFactory,
+		NotificationTemplateResource.Factory notificationTemplateResource,
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -321,6 +324,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 		_workflowDefinitionResourceFactory = workflowDefinitionResourceFactory;
+
+		_notificationTemplateResourceFactory = notificationTemplateResource;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
@@ -470,6 +475,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 							listTypeDefinitionIdsStringUtilReplaceValues,
 							objectDefinitionResource, serviceContext,
 							siteNavigationMenuItemSettingsBuilder));
+
+			_invoke(
+				() -> _addNotificationTemplates(
+					documentsStringUtilReplaceValues,
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+					serviceContext));
 
 			_invoke(
 				() -> _addCPDefinitions(
@@ -1963,6 +1974,102 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return listTypeDefinitionIdsStringUtilReplaceValues;
+	}
+
+	private void _addNotificationTemplate(
+			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String>
+				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+			String resourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			resourcePath + "notification-template.json", _servletContext);
+
+		if (Validator.isNull(json)) {
+			return;
+		}
+
+		json = _replace(
+			json, "[$", "$]",
+			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
+
+		JSONObject bodyJSONObject = _jsonFactory.createJSONObject();
+
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			resourcePath, "*.html", false);
+
+		if (enumeration != null) {
+			while (enumeration.hasMoreElements()) {
+				URL url = enumeration.nextElement();
+
+				bodyJSONObject.put(
+					FileUtil.getShortFileName(
+						FileUtil.stripExtension(url.getPath())),
+					StringUtil.replace(
+						StringUtil.read(url.openStream()), "[$", "$]",
+						documentsStringUtilReplaceValues));
+			}
+		}
+
+		JSONObject notificationTemplateJSONObject =
+			JSONFactoryUtil.createJSONObject(json);
+
+		notificationTemplateJSONObject.put("body", bodyJSONObject);
+
+		NotificationTemplate notificationTemplate = NotificationTemplate.toDTO(
+			notificationTemplateJSONObject.toString());
+
+		NotificationTemplateResource.Builder
+			notificationTemplateResourceBuilder =
+				_notificationTemplateResourceFactory.create();
+
+		NotificationTemplateResource notificationTemplateResource =
+			notificationTemplateResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		Page<NotificationTemplate> notificationTemplatesPage =
+			notificationTemplateResource.getNotificationTemplatesPage(
+				null, null,
+				notificationTemplateResource.toFilter(
+					StringBundler.concat(
+						"name eq '", notificationTemplate.getName(), "'")),
+				null, null);
+
+		NotificationTemplate existingNotificationTemplate =
+			notificationTemplatesPage.fetchFirstItem();
+
+		if (existingNotificationTemplate == null) {
+			notificationTemplateResource.postNotificationTemplate(
+				notificationTemplate);
+		}
+		else {
+			notificationTemplateResource.putNotificationTemplate(
+				existingNotificationTemplate.getId(), notificationTemplate);
+		}
+	}
+
+	private void _addNotificationTemplates(
+			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String>
+				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/notification-templates");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		for (String resourcePath : resourcePaths) {
+			_addNotificationTemplate(
+				documentsStringUtilReplaceValues,
+				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+				resourcePath, serviceContext);
+		}
 	}
 
 	private Map<String, String> _addObjectDefinitions(
@@ -3919,6 +4026,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_listTypeDefinitionResourceFactory;
 	private final ListTypeEntryResource _listTypeEntryResource;
 	private final ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
+	private final NotificationTemplateResource.Factory
+		_notificationTemplateResourceFactory;
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectDefinitionResource.Factory

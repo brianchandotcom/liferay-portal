@@ -106,7 +106,8 @@ export function getSelectedValue(value) {
 }
 
 export function getObjectFieldName({settingsContext}) {
-	const getAdvancedColumn = ({title}) => title.toLowerCase() === 'advanced';
+	const getAdvancedColumn = ({title}) =>
+		title.toLowerCase() === Liferay.Language.get('advanced').toLowerCase();
 	const fieldsFromAdvancedColumn = settingsContext.pages.find(
 		getAdvancedColumn
 	)?.rows[0].columns[0].fields;

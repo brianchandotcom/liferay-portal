@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_INFO_BY_INDEX</td>
+	<td>xpath=(//tr[td[normalize-space()='${key_tableEntry}']]//td)[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_COLUMN_LINK</td>
 	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'${key_columnName}-column')]//a</td>
 	<td></td>

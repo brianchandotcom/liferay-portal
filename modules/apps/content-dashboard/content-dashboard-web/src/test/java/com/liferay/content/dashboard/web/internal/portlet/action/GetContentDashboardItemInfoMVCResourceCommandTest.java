@@ -735,7 +735,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				@Override
 				public Preview getPreview() {
 					return new Preview(
-						"www.preview.com/downloadURL",
 						"www.preview.com/imageURL",
 						"www.viewURL.url.com/viewURL");
 				}

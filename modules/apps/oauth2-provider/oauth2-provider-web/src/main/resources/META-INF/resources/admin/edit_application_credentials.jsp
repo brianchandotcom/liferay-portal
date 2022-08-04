@@ -238,7 +238,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 </div>
 
 <aui:script use="aui-modal,liferay-form,node,node-event-simulate">
-	function <portlet:namespace />areAdminApplicationSectionsRequired() {
+	window.<portlet:namespace />areAdminApplicationSectionsRequired = function() {
 		var selectedClientProfile = <portlet:namespace />getSelectedClientProfile();
 		return (
 			A.all(
@@ -254,7 +254,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		);
 	}
 
-	function <portlet:namespace />generateRandomSecret() {
+	window.<portlet:namespace />generateRandomSecret = function() {
 		Liferay.Util.fetch(
 			'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/oauth2_provider/generate_random_secret" />',
 			{
@@ -276,11 +276,11 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			});
 	}
 
-	function <portlet:namespace />getSelectedClientProfile() {
+	window.<portlet:namespace />getSelectedClientProfile = function() {
 		return A.one('#<portlet:namespace />clientProfile option:selected');
 	}
 
-	function <portlet:namespace />isClientCredentialsSectionRequired() {
+	window.<portlet:namespace />isClientCredentialsSectionRequired = function() {
 		var selectedClientProfile = <portlet:namespace />getSelectedClientProfile();
 
 		return (
@@ -292,7 +292,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		);
 	}
 
-	function <portlet:namespace />isConfidentialClientRequired() {
+	window.<portlet:namespace />isConfidentialClientRequired = function() {
 		var selectedClientProfile = <portlet:namespace />getSelectedClientProfile();
 
 		return (
@@ -304,7 +304,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		);
 	}
 
-	function <portlet:namespace />isRedirectURIRequired() {
+	window.<portlet:namespace />isRedirectURIRequired = function() {
 		var selectedClientProfile = <portlet:namespace />getSelectedClientProfile();
 
 		return (
@@ -357,7 +357,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		<portlet:namespace />updateComponent(targetControl, srcControl.val());
 	}
 
-	function <portlet:namespace />showEditClientIdModal() {
+	window.<portlet:namespace />showEditClientIdModal = function() {
 		var bodyContentDiv = A.one('#<portlet:namespace />edit-client-id-modal');
 		var clientIdPadlock = A.one('#<portlet:namespace />clientIdPadlock');
 		var applyField = A.one('#<portlet:namespace />newClientId');
@@ -391,7 +391,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		);
 	}
 
-	function <portlet:namespace />showModal(
+	window.<portlet:namespace />showModal = function(
 		title,
 		bodyContent,
 		footerContent,
@@ -475,7 +475,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		}
 	}
 
-	function <portlet:namespace />updateAllowedGrantTypes(clientProfile) {
+	window.<portlet:namespace />updateAllowedGrantTypes = function(clientProfile) {
 		A.all('#<portlet:namespace />allowedGrantTypes .allowedGrantType').hide();
 		A.all(
 			'#<portlet:namespace />allowedGrantTypes .allowedGrantType.client-profile-' +
@@ -487,7 +487,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		<portlet:namespace />updateClientCredentialsSection();
 	}
 
-	function <portlet:namespace />updateClientCredentialsSection() {
+	window.<portlet:namespace />updateClientCredentialsSection = function() {
 		var clientCredentialsSection = A.one(
 			'#<portlet:namespace />clientCredentialsSection'
 		);
@@ -507,13 +507,13 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		}
 	}
 
-	function <portlet:namespace />updateComponent(component, newValue) {
+	window.<portlet:namespace />updateComponent = function(component, newValue) {
 		component.val(newValue);
 		component.simulate('keyup');
 		component.simulate('change');
 	}
 
-	function <portlet:namespace />updatePadlock(
+	window.<portlet:namespace />updatePadlock = function(
 		padlockId,
 		newValue,
 		originalValue
@@ -529,7 +529,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		}
 	}
 
-	function <portlet:namespace />updateRedirectURIs(required) {
+	window.<portlet:namespace />updateRedirectURIs = function(required) {
 		var redirectURIsNode = document.getElementById(
 			'<portlet:namespace />redirectURIs'
 		);

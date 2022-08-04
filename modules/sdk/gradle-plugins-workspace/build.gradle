@@ -117,7 +117,7 @@ dependencies {
 		exclude group: "org.codehaus.plexus"
 		exclude group: "org.sonatype.plexus"
 	}
-	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
+	compile group: "de.undercouch", name: "gradle-download-task", version: "5.0.0"
 	compile group: "net.java.dev.jna", name: "jna", version: "5.8.0"
 
 	compileInclude files("lib/com.liferay.workspace.bundle.url.codec-1.0.0.jar")

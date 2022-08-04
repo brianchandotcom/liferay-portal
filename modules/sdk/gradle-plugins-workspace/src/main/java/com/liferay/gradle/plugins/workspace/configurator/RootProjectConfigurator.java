@@ -40,6 +40,7 @@ import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.plugins.workspace.task.CreateTokenTask;
 import com.liferay.gradle.plugins.workspace.task.InitBundleTask;
+import com.liferay.gradle.plugins.workspace.task.VerifyBundleTask;
 import com.liferay.gradle.plugins.workspace.task.VerifyProductTask;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
@@ -1047,9 +1048,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						File file = null;
 
 						try {
-							URI uri = project.uri(src);
+							URL srcURL = (URL)src;
 
-							file = project.file(uri);
+							if (Objects.equals("file", srcURL.getProtocol())) {
+								URI uri = project.uri(src);
+
+								file = project.file(uri);
+							}
 						}
 						catch (Exception exception) {
 							if (logger.isDebugEnabled()) {
@@ -1087,48 +1092,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					File destinationDir =
-						workspaceExtension.getBundleCacheDir();
-
-					destinationDir.mkdirs();
-
-					download.dest(destinationDir);
-
-					List<?> srcList = _getSrcList(download);
-
-					if (!srcList.isEmpty()) {
-						return;
-					}
-
-					String bundleUrl = workspaceExtension.getBundleUrl();
-
-					if (Objects.isNull(bundleUrl)) {
-						return;
-					}
-
-					try {
-						if (bundleUrl.startsWith("file:")) {
-							URL url = new URL(bundleUrl);
-
-							File file = new File(url.getFile());
-
-							file = file.getAbsoluteFile();
-
-							URI uri = file.toURI();
-
-							bundleUrl = uri.toASCIIString();
-						}
-						else {
-							bundleUrl = bundleUrl.replace(" ", "%20");
-						}
-
-						download.src(bundleUrl);
-					}
-					catch (MalformedURLException malformedURLException) {
-						throw new GradleException(
-							malformedURLException.getMessage(),
-							malformedURLException);
-					}
+					_configureDownloadTask(download, workspaceExtension);
 				}
 
 			});
@@ -1593,8 +1557,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Project project, VerifyProductTask verifyProductTask,
 		Download downloadBundleTask, WorkspaceExtension workspaceExtension) {
 
-		Verify verify = GradleUtil.addTask(
-			project, VERIFY_BUNDLE_TASK_NAME, Verify.class);
+		VerifyBundleTask verify = GradleUtil.addTask(
+			project, VERIFY_BUNDLE_TASK_NAME, VerifyBundleTask.class);
 
 		verify.algorithm("MD5");
 		verify.dependsOn(verifyProductTask, downloadBundleTask);
@@ -1723,6 +1687,45 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					}
 
 				}));
+	}
+
+	private void _configureDownloadTask(
+		Download download, WorkspaceExtension workspaceExtension) {
+
+		File destinationDir = workspaceExtension.getBundleCacheDir();
+
+		destinationDir.mkdirs();
+
+		download.dest(destinationDir);
+
+		String bundleUrl = workspaceExtension.getBundleUrl();
+
+		if (Objects.isNull(bundleUrl)) {
+			return;
+		}
+
+		try {
+			if (bundleUrl.startsWith("file:")) {
+				URL url = new URL(bundleUrl);
+
+				File file = new File(url.getFile());
+
+				file = file.getAbsoluteFile();
+
+				URI uri = file.toURI();
+
+				bundleUrl = uri.toASCIIString();
+			}
+			else {
+				bundleUrl = bundleUrl.replace(" ", "%20");
+			}
+
+			download.src(bundleUrl);
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new GradleException(
+				malformedURLException.getMessage(), malformedURLException);
+		}
 	}
 
 	private void _configureNpmProject(Project project) {

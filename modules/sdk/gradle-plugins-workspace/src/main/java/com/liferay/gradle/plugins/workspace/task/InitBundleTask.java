@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.gradle.api.GradleException;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
@@ -49,9 +50,18 @@ public class InitBundleTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		setArgs(_getCompleteArgs());
+		try {
+			setArgs(_getCompleteArgs());
 
-		super.exec();
+			super.exec();
+		}
+		catch (Exception exception) {
+			throw new GradleException(
+				"Failed to init bundle base on '" +
+					getFile().getAbsolutePath() +
+						". Please remove this file and try again.",
+				exception);
+		}
 	}
 
 	@Input

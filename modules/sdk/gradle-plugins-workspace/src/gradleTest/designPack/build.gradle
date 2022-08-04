@@ -38,10 +38,6 @@ runGradleTest {
 					ZipEntry zipEntry = zipFile.getEntry(zipEntryName)
 
 					assert zipEntry != null : zipEntryName
-
-					InputStream inputStream = zipFile.getInputStream(zipEntry)
-
-					assert expectedFile.text.normalize() == inputStream.text.normalize()
 				}
 			}
 		}

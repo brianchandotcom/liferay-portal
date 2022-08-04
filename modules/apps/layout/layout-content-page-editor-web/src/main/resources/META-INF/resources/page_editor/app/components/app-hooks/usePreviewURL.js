@@ -12,7 +12,6 @@
  * details.
  */
 
-import {addParams} from 'frontend-js-web';
 import {useEffect} from 'react';
 
 import {LAYOUT_TYPES} from '../../config/constants/layoutTypes';
@@ -36,27 +35,28 @@ export default function usePreviewURL() {
 			return;
 		}
 
-		let parameters = {
+		const url = new URL(
+			previewElement?.dataset.pageEditorLayoutPreviewBaseUrl
+		);
+
+		const setParameters = (parameters) => {
+			Object.entries(parameters).forEach(([key, value]) => {
+				url.searchParams.set(`${config.portletNamespace}${key}`, value);
+			});
+		};
+
+		setParameters({
 			languageId,
 			segmentsExperienceId,
-		};
+		});
 
 		if (
 			config.layoutType === LAYOUT_TYPES.display &&
 			displayPagePreviewItem
 		) {
-			parameters = {
-				...parameters,
-				...displayPagePreviewItem.data,
-			};
+			setParameters(displayPagePreviewItem.data);
 		}
 
-		previewElement.setAttribute(
-			'href',
-			addParams(
-				Liferay.Util.ns(config.portletNamespace, parameters),
-				previewElement.dataset.pageEditorLayoutPreviewBaseUrl
-			)
-		);
+		previewElement.setAttribute('href', url.toString());
 	}, [displayPagePreviewItem, languageId, segmentsExperienceId]);
 }

@@ -34,7 +34,6 @@ renderResponse.setTitle((region == null) ? LanguageUtil.get(request, "add-region
 <liferay-frontend:edit-form
 	action="<%= editRegionURL %>"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (region == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="countryId" type="hidden" value='<%= ParamUtil.getString(request, "countryId") %>' />

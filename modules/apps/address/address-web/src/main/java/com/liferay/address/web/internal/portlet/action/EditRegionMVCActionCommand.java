@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -75,19 +74,37 @@ public class EditRegionMVCActionCommand
 		throws Exception {
 
 		try {
-			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+			long regionId = ParamUtil.getLong(actionRequest, "regionId");
+
+			boolean active = ParamUtil.getBoolean(actionRequest, "active");
+			String name = ParamUtil.getString(actionRequest, "name");
+			double position = ParamUtil.getDouble(actionRequest, "position");
+			String regionCode = ParamUtil.getString(
+				actionRequest, "regionCode");
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-			if (cmd.equals(Constants.ADD)) {
-				Region region = _addOrUpdateRegion(actionRequest);
+			Region region = null;
+
+			if (regionId <= 0) {
+				long countryId = ParamUtil.getLong(actionRequest, "countryId");
+
+				region = _regionService.addRegion(
+					countryId, active, name, position, regionCode,
+					ServiceContextFactory.getInstance(
+						Region.class.getName(), actionRequest));
 
 				redirect = HttpComponentsUtil.setParameter(
 					redirect, actionResponse.getNamespace() + "regionId",
 					region.getRegionId());
 			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				_addOrUpdateRegion(actionRequest);
+			else {
+				region = _regionService.updateRegion(
+					regionId, active, name, position, regionCode);
 			}
+
+			_updateRegionLocalizations(
+				region,
+				LocalizationUtil.getLocalizationMap(actionRequest, "title"));
 
 			if (Validator.isNotNull(redirect)) {
 				sendRedirect(actionRequest, actionResponse, redirect);
@@ -114,38 +131,6 @@ public class EditRegionMVCActionCommand
 				throw new Exception(throwable);
 			}
 		}
-	}
-
-	private Region _addOrUpdateRegion(ActionRequest actionRequest)
-		throws Exception {
-
-		long regionId = ParamUtil.getLong(actionRequest, "regionId");
-
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
-		String regionCode = ParamUtil.getString(actionRequest, "regionCode");
-		String name = ParamUtil.getString(actionRequest, "name");
-		double position = ParamUtil.getDouble(actionRequest, "position");
-
-		Region region = null;
-
-		if (regionId <= 0) {
-			long countryId = ParamUtil.getLong(actionRequest, "countryId");
-
-			region = _regionService.addRegion(
-				countryId, active, name, position, regionCode,
-				ServiceContextFactory.getInstance(
-					Region.class.getName(), actionRequest));
-		}
-		else {
-			region = _regionService.updateRegion(
-				regionId, active, name, position, regionCode);
-		}
-
-		_updateRegionLocalizations(
-			region,
-			LocalizationUtil.getLocalizationMap(actionRequest, "title"));
-
-		return region;
 	}
 
 	private void _updateRegionLocalizations(

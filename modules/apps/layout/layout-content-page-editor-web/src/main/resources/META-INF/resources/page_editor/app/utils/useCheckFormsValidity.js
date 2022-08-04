@@ -23,26 +23,6 @@ import hasRequiredInputChild from './hasRequiredInputChild';
 import hasVisibleSubmitChild from './hasVisibleSubmitChild';
 import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
 
-function getFormItems(layoutData) {
-	return Object.values(layoutData.items).filter(
-		(item) =>
-			item.type === LAYOUT_DATA_ITEM_TYPES.form &&
-			item.config.classNameId !== '0' &&
-			!isLayoutDataItemDeleted(layoutData, item.itemId)
-	);
-}
-
-function addError(validations, formItem, type) {
-	const formValidation = validations.get(formItem.itemId);
-	const errors = formValidation ? formValidation.errors : [];
-	const nextFormErrors = [...errors, type];
-
-	validations.set(formItem.itemId, {
-		classNameId: formItem.config.classNameId,
-		errors: nextFormErrors,
-	});
-}
-
 export default function useCheckFormsValidity() {
 	const globalContext = useGlobalContext();
 	const stateRef = useSelectorRef((state) => state);
@@ -129,4 +109,24 @@ export default function useCheckFormsValidity() {
 			return true;
 		});
 	};
+}
+
+function addError(validations, formItem, type) {
+	const formValidation = validations.get(formItem.itemId);
+	const errors = formValidation ? formValidation.errors : [];
+	const nextFormErrors = [...errors, type];
+
+	validations.set(formItem.itemId, {
+		classNameId: formItem.config.classNameId,
+		errors: nextFormErrors,
+	});
+}
+
+function getFormItems(layoutData) {
+	return Object.values(layoutData.items).filter(
+		(item) =>
+			item.type === LAYOUT_DATA_ITEM_TYPES.form &&
+			item.config.classNameId !== '0' &&
+			!isLayoutDataItemDeleted(layoutData, item.itemId)
+	);
 }

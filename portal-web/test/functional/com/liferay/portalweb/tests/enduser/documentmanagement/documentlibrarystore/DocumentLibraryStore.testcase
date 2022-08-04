@@ -277,13 +277,13 @@ definition {
 
 		var filesAfterReIndex = FileUtil.listFiles("${s3TempDir}");
 
-		echo("Temp Folder after Reindex: ${folderAfterReIndex}");
+		echo("S3 temp directory files after reindex: ${filesAfterReIndex}.");
 
-		if ("${folderBeforeReIndex}" == "${folderAfterReIndex}") {
-			echo("The s3 folder still unchanged");
+		if ("${filesBeforeReIndex}" == "${filesAfterReIndex}") {
+			echo("The S3 temp directory remains unchanged after re-indexing.");
 		}
 		else {
-			fail("FAIL. The s3 folder changed after re-indexing");
+			fail("The S3 temp directory modified after re-indexing.");
 		}
 	}
 

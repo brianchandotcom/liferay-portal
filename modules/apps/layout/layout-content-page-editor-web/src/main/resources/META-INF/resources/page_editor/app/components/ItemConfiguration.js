@@ -101,55 +101,69 @@ function ItemConfigurationContent({
 
 	return (
 		<div className="page-editor__page-structure__item-configuration">
-			<ClayTabs className="flex-nowrap pt-2 px-3">
-				{panels.map((panel) => (
-					<ClayTabs.Item
-						active={panel.panelId === activePanel.id}
-						innerProps={{
-							'aria-controls': `${panelIdPrefix}-${panel.panelId}`,
-							'id': `${tabIdPrefix}-${panel.panelId}`,
-						}}
-						key={panel.panelId}
-						onClick={() => {
-							setActivePanel({
-								id: panel.panelId,
-								type: panel.type || null,
-							});
-						}}
-					>
-						<span
-							className="c-inner page-editor__page-structure__item-configuration-tab text-truncate"
-							data-tooltip-align="top"
-							tabIndex="-1"
-							title={panel.label}
-						>
-							{panel.label}
-						</span>
-					</ClayTabs.Item>
-				))}
-			</ClayTabs>
+			{!panels.length ? (
+				<ClayAlert
+					className="m-3"
+					displayType="info"
+					title={Liferay.Language.get('info')}
+				>
+					{Liferay.Language.get(
+						'this-page-element-does-not-have-any-configuration-available'
+					)}
+				</ClayAlert>
+			) : (
+				<>
+					<ClayTabs className="flex-nowrap pt-2 px-3">
+						{panels.map((panel) => (
+							<ClayTabs.Item
+								active={panel.panelId === activePanel.id}
+								innerProps={{
+									'aria-controls': `${panelIdPrefix}-${panel.panelId}`,
+									'id': `${tabIdPrefix}-${panel.panelId}`,
+								}}
+								key={panel.panelId}
+								onClick={() => {
+									setActivePanel({
+										id: panel.panelId,
+										type: panel.type || null,
+									});
+								}}
+							>
+								<span
+									className="c-inner page-editor__page-structure__item-configuration-tab text-truncate"
+									data-tooltip-align="top"
+									tabIndex="-1"
+									title={panel.label}
+								>
+									{panel.label}
+								</span>
+							</ClayTabs.Item>
+						))}
+					</ClayTabs>
 
-			<ClayTabs.Content
-				activeIndex={panels.findIndex(
-					(panel) => panel.panelId === activePanel.id
-				)}
-			>
-				{panels.map((panel) => (
-					<ClayTabs.TabPane
-						aria-labelledby={`${tabIdPrefix}-${panel.panelId}`}
-						className="pb-3 pt-4 px-3"
-						id={`${panelIdPrefix}-${panel.panelId}`}
-						key={panel.panelId}
-					>
-						{panel.panelId === activePanel.id && (
-							<ItemConfigurationComponent
-								Component={panel.component}
-								item={activeItem}
-							/>
+					<ClayTabs.Content
+						activeIndex={panels.findIndex(
+							(panel) => panel.panelId === activePanel.id
 						)}
-					</ClayTabs.TabPane>
-				))}
-			</ClayTabs.Content>
+					>
+						{panels.map((panel) => (
+							<ClayTabs.TabPane
+								aria-labelledby={`${tabIdPrefix}-${panel.panelId}`}
+								className="pb-3 pt-4 px-3"
+								id={`${panelIdPrefix}-${panel.panelId}`}
+								key={panel.panelId}
+							>
+								{panel.panelId === activePanel.id && (
+									<ItemConfigurationComponent
+										Component={panel.component}
+										item={activeItem}
+									/>
+								)}
+							</ClayTabs.TabPane>
+						))}
+					</ClayTabs.Content>
+				</>
+			)}
 		</div>
 	);
 }

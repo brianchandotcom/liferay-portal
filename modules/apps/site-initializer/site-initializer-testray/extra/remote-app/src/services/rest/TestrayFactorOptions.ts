@@ -19,11 +19,11 @@ import {APIResponse, TestrayFactorOptions} from './types';
 type FactorOption = typeof yupSchema.factorOption.__outputType;
 
 const adapter = ({
-	factorCategoryId: r_factorCategoryToOptions_c_factorCategory,
+	factorCategoryId: r_factorCategoryToOptions_c_factorCategoryId,
 	name,
 }: FactorOption) => ({
 	name,
-	r_factorCategoryToOptions_c_factorCategory,
+	r_factorCategoryToOptions_c_factorCategoryId,
 });
 
 const createFactorOption = (factorOption: FactorOption) =>

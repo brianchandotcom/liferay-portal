@@ -44,18 +44,26 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 		formState: {errors},
 		handleSubmit,
 		register,
+		watch,
 	} = useForm<FactorOptionsForm>({
-		defaultValues: modalState,
+		defaultValues: modalState
+			? {
+					factorCategoryId: modalState?.factorCategory?.id,
+					id: modalState.id,
+					name: modalState.name,
+			  }
+			: {},
 		resolver: yupResolver(yupSchema.factorOption),
 	});
 
-	const {data} = useFetch('/factoroptions', getFactorOptionsTransformData);
+	const {data} = useFetch('/factorcategories', getFactorOptionsTransformData);
 
 	const factorCategories = data?.items || [];
 
 	const _onSubmit = (form: FactorOptionsForm) => {
 		onSubmit(
-			{id: form.id, name: form.name},
+			{...form},
+
 			{
 				create: createFactorOption,
 				update: updateFactorOption,
@@ -64,6 +72,10 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 			.then(onSave)
 			.catch(onError);
 	};
+
+	const factorCategoryId = watch('factorCategoryId');
+
+	const name = watch('name');
 
 	const inputProps = {
 		errors,
@@ -91,15 +103,19 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 				label={i18n.translate('name')}
 				name="name"
 				{...inputProps}
+				value={name}
 			/>
 
 			<Form.Select
+				{...inputProps}
 				label={i18n.translate('category')}
-				name="category"
+				name="factorCategoryId"
 				options={factorCategories.map(({id: value, name: label}) => ({
 					label,
 					value,
 				}))}
+				required={false}
+				value={factorCategoryId}
 			/>
 		</Modal>
 	);

@@ -91,7 +91,11 @@ definition {
 			key_tagNum = "${tagNum}",
 			locator1 = "Icon#DELETE_CUSTOM_META_TAG");
 
-		Button.click(button = "Save");
+		Click.clickAt(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		Alert.viewSuccessMessageText(successMessage = "The page was updated successfully.");
 	}
 
 	macro viewDisabledProperty {

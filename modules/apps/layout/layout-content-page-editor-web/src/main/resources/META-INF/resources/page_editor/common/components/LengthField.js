@@ -96,7 +96,7 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 		setActive(false);
 		setNextUnit(unit);
 
-		if (!nextValue) {
+		if (!nextValue || unit === nextUnit) {
 			return;
 		}
 

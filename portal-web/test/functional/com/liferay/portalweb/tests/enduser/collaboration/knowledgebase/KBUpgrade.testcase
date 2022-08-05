@@ -29,9 +29,10 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewKBArticleArchive72104 {
+	test ViewKBArticleArchive72107 {
 		property data.archive.type = "data-archive-collaboration";
-		property portal.version = "7.2.10.4";
+		property database.types = "mariadb,mysql,postgresql,db2,oracle,sqlserver";
+		property portal.version = "7.2.10.7";
 
 		Upgrade.viewAndAddKBArticle();
 

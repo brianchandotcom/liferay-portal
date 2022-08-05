@@ -28,7 +28,7 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testGradleUpgradeReleaseDxpCheck() throws Exception {
-		test("GradleUpgradeReleaseDxpCheck.testgradle");
+		test("upgrade/GradleUpgradeReleaseDxpCheck.testgradle");
 	}
 
 	@Override

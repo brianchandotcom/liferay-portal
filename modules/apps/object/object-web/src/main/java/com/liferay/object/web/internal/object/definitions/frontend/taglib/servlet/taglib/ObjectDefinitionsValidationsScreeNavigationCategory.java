@@ -23,9 +23,7 @@ import com.liferay.object.web.internal.object.definitions.display.context.Object
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsUtil;
 
 import java.io.IOException;
 
@@ -79,11 +77,7 @@ public class ObjectDefinitionsValidationsScreeNavigationCategory
 			return false;
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-151671"))) {
-			return true;
-		}
-
-		return !objectDefinition.isSystem();
+		return true;
 	}
 
 	@Override

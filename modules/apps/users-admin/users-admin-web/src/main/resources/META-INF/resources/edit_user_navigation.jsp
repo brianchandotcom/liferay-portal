@@ -66,18 +66,16 @@ redirect = HttpComponentsUtil.addParameter(redirect, liferayPortletResponse.getN
 
 <liferay-ui:success key="userAdded" message="the-user-was-created-successfully" />
 
-<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-151671")) %>'>
-	<liferay-ui:error exception="<%= ObjectValidationRuleEngineException.class %>">
+<liferay-ui:error exception="<%= ObjectValidationRuleEngineException.class %>">
 
-		<%
-		ModelListenerException mle = (ModelListenerException)errorException;
+	<%
+	ModelListenerException mle = (ModelListenerException)errorException;
 
-		ObjectValidationRuleEngineException ovree = (ObjectValidationRuleEngineException)mle.getCause();
-		%>
+	ObjectValidationRuleEngineException ovree = (ObjectValidationRuleEngineException)mle.getCause();
+	%>
 
-		<liferay-ui:message key="<%= ovree.getMessage() %>" />
-	</liferay-ui:error>
-</c:if>
+	<liferay-ui:message key="<%= ovree.getMessage() %>" />
+</liferay-ui:error>
 
 <portlet:actionURL name="<%= actionCommandName %>" var="actionCommandURL" />
 

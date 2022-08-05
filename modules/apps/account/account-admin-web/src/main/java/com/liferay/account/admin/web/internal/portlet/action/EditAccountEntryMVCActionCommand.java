@@ -37,13 +37,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.Objects;
 
@@ -122,9 +120,7 @@ public class EditAccountEntryMVCActionCommand
 					"mvcRenderCommandName",
 					"/account_admin/edit_account_entry");
 			}
-			else if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-151671")) &&
-					 (exception instanceof ModelListenerException) &&
+			else if ((exception instanceof ModelListenerException) &&
 					 (exception.getCause() instanceof
 						 ObjectValidationRuleEngineException)) {
 

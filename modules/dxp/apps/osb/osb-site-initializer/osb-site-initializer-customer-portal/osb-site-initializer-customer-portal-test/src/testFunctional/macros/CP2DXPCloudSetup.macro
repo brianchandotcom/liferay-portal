@@ -38,7 +38,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Objects");
 
-		CustomerPortal.viewCPObjectCustomInfo(index = "14");
+		ObjectPortlet.selectObject(label = "${title}");
 
 		CreateObject.checkToggleActive();
 

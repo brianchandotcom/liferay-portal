@@ -339,9 +339,9 @@ definition {
 
 			ACSegments.addSegmentField(segmentField = "URL");
 
-			ACSegments.goToSidebarAttributes(criterion = "Account Attributes");
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-			ACSegments.addSegmentField(segmentField = "accountName");
+			ACSegments.addSegmentField(segmentField = "additionalName");
 		}
 
 		task ("Assert that Duplicate and Delete are present in the criterias options") {
@@ -355,7 +355,7 @@ definition {
 			MenuItem.viewPresent(menuItem = "Delete");
 
 			Click(
-				criteriaName = "accountName",
+				criteriaName = "additionalName",
 				index = "1",
 				locator1 = "ACSegments#CRITERIA_ELLIPSIS");
 

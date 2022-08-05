@@ -26,11 +26,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rafael Praxedes
  */
 @Component(immediate = true, service = PortalInstanceLifecycleListener.class)
-public class WorkflowMetricsPortalInstanceLifecycleListener
+public class AddIndexesWorkflowMetricsPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
+	public void portalInstancePreregistered(Company company) throws Exception {
 		_workflowMetricsIndexCreator.createIndex(company);
 	}
 

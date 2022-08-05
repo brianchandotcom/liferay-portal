@@ -55,7 +55,9 @@ public class WorkflowMetricsIndexCreator {
 		_slaTaskResultWorkflowMetricsIndex.createIndex(company.getCompanyId());
 		_taskWorkflowMetricsIndex.createIndex(company.getCompanyId());
 		_transitionWorkflowMetricsIndex.createIndex(company.getCompanyId());
+	}
 
+	public void reindex(Company company) {
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				int count = _backgroundTaskLocalService.getBackgroundTasksCount(

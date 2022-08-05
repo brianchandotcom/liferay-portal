@@ -39,6 +39,6 @@ public class DependencyManagerSyncUtil {
 	private static volatile DependencyManagerSync _dependencyManagerSync =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			DependencyManagerSync.class, DependencyManagerSyncUtil.class,
-			"_dependencyManagerSync", false);
+			"_dependencyManagerSync", true);
 
 }

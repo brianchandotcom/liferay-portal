@@ -75,36 +75,41 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 			return;
 		}
 
-		try {
-			_componentExecutorFactoryRegistration.unregister();
-		}
-		catch (IllegalStateException illegalStateException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException);
+		if (_componentExecutorFactoryRegistration != null) {
+			try {
+				_componentExecutorFactoryRegistration.unregister();
 			}
+			catch (IllegalStateException illegalStateException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(illegalStateException);
+				}
 
-			// Concurrent unregister, no need to do anything
+				// Concurrent unregister, no need to do anything
 
+			}
 		}
 
-		_executorService.shutdown();
+		if (_executorService != null) {
+			_executorService.shutdown();
 
-		try {
-			if (!_executorService.awaitTermination(
-					_syncTimeout, TimeUnit.SECONDS)) {
+			try {
+				if (!_executorService.awaitTermination(
+						_syncTimeout, TimeUnit.SECONDS)) {
 
-				_executorService.shutdownNow();
+					_executorService.shutdownNow();
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Dependency manager sync timeout after waiting " +
-							_syncTimeout + "s");
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Dependency manager sync timeout after waiting " +
+								_syncTimeout + "s");
+					}
 				}
 			}
-		}
-		catch (InterruptedException interruptedException) {
-			_log.error(
-				"Dependency manager sync interrupted", interruptedException);
+			catch (InterruptedException interruptedException) {
+				_log.error(
+					"Dependency manager sync interrupted",
+					interruptedException);
+			}
 		}
 
 		_syncDefaultNoticeableFuture.run();

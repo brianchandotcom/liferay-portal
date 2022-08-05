@@ -162,6 +162,20 @@ public class ObjectDefinitionsDetailsDisplayContext
 			ObjectWebKeys.OBJECT_DEFINITION);
 	}
 
+	public ObjectField getObjectFieldByName(
+		String name, List<ObjectField> objectFields) {
+
+		for (ObjectField objectField : objectFields) {
+			String objectFieldName = objectField.getName();
+
+			if (objectFieldName.equals(name))
+
+				return objectField;
+		}
+
+		return null;
+	}
+
 	public List<ObjectField> getObjectFields() {
 		HttpServletRequest httpServletRequest =
 			objectRequestHelper.getRequest();

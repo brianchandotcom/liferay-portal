@@ -24,7 +24,10 @@ ObjectDefinitionsDetailsDisplayContext objectDefinitionsDetailsDisplayContext = 
 ObjectDefinition objectDefinition = objectDefinitionsDetailsDisplayContext.getObjectDefinition();
 
 List<ObjectField> accountEntryRelationshipObjectFields = objectDefinitionsDetailsDisplayContext.getAccountEntryRelationshipObjectFields();
+
 List<ObjectField> nonrelationshipObjectFields = objectDefinitionsDetailsDisplayContext.getNonrelationshipObjectFields();
+
+ObjectField objectIdField = objectDefinitionsDetailsDisplayContext.getObjectFieldByName("id", nonrelationshipObjectFields);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
@@ -98,13 +101,17 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 						md="11"
 					>
 						<aui:select disabled="<%= !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="titleObjectFieldId" showEmptyOption="<%= false %>">
-							<aui:option label='<%= LanguageUtil.get(request, "id") %>' selected="<%= true %>" value="" />
+							<aui:option label="<%= HtmlUtil.escape(objectIdField.getLabel(locale)) %>" selected="<%= true %>" value="<%= objectIdField.getObjectFieldId() %>" />
 
 							<%
 							for (ObjectField objectField : nonrelationshipObjectFields) {
+								String idFieldLabel = HtmlUtil.escape(objectIdField.getLabel(locale));
+								String objectFieldLabel = HtmlUtil.escape(objectField.getLabel(locale));
 							%>
 
-								<aui:option label="<%= HtmlUtil.escape(objectField.getLabel(locale)) %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getTitleObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
+								<c:if test="<%= !idFieldLabel.equals(objectFieldLabel) %>">
+									<aui:option label="<%= HtmlUtil.escape(objectField.getLabel(locale)) %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getTitleObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
+								</c:if>
 
 							<%
 							}

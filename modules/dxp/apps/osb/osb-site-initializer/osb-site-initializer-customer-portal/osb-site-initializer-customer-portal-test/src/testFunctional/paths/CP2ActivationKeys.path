@@ -55,6 +55,11 @@
 	<td>//*[@class='custom-control-label' and contains(., '${key_filterOption}')]/preceding-sibling::*[@type='checkbox']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LICENSE_TAB_BUTTON</td>
+	<td>//*[contains(@type, 'button') and contains(@value, '${key_licenseTab}') and contains(., '${key_numberOfLicenses}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

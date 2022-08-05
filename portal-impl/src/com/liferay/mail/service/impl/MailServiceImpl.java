@@ -318,6 +318,12 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 			session = Session.getInstance(properties);
 		}
 
+		if (_log.isDebugEnabled()) {
+			session.setDebug(true);
+
+			properties.list(System.out);
+		}
+
 		_sessions.put(companyId, session);
 
 		return session;

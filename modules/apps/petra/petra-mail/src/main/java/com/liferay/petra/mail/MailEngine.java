@@ -18,7 +18,6 @@ import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.FileAttachment;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.model.SMTPAccount;
-import com.liferay.mail.kernel.service.MailServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -76,20 +75,6 @@ import javax.mail.internet.MimeMultipart;
  * @see    com.liferay.util.mail.MailEngine
  */
 public class MailEngine {
-
-	public static Session getSession() {
-		Session session = session = MailServiceUtil.getSession();
-
-		if (_log.isDebugEnabled()) {
-			session.setDebug(true);
-
-			Properties properties = session.getProperties();
-
-			properties.list(System.out);
-		}
-
-		return session;
-	}
 
 	public static Session getSession(Account account) {
 		Session session = Session.getInstance(_getProperties(account));

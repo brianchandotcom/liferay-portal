@@ -869,7 +869,7 @@
 
 <tr>
 	<td>CONFIGURATION_PANEL_CONFIGURATION</td>
-	<td>//div[contains(@class,'item-configuration')]</td>
+	<td>//div[contains(@class,'page-structure__item-configuration')]</td>
 	<td></td>
 </tr>
 <tr>

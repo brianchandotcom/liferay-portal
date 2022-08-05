@@ -12,12 +12,13 @@
  * details.
  */
 
+import {Observer} from '@clayui/modal/lib/types';
 import React from 'react';
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
 	inputId: string;
 	label: string;
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 }
 export declare function ModalBasicWithFieldName({

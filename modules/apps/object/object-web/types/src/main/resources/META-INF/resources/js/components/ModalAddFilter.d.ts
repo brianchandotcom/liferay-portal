@@ -14,6 +14,7 @@
 
 /// <reference types="react" />
 
+import {Observer} from '@clayui/modal/lib/types';
 import './ModalAddFilter.scss';
 export declare function ModalAddFilter({
 	currentFilters,
@@ -36,14 +37,14 @@ interface IProps {
 	filterOperators: TFilterOperators;
 	header: string;
 	objectFields: ObjectField[];
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 	onSave: (
+		objectFieldName: string,
 		filterBy?: string,
 		fieldLabel?: LocalizedValue<string>,
 		objectFieldBusinessType?: string,
 		filterType?: string,
-		objectFieldName?: string,
 		valueList?: IItem[],
 		value?: string
 	) => void;
@@ -56,12 +57,12 @@ declare type TCurrentFilter = {
 	definition: {
 		[key: string]: string[];
 	} | null;
-	fieldLabel: string;
-	filterBy: string;
+	fieldLabel?: string;
+	filterBy?: string;
 	filterType: string | null;
 	label: TName;
 	objectFieldBusinessType?: string;
-	objectFieldName: string;
+	objectFieldName?: string;
 	value?: string;
 	valueList?: LabelValueObject[];
 };

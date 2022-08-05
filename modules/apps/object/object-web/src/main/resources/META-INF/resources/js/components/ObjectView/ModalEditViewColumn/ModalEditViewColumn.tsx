@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
+import {Observer} from '@clayui/modal/lib/types';
 import {Input, InputLocalized} from '@liferay/object-js-components-web';
 import React, {FormEvent, useContext, useState} from 'react';
 
@@ -22,7 +23,7 @@ import ViewContext, {TYPES} from '../context';
 
 interface IProps {
 	editingObjectFieldName: string;
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 }
 

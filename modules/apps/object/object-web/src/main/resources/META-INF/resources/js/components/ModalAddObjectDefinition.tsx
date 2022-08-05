@@ -16,7 +16,14 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
-import {API, Input, Select, useForm} from '@liferay/object-js-components-web';
+import {Observer} from '@clayui/modal/lib/types';
+import {
+	API,
+	FormError,
+	Input,
+	Select,
+	useForm,
+} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {
@@ -82,7 +89,7 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 	};
 
 	const validate = (values: TInitialValues) => {
-		const errors: any = {};
+		const errors: FormError<TInitialValues> = {};
 
 		if (!values.label) {
 			errors.label = Liferay.Language.get('required');
@@ -157,10 +164,10 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 						<Select
 							label={Liferay.Language.get('storage-type')}
 							name="storageType"
-							onChange={({target: {value}}: any) => {
+							onChange={({target: {value}}) => {
 								setValues({
 									...values,
-									storageType: storageTypes[value],
+									storageType: storageTypes[Number(value)],
 								});
 							}}
 							options={storageTypes}
@@ -195,7 +202,7 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 	storageTypes: string[];
 }

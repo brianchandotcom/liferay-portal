@@ -129,7 +129,7 @@ export default function PredefinedValuesTable({
 								buttonDisabled={inputAsValue}
 								error={predefinedErrors.get(name)}
 								hideFeedback
-								onChange={({target: {value}}: any) => {
+								onChange={({target: {value}}) => {
 									setValues({
 										parameters: {
 											...values.parameters,

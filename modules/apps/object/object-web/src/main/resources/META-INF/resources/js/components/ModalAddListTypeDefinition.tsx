@@ -16,7 +16,13 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
-import {API, Input, useForm} from '@liferay/object-js-components-web';
+import {Observer} from '@clayui/modal/lib/types';
+import {
+	API,
+	FormError,
+	Input,
+	useForm,
+} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {TName} from './Layout/types';
@@ -46,7 +52,7 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({
 	};
 
 	const validate = (values: TInitialValues) => {
-		const errors: any = {};
+		const errors: FormError<TInitialValues> = {};
 
 		if (!values.name_i18n[defaultLanguageId]) {
 			errors.name_i18n = Liferay.Language.get('required');
@@ -113,7 +119,7 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 }
 

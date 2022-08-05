@@ -16,14 +16,20 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayModal from '@clayui/modal';
+import {Observer} from '@clayui/modal/lib/types';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {AutoComplete, Input, useForm} from '@liferay/object-js-components-web';
+import {
+	AutoComplete,
+	FormError,
+	Input,
+	useForm,
+} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React, {useContext, useMemo, useState} from 'react';
 
 import {separateCamelCase} from '../../../utils/string';
 import LayoutContext, {TYPES as EVENT_TYPES} from '../context';
-import {TObjectRelationship} from '../types';
+import {TObjectLayoutTab, TObjectRelationship} from '../types';
 
 import './ModalAddObjectLayoutTab.scss';
 
@@ -57,7 +63,7 @@ const types: TTabTypes = {
 
 interface IModalAddObjectLayoutTabProps
 	extends React.HTMLAttributes<HTMLElement> {
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 }
 
@@ -139,11 +145,11 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 		});
 	}, [objectRelationships, query]);
 
-	const onSubmit = (values: any) => {
+	const onSubmit = (values: TObjectLayoutTab) => {
 		dispatch({
 			payload: {
 				name: {
-					[defaultLanguageId]: values.name,
+					[defaultLanguageId]: values.name[defaultLanguageId],
 				},
 				objectRelationshipId: values.objectRelationshipId,
 			},
@@ -153,10 +159,10 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 		onClose();
 	};
 
-	const onValidate = (values: any) => {
-		const errors: any = {};
+	const onValidate = (values: Partial<TObjectLayoutTab>) => {
+		const errors: FormError<TObjectLayoutTab> = {};
 
-		if (!values.name) {
+		if (!values.name?.[defaultLanguageId]) {
 			errors.name = Liferay.Language.get('required');
 		}
 
@@ -170,14 +176,13 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, setValues, values} = useForm({
-		initialValues: {
-			name: '',
-			objectRelationshipId: 0,
-		},
-		onSubmit,
-		validate: onValidate,
-	});
+	const {errors, handleSubmit, setValues, values} = useForm<TObjectLayoutTab>(
+		{
+			initialValues: {},
+			onSubmit,
+			validate: onValidate,
+		}
+	);
 
 	return (
 		<ClayModal observer={observer}>
@@ -192,9 +197,15 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 						id="inputName"
 						label={Liferay.Language.get('label')}
 						name="name"
-						onChange={handleChange}
+						onChange={({target: {value}}) => {
+							setValues({
+								name: {
+									[defaultLanguageId]: value,
+								},
+							});
+						}}
 						required
-						value={values.name}
+						value={values.name?.[defaultLanguageId]}
 					/>
 
 					<ClayForm.Group>

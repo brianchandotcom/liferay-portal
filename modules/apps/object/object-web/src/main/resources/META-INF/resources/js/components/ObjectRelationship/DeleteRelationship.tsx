@@ -83,7 +83,7 @@ interface IProps {
 	objectRelationship: ObjectRelationship;
 	observer: Observer;
 	onClose: () => void;
-	onDelete: any;
+	onDelete: (value: number) => void;
 }
 
 export default function ModalWithProvider({isApproved}: {isApproved: boolean}) {

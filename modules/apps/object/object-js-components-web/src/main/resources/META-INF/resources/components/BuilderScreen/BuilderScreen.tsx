@@ -133,9 +133,7 @@ export function BuilderScreen({
 									hasDragAndDrop={hasDragAndDrop}
 									index={index}
 									label={viewColumn?.fieldLabel}
-									objectFieldName={
-										viewColumn?.objectFieldName
-									}
+									objectFieldName={viewColumn.objectFieldName}
 									onChangeColumnOrder={onChangeColumnOrder}
 									onDeleteColumn={onDeleteColumn}
 									onEditing={onEditing}

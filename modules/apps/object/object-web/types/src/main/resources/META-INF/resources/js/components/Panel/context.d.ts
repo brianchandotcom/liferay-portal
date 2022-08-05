@@ -13,14 +13,17 @@
  */
 
 import React from 'react';
+export declare enum TYPES {
+	CHANGE_PANEL_EXPANDED = 'CHANGE_PANEL_EXPANDED',
+}
 declare type TState = {
 	expanded: boolean;
 };
 declare type TAction = {
 	payload: {
-		[key: string]: any;
+		expanded: boolean;
 	};
-	type: keyof typeof TYPES;
+	type: TYPES.CHANGE_PANEL_EXPANDED;
 };
 declare type TDispatch = React.Dispatch<
 	React.ReducerAction<React.Reducer<TState, TAction>>
@@ -33,8 +36,5 @@ interface IPanelContextProps extends Array<TState | TDispatch> {
 	1: TDispatch;
 }
 export declare const PanelContext: React.Context<IPanelContextProps>;
-export declare const TYPES: {
-	readonly CHANGE_PANEL_EXPANDED: 'CHANGE_PANEL_EXPANDED';
-};
 declare const PanelContextProvider: React.FC<React.HTMLAttributes<HTMLElement>>;
 export default PanelContextProvider;

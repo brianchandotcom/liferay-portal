@@ -364,7 +364,7 @@ export default function ActionBuilder({
 							)}
 							label={Liferay.Language.get('expression-builder')}
 							name="conditionExpression"
-							onChange={({target: {value}}: any) =>
+							onChange={({target: {value}}) =>
 								setValues({conditionExpression: value})
 							}
 							onOpenModal={() => {
@@ -497,7 +497,11 @@ export default function ActionBuilder({
 							currentObjectDefinitionFields={
 								currentObjectDefinitionFields
 							}
-							errors={errors.predefinedValues as any}
+							errors={
+								errors.predefinedValues as {
+									[key: string]: string;
+								}
+							}
 							objectFieldsMap={objectFieldsMap}
 							setValues={setValues}
 							validateExpressionURL={validateExpressionURL}

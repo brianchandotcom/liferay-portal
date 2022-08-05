@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
+import {Observer} from '@clayui/modal/lib/types';
 import {API, Input} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
@@ -169,7 +170,7 @@ export default function ModalWithProvider({
 }
 
 interface IModal extends IProps {
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 }
 

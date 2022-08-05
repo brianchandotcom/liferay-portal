@@ -38,18 +38,18 @@ export declare function useObjectFieldForm({
 }: IUseObjectFieldForm): {
 	errors: FormError<
 		ObjectField & {
-			function: any;
-			maxLength: any;
-			acceptedFileExtensions: any;
-			fileSource: any;
-			filters: any;
-			maximumFileSize: any;
-			objectFieldName: any;
-			objectRelationshipName: any;
-			showCounter: any;
-			showFilesInDocumentsAndMedia: any;
-			stateFlow: any;
-			storageDLFolderPath: any;
+			function: unknown;
+			maxLength: unknown;
+			acceptedFileExtensions: unknown;
+			fileSource: unknown;
+			filters: unknown;
+			maximumFileSize: unknown;
+			objectFieldName: unknown;
+			objectRelationshipName: unknown;
+			showCounter: unknown;
+			showFilesInDocumentsAndMedia: unknown;
+			stateFlow: unknown;
+			storageDLFolderPath: unknown;
 		}
 	>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -81,7 +81,7 @@ interface IProps {
 export declare type ObjectFieldErrors = FormError<
 	ObjectField &
 		{
-			[key in ObjectFieldSettingName]: any;
+			[key in ObjectFieldSettingName]: unknown;
 		}
 >;
 export {};

@@ -14,6 +14,7 @@
 
 /// <reference types="react" />
 
+import {Observer} from '@clayui/modal/lib/types';
 export default function AddRelationship({
 	apiURL,
 	ffOneToOneRelationshipConfigurationEnabled,
@@ -24,7 +25,7 @@ interface IProps {
 	apiURL: string;
 	ffOneToOneRelationshipConfigurationEnabled: boolean;
 	objectDefinitionId: number;
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 	parameterRequired: boolean;
 }

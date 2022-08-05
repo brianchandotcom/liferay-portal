@@ -12,12 +12,13 @@
  * details.
  */
 
+import {Observer} from '@clayui/modal/lib/types';
 import React from 'react';
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	editingObjectFieldName: string;
 	header: string;
 	isEditingSort: boolean;
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 }
 export declare function ModalAddDefaultSortColumn({

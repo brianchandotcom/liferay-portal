@@ -148,7 +148,6 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 			cssClass="navbar-no-collapse"
 			names="details,versions"
 			refresh="<%= false %>"
-			type="dropdown"
 		>
 			<liferay-ui:section>
 				<div class="sidebar-body">

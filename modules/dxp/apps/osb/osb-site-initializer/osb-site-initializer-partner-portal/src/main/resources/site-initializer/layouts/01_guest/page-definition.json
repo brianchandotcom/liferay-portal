@@ -154,7 +154,7 @@
 															"fragmentStyle": {
 																"borderWidth": "0",
 																"paddingTop": "2",
-																"textAlign": "",
+																"textAlign": "justify",
 																"width": "400px"
 															},
 															"fragmentViewports": [

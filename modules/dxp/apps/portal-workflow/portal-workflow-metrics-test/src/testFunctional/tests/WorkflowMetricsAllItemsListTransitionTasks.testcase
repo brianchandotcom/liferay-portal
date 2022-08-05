@@ -233,6 +233,8 @@ definition {
 	@description = "LPS-108138 - Verify that the message -The selected steps have transitioned successfully- is displayed when several steps are transitioned at once"
 	@priority = "3"
 	test MessageIsDisplayedWhenSeveralStepsAreTransitionedAtOnce {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

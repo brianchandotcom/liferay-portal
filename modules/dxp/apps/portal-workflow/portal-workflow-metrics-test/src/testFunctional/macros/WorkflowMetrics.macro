@@ -315,7 +315,7 @@ definition {
 	}
 
 	macro assertSLAMetricsCalculated {
-		while (IsElementNotPresent(locator1 = "WorkflowMetricsSLA#SLA_PROCESS_DATE_MESSAGE") && (maxIterations = "15")) {
+		while (IsElementNotPresent(locator1 = "WorkflowMetricsSLA#SLA_PROCESS_DATE_MESSAGE") && (maxIterations = "25")) {
 			Refresh();
 		}
 

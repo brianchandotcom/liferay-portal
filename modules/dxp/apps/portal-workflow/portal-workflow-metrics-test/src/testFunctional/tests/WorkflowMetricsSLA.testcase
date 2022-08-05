@@ -968,7 +968,7 @@ definition {
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		while (IsElementNotPresent(key_slaName = "${slaName}", locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_ENGLISH_HOUR_FORMAT")) {
+		while (IsElementNotPresent(key_slaName = "${slaName}", locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_ENGLISH_HOUR_FORMAT") && (maxIterations = "45")) {
 			Click(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
 
 			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");

@@ -20,6 +20,8 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.notification.web.internal.constants.NotificationFDSNames;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Locale;
 
@@ -40,7 +42,7 @@ public class NotificationQueueEntryTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		return fdsTableSchemaBuilder.add(
+		fdsTableSchemaBuilder.add(
 			"subject", "subject"
 		).add(
 			"triggerBy", "trigger-by"
@@ -48,11 +50,22 @@ public class NotificationQueueEntryTableFDSView extends BaseTableFDSView {
 			"fromName", "from"
 		).add(
 			"toName", "to"
-		).add(
-			"status", "status",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"notificationQueueEntryStatusDataRenderer")
-		).build();
+		);
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-159052"))) {
+			fdsTableSchemaBuilder.add(
+				"status", "status",
+				fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+					"notificationQueueEntryStatusDataRenderer"));
+		}
+		else {
+			fdsTableSchemaBuilder.add(
+				"sent", "status",
+				fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+					"notificationQueueEntryStatusDataRenderer"));
+		}
+
+		return fdsTableSchemaBuilder.build();
 	}
 
 	@Reference

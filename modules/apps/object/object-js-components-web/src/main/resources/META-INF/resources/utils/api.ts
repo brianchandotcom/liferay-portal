@@ -65,6 +65,23 @@ const headers = new Headers({
 	'Content-Type': 'application/json',
 });
 
+async function deleteItem(url: string) {
+	const response = await fetch(url, {headers, method: 'DELETE'});
+
+	if (response.status === 401) {
+		window.location.reload();
+	}
+	else if (!response.ok) {
+		const errorMessage = Liferay.Language.get('an-error-occurred');
+
+		throw new Error(errorMessage);
+	}
+}
+
+export function deleteObjectDefinitions(id: number) {
+	return deleteItem(`/o/object-admin/v1.0/object-definitions/${id}`);
+}
+
 export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 	const result = await fetch(input, {headers, method: 'GET', ...init});
 

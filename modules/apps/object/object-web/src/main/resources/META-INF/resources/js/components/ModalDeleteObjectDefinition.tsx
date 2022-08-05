@@ -15,10 +15,9 @@
 import {ClayModalProvider, useModal} from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
 import {API} from '@liferay/object-js-components-web';
-import {createResourceURL, fetch, sub} from 'frontend-js-web';
+import {createResourceURL, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {HEADERS} from '../utils/constants';
 import DangerModal from './DangerModal';
 import WarningModal from './WarningModal';
 
@@ -143,74 +142,59 @@ export default function ModalWithProvider({
 		status: {code: number};
 	} | null>(null);
 
-	const getDeleteObjectDefinition = async ({
-		itemData,
-	}: {
-		itemData: {
-			id: string;
-			name: string;
-			objectEntriesCount: number;
-			status: {code: number};
-		};
-	}) => {
-		const url = createResourceURL(baseResourceURL, {
-			objectDefinitionId: itemData.id,
-			p_p_resource_id:
-				'/object_definitions/get_object_definition_delete_info',
-		}).href;
-		const {
-			hasObjectRelationship,
-			objectEntriesCount,
-		} = await API.fetchJSON<{
-			hasObjectRelationship: boolean;
-			objectEntriesCount: number;
-		}>(url);
-
-		setObjectDefinition({
-			...itemData,
-			hasObjectRelationship,
-			objectEntriesCount,
-		});
-	};
-
 	const {observer, onClose} = useModal({
 		onClose: () => setObjectDefinition(null),
 	});
 
-	const deleteObjectDefinition = async (id: string) => {
-		const response = await fetch(
-			`/o/object-admin/v1.0/object-definitions/${id}`,
-			{
-				headers: HEADERS,
-				method: 'DELETE',
-			}
-		);
-
-		if (response.ok) {
+	const deleteObjectDefinition = async (id: number) => {
+		API.deleteObjectDefinitions(id).then(() => {
 			Liferay.Util.openToast({
 				message: sub(
 					Liferay.Language.get('x-was-deleted-successfully'),
 					`<strong>${objectDefinition?.name}</strong>`
 				),
-				type: 'success',
 			});
-			setTimeout(() => {
-				window.location.reload();
-			}, 1500);
 
-			return;
-		}
-		onClose();
+			onClose();
+			setTimeout(window.location.reload, 1500);
+		});
 	};
 
 	useEffect(() => {
+		const getDeleteObjectDefinition = async ({
+			itemData,
+		}: {
+			itemData: {
+				id: string;
+				name: string;
+				objectEntriesCount: number;
+				status: {code: number};
+			};
+		}) => {
+			const url = createResourceURL(baseResourceURL, {
+				objectDefinitionId: itemData.id,
+				p_p_resource_id:
+					'/object_definitions/get_object_definition_delete_info',
+			}).href;
+			const {
+				hasObjectRelationship,
+				objectEntriesCount,
+			} = await API.fetchJSON<{
+				hasObjectRelationship: boolean;
+				objectEntriesCount: number;
+			}>(url);
+
+			setObjectDefinition({
+				...itemData,
+				hasObjectRelationship,
+				objectEntriesCount,
+			});
+		};
+
 		Liferay.on('deleteObjectDefinition', getDeleteObjectDefinition);
 
-		return () => {
-			Liferay.detach('deleteObjectDefinition');
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		return () => Liferay.detach('deleteObjectDefinition');
+	}, [baseResourceURL]);
 
 	return (
 		<ClayModalProvider>

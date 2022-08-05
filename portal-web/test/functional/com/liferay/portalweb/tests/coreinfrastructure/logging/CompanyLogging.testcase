@@ -36,24 +36,17 @@ definition {
 				categoryName = "com.liferay.portal.background.task.internal.messaging.RemoveOnCompletionBackgroundTaskStatusMessageListener");
 		}
 
-		task ("When two new virtual instances are created") {
-			HeadlessPortalInstanceAPI.addPortalInstance(
-				domain = "www.able.com",
-				portalInstanceId = "www.able.com",
-				virtualHost = "www.able.com");
-
-			HeadlessPortalInstanceAPI.addPortalInstance(
-				domain = "www.baker.com",
-				portalInstanceId = "www.baker.com",
-				virtualHost = "www.baker.com");
-		}
-
 		task ("Then the logs of one company should not appear in the logs of the other") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "o/company-log");
+			for (var portalInstanceName : list "www.able.com,www.baker.com") {
+				HeadlessPortalInstanceAPI.addPortalInstance(
+					domain = "${portalInstanceName}",
+					portalInstanceId = "${portalInstanceName}",
+					virtualHost = "${portalInstanceName}");
 
-			CompanyLogging.assertCompanyLogIsolated(portalInstanceName = "www.able.com");
+				Navigator.openWithAppendToBaseURL(urlAppend = "o/company-log");
 
-			CompanyLogging.assertCompanyLogIsolated(portalInstanceName = "www.baker.com");
+				CompanyLogging.assertCompanyLogIsolated(portalInstanceName = "${portalInstanceName}");
+			}
 		}
 	}
 
@@ -109,15 +102,12 @@ definition {
 		}
 
 		task ("And given two new virtual instances are created") {
-			HeadlessPortalInstanceAPI.addPortalInstance(
-				domain = "www.able.com",
-				portalInstanceId = "www.able.com",
-				virtualHost = "www.able.com");
-
-			HeadlessPortalInstanceAPI.addPortalInstance(
-				domain = "www.baker.com",
-				portalInstanceId = "www.baker.com",
-				virtualHost = "www.baker.com");
+			for (var portalInstanceName : list "www.able.com,www.baker.com") {
+				HeadlessPortalInstanceAPI.addPortalInstance(
+					domain = "${portalInstanceName}",
+					portalInstanceId = "${portalInstanceName}",
+					virtualHost = "${portalInstanceName}");
+			}
 		}
 
 		task ("When the Omniadmin navigates to the company logging UI access point") {

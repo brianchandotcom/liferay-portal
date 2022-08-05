@@ -17,7 +17,7 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import isValidStyleValue from '../../app/utils/isValidStyleValue';
 import {useId} from '../../app/utils/useId';
@@ -88,6 +88,7 @@ LengthField.propTypes = {
 
 const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 	const [active, setActive] = useState(false);
+	const inputRef = useRef();
 	const [nextValue, setNextValue] = useControlledState(initialValue.value);
 	const [nextUnit, setNextUnit] = useState(initialValue.unit);
 	const triggerId = useId();
@@ -103,7 +104,11 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 		let valueWithUnits = `${nextValue}${unit}`;
 
 		if (unit === CUSTOM) {
-			valueWithUnits = nextValue;
+			inputRef.current.focus();
+
+			setNextValue('');
+
+			return;
 		}
 		else if (isNaN(nextValue)) {
 			valueWithUnits = '';
@@ -179,6 +184,7 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 						setNextValue(event.target.value);
 					}}
 					onKeyDown={handleKeyDown}
+					ref={inputRef}
 					sizing="sm"
 					type={nextUnit === CUSTOM ? 'text' : 'number'}
 					value={nextValue}

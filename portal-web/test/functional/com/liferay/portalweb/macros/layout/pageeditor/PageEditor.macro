@@ -4059,7 +4059,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	macro searchFragmentViaSidebar {
 		WaitForPageLoad();
 
-		PageEditor.gotoTab(tabName = "Fragments");
+		Navigator.gotoNavTab(navTab = "Fragments");
 
 		Type(
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",

@@ -353,9 +353,109 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-89636. It saves tags without clicking Enter or adding a Comma."
+	@priority = "4"
+	test CanSaveTags {
+		for (var entryCount : list "1,2,3,4") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${entryCount}.jpg");
+		}
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2,Document_3,Document_4");
+
+		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
+
+		DMDocument.editTags(
+			itemNumber = "4",
+			multipleDocuments = "true",
+			tagName = "tagone");
+
+		for (var key_dmDocumentTitle : list "Document_1,Document_2,Document_3,Document_4") {
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+
+			DMDocument.viewTagInfo(tagName = "tagone");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+	}
+
+	@priority = "4"
+	@refactordone
+	test SingleDocumentSelectionDoesNotCheckAllEntries {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document1 Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document2 Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
+
+		AssertElementPresent(locator1 = "Checkbox#SELECT_ALL_CHECKBOX_TICK");
+
+		DMDocument.uncheckDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
+
+		AssertElementNotPresent(locator1 = "Checkbox#SELECT_ALL_CHECKBOX_TICK");
+	}
+
+	@description = "This test covers LPS-91524. It asserts that the Edit Tags icon is disabled when workflow is enabled. "
+	@priority = "4"
+	test TagsCannotBeEditedForUnapprovedEntries {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.configureWorkflowCP(
+			dmFolderName = "DM Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		for (var entryCount : list "1,2") {
+			DMDocument.addWithWorkflowCP(
+				dmDocumentDescription = "DM Document 1 in Folder",
+				dmDocumentFile = "Document_${entryCount}.jpg",
+				dmDocumentTitle = "DM Document ${entryCount} in Folder");
+		}
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.selectDocuments(dmDocumentTitle = "DM Document 1 in Folder,DM Document 2 in Folder");
+
+		AssertElementPresent(locator1 = "Icon#EDIT_TAGS_DISABLED");
+	}
+
 	@description = "This test covers LPS-94994. It ensures that users can edit category tags by using the bulk append action."
 	@priority = "5"
-	test CanReplaceUncommonCategoryTags {
+	test UncommonCategoryTagsCanBeReplacedUsingBulkAction {
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
 
 		for (var categoryName : list "Books,Plants,Pets,Furniture") {
@@ -396,106 +496,6 @@ definition {
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}
-	}
-
-	@description = "This test covers LPS-89636. It saves tags without clicking Enter or adding a Comma."
-	@priority = "4"
-	test CanSaveTags {
-		for (var entryCount : list "1,2,3,4") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${entryCount}",
-				groupName = "Guest",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_${entryCount}.jpg");
-		}
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2,Document_3,Document_4");
-
-		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
-
-		DMDocument.editTags(
-			itemNumber = "4",
-			multipleDocuments = "true",
-			tagName = "tagone");
-
-		for (var key_dmDocumentTitle : list "Document_1,Document_2,Document_3,Document_4") {
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
-
-			DMDocument.viewTagInfo(tagName = "tagone");
-
-			Navigator.gotoPage(pageName = "Documents and Media Page");
-		}
-	}
-
-	@description = "This test covers LPS-91524. It asserts that the Edit Tags icon is disabled when workflow is enabled. "
-	@priority = "4"
-	test CanViewEditTagsIconWithWorkflow {
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.configureWorkflowCP(
-			dmFolderName = "DM Folder Name",
-			workflowDefinition = "Single Approver",
-			workflowRestriction = "Default Workflow");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		for (var entryCount : list "1,2") {
-			DMDocument.addWithWorkflowCP(
-				dmDocumentDescription = "DM Document 1 in Folder",
-				dmDocumentFile = "Document_${entryCount}.jpg",
-				dmDocumentTitle = "DM Document ${entryCount} in Folder");
-		}
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.selectDocuments(dmDocumentTitle = "DM Document 1 in Folder,DM Document 2 in Folder");
-
-		AssertElementPresent(locator1 = "Icon#EDIT_TAGS_DISABLED");
-	}
-
-	@priority = "4"
-	@refactordone
-	test SingleDocumentSelectionDoesNotCheckAllEntries {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document1 Title",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document2 Title",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
-
-		AssertElementPresent(locator1 = "Checkbox#SELECT_ALL_CHECKBOX_TICK");
-
-		DMDocument.uncheckDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
-
-		AssertElementNotPresent(locator1 = "Checkbox#SELECT_ALL_CHECKBOX_TICK");
 	}
 
 }

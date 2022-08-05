@@ -985,6 +985,7 @@
 		<check name="JSPGetStaticResourceURLCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks calls to `PortalUtil.getStaticResourceURL` and `getContextPath` without `getPathProxy`." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JSPIllegalSyntaxCheck">
 			<category name="Bug Prevention" />

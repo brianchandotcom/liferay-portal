@@ -109,6 +109,54 @@ public class OAuth2ApplicationLocalServiceUtil {
 		return getService().addOAuth2Application(oAuth2Application);
 	}
 
+	public static OAuth2Application addOrUpdateOAuth2Application(
+			String externalReferenceCode, long userId, String userName,
+			List<com.liferay.oauth2.provider.constants.GrantType>
+				allowedGrantTypesList,
+			String clientAuthenticationMethod, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String jwks, String name,
+			String privacyPolicyURL, List<String> redirectURIsList,
+			boolean rememberDevice, boolean trustedApplication,
+			java.util.function.Consumer
+				<com.liferay.oauth2.provider.util.builder.OAuth2ScopeBuilder>
+					builderConsumer,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateOAuth2Application(
+			externalReferenceCode, userId, userName, allowedGrantTypesList,
+			clientAuthenticationMethod, clientCredentialUserId, clientId,
+			clientProfile, clientSecret, description, featuresList, homePageURL,
+			iconFileEntryId, jwks, name, privacyPolicyURL, redirectURIsList,
+			rememberDevice, trustedApplication, builderConsumer,
+			serviceContext);
+	}
+
+	public static OAuth2Application addOrUpdateOAuth2Application(
+			String externalReferenceCode, long userId, String userName,
+			List<com.liferay.oauth2.provider.constants.GrantType>
+				allowedGrantTypesList,
+			String clientAuthenticationMethod, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String jwks, String name,
+			String privacyPolicyURL, List<String> redirectURIsList,
+			boolean rememberDevice, List<String> scopeAliasesList,
+			boolean trustedApplication,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateOAuth2Application(
+			externalReferenceCode, userId, userName, allowedGrantTypesList,
+			clientAuthenticationMethod, clientCredentialUserId, clientId,
+			clientProfile, clientSecret, description, featuresList, homePageURL,
+			iconFileEntryId, jwks, name, privacyPolicyURL, redirectURIsList,
+			rememberDevice, scopeAliasesList, trustedApplication,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new o auth2 application with the primary key. Does not add the o auth2 application to the database.
 	 *
@@ -441,6 +489,22 @@ public class OAuth2ApplicationLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static OAuth2Application updateExternalReferenceCode(
+			long oAuth2ApplicationId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			oAuth2ApplicationId, externalReferenceCode);
+	}
+
+	public static OAuth2Application updateExternalReferenceCode(
+			OAuth2Application oAuth2Application, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			oAuth2Application, externalReferenceCode);
 	}
 
 	public static OAuth2Application updateIcon(

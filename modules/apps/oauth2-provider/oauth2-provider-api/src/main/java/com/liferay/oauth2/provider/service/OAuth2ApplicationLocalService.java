@@ -108,6 +108,31 @@ public interface OAuth2ApplicationLocalService
 	public OAuth2Application addOAuth2Application(
 		OAuth2Application oAuth2Application);
 
+	public OAuth2Application addOrUpdateOAuth2Application(
+			String externalReferenceCode, long userId, String userName,
+			List<GrantType> allowedGrantTypesList,
+			String clientAuthenticationMethod, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String jwks, String name,
+			String privacyPolicyURL, List<String> redirectURIsList,
+			boolean rememberDevice, boolean trustedApplication,
+			Consumer<OAuth2ScopeBuilder> builderConsumer,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public OAuth2Application addOrUpdateOAuth2Application(
+			String externalReferenceCode, long userId, String userName,
+			List<GrantType> allowedGrantTypesList,
+			String clientAuthenticationMethod, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String jwks, String name,
+			String privacyPolicyURL, List<String> redirectURIsList,
+			boolean rememberDevice, List<String> scopeAliasesList,
+			boolean trustedApplication, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new o auth2 application with the primary key. Does not add the o auth2 application to the database.
 	 *
@@ -360,6 +385,16 @@ public interface OAuth2ApplicationLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public OAuth2Application updateExternalReferenceCode(
+			long oAuth2ApplicationId, String externalReferenceCode)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public OAuth2Application updateExternalReferenceCode(
+			OAuth2Application oAuth2Application, String externalReferenceCode)
 		throws PortalException;
 
 	public OAuth2Application updateIcon(

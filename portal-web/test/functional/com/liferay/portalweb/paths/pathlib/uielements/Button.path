@@ -402,7 +402,7 @@
 </tr>
 <tr>
 	<td>EXECUTE</td>
-	<td>//button[contains(.,'Execute')]</td>
+	<td>//button[contains(.,'Execute')] | //div[contains(@id,'${method}')]//button[contains(.,'Execute')]</td>
 	<td></td>
 </tr>
 <tr>

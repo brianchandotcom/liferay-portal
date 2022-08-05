@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>OpenAPI</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">OpenAPI</td></tr>
+</thead>
+
+<tbody>
+
+<!--SWAGGER-->
+
+<tr>
+	<td>API_METHOD</td>
+	<td>//*[@id="operations-${service}-${method}"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAMETER_UNDER_METHOD</td>
+	<td>//div[contains(@id,'${method}')]//input[contains(@placeholder,'${parameter}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESPONSE_CODE</td>
+	<td>//div[contains(@id,'${method}')]//tbody//td[contains(@class,'response-col_status')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESPONSE_BODY</td>
+	<td>//div[contains(@id,'${method}')]//td[contains(.,'Response body')]//div[contains(@class,'highlight-code')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUEST_BODY</td>
+	<td>//div[contains(@id,'${method}')]//textarea[@class='body-param__text']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

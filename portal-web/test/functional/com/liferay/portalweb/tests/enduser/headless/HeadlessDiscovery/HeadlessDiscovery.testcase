@@ -23,17 +23,49 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given navigate to headless delivery endpoint") {
-			var portalURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${portalURL}/o/api?endpoint=${portalURL}/o/headless-delivery/v1.0/openapi.json");
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-delivery",
+				version = "v1.0");
 		}
 
 		task ("Then headless delivery api loaded with no errors") {
+			var portalURL = PropsUtil.get("portal.url");
+
 			AssertTextEquals(
 				locator1 = "Select#HEADLESS_SERVERS",
 				value1 = "${portalURL}/o/headless-delivery/");
 
 			AssertConsoleTextNotPresent(value1 = "Failed to load API definition");
+		}
+	}
+
+	@priority = "5"
+	test CanRetrieveSiteBlogPostingsWithHeadlessDeliveryOpenAPI {
+		property portal.acceptance = "true";
+
+		task ("Given navigate to headless delivery endpoint") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-delivery",
+				version = "v1.0");
+		}
+
+		task ("When executing getSiteBlogPosingPage with siteID as the parameter") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "getSiteBlogPostingsPage",
+				parameter = "siteId",
+				service = "BlogPosting",
+				value = "${siteId}");
+		}
+
+		task ("Then the shown response code is 200") {
+			AssertTextEquals(
+				locator1 = "OpenAPI#RESPONSE_CODE",
+				method = "getSiteBlogPostingsPage",
+				value1 = "200");
 		}
 	}
 

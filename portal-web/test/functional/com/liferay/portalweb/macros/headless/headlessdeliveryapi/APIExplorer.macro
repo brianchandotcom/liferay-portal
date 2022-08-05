@@ -1,0 +1,35 @@
+definition {
+
+	macro executeAPIMethodWithParameters {
+		Click(
+			locator1 = "OpenAPI#API_METHOD",
+			method = "${method}",
+			service = "${service}");
+
+		Type(
+			locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
+			method = "${method}",
+			parameter = "${parameter}",
+			value1 = "${value}");
+
+		if (isSet(requestBody)) {
+			Type(
+				locator1 = "OpenAPI#REQUEST_BODY",
+				method = "${method}",
+				value1 = "${requestBody}");
+		}
+
+		Click(
+			locator1 = "Button#EXECUTE",
+			method = "${method}");
+	}
+
+	macro navigateToOpenAPI {
+		Variables.assertDefined(parameterList = "${api},${version}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		Navigator.openSpecificURL(url = "${portalURL}/o/api?endpoint=${portalURL}/o/${api}/${version}/openapi.json");
+	}
+
+}

@@ -3,6 +3,8 @@ definition {
 	macro checkSuccessAlertAppearsAndDisappears {
 		WaitForElementPresent(locator1 = "Message#SUCCESS");
 
+		Alert.closeMessage(messageType = "SUCCESS");
+
 		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 	}
 

@@ -49,7 +49,7 @@ public class NotificationQueueEntryTableFDSView extends BaseTableFDSView {
 		).add(
 			"toName", "to"
 		).add(
-			"sent", "status",
+			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"notificationQueueEntryStatusDataRenderer")
 		).build();

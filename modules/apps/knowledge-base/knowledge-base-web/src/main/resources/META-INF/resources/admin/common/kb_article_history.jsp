@@ -49,6 +49,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 			<div class="autofit-col">
 				<liferay-ui:icon-menu
 					direction="left-side"
+					dropdownCssClass="dropdown-menu-indicator-start"
 					icon="<%= StringPool.BLANK %>"
 					markupView="lexicon"
 					message="actions"
@@ -69,6 +70,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 
 						<liferay-ui:icon
 							icon="undo"
+							iconCssClass="dropdown-item-indicator-start"
 							label="<%= true %>"
 							markupView="lexicon"
 							message="revert"

@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>TestrayBuild</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TestrayBuild</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>ROUTINE_ID</td>
+	<td>//select[contains(@id, 'routineId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_VERSION</td>
+	<td>//select[contains(@id, 'productVersionId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GIT_HASH_FIELD</td>
+	<td>//input[contains(@id, 'gitHash')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUILD_DETAILS_PRODUCT_VERSION</td>
+	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Product Version')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUILD_DETAILS_DESCRIPTION</td>
+	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUILD_DETAILS_GIT_HASH</td>
+	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Git Hash')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

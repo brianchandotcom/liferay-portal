@@ -1,0 +1,47 @@
+definition {
+
+	macro editBuild {
+		TestrayManage.goToEditPage(valueName = "${valueName}");
+
+		TestrayBuild.typeBuildField();
+	}
+
+	macro typeBuildField {
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${fieldName}");
+
+		Select(
+			locator1 = "TestrayBuild#ROUTINE_ID",
+			value1 = "${routine}");
+
+		Select(
+			locator1 = "TestrayBuild#PRODUCT_VERSION",
+			value1 = "${productVersion}");
+
+		Type(
+			locator1 = "TestrayBuild#GIT_HASH_FIELD",
+			value1 = "${gitHash}");
+
+		Type(
+			locator1 = "TestrayCases#FIELD_DESCRIPTION",
+			value1 = "${description}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+	}
+
+	macro viewBuildDetails {
+		AssertElementPresent(
+			locator1 = "TestrayBuild#BUILD_DETAILS_PRODUCT_VERSION",
+			value1 = "${productVersion}");
+
+		AssertElementPresent(
+			locator1 = "TestrayBuild#BUILD_DETAILS_DESCRIPTION",
+			value1 = "${description}");
+
+		AssertElementPresent(
+			locator1 = "TestrayBuild#BUILD_DETAILS_GIT_HASH",
+			value1 = "${gitHash}");
+	}
+
+}

@@ -16,7 +16,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_OPTIONS</td>
+	<td>ADD_PROJECT_ON_MODAL</td>
 	<td>//div[contains(@class, 'modal')]//button[contains(@class, 'nav-btn')]</td>
 	<td></td>
 </tr>
@@ -26,8 +26,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_CATEGORY</td>
+	<td>//select[contains(@id, 'category')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
-	<td>//div[contains(@class, 'modal-content')]//button[contains(text(),'Save')]</td>
+	<td>//button[contains(text(),'Save')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -37,7 +42,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_NAME</td>
-	<td>//div[contains(@class ,'modal-body')]//td[contains(., '${value}')]</td>
+	<td>//td[text()='${key_value}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -53,11 +58,6 @@
 <tr>
 	<td>TITLE_BREADCRUMB</td>
 	<td>//div[contains(@class,'control-menu-container')]//span[contains(., '${key_title}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PROJECT_NAME_MODAL</td>
-	<td>//div[contains(@class, 'modal-content')]//td[contains(text(), '${key_title}')]</td>
 	<td></td>
 </tr>
 </tbody>

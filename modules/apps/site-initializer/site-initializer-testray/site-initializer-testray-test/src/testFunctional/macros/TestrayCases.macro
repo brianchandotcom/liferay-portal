@@ -1,0 +1,63 @@
+definition {
+
+	macro typeCasesField {
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${caseName}");
+
+		Select(
+			locator1 = "TestrayCases#CASE_PRIORITY",
+			value1 = "${priority}");
+
+		Select(
+			locator1 = "TestrayCases#CASE_TYPE",
+			value1 = "${CaseTypeId}");
+
+		Select(
+			locator1 = "TestrayCases#MAIN_COMPONENT",
+			value1 = "${componentId}");
+
+		Type(
+			locator1 = "TestrayCases#ESTIMATED_DURATION",
+			value1 = "${duration}");
+
+		Type(
+			locator1 = "TestrayCases#FIELD_DESCRIPTION",
+			value1 = "${description}");
+
+		Type(
+			locator1 = "TestrayCases#FIELD_STEPS",
+			value1 = "${steps}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+
+		Refresh();
+	}
+
+	macro viewCaseDetails {
+		AssertElementPresent(
+			locator1 = "TestrayCases#CASE_DETAILS_CASE_NAME",
+			value1 = "${caseName}");
+
+		AssertElementPresent(
+			locator1 = "TestrayCases#CASE_DETAILS_PRIORITY",
+			value1 = "${priority}");
+
+		AssertElementPresent(
+			locator1 = "TestrayCases#CASE_DETAILS_COMPONENT",
+			value1 = "${mainComponent}");
+
+		AssertElementPresent(
+			locator1 = "TestrayCases#CASE_DETAILS_DURATION",
+			value1 = "${duration}");
+
+		AssertElementPresent(
+			locator1 = "TestrayCases#CASE_DETAILS_DESCRIPTION",
+			value1 = "${description}");
+
+		AssertElementPresent(
+			locator1 = "TestrayCases#CASE_DETAILS_STEPS",
+			value1 = "${steps}");
+	}
+
+}

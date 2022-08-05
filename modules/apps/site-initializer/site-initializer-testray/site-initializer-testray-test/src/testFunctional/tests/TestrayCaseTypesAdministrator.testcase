@@ -29,27 +29,89 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanAddCaseTypes {
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		// TODO LPS-156676 AdminCanAddCaseTypes pending implementation
+		task ("Go to Case Types on Manage Sidebar") {
+			TestrayLayout.clickManageOnSidebar();
 
+			TestrayManage.selectOptionsManage(itemvalue = "Case Types");
+		}
+
+		task ("Change Items Per Page") {
+			Testray.changePagination(valuePagination = "150");
+		}
+
+		task ("Create a new Case Type and assert if it was created") {
+			TestrayManage.createNewCaseTypes(caseName = "Test Case Type");
+
+			TestrayManage.assertName(name = "Test Case Type");
+		}
 	}
 
 	@description = "This is a test for LPS-156679 - Verify that as an Administrator I can delete Case Types"
 	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanDeleteCaseTypes {
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		// TODO LPS-156679 AdminCanDeleteCaseTypes pending implementation
+		task ("Go to Case Types on Manage Sidebar") {
+			TestrayLayout.clickManageOnSidebar();
 
+			TestrayManage.selectOptionsManage(itemvalue = "Case Types");
+		}
+
+		task ("Change Items Per Page") {
+			Testray.changePagination(valuePagination = "150");
+		}
+
+		task ("Create a new Case Type and assert if it was created") {
+			TestrayManage.createNewCaseTypes(caseName = "Test Case Type");
+
+			TestrayManage.assertName(name = "Test Case Type");
+		}
+
+		task ("Delete new case type and asserts that it has been deleted") {
+			TestrayManage.deleteProject(valueName = "Test Case Type");
+
+			TestrayManage.assertNameNotPresent(name = "Test Case Type");
+		}
 	}
 
 	@description = "This is a test for LPS-156681 - Verify if the Administrator can Edit Case Types"
 	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanEditCaseTypes {
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		// TODO LPS-156681 AdminCanEditCaseTypes pending implementation
+		task ("Go to Case Types on Manage Sidebar") {
+			TestrayLayout.clickManageOnSidebar();
 
+			TestrayManage.selectOptionsManage(itemvalue = "Case Types");
+		}
+
+		task ("Change Items Per Page") {
+			Testray.changePagination(valuePagination = "150");
+		}
+
+		task ("Create a new Case Type and assert if it was created") {
+			TestrayManage.createNewCaseTypes(caseName = "Test Case Type");
+
+			TestrayManage.assertName(name = "Test Case Type");
+		}
+
+		task ("Edit new case type and asserts that it has been edited") {
+			TestrayManage.editNewName(
+				valueName = "Test Case Type",
+				valueType = "Case Type Edited");
+
+			TestrayManage.assertName(name = "Case Type Edited");
+		}
 	}
 
 }

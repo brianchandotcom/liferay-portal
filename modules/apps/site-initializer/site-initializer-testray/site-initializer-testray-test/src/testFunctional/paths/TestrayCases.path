@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>TestrayCases</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TestrayCases</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>CASE_PRIORITY</td>
+	<td>//select[contains(@id, 'priority')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CASE_TYPE</td>
+	<td>//select[contains(@id, 'caseTypeId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAIN_COMPONENT</td>
+	<td>//select[contains(@id, 'componentId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ESTIMATED_DURATION</td>
+	<td>//input[contains(@id, 'estimatedDuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_DESCRIPTION</td>
+	<td>//textarea[contains(@id, 'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_STEPS</td>
+	<td>//textarea[contains(@id, 'steps')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CASE_DETAILS_CASE_NAME</td>
+	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Type')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CASE_DETAILS_PRIORITY</td>
+	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Priority')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CASE_DETAILS_COMPONENT</td>
+	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Main Component')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CASE_DETAILS_DURATION</td>
+	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Estimated Duration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CASE_DETAILS_DESCRIPTION</td>
+	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CASE_DETAILS_STEPS</td>
+	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Steps')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

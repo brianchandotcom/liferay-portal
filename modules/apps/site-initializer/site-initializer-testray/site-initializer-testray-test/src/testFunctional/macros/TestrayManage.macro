@@ -1,35 +1,43 @@
 definition {
 
 	macro addNewCategory {
-		Click(locator1 = "TestrayManage#ADD_OPTIONS");
+		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "New Category Test");
+			value1 = "${category}");
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro assertCreatedCategories {
-		AssertElementPresent(
-			key_title = "${key_name}",
-			locator1 = "TestrayManage#PROJECT_NAME_MODAL");
+	macro addNewOptions {
+		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${options}");
+
+		Select(
+			locator1 = "TestrayManage#SELECT_CATEGORY",
+			value1 = "${category}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro assertCreatedOptions {
+	macro assertName {
 		AssertElementPresent(
-			locator1 = "TestrayManage#OPTIONS_NAME",
-			value = "${key_value}");
+			key_value = "${name}",
+			locator1 = "TestrayManage#OPTIONS_NAME");
 	}
 
-	macro assertNameCaseTypes {
-		AssertElementPresent(
+	macro assertNameNotPresent {
+		AssertElementNotPresent(
 			locator1 = "TestrayManage#OPTIONS_NAME",
-			value = "${key_value}");
+			value = "${name}");
 	}
 
 	macro assertTitleModal {
-		AssertElementPresent(
+		AssertElementNotPresent(
 			key_title = "${key_itemvalue}",
 			locator1 = "TestrayManage#TITLE_MODAL_ITEM");
 	}
@@ -39,17 +47,17 @@ definition {
 	}
 
 	macro createNewCaseTypes {
-		Click(locator1 = "TestrayManage#ADD_OPTIONS");
+		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${key_value}");
+			value1 = "${caseName}");
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
 	macro createNewOption {
-		Click(locator1 = "TestrayManage#ADD_OPTIONS");
+		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
@@ -58,10 +66,54 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	macro deleteProject {
+		MouseOver(
+			key_value = "${valueName}",
+			locator1 = "TestrayManage#OPTIONS_NAME");
+
+		Click(locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+	}
+
+	macro editNewName {
+		TestrayManage.goToEditPage(valueName = "${valueName}");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${valueType}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+	}
+
+	macro editNewOptionName {
+		TestrayManage.goToEditPage(valueName = "${valueName}");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${valueType}");
+
+		Select(
+			locator1 = "TestrayManage#SELECT_CATEGORY",
+			value1 = "${category}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+	}
+
+	macro goToEditPage {
+		MouseOver(
+			key_value = "${valueName}",
+			locator1 = "TestrayManage#OPTIONS_NAME");
+
+		Click(locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+	}
+
 	macro selectOptionsManage {
 		Click(
-			key_itemvalue = "${key_itemvalue}",
-			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+			key_itemvalue = "${itemvalue}",
+			locator1 = "TestrayDropdown#OPTIONS_SIDEBAR");
 	}
 
 }

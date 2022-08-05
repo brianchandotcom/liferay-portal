@@ -16,8 +16,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DROPDOWN_ITEM</td>
+	<td>OPTIONS_SIDEBAR</td>
 	<td>//span[contains(text(),'${key_itemvalue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DROPDOWN_ITEM</td>
+	<td>//div[contains(@class, 'dropdown-action')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,8 +1,6 @@
 definition {
 
-	macro createSuiteTestray {
-		Click(locator1 = "Testray#ADD_PROJECT");
-
+	macro typeSuiteField {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
 			value1 = "Suite Test");

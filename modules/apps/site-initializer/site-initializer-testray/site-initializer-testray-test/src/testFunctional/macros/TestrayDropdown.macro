@@ -17,7 +17,7 @@ definition {
 	macro selectTheProjectFromDropdown {
 		Click(
 			key_itemvalue = "${key_value}",
-			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+			locator1 = "TestrayDropdown#OPTIONS_SIDEBAR");
 	}
 
 }

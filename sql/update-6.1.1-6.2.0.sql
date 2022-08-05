@@ -325,8 +325,6 @@ alter table Image drop column text_;
 alter table Layout add userId LONG;
 alter table Layout add userName VARCHAR(75) null;
 
-drop index IX_CED31606 on Layout;
-
 create table LayoutFriendlyURL (
 	uuid_ VARCHAR(75) null,
 	layoutFriendlyURLId LONG not null primary key,

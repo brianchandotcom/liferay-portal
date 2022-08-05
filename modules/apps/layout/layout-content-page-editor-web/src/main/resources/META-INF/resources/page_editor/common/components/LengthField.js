@@ -19,6 +19,7 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import isValidStyleValue from '../../app/utils/isValidStyleValue';
 import {useId} from '../../app/utils/useId';
 import useControlledState from '../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../prop-types/index';
@@ -128,7 +129,11 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 			valueWithUnits = `${nextValue}${nextUnit}`;
 		}
 
-		if (!valueWithUnits && field.typeOptions?.showLengthField) {
+		if (
+			field.typeOptions?.showLengthField &&
+			(!valueWithUnits ||
+				!isValidStyleValue(field.cssProperty, valueWithUnits))
+		) {
 			const [, number, unit] = value.toLowerCase().match(REGEX) || [];
 
 			setNextValue(number || value);

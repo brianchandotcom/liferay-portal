@@ -29,6 +29,7 @@ import {useSelector} from '../../contexts/StoreContext';
 import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import isNullOrUndefined from '../../utils/isNullOrUndefined';
+import isValidStyleValue from '../../utils/isValidStyleValue';
 import {useId} from '../../utils/useId';
 
 export function AdvancedSelectField({
@@ -82,7 +83,13 @@ export function AdvancedSelectField({
 				<InputWithIcon
 					field={field}
 					onBlur={(event) => {
-						if (!event.target.value) {
+						if (
+							!event.target.value ||
+							!isValidStyleValue(
+								field.cssProperty,
+								event.target.value
+							)
+						) {
 							setNextValue(value);
 
 							return;

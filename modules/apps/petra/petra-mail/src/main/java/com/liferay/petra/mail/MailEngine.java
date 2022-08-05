@@ -18,6 +18,7 @@ import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.FileAttachment;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.model.SMTPAccount;
+import com.liferay.mail.kernel.service.MailServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -158,7 +159,7 @@ public class MailEngine {
 			Session session = null;
 
 			if (smtpAccount == null) {
-				session = getSession();
+				session = MailServiceUtil.getSession();
 			}
 			else {
 				session = getSession(smtpAccount);

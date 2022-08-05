@@ -15,7 +15,7 @@
 package com.liferay.portal.pop.notifications.internal.messaging;
 
 import com.liferay.mail.kernel.model.Account;
-import com.liferay.petra.mail.MailEngine;
+import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -206,7 +206,7 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 	}
 
 	private Store _getStore() throws MessagingException {
-		Session session = MailEngine.getSession();
+		Session session = _mailService.getSession();
 
 		String storeProtocol = GetterUtil.getString(
 			session.getProperty("mail.store.protocol"));
@@ -277,6 +277,9 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		POPNotificationsMessageListener.class);
+
+	@Reference
+	private MailService _mailService;
 
 	private final Map<MessageListener, MessageListenerWrapper>
 		_messageListenerWrappers = new ConcurrentHashMap<>();

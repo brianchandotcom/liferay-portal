@@ -175,6 +175,7 @@ public class BlogsEntryAnalyticsReportsInfoItemTest {
 			themeDisplay.setLayoutSet(layout.getLayoutSet());
 
 			themeDisplay.setRequest(mockHttpServletRequest);
+			themeDisplay.setScopeGroupId(_group.getGroupId());
 			themeDisplay.setSiteGroupId(_group.getGroupId());
 
 			mockHttpServletRequest.setAttribute(

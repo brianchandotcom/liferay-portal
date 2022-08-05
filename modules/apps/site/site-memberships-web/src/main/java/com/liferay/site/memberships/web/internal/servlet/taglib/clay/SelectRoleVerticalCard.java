@@ -68,7 +68,7 @@ public class SelectRoleVerticalCard implements VerticalCard {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return HtmlUtil.escape(_role.getTitle(themeDisplay.getLocale()));
+		return _role.getTitle(themeDisplay.getLocale());
 	}
 
 	@Override

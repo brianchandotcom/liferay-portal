@@ -18,11 +18,9 @@ import {
 	SidePanelForm,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
-import {fetch, openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {HEADERS} from '../utils/constants';
-import {ERRORS} from '../utils/errors';
 import {useObjectFieldForm} from './ObjectFieldFormBase';
 import StateDefinition from './StateManager/StateDefinition';
 
@@ -67,16 +65,12 @@ export default function EditObjectStateField({objectField, readOnly}: IProps) {
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
 		delete objectField.system;
 
-		const response = await fetch(
-			`/o/object-admin/v1.0/object-fields/${id}`,
-			{
-				body: JSON.stringify(objectField),
-				headers: HEADERS,
-				method: 'PUT',
-			}
-		);
+		try {
+			await API.save(
+				`/o/object-admin/v1.0/object-fields/${id}`,
+				objectField
+			);
 
-		if (response.ok) {
 			saveAndReload();
 			openToast({
 				message: Liferay.Language.get(
@@ -84,16 +78,8 @@ export default function EditObjectStateField({objectField, readOnly}: IProps) {
 				),
 			});
 		}
-		else {
-			const error = (await response.json()) as
-				| {type?: string}
-				| undefined;
-
-			const message =
-				(error?.type && ERRORS[error.type]) ??
-				Liferay.Language.get('an-error-occurred');
-
-			openToast({message, type: 'danger'});
+		catch (error) {
+			openToast({message: (error as Error).message, type: 'danger'});
 		}
 	};
 

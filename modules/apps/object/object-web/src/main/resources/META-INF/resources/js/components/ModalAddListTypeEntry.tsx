@@ -17,14 +17,13 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import {
+	API,
 	Input,
 	InputLocalized,
 	useForm,
 } from '@liferay/object-js-components-web';
-import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {HEADERS} from '../utils/constants';
 import {toCamelCase} from '../utils/string';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
@@ -45,29 +44,21 @@ const ModalAddListTypeEntry: React.FC<IProps> = ({
 	};
 
 	const onSubmit = async ({key, name_i18n}: TInitialValues) => {
-		const response = await fetch(apiURL, {
-			body: JSON.stringify({
-				key: key || toCamelCase(name_i18n[selectedLocale.label]),
-				name_i18n,
-			}),
-			headers: HEADERS,
-			method: 'POST',
-		});
+		try {
+			await API.save(
+				apiURL,
+				{
+					key: key || toCamelCase(name_i18n[selectedLocale.label]),
+					name_i18n,
+				},
+				'POST'
+			);
 
-		if (response.status === 401) {
-			window.location.reload();
-		}
-		else if (response.ok) {
 			onClose();
-
 			window.location.reload();
 		}
-		else {
-			const {
-				title = Liferay.Language.get('an-error-occurred'),
-			} = (await response.json()) as {title: string};
-
-			setError(title);
+		catch (error) {
+			setError((error as Error).message);
 		}
 	};
 

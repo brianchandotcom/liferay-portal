@@ -26,13 +26,11 @@ import {
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
-import {fetch, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {createTextMaskInputElement} from 'text-mask-core';
 
-import {HEADERS} from '../utils/constants';
 import {createAutoCorrectedNumberPipe} from '../utils/createAutoCorrectedNumberPipe';
-import {ERRORS} from '../utils/errors';
 import {
 	normalizeFieldSettings,
 	updateFieldSettings,
@@ -82,16 +80,12 @@ export default function EditObjectField({
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
 		delete objectField.system;
 
-		const response = await fetch(
-			`/o/object-admin/v1.0/object-fields/${id}`,
-			{
-				body: JSON.stringify(objectField),
-				headers: HEADERS,
-				method: 'PUT',
-			}
-		);
+		try {
+			await API.save(
+				`/o/object-admin/v1.0/object-fields/${id}`,
+				objectField
+			);
 
-		if (response.ok) {
 			saveAndReload();
 			openToast({
 				message: Liferay.Language.get(
@@ -99,14 +93,8 @@ export default function EditObjectField({
 				),
 			});
 		}
-		else {
-			const error: {type?: string} | undefined = await response.json();
-
-			const message =
-				(error?.type && ERRORS[error.type]) ??
-				Liferay.Language.get('an-error-occurred');
-
-			openToast({message, type: 'danger'});
+		catch (error) {
+			openToast({message: (error as Error).message, type: 'danger'});
 		}
 	};
 

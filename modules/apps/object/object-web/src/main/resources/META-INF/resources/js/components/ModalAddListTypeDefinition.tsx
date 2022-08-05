@@ -16,11 +16,9 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
-import {Input, useForm} from '@liferay/object-js-components-web';
-import {fetch} from 'frontend-js-web';
+import {API, Input, useForm} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {HEADERS} from '../utils/constants';
 import {TName} from './Layout/types';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
@@ -35,29 +33,15 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({
 	};
 	const [error, setError] = useState<string>('');
 
-	const onSubmit = async ({name_i18n}: TInitialValues) => {
-		const response = await fetch(apiURL, {
-			body: JSON.stringify({
-				name_i18n,
-			}),
-			headers: HEADERS,
-			method: 'POST',
-		});
+	const onSubmit = async (values: TInitialValues) => {
+		try {
+			await API.save(apiURL, values, 'POST');
 
-		if (response.status === 401) {
-			window.location.reload();
-		}
-		else if (response.ok) {
 			onClose();
-
 			window.location.reload();
 		}
-		else {
-			const {
-				title = Liferay.Language.get('an-error-occurred'),
-			} = (await response.json()) as {title: string};
-
-			setError(title);
+		catch (error) {
+			setError((error as Error).message);
 		}
 	};
 
@@ -71,7 +55,7 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, values} = useForm({
+	const {errors, handleSubmit, setValues, values} = useForm({
 		initialValues,
 		onSubmit,
 		validate,
@@ -94,16 +78,13 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({
 						id="listTypeDefinitionName"
 						label={Liferay.Language.get('name')}
 						name="name_i18n"
-						onChange={({target: {value}}: any) => {
-							handleChange({
-								target: {
-									name: 'name_i18n',
-									value: {
-										[defaultLanguageId]: value,
-									},
+						onChange={({target: {value}}) =>
+							setValues({
+								name_i18n: {
+									[defaultLanguageId]: value,
 								},
-							} as any);
-						}}
+							})
+						}
 						required
 						value={values.name_i18n[defaultLanguageId]}
 					/>

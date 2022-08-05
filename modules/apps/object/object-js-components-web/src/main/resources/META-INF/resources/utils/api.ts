@@ -14,6 +14,8 @@
 
 import {fetch} from 'frontend-js-web';
 
+import {ERRORS} from './errors';
+
 interface NotificationTemplate {
 	attachmentObjectFieldIds: string[] | number[];
 	bcc: string;
@@ -69,7 +71,7 @@ export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 	return (await result.json()) as T;
 }
 
-async function getList<T>(url: string) {
+export async function getList<T>(url: string) {
 	const {items} = await fetchJSON<{items: T[]}>(url);
 
 	return items;
@@ -119,7 +121,7 @@ export async function getPickListItems(pickListId: number) {
 
 export async function save(
 	url: string,
-	item: any,
+	item: unknown,
 	method: 'PUT' | 'POST' = 'PUT'
 ) {
 	const response = await fetch(url, {
@@ -133,10 +135,19 @@ export async function save(
 	}
 	else if (!response.ok) {
 		const {
-			title = Liferay.Language.get('an-error-occurred'),
+			title,
+			type,
+		}: {
+			title?: string;
+			type?: string;
 		} = await response.json();
 
-		throw new Error(title);
+		const errorMessage =
+			(type && ERRORS[type]) ??
+			title ??
+			Liferay.Language.get('an-error-occurred');
+
+		throw new Error(errorMessage);
 	}
 }
 

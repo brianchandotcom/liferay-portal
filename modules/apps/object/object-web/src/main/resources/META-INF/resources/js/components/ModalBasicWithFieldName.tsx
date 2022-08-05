@@ -16,11 +16,8 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import {Input, useForm} from '@liferay/object-js-components-web';
-import {fetch} from 'frontend-js-web';
+import {API, Input, useForm} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
-
-import {HEADERS} from '../utils/constants';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
@@ -49,30 +46,14 @@ export function ModalBasicWithFieldName({
 	const [error, setError] = useState<string>('');
 
 	const onSubmit = async ({name}: TInitialValues) => {
-		const response = await fetch(apiURL, {
-			body: JSON.stringify({
-				name: {
-					[defaultLanguageId]: name,
-				},
-			}),
-			headers: HEADERS,
-			method: 'POST',
-		});
+		try {
+			await API.save(apiURL, {name: {[defaultLanguageId]: name}}, 'POST');
 
-		if (response.status === 401) {
-			window.location.reload();
-		}
-		else if (response.ok) {
 			onClose();
-
 			window.location.reload();
 		}
-		else {
-			const {
-				title = Liferay.Language.get('an-error-occurred'),
-			} = (await response.json()) as {title?: string};
-
-			setError(title);
+		catch (error) {
+			setError((error as Error).message);
 		}
 	};
 

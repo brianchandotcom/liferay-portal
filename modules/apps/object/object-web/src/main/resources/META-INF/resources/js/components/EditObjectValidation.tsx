@@ -71,7 +71,7 @@ export default function EditObjectValidation({
 			});
 		}
 		else {
-			const {detail} = (await response.json()) as {detail: string};
+			const {detail}: {detail: string} = await response.json();
 			const {fieldName, message} = JSON.parse(detail) as {
 				fieldName: keyof ObjectValidationErrors;
 				message: string;

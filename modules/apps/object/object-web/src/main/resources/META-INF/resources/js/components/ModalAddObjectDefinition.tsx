@@ -16,12 +16,9 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
-import {Input, Select, useForm} from '@liferay/object-js-components-web';
-import {fetch} from 'frontend-js-web';
+import {API, Input, Select, useForm} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {HEADERS} from '../utils/constants';
-import {ERRORS} from '../utils/errors';
 import {
 	firstLetterUppercase,
 	removeAllSpecialCharacters,
@@ -73,28 +70,14 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 		if (Liferay.FeatureFlags['LPS-135430']) {
 			objectDefinition.storageType = storageType.toLowerCase();
 		}
-		const response = await fetch(apiURL, {
-			body: JSON.stringify(objectDefinition),
-			headers: HEADERS,
-			method: 'POST',
-		});
+		try {
+			await API.save(apiURL, objectDefinition, 'POST');
 
-		if (response.status === 401) {
-			window.location.reload();
-		}
-		else if (response.ok) {
 			onClose();
-
 			window.location.reload();
 		}
-		else {
-			const {type} = (await response.json()) as any;
-			const isMapped = Object.prototype.hasOwnProperty.call(ERRORS, type);
-			const errorMessage = isMapped
-				? ERRORS[type]
-				: Liferay.Language.get('an-error-occurred');
-
-			setError(errorMessage);
+		catch (error) {
+			setError((error as Error).message);
 		}
 	};
 

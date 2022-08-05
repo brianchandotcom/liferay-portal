@@ -14,6 +14,7 @@
 
 import {ClayModalProvider, useModal} from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
+import {API} from '@liferay/object-js-components-web';
 import {createResourceURL, fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -152,21 +153,19 @@ export default function ModalWithProvider({
 			status: {code: number};
 		};
 	}) => {
-		const response = await fetch(
-			createResourceURL(baseResourceURL, {
-				objectDefinitionId: itemData.id,
-				p_p_resource_id:
-					'/object_definitions/get_object_definition_delete_info',
-			}).href
-		);
-
+		const url = createResourceURL(baseResourceURL, {
+			objectDefinitionId: itemData.id,
+			p_p_resource_id:
+				'/object_definitions/get_object_definition_delete_info',
+		}).href;
 		const {
 			hasObjectRelationship,
 			objectEntriesCount,
-		} = (await response.json()) as {
+		} = await API.fetchJSON<{
 			hasObjectRelationship: boolean;
 			objectEntriesCount: number;
-		};
+		}>(url);
+
 		setObjectDefinition({
 			...itemData,
 			hasObjectRelationship,

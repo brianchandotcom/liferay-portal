@@ -16,12 +16,9 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
-import {Input} from '@liferay/object-js-components-web';
-import {fetch} from 'frontend-js-web';
+import {API, Input} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {HEADERS} from '../utils/constants';
-import {ERRORS} from '../utils/errors';
 import {toCamelCase} from '../utils/string';
 import ObjectFieldFormBase, {useObjectFieldForm} from './ObjectFieldFormBase';
 
@@ -46,31 +43,23 @@ function ModalAddObjectField({
 	};
 
 	const onSubmit = async (field: ObjectField) => {
-		const response = await fetch(apiURL, {
-			body: JSON.stringify({
-				...field,
-				name:
-					field.name ||
-					toCamelCase(field.label[defaultLanguageId] as string),
-			}),
-			headers: HEADERS,
-			method: 'POST',
-		});
+		try {
+			await API.save(
+				apiURL,
+				{
+					...field,
+					name:
+						field.name ||
+						toCamelCase(field.label[defaultLanguageId] as string),
+				},
+				'POST'
+			);
 
-		if (response.status === 401) {
-			window.location.reload();
-		}
-		else if (response.ok) {
 			onClose();
-
 			window.location.reload();
 		}
-		else {
-			const {type} = (await response.json()) as any;
-			const errorMessage =
-				ERRORS[type] ?? Liferay.Language.get('an-error-occurred');
-
-			setError(errorMessage);
+		catch (error) {
+			setError((error as Error).message);
 		}
 	};
 

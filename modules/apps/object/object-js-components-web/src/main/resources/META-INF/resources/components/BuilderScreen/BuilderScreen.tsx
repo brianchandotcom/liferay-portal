@@ -27,7 +27,7 @@ import BuilderListItem from './BuilderListItem';
 
 import './BuilderScreen.scss';
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId() as Locale;
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function BuilderScreen({
 	defaultSort,

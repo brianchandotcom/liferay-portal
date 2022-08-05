@@ -141,9 +141,7 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 				}).href
 			);
 
-			const {valid} = (await response.json()) as {
-				valid: boolean;
-			};
+			const {valid}: {valid: boolean} = await response.json();
 
 			if (!valid) {
 				error = Liferay.Language.get('syntax-error');

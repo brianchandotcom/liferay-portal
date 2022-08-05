@@ -20,10 +20,8 @@ import {
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
-import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {HEADERS} from '../../utils/constants';
 import BasicInfoScreen from './BasicInfoScreen/BasicInfoScreen';
 import {DefaultSortScreen} from './DefaultSortScreen/DefaultSortScreen';
 import {FilterScreen} from './FilterScreen/FilterScreen';
@@ -171,19 +169,11 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		}
 
 		if (!objectView.defaultObjectView || objectViewColumns.length !== 0) {
-			const response = await fetch(
-				`/o/object-admin/v1.0/object-views/${objectViewId}`,
-				{
-					body: JSON.stringify(newObjectView),
-					headers: HEADERS,
-					method: 'PUT',
-				}
-			);
-
-			if (response.status === 401) {
-				window.location.reload();
-			}
-			else if (response.ok) {
+			try {
+				await API.save(
+					`/o/object-admin/v1.0/object-views/${objectViewId}`,
+					newObjectView
+				);
 				saveAndReload();
 
 				openToast({
@@ -192,13 +182,9 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 					),
 				});
 			}
-			else {
-				const {
-					title = Liferay.Language.get('an-error-occurred'),
-				} = (await response.json()) as any;
-
+			catch (error) {
 				openToast({
-					message: title,
+					message: (error as Error).message,
 					type: 'danger',
 				});
 			}

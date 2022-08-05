@@ -42,15 +42,3 @@
 .bb line {
 	fill: none;
 }
-
-@media screen and (max-width: 1280px) {
-	.line-chart-legend {
-		flex-direction: row !important;
-		justify-content: space-evenly !important;
-	}
-
-	.line-chart-screen {
-		padding-left: 24px;
-		padding-right: 24px;
-	}
-}

@@ -30,8 +30,25 @@
 	width: 19px;
 }
 
+.dashboard-commission-legend {
+	width: 120px;
+}
+
 @media screen and (max-width: 1280px) {
 	.dashboard-commission-title {
 		word-break: break-word;
+	}
+}
+
+@media screen and (max-width: 1280px) {
+	.dashboard-commission-legend {
+		flex-direction: row !important;
+		justify-content: space-evenly !important;
+		width: 100%;
+	}
+
+	.dashboard-commission-screen {
+		padding-left: 24px;
+		padding-right: 24px;
 	}
 }

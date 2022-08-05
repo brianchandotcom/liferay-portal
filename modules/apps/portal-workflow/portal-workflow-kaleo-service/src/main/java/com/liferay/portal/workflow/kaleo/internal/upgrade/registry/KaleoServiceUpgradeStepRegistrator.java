@@ -171,7 +171,7 @@ public class KaleoServiceUpgradeStepRegistrator
 				"KaleoTaskAssignment", "KaleoTaskAssignmentInstance",
 				"KaleoTaskForm", "KaleoTaskFormInstance",
 				"KaleoTaskInstanceToken", "KaleoTimer",
-				"KaleoTimerInstanceToken", "KaleoTransition"));<
+				"KaleoTimerInstanceToken", "KaleoTransition"));
 	}
 
 }

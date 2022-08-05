@@ -20,6 +20,7 @@ import {ManagementToolbar as FrontendManagementToolbar} from 'frontend-js-compon
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
+import normalizeDropdownItems from '../normalize_dropdown_items';
 import ActionControls from './ActionControls';
 import CreationMenu from './CreationMenu';
 import FeatureFlagContext from './FeatureFlagContext';
@@ -82,6 +83,10 @@ function ManagementToolbar({
 	);
 	const [active, setActive] = useState(initialCheckboxStatus !== 'unchecked');
 	const [searchMobile, setSearchMobile] = useState(false);
+	const normalizedViewTypeItems = useMemo(
+		() => normalizeDropdownItems(viewTypeItems),
+		[viewTypeItems]
+	);
 	const viewTypeIcon = useMemo(
 		() => viewTypeItems?.find((item) => item.active)?.icon,
 		[viewTypeItems]
@@ -177,10 +182,10 @@ function ManagementToolbar({
 						</>
 					) : (
 						<>
-							{viewTypeItems && (
+							{normalizedViewTypeItems && (
 								<FrontendManagementToolbar.Item>
 									<ClayDropDownWithItems
-										items={viewTypeItems}
+										items={normalizedViewTypeItems}
 										trigger={
 											showDesignImprovementsFF ? (
 												<ClayButton

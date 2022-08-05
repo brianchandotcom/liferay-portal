@@ -252,8 +252,8 @@ export const mockedImageDocumentProps = {
 		url: 'mocked/view/url/in/portal',
 	},
 	description: 'Mocked description',
+	downloadURL: 'mocked/download/url/demo.jpg&download=true',
 	preview: {
-		downloadURL: 'mocked/download/url/demo.jpg&download=true',
 		imageURL: 'mocked/preview/url/demo.jpg',
 		url: 'mocked/vuew/url/',
 	},
@@ -309,8 +309,8 @@ export const mockedFileDocumentProps = {
 		url: 'mocked/view/url/in/portal',
 	},
 	description: 'Mocked description',
+	downloadURL: 'mocked/download/url/demo.jpg&download=true',
 	preview: {
-		downloadURL: 'mocked/download/url/demo.jpg&download=true',
 		imageURL: '',
 		url: 'mocked/vuew/url/',
 	},

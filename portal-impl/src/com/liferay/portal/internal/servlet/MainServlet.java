@@ -341,11 +341,16 @@ public class MainServlet extends HttpServlet {
 		}
 
 		try {
-			String xml = StreamUtil.toString(
+			String shieldedContainerWebXml = StreamUtil.toString(
 				servletContext.getResourceAsStream(
 					"/WEB-INF/shielded-container-web.xml"));
 
-			_checkWebSettings(xml);
+			_checkShieldedContainerWebXml(shieldedContainerWebXml);
+
+			String webXml = StreamUtil.toString(
+				servletContext.getResourceAsStream("/WEB-INF/web.xml"));
+
+			_checkWebXmlSettings(webXml);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -613,7 +618,19 @@ public class MainServlet extends HttpServlet {
 		}
 	}
 
-	private void _checkWebSettings(String xml) throws DocumentException {
+	private void _checkShieldedContainerWebXml(String xml)
+		throws DocumentException {
+
+		Document doc = UnsecureSAXReaderUtil.read(xml);
+
+		Element root = doc.getRootElement();
+
+		I18nServlet.setLanguageIds(root);
+
+		I18nFilter.setLanguageIds(I18nServlet.getLanguageIds());
+	}
+
+	private void _checkWebXmlSettings(String xml) throws DocumentException {
 		Document doc = UnsecureSAXReaderUtil.read(xml);
 
 		Element root = doc.getRootElement();
@@ -632,10 +649,6 @@ public class MainServlet extends HttpServlet {
 		PropsUtil.set(PropsKeys.SESSION_TIMEOUT, String.valueOf(timeout));
 
 		PropsValues.SESSION_TIMEOUT = timeout;
-
-		I18nServlet.setLanguageIds(root);
-
-		I18nFilter.setLanguageIds(I18nServlet.getLanguageIds());
 	}
 
 	private void _destroyCompanies() throws Exception {

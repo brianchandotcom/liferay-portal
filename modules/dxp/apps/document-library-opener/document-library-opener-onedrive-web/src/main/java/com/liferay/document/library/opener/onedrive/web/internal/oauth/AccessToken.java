@@ -16,13 +16,15 @@ package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
+import java.io.Serializable;
+
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 /**
  * @author Cristina González
  */
-public class AccessToken {
+public class AccessToken implements Serializable {
 
 	public AccessToken(OAuth2AccessToken oAuth2AccessToken) {
 		if (oAuth2AccessToken == null) {

@@ -211,6 +211,8 @@ definition {
 			groupName = "Test Site Name",
 			siteURLKey = "test-site-name");
 
+		Panel.expandPanel(panel = "Configuration");
+
 		BlogsEntry.addCustomURL(customURL = "blogs-entry-new");
 
 		PortletEntry.publish();
@@ -485,6 +487,8 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Test Site Name",
 			siteURLKey = "test-site-name");
+
+		Panel.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomURL(customURL = "blogs-entry-new");
 

@@ -46,7 +46,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
             class="autofit-col"
           >
             <button
-              aria-label="Close"
+              aria-label="close"
               class="text-secondary btn btn-monospaced btn-unstyled"
               data-tooltip-align="bottom"
               title="close"

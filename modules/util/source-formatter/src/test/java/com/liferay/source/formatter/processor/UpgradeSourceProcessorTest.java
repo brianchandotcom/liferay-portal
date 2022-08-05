@@ -31,6 +31,13 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("upgrade/GradleUpgradeReleaseDxpCheck.testgradle");
 	}
 
+	@Test
+	public void testPropertiesUpgradeLiferayPluginPackageFileCheck()
+		throws Exception {
+
+		test("upgrade/liferay-plugin-package.testproperties");
+	}
+
 	@Override
 	protected SourceFormatterArgs getSourceFormatterArgs() {
 		List<String> checkCategoryNames = new ArrayList<>();

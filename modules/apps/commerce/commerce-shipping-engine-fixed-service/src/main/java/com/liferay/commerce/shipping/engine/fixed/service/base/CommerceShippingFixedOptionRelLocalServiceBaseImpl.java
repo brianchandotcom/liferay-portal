@@ -20,7 +20,7 @@ import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedO
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelFinder;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -38,12 +38,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -52,6 +51,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce shipping fixed option rel local service.
@@ -66,7 +68,7 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceShippingFixedOptionRelLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceShippingFixedOptionRelLocalService,
+	implements AopService, CommerceShippingFixedOptionRelLocalService,
 			   IdentifiableOSGiService {
 
 	/*
@@ -413,114 +415,25 @@ public abstract class CommerceShippingFixedOptionRelLocalServiceBaseImpl
 			commerceShippingFixedOptionRel);
 	}
 
-	/**
-	 * Returns the commerce shipping fixed option rel local service.
-	 *
-	 * @return the commerce shipping fixed option rel local service
-	 */
-	public CommerceShippingFixedOptionRelLocalService
-		getCommerceShippingFixedOptionRelLocalService() {
-
-		return commerceShippingFixedOptionRelLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce shipping fixed option rel local service.
-	 *
-	 * @param commerceShippingFixedOptionRelLocalService the commerce shipping fixed option rel local service
-	 */
-	public void setCommerceShippingFixedOptionRelLocalService(
-		CommerceShippingFixedOptionRelLocalService
-			commerceShippingFixedOptionRelLocalService) {
-
-		this.commerceShippingFixedOptionRelLocalService =
-			commerceShippingFixedOptionRelLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceShippingFixedOptionRelLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce shipping fixed option rel persistence.
-	 *
-	 * @return the commerce shipping fixed option rel persistence
-	 */
-	public CommerceShippingFixedOptionRelPersistence
-		getCommerceShippingFixedOptionRelPersistence() {
-
-		return commerceShippingFixedOptionRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce shipping fixed option rel persistence.
-	 *
-	 * @param commerceShippingFixedOptionRelPersistence the commerce shipping fixed option rel persistence
-	 */
-	public void setCommerceShippingFixedOptionRelPersistence(
-		CommerceShippingFixedOptionRelPersistence
-			commerceShippingFixedOptionRelPersistence) {
-
-		this.commerceShippingFixedOptionRelPersistence =
-			commerceShippingFixedOptionRelPersistence;
-	}
-
-	/**
-	 * Returns the commerce shipping fixed option rel finder.
-	 *
-	 * @return the commerce shipping fixed option rel finder
-	 */
-	public CommerceShippingFixedOptionRelFinder
-		getCommerceShippingFixedOptionRelFinder() {
-
-		return commerceShippingFixedOptionRelFinder;
-	}
-
-	/**
-	 * Sets the commerce shipping fixed option rel finder.
-	 *
-	 * @param commerceShippingFixedOptionRelFinder the commerce shipping fixed option rel finder
-	 */
-	public void setCommerceShippingFixedOptionRelFinder(
-		CommerceShippingFixedOptionRelFinder
-			commerceShippingFixedOptionRelFinder) {
-
-		this.commerceShippingFixedOptionRelFinder =
-			commerceShippingFixedOptionRelFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel",
-			commerceShippingFixedOptionRelLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceShippingFixedOptionRelLocalService =
+			(CommerceShippingFixedOptionRelLocalService)aopProxy;
 
 		_setLocalServiceUtilService(commerceShippingFixedOptionRelLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -584,26 +497,19 @@ public abstract class CommerceShippingFixedOptionRelLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommerceShippingFixedOptionRelLocalService.class)
 	protected CommerceShippingFixedOptionRelLocalService
 		commerceShippingFixedOptionRelLocalService;
 
-	@BeanReference(type = CommerceShippingFixedOptionRelPersistence.class)
+	@Reference
 	protected CommerceShippingFixedOptionRelPersistence
 		commerceShippingFixedOptionRelPersistence;
 
-	@BeanReference(type = CommerceShippingFixedOptionRelFinder.class)
+	@Reference
 	protected CommerceShippingFixedOptionRelFinder
 		commerceShippingFixedOptionRelFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

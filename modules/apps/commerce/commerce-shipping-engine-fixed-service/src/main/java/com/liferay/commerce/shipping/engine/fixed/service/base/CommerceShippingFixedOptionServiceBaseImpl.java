@@ -18,7 +18,7 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionServiceUtil;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce shipping fixed option remote service.
@@ -46,116 +48,33 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceShippingFixedOptionServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceShippingFixedOptionService, IdentifiableOSGiService {
+	implements AopService, CommerceShippingFixedOptionService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceShippingFixedOptionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceShippingFixedOptionServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce shipping fixed option local service.
-	 *
-	 * @return the commerce shipping fixed option local service
-	 */
-	public com.liferay.commerce.shipping.engine.fixed.service.
-		CommerceShippingFixedOptionLocalService
-			getCommerceShippingFixedOptionLocalService() {
-
-		return commerceShippingFixedOptionLocalService;
-	}
-
-	/**
-	 * Sets the commerce shipping fixed option local service.
-	 *
-	 * @param commerceShippingFixedOptionLocalService the commerce shipping fixed option local service
-	 */
-	public void setCommerceShippingFixedOptionLocalService(
-		com.liferay.commerce.shipping.engine.fixed.service.
-			CommerceShippingFixedOptionLocalService
-				commerceShippingFixedOptionLocalService) {
-
-		this.commerceShippingFixedOptionLocalService =
-			commerceShippingFixedOptionLocalService;
-	}
-
-	/**
-	 * Returns the commerce shipping fixed option remote service.
-	 *
-	 * @return the commerce shipping fixed option remote service
-	 */
-	public CommerceShippingFixedOptionService
-		getCommerceShippingFixedOptionService() {
-
-		return commerceShippingFixedOptionService;
-	}
-
-	/**
-	 * Sets the commerce shipping fixed option remote service.
-	 *
-	 * @param commerceShippingFixedOptionService the commerce shipping fixed option remote service
-	 */
-	public void setCommerceShippingFixedOptionService(
-		CommerceShippingFixedOptionService commerceShippingFixedOptionService) {
-
-		this.commerceShippingFixedOptionService =
-			commerceShippingFixedOptionService;
-	}
-
-	/**
-	 * Returns the commerce shipping fixed option persistence.
-	 *
-	 * @return the commerce shipping fixed option persistence
-	 */
-	public CommerceShippingFixedOptionPersistence
-		getCommerceShippingFixedOptionPersistence() {
-
-		return commerceShippingFixedOptionPersistence;
-	}
-
-	/**
-	 * Sets the commerce shipping fixed option persistence.
-	 *
-	 * @param commerceShippingFixedOptionPersistence the commerce shipping fixed option persistence
-	 */
-	public void setCommerceShippingFixedOptionPersistence(
-		CommerceShippingFixedOptionPersistence
-			commerceShippingFixedOptionPersistence) {
-
-		this.commerceShippingFixedOptionPersistence =
-			commerceShippingFixedOptionPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceShippingFixedOptionService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceShippingFixedOptionService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceShippingFixedOptionService =
+			(CommerceShippingFixedOptionService)aopProxy;
+
+		_setServiceUtilService(commerceShippingFixedOptionService);
 	}
 
 	/**
@@ -218,24 +137,19 @@ public abstract class CommerceShippingFixedOptionServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.shipping.engine.fixed.service.
 		CommerceShippingFixedOptionLocalService
 			commerceShippingFixedOptionLocalService;
 
-	@BeanReference(type = CommerceShippingFixedOptionService.class)
 	protected CommerceShippingFixedOptionService
 		commerceShippingFixedOptionService;
 
-	@BeanReference(type = CommerceShippingFixedOptionPersistence.class)
+	@Reference
 	protected CommerceShippingFixedOptionPersistence
 		commerceShippingFixedOptionPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

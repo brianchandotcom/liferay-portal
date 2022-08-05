@@ -45,7 +45,27 @@ public class LayoutReportsGooglePageSpeedGroupConfigurationVisibilityController
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
-		if (ExtendedObjectClassDefinition.Scope.GROUP.equals(scope)) {
+		if (ExtendedObjectClassDefinition.Scope.SYSTEM.equals(scope)) {
+			try {
+				long companyId = _portal.getDefaultCompanyId();
+
+				return _layoutReportsGooglePageSpeedConfigurationProvider.
+					isEnabled(companyId);
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+		}
+		else if (ExtendedObjectClassDefinition.Scope.COMPANY.equals(scope)) {
+			try {
+				return _layoutReportsGooglePageSpeedConfigurationProvider.
+					isEnabled((Long)scopePK);
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+		}
+		else if (ExtendedObjectClassDefinition.Scope.GROUP.equals(scope)) {
 			try {
 				Group group = _groupLocalService.getGroup((long)scopePK);
 
@@ -73,5 +93,8 @@ public class LayoutReportsGooglePageSpeedGroupConfigurationVisibilityController
 	@Reference
 	private LayoutReportsGooglePageSpeedConfigurationProvider
 		_layoutReportsGooglePageSpeedConfigurationProvider;
+
+	@Reference
+	private Portal _portal;
 
 }

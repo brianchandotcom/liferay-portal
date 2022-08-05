@@ -82,6 +82,10 @@ export function deleteObjectDefinitions(id: number) {
 	return deleteItem(`/o/object-admin/v1.0/object-definitions/${id}`);
 }
 
+export function deleteObjectRelationships(id: number) {
+	return deleteItem(`/o/object-admin/v1.0/object-relationships/${id}`);
+}
+
 export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 	const result = await fetch(input, {headers, method: 'GET', ...init});
 

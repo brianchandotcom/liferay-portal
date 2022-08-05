@@ -51,6 +51,7 @@ interface PickList {
 	name: string;
 }
 export declare function deleteObjectDefinitions(id: number): Promise<void>;
+export declare function deleteObjectRelationships(id: number): Promise<void>;
 export declare function fetchJSON<T>(
 	input: RequestInfo,
 	init?: RequestInit

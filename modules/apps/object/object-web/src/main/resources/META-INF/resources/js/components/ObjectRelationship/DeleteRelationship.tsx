@@ -14,10 +14,10 @@
 
 import {ClayModalProvider, useModal} from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
-import {fetch, sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import {API} from '@liferay/object-js-components-web';
+import {sub} from 'frontend-js-web';
+import React, {useCallback, useEffect, useState} from 'react';
 
-import {HEADERS} from '../../utils/constants';
 import DangerModal from '../DangerModal';
 import WarningModal from '../WarningModal';
 
@@ -96,46 +96,36 @@ export default function ModalWithProvider({isApproved}: {isApproved: boolean}) {
 		onClose: () => setObjectRelationship(null),
 	});
 
-	const deleteRelationship = async (id: string) => {
-		const response = await fetch(
-			`/o/object-admin/v1.0/object-relationships/${id}`,
-			{
-				headers: HEADERS,
-				method: 'DELETE',
-			}
-		);
+	const deleteRelationship = useCallback(
+		(id: number) => {
+			API.deleteObjectRelationships(id).then(() => {
+				Liferay.Util.openToast({
+					message: Liferay.Language.get(
+						'relationship-was-deleted-successfully'
+					),
+				});
 
-		if (response.ok) {
-			Liferay.Util.openToast({
-				message: Liferay.Language.get(
-					'relationship-was-deleted-successfully'
-				),
-				type: 'success',
+				onClose();
+				setTimeout(() => window.location.reload(), 1500);
 			});
-		}
-		onClose();
-		setTimeout(() => {
-			window.location.reload();
-		}, 1500);
-	};
-
-	const getObjectRelationship = async ({itemData}: any) => {
-		if (isApproved || itemData.reverse) {
-			setObjectRelationship(itemData);
-		}
-		else {
-			deleteRelationship(itemData.id);
-		}
-	};
+		},
+		[onClose]
+	);
 
 	useEffect(() => {
+		const getObjectRelationship = ({itemData}: any) => {
+			if (isApproved || itemData.reverse) {
+				setObjectRelationship(itemData);
+			}
+			else {
+				deleteRelationship(itemData.id);
+			}
+		};
+
 		Liferay.on('deleteObjectRelationship', getObjectRelationship);
 
-		return () => {
-			Liferay.detach('deleteObjectRelationship');
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		return () => Liferay.detach('deleteObjectRelationship');
+	}, [deleteRelationship, isApproved]);
 
 	return (
 		<ClayModalProvider>

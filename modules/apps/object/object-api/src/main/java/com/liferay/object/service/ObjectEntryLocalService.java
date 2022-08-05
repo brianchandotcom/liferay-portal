@@ -89,6 +89,11 @@ public interface ObjectEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectEntry addObjectEntry(ObjectEntry objectEntry);
 
+	public void addOrUpdateExtensionDynamicObjectDefinitionTableValues(
+			long userId, ObjectDefinition objectDefinition, long primaryKey,
+			Map<String, Serializable> values, ServiceContext serviceContext)
+		throws PortalException;
+
 	public ObjectEntry addOrUpdateObjectEntry(
 			String externalReferenceCode, long userId, long groupId,
 			long objectDefinitionId, Map<String, Serializable> values,
@@ -108,6 +113,10 @@ public interface ObjectEntryLocalService
 	 * @throws PortalException
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public void deleteExtensionDynamicObjectDefinitionTableValues(
+			ObjectDefinition objectDefinition, long primaryKey)
 		throws PortalException;
 
 	/**
@@ -256,6 +265,12 @@ public interface ObjectEntryLocalService
 		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<String, Serializable>
+			getExtensionDynamicObjectDefinitionTableValues(
+				ObjectDefinition objectDefinition, long primaryKey)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -388,7 +403,7 @@ public interface ObjectEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<String, Object> getSystemModelAttributes(
-			ObjectDefinition objectDefinition, long objectEntryId)
+			ObjectDefinition objectDefinition, long primaryKey)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -28,14 +28,13 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -55,8 +54,8 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 			company, PropsValues.ASSET_VOCABULARY_DEFAULT,
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
-		List<Long> classNameIds = ListUtil.fromCollection(
-			_contentDashboardItemFactoryTracker.getClassNameIds());
+		Collection<Long> classNameIds =
+			_contentDashboardItemFactoryTracker.getClassNameIds();
 
 		for (ContentDashboardConstants.DefaultInternalAssetVocabularyName
 				defaultInternalAssetVocabularyName :

@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -42,7 +43,7 @@ public class AssetVocabularyUtil {
 
 	public static AssetVocabulary addAssetVocabulary(
 			AssetVocabularyLocalService assetVocabularyLocalService,
-			List<Long> classNameIds, Company company,
+			Collection<Long> classNameIds, Company company,
 			String assetVocabularyName, int visibilityType)
 		throws PortalException {
 
@@ -73,7 +74,7 @@ public class AssetVocabularyUtil {
 
 	private static AssetVocabulary _addAssetVocabulary(
 			AssetVocabularyLocalService assetVocabularyLocalService,
-			String assetVocabularyName, List<Long> classNameIdsList,
+			String assetVocabularyName, Collection<Long> classNameIdsCollection,
 			Company company, int visibilityType)
 		throws PortalException {
 
@@ -91,13 +92,15 @@ public class AssetVocabularyUtil {
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();
 
-		if (classNameIdsList != null) {
-			long[] classNameIds = new long[classNameIdsList.size()];
-			long[] classTypePKs = new long[classNameIdsList.size()];
-			boolean[] requireds = new boolean[classNameIdsList.size()];
+		if (classNameIdsCollection != null) {
+			long[] classNameIds = new long[classNameIdsCollection.size()];
+			long[] classTypePKs = new long[classNameIdsCollection.size()];
+			boolean[] requireds = new boolean[classNameIdsCollection.size()];
 
-			for (int i = 0; i < classNameIdsList.size(); i++) {
-				classNameIds[i] = classNameIdsList.get(i);
+			Iterator<Long> iterator = classNameIdsCollection.iterator();
+
+			for (int i = 0; i < classNameIdsCollection.size(); i++) {
+				classNameIds[i] = iterator.next();
 				classTypePKs[i] = AssetCategoryConstants.ALL_CLASS_TYPE_PK;
 				requireds[i] = false;
 			}
@@ -120,7 +123,8 @@ public class AssetVocabularyUtil {
 
 	private static AssetVocabularySettingsHelper
 		_getAssetVocabularySettingsHelper(
-			AssetVocabulary assetVocabulary, List<Long> classNameIdsList) {
+			AssetVocabulary assetVocabulary,
+			Collection<Long> classNameIdsCollection) {
 
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();
@@ -128,7 +132,7 @@ public class AssetVocabularyUtil {
 		Set<Long> classNameIds = SetUtil.fromArray(
 			assetVocabulary.getSelectedClassNameIds());
 
-		classNameIds.addAll(classNameIdsList);
+		classNameIds.addAll(classNameIdsCollection);
 
 		long[] selectedClassNameIds = ArrayUtil.toArray(
 			classNameIds.toArray(new Long[0]));

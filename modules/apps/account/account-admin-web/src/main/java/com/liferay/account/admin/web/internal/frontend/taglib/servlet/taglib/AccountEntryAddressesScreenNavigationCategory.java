@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
 import java.util.Locale;
@@ -70,13 +71,14 @@ public class AccountEntryAddressesScreenNavigationCategory
 			return false;
 		}
 
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
 		if (AccountEntryPermission.contains(
-				PermissionCheckerFactoryUtil.create(user),
-				accountEntry.getAccountEntryId(),
+				permissionChecker, accountEntry.getAccountEntryId(),
 				AccountActionKeys.MANAGE_ADDRESSES) ||
 			AccountEntryPermission.contains(
-				PermissionCheckerFactoryUtil.create(user),
-				accountEntry.getAccountEntryId(),
+				permissionChecker, accountEntry.getAccountEntryId(),
 				AccountActionKeys.VIEW_ADDRESSES)) {
 
 			return true;

@@ -39,6 +39,8 @@ page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowIn
 page import="com.liferay.taglib.search.DateSearchEntry" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
+<%@ page import="java.util.Collections" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

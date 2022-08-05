@@ -43,7 +43,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_VIEW</td>
-	<td>//a[contains(@data-title,'View')]/span[@class='icon-monospaced']/*[name()='svg'][contains(@class,'lexicon-icon-view')]</td>
+	<td>//a[contains(@data-title,'View')]</td>
 	<td></td>
 </tr>
 <tr>

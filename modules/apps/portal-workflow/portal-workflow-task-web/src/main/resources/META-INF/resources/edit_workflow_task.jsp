@@ -191,6 +191,7 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 								</portlet:renderURL>
 
 								<liferay-ui:icon
+									data='<%= Collections.singletonMap("title", "View") %>'
 									icon="view"
 									label="<%= false %>"
 									linkCssClass="btn btn-monospaced btn-outline-secondary"

@@ -18,7 +18,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.ContactBirthdayException;
 import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
-import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.RequiredUserException;
@@ -317,17 +315,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 						return;
 					}
-				}
-			}
-			else if ((exception instanceof ModelListenerException) &&
-					 (exception.getCause() instanceof
-						 ObjectValidationRuleEngineException)) {
-
-				Throwable throwable = exception.getCause();
-
-				if (throwable != null) {
-					SessionErrors.add(
-						actionRequest, throwable.getClass(), exception);
 				}
 			}
 			else {

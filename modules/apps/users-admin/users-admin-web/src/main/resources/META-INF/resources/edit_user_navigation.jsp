@@ -66,17 +66,6 @@ redirect = HttpComponentsUtil.addParameter(redirect, liferayPortletResponse.getN
 
 <liferay-ui:success key="userAdded" message="the-user-was-created-successfully" />
 
-<liferay-ui:error exception="<%= ObjectValidationRuleEngineException.class %>">
-
-	<%
-	ModelListenerException mle = (ModelListenerException)errorException;
-
-	ObjectValidationRuleEngineException ovree = (ObjectValidationRuleEngineException)mle.getCause();
-	%>
-
-	<liferay-ui:message key="<%= ovree.getMessage() %>" />
-</liferay-ui:error>
-
 <portlet:actionURL name="<%= actionCommandName %>" var="actionCommandURL" />
 
 <aui:form action="<%= actionCommandURL %>" cssClass="portlet-users-admin-edit-user" data-senna-off="true" method="post" name="fm">

@@ -31,17 +31,6 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 	<aui:form method="post" name="fm">
 		<aui:input name="accountEntryIds" type="hidden" />
 
-		<liferay-ui:error exception="<%= ObjectValidationRuleEngineException.class %>">
-
-			<%
-			ModelListenerException mle = (ModelListenerException)errorException;
-
-			ObjectValidationRuleEngineException ovree = (ObjectValidationRuleEngineException)mle.getCause();
-			%>
-
-			<liferay-ui:message key="<%= ovree.getMessage() %>" />
-		</liferay-ui:error>
-
 		<liferay-ui:search-container
 			searchContainer="<%= accountEntryDisplaySearchContainer %>"
 		>

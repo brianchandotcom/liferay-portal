@@ -312,9 +312,6 @@ public class MailEngine {
 
 			_send(session, message, bulkAddresses, batchSize);
 		}
-		catch (PortalException portalException) {
-			throw portalException;
-		}
 		catch (SendFailedException sendFailedException) {
 			_log.error(sendFailedException);
 

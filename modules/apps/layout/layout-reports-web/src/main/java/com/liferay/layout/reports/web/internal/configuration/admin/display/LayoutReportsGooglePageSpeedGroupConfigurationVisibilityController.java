@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.io.Serializable;
 
@@ -29,17 +31,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Cristina González
  */
 @Component(
 	immediate = true,
-	property = {
-		"configuration.pid=com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration",
-		"configuration.pid=com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedGroupConfiguration"
-	},
+	property = "configuration.pid=com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedGroupConfiguration",
 	service = ConfigurationVisibilityController.class
 )
-public class LayoutReportsGooglePageSpeedConfigurationVisibilityController
+public class LayoutReportsGooglePageSpeedGroupConfigurationVisibilityController
 	implements ConfigurationVisibilityController {
 
 	@Override
@@ -62,7 +61,11 @@ public class LayoutReportsGooglePageSpeedConfigurationVisibilityController
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutReportsGooglePageSpeedConfigurationVisibilityController.class);
+		LayoutReportsGooglePageSpeedGroupConfigurationVisibilityController.
+			class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

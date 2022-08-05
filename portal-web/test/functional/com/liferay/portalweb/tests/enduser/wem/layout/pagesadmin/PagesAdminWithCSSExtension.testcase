@@ -414,6 +414,117 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153658. The inherited CSS extensions from master or Pages should be read-only mode."
+	@priority = "4"
+	test ViewInheritedCSSExtensionFromMasterPageOrPages {
+		task ("Given a site designer has a master page with a CSS extension") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Master Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Master Page Template");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			PagesAdmin.addCSSExtensions(extensionNameList = "BackgroundColor");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the site designer adds a content page based on master page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Master Page Template",
+				pageName = "Test Page Name 1");
+		}
+
+		task ("Then the site designer could see the inherited CSS extension") {
+			AssertCssValue(
+				locator1 = "//body",
+				locator2 = "background-color",
+				value1 = "rgba(128, 128, 0, 1)");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			LexiconTable.viewTableEntryInfo(
+				index = "3",
+				tableEntry = "BackgroundColor",
+				tableEntryInfo = "From Master");
+
+			AssertElementNotPresent(
+				key_tableEntry = "BackgroundColor",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+
+		task ("Given a site designer has the Pages with a CSS extension") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			WaitForPageLoad();
+
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Configuration");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			Panel.expandPanel(panel = "Look and Feel");
+
+			PagesAdmin.addCSSExtensions(extensionNameList = "BackgroundColor");
+
+			PortletEntry.save();
+		}
+
+		task ("When the site designer adds a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2");
+		}
+
+		task ("Then the site designer could see the inherited CSS extension") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name 2");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			LexiconTable.viewTableEntryInfo(
+				index = "3",
+				tableEntry = "BackgroundColor",
+				tableEntryInfo = "From Pages");
+
+			AssertElementNotPresent(
+				key_tableEntry = "BackgroundColor",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+	}
+
 	@description = "This is a test for LPS-153656. Page should inherit the CSS extension from page template."
 	@priority = "5"
 	test ViewInheritedCSSExtensionFromPageTemplate {

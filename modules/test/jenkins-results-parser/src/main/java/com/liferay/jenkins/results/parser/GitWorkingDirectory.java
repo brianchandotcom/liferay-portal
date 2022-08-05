@@ -423,7 +423,7 @@ public class GitWorkingDirectory {
 			final String title)
 		throws IOException {
 
-		Retryable<String> retryable = new Retryable<String>(true, 3, 0, true) {
+		Retryable<String> retryable = new Retryable<String>(true, 5, 0, true) {
 
 			@Override
 			public String execute() {

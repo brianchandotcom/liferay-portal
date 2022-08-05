@@ -335,7 +335,7 @@ definition {
 		}
 
 		task ("Add a Web Content Display widget to module 1") {
-			PageEditor.gotoTab(tabName = "Widgets");
+			Navigator.gotoNavTab(navTab = "Widgets");
 
 			Type.sendKeysApplicationSearch(
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",

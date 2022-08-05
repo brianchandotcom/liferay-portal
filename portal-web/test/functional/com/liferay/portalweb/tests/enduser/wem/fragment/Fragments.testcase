@@ -186,7 +186,7 @@ NO CSS
 		}
 
 		task ("Add an Asset Publisher below Image inside the Container") {
-			PageEditor.gotoTab(tabName = "Widgets");
+			Navigator.gotoNavTab(navTab = "Widgets");
 
 			Type.sendKeysApplicationSearch(
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",

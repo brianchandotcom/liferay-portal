@@ -132,7 +132,7 @@
 </tr>
 <tr>
 	<td>FIELD_REQUIRED</td>
-	<td>//label[text()='${key_fieldFieldLabel}']/span[contains(@class,'required')]</td>
+	<td>//label[text()='${key_fieldFieldLabel}']/span[contains(@class,'required')] | //label[contains(.,'${key_fieldFieldLabel}')]/span[contains(.,'Required')]</td>
 	<td></td>
 </tr>
 <tr>

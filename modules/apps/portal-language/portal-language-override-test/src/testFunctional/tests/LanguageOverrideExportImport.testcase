@@ -42,4 +42,22 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that the File Upload field is required in Import Translations page."
+	@priority = "4"
+	test CanViewFileUploadFieldIsRequired {
+		task ("Given go to the Import Translations page") {
+			Portlet.gotoPortletOptions(portletOption = "Import Translations");
+		}
+
+		task ("When click Save button") {
+			Button.clickSave();
+		}
+
+		task ("Then assert error message and File Upload field is required") {
+			FormPortlet.viewValidationErrorMessage();
+
+			FormFields.viewFieldRequired(fieldLabel = "File Upload");
+		}
+	}
+
 }

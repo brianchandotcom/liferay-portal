@@ -144,13 +144,13 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 			</div>
 		</div>
 
+		<div class="sidebar-body">
 		<liferay-ui:tabs
 			cssClass="navbar-no-collapse"
 			names="details,versions"
 			refresh="<%= false %>"
 		>
 			<liferay-ui:section>
-				<div class="sidebar-body">
 					<dl class="sidebar-dl sidebar-section">
 						<dt class="sidebar-dt">
 							<liferay-ui:message key="title" />
@@ -195,15 +195,13 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 							<%= kbArticle.getViewCount() %>
 						</dd>
 					</dl>
-				</div>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<div class="sidebar-body">
 					<liferay-util:include page="/admin/common/kb_article_history.jsp" servletContext="<%= application %>" />
-				</div>
 			</liferay-ui:section>
 		</liferay-ui:tabs>
+		</div>
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">

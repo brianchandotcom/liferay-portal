@@ -1,0 +1,34 @@
+definition {
+
+	macro _getAssetLibraryContentElementsByDifferentParameters {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${parameter}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/content-elements?${parameter}=${fieldValue} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+	''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
+	macro assertResponseHasABodyWithAssetLibraryKeyOnly {
+		var actualValue = JSONUtil.getWithJSONPath("${responseToParse}", "$.items");
+
+		TestUtils.assertEquals(
+			actual = "${actualValue}",
+			expected = "${expectedValue}");
+	}
+
+	macro getAssetLibraryContentElementsByDifferentParameters {
+		ContentElementAPI._getAssetLibraryContentElementsByDifferentParameters(
+			assetLibraryId = "${assetLibraryId}",
+			fieldValue = "${fieldValue}",
+			parameter = "${parameter}");
+	}
+
+}

@@ -19,7 +19,9 @@ import com.liferay.commerce.shipping.engine.fixed.service.base.CommerceShippingF
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.math.BigDecimal;
 
@@ -41,7 +43,7 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 			double ratePercentage)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		long commerceShippingFixedOptionRelId = counterLocalService.increment();
 
@@ -201,5 +203,8 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 		return commerceShippingFixedOptionRelPersistence.update(
 			commerceShippingFixedOptionRel);
 	}
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

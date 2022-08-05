@@ -12,6 +12,14 @@
  * details.
  */
 
+import 'ckeditor4';
+
+export function BalloonEditor({
+	config,
+	contents,
+	name,
+}: IBalloonEditorProps): JSX.Element;
+
 export function ClassicEditor({
 	contents,
 	editorConfig,
@@ -20,15 +28,18 @@ export function ClassicEditor({
 }: IClassicEditorProps): JSX.Element;
 
 export interface IEditor {
-	editor: {
-		config: {contentsLangDirection: unknown; contentsLanguage: unknown};
-		setData: (data: unknown) => void;
-	};
+	editor: CKEDITOR.editor;
+}
+
+interface IBalloonEditorProps {
+	config?: CKEDITOR.config;
+	contents: string;
+	name: string;
 }
 
 interface IClassicEditorProps {
 	contents: string;
-	editorConfig: object;
+	editorConfig: CKEDITOR.config;
 	initialToolbarSet?: string;
 	name: string;
 	onChange: (content: string) => void;

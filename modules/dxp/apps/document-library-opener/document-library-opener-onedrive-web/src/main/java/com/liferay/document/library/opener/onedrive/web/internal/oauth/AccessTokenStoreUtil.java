@@ -22,9 +22,11 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Cristina González
  */
-public class AccessTokenStore {
+public class AccessTokenStoreUtil {
 
-	public void add(long companyId, long userId, AccessToken accessToken) {
+	public static void add(
+		long companyId, long userId, AccessToken accessToken) {
+
 		Map<Long, AccessToken> companyAccessTokens =
 			_accessTokenMap.computeIfAbsent(
 				companyId, key -> new ConcurrentHashMap<>());
@@ -32,7 +34,7 @@ public class AccessTokenStore {
 		companyAccessTokens.put(userId, accessToken);
 	}
 
-	public void delete(long companyId, long userId) {
+	public static void delete(long companyId, long userId) {
 		Map<Long, AccessToken> companyAccessTokens =
 			_accessTokenMap.computeIfAbsent(
 				companyId, key -> new ConcurrentHashMap<>());
@@ -40,7 +42,7 @@ public class AccessTokenStore {
 		companyAccessTokens.remove(userId);
 	}
 
-	public Optional<AccessToken> getAccessTokenOptional(
+	public static Optional<AccessToken> getAccessTokenOptional(
 		long companyId, long userId) {
 
 		Map<Long, AccessToken> companyAccessTokens =
@@ -49,7 +51,7 @@ public class AccessTokenStore {
 		return Optional.ofNullable(companyAccessTokens.get(userId));
 	}
 
-	private final Map<Long, Map<Long, AccessToken>> _accessTokenMap =
+	private static final Map<Long, Map<Long, AccessToken>> _accessTokenMap =
 		new ConcurrentHashMap<>();
 
 }

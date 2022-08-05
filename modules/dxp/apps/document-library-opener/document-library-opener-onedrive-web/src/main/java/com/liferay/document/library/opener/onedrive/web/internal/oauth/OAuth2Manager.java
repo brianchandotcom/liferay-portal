@@ -50,7 +50,7 @@ public class OAuth2Manager {
 			AccessToken accessToken = new AccessToken(
 				oAuth20Service.getAccessToken(code));
 
-			_accessTokenStore.add(companyId, userId, accessToken);
+			AccessTokenStoreUtil.add(companyId, userId, accessToken);
 
 			return accessToken;
 		}
@@ -64,7 +64,7 @@ public class OAuth2Manager {
 		throws PortalException {
 
 		Optional<AccessToken> accessTokenOptional =
-			_accessTokenStore.getAccessTokenOptional(companyId, userId);
+			AccessTokenStoreUtil.getAccessTokenOptional(companyId, userId);
 
 		if (!accessTokenOptional.isPresent()) {
 			return Optional.empty();
@@ -104,13 +104,13 @@ public class OAuth2Manager {
 
 	public void revokeOAuth2AccessToken(long companyId, long userId) {
 		Optional<AccessToken> accessTokenOptional =
-			_accessTokenStore.getAccessTokenOptional(companyId, userId);
+			AccessTokenStoreUtil.getAccessTokenOptional(companyId, userId);
 
 		if (!accessTokenOptional.isPresent()) {
 			return;
 		}
 
-		_accessTokenStore.delete(companyId, userId);
+		AccessTokenStoreUtil.delete(companyId, userId);
 	}
 
 	private OAuth20Service _createOAuth20Service(
@@ -173,7 +173,7 @@ public class OAuth2Manager {
 				oAuth20Service.refreshAccessToken(
 					accessToken.getRefreshToken()));
 
-			_accessTokenStore.add(companyId, userId, newAccessToken);
+			AccessTokenStoreUtil.add(companyId, userId, newAccessToken);
 
 			return Optional.of(newAccessToken);
 		}
@@ -183,8 +183,6 @@ public class OAuth2Manager {
 			throw new PortalException(exception);
 		}
 	}
-
-	private final AccessTokenStore _accessTokenStore = new AccessTokenStore();
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

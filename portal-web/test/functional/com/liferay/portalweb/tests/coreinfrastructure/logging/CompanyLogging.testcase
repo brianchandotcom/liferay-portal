@@ -56,9 +56,7 @@ definition {
 		property custom.properties = "company.log.enabled=false";
 
 		task ("When the user tries navigating to the company logging UI access point with company logs disabled") {
-			var baseURL = PropsUtil.get("portal.url");
-
-			Open.openNoError(locator1 = "${baseURL}/o/company-log");
+			Navigator.openWithAppendToBaseURL(urlAppend = "o/company-log");
 		}
 
 		task ("Then the page cannot be accessed") {

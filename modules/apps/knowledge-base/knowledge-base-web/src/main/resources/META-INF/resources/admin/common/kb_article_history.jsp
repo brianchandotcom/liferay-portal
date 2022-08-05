@@ -29,81 +29,80 @@ OrderByComparator<KBArticle> orderByComparator = KBUtil.getKBArticleOrderByCompa
 List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGroupId, kbArticle.getResourcePrimKey(), selStatus, QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 %>
 
+<ul class="list-group sidebar-list-group">
 
-		<ul class="list-group sidebar-list-group">
+	<%
+	for (KBArticle curKBArticle : kbArticles) {
+	%>
 
-			<%
-			for (KBArticle curKBArticle : kbArticles) {
-			%>
+		<li class="list-group-item list-group-item-flex">
+			<div class="autofit-col autofit-col-expand">
+				<div class="h5">
+					<liferay-ui:message arguments="<%= curKBArticle.getVersion() %>" key="version-x" />
+				</div>
 
-				<li class="list-group-item list-group-item-flex">
-					<div class="autofit-col autofit-col-expand">
-						<div class="h5">
-							<liferay-ui:message arguments="<%= curKBArticle.getVersion() %>" key="version-x" />
-						</div>
+				<div class="h6 sidebar-caption">
+					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(curKBArticle.getUserName()), dateFormatDateTime.format(curKBArticle.getModifiedDate())} %>" key="by-x-on-x" />
+				</div>
+			</div>
 
-						<div class="h6 sidebar-caption">
-							<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(curKBArticle.getUserName()), dateFormatDateTime.format(curKBArticle.getModifiedDate())} %>" key="by-x-on-x" />
-						</div>
-					</div>
+			<div class="autofit-col">
+				<liferay-ui:icon-menu
+					direction="left-side"
+					icon="<%= StringPool.BLANK %>"
+					markupView="lexicon"
+					message="actions"
+					showWhenSingleIcon="<%= true %>"
+				>
+					<c:if test="<%= (kbArticle.getStatus() == WorkflowConstants.STATUS_APPROVED) && KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">
+						<liferay-portlet:actionURL name="/knowledge_base/update_kb_article" varImpl="revertURL">
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />
+							<portlet:param name="version" value="<%= String.valueOf(curKBArticle.getVersion()) %>" />
+							<portlet:param name="workflowAction" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
+						</liferay-portlet:actionURL>
 
-					<div class="autofit-col">
-						<liferay-ui:icon-menu
-							direction="left-side"
-							icon="<%= StringPool.BLANK %>"
+						<%
+						revertURL.setParameter("section", AdminUtil.unescapeSections(curKBArticle.getSections()));
+						%>
+
+						<liferay-ui:icon
+							icon="undo"
+							label="<%= true %>"
 							markupView="lexicon"
-							message="actions"
-							showWhenSingleIcon="<%= true %>"
-						>
-							<c:if test="<%= (kbArticle.getStatus() == WorkflowConstants.STATUS_APPROVED) && KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">
-								<liferay-portlet:actionURL name="/knowledge_base/update_kb_article" varImpl="revertURL">
-									<portlet:param name="redirect" value="<%= currentURL %>" />
-									<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
-									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />
-									<portlet:param name="version" value="<%= String.valueOf(curKBArticle.getVersion()) %>" />
-									<portlet:param name="workflowAction" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
-								</liferay-portlet:actionURL>
+							message="revert"
+							url="<%= revertURL.toString() %>"
+						/>
+					</c:if>
 
-								<%
-								revertURL.setParameter("section", AdminUtil.unescapeSections(curKBArticle.getSections()));
-								%>
+					<portlet:renderURL var="selectVersionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="mvcPath" value="/admin/common/select_version.jsp" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+						<portlet:param name="sourceVersion" value="<%= String.valueOf(curKBArticle.getVersion()) %>" />
+					</portlet:renderURL>
 
-								<liferay-ui:icon
-									icon="undo"
-									label="<%= true %>"
-									markupView="lexicon"
-									message="revert"
-									url="<%= revertURL.toString() %>"
-								/>
-							</c:if>
+					<%
+					String taglibOnClick = liferayPortletResponse.getNamespace() + "openCompareVersionsPopup('" + selectVersionURL.toString() + "');";
+					%>
 
-							<portlet:renderURL var="selectVersionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-								<portlet:param name="mvcPath" value="/admin/common/select_version.jsp" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
-								<portlet:param name="sourceVersion" value="<%= String.valueOf(curKBArticle.getVersion()) %>" />
-							</portlet:renderURL>
+					<liferay-ui:icon
+						cssClass="compare-to-link"
+						label="<%= true %>"
+						message="compare-to"
+						onClick="<%= taglibOnClick %>"
+						url="javascript:void(0);"
+					/>
+				</liferay-ui:icon-menu>
+			</div>
+		</li>
 
-							<%
-							String taglibOnClick = liferayPortletResponse.getNamespace() + "openCompareVersionsPopup('" + selectVersionURL.toString() + "');";
-							%>
+	<%
+	}
+	%>
 
-							<liferay-ui:icon
-								cssClass="compare-to-link"
-								label="<%= true %>"
-								message="compare-to"
-								onClick="<%= taglibOnClick %>"
-								url="javascript:void(0);"
-							/>
-						</liferay-ui:icon-menu>
-					</div>
-				</li>
-
-			<%
-			}
-			%>
-
-		</ul>
+</ul>
 
 <portlet:renderURL var="compareVersionURL">
 	<portlet:param name="mvcPath" value="/admin/common/compare_versions.jsp" />

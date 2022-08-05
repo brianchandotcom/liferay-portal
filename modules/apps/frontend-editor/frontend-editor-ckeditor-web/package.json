@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@types/ckeditor4": "4.16.2",
 		"ckeditor4-react": "1.4.2",
 		"liferay-ckeditor": "4.18.0-liferay.2"
 	},

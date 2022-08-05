@@ -469,6 +469,27 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				cpDefinition.getUrlTitleMap());
 		}
 
+		Map<String, String> metaTitleMap = product.getMetaTitle();
+
+		if ((cpDefinition != null) && (metaTitleMap == null)) {
+			metaTitleMap = LanguageUtils.getLanguageIdMap(
+				cpDefinition.getMetaTitleMap());
+		}
+
+		Map<String, String> metaDescriptionMap = product.getMetaDescription();
+
+		if ((cpDefinition != null) && (metaDescriptionMap == null)) {
+			metaDescriptionMap = LanguageUtils.getLanguageIdMap(
+				cpDefinition.getMetaDescriptionMap());
+		}
+
+		Map<String, String> metaKeywordMap = product.getMetaKeyword();
+
+		if ((cpDefinition != null) && (metaKeywordMap == null)) {
+			metaKeywordMap = LanguageUtils.getLanguageIdMap(
+				cpDefinition.getMetaKeywordsMap());
+		}
+
 		boolean ignoreSKUCombinations = true;
 
 		if (cpDefinition != null) {
@@ -488,9 +509,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			LanguageUtils.getLocalizedMap(shortDescriptionMap),
 			LanguageUtils.getLocalizedMap(descriptionMap),
 			LanguageUtils.getLocalizedMap(urlTitleMap),
-			LanguageUtils.getLocalizedMap(product.getMetaTitle()),
-			LanguageUtils.getLocalizedMap(product.getMetaDescription()),
-			LanguageUtils.getLocalizedMap(product.getMetaKeyword()),
+			LanguageUtils.getLocalizedMap(metaTitleMap),
+			LanguageUtils.getLocalizedMap(metaDescriptionMap),
+			LanguageUtils.getLocalizedMap(metaKeywordMap),
 			product.getProductType(), ignoreSKUCombinations,
 			GetterUtil.getBoolean(shippingConfiguration.getShippable(), true),
 			GetterUtil.getBoolean(
@@ -1124,14 +1145,43 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				cpDefinition.getDescriptionMap());
 		}
 
+		Map<String, String> urlTitleMap = product.getUrls();
+
+		if ((cpDefinition != null) && (urlTitleMap == null)) {
+			urlTitleMap = LanguageUtils.getLanguageIdMap(
+				cpDefinition.getUrlTitleMap());
+		}
+
+		Map<String, String> metaTitleMap = product.getMetaTitle();
+
+		if ((cpDefinition != null) && (metaTitleMap == null)) {
+			metaTitleMap = LanguageUtils.getLanguageIdMap(
+				cpDefinition.getMetaTitleMap());
+		}
+
+		Map<String, String> metaDescriptionMap = product.getMetaDescription();
+
+		if ((cpDefinition != null) && (metaDescriptionMap == null)) {
+			metaDescriptionMap = LanguageUtils.getLanguageIdMap(
+				cpDefinition.getMetaDescriptionMap());
+		}
+
+		Map<String, String> metaKeywordMap = product.getMetaKeyword();
+
+		if ((cpDefinition != null) && (metaKeywordMap == null)) {
+			metaKeywordMap = LanguageUtils.getLanguageIdMap(
+				cpDefinition.getMetaKeywordsMap());
+		}
+
 		cpDefinition = _cpDefinitionService.updateCPDefinition(
 			cpDefinition.getCPDefinitionId(),
 			LanguageUtils.getLocalizedMap(nameMap),
 			LanguageUtils.getLocalizedMap(shortDescriptionMap),
 			LanguageUtils.getLocalizedMap(descriptionMap),
-			cpDefinition.getUrlTitleMap(), cpDefinition.getMetaTitleMap(),
-			cpDefinition.getMetaDescriptionMap(),
-			cpDefinition.getMetaKeywordsMap(),
+			LanguageUtils.getLocalizedMap(urlTitleMap),
+			LanguageUtils.getLocalizedMap(metaTitleMap),
+			LanguageUtils.getLocalizedMap(metaDescriptionMap),
+			LanguageUtils.getLocalizedMap(metaKeywordMap),
 			cpDefinition.isIgnoreSKUCombinations(),
 			cpDefinition.getDDMStructureKey(), true,
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),

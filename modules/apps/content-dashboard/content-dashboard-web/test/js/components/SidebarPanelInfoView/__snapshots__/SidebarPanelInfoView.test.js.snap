@@ -27,8 +27,29 @@ exports[`SidebarPanelInfoView renders 1`] = `
             class="autofit-col"
           >
             <button
+              class="mr-2 btn btn-monospaced btn-outline-borderless btn-outline-secondary"
+              data-tooltip-align="bottom"
+              title="Subscribe"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-bell-on"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#bell-on"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="autofit-col"
+          >
+            <button
               aria-label="Close"
-              class="mt-n2 text-secondary btn btn-monospaced btn-unstyled"
+              class="text-secondary btn btn-monospaced btn-unstyled"
+              data-tooltip-align="bottom"
+              title="close"
               type="button"
             >
               <svg

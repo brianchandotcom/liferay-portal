@@ -35,6 +35,11 @@ export const mockedProps = {
 		},
 	},
 	subType: 'Basic Web Content',
+	subscribe: {
+		icon: 'bell-on',
+		label: 'Subscribe',
+		url: 'http://localhost:8080/subscribe-url',
+	},
 	tags: ['tag1', 'tag2'],
 	title: 'Basic Web Content Title',
 	type: 'Web Content Article',

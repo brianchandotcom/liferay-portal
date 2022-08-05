@@ -12,10 +12,11 @@
  * details.
  */
 
-import {render} from '@testing-library/react';
+import {fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
+import {fetch, openToast} from 'frontend-js-web';
 
 import Sidebar from '../../../../src/main/resources/META-INF/resources/js/components/Sidebar';
 import SidebarPanelInfoView from '../../../../src/main/resources/META-INF/resources/js/components/SidebarPanelInfoView/SidebarPanelInfoView';
@@ -28,9 +29,17 @@ import {
 	mockedVideoShortcutDocumentProps,
 } from '../../mocks/props';
 
+jest.mock('frontend-js-web', () => ({
+	fetch: jest.fn().mockReturnValue({
+		ok: true,
+	}),
+
+	openToast: jest.fn(),
+}));
+
 const _getSidebarComponent = (props) => {
 	return (
-		<Sidebar>
+		<Sidebar fetchData={() => jest.fn()}>
 			<SidebarPanelInfoView {...props} />
 		</Sidebar>
 	);
@@ -305,5 +314,89 @@ describe('SidebarPanelInfoView', () => {
 
 		const image = container.querySelector('.sticker-img');
 		expect(image).toBeTruthy();
+	});
+
+	it('renders sidebar panel with/without subscribe button if proceeds', () => {
+		const {getByTitle, queryByTitle, rerender} = render(
+			_getSidebarComponent({
+				...mockedProps,
+			})
+		);
+
+		expect(getByTitle('Subscribe')).toBeInTheDocument();
+
+		const copyMockedProps = JSON.parse(JSON.stringify(mockedProps));
+		copyMockedProps.subscribe = null;
+
+		rerender(
+			_getSidebarComponent({
+				...copyMockedProps,
+			})
+		);
+
+		expect(queryByTitle('Subscribe')).not.toBeInTheDocument();
+	});
+
+	it('renders sidebar panel with subscribe button and it calls the API', async () => {
+		const {getByTitle} = render(
+			_getSidebarComponent({
+				...mockedProps,
+			})
+		);
+
+		const button = getByTitle('Subscribe');
+
+		fireEvent(
+			button,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		await waitFor(() =>
+			expect(fetch).toHaveBeenCalledWith(mockedProps.subscribe.url)
+		);
+
+		await waitFor(() =>
+			expect(openToast).toHaveBeenCalledWith({
+				message: Liferay.Language.get(
+					'your-request-completed-successfully'
+				),
+				type: 'success',
+			})
+		);
+	});
+
+	it('renders sidebar panel with subscribe button and it handles the API error', async () => {
+		fetch.mockImplementation(() => {
+			return {
+				ok: false,
+			};
+		});
+
+		const {getByTitle} = render(
+			_getSidebarComponent({
+				...mockedProps,
+			})
+		);
+
+		const button = getByTitle('Subscribe');
+
+		fireEvent(
+			button,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		expect(fetch).toHaveBeenCalledWith(mockedProps.subscribe.url);
+		await waitFor(() =>
+			expect(openToast).toHaveBeenCalledWith({
+				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				type: 'danger',
+			})
+		);
 	});
 });

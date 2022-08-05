@@ -210,6 +210,23 @@ definition {
 		return "${curl}";
 	}
 
+	macro _getBlogPostings {
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			groupName = "Guest",
+			site = "true");
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _getFieldValueOfExistingBlogPosting {
 		Variables.assertDefined(parameterList = "${response},${fieldName}");
 
@@ -330,23 +347,6 @@ definition {
 		var idList = JSONUtil.getWithJSONPath("${response}", "$.items.[*].id");
 
 		return "${idList}";
-	}
-
-	macro _getBlogPostings {
-		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-			groupName = "Guest",
-			site = "true");
-
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json
-		''';
-
-		var curl = JSONCurlUtil.get("${curl}");
-
-		return "${curl}";
 	}
 
 	macro getIdOfCreatedBlogPosting {

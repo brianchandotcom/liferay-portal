@@ -52,6 +52,15 @@ public class PortalInstanceLifecycleListenerManagerImpl
 	implements AopService, PortalInstanceLifecycleManager {
 
 	@Override
+	public void preregisterCompany(Company company) {
+		for (PortalInstanceLifecycleListener portalInstanceLifecycleListener :
+				_portalInstanceLifecycleListeners) {
+
+			preregisterCompany(portalInstanceLifecycleListener, company);
+		}
+	}
+
+	@Override
 	public void preunregisterCompany(Company company) {
 		for (PortalInstanceLifecycleListener portalInstanceLifecycleListener :
 				_portalInstanceLifecycleListeners) {
@@ -122,6 +131,9 @@ public class PortalInstanceLifecycleListenerManagerImpl
 					TransactionInvokerUtil.invoke(
 						_transactionConfig,
 						() -> {
+							preregisterCompany(
+								portalInstanceLifecycleListener, company);
+
 							registerCompany(
 								portalInstanceLifecycleListener, company);
 
@@ -133,6 +145,33 @@ public class PortalInstanceLifecycleListenerManagerImpl
 				}
 			},
 			new ArrayList<>(_companies));
+	}
+
+	protected void preregisterCompany(
+		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
+		Company company) {
+
+		if (!(portalInstanceLifecycleListener instanceof Clusterable) &&
+			!clusterMasterExecutor.isMaster()) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Skipping " + portalInstanceLifecycleListener);
+			}
+
+			return;
+		}
+
+		try {
+			portalInstanceLifecycleListener.portalInstancePreregistered(
+				company);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to preregister portal instance " + company,
+					exception);
+			}
+		}
 	}
 
 	protected void preunregisterCompany(

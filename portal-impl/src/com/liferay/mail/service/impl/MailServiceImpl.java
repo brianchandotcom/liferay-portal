@@ -329,7 +329,7 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		return session;
 	}
 
-	public static Session getSession(Account account) {
+	public Session getSession(Account account) {
 		Session session = Session.getInstance(_getProperties(account));
 
 		if (_log.isDebugEnabled()) {

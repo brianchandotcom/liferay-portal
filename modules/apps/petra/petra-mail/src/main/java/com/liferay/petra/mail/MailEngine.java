@@ -147,7 +147,7 @@ public class MailEngine {
 				session = MailServiceUtil.getSession();
 			}
 			else {
-				session = getSession(smtpAccount);
+				session = MailServiceUtil.getSession(smtpAccount);
 			}
 
 			Message message = new LiferayMimeMessage(session);

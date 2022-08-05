@@ -15,6 +15,7 @@
 package com.liferay.message.boards.internal.messaging;
 
 import com.liferay.mail.kernel.model.Account;
+import com.liferay.mail.kernel.service.MailService;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.internal.util.MBMailMessage;
 import com.liferay.message.boards.internal.util.MBMailUtil;
@@ -22,7 +23,6 @@ import com.liferay.message.boards.internal.util.MailingListThreadLocal;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
-import com.liferay.petra.mail.MailEngine;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -156,7 +156,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 		account.setUser(user);
 		account.setPassword(password);
 
-		Session session = MailEngine.getSession(account);
+		Session session = _mailService.getSession(account);
 
 		URLName urlName = new URLName(
 			protocol, host, port, StringPool.BLANK, user, password);
@@ -306,6 +306,9 @@ public class MailingListMessageListener extends BaseMessageListener {
 
 	@Reference
 	private HtmlParser _htmlParser;
+
+	@Reference
+	private MailService _mailService;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

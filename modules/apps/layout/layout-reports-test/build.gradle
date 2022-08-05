@@ -1,5 +1,6 @@
 dependencies {
 	testIntegrationCompile project(":apps:blogs:blogs-api")
+	testIntegrationCompile project(":apps:configuration-admin:configuration-admin-api")
 	testIntegrationCompile project(":apps:frontend-taglib:frontend-taglib-form-navigator")
 	testIntegrationCompile project(":apps:info:info-api")
 	testIntegrationCompile project(":apps:journal:journal-api")
@@ -7,5 +8,6 @@ dependencies {
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":apps:product-navigation:product-navigation-control-menu-api")
+	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

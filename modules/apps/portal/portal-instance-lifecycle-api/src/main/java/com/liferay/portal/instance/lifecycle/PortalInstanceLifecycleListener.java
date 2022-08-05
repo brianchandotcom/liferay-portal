@@ -24,6 +24,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PortalInstanceLifecycleListener {
 
+	public default void portalInstancePreregistered(Company company)
+		throws Exception {
+	}
+
 	public default void portalInstancePreunregistered(Company company)
 		throws Exception {
 	}

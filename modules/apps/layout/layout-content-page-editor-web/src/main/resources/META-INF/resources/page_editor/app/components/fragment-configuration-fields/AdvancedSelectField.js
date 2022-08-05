@@ -83,6 +83,8 @@ export function AdvancedSelectField({
 					field={field}
 					onBlur={(event) => {
 						if (!event.target.value) {
+							setNextValue(value);
+
 							return;
 						}
 

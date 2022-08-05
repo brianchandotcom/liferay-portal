@@ -128,6 +128,15 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 			valueWithUnits = `${nextValue}${nextUnit}`;
 		}
 
+		if (!valueWithUnits && field.typeOptions?.showLengthField) {
+			const [, number, unit] = value.toLowerCase().match(REGEX) || [];
+
+			setNextValue(number || value);
+			setNextUnit(unit || CUSTOM);
+
+			return;
+		}
+
 		if (valueWithUnits !== value) {
 			onValueSelect(field.name, valueWithUnits);
 		}
@@ -160,9 +169,7 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 					aria-label={field.label}
 					id={id}
 					insetBefore={Boolean(field.icon)}
-					onBlur={() => {
-						handleValueSelect();
-					}}
+					onBlur={handleValueSelect}
 					onChange={(event) => {
 						setNextValue(event.target.value);
 					}}

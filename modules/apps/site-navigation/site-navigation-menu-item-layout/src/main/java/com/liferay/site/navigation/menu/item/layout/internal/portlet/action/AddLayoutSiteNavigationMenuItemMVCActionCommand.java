@@ -17,7 +17,7 @@ package com.liferay.site.navigation.menu.item.layout.internal.portlet.action;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -156,7 +156,7 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 			if (MapUtil.isEmpty(layoutSiteNavigationMenuItemMap)) {
 				jsonObject.put(
 					"errorMessage",
-					LanguageUtil.get(
+					_language.get(
 						_portal.getHttpServletRequest(actionRequest),
 						"please-choose-at-least-one-page"));
 			}
@@ -175,7 +175,7 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 
 			jsonObject.put(
 				"errorMessage",
-				LanguageUtil.get(
+				_language.get(
 					_portal.getHttpServletRequest(actionRequest),
 					"an-unexpected-error-occurred"));
 		}
@@ -186,6 +186,9 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddLayoutSiteNavigationMenuItemMVCActionCommand.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

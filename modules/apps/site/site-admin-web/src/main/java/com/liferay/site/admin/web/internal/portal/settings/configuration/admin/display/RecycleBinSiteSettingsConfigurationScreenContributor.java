@@ -14,7 +14,7 @@
 
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -51,7 +51,7 @@ public class RecycleBinSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "recycle-bin");
+		return _language.get(locale, "recycle-bin");
 	}
 
 	@Override
@@ -75,6 +75,9 @@ public class RecycleBinSiteSettingsConfigurationScreenContributor
 
 		return true;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
 	private ServletContext _servletContext;

@@ -15,7 +15,7 @@
 package com.liferay.site.navigation.breadcrumb.web.internal.portlet.display.template;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
@@ -74,7 +74,7 @@ public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 			SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB,
 			ResourceBundleUtil.getBundle(locale, getClass()));
 
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return _language.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override
@@ -128,6 +128,9 @@ public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 		return "com/liferay/site/navigation/breadcrumb/web/portlet/display" +
 			"/template/dependencies/portlet-display-templates.xml";
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

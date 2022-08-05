@@ -17,7 +17,7 @@ package com.liferay.site.navigation.menu.item.display.page.internal.portlet.acti
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -110,7 +110,7 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 				jsonObject.put(
 					"errorMessage",
-					LanguageUtil.get(
+					_language.get(
 						_portal.getHttpServletRequest(actionRequest),
 						"an-unexpected-error-occurred"));
 			}
@@ -127,7 +127,7 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 			jsonObject.put(
 				"errorMessage",
-				LanguageUtil.get(
+				_language.get(
 					_portal.getHttpServletRequest(actionRequest),
 					"an-unexpected-error-occurred"));
 		}
@@ -138,6 +138,9 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

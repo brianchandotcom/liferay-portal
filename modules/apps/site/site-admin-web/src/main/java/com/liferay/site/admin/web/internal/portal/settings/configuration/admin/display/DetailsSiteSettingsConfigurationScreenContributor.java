@@ -14,7 +14,7 @@
 
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
@@ -48,7 +48,7 @@ public class DetailsSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "details");
+		return _language.get(locale, "details");
 	}
 
 	@Override
@@ -60,6 +60,9 @@ public class DetailsSiteSettingsConfigurationScreenContributor
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
 	private ServletContext _servletContext;

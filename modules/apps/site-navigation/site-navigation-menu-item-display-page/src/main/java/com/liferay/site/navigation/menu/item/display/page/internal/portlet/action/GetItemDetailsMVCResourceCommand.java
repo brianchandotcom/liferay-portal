@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -117,7 +117,7 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"error",
-					LanguageUtil.get(
+					_language.get(
 						themeDisplay.getRequest(),
 						"an-unexpected-error-occurred")));
 		}
@@ -223,6 +223,9 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutDisplayPageInfoItemFieldValuesProviderTracker

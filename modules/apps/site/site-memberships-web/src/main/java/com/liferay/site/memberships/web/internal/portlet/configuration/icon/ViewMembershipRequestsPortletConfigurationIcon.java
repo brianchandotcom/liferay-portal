@@ -15,7 +15,7 @@
 package com.liferay.site.memberships.web.internal.portlet.configuration.icon;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -52,7 +52,7 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getLocale(portletRequest), getClass());
 
-		return LanguageUtil.get(resourceBundle, "view-membership-requests");
+		return _language.get(resourceBundle, "view-membership-requests");
 	}
 
 	@Override
@@ -97,6 +97,9 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.exception.GroupKeyException;
 import com.liferay.portal.kernel.exception.GroupParentException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -40,6 +40,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -78,7 +79,7 @@ public class GroupExceptionRequestHandler {
 			if (assetCategoryException.getType() ==
 					AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
 
-				errorMessage = LanguageUtil.format(
+				errorMessage = _language.format(
 					themeDisplay.getRequest(),
 					"please-select-at-least-one-category-for-x",
 					assetVocabularyTitle);
@@ -86,23 +87,23 @@ public class GroupExceptionRequestHandler {
 			else if (assetCategoryException.getType() ==
 						AssetCategoryException.TOO_MANY_CATEGORIES) {
 
-				errorMessage = LanguageUtil.format(
+				errorMessage = _language.format(
 					themeDisplay.getRequest(),
 					"you-cannot-select-more-than-one-category-for-x",
 					assetVocabularyTitle);
 			}
 		}
 		else if (exception instanceof DataLimitExceededException) {
-			errorMessage = LanguageUtil.get(
+			errorMessage = _language.get(
 				themeDisplay.getRequest(),
 				"unable-to-exceed-maximum-number-of-allowed-sites");
 		}
 		else if (exception instanceof DuplicateGroupException) {
-			errorMessage = LanguageUtil.get(
+			errorMessage = _language.get(
 				themeDisplay.getRequest(), "please-enter-a-unique-name");
 		}
 		else if (exception instanceof GroupInheritContentException) {
-			errorMessage = LanguageUtil.get(
+			errorMessage = _language.get(
 				themeDisplay.getRequest(),
 				"this-site-cannot-inherit-content-from-its-parent-site");
 		}
@@ -110,13 +111,13 @@ public class GroupExceptionRequestHandler {
 			errorMessage = _handleGroupKeyException(actionRequest);
 		}
 		else if (exception instanceof GroupParentException.MustNotBeOwnParent) {
-			errorMessage = LanguageUtil.get(
+			errorMessage = _language.get(
 				themeDisplay.getRequest(),
 				"this-site-cannot-inherit-content-from-its-parent-site");
 		}
 
 		if (Validator.isNull(errorMessage)) {
-			errorMessage = LanguageUtil.get(
+			errorMessage = _language.get(
 				themeDisplay.getRequest(), "an-unexpected-error-occurred");
 
 			_log.error(exception);
@@ -135,7 +136,7 @@ public class GroupExceptionRequestHandler {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(
-			LanguageUtil.format(
+			_language.format(
 				themeDisplay.getRequest(),
 				"the-x-cannot-be-x-or-a-reserved-word-such-as-x",
 				new String[] {
@@ -148,7 +149,7 @@ public class GroupExceptionRequestHandler {
 		sb.append(StringPool.SPACE);
 
 		sb.append(
-			LanguageUtil.format(
+			_language.format(
 				themeDisplay.getRequest(),
 				"the-x-cannot-contain-the-following-invalid-characters-x",
 				new String[] {
@@ -162,7 +163,7 @@ public class GroupExceptionRequestHandler {
 			Group.class.getName(), "groupKey");
 
 		sb.append(
-			LanguageUtil.format(
+			_language.format(
 				themeDisplay.getRequest(),
 				"the-x-cannot-contain-more-than-x-characters",
 				new String[] {
@@ -174,5 +175,8 @@ public class GroupExceptionRequestHandler {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupExceptionRequestHandler.class);
+
+	@Reference
+	private Language _language;
 
 }

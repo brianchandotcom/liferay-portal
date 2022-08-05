@@ -15,7 +15,7 @@
 package com.liferay.site.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -82,7 +82,7 @@ public class EditSiteURLMVCActionCommand
 			liveGroup.getMembershipRestriction(), friendlyURL,
 			liveGroup.isInheritContent(), liveGroup.isActive(), serviceContext);
 
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+		Set<Locale> availableLocales = _language.getAvailableLocales(
 			liveGroup.getGroupId());
 
 		_layoutSetService.updateVirtualHosts(
@@ -162,6 +162,9 @@ public class EditSiteURLMVCActionCommand
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutSetService _layoutSetService;

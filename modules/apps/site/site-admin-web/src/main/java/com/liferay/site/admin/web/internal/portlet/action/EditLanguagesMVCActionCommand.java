@@ -16,7 +16,7 @@ package com.liferay.site.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.exception.LocaleException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
@@ -83,8 +83,7 @@ public class EditLanguagesMVCActionCommand
 			formTypeSettingsUnicodeProperties.setProperty(
 				PropsKeys.LOCALES,
 				StringUtil.merge(
-					LocaleUtil.toLanguageIds(
-						LanguageUtil.getAvailableLocales())));
+					LocaleUtil.toLanguageIds(_language.getAvailableLocales())));
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -130,5 +129,8 @@ public class EditLanguagesMVCActionCommand
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private Language _language;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
@@ -56,7 +56,7 @@ public class PublicPrivatePagesSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "pages");
+		return _language.get(locale, "pages");
 	}
 
 	@Override
@@ -101,6 +101,9 @@ public class PublicPrivatePagesSiteSettingsConfigurationScreenContributor
 
 		return false;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

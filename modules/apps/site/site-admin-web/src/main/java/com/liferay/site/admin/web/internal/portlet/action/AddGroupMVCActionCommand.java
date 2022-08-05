@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
@@ -363,8 +363,7 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 			formTypeSettingsUnicodeProperties.setProperty(
 				PropsKeys.LOCALES,
 				StringUtil.merge(
-					LocaleUtil.toLanguageIds(
-						LanguageUtil.getAvailableLocales())));
+					LocaleUtil.toLanguageIds(_language.getAvailableLocales())));
 
 			User user = themeDisplay.getDefaultUser();
 
@@ -410,7 +409,7 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 
 		// Virtual hosts
 
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+		Set<Locale> availableLocales = _language.getAvailableLocales(
 			liveGroup.getGroupId());
 
 		_layoutSetService.updateVirtualHosts(
@@ -512,6 +511,9 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutSEOSiteLocalService _layoutSEOSiteLocalService;

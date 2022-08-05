@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -122,7 +122,7 @@ public class AssetVocabularySiteNavigationMenuItemType
 
 	@Override
 	public String getAddTitle(Locale locale) {
-		return LanguageUtil.format(locale, "select-x", "vocabularies");
+		return _language.format(locale, "select-x", "vocabularies");
 	}
 
 	@Override
@@ -207,7 +207,7 @@ public class AssetVocabularySiteNavigationMenuItemType
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "vocabulary");
+		return _language.get(locale, "vocabulary");
 	}
 
 	@Override
@@ -531,6 +531,9 @@ public class AssetVocabularySiteNavigationMenuItemType
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.navigation.menu.item.asset.vocabulary)",

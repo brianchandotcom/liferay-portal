@@ -15,7 +15,7 @@
 package com.liferay.site.navigation.menu.web.internal.portlet.contributor;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -118,7 +118,7 @@ public class SiteNavigationMenuAddPortletToolbarContributor
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setLabel(
-			LanguageUtil.get(
+			_language.get(
 				_portal.getHttpServletRequest(portletRequest), "add-page"));
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -181,6 +181,9 @@ public class SiteNavigationMenuAddPortletToolbarContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteNavigationMenuAddPortletToolbarContributor.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

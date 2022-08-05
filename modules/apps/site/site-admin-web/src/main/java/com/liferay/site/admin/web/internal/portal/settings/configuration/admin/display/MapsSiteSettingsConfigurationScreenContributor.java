@@ -16,7 +16,7 @@ package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.
 
 import com.liferay.map.constants.MapProviderWebKeys;
 import com.liferay.map.util.MapProviderHelperUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -56,7 +56,7 @@ public class MapsSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "maps");
+		return _language.get(locale, "maps");
 	}
 
 	@Override
@@ -96,6 +96,9 @@ public class MapsSiteSettingsConfigurationScreenContributor
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
 	private ServletContext _servletContext;

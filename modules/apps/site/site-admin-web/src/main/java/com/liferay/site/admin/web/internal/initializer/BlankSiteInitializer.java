@@ -15,13 +15,14 @@
 package com.liferay.site.admin.web.internal.initializer;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -47,7 +48,7 @@ public class BlankSiteInitializer implements SiteInitializer {
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "blank-site");
+		return _language.get(locale, "blank-site");
 	}
 
 	@Override
@@ -63,5 +64,8 @@ public class BlankSiteInitializer implements SiteInitializer {
 	public boolean isActive(long companyId) {
 		return true;
 	}
+
+	@Reference
+	private Language _language;
 
 }

@@ -16,7 +16,7 @@ package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -90,7 +90,7 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 
 			jsonObject.put(
 				"error",
-				LanguageUtil.get(
+				_language.get(
 					themeDisplay.getRequest(), exceptionClass.getName()));
 		}
 		catch (Exception exception) {
@@ -98,7 +98,7 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 
 			jsonObject.put(
 				"error",
-				LanguageUtil.get(
+				_language.get(
 					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
 		}
 
@@ -110,6 +110,9 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditSiteNavigationMenuItemParentMVCActionCommand.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private SiteNavigationMenuItemService _siteNavigationMenuItemService;

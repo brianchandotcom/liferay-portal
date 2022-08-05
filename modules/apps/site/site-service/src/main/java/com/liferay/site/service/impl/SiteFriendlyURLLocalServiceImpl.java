@@ -16,7 +16,7 @@ package com.liferay.site.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -80,7 +80,7 @@ public class SiteFriendlyURLLocalServiceImpl
 
 		List<SiteFriendlyURL> siteFriendlyURLs = new ArrayList<>();
 
-		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
+		for (Locale locale : _language.getAvailableLocales(groupId)) {
 			String friendlyURL = friendlyURLMap.get(locale);
 
 			if (Validator.isNull(friendlyURL)) {
@@ -170,7 +170,7 @@ public class SiteFriendlyURLLocalServiceImpl
 
 		List<SiteFriendlyURL> siteFriendlyURLs = new ArrayList<>();
 
-		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
+		for (Locale locale : _language.getAvailableLocales(groupId)) {
 			String friendlyURL = friendlyURLMap.get(locale);
 
 			String languageId = LocaleUtil.toLanguageId(locale);
@@ -192,6 +192,9 @@ public class SiteFriendlyURLLocalServiceImpl
 
 		return siteFriendlyURLs;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private UserLocalService _userLocalService;

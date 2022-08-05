@@ -14,7 +14,7 @@
 
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil;
 import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionValues;
@@ -52,7 +52,7 @@ public class RatingsSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "ratings");
+		return _language.get(locale, "ratings");
 	}
 
 	@Override
@@ -78,6 +78,9 @@ public class RatingsSiteSettingsConfigurationScreenContributor
 
 		return !portletRatingsDefinitionValuesMap.isEmpty();
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
 	private ServletContext _servletContext;

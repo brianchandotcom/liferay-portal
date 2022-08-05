@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -77,7 +77,7 @@ public class GetAssetVocabularyDetailsMVCResourceCommand
 						if (assetVocabulary.getGroupId() ==
 								themeDisplay.getCompanyGroupId()) {
 
-							return LanguageUtil.get(
+							return _language.get(
 								_portal.getHttpServletRequest(resourceRequest),
 								"global");
 						}
@@ -97,7 +97,7 @@ public class GetAssetVocabularyDetailsMVCResourceCommand
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"error",
-					LanguageUtil.get(
+					_language.get(
 						themeDisplay.getRequest(),
 						"an-unexpected-error-occurred")));
 		}
@@ -111,6 +111,9 @@ public class GetAssetVocabularyDetailsMVCResourceCommand
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

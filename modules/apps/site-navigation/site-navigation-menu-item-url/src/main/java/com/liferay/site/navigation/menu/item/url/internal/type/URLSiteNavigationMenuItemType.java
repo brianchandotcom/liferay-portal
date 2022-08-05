@@ -16,7 +16,7 @@ package com.liferay.site.navigation.menu.item.url.internal.type;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -59,7 +59,7 @@ public class URLSiteNavigationMenuItemType
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "url");
+		return _language.get(locale, "url");
 	}
 
 	@Override
@@ -154,6 +154,9 @@ public class URLSiteNavigationMenuItemType
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.navigation.menu.item.url)",

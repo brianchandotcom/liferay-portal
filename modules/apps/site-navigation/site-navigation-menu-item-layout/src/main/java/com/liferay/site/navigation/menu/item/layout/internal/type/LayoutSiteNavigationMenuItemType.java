@@ -24,7 +24,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -150,7 +150,7 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Override
 	public String getAddTitle(Locale locale) {
-		return LanguageUtil.format(locale, "select-x", "pages");
+		return _language.format(locale, "select-x", "pages");
 	}
 
 	@Override
@@ -171,7 +171,7 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "page");
+		return _language.get(locale, "page");
 	}
 
 	@Override
@@ -221,14 +221,14 @@ public class LayoutSiteNavigationMenuItemType
 		Group group = layout.getGroup();
 
 		if (!group.isPrivateLayoutsEnabled()) {
-			return LanguageUtil.get(locale, "page");
+			return _language.get(locale, "page");
 		}
 
 		if (layout.isPublicLayout()) {
-			return LanguageUtil.get(locale, "public-page");
+			return _language.get(locale, "public-page");
 		}
 
-		return LanguageUtil.get(locale, "private-page");
+		return _language.get(locale, "private-page");
 	}
 
 	@Override
@@ -609,6 +609,9 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;

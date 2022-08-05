@@ -15,7 +15,7 @@
 package com.liferay.site.navigation.language.web.internal.portlet.display.template;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -64,7 +64,7 @@ public class SiteNavigationLanguagePortletDisplayTemplateHandler
 			SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE,
 			ResourceBundleUtil.getBundle(locale, getClass()));
 
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return _language.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override
@@ -106,6 +106,9 @@ public class SiteNavigationLanguagePortletDisplayTemplateHandler
 		return "com/liferay/site/navigation/language/web/portlet/display" +
 			"/template/dependencies/portlet-display-templates.xml";
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

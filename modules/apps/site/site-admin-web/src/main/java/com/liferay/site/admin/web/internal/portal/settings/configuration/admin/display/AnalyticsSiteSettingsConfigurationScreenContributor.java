@@ -15,7 +15,7 @@
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -52,7 +52,7 @@ public class AnalyticsSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "analytics");
+		return _language.get(locale, "analytics");
 	}
 
 	@Override
@@ -81,6 +81,9 @@ public class AnalyticsSiteSettingsConfigurationScreenContributor
 
 		return true;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
 	private ServletContext _servletContext;

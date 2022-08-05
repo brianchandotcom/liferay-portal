@@ -15,7 +15,7 @@
 package com.liferay.site.navigation.menu.web.internal.portlet.display.template;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -73,7 +73,7 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU,
 			ResourceBundleUtil.getBundle(locale, getClass()));
 
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return _language.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override
@@ -138,6 +138,9 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 
 		return templateVariableGroup;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

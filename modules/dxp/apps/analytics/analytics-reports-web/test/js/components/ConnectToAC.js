@@ -45,37 +45,4 @@ describe('ConnectToAC', () => {
 		expect(link.length).toBe(1);
 		expect(link[0].href).toBe(testProps.analyticsURL);
 	});
-
-	it('renders a link to start free trial of AC when analytics is not connected', () => {
-		const testProps = {
-			analyticsCloudTrialURL: 'https://localhost/',
-			analyticsURL: 'https://localhost/',
-			hideAnalyticsReportsPanelURL: 'https://localhost/',
-			isAnalyticsConnected: false,
-			pathToAssets: '/',
-		};
-
-		const {container, getByText} = render(
-			<ConnectToAC
-				analyticsCloudTrialURL={testProps.analyticsCloudTrialURL}
-				analyticsURL={testProps.analyticsURL}
-				hideAnalyticsReportsPanelURL={
-					testProps.hideAnalyticsReportsPanelURL
-				}
-				isAnalyticsConnected={testProps.isAnalyticsConnected}
-				pathToAssets={testProps.pathToAssets}
-			/>
-		);
-
-		expect(
-			getByText('connect-to-liferay-analytics-cloud')
-		).toBeInTheDocument();
-		expect(getByText('start-free-trial')).toBeInTheDocument();
-
-		const link = container.querySelectorAll('a');
-		expect(link.length).toBe(2);
-
-		expect(link[0].href).toBe(testProps.analyticsCloudTrialURL);
-		expect(link[1].href).toBe('');
-	});
 });

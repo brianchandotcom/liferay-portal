@@ -58,6 +58,8 @@ definition {
 	}
 
 	macro assertColumnLabelPresent {
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
 		AssertElementPresent(
 			key_columnLabel = "${columnLabel}",
 			locator1 = "ObjectCustomViews#BUILDER_SEARCH_RESULT_COLUMN_LABEL");

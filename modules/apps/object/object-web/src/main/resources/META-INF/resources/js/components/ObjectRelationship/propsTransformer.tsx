@@ -19,8 +19,8 @@ export default function propsTransformer({...otherProps}) {
 			action,
 			itemData,
 		}: {
-			action: any;
-			itemData: any;
+			action: {data: {id: string}};
+			itemData: ObjectRelationship;
 		}) {
 			if (action.data.id === 'deleteObjectRelationship') {
 				Liferay.fire('deleteObjectRelationship', {itemData});

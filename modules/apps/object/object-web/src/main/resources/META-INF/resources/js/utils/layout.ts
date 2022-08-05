@@ -12,7 +12,11 @@
  * details.
  */
 
-import {TObjectLayoutRow} from '../components/Layout/types';
+import {
+	TObjectField,
+	TObjectLayoutRow,
+	TObjectRelationship,
+} from '../components/Layout/types';
 
 export function findObjectLayoutRowIndex(
 	objectLayoutRows: TObjectLayoutRow[],
@@ -40,7 +44,7 @@ export function findObjectLayoutRowIndex(
 }
 
 export function findObjectFieldIndex(
-	objectFields: any[],
+	objectFields: TObjectField[] | TObjectRelationship[],
 	objectFieldId: number
 ): number {
 	const objIds = objectFields.map(({id}) => id);

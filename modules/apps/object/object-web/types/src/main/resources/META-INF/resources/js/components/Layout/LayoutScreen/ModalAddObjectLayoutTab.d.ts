@@ -12,11 +12,12 @@
  * details.
  */
 
+import {Observer} from '@clayui/modal/lib/types';
 import React from 'react';
 import './ModalAddObjectLayoutTab.scss';
 interface IModalAddObjectLayoutTabProps
 	extends React.HTMLAttributes<HTMLElement> {
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 }
 declare const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps>;

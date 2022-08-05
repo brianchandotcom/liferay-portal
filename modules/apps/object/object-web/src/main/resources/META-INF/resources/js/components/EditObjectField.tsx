@@ -63,7 +63,10 @@ export default function EditObjectField({
 	readOnly,
 	workflowStatusJSONArray,
 }: IProps) {
-	const [editingObjectFieldName, setEditingObjectFieldName] = useState('');
+	const [editingObjectFieldName, setEditingObjectFieldName] = useState<
+		string
+	>('');
+
 	const [editingFilter, setEditingFilter] = useState(false);
 	const [objectFields, setObjectFields] = useState<ObjectField[]>();
 	const [objectDefinitionId2, setObjectDefinitionId2] = useState<number>();
@@ -139,7 +142,7 @@ export default function EditObjectField({
 			),
 		});
 
-	const handleDeleteFilterColumn = (objectFieldName: string) => {
+	const handleDeleteFilterColumn = (objectFieldName?: string) => {
 		const {objectFieldSettings} = values;
 
 		const [filter] = objectFieldSettings?.filter(
@@ -179,11 +182,11 @@ export default function EditObjectField({
 	};
 
 	const handleSaveFilterColumn = (
+		objectFieldName: string,
 		filterBy?: string,
 		fieldLabel?: LocalizedValue<string>,
 		objectFieldBusinessType?: string,
 		filterType?: string,
-		objectFieldName?: string,
 		valueList?: IItem[],
 		value?: string
 	) => {
@@ -400,7 +403,7 @@ export default function EditObjectField({
 			) {
 				const newAggregationFilters = filterValues.map(
 					(parsedFilter) => {
-						const objectField = objectFields?.find(
+						const objectField = objectFields.find(
 							(objectField) =>
 								objectField.name === parsedFilter.filterBy
 						);

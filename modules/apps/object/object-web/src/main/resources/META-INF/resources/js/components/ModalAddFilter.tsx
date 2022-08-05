@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
+import {Observer} from '@clayui/modal/lib/types';
 import {
 	API,
 	AutoComplete,
@@ -306,11 +307,11 @@ export function ModalAddFilter({
 
 		if (editingFilter) {
 			onSave(
+				editingObjectFieldName,
 				selectedFilterBy?.name,
 				selectedFilterBy?.label,
 				selectedFilterBy?.businessType,
 				selectedFilterType?.value,
-				editingObjectFieldName,
 				selectedFilterBy?.name === 'status' ||
 					selectedFilterBy?.businessType === 'Picklist'
 					? checkedItems
@@ -320,11 +321,11 @@ export function ModalAddFilter({
 		}
 		else {
 			onSave(
+				selectedFilterBy?.name!,
 				selectedFilterBy?.name,
 				selectedFilterBy?.label,
 				selectedFilterBy?.businessType,
 				selectedFilterType?.value,
-				selectedFilterBy?.name,
 				selectedFilterBy?.name === 'status' ||
 					selectedFilterBy?.businessType === 'Picklist'
 					? checkedItems
@@ -509,14 +510,14 @@ interface IProps {
 	filterOperators: TFilterOperators;
 	header: string;
 	objectFields: ObjectField[];
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 	onSave: (
+		objectFieldName: string,
 		filterBy?: string,
 		fieldLabel?: LocalizedValue<string>,
 		objectFieldBusinessType?: string,
 		filterType?: string,
-		objectFieldName?: string,
 		valueList?: IItem[],
 		value?: string
 	) => void;
@@ -538,12 +539,12 @@ type TErrors = {
 
 type TCurrentFilter = {
 	definition: {[key: string]: string[]} | null;
-	fieldLabel: string;
-	filterBy: string;
+	fieldLabel?: string;
+	filterBy?: string;
 	filterType: string | null;
 	label: TName;
 	objectFieldBusinessType?: string;
-	objectFieldName: string;
+	objectFieldName?: string;
 	value?: string;
 	valueList?: LabelValueObject[];
 };

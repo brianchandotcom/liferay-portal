@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
+import {Observer} from '@clayui/modal/lib/types';
 import {Input} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -66,7 +67,7 @@ function ModalAddObjectField({
 			window.location.reload();
 		}
 		else {
-			const {type} = (await response.json()) as any;
+			const {type} = await response.json();
 			const errorMessage =
 				ERRORS[type] ?? Liferay.Language.get('an-error-occurred');
 
@@ -180,7 +181,7 @@ export default function ModalWithProvider({
 }
 
 interface IModal extends IProps {
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 }
 

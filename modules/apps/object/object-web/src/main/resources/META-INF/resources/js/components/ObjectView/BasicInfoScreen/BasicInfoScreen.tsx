@@ -55,7 +55,7 @@ export default function BasicInfoScreen() {
 					error={error}
 					label={Liferay.Language.get('name')}
 					name="name"
-					onChange={({target: {value}}: any) => {
+					onChange={({target: {value}}) => {
 						handleChangeName(value);
 					}}
 					required

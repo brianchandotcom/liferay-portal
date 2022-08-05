@@ -39,7 +39,8 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		<>
 			{objectLayout?.objectLayoutTabs?.map(
 				({name, objectLayoutBoxes, objectRelationshipId}, tabIndex) => {
-					const isRelationshipType = objectRelationshipId !== 0;
+					const isRelationshipType =
+						objectRelationshipId && objectRelationshipId !== 0;
 					const labelDisplayType = isRelationshipType
 						? 'warning'
 						: 'info';
@@ -111,7 +112,7 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 										/>
 									</>
 								}
-								title={name[defaultLanguageId]}
+								title={name[defaultLanguageId]!}
 								type="regular"
 							/>
 
@@ -133,7 +134,7 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 													collapsable={collapsable}
 													key={`box_${boxIndex}`}
 													label={
-														name[defaultLanguageId]
+														name[defaultLanguageId]!
 													}
 													objectLayoutRows={
 														objectLayoutRows

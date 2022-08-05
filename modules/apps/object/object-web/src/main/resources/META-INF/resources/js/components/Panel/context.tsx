@@ -14,13 +14,17 @@
 
 import React, {createContext, useReducer} from 'react';
 
+export enum TYPES {
+	CHANGE_PANEL_EXPANDED = 'CHANGE_PANEL_EXPANDED',
+}
+
 type TState = {
 	expanded: boolean;
 };
 
 type TAction = {
-	payload: {[key: string]: any};
-	type: keyof typeof TYPES;
+	payload: {expanded: boolean};
+	type: TYPES.CHANGE_PANEL_EXPANDED;
 };
 
 type TDispatch = React.Dispatch<
@@ -37,10 +41,6 @@ interface IPanelContextProps extends Array<TState | TDispatch> {
 }
 
 export const PanelContext = createContext({} as IPanelContextProps);
-
-export const TYPES = {
-	CHANGE_PANEL_EXPANDED: 'CHANGE_PANEL_EXPANDED',
-} as const;
 
 const reducer = (state: TState, action: TAction) => {
 	switch (action.type) {

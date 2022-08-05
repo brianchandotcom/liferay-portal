@@ -47,11 +47,11 @@ export function FilterScreen() {
 	};
 
 	const saveFilterColumn = (
+		objectFieldName: string,
 		filterBy?: string,
 		fieldLabel?: LocalizedValue<string>,
 		objectFieldBusinessType?: string,
 		filterType?: string,
-		objectFieldName?: string,
 		valueList?: IItem[]
 	) => {
 		if (editingFilter) {

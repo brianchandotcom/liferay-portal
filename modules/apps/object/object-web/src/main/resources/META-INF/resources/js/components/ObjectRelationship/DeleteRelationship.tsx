@@ -83,7 +83,7 @@ interface IProps {
 	objectRelationship: ObjectRelationship;
 	observer: Observer;
 	onClose: () => void;
-	onDelete: any;
+	onDelete: (value: number) => void;
 }
 
 export default function ModalWithProvider({isApproved}: {isApproved: boolean}) {
@@ -96,7 +96,7 @@ export default function ModalWithProvider({isApproved}: {isApproved: boolean}) {
 		onClose: () => setObjectRelationship(null),
 	});
 
-	const deleteRelationship = async (id: string) => {
+	const deleteRelationship = async (id: number) => {
 		const response = await fetch(
 			`/o/object-admin/v1.0/object-relationships/${id}`,
 			{
@@ -119,7 +119,11 @@ export default function ModalWithProvider({isApproved}: {isApproved: boolean}) {
 		}, 1500);
 	};
 
-	const getObjectRelationship = async ({itemData}: any) => {
+	const getObjectRelationship = async ({
+		itemData,
+	}: {
+		itemData: ObjectRelationship;
+	}) => {
 		if (isApproved || itemData.reverse) {
 			setObjectRelationship(itemData);
 		}

@@ -67,7 +67,13 @@ function ModalDeleteObjectDefinition({
 		);
 	}
 
-	return code === 0 ? (
+	if (code !== 0) {
+		onDelete(id);
+
+		return null;
+	}
+
+	return (
 		<DangerModal
 			errorMessage={sub(
 				Liferay.Language.get('input-does-not-match-x'),
@@ -111,8 +117,6 @@ function ModalDeleteObjectDefinition({
 				}}
 			/>
 		</DangerModal>
-	) : (
-		onDelete(id)
 	);
 }
 
@@ -126,7 +130,7 @@ interface IProps {
 	};
 	observer: Observer;
 	onClose: () => void;
-	onDelete: any;
+	onDelete: (value: string) => Promise<void>;
 }
 
 export default function ModalWithProvider({

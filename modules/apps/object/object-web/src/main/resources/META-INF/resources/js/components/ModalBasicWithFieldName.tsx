@@ -16,19 +16,19 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import {Input, useForm} from '@liferay/object-js-components-web';
+import {Observer} from '@clayui/modal/lib/types';
+import {FormError, Input, useForm} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {HEADERS} from '../utils/constants';
-
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
 	inputId: string;
 	label: string;
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 }
 
@@ -76,8 +76,8 @@ export function ModalBasicWithFieldName({
 		}
 	};
 
-	const validate = ({name}: any) => {
-		const errors: any = {};
+	const validate = ({name}: TInitialValues) => {
+		const errors: FormError<TInitialValues> = {};
 
 		if (name[defaultLanguageId] === '') {
 			errors.name = Liferay.Language.get('required');

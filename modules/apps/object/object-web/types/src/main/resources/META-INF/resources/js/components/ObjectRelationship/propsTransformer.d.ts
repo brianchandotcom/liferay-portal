@@ -21,7 +21,11 @@ export default function propsTransformer({
 		action,
 		itemData,
 	}: {
-		action: any;
-		itemData: any;
+		action: {
+			data: {
+				id: string;
+			};
+		};
+		itemData: ObjectRelationship;
 	}): void;
 };

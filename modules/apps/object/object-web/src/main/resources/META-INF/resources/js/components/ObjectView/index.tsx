@@ -195,7 +195,7 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			else {
 				const {
 					title = Liferay.Language.get('an-error-occurred'),
-				} = (await response.json()) as any;
+				} = await response.json();
 
 				openToast({
 					message: title,

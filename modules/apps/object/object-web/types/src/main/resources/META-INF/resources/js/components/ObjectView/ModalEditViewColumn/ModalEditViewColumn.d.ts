@@ -14,9 +14,10 @@
 
 /// <reference types="react" />
 
+import {Observer} from '@clayui/modal/lib/types';
 interface IProps {
 	editingObjectFieldName: string;
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 }
 export declare function ModalEditViewColumn({

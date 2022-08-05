@@ -13,12 +13,13 @@
  */
 
 import {ClayModalProvider, useModal} from '@clayui/modal';
+import {Observer} from '@clayui/modal/lib/types';
 import React, {useEffect, useState} from 'react';
 
 import ModalBasicWithFieldName from './ModalBasicWithFieldName';
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 }
 

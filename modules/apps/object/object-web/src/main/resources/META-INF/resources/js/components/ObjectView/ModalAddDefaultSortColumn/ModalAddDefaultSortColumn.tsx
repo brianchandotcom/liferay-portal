@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
+import {Observer} from '@clayui/modal/lib/types';
 import {
 	AutoComplete,
 	FormCustomSelect,
@@ -34,7 +35,7 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 	editingObjectFieldName: string;
 	header: string;
 	isEditingSort: boolean;
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 }
 
@@ -90,7 +91,7 @@ export function ModalAddDefaultSortColumn({
 	const [selectedObjetSort, setSelectedObjetSort] = useState(SORT_OPTIONS[0]);
 	const [query, setQuery] = useState<string>('');
 
-	const filtredObjectSortColumn = useMemo(() => {
+	const filteredObjectSortColumn = useMemo(() => {
 		return availableViewColumns.filter(({fieldLabel}) => {
 			return fieldLabel?.toLowerCase().includes(query.toLowerCase());
 		});
@@ -101,8 +102,8 @@ export function ModalAddDefaultSortColumn({
 
 		let objectFieldName = selectedObjectSortColumn?.objectFieldName;
 
-		if (!objectFieldName && !!filtredObjectSortColumn.length) {
-			objectFieldName = filtredObjectSortColumn[0].objectFieldName;
+		if (!objectFieldName && !!filteredObjectSortColumn.length) {
+			objectFieldName = filteredObjectSortColumn[0].objectFieldName;
 		}
 
 		if (isEditingSort) {
@@ -117,7 +118,7 @@ export function ModalAddDefaultSortColumn({
 		else {
 			dispatch({
 				payload: {
-					objectFieldName,
+					objectFieldName: objectFieldName!,
 					objectFields,
 					objectViewSortColumns,
 					selectedObjetSort,
@@ -140,7 +141,7 @@ export function ModalAddDefaultSortColumn({
 							emptyStateMessage={Liferay.Language.get(
 								'there-are-no-columns-added-in-this-view-yet'
 							)}
-							items={filtredObjectSortColumn}
+							items={filteredObjectSortColumn}
 							label={Liferay.Language.get('columns')}
 							onChangeQuery={setQuery}
 							onSelectItem={(item) => {

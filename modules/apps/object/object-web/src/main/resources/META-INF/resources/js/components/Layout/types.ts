@@ -14,9 +14,7 @@
 
 export type BoxType = 'regular' | 'categorization';
 
-export type TName = {
-	[key: string]: string;
-};
+export type TName = LocalizedValue<string>;
 
 export type TObjectLayout = {
 	defaultObjectLayout: boolean;
@@ -26,7 +24,7 @@ export type TObjectLayout = {
 };
 
 export type TObjectLayoutTab = {
-	name: TName;
+	name: LocalizedValue<string>;
 	objectLayoutBoxes: TObjectLayoutBox[];
 	objectRelationshipId: number;
 	priority: number;

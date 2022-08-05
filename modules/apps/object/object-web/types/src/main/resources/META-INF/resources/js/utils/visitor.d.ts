@@ -23,20 +23,26 @@ declare class TabsVisitor {
 	constructor(layout: TObjectLayout);
 	dispose(): void;
 	setLayout(layout: TObjectLayout): void;
-	mapFields(mapper: (field: TObjectLayoutColumn) => void): any;
+	mapFields(
+		mapper: (field: TObjectLayoutColumn) => void
+	): void[][][][] | undefined;
 }
 declare class BoxesVisitor {
 	private _tab;
 	constructor(tab: TObjectLayoutTab);
 	dispose(): void;
 	setTab(tab: TObjectLayoutTab): void;
-	mapFields(mapper: (field: TObjectLayoutColumn) => void): any;
+	mapFields(
+		mapper: (field: TObjectLayoutColumn) => void
+	): void[][][] | undefined;
 }
 declare class RowsVisitor {
 	private _box;
 	constructor(box: TObjectLayoutBox);
 	dispose(): void;
 	setBox(box: TObjectLayoutBox): void;
-	mapFields(mapper: (field: TObjectLayoutColumn) => void): any;
+	mapFields(
+		mapper: (field: TObjectLayoutColumn) => void
+	): void[][] | undefined;
 }
 export {BoxesVisitor, RowsVisitor, TabsVisitor};

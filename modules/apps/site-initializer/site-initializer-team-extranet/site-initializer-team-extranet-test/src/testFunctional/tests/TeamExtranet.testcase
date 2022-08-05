@@ -77,7 +77,7 @@ definition {
 
 			AssertElementPresent(
 				id = "parallaxContainerImage",
-				key_image = "entry_01.jpg",
+				key_image = "entry_01",
 				locator1 = "Fragment#BACKGROUND_IMAGE_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
 	}

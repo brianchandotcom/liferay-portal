@@ -4094,6 +4094,8 @@ definition {
 		}
 
 		task ("Assert styles of Container in view mode") {
+			SetWindowSize(value1 = "1800,1040");
+
 			var screenWidth = selenium.getElementWidth("//body");
 			var containerWidth = selenium.getElementWidth("xpath=(//div[contains(@class,'lfr-layout-structure-item-container')])[2]");
 

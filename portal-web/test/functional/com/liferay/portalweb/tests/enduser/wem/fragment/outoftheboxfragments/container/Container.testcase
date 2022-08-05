@@ -179,6 +179,8 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
+			SetWindowSize(value1 = "1800,1040");
+
 			var screenWidth = selenium.getElementWidth("//body");
 			var containerWidth = selenium.getElementWidth("//div[contains(@class,'lfr-layout-structure-item-container')]");
 

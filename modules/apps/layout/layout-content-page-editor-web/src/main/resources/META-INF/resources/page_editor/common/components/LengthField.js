@@ -157,9 +157,9 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 			return;
 		}
 
-		const match = value.toLowerCase().match(REGEX);
+		const [, , unit] = value.toLowerCase().match(REGEX) || [];
 
-		setNextUnit(match ? match[2] : CUSTOM);
+		setNextUnit(unit || CUSTOM);
 	}, [value]);
 
 	return (

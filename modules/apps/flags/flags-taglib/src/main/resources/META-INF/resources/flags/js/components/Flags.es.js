@@ -32,6 +32,7 @@ import FlagsModal from './FlagsModal.es';
 
 const Flags = ({
 	baseData,
+	btnProps,
 	captchaURI,
 	companyName,
 	disabled = false,
@@ -39,6 +40,7 @@ const Flags = ({
 	message = Liferay.Language.get('report'),
 	onlyIcon = false,
 	pathTermsOfUse,
+	showIcon = true,
 	reasons,
 	signedIn = false,
 	uri,
@@ -84,11 +86,9 @@ const Flags = ({
 
 		if (name === 'otherReason') {
 			setOtherReason(value);
-		}
-		else if (name === 'reporterEmailAddress') {
+		} else if (name === 'reporterEmailAddress') {
 			setReporterEmailAddress(value);
-		}
-		else if (name === 'selectedReason') {
+		} else if (name === 'selectedReason') {
 			setSelectedReason(value);
 		}
 	};
@@ -103,13 +103,10 @@ const Flags = ({
 		const formDataObj = {
 			...baseData,
 			[`${namespace}reason`]: getReason(),
+			[`${namespace}reporterEmailAddress`]: signedIn
+				? Liferay.ThemeDisplay.getUserEmailAddress()
+				: reporterEmailAddress,
 		};
-
-		if (!signedIn) {
-			formDataObj[
-				`${namespace}reporterEmailAddress`
-			] = reporterEmailAddress;
-		}
 
 		fetch(uri, {
 			body: objectToFormData(formDataObj, new FormData(event.target)),
@@ -148,14 +145,19 @@ const Flags = ({
 				monospaced={onlyIcon}
 				onClick={handleClickShow}
 				small
+				{...btnProps}
 			>
-				<span
-					className={
-						!onlyIcon ? 'inline-item inline-item-before' : undefined
-					}
-				>
-					<ClayIcon symbol="flag-empty" />
-				</span>
+				{showIcon && (
+					<span
+						className={
+							onlyIcon
+								? undefined
+								: 'inline-item inline-item-before'
+						}
+					>
+						<ClayIcon symbol="flag-empty" />
+					</span>
+				)}
 
 				<span className={onlyIcon ? 'sr-only' : undefined}>
 					{message}
@@ -183,6 +185,7 @@ const Flags = ({
 };
 Flags.propTypes = {
 	baseData: PropTypes.object.isRequired,
+	btnProps: PropTypes.object,
 	captchaURI: PropTypes.string.isRequired,
 	companyName: PropTypes.string.isRequired,
 	disabled: PropTypes.bool,
@@ -191,6 +194,7 @@ Flags.propTypes = {
 	onlyIcon: PropTypes.bool,
 	pathTermsOfUse: PropTypes.string.isRequired,
 	reasons: PropTypes.object.isRequired,
+	showIcon: PropTypes.bool,
 	signedIn: PropTypes.bool,
 	uri: PropTypes.string.isRequired,
 };

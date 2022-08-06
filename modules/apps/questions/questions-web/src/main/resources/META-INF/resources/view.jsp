@@ -30,6 +30,8 @@
 			HashMapBuilder.<String, Object>put(
 				"defaultRank", renderRequest.getAttribute(QuestionsWebKeys.DEFAULT_RANK)
 			).put(
+				"flagsProperties", renderRequest.getAttribute(QuestionsWebKeys.FLAGS_PROPERTIES)
+			).put(
 				"historyRouterBasePath", questionsConfiguration.historyRouterBasePath()
 			).put(
 				"i18nPath", renderRequest.getAttribute(WebKeys.I18N_PATH)

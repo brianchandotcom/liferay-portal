@@ -91,16 +91,9 @@ WikiPageDisplay pageDisplay = WikiPageLocalServiceUtil.getPageDisplay(
 				<clay:col
 					md="4"
 				>
-					<liferay-frontend:horizontal-card
-						text="<%= fileEntry.getTitle() %>"
-						url='<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED) %>'
-					>
-						<liferay-frontend:horizontal-card-col>
-							<liferay-document-library:mime-type-sticker
-								fileVersion="<%= fileEntry.getFileVersion() %>"
-							/>
-						</liferay-frontend:horizontal-card-col>
-					</liferay-frontend:horizontal-card>
+					<clay:horizontal-card
+						horizontalCard="<%= new WikiPageAttachmentHorizontalCard(fileEntry, request) %>"
+					/>
 				</clay:col>
 
 			<%

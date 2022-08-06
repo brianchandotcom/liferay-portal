@@ -62,6 +62,7 @@ page import="com.liferay.wiki.web.internal.importer.MediaWikiImporter" %><%@
 page import="com.liferay.wiki.web.internal.importer.WikiImporterTracker" %><%@
 page import="com.liferay.wiki.web.internal.security.permission.resource.WikiNodePermission" %><%@
 page import="com.liferay.wiki.web.internal.security.permission.resource.WikiPagePermission" %><%@
+page import="com.liferay.wiki.web.internal.servlet.taglib.clay.WikiPageAttachmentHorizontalCard" %><%@
 page import="com.liferay.wiki.web.internal.util.WikiPageAttachmentsUtil" %><%@
 page import="com.liferay.wiki.web.internal.util.WikiUtil" %><%@
 page import="com.liferay.wiki.web.internal.util.WikiWebComponentProvider" %>

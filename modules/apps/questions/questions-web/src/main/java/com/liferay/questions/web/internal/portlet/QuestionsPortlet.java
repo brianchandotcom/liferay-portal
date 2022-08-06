@@ -15,6 +15,7 @@
 package com.liferay.questions.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.flags.taglib.servlet.taglib.react.FlagsTagUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -25,6 +26,7 @@ import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -34,17 +36,25 @@ import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.questions.web.internal.configuration.QuestionsConfiguration;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
 import com.liferay.questions.web.internal.constants.QuestionsWebKeys;
+import com.liferay.flags.taglib.servlet.taglib.react.FlagsTag;
 
 import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import javax.portlet.Portlet;
@@ -101,6 +111,42 @@ public class QuestionsPortlet extends MVCPortlet {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)renderRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		HashMap<String, Object> flagsHashMap = HashMapBuilder.<String, Object>put("context",
+			HashMapBuilder.<String, Object>put(
+				"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS)
+			).build())
+			.put("props", () -> {
+				return HashMapBuilder.<String, Object>put(
+						"captchaURI", FlagsTagUtil.getCaptchaURI(httpServletRequest)
+					)
+					.put("companyName", () -> {
+						Company company = themeDisplay.getCompany();
+
+						return company.getName();
+					})
+					.put(
+						"isFlagEnabled", FlagsTagUtil.isFlagsEnabled(themeDisplay)
+					)
+					.put("pathTermsOfUse", PortalUtil.getPathMain() + "/portal/terms_of_use")
+					.put("reasons", FlagsTagUtil.getReasons(themeDisplay.getCompanyId(), httpServletRequest))
+					.put(
+						"uri", FlagsTagUtil.getURI(httpServletRequest)
+					)
+					.put(
+						"viewMode",
+						Objects.equals(
+							Constants.VIEW,
+							ParamUtil.getString(
+								themeDisplay.getRequest(), "p_l_mode",
+								Constants.VIEW))
+					)
+					.build();
+			}).build();
+
 		ItemSelectorCriterion itemSelectorCriterion =
 			new ImageItemSelectorCriterion();
 
@@ -132,7 +178,7 @@ public class QuestionsPortlet extends MVCPortlet {
 		);
 
 		renderRequest.setAttribute(QuestionsWebKeys.DEFAULT_RANK, lowestRank);
-
+		renderRequest.setAttribute(QuestionsWebKeys.FLAGS_PROPERTIES, flagsHashMap);
 		renderRequest.setAttribute(
 			QuestionsWebKeys.TAG_SELECTOR_URL,
 			_getTagSelectorURL(renderRequest, renderResponse));

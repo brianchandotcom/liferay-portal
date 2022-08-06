@@ -41,14 +41,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.questions.web.internal.configuration.QuestionsConfiguration;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
 import com.liferay.questions.web.internal.constants.QuestionsWebKeys;
-import com.liferay.flags.taglib.servlet.taglib.react.FlagsTag;
 
 import java.io.IOException;
 
@@ -113,42 +111,49 @@ public class QuestionsPortlet extends MVCPortlet {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)renderRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		HashMap<String, Object> flagsHashMap = HashMapBuilder.<String, Object>put("context",
+		HashMap<String, Object> flagsHashMap =
 			HashMapBuilder.<String, Object>put(
-				"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS)
-			).build())
-			.put("props", () -> {
-				return HashMapBuilder.<String, Object>put(
-						"captchaURI", FlagsTagUtil.getCaptchaURI(httpServletRequest)
-					)
-					.put("companyName", () -> {
+				"context",
+				HashMapBuilder.<String, Object>put(
+					"namespace", _portal.getPortletNamespace(PortletKeys.FLAGS)
+				).build()
+			).put(
+				"props",
+				() -> HashMapBuilder.<String, Object>put(
+					"captchaURI", FlagsTagUtil.getCaptchaURI(httpServletRequest)
+				).put(
+					"companyName",
+					() -> {
 						Company company = themeDisplay.getCompany();
 
 						return company.getName();
-					})
-					.put(
-						"isFlagEnabled", FlagsTagUtil.isFlagsEnabled(themeDisplay) &&
-							 GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-159928"))
-					)
-					.put("pathTermsOfUse", PortalUtil.getPathMain() + "/portal/terms_of_use")
-					.put("reasons", FlagsTagUtil.getReasons(themeDisplay.getCompanyId(), httpServletRequest))
-					.put(
-						"uri", FlagsTagUtil.getURI(httpServletRequest)
-					)
-					.put(
-						"viewMode",
-						Objects.equals(
-							Constants.VIEW,
-							ParamUtil.getString(
-								themeDisplay.getRequest(), "p_l_mode",
-								Constants.VIEW))
-					)
-					.build();
-			}).build();
+					}
+				).put(
+					"isFlagEnabled",
+					FlagsTagUtil.isFlagsEnabled(themeDisplay) &&
+					GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-159928"))
+				).put(
+					"pathTermsOfUse",
+					_portal.getPathMain() + "/portal/terms_of_use"
+				).put(
+					"reasons",
+					FlagsTagUtil.getReasons(
+						themeDisplay.getCompanyId(), httpServletRequest)
+				).put(
+					"uri", FlagsTagUtil.getURI(httpServletRequest)
+				).put(
+					"viewMode",
+					Objects.equals(
+						Constants.VIEW,
+						ParamUtil.getString(
+							themeDisplay.getRequest(), "p_l_mode",
+							Constants.VIEW))
+				).build()
+			).build();
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new ImageItemSelectorCriterion();
@@ -181,7 +186,9 @@ public class QuestionsPortlet extends MVCPortlet {
 		);
 
 		renderRequest.setAttribute(QuestionsWebKeys.DEFAULT_RANK, lowestRank);
-		renderRequest.setAttribute(QuestionsWebKeys.FLAGS_PROPERTIES, flagsHashMap);
+
+		renderRequest.setAttribute(
+			QuestionsWebKeys.FLAGS_PROPERTIES, flagsHashMap);
 		renderRequest.setAttribute(
 			QuestionsWebKeys.TAG_SELECTOR_URL,
 			_getTagSelectorURL(renderRequest, renderResponse));

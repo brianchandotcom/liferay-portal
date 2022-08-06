@@ -14,8 +14,7 @@
 
 package com.liferay.flags.taglib.servlet.taglib.react;
 
-import com.liferay.flags.taglib.servlet.taglib.react.ServletContextUtil;
-import com.liferay.flags.taglib.servlet.taglib.react.FlagsTagUtil;
+import com.liferay.flags.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;

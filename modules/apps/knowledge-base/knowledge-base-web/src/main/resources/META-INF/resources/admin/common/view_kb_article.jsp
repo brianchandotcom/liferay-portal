@@ -55,7 +55,15 @@ if (portletTitleBasedNavigation) {
 <c:if test="<%= portletTitleBasedNavigation %>">
 	<div class="management-bar management-bar-light navbar navbar-expand-md">
 		<clay:container-fluid>
-			<ul class="navbar-nav">
+			<ul class="m-auto navbar-nav"></ul>
+
+			<ul class="m-auto middle navbar-nav">
+				<li class="nav-item">
+					<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
+				</li>
+			</ul>
+
+			<ul class="end m-auto navbar-nav">
 				<li class="nav-item">
 					<liferay-frontend:management-bar-sidenav-toggler-button
 						cssClass="btn-secondary"
@@ -64,14 +72,6 @@ if (portletTitleBasedNavigation) {
 					/>
 				</li>
 			</ul>
-
-			<ul class="middle navbar-nav">
-				<li class="nav-item">
-					<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
-				</li>
-			</ul>
-
-			<ul class="end m-auto navbar-nav"></ul>
 		</clay:container-fluid>
 	</div>
 </c:if>

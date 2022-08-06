@@ -30,6 +30,8 @@ const FlagsContainer = ({
 
 	const namespace = flagsContext?.namespace;
 
+	const isFlagEnabled = flagsProps?.isFlagEnabled;
+
 	const props = {
 		...flagsProps,
 		baseData: {
@@ -47,7 +49,11 @@ const FlagsContainer = ({
 		signedIn: Liferay.ThemeDisplay.isSignedIn(),
 	};
 
-	return <Flags context={flagsContext} props={props} />;
+	if (isFlagEnabled) {
+		return <Flags context={flagsContext} props={props} />;
+	}
+
+	return null;
 };
 
 export default FlagsContainer;

@@ -37,11 +37,13 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.questions.web.internal.configuration.QuestionsConfiguration;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
@@ -129,7 +131,8 @@ public class QuestionsPortlet extends MVCPortlet {
 						return company.getName();
 					})
 					.put(
-						"isFlagEnabled", FlagsTagUtil.isFlagsEnabled(themeDisplay)
+						"isFlagEnabled", FlagsTagUtil.isFlagsEnabled(themeDisplay) &&
+							 GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-159928"))
 					)
 					.put("pathTermsOfUse", PortalUtil.getPathMain() + "/portal/terms_of_use")
 					.put("reasons", FlagsTagUtil.getReasons(themeDisplay.getCompanyId(), httpServletRequest))

@@ -16,9 +16,11 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import {useMutation} from 'graphql-hooks';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
+import {AppContext} from '../AppContext.es';
+import FlagsContainer from '../pages/questions/components/FlagsContainer';
 import {deleteMessageQuery} from '../utils/client.es';
 import lang from '../utils/lang.es';
 import {getDateFormatted} from '../utils/time.es';
@@ -27,10 +29,10 @@ import Modal from './Modal.es';
 
 export default withRouter(
 	({comment, commentChange, editable = true, match: {url}}) => {
+		const context = useContext(AppContext);
 		const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(
 			false
 		);
-
 		const [deleteMessage] = useMutation(deleteMessageQuery);
 
 		return (
@@ -76,6 +78,18 @@ export default withRouter(
 								>
 									{Liferay.Language.get('delete')}
 								</ClayButton>
+
+								<FlagsContainer
+									btnProps={{
+										className:
+											'c-mr-2 c-px-2 c-py-1 btn btn-secondary',
+										small: true,
+									}}
+									content={comment}
+									context={context}
+									onlyIcon={false}
+									showIcon={false}
+								/>
 
 								<ClayButton
 									className="btn-sm c-px-2 c-py-1"

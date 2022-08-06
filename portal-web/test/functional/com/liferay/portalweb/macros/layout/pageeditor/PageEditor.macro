@@ -4059,6 +4059,10 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	macro searchFragmentViaSidebar {
 		WaitForPageLoad();
 
+		if (IsElementPresent(locator1 = "Icon#TIMES")) {
+			Click(locator1 = "Icon#TIMES");
+		}
+
 		Navigator.gotoNavTab(navTab = "Fragments");
 
 		Type(

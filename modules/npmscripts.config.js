@@ -38,6 +38,9 @@ module.exports = {
 					'@liferay/document-library-web': {
 						'/': '*',
 					},
+					'@liferay/flags-taglib': {
+						'/': '*',
+					},
 					'@liferay/fragment-renderer-collection-filter-impl': {
 						'/': '*',
 					},

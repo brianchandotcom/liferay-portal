@@ -28,6 +28,8 @@ import com.liferay.portal.tools.GitException;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.processor.SourceProcessor;
+import com.liferay.source.formatter.upgrade.GradleBuildFile;
+import com.liferay.source.formatter.upgrade.GradleDependency;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
@@ -41,8 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -204,16 +204,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				githubToken));
 	}
 
-	private String _getContentByPattern(String content, Pattern pattern) {
-		Matcher matcher = pattern.matcher(content);
-
-		if (matcher.find()) {
-			return matcher.group(1);
-		}
-
-		return null;
-	}
-
 	private List<SecurityVulnerabilityNode> _getSecurityVulnerabilityNodes(
 			String packageName, String cursor,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum,
@@ -335,60 +325,22 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		int x = content.indexOf("dependencies {");
+		GradleBuildFile gradleBuildFile = new GradleBuildFile(content);
 
-		if (x == -1) {
-			return;
-		}
+		List<GradleDependency> gradleDependencies =
+			gradleBuildFile.getGradleDependencies();
 
-		String dependencies = null;
+		Iterator<GradleDependency> iterator = gradleDependencies.iterator();
 
-		int y = content.indexOf("}", x);
-
-		while (true) {
-			if (y == -1) {
-				return;
-			}
-
-			dependencies = content.substring(x, y + 1);
-
-			int level = getLevel(
-				dependencies, StringPool.OPEN_CURLY_BRACE,
-				StringPool.CLOSE_CURLY_BRACE);
-
-			if (level == 0) {
-				break;
-			}
-
-			y = content.indexOf("}", y + 1);
-		}
-
-		for (String dependency : dependencies.split(StringPool.NEW_LINE)) {
-			dependency = dependency.trim();
-
-			if (Validator.isNull(dependency) ||
-				!dependency.matches(
-					"(compile|compileInclude|compileOnly|classpath" +
-						"|testCompile) .+")) {
-
-				continue;
-			}
-
-			String group = _getContentByPattern(
-				dependency, _gradleGroupPattern);
-			String name = _getContentByPattern(dependency, _gradleNamePattern);
-			String version = _getContentByPattern(
-				dependency, _gradleVersionPattern);
-
-			if (Validator.isNull(group) || Validator.isNull(name) ||
-				Validator.isNull(version)) {
-
-				continue;
-			}
+		while (iterator.hasNext()) {
+			GradleDependency gradleDependency = iterator.next();
 
 			_checkVulnerabilities(
-				fileName, absolutePath, group + StringPool.COLON + name,
-				version, SecurityAdvisoryEcosystemEnum.MAVEN);
+				fileName, absolutePath,
+				gradleDependency.getGroup() + StringPool.COLON +
+					gradleDependency.getName(),
+				gradleDependency.getVersion(),
+				SecurityAdvisoryEcosystemEnum.MAVEN);
 		}
 	}
 
@@ -596,13 +548,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LibraryVersionCheck.class);
-
-	private static final Pattern _gradleGroupPattern = Pattern.compile(
-		"group: \"([^,\n\\\\)]+)\"");
-	private static final Pattern _gradleNamePattern = Pattern.compile(
-		"name: \"([^,\n\\\\)]+)\"");
-	private static final Pattern _gradleVersionPattern = Pattern.compile(
-		"version: \"([^,\n\\\\)]+)\"");
 
 	private final Map<String, List<SecurityVulnerabilityNode>>
 		_vulnerableVersionMap = new ConcurrentHashMap<>();

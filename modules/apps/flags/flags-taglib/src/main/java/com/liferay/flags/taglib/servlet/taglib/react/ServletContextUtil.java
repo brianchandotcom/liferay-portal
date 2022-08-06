@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.flags.taglib.internal.servlet;
+package com.liferay.flags.taglib.servlet.taglib.react;
 
 import javax.servlet.ServletContext;
 

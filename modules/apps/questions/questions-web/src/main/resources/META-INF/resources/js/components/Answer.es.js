@@ -17,9 +17,11 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import classnames from 'classnames';
 import {useMutation} from 'graphql-hooks';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
+import {AppContext} from '../AppContext.es';
+import FlagsContainer from '../pages/questions/components/FlagsContainer';
 import {
 	deleteMessageQuery,
 	markAsAnswerMessageBoardMessageQuery,
@@ -44,6 +46,7 @@ export default withRouter(
 		onSubscription,
 		question,
 	}) => {
+		const context = useContext(AppContext);
 		const [comments, setComments] = useState(
 			answer.messageBoardMessages.items
 		);
@@ -232,6 +235,18 @@ export default withRouter(
 														  )}
 												</ClayButton>
 											)}
+
+											<FlagsContainer
+												btnProps={{
+													className:
+														'c-mr-2 c-px-2 c-py-1 btn btn-secondary',
+													small: true,
+												}}
+												content={answer}
+												context={context}
+												onlyIcon={false}
+												showIcon={false}
+											/>
 
 											{/* this is an extra double check, remove it without creating 2 clay-group-item */}
 

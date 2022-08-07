@@ -8,9 +8,9 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-const LIFERAY_APIS = {
-	headlessAdminListType: 'headless-admin-list-type/v1.0',
-	headlessAdminUser: 'headless-admin-user/v1.0',
-	typeOfActivities: 'c/typeofactivities/',
-};
-export default LIFERAY_APIS;
+
+export enum liferayAPIs {
+	HEADERLESS_LIST_TYPE = 'headless-admin-list-type/v1.0',
+	HEADERLESS_ADMIN_USER = 'headless-admin-user/v1.0',
+	OBJECT = 'c',
+}

@@ -12,19 +12,19 @@
 import {Liferay} from '..';
 import useSWR from 'swr';
 
-import LiferayItems from '../../../utils/types/liferayItems';
+import {LiferayPicklistName} from '../../../common/enums/liferayPicklistName';
 import ListTypeDefinition from '../../../utils/types/listTypeDefinition';
-import {liferayAPIs} from '../common/apis';
-import liferayFetcher from '../common/fetcher';
-import {listTypeDefinitionName} from './constants/listTypeDefinitionName';
+import {LiferayAPIs} from '../common/enums/apis';
+import LiferayItems from '../common/interfaces/liferayItems';
+import liferayFetcher from '../common/utils/fetcher';
 
 export default function useGetListTypeDefinitions(
-	names: listTypeDefinitionName[]
+	names: LiferayPicklistName[]
 ) {
 	return useSWR(
 		[
 			`/o/${
-				liferayAPIs.HEADERLESS_LIST_TYPE
+				LiferayAPIs.HEADERLESS_LIST_TYPE
 			}/list-type-definitions?filter=name in ('${names.join("', '")}')`,
 			Liferay.authToken,
 		],

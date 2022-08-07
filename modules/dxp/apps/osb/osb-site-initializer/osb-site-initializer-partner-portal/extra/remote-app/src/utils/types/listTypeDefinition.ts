@@ -9,14 +9,14 @@
  * distribution rights of the Software.
  */
 
-interface ListTypeEntry {
-	id: number;
+interface LiferayPicklist {
+	id?: number;
 	key: string;
 	name: string;
 }
 
 export default interface ListTypeDefinition {
 	id: number;
-	listTypeEntries: ListTypeEntry[];
+	listTypeEntries: LiferayPicklist[];
 	name: string;
 }

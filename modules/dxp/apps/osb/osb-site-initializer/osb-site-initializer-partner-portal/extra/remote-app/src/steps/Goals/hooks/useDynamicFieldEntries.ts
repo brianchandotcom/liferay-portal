@@ -11,7 +11,7 @@
 
 import {useMemo} from 'react';
 
-import {listTypeDefinitionName} from '../../../services/liferay/list-type-definitions/constants/listTypeDefinitionName';
+import {LiferayPicklistName} from '../../../common/enums/liferayPicklistName';
 import useGetListTypeDefinitions from '../../../services/liferay/list-type-definitions/useGetListTypeDefinitions';
 import useGetAdditionalOptions from '../../../services/liferay/object/additional-options/useGetAdditionalOptions';
 import useGetMyUserAccount from '../../../services/liferay/user-account/useGetMyUserAccount';
@@ -21,10 +21,10 @@ export default function useDynamicFieldEntries() {
 	const {data: userAccount} = useGetMyUserAccount();
 	const {data: additionalOptions} = useGetAdditionalOptions();
 	const {data: listTypeDefinitions} = useGetListTypeDefinitions([
-		listTypeDefinitionName.COUNTRIES,
-		listTypeDefinitionName.LIFERAY_BUSINESS_SALES_GOALS,
-		listTypeDefinitionName.TARGETS_AUDIENCE_ROLE,
-		listTypeDefinitionName.TARGETS_MARKET,
+		LiferayPicklistName.COUNTRIES,
+		LiferayPicklistName.LIFERAY_BUSINESS_SALES_GOALS,
+		LiferayPicklistName.TARGETS_AUDIENCE_ROLE,
+		LiferayPicklistName.TARGETS_MARKET,
 	]);
 
 	const companiesEntries = useMemo(

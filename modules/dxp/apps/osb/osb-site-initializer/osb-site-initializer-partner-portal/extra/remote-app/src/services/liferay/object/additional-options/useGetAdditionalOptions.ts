@@ -12,18 +12,19 @@
 import useSWR from 'swr';
 
 import {Liferay} from '../..';
-import AdditionalOption from '../../../../utils/types/additionalOption';
-import LiferayItems from '../../../../utils/types/liferayItems';
-import {liferayAPIs} from '../../common/apis';
-import liferayFetcher from '../../common/fetcher';
-import {liferayObjectResourceName} from '../constants/liferayObjectResourceName';
+import {LiferayAPIs} from '../../common/enums/apis';
+import LiferayItems from '../../common/interfaces/liferayItems';
+import liferayFetcher from '../../common/utils/fetcher';
+
+interface AdditionalOption {
+	description: string;
+	id: number;
+	name: string;
+}
 
 export default function useGetAdditionalOptions() {
 	return useSWR(
-		[
-			`/o/${liferayAPIs.OBJECT}/${liferayObjectResourceName.ADDITIONAL_OPTIONS}`,
-			Liferay.authToken,
-		],
+		[`/o/${LiferayAPIs.OBJECT}/additionaloptions`, Liferay.authToken],
 		(url, token) =>
 			liferayFetcher<LiferayItems<AdditionalOption[]>>(url, token)
 	);

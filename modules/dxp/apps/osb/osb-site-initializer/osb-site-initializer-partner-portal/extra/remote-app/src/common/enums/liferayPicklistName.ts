@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-export default interface LiferayObject {
-	dateCreated: Date;
-	dateModified: Date;
-	externalReferenceCode: string;
-	id: number;
+export enum LiferayPicklistName {
+	COUNTRIES = 'Countries',
+	LIFERAY_BUSINESS_SALES_GOALS = 'Liferay Business/Sales Goals',
+	TARGETS_MARKET = 'Targets Market',
+	TARGETS_AUDIENCE_ROLE = 'Targets Audience/Role',
 }

@@ -11,9 +11,9 @@
 
 import ClayButton from '@clayui/button';
 
+import {LiferayPicklistName} from '../../common/enums/liferayPicklistName';
 import PRMForm from '../../components/PRMForm';
 import PRMFormik from '../../components/PRMFormik';
-import {listTypeDefinitionName} from '../../services/liferay/list-type-definitions/constants/listTypeDefinitionName';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 
 interface IProps {
@@ -44,7 +44,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 						component={PRMForm.Select}
 						label="Country"
 						name="country"
-						options={fieldEntries[listTypeDefinitionName.COUNTRIES]}
+						options={fieldEntries[LiferayPicklistName.COUNTRIES]}
 						required
 					/>
 				</PRMForm.Group>
@@ -63,8 +63,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 						component={PRMForm.CheckboxGroup}
 						items={
 							fieldEntries[
-								listTypeDefinitionName
-									.LIFERAY_BUSINESS_SALES_GOALS
+								LiferayPicklistName.LIFERAY_BUSINESS_SALES_GOALS
 							]
 						}
 						label="Select Liferay business/sales goals this Campaign serves (choose up to three)"
@@ -78,9 +77,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 				<div className="border border-neutral-3 mb-4 p-3 rounded-lg">
 					<PRMFormik.Field
 						component={PRMForm.CheckboxGroup}
-						items={
-							fieldEntries[listTypeDefinitionName.TARGETS_MARKET]
-						}
+						items={fieldEntries[LiferayPicklistName.TARGETS_MARKET]}
 						label="Please select the target market(s) for this campaign (choose up to three)"
 						name="targetsMarket"
 						required
@@ -99,7 +96,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 						component={PRMForm.CheckboxGroup}
 						items={
 							fieldEntries[
-								listTypeDefinitionName.TARGETS_AUDIENCE_ROLE
+								LiferayPicklistName.TARGETS_AUDIENCE_ROLE
 							]
 						}
 						label="Choose your target audience/role (Select all that apply)"

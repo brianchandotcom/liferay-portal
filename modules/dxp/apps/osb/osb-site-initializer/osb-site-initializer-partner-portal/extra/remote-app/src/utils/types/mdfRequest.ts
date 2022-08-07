@@ -10,7 +10,13 @@
  */
 
 import {requestStatus} from '../constants/requestStatus';
-import LiferayObject from './liferayObject';
+
+interface LiferayObject {
+	dateCreated: Date;
+	dateModified: Date;
+	externalReferenceCode: string;
+	id: number;
+}
 
 interface Activity extends Partial<LiferayObject> {
 	name: string;

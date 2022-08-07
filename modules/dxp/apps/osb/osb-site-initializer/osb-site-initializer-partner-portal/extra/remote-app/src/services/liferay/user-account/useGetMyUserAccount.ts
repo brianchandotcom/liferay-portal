@@ -12,14 +12,36 @@
 import {Liferay} from '..';
 import useSWR from 'swr';
 
-import UserAccount from '../../../utils/types/userAccount';
-import {liferayAPIs} from '../common/apis';
-import liferayFetcher from '../common/fetcher';
+import {LiferayAPIs} from '../common/enums/apis';
+import liferayFetcher from '../common/utils/fetcher';
+
+interface AccountBrief {
+	id: number;
+	name: string;
+}
+
+interface Telephone {
+	id: number;
+	phoneNumber: string;
+}
+
+interface UserAccountContactInformation {
+	telephones: Telephone[];
+}
+
+interface UserAccount {
+	accountBriefs: AccountBrief[];
+	emailAddress: string;
+	familyName: string;
+	givenName: string;
+	id: number;
+	userAccountContactInformation: UserAccountContactInformation;
+}
 
 export default function useGetMyUserAccount() {
 	return useSWR(
 		[
-			`/o/${liferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`,
+			`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`,
 			Liferay.authToken,
 		],
 		(url, token) => liferayFetcher<UserAccount>(url, token)

@@ -11,7 +11,7 @@
 
 import iconSVG from '@clayui/css/lib/images/icons/icons.svg';
 
-import {Liferay} from '../services/liferay';
+import {Liferay} from '../../services/liferay';
 
 export default function getIconSpriteMap() {
 	const pathThemeImages = Liferay.ThemeDisplay.getPathThemeImages();

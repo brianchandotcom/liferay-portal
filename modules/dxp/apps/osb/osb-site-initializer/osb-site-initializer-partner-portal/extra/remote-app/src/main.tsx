@@ -14,7 +14,7 @@ import React from 'react';
 import {Root, createRoot} from 'react-dom/client';
 
 import App from './App';
-import getIconSpriteMap from './utils/getIconSpriteMap';
+import getIconSpriteMap from './common/utils/getIconSpriteMap';
 
 class PartnerPortalRemoteAppComponent extends HTMLElement {
 	private root: Root | undefined;

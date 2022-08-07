@@ -11,10 +11,10 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
-import {FieldProps} from 'formik';
 
 import WrapperInput from '../common/components/WrapperInput';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
+import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 
 interface IProps {
 	items: React.OptionHTMLAttributes<HTMLOptionElement>[];
@@ -22,16 +22,12 @@ interface IProps {
 
 const CheckboxGroup = ({
 	field,
-	form,
 	items = [],
 	label,
+	meta,
 	required,
-}: IProps & PRMFormFieldProps & FieldProps<string[]>) => (
-	<WrapperInput
-		{...form.getFieldMeta(field.name)}
-		label={label}
-		required={required}
-	>
+}: IProps & PRMFormFieldProps & PRMFormFieldStateProps<string[]>) => (
+	<WrapperInput {...meta} label={label} required={required}>
 		{items.map((item, index) => (
 			<ClayCheckbox
 				{...field}

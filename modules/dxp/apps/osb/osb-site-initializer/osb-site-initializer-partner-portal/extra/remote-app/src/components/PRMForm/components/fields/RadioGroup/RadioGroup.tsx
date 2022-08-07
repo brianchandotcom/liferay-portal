@@ -11,10 +11,10 @@
  */
 
 import {ClayRadio} from '@clayui/form';
-import {FieldProps} from 'formik';
 
 import WrapperInput from '../common/components/WrapperInput';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
+import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 
 interface IProps {
 	items: (React.OptionHTMLAttributes<HTMLOptionElement> & {
@@ -24,17 +24,13 @@ interface IProps {
 
 const RadioGroup = ({
 	field,
-	form,
+	meta,
 	items = [],
 	label,
 	required,
-}: IProps & PRMFormFieldProps & FieldProps<string>) => {
+}: IProps & PRMFormFieldProps & PRMFormFieldStateProps<string>) => {
 	return (
-		<WrapperInput
-			{...form.getFieldMeta(field.name)}
-			label={label}
-			required={required}
-		>
+		<WrapperInput {...meta} label={label} required={required}>
 			{items.map((item, index) => (
 				<div
 					className="border border-neutral-3 mb-4 p-3 rounded-lg"

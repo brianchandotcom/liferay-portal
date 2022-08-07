@@ -10,22 +10,22 @@
  */
 
 import {ClaySelectWithOption} from '@clayui/form';
-import {FieldProps} from 'formik';
 import React from 'react';
 
 import WrapperInput from '../common/components/WrapperInput';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
+import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 
 const Select = ({
 	field,
-	form,
+	meta,
 	label,
 	options = [],
 	required,
 	...props
 }: PRMFormFieldProps &
 	React.ComponentProps<typeof ClaySelectWithOption> &
-	FieldProps<string>) => {
+	PRMFormFieldStateProps<string>) => {
 	const defaultOptions = {
 		disabled: true,
 		label: options.length ? 'Choose a option' : 'No options available',
@@ -33,11 +33,7 @@ const Select = ({
 	};
 
 	return (
-		<WrapperInput
-			{...form.getFieldMeta(field.name)}
-			label={label}
-			required={required}
-		>
+		<WrapperInput {...meta} label={label} required={required}>
 			<ClaySelectWithOption
 				options={[defaultOptions, ...options]}
 				{...field}

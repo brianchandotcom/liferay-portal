@@ -10,9 +10,9 @@
  */
 
 import ClayButton from '@clayui/button';
-import {Field} from 'formik';
 
 import PRMForm from '../../components/PRMForm';
+import PRMFormik from '../../components/PRMFormik';
 import {listTypeDefinitionName} from '../../services/liferay/list-type-definitions/constants/listTypeDefinitionName';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 
@@ -32,7 +32,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 		<PRMForm name="Goals" title="Campaign Information">
 			<PRMForm.Section title="Partner">
 				<PRMForm.Group>
-					<Field
+					<PRMFormik.Field
 						component={PRMForm.Select}
 						label="Company Name"
 						name="r_company_accountEntryId"
@@ -40,7 +40,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 						required
 					/>
 
-					<Field
+					<PRMFormik.Field
 						component={PRMForm.Select}
 						label="Country"
 						name="country"
@@ -51,7 +51,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 			</PRMForm.Section>
 
 			<PRMForm.Section title="Campaign">
-				<Field
+				<PRMFormik.Field
 					component={PRMForm.InputText}
 					label="Provide a name and short description of the overall campaign"
 					name="overallCampaign"
@@ -59,7 +59,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 				/>
 
 				<div className="border border-neutral-3 mb-4 p-3 rounded-lg">
-					<Field
+					<PRMFormik.Field
 						component={PRMForm.CheckboxGroup}
 						items={
 							fieldEntries[
@@ -76,7 +76,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 
 			<PRMForm.Section title="Target Market">
 				<div className="border border-neutral-3 mb-4 p-3 rounded-lg">
-					<Field
+					<PRMFormik.Field
 						component={PRMForm.CheckboxGroup}
 						items={
 							fieldEntries[listTypeDefinitionName.TARGETS_MARKET]
@@ -87,7 +87,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 					/>
 				</div>
 
-				<Field
+				<PRMFormik.Field
 					component={PRMForm.RadioGroup}
 					items={additionalOptionsEntries}
 					label="Additional options? Choose one if applicable"
@@ -95,7 +95,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 				/>
 
 				<div className="border border-neutral-3 mb-4 p-3 rounded-lg">
-					<Field
+					<PRMFormik.Field
 						component={PRMForm.CheckboxGroup}
 						items={
 							fieldEntries[

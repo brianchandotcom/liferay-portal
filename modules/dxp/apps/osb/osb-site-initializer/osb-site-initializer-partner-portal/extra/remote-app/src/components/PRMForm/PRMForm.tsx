@@ -20,23 +20,21 @@ type IProps = {
 	title: string;
 };
 
-const PRMForm = ({children, description, name, title}: IProps) => {
-	return (
-		<div className="pt-5 px-6 sheet sheet-lg">
-			<div>
-				<div className="font-weight-bold mb-1 text-primary">
-					{name.toUpperCase()}
-				</div>
-
-				{description && <div className="sheet-text">{description}</div>}
-
-				<h2 className="mb-4">{title}</h2>
+const PRMForm = ({children, description, name, title}: IProps) => (
+	<div className="pt-5 px-6 sheet sheet-lg">
+		<div>
+			<div className="font-weight-bold mb-1 text-primary">
+				{name.toUpperCase()}
 			</div>
 
-			{children}
+			{description && <div className="sheet-text">{description}</div>}
+
+			<h2 className="mb-4">{title}</h2>
 		</div>
-	);
-};
+
+		{children}
+	</div>
+);
 
 PRMForm.Section = Section;
 PRMForm.Group = Group;

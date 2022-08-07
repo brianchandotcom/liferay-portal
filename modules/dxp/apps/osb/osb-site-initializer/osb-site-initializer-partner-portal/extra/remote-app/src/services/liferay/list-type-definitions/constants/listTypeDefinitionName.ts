@@ -9,14 +9,9 @@
  * distribution rights of the Software.
  */
 
-const LIST_TYPE_ENTRIES = {
-	businessSalesGoals: 'businessSalesGoals',
-	country: 'country',
-	expense: 'expense',
-	goalsTargetMarket: 'goalsTargetMarket',
-	leadFollowUpStrategy: 'leadFollowUpStrategy',
-	targetAudienceRole: 'targetAudienceRole',
-	typeOfActivity: 'typeOfActivity',
-};
-
-export default LIST_TYPE_ENTRIES;
+export enum listTypeDefinitionName {
+	COUNTRIES = 'Countries',
+	LIFERAY_BUSINESS_SALES_GOALS = 'Liferay Business/Sales Goals',
+	TARGETS_MARKET = 'Targets Market',
+	TARGETS_AUDIENCE_ROLE = 'Targets Audience/Role',
+}

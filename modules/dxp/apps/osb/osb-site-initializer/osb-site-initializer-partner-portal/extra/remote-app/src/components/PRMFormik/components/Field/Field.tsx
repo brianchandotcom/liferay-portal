@@ -13,7 +13,7 @@ import {Field as FormikField, FieldProps} from 'formik';
 import React from 'react';
 
 interface IProps {
-	component: React.ComponentType<Omit<FieldProps, 'form'>>;
+	component: JSX.Element;
 	name: string;
 }
 

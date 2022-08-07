@@ -75,7 +75,7 @@ definition {
 
 		task ("And Then another folder with same erc is not being created") {
 			var commentsBlogsPosting = HeadlessBlog.getBlogsPostingComment(blogsPostingId = "${response}");
-			
+
 			HeadlessBlog.assertProperNumberOfItems(
 				expectedTotalElement = "1",
 				responseToParse = "${commentsBlogsPosting}");

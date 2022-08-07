@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-import {Form, Formik} from 'formik';
 import {useState} from 'react';
 
+import PRMFormik from '../../common/components/PRMFormik';
 import {RequestStatus} from '../../common/enums/requestStatus';
 import MDFRequest from '../../common/interfaces/mdfRequest';
 import {StepType} from './enums/stepType';
@@ -44,18 +44,17 @@ const MDFRequestForm = () => {
 
 	const StepFormComponent: StepComponent = {
 		[StepType.GOALS]: (
-			<Goals onContinue={() => setStep(StepType.ACTIVITIES)} />
+			<Goals
+				onContinue={() => setStep(StepType.ACTIVITIES)}
+				validationSchema={yup}
+			/>
 		),
 	};
 
 	return (
-		<Formik
-			initialValues={initialFormValues}
-			onSubmit={onSubmit}
-			validationSchema={yup}
-		>
-			<Form>{StepFormComponent[step]}</Form>
-		</Formik>
+		<PRMFormik initialValues={initialFormValues} onSubmit={onSubmit}>
+			{StepFormComponent[step]}
+		</PRMFormik>
 	);
 };
 

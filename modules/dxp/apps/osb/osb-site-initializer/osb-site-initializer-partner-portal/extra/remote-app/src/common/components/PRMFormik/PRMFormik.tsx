@@ -9,9 +9,29 @@
  * distribution rights of the Software.
  */
 
-import Field from './components/Field';
+import {Form, Formik, FormikConfig, FormikValues} from 'formik';
+import React from 'react';
 
-const PRMFormik = () => {};
+import Field from './components/Field';
+import PRMFormikPageProps from './interfaces/prmFormikPageProps';
+
+const PRMFormik = <T extends FormikValues>({
+	children,
+	...props
+}: FormikConfig<T>) => {
+	const currentChild = React.Children.only(children) as React.ReactElement<
+		PRMFormikPageProps
+	>;
+
+	return (
+		<Formik
+			{...props}
+			validationSchema={currentChild.props.validationSchema}
+		>
+			<Form>{currentChild}</Form>
+		</Formik>
+	);
+};
 
 PRMFormik.Field = Field;
 

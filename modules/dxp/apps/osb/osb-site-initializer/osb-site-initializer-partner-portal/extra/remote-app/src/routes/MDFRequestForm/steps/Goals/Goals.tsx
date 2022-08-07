@@ -13,6 +13,7 @@ import ClayButton from '@clayui/button';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
+import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 
@@ -21,7 +22,7 @@ interface IProps {
 	onContinue?(event: React.MouseEvent<HTMLButtonElement>): void;
 }
 
-const Goals = ({onCancel, onContinue}: IProps) => {
+const Goals = ({onCancel, onContinue}: IProps & PRMFormikPageProps) => {
 	const {
 		additionalOptionsEntries,
 		companiesEntries,

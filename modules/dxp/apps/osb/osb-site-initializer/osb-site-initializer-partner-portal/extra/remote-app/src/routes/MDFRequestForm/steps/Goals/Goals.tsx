@@ -11,9 +11,9 @@
 
 import ClayButton from '@clayui/button';
 
-import PRMForm from '../../../common/components/PRMForm';
-import PRMFormik from '../../../common/components/PRMFormik';
-import {LiferayPicklistName} from '../../../common/enums/liferayPicklistName';
+import PRMForm from '../../../../common/components/PRMForm';
+import PRMFormik from '../../../../common/components/PRMFormik';
+import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 
 interface IProps {

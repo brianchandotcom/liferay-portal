@@ -13,8 +13,8 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import React from 'react';
 import {Root, createRoot} from 'react-dom/client';
 
-import MDFRequestForm from './MDFRequestForm';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
+import MDFRequestForm from './routes/MDFRequestForm';
 
 class PartnerPortalRemoteAppComponent extends HTMLElement {
 	private root: Root | undefined;

@@ -12,9 +12,9 @@
 import ClayButton from '@clayui/button';
 import {Field} from 'formik';
 
-import BasicForm from '../../components/BasicForm';
 import CheckboxGroup from '../../components/CheckboxGroup';
 import InputText from '../../components/InputText';
+import PRMForm from '../../components/PRMForm';
 import RadioGroup from '../../components/RadioGroup';
 import Select from '../../components/Select';
 import {listTypeDefinitionName} from '../../services/liferay/list-type-definitions/constants/listTypeDefinitionName';
@@ -33,9 +33,9 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 	} = useDynamicFieldEntries();
 
 	return (
-		<BasicForm name="Goals" title="Campaign Information">
-			<BasicForm.Section title="Partner">
-				<BasicForm.Group>
+		<PRMForm name="Goals" title="Campaign Information">
+			<PRMForm.Section title="Partner">
+				<PRMForm.Group>
 					<Field
 						component={Select}
 						label="Company Name"
@@ -51,10 +51,10 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 						options={fieldEntries[listTypeDefinitionName.COUNTRIES]}
 						required
 					/>
-				</BasicForm.Group>
-			</BasicForm.Section>
+				</PRMForm.Group>
+			</PRMForm.Section>
 
-			<BasicForm.Section title="Campaign">
+			<PRMForm.Section title="Campaign">
 				<Field
 					component={InputText}
 					label="Provide a name and short description of the overall campaign"
@@ -76,9 +76,9 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 						required
 					/>
 				</div>
-			</BasicForm.Section>
+			</PRMForm.Section>
 
-			<BasicForm.Section title="Target Market">
+			<PRMForm.Section title="Target Market">
 				<div className="border border-neutral-3 mb-4 p-3 rounded-lg">
 					<Field
 						component={CheckboxGroup}
@@ -111,9 +111,9 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 						required
 					/>
 				</div>
-			</BasicForm.Section>
+			</PRMForm.Section>
 
-			<BasicForm.Footer>
+			<PRMForm.Footer>
 				<div className="mr-auto pl-0 py-3">
 					<ClayButton
 						className="pl-0"
@@ -135,8 +135,8 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 
 					<ClayButton onClick={onContinue}>Continue</ClayButton>
 				</div>
-			</BasicForm.Footer>
-		</BasicForm>
+			</PRMForm.Footer>
+		</PRMForm>
 	);
 };
 

@@ -20,7 +20,7 @@ type IProps = {
 	title: string;
 };
 
-const BasicForm = ({children, description, name, title}: IProps) => {
+const PRMForm = ({children, description, name, title}: IProps) => {
 	return (
 		<div className="pt-5 px-6 sheet sheet-lg">
 			<div>
@@ -38,8 +38,8 @@ const BasicForm = ({children, description, name, title}: IProps) => {
 	);
 };
 
-BasicForm.Section = Section;
-BasicForm.Group = Group;
-BasicForm.Footer = Footer;
+PRMForm.Section = Section;
+PRMForm.Group = Group;
+PRMForm.Footer = Footer;
 
-export default BasicForm;
+export default PRMForm;

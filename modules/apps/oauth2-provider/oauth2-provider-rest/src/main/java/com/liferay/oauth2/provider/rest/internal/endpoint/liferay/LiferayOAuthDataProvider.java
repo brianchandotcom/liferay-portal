@@ -667,6 +667,8 @@ public class LiferayOAuthDataProvider
 	protected JwtClaims createJwtAccessToken(
 		ServerAccessToken serverAccessToken) {
 
+		_enrichServiceAccessToken(Collections.emptyMap(), serverAccessToken);
+
 		// Override this method to fix a bug in cxf.
 		// Scopes in JWT claim should be a string.
 
@@ -707,47 +709,8 @@ public class LiferayOAuthDataProvider
 			return serverAccessToken;
 		}
 
-		BearerTokenProvider.AccessToken accessToken = fromCXFAccessToken(
-			serverAccessToken);
-
-		OAuth2Application oAuth2Application =
-			accessToken.getOAuth2Application();
-
-		BearerTokenProvider bearerTokenProvider = getBearerTokenProvider(
-			oAuth2Application.getCompanyId(), oAuth2Application.getClientId());
-
-		bearerTokenProvider.onBeforeCreate(accessToken);
-
-		serverAccessToken.setAudiences(accessToken.getAudiences());
-		serverAccessToken.setClientCodeVerifier(
-			accessToken.getClientCodeVerifier());
-		serverAccessToken.setExpiresIn(accessToken.getExpiresIn());
-		serverAccessToken.setExtraProperties(accessToken.getExtraProperties());
-		serverAccessToken.setGrantCode(accessToken.getGrantCode());
-		serverAccessToken.setGrantType(accessToken.getGrantType());
-		serverAccessToken.setIssuedAt(accessToken.getIssuedAt());
-		serverAccessToken.setIssuer(accessToken.getIssuer());
-		serverAccessToken.setNonce(accessToken.getNonce());
-
-		Map<String, String> accessTokenParameters = accessToken.getParameters();
-
-		accessTokenParameters.putAll(
-			accessTokenRegistration.getExtraProperties());
-
-		serverAccessToken.setParameters(accessTokenParameters);
-
-		serverAccessToken.setRefreshToken(accessToken.getRefreshToken());
-		serverAccessToken.setResponseType(accessToken.getResponseType());
-		serverAccessToken.setScopes(
-			convertScopeToPermissions(
-				serverAccessToken.getClient(), accessToken.getScopes()));
-		serverAccessToken.setTokenKey(accessToken.getTokenKey());
-		serverAccessToken.setTokenType(accessToken.getTokenType());
-
-		UserSubject userSubject = serverAccessToken.getSubject();
-
-		userSubject.setId(String.valueOf(accessToken.getUserId()));
-		userSubject.setLogin(accessToken.getUserName());
+		_enrichServiceAccessToken(
+			accessTokenRegistration.getExtraProperties(), serverAccessToken);
 
 		return serverAccessToken;
 	}
@@ -827,40 +790,7 @@ public class LiferayOAuthDataProvider
 			return serverAccessToken;
 		}
 
-		BearerTokenProvider.AccessToken accessToken = fromCXFAccessToken(
-			serverAccessToken);
-
-		OAuth2Application oAuth2Application =
-			accessToken.getOAuth2Application();
-
-		BearerTokenProvider bearerTokenProvider = getBearerTokenProvider(
-			oAuth2Application.getCompanyId(), oAuth2Application.getClientId());
-
-		bearerTokenProvider.onBeforeCreate(accessToken);
-
-		serverAccessToken.setAudiences(accessToken.getAudiences());
-		serverAccessToken.setClientCodeVerifier(
-			accessToken.getClientCodeVerifier());
-		serverAccessToken.setExpiresIn(accessToken.getExpiresIn());
-		serverAccessToken.setExtraProperties(accessToken.getExtraProperties());
-		serverAccessToken.setGrantCode(accessToken.getGrantCode());
-		serverAccessToken.setGrantType(accessToken.getGrantType());
-		serverAccessToken.setIssuedAt(accessToken.getIssuedAt());
-		serverAccessToken.setIssuer(accessToken.getIssuer());
-		serverAccessToken.setNonce(accessToken.getNonce());
-		serverAccessToken.setParameters(accessToken.getParameters());
-		serverAccessToken.setRefreshToken(accessToken.getRefreshToken());
-		serverAccessToken.setResponseType(accessToken.getResponseType());
-		serverAccessToken.setScopes(
-			convertScopeToPermissions(
-				serverAccessToken.getClient(), accessToken.getScopes()));
-		serverAccessToken.setTokenKey(accessToken.getTokenKey());
-		serverAccessToken.setTokenType(accessToken.getTokenType());
-
-		UserSubject userSubject = serverAccessToken.getSubject();
-
-		userSubject.setId(String.valueOf(accessToken.getUserId()));
-		userSubject.setLogin(accessToken.getUserName());
+		_enrichServiceAccessToken(Collections.emptyMap(), serverAccessToken);
 
 		return serverAccessToken;
 	}
@@ -937,6 +867,52 @@ public class LiferayOAuthDataProvider
 						jwtAccessTokenSigningJSONWebKey())));
 
 		super.setJwtAccessTokenProducer(oAuthJoseJwtProducer);
+	}
+
+	private void _enrichServiceAccessToken(
+		Map<String, String> extraProperties,
+		ServerAccessToken serverAccessToken) {
+
+		BearerTokenProvider.AccessToken accessToken = fromCXFAccessToken(
+			serverAccessToken);
+
+		OAuth2Application oAuth2Application =
+			accessToken.getOAuth2Application();
+
+		BearerTokenProvider bearerTokenProvider = getBearerTokenProvider(
+			oAuth2Application.getCompanyId(), oAuth2Application.getClientId());
+
+		bearerTokenProvider.onBeforeCreate(accessToken);
+
+		serverAccessToken.setAudiences(accessToken.getAudiences());
+		serverAccessToken.setClientCodeVerifier(
+			accessToken.getClientCodeVerifier());
+		serverAccessToken.setExpiresIn(accessToken.getExpiresIn());
+		serverAccessToken.setExtraProperties(accessToken.getExtraProperties());
+		serverAccessToken.setGrantCode(accessToken.getGrantCode());
+		serverAccessToken.setGrantType(accessToken.getGrantType());
+		serverAccessToken.setIssuedAt(accessToken.getIssuedAt());
+		serverAccessToken.setIssuer(accessToken.getIssuer());
+		serverAccessToken.setNonce(accessToken.getNonce());
+
+		Map<String, String> accessTokenParameters = accessToken.getParameters();
+
+		accessTokenParameters.putAll(extraProperties);
+
+		serverAccessToken.setParameters(accessTokenParameters);
+
+		serverAccessToken.setRefreshToken(accessToken.getRefreshToken());
+		serverAccessToken.setResponseType(accessToken.getResponseType());
+		serverAccessToken.setScopes(
+			convertScopeToPermissions(
+				serverAccessToken.getClient(), accessToken.getScopes()));
+		serverAccessToken.setTokenKey(accessToken.getTokenKey());
+		serverAccessToken.setTokenType(accessToken.getTokenType());
+
+		UserSubject userSubject = serverAccessToken.getSubject();
+
+		userSubject.setId(String.valueOf(accessToken.getUserId()));
+		userSubject.setLogin(accessToken.getUserName());
 	}
 
 	private Date _fromCXFTime(long issuedAt) {

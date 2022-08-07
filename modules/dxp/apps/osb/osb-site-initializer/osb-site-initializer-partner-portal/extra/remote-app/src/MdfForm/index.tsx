@@ -9,41 +9,54 @@
  * distribution rights of the Software.
  */
 
+import {Form, Formik} from 'formik';
 import {useState} from 'react';
 
+import Goals from '../steps/Goals';
+import yup from '../steps/Goals/schema/yup';
+import {requestStatus} from '../utils/constants/requestStatus';
 import {stepType} from '../utils/constants/stepType';
-import ActivitiesForm from './pages/ActivitiesForm';
-import ActivitiesList from './pages/ActivitiesList';
-import GoalsPage from './pages/GoalsPage';
-import ReviewForm from './pages/ReviewForm';
+import MDFRequest from '../utils/types/mdfRequest';
+
+const initialFormValues: MDFRequest = {
+	activities: [],
+	country: '',
+	liferayBusinessSalesGoals: [],
+	overallCampaign: '',
+	r_additionalOption_mdfRequest: '',
+	r_company_accountEntryId: '',
+	requestStatus: requestStatus.DRAFT,
+	targetsAudienceRole: [],
+	targetsMarket: [],
+};
+
+type StepComponent = {
+	[key in stepType]?: JSX.Element;
+};
 
 const MdfForm = () => {
 	const [step, setStep] = useState<stepType>(stepType.GOALS);
-	const [generalObject, setGeneralObject] = useState<any>();
-	const StepLayout = {
-		[stepType.ACTIVITIES]: (
-			<ActivitiesList generalObject={generalObject} setStep={setStep} />
-		),
+
+	const onSubmit = (value: MDFRequest) => {
+		// eslint-disable-next-line no-console
+		console.log(value);
+	};
+
+	const StepFormComponent: StepComponent = {
 		[stepType.GOALS]: (
-			<GoalsPage
-				generalObject={generalObject}
-				setGeneralObject={setGeneralObject}
-				setStep={setStep}
-			/>
-		),
-		[stepType.ACTIVITY]: (
-			<ActivitiesForm
-				generalObject={generalObject}
-				setGeneralObject={setGeneralObject}
-				setStep={setStep}
-			/>
-		),
-		[stepType.REVIEW]: (
-			<ReviewForm generalObject={generalObject} setStep={setStep} />
+			<Goals onContinue={() => setStep(stepType.ACTIVITIES)} />
 		),
 	};
 
-	return StepLayout[step];
+	return (
+		<Formik
+			initialValues={initialFormValues}
+			onSubmit={onSubmit}
+			validationSchema={yup}
+		>
+			<Form>{StepFormComponent[step]}</Form>
+		</Formik>
+	);
 };
 
 export default MdfForm;

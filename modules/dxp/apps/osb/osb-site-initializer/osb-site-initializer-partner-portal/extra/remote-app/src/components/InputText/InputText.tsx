@@ -9,31 +9,32 @@
  * distribution rights of the Software.
  */
 
-/** Type '{
- *  <T = string | ChangeEvent<any>>(field: T): T extends ChangeEvent<...> ? void : (e: string | ChangeEvent<...>) => void; };
- * placeholder: string; type: string; value: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
- */
 import {ClayInput} from '@clayui/form';
+import {FieldProps} from 'formik';
 
-type Props = {
-	className: any;
-	disabled: any;
-	label: string;
-	name: string;
-	onChange: any;
-	placeholder?: string;
-	type: string;
-	value: any;
-};
+import BasicInput, {BasicInputProps} from '../BasicInput/BasicInput';
 
-const InputText = ({label, ...props}: Props) => {
-	return (
-		<>
-			{label && <label>{label}</label>}
-
-			<ClayInput {...props} />
-		</>
-	);
-};
+const InputText = ({
+	field,
+	form,
+	label,
+	required,
+	...props
+}: BasicInputProps &
+	FieldProps<string> &
+	React.ComponentProps<typeof ClayInput>) => (
+	<BasicInput
+		{...form.getFieldMeta(field.name)}
+		label={label}
+		required={required}
+	>
+		<ClayInput
+			{...props}
+			name={field.name}
+			onBlur={field.onBlur}
+			onChange={field.onChange}
+		/>
+	</BasicInput>
+);
 
 export default InputText;

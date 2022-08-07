@@ -13,12 +13,12 @@ import Footer from './components/Footer';
 import Group from './components/Group';
 import Section from './components/Section';
 
-type IProps = {
+interface IProps {
 	children?: React.ReactNode;
 	description?: string;
 	name: string;
 	title: string;
-};
+}
 
 const PRMForm = ({children, description, name, title}: IProps) => (
 	<div className="pt-5 px-6 sheet sheet-lg">

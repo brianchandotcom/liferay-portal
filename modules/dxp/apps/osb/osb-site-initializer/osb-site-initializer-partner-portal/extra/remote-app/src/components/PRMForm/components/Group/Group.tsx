@@ -11,11 +11,11 @@
 
 import {Children} from 'react';
 
-type GroupProps = {
+interface IProps {
 	children?: React.ReactNode;
-};
+}
 
-const Group = ({children}: GroupProps) => (
+const Group = ({children}: IProps) => (
 	<div className="form-group-autofit">
 		{Children.map(children, (child) => {
 			return <div className="form-group-item">{child}</div>;

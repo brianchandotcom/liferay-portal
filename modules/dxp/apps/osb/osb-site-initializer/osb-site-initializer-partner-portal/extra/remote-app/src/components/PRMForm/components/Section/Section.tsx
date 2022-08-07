@@ -9,12 +9,12 @@
  * distribution rights of the Software.
  */
 
-type SectionProps = {
+interface IProps {
 	children?: React.ReactNode;
 	title: string;
-};
+}
 
-const Section = ({children, title}: SectionProps) => (
+const Section = ({children, title}: IProps) => (
 	<div>
 		<h3 className="sheet-subtitle">{title}</h3>
 

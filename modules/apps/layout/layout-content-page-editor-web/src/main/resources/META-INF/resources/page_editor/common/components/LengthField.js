@@ -112,6 +112,14 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 		}
 		else if (isNaN(nextValue)) {
 			valueWithUnits = '';
+
+			inputRef.current.focus();
+
+			if (field.typeOptions?.showLengthField) {
+				setNextValue(valueWithUnits);
+
+				return;
+			}
 		}
 
 		if (valueWithUnits !== value) {

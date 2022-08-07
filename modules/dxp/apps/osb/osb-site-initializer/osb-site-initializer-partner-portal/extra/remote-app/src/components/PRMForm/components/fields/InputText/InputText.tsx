@@ -12,9 +12,8 @@
 import {ClayInput} from '@clayui/form';
 import {FieldProps} from 'formik';
 
-import WrapperInput, {
-	BasicInputProps,
-} from '../common/WrapperInput/WrapperInput';
+import WrapperInput from '../common/components/WrapperInput';
+import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 
 const InputText = ({
 	field,
@@ -22,7 +21,7 @@ const InputText = ({
 	label,
 	required,
 	...props
-}: BasicInputProps &
+}: PRMFormFieldProps &
 	FieldProps<string> &
 	React.ComponentProps<typeof ClayInput>) => (
 	<WrapperInput

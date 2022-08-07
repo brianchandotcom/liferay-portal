@@ -13,10 +13,7 @@ import ClayForm from '@clayui/form';
 import classNames from 'classnames';
 import {FieldMetaProps} from 'formik';
 
-export interface BasicInputProps {
-	label?: string;
-	required?: boolean;
-}
+import PRMFormFieldProps from '../../interfaces/prmFormFieldProps';
 
 interface IProps {
 	children?: React.ReactNode;
@@ -28,7 +25,7 @@ const WrapperInput = <T extends unknown>({
 	label,
 	required,
 	touched,
-}: BasicInputProps & IProps & FieldMetaProps<T>) => (
+}: PRMFormFieldProps & IProps & FieldMetaProps<T>) => (
 	<div
 		className={classNames('mb-4', {
 			'has-error': touched && error,

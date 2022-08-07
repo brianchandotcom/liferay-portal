@@ -13,9 +13,8 @@ import {ClaySelectWithOption} from '@clayui/form';
 import {FieldProps} from 'formik';
 import React from 'react';
 
-import WrapperInput, {
-	BasicInputProps,
-} from '../common/WrapperInput/WrapperInput';
+import WrapperInput from '../common/components/WrapperInput';
+import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 
 const Select = ({
 	field,
@@ -24,7 +23,7 @@ const Select = ({
 	options = [],
 	required,
 	...props
-}: BasicInputProps &
+}: PRMFormFieldProps &
 	React.ComponentProps<typeof ClaySelectWithOption> &
 	FieldProps<string>) => {
 	const defaultOptions = {

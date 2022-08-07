@@ -16,5 +16,8 @@ import {defineConfig} from 'vite';
 
 export default defineConfig({
 	build: {assetsDir: 'static', outDir: 'build'},
+	esbuild: {
+		logOverride: {'this-is-undefined-in-esm': 'silent'},
+	},
 	plugins: [react()],
 });

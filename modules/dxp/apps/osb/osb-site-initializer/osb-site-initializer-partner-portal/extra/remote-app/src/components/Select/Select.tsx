@@ -9,30 +9,42 @@
  * distribution rights of the Software.
  */
 
-import {ClaySelect} from '@clayui/form';
+import {ClaySelectWithOption} from '@clayui/form';
+import {FieldProps} from 'formik';
+import React from 'react';
 
-type Props = {
-	label: string;
-	name: string;
-	onChange: any;
-	options: any;
-};
+import BasicInput from '../BasicInput';
+import {BasicInputProps} from '../BasicInput/BasicInput';
 
-const Select = ({label, options, ...props}: Props) => {
+const Select = ({
+	field,
+	form,
+	label,
+	options = [],
+	required,
+	...props
+}: BasicInputProps &
+	React.ComponentProps<typeof ClaySelectWithOption> &
+	FieldProps<string>) => {
+	const defaultOptions = {
+		disabled: true,
+		label: options.length ? 'Choose a option' : 'No options available',
+		value: '',
+	};
+
 	return (
-		<>
-			<label>{label}</label>
-
-			<ClaySelect {...props}>
-				{options.map((item: any, _: any) => (
-					<ClaySelect.Option
-						key={item.key}
-						label={item.name}
-						value={item.key}
-					/>
-				))}
-			</ClaySelect>
-		</>
+		<BasicInput
+			{...form.getFieldMeta(field.name)}
+			label={label}
+			required={required}
+		>
+			<ClaySelectWithOption
+				options={[defaultOptions, ...options]}
+				{...field}
+				{...props}
+				required={required}
+			/>
+		</BasicInput>
 	);
 };
 

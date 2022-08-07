@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ATTACHMENT_FILE_NAME</td>
-	<td>//div[contains(@class,'page-attachments')]//a[contains(@title,'${key_attachmentFileName}')]</td>
+	<td>//div[contains(@class,'page-attachments')]//a[contains(.,'${key_attachmentFileName}')]</td>
 	<td></td>
 </tr>
 <tr>

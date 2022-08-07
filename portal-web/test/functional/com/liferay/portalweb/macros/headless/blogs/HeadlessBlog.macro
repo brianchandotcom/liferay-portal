@@ -39,6 +39,22 @@ definition {
 			expected = "${expectedCommentERCValue}");
 	}
 
+	macro assertCommentTextWithCorrectValue {
+		var actualTextComments = JSONUtil.getWithJSONPath("${blogsPostingId}", "$..['items'][?(@.creator)].text");
+
+		TestUtils.assertEquals(
+			actual = "${actualTextComments}",
+			expected = "${actualTextComments}");
+	}
+
+	macro assertProperNumberOfItems {
+		var actualTotalElement = JSONUtil.getWithJSONPath("${responseToParse}", "$..['totalCount']");
+
+		TestUtils.assertEquals(
+			actual = "${actualTotalElement}",
+			expected = "${expectedTotalElement}");
+	}
+
 	macro getAllBlogsPostingId {
 		var response = HeadlessBlogAPI._getAllBlogsPostingId();
 

@@ -88,6 +88,7 @@ LengthField.propTypes = {
 
 const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 	const [active, setActive] = useState(false);
+	const [error, setError] = useState(false);
 	const inputRef = useRef();
 	const [nextValue, setNextValue] = useControlledState(initialValue.value);
 	const [nextUnit, setNextUnit] = useState(initialValue.unit);
@@ -151,6 +152,9 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 
 			setNextValue(number || value);
 			setNextUnit(unit || CUSTOM);
+			setError(true);
+
+			setTimeout(() => setError(false), 1000);
 
 			return;
 		}
@@ -261,6 +265,14 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
 			</ClayInput.GroupItem>
+
+			{error ? (
+				<span aria-live="assertive" className="sr-only">
+					{Liferay.Language.get(
+						'this-style-does-not-exist-or-is-empty'
+					)}
+				</span>
+			) : null}
 		</ClayInput.Group>
 	);
 };

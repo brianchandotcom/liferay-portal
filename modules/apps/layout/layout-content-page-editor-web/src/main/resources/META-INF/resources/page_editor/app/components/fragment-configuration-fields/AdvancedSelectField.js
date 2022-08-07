@@ -45,6 +45,7 @@ export function AdvancedSelectField({
 	const triggerId = useId();
 
 	const [active, setActive] = useState(false);
+	const [error, setError] = useState(false);
 	const [isTokenValueOrInherited, setIsTokenValueOrInherited] = useState(
 		!isNullOrUndefined(tokenValues[value]) || !value
 	);
@@ -91,6 +92,9 @@ export function AdvancedSelectField({
 							)
 						) {
 							setNextValue(value);
+							setError(true);
+
+							setTimeout(() => setError(false), 1000);
 
 							return;
 						}
@@ -170,6 +174,14 @@ export function AdvancedSelectField({
 				<div className="mt-1 small text-secondary" id={helpTextId}>
 					{field.description}
 				</div>
+			) : null}
+
+			{error ? (
+				<span aria-live="assertive" className="sr-only">
+					{Liferay.Language.get(
+						'this-style-does-not-exist-or-is-empty'
+					)}
+				</span>
 			) : null}
 		</div>
 	);

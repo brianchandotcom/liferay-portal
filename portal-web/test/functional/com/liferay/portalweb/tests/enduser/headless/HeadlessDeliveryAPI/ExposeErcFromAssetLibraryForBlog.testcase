@@ -20,11 +20,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
+		BlogPostingAPI.deleteAllBlogPostings();
 	}
 
 	@description = "Creates a comment in a blog posting with a custom external reference code"
@@ -47,6 +43,42 @@ definition {
 			HeadlessBlog.assertCommentERCWithCorrectValue(
 				expectedCommentERCValue = "ercComment",
 				response = "${commentsFromBlogsPosting}");
+		}
+	}
+
+	@description = "Can not creates two comments in a blog posting with same custom external reference code"
+	@priority = "4"
+	test canNotCreateTwoCommentsWithCustomExternalReferenceCode {
+		property portal.acceptance = "true";
+
+		task ("When with POST request I create a comment with a custom external reference code") {
+			var response = HeadlessBlog.getAllBlogsPostingId();
+
+			var response1 = HeadlessBlog.postBlogsPostingComment(
+				blogsPostingId = "${response}",
+				commentExternalReferenceCode = "ercComment",
+				textComment = "CommentOne");
+		}
+
+		task ("When with POST request I create a comment with an already existing custom external reference code") {
+			var response2 = HeadlessBlog.postBlogsPostingComment(
+				blogsPostingId = "${response}",
+				commentExternalReferenceCode = "ercComment",
+				textComment = "CommentTwo");
+		}
+
+		task ("Then I receive an error code response about duplicate folder erc") {
+			TestUtils.assertPartialEquals(
+				actual = "${response2}",
+				expected = "Duplicate message external reference code");
+		}
+
+		task ("And Then another folder with same erc is not being created") {
+			var commentsBlogsPosting = HeadlessBlog.getBlogsPostingComment(blogsPostingId = "${response}");
+			
+			HeadlessBlog.assertProperNumberOfItems(
+				expectedTotalElement = "1",
+				responseToParse = "${commentsBlogsPosting}");
 		}
 	}
 

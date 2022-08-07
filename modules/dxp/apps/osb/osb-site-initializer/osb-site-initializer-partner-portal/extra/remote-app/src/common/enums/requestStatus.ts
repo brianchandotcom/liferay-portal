@@ -9,9 +9,6 @@
  * distribution rights of the Software.
  */
 
-export enum stepType {
-	ACTIVITY = 'activity',
-	ACTIVITIES = 'activities',
-	GOALS = 'goals',
-	REVIEW = 'review',
+export enum RequestStatus {
+	DRAFT = 'draft',
 }

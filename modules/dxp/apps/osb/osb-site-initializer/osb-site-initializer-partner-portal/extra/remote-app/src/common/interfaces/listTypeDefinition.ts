@@ -9,16 +9,10 @@
  * distribution rights of the Software.
  */
 
-import iconSVG from '@clayui/css/lib/images/icons/icons.svg';
+import LiferayPicklist from './liferayPicklist';
 
-import {Liferay} from '../services/liferay';
-
-export default function getIconSpriteMap() {
-	const pathThemeImages = Liferay.ThemeDisplay.getPathThemeImages();
-
-	if (pathThemeImages) {
-		return `${pathThemeImages}/clay/icons.svg`;
-	}
-
-	return iconSVG;
+export default interface ListTypeDefinition {
+	id: number;
+	listTypeEntries: LiferayPicklist[];
+	name: string;
 }

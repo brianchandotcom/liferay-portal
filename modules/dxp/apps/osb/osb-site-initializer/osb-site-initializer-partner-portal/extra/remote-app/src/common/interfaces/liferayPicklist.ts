@@ -9,12 +9,8 @@
  * distribution rights of the Software.
  */
 
-import MdfForm from './MdfForm';
-
-const App = () => (
-	<div>
-		<MdfForm />
-	</div>
-);
-
-export default App;
+export default interface LiferayPicklist {
+	id?: number;
+	key: string;
+	name: string;
+}

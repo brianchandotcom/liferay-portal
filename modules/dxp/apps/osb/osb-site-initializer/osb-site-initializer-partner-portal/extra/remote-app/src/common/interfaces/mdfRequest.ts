@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {requestStatus} from '../constants/requestStatus';
+import {RequestStatus} from '../enums/requestStatus';
+import LiferayPicklist from './liferayPicklist';
 
 interface LiferayObject {
 	dateCreated: Date;
@@ -24,12 +25,12 @@ interface Activity extends Partial<LiferayObject> {
 
 export default interface MDFRequest extends Partial<LiferayObject> {
 	activities: Activity[];
-	country: string;
+	country: LiferayPicklist | {};
 	liferayBusinessSalesGoals: string[];
 	overallCampaign: string;
 	r_additionalOption_mdfRequest: string;
 	r_company_accountEntryId: string;
-	requestStatus: requestStatus;
+	requestStatus: RequestStatus;
 	targetsAudienceRole: string[];
 	targetsMarket: string[];
 }

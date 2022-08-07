@@ -12,8 +12,8 @@
 import {Liferay} from '..';
 import useSWR from 'swr';
 
-import {LiferayPicklistName} from '../../../common/enums/liferayPicklistName';
-import ListTypeDefinition from '../../../utils/types/listTypeDefinition';
+import {LiferayPicklistName} from '../../../enums/liferayPicklistName';
+import ListTypeDefinition from '../../../interfaces/listTypeDefinition';
 import {LiferayAPIs} from '../common/enums/apis';
 import LiferayItems from '../common/interfaces/liferayItems';
 import liferayFetcher from '../common/utils/fetcher';

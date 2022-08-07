@@ -13,7 +13,7 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import React from 'react';
 import {Root, createRoot} from 'react-dom/client';
 
-import App from './App';
+import MDFRequestForm from './MDFRequestForm';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
 
 class PartnerPortalRemoteAppComponent extends HTMLElement {
@@ -26,7 +26,7 @@ class PartnerPortalRemoteAppComponent extends HTMLElement {
 			this.root.render(
 				<React.StrictMode>
 					<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
-						<App />
+						<MDFRequestForm />
 					</ClayIconSpriteContext.Provider>
 				</React.StrictMode>
 			);

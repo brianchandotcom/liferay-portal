@@ -12,11 +12,11 @@
 import {Form, Formik} from 'formik';
 import {useState} from 'react';
 
-import Goals from '../steps/Goals';
-import yup from '../steps/Goals/schema/yup';
-import {requestStatus} from '../utils/constants/requestStatus';
-import {stepType} from '../utils/constants/stepType';
-import MDFRequest from '../utils/types/mdfRequest';
+import {RequestStatus} from '../common/enums/requestStatus';
+import MDFRequest from '../common/interfaces/mdfRequest';
+import {StepType} from './enums/stepType';
+import Goals from './steps/Goals';
+import yup from './steps/Goals/schema/yup';
 
 const initialFormValues: MDFRequest = {
 	activities: [],
@@ -25,17 +25,17 @@ const initialFormValues: MDFRequest = {
 	overallCampaign: '',
 	r_additionalOption_mdfRequest: '',
 	r_company_accountEntryId: '',
-	requestStatus: requestStatus.DRAFT,
+	requestStatus: RequestStatus.DRAFT,
 	targetsAudienceRole: [],
 	targetsMarket: [],
 };
 
 type StepComponent = {
-	[key in stepType]?: JSX.Element;
+	[key in StepType]?: JSX.Element;
 };
 
-const MdfForm = () => {
-	const [step, setStep] = useState<stepType>(stepType.GOALS);
+const MDFRequestForm = () => {
+	const [step, setStep] = useState<StepType>(StepType.GOALS);
 
 	const onSubmit = (value: MDFRequest) => {
 		// eslint-disable-next-line no-console
@@ -43,8 +43,8 @@ const MdfForm = () => {
 	};
 
 	const StepFormComponent: StepComponent = {
-		[stepType.GOALS]: (
-			<Goals onContinue={() => setStep(stepType.ACTIVITIES)} />
+		[StepType.GOALS]: (
+			<Goals onContinue={() => setStep(StepType.ACTIVITIES)} />
 		),
 	};
 
@@ -59,4 +59,4 @@ const MdfForm = () => {
 	);
 };
 
-export default MdfForm;
+export default MDFRequestForm;

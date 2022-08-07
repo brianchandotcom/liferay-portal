@@ -9,14 +9,4 @@
  * distribution rights of the Software.
  */
 
-interface LiferayPicklist {
-	id?: number;
-	key: string;
-	name: string;
-}
-
-export default interface ListTypeDefinition {
-	id: number;
-	listTypeEntries: LiferayPicklist[];
-	name: string;
-}
+export {default} from './MDFRequestForm';

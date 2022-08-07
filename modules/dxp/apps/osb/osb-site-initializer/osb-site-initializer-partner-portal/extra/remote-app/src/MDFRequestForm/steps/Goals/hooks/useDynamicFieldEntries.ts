@@ -11,10 +11,10 @@
 
 import {useMemo} from 'react';
 
-import {LiferayPicklistName} from '../../../common/enums/liferayPicklistName';
-import useGetListTypeDefinitions from '../../../services/liferay/list-type-definitions/useGetListTypeDefinitions';
-import useGetAdditionalOptions from '../../../services/liferay/object/additional-options/useGetAdditionalOptions';
-import useGetMyUserAccount from '../../../services/liferay/user-account/useGetMyUserAccount';
+import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
+import useGetListTypeDefinitions from '../../../../common/services/liferay/list-type-definitions/useGetListTypeDefinitions';
+import useGetAdditionalOptions from '../../../../common/services/liferay/object/additional-options/useGetAdditionalOptions';
+import useGetMyUserAccount from '../../../../common/services/liferay/user-account/useGetMyUserAccount';
 import getEntriesByListTypeDefinitions from '../utils/getEntriesByListTypeDefinitions';
 
 export default function useDynamicFieldEntries() {

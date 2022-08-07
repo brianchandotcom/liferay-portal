@@ -13,8 +13,9 @@ import {ClaySelectWithOption} from '@clayui/form';
 import {FieldProps} from 'formik';
 import React from 'react';
 
-import BasicInput from '../BasicInput';
-import {BasicInputProps} from '../BasicInput/BasicInput';
+import WrapperInput, {
+	BasicInputProps,
+} from '../common/WrapperInput/WrapperInput';
 
 const Select = ({
 	field,
@@ -33,7 +34,7 @@ const Select = ({
 	};
 
 	return (
-		<BasicInput
+		<WrapperInput
 			{...form.getFieldMeta(field.name)}
 			label={label}
 			required={required}
@@ -44,7 +45,7 @@ const Select = ({
 				{...props}
 				required={required}
 			/>
-		</BasicInput>
+		</WrapperInput>
 	);
 };
 

@@ -13,7 +13,9 @@
 import {ClayRadio} from '@clayui/form';
 import {FieldProps} from 'formik';
 
-import BasicInput, {BasicInputProps} from '../BasicInput/BasicInput';
+import WrapperInput, {
+	BasicInputProps,
+} from '../common/WrapperInput/WrapperInput';
 
 interface IProps {
 	items: (React.OptionHTMLAttributes<HTMLOptionElement> & {
@@ -29,7 +31,7 @@ const RadioGroup = ({
 	required,
 }: IProps & BasicInputProps & FieldProps<string>) => {
 	return (
-		<BasicInput
+		<WrapperInput
 			{...form.getFieldMeta(field.name)}
 			label={label}
 			required={required}
@@ -50,7 +52,7 @@ const RadioGroup = ({
 					{item.description && <span>{item.description}</span>}
 				</div>
 			))}
-		</BasicInput>
+		</WrapperInput>
 	);
 };
 export default RadioGroup;

@@ -22,7 +22,7 @@ interface IProps {
 	children?: React.ReactNode;
 }
 
-const BasicInput = <T extends unknown>({
+const WrapperInput = <T extends unknown>({
 	children,
 	error,
 	label,
@@ -51,4 +51,4 @@ const BasicInput = <T extends unknown>({
 	</div>
 );
 
-export default BasicInput;
+export default WrapperInput;

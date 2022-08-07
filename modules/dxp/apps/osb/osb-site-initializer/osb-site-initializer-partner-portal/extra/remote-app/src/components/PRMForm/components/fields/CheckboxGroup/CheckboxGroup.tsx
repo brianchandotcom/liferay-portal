@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -9,32 +10,38 @@
  * distribution rights of the Software.
  */
 
-import {ClayInput} from '@clayui/form';
+import {ClayCheckbox} from '@clayui/form';
 import {FieldProps} from 'formik';
 
-import BasicInput, {BasicInputProps} from '../BasicInput/BasicInput';
+import WrapperInput, {
+	BasicInputProps,
+} from '../common/WrapperInput/WrapperInput';
 
-const InputText = ({
+interface IProps {
+	items: React.OptionHTMLAttributes<HTMLOptionElement>[];
+}
+
+const CheckboxGroup = ({
 	field,
 	form,
+	items = [],
 	label,
 	required,
-	...props
-}: BasicInputProps &
-	FieldProps<string> &
-	React.ComponentProps<typeof ClayInput>) => (
-	<BasicInput
+}: IProps & BasicInputProps & FieldProps<string[]>) => (
+	<WrapperInput
 		{...form.getFieldMeta(field.name)}
 		label={label}
 		required={required}
 	>
-		<ClayInput
-			{...props}
-			name={field.name}
-			onBlur={field.onBlur}
-			onChange={field.onChange}
-		/>
-	</BasicInput>
+		{items.map((item, index) => (
+			<ClayCheckbox
+				{...field}
+				checked={field.value.includes(item.label as string)}
+				key={`${item.value}-${index}`}
+				label={item.label}
+				value={item.label}
+			/>
+		))}
+	</WrapperInput>
 );
-
-export default InputText;
+export default CheckboxGroup;

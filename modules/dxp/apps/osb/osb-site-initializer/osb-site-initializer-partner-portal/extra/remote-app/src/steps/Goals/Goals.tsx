@@ -12,11 +12,7 @@
 import ClayButton from '@clayui/button';
 import {Field} from 'formik';
 
-import CheckboxGroup from '../../components/CheckboxGroup';
-import InputText from '../../components/InputText';
 import PRMForm from '../../components/PRMForm';
-import RadioGroup from '../../components/RadioGroup';
-import Select from '../../components/Select';
 import {listTypeDefinitionName} from '../../services/liferay/list-type-definitions/constants/listTypeDefinitionName';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 
@@ -37,7 +33,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 			<PRMForm.Section title="Partner">
 				<PRMForm.Group>
 					<Field
-						component={Select}
+						component={PRMForm.Select}
 						label="Company Name"
 						name="r_company_accountEntryId"
 						options={companiesEntries}
@@ -45,7 +41,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 					/>
 
 					<Field
-						component={Select}
+						component={PRMForm.Select}
 						label="Country"
 						name="country"
 						options={fieldEntries[listTypeDefinitionName.COUNTRIES]}
@@ -56,7 +52,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 
 			<PRMForm.Section title="Campaign">
 				<Field
-					component={InputText}
+					component={PRMForm.InputText}
 					label="Provide a name and short description of the overall campaign"
 					name="overallCampaign"
 					required
@@ -64,7 +60,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 
 				<div className="border border-neutral-3 mb-4 p-3 rounded-lg">
 					<Field
-						component={CheckboxGroup}
+						component={PRMForm.CheckboxGroup}
 						items={
 							fieldEntries[
 								listTypeDefinitionName
@@ -81,7 +77,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 			<PRMForm.Section title="Target Market">
 				<div className="border border-neutral-3 mb-4 p-3 rounded-lg">
 					<Field
-						component={CheckboxGroup}
+						component={PRMForm.CheckboxGroup}
 						items={
 							fieldEntries[listTypeDefinitionName.TARGETS_MARKET]
 						}
@@ -92,7 +88,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 				</div>
 
 				<Field
-					component={RadioGroup}
+					component={PRMForm.RadioGroup}
 					items={additionalOptionsEntries}
 					label="Additional options? Choose one if applicable"
 					name="r_additionalOption_mdfRequest"
@@ -100,7 +96,7 @@ const Goals = ({onCancel, onContinue}: IProps) => {
 
 				<div className="border border-neutral-3 mb-4 p-3 rounded-lg">
 					<Field
-						component={CheckboxGroup}
+						component={PRMForm.CheckboxGroup}
 						items={
 							fieldEntries[
 								listTypeDefinitionName.TARGETS_AUDIENCE_ROLE

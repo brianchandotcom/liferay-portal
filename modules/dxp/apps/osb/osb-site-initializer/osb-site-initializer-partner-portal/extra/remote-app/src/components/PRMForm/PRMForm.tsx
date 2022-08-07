@@ -9,9 +9,13 @@
  * distribution rights of the Software.
  */
 
-import Footer from './components/Footer';
-import Group from './components/Group';
-import Section from './components/Section';
+import CheckboxGroup from './components/fields/CheckboxGroup';
+import InputText from './components/fields/InputText';
+import RadioGroup from './components/fields/RadioGroup';
+import Select from './components/fields/Select';
+import Footer from './components/layout/Footer';
+import Group from './components/layout/Group';
+import Section from './components/layout/Section';
 
 interface IProps {
 	children?: React.ReactNode;
@@ -39,5 +43,10 @@ const PRMForm = ({children, description, name, title}: IProps) => (
 PRMForm.Section = Section;
 PRMForm.Group = Group;
 PRMForm.Footer = Footer;
+
+PRMForm.CheckboxGroup = CheckboxGroup;
+PRMForm.InputText = InputText;
+PRMForm.RadioGroup = RadioGroup;
+PRMForm.Select = Select;
 
 export default PRMForm;

@@ -32,7 +32,10 @@ export default function TabCollection({
 	const [open, setOpen] = useState(() => {
 		const sessionValue = window.sessionStorage.getItem(openStateSessionKey);
 
-		if (!isNullOrUndefined(sessionValue)) {
+		if (
+			Liferay.FeatureFlags['LPS-153452'] &&
+			!isNullOrUndefined(sessionValue)
+		) {
 			return sessionValue === 'true';
 		}
 

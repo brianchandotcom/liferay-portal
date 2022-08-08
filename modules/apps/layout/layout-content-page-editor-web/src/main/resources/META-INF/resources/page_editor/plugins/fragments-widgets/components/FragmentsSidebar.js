@@ -148,7 +148,10 @@ export default function FragmentsSidebar() {
 			activeTabIdSessionKey
 		);
 
-		if (Object.values(COLLECTION_IDS).includes(persistedTabId)) {
+		if (
+			Liferay.FeatureFlags['LPS-153452'] &&
+			Object.values(COLLECTION_IDS).includes(persistedTabId)
+		) {
 			return persistedTabId;
 		}
 
@@ -224,7 +227,10 @@ export default function FragmentsSidebar() {
 			10
 		);
 
-		if (!isNaN(initialScrollPosition)) {
+		if (
+			Liferay.FeatureFlags['LPS-153452'] &&
+			!isNaN(initialScrollPosition)
+		) {
 			wrapperElement.scrollBy({
 				behavior: 'auto',
 				left: 0,

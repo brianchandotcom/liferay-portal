@@ -2860,6 +2860,893 @@ public class NotificationQueueEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_LTSENTDATE_SENTDATE_2 =
 		"notificationQueueEntry.sentDate < ?";
 
+	private FinderPath _finderPathWithPaginationFindByStatus;
+	private FinderPath _finderPathWithoutPaginationFindByStatus;
+	private FinderPath _finderPathCountByStatus;
+
+	/**
+	 * Returns all the notification queue entries where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the matching notification queue entries
+	 */
+	@Override
+	public List<NotificationQueueEntry> findByStatus(int status) {
+		return findByStatus(status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the notification queue entries where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @return the range of matching notification queue entries
+	 */
+	@Override
+	public List<NotificationQueueEntry> findByStatus(
+		int status, int start, int end) {
+
+		return findByStatus(status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the notification queue entries where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching notification queue entries
+	 */
+	@Override
+	public List<NotificationQueueEntry> findByStatus(
+		int status, int start, int end,
+		OrderByComparator<NotificationQueueEntry> orderByComparator) {
+
+		return findByStatus(status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the notification queue entries where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching notification queue entries
+	 */
+	@Override
+	public List<NotificationQueueEntry> findByStatus(
+		int status, int start, int end,
+		OrderByComparator<NotificationQueueEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByStatus;
+				finderArgs = new Object[] {status};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByStatus;
+			finderArgs = new Object[] {status, start, end, orderByComparator};
+		}
+
+		List<NotificationQueueEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<NotificationQueueEntry>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (NotificationQueueEntry notificationQueueEntry : list) {
+					if (status != notificationQueueEntry.getStatus()) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(status);
+
+				list = (List<NotificationQueueEntry>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first notification queue entry in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notification queue entry
+	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
+	 */
+	@Override
+	public NotificationQueueEntry findByStatus_First(
+			int status,
+			OrderByComparator<NotificationQueueEntry> orderByComparator)
+		throws NoSuchNotificationQueueEntryException {
+
+		NotificationQueueEntry notificationQueueEntry = fetchByStatus_First(
+			status, orderByComparator);
+
+		if (notificationQueueEntry != null) {
+			return notificationQueueEntry;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchNotificationQueueEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first notification queue entry in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
+	 */
+	@Override
+	public NotificationQueueEntry fetchByStatus_First(
+		int status,
+		OrderByComparator<NotificationQueueEntry> orderByComparator) {
+
+		List<NotificationQueueEntry> list = findByStatus(
+			status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last notification queue entry in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notification queue entry
+	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
+	 */
+	@Override
+	public NotificationQueueEntry findByStatus_Last(
+			int status,
+			OrderByComparator<NotificationQueueEntry> orderByComparator)
+		throws NoSuchNotificationQueueEntryException {
+
+		NotificationQueueEntry notificationQueueEntry = fetchByStatus_Last(
+			status, orderByComparator);
+
+		if (notificationQueueEntry != null) {
+			return notificationQueueEntry;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchNotificationQueueEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last notification queue entry in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
+	 */
+	@Override
+	public NotificationQueueEntry fetchByStatus_Last(
+		int status,
+		OrderByComparator<NotificationQueueEntry> orderByComparator) {
+
+		int count = countByStatus(status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<NotificationQueueEntry> list = findByStatus(
+			status, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set where status = &#63;.
+	 *
+	 * @param notificationQueueEntryId the primary key of the current notification queue entry
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next notification queue entry
+	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
+	 */
+	@Override
+	public NotificationQueueEntry[] findByStatus_PrevAndNext(
+			long notificationQueueEntryId, int status,
+			OrderByComparator<NotificationQueueEntry> orderByComparator)
+		throws NoSuchNotificationQueueEntryException {
+
+		NotificationQueueEntry notificationQueueEntry = findByPrimaryKey(
+			notificationQueueEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			NotificationQueueEntry[] array = new NotificationQueueEntryImpl[3];
+
+			array[0] = getByStatus_PrevAndNext(
+				session, notificationQueueEntry, status, orderByComparator,
+				true);
+
+			array[1] = notificationQueueEntry;
+
+			array[2] = getByStatus_PrevAndNext(
+				session, notificationQueueEntry, status, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected NotificationQueueEntry getByStatus_PrevAndNext(
+		Session session, NotificationQueueEntry notificationQueueEntry,
+		int status, OrderByComparator<NotificationQueueEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(NotificationQueueEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						notificationQueueEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<NotificationQueueEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the notification queue entries that the user has permission to view where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the matching notification queue entries that the user has permission to view
+	 */
+	@Override
+	public List<NotificationQueueEntry> filterFindByStatus(int status) {
+		return filterFindByStatus(
+			status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the notification queue entries that the user has permission to view where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @return the range of matching notification queue entries that the user has permission to view
+	 */
+	@Override
+	public List<NotificationQueueEntry> filterFindByStatus(
+		int status, int start, int end) {
+
+		return filterFindByStatus(status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the notification queue entries that the user has permissions to view where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching notification queue entries that the user has permission to view
+	 */
+	@Override
+	public List<NotificationQueueEntry> filterFindByStatus(
+		int status, int start, int end,
+		OrderByComparator<NotificationQueueEntry> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByStatus(status, start, end, orderByComparator);
+		}
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				3 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), NotificationQueueEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_ALIAS, NotificationQueueEntryImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_TABLE, NotificationQueueEntryImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(status);
+
+			return (List<NotificationQueueEntry>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set of notification queue entries that the user has permission to view where status = &#63;.
+	 *
+	 * @param notificationQueueEntryId the primary key of the current notification queue entry
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next notification queue entry
+	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
+	 */
+	@Override
+	public NotificationQueueEntry[] filterFindByStatus_PrevAndNext(
+			long notificationQueueEntryId, int status,
+			OrderByComparator<NotificationQueueEntry> orderByComparator)
+		throws NoSuchNotificationQueueEntryException {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByStatus_PrevAndNext(
+				notificationQueueEntryId, status, orderByComparator);
+		}
+
+		NotificationQueueEntry notificationQueueEntry = findByPrimaryKey(
+			notificationQueueEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			NotificationQueueEntry[] array = new NotificationQueueEntryImpl[3];
+
+			array[0] = filterGetByStatus_PrevAndNext(
+				session, notificationQueueEntry, status, orderByComparator,
+				true);
+
+			array[1] = notificationQueueEntry;
+
+			array[2] = filterGetByStatus_PrevAndNext(
+				session, notificationQueueEntry, status, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected NotificationQueueEntry filterGetByStatus_PrevAndNext(
+		Session session, NotificationQueueEntry notificationQueueEntry,
+		int status, OrderByComparator<NotificationQueueEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), NotificationQueueEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_ALIAS, NotificationQueueEntryImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_TABLE, NotificationQueueEntryImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						notificationQueueEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<NotificationQueueEntry> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the notification queue entries where status = &#63; from the database.
+	 *
+	 * @param status the status
+	 */
+	@Override
+	public void removeByStatus(int status) {
+		for (NotificationQueueEntry notificationQueueEntry :
+				findByStatus(
+					status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(notificationQueueEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of notification queue entries where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the number of matching notification queue entries
+	 */
+	@Override
+	public int countByStatus(int status) {
+		FinderPath finderPath = _finderPathCountByStatus;
+
+		Object[] finderArgs = new Object[] {status};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(status);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of notification queue entries that the user has permission to view where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the number of matching notification queue entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByStatus(int status) {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return countByStatus(status);
+		}
+
+		StringBundler sb = new StringBundler(2);
+
+		sb.append(_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), NotificationQueueEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(status);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_STATUS_STATUS_2 =
+		"notificationQueueEntry.status = ?";
+
 	public NotificationQueueEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3494,6 +4381,24 @@ public class NotificationQueueEntryPersistenceImpl
 		_finderPathWithPaginationCountByLtSentDate = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtSentDate",
 			new String[] {Date.class.getName()}, new String[] {"sentDate"},
+			false);
+
+		_finderPathWithPaginationFindByStatus = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStatus",
+			new String[] {
+				Integer.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"status"}, true);
+
+		_finderPathWithoutPaginationFindByStatus = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStatus",
+			new String[] {Integer.class.getName()}, new String[] {"status"},
+			true);
+
+		_finderPathCountByStatus = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatus",
+			new String[] {Integer.class.getName()}, new String[] {"status"},
 			false);
 
 		_setNotificationQueueEntryUtilPersistence(this);

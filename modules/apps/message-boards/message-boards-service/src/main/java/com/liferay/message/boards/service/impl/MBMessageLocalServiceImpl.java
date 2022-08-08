@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.comment.configuration.CommentGroupServiceConfiguration;
 import com.liferay.comment.constants.CommentConstants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -57,11 +58,13 @@ import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.social.MBActivityKeys;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.message.boards.util.comparator.MessageThreadComparator;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1131,10 +1134,27 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				//String body = subject;
 
-				message = mbMessageLocalService.addDiscussionMessage(
-					null, userId, null, groupId, className, classPK, 0,
-					MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, subject,
-					subject, new ServiceContext());
+				if (CTCollectionThreadLocal.isProductionMode() ||
+					_ctEntryLocalService.hasCTEntry(
+						CTCollectionThreadLocal.getCTCollectionId(),
+						classNameId, classPK)) {
+
+					message = mbMessageLocalService.addDiscussionMessage(
+						null, userId, null, groupId, className, classPK, 0,
+						MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, subject,
+						subject, new ServiceContext());
+				}
+				else {
+					try (SafeCloseable safeCloseable =
+							CTCollectionThreadLocal.
+								setProductionModeWithSafeCloseable()) {
+
+						message = mbMessageLocalService.addDiscussionMessage(
+							null, userId, null, groupId, className, classPK, 0,
+							MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,
+							subject, subject, new ServiceContext());
+					}
+				}
 			}
 			catch (SystemException systemException) {
 				if (_log.isWarnEnabled()) {
@@ -2898,6 +2918,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

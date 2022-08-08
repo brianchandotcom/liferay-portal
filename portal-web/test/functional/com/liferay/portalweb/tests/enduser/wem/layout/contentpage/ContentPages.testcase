@@ -303,6 +303,33 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-137155. The page creator can configure content page via header ellipsis icon at edit mode."
+	@priority = "3"
+	test ConfigureViaHeaderEllipsisIcon {
+		task ("Given a page designer has content page in pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.viewPageItemPresent(pageName = "Test Content Page Name");
+		}
+
+		task ("When the page designer renames page via header ellipsis icon at edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
+
+			PortletEntry.inputName(name = "Test Page Name Edited");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the page designer can see new page name in pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.viewPageItemPresent(pageName = "Test Page Name Edited");
+		}
+	}
 	@description = "This is a test for LPS-78726. Discarding a draft will revert a content page back to its most recent published version."
 	@priority = "5"
 	test DiscardContentPageDraft {

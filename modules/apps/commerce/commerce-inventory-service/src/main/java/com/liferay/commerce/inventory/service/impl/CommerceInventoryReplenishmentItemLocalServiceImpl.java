@@ -20,6 +20,7 @@ import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryReplen
 import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryReplenishmentItemLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -28,15 +29,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem",
+	service = AopService.class
+)
 public class CommerceInventoryReplenishmentItemLocalServiceImpl
 	extends CommerceInventoryReplenishmentItemLocalServiceBaseImpl {
 
@@ -233,7 +241,7 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

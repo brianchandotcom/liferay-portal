@@ -18,19 +18,30 @@ import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryReplenishmentItemServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceInventoryReplenishmentItem"
+	},
+	service = AopService.class
+)
 public class CommerceInventoryReplenishmentItemServiceImpl
 	extends CommerceInventoryReplenishmentItemServiceBaseImpl {
 
@@ -224,11 +235,10 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 				availabilityDate, quantity, mvccVersion);
 	}
 
-	private static volatile ModelResourcePermission<CommerceInventoryWarehouse>
-		_commerceInventoryWarehouseModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceInventoryReplenishmentItemServiceImpl.class,
-				"_commerceInventoryWarehouseModelResourcePermission",
-				CommerceInventoryWarehouse.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.inventory.model.CommerceInventoryWarehouse)"
+	)
+	private ModelResourcePermission<CommerceInventoryWarehouse>
+		_commerceInventoryWarehouseModelResourcePermission;
 
 }

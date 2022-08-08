@@ -17,22 +17,33 @@ package com.liferay.commerce.inventory.service.impl;
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryWarehouseServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceInventoryWarehouse"
+	},
+	service = AopService.class
+)
 public class CommerceInventoryWarehouseServiceImpl
 	extends CommerceInventoryWarehouseServiceBaseImpl {
 
@@ -336,11 +347,10 @@ public class CommerceInventoryWarehouseServiceImpl
 				serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<CommerceInventoryWarehouse>
-		_commerceInventoryWarehouseModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceInventoryWarehouseServiceImpl.class,
-				"_commerceInventoryWarehouseModelResourcePermission",
-				CommerceInventoryWarehouse.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.inventory.model.CommerceInventoryWarehouse)"
+	)
+	private ModelResourcePermission<CommerceInventoryWarehouse>
+		_commerceInventoryWarehouseModelResourcePermission;
 
 }

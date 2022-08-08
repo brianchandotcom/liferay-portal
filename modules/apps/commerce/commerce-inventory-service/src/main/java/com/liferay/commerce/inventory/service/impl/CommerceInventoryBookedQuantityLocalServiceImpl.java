@@ -22,20 +22,27 @@ import com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalService
 import com.liferay.commerce.inventory.service.base.CommerceInventoryBookedQuantityLocalServiceBaseImpl;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity",
+	service = AopService.class
+)
 public class CommerceInventoryBookedQuantityLocalServiceImpl
 	extends CommerceInventoryBookedQuantityLocalServiceBaseImpl {
 
@@ -231,15 +238,15 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 				commerceInventoryBookedQuantity);
 	}
 
-	@BeanReference(type = CommerceInventoryAuditLocalService.class)
+	@Reference
 	private CommerceInventoryAuditLocalService
 		_commerceInventoryAuditLocalService;
 
-	@ServiceReference(type = CommerceInventoryAuditTypeRegistry.class)
+	@Reference
 	private CommerceInventoryAuditTypeRegistry
 		_commerceInventoryAuditTypeRegistry;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

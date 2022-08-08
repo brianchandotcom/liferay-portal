@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.wish.list.service.impl;
 
-import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.wish.list.exception.CommerceWishListNameException;
 import com.liferay.commerce.wish.list.exception.GuestWishListMaxAllowedException;
 import com.liferay.commerce.wish.list.internal.configuration.CommerceWishListConfiguration;
@@ -348,9 +347,6 @@ public class CommerceWishListLocalServiceImpl
 
 	@Reference
 	private CommerceWishListItemLocalService _commerceWishListItemLocalService;
-
-	@Reference
-	private DDMFormValuesHelper _ddmFormValuesHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

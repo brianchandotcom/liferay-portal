@@ -72,11 +72,11 @@ export default function TabsPanel({
 											? FRAGMENTS_DISPLAY_STYLES.LIST
 											: displayStyle
 									}
-									key={index}
-									open={
+									initialOpen={
 										index <
 										INITIAL_EXPANDED_ITEM_COLLECTIONS
 									}
+									key={index}
 								/>
 							))}
 						</ul>

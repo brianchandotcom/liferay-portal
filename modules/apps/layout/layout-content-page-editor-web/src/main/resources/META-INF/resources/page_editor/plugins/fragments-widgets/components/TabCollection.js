@@ -13,7 +13,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import Collapse from '../../../common/components/Collapse';
@@ -22,13 +22,16 @@ import TabItem from './TabItem';
 export default function TabCollection({
 	collection,
 	displayStyle,
+	initialOpen,
 	isSearchResult,
-	open,
 }) {
+	const [open, setOpen] = useState(initialOpen);
+
 	return (
 		<Collapse
 			key={collection.collectionId}
 			label={collection.label}
+			onOpen={setOpen}
 			open={isSearchResult || open}
 		>
 			{collection.collections &&
@@ -36,6 +39,7 @@ export default function TabCollection({
 					<TabCollection
 						collection={collection}
 						displayStyle={displayStyle}
+						initialOpen={false}
 						isSearchResult={isSearchResult}
 						key={index}
 					/>

@@ -30,9 +30,9 @@ export default function SearchResultsPanel({filteredTabs}) {
 				{tab.collections.map((collection, index) => (
 					<TabCollection
 						collection={collection}
+						initialOpen
 						isSearchResult
 						key={index}
-						open
 					/>
 				))}
 			</div>

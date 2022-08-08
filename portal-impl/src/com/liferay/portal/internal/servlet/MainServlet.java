@@ -341,16 +341,14 @@ public class MainServlet extends HttpServlet {
 		}
 
 		try {
-			String shieldedContainerWebXml = StreamUtil.toString(
-				servletContext.getResourceAsStream(
-					"/WEB-INF/shielded-container-web.xml"));
+			_checkShieldedContainerWebXml(
+				StreamUtil.toString(
+					servletContext.getResourceAsStream(
+						"/WEB-INF/shielded-container-web.xml")));
 
-			_checkShieldedContainerWebXml(shieldedContainerWebXml);
-
-			String webXml = StreamUtil.toString(
-				servletContext.getResourceAsStream("/WEB-INF/web.xml"));
-
-			_checkWebXmlSettings(webXml);
+			_checkWebXmlSettings(
+				StreamUtil.toString(
+					servletContext.getResourceAsStream("/WEB-INF/web.xml")));
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -623,9 +621,7 @@ public class MainServlet extends HttpServlet {
 
 		Document doc = UnsecureSAXReaderUtil.read(xml);
 
-		Element root = doc.getRootElement();
-
-		I18nServlet.setLanguageIds(root);
+		I18nServlet.setLanguageIds(doc.getRootElement());
 
 		I18nFilter.setLanguageIds(I18nServlet.getLanguageIds());
 	}

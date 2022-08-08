@@ -21,6 +21,12 @@
 #elseif (${liferayVersion.startsWith("7.2")})
 		<liferay.bom.version>7.2.1-1</liferay.bom.version>
 		<liferay.workspace.bundle.url>https://releases-cdn.liferay.com/portal/7.2.1-ga2/liferay-ce-portal-tomcat-7.2.1-ga2-20191111141448326.tar.gz</liferay.workspace.bundle.url>
+#elseif (${liferayVersion.startsWith("7.3")})
+		<liferay.bom.version>7.3.7</liferay.bom.version>
+		<liferay.workspace.bundle.url>https://releases-cdn.liferay.com/portal/7.3.7-ga8/liferay-ce-portal-tomcat-7.3.7-ga8-20210610183559721.tar.gz</liferay.workspace.bundle.url>
+#elseif (${liferayVersion.startsWith("7.4")})
+		<liferay.bom.version>7.4.3.36</liferay.bom.version>
+		<liferay.workspace.bundle.url>https://releases-cdn.liferay.com/portal/7.4.3.36-ga36/liferay-ce-portal-tomcat-7.4.3.36-ga36-20220802152002501.tar.gz</liferay.workspace.bundle.url>
 #else
 		<liferay.bom.version>${liferayVersion}</liferay.bom.version>
 #end

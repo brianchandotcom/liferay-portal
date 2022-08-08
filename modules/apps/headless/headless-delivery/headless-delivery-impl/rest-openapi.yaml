@@ -3003,6 +3003,12 @@ components:
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
+                rootMessageId:
+                    description:
+                        The ID of the Thread's body.
+                    format: int64
+                    readOnly: true
+                    type: integer
             required:
                 - headline
             type: object

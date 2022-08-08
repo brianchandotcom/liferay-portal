@@ -324,6 +324,16 @@ public class MessageBoardThreadSerDes {
 			sb.append("]");
 		}
 
+		if (messageBoardThread.getRootMessageId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"rootMessageId\": ");
+
+			sb.append(messageBoardThread.getRootMessageId());
+		}
+
 		if (messageBoardThread.getSeen() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -656,6 +666,15 @@ public class MessageBoardThreadSerDes {
 				String.valueOf(messageBoardThread.getRelatedContents()));
 		}
 
+		if (messageBoardThread.getRootMessageId() == null) {
+			map.put("rootMessageId", null);
+		}
+		else {
+			map.put(
+				"rootMessageId",
+				String.valueOf(messageBoardThread.getRootMessageId()));
+		}
+
 		if (messageBoardThread.getSeen() == null) {
 			map.put("seen", null);
 		}
@@ -893,6 +912,12 @@ public class MessageBoardThreadSerDes {
 						).toArray(
 							size -> new RelatedContent[size]
 						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "rootMessageId")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setRootMessageId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "seen")) {

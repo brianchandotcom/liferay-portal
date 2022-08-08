@@ -554,6 +554,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getNumberOfMessageBoardMessages());
 		}
 
+		if (messageBoardThread.getRootMessageId() != null) {
+			existingMessageBoardThread.setRootMessageId(
+				messageBoardThread.getRootMessageId());
+		}
+
 		if (messageBoardThread.getSeen() != null) {
 			existingMessageBoardThread.setSeen(messageBoardThread.getSeen());
 		}

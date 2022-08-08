@@ -18,7 +18,7 @@ import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemServiceUtil;
 import com.liferay.commerce.wish.list.service.persistence.CommerceWishListItemPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce wish list item remote service.
@@ -46,110 +48,31 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceWishListItemServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceWishListItemService, IdentifiableOSGiService {
+	implements AopService, CommerceWishListItemService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceWishListItemService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceWishListItemServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce wish list item local service.
-	 *
-	 * @return the commerce wish list item local service
-	 */
-	public
-		com.liferay.commerce.wish.list.service.CommerceWishListItemLocalService
-			getCommerceWishListItemLocalService() {
-
-		return commerceWishListItemLocalService;
-	}
-
-	/**
-	 * Sets the commerce wish list item local service.
-	 *
-	 * @param commerceWishListItemLocalService the commerce wish list item local service
-	 */
-	public void setCommerceWishListItemLocalService(
-		com.liferay.commerce.wish.list.service.CommerceWishListItemLocalService
-			commerceWishListItemLocalService) {
-
-		this.commerceWishListItemLocalService =
-			commerceWishListItemLocalService;
-	}
-
-	/**
-	 * Returns the commerce wish list item remote service.
-	 *
-	 * @return the commerce wish list item remote service
-	 */
-	public CommerceWishListItemService getCommerceWishListItemService() {
-		return commerceWishListItemService;
-	}
-
-	/**
-	 * Sets the commerce wish list item remote service.
-	 *
-	 * @param commerceWishListItemService the commerce wish list item remote service
-	 */
-	public void setCommerceWishListItemService(
-		CommerceWishListItemService commerceWishListItemService) {
-
-		this.commerceWishListItemService = commerceWishListItemService;
-	}
-
-	/**
-	 * Returns the commerce wish list item persistence.
-	 *
-	 * @return the commerce wish list item persistence
-	 */
-	public CommerceWishListItemPersistence
-		getCommerceWishListItemPersistence() {
-
-		return commerceWishListItemPersistence;
-	}
-
-	/**
-	 * Sets the commerce wish list item persistence.
-	 *
-	 * @param commerceWishListItemPersistence the commerce wish list item persistence
-	 */
-	public void setCommerceWishListItemPersistence(
-		CommerceWishListItemPersistence commerceWishListItemPersistence) {
-
-		this.commerceWishListItemPersistence = commerceWishListItemPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceWishListItemService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceWishListItemService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceWishListItemService = (CommerceWishListItemService)aopProxy;
+
+		_setServiceUtilService(commerceWishListItemService);
 	}
 
 	/**
@@ -212,22 +135,17 @@ public abstract class CommerceWishListItemServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.wish.list.service.CommerceWishListItemLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.commerce.wish.list.service.CommerceWishListItemLocalService
 			commerceWishListItemLocalService;
 
-	@BeanReference(type = CommerceWishListItemService.class)
 	protected CommerceWishListItemService commerceWishListItemService;
 
-	@BeanReference(type = CommerceWishListItemPersistence.class)
+	@Reference
 	protected CommerceWishListItemPersistence commerceWishListItemPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

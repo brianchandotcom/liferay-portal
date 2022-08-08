@@ -62,7 +62,7 @@ public class FileExtensionContentDashboardItemFilter
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "fileExtension");
+		return _language.get(locale, "filter-by-extension");
 	}
 
 	@Override

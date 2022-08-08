@@ -32,6 +32,8 @@ boolean isProductMenuOpen = kbAdminNavigationDisplayContext.isProductMenuOpen();
 					"items", kbAdminNavigationDisplayContext.getVerticalNavigationJSONObjects()
 				).put(
 					"parentContainerId", liferayPortletResponse.getNamespace() + "verticalBarId"
+				).put(
+					"productMenuOpen", isProductMenuOpen
 				).build()
 			%>'
 		/>

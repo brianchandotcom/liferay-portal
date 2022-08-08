@@ -21,15 +21,23 @@ import React, {useEffect, useState} from 'react';
 import NavigationPanel from './NavigationPanel';
 
 const CSS_EXPANDED = 'expanded';
-const BLANK = '';
 
-const VerticalNavigationBar = ({items, parentContainerId}) => {
+const VerticalNavigationBar = ({
+	items,
+	parentContainerId,
+	productMenuOpen: initialProductMenuOpen,
+}) => {
 	const parentContainer = document.getElementById(parentContainerId);
 
-	const currentItem = items.find((item) => item.active);
-
-	const [productMenuOpen, setProductMenuOpen] = useState(false);
-	const [activePanel, setActivePanel] = useState();
+	const [productMenuOpen, setProductMenuOpen] = useState(
+		initialProductMenuOpen
+	);
+	const [verticalBarOpen, setVerticalBarOpen] = useState(
+		!initialProductMenuOpen
+	);
+	const [activePanel, setActivePanel] = useState(
+		items.find(({active}) => active)?.key
+	);
 
 	const productMenu = Liferay.SideNavigation.instance(
 		document.querySelector('.product-menu-toggle')
@@ -37,12 +45,11 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 
 	useEffect(() => {
 		if (productMenu) {
-			setProductMenuOpen(productMenu.visible());
-
 			const productMenuOpenListener = productMenu.on(
 				'openStart.lexicon.sidenav',
 				() => {
 					setProductMenuOpen(true);
+					setVerticalBarOpen(false);
 				}
 			);
 
@@ -50,6 +57,7 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 				'closedStart.lexicon.sidenav',
 				() => {
 					setProductMenuOpen(false);
+					setVerticalBarOpen(true);
 				}
 			);
 
@@ -61,23 +69,38 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 	}, [productMenu]);
 
 	useEffect(() => {
-		setActivePanel(productMenuOpen ? BLANK : currentItem.key);
-	}, [productMenuOpen, parentContainer, currentItem]);
+		parentContainer.classList.toggle(
+			CSS_EXPANDED,
+			Boolean(verticalBarOpen && activePanel)
+		);
+	}, [activePanel, parentContainer, verticalBarOpen]);
 
-	useEffect(() => {
-		if (activePanel) {
-			parentContainer.classList.add(CSS_EXPANDED);
-		}
-		else {
-			parentContainer.classList.remove(CSS_EXPANDED);
-		}
-	}, [activePanel, parentContainer]);
+	const onActiveChange = (currentActivePanelKey) => {
+		setVerticalBarOpen(
+			(currenVerticalBarOpen) =>
+				Boolean(currentActivePanelKey) &&
+				!(
+					currentActivePanelKey === activePanel &&
+					currenVerticalBarOpen
+				)
+		);
 
-	const onActiveChange = () => {
-		setActivePanel(activePanel ? BLANK : currentItem.key);
+		if (currentActivePanelKey) {
+			const href = items.find(({key}) => key === currentActivePanelKey)
+				?.href;
 
-		if (productMenuOpen) {
-			productMenu.hide();
+			setActivePanel(currentActivePanelKey);
+
+			if (productMenuOpen) {
+				productMenu.hide();
+
+				setTimeout(() => {
+					navigate(href);
+				}, 500);
+			}
+			else {
+				navigate(href);
+			}
 		}
 	};
 
@@ -90,7 +113,7 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 	return (
 		<VerticalBar
 			absolute
-			active={activePanel}
+			active={verticalBarOpen && activePanel ? activePanel : null}
 			onActiveChange={onActiveChange}
 			position="left"
 		>
@@ -100,13 +123,6 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 						<ClayButtonWithIcon
 							data-tooltip-align="right"
 							displayType="unstyled"
-							onClick={(event) => {
-								if (item.key !== currentItem.key) {
-									event.preventDefault();
-
-									navigate(item.href);
-								}
-							}}
 							symbol={item.icon}
 							title={Liferay.Language.get(item.title)}
 						/>

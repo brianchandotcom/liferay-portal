@@ -146,26 +146,36 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 		md="5"
 	>
 		<div align="middle">
-			<c:if test="<%= selUser != null %>">
-				<c:choose>
-					<c:when test='<%= UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "portrait") %>'>
-						<label class="control-label"></label>
+			<c:choose>
+				<c:when test="<%= selUser != null %>">
+					<c:choose>
+						<c:when test='<%= UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "portrait") %>'>
+							<label class="control-label"></label>
 
-						<liferay-ui:logo-selector
-							aspectRatio="<%= 1 %>"
-							currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
-							defaultLogo="<%= selUser.getPortraitId() == 0 %>"
-							defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0, null) %>"
-							logoDisplaySelector=".user-logo"
-							preserveRatio="<%= true %>"
-							tempImageFileName="<%= String.valueOf(selUser.getUserId()) %>"
-						/>
-					</c:when>
-					<c:otherwise>
-						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="portrait" />" src="<%= selUser.getPortraitURL(themeDisplay) %>" />
-					</c:otherwise>
-				</c:choose>
-			</c:if>
+							<liferay-ui:logo-selector
+								aspectRatio="<%= 1 %>"
+								currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
+								defaultLogo="<%= selUser.getPortraitId() == 0 %>"
+								defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0, null) %>"
+								logoDisplaySelector=".user-logo"
+								preserveRatio="<%= true %>"
+								tempImageFileName="<%= String.valueOf(selUser.getUserId()) %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="portrait" />" src="<%= selUser.getPortraitURL(themeDisplay) %>" />
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:logo-selector
+						currentLogoURL='<%= themeDisplay.getPathImage() + "/user_portrait?img_id=0" %>'
+						defaultLogo="<%= true %>"
+						defaultLogoURL='<%= themeDisplay.getPathImage() + "/user_portrait?img_id=0" %>'
+						tempImageFileName="0"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</clay:col>
 </clay:row>

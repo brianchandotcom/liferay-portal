@@ -9,6 +9,11 @@
  * distribution rights of the Software.
  */
 
-export default interface PRMFormikPageProps {
+import {FormikHelpers} from 'formik';
+
+export default interface PRMFormikPageProps<T> {
+	onCancel: () => void;
+	onContinue?: (formikHelpers: FormikHelpers<T>) => void;
+	onSaveAsDraft?: (values: T, formikHelpers: FormikHelpers<T>) => void;
 	validationSchema?: any | (() => any);
 }

@@ -513,6 +513,20 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			new ArrayList<Website>(), new ArrayList<AnnouncementsDelivery>(),
 			sendEmail, serviceContext);
 
+		byte[] portraitBytes = null;
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+			portraitBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+
+		if (portraitBytes != null) {
+			user = userLocalService.updatePortrait(user.getUserId(), portraitBytes);
+		}
+
 		user.setComments(comments);
 
 		return userLocalService.updateUser(user);

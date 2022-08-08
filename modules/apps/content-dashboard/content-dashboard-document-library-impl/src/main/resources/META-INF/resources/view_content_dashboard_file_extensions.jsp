@@ -20,12 +20,9 @@
 ContentDashboardFileExtensionItemSelectorViewDisplayContext contentDashboardFileExtensionItemSelectorViewDisplayContext = (ContentDashboardFileExtensionItemSelectorViewDisplayContext)request.getAttribute(ContentDashboardFileExtensionItemSelectorViewDisplayContext.class.getName());
 %>
 
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/tree.css") %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
-
 <section class="h-100">
-	<span aria-hidden="true" class="loading-animation mt-0 tree-filter-loader"></span>
+	<span aria-hidden="true" class="loading-animation mt-0 tree-filter-loader"
+		style="top: 50%; transform: translateY(-50%);"></span>
 
 	<react:component module="js/components/SelectFileExtensionWrapper"
 		props="<%= contentDashboardFileExtensionItemSelectorViewDisplayContext.getData() %>" />

@@ -18,6 +18,8 @@ import React from 'react';
 import TreeFilter from './TreeFilter/TreeFilter';
 import {nodeTreeArrayMapper} from './TreeFilter/treeUtils';
 
+import '../../css/tree.scss';
+
 const SelectFileExtension = ({
 	fileExtensionGroups,
 	itemSelectorSaveEvent,

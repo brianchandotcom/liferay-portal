@@ -531,6 +531,10 @@ public class UIItemsBuilder {
 
 		String mvcActionCommandName = "/document_library/edit_file_entry";
 
+		if (_fileShortcut != null) {
+			mvcActionCommandName = "/document_library/edit_file_shortcut";
+		}
+
 		PortletURL portletURL = _getDeleteActionURL(mvcActionCommandName, cmd);
 
 		if (_fileShortcut == null) {

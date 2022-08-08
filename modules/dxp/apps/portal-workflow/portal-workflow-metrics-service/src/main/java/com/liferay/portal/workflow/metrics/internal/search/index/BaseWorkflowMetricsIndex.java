@@ -29,9 +29,6 @@ import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Inácio Nery
@@ -40,9 +37,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Override
 	public void createIndex(long companyId) throws PortalException {
-		if ((searchEngineAdapter == null) ||
-			_hasIndex(getIndexName(companyId))) {
-
+		if (_hasIndex(getIndexName(companyId))) {
 			return;
 		}
 
@@ -51,9 +46,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Override
 	public void removeIndex(long companyId) throws PortalException {
-		if ((searchEngineAdapter == null) ||
-			!_hasIndex(getIndexName(companyId))) {
-
+		if (!_hasIndex(getIndexName(companyId))) {
 			return;
 		}
 
@@ -61,12 +54,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 			new DeleteIndexRequest(getIndexName(companyId)));
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(search.engine.impl=Elasticsearch)"
-	)
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	protected volatile SearchEngineAdapter searchEngineAdapter;
 
 	private String _createIndex(String indexName) {

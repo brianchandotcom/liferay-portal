@@ -40,10 +40,6 @@ public class NodeWorkflowMetricsIndexerImpl
 
 	@Override
 	public Document addNode(AddNodeRequest addNodeRequest) {
-		if (searchEngineAdapter == null) {
-			return null;
-		}
-
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
 		Document document = documentBuilder.setLong(

@@ -28,13 +28,8 @@ import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetrics
 
 import java.io.Serializable;
 
-import java.util.Objects;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Inácio Nery
@@ -43,10 +38,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class WorkflowMetricsIndexCreator {
 
 	public void createIndex(Company company) throws PortalException {
-		if (Objects.isNull(_searchEngineAdapter)) {
-			return;
-		}
-
 		_instanceWorkflowMetricsIndex.createIndex(company.getCompanyId());
 		_nodeWorkflowMetricsIndex.createIndex(company.getCompanyId());
 		_processWorkflowMetricsIndex.createIndex(company.getCompanyId());
@@ -96,10 +87,6 @@ public class WorkflowMetricsIndexCreator {
 	}
 
 	public void removeIndex(Company company) throws PortalException {
-		if (Objects.isNull(_searchEngineAdapter)) {
-			return;
-		}
-
 		_instanceWorkflowMetricsIndex.removeIndex(company.getCompanyId());
 		_nodeWorkflowMetricsIndex.removeIndex(company.getCompanyId());
 		_processWorkflowMetricsIndex.removeIndex(company.getCompanyId());
@@ -122,12 +109,7 @@ public class WorkflowMetricsIndexCreator {
 	@Reference(target = "(workflow.metrics.index.entity.name=process)")
 	private WorkflowMetricsIndex _processWorkflowMetricsIndex;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(search.engine.impl=Elasticsearch)"
-	)
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private volatile SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference(

@@ -75,12 +75,7 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 		workflowMetricsSLAProcessMessageListener.receive(message);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(search.engine.impl=Elasticsearch)"
-	)
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	protected volatile SearchEngineAdapter searchEngineAdapter;
 
 	@Reference(
@@ -92,8 +87,7 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 		workflowMetricsSLAProcessMessageListener;
 
 	private void _creatDefaultDocuments(long companyId) {
-		if ((searchEngineAdapter == null) ||
-			!_hasIndex(
+		if (!_hasIndex(
 				_processWorkflowMetricsIndexNameBuilder.getIndexName(
 					companyId))) {
 
@@ -164,10 +158,6 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 	}
 
 	private boolean _hasIndex(String indexName) {
-		if (searchEngineAdapter == null) {
-			return false;
-		}
-
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest(indexName);
 

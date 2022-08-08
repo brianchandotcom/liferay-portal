@@ -52,9 +52,6 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Inácio Nery
@@ -62,10 +59,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public abstract class BaseWorkflowMetricsIndexer {
 
 	public void addDocuments(List<Document> documents) {
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
 		documents.forEach(
@@ -105,10 +98,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 	}
 
 	protected void addDocument(Document document) {
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			getIndexName(document.getLong("companyId")), document);
 
@@ -167,10 +156,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 	protected void updateDocuments(
 		long companyId, Map<String, Object> fieldsMap, Query filterQuery) {
-
-		if (searchEngineAdapter == null) {
-			return;
-		}
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -244,22 +229,13 @@ public abstract class BaseWorkflowMetricsIndexer {
 	@Reference
 	protected Scripts scripts;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(search.engine.impl=Elasticsearch)"
-	)
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	protected volatile SearchEngineAdapter searchEngineAdapter;
 
 	@Reference
 	protected WorkflowMetricsPortalExecutor workflowMetricsPortalExecutor;
 
 	private void _updateDocument(Document document) {
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
 			getIndexName(document.getLong("companyId")),
 			document.getString("uid"), document);

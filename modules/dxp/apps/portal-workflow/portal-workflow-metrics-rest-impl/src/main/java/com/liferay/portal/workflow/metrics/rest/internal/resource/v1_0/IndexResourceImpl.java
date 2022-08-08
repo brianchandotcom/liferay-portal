@@ -243,12 +243,7 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 	@Reference
 	private Language _language;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(search.engine.impl=Elasticsearch)"
-	)
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private volatile SearchEngineAdapter _searchEngineAdapter;
 
 }

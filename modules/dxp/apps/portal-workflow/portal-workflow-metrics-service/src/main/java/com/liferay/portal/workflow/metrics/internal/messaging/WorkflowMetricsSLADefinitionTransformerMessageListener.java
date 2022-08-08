@@ -50,9 +50,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Rafael Praxedes
@@ -91,20 +88,12 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		if (_searchEngineAdapter == null) {
-			return;
-		}
-
 		_companyLocalService.forEachCompanyId(
 			companyId -> _transform(companyId));
 	}
 
 	@Override
 	protected void doReceive(Message message, long companyId) {
-		if (_searchEngineAdapter == null) {
-			return;
-		}
-
 		_transform(companyId);
 	}
 
@@ -194,12 +183,7 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(search.engine.impl=Elasticsearch)"
-	)
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private volatile SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference

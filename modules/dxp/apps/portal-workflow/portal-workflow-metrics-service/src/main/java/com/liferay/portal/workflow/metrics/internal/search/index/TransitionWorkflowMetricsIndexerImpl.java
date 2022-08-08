@@ -33,10 +33,6 @@ public class TransitionWorkflowMetricsIndexerImpl
 
 	@Override
 	public Document addTransition(AddTransitionRequest addTransitionRequest) {
-		if (searchEngineAdapter == null) {
-			return null;
-		}
-
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
 		Document document = documentBuilder.setLong(

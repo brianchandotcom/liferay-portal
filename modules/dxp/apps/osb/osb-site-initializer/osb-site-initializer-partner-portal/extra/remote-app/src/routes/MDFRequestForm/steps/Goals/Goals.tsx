@@ -10,24 +10,29 @@
  */
 
 import ClayButton from '@clayui/button';
+import {useFormikContext} from 'formik';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
+import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 
-interface IProps {
-	onCancel?(event: React.MouseEvent<HTMLButtonElement>): void;
-	onContinue?(event: React.MouseEvent<HTMLButtonElement>): void;
-}
-
-const Goals = ({onCancel, onContinue}: IProps & PRMFormikPageProps) => {
+const Goals = ({
+	onCancel,
+	onContinue,
+	onSaveAsDraft,
+}: PRMFormikPageProps<MDFRequest>) => {
 	const {
 		additionalOptionsEntries,
 		companiesEntries,
 		fieldEntries,
 	} = useDynamicFieldEntries();
+
+	const {isSubmitting, isValid, values, ...formikHelpers} = useFormikContext<
+		MDFRequest
+	>();
 
 	return (
 		<PRMForm name="Goals" title="Campaign Information">
@@ -111,8 +116,9 @@ const Goals = ({onCancel, onContinue}: IProps & PRMFormikPageProps) => {
 				<div className="mr-auto pl-0 py-3">
 					<ClayButton
 						className="pl-0"
+						disabled={isSubmitting}
 						displayType={null}
-						type="submit"
+						onClick={() => onSaveAsDraft?.(values, formikHelpers)}
 					>
 						Save as Draft
 					</ClayButton>
@@ -127,7 +133,12 @@ const Goals = ({onCancel, onContinue}: IProps & PRMFormikPageProps) => {
 						Cancel
 					</ClayButton>
 
-					<ClayButton onClick={onContinue}>Continue</ClayButton>
+					<ClayButton
+						disabled={!isValid}
+						onClick={() => onContinue?.(formikHelpers)}
+					>
+						Continue
+					</ClayButton>
 				</div>
 			</PRMForm.Footer>
 		</PRMForm>

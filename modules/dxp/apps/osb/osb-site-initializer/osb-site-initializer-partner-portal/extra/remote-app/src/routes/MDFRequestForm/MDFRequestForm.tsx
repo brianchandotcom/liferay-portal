@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {FormikHelpers, setNestedObjectValues} from 'formik';
 import {useState} from 'react';
 
 import PRMFormik from '../../common/components/PRMFormik';
@@ -17,6 +18,7 @@ import MDFRequest from '../../common/interfaces/mdfRequest';
 import {StepType} from './enums/stepType';
 import Goals from './steps/Goals';
 import yup from './steps/Goals/schema/yup';
+import isObjectEmpty from './utils/isObjectEmpty';
 
 const initialFormValues: MDFRequest = {
 	activities: [],
@@ -37,15 +39,47 @@ type StepComponent = {
 const MDFRequestForm = () => {
 	const [step, setStep] = useState<StepType>(StepType.GOALS);
 
-	const onSubmit = (value: MDFRequest) => {
+	const onSubmit = (
+		value: MDFRequest,
+		formikHelpers: FormikHelpers<MDFRequest>
+	) => {
 		// eslint-disable-next-line no-console
 		console.log(value);
+		formikHelpers.setSubmitting(false);
+	};
+
+	const onSaveAsDraft = (
+		value: MDFRequest,
+		formikHelpers: FormikHelpers<MDFRequest>
+	) => {
+		// eslint-disable-next-line no-console
+		console.log(value);
+		formikHelpers.setSubmitting(true);
+	};
+
+	const onContinue = async (formikHelpers: FormikHelpers<MDFRequest>) => {
+		const validationErrors = await formikHelpers.validateForm();
+
+		if (isObjectEmpty(validationErrors)) {
+			setStep(StepType.ACTIVITIES);
+
+			return;
+		}
+
+		formikHelpers.setTouched(setNestedObjectValues(validationErrors, true));
+	};
+
+	const onCancel = () => {
+		// eslint-disable-next-line no-console
+		console.log('Cancel!');
 	};
 
 	const StepFormComponent: StepComponent = {
 		[StepType.GOALS]: (
 			<Goals
-				onContinue={() => setStep(StepType.ACTIVITIES)}
+				onCancel={onCancel}
+				onContinue={onContinue}
+				onSaveAsDraft={onSaveAsDraft}
 				validationSchema={yup}
 			/>
 		),

@@ -23,8 +23,9 @@ definition {
 	}
 
 	@description = "Any logs that would appear in specifically company A should never appear in the logs of company B"
-	@priority = "3"
+	@priority = "5"
 	test AssertCompanyLogsIsolated {
+		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "CompanyLogging#AssertCompanyLogsIsolated";
 
@@ -136,6 +137,7 @@ definition {
 	@description = "A company admin should only be able to see the logs from the company they are an admin of"
 	@priority = "5"
 	test GetCompanyAdminLogs {
+		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "CompanyLogging#GetCompanyAdminLogs";
 

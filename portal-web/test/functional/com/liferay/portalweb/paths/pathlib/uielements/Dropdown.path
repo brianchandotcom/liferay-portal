@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_TOGGLE_BUTTON_WITH_LABEL</td>
+	<td>//label[normalize-space()='${key_fieldLabel}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_MESSAGE_DROPDOWN</td>
 	<td>//div[contains(@class,'empty-result-message')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

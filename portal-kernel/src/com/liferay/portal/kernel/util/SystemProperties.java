@@ -100,9 +100,7 @@ public class SystemProperties {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				try (InputStream inputStream = url.openStream()) {
-					_load(inputStream, properties);
-				}
+				_load(url, properties);
 
 				if (urls != null) {
 					urls.add(url);
@@ -122,9 +120,7 @@ public class SystemProperties {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				try (InputStream inputStream = url.openStream()) {
-					_load(inputStream, properties);
-				}
+				_load(url, properties);
 
 				if (urls != null) {
 					urls.add(url);
@@ -194,10 +190,11 @@ public class SystemProperties {
 		_properties.put(key, value);
 	}
 
-	private static void _load(InputStream inputStream, Properties properties)
+	private static void _load(URL url, Properties properties)
 		throws IOException {
 
-		try (InputStreamReader inputStreamReader = new InputStreamReader(
+		try (InputStream inputStream = url.openStream();
+			InputStreamReader inputStreamReader = new InputStreamReader(
 				inputStream);
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(inputStreamReader)) {

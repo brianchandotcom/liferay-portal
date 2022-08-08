@@ -9,7 +9,7 @@ definition {
 	macro clickAdd {
 		Button.click(button = "Add");
 
-		if (IsElementPresent(locator1 = "Home#LOADING_ANIMATION")) {
+		if (IsVisible(locator1 = "Home#LOADING_ANIMATION")) {
 			SelectFrameTop();
 		}
 		else {

@@ -19,13 +19,16 @@ import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
+import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.service.base.CommerceDiscountRuleLocalServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -58,7 +61,7 @@ public class CommerceDiscountRuleLocalServiceImpl
 
 		// Commerce discount rule
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		validate(type);
 
@@ -240,7 +243,7 @@ public class CommerceDiscountRuleLocalServiceImpl
 		throws PortalException {
 
 		CommerceDiscount commerceDiscount =
-			commerceDiscountLocalService.getCommerceDiscount(
+			_commerceDiscountLocalService.getCommerceDiscount(
 				commerceDiscountId);
 
 		Indexer<CommerceDiscount> indexer =
@@ -258,7 +261,13 @@ public class CommerceDiscountRuleLocalServiceImpl
 		}
 	}
 
+	@BeanReference(type = CommerceDiscountLocalService.class)
+	private CommerceDiscountLocalService _commerceDiscountLocalService;
+
 	@ServiceReference(type = CommerceDiscountRuleTypeRegistry.class)
 	private CommerceDiscountRuleTypeRegistry _commerceDiscountRuleTypeRegistry;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

@@ -35,6 +35,11 @@ import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupR
 import com.liferay.commerce.discount.model.CommerceDiscountOrderTypeRelTable;
 import com.liferay.commerce.discount.model.CommerceDiscountRelTable;
 import com.liferay.commerce.discount.model.CommerceDiscountTable;
+import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelLocalService;
+import com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelLocalService;
+import com.liferay.commerce.discount.service.CommerceDiscountRelLocalService;
+import com.liferay.commerce.discount.service.CommerceDiscountRuleLocalService;
+import com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService;
 import com.liferay.commerce.discount.service.base.CommerceDiscountLocalServiceBaseImpl;
 import com.liferay.commerce.discount.target.CommerceDiscountTarget;
 import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
@@ -51,6 +56,7 @@ import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -69,7 +75,10 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
@@ -282,7 +291,7 @@ public class CommerceDiscountLocalServiceImpl
 
 		// Commerce discount
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		_validate(
 			0, serviceContext.getCompanyId(), title, target, useCouponCode,
@@ -367,7 +376,7 @@ public class CommerceDiscountLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(
+		_resourceLocalService.addModelResources(
 			commerceDiscount, serviceContext);
 
 		// Workflow
@@ -565,29 +574,29 @@ public class CommerceDiscountLocalServiceImpl
 
 		// Commerce discount usage entries
 
-		commerceDiscountUsageEntryLocalService.
+		_commerceDiscountUsageEntryLocalService.
 			deleteCommerceUsageEntryByDiscountId(
 				commerceDiscount.getCommerceDiscountId());
 
 		// Commerce discount rels
 
-		commerceDiscountRelLocalService.deleteCommerceDiscountRels(
+		_commerceDiscountRelLocalService.deleteCommerceDiscountRels(
 			commerceDiscount.getCommerceDiscountId());
 
 		// Commerce discount rules
 
-		commerceDiscountRuleLocalService.deleteCommerceDiscountRules(
+		_commerceDiscountRuleLocalService.deleteCommerceDiscountRules(
 			commerceDiscount.getCommerceDiscountId());
 
 		// Commerce discount account groups rels
 
-		commerceDiscountCommerceAccountGroupRelLocalService.
+		_commerceDiscountCommerceAccountGroupRelLocalService.
 			deleteCommerceDiscountCommerceAccountGroupRelsByCommerceDiscountId(
 				commerceDiscount.getCommerceDiscountId());
 
 		// Commerce discount order type rels
 
-		commerceDiscountOrderTypeRelLocalService.
+		_commerceDiscountOrderTypeRelLocalService.
 			deleteCommerceDiscountOrderTypeRels(
 				commerceDiscount.getCommerceDiscountId());
 
@@ -597,7 +606,7 @@ public class CommerceDiscountLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			commerceDiscount.getCompanyId(), CommerceDiscount.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			commerceDiscount.getCommerceDiscountId());
@@ -1155,7 +1164,7 @@ public class CommerceDiscountLocalServiceImpl
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		CommerceDiscount commerceDiscount =
 			commerceDiscountPersistence.findByPrimaryKey(commerceDiscountId);
@@ -1233,7 +1242,7 @@ public class CommerceDiscountLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		CommerceDiscount commerceDiscount =
 			commerceDiscountPersistence.findByPrimaryKey(commerceDiscountId);
@@ -1335,7 +1344,7 @@ public class CommerceDiscountLocalServiceImpl
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 		Date date = new Date();
 
 		CommerceDiscount commerceDiscount =
@@ -1756,7 +1765,7 @@ public class CommerceDiscountLocalServiceImpl
 					CommerceDiscountTable.INSTANCE.commerceDiscountId
 				).and(
 					CommerceChannelRelTable.INSTANCE.classNameId.eq(
-						classNameLocalService.getClassNameId(
+						_classNameLocalService.getClassNameId(
 							CommerceDiscount.class.getName()))
 				));
 			predicate = predicate.and(
@@ -1770,7 +1779,7 @@ public class CommerceDiscountLocalServiceImpl
 					CommerceDiscountTable.INSTANCE.commerceDiscountId
 				).and(
 					CommerceChannelRelTable.INSTANCE.classNameId.eq(
-						classNameLocalService.getClassNameId(
+						_classNameLocalService.getClassNameId(
 							CommerceDiscount.class.getName()))
 				));
 			predicate = predicate.and(
@@ -1820,7 +1829,7 @@ public class CommerceDiscountLocalServiceImpl
 			CommerceDiscountRelTable.INSTANCE.classPK.eq(cpDefinitionId)
 		).and(
 			CommerceDiscountRelTable.INSTANCE.classNameId.eq(
-				classNameLocalService.getClassNameId(
+				_classNameLocalService.getClassNameId(
 					CPDefinition.class.getName()))
 		);
 
@@ -1831,7 +1840,7 @@ public class CommerceDiscountLocalServiceImpl
 				CommerceDiscountRelTable.INSTANCE.classPK.eq(cpInstanceId)
 			).and(
 				CommerceDiscountRelTable.INSTANCE.classNameId.eq(
-					classNameLocalService.getClassNameId(
+					_classNameLocalService.getClassNameId(
 						CPInstance.class.getName()))
 			));
 
@@ -1856,7 +1865,7 @@ public class CommerceDiscountLocalServiceImpl
 						))
 				).and(
 					CommerceDiscountRelTable.INSTANCE.classNameId.eq(
-						classNameLocalService.getClassNameId(
+						_classNameLocalService.getClassNameId(
 							AssetCategory.class.getName()))
 				));
 		}
@@ -1884,7 +1893,7 @@ public class CommerceDiscountLocalServiceImpl
 						))
 				).and(
 					CommerceDiscountRelTable.INSTANCE.classNameId.eq(
-						classNameLocalService.getClassNameId(
+						_classNameLocalService.getClassNameId(
 							CommercePricingClass.class.getName()))
 				));
 		}
@@ -1957,14 +1966,43 @@ public class CommerceDiscountLocalServiceImpl
 	@ServiceReference(type = AssetEntryLocalService.class)
 	private AssetEntryLocalService _assetEntryLocalService;
 
+	@ServiceReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(
+		type = CommerceDiscountCommerceAccountGroupRelLocalService.class
+	)
+	private CommerceDiscountCommerceAccountGroupRelLocalService
+		_commerceDiscountCommerceAccountGroupRelLocalService;
+
+	@BeanReference(type = CommerceDiscountOrderTypeRelLocalService.class)
+	private CommerceDiscountOrderTypeRelLocalService
+		_commerceDiscountOrderTypeRelLocalService;
+
+	@BeanReference(type = CommerceDiscountRelLocalService.class)
+	private CommerceDiscountRelLocalService _commerceDiscountRelLocalService;
+
+	@BeanReference(type = CommerceDiscountRuleLocalService.class)
+	private CommerceDiscountRuleLocalService _commerceDiscountRuleLocalService;
+
 	@ServiceReference(type = CommerceDiscountTargetRegistry.class)
 	private CommerceDiscountTargetRegistry _commerceDiscountTargetRegistry;
+
+	@BeanReference(type = CommerceDiscountUsageEntryLocalService.class)
+	private CommerceDiscountUsageEntryLocalService
+		_commerceDiscountUsageEntryLocalService;
 
 	@ServiceReference(type = CommercePricingClassLocalService.class)
 	private CommercePricingClassLocalService _commercePricingClassLocalService;
 
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@ServiceReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 	@ServiceReference(type = WorkflowInstanceLinkLocalService.class)
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

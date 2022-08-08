@@ -17,10 +17,15 @@ package com.liferay.commerce.discount.service.impl;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountUsageEntry;
+import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.service.base.CommerceDiscountUsageEntryLocalServiceBaseImpl;
+import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Objects;
 
@@ -38,13 +43,13 @@ public class CommerceDiscountUsageEntryLocalServiceImpl
 
 		long userId = serviceContext.getUserId();
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		if (user.isDefaultUser()) {
 			userId = 0;
 		}
 
-		long commerceDiscountUsageEntryId = counterLocalService.increment();
+		long commerceDiscountUsageEntryId = _counterLocalService.increment();
 
 		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
 			commerceDiscountUsageEntryPersistence.create(
@@ -117,7 +122,7 @@ public class CommerceDiscountUsageEntryLocalServiceImpl
 		throws PortalException {
 
 		CommerceDiscount commerceDiscount =
-			commerceDiscountLocalService.getCommerceDiscount(
+			_commerceDiscountLocalService.getCommerceDiscount(
 				commerceDiscountId);
 
 		if (Objects.equals(
@@ -181,5 +186,14 @@ public class CommerceDiscountUsageEntryLocalServiceImpl
 
 		return true;
 	}
+
+	@BeanReference(type = CommerceDiscountLocalService.class)
+	private CommerceDiscountLocalService _commerceDiscountLocalService;
+
+	@ServiceReference(type = CounterLocalService.class)
+	private CounterLocalService _counterLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

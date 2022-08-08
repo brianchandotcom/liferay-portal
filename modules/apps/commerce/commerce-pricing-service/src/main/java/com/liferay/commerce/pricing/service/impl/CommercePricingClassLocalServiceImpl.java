@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
@@ -413,7 +413,7 @@ public class CommercePricingClassLocalServiceImpl
 				commercePricingClasses = null;
 
 				Indexer<CommercePricingClass> indexer =
-					IndexerRegistryUtil.getIndexer(CommercePricingClass.class);
+					_indexerRegistry.getIndexer(CommercePricingClass.class);
 
 				long companyId = GetterUtil.getLong(
 					document.get(Field.COMPANY_ID));
@@ -433,7 +433,7 @@ public class CommercePricingClassLocalServiceImpl
 		throws PortalException {
 
 		Indexer<CommercePricingClass> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommercePricingClass.class);
+			_indexerRegistry.nullSafeGetIndexer(CommercePricingClass.class);
 
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
@@ -473,6 +473,9 @@ public class CommercePricingClassLocalServiceImpl
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

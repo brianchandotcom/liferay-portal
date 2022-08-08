@@ -22,7 +22,7 @@ import com.liferay.commerce.notification.util.comparator.CommerceNotificationAtt
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,9 +45,17 @@ import java.util.List;
 
 import javax.mail.internet.InternetAddress;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.notification.model.CommerceNotificationQueueEntry",
+	service = AopService.class
+)
 public class CommerceNotificationQueueEntryLocalServiceImpl
 	extends CommerceNotificationQueueEntryLocalServiceBaseImpl {
 
@@ -351,17 +358,17 @@ public class CommerceNotificationQueueEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceNotificationQueueEntryLocalServiceImpl.class);
 
-	@ServiceReference(type = ClassNameLocalService.class)
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@BeanReference(type = CommerceNotificationAttachmentLocalService.class)
+	@Reference
 	private CommerceNotificationAttachmentLocalService
 		_commerceNotificationAttachmentLocalService;
 
-	@ServiceReference(type = MailService.class)
+	@Reference
 	private MailService _mailService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

@@ -197,8 +197,10 @@ public class SystemProperties {
 	private static void _load(InputStream inputStream, Properties properties)
 		throws IOException {
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new InputStreamReader(inputStream))) {
+		try (InputStreamReader inputStreamReader = new InputStreamReader(
+				inputStream);
+			UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(inputStreamReader)) {
 
 			String line = null;
 			StringBundler sb = new StringBundler();

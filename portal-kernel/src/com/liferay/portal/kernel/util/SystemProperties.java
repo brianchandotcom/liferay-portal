@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -205,9 +206,9 @@ public class SystemProperties {
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				line = line.trim();
 
-				// Comment line, Empty line or "\"
+				// Empty line, Comment line or "\"
 
-				if (line.startsWith(StringPool.POUND) || line.isEmpty() ||
+				if (line.isEmpty() || (line.charAt(0) == CharPool.POUND) ||
 					line.equals(StringPool.BACK_SLASH)) {
 
 					continue;

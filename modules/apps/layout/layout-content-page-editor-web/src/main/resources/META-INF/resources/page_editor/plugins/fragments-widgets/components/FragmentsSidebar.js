@@ -13,10 +13,18 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import React, {useMemo, useState} from 'react';
+import {debounce} from 'frontend-js-web';
+import React, {
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
+import {config} from '../../../app/config/index';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import {useWidgets} from '../../../app/contexts/WidgetsContext';
 import SearchForm from '../../../common/components/SearchForm';
@@ -131,6 +139,7 @@ const normalizeFragmentEntry = (fragmentEntry) => {
 export default function FragmentsSidebar() {
 	const fragments = useSelector((state) => state.fragments);
 	const widgets = useWidgets();
+	const wrapperElementRef = useRef(null);
 
 	const [activeTabId, setActiveTabId] = useState(COLLECTION_IDS.fragments);
 	const [displayStyle, setDisplayStyle] = useState(
@@ -139,6 +148,8 @@ export default function FragmentsSidebar() {
 	);
 
 	const [searchValue, setSearchValue] = useState('');
+
+	const scrollPositionSessionKey = `${config.portletNamespace}_fragments-sidebar_tab_${activeTabId}_scroll-position`;
 
 	const tabs = useMemo(
 		() => [
@@ -183,8 +194,58 @@ export default function FragmentsSidebar() {
 	const displayStyleButtonDisabled =
 		searchValue || activeTabId === COLLECTION_IDS.widgets;
 
+	useLayoutEffect(() => {
+		const wrapperElement = wrapperElementRef.current;
+
+		if (!wrapperElement) {
+			return;
+		}
+
+		const initialScrollPosition = parseInt(
+			window.sessionStorage.getItem(scrollPositionSessionKey),
+			10
+		);
+
+		if (!isNaN(initialScrollPosition)) {
+			wrapperElement.scrollBy({
+				behavior: 'auto',
+				left: 0,
+				top: initialScrollPosition,
+			});
+		}
+
+		// LPS-157780 We do not want to depend on scrollPositionSessionKey here
+		// because we only want to apply the persisted scroll when the panel
+		// is initially opened.
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		const wrapperElement = wrapperElementRef.current;
+
+		if (!wrapperElement) {
+			return;
+		}
+
+		const handleScroll = debounce(() => {
+			window.sessionStorage.setItem(
+				scrollPositionSessionKey,
+				wrapperElement.scrollTop
+			);
+		}, 300);
+
+		wrapperElement.addEventListener('scroll', handleScroll, {
+			passive: true,
+		});
+
+		return () => {
+			wrapperElement.removeEventListener('scroll', handleScroll);
+		};
+	}, [scrollPositionSessionKey]);
+
 	return (
-		<>
+		<div className="h-100 overflow-auto" ref={wrapperElementRef}>
 			<SidebarPanelHeader>
 				{Liferay.Language.get('fragments-and-widgets')}
 			</SidebarPanelHeader>
@@ -242,6 +303,6 @@ export default function FragmentsSidebar() {
 					/>
 				)}
 			</SidebarPanelContent>
-		</>
+		</div>
 	);
 }

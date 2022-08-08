@@ -21,4 +21,7 @@ public interface JaxRsResourceRegistry {
 
 	public Object getPropertyValue(String className, String propertyName);
 
+	public Object getPropertyValueByDTO(
+		String dtoClassName, String propertyName);
+
 }

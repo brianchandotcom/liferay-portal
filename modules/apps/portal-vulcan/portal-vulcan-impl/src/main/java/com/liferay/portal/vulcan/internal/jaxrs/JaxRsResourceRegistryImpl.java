@@ -50,6 +50,22 @@ public class JaxRsResourceRegistryImpl implements JaxRsResourceRegistry {
 		return object;
 	}
 
+	@Override
+	public Object getPropertyValueByDTO(
+		String dtoClassName, String propertyName) {
+
+		Object object = null;
+
+		Map<String, Object> properties = _jaxRsModelProperties.get(
+			dtoClassName);
+
+		if (properties != null) {
+			object = properties.get(propertyName);
+		}
+
+		return object;
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
@@ -69,6 +85,8 @@ public class JaxRsResourceRegistryImpl implements JaxRsResourceRegistry {
 		_serviceTracker.close();
 	}
 
+	private final Map<String, Map<String, Object>> _jaxRsModelProperties =
+		new HashMap<>();
 	private final Map<String, Map<String, Object>> _jaxRsResourceProperties =
 		new HashMap<>();
 	private ServiceTracker<?, ?> _serviceTracker;
@@ -89,6 +107,10 @@ public class JaxRsResourceRegistryImpl implements JaxRsResourceRegistry {
 
 			_jaxRsResourceProperties.put(_getClassName(object), properties);
 
+			_jaxRsModelProperties.put(
+				(String)serviceReference.getProperty("entity.class.name"),
+				properties);
+
 			return object;
 		}
 
@@ -102,6 +124,9 @@ public class JaxRsResourceRegistryImpl implements JaxRsResourceRegistry {
 			ServiceReference<Object> serviceReference, Object object) {
 
 			_jaxRsResourceProperties.remove(_getClassName(object));
+
+			_jaxRsModelProperties.remove(
+				(String)serviceReference.getProperty("entity.class.name"));
 		}
 
 		private JaxRsResourceTrackerCustomizer(BundleContext bundleContext) {

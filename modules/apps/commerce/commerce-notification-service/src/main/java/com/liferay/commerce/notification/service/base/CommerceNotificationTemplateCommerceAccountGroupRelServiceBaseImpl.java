@@ -18,7 +18,7 @@ import com.liferay.commerce.notification.model.CommerceNotificationTemplateComme
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelService;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelServiceUtil;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplateCommerceAccountGroupRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce notification template commerce account group rel remote service.
@@ -47,7 +49,8 @@ import javax.sql.DataSource;
 public abstract class
 	CommerceNotificationTemplateCommerceAccountGroupRelServiceBaseImpl
 		extends BaseServiceImpl
-		implements CommerceNotificationTemplateCommerceAccountGroupRelService,
+		implements AopService,
+				   CommerceNotificationTemplateCommerceAccountGroupRelService,
 				   IdentifiableOSGiService {
 
 	/*
@@ -55,113 +58,27 @@ public abstract class
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceNotificationTemplateCommerceAccountGroupRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceNotificationTemplateCommerceAccountGroupRelServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce notification template commerce account group rel local service.
-	 *
-	 * @return the commerce notification template commerce account group rel local service
-	 */
-	public com.liferay.commerce.notification.service.
-		CommerceNotificationTemplateCommerceAccountGroupRelLocalService
-			getCommerceNotificationTemplateCommerceAccountGroupRelLocalService() {
-
-		return commerceNotificationTemplateCommerceAccountGroupRelLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce notification template commerce account group rel local service.
-	 *
-	 * @param commerceNotificationTemplateCommerceAccountGroupRelLocalService the commerce notification template commerce account group rel local service
-	 */
-	public void
-		setCommerceNotificationTemplateCommerceAccountGroupRelLocalService(
-			com.liferay.commerce.notification.service.
-				CommerceNotificationTemplateCommerceAccountGroupRelLocalService
-					commerceNotificationTemplateCommerceAccountGroupRelLocalService) {
-
-		this.commerceNotificationTemplateCommerceAccountGroupRelLocalService =
-			commerceNotificationTemplateCommerceAccountGroupRelLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceNotificationTemplateCommerceAccountGroupRelService.class,
+			IdentifiableOSGiService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce notification template commerce account group rel remote service.
-	 *
-	 * @return the commerce notification template commerce account group rel remote service
-	 */
-	public CommerceNotificationTemplateCommerceAccountGroupRelService
-		getCommerceNotificationTemplateCommerceAccountGroupRelService() {
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceNotificationTemplateCommerceAccountGroupRelService =
+			(CommerceNotificationTemplateCommerceAccountGroupRelService)
+				aopProxy;
 
-		return commerceNotificationTemplateCommerceAccountGroupRelService;
-	}
-
-	/**
-	 * Sets the commerce notification template commerce account group rel remote service.
-	 *
-	 * @param commerceNotificationTemplateCommerceAccountGroupRelService the commerce notification template commerce account group rel remote service
-	 */
-	public void setCommerceNotificationTemplateCommerceAccountGroupRelService(
-		CommerceNotificationTemplateCommerceAccountGroupRelService
-			commerceNotificationTemplateCommerceAccountGroupRelService) {
-
-		this.commerceNotificationTemplateCommerceAccountGroupRelService =
-			commerceNotificationTemplateCommerceAccountGroupRelService;
-	}
-
-	/**
-	 * Returns the commerce notification template commerce account group rel persistence.
-	 *
-	 * @return the commerce notification template commerce account group rel persistence
-	 */
-	public CommerceNotificationTemplateCommerceAccountGroupRelPersistence
-		getCommerceNotificationTemplateCommerceAccountGroupRelPersistence() {
-
-		return commerceNotificationTemplateCommerceAccountGroupRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce notification template commerce account group rel persistence.
-	 *
-	 * @param commerceNotificationTemplateCommerceAccountGroupRelPersistence the commerce notification template commerce account group rel persistence
-	 */
-	public void
-		setCommerceNotificationTemplateCommerceAccountGroupRelPersistence(
-			CommerceNotificationTemplateCommerceAccountGroupRelPersistence
-				commerceNotificationTemplateCommerceAccountGroupRelPersistence) {
-
-		this.commerceNotificationTemplateCommerceAccountGroupRelPersistence =
-			commerceNotificationTemplateCommerceAccountGroupRelPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
 		_setServiceUtilService(
 			commerceNotificationTemplateCommerceAccountGroupRelService);
-	}
-
-	public void destroy() {
-		_setServiceUtilService(null);
 	}
 
 	/**
@@ -230,28 +147,19 @@ public abstract class
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.notification.service.
 		CommerceNotificationTemplateCommerceAccountGroupRelLocalService
 			commerceNotificationTemplateCommerceAccountGroupRelLocalService;
 
-	@BeanReference(
-		type = CommerceNotificationTemplateCommerceAccountGroupRelService.class
-	)
 	protected CommerceNotificationTemplateCommerceAccountGroupRelService
 		commerceNotificationTemplateCommerceAccountGroupRelService;
 
-	@BeanReference(
-		type = CommerceNotificationTemplateCommerceAccountGroupRelPersistence.class
-	)
+	@Reference
 	protected CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 		commerceNotificationTemplateCommerceAccountGroupRelPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

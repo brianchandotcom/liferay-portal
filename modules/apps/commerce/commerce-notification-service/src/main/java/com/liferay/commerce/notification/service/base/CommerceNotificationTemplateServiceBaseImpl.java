@@ -18,7 +18,7 @@ import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateServiceUtil;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplatePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce notification template remote service.
@@ -46,117 +48,33 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceNotificationTemplateServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceNotificationTemplateService, IdentifiableOSGiService {
+	implements AopService, CommerceNotificationTemplateService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceNotificationTemplateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceNotificationTemplateServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce notification template local service.
-	 *
-	 * @return the commerce notification template local service
-	 */
-	public com.liferay.commerce.notification.service.
-		CommerceNotificationTemplateLocalService
-			getCommerceNotificationTemplateLocalService() {
-
-		return commerceNotificationTemplateLocalService;
-	}
-
-	/**
-	 * Sets the commerce notification template local service.
-	 *
-	 * @param commerceNotificationTemplateLocalService the commerce notification template local service
-	 */
-	public void setCommerceNotificationTemplateLocalService(
-		com.liferay.commerce.notification.service.
-			CommerceNotificationTemplateLocalService
-				commerceNotificationTemplateLocalService) {
-
-		this.commerceNotificationTemplateLocalService =
-			commerceNotificationTemplateLocalService;
-	}
-
-	/**
-	 * Returns the commerce notification template remote service.
-	 *
-	 * @return the commerce notification template remote service
-	 */
-	public CommerceNotificationTemplateService
-		getCommerceNotificationTemplateService() {
-
-		return commerceNotificationTemplateService;
-	}
-
-	/**
-	 * Sets the commerce notification template remote service.
-	 *
-	 * @param commerceNotificationTemplateService the commerce notification template remote service
-	 */
-	public void setCommerceNotificationTemplateService(
-		CommerceNotificationTemplateService
-			commerceNotificationTemplateService) {
-
-		this.commerceNotificationTemplateService =
-			commerceNotificationTemplateService;
-	}
-
-	/**
-	 * Returns the commerce notification template persistence.
-	 *
-	 * @return the commerce notification template persistence
-	 */
-	public CommerceNotificationTemplatePersistence
-		getCommerceNotificationTemplatePersistence() {
-
-		return commerceNotificationTemplatePersistence;
-	}
-
-	/**
-	 * Sets the commerce notification template persistence.
-	 *
-	 * @param commerceNotificationTemplatePersistence the commerce notification template persistence
-	 */
-	public void setCommerceNotificationTemplatePersistence(
-		CommerceNotificationTemplatePersistence
-			commerceNotificationTemplatePersistence) {
-
-		this.commerceNotificationTemplatePersistence =
-			commerceNotificationTemplatePersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceNotificationTemplateService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceNotificationTemplateService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceNotificationTemplateService =
+			(CommerceNotificationTemplateService)aopProxy;
+
+		_setServiceUtilService(commerceNotificationTemplateService);
 	}
 
 	/**
@@ -220,24 +138,19 @@ public abstract class CommerceNotificationTemplateServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.notification.service.
 		CommerceNotificationTemplateLocalService
 			commerceNotificationTemplateLocalService;
 
-	@BeanReference(type = CommerceNotificationTemplateService.class)
 	protected CommerceNotificationTemplateService
 		commerceNotificationTemplateService;
 
-	@BeanReference(type = CommerceNotificationTemplatePersistence.class)
+	@Reference
 	protected CommerceNotificationTemplatePersistence
 		commerceNotificationTemplatePersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

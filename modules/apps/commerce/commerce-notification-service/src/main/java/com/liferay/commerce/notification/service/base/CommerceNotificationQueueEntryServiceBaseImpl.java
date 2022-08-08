@@ -18,7 +18,7 @@ import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
 import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryService;
 import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryServiceUtil;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationQueueEntryPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce notification queue entry remote service.
@@ -46,117 +48,33 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceNotificationQueueEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceNotificationQueueEntryService, IdentifiableOSGiService {
+	implements AopService, CommerceNotificationQueueEntryService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceNotificationQueueEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceNotificationQueueEntryServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce notification queue entry local service.
-	 *
-	 * @return the commerce notification queue entry local service
-	 */
-	public com.liferay.commerce.notification.service.
-		CommerceNotificationQueueEntryLocalService
-			getCommerceNotificationQueueEntryLocalService() {
-
-		return commerceNotificationQueueEntryLocalService;
-	}
-
-	/**
-	 * Sets the commerce notification queue entry local service.
-	 *
-	 * @param commerceNotificationQueueEntryLocalService the commerce notification queue entry local service
-	 */
-	public void setCommerceNotificationQueueEntryLocalService(
-		com.liferay.commerce.notification.service.
-			CommerceNotificationQueueEntryLocalService
-				commerceNotificationQueueEntryLocalService) {
-
-		this.commerceNotificationQueueEntryLocalService =
-			commerceNotificationQueueEntryLocalService;
-	}
-
-	/**
-	 * Returns the commerce notification queue entry remote service.
-	 *
-	 * @return the commerce notification queue entry remote service
-	 */
-	public CommerceNotificationQueueEntryService
-		getCommerceNotificationQueueEntryService() {
-
-		return commerceNotificationQueueEntryService;
-	}
-
-	/**
-	 * Sets the commerce notification queue entry remote service.
-	 *
-	 * @param commerceNotificationQueueEntryService the commerce notification queue entry remote service
-	 */
-	public void setCommerceNotificationQueueEntryService(
-		CommerceNotificationQueueEntryService
-			commerceNotificationQueueEntryService) {
-
-		this.commerceNotificationQueueEntryService =
-			commerceNotificationQueueEntryService;
-	}
-
-	/**
-	 * Returns the commerce notification queue entry persistence.
-	 *
-	 * @return the commerce notification queue entry persistence
-	 */
-	public CommerceNotificationQueueEntryPersistence
-		getCommerceNotificationQueueEntryPersistence() {
-
-		return commerceNotificationQueueEntryPersistence;
-	}
-
-	/**
-	 * Sets the commerce notification queue entry persistence.
-	 *
-	 * @param commerceNotificationQueueEntryPersistence the commerce notification queue entry persistence
-	 */
-	public void setCommerceNotificationQueueEntryPersistence(
-		CommerceNotificationQueueEntryPersistence
-			commerceNotificationQueueEntryPersistence) {
-
-		this.commerceNotificationQueueEntryPersistence =
-			commerceNotificationQueueEntryPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceNotificationQueueEntryService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceNotificationQueueEntryService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceNotificationQueueEntryService =
+			(CommerceNotificationQueueEntryService)aopProxy;
+
+		_setServiceUtilService(commerceNotificationQueueEntryService);
 	}
 
 	/**
@@ -220,24 +138,19 @@ public abstract class CommerceNotificationQueueEntryServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.notification.service.
 		CommerceNotificationQueueEntryLocalService
 			commerceNotificationQueueEntryLocalService;
 
-	@BeanReference(type = CommerceNotificationQueueEntryService.class)
 	protected CommerceNotificationQueueEntryService
 		commerceNotificationQueueEntryService;
 
-	@BeanReference(type = CommerceNotificationQueueEntryPersistence.class)
+	@Reference
 	protected CommerceNotificationQueueEntryPersistence
 		commerceNotificationQueueEntryPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

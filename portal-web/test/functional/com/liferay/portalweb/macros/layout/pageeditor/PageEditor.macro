@@ -1232,6 +1232,27 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if (isSet(unit)) {
+			Click(
+				key_fieldLabel = "${fieldLabel}",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
+
+			MenuItem.click(menuItem = "${unit}");
+		}
+
+		if (isSet(borderWidth)) {
+			Type(
+				key_text = "Border Width",
+				locator1 = "TextInput#ANY",
+				value1 = "${borderWidth}");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(bottomSpacing)) {
 			Select(
 				key_fieldLabel = "Bottom Spacing",

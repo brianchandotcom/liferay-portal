@@ -51,7 +51,7 @@ public class AccessTokenStoreUtilTest {
 
 		AccessToken actualAccessToken = accessTokenOptional.get();
 
-		Assert.assertEquals(
+		Assert.assertArrayEquals(
 			initialAccessToken.getAccessToken(),
 			actualAccessToken.getAccessToken());
 	}

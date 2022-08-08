@@ -166,6 +166,10 @@ export default function Sidebar() {
 						sidebarOpen: open,
 					})
 				);
+
+				if (!open) {
+					selectItem(null);
+				}
 			};
 
 			if (!sideNavigation.visible()) {

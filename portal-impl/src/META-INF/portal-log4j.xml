@@ -44,7 +44,6 @@
 		<Logger level="ERROR" name="com.liferay.mail.util.DummyHook" />
 		<Logger level="ERROR" name="com.liferay.mail.util.HookFactory" />
 		<Logger level="ERROR" name="com.liferay.mail.util.MailSessionFactoryBean" />
-		<Logger level="WARN" name="com.liferay.petra.mail" />
 		<Logger level="INFO" name="com.liferay.portal.action.JSONServiceAction" />
 		<Logger level="WARN" name="com.liferay.portal.action.LayoutAction" />
 		<Logger level="WARN" name="com.liferay.portal.bean.BeanLocatorImpl" />

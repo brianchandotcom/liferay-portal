@@ -142,6 +142,18 @@ export default function Sidebar() {
 	);
 
 	useEffect(() => {
+		if (sidebarOpen) {
+			const sideNavigation = Liferay.SideNavigation.instance(
+				document.querySelector('.product-menu-toggle')
+			);
+
+			if (sideNavigation?.visible()) {
+				sideNavigation.hide();
+			}
+		}
+	}, [sidebarOpen]);
+
+	useEffect(() => {
 		const sideNavigation = Liferay.SideNavigation.instance(
 			document.querySelector('.product-menu-toggle')
 		);
@@ -225,13 +237,6 @@ export default function Sidebar() {
 	const handleClick = (panel) => {
 		const open =
 			panel.sidebarPanelId === sidebarPanelId ? !sidebarOpen : true;
-		const productMenuToggle = document.querySelector(
-			'.product-menu-toggle'
-		);
-
-		if (productMenuToggle && !sidebarOpen) {
-			Liferay.SideNavigation.hide(productMenuToggle);
-		}
 
 		dispatch(
 			Actions.switchSidebarPanel({
@@ -334,7 +339,9 @@ export default function Sidebar() {
 							Liferay.Language.direction[
 								themeDisplay?.getLanguageId()
 							] === 'rtl',
-						[`page-editor__sidebar__content--panel-id-${sidebarPanelId}`]: sidebarPanelId,
+						[`page-editor__sidebar__content--panel-id-${sidebarPanelId}`]:
+							sidebarPanelId &&
+							!Liferay.FeatureFlags['LPS-153452'],
 					})}
 					onClick={deselectItem}
 				>

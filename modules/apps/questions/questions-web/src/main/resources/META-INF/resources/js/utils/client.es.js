@@ -322,6 +322,7 @@ export const getThreadQuery = `
 			friendlyUrlPath
 			headline
 			id
+			rootMessageId
 			keywords
 			locked
 			messageBoardSection {

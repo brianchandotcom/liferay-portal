@@ -15,17 +15,17 @@ definition {
 			logContent = "${logContent}",
 			portalInstanceName = "${portalInstanceName}");
 
-		var companyTitles = JSONCompany.getAllCompanyNames();
+		var portalInstanceNames = JSONCompany.getAllCompanyNames();
 
-		var companyTitles = ListUtil.newListFromString("${companyTitles}");
+		var portalInstanceNames = ListUtil.newListFromString("${portalInstanceNames}");
 
-		ListUtil.remove("${companyTitles}", "${portalInstanceName}");
+		ListUtil.remove("${portalInstanceNames}", "${portalInstanceName}");
 
-		for (var companyTitle : list "${companyTitles}") {
-			var companyId = JSONCompany.getCompanyIdByName(portalInstanceName = "${companyTitle}");
+		for (var additionalPortalInstanceName : list "${portalInstanceNames}") {
+			var companyId = JSONCompany.getCompanyIdByName(portalInstanceName = "${additionalPortalInstanceName}");
 
 			if (contains("${logContent}", "companyId=${companyId}")) {
-				fail("The ${portalInstanceName} company log file contains logs from the ${companyTitle} company");
+				fail("The ${portalInstanceName} company log file contains logs from the ${additionalPortalInstanceName} company");
 			}
 		}
 	}

@@ -113,22 +113,22 @@ definition {
 		}
 
 		task ("Then log files are present for all companies") {
-			var companyTitles = JSONCompany.getAllCompanyNames();
+			var portalInstanceNames = JSONCompany.getAllCompanyNames();
 
-			for (var companyTitle : list "${companyTitles}") {
+			for (var portalInstanceName : list "${portalInstanceNames}") {
 				AssertElementPresent(
-					key_virtualHost = "${companyTitle}",
+					key_virtualHost = "${portalInstanceName}",
 					locator1 = "CompanyLogging#COMPANY_LOG_TITLE");
 			}
 		}
 
 		task ("And the log files can be downloaded and viewed for each company") {
-			for (var companyTitle : list "${companyTitles}") {
-				var logContent = CompanyLogging.downloadCompanyLog(portalInstanceName = "${companyTitle}");
+			for (var portalInstanceName : list "${portalInstanceNames}") {
+				var logContent = CompanyLogging.downloadCompanyLog(portalInstanceName = "${portalInstanceName}");
 
 				CompanyLogging.assertCompanyLogContent(
 					logContent = "${logContent}",
-					portalInstanceName = "${companyTitle}");
+					portalInstanceName = "${portalInstanceName}");
 			}
 		}
 	}

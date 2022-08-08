@@ -1,5 +1,6 @@
 {
 	"description": "Quote folder",
+	"externalReferenceCode": "JOURNALARTICLE001",
 	"name": "Quote",
 	"viewableBy": "Anyone"
 }

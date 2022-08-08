@@ -51,6 +51,29 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test CanLoadHeadlessAdminContentOpenAPI {
+		property portal.acceptance = "true";
+
+		task ("Given navigate to headless admin content endpoint") {
+			var api = "headless-admin-content";
+
+			APIExplorer.navigateToOpenAPI(
+				api = "${api}",
+				version = "v1.0");
+		}
+
+		task ("Then headless admin content api loaded with no errors") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			AssertTextEquals(
+				locator1 = "Select#HEADLESS_SERVERS",
+				value1 = "${portalURL}/o/${api}/");
+
+			AssertConsoleTextNotPresent(value1 = "Failed to load API definition");
+		}
+	}
+
 	@description = "Load headless delivery openAPI explorer"
 	@priority = "5"
 	test CanLoadHeadlessDeliveryOpenAPI {

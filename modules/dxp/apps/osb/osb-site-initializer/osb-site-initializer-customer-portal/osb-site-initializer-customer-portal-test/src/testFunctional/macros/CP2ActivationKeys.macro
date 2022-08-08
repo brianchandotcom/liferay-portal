@@ -144,4 +144,27 @@ definition {
 		}
 	}
 
+	macro countTableRows {
+		var key_rowCount = "1";
+		var rowCount = "0";
+		var hasPagesToCount = "true";
+
+		while ("${hasPagesToCount}" == "true") {
+			while (IsElementPresent(locator1 = "CP2ActivationKeys#KEYS_TABLE_ROWS") && (maxIterations = "51")) {
+				var key_rowCount = MathUtil.sum("${key_rowCount}", "1");
+				var rowCount = MathUtil.sum("${rowCount}", "1");
+			}
+
+			if (IsElementPresent(locator1 = "CP2ActivationKeys#KEYS_TABLE_ROWS") && IsElementNotPresent(locator1 = "CP2ActivationKeys#DISABLED_NEXT_PAGE_BUTTON")) {
+				var key_rowCount = "1";
+
+				CP2ActivationKeys.goToNextTablePage();
+			}
+			else {
+				var hasPagesToCount = "false";
+			}
+		}
+
+		return "${rowCount}";
+	}
 }

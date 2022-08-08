@@ -12,37 +12,18 @@
  * details.
  */
 
-import {
-	currentDateString,
-	currentYear,
-	sixMonthsAgoDate,
-	threeMonthsAgoDate,
-} from '../utils/dateFormatter';
 import {axios} from './liferay/api';
 
 const DeliveryAPI = 'o/c/raylifesalesgoals';
 const userId = Liferay.ThemeDisplay.getUserId();
 
-export function getSalesGoalCurrentMonth() {
+export function getSalesGoal(
+	currentYear,
+	currentMonth,
+	periodYear,
+	periodMonth
+) {
 	return axios.get(
-		`${DeliveryAPI}/?fields=finalReferenceDate,goalValue,initialReferenceDate&pageSize=200&filter=finalReferenceDate le ${currentDateString[0]}-${currentDateString[1]}-31 and finalReferenceDate ge ${currentDateString[0]}-${currentDateString[1]}-01 and userId eq '${userId}'`
-	);
-}
-
-export function getSalesGoalLastThreeMonths() {
-	return axios.get(
-		`${DeliveryAPI}/?fields=finalReferenceDate,goalValue,initialReferenceDate&pageSize=200&filter=finalReferenceDate le ${currentDateString[0]}-${currentDateString[1]}-31 and finalReferenceDate ge ${threeMonthsAgoDate[0]}-${threeMonthsAgoDate[1]}-01 and userId eq '${userId}'`
-	);
-}
-
-export function getSalesGoalLastSixMonths() {
-	return axios.get(
-		`${DeliveryAPI}/?fields=finalReferenceDate,goalValue,initialReferenceDate&pageSize=200&filter=finalReferenceDate le ${currentDateString[0]}-${currentDateString[1]}-31 and finalReferenceDate ge ${sixMonthsAgoDate[0]}-${sixMonthsAgoDate[1]}-01 and userId eq '${userId}'`
-	);
-}
-
-export function getSalesGoalAllYear() {
-	return axios.get(
-		`${DeliveryAPI}/?fields=finalReferenceDate,goalValue,initialReferenceDate&pageSize=200&filter=finalReferenceDate le ${currentYear}-12-31 and finalReferenceDate ge ${currentYear}-01-01 and userId eq '${userId}'`
+		`${DeliveryAPI}/?fields=finalReferenceDate,goalValue,initialReferenceDate&pageSize=200&filter=finalReferenceDate le ${currentYear}-${currentMonth}-31 and finalReferenceDate ge ${periodYear}-${periodMonth}-01 and userId eq '${userId}'`
 	);
 }

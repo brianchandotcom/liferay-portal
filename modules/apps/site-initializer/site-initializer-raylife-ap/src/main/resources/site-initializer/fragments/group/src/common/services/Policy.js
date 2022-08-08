@@ -14,13 +14,11 @@
 
 import {
 	currentDate,
-	currentDateString,
 	currentYear,
 	lastYear,
 	lastYearSixMonthsAgoPeriod,
 	oneYearAgoDate,
 	sixMonthsAgoDate,
-	threeMonthsAgoDate,
 } from '../utils/dateFormatter';
 import {axios} from './liferay/api';
 
@@ -63,26 +61,13 @@ export function getPoliciesUntilCurrentMonthLastYear() {
 	);
 }
 
-export function getPoliciesForSalesGoalCurrentMonth() {
+export function getPoliciesForSalesGoal(
+	currentYear,
+	currentMonth,
+	periodYear,
+	periodMonth
+) {
 	return axios.get(
-		`${DeliveryAPI}/?fields=boundDate,termPremium&pageSize=200&filter=policyStatus ne 'declined' and userId eq '${userId}' and boundDate le ${currentDateString[0]}-${currentDateString[1]}-31 and boundDate ge ${currentDateString[0]}-${currentDateString[1]}-01`
-	);
-}
-
-export function getPoliciesForSalesGoalThreeMonths() {
-	return axios.get(
-		`${DeliveryAPI}/?fields=boundDate,termPremium&pageSize=200&filter=policyStatus ne 'declined' and userId eq '${userId}' and boundDate le ${currentDateString[0]}-${currentDateString[1]}-31 and boundDate ge ${threeMonthsAgoDate[0]}-${threeMonthsAgoDate[1]}-01`
-	);
-}
-
-export function getPoliciesForSalesGoalSixMonths() {
-	return axios.get(
-		`${DeliveryAPI}/?fields=boundDate,termPremium&pageSize=200&filter=policyStatus ne 'declined' and userId eq '${userId}' and boundDate le ${currentDateString[0]}-${currentDateString[1]}-31 and boundDate ge ${sixMonthsAgoDate[0]}-${sixMonthsAgoDate[1]}-01`
-	);
-}
-
-export function getPoliciesForSalesGoalUntilCurrentMonth() {
-	return axios.get(
-		`${DeliveryAPI}/?fields=boundDate,termPremium&pageSize=200&filter=policyStatus ne 'declined' and userId eq '${userId}' and boundDate le ${currentDateString[0]}-${currentDateString[1]}-31 and boundDate ge ${currentYear}-01-01`
+		`${DeliveryAPI}/?fields=boundDate,termPremium&pageSize=200&filter=policyStatus ne 'declined' and userId eq '${userId}' and boundDate le ${currentYear}-${currentMonth}-31 and boundDate ge ${periodYear}-${periodMonth}-01`
 	);
 }

@@ -547,17 +547,23 @@ public class UIItemsBuilder {
 				String.valueOf(_fileShortcut.getFileShortcutId()));
 		}
 
-		return DropdownItemBuilder.putData(
-			"action", "delete"
-		).putData(
-			"deleteURL", portletURL.toString()
-		).setIcon(
+		DropdownItem dropdownItem = DropdownItemBuilder.setIcon(
 			"trash"
 		).setKey(
 			DLUIItemKeys.DELETE
 		).setLabel(
 			LanguageUtil.get(_httpServletRequest, "delete")
 		).build();
+
+		if (cmd.equals(Constants.DELETE)) {
+			dropdownItem.putData("action", "delete");
+			dropdownItem.putData("deleteURL", portletURL.toString());
+		}
+		else {
+			dropdownItem.setHref(portletURL.toString());
+		}
+
+		return dropdownItem;
 	}
 
 	public DropdownItem createDeleteVersionDropdownItem() {

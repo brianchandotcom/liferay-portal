@@ -36,22 +36,26 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Override
-	public void createIndex(long companyId) throws PortalException {
+	public boolean createIndex(long companyId) throws PortalException {
 		if (_hasIndex(getIndexName(companyId))) {
-			return;
+			return false;
 		}
 
 		_createIndex(getIndexName(companyId));
+
+		return true;
 	}
 
 	@Override
-	public void removeIndex(long companyId) throws PortalException {
+	public boolean removeIndex(long companyId) throws PortalException {
 		if (!_hasIndex(getIndexName(companyId))) {
-			return;
+			return false;
 		}
 
 		searchEngineAdapter.execute(
 			new DeleteIndexRequest(getIndexName(companyId)));
+
+		return true;
 	}
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")

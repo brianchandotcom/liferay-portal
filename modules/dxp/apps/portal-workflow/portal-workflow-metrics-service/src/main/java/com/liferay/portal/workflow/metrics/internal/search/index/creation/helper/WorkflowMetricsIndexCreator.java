@@ -38,7 +38,13 @@ import org.osgi.service.component.annotations.Reference;
 public class WorkflowMetricsIndexCreator {
 
 	public void createIndex(Company company) throws PortalException {
-		_instanceWorkflowMetricsIndex.createIndex(company.getCompanyId());
+		boolean indexCreated = _instanceWorkflowMetricsIndex.createIndex(
+			company.getCompanyId());
+
+		if (!indexCreated) {
+			return;
+		}
+
 		_nodeWorkflowMetricsIndex.createIndex(company.getCompanyId());
 		_processWorkflowMetricsIndex.createIndex(company.getCompanyId());
 		_slaInstanceResultWorkflowMetricsIndex.createIndex(
@@ -87,7 +93,13 @@ public class WorkflowMetricsIndexCreator {
 	}
 
 	public void removeIndex(Company company) throws PortalException {
-		_instanceWorkflowMetricsIndex.removeIndex(company.getCompanyId());
+		boolean indexRemoved = _instanceWorkflowMetricsIndex.removeIndex(
+			company.getCompanyId());
+
+		if (!indexRemoved) {
+			return;
+		}
+
 		_nodeWorkflowMetricsIndex.removeIndex(company.getCompanyId());
 		_processWorkflowMetricsIndex.removeIndex(company.getCompanyId());
 		_slaInstanceResultWorkflowMetricsIndex.removeIndex(

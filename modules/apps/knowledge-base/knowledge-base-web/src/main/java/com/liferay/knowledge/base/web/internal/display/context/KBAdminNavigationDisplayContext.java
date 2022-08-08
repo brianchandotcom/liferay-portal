@@ -316,7 +316,7 @@ public class KBAdminNavigationDisplayContext {
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setMVCPath(
-						"/admin/view_folders.jsp"
+						"/admin/view_kb_folders.jsp"
 					).setParameter(
 						"parentResourceClassNameId", kbFolder.getClassNameId()
 					).setParameter(

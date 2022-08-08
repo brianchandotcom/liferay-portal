@@ -7,7 +7,8 @@
 			"test/js/mocks/*"
 		]
 	},
-	"name": "content-dashboard-web",
+	"main": "js/index.js",
+	"name": "@liferay/content-dashboard-web",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",

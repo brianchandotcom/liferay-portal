@@ -9,21 +9,20 @@
  * distribution rights of the Software.
  */
 
-export default async function liferayFetcher<T>(
-	url: string,
-	token: string
-): Promise<T> {
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(url, {
-		headers: {
-			'accept': 'application/json',
-			'x-csrf-token': token,
-		},
+import {LiferayError} from '../enums/liferayError';
+import {Liferay} from '../services/liferay';
+
+const DEFAULT_MESSAGE = 'An unexpected error occured.';
+
+type ToastErrorMessage = {
+	[key in LiferayError]?: string;
+};
+
+const toastMessages: ToastErrorMessage = {};
+
+export default function handleError(status: LiferayError) {
+	Liferay.Util.openToast({
+		message: toastMessages[status] || DEFAULT_MESSAGE,
+		type: 'danger',
 	});
-
-	if (!response.ok) {
-		throw new Error(String(response.status));
-	}
-
-	return response.json();
 }

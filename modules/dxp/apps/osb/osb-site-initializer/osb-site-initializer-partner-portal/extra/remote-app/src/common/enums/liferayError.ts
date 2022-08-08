@@ -9,21 +9,6 @@
  * distribution rights of the Software.
  */
 
-export default async function liferayFetcher<T>(
-	url: string,
-	token: string
-): Promise<T> {
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(url, {
-		headers: {
-			'accept': 'application/json',
-			'x-csrf-token': token,
-		},
-	});
-
-	if (!response.ok) {
-		throw new Error(String(response.status));
-	}
-
-	return response.json();
+export enum LiferayError {
+	NOT_AUTORIZED = '403',
 }

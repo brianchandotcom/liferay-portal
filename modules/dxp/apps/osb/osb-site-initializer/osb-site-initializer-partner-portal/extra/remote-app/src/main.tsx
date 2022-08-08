@@ -12,8 +12,10 @@
 import {ClayIconSpriteContext} from '@clayui/icon';
 import React from 'react';
 import {Root, createRoot} from 'react-dom/client';
+import {SWRConfig} from 'swr';
 
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
+import handleError from './common/utils/handleError';
 import MDFRequestForm from './routes/MDFRequestForm';
 
 class PartnerPortalRemoteAppComponent extends HTMLElement {
@@ -25,9 +27,20 @@ class PartnerPortalRemoteAppComponent extends HTMLElement {
 
 			this.root.render(
 				<React.StrictMode>
-					<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
-						<MDFRequestForm />
-					</ClayIconSpriteContext.Provider>
+					<SWRConfig
+						value={{
+							onError: (error) => handleError(error),
+							revalidateOnFocus: false,
+							revalidateOnReconnect: false,
+							shouldRetryOnError: false,
+						}}
+					>
+						<ClayIconSpriteContext.Provider
+							value={getIconSpriteMap()}
+						>
+							<MDFRequestForm />
+						</ClayIconSpriteContext.Provider>
+					</SWRConfig>
 				</React.StrictMode>
 			);
 		}

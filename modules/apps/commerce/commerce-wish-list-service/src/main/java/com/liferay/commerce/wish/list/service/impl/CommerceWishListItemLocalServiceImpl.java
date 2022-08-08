@@ -25,11 +25,15 @@ import com.liferay.commerce.wish.list.exception.GuestWishListItemMaxAllowedExcep
 import com.liferay.commerce.wish.list.internal.configuration.CommerceWishListConfiguration;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
+import com.liferay.commerce.wish.list.service.CommerceWishListLocalService;
 import com.liferay.commerce.wish.list.service.base.CommerceWishListItemLocalServiceBaseImpl;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -76,13 +80,13 @@ public class CommerceWishListItemLocalServiceImpl
 		throws PortalException {
 
 		CommerceWishList commerceWishList =
-			commerceWishListLocalService.getCommerceWishList(
+			_commerceWishListLocalService.getCommerceWishList(
 				commerceWishListId);
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		validate(commerceWishList, cProductId, cpInstanceUuid);
 
-		long commerceWishListItemId = counterLocalService.increment();
+		long commerceWishListItemId = _counterLocalService.increment();
 
 		CommerceWishListItem commerceWishListItem =
 			commerceWishListItemPersistence.create(commerceWishListItemId);
@@ -216,6 +220,12 @@ public class CommerceWishListItemLocalServiceImpl
 	@ServiceReference(type = CommerceWishListConfiguration.class)
 	private CommerceWishListConfiguration _commerceWishListConfiguration;
 
+	@BeanReference(type = CommerceWishListLocalService.class)
+	private CommerceWishListLocalService _commerceWishListLocalService;
+
+	@ServiceReference(type = CounterLocalService.class)
+	private CounterLocalService _counterLocalService;
+
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
@@ -224,5 +234,8 @@ public class CommerceWishListItemLocalServiceImpl
 
 	@ServiceReference(type = CProductLocalService.class)
 	private CProductLocalService _cProductLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

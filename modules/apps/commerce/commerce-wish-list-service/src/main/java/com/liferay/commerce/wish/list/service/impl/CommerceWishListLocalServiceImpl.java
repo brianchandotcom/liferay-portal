@@ -20,8 +20,10 @@ import com.liferay.commerce.wish.list.exception.GuestWishListMaxAllowedException
 import com.liferay.commerce.wish.list.internal.configuration.CommerceWishListConfiguration;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
+import com.liferay.commerce.wish.list.service.CommerceWishListItemLocalService;
 import com.liferay.commerce.wish.list.service.base.CommerceWishListLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,7 +52,7 @@ public class CommerceWishListLocalServiceImpl
 			String name, boolean defaultWishList, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
 		if (user.isDefaultUser()) {
@@ -84,7 +87,7 @@ public class CommerceWishListLocalServiceImpl
 
 		// Commerce wish list items
 
-		commerceWishListItemLocalService.deleteCommerceWishListItems(
+		_commerceWishListItemLocalService.deleteCommerceWishListItems(
 			commerceWishList.getCommerceWishListId());
 
 		return commerceWishList;
@@ -171,7 +174,7 @@ public class CommerceWishListLocalServiceImpl
 			long groupId, long userId, String guestUuid)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		CommerceWishList guestCommerceWishList = null;
 
@@ -252,12 +255,12 @@ public class CommerceWishListLocalServiceImpl
 		// Commerce wish list items
 
 		List<CommerceWishListItem> fromCommerceWishListItems =
-			commerceWishListItemLocalService.getCommerceWishListItems(
+			_commerceWishListItemLocalService.getCommerceWishListItems(
 				fromCommerceWishListId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 
 		List<CommerceWishListItem> toCommerceWishListItems =
-			commerceWishListItemLocalService.getCommerceWishListItems(
+			_commerceWishListItemLocalService.getCommerceWishListItems(
 				toCommerceWishListId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 
@@ -285,7 +288,7 @@ public class CommerceWishListLocalServiceImpl
 			}
 
 			if (!found) {
-				commerceWishListItemLocalService.addCommerceWishListItem(
+				_commerceWishListItemLocalService.addCommerceWishListItem(
 					toCommerceWishListId,
 					fromCommerceWishListItem.getCProductId(),
 					fromCommerceWishListItem.getCPInstanceUuid(), json,
@@ -336,7 +339,13 @@ public class CommerceWishListLocalServiceImpl
 	@ServiceReference(type = CommerceWishListConfiguration.class)
 	private CommerceWishListConfiguration _commerceWishListConfiguration;
 
+	@BeanReference(type = CommerceWishListItemLocalService.class)
+	private CommerceWishListItemLocalService _commerceWishListItemLocalService;
+
 	@ServiceReference(type = DDMFormValuesHelper.class)
 	private DDMFormValuesHelper _ddmFormValuesHelper;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

@@ -401,12 +401,12 @@ definition {
 		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
 				webContentSourceHtml = "This is the content of the rich text field",
-				webContentTitle = "これはリッチテキストフィールドのタイトルです");
+				webContentTitle = "これはリッチ テキスト フィールドのタイトルです");
 
 			Translations.translateSpecificField(fieldName = "Rich Text");
 
 			Translations.viewTargetFields(
-				webContentSourceHtml = "これはリッチテキストフィールドの内容です",
+				webContentSourceHtml = "これはリッチ テキスト フィールドの内容です",
 				webContentTitle = "これはリッチテキストフィールドのタイトルです");
 
 			PortletEntry.publish();
@@ -419,8 +419,8 @@ definition {
 				webContentTitle = "This is the title of the rich text field");
 
 			Translations.viewTargetFields(
-				webContentSourceHtml = "これはリッチテキストフィールドの内容です",
-				webContentTitle = "これはリッチテキストフィールドのタイトルです");
+				webContentSourceHtml = "これはリッチ テキスト フィールドの内容です",
+				webContentTitle = "これはリッチ テキスト フィールドのタイトルです");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
 			echo("There is a Google network issue. Ending test.");

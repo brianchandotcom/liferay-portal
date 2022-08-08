@@ -317,6 +317,97 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-9589 | Automation ID: LRAC-11541 | Test Summary: Check that the vote and posted events appear as a default event"
+	@priority = "2"
+	test CheckVoteAndPostedEventsAppearLikeDefaultEvent {
+		var layoutName = "DM Page";
+		var defaultEventNameList = "VOTE,posted";
+
+		task ("Add a new public widget page") {
+			ACUtils.addPage(layoutName = "${layoutName}");
+		}
+
+		task ("Create a Document And Media") {
+			ACUtils.createDMAndAddToPage(layoutName = "${layoutName}");
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to default events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Default Events");
+		}
+
+		task ("Unhide default event") {
+			for (var defaultEventName : list "${defaultEventNameList}") {
+				ACDefinitions.unhideEvent(customEventName = "${defaultEventName}");
+			}
+		}
+
+		task ("Go to DXP") {
+			ACUtils.launchDXP();
+		}
+
+		task ("View the DM Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "${layoutName}",
+				siteName = "Site Name");
+		}
+
+		task ("Add a Comment for DM") {
+			DMDocumentComment.addPG(
+				commentBody = "This is for test",
+				dmDocumentTitle = "DM AC Title");
+		}
+
+		task ("Choose a rating star for the DM") {
+			DMDocument.expandInfo();
+
+			Ratings.rateStar(ratingStarCount = "4");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Click to add event and switch tab to Custom") {
+			ACEventAnalysis.clickToAddEventButton();
+
+			ACNavigation.switchTabInCard(tabName = "Custom");
+		}
+
+		task ("Search for default event in the custom tab and check that it doesn't appear") {
+			for (var defaultEventName : list "${defaultEventNameList}") {
+				ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
+
+				ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${defaultEventName}");
+			}
+		}
+
+		task ("Switch tab to default and search for default event in the default tab and check that it appears") {
+			ACNavigation.switchTabInCard(tabName = "Default");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${defaultEventNameList}");
+		}
+	}
+
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10292 | Test Summary: Creating Events from All tab, default tab and custom tab and Event Attributes"
 	@priority = "5"
 	test CreateEventAnalysisFromAllAndDefaultAndCustomTab {

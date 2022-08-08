@@ -17,6 +17,7 @@
 				<action-key>MANAGE_USERS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>VIEW_ACCOUNT_GROUPS</action-key>
 				<action-key>VIEW_ACCOUNT_ROLES</action-key>
 				<action-key>VIEW_ADDRESSES</action-key>
 				<action-key>VIEW_ORGANIZATIONS</action-key>

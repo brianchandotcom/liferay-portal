@@ -15,7 +15,7 @@
 package com.liferay.users.admin.web.internal.product.navigation.personal.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
@@ -25,6 +25,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -41,7 +42,7 @@ public class SignOutPersonalMenuEntry implements PersonalMenuEntry {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "sign-out");
+		return _language.get(locale, "sign-out");
 	}
 
 	@Override
@@ -54,5 +55,8 @@ public class SignOutPersonalMenuEntry implements PersonalMenuEntry {
 
 		return themeDisplay.getURLSignOut();
 	}
+
+	@Reference
+	private Language _language;
 
 }

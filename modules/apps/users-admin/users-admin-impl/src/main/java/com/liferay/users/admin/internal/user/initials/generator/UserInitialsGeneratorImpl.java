@@ -14,7 +14,7 @@
 
 package com.liferay.users.admin.internal.user.initials.generator;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.constants.LanguageConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -76,7 +77,7 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 		}
 
 		userInitialsFieldNames = StringUtil.split(
-			LanguageUtil.get(
+			_language.get(
 				locale, LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES, null));
 
 		if (ArrayUtil.isEmpty(userInitialsFieldNames)) {
@@ -100,6 +101,9 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 		).put(
 			LanguageConstants.VALUE_MIDDLE_NAME, 1
 		).build();
+
+	@Reference
+	private Language _language;
 
 	private final Map<Locale, String[]> _userInitialsFieldNamesMap =
 		new HashMap<>();

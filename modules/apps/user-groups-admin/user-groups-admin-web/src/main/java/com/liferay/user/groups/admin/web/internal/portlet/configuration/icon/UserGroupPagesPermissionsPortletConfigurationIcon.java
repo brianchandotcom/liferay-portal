@@ -15,7 +15,7 @@
 package com.liferay.user.groups.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -59,7 +59,7 @@ public class UserGroupPagesPermissionsPortletConfigurationIcon
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getLocale(portletRequest), getClass());
 
-		return LanguageUtil.get(resourceBundle, "user-group-pages-permissions");
+		return _language.get(resourceBundle, "user-group-pages-permissions");
 	}
 
 	@Override
@@ -129,5 +129,8 @@ public class UserGroupPagesPermissionsPortletConfigurationIcon
 
 	@Reference
 	private GroupPermission _groupPermission;
+
+	@Reference
+	private Language _language;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.user.action.contributor;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -26,6 +26,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -36,7 +37,7 @@ public class ErasePersonalDataUserActionContributor
 
 	@Override
 	public String getConfirmationMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(getLocale(portletRequest)),
 			"the-user-must-be-deactivated-before-starting-the-data-erasure-" +
 				"process.-are-you-sure-you-want-to-deactivate-the-user");
@@ -78,5 +79,8 @@ public class ErasePersonalDataUserActionContributor
 	protected String getMVCRenderCommandName() {
 		return null;
 	}
+
+	@Reference
+	private Language _language;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -53,7 +53,7 @@ public class DeleteUserMVCActionCommand extends BaseUADMVCActionCommand {
 
 		MultiSessionMessages.add(
 			actionRequest, "requestProcessed",
-			LanguageUtil.get(
+			_language.get(
 				_portalImpl.getHttpServletRequest(actionRequest),
 				"user-successfully-deleted"));
 
@@ -64,6 +64,9 @@ public class DeleteUserMVCActionCommand extends BaseUADMVCActionCommand {
 		sendRedirect(
 			actionRequest, actionResponse, liferayPortletURL.toString());
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portalImpl;

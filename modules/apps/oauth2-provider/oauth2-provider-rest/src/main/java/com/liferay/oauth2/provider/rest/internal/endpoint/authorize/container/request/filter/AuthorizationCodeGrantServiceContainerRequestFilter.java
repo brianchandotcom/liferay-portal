@@ -17,8 +17,10 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.authorize.container.r
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.rest.internal.endpoint.authorize.configuration.AuthorizeScreenConfiguration;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -39,6 +41,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.net.URI;
 
 import java.security.Principal;
+
+import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Priority;
 
@@ -83,24 +88,22 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 			return;
 		}
 
+		String clientId = ParamUtil.getString(_httpServletRequest, "client_id");
+
+		User user = _getUser();
+
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.fetchOAuth2Application(
+				user.getCompanyId(), clientId);
+
+		boolean promptNone = _isPromptNone(oAuth2Application);
+
 		try {
-			User user = _portal.getUser(_httpServletRequest);
-
-			if (user == null) {
-				user = _userLocalService.getDefaultUser(
-					_portal.getCompanyId(_httpServletRequest));
-			}
-
 			boolean guestAuthorized = false;
 
-			if (user.isDefaultUser()) {
-				String clientId = ParamUtil.getString(
-					_httpServletRequest, "client_id");
-
-				if (!Validator.isBlank(clientId)) {
-					guestAuthorized = _containsOAuth2ApplicationViewPermission(
-						clientId, user);
-				}
+			if (user.isDefaultUser() && !Validator.isBlank(clientId)) {
+				guestAuthorized = _containsOAuth2ApplicationViewPermission(
+					oAuth2Application, user);
 			}
 
 			if (!user.isDefaultUser() || guestAuthorized) {
@@ -128,10 +131,24 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 		catch (Exception exception) {
 			_log.error("Unable to resolve authenticated user", exception);
 
-			containerRequestContext.abortWith(
-				Response.status(
-					Response.Status.INTERNAL_SERVER_ERROR
-				).build());
+			if (promptNone) {
+				_abortWithoutPrompt(
+					containerRequestContext, oAuth2Application,
+					"interaction_required");
+			}
+			else {
+				containerRequestContext.abortWith(
+					Response.status(
+						Response.Status.INTERNAL_SERVER_ERROR
+					).build());
+			}
+
+			return;
+		}
+
+		if (promptNone) {
+			_abortWithoutPrompt(
+				containerRequestContext, oAuth2Application, "login_required");
 
 			return;
 		}
@@ -179,13 +196,40 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 			).build());
 	}
 
-	private boolean _containsOAuth2ApplicationViewPermission(
-			String clientId, User user)
-		throws Exception {
+	private void _abortWithoutPrompt(
+		ContainerRequestContext containerRequestContext,
+		OAuth2Application oAuth2Application, String error) {
 
-		OAuth2Application oAuth2Application =
-			_oAuth2ApplicationLocalService.fetchOAuth2Application(
-				user.getCompanyId(), clientId);
+		if (oAuth2Application == null) {
+			return;
+		}
+
+		List<String> redirectURIsList = oAuth2Application.getRedirectURIsList();
+
+		String firstRedirectURL = redirectURIsList.get(0);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(firstRedirectURL);
+		sb.append("?error=");
+		sb.append(error);
+
+		String state = ParamUtil.getString(_httpServletRequest, "state");
+
+		if (Validator.isNotNull(state)) {
+			sb.append("&state=");
+			sb.append(state);
+		}
+
+		containerRequestContext.abortWith(
+			Response.temporaryRedirect(
+				URI.create(sb.toString())
+			).build());
+	}
+
+	private boolean _containsOAuth2ApplicationViewPermission(
+			OAuth2Application oAuth2Application, User user)
+		throws Exception {
 
 		if (oAuth2Application == null) {
 			return false;
@@ -224,6 +268,38 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 		}
 
 		return loginURL;
+	}
+
+	private User _getUser() {
+		try {
+			User user = _portal.getUser(_httpServletRequest);
+
+			if (user == null) {
+				user = _userLocalService.getDefaultUser(
+					_portal.getCompanyId(_httpServletRequest));
+			}
+
+			return user;
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
+	}
+
+	private boolean _isPromptNone(OAuth2Application oAuth2Application) {
+		if (oAuth2Application == null) {
+			return false;
+		}
+
+		String prompt = ParamUtil.getString(_httpServletRequest, "prompt");
+
+		if (oAuth2Application.isTrustedApplication() &&
+			Objects.equals("none", prompt)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

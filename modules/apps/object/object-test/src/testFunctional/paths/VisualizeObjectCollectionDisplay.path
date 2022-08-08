@@ -62,7 +62,7 @@
 	</tr>
 	<tr>
 		<td>MAP_FRAGMENT</td>
-		<td>//select[@aria-label='Field']</td>
+		<td>//select[@class='form-control']</td>
 		<td></td>
 	</tr>
 	<tr>

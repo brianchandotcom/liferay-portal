@@ -44,6 +44,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro configureUnit {
+		Click(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
+
+		MenuItem.click(menuItem = "${unit}");
+	}
+
 	macro expandSection {
 		WaitForVisible(
 			key_panel = "${sectionName}",

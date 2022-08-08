@@ -19,7 +19,7 @@ import com.liferay.commerce.pricing.service.CommercePriceModifierService;
 import com.liferay.commerce.pricing.service.CommercePriceModifierServiceUtil;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -28,11 +28,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce price modifier remote service.
@@ -47,131 +49,31 @@ import javax.sql.DataSource;
  */
 public abstract class CommercePriceModifierServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommercePriceModifierService, IdentifiableOSGiService {
+	implements AopService, CommercePriceModifierService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommercePriceModifierService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceModifierServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce price modifier local service.
-	 *
-	 * @return the commerce price modifier local service
-	 */
-	public
-		com.liferay.commerce.pricing.service.CommercePriceModifierLocalService
-			getCommercePriceModifierLocalService() {
-
-		return commercePriceModifierLocalService;
-	}
-
-	/**
-	 * Sets the commerce price modifier local service.
-	 *
-	 * @param commercePriceModifierLocalService the commerce price modifier local service
-	 */
-	public void setCommercePriceModifierLocalService(
-		com.liferay.commerce.pricing.service.CommercePriceModifierLocalService
-			commercePriceModifierLocalService) {
-
-		this.commercePriceModifierLocalService =
-			commercePriceModifierLocalService;
-	}
-
-	/**
-	 * Returns the commerce price modifier remote service.
-	 *
-	 * @return the commerce price modifier remote service
-	 */
-	public CommercePriceModifierService getCommercePriceModifierService() {
-		return commercePriceModifierService;
-	}
-
-	/**
-	 * Sets the commerce price modifier remote service.
-	 *
-	 * @param commercePriceModifierService the commerce price modifier remote service
-	 */
-	public void setCommercePriceModifierService(
-		CommercePriceModifierService commercePriceModifierService) {
-
-		this.commercePriceModifierService = commercePriceModifierService;
-	}
-
-	/**
-	 * Returns the commerce price modifier persistence.
-	 *
-	 * @return the commerce price modifier persistence
-	 */
-	public CommercePriceModifierPersistence
-		getCommercePriceModifierPersistence() {
-
-		return commercePriceModifierPersistence;
-	}
-
-	/**
-	 * Sets the commerce price modifier persistence.
-	 *
-	 * @param commercePriceModifierPersistence the commerce price modifier persistence
-	 */
-	public void setCommercePriceModifierPersistence(
-		CommercePriceModifierPersistence commercePriceModifierPersistence) {
-
-		this.commercePriceModifierPersistence =
-			commercePriceModifierPersistence;
-	}
-
-	/**
-	 * Returns the commerce price modifier finder.
-	 *
-	 * @return the commerce price modifier finder
-	 */
-	public CommercePriceModifierFinder getCommercePriceModifierFinder() {
-		return commercePriceModifierFinder;
-	}
-
-	/**
-	 * Sets the commerce price modifier finder.
-	 *
-	 * @param commercePriceModifierFinder the commerce price modifier finder
-	 */
-	public void setCommercePriceModifierFinder(
-		CommercePriceModifierFinder commercePriceModifierFinder) {
-
-		this.commercePriceModifierFinder = commercePriceModifierFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commercePriceModifierService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommercePriceModifierService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commercePriceModifierService = (CommercePriceModifierService)aopProxy;
+
+		_setServiceUtilService(commercePriceModifierService);
 	}
 
 	/**
@@ -234,25 +136,20 @@ public abstract class CommercePriceModifierServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.pricing.service.CommercePriceModifierLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.commerce.pricing.service.CommercePriceModifierLocalService
 			commercePriceModifierLocalService;
 
-	@BeanReference(type = CommercePriceModifierService.class)
 	protected CommercePriceModifierService commercePriceModifierService;
 
-	@BeanReference(type = CommercePriceModifierPersistence.class)
+	@Reference
 	protected CommercePriceModifierPersistence commercePriceModifierPersistence;
 
-	@BeanReference(type = CommercePriceModifierFinder.class)
+	@Reference
 	protected CommercePriceModifierFinder commercePriceModifierFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

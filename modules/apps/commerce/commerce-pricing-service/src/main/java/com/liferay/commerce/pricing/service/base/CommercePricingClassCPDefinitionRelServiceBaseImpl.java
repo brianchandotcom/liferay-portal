@@ -19,7 +19,7 @@ import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelS
 import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelServiceUtil;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -28,11 +28,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce pricing class cp definition rel remote service.
@@ -47,7 +49,7 @@ import javax.sql.DataSource;
  */
 public abstract class CommercePricingClassCPDefinitionRelServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommercePricingClassCPDefinitionRelService,
+	implements AopService, CommercePricingClassCPDefinitionRelService,
 			   IdentifiableOSGiService {
 
 	/*
@@ -55,134 +57,25 @@ public abstract class CommercePricingClassCPDefinitionRelServiceBaseImpl
 	 *
 	 * Never modify or reference this class directly. Use <code>CommercePricingClassCPDefinitionRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePricingClassCPDefinitionRelServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce pricing class cp definition rel local service.
-	 *
-	 * @return the commerce pricing class cp definition rel local service
-	 */
-	public com.liferay.commerce.pricing.service.
-		CommercePricingClassCPDefinitionRelLocalService
-			getCommercePricingClassCPDefinitionRelLocalService() {
-
-		return commercePricingClassCPDefinitionRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce pricing class cp definition rel local service.
-	 *
-	 * @param commercePricingClassCPDefinitionRelLocalService the commerce pricing class cp definition rel local service
-	 */
-	public void setCommercePricingClassCPDefinitionRelLocalService(
-		com.liferay.commerce.pricing.service.
-			CommercePricingClassCPDefinitionRelLocalService
-				commercePricingClassCPDefinitionRelLocalService) {
-
-		this.commercePricingClassCPDefinitionRelLocalService =
-			commercePricingClassCPDefinitionRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce pricing class cp definition rel remote service.
-	 *
-	 * @return the commerce pricing class cp definition rel remote service
-	 */
-	public CommercePricingClassCPDefinitionRelService
-		getCommercePricingClassCPDefinitionRelService() {
-
-		return commercePricingClassCPDefinitionRelService;
-	}
-
-	/**
-	 * Sets the commerce pricing class cp definition rel remote service.
-	 *
-	 * @param commercePricingClassCPDefinitionRelService the commerce pricing class cp definition rel remote service
-	 */
-	public void setCommercePricingClassCPDefinitionRelService(
-		CommercePricingClassCPDefinitionRelService
-			commercePricingClassCPDefinitionRelService) {
-
-		this.commercePricingClassCPDefinitionRelService =
-			commercePricingClassCPDefinitionRelService;
-	}
-
-	/**
-	 * Returns the commerce pricing class cp definition rel persistence.
-	 *
-	 * @return the commerce pricing class cp definition rel persistence
-	 */
-	public CommercePricingClassCPDefinitionRelPersistence
-		getCommercePricingClassCPDefinitionRelPersistence() {
-
-		return commercePricingClassCPDefinitionRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce pricing class cp definition rel persistence.
-	 *
-	 * @param commercePricingClassCPDefinitionRelPersistence the commerce pricing class cp definition rel persistence
-	 */
-	public void setCommercePricingClassCPDefinitionRelPersistence(
-		CommercePricingClassCPDefinitionRelPersistence
-			commercePricingClassCPDefinitionRelPersistence) {
-
-		this.commercePricingClassCPDefinitionRelPersistence =
-			commercePricingClassCPDefinitionRelPersistence;
-	}
-
-	/**
-	 * Returns the commerce pricing class cp definition rel finder.
-	 *
-	 * @return the commerce pricing class cp definition rel finder
-	 */
-	public CommercePricingClassCPDefinitionRelFinder
-		getCommercePricingClassCPDefinitionRelFinder() {
-
-		return commercePricingClassCPDefinitionRelFinder;
-	}
-
-	/**
-	 * Sets the commerce pricing class cp definition rel finder.
-	 *
-	 * @param commercePricingClassCPDefinitionRelFinder the commerce pricing class cp definition rel finder
-	 */
-	public void setCommercePricingClassCPDefinitionRelFinder(
-		CommercePricingClassCPDefinitionRelFinder
-			commercePricingClassCPDefinitionRelFinder) {
-
-		this.commercePricingClassCPDefinitionRelFinder =
-			commercePricingClassCPDefinitionRelFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commercePricingClassCPDefinitionRelService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommercePricingClassCPDefinitionRelService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commercePricingClassCPDefinitionRelService =
+			(CommercePricingClassCPDefinitionRelService)aopProxy;
+
+		_setServiceUtilService(commercePricingClassCPDefinitionRelService);
 	}
 
 	/**
@@ -246,28 +139,23 @@ public abstract class CommercePricingClassCPDefinitionRelServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.pricing.service.
 		CommercePricingClassCPDefinitionRelLocalService
 			commercePricingClassCPDefinitionRelLocalService;
 
-	@BeanReference(type = CommercePricingClassCPDefinitionRelService.class)
 	protected CommercePricingClassCPDefinitionRelService
 		commercePricingClassCPDefinitionRelService;
 
-	@BeanReference(type = CommercePricingClassCPDefinitionRelPersistence.class)
+	@Reference
 	protected CommercePricingClassCPDefinitionRelPersistence
 		commercePricingClassCPDefinitionRelPersistence;
 
-	@BeanReference(type = CommercePricingClassCPDefinitionRelFinder.class)
+	@Reference
 	protected CommercePricingClassCPDefinitionRelFinder
 		commercePricingClassCPDefinitionRelFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

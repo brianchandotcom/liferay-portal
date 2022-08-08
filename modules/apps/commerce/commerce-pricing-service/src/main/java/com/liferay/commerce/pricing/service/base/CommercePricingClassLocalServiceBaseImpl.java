@@ -26,7 +26,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -45,14 +45,13 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -61,6 +60,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce pricing class local service.
@@ -75,8 +77,8 @@ import javax.sql.DataSource;
  */
 public abstract class CommercePricingClassLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommercePricingClassLocalService,
-			   CTService<CommercePricingClass>, IdentifiableOSGiService {
+	implements AopService, CommercePricingClassLocalService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -559,107 +561,26 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 		return commercePricingClassPersistence.update(commercePricingClass);
 	}
 
-	/**
-	 * Returns the commerce pricing class local service.
-	 *
-	 * @return the commerce pricing class local service
-	 */
-	public CommercePricingClassLocalService
-		getCommercePricingClassLocalService() {
-
-		return commercePricingClassLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce pricing class local service.
-	 *
-	 * @param commercePricingClassLocalService the commerce pricing class local service
-	 */
-	public void setCommercePricingClassLocalService(
-		CommercePricingClassLocalService commercePricingClassLocalService) {
-
-		this.commercePricingClassLocalService =
-			commercePricingClassLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommercePricingClassLocalService.class,
+			IdentifiableOSGiService.class, CTService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce pricing class persistence.
-	 *
-	 * @return the commerce pricing class persistence
-	 */
-	public CommercePricingClassPersistence
-		getCommercePricingClassPersistence() {
-
-		return commercePricingClassPersistence;
-	}
-
-	/**
-	 * Sets the commerce pricing class persistence.
-	 *
-	 * @param commercePricingClassPersistence the commerce pricing class persistence
-	 */
-	public void setCommercePricingClassPersistence(
-		CommercePricingClassPersistence commercePricingClassPersistence) {
-
-		this.commercePricingClassPersistence = commercePricingClassPersistence;
-	}
-
-	/**
-	 * Returns the commerce pricing class finder.
-	 *
-	 * @return the commerce pricing class finder
-	 */
-	public CommercePricingClassFinder getCommercePricingClassFinder() {
-		return commercePricingClassFinder;
-	}
-
-	/**
-	 * Sets the commerce pricing class finder.
-	 *
-	 * @param commercePricingClassFinder the commerce pricing class finder
-	 */
-	public void setCommercePricingClassFinder(
-		CommercePricingClassFinder commercePricingClassFinder) {
-
-		this.commercePricingClassFinder = commercePricingClassFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.pricing.model.CommercePricingClass",
-			commercePricingClassLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commercePricingClassLocalService =
+			(CommercePricingClassLocalService)aopProxy;
 
 		_setLocalServiceUtilService(commercePricingClassLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.pricing.model.CommercePricingClass");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -737,23 +658,16 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommercePricingClassLocalService.class)
 	protected CommercePricingClassLocalService commercePricingClassLocalService;
 
-	@BeanReference(type = CommercePricingClassPersistence.class)
+	@Reference
 	protected CommercePricingClassPersistence commercePricingClassPersistence;
 
-	@BeanReference(type = CommercePricingClassFinder.class)
+	@Reference
 	protected CommercePricingClassFinder commercePricingClassFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

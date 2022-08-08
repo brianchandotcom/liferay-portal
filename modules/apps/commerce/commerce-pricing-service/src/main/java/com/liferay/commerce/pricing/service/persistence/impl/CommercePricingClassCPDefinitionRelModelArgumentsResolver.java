@@ -24,12 +24,21 @@ import com.liferay.portal.kernel.model.BaseModel;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * The arguments resolver class for retrieving value from CommercePricingClassCPDefinitionRel.
  *
  * @author Riccardo Alberti
  * @generated
  */
+@Component(
+	immediate = true,
+	service = {
+		CommercePricingClassCPDefinitionRelModelArgumentsResolver.class,
+		ArgumentsResolver.class
+	}
+)
 public class CommercePricingClassCPDefinitionRelModelArgumentsResolver
 	implements ArgumentsResolver {
 

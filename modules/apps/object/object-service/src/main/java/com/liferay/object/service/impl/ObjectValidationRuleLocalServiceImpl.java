@@ -22,11 +22,12 @@ import com.liferay.object.exception.ObjectValidationRuleNameException;
 import com.liferay.object.exception.ObjectValidationRuleScriptException;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectValidationRule;
+import com.liferay.object.runtime.scripting.exception.GroovyScriptingException;
+import com.liferay.object.runtime.scripting.validator.GroovyScriptingValidator;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.base.ObjectValidationRuleLocalServiceBaseImpl;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineTracker;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -42,10 +43,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import groovy.lang.GroovyShell;
 
 import java.io.Serializable;
 
@@ -280,23 +278,20 @@ public class ObjectValidationRuleLocalServiceImpl
 						engine,
 						ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY)) {
 
-				if (StringUtil.count(script, StringPool.NEW_LINE) > 2987) {
-					throw new ObjectValidationRuleScriptException(
-						"the-maximum-number-of-lines-available-is-2987");
-				}
-
-				GroovyShell groovyShell = new GroovyShell();
-
-				groovyShell.parse(script);
+				_groovyScriptingValidator.validate(script);
 			}
 		}
-		catch (Exception exception) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				_log.debug(portalException);
 			}
 
-			if (exception instanceof ObjectValidationRuleScriptException) {
-				throw exception;
+			if (portalException instanceof GroovyScriptingException) {
+				GroovyScriptingException groovyScriptingException =
+					(GroovyScriptingException)portalException;
+
+				throw new ObjectValidationRuleScriptException(
+					groovyScriptingException.getMessageKey());
 			}
 
 			throw new ObjectValidationRuleScriptException("syntax-error");
@@ -308,6 +303,9 @@ public class ObjectValidationRuleLocalServiceImpl
 
 	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;
+
+	@Reference
+	private GroovyScriptingValidator _groovyScriptingValidator;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

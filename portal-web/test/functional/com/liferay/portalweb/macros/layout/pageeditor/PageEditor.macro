@@ -535,7 +535,7 @@ definition {
 		PageEditor.gotoTabsFragmentNavItem(navItem = "${navItem}");
 
 		AssertVisible(
-			key_content = "Place fragments here.",
+			key_content = "Place fragments or widgets here.",
 			key_fragmentClass = "content",
 			key_position = "${position}",
 			locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");

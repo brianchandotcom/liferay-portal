@@ -261,7 +261,7 @@
 </tr>
 <tr>
 	<td>NO_FRAGMENTS_MESSAGE</td>
-	<td>//div[contains(@class,'page-editor__no-fragments-state')][normalize-space()='Place fragments here.']</td>
+	<td>//div[contains(@class,'page-editor__no-fragments-state')][normalize-space()='Place fragments or widgets here.']</td>
 	<td></td>
 </tr>
 <tr>

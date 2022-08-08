@@ -20,8 +20,6 @@ import com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalS
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
@@ -49,104 +47,6 @@ public abstract class CommerceAccountOrganizationRelLocalServiceBaseImpl
 	 */
 
 	/**
-	 * Returns the commerce account local service.
-	 *
-	 * @return the commerce account local service
-	 */
-	public com.liferay.commerce.account.service.CommerceAccountLocalService
-		getCommerceAccountLocalService() {
-
-		return commerceAccountLocalService;
-	}
-
-	/**
-	 * Sets the commerce account local service.
-	 *
-	 * @param commerceAccountLocalService the commerce account local service
-	 */
-	public void setCommerceAccountLocalService(
-		com.liferay.commerce.account.service.CommerceAccountLocalService
-			commerceAccountLocalService) {
-
-		this.commerceAccountLocalService = commerceAccountLocalService;
-	}
-
-	/**
-	 * Returns the commerce account group local service.
-	 *
-	 * @return the commerce account group local service
-	 */
-	public com.liferay.commerce.account.service.CommerceAccountGroupLocalService
-		getCommerceAccountGroupLocalService() {
-
-		return commerceAccountGroupLocalService;
-	}
-
-	/**
-	 * Sets the commerce account group local service.
-	 *
-	 * @param commerceAccountGroupLocalService the commerce account group local service
-	 */
-	public void setCommerceAccountGroupLocalService(
-		com.liferay.commerce.account.service.CommerceAccountGroupLocalService
-			commerceAccountGroupLocalService) {
-
-		this.commerceAccountGroupLocalService =
-			commerceAccountGroupLocalService;
-	}
-
-	/**
-	 * Returns the commerce account group commerce account rel local service.
-	 *
-	 * @return the commerce account group commerce account rel local service
-	 */
-	public com.liferay.commerce.account.service.
-		CommerceAccountGroupCommerceAccountRelLocalService
-			getCommerceAccountGroupCommerceAccountRelLocalService() {
-
-		return commerceAccountGroupCommerceAccountRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce account group commerce account rel local service.
-	 *
-	 * @param commerceAccountGroupCommerceAccountRelLocalService the commerce account group commerce account rel local service
-	 */
-	public void setCommerceAccountGroupCommerceAccountRelLocalService(
-		com.liferay.commerce.account.service.
-			CommerceAccountGroupCommerceAccountRelLocalService
-				commerceAccountGroupCommerceAccountRelLocalService) {
-
-		this.commerceAccountGroupCommerceAccountRelLocalService =
-			commerceAccountGroupCommerceAccountRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce account group rel local service.
-	 *
-	 * @return the commerce account group rel local service
-	 */
-	public
-		com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService
-			getCommerceAccountGroupRelLocalService() {
-
-		return commerceAccountGroupRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce account group rel local service.
-	 *
-	 * @param commerceAccountGroupRelLocalService the commerce account group rel local service
-	 */
-	public void setCommerceAccountGroupRelLocalService(
-		com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService
-			commerceAccountGroupRelLocalService) {
-
-		this.commerceAccountGroupRelLocalService =
-			commerceAccountGroupRelLocalService;
-	}
-
-	/**
 	 * Returns the commerce account organization rel local service.
 	 *
 	 * @return the commerce account organization rel local service
@@ -171,31 +71,6 @@ public abstract class CommerceAccountOrganizationRelLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce account user rel local service.
-	 *
-	 * @return the commerce account user rel local service
-	 */
-	public
-		com.liferay.commerce.account.service.CommerceAccountUserRelLocalService
-			getCommerceAccountUserRelLocalService() {
-
-		return commerceAccountUserRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce account user rel local service.
-	 *
-	 * @param commerceAccountUserRelLocalService the commerce account user rel local service
-	 */
-	public void setCommerceAccountUserRelLocalService(
-		com.liferay.commerce.account.service.CommerceAccountUserRelLocalService
-			commerceAccountUserRelLocalService) {
-
-		this.commerceAccountUserRelLocalService =
-			commerceAccountUserRelLocalService;
-	}
-
-	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -216,112 +91,6 @@ public abstract class CommerceAccountOrganizationRelLocalServiceBaseImpl
 			counterLocalService) {
 
 		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-
-		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
 	}
 
 	public void afterPropertiesSet() {
@@ -368,72 +137,14 @@ public abstract class CommerceAccountOrganizationRelLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.account.service.CommerceAccountLocalService.class
-	)
-	protected com.liferay.commerce.account.service.CommerceAccountLocalService
-		commerceAccountLocalService;
-
-	@BeanReference(
-		type = com.liferay.commerce.account.service.CommerceAccountGroupLocalService.class
-	)
-	protected
-		com.liferay.commerce.account.service.CommerceAccountGroupLocalService
-			commerceAccountGroupLocalService;
-
-	@BeanReference(
-		type = com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService.class
-	)
-	protected com.liferay.commerce.account.service.
-		CommerceAccountGroupCommerceAccountRelLocalService
-			commerceAccountGroupCommerceAccountRelLocalService;
-
-	@BeanReference(
-		type = com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService.class
-	)
-	protected
-		com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService
-			commerceAccountGroupRelLocalService;
-
 	@BeanReference(type = CommerceAccountOrganizationRelLocalService.class)
 	protected CommerceAccountOrganizationRelLocalService
 		commerceAccountOrganizationRelLocalService;
-
-	@BeanReference(
-		type = com.liferay.commerce.account.service.CommerceAccountUserRelLocalService.class
-	)
-	protected
-		com.liferay.commerce.account.service.CommerceAccountUserRelLocalService
-			commerceAccountUserRelLocalService;
 
 	@ServiceReference(
 		type = com.liferay.counter.kernel.service.CounterLocalService.class
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@ServiceReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 
 }

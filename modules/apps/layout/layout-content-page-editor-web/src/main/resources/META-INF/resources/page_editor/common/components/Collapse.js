@@ -15,19 +15,17 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import './Collapse.scss';
 
-export default function Collapse({children, label, open}) {
-	const [isOpen, setIsOpen] = useState(open);
+export default function Collapse({children, label, onOpen, open}) {
+	const [internalIsOpen, setInternalIsOpen] = useState(open);
+	const isOpen = onOpen ? open : internalIsOpen;
+	const setIsOpen = onOpen || setInternalIsOpen;
+
 	const collapseIcon = isOpen ? 'angle-down' : 'angle-right';
-
 	const collapseIconClassName = isOpen ? 'open' : 'closed';
-
-	useEffect(() => {
-		setIsOpen(open);
-	}, [open]);
 
 	const handleClick = () => {
 		setIsOpen(!isOpen);
@@ -72,5 +70,6 @@ export default function Collapse({children, label, open}) {
 Collapse.propTypes = {
 	children: PropTypes.node.isRequired,
 	label: PropTypes.string,
+	onOpen: PropTypes.func,
 	open: PropTypes.bool,
 };

@@ -27,6 +27,8 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
+import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
+import com.liferay.knowledge.base.web.internal.display.context.KBArticleItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -50,6 +52,8 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -86,6 +90,10 @@ public class KBArticleItemSelectorView
 		return _portletIds;
 	}
 
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
@@ -112,11 +120,24 @@ public class KBArticleItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		_itemSelectorViewDescriptorRenderer.renderHTML(
-			servletRequest, servletResponse, infoItemItemSelectorCriterion,
-			portletURL, itemSelectedEventName, search,
-			new KBArticleItemSelectorViewDescriptor(
-				(HttpServletRequest)servletRequest, portletURL));
+		KBArticleItemSelectorViewDisplayContext
+			kbArticleItemSelectorViewDisplayContext =
+				new KBArticleItemSelectorViewDisplayContext(
+					(HttpServletRequest)servletRequest,
+					infoItemItemSelectorCriterion, itemSelectedEventName,
+					portletURL, search);
+
+		servletRequest.setAttribute(
+			KBWebKeys.KB_ARTICLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			kbArticleItemSelectorViewDisplayContext);
+
+		ServletContext servletContext = getServletContext();
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher(
+				"/item/selector/select_kb_articles.jsp");
+
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<String> _portletIds = Collections.singletonList(
@@ -137,6 +158,11 @@ public class KBArticleItemSelectorView
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.knowledge.base.web)"
+	)
+	private ServletContext _servletContext;
 
 	private class KBArticleItemDescriptor
 		implements ItemSelectorViewDescriptor.ItemDescriptor {

@@ -17,19 +17,30 @@ package com.liferay.commerce.discount.service.impl;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.base.CommerceDiscountRuleServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceDiscountRule"
+	},
+	service = AopService.class
+)
 public class CommerceDiscountRuleServiceImpl
 	extends CommerceDiscountRuleServiceBaseImpl {
 
@@ -187,10 +198,10 @@ public class CommerceDiscountRuleServiceImpl
 			commerceDiscountRuleId, name, type, typeSettings);
 	}
 
-	private static volatile ModelResourcePermission<CommerceDiscount>
-		_commerceDiscountResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceDiscountRuleServiceImpl.class,
-				"_commerceDiscountResourcePermission", CommerceDiscount.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.discount.model.CommerceDiscount)"
+	)
+	private ModelResourcePermission<CommerceDiscount>
+		_commerceDiscountResourcePermission;
 
 }

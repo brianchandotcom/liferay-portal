@@ -18,6 +18,7 @@ import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountAccountRel;
 import com.liferay.commerce.discount.service.base.CommerceDiscountAccountRelLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -27,14 +28,21 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Alberti
  * @see CommerceDiscountAccountRelLocalServiceBaseImpl
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.discount.model.CommerceDiscountAccountRel",
+	service = AopService.class
+)
 public class CommerceDiscountAccountRelLocalServiceImpl
 	extends CommerceDiscountAccountRelLocalServiceBaseImpl {
 
@@ -175,10 +183,10 @@ public class CommerceDiscountAccountRelLocalServiceImpl
 		indexer.reindex(CommerceDiscount.class.getName(), commerceDiscountId);
 	}
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

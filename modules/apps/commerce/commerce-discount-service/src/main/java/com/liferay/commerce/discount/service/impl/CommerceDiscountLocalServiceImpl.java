@@ -56,7 +56,7 @@ import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -89,7 +89,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -106,10 +105,18 @@ import java.util.Set;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.discount.model.CommerceDiscount",
+	service = AopService.class
+)
 public class CommerceDiscountLocalServiceImpl
 	extends CommerceDiscountLocalServiceBaseImpl {
 
@@ -1963,48 +1970,46 @@ public class CommerceDiscountLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceDiscountLocalServiceImpl.class);
 
-	@ServiceReference(type = AssetEntryLocalService.class)
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
-	@ServiceReference(type = ClassNameLocalService.class)
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@BeanReference(
-		type = CommerceDiscountCommerceAccountGroupRelLocalService.class
-	)
+	@Reference
 	private CommerceDiscountCommerceAccountGroupRelLocalService
 		_commerceDiscountCommerceAccountGroupRelLocalService;
 
-	@BeanReference(type = CommerceDiscountOrderTypeRelLocalService.class)
+	@Reference
 	private CommerceDiscountOrderTypeRelLocalService
 		_commerceDiscountOrderTypeRelLocalService;
 
-	@BeanReference(type = CommerceDiscountRelLocalService.class)
+	@Reference
 	private CommerceDiscountRelLocalService _commerceDiscountRelLocalService;
 
-	@BeanReference(type = CommerceDiscountRuleLocalService.class)
+	@Reference
 	private CommerceDiscountRuleLocalService _commerceDiscountRuleLocalService;
 
-	@ServiceReference(type = CommerceDiscountTargetRegistry.class)
+	@Reference
 	private CommerceDiscountTargetRegistry _commerceDiscountTargetRegistry;
 
-	@BeanReference(type = CommerceDiscountUsageEntryLocalService.class)
+	@Reference
 	private CommerceDiscountUsageEntryLocalService
 		_commerceDiscountUsageEntryLocalService;
 
-	@ServiceReference(type = CommercePricingClassLocalService.class)
+	@Reference
 	private CommercePricingClassLocalService _commercePricingClassLocalService;
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@ServiceReference(type = ResourceLocalService.class)
+	@Reference
 	private ResourceLocalService _resourceLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
-	@ServiceReference(type = WorkflowInstanceLinkLocalService.class)
+	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

@@ -21,6 +21,7 @@ import com.liferay.commerce.discount.service.base.CommerceDiscountServiceBaseImp
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,21 +30,30 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.math.BigDecimal;
 
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceDiscount"
+	},
+	service = AopService.class
+)
 public class CommerceDiscountServiceImpl
 	extends CommerceDiscountServiceBaseImpl {
 
@@ -514,13 +524,13 @@ public class CommerceDiscountServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceDiscountServiceImpl.class);
 
-	private static volatile ModelResourcePermission<CommerceDiscount>
-		_commerceDiscountResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceDiscountServiceImpl.class,
-				"_commerceDiscountResourcePermission", CommerceDiscount.class);
-
-	@ServiceReference(type = CommerceChannelService.class)
+	@Reference
 	private CommerceChannelService _commerceChannelService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.discount.model.CommerceDiscount)"
+	)
+	private ModelResourcePermission<CommerceDiscount>
+		_commerceDiscountResourcePermission;
 
 }

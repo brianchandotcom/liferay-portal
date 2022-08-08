@@ -21,7 +21,7 @@ import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.service.base.CommerceDiscountRuleLocalServiceBaseImpl;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -32,14 +32,21 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.discount.model.CommerceDiscountRule",
+	service = AopService.class
+)
 public class CommerceDiscountRuleLocalServiceImpl
 	extends CommerceDiscountRuleLocalServiceBaseImpl {
 
@@ -261,13 +268,13 @@ public class CommerceDiscountRuleLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = CommerceDiscountLocalService.class)
+	@Reference
 	private CommerceDiscountLocalService _commerceDiscountLocalService;
 
-	@ServiceReference(type = CommerceDiscountRuleTypeRegistry.class)
+	@Reference
 	private CommerceDiscountRuleTypeRegistry _commerceDiscountRuleTypeRegistry;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

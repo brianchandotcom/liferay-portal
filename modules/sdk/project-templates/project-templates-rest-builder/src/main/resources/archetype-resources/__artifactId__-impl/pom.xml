@@ -19,6 +19,14 @@
 			<artifactId>release.${product}.api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+#if (${liferayVersion.startsWith("7.3")} || ${liferayVersion.startsWith("7.4")})
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.3.2</version>
+			<scope>provided</scope>
+		</dependency>
+#end
 		<dependency>
 			<groupId>${groupId}</groupId>
 			<artifactId>${artifactId}-api</artifactId>

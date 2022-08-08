@@ -958,7 +958,11 @@ import org.osgi.service.component.annotations.Reference;
 		 * <strong>Important:</strong> Inspect ${entity.name}LocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 		 * </p>
 		 *
-		 * @param ${entity.variableName} the ${entity.humanName}
+		<#if entity.versionEntity??>
+		 	* @param draft${entity.name} the ${entity.humanName}
+		<#else>
+			* @param ${entity.variableName} the ${entity.humanName}
+		</#if>
 		 * @return the ${entity.humanName} that was updated
 		<#list serviceBaseExceptions as exception>
 		 * @throws ${exception}

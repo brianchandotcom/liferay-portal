@@ -4192,7 +4192,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	macro viewCannotAddFragmentToOutsideOfDropZone {
 		WaitForPageLoad();
 
-		PageEditor.gotoTab(tabName = "Fragments");
+		Navigator.gotoNavTab(navTab = "Fragments");
 
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 

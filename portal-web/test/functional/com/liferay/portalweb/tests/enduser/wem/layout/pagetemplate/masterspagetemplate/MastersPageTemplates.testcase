@@ -1265,7 +1265,7 @@ definition {
 		task ("Wait for page load and All the fragments in Basic Components are visible") {
 			WaitForPageLoad();
 
-			PageEditor.gotoTab(tabName = "Fragments");
+			Navigator.gotoNavTab(navTab = "Fragments");
 
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 

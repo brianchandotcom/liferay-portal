@@ -34,6 +34,7 @@
 		<column name="subject" type="String" />
 		<column name="to" type="String" />
 		<column name="toName" type="String" />
+		<column name="status" type="int" />
 
 		<!-- Finder methods -->
 
@@ -45,6 +46,9 @@
 		</finder>
 		<finder name="LtSentDate" return-type="Collection">
 			<finder-column comparator="&lt;" name="sentDate" />
+		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="NotificationQueueEntryAttachment" remote-service="false" table="NQueueEntryAttachment" uuid="false">

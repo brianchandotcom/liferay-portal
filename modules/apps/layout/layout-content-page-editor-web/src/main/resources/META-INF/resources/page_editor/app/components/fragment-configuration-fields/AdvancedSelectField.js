@@ -59,6 +59,28 @@ export function AdvancedSelectField({
 		onValueSelect(field.name, nextValue);
 	};
 
+	const handleInputBlur = (event) => {
+		if (
+			!event.target.value ||
+			!isValidStyleValue(field.cssProperty, event.target.value)
+		) {
+			setNextValue(value);
+			setError(true);
+
+			setTimeout(() => setError(false), 1000);
+
+			return;
+		}
+
+		onValueSelect(field.name, event.target.value);
+	};
+
+	const handleInputKeyDown = (event) => {
+		if (event.key === 'Enter') {
+			handleInputBlur(event);
+		}
+	};
+
 	return (
 		<div
 			className={classNames('page-editor__select-field', {
@@ -83,27 +105,11 @@ export function AdvancedSelectField({
 			) : (
 				<InputWithIcon
 					field={field}
-					onBlur={(event) => {
-						if (
-							!event.target.value ||
-							!isValidStyleValue(
-								field.cssProperty,
-								event.target.value
-							)
-						) {
-							setNextValue(value);
-							setError(true);
-
-							setTimeout(() => setError(false), 1000);
-
-							return;
-						}
-
-						onValueSelect(field.name, event.target.value);
-					}}
+					onBlur={handleInputBlur}
 					onChange={(event) => {
 						setNextValue(event.target.value);
 					}}
+					onKeyDown={handleInputKeyDown}
 					value={nextValue}
 				/>
 			)}
@@ -286,7 +292,7 @@ const SingleSelectWithIcon = ({
 	);
 };
 
-const InputWithIcon = ({field, onBlur, onChange, value}) => {
+const InputWithIcon = ({field, onBlur, onChange, onKeyDown, value}) => {
 	const inputId = useId();
 
 	return (
@@ -298,6 +304,7 @@ const InputWithIcon = ({field, onBlur, onChange, value}) => {
 					insetBefore={Boolean(field.icon)}
 					onBlur={onBlur}
 					onChange={onChange}
+					onKeyDown={onKeyDown}
 					sizing="sm"
 					value={value}
 				/>

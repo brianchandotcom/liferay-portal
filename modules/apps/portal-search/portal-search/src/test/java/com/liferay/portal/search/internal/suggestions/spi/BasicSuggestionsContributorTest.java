@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.internal.suggestions.SuggestionBuilderFactoryImpl;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -76,6 +77,7 @@ public class BasicSuggestionsContributorTest {
 		MockitoAnnotations.initMocks(this);
 
 		_basicSuggestionsContributor = new BasicSuggestionsContributor();
+		_suggestionBuilderFactory = new SuggestionBuilderFactoryImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			_basicSuggestionsContributor, "_assetEntryLocalService",
@@ -369,12 +371,6 @@ public class BasicSuggestionsContributorTest {
 	private void _setUpSuggestionBuilderFactory() {
 		SuggestionBuilder suggestionBuilder = Mockito.mock(
 			SuggestionBuilder.class);
-
-		Mockito.doReturn(
-			suggestionBuilder
-		).when(
-			_suggestionBuilderFactory
-		).builder();
 
 		Mockito.doReturn(
 			suggestionBuilder

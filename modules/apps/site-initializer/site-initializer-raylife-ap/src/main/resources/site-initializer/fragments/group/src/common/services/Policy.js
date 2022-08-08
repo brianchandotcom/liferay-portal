@@ -12,35 +12,20 @@
  * details.
  */
 
+import {
+	currentDate,
+	currentDateString,
+	currentYear,
+	lastYear,
+	lastYearSixMonthsAgoPeriod,
+	oneYearAgoDate,
+	sixMonthsAgoDate,
+	threeMonthsAgoDate,
+} from '../utils/dateFormatter';
 import {axios} from './liferay/api';
 
 const DeliveryAPI = 'o/c/raylifepolicies';
-
-function convertDateToString(date) {
-	const newDate = date.toISOString().substring(0, 10);
-
-	return newDate;
-}
-
-const currentDate = convertDateToString(new Date());
-
-const currentYear = new Date().getFullYear();
-
-const lastYear = currentYear - 1;
-
-const sixMonthsAgo = new Date().getMonth() - 5;
-
-const oneYearAgoDate = convertDateToString(
-	new Date(new Date().setFullYear(lastYear))
-);
-
-const sixMonthsAgoDate = convertDateToString(
-	new Date(new Date().setMonth(sixMonthsAgo))
-).split('-');
-
-const lastYearSixMonthsAgoPeriod = convertDateToString(
-	new Date(new Date(new Date().setFullYear(lastYear)).setMonth(sixMonthsAgo))
-).split('-');
+const userId = Liferay.ThemeDisplay.getUserId();
 
 export function getPoliciesStatus(totalCount) {
 	return new Promise((resolve) => {
@@ -75,5 +60,29 @@ export function getPoliciesUntilCurrentMonth() {
 export function getPoliciesUntilCurrentMonthLastYear() {
 	return axios.get(
 		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and (startDate le ${oneYearAgoDate} and startDate ge ${lastYear}-01-01)&pageSize=200`
+	);
+}
+
+export function getPoliciesForSalesGoalCurrentMonth() {
+	return axios.get(
+		`${DeliveryAPI}/?fields=boundDate,termPremium&pageSize=200&filter=policyStatus ne 'declined' and userId eq '${userId}' and boundDate le ${currentDateString[0]}-${currentDateString[1]}-31 and boundDate ge ${currentDateString[0]}-${currentDateString[1]}-01`
+	);
+}
+
+export function getPoliciesForSalesGoalThreeMonths() {
+	return axios.get(
+		`${DeliveryAPI}/?fields=boundDate,termPremium&pageSize=200&filter=policyStatus ne 'declined' and userId eq '${userId}' and boundDate le ${currentDateString[0]}-${currentDateString[1]}-31 and boundDate ge ${threeMonthsAgoDate[0]}-${threeMonthsAgoDate[1]}-01`
+	);
+}
+
+export function getPoliciesForSalesGoalSixMonths() {
+	return axios.get(
+		`${DeliveryAPI}/?fields=boundDate,termPremium&pageSize=200&filter=policyStatus ne 'declined' and userId eq '${userId}' and boundDate le ${currentDateString[0]}-${currentDateString[1]}-31 and boundDate ge ${sixMonthsAgoDate[0]}-${sixMonthsAgoDate[1]}-01`
+	);
+}
+
+export function getPoliciesForSalesGoalUntilCurrentMonth() {
+	return axios.get(
+		`${DeliveryAPI}/?fields=boundDate,termPremium&pageSize=200&filter=policyStatus ne 'declined' and userId eq '${userId}' and boundDate le ${currentDateString[0]}-${currentDateString[1]}-31 and boundDate ge ${currentYear}-01-01`
 	);
 }

@@ -18,7 +18,6 @@ import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemServiceUtil;
 import com.liferay.commerce.wish.list.service.persistence.CommerceWishListItemPersistence;
-import com.liferay.commerce.wish.list.service.persistence.CommerceWishListPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -27,8 +26,6 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
-import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -56,72 +53,6 @@ public abstract class CommerceWishListItemServiceBaseImpl
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceWishListItemService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceWishListItemServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce wish list local service.
-	 *
-	 * @return the commerce wish list local service
-	 */
-	public com.liferay.commerce.wish.list.service.CommerceWishListLocalService
-		getCommerceWishListLocalService() {
-
-		return commerceWishListLocalService;
-	}
-
-	/**
-	 * Sets the commerce wish list local service.
-	 *
-	 * @param commerceWishListLocalService the commerce wish list local service
-	 */
-	public void setCommerceWishListLocalService(
-		com.liferay.commerce.wish.list.service.CommerceWishListLocalService
-			commerceWishListLocalService) {
-
-		this.commerceWishListLocalService = commerceWishListLocalService;
-	}
-
-	/**
-	 * Returns the commerce wish list remote service.
-	 *
-	 * @return the commerce wish list remote service
-	 */
-	public com.liferay.commerce.wish.list.service.CommerceWishListService
-		getCommerceWishListService() {
-
-		return commerceWishListService;
-	}
-
-	/**
-	 * Sets the commerce wish list remote service.
-	 *
-	 * @param commerceWishListService the commerce wish list remote service
-	 */
-	public void setCommerceWishListService(
-		com.liferay.commerce.wish.list.service.CommerceWishListService
-			commerceWishListService) {
-
-		this.commerceWishListService = commerceWishListService;
-	}
-
-	/**
-	 * Returns the commerce wish list persistence.
-	 *
-	 * @return the commerce wish list persistence
-	 */
-	public CommerceWishListPersistence getCommerceWishListPersistence() {
-		return commerceWishListPersistence;
-	}
-
-	/**
-	 * Sets the commerce wish list persistence.
-	 *
-	 * @param commerceWishListPersistence the commerce wish list persistence
-	 */
-	public void setCommerceWishListPersistence(
-		CommerceWishListPersistence commerceWishListPersistence) {
-
-		this.commerceWishListPersistence = commerceWishListPersistence;
-	}
 
 	/**
 	 * Returns the commerce wish list item local service.
@@ -213,154 +144,6 @@ public abstract class CommerceWishListItemServiceBaseImpl
 		this.counterLocalService = counterLocalService;
 	}
 
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name remote service.
-	 *
-	 * @return the class name remote service
-	 */
-	public com.liferay.portal.kernel.service.ClassNameService
-		getClassNameService() {
-
-		return classNameService;
-	}
-
-	/**
-	 * Sets the class name remote service.
-	 *
-	 * @param classNameService the class name remote service
-	 */
-	public void setClassNameService(
-		com.liferay.portal.kernel.service.ClassNameService classNameService) {
-
-		this.classNameService = classNameService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-
-		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.kernel.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.kernel.service.UserService userService) {
-
-		this.userService = userService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
 	public void afterPropertiesSet() {
 		_setServiceUtilService(commerceWishListItemService);
 	}
@@ -430,22 +213,6 @@ public abstract class CommerceWishListItemServiceBaseImpl
 	}
 
 	@BeanReference(
-		type = com.liferay.commerce.wish.list.service.CommerceWishListLocalService.class
-	)
-	protected
-		com.liferay.commerce.wish.list.service.CommerceWishListLocalService
-			commerceWishListLocalService;
-
-	@BeanReference(
-		type = com.liferay.commerce.wish.list.service.CommerceWishListService.class
-	)
-	protected com.liferay.commerce.wish.list.service.CommerceWishListService
-		commerceWishListService;
-
-	@BeanReference(type = CommerceWishListPersistence.class)
-	protected CommerceWishListPersistence commerceWishListPersistence;
-
-	@BeanReference(
 		type = com.liferay.commerce.wish.list.service.CommerceWishListItemLocalService.class
 	)
 	protected
@@ -463,40 +230,5 @@ public abstract class CommerceWishListItemServiceBaseImpl
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
-	@ServiceReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserService.class
-	)
-	protected com.liferay.portal.kernel.service.UserService userService;
-
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 
 }

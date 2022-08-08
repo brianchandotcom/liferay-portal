@@ -48,17 +48,9 @@ html#{$cadmin-selector} #{$selector} {
 				}
 			}
 
-			&#{$selector}--with-sidebar {
-				margin-left: $sidebarButtonWidth;
-			}
-
 			&#{$selector}--with-sidebar-open {
 				#{$selector}__label-width {
 					right: $sidebarContentWidth;
-				}
-
-				@include media-breakpoint-up(sm) {
-					margin-left: $sidebarButtonWidth + $sidebarContentWidth;
 				}
 			}
 

@@ -15,7 +15,9 @@
 package com.liferay.portal.upgrade.internal.registry;
 
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
@@ -92,6 +94,70 @@ public class UpgradeStepRegistryTest {
 		Assert.assertEquals(
 			new UpgradeInfo("0.0.0", "1.0.0", 0, testUpgradeStep),
 			upgradeInfos.get(0));
+	}
+
+	@Test
+	public void testCreateUpgradeInfosWithPostUpgradeSteps() {
+		_registerAndCheckPreAndPostUpgradeSteps(
+			new UpgradeStep[0],
+			new UpgradeStep[] {new TestUpgradeStep(), new TestUpgradeStep()});
+	}
+
+	@Test
+	public void testCreateUpgradeInfosWithPreAndPostUpgradeSteps() {
+		_registerAndCheckPreAndPostUpgradeSteps(
+			new UpgradeStep[] {new TestUpgradeStep()},
+			new UpgradeStep[] {new TestUpgradeStep()});
+	}
+
+	@Test
+	public void testCreateUpgradeInfosWithPreUpgradeSteps() {
+		_registerAndCheckPreAndPostUpgradeSteps(
+			new UpgradeStep[] {new TestUpgradeStep(), new TestUpgradeStep()},
+			new UpgradeStep[0]);
+	}
+
+	private void _registerAndCheckPreAndPostUpgradeSteps(
+		UpgradeStep[] preUpgradeSteps, UpgradeStep[] postUpgradeSteps) {
+
+		UpgradeProcess upgradeProcess = new UpgradeProcess() {
+
+			@Override
+			protected void doUpgrade() throws Exception {
+			}
+
+			@Override
+			protected UpgradeStep[] getPostUpgradeSteps() {
+				return postUpgradeSteps;
+			}
+
+			@Override
+			protected UpgradeStep[] getPreUpgradeSteps() {
+				return preUpgradeSteps;
+			}
+
+		};
+
+		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+
+		upgradeStepRegistry.register("0.0.0", "1.0.0", upgradeProcess);
+
+		UpgradeStep[] sortedUpgradeSteps = ArrayUtil.append(
+			preUpgradeSteps, new UpgradeStep[] {upgradeProcess},
+			postUpgradeSteps);
+
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
+
+		Assert.assertEquals(upgradeInfos.toString(), 3, upgradeInfos.size());
+		Assert.assertEquals(
+			Arrays.asList(
+				new UpgradeInfo(
+					"0.0.0", "1.0.0.step-2", 0, sortedUpgradeSteps[0]),
+				new UpgradeInfo(
+					"1.0.0.step-2", "1.0.0.step-1", 0, sortedUpgradeSteps[1]),
+				new UpgradeInfo(
+					"1.0.0.step-1", "1.0.0", 0, sortedUpgradeSteps[2])),
+			upgradeInfos);
 	}
 
 	private static class TestUpgradeStep implements UpgradeStep {

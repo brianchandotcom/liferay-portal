@@ -16,9 +16,11 @@ package com.liferay.commerce.payment.service.impl;
 
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifier;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.payment.service.base.CommercePaymentMethodGroupRelQualifierServiceBaseImpl;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -223,7 +225,7 @@ public class CommercePaymentMethodGroupRelQualifierServiceImpl
 		throws PortalException {
 
 		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
-			commercePaymentMethodGroupRelLocalService.
+			_commercePaymentMethodGroupRelLocalService.
 				getCommercePaymentMethodGroupRel(
 					commercePaymentMethodGroupRelId);
 
@@ -244,5 +246,9 @@ public class CommercePaymentMethodGroupRelQualifierServiceImpl
 
 	@ServiceReference(type = CommerceChannelLocalService.class)
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@BeanReference(type = CommercePaymentMethodGroupRelLocalService.class)
+	private CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelLocalService;
 
 }

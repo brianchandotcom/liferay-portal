@@ -35,6 +35,8 @@ import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -56,7 +58,7 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 				long commercePaymentMethodGroupRelId)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		_validate(classNameId, classPK, commercePaymentMethodGroupRelId);
 
@@ -65,7 +67,7 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 				commercePaymentMethodGroupRelQualifierPersistence.create(
 					counterLocalService.increment());
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		commercePaymentMethodGroupRelQualifier.setCompanyId(
 			user.getCompanyId());
@@ -140,7 +142,7 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 		List<CommercePaymentMethodGroupRelQualifier>
 			commercePaymentMethodGroupRelQualifiers =
 				commercePaymentMethodGroupRelQualifierPersistence.findByC_C(
-					classNameLocalService.getClassNameId(className),
+					_classNameLocalService.getClassNameId(className),
 					commercePaymentMethodGroupRelId);
 
 		for (CommercePaymentMethodGroupRelQualifier
@@ -160,7 +162,7 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 			long commercePaymentMethodGroupRelId) {
 
 		return commercePaymentMethodGroupRelQualifierPersistence.fetchByC_C_C(
-			classNameLocalService.getClassNameId(className), classPK,
+			_classNameLocalService.getClassNameId(className), classPK,
 			commercePaymentMethodGroupRelId);
 	}
 
@@ -222,7 +224,7 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 			String className, long commercePaymentMethodGroupRelId) {
 
 		return commercePaymentMethodGroupRelQualifierPersistence.findByC_C(
-			classNameLocalService.getClassNameId(className),
+			_classNameLocalService.getClassNameId(className),
 			commercePaymentMethodGroupRelId);
 	}
 
@@ -300,7 +302,8 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 					).and(
 						CommercePaymentMethodGroupRelQualifierTable.INSTANCE.
 							classNameId.eq(
-								classNameLocalService.getClassNameId(className))
+								_classNameLocalService.getClassNameId(
+									className))
 					).and(
 						() -> {
 							if (Validator.isNotNull(keywords)) {
@@ -331,7 +334,13 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 		}
 	}
 
+	@ServiceReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
 	@ServiceReference(type = CustomSQL.class)
 	private CustomSQL _customSQL;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

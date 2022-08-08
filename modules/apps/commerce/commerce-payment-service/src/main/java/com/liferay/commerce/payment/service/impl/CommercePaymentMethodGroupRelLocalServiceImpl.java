@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ImageLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -97,7 +99,7 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 
 		commercePaymentMethodGroupRel.setGroupId(groupId);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		commercePaymentMethodGroupRel.setCompanyId(user.getCompanyId());
 		commercePaymentMethodGroupRel.setUserId(user.getUserId());
@@ -119,7 +121,7 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 			commercePaymentMethodGroupRelPersistence.update(
 				commercePaymentMethodGroupRel);
 
-		resourceLocalService.addResources(
+		_resourceLocalService.addResources(
 			user.getCompanyId(), groupId, user.getUserId(),
 			CommercePaymentMethodGroupRel.class.getName(),
 			commercePaymentMethodGroupRel.getCommercePaymentMethodGroupRelId(),
@@ -169,7 +171,7 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 				commercePaymentMethodGroupRel.
 					getCommercePaymentMethodGroupRelId());
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			commercePaymentMethodGroupRel, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		return commercePaymentMethodGroupRel;
@@ -413,5 +415,11 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 
 	@ServiceReference(type = ImageLocalService.class)
 	private ImageLocalService _imageLocalService;
+
+	@ServiceReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

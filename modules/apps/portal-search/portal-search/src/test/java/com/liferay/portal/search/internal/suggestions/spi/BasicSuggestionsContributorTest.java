@@ -29,11 +29,14 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.internal.suggestions.SuggestionBuilderFactoryImpl;
+import com.liferay.portal.search.internal.suggestions.SuggestionsContributorResultsBuilderFactoryImpl;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -42,12 +45,10 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.suggestions.Suggestion;
 import com.liferay.portal.search.suggestions.SuggestionBuilder;
-import com.liferay.portal.search.suggestions.SuggestionBuilderFactory;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
-import com.liferay.portal.search.suggestions.SuggestionsContributorResultsBuilder;
-import com.liferay.portal.search.suggestions.SuggestionsContributorResultsBuilderFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 import javax.portlet.MutableRenderParameters;
@@ -77,7 +78,8 @@ public class BasicSuggestionsContributorTest {
 		MockitoAnnotations.initMocks(this);
 
 		_basicSuggestionsContributor = new BasicSuggestionsContributor();
-		_suggestionBuilderFactory = new SuggestionBuilderFactoryImpl();
+		_suggestionsContributorConfiguration =
+			new SuggestionsContributorConfiguration();
 
 		ReflectionTestUtil.setFieldValue(
 			_basicSuggestionsContributor, "_assetEntryLocalService",
@@ -92,11 +94,11 @@ public class BasicSuggestionsContributorTest {
 			_basicSuggestionsContributor, "_searcher", _searcher);
 		ReflectionTestUtil.setFieldValue(
 			_basicSuggestionsContributor, "_suggestionBuilderFactory",
-			_suggestionBuilderFactory);
+			new SuggestionBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			_basicSuggestionsContributor,
 			"_suggestionsContributorResultsBuilderFactory",
-			_suggestionsContributorResultsBuilderFactory);
+			new SuggestionsContributorResultsBuilderFactoryImpl());
 	}
 
 	@Test
@@ -146,17 +148,23 @@ public class BasicSuggestionsContributorTest {
 			liferayPortletURL
 		).toString();
 
+		_suggestionsContributorConfiguration.setDisplayGroupName("test");
+		
+		_suggestionsContributorConfiguration.setAttributes(HashMapBuilder.<String, Object>put(
+			"fields", ListUtil.fromArray("field")
+		).put(
+			"sxpBlueprintId", RandomTestUtil.randomLong()
+		).put(
+			"textField", "test"
+		).build());
+
 		SuggestionsContributorResults suggestionsContributorResults =
-			Mockito.mock(SuggestionsContributorResults.class);
-
-		_setUpSuggestionsContributorResultsBuilderFactory(
-			suggestionsContributorResults);
-
-		Assert.assertEquals(
-			suggestionsContributorResults,
 			_basicSuggestionsContributor.getSuggestionsContributorResults(
 				_liferayPortletRequest, liferayPortletResponse, _searchContext,
-				Mockito.mock(SuggestionsContributorConfiguration.class)));
+				_suggestionsContributorConfiguration);
+
+		Assert.assertEquals(
+			"test", suggestionsContributorResults.getDisplayGroupName());
 
 		Mockito.verify(
 			_assetRendererFactory, Mockito.times(1)
@@ -178,17 +186,13 @@ public class BasicSuggestionsContributorTest {
 		_setUpSuggestionBuilderFactory();
 
 		SuggestionsContributorResults suggestionsContributorResults =
-			Mockito.mock(SuggestionsContributorResults.class);
-
-		_setUpSuggestionsContributorResultsBuilderFactory(
-			suggestionsContributorResults);
-
-		Assert.assertEquals(
-			suggestionsContributorResults,
 			_basicSuggestionsContributor.getSuggestionsContributorResults(
 				_liferayPortletRequest,
 				Mockito.mock(LiferayPortletResponse.class), _searchContext,
-				Mockito.mock(SuggestionsContributorConfiguration.class)));
+				_suggestionsContributorConfiguration);
+
+		Assert.assertEquals(
+			"test", suggestionsContributorResults.getDisplayGroupName());
 
 		Mockito.verify(
 			_assetRendererFactory, Mockito.never()
@@ -285,12 +289,10 @@ public class BasicSuggestionsContributorTest {
 		).getKeywords();
 
 		Mockito.doReturn(
-			"test"
+			LocaleUtil.US
 		).when(
 			_searchContext
-		).getAttribute(
-			Mockito.anyString()
-		);
+		).getLocale();
 	}
 
 	private void _setUpSearcher(long totalHits) {
@@ -419,42 +421,6 @@ public class BasicSuggestionsContributorTest {
 		);
 	}
 
-	private void _setUpSuggestionsContributorResultsBuilderFactory(
-		SuggestionsContributorResults suggestionsContributorResults) {
-
-		SuggestionsContributorResultsBuilder
-			suggestionsContributorResultsBuilder = Mockito.mock(
-				SuggestionsContributorResultsBuilder.class);
-
-		Mockito.doReturn(
-			suggestionsContributorResultsBuilder
-		).when(
-			_suggestionsContributorResultsBuilderFactory
-		).builder();
-
-		Mockito.doReturn(
-			suggestionsContributorResults
-		).when(
-			suggestionsContributorResultsBuilder
-		).build();
-
-		Mockito.doReturn(
-			suggestionsContributorResultsBuilder
-		).when(
-			suggestionsContributorResultsBuilder
-		).displayGroupName(
-			Mockito.anyString()
-		);
-
-		Mockito.doReturn(
-			suggestionsContributorResultsBuilder
-		).when(
-			suggestionsContributorResultsBuilder
-		).suggestions(
-			Mockito.anyList()
-		);
-	}
-
 	@Mock
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -485,11 +451,7 @@ public class BasicSuggestionsContributorTest {
 	private ServiceTrackerMap<String, AssetRendererFactory<?>>
 		_serviceTrackerMap;
 
-	@Mock
-	private SuggestionBuilderFactory _suggestionBuilderFactory;
-
-	@Mock
-	private SuggestionsContributorResultsBuilderFactory
-		_suggestionsContributorResultsBuilderFactory;
+	private SuggestionsContributorConfiguration
+		_suggestionsContributorConfiguration;
 
 }

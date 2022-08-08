@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>PRODUCT</td>
-	<td>//button[contains(@class, 'btn-borderless') and contains(text(), '${product}')]</td>
+	<td>//button[contains(@class, 'btn-borderless') and (text()='${product}')]</td>
 	<td></td>
 </tr>
 <tr>

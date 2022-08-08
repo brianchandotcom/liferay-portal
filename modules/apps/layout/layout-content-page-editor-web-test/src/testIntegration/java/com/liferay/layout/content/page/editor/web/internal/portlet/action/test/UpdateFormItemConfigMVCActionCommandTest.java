@@ -181,19 +181,16 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			String formItemId = addItemJSONObject.getString("addedItemId");
 
-			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
 				_getMockLiferayPortletActionRequest(
 					JSONUtil.put(
 						"classNameId", classNameId
 					).put(
 						"classTypeId", "0"
 					).toString(),
-					formItemId, _layout);
-
-			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
-				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
-				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				mockLiferayPortletActionRequest,
+					formItemId, _layout),
 				new MockLiferayPortletActionResponse());
 
 			_assertUpdateFormStyledLayoutStructureItemConfigJSONObject(
@@ -239,19 +236,16 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			String formItemId = addItemJSONObject.getString("addedItemId");
 
-			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
 				_getMockLiferayPortletActionRequest(
 					JSONUtil.put(
 						"classNameId", classNameId
 					).put(
 						"classTypeId", "0"
 					).toString(),
-					formItemId, _layout);
-
-			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
-				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
-				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				mockLiferayPortletActionRequest,
+					formItemId, _layout),
 				new MockLiferayPortletActionResponse());
 
 			_assertUpdateFormStyledLayoutStructureItemConfigJSONObject(
@@ -294,19 +288,16 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			String formItemId = jsonObject.getString("addedItemId");
 
-			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
 				_getMockLiferayPortletActionRequest(
 					JSONUtil.put(
 						"classNameId", classNameId
 					).put(
 						"classTypeId", "0"
 					).toString(),
-					formItemId, _layout);
-
-			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
-				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
-				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				mockLiferayPortletActionRequest,
+					formItemId, _layout),
 				new MockLiferayPortletActionResponse());
 
 			_assertUpdateFormStyledLayoutStructureItemConfigJSONObject(
@@ -345,19 +336,16 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			String formItemId = addItemJSONObject.getString("addedItemId");
 
-			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
 				_getMockLiferayPortletActionRequest(
 					JSONUtil.put(
 						"classNameId", classNameId
 					).put(
 						"classTypeId", "0"
 					).toString(),
-					formItemId, _layout);
-
-			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
-				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
-				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				mockLiferayPortletActionRequest,
+					formItemId, _layout),
 				new MockLiferayPortletActionResponse());
 
 			_assertUpdateFormStyledLayoutStructureItemConfigJSONObject(
@@ -401,7 +389,9 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				classNameId, _INFO_FIELDS.length, formItemId, _INFO_FIELDS,
 				false, false);
 
-			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
 				_getMockLiferayPortletActionRequest(
 					JSONUtil.put(
 						"successMessage",
@@ -412,12 +402,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 									LocaleUtil.getMostRelevantLocale()),
 								RandomTestUtil.randomString()))
 					).toString(),
-					formItemId, _layout);
-
-			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
-				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
-				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				mockLiferayPortletActionRequest,
+					formItemId, _layout),
 				new MockLiferayPortletActionResponse());
 
 			_assertUpdateFormStyledLayoutStructureItemConfigJSONObject(
@@ -460,19 +445,16 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				classNameId, _INFO_FIELDS.length, formItemId, _INFO_FIELDS,
 				false, false);
 
-			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
 				_getMockLiferayPortletActionRequest(
 					JSONUtil.put(
 						"classNameId", "0"
 					).put(
 						"classTypeId", "0"
 					).toString(),
-					formItemId, _layout);
-
-			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
-				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
-				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				mockLiferayPortletActionRequest,
+					formItemId, _layout),
 				new MockLiferayPortletActionResponse());
 
 			_assertUpdateFormStyledLayoutStructureItemConfigJSONObject(

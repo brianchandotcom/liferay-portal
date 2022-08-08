@@ -162,6 +162,13 @@
 			"tabOrder": 6
 		},
 		{
+			"accountKey": "ERC-012",
+			"hasActivation": true,
+			"menuOrder": 7,
+			"name": "Portal",
+			"tabOrder": 4
+		},
+		{
 			"accountKey": "ERC-013",
 			"hasActivation": true,
 			"menuOrder": 3,

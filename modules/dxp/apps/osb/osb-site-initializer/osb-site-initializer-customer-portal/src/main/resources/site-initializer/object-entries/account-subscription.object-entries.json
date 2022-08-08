@@ -251,6 +251,16 @@
 			"subscriptionStatus": "Active"
 		},
 		{
+			"accountKey": "ERC-012",
+			"accountSubscriptionGroupERC": "ERC-012_portal",
+			"endDate": "2022-12-31 00:00:00.0",
+			"instanceSize": "",
+			"name": "Service Partnership",
+			"quantity": 1,
+			"startDate": "2021-01-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
 			"accountKey": "ERC-013",
 			"accountSubscriptionGroupERC": "ERC-013_dxp",
 			"endDate": "2024-01-31 00:00:00.0",

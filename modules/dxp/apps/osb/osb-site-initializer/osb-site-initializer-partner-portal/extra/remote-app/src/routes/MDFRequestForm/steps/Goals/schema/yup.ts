@@ -9,21 +9,24 @@
  * distribution rights of the Software.
  */
 
-import * as Yup from 'yup';
+import {array, object, string} from 'yup';
 
-const yup = Yup.object({
-	country: Yup.string().required('Required'),
-	liferayBusinessSalesGoals: Yup.array()
+const goalsSchema = object({
+	country: object({
+		key: string().defined(),
+		name: string().defined(),
+	}).required('Required'),
+	liferayBusinessSalesGoals: array()
 		.min(1, 'Required')
 		.max(3, 'You have exceed the choose limit'),
-	overallCampaign: Yup.string()
+	overallCampaign: string()
 		.max(350, 'You have exceeded the character limit')
 		.required('Required'),
-	r_company_accountEntryId: Yup.string().required('Required'),
-	targetsAudienceRole: Yup.array().min(1, 'Required'),
-	targetsMarket: Yup.array()
+	r_company_accountEntryId: string().required('Required'),
+	targetsAudienceRole: array().min(1, 'Required'),
+	targetsMarket: array()
 		.min(1, 'Required')
 		.max(3, 'You have exceed the choose limit'),
 });
 
-export default yup;
+export default goalsSchema;

@@ -34,6 +34,19 @@ const Goals = ({
 		MDFRequest
 	>();
 
+	const countryOptions = fieldEntries[LiferayPicklistName.COUNTRIES];
+
+	const onCountrySelected = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const countrySelected = countryOptions.find(
+			(countryOption) => countryOption.value === event.target.value
+		);
+
+		formikHelpers.setFieldValue('country', {
+			key: countrySelected?.value,
+			name: countrySelected?.label,
+		});
+	};
+
 	return (
 		<PRMForm name="Goals" title="Campaign Information">
 			<PRMForm.Section title="Partner">
@@ -50,6 +63,7 @@ const Goals = ({
 						component={PRMForm.Select}
 						label="Country"
 						name="country"
+						onChange={onCountrySelected}
 						options={fieldEntries[LiferayPicklistName.COUNTRIES]}
 						required
 					/>

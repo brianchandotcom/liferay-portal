@@ -17,12 +17,12 @@ import {RequestStatus} from '../../common/enums/requestStatus';
 import MDFRequest from '../../common/interfaces/mdfRequest';
 import {StepType} from './enums/stepType';
 import Goals from './steps/Goals';
-import yup from './steps/Goals/schema/yup';
+import goalsSchema from './steps/Goals/schema/yup';
 import isObjectEmpty from './utils/isObjectEmpty';
 
 const initialFormValues: MDFRequest = {
 	activities: [],
-	country: '',
+	country: {},
 	liferayBusinessSalesGoals: [],
 	overallCampaign: '',
 	r_additionalOption_mdfRequest: '',
@@ -80,7 +80,7 @@ const MDFRequestForm = () => {
 				onCancel={onCancel}
 				onContinue={onContinue}
 				onSaveAsDraft={onSaveAsDraft}
-				validationSchema={yup}
+				validationSchema={goalsSchema}
 			/>
 		),
 	};

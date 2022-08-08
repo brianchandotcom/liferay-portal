@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Object Runtime API
 Bundle-SymbolicName: com.liferay.object.runtime.api
-Bundle-Version: 1.0.2
+Bundle-Version: 1.1.0
 Export-Package:\
+	com.liferay.object.runtime.scripting.exception,\
 	com.liferay.object.runtime.scripting.executor,\
 	com.liferay.object.runtime.scripting.validator

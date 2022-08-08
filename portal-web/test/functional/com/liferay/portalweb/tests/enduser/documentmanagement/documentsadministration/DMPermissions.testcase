@@ -1190,12 +1190,7 @@ definition {
 			groupName = "Moon Rocks 101",
 			layoutName = "Moon Rocks Page");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.add(roleTitle = "Regular Role Name");
+		JSONRole.addRegularRole(roleTitle = "Regular Role Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1217,25 +1212,13 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Moon Rocks 101");
+		JSONUser.addUserToSite(
+			groupName = "Moon Rocks 101",
+			userEmailAddress = "userea@liferay.com");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Regular Role Name",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutPG();
 

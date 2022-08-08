@@ -32,6 +32,9 @@ module.exports = {
 					'@liferay/address-web': {
 						'/': '*',
 					},
+					'@liferay/content-dashboard-web': {
+						'/': '*',
+					},
 					'@liferay/document-library-preview-css': {
 						'/': '*',
 					},

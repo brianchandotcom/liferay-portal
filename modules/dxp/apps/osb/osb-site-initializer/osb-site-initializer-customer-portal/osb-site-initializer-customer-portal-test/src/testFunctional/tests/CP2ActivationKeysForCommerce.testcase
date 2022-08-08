@@ -88,55 +88,33 @@ definition {
 	@description = "LPS-146072 - Verify that when selecting the 'Commerce' product the 'Activation Keys' page opens"
 	@priority = "4"
 	test CanViewActivationKeysPage {
-		task ("Assert that project has DPX 7.4") {
-			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
+		var accountsList = "7.4,7.3,7.2,7.1,7.0";
 
-			CP2NavigationMenu.goToProductActivation();
+		for (var account : list "${accountsList}") {
+			task ("Go to Test Account") {
+				CustomerPortal.enterOnProject(title = "Test Account QA ${account}");
 
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+				CP2NavigationMenu.goToProductActivation();
+			}
+			
+			task ("Assert that project has DXP ${account}") {
 
-			CP2ActivationKeys.assertDropDownSelection(option = "7.4");
+				CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+				CP2ActivationKeys.assertDropDownSelection(option = "${account}");
+			}
+
+			task ("Assert access to Commerce Activation Key Page") {
+				CP2NavigationMenu.clickOnProductButton(product = "Commerce");
+
+				CustomerPortal.assertPageTitle(title = "${pageTitle}");
+			}
+
+			task ("Go to Customer Portal") {
+				ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			}
 		}
-
-		task ("Assert access to Commerce Activation Key Page") {
-			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
-
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
-		}
-
-		task ("Go to Customer Portal") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("Assert that project has DPX 7.3") {
-			CustomerPortal.enterOnProject(title = "Test Account QA 7.3");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-
-			CP2ActivationKeys.assertDropDownSelection(option = "7.3");
-		}
-
-		task ("Assert access to Commerce Activation Key Page") {
-			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
-
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
-		}
-
-		task ("Go to Customer Portal") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("Assert that project has DPX 7.2") {
-			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-
-			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
-		}
+	}
 
 		task ("Assert access to Commerce Activation Key Page") {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");

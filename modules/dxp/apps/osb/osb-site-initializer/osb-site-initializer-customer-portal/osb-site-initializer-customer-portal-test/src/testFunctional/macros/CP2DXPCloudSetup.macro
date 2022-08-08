@@ -189,7 +189,7 @@ definition {
 
 	macro typeAllSetupDXPCloudInfoFields {
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.projectId",
+			label = "projectId",
 			value = "001");
 
 		Select(
@@ -197,19 +197,19 @@ definition {
 			value1 = "Iowa, USA");
 
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].email",
+			label = "email",
 			value = "test@liferay.com");
 
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].firstName",
+			label = "firstName",
 			value = "FirstName");
 
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].lastName",
+			label = "lastName",
 			value = "LastName");
 
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].github",
+			label = "github",
 			value = "GitHubUser");
 	}
 

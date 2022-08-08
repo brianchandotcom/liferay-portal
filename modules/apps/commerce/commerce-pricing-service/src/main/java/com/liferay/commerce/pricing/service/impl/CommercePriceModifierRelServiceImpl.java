@@ -17,13 +17,17 @@ package com.liferay.commerce.pricing.service.impl;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
 import com.liferay.commerce.pricing.model.CommercePriceModifierRel;
+import com.liferay.commerce.pricing.service.CommercePriceModifierLocalService;
 import com.liferay.commerce.pricing.service.base.CommercePriceModifierRelServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -40,7 +44,7 @@ public class CommercePriceModifierRelServiceImpl
 		throws PortalException {
 
 		CommercePriceModifier commercePriceModifier =
-			commercePriceModifierLocalService.getCommercePriceModifier(
+			_commercePriceModifierLocalService.getCommercePriceModifier(
 				commercePriceModifierId);
 
 		_commercePriceListModelResourcePermission.check(
@@ -216,7 +220,7 @@ public class CommercePriceModifierRelServiceImpl
 		String className, long classPK) {
 
 		return commercePriceModifierRelPersistence.findByCN_CPK(
-			classNameLocalService.getClassNameId(className), classPK);
+			_classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
@@ -264,5 +268,12 @@ public class CommercePriceModifierRelServiceImpl
 				CommercePriceModifierServiceImpl.class,
 				"_commercePriceListModelResourcePermission",
 				CommercePriceList.class);
+
+	@ServiceReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = CommercePriceModifierLocalService.class)
+	private CommercePriceModifierLocalService
+		_commercePriceModifierLocalService;
 
 }

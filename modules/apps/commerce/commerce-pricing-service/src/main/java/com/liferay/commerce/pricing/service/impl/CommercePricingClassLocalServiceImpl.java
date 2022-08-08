@@ -18,8 +18,10 @@ import com.liferay.commerce.pricing.exception.CommercePricingClassTitleException
 import com.liferay.commerce.pricing.exception.NoSuchPricingClassException;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel;
+import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService;
 import com.liferay.commerce.pricing.service.base.CommercePricingClassLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,7 +40,9 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -84,7 +88,7 @@ public class CommercePricingClassLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		validate(titleMap);
 
@@ -113,7 +117,7 @@ public class CommercePricingClassLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(
+		_resourceLocalService.addModelResources(
 			commercePricingClass, serviceContext);
 
 		return commercePricingClass;
@@ -171,14 +175,14 @@ public class CommercePricingClassLocalServiceImpl
 		long commercePricingClassId =
 			commercePricingClass.getCommercePricingClassId();
 
-		commercePricingClassCPDefinitionRelLocalService.
+		_commercePricingClassCPDefinitionRelLocalService.
 			deleteCommercePricingClassCPDefinitionRels(commercePricingClassId);
 
 		commercePricingClassPersistence.remove(commercePricingClass);
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			commercePricingClass, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		// Expando
@@ -232,7 +236,7 @@ public class CommercePricingClassLocalServiceImpl
 	public long[] getCommercePricingClassByCPDefinition(long cpDefinitionId) {
 		List<CommercePricingClassCPDefinitionRel>
 			commercePricingClassCPDefinitionRels =
-				commercePricingClassCPDefinitionRelLocalService.
+				_commercePricingClassCPDefinitionRelLocalService.
 					getCommercePricingClassByCPDefinitionId(cpDefinitionId);
 
 		Stream<CommercePricingClassCPDefinitionRel> stream =
@@ -302,7 +306,7 @@ public class CommercePricingClassLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		CommercePricingClass commercePricingClass =
 			commercePricingClassPersistence.findByPrimaryKey(
@@ -456,7 +460,17 @@ public class CommercePricingClassLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePricingClassLocalServiceImpl.class);
 
+	@BeanReference(type = CommercePricingClassCPDefinitionRelLocalService.class)
+	private CommercePricingClassCPDefinitionRelLocalService
+		_commercePricingClassCPDefinitionRelLocalService;
+
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@ServiceReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

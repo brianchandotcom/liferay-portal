@@ -27,6 +27,7 @@ import com.liferay.commerce.pricing.exception.CommercePriceModifierTypeException
 import com.liferay.commerce.pricing.exception.DuplicateCommercePriceModifierException;
 import com.liferay.commerce.pricing.exception.NoSuchPriceModifierException;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
+import com.liferay.commerce.pricing.service.CommercePriceModifierRelLocalService;
 import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
 import com.liferay.commerce.pricing.service.base.CommercePriceModifierLocalServiceBaseImpl;
 import com.liferay.commerce.pricing.type.CommercePriceModifierType;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
@@ -132,7 +134,7 @@ public class CommercePriceModifierLocalServiceImpl
 
 		// Commerce price modifier
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		Date date = new Date();
 
@@ -273,7 +275,7 @@ public class CommercePriceModifierLocalServiceImpl
 
 		// Commerce price modifier rels
 
-		commercePriceModifierRelLocalService.deleteCommercePriceModifierRels(
+		_commercePriceModifierRelLocalService.deleteCommercePriceModifierRels(
 			commercePriceModifier.getCommercePriceModifierId());
 
 		// Commerce price modifier
@@ -405,7 +407,7 @@ public class CommercePriceModifierLocalServiceImpl
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		CommercePriceModifier commercePriceModifier =
 			commercePriceModifierPersistence.findByPrimaryKey(
@@ -416,7 +418,7 @@ public class CommercePriceModifierLocalServiceImpl
 		String currentTarget = commercePriceModifier.getTarget();
 
 		if (!currentTarget.equals(target)) {
-			commercePriceModifierRelLocalService.
+			_commercePriceModifierRelLocalService.
 				deleteCommercePriceModifierRels(
 					commercePriceModifier.getCommercePriceModifierId());
 		}
@@ -474,7 +476,7 @@ public class CommercePriceModifierLocalServiceImpl
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 		Date date = new Date();
 
 		CommercePriceModifier commercePriceModifier =
@@ -677,6 +679,10 @@ public class CommercePriceModifierLocalServiceImpl
 	@ServiceReference(type = AssetEntryLocalService.class)
 	private AssetEntryLocalService _assetEntryLocalService;
 
+	@BeanReference(type = CommercePriceModifierRelLocalService.class)
+	private CommercePriceModifierRelLocalService
+		_commercePriceModifierRelLocalService;
+
 	@ServiceReference(type = CommercePriceModifierTypeRegistry.class)
 	private CommercePriceModifierTypeRegistry
 		_commercePriceModifierTypeRegistry;
@@ -686,6 +692,9 @@ public class CommercePriceModifierLocalServiceImpl
 
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 	@ServiceReference(type = WorkflowInstanceLinkLocalService.class)
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

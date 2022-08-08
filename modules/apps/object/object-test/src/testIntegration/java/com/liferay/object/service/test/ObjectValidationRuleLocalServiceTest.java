@@ -27,11 +27,15 @@ import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -42,6 +46,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 
 /**
@@ -67,72 +72,50 @@ public class ObjectValidationRuleLocalServiceTest {
 
 	@Test
 	public void testAddObjectValidationRule() throws Exception {
+		_assertFailureAddObjectValidationRule(
+			"abcdefghijklmnopqrstuvwxyz",
+			ObjectValidationRuleEngineException.class,
+			"Engine \"abcdefghijklmnopqrstuvwxyz\" does not exist",
+			RandomTestUtil.randomString(), "isEmailAddress(textField)");
+		_assertFailureAddObjectValidationRule(
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			ObjectValidationRuleScriptException.class, "required",
+			RandomTestUtil.randomString(), StringPool.BLANK);
 
-		// Engine "abcdefghijklmnopqrstuvwxyz" does not exist
+		String validDDMScript = "isEmailAddress(textField)";
 
-		try {
-			_testAddObjectValidationRule(
-				"abcdefghijklmnopqrstuvwxyz", "Test",
-				"isEmailAddress(textField)");
+		_assertFailureAddObjectValidationRule(
+			StringPool.BLANK, ObjectValidationRuleEngineException.class,
+			"Engine is null", RandomTestUtil.randomString(), validDDMScript);
+		_assertFailureAddObjectValidationRule(
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			ObjectValidationRuleNameException.class,
+			"Name is null for locale " + LocaleUtil.US.getDisplayName(),
+			StringPool.BLANK, validDDMScript);
 
-			Assert.fail();
-		}
-		catch (ObjectValidationRuleEngineException
-					objectValidationRuleEngineException) {
+		Class<?> clazz = getClass();
 
-			Assert.assertEquals(
-				"Engine \"abcdefghijklmnopqrstuvwxyz\" does not exist",
-				objectValidationRuleEngineException.getMessage());
-		}
+		_assertFailureAddObjectValidationRule(
+			ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
+			ObjectValidationRuleScriptException.class, "syntax-error",
+			RandomTestUtil.randomString(),
+			StringUtil.read(
+				clazz,
+				StringBundler.concat(
+					"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
+					testName.getMethodName(), ".invalidSyntax.groovy")));
 
-		// Engine is null
-
-		try {
-			_testAddObjectValidationRule(
-				"", "Test", "isEmailAddress(textField)");
-
-			Assert.fail();
-		}
-		catch (ObjectValidationRuleEngineException
-					objectValidationRuleEngineException) {
-
-			Assert.assertEquals(
-				"Engine is null",
-				objectValidationRuleEngineException.getMessage());
-		}
-
-		// Name is null
-
-		try {
-			_testAddObjectValidationRule(
-				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, "",
-				"isEmailAddress(textField)");
-
-			Assert.fail();
-		}
-		catch (ObjectValidationRuleNameException
-					objectValidationRuleNameException) {
-
-			Assert.assertEquals(
-				"Name is null for locale " + LocaleUtil.US.getDisplayName(),
-				objectValidationRuleNameException.getMessage());
-		}
-
-		// Script is null
-
-		try {
-			_testAddObjectValidationRule(
-				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, "Test", "");
-
-			Assert.fail();
-		}
-		catch (ObjectValidationRuleScriptException
-					objectValidationRuleScriptException) {
-
-			Assert.assertEquals(
-				"required",
-				objectValidationRuleScriptException.getMessageKey());
-		}
+		_objectValidationRuleLocalService.addObjectValidationRule(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.read(
+				clazz,
+				StringBundler.concat(
+					"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
+					testName.getMethodName(), ".groovy")));
 
 		ObjectValidationRule objectValidationRule =
 			_objectValidationRuleLocalService.addObjectValidationRule(
@@ -142,7 +125,7 @@ public class ObjectValidationRuleLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(
 					"Field must be an email address"),
 				LocalizedMapUtil.getLocalizedMap("Email Address Validation"),
-				"isEmailAddress(textField)");
+				validDDMScript);
 
 		Assert.assertTrue(objectValidationRule.isActive());
 		Assert.assertEquals(
@@ -154,8 +137,7 @@ public class ObjectValidationRuleLocalServiceTest {
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Email Address Validation"),
 			objectValidationRule.getNameMap());
-		Assert.assertEquals(
-			"isEmailAddress(textField)", objectValidationRule.getScript());
+		Assert.assertEquals(validDDMScript, objectValidationRule.getScript());
 	}
 
 	@Test
@@ -249,6 +231,40 @@ public class ObjectValidationRuleLocalServiceTest {
 			objectValidationRule.getNameMap());
 		Assert.assertEquals(
 			"isURL(textField)", objectValidationRule.getScript());
+	}
+
+	@Rule
+	public TestName testName = new TestName();
+
+	private void _assertFailureAddObjectValidationRule(
+			String engine, Class<?> expectedExceptionClass,
+			String expectedMessage, String name, String script)
+		throws Exception {
+
+		try {
+			_testAddObjectValidationRule(engine, name, script);
+
+			Assert.fail();
+		}
+		catch (PortalException portalException) {
+			Assert.assertTrue(
+				expectedExceptionClass.isInstance(portalException));
+
+			String actualMessage = portalException.getMessage();
+
+			if (portalException instanceof
+					ObjectValidationRuleScriptException) {
+
+				ObjectValidationRuleScriptException
+					objectValidationRuleScriptException =
+						(ObjectValidationRuleScriptException)portalException;
+
+				actualMessage =
+					objectValidationRuleScriptException.getMessageKey();
+			}
+
+			Assert.assertEquals(expectedMessage, actualMessage);
+		}
 	}
 
 	private void _testAddObjectValidationRule(

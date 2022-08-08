@@ -330,6 +330,41 @@ definition {
 			PagesAdmin.viewPageItemPresent(pageName = "Test Page Name Edited");
 		}
 	}
+
+	@description = "This is a test for LPS-137155. The page creator can delete content page via header ellipsis icon at edit mode."
+	@priority = "3"
+	test DeleteViaHeaderEllipsisIcon {
+		task ("Given a page designer has content page in pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.viewPageItemPresent(pageName = "Test Content Page Name");
+		}
+
+		task ("When the page designer deletes the page via header ellipsis icon at edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Delete");
+
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Are you sure you want to delete the page &quot;Test Content Page Name&quot;? It will be removed immediately.");
+
+			Click(
+				key_text = "Delete",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		task ("Then the page designer should not see the page in pages admin") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Pages");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
+				value1 = "No Pages yet.");
+		}
+	}
+
 	@description = "This is a test for LPS-78726. Discarding a draft will revert a content page back to its most recent published version."
 	@priority = "5"
 	test DiscardContentPageDraft {

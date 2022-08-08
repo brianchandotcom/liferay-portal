@@ -94,9 +94,13 @@ const VerticalNavigationBar = ({
 			if (productMenuOpen) {
 				productMenu.hide();
 
-				setTimeout(() => {
-					navigate(href);
-				}, 500);
+				const productMenuOpenListener = productMenu.on(
+					'closed.lexicon.sidenav',
+					() => {
+						productMenuOpenListener.removeListener();
+						navigate(href);
+					}
+				);
 			}
 			else {
 				navigate(href);

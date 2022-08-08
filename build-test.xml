@@ -9600,8 +9600,8 @@ virtualHostname="localhost"
 										<move
 											failonerror="false"
 											file="@{app.dir}/settings.gradle"
+											quiet="true"
 											tofile="@{app.dir}/settings.gradle.temp"
-											verbose="true"
 										/>
 
 										<for param="module.dir.path">
@@ -9661,6 +9661,7 @@ virtualHostname="localhost"
 										<move
 											failonerror="false"
 											file="@{app.dir}/settings.gradle.temp"
+											quiet="true"
 											tofile="@{app.dir}/settings.gradle"
 										/>
 									</else>

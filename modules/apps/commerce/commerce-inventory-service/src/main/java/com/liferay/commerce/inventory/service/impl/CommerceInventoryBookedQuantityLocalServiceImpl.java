@@ -18,11 +18,14 @@ import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.exception.NoSuchInventoryBookedQuantityException;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
+import com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalService;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryBookedQuantityLocalServiceBaseImpl;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
@@ -42,7 +45,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			Map<String, String> context)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		long commerceInventoryBookedQuantityId =
 			counterLocalService.increment();
@@ -62,7 +65,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			_commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
 				CommerceInventoryConstants.AUDIT_TYPE_BOOKED_QUANTITY);
 
-		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
+		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, sku, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context), quantity);
 
@@ -145,7 +148,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 				commerceBookedQuantityId);
 
 		if (commerceBookedQuantity == null) {
-			User user = userLocalService.getUser(userId);
+			User user = _userLocalService.getUser(userId);
 
 			commerceBookedQuantity =
 				commerceInventoryBookedQuantityPersistence.create(
@@ -164,7 +167,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			_commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
 				CommerceInventoryConstants.AUDIT_TYPE_RESTORE_QUANTITY);
 
-		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
+		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, sku, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context), quantity);
 
@@ -187,7 +190,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			_commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
 				CommerceInventoryConstants.AUDIT_TYPE_RESTOCK_QUANTITY);
 
-		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
+		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryBookedQuantity.getSku(),
 			commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context),
@@ -218,7 +221,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			_commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
 				CommerceInventoryConstants.AUDIT_TYPE_UPDATE_BOOKED_QUANTITY);
 
-		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
+		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryBookedQuantity.getSku(),
 			commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context), quantity);
@@ -228,8 +231,15 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 				commerceInventoryBookedQuantity);
 	}
 
+	@BeanReference(type = CommerceInventoryAuditLocalService.class)
+	private CommerceInventoryAuditLocalService
+		_commerceInventoryAuditLocalService;
+
 	@ServiceReference(type = CommerceInventoryAuditTypeRegistry.class)
 	private CommerceInventoryAuditTypeRegistry
 		_commerceInventoryAuditTypeRegistry;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

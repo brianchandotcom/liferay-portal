@@ -21,14 +21,16 @@ import com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseItemExce
 import com.liferay.commerce.inventory.model.CIWarehouseItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
+import com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalService;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryWarehouseItemLocalServiceBaseImpl;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
 import com.liferay.commerce.inventory.type.constants.CommerceInventoryAuditTypeConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -64,7 +66,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
@@ -368,7 +370,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
 				CommerceInventoryConstants.AUDIT_TYPE_INCREASE_QUANTITY);
 
-		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
+		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryWarehouseItem.getSku(),
 			commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(null), quantity);
@@ -414,7 +416,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
 				CommerceInventoryConstants.AUDIT_TYPE_MOVE_QUANTITY);
 
-		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
+		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, sku, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(
 				HashMapBuilder.put(
@@ -470,7 +472,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			commerceInventoryWarehouseItem.getCommerceInventoryWarehouse();
 
-		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
+		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryWarehouseItem.getSku(),
 			commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(
@@ -513,7 +515,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			commerceInventoryWarehouseItem.getCommerceInventoryWarehouse();
 
-		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
+		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryWarehouseItem.getSku(),
 			commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(
@@ -542,7 +544,11 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 	protected CommerceInventoryAuditTypeRegistry
 		commerceInventoryAuditTypeRegistry;
 
-	@ServiceReference(type = UserService.class)
-	protected UserService userService;
+	@BeanReference(type = CommerceInventoryAuditLocalService.class)
+	private CommerceInventoryAuditLocalService
+		_commerceInventoryAuditLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

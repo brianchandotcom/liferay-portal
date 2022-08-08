@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
@@ -46,7 +48,7 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 				Date availabilityDate, int quantity)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		_validateExternalReferenceCode(
 			0, user.getCompanyId(), externalReferenceCode);
@@ -230,5 +232,8 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 				"SKU code is null");
 		}
 	}
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

@@ -18,6 +18,8 @@ import com.liferay.commerce.inventory.model.CommerceInventoryAudit;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryAuditLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
@@ -35,7 +37,7 @@ public class CommerceInventoryAuditLocalServiceImpl
 			int quantity)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		long commerceInventoryAuditId = counterLocalService.increment();
 
@@ -70,5 +72,8 @@ public class CommerceInventoryAuditLocalServiceImpl
 	public int getCommerceInventoryAuditsCount(long companyId, String sku) {
 		return commerceInventoryAuditPersistence.countByC_S(companyId, sku);
 	}
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

@@ -21,6 +21,7 @@ patch {
 	fileNames "**/freemarker/core/IteratorBlock.java"
 	fileNames "**/freemarker/core/TemplateElementArrayBuilder.java"
 	fileNames "**/freemarker/core/TextBlock.java"
+	fileNames "**/freemarker/ext/jsp/JspTagModelBase.java"
 	fileNames "**/freemarker/ext/jsp/JspWriterAdapter.java"
 	fileNames "**/freemarker/ext/jsp/TagTransformModel.java"
 

@@ -106,6 +106,7 @@ public class BasicSuggestionsContributorTest {
 		_setUpAssetRendererFactoryRegistryUtil();
 		_setUpLayoutLocalService();
 		_setUpLiferayPortletRequest();
+		_setUpSearchContext();
 		_setUpSearchHits();
 		_setUpSearchRequestBuilderFactory();
 		_setUpSearcher(1L);
@@ -154,8 +155,7 @@ public class BasicSuggestionsContributorTest {
 		Assert.assertEquals(
 			suggestionsContributorResults,
 			_basicSuggestionsContributor.getSuggestionsContributorResults(
-				_liferayPortletRequest, liferayPortletResponse,
-				Mockito.mock(SearchContext.class),
+				_liferayPortletRequest, liferayPortletResponse, _searchContext,
 				Mockito.mock(SuggestionsContributorConfiguration.class)));
 
 		Mockito.verify(
@@ -171,6 +171,7 @@ public class BasicSuggestionsContributorTest {
 
 		_setUpLayoutLocalService();
 		_setUpLiferayPortletRequest();
+		_setUpSearchContext();
 		_setUpSearchHits();
 		_setUpSearchRequestBuilderFactory();
 		_setUpSearcher(1L);
@@ -186,8 +187,7 @@ public class BasicSuggestionsContributorTest {
 			suggestionsContributorResults,
 			_basicSuggestionsContributor.getSuggestionsContributorResults(
 				_liferayPortletRequest,
-				Mockito.mock(LiferayPortletResponse.class),
-				Mockito.mock(SearchContext.class),
+				Mockito.mock(LiferayPortletResponse.class), _searchContext,
 				Mockito.mock(SuggestionsContributorConfiguration.class)));
 
 		Mockito.verify(
@@ -275,6 +275,22 @@ public class BasicSuggestionsContributorTest {
 		).when(
 			themeDisplay
 		).getScopeGroupId();
+	}
+
+	private void _setUpSearchContext() {
+		Mockito.doReturn(
+			"test"
+		).when(
+			_searchContext
+		).getKeywords();
+
+		Mockito.doReturn(
+			"test"
+		).when(
+			_searchContext
+		).getAttribute(
+			Mockito.anyString()
+		);
 	}
 
 	private void _setUpSearcher(long totalHits) {
@@ -452,6 +468,9 @@ public class BasicSuggestionsContributorTest {
 
 	@Mock
 	private LiferayPortletRequest _liferayPortletRequest;
+
+	@Mock
+	private SearchContext _searchContext;
 
 	@Mock
 	private Searcher _searcher;

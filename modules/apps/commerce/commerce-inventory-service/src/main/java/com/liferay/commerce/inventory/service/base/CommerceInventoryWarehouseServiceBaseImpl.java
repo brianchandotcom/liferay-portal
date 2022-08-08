@@ -19,7 +19,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseServiceUtil;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseFinder;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehousePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -28,11 +28,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce inventory warehouse remote service.
@@ -47,139 +49,33 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceInventoryWarehouseServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceInventoryWarehouseService, IdentifiableOSGiService {
+	implements AopService, CommerceInventoryWarehouseService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceInventoryWarehouseService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceInventoryWarehouseServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce inventory warehouse local service.
-	 *
-	 * @return the commerce inventory warehouse local service
-	 */
-	public com.liferay.commerce.inventory.service.
-		CommerceInventoryWarehouseLocalService
-			getCommerceInventoryWarehouseLocalService() {
-
-		return commerceInventoryWarehouseLocalService;
-	}
-
-	/**
-	 * Sets the commerce inventory warehouse local service.
-	 *
-	 * @param commerceInventoryWarehouseLocalService the commerce inventory warehouse local service
-	 */
-	public void setCommerceInventoryWarehouseLocalService(
-		com.liferay.commerce.inventory.service.
-			CommerceInventoryWarehouseLocalService
-				commerceInventoryWarehouseLocalService) {
-
-		this.commerceInventoryWarehouseLocalService =
-			commerceInventoryWarehouseLocalService;
-	}
-
-	/**
-	 * Returns the commerce inventory warehouse remote service.
-	 *
-	 * @return the commerce inventory warehouse remote service
-	 */
-	public CommerceInventoryWarehouseService
-		getCommerceInventoryWarehouseService() {
-
-		return commerceInventoryWarehouseService;
-	}
-
-	/**
-	 * Sets the commerce inventory warehouse remote service.
-	 *
-	 * @param commerceInventoryWarehouseService the commerce inventory warehouse remote service
-	 */
-	public void setCommerceInventoryWarehouseService(
-		CommerceInventoryWarehouseService commerceInventoryWarehouseService) {
-
-		this.commerceInventoryWarehouseService =
-			commerceInventoryWarehouseService;
-	}
-
-	/**
-	 * Returns the commerce inventory warehouse persistence.
-	 *
-	 * @return the commerce inventory warehouse persistence
-	 */
-	public CommerceInventoryWarehousePersistence
-		getCommerceInventoryWarehousePersistence() {
-
-		return commerceInventoryWarehousePersistence;
-	}
-
-	/**
-	 * Sets the commerce inventory warehouse persistence.
-	 *
-	 * @param commerceInventoryWarehousePersistence the commerce inventory warehouse persistence
-	 */
-	public void setCommerceInventoryWarehousePersistence(
-		CommerceInventoryWarehousePersistence
-			commerceInventoryWarehousePersistence) {
-
-		this.commerceInventoryWarehousePersistence =
-			commerceInventoryWarehousePersistence;
-	}
-
-	/**
-	 * Returns the commerce inventory warehouse finder.
-	 *
-	 * @return the commerce inventory warehouse finder
-	 */
-	public CommerceInventoryWarehouseFinder
-		getCommerceInventoryWarehouseFinder() {
-
-		return commerceInventoryWarehouseFinder;
-	}
-
-	/**
-	 * Sets the commerce inventory warehouse finder.
-	 *
-	 * @param commerceInventoryWarehouseFinder the commerce inventory warehouse finder
-	 */
-	public void setCommerceInventoryWarehouseFinder(
-		CommerceInventoryWarehouseFinder commerceInventoryWarehouseFinder) {
-
-		this.commerceInventoryWarehouseFinder =
-			commerceInventoryWarehouseFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceInventoryWarehouseService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceInventoryWarehouseService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceInventoryWarehouseService =
+			(CommerceInventoryWarehouseService)aopProxy;
+
+		_setServiceUtilService(commerceInventoryWarehouseService);
 	}
 
 	/**
@@ -242,27 +138,22 @@ public abstract class CommerceInventoryWarehouseServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.inventory.service.
 		CommerceInventoryWarehouseLocalService
 			commerceInventoryWarehouseLocalService;
 
-	@BeanReference(type = CommerceInventoryWarehouseService.class)
 	protected CommerceInventoryWarehouseService
 		commerceInventoryWarehouseService;
 
-	@BeanReference(type = CommerceInventoryWarehousePersistence.class)
+	@Reference
 	protected CommerceInventoryWarehousePersistence
 		commerceInventoryWarehousePersistence;
 
-	@BeanReference(type = CommerceInventoryWarehouseFinder.class)
+	@Reference
 	protected CommerceInventoryWarehouseFinder commerceInventoryWarehouseFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

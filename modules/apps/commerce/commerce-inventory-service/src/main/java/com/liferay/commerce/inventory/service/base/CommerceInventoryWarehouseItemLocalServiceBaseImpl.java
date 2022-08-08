@@ -25,7 +25,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -44,12 +44,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -58,6 +57,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce inventory warehouse item local service.
@@ -72,7 +74,7 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceInventoryWarehouseItemLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceInventoryWarehouseItemLocalService,
+	implements AopService, CommerceInventoryWarehouseItemLocalService,
 			   IdentifiableOSGiService {
 
 	/*
@@ -570,114 +572,25 @@ public abstract class CommerceInventoryWarehouseItemLocalServiceBaseImpl
 			commerceInventoryWarehouseItem);
 	}
 
-	/**
-	 * Returns the commerce inventory warehouse item local service.
-	 *
-	 * @return the commerce inventory warehouse item local service
-	 */
-	public CommerceInventoryWarehouseItemLocalService
-		getCommerceInventoryWarehouseItemLocalService() {
-
-		return commerceInventoryWarehouseItemLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce inventory warehouse item local service.
-	 *
-	 * @param commerceInventoryWarehouseItemLocalService the commerce inventory warehouse item local service
-	 */
-	public void setCommerceInventoryWarehouseItemLocalService(
-		CommerceInventoryWarehouseItemLocalService
-			commerceInventoryWarehouseItemLocalService) {
-
-		this.commerceInventoryWarehouseItemLocalService =
-			commerceInventoryWarehouseItemLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceInventoryWarehouseItemLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce inventory warehouse item persistence.
-	 *
-	 * @return the commerce inventory warehouse item persistence
-	 */
-	public CommerceInventoryWarehouseItemPersistence
-		getCommerceInventoryWarehouseItemPersistence() {
-
-		return commerceInventoryWarehouseItemPersistence;
-	}
-
-	/**
-	 * Sets the commerce inventory warehouse item persistence.
-	 *
-	 * @param commerceInventoryWarehouseItemPersistence the commerce inventory warehouse item persistence
-	 */
-	public void setCommerceInventoryWarehouseItemPersistence(
-		CommerceInventoryWarehouseItemPersistence
-			commerceInventoryWarehouseItemPersistence) {
-
-		this.commerceInventoryWarehouseItemPersistence =
-			commerceInventoryWarehouseItemPersistence;
-	}
-
-	/**
-	 * Returns the commerce inventory warehouse item finder.
-	 *
-	 * @return the commerce inventory warehouse item finder
-	 */
-	public CommerceInventoryWarehouseItemFinder
-		getCommerceInventoryWarehouseItemFinder() {
-
-		return commerceInventoryWarehouseItemFinder;
-	}
-
-	/**
-	 * Sets the commerce inventory warehouse item finder.
-	 *
-	 * @param commerceInventoryWarehouseItemFinder the commerce inventory warehouse item finder
-	 */
-	public void setCommerceInventoryWarehouseItemFinder(
-		CommerceInventoryWarehouseItemFinder
-			commerceInventoryWarehouseItemFinder) {
-
-		this.commerceInventoryWarehouseItemFinder =
-			commerceInventoryWarehouseItemFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem",
-			commerceInventoryWarehouseItemLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceInventoryWarehouseItemLocalService =
+			(CommerceInventoryWarehouseItemLocalService)aopProxy;
 
 		_setLocalServiceUtilService(commerceInventoryWarehouseItemLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -741,26 +654,19 @@ public abstract class CommerceInventoryWarehouseItemLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommerceInventoryWarehouseItemLocalService.class)
 	protected CommerceInventoryWarehouseItemLocalService
 		commerceInventoryWarehouseItemLocalService;
 
-	@BeanReference(type = CommerceInventoryWarehouseItemPersistence.class)
+	@Reference
 	protected CommerceInventoryWarehouseItemPersistence
 		commerceInventoryWarehouseItemPersistence;
 
-	@BeanReference(type = CommerceInventoryWarehouseItemFinder.class)
+	@Reference
 	protected CommerceInventoryWarehouseItemFinder
 		commerceInventoryWarehouseItemFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

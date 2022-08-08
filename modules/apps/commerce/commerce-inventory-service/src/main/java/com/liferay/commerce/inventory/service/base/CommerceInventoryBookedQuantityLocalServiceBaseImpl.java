@@ -19,7 +19,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLoc
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalServiceUtil;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryBookedQuantityPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -37,12 +37,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -51,6 +50,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce inventory booked quantity local service.
@@ -65,7 +67,7 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceInventoryBookedQuantityLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceInventoryBookedQuantityLocalService,
+	implements AopService, CommerceInventoryBookedQuantityLocalService,
 			   IdentifiableOSGiService {
 
 	/*
@@ -416,91 +418,26 @@ public abstract class CommerceInventoryBookedQuantityLocalServiceBaseImpl
 			commerceInventoryBookedQuantity);
 	}
 
-	/**
-	 * Returns the commerce inventory booked quantity local service.
-	 *
-	 * @return the commerce inventory booked quantity local service
-	 */
-	public CommerceInventoryBookedQuantityLocalService
-		getCommerceInventoryBookedQuantityLocalService() {
-
-		return commerceInventoryBookedQuantityLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce inventory booked quantity local service.
-	 *
-	 * @param commerceInventoryBookedQuantityLocalService the commerce inventory booked quantity local service
-	 */
-	public void setCommerceInventoryBookedQuantityLocalService(
-		CommerceInventoryBookedQuantityLocalService
-			commerceInventoryBookedQuantityLocalService) {
-
-		this.commerceInventoryBookedQuantityLocalService =
-			commerceInventoryBookedQuantityLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceInventoryBookedQuantityLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce inventory booked quantity persistence.
-	 *
-	 * @return the commerce inventory booked quantity persistence
-	 */
-	public CommerceInventoryBookedQuantityPersistence
-		getCommerceInventoryBookedQuantityPersistence() {
-
-		return commerceInventoryBookedQuantityPersistence;
-	}
-
-	/**
-	 * Sets the commerce inventory booked quantity persistence.
-	 *
-	 * @param commerceInventoryBookedQuantityPersistence the commerce inventory booked quantity persistence
-	 */
-	public void setCommerceInventoryBookedQuantityPersistence(
-		CommerceInventoryBookedQuantityPersistence
-			commerceInventoryBookedQuantityPersistence) {
-
-		this.commerceInventoryBookedQuantityPersistence =
-			commerceInventoryBookedQuantityPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity",
-			commerceInventoryBookedQuantityLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceInventoryBookedQuantityLocalService =
+			(CommerceInventoryBookedQuantityLocalService)aopProxy;
 
 		_setLocalServiceUtilService(
 			commerceInventoryBookedQuantityLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -564,22 +501,15 @@ public abstract class CommerceInventoryBookedQuantityLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommerceInventoryBookedQuantityLocalService.class)
 	protected CommerceInventoryBookedQuantityLocalService
 		commerceInventoryBookedQuantityLocalService;
 
-	@BeanReference(type = CommerceInventoryBookedQuantityPersistence.class)
+	@Reference
 	protected CommerceInventoryBookedQuantityPersistence
 		commerceInventoryBookedQuantityPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

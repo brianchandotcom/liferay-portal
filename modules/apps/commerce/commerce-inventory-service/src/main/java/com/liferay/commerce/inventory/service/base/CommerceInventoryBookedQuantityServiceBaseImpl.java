@@ -18,7 +18,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityService;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityServiceUtil;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryBookedQuantityPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce inventory booked quantity remote service.
@@ -46,117 +48,33 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceInventoryBookedQuantityServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceInventoryBookedQuantityService, IdentifiableOSGiService {
+	implements AopService, CommerceInventoryBookedQuantityService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceInventoryBookedQuantityService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceInventoryBookedQuantityServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce inventory booked quantity local service.
-	 *
-	 * @return the commerce inventory booked quantity local service
-	 */
-	public com.liferay.commerce.inventory.service.
-		CommerceInventoryBookedQuantityLocalService
-			getCommerceInventoryBookedQuantityLocalService() {
-
-		return commerceInventoryBookedQuantityLocalService;
-	}
-
-	/**
-	 * Sets the commerce inventory booked quantity local service.
-	 *
-	 * @param commerceInventoryBookedQuantityLocalService the commerce inventory booked quantity local service
-	 */
-	public void setCommerceInventoryBookedQuantityLocalService(
-		com.liferay.commerce.inventory.service.
-			CommerceInventoryBookedQuantityLocalService
-				commerceInventoryBookedQuantityLocalService) {
-
-		this.commerceInventoryBookedQuantityLocalService =
-			commerceInventoryBookedQuantityLocalService;
-	}
-
-	/**
-	 * Returns the commerce inventory booked quantity remote service.
-	 *
-	 * @return the commerce inventory booked quantity remote service
-	 */
-	public CommerceInventoryBookedQuantityService
-		getCommerceInventoryBookedQuantityService() {
-
-		return commerceInventoryBookedQuantityService;
-	}
-
-	/**
-	 * Sets the commerce inventory booked quantity remote service.
-	 *
-	 * @param commerceInventoryBookedQuantityService the commerce inventory booked quantity remote service
-	 */
-	public void setCommerceInventoryBookedQuantityService(
-		CommerceInventoryBookedQuantityService
-			commerceInventoryBookedQuantityService) {
-
-		this.commerceInventoryBookedQuantityService =
-			commerceInventoryBookedQuantityService;
-	}
-
-	/**
-	 * Returns the commerce inventory booked quantity persistence.
-	 *
-	 * @return the commerce inventory booked quantity persistence
-	 */
-	public CommerceInventoryBookedQuantityPersistence
-		getCommerceInventoryBookedQuantityPersistence() {
-
-		return commerceInventoryBookedQuantityPersistence;
-	}
-
-	/**
-	 * Sets the commerce inventory booked quantity persistence.
-	 *
-	 * @param commerceInventoryBookedQuantityPersistence the commerce inventory booked quantity persistence
-	 */
-	public void setCommerceInventoryBookedQuantityPersistence(
-		CommerceInventoryBookedQuantityPersistence
-			commerceInventoryBookedQuantityPersistence) {
-
-		this.commerceInventoryBookedQuantityPersistence =
-			commerceInventoryBookedQuantityPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceInventoryBookedQuantityService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceInventoryBookedQuantityService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceInventoryBookedQuantityService =
+			(CommerceInventoryBookedQuantityService)aopProxy;
+
+		_setServiceUtilService(commerceInventoryBookedQuantityService);
 	}
 
 	/**
@@ -220,24 +138,19 @@ public abstract class CommerceInventoryBookedQuantityServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.inventory.service.
 		CommerceInventoryBookedQuantityLocalService
 			commerceInventoryBookedQuantityLocalService;
 
-	@BeanReference(type = CommerceInventoryBookedQuantityService.class)
 	protected CommerceInventoryBookedQuantityService
 		commerceInventoryBookedQuantityService;
 
-	@BeanReference(type = CommerceInventoryBookedQuantityPersistence.class)
+	@Reference
 	protected CommerceInventoryBookedQuantityPersistence
 		commerceInventoryBookedQuantityPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

@@ -24,7 +24,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -43,12 +43,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -57,6 +56,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce inventory replenishment item local service.
@@ -71,7 +73,7 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceInventoryReplenishmentItemLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceInventoryReplenishmentItemLocalService,
+	implements AopService, CommerceInventoryReplenishmentItemLocalService,
 			   IdentifiableOSGiService {
 
 	/*
@@ -580,91 +582,26 @@ public abstract class CommerceInventoryReplenishmentItemLocalServiceBaseImpl
 			commerceInventoryReplenishmentItem);
 	}
 
-	/**
-	 * Returns the commerce inventory replenishment item local service.
-	 *
-	 * @return the commerce inventory replenishment item local service
-	 */
-	public CommerceInventoryReplenishmentItemLocalService
-		getCommerceInventoryReplenishmentItemLocalService() {
-
-		return commerceInventoryReplenishmentItemLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce inventory replenishment item local service.
-	 *
-	 * @param commerceInventoryReplenishmentItemLocalService the commerce inventory replenishment item local service
-	 */
-	public void setCommerceInventoryReplenishmentItemLocalService(
-		CommerceInventoryReplenishmentItemLocalService
-			commerceInventoryReplenishmentItemLocalService) {
-
-		this.commerceInventoryReplenishmentItemLocalService =
-			commerceInventoryReplenishmentItemLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceInventoryReplenishmentItemLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce inventory replenishment item persistence.
-	 *
-	 * @return the commerce inventory replenishment item persistence
-	 */
-	public CommerceInventoryReplenishmentItemPersistence
-		getCommerceInventoryReplenishmentItemPersistence() {
-
-		return commerceInventoryReplenishmentItemPersistence;
-	}
-
-	/**
-	 * Sets the commerce inventory replenishment item persistence.
-	 *
-	 * @param commerceInventoryReplenishmentItemPersistence the commerce inventory replenishment item persistence
-	 */
-	public void setCommerceInventoryReplenishmentItemPersistence(
-		CommerceInventoryReplenishmentItemPersistence
-			commerceInventoryReplenishmentItemPersistence) {
-
-		this.commerceInventoryReplenishmentItemPersistence =
-			commerceInventoryReplenishmentItemPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem",
-			commerceInventoryReplenishmentItemLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceInventoryReplenishmentItemLocalService =
+			(CommerceInventoryReplenishmentItemLocalService)aopProxy;
 
 		_setLocalServiceUtilService(
 			commerceInventoryReplenishmentItemLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -728,22 +665,15 @@ public abstract class CommerceInventoryReplenishmentItemLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommerceInventoryReplenishmentItemLocalService.class)
 	protected CommerceInventoryReplenishmentItemLocalService
 		commerceInventoryReplenishmentItemLocalService;
 
-	@BeanReference(type = CommerceInventoryReplenishmentItemPersistence.class)
+	@Reference
 	protected CommerceInventoryReplenishmentItemPersistence
 		commerceInventoryReplenishmentItemPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

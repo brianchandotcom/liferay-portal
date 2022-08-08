@@ -19,7 +19,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalService
 import com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalServiceUtil;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryAuditPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -37,12 +37,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -51,6 +50,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce inventory audit local service.
@@ -65,7 +67,8 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceInventoryAuditLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceInventoryAuditLocalService, IdentifiableOSGiService {
+	implements AopService, CommerceInventoryAuditLocalService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -403,88 +406,25 @@ public abstract class CommerceInventoryAuditLocalServiceBaseImpl
 		return commerceInventoryAuditPersistence.update(commerceInventoryAudit);
 	}
 
-	/**
-	 * Returns the commerce inventory audit local service.
-	 *
-	 * @return the commerce inventory audit local service
-	 */
-	public CommerceInventoryAuditLocalService
-		getCommerceInventoryAuditLocalService() {
-
-		return commerceInventoryAuditLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce inventory audit local service.
-	 *
-	 * @param commerceInventoryAuditLocalService the commerce inventory audit local service
-	 */
-	public void setCommerceInventoryAuditLocalService(
-		CommerceInventoryAuditLocalService commerceInventoryAuditLocalService) {
-
-		this.commerceInventoryAuditLocalService =
-			commerceInventoryAuditLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceInventoryAuditLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce inventory audit persistence.
-	 *
-	 * @return the commerce inventory audit persistence
-	 */
-	public CommerceInventoryAuditPersistence
-		getCommerceInventoryAuditPersistence() {
-
-		return commerceInventoryAuditPersistence;
-	}
-
-	/**
-	 * Sets the commerce inventory audit persistence.
-	 *
-	 * @param commerceInventoryAuditPersistence the commerce inventory audit persistence
-	 */
-	public void setCommerceInventoryAuditPersistence(
-		CommerceInventoryAuditPersistence commerceInventoryAuditPersistence) {
-
-		this.commerceInventoryAuditPersistence =
-			commerceInventoryAuditPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.inventory.model.CommerceInventoryAudit",
-			commerceInventoryAuditLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceInventoryAuditLocalService =
+			(CommerceInventoryAuditLocalService)aopProxy;
 
 		_setLocalServiceUtilService(commerceInventoryAuditLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.inventory.model.CommerceInventoryAudit");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -547,22 +487,15 @@ public abstract class CommerceInventoryAuditLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommerceInventoryAuditLocalService.class)
 	protected CommerceInventoryAuditLocalService
 		commerceInventoryAuditLocalService;
 
-	@BeanReference(type = CommerceInventoryAuditPersistence.class)
+	@Reference
 	protected CommerceInventoryAuditPersistence
 		commerceInventoryAuditPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

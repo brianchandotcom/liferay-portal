@@ -147,6 +147,7 @@ public class MessageBoardThreadDTOConverter
 				threadType = _toThreadType(
 					languageId, mbThread.getGroupId(), mbThread.getPriority());
 				viewCount = mbThread.getViewCount();
+				rootMessageId = mbThread.getRootMessageId();
 
 				setCreatorStatistics(
 					() -> {

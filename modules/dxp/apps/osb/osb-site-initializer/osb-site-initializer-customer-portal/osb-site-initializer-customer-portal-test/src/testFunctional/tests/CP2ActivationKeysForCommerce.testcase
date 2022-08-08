@@ -51,7 +51,7 @@ definition {
 
 		// "Reason: Not eble to reproduce scenario without OKTA workaround.""
 
-		task ("Assert that project has DPX 7.2") {
+		task ("Assert that project has DXP 7.2") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
 
 			CP2NavigationMenu.goToProductActivation();
@@ -244,7 +244,7 @@ definition {
 
 		// Reason: Not eble to reproduce scenario without OKTA workaround.
 
-		task ("Assert that project has DPX 7.2") {
+		task ("Assert that project has DXP 7.2") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
 
 			CP2NavigationMenu.goToProductActivation();
@@ -263,7 +263,7 @@ definition {
 		// "Assert DropDown list of LES subscription is populated"
 		// "Assert Subscription Start and End Date Time Option is populated"
 
-		task ("Assert that project has DPX 7.1") {
+		task ("Assert that project has DXP 7.1") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.1");
 
 			CP2NavigationMenu.goToProductActivation();
@@ -279,7 +279,7 @@ definition {
 			CustomerPortal.assertPageTitle(title = "${pageTitle}");
 		}
 
-		task ("Assert that project has DPX 7.1") {
+		task ("Assert that project has DXP 7.1") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.0");
 
 			CP2NavigationMenu.goToProductActivation();
@@ -307,7 +307,7 @@ definition {
 
 		// Reason: Not eble to reproduce scenario without OKTA workaround.
 
-		task ("Assert that project has DPX 7.2") {
+		task ("Assert that project has DXP 7.2") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
 
 			CP2NavigationMenu.goToProductActivation();
@@ -329,7 +329,7 @@ definition {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
-		task ("Assert that project has DPX 7.1") {
+		task ("Assert that project has DXP 7.1") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.1");
 
 			CP2NavigationMenu.goToProductActivation();
@@ -351,7 +351,7 @@ definition {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
-		task ("Assert that project has DPX 7.0") {
+		task ("Assert that project has DXP 7.0") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.0");
 
 			CP2NavigationMenu.goToProductActivation();
@@ -378,7 +378,7 @@ definition {
 
 		// "Reason: Not eble to reproduce scenario without OKTA workaround.""
 
-		task ("Assert that project has DPX 7.2") {
+		task ("Assert that project has DXP 7.2") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
 
 			CP2NavigationMenu.goToProductActivation();
@@ -411,7 +411,7 @@ definition {
 
 		// "Reason: Not eble to reproduce scenario without OKTA workaround.""
 
-		task ("Assert that project has DPX 7.2") {
+		task ("Assert that project has DXP 7.2") {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.2");
 
 			CP2NavigationMenu.goToProductActivation();

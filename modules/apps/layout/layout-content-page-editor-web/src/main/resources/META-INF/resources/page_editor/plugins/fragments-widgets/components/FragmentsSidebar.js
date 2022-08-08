@@ -137,11 +137,29 @@ const normalizeFragmentEntry = (fragmentEntry) => {
 };
 
 export default function FragmentsSidebar() {
+	const activeTabIdSessionKey = `${config.portletNamespace}_fragments-sidebar_active-tab-id`;
+
 	const fragments = useSelector((state) => state.fragments);
 	const widgets = useWidgets();
 	const wrapperElementRef = useRef(null);
 
-	const [activeTabId, setActiveTabId] = useState(COLLECTION_IDS.fragments);
+	const [activeTabId, setActiveTabId] = useState(() => {
+		const persistedTabId = window.sessionStorage.getItem(
+			activeTabIdSessionKey
+		);
+
+		if (Object.values(COLLECTION_IDS).includes(persistedTabId)) {
+			return persistedTabId;
+		}
+
+		return COLLECTION_IDS.fragments;
+	});
+
+	const updateActiveTabId = (nextTabId) => {
+		window.sessionStorage.setItem(activeTabIdSessionKey, nextTabId);
+		setActiveTabId(nextTabId);
+	};
+
 	const [displayStyle, setDisplayStyle] = useState(
 		window.sessionStorage.getItem(FRAGMENTS_DISPLAY_STYLE_KEY) ||
 			FRAGMENTS_DISPLAY_STYLES.LIST
@@ -298,7 +316,7 @@ export default function FragmentsSidebar() {
 					<TabsPanel
 						activeTabId={activeTabId}
 						displayStyle={displayStyle}
-						setActiveTabId={setActiveTabId}
+						setActiveTabId={updateActiveTabId}
 						tabs={tabs}
 					/>
 				)}

@@ -43,7 +43,23 @@ Group group = layoutsAdminDisplayContext.getGroup();
 	<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="query-string-help" label="query-string" name="TypeSettingsProperties--query-string--" size="30" type="text" value='<%= GetterUtil.getString(layoutTypeSettings.getProperty("query-string")) %>' />
 </c:if>
 
-<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="target" name="TypeSettingsProperties--target--" size="15" type="text" value='<%= GetterUtil.getString(layoutTypeSettings.getProperty("target")) %>' />
+<%
+String selectFrame = GetterUtil.getString(layoutTypeSettings.getProperty("select-frame"));
+%>
+
+<aui:select cssClass="propagatable-field" id="TypeSettingsProperties_selectFrame" label="select-frame" name="TypeSettingsProperties--select-frame--" value="<%= selectFrame %>">
+	<aui:option label="open-in-a-specific-frame" />
+	<aui:option label="open-in-a-new-frame" />
+</aui:select>
+
+<c:choose>
+	<c:when test='<%= selectFrame.equals("open-in-a-specific-frame") || selectFrame.equals("") %>'>
+		<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" id="TypeSettingsProperties_target" label="target" name="TypeSettingsProperties--target--" size="15" type="text" value='<%= GetterUtil.getString(layoutTypeSettings.getProperty("target")) %>' />
+	</c:when>
+	<c:otherwise>
+		<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" id="TypeSettingsProperties_target" label="target" name="TypeSettingsProperties--target--" size="15" type="text" value='<%= GetterUtil.getString(layoutTypeSettings.getProperty("target")) %>' wrapperCssClass="hide" />
+	</c:otherwise>
+</c:choose>
 
 <aui:field-wrapper helpMessage="this-icon-will-be-shown-in-the-navigation-menu" label="icon" name="iconFileName">
 	<liferay-ui:logo-selector

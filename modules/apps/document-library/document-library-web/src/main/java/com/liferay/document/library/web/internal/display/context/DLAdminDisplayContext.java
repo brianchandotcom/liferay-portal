@@ -39,9 +39,11 @@ import com.liferay.document.library.web.internal.util.DLFolderUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -819,9 +821,15 @@ public class DLAdminDisplayContext {
 
 	private String _getPortletPreference(String name, String defaultValue) {
 		if (_themeDisplay.isSignedIn()) {
-			PortletPreferences portletPreferences = _getPortletPreferences();
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
 
-			return portletPreferences.getValue(name, defaultValue);
+				PortletPreferences portletPreferences =
+					_getPortletPreferences();
+
+				return portletPreferences.getValue(name, defaultValue);
+			}
 		}
 
 		return GetterUtil.getString(

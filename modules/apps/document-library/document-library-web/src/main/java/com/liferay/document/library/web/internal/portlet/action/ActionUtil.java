@@ -23,6 +23,8 @@ import com.liferay.document.library.kernel.util.RawMetadataProcessorUtil;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalServiceUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLPermission;
 import com.liferay.document.library.web.internal.util.DLFolderUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -224,12 +226,17 @@ public class ActionUtil {
 
 			String portletId = portletDisplay.getId();
 
-			PortletPreferences portletPreferences =
-				PortletPreferencesFactoryUtil.getPortletPreferences(
-					httpServletRequest, portletId);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
 
-			folderId = GetterUtil.getLong(
-				portletPreferences.getValue("rootFolderId", null));
+				PortletPreferences portletPreferences =
+					PortletPreferencesFactoryUtil.getPortletPreferences(
+						httpServletRequest, portletId);
+
+				folderId = GetterUtil.getLong(
+					portletPreferences.getValue("rootFolderId", null));
+			}
 		}
 
 		if (folderId <= 0) {

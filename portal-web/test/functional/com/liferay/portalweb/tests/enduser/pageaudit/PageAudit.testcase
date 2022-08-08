@@ -4386,7 +4386,7 @@ definition {
 		}
 
 		task ("Check if Google PageSpeed Insights tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section") {
-			AssertElementPresent(
+			AssertElementNotPresent(
 				key_configurationName = "Google PageSpeed Insights",
 				key_configurationScope = "Site Scope",
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
@@ -4396,6 +4396,10 @@ definition {
 			Click.javaScriptClick(
 				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Click(locator1 = "Button#UPDATE");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Check if Google PageSpeed Insights tab is visible in the 'VIRTUAL INSTANCE SCOPE' section") {

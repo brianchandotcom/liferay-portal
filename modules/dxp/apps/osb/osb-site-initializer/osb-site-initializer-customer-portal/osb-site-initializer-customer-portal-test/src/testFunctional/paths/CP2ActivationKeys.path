@@ -60,6 +60,16 @@
 	<td>//*[contains(@type, 'button') and contains(@value, '${key_licenseTab}') and contains(., '${key_numberOfLicenses}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGINATION_BUTTON</td>
+	<td>//*[contains(@class, 'pagination-items-per-page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_BUTTON_ITEM</td>
+	<td>//*[contains(@class, 'dropdown-item') and text()='${key_quantity} Items']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

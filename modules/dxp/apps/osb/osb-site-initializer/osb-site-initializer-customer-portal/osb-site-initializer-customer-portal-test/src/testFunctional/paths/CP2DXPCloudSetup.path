@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>SETUP_FIELDS</td>
-	<td>//input[contains(@name, '${label}')]</td>
+	<td>xpath=(//*[contains(@class, 'form-control') and contains(@name, '${label}')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -16,6 +16,8 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
+import {config} from '../../../app/config/index';
+import isNullOrUndefined from '../../../app/utils/isNullOrUndefined';
 import Collapse from '../../../common/components/Collapse';
 import TabItem from './TabItem';
 
@@ -25,13 +27,28 @@ export default function TabCollection({
 	initialOpen,
 	isSearchResult,
 }) {
-	const [open, setOpen] = useState(initialOpen);
+	const openStateSessionKey = `${config.portletNamespace}_fragment-collection_${collection.collectionId}_open`;
+
+	const [open, setOpen] = useState(() => {
+		const sessionValue = window.sessionStorage.getItem(openStateSessionKey);
+
+		if (!isNullOrUndefined(sessionValue)) {
+			return sessionValue === 'true';
+		}
+
+		return initialOpen;
+	});
+
+	const handleOpen = (nextOpen) => {
+		setOpen(nextOpen);
+		window.sessionStorage.setItem(openStateSessionKey, nextOpen);
+	};
 
 	return (
 		<Collapse
 			key={collection.collectionId}
 			label={collection.label}
-			onOpen={setOpen}
+			onOpen={handleOpen}
 			open={isSearchResult || open}
 		>
 			{collection.collections &&

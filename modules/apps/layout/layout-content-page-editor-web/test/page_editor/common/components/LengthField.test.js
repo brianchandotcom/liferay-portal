@@ -13,16 +13,18 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {LengthField} from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/LengthField';
 
+const FIELD = {label: 'length-field', name: 'lengthField'};
+
 const renderLengthField = ({
 	onValueSelect = () => {},
 	value = '12px',
-	field = {label: 'Length Field', name: 'length-field'},
+	field = FIELD,
 } = {}) =>
 	render(
 		<LengthField
@@ -36,23 +38,34 @@ describe('LengthField', () => {
 	it('renders LengthField', () => {
 		renderLengthField();
 
-		expect(screen.getByText('Length Field')).toBeInTheDocument();
+		expect(screen.getByText('length-field')).toBeInTheDocument();
 	});
 
 	it('shows the value', () => {
 		renderLengthField();
 
-		expect(screen.getByLabelText('Length Field')).toHaveValue(12);
+		expect(screen.getByLabelText('length-field')).toHaveValue(12);
 		expect(screen.getByLabelText('select-a-unit').textContent).toBe('PX');
 	});
 
 	it('changes the number of the value', () => {
 		renderLengthField();
-		const input = screen.getByLabelText('Length Field');
+		const input = screen.getByLabelText('length-field');
 
 		userEvent.type(input, '20');
 
 		expect(input).toHaveValue(20);
+	});
+
+	it('saves the value', () => {
+		const onValueSelect = jest.fn();
+		renderLengthField({onValueSelect});
+		const input = screen.getByLabelText('length-field');
+
+		userEvent.type(input, '24');
+		fireEvent.blur(input);
+
+		expect(onValueSelect).toBeCalledWith(FIELD.name, '24px');
 	});
 
 	it('changes the unit of the value', () => {
@@ -65,7 +78,7 @@ describe('LengthField', () => {
 
 	it('keeps the empty input and the units when the value is cleared', () => {
 		renderLengthField({value: '14vh'});
-		const input = screen.getByLabelText('Length Field');
+		const input = screen.getByLabelText('length-field');
 
 		userEvent.type(input, '');
 
@@ -83,12 +96,53 @@ describe('LengthField', () => {
 		).toBeInTheDocument();
 	});
 
+	it('focuses the input when custom option is selected', () => {
+		renderLengthField();
+
+		userEvent.click(screen.getByText('CUSTOM'));
+
+		expect(screen.getByLabelText('length-field')).toHaveFocus();
+	});
+
 	it('does not allow typing letters when a unit is selected', () => {
 		renderLengthField();
-		const input = screen.getByLabelText('Length Field');
+		const input = screen.getByLabelText('length-field');
 
 		userEvent.type(input, 'auto');
 
 		expect(input).toHaveValue(null);
+	});
+
+	describe('LengthField when it is part of a Select field', () => {
+		const field = {
+			...FIELD,
+			typeOptions: {
+				showLengthField: true,
+			},
+		};
+
+		it('focuses the input when the currently option is custom and a other unit is selected', () => {
+			renderLengthField({field, value: 'calc(12px - 3px)'});
+
+			userEvent.click(screen.getByText('%'));
+
+			expect(screen.getByLabelText('length-field')).toHaveFocus();
+		});
+
+		it('does not save the value and keeps the previous value when the input is cleared', () => {
+			const onValueSelect = jest.fn();
+			renderLengthField({
+				field,
+				onValueSelect,
+				value: 'initial',
+			});
+			const input = screen.getByLabelText('length-field');
+
+			userEvent.type(input, '');
+			fireEvent.blur(input);
+
+			expect(input).toHaveValue('initial');
+			expect(onValueSelect).not.toBeCalled();
+		});
 	});
 });

@@ -491,6 +491,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-142050. In style books, selecting Custom in units could insert any type of character."
+	@priority = "3"
+	test ConfigureCustomUnit {
+		property custom.properties = "feature.flag.LPS-143206=true";
+
+		task ("Given a site designer has a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+		}
+
+		task ("When the site designer accesses to the Spacing form") {
+			StyleBooks.selectForm(formName = "Spacing");
+		}
+
+		task ("Then the site designer sees the default unit of Spacer 1 is REM") {
+			AssertTextEquals(
+				key_fieldLabel = "Spacer 1",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL",
+				value1 = "REM");
+		}
+
+		task ("When the site designer selects custom unit for Spacer 1") {
+			StyleBooks.configureUnit(
+				fieldLabel = "Spacer 1",
+				unit = "CUSTOM");
+		}
+
+		task ("Then the site designer could define a custom unit for Spacer 1") {
+			Type(
+				key_text = "Spacer 1",
+				locator1 = "TextInput#ANY",
+				value1 = "2px");
+
+			StyleBooks.clickManagementBar();
+
+			StyleBooks.waitForAutoSave();
+
+			AssertTextEquals(
+				key_fieldLabel = "Spacer 1",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL",
+				value1 = "PX");
+
+			AssertTextEquals(
+				key_text = "Spacer 1",
+				locator1 = "TextInput#ANY",
+				value1 = "2");
+		}
+	}
+
 	@description = "This is a test for LPS-147705. A warning message appears when users try to delete a style book."
 	@priority = "4"
 	test DeleteStyleBook {

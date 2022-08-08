@@ -206,8 +206,10 @@ export default function EditObjectField({
 			({name}) => name === 'filters'
 		);
 
-		if (filterSetting?.length === 0 && objectFieldSettings) {
-			let newObjectFieldSettings: ObjectFieldSetting[] | undefined = [];
+		if (filterSetting) {
+			const [filter] = filterSetting;
+
+			let newFilterValues: ObjectFieldFilterSetting[] = [];
 
 			if (objectFieldBusinessType === 'Date') {
 				const dateJson: ObjectFieldDateRangeFilterSettings = {};
@@ -216,139 +218,80 @@ export default function EditObjectField({
 					dateJson[value] = label;
 				});
 
-				newObjectFieldSettings = [
-					...objectFieldSettings,
+				newFilterValues = [
+					...(filter.value as ObjectFieldFilterSetting[]),
 					{
-						name: 'filters',
-						value: [
-							{
-								filterBy: objectFieldName,
-								filterType,
-								json: {
-									[filterType as string]: value
-										? value
-										: dateJson,
-								},
-							},
-						],
+						filterBy: objectFieldName,
+						filterType,
+						json: dateJson,
+					},
+				];
+			}
+			else if (
+				objectFieldBusinessType === 'Picklist' ||
+				objectFieldName === 'status'
+			) {
+				let picklistJson:
+					| ExcludesFilterOperator
+					| IncludesFilterOperator;
+
+				if (filterType === 'excludes') {
+					picklistJson = {
+						not: {
+							in: valueList?.map(({value}) => value) as
+								| string[]
+								| number[],
+						},
+					};
+				}
+				else {
+					picklistJson = {
+						in: valueList?.map(({value}) => value) as
+							| string[]
+							| number[],
+					};
+				}
+
+				newFilterValues = [
+					...(filter.value as ObjectFieldFilterSetting[]),
+					{
+						filterBy: objectFieldName,
+						filterType,
+						json: picklistJson,
 					},
 				];
 			}
 			else {
-				newObjectFieldSettings = [
-					...objectFieldSettings,
+				newFilterValues = [
+					...(filter.value as ObjectFieldFilterSetting[]),
 					{
-						name: 'filters',
-						value: [
-							{
-								filterBy: objectFieldName,
-								filterType,
-								json: {
-									[filterType as string]: value
-										? value
-										: valueList?.map(({value}) => value),
-								},
-							},
-						],
+						filterBy: objectFieldName,
+						filterType,
+						json: {
+							[filterType as string]: value
+								? value
+								: valueList?.map(({value}) => value),
+						},
 					},
 				];
 			}
+
+			const newFilter: ObjectFieldSetting = {
+				name: filter.name,
+				value: newFilterValues,
+			};
+
+			const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
+				...(objectFieldSettings?.filter(
+					(fieldSetting) => fieldSetting.name !== 'filters'
+				) as ObjectFieldSetting[]),
+				newFilter,
+			];
 
 			setAggregationFilters(newAggregationFilters);
 			setValues({
 				objectFieldSettings: newObjectFieldSettings,
 			});
-		}
-		else {
-			if (filterSetting) {
-				const [filter] = filterSetting;
-
-				let newFilterValues: ObjectFieldFilterSetting[] = [];
-
-				if (objectFieldBusinessType === 'Date') {
-					const dateJson: ObjectFieldDateRangeFilterSettings = {};
-
-					valueList?.forEach(({label, value}) => {
-						dateJson[value] = label;
-					});
-
-					newFilterValues = [
-						...(filter.value as ObjectFieldFilterSetting[]),
-						{
-							filterBy: objectFieldName,
-							filterType,
-							json: dateJson,
-						},
-					];
-				}
-				else if (
-					objectFieldBusinessType === 'Picklist' ||
-					objectFieldName === 'status'
-				) {
-					let picklistJson:
-						| ExcludesFilterOperator
-						| IncludesFilterOperator;
-
-					if (filterType === 'excludes') {
-						picklistJson = {
-							not: {
-								in: valueList?.map(({value}) => value) as
-									| string[]
-									| number[],
-							},
-						};
-					}
-					else {
-						picklistJson = {
-							in: valueList?.map(({value}) => value) as
-								| string[]
-								| number[],
-						};
-					}
-
-					newFilterValues = [
-						...(filter.value as ObjectFieldFilterSetting[]),
-						{
-							filterBy: objectFieldName,
-							filterType,
-							json: picklistJson,
-						},
-					];
-				}
-				else {
-					newFilterValues = [
-						...(filter.value as ObjectFieldFilterSetting[]),
-						{
-							filterBy: objectFieldName,
-							filterType,
-							json: {
-								[filterType as string]: value
-									? value
-									: valueList?.map(({value}) => value),
-							},
-						},
-					];
-				}
-
-				const newFilter: ObjectFieldSetting = {
-					name: filter.name,
-					value: newFilterValues,
-				};
-
-				const newObjectFieldSettings:
-					| ObjectFieldSetting[]
-					| undefined = [
-					...(objectFieldSettings?.filter(
-						(fieldSetting) => fieldSetting.name !== 'filters'
-					) as ObjectFieldSetting[]),
-					newFilter,
-				];
-
-				setAggregationFilters(newAggregationFilters);
-				setValues({
-					objectFieldSettings: newObjectFieldSettings,
-				});
-			}
 		}
 	};
 

@@ -25,7 +25,9 @@ const SuiteOutlet = () => {
 	const {testrayProject}: any = useOutletContext();
 	const {setHeading} = useHeader();
 
-	const {data: testraySuite} = useFetch<TestraySuite>(`/suites/${suiteId}`);
+	const {data: testraySuite, mutate: mutateSuite} = useFetch<TestraySuite>(
+		`/suites/${suiteId}`
+	);
 
 	useEffect(() => {
 		if (testraySuite && testrayProject) {
@@ -49,7 +51,7 @@ const SuiteOutlet = () => {
 		return null;
 	}
 
-	return <Outlet context={{projectId, testraySuite}} />;
+	return <Outlet context={{mutateSuite, projectId, testraySuite}} />;
 };
 
 export default SuiteOutlet;

@@ -31,6 +31,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -40,14 +41,21 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifier",
+	service = AopService.class
+)
 public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 	extends CommercePaymentMethodGroupRelQualifierLocalServiceBaseImpl {
 
@@ -334,13 +342,13 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = ClassNameLocalService.class)
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

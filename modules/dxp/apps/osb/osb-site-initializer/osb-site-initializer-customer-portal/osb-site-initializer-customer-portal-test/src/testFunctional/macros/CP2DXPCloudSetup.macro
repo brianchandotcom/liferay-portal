@@ -236,6 +236,12 @@ definition {
 	}
 
 	macro typeSetupDXPCloudInfoFields {
+		if(!(isSet(position))) {
+			var position = "1";
+		}
+
+		var key_index = "${position}";
+		
 		Type(
 			locator1 = "CP2DXPCloudSetup#SETUP_FIELDS",
 			value1 = "${value}");

@@ -349,12 +349,6 @@ definition {
 		return "${curl}";
 	}
 
-	macro getBlogPostingsIdList {
-		var response = BlogPostingAPI._getBlogPostings();
-
-		var idList = JSONUtil.getWithJSONPath("${response}", "$.items.[*].id");
-
-		return "${idList}";
 	macro getBlogPostingsbyDifferentParameters {
 		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
@@ -370,6 +364,14 @@ definition {
 		var curl = JSONCurlUtil.get("${curl}");
 
 		return "${curl}";
+	}
+
+	macro getBlogPostingsIdList {
+		var response = BlogPostingAPI._getBlogPostings();
+
+		var idList = JSONUtil.getWithJSONPath("${response}", "$.items.[*].id");
+
+		return "${idList}";
 	}
 
 	macro getIdOfCreatedBlogPosting {

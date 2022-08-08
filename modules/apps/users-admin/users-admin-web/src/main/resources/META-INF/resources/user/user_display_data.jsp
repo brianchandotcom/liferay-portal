@@ -169,9 +169,12 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:logo-selector
+						aspectRatio="<%= 1 %>"
 						currentLogoURL='<%= themeDisplay.getPathImage() + "/user_portrait?img_id=0" %>'
 						defaultLogo="<%= true %>"
 						defaultLogoURL='<%= themeDisplay.getPathImage() + "/user_portrait?img_id=0" %>'
+						logoDisplaySelector=".user-logo"
+						preserveRatio="<%= true %>"
 						tempImageFileName="0"
 					/>
 				</c:otherwise>

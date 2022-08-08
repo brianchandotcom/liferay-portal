@@ -11,6 +11,7 @@ definition {
 	var testSiteURL = "customer-portal-site";
 	var testSiteTamplate = "Liferay OSB Site Initializer Customer Portal";
 	var pageTitle = "Activation Keys";
+	var testUser = "Test Test";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -29,6 +30,8 @@ definition {
 
 		task ("Go to Customer Portal") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.waitCP20PageToLoad(title = "${testUser}");
 		}
 	}
 
@@ -112,6 +115,8 @@ definition {
 
 			task ("Go to Customer Portal") {
 				ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+				CustomerPortal.waitCP20PageToLoad(title = "${testUser}");
 			}
 		}
 	}
@@ -154,6 +159,8 @@ definition {
 
 			task ("Go to Customer Portal") {
 				ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+				CustomerPortal.waitCP20PageToLoad(title = "${testUser}");
 			}
 		}
 	}

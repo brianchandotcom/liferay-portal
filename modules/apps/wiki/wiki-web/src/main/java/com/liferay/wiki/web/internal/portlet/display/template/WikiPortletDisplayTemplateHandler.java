@@ -15,7 +15,7 @@
 package com.liferay.wiki.web.internal.portlet.display.template;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -58,7 +58,7 @@ public class WikiPortletDisplayTemplateHandler
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale, getClass()));
 
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return _language.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override
@@ -108,6 +108,9 @@ public class WikiPortletDisplayTemplateHandler
 		return "com/liferay/wiki/web/portlet/display/template/dependencies" +
 			"/portlet-display-templates.xml";
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

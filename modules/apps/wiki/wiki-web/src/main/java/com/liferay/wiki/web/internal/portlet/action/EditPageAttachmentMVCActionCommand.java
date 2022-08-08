@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -356,7 +356,7 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-file-size-no-" +
 							"larger-than-x",
-						LanguageUtil.formatStorageSize(
+						_language.formatStorageSize(
 							fileSizeException.getMaxSize(),
 							themeDisplay.getLocale()));
 
@@ -420,6 +420,9 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLValidator _dlValidator;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

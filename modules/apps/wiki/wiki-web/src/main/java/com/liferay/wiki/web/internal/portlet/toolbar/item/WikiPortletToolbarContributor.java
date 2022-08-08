@@ -18,7 +18,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -114,7 +114,7 @@ public class WikiPortletToolbarContributor
 
 		urlMenuItem.setIcon("icon-plus-sign-2");
 		urlMenuItem.setLabel(
-			LanguageUtil.get(
+			_language.get(
 				_portal.getHttpServletRequest(portletRequest), "add-page"));
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -195,6 +195,9 @@ public class WikiPortletToolbarContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPortletToolbarContributor.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

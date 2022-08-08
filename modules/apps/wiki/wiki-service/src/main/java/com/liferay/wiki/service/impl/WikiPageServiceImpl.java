@@ -20,7 +20,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -986,7 +986,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			if (page.isMinorEdit()) {
 				title += StringBundler.concat(
 					StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
-					LanguageUtil.get(locale, "minor-edit"),
+					_language.get(locale, "minor-edit"),
 					StringPool.CLOSE_PARENTHESIS);
 			}
 
@@ -1023,6 +1023,9 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 	@Reference
 	private HtmlParser _htmlParser;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

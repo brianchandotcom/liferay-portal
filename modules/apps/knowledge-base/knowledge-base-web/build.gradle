@@ -44,6 +44,7 @@ dependencies {
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:rss:rss-taglib")
+	compileOnly project(":apps:site-navigation:site-navigation-taglib")
 	compileOnly project(":apps:social:social-bookmarks-taglib")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")

@@ -6100,6 +6100,7 @@ definition {
 		PortletEntry.changeLocale(locale = "es-ES");
 
 		WebContent.viewCP(
+			upgradedFieldLabel = "true",
 			webContentContent = "Contenidoweb",
 			webContentDescription = "Descripcion",
 			webContentTitle = "Titulodelcontenidoweb");
@@ -6111,6 +6112,7 @@ definition {
 		PortletEntry.changeLocale(locale = "ja-JP");
 
 		WebContent.viewCP(
+			upgradedFieldLabel = "true",
 			webContentContent = "wc webcontentコンテンツ",
 			webContentDescription = "wc webcontent記述",
 			webContentTitle = "wc webcontentタイトルを並べて");

@@ -18,7 +18,6 @@ import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelServiceUtil;
 import com.liferay.commerce.payment.service.persistence.CommercePaymentMethodGroupRelPersistence;
-import com.liferay.commerce.payment.service.persistence.CommercePaymentMethodGroupRelQualifierPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -27,8 +26,6 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
-import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -132,82 +129,6 @@ public abstract class CommercePaymentMethodGroupRelServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce payment method group rel qualifier local service.
-	 *
-	 * @return the commerce payment method group rel qualifier local service
-	 */
-	public com.liferay.commerce.payment.service.
-		CommercePaymentMethodGroupRelQualifierLocalService
-			getCommercePaymentMethodGroupRelQualifierLocalService() {
-
-		return commercePaymentMethodGroupRelQualifierLocalService;
-	}
-
-	/**
-	 * Sets the commerce payment method group rel qualifier local service.
-	 *
-	 * @param commercePaymentMethodGroupRelQualifierLocalService the commerce payment method group rel qualifier local service
-	 */
-	public void setCommercePaymentMethodGroupRelQualifierLocalService(
-		com.liferay.commerce.payment.service.
-			CommercePaymentMethodGroupRelQualifierLocalService
-				commercePaymentMethodGroupRelQualifierLocalService) {
-
-		this.commercePaymentMethodGroupRelQualifierLocalService =
-			commercePaymentMethodGroupRelQualifierLocalService;
-	}
-
-	/**
-	 * Returns the commerce payment method group rel qualifier remote service.
-	 *
-	 * @return the commerce payment method group rel qualifier remote service
-	 */
-	public com.liferay.commerce.payment.service.
-		CommercePaymentMethodGroupRelQualifierService
-			getCommercePaymentMethodGroupRelQualifierService() {
-
-		return commercePaymentMethodGroupRelQualifierService;
-	}
-
-	/**
-	 * Sets the commerce payment method group rel qualifier remote service.
-	 *
-	 * @param commercePaymentMethodGroupRelQualifierService the commerce payment method group rel qualifier remote service
-	 */
-	public void setCommercePaymentMethodGroupRelQualifierService(
-		com.liferay.commerce.payment.service.
-			CommercePaymentMethodGroupRelQualifierService
-				commercePaymentMethodGroupRelQualifierService) {
-
-		this.commercePaymentMethodGroupRelQualifierService =
-			commercePaymentMethodGroupRelQualifierService;
-	}
-
-	/**
-	 * Returns the commerce payment method group rel qualifier persistence.
-	 *
-	 * @return the commerce payment method group rel qualifier persistence
-	 */
-	public CommercePaymentMethodGroupRelQualifierPersistence
-		getCommercePaymentMethodGroupRelQualifierPersistence() {
-
-		return commercePaymentMethodGroupRelQualifierPersistence;
-	}
-
-	/**
-	 * Sets the commerce payment method group rel qualifier persistence.
-	 *
-	 * @param commercePaymentMethodGroupRelQualifierPersistence the commerce payment method group rel qualifier persistence
-	 */
-	public void setCommercePaymentMethodGroupRelQualifierPersistence(
-		CommercePaymentMethodGroupRelQualifierPersistence
-			commercePaymentMethodGroupRelQualifierPersistence) {
-
-		this.commercePaymentMethodGroupRelQualifierPersistence =
-			commercePaymentMethodGroupRelQualifierPersistence;
-	}
-
-	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -228,154 +149,6 @@ public abstract class CommercePaymentMethodGroupRelServiceBaseImpl
 			counterLocalService) {
 
 		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name remote service.
-	 *
-	 * @return the class name remote service
-	 */
-	public com.liferay.portal.kernel.service.ClassNameService
-		getClassNameService() {
-
-		return classNameService;
-	}
-
-	/**
-	 * Sets the class name remote service.
-	 *
-	 * @param classNameService the class name remote service
-	 */
-	public void setClassNameService(
-		com.liferay.portal.kernel.service.ClassNameService classNameService) {
-
-		this.classNameService = classNameService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-
-		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.kernel.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.kernel.service.UserService userService) {
-
-		this.userService = userService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
 	}
 
 	public void afterPropertiesSet() {
@@ -462,65 +235,10 @@ public abstract class CommercePaymentMethodGroupRelServiceBaseImpl
 	protected CommercePaymentMethodGroupRelPersistence
 		commercePaymentMethodGroupRelPersistence;
 
-	@BeanReference(
-		type = com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierLocalService.class
-	)
-	protected com.liferay.commerce.payment.service.
-		CommercePaymentMethodGroupRelQualifierLocalService
-			commercePaymentMethodGroupRelQualifierLocalService;
-
-	@BeanReference(
-		type = com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierService.class
-	)
-	protected com.liferay.commerce.payment.service.
-		CommercePaymentMethodGroupRelQualifierService
-			commercePaymentMethodGroupRelQualifierService;
-
-	@BeanReference(
-		type = CommercePaymentMethodGroupRelQualifierPersistence.class
-	)
-	protected CommercePaymentMethodGroupRelQualifierPersistence
-		commercePaymentMethodGroupRelQualifierPersistence;
-
 	@ServiceReference(
 		type = com.liferay.counter.kernel.service.CounterLocalService.class
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
-	@ServiceReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserService.class
-	)
-	protected com.liferay.portal.kernel.service.UserService userService;
-
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 
 }

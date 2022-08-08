@@ -2887,7 +2887,9 @@ public class LayoutStagedModelDataHandler
 				layoutTypePortlet.getTypeSettingsProperties();
 
 			UnicodeProperties newTypeSettingsUnicodeProperties =
-				UnicodePropertiesBuilder.fastLoad(
+				UnicodePropertiesBuilder.create(
+					prototypeTypeSettingsUnicodeProperties.isSafe()
+				).fastLoad(
 					prototypeTypeSettingsUnicodeProperties.toString()
 				).build();
 

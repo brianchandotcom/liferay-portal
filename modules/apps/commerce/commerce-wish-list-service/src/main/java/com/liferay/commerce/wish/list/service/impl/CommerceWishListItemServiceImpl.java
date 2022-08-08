@@ -20,19 +20,29 @@ import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.base.CommerceWishListItemServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceWishListItem"
+	},
+	service = AopService.class
+)
 public class CommerceWishListItemServiceImpl
 	extends CommerceWishListItemServiceBaseImpl {
 
@@ -148,17 +158,16 @@ public class CommerceWishListItemServiceImpl
 			commerceWishListId);
 	}
 
-	@ServiceReference(type = CommerceProductViewPermission.class)
+	@Reference
 	protected CommerceProductViewPermission commerceProductViewPermission;
 
-	@ServiceReference(type = CProductLocalService.class)
+	@Reference
 	protected CProductLocalService cProductLocalService;
 
-	private static volatile ModelResourcePermission<CommerceWishList>
-		_commerceWishListModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceWishListItemServiceImpl.class,
-				"_commerceWishListModelResourcePermission",
-				CommerceWishList.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.wish.list.model.CommerceWishList)"
+	)
+	private ModelResourcePermission<CommerceWishList>
+		_commerceWishListModelResourcePermission;
 
 }

@@ -17,19 +17,30 @@ package com.liferay.commerce.wish.list.service.impl;
 import com.liferay.commerce.wish.list.constants.CommerceWishListActionKeys;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.base.CommerceWishListServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Andrea Di Giorgi
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceWishList"
+	},
+	service = AopService.class
+)
 public class CommerceWishListServiceImpl
 	extends CommerceWishListServiceBaseImpl {
 
@@ -169,11 +180,10 @@ public class CommerceWishListServiceImpl
 			CommerceWishListActionKeys.MANAGE_COMMERCE_WISH_LISTS);
 	}
 
-	private static volatile ModelResourcePermission<CommerceWishList>
-		_commerceWishListModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceWishListServiceImpl.class,
-				"_commerceWishListModelResourcePermission",
-				CommerceWishList.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.wish.list.model.CommerceWishList)"
+	)
+	private ModelResourcePermission<CommerceWishList>
+		_commerceWishListModelResourcePermission;
 
 }

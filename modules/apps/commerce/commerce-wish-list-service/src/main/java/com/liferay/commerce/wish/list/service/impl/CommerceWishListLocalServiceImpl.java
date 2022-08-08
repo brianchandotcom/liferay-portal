@@ -23,7 +23,7 @@ import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemLocalService;
 import com.liferay.commerce.wish.list.service.base.CommerceWishListLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,15 +35,22 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Andrea Di Giorgi
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.wish.list.model.CommerceWishList",
+	service = AopService.class
+)
 public class CommerceWishListLocalServiceImpl
 	extends CommerceWishListLocalServiceBaseImpl {
 
@@ -336,16 +343,16 @@ public class CommerceWishListLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = CommerceWishListConfiguration.class)
+	@Reference
 	private CommerceWishListConfiguration _commerceWishListConfiguration;
 
-	@BeanReference(type = CommerceWishListItemLocalService.class)
+	@Reference
 	private CommerceWishListItemLocalService _commerceWishListItemLocalService;
 
-	@ServiceReference(type = DDMFormValuesHelper.class)
+	@Reference
 	private DDMFormValuesHelper _ddmFormValuesHelper;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

@@ -543,7 +543,7 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 * <strong>Important:</strong> Inspect FragmentEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param fragmentEntry the fragment entry
+	 * @param draftFragmentEntry the fragment entry
 	 * @return the fragment entry that was updated
 	 * @throws PortalException
 	 */

@@ -611,7 +611,7 @@ public interface CommerceMLForecastAlertEntryPersistence
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
+	 * @param commerceAccountIds the commerce account IDs
 	 * @param status the status
 	 * @param start the lower bound of the range of commerce ml forecast alert entries
 	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
@@ -888,7 +888,7 @@ public interface CommerceMLForecastAlertEntryPersistence
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
+	 * @param commerceAccountIds the commerce account IDs
 	 * @param relativeChange the relative change
 	 * @param status the status
 	 * @param start the lower bound of the range of commerce ml forecast alert entries
@@ -1173,7 +1173,7 @@ public interface CommerceMLForecastAlertEntryPersistence
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
+	 * @param commerceAccountIds the commerce account IDs
 	 * @param relativeChange the relative change
 	 * @param status the status
 	 * @param start the lower bound of the range of commerce ml forecast alert entries

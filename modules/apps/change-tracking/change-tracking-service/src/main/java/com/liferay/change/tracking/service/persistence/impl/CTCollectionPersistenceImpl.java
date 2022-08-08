@@ -2884,7 +2884,7 @@ public class CTCollectionPersistenceImpl
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param status the status
+	 * @param statuses the statuses
 	 * @param start the lower bound of the range of ct collections
 	 * @param end the upper bound of the range of ct collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)

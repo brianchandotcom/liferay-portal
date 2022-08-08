@@ -1485,7 +1485,7 @@ public interface DispatchTriggerPersistence
 	 * </p>
 	 *
 	 * @param active the active
-	 * @param dispatchTaskClusterMode the dispatch task cluster mode
+	 * @param dispatchTaskClusterModes the dispatch task cluster modes
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)

@@ -578,7 +578,7 @@ public interface VirtualHostPersistence
 	 * </p>
 	 *
 	 * @param layoutSetId the layout set ID
-	 * @param hostname the hostname
+	 * @param hostnames the hostnames
 	 * @param start the lower bound of the range of virtual hosts
 	 * @param end the upper bound of the range of virtual hosts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)

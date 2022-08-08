@@ -306,7 +306,7 @@ public interface ExpandoColumnPersistence
 	 * </p>
 	 *
 	 * @param tableId the table ID
-	 * @param name the name
+	 * @param names the names
 	 * @param start the lower bound of the range of expando columns
 	 * @param end the upper bound of the range of expando columns (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)

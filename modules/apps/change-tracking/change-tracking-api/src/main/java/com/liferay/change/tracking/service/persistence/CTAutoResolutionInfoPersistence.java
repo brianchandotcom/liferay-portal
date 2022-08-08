@@ -399,7 +399,7 @@ public interface CTAutoResolutionInfoPersistence
 	 *
 	 * @param ctCollectionId the ct collection ID
 	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPK the source model class pk
+	 * @param sourceModelClassPKs the source model class pks
 	 * @param start the lower bound of the range of ct auto resolution infos
 	 * @param end the upper bound of the range of ct auto resolution infos (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)

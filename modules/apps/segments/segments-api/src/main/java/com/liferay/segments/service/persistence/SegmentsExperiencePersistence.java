@@ -2564,7 +2564,7 @@ public interface SegmentsExperiencePersistence
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
+	 * @param segmentsEntryIds the segments entry IDs
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param active the active

@@ -985,7 +985,7 @@ public interface MicroblogsEntryPersistence
 	 * </p>
 	 *
 	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
+	 * @param creatorClassPKs the creator class pks
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1827,7 +1827,7 @@ public interface MicroblogsEntryPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
+	 * @param creatorClassPKs the creator class pks
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -2472,7 +2472,7 @@ public interface MicroblogsEntryPersistence
 	 * </p>
 	 *
 	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
+	 * @param creatorClassPKs the creator class pks
 	 * @param type the type
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
@@ -2896,7 +2896,7 @@ public interface MicroblogsEntryPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
+	 * @param creatorClassPKs the creator class pks
 	 * @param type the type
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)

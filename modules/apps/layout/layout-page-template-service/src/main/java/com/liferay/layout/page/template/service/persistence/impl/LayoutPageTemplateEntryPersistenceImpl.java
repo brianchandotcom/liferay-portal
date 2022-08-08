@@ -6540,7 +6540,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param types the types
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -11635,7 +11635,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param type the type
+	 * @param types the types
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -13268,7 +13268,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param types the types
 	 * @param status the status
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
@@ -19453,7 +19453,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param type the type
+	 * @param types the types
 	 * @param status the status
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)

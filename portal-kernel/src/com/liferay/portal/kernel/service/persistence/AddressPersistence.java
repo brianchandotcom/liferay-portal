@@ -1454,7 +1454,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeId the type ID
+	 * @param typeIds the type IDs
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)

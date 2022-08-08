@@ -2891,7 +2891,7 @@ public class MBMessageUtil {
 	 * </p>
 	 *
 	 * @param userId the user ID
-	 * @param classNameId the class name ID
+	 * @param classNameIds the class name IDs
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -5564,7 +5564,7 @@ public class MBMessageUtil {
 	 * </p>
 	 *
 	 * @param userId the user ID
-	 * @param classNameId the class name ID
+	 * @param classNameIds the class name IDs
 	 * @param status the status
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)

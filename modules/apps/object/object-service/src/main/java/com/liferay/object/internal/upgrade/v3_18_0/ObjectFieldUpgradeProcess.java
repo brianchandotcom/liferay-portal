@@ -88,7 +88,7 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 				long userId = resultSet.getLong("userId");
 				String userName = resultSet.getString("userName");
 
-				if (resultSet.getBoolean("system_")) {
+				if (!resultSet.getBoolean("system_")) {
 					dbTableName = "ObjectEntry";
 				}
 

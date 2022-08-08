@@ -128,9 +128,11 @@ definition {
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}");
+		PortletEntry.inputTitle(title = "${webContentTitle}");
+
+		CKEditor.addContentInWebContent(
+			content = "${webContentContent}",
+			fieldLabel = "content");
 
 		PortletEntry.publish();
 

@@ -53,3 +53,8 @@ Group group = layoutsAdminDisplayContext.getGroup();
 		tempImageFileName="<%= String.valueOf(selLayout.getPlid()) %>"
 	/>
 </aui:field-wrapper>
+
+<liferay-frontend:component
+	componentId='<%= liferayPortletResponse.getNamespace() + "addLayout" %>'
+	module="js/Advanced"
+/>

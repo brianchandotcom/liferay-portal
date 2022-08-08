@@ -35,7 +35,8 @@ create table NotificationQueueEntry (
 	sentDate DATE null,
 	subject VARCHAR(75) null,
 	to_ VARCHAR(75) null,
-	toName VARCHAR(75) null
+	toName VARCHAR(75) null,
+	status INTEGER
 );
 
 create table NotificationTemplate (

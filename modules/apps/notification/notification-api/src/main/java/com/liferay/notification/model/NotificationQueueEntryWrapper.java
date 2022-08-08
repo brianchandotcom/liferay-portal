@@ -66,6 +66,7 @@ public class NotificationQueueEntryWrapper
 		attributes.put("subject", getSubject());
 		attributes.put("to", getTo());
 		attributes.put("toName", getToName());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -198,6 +199,12 @@ public class NotificationQueueEntryWrapper
 
 		if (toName != null) {
 			setToName(toName);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -384,6 +391,16 @@ public class NotificationQueueEntryWrapper
 	@Override
 	public Date getSentDate() {
 		return model.getSentDate();
+	}
+
+	/**
+	 * Returns the status of this notification queue entry.
+	 *
+	 * @return the status of this notification queue entry
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -634,6 +651,16 @@ public class NotificationQueueEntryWrapper
 	@Override
 	public void setSentDate(Date sentDate) {
 		model.setSentDate(sentDate);
+	}
+
+	/**
+	 * Sets the status of this notification queue entry.
+	 *
+	 * @param status the status of this notification queue entry
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
 	}
 
 	/**

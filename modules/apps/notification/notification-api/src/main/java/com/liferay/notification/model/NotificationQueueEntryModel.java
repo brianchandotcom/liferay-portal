@@ -413,6 +413,20 @@ public interface NotificationQueueEntryModel
 	 */
 	public void setToName(String toName);
 
+	/**
+	 * Returns the status of this notification queue entry.
+	 *
+	 * @return the status of this notification queue entry
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this notification queue entry.
+	 *
+	 * @param status the status of this notification queue entry
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public NotificationQueueEntry cloneWithOriginalValues();
 

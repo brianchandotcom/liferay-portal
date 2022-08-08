@@ -268,6 +268,15 @@ public class KBAdminNavigationDisplayContext {
 		return verticalNavigationItems;
 	}
 
+	public boolean isProductMenuOpen() {
+		String productMenuState = SessionClicks.get(
+			_httpServletRequest,
+			"com.liferay.product.navigation.product.menu.web_productMenuState",
+			"closed");
+
+		return Objects.equals(productMenuState, "open");
+	}
+
 	private JSONArray _getKBArticleNavigationJSONArray()
 		throws PortalException {
 
@@ -353,15 +362,6 @@ public class KBAdminNavigationDisplayContext {
 		}
 
 		return articleNavigationJSONArray;
-	}
-
-	public boolean isProductMenuOpen() {
-		String productMenuState = SessionClicks.get(
-			_httpServletRequest,
-			"com.liferay.product.navigation.product.menu.web_productMenuState",
-			"closed");
-
-		return Objects.equals(productMenuState, "open");
 	}
 
 	private final HttpServletRequest _httpServletRequest;

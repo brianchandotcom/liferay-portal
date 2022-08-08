@@ -81,7 +81,7 @@ dependencies {
 	compileInclude project(":apps:wiki:wiki-api")
 	compileInclude project(":apps:wiki:wiki-service")
 
-	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.29.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.29.LIFERAY-PATCHED-3"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":core:petra:petra-function")

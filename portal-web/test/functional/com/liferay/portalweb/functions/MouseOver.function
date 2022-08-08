@@ -50,4 +50,18 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function waitForMenuToggleJSMouseOver {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent();
+
+		selenium.waitForElementPresent("//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]");
+
+		selenium.mouseOver();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 }

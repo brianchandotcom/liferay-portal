@@ -16,76 +16,41 @@ import React from 'react';
 
 import {HIGHLIGHTED_COMMENT_ID_KEY} from '../../../app/config/constants/highlightedCommentIdKey';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {
-	useActiveItemId,
-	useSelectItem,
-} from '../../../app/contexts/ControlsContext';
-import {useSelector} from '../../../app/contexts/StoreContext';
-import getFragmentItem from '../../../app/utils/getFragmentItem';
+import {useActiveItemId} from '../../../app/contexts/ControlsContext';
+import {useSelectorCallback} from '../../../app/contexts/StoreContext';
 import {useSessionState} from '../../../core/hooks/useSessionState';
 import FragmentComments from './FragmentComments';
 import FragmentEntryLinksWithComments from './FragmentEntryLinksWithComments';
 
-function getActiveFragmentEntryLink({
-	fragmentEntryLinks,
-	highlightMessageId,
-	itemId,
-	layoutData,
-}) {
-	if (highlightMessageId) {
-		return Object.values(fragmentEntryLinks).find((fragmentEntryLink) =>
-			fragmentEntryLink.comments.some(
-				(comment) =>
-					comment.commentId === highlightMessageId ||
-					comment.children?.some(
-						(childComment) =>
-							childComment.commentId === highlightMessageId
-					)
-			)
-		);
-	}
-	else {
-		const item = layoutData.items[itemId];
-
-		if (item) {
-			if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-				return fragmentEntryLinks[item.config.fragmentEntryLinkId];
-			}
-			else if (item.parentId) {
-				return getActiveFragmentEntryLink({
-					fragmentEntryLinks,
-					itemId: item.parentId,
-					layoutData,
-				});
-			}
-		}
-	}
-
-	return null;
-}
-
 export default function CommentsSidebar() {
-	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
-	const layoutData = useSelector((state) => state.layoutData);
-
 	const activeItemId = useActiveItemId();
-	const [highlightMessageId] = useSessionState(HIGHLIGHTED_COMMENT_ID_KEY);
-	const selectItem = useSelectItem();
+	const [highlightedMessageId] = useSessionState(HIGHLIGHTED_COMMENT_ID_KEY);
 
-	const activeFragmentEntryLink = getActiveFragmentEntryLink({
-		fragmentEntryLinks,
-		highlightMessageId,
-		itemId: activeItemId,
-		layoutData,
-	});
+	const activeFragmentEntryLink = useSelectorCallback(
+		(state) => {
+			const getActiveFragmentEntryLink = (itemId) => {
+				const item = state.layoutData.items[itemId];
 
-	if (highlightMessageId && activeFragmentEntryLink) {
-		const activeItem = getFragmentItem(
-			layoutData,
-			activeFragmentEntryLink.fragmentEntryLinkId
-		);
-		selectItem(activeItem.itemId);
-	}
+				if (item) {
+					if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+						return (
+							state.fragmentEntryLinks[
+								item.config.fragmentEntryLinkId
+							] || null
+						);
+					}
+					else if (item.parentId) {
+						return getActiveFragmentEntryLink(item.parentId);
+					}
+				}
+
+				return null;
+			};
+
+			return getActiveFragmentEntryLink(activeItemId);
+		},
+		[activeItemId, highlightedMessageId]
+	);
 
 	return (
 		<div

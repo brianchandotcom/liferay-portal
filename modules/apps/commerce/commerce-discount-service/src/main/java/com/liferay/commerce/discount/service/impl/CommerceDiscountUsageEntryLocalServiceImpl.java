@@ -17,8 +17,8 @@ package com.liferay.commerce.discount.service.impl;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountUsageEntry;
-import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.service.base.CommerceDiscountUsageEntryLocalServiceBaseImpl;
+import com.liferay.commerce.discount.service.persistence.CommerceDiscountPersistence;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -129,8 +129,7 @@ public class CommerceDiscountUsageEntryLocalServiceImpl
 		throws PortalException {
 
 		CommerceDiscount commerceDiscount =
-			_commerceDiscountLocalService.getCommerceDiscount(
-				commerceDiscountId);
+			_commerceDiscountPersistence.findByPrimaryKey(commerceDiscountId);
 
 		if (Objects.equals(
 				commerceDiscount.getLimitationType(),
@@ -195,7 +194,7 @@ public class CommerceDiscountUsageEntryLocalServiceImpl
 	}
 
 	@Reference
-	private CommerceDiscountLocalService _commerceDiscountLocalService;
+	private CommerceDiscountPersistence _commerceDiscountPersistence;
 
 	@Reference
 	private CounterLocalService _counterLocalService;

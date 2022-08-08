@@ -19,8 +19,8 @@ import com.liferay.asset.kernel.model.AssetCategoryTable;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.commerce.discount.model.CommerceDiscountRelTable;
-import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.service.base.CommerceDiscountRelLocalServiceBaseImpl;
+import com.liferay.commerce.discount.service.persistence.CommerceDiscountPersistence;
 import com.liferay.commerce.discount.util.comparator.CommerceDiscountRelCreateDateComparator;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.model.CommercePricingClassTable;
@@ -390,8 +390,7 @@ public class CommerceDiscountRelLocalServiceImpl
 		throws PortalException {
 
 		CommerceDiscount commerceDiscount =
-			_commerceDiscountLocalService.getCommerceDiscount(
-				commerceDiscountId);
+			_commerceDiscountPersistence.findByPrimaryKey(commerceDiscountId);
 
 		Indexer<CommerceDiscount> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CommerceDiscount.class);
@@ -430,7 +429,7 @@ public class CommerceDiscountRelLocalServiceImpl
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
-	private CommerceDiscountLocalService _commerceDiscountLocalService;
+	private CommerceDiscountPersistence _commerceDiscountPersistence;
 
 	@Reference
 	private CustomSQL _customSQL;

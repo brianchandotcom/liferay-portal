@@ -19,8 +19,8 @@ import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
-import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.service.base.CommerceDiscountRuleLocalServiceBaseImpl;
+import com.liferay.commerce.discount.service.persistence.CommerceDiscountPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -250,8 +250,7 @@ public class CommerceDiscountRuleLocalServiceImpl
 		throws PortalException {
 
 		CommerceDiscount commerceDiscount =
-			_commerceDiscountLocalService.getCommerceDiscount(
-				commerceDiscountId);
+			_commerceDiscountPersistence.findByPrimaryKey(commerceDiscountId);
 
 		Indexer<CommerceDiscount> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CommerceDiscount.class);
@@ -269,7 +268,7 @@ public class CommerceDiscountRuleLocalServiceImpl
 	}
 
 	@Reference
-	private CommerceDiscountLocalService _commerceDiscountLocalService;
+	private CommerceDiscountPersistence _commerceDiscountPersistence;
 
 	@Reference
 	private CommerceDiscountRuleTypeRegistry _commerceDiscountRuleTypeRegistry;

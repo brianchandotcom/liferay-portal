@@ -18,6 +18,7 @@ import com.liferay.commerce.pricing.constants.CommercePricingClassActionKeys;
 import com.liferay.commerce.pricing.exception.NoSuchPricingClassException;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.base.CommercePricingClassServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,21 +29,30 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Riccardo Alberti
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommercePricingClass"
+	},
+	service = AopService.class
+)
 public class CommercePricingClassServiceImpl
 	extends CommercePricingClassServiceBaseImpl {
 
@@ -255,14 +265,13 @@ public class CommercePricingClassServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePricingClassServiceImpl.class);
 
-	private static volatile ModelResourcePermission<CommercePricingClass>
-		_commercePricingClassResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommercePricingClassServiceImpl.class,
-				"_commercePricingClassResourcePermission",
-				CommercePricingClass.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.pricing.model.CommercePricingClass)"
+	)
+	private ModelResourcePermission<CommercePricingClass>
+		_commercePricingClassResourcePermission;
 
-	@ServiceReference(type = CompanyService.class)
+	@Reference
 	private CompanyService _companyService;
 
 }

@@ -16,6 +16,7 @@ package com.liferay.commerce.pricing.service.impl;
 
 import com.liferay.commerce.pricing.model.CommercePriceModifierRel;
 import com.liferay.commerce.pricing.service.base.CommercePriceModifierRelLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -25,13 +26,20 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Alberti
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.pricing.model.CommercePriceModifierRel",
+	service = AopService.class
+)
 public class CommercePriceModifierRelLocalServiceImpl
 	extends CommercePriceModifierRelLocalServiceBaseImpl {
 
@@ -234,10 +242,10 @@ public class CommercePriceModifierRelLocalServiceImpl
 				commercePriceModifierId, languageId, name);
 	}
 
-	@ServiceReference(type = ClassNameLocalService.class)
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

@@ -17,18 +17,29 @@ package com.liferay.commerce.pricing.service.impl;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel;
 import com.liferay.commerce.pricing.service.base.CommercePricingClassCPDefinitionRelServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Riccardo Alberti
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommercePricingClassCPDefinitionRel"
+	},
+	service = AopService.class
+)
 public class CommercePricingClassCPDefinitionRelServiceImpl
 	extends CommercePricingClassCPDefinitionRelServiceBaseImpl {
 
@@ -196,11 +207,10 @@ public class CommercePricingClassCPDefinitionRelServiceImpl
 				commercePricingClassId, name, languageId, start, end, true);
 	}
 
-	private static volatile ModelResourcePermission<CommercePricingClass>
-		_commercePricingClassResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommercePricingClassCPDefinitionRelServiceImpl.class,
-				"_commercePricingClassResourcePermission",
-				CommercePricingClass.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.pricing.model.CommercePricingClass)"
+	)
+	private ModelResourcePermission<CommercePricingClass>
+		_commercePricingClassResourcePermission;
 
 }

@@ -2985,20 +2985,11 @@ definition {
 			}
 
 			if (isSet(borderWidth)) {
-				Type(
-					key_fieldLabel = "Border Width",
-					locator1 = "FormFields#NUMBER_FIELD",
-					value1 = "${borderWidth}");
-
-				Click(
-					key_sidebarButton = "Browser",
-					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
-				PageEditor.waitForAutoSave();
+				PageEditor.configureFragment(borderWidth = "${borderWidth}");
 
 				AssertTextEquals(
-					key_fieldLabel = "Border Width",
-					locator1 = "FormFields#NUMBER_FIELD",
+					key_text = "Border Width",
+					locator1 = "TextInput#ANY",
 					value1 = "${borderWidth}");
 			}
 
@@ -3322,20 +3313,11 @@ definition {
 			}
 
 			if (isSet(borderWidth)) {
-				Type(
-					key_fieldLabel = "Border Width",
-					locator1 = "FormFields#NUMBER_FIELD",
-					value1 = "${borderWidth}");
-
-				Click(
-					key_sidebarButton = "Browser",
-					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
-				PageEditor.waitForAutoSave();
+				PageEditor.configureFragment(borderWidth = "${borderWidth}");
 
 				AssertTextEquals(
-					key_fieldLabel = "Border Width",
-					locator1 = "FormFields#NUMBER_FIELD",
+					key_text = "Border Width",
+					locator1 = "TextInput#ANY",
 					value1 = "${borderWidth}");
 			}
 

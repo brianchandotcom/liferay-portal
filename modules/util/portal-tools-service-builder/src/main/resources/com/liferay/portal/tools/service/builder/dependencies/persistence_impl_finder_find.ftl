@@ -1509,7 +1509,11 @@ that may or may not be enforced with a unique index at the database level. Case
 	 * </p>
 	 *
 	<#list entityColumns as entityColumn>
-	 * @param ${entityColumn.name} the ${entityColumn.humanName}
+		<#if entityColumn.hasArrayableOperator()>
+			* @param ${entityColumn.pluralName} the ${entityColumn.pluralHumanName}
+		<#else>
+			* @param ${entityColumn.name} the ${entityColumn.humanName}
+		</#if>
 	</#list>
 	 * @param start the lower bound of the range of ${entity.pluralHumanName}
 	 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
@@ -1875,7 +1879,11 @@ that may or may not be enforced with a unique index at the database level. Case
 	 * </p>
 	 *
 	<#list entityColumns as entityColumn>
-	 * @param ${entityColumn.name} the ${entityColumn.humanName}
+		<#if entityColumn.hasArrayableOperator()>
+			* @param ${entityColumn.pluralName} the ${entityColumn.pluralHumanName}
+		<#else>
+			* @param ${entityColumn.name} the ${entityColumn.humanName}
+		</#if>
 	</#list>
 	 * @param start the lower bound of the range of ${entity.pluralHumanName}
 	 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)

@@ -17,12 +17,6 @@ package com.liferay.commerce.pricing.service.base;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
 import com.liferay.commerce.pricing.service.CommercePricingClassLocalServiceUtil;
-import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder;
-import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierPersistence;
-import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelFinder;
-import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelPersistence;
-import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelFinder;
-import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelPersistence;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -54,8 +48,6 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -568,145 +560,6 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce price modifier local service.
-	 *
-	 * @return the commerce price modifier local service
-	 */
-	public
-		com.liferay.commerce.pricing.service.CommercePriceModifierLocalService
-			getCommercePriceModifierLocalService() {
-
-		return commercePriceModifierLocalService;
-	}
-
-	/**
-	 * Sets the commerce price modifier local service.
-	 *
-	 * @param commercePriceModifierLocalService the commerce price modifier local service
-	 */
-	public void setCommercePriceModifierLocalService(
-		com.liferay.commerce.pricing.service.CommercePriceModifierLocalService
-			commercePriceModifierLocalService) {
-
-		this.commercePriceModifierLocalService =
-			commercePriceModifierLocalService;
-	}
-
-	/**
-	 * Returns the commerce price modifier persistence.
-	 *
-	 * @return the commerce price modifier persistence
-	 */
-	public CommercePriceModifierPersistence
-		getCommercePriceModifierPersistence() {
-
-		return commercePriceModifierPersistence;
-	}
-
-	/**
-	 * Sets the commerce price modifier persistence.
-	 *
-	 * @param commercePriceModifierPersistence the commerce price modifier persistence
-	 */
-	public void setCommercePriceModifierPersistence(
-		CommercePriceModifierPersistence commercePriceModifierPersistence) {
-
-		this.commercePriceModifierPersistence =
-			commercePriceModifierPersistence;
-	}
-
-	/**
-	 * Returns the commerce price modifier finder.
-	 *
-	 * @return the commerce price modifier finder
-	 */
-	public CommercePriceModifierFinder getCommercePriceModifierFinder() {
-		return commercePriceModifierFinder;
-	}
-
-	/**
-	 * Sets the commerce price modifier finder.
-	 *
-	 * @param commercePriceModifierFinder the commerce price modifier finder
-	 */
-	public void setCommercePriceModifierFinder(
-		CommercePriceModifierFinder commercePriceModifierFinder) {
-
-		this.commercePriceModifierFinder = commercePriceModifierFinder;
-	}
-
-	/**
-	 * Returns the commerce price modifier rel local service.
-	 *
-	 * @return the commerce price modifier rel local service
-	 */
-	public
-		com.liferay.commerce.pricing.service.
-			CommercePriceModifierRelLocalService
-				getCommercePriceModifierRelLocalService() {
-
-		return commercePriceModifierRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce price modifier rel local service.
-	 *
-	 * @param commercePriceModifierRelLocalService the commerce price modifier rel local service
-	 */
-	public void setCommercePriceModifierRelLocalService(
-		com.liferay.commerce.pricing.service.
-			CommercePriceModifierRelLocalService
-				commercePriceModifierRelLocalService) {
-
-		this.commercePriceModifierRelLocalService =
-			commercePriceModifierRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce price modifier rel persistence.
-	 *
-	 * @return the commerce price modifier rel persistence
-	 */
-	public CommercePriceModifierRelPersistence
-		getCommercePriceModifierRelPersistence() {
-
-		return commercePriceModifierRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce price modifier rel persistence.
-	 *
-	 * @param commercePriceModifierRelPersistence the commerce price modifier rel persistence
-	 */
-	public void setCommercePriceModifierRelPersistence(
-		CommercePriceModifierRelPersistence
-			commercePriceModifierRelPersistence) {
-
-		this.commercePriceModifierRelPersistence =
-			commercePriceModifierRelPersistence;
-	}
-
-	/**
-	 * Returns the commerce price modifier rel finder.
-	 *
-	 * @return the commerce price modifier rel finder
-	 */
-	public CommercePriceModifierRelFinder getCommercePriceModifierRelFinder() {
-		return commercePriceModifierRelFinder;
-	}
-
-	/**
-	 * Sets the commerce price modifier rel finder.
-	 *
-	 * @param commercePriceModifierRelFinder the commerce price modifier rel finder
-	 */
-	public void setCommercePriceModifierRelFinder(
-		CommercePriceModifierRelFinder commercePriceModifierRelFinder) {
-
-		this.commercePriceModifierRelFinder = commercePriceModifierRelFinder;
-	}
-
-	/**
 	 * Returns the commerce pricing class local service.
 	 *
 	 * @return the commerce pricing class local service
@@ -772,80 +625,6 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce pricing class cp definition rel local service.
-	 *
-	 * @return the commerce pricing class cp definition rel local service
-	 */
-	public com.liferay.commerce.pricing.service.
-		CommercePricingClassCPDefinitionRelLocalService
-			getCommercePricingClassCPDefinitionRelLocalService() {
-
-		return commercePricingClassCPDefinitionRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce pricing class cp definition rel local service.
-	 *
-	 * @param commercePricingClassCPDefinitionRelLocalService the commerce pricing class cp definition rel local service
-	 */
-	public void setCommercePricingClassCPDefinitionRelLocalService(
-		com.liferay.commerce.pricing.service.
-			CommercePricingClassCPDefinitionRelLocalService
-				commercePricingClassCPDefinitionRelLocalService) {
-
-		this.commercePricingClassCPDefinitionRelLocalService =
-			commercePricingClassCPDefinitionRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce pricing class cp definition rel persistence.
-	 *
-	 * @return the commerce pricing class cp definition rel persistence
-	 */
-	public CommercePricingClassCPDefinitionRelPersistence
-		getCommercePricingClassCPDefinitionRelPersistence() {
-
-		return commercePricingClassCPDefinitionRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce pricing class cp definition rel persistence.
-	 *
-	 * @param commercePricingClassCPDefinitionRelPersistence the commerce pricing class cp definition rel persistence
-	 */
-	public void setCommercePricingClassCPDefinitionRelPersistence(
-		CommercePricingClassCPDefinitionRelPersistence
-			commercePricingClassCPDefinitionRelPersistence) {
-
-		this.commercePricingClassCPDefinitionRelPersistence =
-			commercePricingClassCPDefinitionRelPersistence;
-	}
-
-	/**
-	 * Returns the commerce pricing class cp definition rel finder.
-	 *
-	 * @return the commerce pricing class cp definition rel finder
-	 */
-	public CommercePricingClassCPDefinitionRelFinder
-		getCommercePricingClassCPDefinitionRelFinder() {
-
-		return commercePricingClassCPDefinitionRelFinder;
-	}
-
-	/**
-	 * Sets the commerce pricing class cp definition rel finder.
-	 *
-	 * @param commercePricingClassCPDefinitionRelFinder the commerce pricing class cp definition rel finder
-	 */
-	public void setCommercePricingClassCPDefinitionRelFinder(
-		CommercePricingClassCPDefinitionRelFinder
-			commercePricingClassCPDefinitionRelFinder) {
-
-		this.commercePricingClassCPDefinitionRelFinder =
-			commercePricingClassCPDefinitionRelFinder;
-	}
-
-	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -866,112 +645,6 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 			counterLocalService) {
 
 		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-
-		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
 	}
 
 	public void afterPropertiesSet() {
@@ -1064,34 +737,6 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.pricing.service.CommercePriceModifierLocalService.class
-	)
-	protected
-		com.liferay.commerce.pricing.service.CommercePriceModifierLocalService
-			commercePriceModifierLocalService;
-
-	@BeanReference(type = CommercePriceModifierPersistence.class)
-	protected CommercePriceModifierPersistence commercePriceModifierPersistence;
-
-	@BeanReference(type = CommercePriceModifierFinder.class)
-	protected CommercePriceModifierFinder commercePriceModifierFinder;
-
-	@BeanReference(
-		type = com.liferay.commerce.pricing.service.CommercePriceModifierRelLocalService.class
-	)
-	protected
-		com.liferay.commerce.pricing.service.
-			CommercePriceModifierRelLocalService
-				commercePriceModifierRelLocalService;
-
-	@BeanReference(type = CommercePriceModifierRelPersistence.class)
-	protected CommercePriceModifierRelPersistence
-		commercePriceModifierRelPersistence;
-
-	@BeanReference(type = CommercePriceModifierRelFinder.class)
-	protected CommercePriceModifierRelFinder commercePriceModifierRelFinder;
-
 	@BeanReference(type = CommercePricingClassLocalService.class)
 	protected CommercePricingClassLocalService commercePricingClassLocalService;
 
@@ -1101,50 +746,11 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 	@BeanReference(type = CommercePricingClassFinder.class)
 	protected CommercePricingClassFinder commercePricingClassFinder;
 
-	@BeanReference(
-		type = com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService.class
-	)
-	protected com.liferay.commerce.pricing.service.
-		CommercePricingClassCPDefinitionRelLocalService
-			commercePricingClassCPDefinitionRelLocalService;
-
-	@BeanReference(type = CommercePricingClassCPDefinitionRelPersistence.class)
-	protected CommercePricingClassCPDefinitionRelPersistence
-		commercePricingClassCPDefinitionRelPersistence;
-
-	@BeanReference(type = CommercePricingClassCPDefinitionRelFinder.class)
-	protected CommercePricingClassCPDefinitionRelFinder
-		commercePricingClassCPDefinitionRelFinder;
-
 	@ServiceReference(
 		type = com.liferay.counter.kernel.service.CounterLocalService.class
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@ServiceReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry

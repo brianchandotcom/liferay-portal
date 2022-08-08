@@ -36,6 +36,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-142050. In page editor, selecting Custom in units could insert any type of character."
+	@priority = "4"
+	test ConfigureCustomUnit {
+		task ("Given a page designer has a Heading fragment on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page designer accesses to the Styles panel of Heading") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+		}
+
+		task ("Then the page designer sees the default unit of Border Width is PX") {
+			AssertTextEquals(
+				key_fieldLabel = "Border Width",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL",
+				value1 = "PX");
+		}
+
+		task ("When the page designer selects custom unit for Border Width of Heading") {
+			PageEditor.configureFragment(
+				fieldLabel = "Border Width",
+				unit = "CUSTOM");
+		}
+
+		task ("Then the page designer could define a custom unit for Border Width") {
+			PageEditor.configureFragment(borderWidth = "3rem");
+
+			AssertTextEquals(
+				key_fieldLabel = "Border Width",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL",
+				value1 = "REM");
+
+			AssertTextEquals(
+				key_text = "Border Width",
+				locator1 = "TextInput#ANY",
+				value1 = "3");
+
+			PageEditor.viewFragmentStyle(
+				borderWidth = "3rem",
+				fragmentName = "Heading");
+		}
+	}
+
 	@description = "This is a test for LPS-136279. View the styles of color selectors."
 	@priority = "4"
 	test ViewStylesOfColorInputs {

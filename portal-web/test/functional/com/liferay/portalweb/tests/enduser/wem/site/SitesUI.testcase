@@ -214,7 +214,7 @@ definition {
 
 			PortletEntry.inputName(name = "Test Site Name");
 
-			Button.clickAdd();
+			Button.click(button = "Add");
 		}
 
 		task ("View the Add and Cancel buttons are not shown") {

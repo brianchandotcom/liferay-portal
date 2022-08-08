@@ -27,6 +27,7 @@ import FragmentService from '../../../app/services/FragmentService';
 import deleteFragmentComment from '../../../app/thunks/deleteFragmentComment';
 import InlineConfirm from '../../../common/components/InlineConfirm';
 import UserIcon from '../../../common/components/UserIcon';
+import {useSessionState} from '../../../core/hooks/useSessionState';
 import EditCommentForm from './EditCommentForm';
 import ReplyCommentForm from './ReplyCommentForm';
 import ResolveButton from './ResolveButton';
@@ -52,6 +53,9 @@ export default function FragmentComment({
 	const [editing, setEditing] = useState(false);
 	const [hidden, setHidden] = useState(false);
 	const [highlighted, setHighlighted] = useState(false);
+	const [highlightedMessageId, setHighlightedMessageId] = useSessionState(
+		HIGHLIGHTED_COMMENT_ID_KEY
+	);
 	const [showDeleteMask, setShowDeleteMask] = useState(false);
 	const [showResolveMask, setShowResolveMask] = useState(false);
 
@@ -123,16 +127,11 @@ export default function FragmentComment({
 	};
 
 	useEffect(() => {
-		const highlightMessageId = window.sessionStorage.getItem(
-			HIGHLIGHTED_COMMENT_ID_KEY
-		);
-
-		if (highlightMessageId === commentId) {
-			window.sessionStorage.removeItem(HIGHLIGHTED_COMMENT_ID_KEY);
-
+		if (highlightedMessageId === commentId) {
 			setHighlighted(true);
+			setHighlightedMessageId(null);
 		}
-	}, [commentId]);
+	}, [commentId, highlightedMessageId, setHighlightedMessageId]);
 
 	return (
 		<article className={commentClassname}>

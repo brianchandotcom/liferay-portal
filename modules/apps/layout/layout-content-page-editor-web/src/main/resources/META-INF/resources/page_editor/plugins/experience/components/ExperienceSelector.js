@@ -26,16 +26,13 @@ import {config} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import selectCanUpdateExperiences from '../../../app/selectors/selectCanUpdateExperiences';
 import selectCanUpdateSegments from '../../../app/selectors/selectCanUpdateSegments';
+import {useSessionState} from '../../../core/hooks/useSessionState';
 import createExperience from '../thunks/createExperience';
 import duplicateExperience from '../thunks/duplicateExperience';
 import removeExperience from '../thunks/removeExperience';
 import updateExperience from '../thunks/updateExperience';
 import updateExperiencePriority from '../thunks/updateExperiencePriority';
-import {
-	recoverModalExperienceState,
-	storeModalExperienceState,
-	useDebounceCallback,
-} from '../utils';
+import {useDebounceCallback} from '../utils';
 import ExperienceModal from './ExperienceModal';
 import ExperiencesList from './ExperiencesList';
 
@@ -92,6 +89,12 @@ const ExperienceSelector = ({
 	const [openModal, setOpenModal] = useState(false);
 	const [editingExperience, setEditingExperience] = useState({});
 
+	const [modalExperienceState, setModalExperienceState] = useSessionState(
+		'modalExperienceState'
+	);
+	const modalExperienceStateRef = useRef(modalExperienceState);
+	modalExperienceStateRef.current = modalExperienceState;
+
 	const {observer: modalObserver, onClose: onModalClose} = useModal({
 		onClose: () => {
 			setOpenModal(false);
@@ -119,7 +122,7 @@ const ExperienceSelector = ({
 		experienceName,
 		segmentId,
 	}) => {
-		storeModalExperienceState({
+		setModalExperienceState({
 			experienceId,
 			experienceName,
 			plid: config.plid,
@@ -131,7 +134,8 @@ const ExperienceSelector = ({
 
 	useEffect(() => {
 		if (config.plid) {
-			const modalExperienceState = recoverModalExperienceState();
+			const modalExperienceState = modalExperienceStateRef.current;
+			setModalExperienceState(null);
 
 			if (
 				modalExperienceState &&
@@ -147,7 +151,7 @@ const ExperienceSelector = ({
 				});
 			}
 		}
-	}, []);
+	}, [setModalExperienceState]);
 
 	useEffect(() => {
 		if (open) {

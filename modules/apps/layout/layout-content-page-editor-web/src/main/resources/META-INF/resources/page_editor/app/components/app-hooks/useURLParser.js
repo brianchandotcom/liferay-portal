@@ -14,6 +14,7 @@
 
 import {useCallback, useEffect} from 'react';
 
+import {useSessionState} from '../../../core/hooks/useSessionState';
 import switchSidebarPanel from '../../actions/switchSidebarPanel';
 import {HIGHLIGHTED_COMMENT_ID_KEY} from '../../config/constants/highlightedCommentIdKey';
 import {useSelectItem} from '../../contexts/ControlsContext';
@@ -22,6 +23,9 @@ import getFragmentItem from '../../utils/getFragmentItem';
 
 export default function useURLParser() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const [, setHighlightedCommentId] = useSessionState(
+		HIGHLIGHTED_COMMENT_ID_KEY
+	);
 	const layoutData = useSelector((state) => state.layoutData);
 	const dispatch = useDispatch();
 	const selectItem = useSelectItem();
@@ -61,11 +65,7 @@ export default function useURLParser() {
 		const url = new URL(window.location.href);
 
 		if (url.searchParams.has('messageId')) {
-			window.sessionStorage.setItem(
-				HIGHLIGHTED_COMMENT_ID_KEY,
-				url.searchParams.get('messageId')
-			);
-
+			setHighlightedCommentId(url.searchParams.get('messageId'));
 			selectFragment(url.searchParams.get('messageId'));
 			url.searchParams.delete('messageId');
 
@@ -88,5 +88,5 @@ export default function useURLParser() {
 				}
 			});
 		}
-	}, [selectFragment]);
+	}, [selectFragment, setHighlightedCommentId]);
 }

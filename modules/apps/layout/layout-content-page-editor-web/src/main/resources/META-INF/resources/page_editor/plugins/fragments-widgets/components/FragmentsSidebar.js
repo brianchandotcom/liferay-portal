@@ -30,10 +30,9 @@ import {useWidgets} from '../../../app/contexts/WidgetsContext';
 import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
+import {useSessionState} from '../../../core/hooks/useSessionState';
 import SearchResultsPanel from './SearchResultsPanel';
 import TabsPanel from './TabsPanel';
-
-const FRAGMENTS_DISPLAY_STYLE_KEY = 'FRAGMENTS_DISPLAY_STYLE_KEY';
 
 export const COLLECTION_IDS = {
 	fragments: 'fragments',
@@ -137,40 +136,37 @@ const normalizeFragmentEntry = (fragmentEntry) => {
 };
 
 export default function FragmentsSidebar() {
-	const activeTabIdSessionKey = `${config.portletNamespace}_fragments-sidebar_active-tab-id`;
-
 	const fragments = useSelector((state) => state.fragments);
 	const widgets = useWidgets();
 	const wrapperElementRef = useRef(null);
 
-	const [activeTabId, setActiveTabId] = useState(() => {
-		const persistedTabId = window.sessionStorage.getItem(
-			activeTabIdSessionKey
-		);
+	const [
+		activeTabId,
+		setActiveTabId,
+	] = useSessionState(
+		`${config.portletNamespace}_fragments-sidebar_active-tab-id`,
+		COLLECTION_IDS.fragments,
+		{persistEnabled: Liferay.FeatureFlags['LPS-153452']}
+	);
 
-		if (
-			Liferay.FeatureFlags['LPS-153452'] &&
-			Object.values(COLLECTION_IDS).includes(persistedTabId)
-		) {
-			return persistedTabId;
-		}
-
-		return COLLECTION_IDS.fragments;
-	});
-
-	const updateActiveTabId = (nextTabId) => {
-		window.sessionStorage.setItem(activeTabIdSessionKey, nextTabId);
-		setActiveTabId(nextTabId);
-	};
-
-	const [displayStyle, setDisplayStyle] = useState(
-		window.sessionStorage.getItem(FRAGMENTS_DISPLAY_STYLE_KEY) ||
-			FRAGMENTS_DISPLAY_STYLES.LIST
+	const [displayStyle, setDisplayStyle] = useSessionState(
+		'FRAGMENTS_DISPLAY_STYLE_KEY',
+		FRAGMENTS_DISPLAY_STYLES.LIST
 	);
 
 	const [searchValue, setSearchValue] = useState('');
 
-	const scrollPositionSessionKey = `${config.portletNamespace}_fragments-sidebar_tab_${activeTabId}_scroll-position`;
+	const [
+		scrollPosition,
+		setScrollPosition,
+	] = useSessionState(
+		`${config.portletNamespace}_fragments-sidebar_tab_${activeTabId}_scroll-position`,
+		0,
+		{persistEnabled: Liferay.FeatureFlags['LPS-153452']}
+	);
+
+	const scrollPositionRef = useRef(scrollPosition);
+	scrollPositionRef.current = scrollPosition;
 
 	const tabs = useMemo(
 		() => [
@@ -217,32 +213,17 @@ export default function FragmentsSidebar() {
 
 	useLayoutEffect(() => {
 		const wrapperElement = wrapperElementRef.current;
+		const initialScrollPosition = scrollPositionRef.current;
 
-		if (!wrapperElement) {
+		if (!wrapperElement || !initialScrollPosition) {
 			return;
 		}
 
-		const initialScrollPosition = parseInt(
-			window.sessionStorage.getItem(scrollPositionSessionKey),
-			10
-		);
-
-		if (
-			Liferay.FeatureFlags['LPS-153452'] &&
-			!isNaN(initialScrollPosition)
-		) {
-			wrapperElement.scrollBy({
-				behavior: 'auto',
-				left: 0,
-				top: initialScrollPosition,
-			});
-		}
-
-		// LPS-157780 We do not want to depend on scrollPositionSessionKey here
-		// because we only want to apply the persisted scroll when the panel
-		// is initially opened.
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		wrapperElement.scrollBy({
+			behavior: 'auto',
+			left: 0,
+			top: initialScrollPosition,
+		});
 	}, []);
 
 	useEffect(() => {
@@ -253,10 +234,7 @@ export default function FragmentsSidebar() {
 		}
 
 		const handleScroll = debounce(() => {
-			window.sessionStorage.setItem(
-				scrollPositionSessionKey,
-				wrapperElement.scrollTop
-			);
+			setScrollPosition(wrapperElement.scrollTop);
 		}, 300);
 
 		wrapperElement.addEventListener('scroll', handleScroll, {
@@ -266,7 +244,7 @@ export default function FragmentsSidebar() {
 		return () => {
 			wrapperElement.removeEventListener('scroll', handleScroll);
 		};
-	}, [scrollPositionSessionKey]);
+	}, [setScrollPosition]);
 
 	return (
 		<div className="h-100 overflow-auto" ref={wrapperElementRef}>
@@ -288,16 +266,10 @@ export default function FragmentsSidebar() {
 						disabled={displayStyleButtonDisabled}
 						displayType="secondary"
 						onClick={() => {
-							const nextDisplayStyle =
+							setDisplayStyle(
 								displayStyle === FRAGMENTS_DISPLAY_STYLES.LIST
 									? FRAGMENTS_DISPLAY_STYLES.CARDS
-									: FRAGMENTS_DISPLAY_STYLES.LIST;
-
-							setDisplayStyle(nextDisplayStyle);
-
-							window.sessionStorage.setItem(
-								FRAGMENTS_DISPLAY_STYLE_KEY,
-								nextDisplayStyle
+									: FRAGMENTS_DISPLAY_STYLES.LIST
 							);
 						}}
 						small
@@ -322,7 +294,7 @@ export default function FragmentsSidebar() {
 					<TabsPanel
 						activeTabId={activeTabId}
 						displayStyle={displayStyle}
-						setActiveTabId={updateActiveTabId}
+						setActiveTabId={setActiveTabId}
 						tabs={tabs}
 					/>
 				)}

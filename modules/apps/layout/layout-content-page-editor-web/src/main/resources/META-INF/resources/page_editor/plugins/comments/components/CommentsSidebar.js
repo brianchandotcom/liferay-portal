@@ -22,6 +22,7 @@ import {
 } from '../../../app/contexts/ControlsContext';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import getFragmentItem from '../../../app/utils/getFragmentItem';
+import {useSessionState} from '../../../core/hooks/useSessionState';
 import FragmentComments from './FragmentComments';
 import FragmentEntryLinksWithComments from './FragmentEntryLinksWithComments';
 
@@ -68,11 +69,8 @@ export default function CommentsSidebar() {
 	const layoutData = useSelector((state) => state.layoutData);
 
 	const activeItemId = useActiveItemId();
+	const [highlightMessageId] = useSessionState(HIGHLIGHTED_COMMENT_ID_KEY);
 	const selectItem = useSelectItem();
-
-	const highlightMessageId = window.sessionStorage.getItem(
-		HIGHLIGHTED_COMMENT_ID_KEY
-	);
 
 	const activeFragmentEntryLink = getActiveFragmentEntryLink({
 		fragmentEntryLinks,

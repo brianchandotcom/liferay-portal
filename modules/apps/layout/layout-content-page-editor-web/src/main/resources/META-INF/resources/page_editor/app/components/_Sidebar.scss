@@ -43,13 +43,6 @@ html#{$cadmin-selector} .cadmin .page-editor__item-configuration-sidebar {
 	}
 }
 
-html#{$cadmin-selector}
-	body.open
-	.cadmin
-	.page-editor__sidebar:not(.page-editor__sidebar-old) {
-	left: $product-menu-width;
-}
-
 html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 	@include sidebar;
 	left: 0;
@@ -217,14 +210,7 @@ html#{$cadmin-selector} .page-editor__wrapper {
 html#{$cadmin-selector} {
 	body.open .page-editor__wrapper#wrapper {
 		&:not(.page-editor__wrapper-old) {
-			margin-left: $product-menu-width + $sidebarButtonWidth;
-
-			.page-editor__wrapper--padded-start {
-				@include media-breakpoint-up(sm) {
-					margin-left: $product-menu-width + $sidebarButtonWidth +
-						$sidebarContentWidth;
-				}
-			}
+			margin-left: $product-menu-width;
 		}
 
 		margin-left: $product-menu-width;

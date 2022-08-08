@@ -36,7 +36,9 @@
 			</then>
 		</if>
 		<while max-iterations="200">
-			<equals arg1="${allLinksChecked}" arg2="no"/>
+			<and>
+                <equals arg1="${allLinksChecked}" arg2="no"/>
+           	</and>
 			<then>
 				<execute macro="Navigator#gotoPage">
 					<var name="pageName" value="Documents and Media Page"/>

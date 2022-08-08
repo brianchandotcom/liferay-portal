@@ -655,6 +655,34 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 
+	@Schema(description = "The ID of the Thread's body.")
+	public Long getRootMessageId() {
+		return rootMessageId;
+	}
+
+	public void setRootMessageId(Long rootMessageId) {
+		this.rootMessageId = rootMessageId;
+	}
+
+	@JsonIgnore
+	public void setRootMessageId(
+		UnsafeSupplier<Long, Exception> rootMessageIdUnsafeSupplier) {
+
+		try {
+			rootMessageId = rootMessageIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The ID of the Thread's body.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long rootMessageId;
+
 	@Schema(
 		description = "A flag that indicates whether this thread has been seen."
 	)
@@ -1245,6 +1273,16 @@ public class MessageBoardThread implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (rootMessageId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"rootMessageId\": ");
+
+			sb.append(rootMessageId);
 		}
 
 		if (seen != null) {

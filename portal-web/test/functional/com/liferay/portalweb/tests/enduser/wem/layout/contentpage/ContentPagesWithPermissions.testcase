@@ -1145,6 +1145,45 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-137155. The page creator can change permissions of content page via header ellipsis icon at edit mode."
+	@priority = "3"
+	test RemoveViewPermissionForGuestViaHeaderEllipsisIcon {
+		task ("Given a page designer has content page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.viewPageItemPresent(pageName = "Test Content Page Name");
+		}
+
+		task ("When the page designer removes view permission of guest role via header ellipsis icon at edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Permissions");
+
+			PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+				addOrRemoveViewPermission = "Remove",
+				permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "guest");
+
+			IFrame.closeFrame();
+
+			PageEditor.publish();
+		}
+
+		task ("Then a guest user cannot access to the content page") {
+			User.logoutPG();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+				value1 = "Not Found");
+		}
+	}
+
 	@description = "This is a test for LPS-103454. When one WC displayed in multiple fields in a content page, there should be one WC entry in Contents Panel list."
 	@priority = "4"
 	test ViewDisplayedWebContentInContentsPanelWithWebContentArticleUpdatePermission {

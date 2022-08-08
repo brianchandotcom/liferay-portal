@@ -14,15 +14,11 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
-import java.nio.charset.StandardCharsets;
+import java.net.URL;
 
 import java.util.Properties;
 
@@ -112,19 +108,12 @@ public class SystemPropertiesTest {
 	public void testLoad() throws IOException {
 		Properties properties = new Properties();
 
-		String propertiesFileContent = StringBundler.concat(
-			"#test case", StringPool.NEW_LINE, _TEST_KEY, "=\\",
-			StringPool.NEW_LINE, "\\", StringPool.NEW_LINE, "#",
-			StringPool.NEW_LINE, _TEST_VALUE, StringPool.NEW_LINE);
-
-		try (InputStream inputStream = new ByteArrayInputStream(
-				propertiesFileContent.getBytes(StandardCharsets.UTF_8))) {
-
-			ReflectionTestUtil.invoke(
-				SystemProperties.class, "_load",
-				new Class<?>[] {InputStream.class, Properties.class},
-				inputStream, properties);
-		}
+		ReflectionTestUtil.invoke(
+			SystemProperties.class, "_load",
+			new Class<?>[] {URL.class, Properties.class},
+			SystemProperties.class.getResource(
+				"dependencies/multiline-comment.properties"),
+			properties);
 
 		Assert.assertEquals(_TEST_VALUE, properties.get(_TEST_KEY));
 	}

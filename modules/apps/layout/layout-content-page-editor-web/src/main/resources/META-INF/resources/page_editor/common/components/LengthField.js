@@ -64,7 +64,7 @@ export function LengthField({field, onValueSelect, value}) {
 	}, [value]);
 
 	return (
-		<ClayForm.Group className="mb-0">
+		<ClayForm.Group className="page-editor__length-field">
 			<label className={field.icon ? 'sr-only' : null} htmlFor={inputId}>
 				{field.label}
 			</label>

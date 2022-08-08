@@ -215,19 +215,23 @@ definition {
 
 	macro typeAllSetupDXPCloufEXtraInfo {
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[1].email",
+			label = "email",
+			position = "2",
 			value = "test@liferay.com");
 
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[1].firstName",
+			label = "firstName",
+			position = "2",
 			value = "FirstName");
 
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[1].lastName",
+			label = "lastName",
+			position = "2",
 			value = "LastName");
 
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[1].github",
+			label = "github",
+			position = "2",
 			value = "GitHubUser");
 	}
 

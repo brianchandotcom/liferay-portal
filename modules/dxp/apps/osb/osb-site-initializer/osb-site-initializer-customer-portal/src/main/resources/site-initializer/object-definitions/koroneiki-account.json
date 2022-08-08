@@ -19,9 +19,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "AC Workspace Name"
+				"en-US": "AC Workspace Group ID"
 			},
-			"name": "acWorkspaceName",
+			"name": "acWorkspaceGroupId",
 			"required": false
 		},
 		{

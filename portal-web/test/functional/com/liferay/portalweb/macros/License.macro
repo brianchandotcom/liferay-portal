@@ -8,4 +8,10 @@ definition {
 			value1 = "delete-license-file -Dlicense.xml.file=${licenseFileName} -Dliferay.home=${liferayHome}");
 	}
 
+	macro deployLicenseFile {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-license-xml");
+	}
+
 }

@@ -20,7 +20,7 @@ definition {
 	}
 
 	macro getCompanyId {
-		if (!(isSet(portalInstanceName))) {
+		if (!(isSet(portalInstanceName)) || ("${portalInstanceName}" == "liferay.com")) {
 			var portalInstanceName = JSONCompany.getPortalInstanceName();
 		}
 
@@ -52,17 +52,6 @@ definition {
 		''';
 
 		var companyId = JSONCurlUtil.get("${curl}", "$['companyId']");
-
-		return "${companyId}";
-	}
-
-	macro getCompanyIdByName {
-		if ("${portalInstanceName}" == "liferay.com") {
-			var companyId = JSONCompany.getCompanyId();
-		}
-		else {
-			var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
-		}
 
 		return "${companyId}";
 	}

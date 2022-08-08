@@ -85,7 +85,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -307,7 +307,7 @@ public class CommerceDiscountLocalServiceImpl
 
 		Date date = new Date();
 
-		Date displayDate = PortalUtil.getDate(
+		Date displayDate = _portal.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
 			CommerceDiscountDisplayDateException.class);
@@ -315,7 +315,7 @@ public class CommerceDiscountLocalServiceImpl
 		Date expirationDate = null;
 
 		if (!neverExpire) {
-			expirationDate = PortalUtil.getDate(
+			expirationDate = _portal.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
 				CommerceDiscountExpirationDateException.class);
@@ -1183,7 +1183,7 @@ public class CommerceDiscountLocalServiceImpl
 
 		Date date = new Date();
 
-		Date displayDate = PortalUtil.getDate(
+		Date displayDate = _portal.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
 			CommerceDiscountDisplayDateException.class);
@@ -1191,7 +1191,7 @@ public class CommerceDiscountLocalServiceImpl
 		Date expirationDate = null;
 
 		if (!neverExpire) {
-			expirationDate = PortalUtil.getDate(
+			expirationDate = _portal.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
 				CommerceDiscountExpirationDateException.class);
@@ -1261,7 +1261,7 @@ public class CommerceDiscountLocalServiceImpl
 
 		Date date = new Date();
 
-		Date displayDate = PortalUtil.getDate(
+		Date displayDate = _portal.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
 			CommerceDiscountDisplayDateException.class);
@@ -1269,7 +1269,7 @@ public class CommerceDiscountLocalServiceImpl
 		Date expirationDate = null;
 
 		if (!neverExpire) {
-			expirationDate = PortalUtil.getDate(
+			expirationDate = _portal.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
 				CommerceDiscountExpirationDateException.class);
@@ -1556,7 +1556,7 @@ public class CommerceDiscountLocalServiceImpl
 				new Date(), WorkflowConstants.STATUS_SCHEDULED);
 
 		for (CommerceDiscount commerceDiscount : commerceDiscounts) {
-			long userId = PortalUtil.getValidUserId(
+			long userId = _portal.getValidUserId(
 				commerceDiscount.getCompanyId(), commerceDiscount.getUserId());
 
 			ServiceContext serviceContext = new ServiceContext();
@@ -1584,7 +1584,7 @@ public class CommerceDiscountLocalServiceImpl
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			for (CommerceDiscount commerceDiscount : commerceDiscounts) {
-				long userId = PortalUtil.getValidUserId(
+				long userId = _portal.getValidUserId(
 					commerceDiscount.getCompanyId(),
 					commerceDiscount.getUserId());
 
@@ -2002,6 +2002,9 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

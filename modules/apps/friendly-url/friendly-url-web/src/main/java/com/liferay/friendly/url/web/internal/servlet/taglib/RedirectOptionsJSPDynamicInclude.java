@@ -14,15 +14,6 @@
 
 package com.liferay.friendly.url.web.internal.servlet.taglib;
 
-import java.io.IOException;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,12 +30,20 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 
+import java.io.IOException;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Daniel Couso
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class RedirectOptionsDynamicInclude
-	extends BaseJSPDynamicInclude {
+public class RedirectOptionsJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
@@ -62,7 +61,8 @@ public class RedirectOptionsDynamicInclude
 			return;
 		}
 
-		boolean showRedirectMessage = ParamUtil.getBoolean(httpServletRequest, "p_l_skip_redirect");
+		boolean showRedirectMessage = ParamUtil.getBoolean(
+			httpServletRequest, "p_l_skip_redirect");
 
 		if (!showRedirectMessage) {
 			return;
@@ -96,13 +96,12 @@ public class RedirectOptionsDynamicInclude
 				false);
 
 		if (redirectEntry == null) {
-			redirectEntry =
-				_redirectEntryLocalService.fetchRedirectEntry(
-					themeDisplay.getScopeGroupId(),
-					_normalizeFriendlyURL(
-						themeDisplay.getLayoutFriendlyURL(
-							themeDisplay.getLayout())),
-					true);
+			redirectEntry = _redirectEntryLocalService.fetchRedirectEntry(
+				themeDisplay.getScopeGroupId(),
+				_normalizeFriendlyURL(
+					themeDisplay.getLayoutFriendlyURL(
+						themeDisplay.getLayout())),
+				true);
 		}
 
 		if (redirectEntry == null) {
@@ -149,7 +148,7 @@ public class RedirectOptionsDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RedirectOptionsDynamicInclude.class);
+		RedirectOptionsJSPDynamicInclude.class);
 
 	@Reference
 	private Portal _portal;

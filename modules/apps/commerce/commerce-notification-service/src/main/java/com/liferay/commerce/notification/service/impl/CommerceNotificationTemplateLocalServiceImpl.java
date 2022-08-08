@@ -18,15 +18,20 @@ import com.liferay.commerce.notification.exception.CommerceNotificationTemplateF
 import com.liferay.commerce.notification.exception.CommerceNotificationTemplateNameException;
 import com.liferay.commerce.notification.exception.CommerceNotificationTemplateTypeException;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
+import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService;
+import com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelLocalService;
 import com.liferay.commerce.notification.service.base.CommerceNotificationTemplateLocalServiceBaseImpl;
 import com.liferay.commerce.notification.type.CommerceNotificationType;
 import com.liferay.commerce.notification.type.CommerceNotificationTypeRegistry;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -53,7 +58,7 @@ public class CommerceNotificationTemplateLocalServiceImpl
 
 		// Commerce notification template
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		validate(name, from, type);
 
@@ -86,7 +91,7 @@ public class CommerceNotificationTemplateLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(
+		_resourceLocalService.addModelResources(
 			commerceNotificationTemplate, serviceContext);
 
 		return commerceNotificationTemplate;
@@ -119,14 +124,14 @@ public class CommerceNotificationTemplateLocalServiceImpl
 
 		// Commerce notification queues
 
-		commerceNotificationQueueEntryLocalService.
+		_commerceNotificationQueueEntryLocalService.
 			updateCommerceNotificationQueueEntriesTemplateIds(
 				commerceNotificationTemplate.
 					getCommerceNotificationTemplateId());
 
 		// Commerce notification template account groups rels
 
-		commerceNotificationTemplateCommerceAccountGroupRelLocalService.
+		_commerceNotificationTemplateCommerceAccountGroupRelLocalService.
 			deleteCNTemplateCommerceAccountGroupRelsByCommerceNotificationTemplateId(
 				commerceNotificationTemplate.
 					getCommerceNotificationTemplateId());
@@ -138,7 +143,7 @@ public class CommerceNotificationTemplateLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			commerceNotificationTemplate.getCompanyId(),
 			CommerceNotificationTemplate.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
@@ -271,10 +276,26 @@ public class CommerceNotificationTemplateLocalServiceImpl
 		}
 	}
 
+	@BeanReference(type = CommerceNotificationQueueEntryLocalService.class)
+	private CommerceNotificationQueueEntryLocalService
+		_commerceNotificationQueueEntryLocalService;
+
+	@BeanReference(
+		type = CommerceNotificationTemplateCommerceAccountGroupRelLocalService.class
+	)
+	private CommerceNotificationTemplateCommerceAccountGroupRelLocalService
+		_commerceNotificationTemplateCommerceAccountGroupRelLocalService;
+
 	@ServiceReference(type = CommerceNotificationTypeRegistry.class)
 	private CommerceNotificationTypeRegistry _commerceNotificationTypeRegistry;
 
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@ServiceReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

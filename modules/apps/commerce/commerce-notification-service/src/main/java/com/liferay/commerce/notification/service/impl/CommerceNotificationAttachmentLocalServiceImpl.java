@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -38,7 +39,7 @@ public class CommerceNotificationAttachmentLocalServiceImpl
 			boolean deleteOnSend, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
@@ -87,5 +88,8 @@ public class CommerceNotificationAttachmentLocalServiceImpl
 
 	@ServiceReference(type = DLAppLocalService.class)
 	private DLAppLocalService _dlAppLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

@@ -16,7 +16,9 @@ package com.liferay.commerce.notification.service.impl;
 
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel;
+import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
 import com.liferay.commerce.notification.service.base.CommerceNotificationTemplateCommerceAccountGroupRelServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -97,7 +99,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelServiceImpl
 		throws PortalException {
 
 		CommerceNotificationTemplate commerceNotificationTemplate =
-			commerceNotificationTemplateLocalService.
+			_commerceNotificationTemplateLocalService.
 				fetchCommerceNotificationTemplate(
 					commerceNotificationTemplateId);
 
@@ -119,5 +121,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelServiceImpl
 					CommerceNotificationTemplateCommerceAccountGroupRelServiceImpl.class,
 					"_commerceNotificationTemplateResourcePermission",
 					CommerceNotificationTemplate.class);
+
+	@BeanReference(type = CommerceNotificationTemplateLocalService.class)
+	private CommerceNotificationTemplateLocalService
+		_commerceNotificationTemplateLocalService;
 
 }

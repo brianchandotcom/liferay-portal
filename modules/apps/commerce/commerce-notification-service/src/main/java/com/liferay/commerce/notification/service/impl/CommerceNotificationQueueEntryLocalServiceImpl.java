@@ -16,11 +16,13 @@ package com.liferay.commerce.notification.service.impl;
 
 import com.liferay.commerce.notification.model.CommerceNotificationAttachment;
 import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
+import com.liferay.commerce.notification.service.CommerceNotificationAttachmentLocalService;
 import com.liferay.commerce.notification.service.base.CommerceNotificationQueueEntryLocalServiceBaseImpl;
 import com.liferay.commerce.notification.util.comparator.CommerceNotificationAttachmentCreateDateComparator;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,6 +32,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -75,7 +79,7 @@ public class CommerceNotificationQueueEntryLocalServiceImpl
 			String body, double priority)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		long commerceNotificationQueueEntryId = counterLocalService.increment();
 
@@ -114,7 +118,7 @@ public class CommerceNotificationQueueEntryLocalServiceImpl
 
 		// Commerce notification attachments
 
-		commerceNotificationAttachmentLocalService.
+		_commerceNotificationAttachmentLocalService.
 			deleteCommerceNotificationAttachments(
 				commerceNotificationQueueEntry.
 					getCommerceNotificationQueueEntryId());
@@ -187,7 +191,7 @@ public class CommerceNotificationQueueEntryLocalServiceImpl
 				orderByComparator) {
 
 		return commerceNotificationQueueEntryPersistence.findByG_C_C_S(
-			groupId, classNameLocalService.getClassNameId(className), classPK,
+			groupId, _classNameLocalService.getClassNameId(className), classPK,
 			sent, start, end, orderByComparator);
 	}
 
@@ -202,7 +206,7 @@ public class CommerceNotificationQueueEntryLocalServiceImpl
 		long groupId, String className, long classPK, boolean sent) {
 
 		return commerceNotificationQueueEntryPersistence.countByG_C_C_S(
-			groupId, classNameLocalService.getClassNameId(className), classPK,
+			groupId, _classNameLocalService.getClassNameId(className), classPK,
 			sent);
 	}
 
@@ -236,7 +240,7 @@ public class CommerceNotificationQueueEntryLocalServiceImpl
 
 			List<CommerceNotificationAttachment>
 				commerceNotificationAttachments =
-					commerceNotificationAttachmentLocalService.
+					_commerceNotificationAttachmentLocalService.
 						getCommerceNotificationAttachments(
 							commerceNotificationQueueEntry.
 								getCommerceNotificationQueueEntryId(),
@@ -347,7 +351,17 @@ public class CommerceNotificationQueueEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceNotificationQueueEntryLocalServiceImpl.class);
 
+	@ServiceReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = CommerceNotificationAttachmentLocalService.class)
+	private CommerceNotificationAttachmentLocalService
+		_commerceNotificationAttachmentLocalService;
+
 	@ServiceReference(type = MailService.class)
 	private MailService _mailService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

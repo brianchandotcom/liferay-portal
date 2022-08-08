@@ -19,7 +19,9 @@ import com.liferay.commerce.notification.service.base.CommerceNotificationTempla
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceImpl
 				long commerceAccountGroupId, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
 		long commerceNotificationTemplateCommerceAccountGroupRelId =
@@ -104,5 +106,8 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceImpl
 			findByCommerceNotificationTemplateId(
 				commerceNotificationTemplateId, start, end, orderByComparator);
 	}
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

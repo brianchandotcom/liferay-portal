@@ -95,7 +95,8 @@ export default function PageStructureSidebarSection({
 
 			<div
 				className={classNames('page-editor__page-structure__section', {
-					resized: !!panelHeight,
+					'overflow-auto': !Liferay.FeatureFlags['LPS-153452'],
+					'resized': !!panelHeight,
 				})}
 				ref={setPanelElement}
 				style={{flexGrow: panelHeight ? 0 : size, height: panelHeight}}

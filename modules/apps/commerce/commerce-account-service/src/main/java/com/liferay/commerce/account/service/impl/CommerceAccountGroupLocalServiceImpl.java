@@ -33,7 +33,7 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -54,17 +54,24 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.account.model.CommerceAccountGroup",
+	service = AopService.class
+)
 public class CommerceAccountGroupLocalServiceImpl
 	extends CommerceAccountGroupLocalServiceBaseImpl {
 
@@ -390,26 +397,24 @@ public class CommerceAccountGroupLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = AccountGroupLocalService.class)
+	@Reference
 	private AccountGroupLocalService _accountGroupLocalService;
 
-	@BeanReference(
-		type = CommerceAccountGroupCommerceAccountRelLocalService.class
-	)
+	@Reference
 	private CommerceAccountGroupCommerceAccountRelLocalService
 		_commerceAccountGroupCommerceAccountRelLocalService;
 
-	@BeanReference(type = CommerceAccountGroupRelLocalService.class)
+	@Reference
 	private CommerceAccountGroupRelLocalService
 		_commerceAccountGroupRelLocalService;
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@ServiceReference(type = ResourceLocalService.class)
+	@Reference
 	private ResourceLocalService _resourceLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

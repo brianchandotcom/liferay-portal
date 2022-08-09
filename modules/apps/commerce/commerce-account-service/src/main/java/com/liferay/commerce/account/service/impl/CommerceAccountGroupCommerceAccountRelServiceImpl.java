@@ -18,17 +18,28 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
 import com.liferay.commerce.account.service.base.CommerceAccountGroupCommerceAccountRelServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceAccountGroupCommerceAccountRel"
+	},
+	service = AopService.class
+)
 public class CommerceAccountGroupCommerceAccountRelServiceImpl
 	extends CommerceAccountGroupCommerceAccountRelServiceBaseImpl {
 
@@ -120,17 +131,16 @@ public class CommerceAccountGroupCommerceAccountRelServiceImpl
 				commerceAccountGroupId);
 	}
 
-	private static volatile ModelResourcePermission<CommerceAccountGroup>
-		_commerceAccountGroupModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceAccountGroupCommerceAccountRelServiceImpl.class,
-				"_commerceAccountGroupModelResourcePermission",
-				CommerceAccountGroup.class);
-	private static volatile ModelResourcePermission<CommerceAccount>
-		_commerceAccountModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceAccountGroupCommerceAccountRelServiceImpl.class,
-				"_commerceAccountModelResourcePermission",
-				CommerceAccount.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccountGroup)"
+	)
+	private ModelResourcePermission<CommerceAccountGroup>
+		_commerceAccountGroupModelResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccount)"
+	)
+	private ModelResourcePermission<CommerceAccount>
+		_commerceAccountModelResourcePermission;
 
 }

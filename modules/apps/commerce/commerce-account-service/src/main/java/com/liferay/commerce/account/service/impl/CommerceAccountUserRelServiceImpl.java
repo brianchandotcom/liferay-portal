@@ -19,17 +19,28 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountUserRel;
 import com.liferay.commerce.account.service.base.CommerceAccountUserRelServiceBaseImpl;
 import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceAccountUserRel"
+	},
+	service = AopService.class
+)
 public class CommerceAccountUserRelServiceImpl
 	extends CommerceAccountUserRelServiceBaseImpl {
 
@@ -176,11 +187,10 @@ public class CommerceAccountUserRelServiceImpl
 			serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<CommerceAccount>
-		_commerceAccountModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceAccountUserRelServiceImpl.class,
-				"_commerceAccountModelResourcePermission",
-				CommerceAccount.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccount)"
+	)
+	private ModelResourcePermission<CommerceAccount>
+		_commerceAccountModelResourcePermission;
 
 }

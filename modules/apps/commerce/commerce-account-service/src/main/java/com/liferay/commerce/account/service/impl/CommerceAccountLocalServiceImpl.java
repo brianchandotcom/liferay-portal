@@ -29,7 +29,7 @@ import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
@@ -62,10 +61,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.account.model.CommerceAccount",
+	service = AopService.class
+)
 public class CommerceAccountLocalServiceImpl
 	extends CommerceAccountLocalServiceBaseImpl {
 
@@ -701,36 +708,36 @@ public class CommerceAccountLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = AccountEntryLocalService.class)
+	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
-	@BeanReference(type = CommerceAccountOrganizationRelLocalService.class)
+	@Reference
 	private CommerceAccountOrganizationRelLocalService
 		_commerceAccountOrganizationRelLocalService;
 
-	@ServiceReference(type = CommerceAccountRoleHelper.class)
+	@Reference
 	private CommerceAccountRoleHelper _commerceAccountRoleHelper;
 
-	@BeanReference(type = CommerceAccountUserRelLocalService.class)
+	@Reference
 	private CommerceAccountUserRelLocalService
 		_commerceAccountUserRelLocalService;
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@ServiceReference(type = Portal.class)
+	@Reference
 	private Portal _portal;
 
-	@ServiceReference(type = ResourceLocalService.class)
+	@Reference
 	private ResourceLocalService _resourceLocalService;
 
-	@ServiceReference(type = RoleLocalService.class)
+	@Reference
 	private RoleLocalService _roleLocalService;
 
-	@ServiceReference(type = UserGroupRoleLocalService.class)
+	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

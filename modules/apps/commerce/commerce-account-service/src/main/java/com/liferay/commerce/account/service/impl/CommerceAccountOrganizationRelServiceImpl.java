@@ -19,19 +19,30 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
 import com.liferay.commerce.account.service.base.CommerceAccountOrganizationRelServiceBaseImpl;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
+import com.liferay.portal.kernel.service.permission.OrganizationPermission;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceAccountOrganizationRel"
+	},
+	service = AopService.class
+)
 public class CommerceAccountOrganizationRelServiceImpl
 	extends CommerceAccountOrganizationRelServiceBaseImpl {
 
@@ -164,7 +175,7 @@ public class CommerceAccountOrganizationRelServiceImpl
 				long organizationId, int start, int end)
 		throws PortalException {
 
-		OrganizationPermissionUtil.check(
+		_organizationPermission.check(
 			getPermissionChecker(), organizationId, ActionKeys.VIEW);
 
 		return commerceAccountOrganizationRelLocalService.
@@ -177,7 +188,7 @@ public class CommerceAccountOrganizationRelServiceImpl
 			long organizationId)
 		throws PortalException {
 
-		OrganizationPermissionUtil.check(
+		_organizationPermission.check(
 			getPermissionChecker(), organizationId, ActionKeys.VIEW);
 
 		return commerceAccountOrganizationRelLocalService.
@@ -197,11 +208,13 @@ public class CommerceAccountOrganizationRelServiceImpl
 			getCommerceAccountOrganizationRelsCount(commerceAccountId);
 	}
 
-	private static volatile ModelResourcePermission<CommerceAccount>
-		_commerceAccountModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceAccountOrganizationRelServiceImpl.class,
-				"_commerceAccountModelResourcePermission",
-				CommerceAccount.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccount)"
+	)
+	private ModelResourcePermission<CommerceAccount>
+		_commerceAccountModelResourcePermission;
+
+	@Reference
+	private OrganizationPermission _organizationPermission;
 
 }

@@ -21,17 +21,25 @@ import com.liferay.commerce.account.exception.DuplicateCommerceAccountGroupRelEx
 import com.liferay.commerce.account.model.CommerceAccountGroupRel;
 import com.liferay.commerce.account.model.impl.CommerceAccountGroupRelImpl;
 import com.liferay.commerce.account.service.base.CommerceAccountGroupRelLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.account.model.CommerceAccountGroupRel",
+	service = AopService.class
+)
 public class CommerceAccountGroupRelLocalServiceImpl
 	extends CommerceAccountGroupRelLocalServiceBaseImpl {
 
@@ -193,7 +201,7 @@ public class CommerceAccountGroupRelLocalServiceImpl
 		};
 	}
 
-	@ServiceReference(type = AccountGroupRelLocalService.class)
+	@Reference
 	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 }

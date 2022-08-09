@@ -26,7 +26,7 @@ import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.base.CommerceAccountUserRelLocalServiceBaseImpl;
 import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.HashSet;
@@ -47,10 +46,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.account.model.CommerceAccountUserRel",
+	service = AopService.class
+)
 public class CommerceAccountUserRelLocalServiceImpl
 	extends CommerceAccountUserRelLocalServiceBaseImpl {
 
@@ -445,22 +452,22 @@ public class CommerceAccountUserRelLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = AccountEntryUserRelLocalService.class)
+	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
-	@BeanReference(type = CommerceAccountLocalService.class)
+	@Reference
 	private CommerceAccountLocalService _commerceAccountLocalService;
 
-	@ServiceReference(type = ConfigurationProvider.class)
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	@ServiceReference(type = RoleLocalService.class)
+	@Reference
 	private RoleLocalService _roleLocalService;
 
-	@ServiceReference(type = UserGroupRoleLocalService.class)
+	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

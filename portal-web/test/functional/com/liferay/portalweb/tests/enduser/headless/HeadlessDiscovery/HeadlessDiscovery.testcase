@@ -103,6 +103,79 @@ definition {
 	}
 
 	@priority = "5"
+	test HeaderWorksInNegativeCaseWithHeadlessDeliveryOpenAPI {
+		property portal.acceptance = "true";
+
+		task ("Given a structure is created in a site with english as default language") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "content-structure");
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+			FormFields.editFieldReference(key_fieldReference = "Text");
+
+			Button.clickSave();
+
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+		}
+
+		task ("Given navigate to headless delivery endpoint") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-delivery",
+				version = "v1.0");
+		}
+
+		task ("Given add Accept-Language header and set value to es-ES") {
+			APIExplorer.addHeaders(
+				headerKey = "Accept-Language",
+				headerValue = "es-ES");
+		}
+
+		task ("When executing postSiteStructuredContent with siteID as the parameter and structuredId in the body") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+			var requestBody = '''{
+				"contentStructureId": ${ddmStructureId},
+				"title": "title of structured content"
+			}''';
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "postSiteStructuredContent",
+				parameter = "siteId",
+				requestBody = "${requestBody}",
+				service = "StructuredContent");
+		}
+
+		task ("Then header Accept-Language is included in request under Curl section") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#CURL_COMMAND",
+				method = "postSiteStructuredContent",
+				service = "StructuredContent",
+				value1 = "-H 'Accept-Language: es-ES'");
+		}
+
+		task ("And Then BAD request is included in response section") {
+			AssertTextEquals(
+				locator1 = "OpenAPI#RESPONSE_CODE",
+				method = "postSiteStructuredContent",
+				value1 = "400");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "postSiteStructuredContent",
+				value1 = "&quot;status&quot;: &quot;BAD_REQUEST&quot;");
+		}
+
+		task ("And Then assert details message in console") {
+			AssertConsoleTextPresent(value1 = "BadRequestException: Structured content must include the default language en-US");
+		}
+	}
+
+	@priority = "5"
 	test HeaderWorksInPositiveCaseWithHeadlessDeliveryOpenAPI {
 		property portal.acceptance = "true";
 

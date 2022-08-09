@@ -10,7 +10,7 @@
  */
 
 import Button from '@clayui/button';
-import {useFormikContext} from 'formik';
+import {ArrayHelpers, useFormikContext} from 'formik';
 import {useState} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
@@ -20,12 +20,17 @@ import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import Form from './Form';
 import Listing from './Listing';
 
+interface IProps {
+	arrayHelpers: ArrayHelpers;
+}
+
 const Activities = ({
+	arrayHelpers,
 	onCancel,
 	onContinue,
 	onPrevious,
 	onSaveAsDraft,
-}: PRMFormikPageProps & MDFRequestStepProps<MDFRequest>) => {
+}: PRMFormikPageProps & MDFRequestStepProps<MDFRequest> & IProps) => {
 	const {isSubmitting, isValid, values, ...formikHelpers} = useFormikContext<
 		MDFRequest
 	>();
@@ -39,6 +44,11 @@ const Activities = ({
 		setIsForm(true);
 	};
 
+	const onPreviousForm = () => {
+		arrayHelpers.pop();
+		setIsForm(false);
+	};
+
 	return (
 		<PRMForm
 			description="Choose the activities that best match your Campaign MDF request"
@@ -48,7 +58,11 @@ const Activities = ({
 			{isForm ? (
 				<Form currentIndex={currentIndex} />
 			) : (
-				<Listing activities={values.activities} onAdd={onAdd} />
+				<Listing
+					{...arrayHelpers}
+					activities={values.activities}
+					onAdd={onAdd}
+				/>
 			)}
 
 			<PRMForm.Footer>
@@ -56,7 +70,7 @@ const Activities = ({
 					<Button
 						className="mr-4"
 						displayType="secondary"
-						onClick={isForm ? () => setIsForm(false) : onPrevious}
+						onClick={isForm ? () => onPreviousForm() : onPrevious}
 					>
 						Previous
 					</Button>

@@ -10,7 +10,7 @@
  */
 
 import Button from '@clayui/button';
-import {ArrayHelpers, FieldArray} from 'formik';
+import {ArrayHelpers} from 'formik';
 
 import MDFRequestActivity from '../../../../../common/interfaces/mdfRequestActivity';
 
@@ -19,33 +19,27 @@ interface IProps {
 	onAdd: () => void;
 }
 
-const Listing = ({activities, onAdd}: IProps) => {
+const Listing = ({activities, onAdd, remove}: IProps & ArrayHelpers) => {
 	return (
-		<FieldArray name="activities">
-			{({remove}: ArrayHelpers) => (
-				<>
-					<div>
-						<div>
-							{activities.length ? (
-								activities.map((activity, index) => (
-									<div key={index}>
-										{activity.name}
+		<>
+			<div>
+				<div>
+					{activities.length ? (
+						activities.map((activity, index) => (
+							<div key={index}>
+								{activity.name}
 
-										<Button onClick={() => remove(index)}>
-											-
-										</Button>
-									</div>
-								))
-							) : (
-								<div>No entries were found</div>
-							)}
-						</div>
+								<Button onClick={() => remove(index)}>-</Button>
+							</div>
+						))
+					) : (
+						<div>No entries were found</div>
+					)}
+				</div>
 
-						<Button onClick={onAdd}>Add Activity</Button>
-					</div>
-				</>
-			)}
-		</FieldArray>
+				<Button onClick={onAdd}>Add Activity</Button>
+			</div>
+		</>
 	);
 };
 

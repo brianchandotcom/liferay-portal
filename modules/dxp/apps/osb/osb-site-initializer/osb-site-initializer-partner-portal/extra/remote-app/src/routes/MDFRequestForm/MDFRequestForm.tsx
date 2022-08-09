@@ -89,7 +89,9 @@ const MDFRequestForm = () => {
 			/>
 		),
 		[StepType.ACTIVITIES]: (
-			<Activities
+			<PRMFormik.Array
+				component={Activities}
+				name="activities"
 				onCancel={onCancel}
 				onContinue={onContinue}
 				onPrevious={onPrevious}

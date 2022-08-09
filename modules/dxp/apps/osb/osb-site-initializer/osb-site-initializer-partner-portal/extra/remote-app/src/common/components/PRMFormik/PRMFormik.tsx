@@ -12,6 +12,7 @@
 import {Form, Formik, FormikConfig, FormikValues} from 'formik';
 import React from 'react';
 
+import Array from './components/Array';
 import Field from './components/Field';
 import PRMFormikPageProps from './interfaces/prmFormikPageProps';
 
@@ -33,6 +34,7 @@ const PRMFormik = <T extends FormikValues>({
 	);
 };
 
+PRMFormik.Array = Array;
 PRMFormik.Field = Field;
 
 export default PRMFormik;

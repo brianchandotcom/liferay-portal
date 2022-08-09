@@ -35,8 +35,7 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcess
 	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
-				"AssetListEntrySegmentsEntryRel",
-				"priority INTEGER default 0 not null")
+				"AssetListEntrySegmentsEntryRel", "priority INTEGER")
 		};
 	}
 

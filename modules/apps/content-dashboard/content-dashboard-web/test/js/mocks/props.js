@@ -335,3 +335,58 @@ export const mockedFileDocumentProps = {
 	type: 'Document',
 	viewURLs: [],
 };
+
+export const mockedContentWithPreview = {
+	className: 'com.liferay.portal.kernel.repository.model.FileEntry',
+	clipboard: {
+		name: 'demo.jpg',
+		url: 'mocked/view/url/in/portal',
+	},
+	description: 'Mocked description',
+	preview: {
+		imageURL: 'mocked/preview/url/demo.jpg',
+		url: 'mocked/vuew/url/',
+	},
+	specificFields: {
+		extension: {
+			title: 'Extension',
+			type: 'string',
+			value: 'jpg',
+		},
+		size: {
+			title: 'Size',
+			type: 'string',
+			value: '200 KB',
+		},
+	},
+	subType: 'Basic Document',
+	type: 'Document',
+	viewURLs: [],
+};
+
+export const mockedContentWithPreviewWithoutLink = {
+	className: 'com.liferay.portal.kernel.repository.model.FileEntry',
+	clipboard: {
+		name: 'demo.jpg',
+		url: 'mocked/view/url/in/portal',
+	},
+	description: 'Mocked description',
+	preview: {
+		imageURL: 'mocked/preview/url/demo.jpg',
+	},
+	specificFields: {
+		extension: {
+			title: 'Extension',
+			type: 'string',
+			value: 'zip',
+		},
+		size: {
+			title: 'Size',
+			type: 'string',
+			value: '200 KB',
+		},
+	},
+	subType: 'Basic Document',
+	type: 'Document',
+	viewURLs: [],
+};

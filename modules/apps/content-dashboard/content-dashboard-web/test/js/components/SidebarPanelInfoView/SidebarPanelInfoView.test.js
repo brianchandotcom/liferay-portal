@@ -21,6 +21,8 @@ import {fetch, openToast} from 'frontend-js-web';
 import Sidebar from '../../../../src/main/resources/META-INF/resources/js/components/Sidebar';
 import SidebarPanelInfoView from '../../../../src/main/resources/META-INF/resources/js/components/SidebarPanelInfoView/SidebarPanelInfoView';
 import {
+	mockedContentWithPreview,
+	mockedContentWithPreviewWithoutLink,
 	mockedFileDocumentProps,
 	mockedImageDocumentProps,
 	mockedNoTaxonomies,
@@ -229,17 +231,12 @@ describe('SidebarPanelInfoView', () => {
 	});
 
 	it('renders sidebar panel with proper info for an image document', () => {
-		const {container, getByText, queryByText} = render(
+		const {getByText, queryByText} = render(
 			_getSidebarComponent({
 				...mockedProps,
 				...mockedImageDocumentProps,
 			})
 		);
-		const previewFigureTag = container.querySelector('figure');
-
-		expect(
-			previewFigureTag.classList.contains('document-preview-figure')
-		).toBe(true);
 
 		expect(getByText('Document - Basic Document')).toBeInTheDocument();
 		expect(getByText('Mocked description')).toBeInTheDocument();
@@ -252,17 +249,12 @@ describe('SidebarPanelInfoView', () => {
 	});
 
 	it('renders sidebar panel with proper info for a video shortcut document', () => {
-		const {container, getByText, queryByText} = render(
+		const {getByText, queryByText} = render(
 			_getSidebarComponent({
 				...mockedProps,
 				...mockedVideoShortcutDocumentProps,
 			})
 		);
-		const previewFigureTag = container.querySelector('figure');
-
-		expect(
-			previewFigureTag.classList.contains('document-preview-figure')
-		).toBe(true);
 
 		expect(getByText('Mocked description')).toBeInTheDocument();
 		expect(
@@ -285,9 +277,6 @@ describe('SidebarPanelInfoView', () => {
 				...mockedFileDocumentProps,
 			})
 		);
-		const previewFigureTag = container.querySelector('figure');
-
-		expect(previewFigureTag).toBe(null);
 
 		expect(
 			container.getElementsByClassName('lexicon-icon-copy').length
@@ -314,6 +303,57 @@ describe('SidebarPanelInfoView', () => {
 
 		const image = container.querySelector('.sticker-img');
 		expect(image).toBeTruthy();
+	});
+
+	it('renders preview of the content with a link if proceeds', () => {
+		const {container, rerender} = render(
+			_getSidebarComponent({
+				...mockedProps,
+				...mockedContentWithPreview,
+			})
+		);
+		const previewFigureTag = container.querySelector('figure');
+		const previewLink = container.querySelectorAll('figure a');
+
+		expect(
+			previewFigureTag.classList.contains('document-preview-figure')
+		).toBe(true);
+		expect(previewLink.length).toBe(1);
+		expect(previewLink[0].getAttribute('href')).toBe(
+			mockedContentWithPreview.preview.url
+		);
+
+		const copyMockedContentWithPreview = JSON.parse(
+			JSON.stringify(mockedContentWithPreview)
+		);
+		copyMockedContentWithPreview.preview = null;
+
+		rerender(
+			_getSidebarComponent({
+				...mockedProps,
+				...copyMockedContentWithPreview,
+			})
+		);
+
+		const newPreviewFigureTag = container.querySelector('figure');
+
+		expect(newPreviewFigureTag).toBe(null);
+	});
+
+	it('renders preview of the content without a link if no url is provided', () => {
+		const {container} = render(
+			_getSidebarComponent({
+				...mockedProps,
+				...mockedContentWithPreviewWithoutLink,
+			})
+		);
+		const previewFigureTag = container.querySelector('figure');
+		const previewLink = container.querySelectorAll('figure a');
+
+		expect(
+			previewFigureTag.classList.contains('document-preview-figure')
+		).toBe(true);
+		expect(previewLink.length).toBe(0);
 	});
 
 	it('renders sidebar panel with/without subscribe button if proceeds', () => {

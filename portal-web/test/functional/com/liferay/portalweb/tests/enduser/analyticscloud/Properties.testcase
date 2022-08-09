@@ -378,15 +378,7 @@ definition {
 	@description = "Bug ID: LRAC-8093 | Automation ID: LRAC-11533 | Test Summary: Able to clear property data"
 	@priority = "4"
 	test ClearPropertyData {
-		task ("Launch AC and go to settings and add a new property") {
-			ACUtils.launchAC();
-
-			ACSettings.takeTokenFromAnalyticsCloud();
-		}
-
 		task ("Connect the DXP to Analytics Cloud") {
-			ACUtils.launchDXP();
-
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",

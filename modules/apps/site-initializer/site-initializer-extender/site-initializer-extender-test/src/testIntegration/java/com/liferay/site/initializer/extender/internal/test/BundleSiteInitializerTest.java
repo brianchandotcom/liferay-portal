@@ -83,6 +83,8 @@ import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
+import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
@@ -248,6 +250,7 @@ public class BundleSiteInitializerTest {
 			_assertLayouts(group, serviceContext);
 			_assertLayoutSets(group);
 			_assertListTypeDefinitions(serviceContext);
+			_assertNotificationTemplate(serviceContext);
 			_assertObjectDefinitions(group, serviceContext);
 			_assertOrganizations(serviceContext);
 			_assertPermissions(group);
@@ -921,6 +924,30 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("testlisttypeentry2", listTypeEntry2.getKey());
 	}
 
+	private void _assertNotificationTemplate(ServiceContext serviceContext)
+		throws Exception {
+
+		NotificationTemplateResource.Builder builder =
+			_notificationTemplateResourceFactory.create();
+
+		NotificationTemplateResource notificationTemplateResource =
+			builder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		Page<NotificationTemplate> notificationTemplatesPage =
+			notificationTemplateResource.getNotificationTemplatesPage(
+				null, null, null, null, null);
+
+		Assert.assertTrue(notificationTemplatesPage.getTotalCount() == 1);
+
+		NotificationTemplate notificationTemplate =
+			notificationTemplatesPage.fetchFirstItem();
+
+		Assert.assertEquals(
+			"Test Notification Template 1", notificationTemplate.getName());
+	}
+
 	private void _assertObjectActions(
 		int objectActionsCount, ObjectDefinition objectDefinition) {
 
@@ -969,7 +996,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(2, objectDefinition1);
+		_assertObjectActions(3, objectDefinition1);
 		_assertObjectEntries(group.getGroupId(), objectDefinition1, 0);
 		_assertObjectRelationships(objectDefinition1, serviceContext);
 
@@ -1715,6 +1742,10 @@ public class BundleSiteInitializerTest {
 	@Inject
 	private ListTypeDefinitionResource.Factory
 		_listTypeDefinitionResourceFactory;
+
+	@Inject
+	private NotificationTemplateResource.Factory
+		_notificationTemplateResourceFactory;
 
 	@Inject
 	private ObjectActionLocalService _objectActionLocalService;

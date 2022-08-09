@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>CONTENT_LINK</td>
-	<td>//div[contains(@class,'content')]//p[contains(.,'${key_entryContent}')]//a</td>
+	<td>//div[contains(@class,'content')]//p[contains(normalize-space(),'${key_entryContent}')]//a</td>
 	<td></td>
 </tr>
 <tr>

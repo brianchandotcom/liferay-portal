@@ -749,7 +749,7 @@ definition {
 	@description = "LPS-137106 - Verify if it is possible to link a Mapped URL with the Objects Page Template"
 	@priority = "5"
 	test ObjectMappedURL {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 327",

@@ -15,6 +15,8 @@
 package com.liferay.portal.upgrade.v7_2_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Raymond Augé
@@ -28,8 +30,14 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 
 			runSQL("update VirtualHost set defaultVirtualHost = [$TRUE$]");
 		}
+	}
 
-		alterTableAddColumn("VirtualHost", "languageId", "VARCHAR(75) null");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"VirtualHost", "languageId VARCHAR(75) null")
+		};
 	}
 
 }

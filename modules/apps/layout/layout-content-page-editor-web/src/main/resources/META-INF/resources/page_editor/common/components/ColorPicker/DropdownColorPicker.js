@@ -114,7 +114,11 @@ export function DropdownColorPicker({
 	const containerRef = useMemo(() => {
 		const ref = React.createRef();
 
-		ref.current = document.querySelector('.page-editor__sidebar');
+		ref.current = document.querySelector(
+			Liferay.FeatureFlags['LPS-153452']
+				? 'page-editor__item-configuration-sidebar'
+				: '.page-editor__sidebar'
+		);
 
 		return ref;
 	}, []);

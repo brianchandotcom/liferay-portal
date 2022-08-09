@@ -654,13 +654,19 @@ definition {
 
 			SelectFrameTop();
 
-			for (var content : list "Web Content With Text Title,Web Content Description,Web Content Text") {
+			for (var content : list "Web Content With Text Title,Web Content Description") {
 				AssertTextEquals.assertPartialText(
 					fragmentName = "wctext",
 					index = "1",
 					locator1 = "Fragment#FRAGMENT_BODY",
 					value1 = "${content}");
 			}
+
+			AssertTextNotPresent(
+				fragmentName = "wctext",
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Web Content Text");
 		}
 
 		task ("Select the custom template") {
@@ -678,13 +684,19 @@ definition {
 		}
 
 		task ("View displayed content") {
-			for (var content : list "Web Content With Text Title,Web Content Description,Web Content Text") {
+			for (var content : list "Web Content With Text Title,Web Content Description") {
 				AssertTextEquals.assertPartialText(
 					fragmentName = "wctext",
 					index = "1",
 					locator1 = "Fragment#FRAGMENT_BODY",
 					value1 = "${content}");
 			}
+
+			AssertTextNotPresent(
+				fragmentName = "wctext",
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Web Content Text");
 		}
 	}
 

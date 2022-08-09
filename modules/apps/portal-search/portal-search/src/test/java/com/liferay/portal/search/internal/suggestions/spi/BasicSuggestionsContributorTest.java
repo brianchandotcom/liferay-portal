@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.document.Document;
@@ -460,15 +459,6 @@ public class BasicSuggestionsContributorTest {
 
 	private void _setUpSuggestionsContributorConfiguration(String textField) {
 		_suggestionsContributorConfiguration.setDisplayGroupName(textField);
-
-		_suggestionsContributorConfiguration.setAttributes(
-			HashMapBuilder.<String, Object>put(
-				"fields", ListUtil.fromArray("field")
-			).put(
-				"sxpBlueprintId", RandomTestUtil.randomLong()
-			).put(
-				"textField", textField
-			).build());
 
 		_suggestionsContributorConfiguration.setSize(1);
 	}

@@ -215,7 +215,7 @@ definition {
 			pageName = "${pageName}",
 			siteName = "${siteName}");
 
-		while (IsElementPresent.pauseIsElementPresent(locator1 = "Icon#BACK")) {
+		while (IsElementPresent(locator1 = "Icon#BACK")) {
 			Click(locator1 = "Icon#BACK");
 		}
 

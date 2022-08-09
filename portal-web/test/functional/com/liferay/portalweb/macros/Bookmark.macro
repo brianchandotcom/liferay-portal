@@ -6,7 +6,7 @@ definition {
 		AssetPublisherPortlet.addAsset(assetType = "Bookmarks Entry");
 
 		if (isSet(bookmarkFolderName)) {
-			AssertClick.pauseAssertTextClickAt(
+			AssertClick(
 				locator1 = "Button#SELECT",
 				value1 = "Select");
 
@@ -31,7 +31,7 @@ definition {
 
 		PortletEntry.inputDescription(description = "${bookmarkDescription}");
 
-		AssertClick.pauseAssertTextClickAt(
+		AssertClick(
 			locator1 = "Button#SAVE",
 			value1 = "Save");
 	}

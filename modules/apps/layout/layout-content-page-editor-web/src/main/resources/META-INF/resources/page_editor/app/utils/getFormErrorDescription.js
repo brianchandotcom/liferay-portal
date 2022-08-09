@@ -22,7 +22,7 @@ export const FORM_ERROR_TYPES = {
 	missingSubmit: 'missingSubmit',
 };
 
-export function getFormValidationData({name = null, type}) {
+export function getFormErrorDescription({name = null, type}) {
 	switch (type) {
 		case FORM_ERROR_TYPES.deletedField:
 			return {

@@ -32,8 +32,8 @@ import canBeRemoved from '../../utils/canBeRemoved';
 import canBeSaved from '../../utils/canBeSaved';
 import {
 	FORM_ERROR_TYPES,
-	getFormValidationData,
-} from '../../utils/getFormValidationData';
+	getFormErrorDescription,
+} from '../../utils/getFormErrorDescription';
 import hideFragment from '../../utils/hideFragment';
 import useHasRequiredChild from '../../utils/useHasRequiredChild';
 import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
@@ -78,7 +78,7 @@ export default function TopperItemActions({item}) {
 					});
 
 					if (hasRequiredChild()) {
-						const {message} = getFormValidationData({
+						const {message} = getFormErrorDescription({
 							type: FORM_ERROR_TYPES.hiddenFragment,
 						});
 

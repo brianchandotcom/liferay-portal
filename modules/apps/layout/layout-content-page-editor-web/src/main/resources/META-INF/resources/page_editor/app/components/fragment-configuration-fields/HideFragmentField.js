@@ -25,8 +25,8 @@ import {useSelectItem} from '../../contexts/ControlsContext';
 import {useSelector} from '../../contexts/StoreContext';
 import {
 	FORM_ERROR_TYPES,
-	getFormValidationData,
-} from '../../utils/getFormValidationData';
+	getFormErrorDescription,
+} from '../../utils/getFormErrorDescription';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import useHasRequiredChild from '../../utils/useHasRequiredChild';
 import hasDropZoneChild from '../layout-data-items/hasDropZoneChild';
@@ -108,7 +108,7 @@ export function HideFragmentField({
 							onValueSelect(field.name, eventValue);
 
 							if (eventValue && hasRequiredChild()) {
-								const {message} = getFormValidationData({
+								const {message} = getFormErrorDescription({
 									type: FORM_ERROR_TYPES.hiddenFragment,
 								});
 

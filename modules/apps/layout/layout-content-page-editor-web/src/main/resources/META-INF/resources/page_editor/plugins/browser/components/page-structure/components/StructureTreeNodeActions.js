@@ -37,8 +37,8 @@ import canBeRenamed from '../../../../../app/utils/canBeRenamed';
 import canBeSaved from '../../../../../app/utils/canBeSaved';
 import {
 	FORM_ERROR_TYPES,
-	getFormValidationData,
-} from '../../../../../app/utils/getFormValidationData';
+	getFormErrorDescription,
+} from '../../../../../app/utils/getFormErrorDescription';
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
@@ -142,7 +142,7 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 					});
 
 					if (hasRequiredChild()) {
-						const {message} = getFormValidationData({
+						const {message} = getFormErrorDescription({
 							type: FORM_ERROR_TYPES.hiddenFragment,
 						});
 

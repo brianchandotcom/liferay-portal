@@ -63,8 +63,8 @@ import {formIsMapped} from '../../../../../app/utils/formIsMapped';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import {
 	FORM_ERROR_TYPES,
-	getFormValidationData,
-} from '../../../../../app/utils/getFormValidationData';
+	getFormErrorDescription,
+} from '../../../../../app/utils/getFormErrorDescription';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
@@ -526,7 +526,7 @@ const VisibilityButton = ({
 				});
 
 				if (!node.hidden && hasRequiredChild()) {
-					const {message} = getFormValidationData({
+					const {message} = getFormErrorDescription({
 						type: FORM_ERROR_TYPES.hiddenFragment,
 					});
 

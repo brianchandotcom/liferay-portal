@@ -26,8 +26,8 @@ import LayoutService from '../services/LayoutService';
 import {CACHE_KEYS, getCacheItem, getCacheKey} from '../utils/cache';
 import {
 	FORM_ERROR_TYPES,
-	getFormValidationData,
-} from '../utils/getFormValidationData';
+	getFormErrorDescription,
+} from '../utils/getFormErrorDescription';
 import getFragmentEntryLinkIdsFromItemId from '../utils/getFragmentEntryLinkIdsFromItemId';
 import {hasFormParent} from '../utils/hasFormParent';
 import hasRequiredInputChild from '../utils/hasRequiredInputChild';
@@ -177,7 +177,7 @@ function maybeShowAlert(layoutData, itemId, fragmentEntryLinks) {
 				FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 			);
 
-			const {message} = getFormValidationData({
+			const {message} = getFormErrorDescription({
 				name: getFieldLabel(fieldId, formFields),
 				type: FORM_ERROR_TYPES.deletedField,
 			});
@@ -195,7 +195,7 @@ function maybeShowAlert(layoutData, itemId, fragmentEntryLinks) {
 				layoutData,
 			})
 		) {
-			const {message} = getFormValidationData({
+			const {message} = getFormErrorDescription({
 				type: FORM_ERROR_TYPES.deletedFragment,
 			});
 

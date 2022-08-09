@@ -2041,12 +2041,47 @@ public class BundleSiteInitializer implements SiteInitializer {
 			notificationTemplatesPage.fetchFirstItem();
 
 		if (existingNotificationTemplate == null) {
-			notificationTemplateResource.postNotificationTemplate(
-				notificationTemplate);
+			notificationTemplate =
+				notificationTemplateResource.postNotificationTemplate(
+					notificationTemplate);
 		}
 		else {
-			notificationTemplateResource.putNotificationTemplate(
-				existingNotificationTemplate.getId(), notificationTemplate);
+			notificationTemplate =
+				notificationTemplateResource.putNotificationTemplate(
+					existingNotificationTemplate.getId(), notificationTemplate);
+		}
+
+		json = SiteInitializerUtil.read(
+			resourcePath + "notification-template.object-actions.json",
+			_servletContext);
+
+		if (Validator.isNull(json)) {
+			return;
+		}
+
+		json = _replace(
+			json, "[$", "$]",
+			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		Map<String, Long> parametersMap = HashMapBuilder.put(
+			"notificationTemplateId", notificationTemplate.getId()
+		).build();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			_objectActionLocalService.addObjectAction(
+				serviceContext.getUserId(),
+				jsonObject.getLong("objectDefinitionId"),
+				jsonObject.getBoolean("active"),
+				jsonObject.getString("conditionExpression"),
+				jsonObject.getString("description"),
+				jsonObject.getString("name"),
+				jsonObject.getString("objectActionExecutorKey"),
+				jsonObject.getString("objectActionTriggerKey"),
+				ObjectActionUtil.toParametersUnicodeProperties(parametersMap));
 		}
 	}
 

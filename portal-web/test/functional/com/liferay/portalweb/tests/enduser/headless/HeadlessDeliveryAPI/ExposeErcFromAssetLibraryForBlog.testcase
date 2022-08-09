@@ -31,18 +31,22 @@ definition {
 		task ("When with POST request I create a comment with a custom external reference code") {
 			var response = HeadlessBlog.getAllBlogsPostingId();
 
-			var putComment = HeadlessBlog.postBlogsPostingComment(
-				blogsPostingId = "${response}",
+			var createBlogPostingComment = HeadlessComment.createBlogPostingComment(
+				blogPostingId = "${response}",
 				commentExternalReferenceCode = "ercComment",
 				textComment = "CommentOne");
 		}
 
 		task ("Then I can see the custom external reference code in the body response") {
-			var commentsFromBlogsPosting = HeadlessBlog.getBlogsPostingComment(blogsPostingId = "${response}");
+			var commentsFromBlogPosting = HeadlessComment.getBlogPostingComments(blogPostingId = "${response}");
 
-			HeadlessBlog.assertCommentERCWithCorrectValue(
-				expectedCommentERCValue = "ercComment",
-				response = "${commentsFromBlogsPosting}");
+			var ercComment = HeadlessCommentAPI._getFieldValueOfExistingBlogPostingComment(
+				fieldName = "externalReferenceCode",
+				response = "${commentsFromBlogPosting}");
+
+			TestUtils.assertEquals(
+				actual = "${ercComment}",
+				expected = "ercComment");
 		}
 	}
 
@@ -54,15 +58,15 @@ definition {
 		task ("When with POST request I create a comment with a custom external reference code") {
 			var response = HeadlessBlog.getAllBlogsPostingId();
 
-			var response1 = HeadlessBlog.postBlogsPostingComment(
-				blogsPostingId = "${response}",
+			var response1 = HeadlessComment.createBlogPostingComment(
+				blogPostingId = "${response}",
 				commentExternalReferenceCode = "ercComment",
 				textComment = "CommentOne");
 		}
 
 		task ("When with POST request I create a comment with an already existing custom external reference code") {
-			var response2 = HeadlessBlog.postBlogsPostingComment(
-				blogsPostingId = "${response}",
+			var response2 = HeadlessComment.createBlogPostingComment(
+				blogPostingId = "${response}",
 				commentExternalReferenceCode = "ercComment",
 				textComment = "CommentTwo");
 		}
@@ -73,12 +77,12 @@ definition {
 				expected = "Duplicate message external reference code");
 		}
 
-		task ("And Then another folder with same erc is not being created") {
-			var commentsBlogsPosting = HeadlessBlog.getBlogsPostingComment(blogsPostingId = "${response}");
+		task ("And Then another comment with the same external reference code is not being created") {
+			var commentsBlogPosting = HeadlessComment.getBlogPostingComments(blogPostingId = "${response}");
 
 			HeadlessBlog.assertProperNumberOfItems(
 				expectedTotalElement = "1",
-				responseToParse = "${commentsBlogsPosting}");
+				responseToParse = "${commentsBlogPosting}");
 		}
 	}
 

@@ -66,6 +66,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -141,21 +142,6 @@ public class CommerceCurrencyLocalServiceImpl
 	}
 
 	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		_serviceRegistration = bundleContext.registerService(
-			PortalInstanceLifecycleListener.class,
-			new PortalInstanceLifecycleListenerImpl(
-				commerceCurrencyLocalService),
-			null);
-	}
-
-	@Override
 	public void deleteCommerceCurrencies(long companyId) {
 		commerceCurrencyPersistence.removeByCompanyId(companyId);
 	}
@@ -177,13 +163,6 @@ public class CommerceCurrencyLocalServiceImpl
 
 		return commerceCurrencyLocalService.deleteCommerceCurrency(
 			commerceCurrency);
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		_serviceRegistration.unregister();
 	}
 
 	@Override
@@ -312,6 +291,21 @@ public class CommerceCurrencyLocalServiceImpl
 		commerceCurrency.setActive(active);
 
 		return commerceCurrencyPersistence.update(commerceCurrency);
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		super.setAopProxy(aopProxy);
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			PortalInstanceLifecycleListener.class,
+			new PortalInstanceLifecycleListenerImpl(
+				commerceCurrencyLocalService),
+			null);
 	}
 
 	@Override
@@ -462,6 +456,16 @@ public class CommerceCurrencyLocalServiceImpl
 				}
 			},
 			ArrayUtil.toLongArray(commerceCurrencyFinder.getCompanyIds()));
+	}
+
+	@Deactivate
+	@Override
+	protected void deactivate() {
+		super.deactivate();
+
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	protected void validate(

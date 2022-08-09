@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
+import Button from '@clayui/button';
 import {useFormikContext} from 'formik';
 import {useCallback, useEffect} from 'react';
 
@@ -18,6 +18,7 @@ import PRMFormik from '../../../../common/components/PRMFormik';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
+import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import useCountryCompanyExtender from './hooks/useCountryCompanyExtender';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 
@@ -25,7 +26,7 @@ const Goals = ({
 	onCancel,
 	onContinue,
 	onSaveAsDraft,
-}: PRMFormikPageProps<MDFRequest>) => {
+}: PRMFormikPageProps & MDFRequestStepProps<MDFRequest>) => {
 	const {
 		isSubmitting,
 		isValid,
@@ -46,6 +47,12 @@ const Goals = ({
 		])
 	);
 
+	useEffect(() => {
+		if (values.r_company_accountEntryId) {
+			setSelectedAccountEntryId(values.r_company_accountEntryId);
+		}
+	}, [setSelectedAccountEntryId, values.r_company_accountEntryId]);
+
 	const countryOptions = fieldEntries[LiferayPicklistName.COUNTRIES];
 	const onCountrySelected = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const countrySelected = countryOptions.find(
@@ -57,12 +64,6 @@ const Goals = ({
 			name: countrySelected?.label,
 		});
 	};
-
-	useEffect(() => {
-		if (values.r_company_accountEntryId) {
-			setSelectedAccountEntryId(values.r_company_accountEntryId);
-		}
-	}, [setSelectedAccountEntryId, values.r_company_accountEntryId]);
 
 	return (
 		<PRMForm name="Goals" title="Campaign Information">
@@ -145,31 +146,31 @@ const Goals = ({
 
 			<PRMForm.Footer>
 				<div className="mr-auto pl-0 py-3">
-					<ClayButton
+					<Button
 						className="pl-0"
 						disabled={isSubmitting}
 						displayType={null}
 						onClick={() => onSaveAsDraft?.(values, formikHelpers)}
 					>
 						Save as Draft
-					</ClayButton>
+					</Button>
 				</div>
 
 				<div className="p-2">
-					<ClayButton
+					<Button
 						className="mr-4"
 						displayType="secondary"
 						onClick={onCancel}
 					>
 						Cancel
-					</ClayButton>
+					</Button>
 
-					<ClayButton
+					<Button
 						disabled={!isValid}
 						onClick={() => onContinue?.(formikHelpers)}
 					>
 						Continue
-					</ClayButton>
+					</Button>
 				</div>
 			</PRMForm.Footer>
 		</PRMForm>

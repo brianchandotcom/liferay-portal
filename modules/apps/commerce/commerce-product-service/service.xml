@@ -350,6 +350,9 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="CProductId" return-type="Collection">
+			<finder-column name="CProductId" />
+		</finder>
 		<finder name="CPTaxCategoryId" return-type="Collection">
 			<finder-column name="CPTaxCategoryId" />
 		</finder>

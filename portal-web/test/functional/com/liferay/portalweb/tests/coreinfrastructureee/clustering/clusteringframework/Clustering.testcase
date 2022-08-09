@@ -224,7 +224,7 @@ definition {
 				locator1 = "build-test.xml",
 				value1 = "cluster-invoke-method -Dcluster.invoke.method=${method}");
 
-			WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_1.0.0");
+			WaitForConsoleTextPresent(value1 = "Result of ${method}");
 
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Result of ${method}: 9080",

@@ -1130,11 +1130,11 @@ definition {
 	}
 
 	macro viewEntryEmbeddedImage {
-		Click.pauseClickAt(
+		Click.clickAt(
 			key_entryContent = "${entryContent}",
 			locator1 = "BlogsEntry#CONTENT_LINK");
 
-		AssertElementPresent.pauseAssertVisible(
+		WaitForVisible(
 			key_imageSourceURL = "${imageSourceURL}",
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}

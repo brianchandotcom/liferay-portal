@@ -16,12 +16,16 @@ package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderPayment;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.base.CommerceOrderPaymentLocalServiceBaseImpl;
 import com.liferay.commerce.util.comparator.CommerceOrderPaymentCreateDateComparator;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -39,9 +43,9 @@ public class CommerceOrderPaymentLocalServiceImpl
 		throws PortalException {
 
 		CommerceOrder commerceOrder =
-			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
-		User user = userLocalService.getUser(commerceOrder.getUserId());
+		User user = _userLocalService.getUser(commerceOrder.getUserId());
 
 		return _getCommerceOrderPayment(status, result, commerceOrder, user);
 	}
@@ -54,8 +58,8 @@ public class CommerceOrderPaymentLocalServiceImpl
 
 		return _getCommerceOrderPayment(
 			status, content,
-			commerceOrderLocalService.getCommerceOrder(commerceOrderId),
-			userLocalService.getUser(serviceContext.getUserId()));
+			_commerceOrderLocalService.getCommerceOrder(commerceOrderId),
+			_userLocalService.getUser(serviceContext.getUserId()));
 	}
 
 	@Override
@@ -109,5 +113,11 @@ public class CommerceOrderPaymentLocalServiceImpl
 
 		return commerceOrderPaymentPersistence.update(commerceOrderPayment);
 	}
+
+	@BeanReference(type = CommerceOrderLocalService.class)
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

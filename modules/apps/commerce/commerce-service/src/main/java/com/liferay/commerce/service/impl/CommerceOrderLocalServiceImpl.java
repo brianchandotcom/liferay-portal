@@ -55,7 +55,14 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.commerce.search.facet.NegatableMultiValueFacet;
+import com.liferay.commerce.service.CommerceAddressLocalService;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.service.CommerceOrderNoteLocalService;
+import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
+import com.liferay.commerce.service.CommerceOrderTypeLocalService;
+import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
+import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
@@ -63,6 +70,7 @@ import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -197,7 +205,7 @@ public class CommerceOrderLocalServiceImpl
 
 		serviceContext.setUserId(userId);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		// Check approval workflow
 
@@ -231,7 +239,7 @@ public class CommerceOrderLocalServiceImpl
 					groupId);
 
 			List<CommerceOrderType> commerceOrderTypes =
-				commerceOrderTypeLocalService.getCommerceOrderTypes(
+				_commerceOrderTypeLocalService.getCommerceOrderTypes(
 					user.getCompanyId(), CommerceChannel.class.getName(),
 					commerceChannel.getCommerceChannelId(), true, 0, 1);
 
@@ -348,7 +356,7 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder = commerceOrderLocalService.updatePaymentStatus(
 				userId, commerceOrder.getCommerceOrderId(), paymentStatus);
 
-			User user = userLocalService.getUser(serviceContext.getUserId());
+			User user = _userLocalService.getUser(serviceContext.getUserId());
 
 			Date orderDate = PortalUtil.getDate(
 				orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
@@ -468,22 +476,22 @@ public class CommerceOrderLocalServiceImpl
 
 		// Commerce order items
 
-		commerceOrderItemLocalService.deleteCommerceOrderItems(
+		_commerceOrderItemLocalService.deleteCommerceOrderItems(
 			commerceOrder.getCommerceOrderId());
 
 		// Commerce order notes
 
-		commerceOrderNoteLocalService.deleteCommerceOrderNotes(
+		_commerceOrderNoteLocalService.deleteCommerceOrderNotes(
 			commerceOrder.getCommerceOrderId());
 
 		// Commerce order payments
 
-		commerceOrderPaymentLocalService.deleteCommerceOrderPayments(
+		_commerceOrderPaymentLocalService.deleteCommerceOrderPayments(
 			commerceOrder.getCommerceOrderId());
 
 		// Commerce addresses
 
-		commerceAddressLocalService.deleteCommerceAddresses(
+		_commerceAddressLocalService.deleteCommerceAddresses(
 			commerceOrder.getModelClassName(),
 			commerceOrder.getCommerceOrderId());
 
@@ -780,14 +788,14 @@ public class CommerceOrderLocalServiceImpl
 		throws PortalException {
 
 		List<CommerceOrderItem> guestCommerceOrderItems =
-			commerceOrderItemPersistence.findByCommerceOrderId(
+			_commerceOrderItemPersistence.findByCommerceOrderId(
 				guestCommerceOrderId);
 
 		for (CommerceOrderItem guestCommerceOrderItem :
 				guestCommerceOrderItems) {
 
 			List<CommerceOrderItem> userCommerceOrderItems =
-				commerceOrderItemPersistence.findByC_CPI(
+				_commerceOrderItemPersistence.findByC_CPI(
 					userCommerceOrderId,
 					guestCommerceOrderItem.getCPInstanceId());
 
@@ -812,7 +820,7 @@ public class CommerceOrderLocalServiceImpl
 				}
 			}
 
-			commerceOrderItemLocalService.addCommerceOrderItem(
+			_commerceOrderItemLocalService.addCommerceOrderItem(
 				userCommerceOrderId, guestCommerceOrderItem.getCPInstanceId(),
 				guestCommerceOrderItem.getJson(),
 				guestCommerceOrderItem.getQuantity(),
@@ -842,7 +850,7 @@ public class CommerceOrderLocalServiceImpl
 		for (CommerceOrderItem commerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
-			commerceOrderItemLocalService.updateCommerceOrderItemPrice(
+			_commerceOrderItemLocalService.updateCommerceOrderItemPrice(
 				commerceOrderItem.getCommerceOrderItemId(), commerceContext);
 		}
 
@@ -966,7 +974,7 @@ public class CommerceOrderLocalServiceImpl
 		// Commerce order items
 
 		List<CommerceOrderItem> commerceOrderItems =
-			commerceOrderItemLocalService.getCommerceOrderItems(
+			_commerceOrderItemLocalService.getCommerceOrderItems(
 				commerceOrder.getCommerceOrderId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -975,7 +983,7 @@ public class CommerceOrderLocalServiceImpl
 				continue;
 			}
 
-			commerceOrderItemLocalService.addCommerceOrderItem(
+			_commerceOrderItemLocalService.addCommerceOrderItem(
 				newCommerceOrder.getCommerceOrderId(),
 				commerceOrderItem.getCPInstanceId(),
 				commerceOrderItem.getJson(), commerceOrderItem.getQuantity(), 0,
@@ -1065,7 +1073,7 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		commerceOrder.setUserId(user.getUserId());
 		commerceOrder.setUserName(user.getFullName());
@@ -1396,7 +1404,7 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrderId);
 
 		CommerceShippingMethod commerceShippingMethod =
-			commerceShippingMethodLocalService.getCommerceShippingMethod(
+			_commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
 		commerceOrder.setCommerceShippingMethodId(
@@ -1438,7 +1446,7 @@ public class CommerceOrderLocalServiceImpl
 			int requestedDeliveryDateMinute, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		Date requestedDeliveryDate = PortalUtil.getDate(
 			requestedDeliveryDateMonth, requestedDeliveryDateDay,
@@ -1463,7 +1471,7 @@ public class CommerceOrderLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
@@ -1587,7 +1595,7 @@ public class CommerceOrderLocalServiceImpl
 			userId = serviceContext.getUserId();
 		}
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 		Date date = new Date();
 
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
@@ -1808,7 +1816,7 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		List<CommerceAddress> commerceAddresses =
-			commerceAddressLocalService.getCommerceAddressesByCompanyId(
+			_commerceAddressLocalService.getCommerceAddressesByCompanyId(
 				serviceContext.getCompanyId(), AccountEntry.class.getName(),
 				commerceOrder.getCommerceAccountId());
 
@@ -1818,7 +1826,7 @@ public class CommerceOrderLocalServiceImpl
 			}
 		}
 
-		return commerceAddressLocalService.copyCommerceAddress(
+		return _commerceAddressLocalService.copyCommerceAddress(
 			commerceAddress.getCommerceAddressId(),
 			CommerceOrder.class.getName(), commerceOrder.getCommerceOrderId(),
 			serviceContext);
@@ -1894,13 +1902,14 @@ public class CommerceOrderLocalServiceImpl
 		long commerceAddressId = commerceAddressIdGetter.apply(commerceOrder);
 
 		if (commerceAddressId > 0) {
-			commerceAddress = commerceAddressLocalService.updateCommerceAddress(
-				commerceAddressId, name, description, street1, street2, street3,
-				city, zip, regionId, countryId, phoneNumber, false, false,
-				serviceContext);
+			commerceAddress =
+				_commerceAddressLocalService.updateCommerceAddress(
+					commerceAddressId, name, description, street1, street2,
+					street3, city, zip, regionId, countryId, phoneNumber, false,
+					false, serviceContext);
 		}
 		else {
-			commerceAddress = commerceAddressLocalService.addCommerceAddress(
+			commerceAddress = _commerceAddressLocalService.addCommerceAddress(
 				commerceOrder.getModelClassName(),
 				commerceOrder.getCommerceOrderId(), name, description, street1,
 				street2, street3, city, zip, regionId, countryId, phoneNumber,
@@ -1963,7 +1972,7 @@ public class CommerceOrderLocalServiceImpl
 
 		if (commerceShippingMethodId > 0) {
 			commerceShippingMethod =
-				commerceShippingMethodLocalService.getCommerceShippingMethod(
+				_commerceShippingMethodLocalService.getCommerceShippingMethod(
 					commerceShippingMethodId);
 
 			if (!commerceShippingMethod.isActive()) {
@@ -1975,7 +1984,7 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		int count =
-			commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
+			_commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
 				commerceOrder.getGroupId(), true);
 
 		if ((commerceShippingMethod == null) && (count > 0) &&
@@ -2234,6 +2243,9 @@ public class CommerceOrderLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderLocalServiceImpl.class);
 
+	@BeanReference(type = CommerceAddressLocalService.class)
+	private CommerceAddressLocalService _commerceAddressLocalService;
+
 	@ServiceReference(type = CommerceChannelLocalService.class)
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
@@ -2253,14 +2265,33 @@ public class CommerceOrderLocalServiceImpl
 	@ServiceReference(type = CommerceOrderConfiguration.class)
 	private CommerceOrderConfiguration _commerceOrderConfiguration;
 
+	@BeanReference(type = CommerceOrderItemLocalService.class)
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@BeanReference(type = CommerceOrderItemPersistence.class)
+	private CommerceOrderItemPersistence _commerceOrderItemPersistence;
+
+	@BeanReference(type = CommerceOrderNoteLocalService.class)
+	private CommerceOrderNoteLocalService _commerceOrderNoteLocalService;
+
+	@BeanReference(type = CommerceOrderPaymentLocalService.class)
+	private CommerceOrderPaymentLocalService _commerceOrderPaymentLocalService;
+
 	@ServiceReference(type = CommerceOrderPriceCalculation.class)
 	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
+
+	@BeanReference(type = CommerceOrderTypeLocalService.class)
+	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 
 	@ServiceReference(type = CommerceShippingEngineRegistry.class)
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
 
 	@ServiceReference(type = CommerceShippingHelper.class)
 	private CommerceShippingHelper _commerceShippingHelper;
+
+	@BeanReference(type = CommerceShippingMethodLocalService.class)
+	private CommerceShippingMethodLocalService
+		_commerceShippingMethodLocalService;
 
 	@ServiceReference(type = CommerceTermEntryLocalService.class)
 	private CommerceTermEntryLocalService _commerceTermEntryLocalService;

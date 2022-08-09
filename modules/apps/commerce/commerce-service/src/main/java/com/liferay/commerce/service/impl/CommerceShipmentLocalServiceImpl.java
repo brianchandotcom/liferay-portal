@@ -27,8 +27,14 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.service.CommerceAddressLocalService;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceShipmentItemLocalService;
+import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.service.base.CommerceShipmentLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -50,6 +56,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -89,10 +96,10 @@ public class CommerceShipmentLocalServiceImpl
 			String zip, long regionId, long countryId, String phoneNumber)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		CommerceOrder commerceOrder =
-			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
 		long commerceShipmentId = counterLocalService.increment();
 
@@ -130,7 +137,7 @@ public class CommerceShipmentLocalServiceImpl
 		throws PortalException {
 
 		CommerceOrder commerceOrder =
-			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
 		return commerceShipmentLocalService.addCommerceShipment(
 			null, commerceOrder.getGroupId(),
@@ -148,7 +155,7 @@ public class CommerceShipmentLocalServiceImpl
 			String commerceShippingOptionName, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
@@ -171,7 +178,7 @@ public class CommerceShipmentLocalServiceImpl
 		commerceShipment.setCommerceAddressId(commerceAddressId);
 
 		CommerceShippingMethod commerceShippingMethod =
-			commerceShippingMethodLocalService.fetchCommerceShippingMethod(
+			_commerceShippingMethodLocalService.fetchCommerceShippingMethod(
 				commerceShippingMethodId);
 
 		if (commerceShippingMethod != null) {
@@ -200,10 +207,10 @@ public class CommerceShipmentLocalServiceImpl
 		CommerceShipment commerceShipment = commerceShipmentPersistence.create(
 			commerceShipmentId);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemLocalService.getCommerceOrderItem(
+			_commerceOrderItemLocalService.getCommerceOrderItem(
 				commerceOrderItemId);
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
@@ -226,7 +233,7 @@ public class CommerceShipmentLocalServiceImpl
 
 		commerceShipment = commerceShipmentPersistence.update(commerceShipment);
 
-		commerceShipmentItemLocalService.
+		_commerceShipmentItemLocalService.
 			addDeliverySubscriptionCommerceShipmentItem(
 				commerceOrder.getScopeGroupId(), userId, commerceShipmentId,
 				commerceOrderItemId);
@@ -243,7 +250,7 @@ public class CommerceShipmentLocalServiceImpl
 
 		commerceShipment = commerceShipmentPersistence.remove(commerceShipment);
 
-		commerceShipmentItemLocalService.deleteCommerceShipmentItems(
+		_commerceShipmentItemLocalService.deleteCommerceShipmentItems(
 			commerceShipment.getCommerceShipmentId(), restoreStockQuantity);
 
 		_expandoRowLocalService.deleteRows(
@@ -559,7 +566,7 @@ public class CommerceShipmentLocalServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		int oldStatus = commerceShipment.getStatus();
 
@@ -618,7 +625,7 @@ public class CommerceShipmentLocalServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
-		User user = userLocalService.getUser(commerceShipment.getUserId());
+		User user = _userLocalService.getUser(commerceShipment.getUserId());
 
 		commerceShipment.setExpectedDate(
 			_getDate(
@@ -664,7 +671,7 @@ public class CommerceShipmentLocalServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
-		User user = userLocalService.getUser(commerceShipment.getUserId());
+		User user = _userLocalService.getUser(commerceShipment.getUserId());
 
 		commerceShipment.setShippingDate(
 			_getDate(
@@ -684,7 +691,7 @@ public class CommerceShipmentLocalServiceImpl
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
 		List<CommerceShipmentItem> commerceShipmentItems =
-			commerceShipmentItemLocalService.getCommerceShipmentItems(
+			_commerceShipmentItemLocalService.getCommerceShipmentItems(
 				commerceShipmentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		if (commerceShipmentItems.isEmpty()) {
@@ -839,7 +846,7 @@ public class CommerceShipmentLocalServiceImpl
 			return commerceAddress;
 		}
 
-		return commerceAddressLocalService.addCommerceAddress(
+		return _commerceAddressLocalService.addCommerceAddress(
 			commerceShipment.getModelClassName(),
 			commerceShipment.getCommerceShipmentId(), name, description,
 			street1, street2, street3, city, zip, regionId, countryId,
@@ -902,10 +909,29 @@ public class CommerceShipmentLocalServiceImpl
 		}
 	}
 
+	@BeanReference(type = CommerceAddressLocalService.class)
+	private CommerceAddressLocalService _commerceAddressLocalService;
+
+	@BeanReference(type = CommerceOrderItemLocalService.class)
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@BeanReference(type = CommerceOrderLocalService.class)
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@BeanReference(type = CommerceShipmentItemLocalService.class)
+	private CommerceShipmentItemLocalService _commerceShipmentItemLocalService;
+
+	@BeanReference(type = CommerceShippingMethodLocalService.class)
+	private CommerceShippingMethodLocalService
+		_commerceShippingMethodLocalService;
+
 	@ServiceReference(type = DTOConverterRegistry.class)
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

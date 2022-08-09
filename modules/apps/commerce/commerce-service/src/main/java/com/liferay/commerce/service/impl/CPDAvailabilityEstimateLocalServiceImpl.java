@@ -19,11 +19,14 @@ import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService;
 import com.liferay.commerce.service.base.CPDAvailabilityEstimateLocalServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -181,7 +184,7 @@ public class CPDAvailabilityEstimateLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		long cpdAvailabilityEstimateId = counterLocalService.increment();
 
@@ -205,7 +208,7 @@ public class CPDAvailabilityEstimateLocalServiceImpl
 
 		if (commerceAvailabilityEstimateId > 0) {
 			CommerceAvailabilityEstimate commerceAvailabilityEstimate =
-				commerceAvailabilityEstimateLocalService.
+				_commerceAvailabilityEstimateLocalService.
 					fetchCommerceAvailabilityEstimate(
 						commerceAvailabilityEstimateId);
 
@@ -215,7 +218,14 @@ public class CPDAvailabilityEstimateLocalServiceImpl
 		}
 	}
 
+	@BeanReference(type = CommerceAvailabilityEstimateLocalService.class)
+	private CommerceAvailabilityEstimateLocalService
+		_commerceAvailabilityEstimateLocalService;
+
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

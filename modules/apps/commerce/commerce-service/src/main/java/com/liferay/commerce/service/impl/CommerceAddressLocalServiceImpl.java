@@ -25,7 +25,9 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceGeocoder;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.impl.CommerceAddressImpl;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.base.CommerceAddressLocalServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Group;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -112,7 +115,7 @@ public class CommerceAddressLocalServiceImpl
 
 		validate(name, street1, city, zip, countryId, type);
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		return CommerceAddressImpl.fromAddress(
 			_addressLocalService.addAddress(
@@ -169,14 +172,14 @@ public class CommerceAddressLocalServiceImpl
 		// Commerce orders
 
 		List<CommerceOrder> commerceOrders =
-			commerceOrderLocalService.getCommerceOrdersByBillingAddress(
+			_commerceOrderLocalService.getCommerceOrdersByBillingAddress(
 				commerceAddress.getCommerceAddressId());
 
 		removeCommerceOrderAddresses(
 			commerceOrders, commerceAddress.getCommerceAddressId());
 
 		commerceOrders =
-			commerceOrderLocalService.getCommerceOrdersByShippingAddress(
+			_commerceOrderLocalService.getCommerceOrdersByShippingAddress(
 				commerceAddress.getCommerceAddressId());
 
 		removeCommerceOrderAddresses(
@@ -579,11 +582,11 @@ public class CommerceAddressLocalServiceImpl
 		// Commerce orders
 
 		List<CommerceOrder> commerceOrders =
-			commerceOrderLocalService.getCommerceOrdersByShippingAddress(
+			_commerceOrderLocalService.getCommerceOrdersByShippingAddress(
 				commerceAddressId);
 
 		for (CommerceOrder commerceOrder : commerceOrders) {
-			commerceOrderLocalService.resetCommerceOrderShipping(
+			_commerceOrderLocalService.resetCommerceOrderShipping(
 				commerceOrder.getCommerceOrderId());
 		}
 
@@ -615,7 +618,7 @@ public class CommerceAddressLocalServiceImpl
 				shippingPrice = BigDecimal.ZERO;
 			}
 
-			commerceOrderLocalService.updateCommerceOrder(
+			_commerceOrderLocalService.updateCommerceOrder(
 				null, commerceOrder.getCommerceOrderId(), billingAddressId,
 				commerceShippingMethodId, shippingAddressId,
 				commerceOrder.getAdvanceStatus(),
@@ -681,7 +684,13 @@ public class CommerceAddressLocalServiceImpl
 	@ServiceReference(type = CommerceGeocoder.class)
 	private CommerceGeocoder _commerceGeocoder;
 
+	@BeanReference(type = CommerceOrderLocalService.class)
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
 	@ServiceReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

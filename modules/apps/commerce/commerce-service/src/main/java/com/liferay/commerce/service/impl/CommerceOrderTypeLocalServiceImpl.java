@@ -21,6 +21,7 @@ import com.liferay.commerce.exception.CommerceOrderTypeNameException;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceOrderTypeRelTable;
 import com.liferay.commerce.model.CommerceOrderTypeTable;
+import com.liferay.commerce.service.CommerceOrderTypeRelLocalService;
 import com.liferay.commerce.service.base.CommerceOrderTypeLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -28,6 +29,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,7 +42,10 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
@@ -90,7 +95,7 @@ public class CommerceOrderTypeLocalServiceImpl
 
 		commerceOrderType.setExternalReferenceCode(externalReferenceCode);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		commerceOrderType.setCompanyId(user.getCompanyId());
 		commerceOrderType.setUserId(user.getUserId());
@@ -134,7 +139,7 @@ public class CommerceOrderTypeLocalServiceImpl
 		commerceOrderType = commerceOrderTypePersistence.update(
 			commerceOrderType);
 
-		resourceLocalService.addModelResources(
+		_resourceLocalService.addModelResources(
 			commerceOrderType, serviceContext);
 
 		return _startWorkflowInstance(
@@ -156,12 +161,12 @@ public class CommerceOrderTypeLocalServiceImpl
 
 		commerceOrderTypePersistence.remove(commerceOrderType);
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			commerceOrderType.getCompanyId(), CommerceOrderType.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			commerceOrderType.getCommerceOrderTypeId());
 
-		commerceOrderTypeRelLocalService.deleteCommerceOrderTypeRels(
+		_commerceOrderTypeRelLocalService.deleteCommerceOrderTypeRels(
 			commerceOrderType.getCommerceOrderTypeId());
 
 		_expandoRowLocalService.deleteRows(
@@ -258,7 +263,7 @@ public class CommerceOrderTypeLocalServiceImpl
 
 		Date date = new Date();
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		commerceOrderType.setDisplayDate(
 			PortalUtil.getDate(
@@ -355,7 +360,7 @@ public class CommerceOrderTypeLocalServiceImpl
 
 		commerceOrderType.setStatus(status);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		commerceOrderType.setStatusByUserId(user.getUserId());
 		commerceOrderType.setStatusByUserName(user.getFullName());
@@ -455,7 +460,7 @@ public class CommerceOrderTypeLocalServiceImpl
 				Predicate commerceOrderTypeRelPredicate =
 					Predicate.withParentheses(
 						CommerceOrderTypeRelTable.INSTANCE.classNameId.eq(
-							classNameLocalService.getClassNameId(className)
+							_classNameLocalService.getClassNameId(className)
 						).and(
 							CommerceOrderTypeRelTable.INSTANCE.classPK.eq(
 								classPK)
@@ -494,11 +499,23 @@ public class CommerceOrderTypeLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderTypeLocalServiceImpl.class);
 
+	@ServiceReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = CommerceOrderTypeRelLocalService.class)
+	private CommerceOrderTypeRelLocalService _commerceOrderTypeRelLocalService;
+
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
 
 	@ServiceReference(type = InlineSQLHelper.class)
 	private InlineSQLHelper _inlineSQLHelper;
+
+	@ServiceReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 	@ServiceReference(type = WorkflowInstanceLinkLocalService.class)
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

@@ -15,13 +15,17 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
+import com.liferay.commerce.service.CPDAvailabilityEstimateLocalService;
 import com.liferay.commerce.service.base.CommerceAvailabilityEstimateLocalServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 import java.util.Locale;
@@ -39,7 +43,7 @@ public class CommerceAvailabilityEstimateLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		long commerceAvailabilityEstimateId = counterLocalService.increment();
 
@@ -70,7 +74,7 @@ public class CommerceAvailabilityEstimateLocalServiceImpl
 
 		// Commerce product definition availability ranges
 
-		cpdAvailabilityEstimateLocalService.deleteCPDAvailabilityEstimates(
+		_cpdAvailabilityEstimateLocalService.deleteCPDAvailabilityEstimates(
 			commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId());
 
 		return commerceAvailabilityEstimate;
@@ -136,5 +140,12 @@ public class CommerceAvailabilityEstimateLocalServiceImpl
 		return commerceAvailabilityEstimatePersistence.update(
 			commerceAvailabilityEstimate);
 	}
+
+	@BeanReference(type = CPDAvailabilityEstimateLocalService.class)
+	private CPDAvailabilityEstimateLocalService
+		_cpdAvailabilityEstimateLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

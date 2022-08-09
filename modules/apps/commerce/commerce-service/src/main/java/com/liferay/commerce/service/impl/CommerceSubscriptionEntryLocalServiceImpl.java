@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -104,7 +105,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		CPSubscriptionType cpSubscriptionType =
 			_cpSubscriptionTypeRegistry.getCPSubscriptionType(subscriptionType);
@@ -311,7 +312,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		commerceSubscriptionEntry.setDeliveryCurrentCycle(
 			currentSubscriptionCycle + 1);
 
-		User user = userLocalService.getUser(
+		User user = _userLocalService.getUser(
 			commerceSubscriptionEntry.getUserId());
 
 		commerceSubscriptionEntry.setDeliveryLastIterationDate(
@@ -377,7 +378,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 		commerceSubscriptionEntry.setCurrentCycle(currentSubscriptionCycle + 1);
 
-		User user = userLocalService.getUser(
+		User user = _userLocalService.getUser(
 			commerceSubscriptionEntry.getUserId());
 
 		commerceSubscriptionEntry.setLastIterationDate(
@@ -499,7 +500,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			commerceSubscriptionEntryPersistence.findByPrimaryKey(
 				commerceSubscriptionEntryId);
 
-		User user = userLocalService.getUser(
+		User user = _userLocalService.getUser(
 			commerceSubscriptionEntry.getUserId());
 
 		validateSubscriptionStatus(
@@ -576,7 +577,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			_cpSubscriptionTypeRegistry.getCPSubscriptionType(
 				commerceSubscriptionEntry.getSubscriptionType());
 
-		User user = userLocalService.getUser(
+		User user = _userLocalService.getUser(
 			commerceSubscriptionEntry.getUserId());
 
 		commerceSubscriptionEntry.setLastIterationDate(lastIterationDate);
@@ -823,5 +824,8 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 	@ServiceReference(type = CPSubscriptionTypeRegistry.class)
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

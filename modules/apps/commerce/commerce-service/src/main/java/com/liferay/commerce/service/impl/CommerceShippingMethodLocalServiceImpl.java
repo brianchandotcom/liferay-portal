@@ -18,12 +18,15 @@ import com.liferay.commerce.exception.CommerceShippingMethodEngineKeyException;
 import com.liferay.commerce.exception.CommerceShippingMethodNameException;
 import com.liferay.commerce.model.CommerceAddressRestriction;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.service.CommerceAddressRestrictionLocalService;
 import com.liferay.commerce.service.base.CommerceShippingMethodLocalServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -50,7 +53,7 @@ public class CommerceShippingMethodLocalServiceImpl
 			long countryId)
 		throws PortalException {
 
-		return commerceAddressRestrictionLocalService.
+		return _commerceAddressRestrictionLocalService.
 			addCommerceAddressRestriction(
 				userId, groupId, CommerceShippingMethod.class.getName(),
 				commerceShippingMethodId, countryId);
@@ -81,7 +84,7 @@ public class CommerceShippingMethodLocalServiceImpl
 
 		// Commerce shipping method
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		if ((imageFile != null) && !imageFile.exists()) {
 			imageFile = null;
@@ -129,8 +132,8 @@ public class CommerceShippingMethodLocalServiceImpl
 			long commerceAddressRestrictionId)
 		throws PortalException {
 
-		commerceAddressRestrictionLocalService.deleteCommerceAddressRestriction(
-			commerceAddressRestrictionId);
+		_commerceAddressRestrictionLocalService.
+			deleteCommerceAddressRestriction(commerceAddressRestrictionId);
 	}
 
 	@Override
@@ -151,7 +154,7 @@ public class CommerceShippingMethodLocalServiceImpl
 
 		// Commerce address restrictions
 
-		commerceAddressRestrictionLocalService.
+		_commerceAddressRestrictionLocalService.
 			deleteCommerceAddressRestrictions(
 				CommerceShippingMethod.class.getName(),
 				commerceShippingMethod.getCommerceShippingMethodId());
@@ -199,7 +202,7 @@ public class CommerceShippingMethodLocalServiceImpl
 		long commerceShippingMethodId, int start, int end,
 		OrderByComparator<CommerceAddressRestriction> orderByComparator) {
 
-		return commerceAddressRestrictionLocalService.
+		return _commerceAddressRestrictionLocalService.
 			getCommerceAddressRestrictions(
 				CommerceShippingMethod.class.getName(),
 				commerceShippingMethodId, start, end, orderByComparator);
@@ -209,7 +212,7 @@ public class CommerceShippingMethodLocalServiceImpl
 	public int getCommerceAddressRestrictionsCount(
 		long commerceShippingMethodId) {
 
-		return commerceAddressRestrictionLocalService.
+		return _commerceAddressRestrictionLocalService.
 			getCommerceAddressRestrictionsCount(
 				CommerceShippingMethod.class.getName(),
 				commerceShippingMethodId);
@@ -247,7 +250,7 @@ public class CommerceShippingMethodLocalServiceImpl
 				commerceShippingMethods) {
 
 			boolean restricted =
-				commerceAddressRestrictionLocalService.
+				_commerceAddressRestrictionLocalService.
 					isCommerceAddressRestricted(
 						CommerceShippingMethod.class.getName(),
 						commerceShippingMethod.getCommerceShippingMethodId(),
@@ -342,7 +345,14 @@ public class CommerceShippingMethodLocalServiceImpl
 		}
 	}
 
+	@BeanReference(type = CommerceAddressRestrictionLocalService.class)
+	private CommerceAddressRestrictionLocalService
+		_commerceAddressRestrictionLocalService;
+
 	@ServiceReference(type = ImageLocalService.class)
 	private ImageLocalService _imageLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

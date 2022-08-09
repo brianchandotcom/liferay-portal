@@ -19,7 +19,9 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.base.CommerceShipmentItemServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -191,7 +193,7 @@ public class CommerceShipmentItemServiceImpl
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemLocalService.getCommerceOrderItem(
+			_commerceOrderItemLocalService.getCommerceOrderItem(
 				commerceOrderItemId);
 
 		_commerceOrderModelResourcePermission.check(
@@ -281,5 +283,8 @@ public class CommerceShipmentItemServiceImpl
 				CommerceShipmentItemServiceImpl.class,
 				"_portletResourcePermission",
 				CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT);
+
+	@BeanReference(type = CommerceOrderItemLocalService.class)
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 }

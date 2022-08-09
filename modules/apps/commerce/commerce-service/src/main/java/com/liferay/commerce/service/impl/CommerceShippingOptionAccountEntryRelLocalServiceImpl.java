@@ -19,6 +19,8 @@ import com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel;
 import com.liferay.commerce.service.base.CommerceShippingOptionAccountEntryRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -44,7 +46,7 @@ public class CommerceShippingOptionAccountEntryRelLocalServiceImpl
 				commerceShippingOptionAccountEntryRelPersistence.create(
 					commerceShippingOptionAccountEntryRelId);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		commerceShippingOptionAccountEntryRel.setCompanyId(user.getCompanyId());
 		commerceShippingOptionAccountEntryRel.setUserId(user.getUserId());
@@ -129,5 +131,8 @@ public class CommerceShippingOptionAccountEntryRelLocalServiceImpl
 			throw new DuplicateCommerceShippingOptionAccountEntryRelException();
 		}
 	}
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

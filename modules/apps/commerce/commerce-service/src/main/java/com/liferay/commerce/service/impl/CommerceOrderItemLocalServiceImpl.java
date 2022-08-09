@@ -53,6 +53,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.util.JsonHelper;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.base.CommerceOrderItemLocalServiceBaseImpl;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
 import com.liferay.commerce.util.CommerceShippingHelper;
@@ -61,6 +62,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -80,6 +82,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -123,14 +126,14 @@ public class CommerceOrderItemLocalServiceImpl
 		}
 
 		CommerceOrder commerceOrder =
-			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
 		updateWorkflow(commerceOrder, serviceContext);
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		CommerceOrderItem commerceOrderItem = _createCommerceOrderItem(
 			commerceOrder.getGroupId(), user, commerceOrder, cpInstance, 0,
@@ -192,7 +195,7 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItemPersistence.update(childCommerceOrderItem);
 		}
 
-		commerceOrderLocalService.recalculatePrice(
+		_commerceOrderLocalService.recalculatePrice(
 			commerceOrderItem.getCommerceOrderId(), commerceContext);
 
 		return commerceOrderItem;
@@ -272,12 +275,12 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 		if (_commerceShippingHelper.isFreeShipping(commerceOrder)) {
-			commerceOrderLocalService.updateCommerceShippingMethod(
+			_commerceOrderLocalService.updateCommerceShippingMethod(
 				commerceOrder.getCommerceOrderId(), 0, null, BigDecimal.ZERO,
 				commerceContext);
 		}
 
-		commerceOrderLocalService.recalculatePrice(
+		_commerceOrderLocalService.recalculatePrice(
 			commerceOrder.getCommerceOrderId(), commerceContext);
 
 		return commerceOrderItem;
@@ -501,14 +504,14 @@ public class CommerceOrderItemLocalServiceImpl
 		throws PortalException {
 
 		CommerceOrder commerceOrder =
-			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
 		updateWorkflow(commerceOrder, serviceContext);
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.fetchByPrimaryKey(commerceOrderItemId);
@@ -1145,7 +1148,7 @@ public class CommerceOrderItemLocalServiceImpl
 		SearchContext searchContext = new SearchContext();
 
 		CommerceOrder commerceOrder =
-			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
 		searchContext.setAttribute(
 			CommerceOrderItemIndexer.FIELD_COMMERCE_ORDER_ID, commerceOrderId);
@@ -1233,7 +1236,7 @@ public class CommerceOrderItemLocalServiceImpl
 				CommerceOrderConstants.TYPE_PK_APPROVAL, true);
 
 		if ((workflowDefinitionLink != null) && commerceOrder.isApproved()) {
-			return commerceOrderLocalService.updateStatus(
+			return _commerceOrderLocalService.updateStatus(
 				serviceContext.getUserId(), commerceOrder.getCommerceOrderId(),
 				WorkflowConstants.STATUS_DRAFT, serviceContext,
 				Collections.emptyMap());
@@ -1988,7 +1991,7 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItem);
 
 		if (commerceOrder.isOpen()) {
-			commerceOrderLocalService.recalculatePrice(
+			_commerceOrderLocalService.recalculatePrice(
 				commerceOrderItem.getCommerceOrderId(), commerceContext);
 		}
 
@@ -2047,6 +2050,9 @@ public class CommerceOrderItemLocalServiceImpl
 	@ServiceReference(type = CommerceOrderConfiguration.class)
 	private CommerceOrderConfiguration _commerceOrderConfiguration;
 
+	@BeanReference(type = CommerceOrderLocalService.class)
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
 	@ServiceReference(type = CommerceOrderValidatorRegistry.class)
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
@@ -2077,6 +2083,9 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@ServiceReference(type = JsonHelper.class)
 	private JsonHelper _jsonHelper;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 	@ServiceReference(type = WorkflowDefinitionLinkLocalService.class)
 	private WorkflowDefinitionLinkLocalService

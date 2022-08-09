@@ -60,7 +60,7 @@ definition {
 
 			PortletEntry.inputName(name = "${siteName}");
 
-			Button.clickAdd();
+			Button.click(button = "Add");
 
 			SelectFrameTop();
 

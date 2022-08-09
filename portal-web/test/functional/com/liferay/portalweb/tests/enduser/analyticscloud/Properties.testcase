@@ -393,11 +393,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			ACDXPSettings.goToInstanceSettingsAC();
-
-			ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-			Alert.viewSuccessMessage();
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Login new user and view page") {

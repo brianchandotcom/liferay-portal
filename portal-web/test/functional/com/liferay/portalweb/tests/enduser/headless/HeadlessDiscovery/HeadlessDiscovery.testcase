@@ -21,6 +21,10 @@ definition {
 			var response = HeadlessWebcontentAPI.returnAllstructuredContentId();
 
 			HeadlessWebcontentAPI.deleteAllStructuredContent(structuredContentId = "${response}");
+
+			JSONCategory.deleteVocabulary(
+				groupName = "Guest",
+				vocabularyName = "Vocabulary Name");
 		}
 	}
 
@@ -53,6 +57,37 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#GRAPHQL_RESPONSE",
 				value1 = "&quot;title&quot;: &quot;Web Content Title&quot;");
+		}
+	}
+
+	@priority = "5"
+	test CanConsumeGraphQLAPIsForHeadlessAdminTaxonomy {
+		property portal.acceptance = "true";
+
+		task ("Given a vocabulary is added") {
+			JSONCategory.addVocabulary(
+				groupName = "Guest",
+				title = "Vocabulary Name");
+		}
+
+		task ("Given navigate to headless admin taxonomy endpoint") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-taxonomy",
+				version = "v1.0");
+		}
+
+		task ("When executing query taxonomy vocabulary name") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			APIExplorer.executeGraphqlQuery(query = "query{taxonomyVocabularies(siteKey:&quot;${siteId}&quot;){items{name}}}");
+		}
+
+		task ("Then the value in respone equals to the one we created") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#GRAPHQL_RESPONSE",
+				value1 = "&quot;name&quot;: &quot;Vocabulary Name&quot;");
 		}
 	}
 

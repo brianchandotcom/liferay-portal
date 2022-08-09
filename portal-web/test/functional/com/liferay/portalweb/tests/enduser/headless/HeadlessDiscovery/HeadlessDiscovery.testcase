@@ -474,6 +474,55 @@ definition {
 	}
 
 	@priority = "5"
+	test HeaderWorksInPositiveCaseWithHeadlessAdminTaxonomyOpenAPI {
+		property portal.acceptance = "true";
+
+		task ("Given a vocabulary with en-US and es-ES languages included") {
+			JSONCategory.addVocabulary(
+				groupName = "Guest",
+				titleMap = "en_US:Vocabulary Name,es_ES:Vocabulary Nombre");
+		}
+
+		task ("Given navigate to headless admin taxonomy endpoint") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-taxonomy",
+				version = "v1.0");
+		}
+
+		task ("Given add Accept-Language header and set value to es-ES") {
+			APIExplorer.addHeaders(
+				headerKey = "Accept-Language",
+				headerValue = "es-ES");
+		}
+
+		task ("When executing getSiteTaxonomyVocabulariesPage with siteID as the parameter") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "getSiteTaxonomyVocabulariesPage",
+				parameter = "siteId",
+				service = "TaxonomyVocabulary");
+		}
+
+		task ("Then header Accept-Language is included in request under Curl section") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#CURL_COMMAND",
+				method = "getSiteTaxonomyVocabulariesPage",
+				service = "TaxonomyVocabulary",
+				value1 = "-H 'Accept-Language: es-ES'");
+		}
+
+		task ("And Then the es-ES content is included in response") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getSiteTaxonomyVocabulariesPage",
+				value1 = "Vocabulary Nombre");
+		}
+	}
+
+	@priority = "5"
 	test HeaderWorksInPositiveCaseWithHeadlessDeliveryOpenAPI {
 		property portal.acceptance = "true";
 

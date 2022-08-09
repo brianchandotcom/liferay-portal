@@ -9,6 +9,27 @@ definition {
 	property testray.main.component.name = "Setup Wizard";
 
 	@priority = "3"
+	test MySQLtoEmptyMySQL {
+		property databases.size = "1";
+		property test.name.skip.portal.instance = "SetupWizardMySQL#MySQLtoEmptyMySQL";
+
+		SetupWizard.configurePG(
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databaseName = "lportal1",
+			databasePassword = PropsUtil.get("database.mysql.password"),
+			databaseType = "MySQL",
+			databaseUserName = PropsUtil.get("database.mysql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
+			jdbcURL = PropsUtil.get("database.mysql.url"));
+
+		Smoke.viewWelcomeContentPage();
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "3"
 	test MySQLtoHSQL {
 		property database.types = "hypersonic";
 		property test.name.skip.portal.instance = "SetupWizardMySQL#MySQLtoHSQL";
@@ -121,27 +142,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "TextInput#SCREEN_NAME",
 			value1 = "testsetupwizard");
-	}
-
-	@priority = "3"
-	test MySQLtoMySQLportal1 {
-		property databases.size = "1";
-		property test.name.skip.portal.instance = "SetupWizardMySQL#MySQLtoMySQLportal1";
-
-		SetupWizard.configurePG(
-			administratorEmail = "test@liferay.com",
-			administratorFirstName = "Test",
-			administratorLastName = "Test",
-			databaseName = "lportal1",
-			databasePassword = PropsUtil.get("database.mysql.password"),
-			databaseType = "MySQL",
-			databaseUserName = PropsUtil.get("database.mysql.username"),
-			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
-			jdbcURL = PropsUtil.get("database.mysql.url"));
-
-		Smoke.viewWelcomeContentPage();
-
-		Smoke.runSmoke();
 	}
 
 }

@@ -21,7 +21,9 @@ import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
+import com.liferay.knowledge.base.util.comparator.KBArticleTitleComparator;
 import com.liferay.knowledge.base.util.comparator.KBObjectsTitleComparator;
 import com.liferay.knowledge.base.web.internal.display.context.helper.KBArticleURLHelper;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
@@ -277,6 +279,40 @@ public class KBAdminNavigationDisplayContext {
 		return Objects.equals(productMenuState, "open");
 	}
 
+	private JSONArray _getChildKBArticlesJSONArray(KBArticle parentKBArticle)
+		throws PortalException {
+
+		JSONArray articleNavigationJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		JSONObject articleNavigationJSONObject = null;
+
+		List<KBArticle> childKBArticle = KBArticleServiceUtil.getKBArticles(
+			parentKBArticle.getGroupId(), parentKBArticle.getResourcePrimKey(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, WorkflowConstants.STATUS_ANY,
+			new KBArticleTitleComparator(true));
+
+		for (KBArticle kbArticle : childKBArticle) {
+			articleNavigationJSONObject = JSONUtil.put(
+				"children", _getChildKBArticlesJSONArray(kbArticle)
+			).put(
+				"href",
+				_kbArticleURLHelper.createViewWithRedirectURL(
+					kbArticle, PortalUtil.getCurrentURL(_httpServletRequest))
+			).put(
+				"id", kbArticle.getKbArticleId()
+			).put(
+				"name", kbArticle.getTitle()
+			).put(
+				"type", "article"
+			);
+
+			articleNavigationJSONArray.put(articleNavigationJSONObject);
+		}
+
+		return articleNavigationJSONArray;
+	}
+
 	private JSONArray _getKBArticleNavigationJSONArray()
 		throws PortalException {
 
@@ -345,6 +381,8 @@ public class KBAdminNavigationDisplayContext {
 				KBArticle kbArticle = (KBArticle)kbObject;
 
 				articleNavigationJSONObject.put(
+					"children", _getChildKBArticlesJSONArray(kbArticle)
+				).put(
 					"href",
 					_kbArticleURLHelper.createViewWithRedirectURL(
 						kbArticle,

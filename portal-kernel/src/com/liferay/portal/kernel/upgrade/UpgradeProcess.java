@@ -90,6 +90,10 @@ public abstract class UpgradeProcess
 	}
 
 	public void upgrade() throws UpgradeException {
+		if (this instanceof DummyUpgradeProcess) {
+			return;
+		}
+
 		long start = System.currentTimeMillis();
 
 		boolean notificationEnabled = NotificationThreadLocal.isEnabled();

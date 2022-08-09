@@ -28,6 +28,7 @@ create index IX_DB33D1FC on CPDSpecificationOptionValue (uuid_[$COLUMN_LENGTH:75
 create unique index IX_99CAED2A on CPDSpecificationOptionValue (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create index IX_44AA747F on CPDefinition (CPTaxCategoryId, ctCollectionId);
+create index IX_624722DF on CPDefinition (CProductId, ctCollectionId);
 create index IX_B656C4C5 on CPDefinition (CProductId, status, ctCollectionId);
 create index IX_BF597105 on CPDefinition (CProductId, version, ctCollectionId);
 create index IX_96B8960 on CPDefinition (companyId, ctCollectionId);

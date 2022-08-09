@@ -407,6 +407,13 @@ public class CPDefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCProductId() throws Exception {
+		_persistence.countByCProductId(RandomTestUtil.nextLong());
+
+		_persistence.countByCProductId(0L);
+	}
+
+	@Test
 	public void testCountByCPTaxCategoryId() throws Exception {
 		_persistence.countByCPTaxCategoryId(RandomTestUtil.nextLong());
 

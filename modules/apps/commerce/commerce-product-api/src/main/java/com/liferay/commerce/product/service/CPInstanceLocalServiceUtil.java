@@ -194,6 +194,13 @@ public class CPInstanceLocalServiceUtil {
 		return getService().deleteCPInstance(cpInstance);
 	}
 
+	public static CPInstance deleteCPInstance(
+			CPInstance cpInstance, boolean makeCopy)
+		throws PortalException {
+
+		return getService().deleteCPInstance(cpInstance, makeCopy);
+	}
+
 	/**
 	 * Deletes the cp instance with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -524,6 +531,10 @@ public class CPInstanceLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getCPInstancesCount(groupId, status);
+	}
+
+	public static int getCPInstancesCount(String cpInstanceUuid) {
+		return getService().getCPInstancesCount(cpInstanceUuid);
 	}
 
 	public static CPInstance getCProductInstance(

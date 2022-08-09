@@ -134,6 +134,14 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 					cpDefinitionSpecificationOptionValue)
 		throws PortalException;
 
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CPDefinitionSpecificationOptionValue
+			deleteCPDefinitionSpecificationOptionValue(
+				CPDefinitionSpecificationOptionValue
+					cpDefinitionSpecificationOptionValue,
+				boolean makeCopy)
+		throws PortalException;
+
 	/**
 	 * Deletes the cp definition specification option value with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -152,6 +160,10 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 		throws PortalException;
 
 	public void deleteCPDefinitionSpecificationOptionValues(long cpDefinitionId)
+		throws PortalException;
+
+	public void deleteCPDefinitionSpecificationOptionValues(
+			long cpDefinitionId, boolean makeCopy)
 		throws PortalException;
 
 	public void deleteCPSpecificationOptionDefinitionValues(

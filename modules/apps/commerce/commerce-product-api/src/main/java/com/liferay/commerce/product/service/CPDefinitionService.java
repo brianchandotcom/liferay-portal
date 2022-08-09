@@ -177,6 +177,10 @@ public interface CPDefinitionService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CPDefinition cloneCPDefinition(
+			long cpDefinitionId, long groupId, ServiceContext serviceContext)
+		throws PortalException;
+
 	public CPDefinition copyCPDefinition(
 			long cpDefinitionId, long groupId, int status)
 		throws PortalException;
@@ -212,6 +216,10 @@ public interface CPDefinitionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionsCount(long groupId, int status)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinition getCProductCPDefinition(long cProductId, int version)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

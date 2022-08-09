@@ -177,6 +177,11 @@ public interface CPInstanceLocalService
 	public CPInstance deleteCPInstance(CPInstance cpInstance)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CPInstance deleteCPInstance(CPInstance cpInstance, boolean makeCopy)
+		throws PortalException;
+
 	/**
 	 * Deletes the cp instance with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -433,6 +438,9 @@ public interface CPInstanceLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPInstancesCount(long groupId, int status)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPInstancesCount(String cpInstanceUuid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPInstance getCProductInstance(

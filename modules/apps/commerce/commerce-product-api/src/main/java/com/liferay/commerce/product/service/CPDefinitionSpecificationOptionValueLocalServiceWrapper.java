@@ -131,6 +131,19 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 				cpDefinitionSpecificationOptionValue);
 	}
 
+	@Override
+	public CPDefinitionSpecificationOptionValue
+			deleteCPDefinitionSpecificationOptionValue(
+				CPDefinitionSpecificationOptionValue
+					cpDefinitionSpecificationOptionValue,
+				boolean makeCopy)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionSpecificationOptionValueLocalService.
+			deleteCPDefinitionSpecificationOptionValue(
+				cpDefinitionSpecificationOptionValue, makeCopy);
+	}
+
 	/**
 	 * Deletes the cp definition specification option value with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -159,6 +172,16 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 
 		_cpDefinitionSpecificationOptionValueLocalService.
 			deleteCPDefinitionSpecificationOptionValues(cpDefinitionId);
+	}
+
+	@Override
+	public void deleteCPDefinitionSpecificationOptionValues(
+			long cpDefinitionId, boolean makeCopy)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpDefinitionSpecificationOptionValueLocalService.
+			deleteCPDefinitionSpecificationOptionValues(
+				cpDefinitionId, makeCopy);
 	}
 
 	@Override

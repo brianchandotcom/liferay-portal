@@ -1865,18 +1865,9 @@ public class ContentPageEditorDisplayContext {
 			return _masterLayoutStructure;
 		}
 
-		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-			LayoutPageTemplateEntryLocalServiceUtil.
-				fetchLayoutPageTemplateEntryByPlid(
-					layout.getMasterLayoutPlid());
-
-		if (masterLayoutPageTemplateEntry == null) {
-			return _masterLayoutStructure;
-		}
-
 		try {
 			_masterLayoutStructure = LayoutStructureUtil.getLayoutStructure(
-				getGroupId(), masterLayoutPageTemplateEntry.getPlid(),
+				layout.getGroupId(), layout.getMasterLayoutPlid(),
 				SegmentsExperienceConstants.KEY_DEFAULT);
 
 			return _masterLayoutStructure;

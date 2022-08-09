@@ -38,9 +38,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
@@ -338,20 +336,10 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			return null;
 		}
 
-		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(
-					layout.getMasterLayoutPlid());
-
-		if (masterLayoutPageTemplateEntry == null) {
-			return null;
-		}
-
 		try {
 			LayoutStructure masterLayoutStructure =
 				LayoutStructureUtil.getLayoutStructure(
-					masterLayoutPageTemplateEntry.getGroupId(),
-					masterLayoutPageTemplateEntry.getPlid(),
+					layout.getGroupId(), layout.getMasterLayoutPlid(),
 					SegmentsExperienceConstants.KEY_DEFAULT);
 
 			return (DropZoneLayoutStructureItem)
@@ -583,10 +571,6 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

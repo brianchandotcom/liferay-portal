@@ -90,7 +90,6 @@ function CategoryMenu({locator, onItemClick = () => {}, sourceItems}) {
  * multiselect, in which the IDs are formatted as an array for the 'View Element
  * JSON'.
  */
-
 function CategorySelectorInput({
 	disabled,
 	id,
@@ -109,7 +108,10 @@ function CategorySelectorInput({
 		multiple ? '' : value[0]?.name || ''
 	);
 	const [matchingCategories, setMatchingCategories] = useState([]);
-	const [active, setActive] = useState(false);
+	const [
+		autocompleteDropdownActive,
+		setAutocompleteDropdownActive,
+	] = useState(false);
 
 	const _handleSetMatchingCategories = (inputValue, categoryTree, locale) => {
 		const categories = [];
@@ -230,7 +232,7 @@ function CategorySelectorInput({
 	};
 
 	const _handleFocus = () => {
-		setActive(true);
+		setAutocompleteDropdownActive(true);
 	};
 
 	const _handleKeyDown = (event) => {
@@ -266,7 +268,7 @@ function CategorySelectorInput({
 	const _handleSingleItemChange = (item) => {
 		setFieldValue(name, [{id: item.id, name: item.name}]);
 		setInputValue(item.name);
-		setActive(false);
+		setAutocompleteDropdownActive(false);
 	};
 
 	const _handleMultiInputValueBlur = () => {
@@ -392,9 +394,12 @@ function CategorySelectorInput({
 						/>
 
 						<ClayAutocomplete.DropDown
-							active={active && !!matchingCategories.length}
+							active={
+								autocompleteDropdownActive &&
+								!!matchingCategories.length
+							}
 							closeOnClickOutside
-							onSetActive={setActive}
+							onSetActive={setAutocompleteDropdownActive}
 						>
 							<CategoryMenu
 								locator={{label: 'name', value: 'id'}}

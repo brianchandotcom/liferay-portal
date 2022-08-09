@@ -110,6 +110,29 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test CanLoadHeadlessAdminTaxonomyOpenAPI {
+		property portal.acceptance = "true";
+
+		task ("Given navigate to headless admin taxonomy endpoint") {
+			var api = "headless-admin-taxonomy";
+
+			APIExplorer.navigateToOpenAPI(
+				api = "${api}",
+				version = "v1.0");
+		}
+
+		task ("Then headless admin taxonomy api loaded with no errors") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			AssertTextEquals(
+				locator1 = "Select#HEADLESS_SERVERS",
+				value1 = "${portalURL}/o/${api}/");
+
+			AssertConsoleTextNotPresent(value1 = "Failed to load API definition");
+		}
+	}
+
 	@description = "Load headless delivery openAPI explorer"
 	@priority = "5"
 	test CanLoadHeadlessDeliveryOpenAPI {

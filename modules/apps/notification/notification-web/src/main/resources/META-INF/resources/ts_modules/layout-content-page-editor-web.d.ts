@@ -12,6 +12,6 @@
  * details.
  */
 
-export {default as Collapse} from '../common/components/Collapse';
-export {default as SearchForm} from './components/SearchForm';
-export {default as SidebarPanelHeader} from './components/SidebarPanelHeader';
+declare module '@liferay/layout-content-page-editor-web' {
+	export * from '@liferay/layout-content-page-editor-web/src/main/resources/META-INF/resources/page_editor/common/index';
+}

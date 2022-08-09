@@ -13,5 +13,3 @@
  */
 
 export {default as Collapse} from '../common/components/Collapse';
-export {default as SearchForm} from './components/SearchForm';
-export {default as SidebarPanelHeader} from './components/SidebarPanelHeader';

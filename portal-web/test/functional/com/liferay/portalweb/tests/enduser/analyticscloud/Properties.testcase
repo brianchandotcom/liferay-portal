@@ -386,13 +386,13 @@ definition {
 		task ("Launch AC and go to settings and add a new property") {
 			ACUtils.launchAC();
 
-			ACSettings.takeTokenFromAnalyticsCloud();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToProperties();
 
 			ACProperties.addNewProperty(propertyName = "${acProperty}");
+
+			ACSettings.takeTokenFromAnalyticsCloud();
 		}
 
 		task ("Connect the DXP to Analytics Cloud") {

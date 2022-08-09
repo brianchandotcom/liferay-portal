@@ -129,6 +129,7 @@ public class MessageBoardThreadDTOConverter
 					dtoConverterContext.getDTOConverterRegistry(),
 					mbMessage.getModelClassName(), mbMessage.getMessageId(),
 					dtoConverterContext.getLocale());
+				rootMessageId = mbThread.getRootMessageId();
 				seen = _mbThreadFlagLocalService.hasThreadFlag(
 					dtoConverterContext.getUserId(), mbThread);
 				showAsQuestion = mbThread.isQuestion();
@@ -147,7 +148,6 @@ public class MessageBoardThreadDTOConverter
 				threadType = _toThreadType(
 					languageId, mbThread.getGroupId(), mbThread.getPriority());
 				viewCount = mbThread.getViewCount();
-				rootMessageId = mbThread.getRootMessageId();
 
 				setCreatorStatistics(
 					() -> {

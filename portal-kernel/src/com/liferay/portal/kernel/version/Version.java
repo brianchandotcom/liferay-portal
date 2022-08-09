@@ -61,6 +61,13 @@ public class Version implements Comparable<Version> {
 		_qualifier = StringPool.BLANK;
 	}
 
+	public Version(int major, int minor, int micro, String qualifier) {
+		_major = major;
+		_minor = minor;
+		_micro = micro;
+		_qualifier = qualifier;
+	}
+
 	@Override
 	public int compareTo(Version version) {
 		int result = Integer.compare(_major, version._major);
@@ -153,13 +160,6 @@ public class Version implements Comparable<Version> {
 		return StringBundler.concat(
 			_major, StringPool.PERIOD, _minor, StringPool.PERIOD, _micro,
 			StringPool.PERIOD, _qualifier);
-	}
-
-	protected Version(int major, int minor, int micro, String qualifier) {
-		_major = major;
-		_minor = minor;
-		_micro = micro;
-		_qualifier = qualifier;
 	}
 
 	private static final Pattern _versionPattern = Pattern.compile(

@@ -4296,22 +4296,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static JSONObject toJSONObject(String url) throws IOException {
-		if ((url != null) && url.startsWith("file:")) {
-			try {
-				return toJSONObject(url, false, 1, null, null, 0, 5, null);
-			}
-			catch (IOException ioException) {
-				if (!url.contains("[qt]")) {
-					throw ioException;
-				}
-
-				return toJSONObject(url.substring(0, url.indexOf("[qt]")));
-			}
-		}
-
-		return toJSONObject(
-			url, true, _RETRIES_SIZE_MAX_DEFAULT, null, null,
-			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null);
+		return toJSONObject(url, (HTTPAuthorization)null);
 	}
 
 	public static JSONObject toJSONObject(String url, boolean checkCache)
@@ -4320,6 +4305,16 @@ public class JenkinsResultsParserUtil {
 		return toJSONObject(
 			url, checkCache, _RETRIES_SIZE_MAX_DEFAULT, null, null,
 			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null);
+	}
+
+	public static JSONObject toJSONObject(
+			String url, boolean checkCache, HTTPAuthorization httpAuthorization)
+		throws IOException {
+
+		return toJSONObject(
+			url, checkCache, _RETRIES_SIZE_MAX_DEFAULT, null, null,
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT,
+			httpAuthorization);
 	}
 
 	public static JSONObject toJSONObject(
@@ -4391,12 +4386,47 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static JSONObject toJSONObject(
+			String url, HTTPAuthorization httpAuthorization)
+		throws IOException {
+
+		if ((url != null) && url.startsWith("file:")) {
+			try {
+				return toJSONObject(
+					url, false, 1, null, null, 0, 5, httpAuthorization);
+			}
+			catch (IOException ioException) {
+				if (!url.contains("[qt]")) {
+					throw ioException;
+				}
+
+				return toJSONObject(
+					url.substring(0, url.indexOf("[qt]")), httpAuthorization);
+			}
+		}
+
+		return toJSONObject(
+			url, true, _RETRIES_SIZE_MAX_DEFAULT, null, null,
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT,
+			httpAuthorization);
+	}
+
+	public static JSONObject toJSONObject(
 			String url, int maxRetries, int retryPeriod, String postContent)
 		throws IOException {
 
 		return toJSONObject(
 			url, true, maxRetries, null, postContent, retryPeriod,
 			_MILLIS_TIMEOUT_DEFAULT, null);
+	}
+
+	public static JSONObject toJSONObject(
+			String url, int maxRetries, int retryPeriod, String postContent,
+			HTTPAuthorization httpAuthorization)
+		throws IOException {
+
+		return toJSONObject(
+			url, true, maxRetries, null, postContent, retryPeriod,
+			_MILLIS_TIMEOUT_DEFAULT, httpAuthorization);
 	}
 
 	public static JSONObject toJSONObject(String url, String postContent)

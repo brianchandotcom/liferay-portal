@@ -14,12 +14,20 @@
 
 package com.liferay.account.internal.search.spi.model.index.contributor;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountGroupRelLocalService;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -38,7 +46,31 @@ public class AccountGroupModelDocumentContributor
 		document.addText(Field.NAME, accountGroup.getName());
 		document.addKeyword(Field.TYPE, accountGroup.getType());
 		document.addKeyword(
+			"accountEntryIds", _getAccountEntryIds(accountGroup));
+		document.addKeyword(
 			"defaultAccountGroup", accountGroup.isDefaultAccountGroup());
 	}
+
+	private long[] _getAccountEntryIds(AccountGroup accountGroup) {
+		DynamicQuery dynamicQuery = _accountGroupRelLocalService.dynamicQuery();
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"accountGroupId", accountGroup.getAccountGroupId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"classNameId",
+				_classNameLocalService.getClassNameId(AccountEntry.class)));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("classPK"));
+
+		return ArrayUtil.toLongArray(
+			_accountGroupRelLocalService.dynamicQuery(dynamicQuery));
+	}
+
+	@Reference
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 }

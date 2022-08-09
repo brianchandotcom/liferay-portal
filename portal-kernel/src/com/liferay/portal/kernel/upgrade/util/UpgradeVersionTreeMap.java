@@ -12,24 +12,46 @@
  * details.
  */
 
-package com.liferay.portal.kernel.version;
+package com.liferay.portal.kernel.upgrade.util;
 
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.version.Version;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.TreeMap;
 
 /**
  * @author Luis Ortiz
  */
-public class VersionTreeMap<T> extends TreeMap<Version, T> {
+public class UpgradeVersionTreeMap extends TreeMap<Version, UpgradeStep> {
 
-	public void put(Version key, T... values) {
+	public void put(Version key, UpgradeProcess value) {
+		_put(key, value.getUpgradeSteps());
+	}
+
+	public void put(Version key, UpgradeProcess... values) {
+		List<UpgradeStep> upgradeStepList = new ArrayList<>();
+
+		for (UpgradeProcess upgradeProcess : values) {
+			Collections.addAll(
+				upgradeStepList, upgradeProcess.getUpgradeSteps());
+		}
+
+		_put(key, upgradeStepList.toArray(new UpgradeStep[0]));
+	}
+
+	private void _put(Version key, UpgradeStep... values) {
 		for (int i = 0; i < (values.length - 1); i++) {
-			T value = values[i];
+			UpgradeStep upgradeStep = values[i];
 
 			Version stepVersion = new Version(
 				key.getMajor(), key.getMinor(), key.getMicro(),
 				"step-" + (i + 1));
 
-			put(stepVersion, value);
+			put(stepVersion, upgradeStep);
 		}
 
 		Version finalVersion = new Version(

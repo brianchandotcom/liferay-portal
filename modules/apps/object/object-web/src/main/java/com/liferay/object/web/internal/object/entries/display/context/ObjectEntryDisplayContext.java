@@ -238,6 +238,17 @@ public class ObjectEntryDisplayContext {
 			ObjectWebKeys.OBJECT_DEFINITION);
 	}
 
+	public ObjectDefinition getObjectDefinition2() throws PortalException {
+		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectLayoutTab.getObjectRelationshipId());
+
+		return _objectDefinitionLocalService.getObjectDefinition(
+			objectRelationship.getObjectDefinitionId2());
+	}
+
 	public ObjectEntry getObjectEntry() throws PortalException {
 		if (_objectEntry != null) {
 			return _objectEntry;

@@ -24,4 +24,7 @@ public class ObjectEntriesFDSNames {
 	public static final String RELATED_MODELS =
 		ObjectPortletKeys.OBJECT_ENTRIES + "-relatedModels";
 
+	public static final String SYSTEM_RELATED_MODELS =
+		ObjectPortletKeys.OBJECT_ENTRIES + "-systemRelatedModels";
+
 }

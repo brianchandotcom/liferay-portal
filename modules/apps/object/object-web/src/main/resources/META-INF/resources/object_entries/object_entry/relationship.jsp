@@ -23,6 +23,7 @@ ObjectEntryDisplayContext objectEntryDisplayContext = (ObjectEntryDisplayContext
 
 ObjectEntry objectEntry = objectEntryDisplayContext.getObjectEntry();
 ObjectLayoutTab objectLayoutTab = objectEntryDisplayContext.getObjectLayoutTab();
+ObjectDefinition objectDefinition = objectEntryDisplayContext.getObjectDefinition2();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
@@ -37,14 +38,28 @@ portletDisplay.setURLBack(backURL);
 	<aui:input name="objectEntryId" type="hidden" value="<%= (objectEntry == null) ? 0 : objectEntry.getId() %>" />
 	<aui:input name="objectRelationshipPrimaryKey2" type="hidden" value="" />
 
-	<frontend-data-set:classic-display
-		contextParams="<%= objectEntryDisplayContext.getRelationshipContextParams() %>"
-		creationMenu="<%= objectEntryDisplayContext.getRelatedModelCreationMenu() %>"
-		dataProviderKey="<%= ObjectEntriesFDSNames.RELATED_MODELS %>"
-		formName="fm"
-		id="<%= ObjectEntriesFDSNames.RELATED_MODELS %>"
-		style="fluid"
-	/>
+	<c:choose>
+		<c:when test="<%= objectDefinition.isSystem() %>">
+			<frontend-data-set:classic-display
+				contextParams="<%= objectEntryDisplayContext.getRelationshipContextParams() %>"
+				creationMenu="<%= objectEntryDisplayContext.getRelatedModelCreationMenu() %>"
+				dataProviderKey="<%= ObjectEntriesFDSNames.SYSTEM_RELATED_MODELS %>"
+				formName="fm"
+				id="<%= ObjectEntriesFDSNames.SYSTEM_RELATED_MODELS %>"
+				style="fluid"
+			/>
+		</c:when>
+		<c:otherwise>
+			<frontend-data-set:classic-display
+				contextParams="<%= objectEntryDisplayContext.getRelationshipContextParams() %>"
+				creationMenu="<%= objectEntryDisplayContext.getRelatedModelCreationMenu() %>"
+				dataProviderKey="<%= ObjectEntriesFDSNames.RELATED_MODELS %>"
+				formName="fm"
+				id="<%= ObjectEntriesFDSNames.RELATED_MODELS %>"
+				style="fluid"
+			/>
+		</c:otherwise>
+	</c:choose>
 </aui:form>
 
 <c:if test="<%= !objectEntryDisplayContext.isDefaultUser() %>">

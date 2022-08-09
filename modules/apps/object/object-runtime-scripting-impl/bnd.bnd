@@ -2,11 +2,4 @@ Bundle-Name: Liferay Object Runtime Scripting Implementation
 Bundle-SymbolicName: com.liferay.object.runtime.scripting.impl
 Bundle-Version: 1.0.2
 DynamicImport-Package: *
-Import-Package:\
-	!org.apache.commons.cli.*,\
-	!org.apache.ivy.*,\
-	\
-	!org.fusesource.jansi.*,\
-	\
-	*
 -dsannotations-options: inherit

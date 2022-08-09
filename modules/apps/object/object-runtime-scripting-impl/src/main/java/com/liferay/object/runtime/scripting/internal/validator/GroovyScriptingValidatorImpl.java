@@ -16,7 +16,6 @@ package com.liferay.object.runtime.scripting.internal.validator;
 
 import com.liferay.object.runtime.scripting.exception.GroovyScriptingException;
 import com.liferay.object.runtime.scripting.validator.GroovyScriptingValidator;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -33,7 +32,7 @@ public class GroovyScriptingValidatorImpl implements GroovyScriptingValidator {
 
 	@Override
 	public void validate(String script) throws GroovyScriptingException {
-		if (StringUtil.count(script, StringPool.NEW_LINE) >
+		if (StringUtil.count(script, _NEW_LINE) >
 				_MAXIMUM_NUMBER_OF_LINES) {
 
 			throw new GroovyScriptingException(
@@ -41,9 +40,7 @@ public class GroovyScriptingValidatorImpl implements GroovyScriptingValidator {
 		}
 
 		try {
-			Class<?> clazz = getClass();
-
-			GroovyShell groovyShell = new GroovyShell(clazz.getClassLoader());
+			GroovyShell groovyShell = new GroovyShell();
 
 			groovyShell.parse(script);
 		}
@@ -57,6 +54,8 @@ public class GroovyScriptingValidatorImpl implements GroovyScriptingValidator {
 	}
 
 	private static final int _MAXIMUM_NUMBER_OF_LINES = 2987;
+
+	private static final String _NEW_LINE = "\n";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroovyScriptingValidatorImpl.class);

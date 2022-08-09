@@ -43,11 +43,9 @@ public class GroovyScriptingExecutorImpl implements GroovyScriptingExecutor {
 
 		Class<?> clazz = getClass();
 
-		ClassLoader classLoader = clazz.getClassLoader();
-
 		Map<String, Object> results = new HashMap<>();
 
-		currentThread.setContextClassLoader(classLoader);
+		currentThread.setContextClassLoader(clazz.getClassLoader());
 
 		try {
 			results = _scripting.eval(

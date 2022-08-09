@@ -1,5 +1,6 @@
 {
-	"attachmentObjectFieldIds": [],
+	"attachmentObjectFieldIds": [
+	],
 	"bcc": "",
 	"cc": "",
 	"description": "Test Notification Template",

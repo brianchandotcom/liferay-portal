@@ -110,6 +110,7 @@ public class BasicSuggestionsContributorTest {
 		_setUpAssetRendererFactoryRegistryUtilNotNull("Title");
 		_setUpLayoutLocalService();
 		_setUpLiferayPortletRequest();
+		_setUpLiferayPortletResponse();
 		_setUpSearchContext();
 		_setUpSearchHits(_setUpDocument("testField"));
 		_setUpSearchRequestBuilderFactory();
@@ -119,8 +120,8 @@ public class BasicSuggestionsContributorTest {
 
 		SuggestionsContributorResults suggestionsContributorResults =
 			_basicSuggestionsContributor.getSuggestionsContributorResults(
-				_liferayPortletRequest, _setUpLiferayPortletResponse(),
-				_searchContext, _suggestionsContributorConfiguration);
+				_liferayPortletRequest, _liferayPortletResponse, _searchContext,
+				_suggestionsContributorConfiguration);
 
 		List<Suggestion> suggestions =
 			suggestionsContributorResults.getSuggestions();
@@ -311,17 +312,14 @@ public class BasicSuggestionsContributorTest {
 		).getScopeGroupId();
 	}
 
-	private LiferayPortletResponse _setUpLiferayPortletResponse() {
-		LiferayPortletResponse liferayPortletResponse = Mockito.mock(
-			LiferayPortletResponse.class);
-
+	private void _setUpLiferayPortletResponse() {
 		LiferayPortletURL liferayPortletURL = Mockito.mock(
 			LiferayPortletURL.class);
 
 		Mockito.doReturn(
 			liferayPortletURL
 		).when(
-			liferayPortletResponse
+			_liferayPortletResponse
 		).createLiferayPortletURL(
 			Mockito.anyLong(), Mockito.anyString(), Mockito.anyString()
 		);
@@ -337,8 +335,6 @@ public class BasicSuggestionsContributorTest {
 		).when(
 			liferayPortletURL
 		).toString();
-
-		return liferayPortletResponse;
 	}
 
 	private void _setUpSearchContext() {
@@ -498,6 +494,9 @@ public class BasicSuggestionsContributorTest {
 
 	@Mock
 	private LiferayPortletRequest _liferayPortletRequest;
+
+	@Mock
+	private LiferayPortletResponse _liferayPortletResponse;
 
 	@Mock
 	private SearchContext _searchContext;

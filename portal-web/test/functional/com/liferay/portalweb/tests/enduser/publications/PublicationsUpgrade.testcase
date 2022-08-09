@@ -14,9 +14,26 @@ definition {
 
 	@priority = "5"
 	test RemoveOrphanedPortletPreferences7310 {
-		property data.archive.type = "data-archive-publications-with-orphaned-portlet";
+		property data.archive.type = "data-archive-publications-with-orphaned-portlet-preferences";
 		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.version = "7.3.10";
+		property test.run.environment = "EE";
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertTextEquals(
+			key_publicationName = "Publication Name",
+			locator1 = "Publications#LIST_OUT_OF_DATE_STATUS",
+			value1 = "Out of Date");
+	}
+
+	@priority = "5"
+	test RemoveOrphanedPortletPreferences7413 {
+		property data.archive.type = "data-archive-publications-with-orphaned-portlet-preferences";
+		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";
+		property portal.version = "7.4.13";
 		property test.run.environment = "EE";
 
 		PublicationsNavigator.openPublicationsAdmin();

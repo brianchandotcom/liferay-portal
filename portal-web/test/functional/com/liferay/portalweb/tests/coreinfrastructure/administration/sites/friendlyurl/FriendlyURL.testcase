@@ -36,6 +36,10 @@ definition {
 		AssertTextPresent(
 			locator1 = "//body",
 			value1 = "Unknown Virtual Hostname: www.able.com");
+
+		AssertLocation(value1 = "http://www.able.com:8080/");
+
+		AssertConsoleTextPresent(value1 = "NoSuchVirtualHostException");
 	}
 
 	@description = "If virtual.hosts.strict.access=true is not set, redirect to a default instance even if there is no associated company"
@@ -46,6 +50,10 @@ definition {
 		AssertTextNotPresent(
 			locator1 = "//body",
 			value1 = "Unknown Virtual Hostname: www.able.com");
+
+		AssertLocation(value1 = "http://www.able.com:8080/web/guest");
+
+		Smoke.viewWelcomeContentPage();
 	}
 
 	@priority = "4"

@@ -92,7 +92,7 @@ definition {
 		return "${entryId}";
 	}
 
-	macro _getAllBlogsPostingId {
+	macro _getBlogsPosting {
 		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
@@ -105,52 +105,6 @@ definition {
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");
-
-		return "${curl}";
-	}
-
-	macro _getBlogsPostingComment {
-		Variables.assertDefined(parameterList = "${blogsPostingId}");
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogsPostingId}/comments \
- 				-u test@liferay.com:test \
-				-H accept: application/json
-		''';
-
-		var curl = JSONCurlUtil.get("${curl}");
-
-		return "${curl}";
-	}
-
-	macro _postBlogsPostingComment {
-		Variables.assertDefined(parameterList = "${blogsPostingId},${textComment}");
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		if (!(isSet(commentExternalReferenceCode))) {
-			var externalReferenceCode = "";
-		}
-
-		if (!(isSet(parentCommentId))) {
-			var parentCommentId = "0";
-		}
-
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogsPostingId}/comments \
- 			 	-u test@liferay.com:test \
-				-H Content-Type: application/json
-            	-d {
-				"creator": {},
-				"externalReferenceCode": "${commentExternalReferenceCode}",
-				"parentCommentId": "${parentCommentId}",
-				"text": "${textComment}"
-				}
-		''';
-
-		var curl = JSONCurlUtil.post("${curl}");
 
 		return "${curl}";
 	}

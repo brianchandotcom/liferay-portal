@@ -295,12 +295,20 @@ public class MockLiferayPortletURL implements LiferayPortletURL {
 		sb.append("//localhost/test?");
 
 		for (Map.Entry<String, String[]> entry : entries) {
-			sb.append(_portletId);
-			sb.append("_");
-			sb.append(entry.getKey());
-			sb.append("=");
-			sb.append(entry.getValue()[0]);
-			sb.append(";");
+			String[] values = entry.getValue();
+
+			if (!ArrayUtil.isEmpty(values)) {
+				for (String value : values) {
+					if (value != null) {
+						sb.append(_portletId);
+						sb.append("_");
+						sb.append(entry.getKey());
+						sb.append("=");
+						sb.append(value);
+						sb.append(";");
+					}
+				}
+			}
 		}
 
 		if (!entries.isEmpty()) {

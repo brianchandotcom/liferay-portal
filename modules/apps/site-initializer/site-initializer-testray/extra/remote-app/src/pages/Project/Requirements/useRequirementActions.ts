@@ -12,22 +12,28 @@
  * details.
  */
 
+import {useNavigate} from 'react-router-dom';
+
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
 import {Security} from '../../../security';
-import {TestrayProject, deleteResource} from '../../../services/rest';
+import {
+	TestrayCase,
+	TestrayProject,
+	deleteResource,
+} from '../../../services/rest';
 import {Action} from '../../../types';
 
 const useRequirementActions = () => {
 	const {removeItemFromList} = useMutate();
-
+	const navigate = useNavigate();
 	const formModal = useFormModal();
 	const modal = formModal.modal;
 
 	const actions: Action[] = [
 		{
-			action: (item: TestrayProject) => modal.open(item),
+			action: ({id}: TestrayCase) => navigate(`${id}/update`),
 			name: i18n.translate('edit'),
 			permission: 'UPDATE',
 		},

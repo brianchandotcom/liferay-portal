@@ -51,12 +51,9 @@ const RequirementsForm = () => {
 	const {
 		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
-	const {projectId} = useParams();
-
+	const {projectId, requirementId} = useParams();
 	const {setTabs} = useHeader({shouldUpdate: false});
-
 	const context: {requirement?: TestrayRequirement} = useOutletContext();
-
 	const {
 		formState: {errors},
 		handleSubmit,
@@ -64,10 +61,9 @@ const RequirementsForm = () => {
 		setValue,
 		watch,
 	} = useForm<RequirementsFormType>({
-		defaultValues: context?.requirement
+		defaultValues: requirementId
 			? ({
-					...context?.requirement,
-					componentId: context?.requirement?.component?.id,
+					...context,
 			  } as any)
 			: {},
 		resolver: yupResolver(yupSchema.requirement),

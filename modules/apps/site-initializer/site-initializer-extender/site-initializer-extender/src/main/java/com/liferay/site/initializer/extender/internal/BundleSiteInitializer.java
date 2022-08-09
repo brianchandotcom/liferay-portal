@@ -1989,10 +1989,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		json = _replace(
-			json, "[$", "$]",
-			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
-
 		JSONObject bodyJSONObject = _jsonFactory.createJSONObject();
 
 		Enumeration<URL> enumeration = _bundle.findEntries(

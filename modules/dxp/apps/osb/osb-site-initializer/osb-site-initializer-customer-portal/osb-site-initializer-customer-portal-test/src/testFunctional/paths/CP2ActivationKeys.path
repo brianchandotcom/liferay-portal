@@ -75,6 +75,16 @@
 	<td>xpath=(//tbody/tr)[${key_rowCount}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGINATION_ROOT</td>
+	<td>//*[contains(@class,'pagination-root')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT_PAGE_BUTTON</td>
+	<td>//*[contains(@aria-label,'Next')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

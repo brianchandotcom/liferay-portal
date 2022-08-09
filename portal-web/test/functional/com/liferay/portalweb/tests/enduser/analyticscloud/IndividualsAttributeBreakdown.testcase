@@ -51,6 +51,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		ACIndividualsDashboard.deleteBreakdown();
+
 		ACUtils.tearDownAC();
 
 		ACUtils.tearDownDXP();
@@ -92,17 +94,13 @@ definition {
 		task ("Add a new breakdown") {
 			ACSegments.addBreakdownByAttribute(
 				attribute = "email",
-				breakdownName = "Breakdown by Job Title");
+				breakdownName = "Breakdown by Email");
 		}
 
 		task ("View the data in new breakdown") {
 			ACIndividualsDashboard.viewBreakdownRecharts(
 				fillColor = "#4B9BFF",
 				tick = "ac@liferay.com");
-		}
-
-		task ("Remove the breakdown") {
-			ACIndividualsDashboard.deleteBreakdown(breakdownName = "Breakdown by Email");
 		}
 	}
 
@@ -188,7 +186,7 @@ definition {
 		}
 
 		task ("Remove the new breakdown") {
-			ACIndividualsDashboard.deleteBreakdown(breakdownName = "Breakdown to Delete");
+			ACIndividualsDashboard.deleteBreakdown();
 		}
 
 		task ("View the breakdown is deleted") {
@@ -248,12 +246,6 @@ definition {
 			ACIndividualsDashboard.viewBreakdownRecharts(
 				fillColor = "#4B9BFF",
 				tick = "ac");
-		}
-
-		task ("Remove the breakdown") {
-			ACIndividualsDashboard.deleteBreakdown(breakdownName = "Breakdown by Family Name");
-
-			ACIndividualsDashboard.deleteBreakdown(breakdownName = "Breakdown by Email");
 		}
 	}
 

@@ -378,19 +378,8 @@ definition {
 	@description = "Bug ID: LRAC-8093 | Automation ID: LRAC-11533 | Test Summary: Able to clear property data"
 	@priority = "4"
 	test ClearPropertyData {
-		property analytics.cloud.upstream = "false";
-		property test.name.skip.portal.instance = "Properties#ClearPropertyData";
-
-		var acProperty = "Clear Property";
-
 		task ("Launch AC and go to settings and add a new property") {
 			ACUtils.launchAC();
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-
-			ACProperties.addNewProperty(propertyName = "${acProperty}");
 
 			ACSettings.takeTokenFromAnalyticsCloud();
 		}
@@ -406,23 +395,9 @@ definition {
 
 			ACDXPSettings.goToInstanceSettingsAC();
 
-			ACDXPSettings.connectAnalyticsCloud();
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 			Alert.viewSuccessMessage();
-		}
-
-		task ("Assign the new site to existing property") {
-			ACDXPSettings.navToSyncedSitesMenu();
-
-			ACDXPSettings.assignSiteToExistingProperty(
-				assignedPropertyName = "${acProperty}",
-				siteName = "Site Name");
-		}
-
-		task ("Sync Users to AC") {
-			ACDXPSettings.navToSyncedContactDataMenu();
-
-			ACDXPSettings.syncContactData();
 		}
 
 		task ("Login new user and view page") {
@@ -432,7 +407,7 @@ definition {
 		}
 
 		task ("Interact with page") {
-			ACUtils.navigateToSitePageWithUser(
+			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -444,7 +419,7 @@ definition {
 		task ("Launch AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${acProperty}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 
 			ACNavigation.goToSites();
 		}
@@ -477,7 +452,7 @@ definition {
 		}
 
 		task ("Clear Property") {
-			ACSettings.clearProperty(propertyName = "${acProperty}");
+			ACSettings.clearProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Exit Settings") {

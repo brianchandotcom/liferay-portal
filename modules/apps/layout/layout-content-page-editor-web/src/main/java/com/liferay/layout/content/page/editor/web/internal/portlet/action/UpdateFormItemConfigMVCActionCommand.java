@@ -186,6 +186,9 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
+		DropZoneLayoutStructureItem masterDropZoneLayoutStructureItem =
+			_getMasterDropZoneLayoutStructureItem(themeDisplay.getLayout());
+
 		TreeSet<String> missingInputTypes = new TreeSet<>();
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
@@ -205,7 +208,11 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 				_fragmentCollectionContributorTracker.getFragmentEntry(
 					_getFragmentEntryKey(infoFieldType));
 
-			if (fragmentEntry == null) {
+			if ((fragmentEntry == null) ||
+				!_isAllowedFragmentEntryKey(
+					fragmentEntry.getFragmentEntryKey(),
+					masterDropZoneLayoutStructureItem)) {
+
 				missingInputTypes.add(
 					infoFieldType.getLabel(themeDisplay.getLocale()));
 
@@ -223,7 +230,11 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			_fragmentCollectionContributorTracker.getFragmentEntry(
 				"INPUTS-submit-button");
 
-		if (fragmentEntry == null) {
+		if ((fragmentEntry == null) ||
+			!_isAllowedFragmentEntryKey(
+				fragmentEntry.getFragmentEntryKey(),
+				masterDropZoneLayoutStructureItem)) {
+
 			missingInputTypes.add(
 				_language.get(themeDisplay.getLocale(), "submit-button"));
 		}

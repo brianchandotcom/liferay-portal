@@ -85,6 +85,11 @@
 	<td>//*[contains(@aria-label,'Next')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DISABLED_NEXT_PAGE_BUTTON</td>
+	<td>//*[contains(@aria-label,'Next') and @disabled='']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

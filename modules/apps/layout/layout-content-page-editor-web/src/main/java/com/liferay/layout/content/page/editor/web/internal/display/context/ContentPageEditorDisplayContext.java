@@ -475,8 +475,8 @@ public class ContentPageEditorDisplayContext {
 				"getPageContentsURL",
 				_getResourceURL("/layout_content_page_editor/get_page_content")
 			).put(
-				"getWidgetsURL",
-				_getResourceURL("/layout_content_page_editor/get_widgets")
+				"getPortletsURL",
+				_getResourceURL("/layout_content_page_editor/get_portlets")
 			).put(
 				"imageSelectorURL", _getItemSelectorURL()
 			).put(

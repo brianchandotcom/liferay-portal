@@ -133,7 +133,7 @@ export interface Config {
 	getLayoutFriendlyURL: string;
 	getLayoutPageTemplateCollectionsURL: string;
 	getPageContentsURL: string;
-	getWidgetsURL: string;
+	getPortletsURL: string;
 	imageSelectorURL: string;
 	infoItemPreviewSelectorURL: string;
 	infoItemSelectorURL: string;

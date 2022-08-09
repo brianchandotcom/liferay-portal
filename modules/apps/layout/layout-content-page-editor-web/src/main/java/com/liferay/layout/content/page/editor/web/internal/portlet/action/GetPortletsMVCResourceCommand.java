@@ -74,11 +74,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/layout_content_page_editor/get_widgets"
+		"mvc.command.name=/layout_content_page_editor/get_portlets"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
+public class GetPortletsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
@@ -96,10 +96,10 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 		try {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				_getWidgetsJSONArray(httpServletRequest, themeDisplay));
+				_getPortletsJSONArray(httpServletRequest, themeDisplay));
 		}
 		catch (Exception exception) {
-			_log.error("Unable to get widgets", exception);
+			_log.error("Unable to get portlets", exception);
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
@@ -109,6 +109,52 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 						themeDisplay.getRequest(),
 						"an-unexpected-error-occurred")));
 		}
+	}
+
+	private JSONArray _getPortletCategoriesJSONArray(
+			HttpServletRequest httpServletRequest,
+			PortletCategory portletCategory, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		List<PortletCategory> portletCategories = ListUtil.fromCollection(
+			portletCategory.getCategories());
+
+		portletCategories = ListUtil.sort(
+			portletCategories,
+			new PortletCategoryComparator(themeDisplay.getLocale()));
+
+		for (PortletCategory currentPortletCategory : portletCategories) {
+			if (currentPortletCategory.isHidden()) {
+				continue;
+			}
+
+			jsonArray.put(
+				JSONUtil.put(
+					"categories",
+					_getPortletCategoriesJSONArray(
+						httpServletRequest, currentPortletCategory,
+						themeDisplay)
+				).put(
+					"path",
+					StringUtil.replace(
+						currentPortletCategory.getPath(),
+						new String[] {"/", "."}, new String[] {"-", "-"})
+				).put(
+					"portlets",
+					_getPortletsJSONArray(
+						httpServletRequest, currentPortletCategory,
+						themeDisplay)
+				).put(
+					"title",
+					_getPortletCategoryTitle(
+						httpServletRequest, currentPortletCategory,
+						themeDisplay)
+				));
+		}
+
+		return jsonArray;
 	}
 
 	private String _getPortletCategoryTitle(
@@ -252,53 +298,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 		return jsonArray;
 	}
 
-	private JSONArray _getWidgetCategoriesJSONArray(
-			HttpServletRequest httpServletRequest,
-			PortletCategory portletCategory, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		List<PortletCategory> portletCategories = ListUtil.fromCollection(
-			portletCategory.getCategories());
-
-		portletCategories = ListUtil.sort(
-			portletCategories,
-			new PortletCategoryComparator(themeDisplay.getLocale()));
-
-		for (PortletCategory currentPortletCategory : portletCategories) {
-			if (currentPortletCategory.isHidden()) {
-				continue;
-			}
-
-			jsonArray.put(
-				JSONUtil.put(
-					"categories",
-					_getWidgetCategoriesJSONArray(
-						httpServletRequest, currentPortletCategory,
-						themeDisplay)
-				).put(
-					"path",
-					StringUtil.replace(
-						currentPortletCategory.getPath(),
-						new String[] {"/", "."}, new String[] {"-", "-"})
-				).put(
-					"portlets",
-					_getPortletsJSONArray(
-						httpServletRequest, currentPortletCategory,
-						themeDisplay)
-				).put(
-					"title",
-					_getPortletCategoryTitle(
-						httpServletRequest, currentPortletCategory,
-						themeDisplay)
-				));
-		}
-
-		return jsonArray;
-	}
-
-	private JSONArray _getWidgetsJSONArray(
+	private JSONArray _getPortletsJSONArray(
 			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -310,7 +310,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 			themeDisplay.getLayout(), portletCategory,
 			themeDisplay.getLayoutTypePortlet());
 
-		return _getWidgetCategoriesJSONArray(
+		return _getPortletCategoriesJSONArray(
 			httpServletRequest, portletCategory, themeDisplay);
 	}
 
@@ -319,7 +319,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetWidgetsMVCResourceCommand.class);
+		GetPortletsMVCResourceCommand.class);
 
 	@Reference
 	private Language _language;

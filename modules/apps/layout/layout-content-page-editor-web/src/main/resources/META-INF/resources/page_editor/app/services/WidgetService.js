@@ -53,6 +53,6 @@ export default {
 	},
 
 	getWidgets() {
-		return serviceFetch(config.getWidgetsURL, {}, () => {});
+		return serviceFetch(config.getPortletsURL, {}, () => {});
 	},
 };

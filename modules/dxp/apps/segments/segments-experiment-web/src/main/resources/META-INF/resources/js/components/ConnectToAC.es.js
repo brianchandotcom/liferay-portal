@@ -15,7 +15,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 export default function ConnectToAC({
-	analyticsCloudTrialURL,
 	analyticsURL,
 	isAnalyticsConnected,
 	hideAnalyticsReportsPanelURL,
@@ -76,19 +75,6 @@ export default function ConnectToAC({
 					</p>
 
 					<ClayLink
-						button={true}
-						displayType="secondary"
-						href={analyticsCloudTrialURL}
-						target="_blank"
-					>
-						{Liferay.Language.get('start-free-trial')}
-
-						<span className="inline-item inline-item-after">
-							<ClayIcon symbol="shortcut" />
-						</span>
-					</ClayLink>
-
-					<ClayLink
 						className="d-block font-weight-bold mb-2 mt-5"
 						onClick={onHideAnalyticsReportsPanelClick}
 						tabIndex="0"
@@ -106,7 +92,6 @@ export default function ConnectToAC({
 }
 
 ConnectToAC.propTypes = {
-	analyticsCloudTrialURL: PropTypes.string.isRequired,
 	analyticsURL: PropTypes.string.isRequired,
 	hideAnalyticsReportsPanelURL: PropTypes.string.isRequired,
 	isAnalyticsConnected: PropTypes.bool.isRequired,

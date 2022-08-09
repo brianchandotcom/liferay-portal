@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Enablement-Course-Structure</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"fields": [
+						{
+							"dataType": "image",
+							"indexType": "text",
+							"label": {
+								"en_US": "Banner Image"
+							},
+							"localizable": true,
+							"name": "courseBannerImage",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "image"
+						},
+						{
+							"dataType": "string",
+							"indexType": "text",
+							"label": {
+								"en_US": "Subtext"
+							},
+							"localizable": true,
+							"name": "courseSubText",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"indexType": "text",
+							"label": {
+								"en_US": "Title"
+							},
+							"localizable": true,
+							"name": "courseTitleText",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"courseBannerImage"
+											],
+											"size": 12
+										},
+										{
+											"fieldNames": [
+												"courseSubText"
+											],
+											"size": 12
+										},
+										{
+											"fieldNames": [
+												"courseTitleText"
+											],
+											"size": 12
+										},
+										{
+											"fieldNames": [
+												"courseButton"
+											],
+											"size": 12
+										},
+										{
+											"fieldNames": [
+												"courseButtonLink"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": "Enablement Course Structure"
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+	</structure>
+</root>

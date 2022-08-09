@@ -2805,8 +2805,6 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.restorePreviousVersion(number = "1");
 
-		
-
 		Alert.viewSuccessMessageText(successMessage = "Restored to Revision 1");
 	}
 

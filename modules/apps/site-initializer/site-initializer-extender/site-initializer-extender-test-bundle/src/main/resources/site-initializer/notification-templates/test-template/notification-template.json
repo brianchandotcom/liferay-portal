@@ -1,0 +1,20 @@
+{
+	"attachmentObjectFieldIds": [],
+	"bcc": "",
+	"cc": "",
+	"description": "Test Notification Template",
+	"from": "test@liferay.com",
+	"fromName": {
+		"en-US": "Test"
+	},
+	"name": "Test Notification Template 1",
+	"name_i18n": {
+		"additionalProp1": "Test"
+	},
+	"subject": {
+		"en-US": "Test"
+	},
+	"to": {
+		"additionalProp1": "Test"
+	}
+}

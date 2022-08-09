@@ -37,7 +37,7 @@ definition {
 	macro assertCanCollapseAndExpandEntryField {
 		WaitForSPARefresh();
 
-		if (IsVisible(key_closedOrOpen = "open", locator1 = "CreateObject#VIEW_COLLAPSE_ICON")) {
+		if (IsElementPresent(key_closedOrOpen = "open", locator1 = "CreateObject#VIEW_COLLAPSE_ICON")) {
 			Click(locator1 = "CreateObject#COLLAPSE_EXPAND_OBJECT_PORTLET_ENTRY_FIELD");
 
 			WaitForSPARefresh();
@@ -47,7 +47,7 @@ definition {
 				locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 		}
 
-		if (IsVisible(key_closedOrOpen = "closed", locator1 = "CreateObject#VIEW_COLLAPSE_ICON")) {
+		if (IsElementPresent(key_closedOrOpen = "closed", locator1 = "CreateObject#VIEW_COLLAPSE_ICON")) {
 			Click(locator1 = "CreateObject#COLLAPSE_EXPAND_OBJECT_PORTLET_ENTRY_FIELD");
 
 			WaitForSPARefresh();

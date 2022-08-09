@@ -26,122 +26,8 @@ definition {
 				organizationName = "Organization 1",
 				organizationSite = "false");
 		}
-	}
 
-	tearDown {
-		CommerceConfiguration.commerceTearDown();
-	}
-
-	@description = "COMMERCE-9403. Verify new users can be added using the Organization Management widget."
-	@priority = "3"
-	test CanAddNewUserUsingWidget {
-		task ("When the Organization Management Widget Page is reached") {
-			Navigator.openSitePage(
-				pageName = "Organization Management Widget Page",
-				siteName = "Minium");
-
-			Click(locator1 = "Button#EXPAND");
-		}
-
-		task ("And the organization svg node is clicked") {
-			Click(
-				key_nodeName = "Organization 1",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
-		}
-
-		task ("And the plus button is clicked") {
-			Click(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
-		}
-
-		task ("And the user svg node is clicked") {
-			Click(
-				key_orgType = "user",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
-		}
-
-		task ("Then the admin is able to create and add a new user to the Organization by adding the user email and selecting the organization role") {
-			Type(
-				locator1 = "CommerceOrganizationManagementWidget#INVITE_EMAIL_INPUT",
-				value1 = "user@liferay.com");
-
-			Click(
-				key_roleOption = "Organization User",
-				locator1 = "CommerceOrganizationManagementWidget#SELECT_ROLE");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("And the user is present in the admin console") {
-			AssertElementPresent(
-				key_nodeName = "user@life",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
-		}
-	}
-
-	@description = "COMMERCE-9402. Verify the store admin can associate existing accounts to an organization by using the Organization Management widget."
-	@priority = "3"
-	test CanAssociateExistingAccountUsingWidget {
-		task ("Given an account") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Commerce Account",
-				accountEntryType = "Business");
-		}
-
-		task ("When the Organization Management Widget Page is reached") {
-			Navigator.openSitePage(
-				pageName = "Organization Management Widget Page",
-				siteName = "Minium");
-
-			Click(locator1 = "Button#EXPAND");
-		}
-
-		task ("And the organization svg node is clicked") {
-			Click(
-				key_nodeName = "Organization 1",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
-		}
-
-		task ("And the plus button is clicked") {
-			Click(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
-		}
-
-		task ("And the account svg node is clicked") {
-			Click(
-				key_orgType = "account",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
-		}
-
-		task ("Then the admin is able to select an existing account to be associated with the organization") {
-			Click.clickAtNotVisible(
-				key_radioOption = "Select Accounts",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-
-			Type(
-				locator1 = "CommerceOrganizationManagementWidget#SEARCH_ACCOUNT_INPUT",
-				value1 = "Commerce Account");
-
-			KeyPress(
-				locator1 = "CommerceOrganizationManagementWidget#SEARCH_ACCOUNT_INPUT",
-				value1 = "\ENTER");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("And the account is present in the admin console") {
-			AssertElementPresent(
-				key_nodeName = "Commerce Account",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
-		}
-	}
-
-	@description = "COMMERCE-9403. Verify the store admin can associate existing users to an organization by using the Organization Management widget."
-	@priority = "3"
-	test CanAssociateExistingUserUsingWidget {
-		task ("Given an account with a buyer user") {
+		task ("Setup: Add buyer account") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",
 				accountType = "Business",
@@ -155,141 +41,141 @@ definition {
 				userScreenName = "buyeruser",
 				userSiteMembership = "Minium");
 		}
+	}
 
-		task ("When the Organization Management Widget Page is reached") {
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-9403. Verify new users can be added using the Organization Management widget."
+	@priority = "3"
+	test CanAddNewUserUsingWidget {
+		task ("Given the Organization Management Widget Page is reached and the account svg node is reached") {
 			Navigator.openSitePage(
 				pageName = "Organization Management Widget Page",
 				siteName = "Minium");
 
-			Click(locator1 = "Button#EXPAND");
-		}
-
-		task ("And the organization svg node is clicked") {
-			Click(
+			CommerceWidget.gotoSVGNode(
 				key_nodeName = "Organization 1",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+				key_orgType = "user");
 		}
 
-		task ("And the plus button is clicked") {
-			Click(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
-		}
-
-		task ("And the user svg node is clicked") {
-			Click(
-				key_orgType = "user",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
-		}
-
-		task ("Then the admin is able to add an existing user's email to be associated with the organization") {
-			Type(
-				locator1 = "CommerceOrganizationManagementWidget#INVITE_EMAIL_INPUT",
-				value1 = "buyer@liferay.com");
-
-			Click(
+		task ("Then the admin is able to create and add a new user to the Organization by adding the user email and selecting the organization role") {
+			CommerceWidget.addUserViaOrganizationManagementWidget(
 				key_roleOption = "Organization User",
-				locator1 = "CommerceOrganizationManagementWidget#SELECT_ROLE");
+				value = "user@liferay.com");
 
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
+			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "user@life");
 		}
 
-		task ("And the user is present in the admin console") {
-			AssertElementPresent(
-				key_nodeName = "Buyer User",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		task ("Then the user is present in the admin console") {
+			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "user@life");
+		}
+	}
+
+	@description = "COMMERCE-9402. Verify the store admin can associate existing accounts to an organization by using the Organization Management widget."
+	@priority = "3"
+	test CanAssociateExistingAccountUsingWidget {
+		task ("Given an account and the Organization Management Widget Page is reached") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+
+			Navigator.openSitePage(
+				pageName = "Organization Management Widget Page",
+				siteName = "Minium");
+		}
+
+		task ("And the account svg node is reached") {
+			CommerceWidget.gotoSVGNode(
+				key_nodeName = "Organization 1",
+				key_orgType = "account");
+		}
+
+		task ("When the admin is able to select an existing account to be associated with the organization") {
+			CommerceWidget.associateAccountWithOrganization(
+				key_radioOption = "Select Accounts",
+				value = "Commerce Account");
+		}
+
+		task ("Then the account is present in the admin console") {
+			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Commerce Account");
+		}
+	}
+
+	@description = "COMMERCE-9403. Verify the store admin can associate existing users to an organization by using the Organization Management widget."
+	@priority = "3"
+	test CanAssociateExistingUserUsingWidget {
+		task ("Given an Organization Management Widget Page is reached") {
+			Navigator.openSitePage(
+				pageName = "Organization Management Widget Page",
+				siteName = "Minium");
+		}
+
+		task ("When the user svg node is reached") {
+			CommerceWidget.gotoSVGNode(
+				key_nodeName = "Organization 1",
+				key_orgType = "user");
+		}
+
+		task ("And the admin is able to add an existing user's email to be associated with the organization") {
+			CommerceWidget.addUserViaOrganizationManagementWidget(
+				key_roleOption = "Organization User",
+				value = "buyer@liferay.com");
+		}
+
+		task ("Then the user is present in the admin console") {
+			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Buyer User");
 		}
 	}
 
 	@description = "COMMERCE-9401. Verify new accounts can be created using the Organization Management widget."
 	@priority = "3"
 	test CanCreateAccountUsingWidget {
-		task ("When the Organization Management Widget Page is reached") {
+		task ("Given the Organization Management Widget Page is reached") {
 			Navigator.openSitePage(
 				pageName = "Organization Management Widget Page",
 				siteName = "Minium");
-
-			Click(locator1 = "Button#EXPAND");
 		}
 
 		task ("And the organization svg node is clicked") {
-			Click(
+			CommerceWidget.gotoSVGNode(
 				key_nodeName = "Organization 1",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+				key_orgType = "account");
 		}
 
-		task ("And the plus button is clicked") {
-			Click(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
-		}
-
-		task ("And the account svg node is clicked") {
-			Click(
-				key_orgType = "account",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
-		}
-
-		task ("Then the admin is able to create a new account") {
-			Click.clickAtNotVisible(
+		task ("When the admin is able to create a new account") {
+			CommerceWidget.addAccountViaOrganizationManagementWidget(
 				key_radioOption = "Create New Account",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-
-			Type(
-				locator1 = "TextInput#NAME",
-				value1 = "Account 1");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
+				value = "Account 1");
 		}
 
-		task ("And the new account is present in the admin console") {
-			AssertElementPresent(
-				key_nodeName = "Account 1",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		task ("Then the new account is present in the admin console") {
+			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Account 1");
 		}
 	}
 
 	@description = "COMMERCE-9400. Verify new child organizations can be created using the Organization Management widget."
 	@priority = "3"
 	test CanCreateOrganizationUsingWidget {
-		task ("When the Organization Management Widget Page is reached") {
+		task ("Given the Organization Management Widget Page is reached") {
 			Navigator.openSitePage(
 				pageName = "Organization Management Widget Page",
 				siteName = "Minium");
-
-			Click(locator1 = "Button#EXPAND");
 		}
 
-		task ("And the organization svg node is clicked") {
-			Click(
+		task ("When the organization node is reached") {
+			CommerceWidget.gotoSVGNode(
 				key_nodeName = "Organization 1",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+				key_orgType = "organization");
 		}
 
-		task ("And the plus button is clicked") {
-			Click(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+		task ("And the admin is able to create a new child organization") {
+			CommerceWidget.canCreateChildOrganization(value = "Child Org 1");
 		}
 
-		task ("And the organization icon is clicked") {
-			Click(
-				key_orgType = "organization",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
-		}
-
-		task ("Then the admin is able to create a new child organization") {
-			Type(
-				locator1 = "TextInput#NAME",
-				value1 = "Child Org 1");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("And then the new child organization is present in the admin console") {
-			AssertElementPresent(
-				key_nodeName = "Child Org 1",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		task ("Then the new child organization is present in the admin console") {
+			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Child Org 1");
 		}
 	}
 
@@ -307,21 +193,6 @@ definition {
 				parentOrganizationName = "Organization 2");
 		}
 
-		task ("And given an account with a buyer user") {
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				accountType = "Business",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "true",
-				requireReset = "false",
-				userEmailAddress = "buyer@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userRole = "Buyer",
-				userScreenName = "buyeruser",
-				userSiteMembership = "Minium");
-		}
-
 		task ("And given the account belongs to Organization 2") {
 			Accounts.assignOrganizations(
 				accountName = "Commerce Account",
@@ -332,80 +203,34 @@ definition {
 			Navigator.openSitePage(
 				pageName = "Organization Management Widget Page",
 				siteName = "Minium");
-
-			Click(locator1 = "Button#EXPAND");
 		}
 
-		task ("Then the admin is able to drag and drop the account to Organization 1") {
-			Click(
+		task ("And the admin is able to drag and drop the account to Organization 1 and the admin is able to drag and drop the child organization to Organization 1") {
+			CommerceWidget.canDragAndDropOrganizaitionAndChildOrganization(
+				key_nodeChild = "Child Org 1",
+				key_nodeDestination = "Organization 1",
 				key_nodeName = "Organization 2",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
-
-			DragAndDrop.dragAndDropPortletToPortletNoError(
-				key_nodeDestination = "Organization 1",
-				key_nodeOrigin = "Commerce Account",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_ORIGIN",
-				locator2 = "CommerceOrganizationManagementWidget#NODE_DESTINATION",
-				value1 = "Commerce Account");
-
-			AssertConfirm(value1 = "Commerce Account will be moved into Organization 1.");
+				key_nodeOrigin = "Commerce Account");
 		}
 
-		task ("And the admin is able to drag and drop the child organization to Organization 1") {
-			DragAndDrop.dragAndDropPortletToPortletNoError(
-				key_nodeDestination = "Organization 1",
-				key_nodeOrigin = "Child Org 1",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_ORIGIN",
-				locator2 = "CommerceOrganizationManagementWidget#NODE_DESTINATION",
-				value1 = "Child Org 1");
+		task ("Then the admin is able to click on the child organization ellipses and click remove to move the child organization outside the parent organization") {
+			CommerceWidget.removeChildOrganization(
+				key_nodeChild = "Child Org 1",
+				key_nodeName = "Organization 1");
 
-			AssertConfirm(value1 = "Child Org 1 will be moved into Organization 1.");
-
-			Refresh();
-
-			Click(locator1 = "Button#EXPAND");
-		}
-
-		task ("And the admin is able to click on the child organization ellipses and click remove to move the child organization outside the parent organization") {
-			Click(
-				key_nodeName = "Organization 1",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
-
-			Click(
-				key_nodeName = "Child Org 1",
-				locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
-
-			ClickNoError(
-				key_menuItem = "Remove",
-				locator1 = "CommerceEntry#ANY_MENU_ITEM");
-
-			AssertConfirm(value1 = "Child Org 1 will be removed from Organization 1.");
-
-			Refresh();
-
-			Click(locator1 = "Button#EXPAND");
-
-			AssertElementPresent(
-				key_nodeName = "Child Org 1",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Child Org 1");
 		}
 	}
 
 	@description = "COMMERCE-9399. Verify organizations can be viewed in the Organization Management widget."
 	@priority = "3"
-	test CanViewOrganizationInWidget {
+	test CanViewOrganizationWidget {
 		task ("When the Organization Management Widget Page is reached") {
-			Navigator.openSitePage(
-				pageName = "Organization Management Widget Page",
-				siteName = "Minium");
-
-			Click(locator1 = "Button#EXPAND");
+			CommerceWidget.openOrganizationWidget();
 		}
 
 		task ("Then the organization is shown within the widget") {
-			AssertElementPresent(
-				key_nodeName = "Organization 1",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Organization 1");
 		}
 	}
 

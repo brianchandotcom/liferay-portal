@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import {
 	ACTIONS,
@@ -35,24 +35,19 @@ const DriverInfo = () => {
 
 		if (!isThereId) {
 			const driverInfoObject = {
-				accidentCitation: [
-					{
-						id: Number((Math.random() * 1000000).toFixed(0)),
-						value: '',
-					},
-				],
+				accidentCitation: [],
 				ageFirstLicenced: '',
 				firstName: '',
 				gender: '',
 				governmentAffiliation: '',
-				hasAccidentOrCitations: false,
+				hasAccidentOrCitations: '',
 				highestEducation: '',
 				id,
 				lastName: '',
 				maritalStatus: '',
-				militaryAffiliation: '',
-				ocupation: '',
-				otherOcupation: '',
+				millitaryAffiliation: '',
+				occupation: '',
+				otherOccupation: '',
 				relationToContact: '',
 			};
 
@@ -62,6 +57,47 @@ const DriverInfo = () => {
 			});
 		}
 	};
+
+	const handleSaveChanges = (currentForm: any) => {
+		const hasAllRequiredFieldsToNextStep = currentForm.every(
+			(_form: any) => {
+				const formValidation =
+					_form.firstName !== '' &&
+					_form.lastName !== '' &&
+					_form.relationToContact !== '' &&
+					_form.gender !== '' &&
+					_form.maritalStatus !== '' &&
+					_form.ageFirstLicenced !== '' &&
+					_form.occupation !== '' &&
+					_form.highestEducation !== '' &&
+					_form.millitaryAffiliation !== '' &&
+					_form.hasAccidentOrCitations !== '';
+
+				if (_form.occupation === 'Other') {
+					return formValidation && _form.otherOccupation !== '';
+				}
+				if (_form.occupation === 'Government') {
+					return formValidation && _form.governmentAffiliation !== '';
+				}
+
+				return formValidation;
+			}
+		);
+
+		dispatch({
+			payload: true,
+			type: ACTIONS.SET_IS_ABLE_TO_SAVE,
+		});
+		dispatch({
+			payload: hasAllRequiredFieldsToNextStep,
+			type: ACTIONS.SET_IS_ABLE_TO_NEXT,
+		});
+	};
+
+	useEffect(() => {
+		handleSaveChanges(form);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [state.steps.driverInfo]);
 
 	return (
 		<div className="bg-neutral-0 mx-8">
@@ -78,7 +114,7 @@ const DriverInfo = () => {
 				))}
 
 				<ClayButton
-					className="ml-7 text-uppercase"
+					className="text-uppercase"
 					displayType="link"
 					onClick={() => handleAddDriverClick()}
 				>

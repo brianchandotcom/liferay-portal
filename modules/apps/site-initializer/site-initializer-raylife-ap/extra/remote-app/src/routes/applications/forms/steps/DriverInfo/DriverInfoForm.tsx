@@ -21,12 +21,23 @@ import ClayForm, {
 	ClaySelect,
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useState} from 'react';
+import classNames from 'classnames';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {
 	ACTIONS,
 	NewApplicationAutoContext,
 } from '../../../context/NewApplicationAutoContextProvider';
+import {
+	accidentCitationOptions,
+	genderOptions,
+	governmentAffiliationOptions,
+	highestEducationOptions,
+	maritalStatusOptions,
+	millitaryAffiliationOptions,
+	occupationOptions,
+	relationToContactOptions,
+} from './SelectOptions';
 
 type FormDriverInfoTypes = {
 	accidentCitationForm: any[];
@@ -37,7 +48,6 @@ type FormDriverInfoTypes = {
 };
 
 const DriverInfoForm = ({
-	accidentCitationForm,
 	form,
 	formIndex,
 	formNumber,
@@ -47,41 +57,149 @@ const DriverInfoForm = ({
 
 	const [occupationValue, setOccupationValue] = useState<string>();
 
+	const [newAccidentCitations, setNewAccidentCitations] = useState<any[]>([]);
+
+	const [
+		_millitaryAffiliationOptions,
+		setMillitaryAffiliationOptions,
+	] = useState<any[]>([]);
+
+	const [_millitaryAffiliation, setMillitaryAffiliation] = useState<string>(
+		''
+	);
+
+	enum dropdownAlign {
+		topCenter = 0,
+		topRight = 1,
+		middleRight = 2,
+		bottomRight = 3,
+		bottomCenter = 4,
+		bottomLeft = 5,
+		middleLeft = 6,
+		topLeft = 7,
+	}
+
+	type hasRequiredErrorTypes = {
+		accidentCitation: boolean;
+		ageFirstLicenced: boolean;
+		firstName: boolean;
+		gender: boolean;
+		governmentAffiliation: boolean;
+		highestEducation: boolean;
+		lastName: boolean;
+		maritalStatus: boolean;
+		millitaryAffiliation: boolean;
+		occupation: boolean;
+		otherOccupation: boolean;
+		relationToContact: boolean;
+	};
+
+	const hasRequiredError: hasRequiredErrorTypes = {
+		accidentCitation: false,
+		ageFirstLicenced: false,
+		firstName: false,
+		gender: false,
+		governmentAffiliation: false,
+		highestEducation: false,
+		lastName: false,
+		maritalStatus: false,
+		millitaryAffiliation: false,
+		occupation: false,
+		otherOccupation: false,
+		relationToContact: false,
+	};
+
+	const [hasError, setHasError] = useState(hasRequiredError);
+
+	const ErrorMessage = ({text}: any) => (
+		<div className="form-feedback-group">
+			<div className="form-feedback-item">
+				<span className="form-feedback-indicator">
+					<ClayIcon symbol="info-circle"></ClayIcon>
+				</span>
+
+				{text ? text : 'This field is required'}
+			</div>
+		</div>
+	);
+
 	const [accidentCitationValue, setAccidentCitationValue] = useState<boolean>(
 		false
 	);
 
 	const accidentCitations = form.map((form) => {
-		return form.accidentCitation.filter(
-			(accidentCitation: {id: number}) => accidentCitation.id !== id
+		const accidentCitationList = form.accidentCitation || [];
+
+		return accidentCitationList.filter(
+			(accidentCitation: {id: number}) =>
+				accidentCitation.id !== form.accidentCitation.id
 		);
 	});
 
+	const handleUpdateField = useCallback(
+		(formId: number, currentId: number, index: number, value: string) => {
+			const payload = {
+				formId,
+				id: currentId,
+				index,
+				value,
+			};
+
+			dispatch({payload, type: ACTIONS.UPDATE_DRIVER_INFO_FORM});
+		},
+		[dispatch]
+	);
+
 	const handleAddCitationClick = () => {
+		const currentId = Number((Math.random() * 1000000).toFixed(0));
 		const driverInfoObject = {
-			accidentCitation: [
-				{id: Number((Math.random() * 1000000).toFixed(0)), value: ''},
-			],
+			accidentCitation: [{id: currentId, value: ''}],
 			ageFirstLicenced: '',
 			firstName: '',
 			gender: '',
 			governmentAffiliation: '',
-			hasAccidentOrCitations: false,
+			hasAccidentOrCitations: '',
 			highestEducation: '',
 			id,
 			lastName: '',
 			maritalStatus: '',
-			militaryAffiliation: '',
-			ocupation: '',
-			otherOcupation: '',
+			millitaryAffiliation: '',
+			occupation: '',
+			otherOccupation: '',
 			relationToContact: '',
 		};
+
+		const newAccidentCitationOptions = accidentCitationOptions.map(
+			(accidentCitationOption) => {
+				return {
+					...accidentCitationOption,
+					onClick: (event: any) => {
+						handleUpdateField(
+							form[formIndex].id,
+							currentId,
+							formIndex,
+							event.target.textContent
+						);
+					},
+				};
+			}
+		);
+
+		setNewAccidentCitations([
+			...newAccidentCitations,
+			newAccidentCitationOptions,
+		]);
 
 		dispatch({
 			payload: driverInfoObject,
 			type: ACTIONS.SET_NEW_ACCIDENT_CITATION,
 		});
 	};
+
+	useEffect(() => {
+		handleAddCitationClick();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const handleChangeField = (
 		fieldName: string,
@@ -101,243 +219,48 @@ const DriverInfoForm = ({
 
 	const handleRemoveFormClick = (id: number) => {
 		const payload = {id};
+
 		dispatch({payload, type: ACTIONS.SET_REMOVE_DRIVER});
 	};
 
 	const handleRemoveAccidentCitationClick = (
-		accidentCitationId: number,
-		formId: number
+		accidentCitationIndex: number,
+		formIndex: number
 	) => {
-		const payload = {accidentCitationId, formId};
+		const payload = {
+			accidentCitationIndex,
+			formIndex,
+		};
 		dispatch({payload, type: ACTIONS.SET_REMOVE_ACCIDENT_CITATION});
 	};
 
-	const relationToContactOptions = [
-		{
-			label: '',
-			value: '',
-		},
-		{
-			label: 'Choose an option',
-			value: 'chooseAnOption',
-		},
-		{
-			label: 'Self',
-			value: 'self',
-		},
-		{
-			label: 'Spouse',
-			value: 'spouse',
-		},
-		{
-			label: 'Dependent',
-			value: 'dependent',
-		},
-		{
-			label: 'Relative',
-			value: 'relative',
-		},
-	];
+	useEffect(() => {
+		const millitaryAffiliationOptionsAddClick = millitaryAffiliationOptions.map(
+			(millitaryAffiliationOption) => {
+				return {
+					...millitaryAffiliationOption,
+					onClick: (event: any) => {
+						let value = event.target.textContent || '';
 
-	const genderOptions = [
-		{
-			label: '',
-			value: '',
-		},
-		{
-			label: 'Choose an option',
-			value: 'chooseAnOption',
-		},
-		{
-			label: 'Male',
-			value: 'male',
-		},
-		{
-			label: 'Female',
-			value: 'female',
-		},
-	];
+						value = value === 'Choose an option' ? '' : value;
 
-	const maritalStatusOptions = [
-		{
-			label: '',
-			value: '',
-		},
-		{
-			label: 'Choose an option',
-			value: 'chooseAnOption',
-		},
-		{
-			label: 'Married',
-			value: 'married',
-		},
-		{
-			label: 'Separated',
-			value: 'separated',
-		},
-		{
-			label: 'Single',
-			value: 'single',
-		},
-		{
-			label: 'Widowed',
-			value: 'widowed',
-		},
-	];
+						handleChangeField('millitaryAffiliation', value, id);
+						setMillitaryAffiliation(value);
+						setHasError({
+							...hasError,
+							millitaryAffiliation: value === '' ? true : false,
+						});
+					},
+				};
+			}
+		);
 
-	const occupationOptions = [
-		{
-			label: '',
-			value: '',
-		},
-		{
-			label: 'Choose an option',
-			value: 'chooseAnOption',
-		},
-		{
-			label: 'Accountant',
-			value: 'accountant',
-		},
-		{
-			label: 'Dentist',
-			value: 'dentist',
-		},
-		{
-			label: 'Engineer',
-			value: 'engineer',
-		},
-		{
-			label: 'Government',
-			value: 'government',
-		},
-		{
-			label: 'Other',
-			value: 'other',
-		},
-	];
-
-	const millitaryAffiliationOptions = [
-		{
-			label: '',
-			value: '',
-		},
-		{
-			label: 'Choose an option',
-			value: 'chooseAnOption',
-		},
-		{
-			label: 'None',
-			value: 'none',
-		},
-		{
-			label: 'US Air Force',
-			value: 'usAirForce',
-		},
-		{
-			label: 'US Coast Guard',
-			value: 'usCoastGuard',
-		},
-		{
-			label: 'US Marine Corps',
-			value: 'usMarineCorps',
-		},
-		{
-			label: 'US Military',
-			value: 'usMilitary',
-		},
-		{
-			label: 'US Navy',
-			value: 'usNavy',
-		},
-	];
-
-	const highestEducationOptions = [
-		{
-			label: '',
-			value: '',
-		},
-		{
-			label: 'Choose an option',
-			value: 'chooseAnOption',
-		},
-		{
-			label: 'High School',
-			value: 'highSchool',
-		},
-		{
-			label: 'College',
-			value: 'college',
-		},
-		{
-			label: 'Masters',
-			value: 'masters',
-		},
-		{
-			label: 'PHD',
-			value: 'phd',
-		},
-	];
-
-	const governmentAffiliationOptions = [
-		{
-			label: '',
-			value: '',
-		},
-		{
-			label: 'Choose an option',
-			value: 'chooseAnOption',
-		},
-		{
-			label: 'ABC Sheriff Association',
-			value: 'abcSheriffAssociation',
-		},
-		{
-			label: 'FBI Academy Associates',
-			value: 'fbiAcademyAssociates',
-		},
-		{
-			label: 'State Firefighters Association',
-			value: 'stateFirefightersAssociation',
-		},
-	];
-
-	const accidentCitation = [
-		{
-			label: '',
-			value: '',
-		},
-		{
-			label: 'Choose an option',
-			value: 'chooseAnOption',
-		},
-		{
-			label: 'Accident - Not at fault',
-			value: 'accidentNotAtFault',
-		},
-		{
-			label: 'Accident - At fault',
-			value: 'accidentAtFault',
-		},
-		{
-			label: 'Accident - Car rolled over',
-			value: 'accidentCarRolledOver',
-		},
-		{
-			label: 'Citation - Driving under the influence',
-			value: 'citationDrivingUnderTheInfluence',
-		},
-		{
-			label: 'Citation - Failing to Yield',
-			value: 'citationFailingToYield',
-		},
-		{
-			label: 'US Citation - Speeding',
-			value: 'citationSpeeding',
-		},
-	];
+		setMillitaryAffiliationOptions(millitaryAffiliationOptionsAddClick);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
-		<div className="bg-neutral-0 mx-8">
+		<div className="bg-neutral-0">
 			<div className="align-items-center d-flex justify-content-between ml-5 mr-3 row">
 				<div className="border-bottom flex-grow-1">
 					<span className="font-weight-bolder text-paragraph-sm text-uppercase">
@@ -369,68 +292,134 @@ const DriverInfoForm = ({
 
 			<ClayForm>
 				<div className="row">
-					<div className="col filled form-condensed form-group">
+					<div
+						className={classNames(
+							'col filled form-condensed form-group',
+							{
+								'has-error': hasError.firstName,
+							}
+						)}
+					>
 						<ClayInput
 							autoComplete="off"
-							className="bg-neutral-0 firstName w-100"
 							id="firstName"
 							name="firstName"
+							onBlur={(event) => {
+								setHasError({
+									...hasError,
+									firstName:
+										event.target.value === ''
+											? true
+											: false,
+								});
+							}}
 							onChange={(event) => {
 								handleChangeField(
 									'firstName',
 									event.target.value,
 									id
 								);
+								setHasError({
+									...hasError,
+									firstName:
+										event.target.value === ''
+											? true
+											: false,
+								});
 							}}
 							required
 							type="text"
+							value={form[formNumber - 1].firstName}
 						/>
 
 						<label htmlFor="firstName">
 							First Name&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>
+
+						{hasError.firstName && <ErrorMessage />}
 					</div>
 
-					<div className="col filled form-condensed form-group">
+					<div
+						className={classNames(
+							'col filled form-condensed form-group',
+							{
+								'has-error': hasError.lastName,
+							}
+						)}
+					>
 						<ClayInput
 							autoComplete="off"
-							className="bg-neutral-0 lastName w-100"
 							id="lastName"
 							name="lastName"
+							onBlur={(event) => {
+								setHasError({
+									...hasError,
+									lastName:
+										event.target.value === ''
+											? true
+											: false,
+								});
+							}}
 							onChange={(event) => {
 								handleChangeField(
 									'lastName',
 									event.target.value,
 									id
 								);
+								setHasError({
+									...hasError,
+									lastName:
+										event.target.value === ''
+											? true
+											: false,
+								});
 							}}
 							required
 							type="text"
+							value={form[formNumber - 1].lastName}
 						/>
 
 						<label htmlFor="lastName">
 							Last Name&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>
+
+						{hasError.lastName && <ErrorMessage />}
 					</div>
 
-					<div className="col filled form-condensed form-group">
+					<div
+						className={classNames(
+							'col filled form-condensed form-group',
+							{
+								'has-error': hasError.relationToContact,
+							}
+						)}
+					>
 						<ClaySelect
 							aria-label="Select Label"
 							id="relationToContact"
 							onChange={(event) => {
+								let value = event.target.value;
+
+								value =
+									value === 'Choose an option' ? '' : value;
 								handleChangeField(
 									'relationToContact',
-									event.target.value,
+									value,
 									id
 								);
+								setHasError({
+									...hasError,
+									relationToContact: value === '',
+								});
 							}}
+							value={form[formNumber - 1].relationToContact}
 						>
 							{relationToContactOptions.map(
 								(relationToContactOption) => (
 									<ClaySelect.Option
-										className="text-uppercase"
+										className="font-weight-bold text-brand-primary text-center text-paragraph-sm text-uppercase"
 										key={relationToContactOption.value}
 										label={relationToContactOption.label}
 										value={relationToContactOption.value}
@@ -443,25 +432,38 @@ const DriverInfoForm = ({
 							Relation To Contact&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>
+
+						{hasError.relationToContact && <ErrorMessage />}
 					</div>
 				</div>
 
 				<div className="row">
-					<div className="col filled form-condensed form-group">
+					<div
+						className={classNames(
+							'col filled form-condensed form-group',
+							{
+								'has-error': hasError.gender,
+							}
+						)}
+					>
 						<ClaySelect
 							aria-label="Select Label"
 							id="gender"
 							onChange={(event) => {
-								handleChangeField(
-									'gender',
-									event.target.value,
-									id
-								);
+								let value = event.target.value;
+								value =
+									value === 'Choose an option' ? '' : value;
+								handleChangeField('gender', value, id);
+								setHasError({
+									...hasError,
+									gender: value === '' ? true : false,
+								});
 							}}
+							value={form[formNumber - 1].gender}
 						>
 							{genderOptions.map((genderOption) => (
 								<ClaySelect.Option
-									className="text-uppercase"
+									className="font-weight-bold text-brand-primary text-center text-paragraph-sm text-uppercase"
 									key={genderOption.value}
 									label={genderOption.label}
 									value={genderOption.value}
@@ -473,23 +475,36 @@ const DriverInfoForm = ({
 							Gender&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>
+
+						{hasError.gender && <ErrorMessage />}
 					</div>
 
-					<div className="col filled form-condensed form-group">
+					<div
+						className={classNames(
+							'col filled form-condensed form-group',
+							{
+								'has-error': hasError.maritalStatus,
+							}
+						)}
+					>
 						<ClaySelect
 							aria-label="Select Label"
-							id="maritalStatusOptions"
+							id="maritalStatus"
 							onChange={(event) => {
-								handleChangeField(
-									'maritalStatusOptions',
-									event.target.value,
-									id
-								);
+								let value = event.target.value;
+								value =
+									value === 'Choose an option' ? '' : value;
+								handleChangeField('maritalStatus', value, id);
+								setHasError({
+									...hasError,
+									maritalStatus: value === '' ? true : false,
+								});
 							}}
+							value={form[formNumber - 1].maritalStatus}
 						>
 							{maritalStatusOptions.map((maritalStatusOption) => (
 								<ClaySelect.Option
-									className="text-uppercase"
+									className="font-weight-bold text-brand-primary text-center text-paragraph-sm text-uppercase"
 									key={maritalStatusOption.value}
 									label={maritalStatusOption.label}
 									value={maritalStatusOption.value}
@@ -497,54 +512,88 @@ const DriverInfoForm = ({
 							))}
 						</ClaySelect>
 
-						<label htmlFor="maritalStatusOptions">
+						<label htmlFor="maritalStatus">
 							Marital Status&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>
+
+						{hasError.maritalStatus && <ErrorMessage />}
 					</div>
 
-					<div className="col filled form-condensed form-group">
+					<div
+						className={classNames(
+							'col filled form-condensed form-group',
+							{
+								'has-error': hasError.ageFirstLicenced,
+							}
+						)}
+					>
 						<ClayInput
 							autoComplete="off"
 							className="ageFirstLicenced bg-neutral-0 w-100"
 							id="ageFirstLicenced"
 							name="ageFirstLicenced"
 							onChange={(event) => {
+								let value = event.target.value;
+								value =
+									value === 'Choose an option' ? '' : value;
 								handleChangeField(
 									'ageFirstLicenced',
-									event.target.value,
+									value,
 									id
 								);
+								setHasError({
+									...hasError,
+									ageFirstLicenced:
+										value === '' ? true : false,
+								});
 							}}
 							required
-							type="text"
+							type="number"
+							value={form[formNumber - 1].ageFirstLicenced}
 						/>
 
 						<label htmlFor="ageFirstLicenced">
 							Age First Licenced&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>
+
+						{hasError.ageFirstLicenced && <ErrorMessage />}
 					</div>
 				</div>
 
 				<div className="row">
-					<div className="col filled form-condensed form-group">
+					<div
+						className={classNames(
+							'col filled form-condensed form-group',
+							{
+								'has-error': hasError.occupation,
+							}
+						)}
+					>
 						<ClaySelect
 							aria-label="Select Label"
 							id="occupation"
-							onChange={(occupation) => {
-								setOccupationValue(occupation.target.value);
+							onChange={(event) => {
+								let value = event.target.value;
 
-								handleChangeField(
-									'occupation',
-									occupation.target.value,
-									id
-								);
+								setOccupationValue(value);
+
+								value =
+									value === 'Choose an option' ? '' : value;
+
+								handleChangeField('occupation', value, id);
+
+								setHasError({
+									...hasError,
+									occupation: value === '' ? true : false,
+								});
 							}}
+							value={form[formNumber - 1].occupation}
 						>
 							{occupationOptions.map((occupationOption) => (
 								<ClaySelect.Option
-									className="text-uppercase"
+									className="font-weight-bold text-brand-primary text-center text-paragraph-sm text-uppercase"
 									key={occupationOption.value}
 									label={occupationOption.label}
 									value={occupationOption.value}
@@ -553,59 +602,103 @@ const DriverInfoForm = ({
 						</ClaySelect>
 
 						<label htmlFor="occupation">
-							Occupation&nbsp;
+							Ocuppation&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>
+
+						{hasError.occupation && <ErrorMessage />}
 					</div>
 
-					<div className="col filled form-condensed form-group">
+					<div
+						className={classNames(
+							'col filled form-condensed form-group',
+							{
+								'has-error': hasError.otherOccupation,
+							}
+						)}
+					>
 						<ClayInput
 							autoComplete="off"
-							className="bg-neutral-0 otherOcupation w-100"
-							disabled={occupationValue !== 'other'}
-							id="otherOcupation"
-							name="otherOcupation"
+							className="bg-neutral-0 otherOccupation w-100"
+							disabled={occupationValue !== 'Other'}
+							id="otherOccupation"
+							name="otherOccupation"
+							onBlur={(event) => {
+								setHasError({
+									...hasError,
+									otherOccupation:
+										event.target.value === ''
+											? true
+											: false,
+								});
+							}}
 							onChange={(event) => {
-								handleChangeField(
-									'otherOcupation',
-									event.target.value,
-									id
-								);
+								let value = event.target.value;
+								value =
+									value === 'Choose an option' ? '' : value;
+								handleChangeField('otherOccupation', value, id);
+								setHasError({
+									...hasError,
+									otherOccupation:
+										value === '' &&
+										occupationValue === 'other'
+											? true
+											: false,
+								});
 							}}
 							required
 							type="text"
+							value={form[formNumber - 1].otherOccupation}
 						/>
 
-						{occupationValue === 'other' && (
+						{occupationValue === 'Other' && (
 							<label htmlFor="otherOccupation">
 								Other Occupation
 								<span className="text-danger-darken-1">*</span>
 							</label>
 						)}
 
-						{occupationValue !== 'other' && (
+						{occupationValue !== 'Other' && (
 							<label htmlFor="otherOccupation">
 								Other Occupation
 							</label>
 						)}
+
+						{hasError.otherOccupation && <ErrorMessage />}
 					</div>
 
-					<div className="col filled form-condensed form-group">
+					<div
+						className={classNames(
+							'col filled form-condensed form-group',
+							{
+								'has-error': hasError.highestEducation,
+							}
+						)}
+					>
 						<ClaySelect
 							aria-label="Select Label"
 							id="highestEducation"
 							onChange={(event) => {
+								let value = event.target.value;
+								value =
+									value === 'Choose an option' ? '' : value;
 								handleChangeField(
 									'highestEducation',
-									event.target.value,
+									value,
 									id
 								);
+								setHasError({
+									...hasError,
+									highestEducation:
+										value === '' ? true : false,
+								});
 							}}
+							value={form[formNumber - 1].highestEducation}
 						>
 							{highestEducationOptions.map(
 								(highestEducationOption) => (
 									<ClaySelect.Option
-										className="text-uppercase"
+										className="font-weight-bold text-brand-primary text-center text-paragraph-sm text-uppercase"
 										key={highestEducationOption.value}
 										label={highestEducationOption.label}
 										value={highestEducationOption.value}
@@ -618,27 +711,45 @@ const DriverInfoForm = ({
 							Highest Education&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>
+
+						{hasError.highestEducation && <ErrorMessage />}
 					</div>
 				</div>
 
 				<div className="mb-3 row">
-					<div className="col filled form-condensed form-group">
+					<div
+						className={classNames(
+							'col filled form-condensed form-group',
+							{
+								'has-error': hasError.governmentAffiliation,
+							}
+						)}
+					>
 						<ClaySelect
 							aria-label="Select Label"
-							disabled={occupationValue !== 'government'}
+							disabled={occupationValue !== 'Government'}
 							id="governmentAffiliation"
 							onChange={(event) => {
+								let value = event.target.value;
+								value =
+									value === 'Choose an option' ? '' : value;
 								handleChangeField(
 									'governmentAffiliation',
-									event.target.value,
+									value,
 									id
 								);
+								setHasError({
+									...hasError,
+									governmentAffiliation:
+										value === '' ? true : false,
+								});
 							}}
+							value={form[formNumber - 1].governmentAffiliation}
 						>
 							{governmentAffiliationOptions.map(
 								(governmentAffiliationOption) => (
 									<ClaySelect.Option
-										className="text-uppercase"
+										className="font-weight-bold text-brand-primary text-center text-paragraph-sm text-uppercase"
 										key={governmentAffiliationOption.value}
 										label={
 											governmentAffiliationOption.label
@@ -651,33 +762,70 @@ const DriverInfoForm = ({
 							)}
 						</ClaySelect>
 
-						{occupationValue === 'government' && (
-							<label htmlFor="otherOcupation">
+						{occupationValue === 'Government' && (
+							<label htmlFor="otherOccupation">
 								Government Affiliation&nbsp;
 								<span className="text-danger-darken-1">*</span>
 							</label>
 						)}
 
-						{occupationValue !== 'government' && (
-							<label htmlFor="otherOcupation">
+						{occupationValue !== 'Government' && (
+							<label htmlFor="otherOccupation">
 								Government Affiliation&nbsp;
 							</label>
 						)}
+
+						{hasError.governmentAffiliation && <ErrorMessage />}
 					</div>
 
-					<div className="col filled form-condensed form-group millitaryAffiliation">
+					<div
+						className={classNames(
+							'col filled form-condensed form-group',
+							{
+								'has-error': hasError.millitaryAffiliation,
+							}
+						)}
+					>
 						<ClayDropDownWithItems
-							items={millitaryAffiliationOptions}
-							searchable
+							alignmentByViewport={true}
+							alignmentPosition={dropdownAlign.bottomCenter}
+							items={_millitaryAffiliationOptions.filter(
+								(millitaryAffiliationOption) => {
+									return millitaryAffiliationOption.label.includes(
+										_millitaryAffiliation
+									);
+								}
+							)}
+							onSearchValueChange={(value) => {
+								setMillitaryAffiliation(value);
+							}}
+							searchValue={_millitaryAffiliation}
+							searchable={true}
 							trigger={
-								<ClayButton className="after bg-neutral-0 border-neutral-5 button-select d-flex icon justify-content-end rounded text-neutral-10">
-									<span>
-										<ClayIcon
-											className="button-select-icon"
-											symbol="caret-double-l"
+								<div className="d-flex select-millitary-affiliation text-neutral-10">
+									<ClaySelect
+										className="bg-neutral-0 border-neutral-5 cursor-pointer select-style text-paragraph"
+										disabled
+										required
+										value={
+											form[formNumber - 1]
+												.millitaryAffiliation
+										}
+									>
+										<ClaySelect.Option
+											className="py-4 text-brand-primary text-center text-paragraph"
+											label={
+												form[formNumber - 1]
+													.millitaryAffiliation
+											}
+											selected
+											value={
+												form[formNumber - 1]
+													.millitaryAffiliation
+											}
 										/>
-									</span>
-								</ClayButton>
+									</ClaySelect>
+								</div>
 							}
 						/>
 
@@ -685,6 +833,8 @@ const DriverInfoForm = ({
 							Millitary Affiliation&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>
+
+						{hasError.millitaryAffiliation && <ErrorMessage />}
 					</div>
 				</div>
 
@@ -697,16 +847,33 @@ const DriverInfoForm = ({
 						Accidents or Citations in the last 10 years?*
 					</div>
 
-					<ClayRadioGroup inline>
+					<ClayRadioGroup
+						defaultValue={form[formIndex].hasAccidentOrCitations}
+						inline
+					>
 						<ClayRadio
 							label="Yes"
-							onClick={() => setAccidentCitationValue(true)}
+							onClick={() => {
+								handleChangeField(
+									'hasAccidentOrCitations',
+									'yes',
+									id
+								);
+								setAccidentCitationValue(true);
+							}}
 							value="yes"
 						/>
 
 						<ClayRadio
 							label="No"
-							onClick={() => setAccidentCitationValue(false)}
+							onClick={() => {
+								handleChangeField(
+									'hasAccidentOrCitations',
+									'no',
+									id
+								);
+								setAccidentCitationValue(false);
+							}}
 							value="no"
 						/>
 					</ClayRadioGroup>
@@ -720,56 +887,92 @@ const DriverInfoForm = ({
 								index: number
 							) => (
 								<>
-									<div className="accidentCitation col-10 filled form-condensed form-group">
-										<ClayDropDownWithItems
-											items={accidentCitation}
-											key={index}
-											searchable
-											trigger={
-												<ClayButton className="after bg-neutral-0 border-neutral-5 button-select d-flex icon justify-content-end mb-3 rounded text-neutral-10">
-													<span>
-														<ClayIcon
-															className="button-select-icon"
-															symbol="caret-double-l"
-														/>
-													</span>
-												</ClayButton>
-											}
-										/>
-
-										<label htmlFor="accidentCitation">
-											Accident Citation
-											<span className="text-danger-darken-1">
-												*
-											</span>
-										</label>
-									</div>
-									{index === 0 ? (
-										<div className="col-1 form-group p-0">
-											<ClayButtonWithIcon
-												className="outline-primary"
-												onClick={() =>
-													handleAddCitationClick()
+									<div
+										className="accidentCitation col-10"
+										key={index}
+									>
+										<div
+											className={classNames(
+												'filled form-condensed form-group',
+												{
+													'has-error':
+														hasError.accidentCitation,
 												}
-												outline
-												symbol="plus"
+											)}
+										>
+											<ClayDropDownWithItems
+												alignmentByViewport={true}
+												alignmentPosition={
+													dropdownAlign.bottomCenter
+												}
+												items={
+													newAccidentCitations[index]
+												}
+												searchable={true}
+												trigger={
+													<div className="d-flex select-accident-citation text-neutral-10">
+														<ClaySelect
+															className="bg-neutral-0 border-neutral-5 cursor-pointer select-style text-paragraph"
+															disabled
+															key={index}
+															required
+														>
+															<ClaySelect.Option
+																className="cursor-pointer py-4 text-brand-primary text-center text-paragraph"
+																label={
+																	form[
+																		formIndex
+																	]
+																		.accidentCitation[
+																		index
+																	].value
+																}
+																selected
+															></ClaySelect.Option>
+														</ClaySelect>
+													</div>
+												}
 											/>
+
+											<label htmlFor="accidentCitation">
+												Accident Citation
+												<span className="text-danger-darken-1">
+													*
+												</span>
+											</label>
+
+											{hasError.accidentCitation && (
+												<ErrorMessage />
+											)}
 										</div>
-									) : (
-										<div className="col-1 form-group p-0">
-											<ClayButtonWithIcon
-												className="bg-neutral-0 border-neutral-0 text-neutral-9"
-												onClick={() => {
-													handleRemoveAccidentCitationClick(
-														accidentCitationForm[0]
-															.id,
-														form[formIndex].id
-													);
-												}}
-												symbol="times-circle"
-											/>
-										</div>
-									)}
+									</div>
+									<div>
+										{index === 0 ? (
+											<div className="col-1 form-group p-0">
+												<ClayButtonWithIcon
+													className="outline-primary"
+													onClick={() =>
+														handleAddCitationClick()
+													}
+													outline
+													symbol="plus"
+												/>
+											</div>
+										) : (
+											<div className="col-1 form-group p-0">
+												<ClayButtonWithIcon
+													className="bg-neutral-0 border-neutral-0 text-neutral-9"
+													onClick={() => {
+														handleRemoveAccidentCitationClick(
+															index,
+															formIndex
+														);
+													}}
+													symbol="times-circle"
+												/>
+											</div>
+										)}
+									</div>
 								</>
 							)
 						)}

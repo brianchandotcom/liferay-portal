@@ -8,16 +8,12 @@
 // FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
 // details.
 
-.button-select {
-	height: 100%;
-	padding-bottom: 11px;
-	padding-left: 16px;
-	padding-right: 8px;
-	padding-top: 11px;
-	width: 100%;
-
-	.button-select-icon {
-		font-size: 25px;
+.select-accident-citation,
+.select-millitary-affiliation {
+	.select-style {
+		color: #5f6167;
+		cursor: pointer;
+		height: 47.97px;
 	}
 }
 

@@ -30,6 +30,14 @@ const Activities = ({
 		MDFRequest
 	>();
 	const [isForm, setIsForm] = useState<boolean>(false);
+	const [currentIndex, setCurrentIndex] = useState<number>(
+		values.activities.length
+	);
+
+	const onAdd = () => {
+		setCurrentIndex(values.activities.length);
+		setIsForm(true);
+	};
 
 	return (
 		<PRMForm
@@ -38,12 +46,9 @@ const Activities = ({
 			title={values.overallCampaign}
 		>
 			{isForm ? (
-				<Form currentIndex={values.activities.length} />
+				<Form currentIndex={currentIndex} />
 			) : (
-				<Listing
-					activities={values.activities}
-					onAdd={() => setIsForm(true)}
-				/>
+				<Listing activities={values.activities} onAdd={onAdd} />
 			)}
 
 			<PRMForm.Footer>

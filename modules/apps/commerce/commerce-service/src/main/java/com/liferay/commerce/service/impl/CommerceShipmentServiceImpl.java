@@ -20,20 +20,29 @@ import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.base.CommerceShipmentServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceShipment"
+	},
+	service = AopService.class
+)
 public class CommerceShipmentServiceImpl
 	extends CommerceShipmentServiceBaseImpl {
 
@@ -487,13 +496,12 @@ public class CommerceShipmentServiceImpl
 			commerceShipmentId, status);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				CommerceShipmentServiceImpl.class, "_portletResourcePermission",
-				CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT);
-
-	@ServiceReference(type = CommerceChannelService.class)
+	@Reference
 	private CommerceChannelService _commerceChannelService;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

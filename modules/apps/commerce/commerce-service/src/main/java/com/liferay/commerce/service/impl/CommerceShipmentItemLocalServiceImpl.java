@@ -32,7 +32,7 @@ import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentLocalService;
 import com.liferay.commerce.service.base.CommerceShipmentItemLocalServiceBaseImpl;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,15 +46,21 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 import java.util.Objects;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
  * @author Luca Pellizzon
  */
+@Component(
+	property = "model.class.name=com.liferay.commerce.model.CommerceShipmentItem",
+	service = AopService.class
+)
 public class CommerceShipmentItemLocalServiceImpl
 	extends CommerceShipmentItemLocalServiceBaseImpl {
 
@@ -582,28 +588,28 @@ public class CommerceShipmentItemLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceShipmentItemLocalServiceImpl.class);
 
-	@ServiceReference(type = CommerceInventoryBookedQuantityLocalService.class)
+	@Reference
 	private CommerceInventoryBookedQuantityLocalService
 		_commerceInventoryBookedQuantityLocalService;
 
-	@ServiceReference(type = CommerceInventoryEngine.class)
+	@Reference
 	private CommerceInventoryEngine _commerceInventoryEngine;
 
-	@ServiceReference(type = CommerceInventoryWarehouseItemLocalService.class)
+	@Reference
 	private CommerceInventoryWarehouseItemLocalService
 		_commerceInventoryWarehouseItemLocalService;
 
-	@ServiceReference(type = CommerceInventoryWarehouseLocalService.class)
+	@Reference
 	private CommerceInventoryWarehouseLocalService
 		_commerceInventoryWarehouseLocalService;
 
-	@BeanReference(type = CommerceOrderItemLocalService.class)
+	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
-	@BeanReference(type = CommerceShipmentLocalService.class)
+	@Reference
 	private CommerceShipmentLocalService _commerceShipmentLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

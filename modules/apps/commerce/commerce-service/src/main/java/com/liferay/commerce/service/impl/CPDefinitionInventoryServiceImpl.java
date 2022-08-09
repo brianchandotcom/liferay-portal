@@ -21,15 +21,24 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.service.base.CPDefinitionInventoryServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CPDefinitionInventory"
+	},
+	service = AopService.class
+)
 public class CPDefinitionInventoryServiceImpl
 	extends CPDefinitionInventoryServiceBaseImpl {
 
@@ -152,17 +161,16 @@ public class CPDefinitionInventoryServiceImpl
 			getPermissionChecker(), commerceCatalog, actionId);
 	}
 
-	private static volatile ModelResourcePermission<CommerceCatalog>
-		_commerceCatalogModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CPDefinitionInventoryServiceImpl.class,
-				"_commerceCatalogModelResourcePermission",
-				CommerceCatalog.class);
-
-	@ServiceReference(type = CommerceCatalogLocalService.class)
+	@Reference
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
-	@ServiceReference(type = CPDefinitionLocalService.class)
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CommerceCatalog)"
+	)
+	private ModelResourcePermission<CommerceCatalog>
+		_commerceCatalogModelResourcePermission;
+
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 }

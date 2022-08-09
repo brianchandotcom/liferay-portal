@@ -21,20 +21,29 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.base.CommerceAddressServiceBaseImpl;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceAddress"
+	},
+	service = AopService.class
+)
 public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 
 	/**
@@ -404,10 +413,10 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 		}
 	}
 
-	@ServiceReference(type = CommerceAccountService.class)
+	@Reference
 	private CommerceAccountService _commerceAccountService;
 
-	@BeanReference(type = CommerceOrderService.class)
+	@Reference
 	private CommerceOrderService _commerceOrderService;
 
 }

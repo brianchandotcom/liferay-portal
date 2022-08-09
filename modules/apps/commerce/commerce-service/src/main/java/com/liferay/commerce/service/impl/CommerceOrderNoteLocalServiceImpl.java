@@ -20,19 +20,25 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.base.CommerceOrderNoteLocalServiceBaseImpl;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
  */
+@Component(
+	property = "model.class.name=com.liferay.commerce.model.CommerceOrderNote",
+	service = AopService.class
+)
 public class CommerceOrderNoteLocalServiceImpl
 	extends CommerceOrderNoteLocalServiceBaseImpl {
 
@@ -230,10 +236,10 @@ public class CommerceOrderNoteLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = CommerceOrderLocalService.class)
+	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

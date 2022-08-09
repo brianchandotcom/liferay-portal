@@ -63,7 +63,7 @@ import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -108,7 +108,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -128,11 +127,18 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
  * @author Marco Leo
  */
+@Component(
+	property = "model.class.name=com.liferay.commerce.model.CommerceOrder",
+	service = AopService.class
+)
 public class CommerceOrderLocalServiceImpl
 	extends CommerceOrderLocalServiceBaseImpl {
 
@@ -2234,85 +2240,85 @@ public class CommerceOrderLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderLocalServiceImpl.class);
 
-	@BeanReference(type = CommerceAddressLocalService.class)
+	@Reference
 	private CommerceAddressLocalService _commerceAddressLocalService;
 
-	@ServiceReference(type = CommerceChannelLocalService.class)
+	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
-	@ServiceReference(type = CommerceCurrencyLocalService.class)
+	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
-	@ServiceReference(type = CommerceDiscountLocalService.class)
+	@Reference
 	private CommerceDiscountLocalService _commerceDiscountLocalService;
 
-	@ServiceReference(type = CommerceDiscountUsageEntryLocalService.class)
+	@Reference
 	private CommerceDiscountUsageEntryLocalService
 		_commerceDiscountUsageEntryLocalService;
 
-	@ServiceReference(type = CommerceDiscountValidatorHelper.class)
+	@Reference
 	private CommerceDiscountValidatorHelper _commerceDiscountValidatorHelper;
 
-	@ServiceReference(type = CommerceOrderConfiguration.class)
+	@Reference
 	private CommerceOrderConfiguration _commerceOrderConfiguration;
 
-	@BeanReference(type = CommerceOrderItemLocalService.class)
+	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
-	@BeanReference(type = CommerceOrderItemPersistence.class)
+	@Reference
 	private CommerceOrderItemPersistence _commerceOrderItemPersistence;
 
-	@BeanReference(type = CommerceOrderNoteLocalService.class)
+	@Reference
 	private CommerceOrderNoteLocalService _commerceOrderNoteLocalService;
 
-	@BeanReference(type = CommerceOrderPaymentLocalService.class)
+	@Reference
 	private CommerceOrderPaymentLocalService _commerceOrderPaymentLocalService;
 
-	@ServiceReference(type = CommerceOrderPriceCalculation.class)
+	@Reference
 	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 
-	@BeanReference(type = CommerceOrderTypeLocalService.class)
+	@Reference
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 
-	@ServiceReference(type = CommerceShippingEngineRegistry.class)
+	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
 
-	@ServiceReference(type = CommerceShippingHelper.class)
+	@Reference
 	private CommerceShippingHelper _commerceShippingHelper;
 
-	@BeanReference(type = CommerceShippingMethodLocalService.class)
+	@Reference
 	private CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
 
-	@ServiceReference(type = CommerceTermEntryLocalService.class)
+	@Reference
 	private CommerceTermEntryLocalService _commerceTermEntryLocalService;
 
-	@ServiceReference(type = ConfigurationProvider.class)
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	@ServiceReference(type = DTOConverterRegistry.class)
+	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@ServiceReference(type = GroupLocalService.class)
+	@Reference
 	private GroupLocalService _groupLocalService;
 
-	@ServiceReference(type = JsonHelper.class)
+	@Reference
 	private JsonHelper _jsonHelper;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
-	@ServiceReference(type = WorkflowDefinitionLinkLocalService.class)
+	@Reference
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 
-	@ServiceReference(type = WorkflowInstanceLinkLocalService.class)
+	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
-	@ServiceReference(type = WorkflowTaskManager.class)
+	@Reference
 	private WorkflowTaskManager _workflowTaskManager;
 
 }

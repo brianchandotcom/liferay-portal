@@ -15,10 +15,20 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.service.base.CommerceAddressRestrictionServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceAddressRestriction"
+	},
+	service = AopService.class
+)
 public class CommerceAddressRestrictionServiceImpl
 	extends CommerceAddressRestrictionServiceBaseImpl {
 }

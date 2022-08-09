@@ -21,21 +21,29 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.base.CommerceShipmentItemServiceBaseImpl;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceShipmentItem"
+	},
+	service = AopService.class
+)
 public class CommerceShipmentItemServiceImpl
 	extends CommerceShipmentItemServiceBaseImpl {
 
@@ -272,19 +280,18 @@ public class CommerceShipmentItemServiceImpl
 			commerceShipmentItemId, externalReferenceCode);
 	}
 
-	private static volatile ModelResourcePermission<CommerceOrder>
-		_commerceOrderModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceShipmentItemServiceImpl.class,
-				"_commerceOrderModelResourcePermission", CommerceOrder.class);
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				CommerceShipmentItemServiceImpl.class,
-				"_portletResourcePermission",
-				CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT);
-
-	@BeanReference(type = CommerceOrderItemLocalService.class)
+	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

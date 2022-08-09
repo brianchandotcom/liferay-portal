@@ -29,7 +29,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -63,9 +62,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = "model.class.name=com.liferay.commerce.model.CommerceOrderType",
+	service = AopService.class
+)
 public class CommerceOrderTypeLocalServiceImpl
 	extends CommerceOrderTypeLocalServiceBaseImpl {
 
@@ -499,25 +505,25 @@ public class CommerceOrderTypeLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderTypeLocalServiceImpl.class);
 
-	@ServiceReference(type = ClassNameLocalService.class)
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@BeanReference(type = CommerceOrderTypeRelLocalService.class)
+	@Reference
 	private CommerceOrderTypeRelLocalService _commerceOrderTypeRelLocalService;
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@ServiceReference(type = InlineSQLHelper.class)
+	@Reference
 	private InlineSQLHelper _inlineSQLHelper;
 
-	@ServiceReference(type = ResourceLocalService.class)
+	@Reference
 	private ResourceLocalService _resourceLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
-	@ServiceReference(type = WorkflowInstanceLinkLocalService.class)
+	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

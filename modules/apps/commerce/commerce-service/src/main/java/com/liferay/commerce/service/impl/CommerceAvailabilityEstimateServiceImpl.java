@@ -18,9 +18,9 @@ import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.commerce.service.base.CommerceAvailabilityEstimateServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -28,9 +28,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceAvailabilityEstimate"
+	},
+	service = AopService.class
+)
 public class CommerceAvailabilityEstimateServiceImpl
 	extends CommerceAvailabilityEstimateServiceBaseImpl {
 
@@ -117,11 +127,9 @@ public class CommerceAvailabilityEstimateServiceImpl
 				serviceContext);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				CommerceAvailabilityEstimateServiceImpl.class,
-				"_portletResourcePermission",
-				CommerceConstants.RESOURCE_NAME_COMMERCE_AVAILABILITY);
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_AVAILABILITY + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

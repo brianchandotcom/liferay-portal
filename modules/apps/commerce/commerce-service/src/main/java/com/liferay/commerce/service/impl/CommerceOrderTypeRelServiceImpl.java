@@ -18,19 +18,29 @@ import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceOrderTypeRel;
 import com.liferay.commerce.service.base.CommerceOrderTypeRelServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceOrderTypeRel"
+	},
+	service = AopService.class
+)
 public class CommerceOrderTypeRelServiceImpl
 	extends CommerceOrderTypeRelServiceBaseImpl {
 
@@ -154,11 +164,10 @@ public class CommerceOrderTypeRelServiceImpl
 			className, classPK);
 	}
 
-	private static volatile ModelResourcePermission<CommerceOrderType>
-		_commerceOrderTypeModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceOrderTypeRelServiceImpl.class,
-				"_commerceOrderTypeModelResourcePermission",
-				CommerceOrderType.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrderType)"
+	)
+	private ModelResourcePermission<CommerceOrderType>
+		_commerceOrderTypeModelResourcePermission;
 
 }

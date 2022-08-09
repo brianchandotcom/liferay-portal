@@ -29,6 +29,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.base.CommerceSubscriptionEntryLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -59,7 +60,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -67,10 +67,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  * @author Luca Pellizzon
  */
+@Component(
+	property = "model.class.name=com.liferay.commerce.model.CommerceSubscriptionEntry",
+	service = AopService.class
+)
 public class CommerceSubscriptionEntryLocalServiceImpl
 	extends CommerceSubscriptionEntryLocalServiceBaseImpl {
 
@@ -810,22 +817,22 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceSubscriptionEntryLocalServiceImpl.class);
 
-	@ServiceReference(type = CommerceChannelLocalService.class)
+	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
-	@ServiceReference(type = CommerceNotificationHelper.class)
+	@Reference
 	private CommerceNotificationHelper _commerceNotificationHelper;
 
-	@ServiceReference(type = CPDefinitionLocalService.class)
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@ServiceReference(type = CPInstanceLocalService.class)
+	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
 
-	@ServiceReference(type = CPSubscriptionTypeRegistry.class)
+	@Reference
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

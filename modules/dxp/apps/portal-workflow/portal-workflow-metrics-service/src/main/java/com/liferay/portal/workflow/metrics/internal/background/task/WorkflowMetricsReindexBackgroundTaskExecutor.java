@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.metrics.internal.background.task;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
@@ -35,7 +36,9 @@ import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetric
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -90,22 +93,31 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 			workflowMetricsIndex.createIndex(backgroundTask.getCompanyId());
 		}
 
+		List<NoticeableFuture<?>> noticeableFutures = new ArrayList<>();
+
 		for (int i = 0; i < indexEntityNames.length; i++) {
 			int count = i + 1;
 			String indexEntityName = indexEntityNames[i];
 
-			_workflowMetricsPortalExecutor.execute(
-				() -> {
-					WorkflowMetricsReindexer workflowMetricsReindexer =
-						_workflowMetricsReindexers.getService(indexEntityName);
+			noticeableFutures.add(
+				_workflowMetricsPortalExecutor.execute(
+					() -> {
+						WorkflowMetricsReindexer workflowMetricsReindexer =
+							_workflowMetricsReindexers.getService(
+								indexEntityName);
 
-					workflowMetricsReindexer.reindex(
-						backgroundTask.getCompanyId());
+						workflowMetricsReindexer.reindex(
+							backgroundTask.getCompanyId());
 
-					_workflowMetricsReindexStatusMessageSender.
-						sendStatusMessage(
-							count, indexEntityNames.length, StringPool.BLANK);
-				});
+						_workflowMetricsReindexStatusMessageSender.
+							sendStatusMessage(
+								count, indexEntityNames.length,
+								StringPool.BLANK);
+					}));
+		}
+
+		for (NoticeableFuture<?> noticeableFuture : noticeableFutures) {
+			noticeableFuture.get();
 		}
 
 		_sendStatusMessage(

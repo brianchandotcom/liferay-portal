@@ -1,18 +1,17 @@
 {
 	"pageElement": {
 		"pageElements": [
-			
-				{
-					"definition": {
-					  "fragmentStyle": {
+			{
+				"definition": {
+					"fragmentStyle": {
 						"borderWidth": "0",
 						"paddingBottom": "6",
 						"paddingLeft": "6",
 						"paddingRight": "6",
 						"textAlign": ""
-					  },
-					  "indexed": true,
-					  "layout": {
+					},
+					"indexed": true,
+					"layout": {
 						"borderWidth": 0,
 						"contentDisplay": "FlexColumn",
 						"marginBottom": 0,
@@ -24,324 +23,421 @@
 						"paddingRight": 6,
 						"paddingTop": 0,
 						"widthType": "Fluid"
-					  }
-					},
-					"pageElements": [
-					  {
+					}
+				},
+				"pageElements": [
+					{
 						"definition": {
-						  "fragmentStyle": { "borderWidth": "0" },
-						  "indexed": true,
-						  "layout": {
-							"borderWidth": 0,
-							"marginBottom": 0,
-							"marginLeft": 0,
-							"marginRight": 0,
-							"marginTop": 0,
-							"paddingBottom": 0,
-							"paddingLeft": 0,
-							"paddingRight": 0,
-							"paddingTop": 0,
-							"widthType": "Fluid"
-						  }
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
 						},
 						"pageElements": [
-						  {
-							"definition": {
-							  "fragment": { "key": "enablement-welcome-banner" },
-							  "fragmentConfig": {
-								"secondaryButtonLink": "https://www.liferay.com/pt/home"
-							  },
-							  "fragmentFields": [
-								{
-								  "id": "first-banner-primary-button-text",
-								  "value": { "fragmentLink": {} }
+							{
+								"definition": {
+									"fragment": {
+										"key": "enablement-welcome-banner"
+									},
+									"fragmentConfig": {
+										"secondaryButtonLink": "https://www.liferay.com/pt/home"
+									},
+									"fragmentFields": [
+										{
+											"id": "first-banner-primary-button-text",
+											"value": {
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "second-banner-primary-button-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Watch a Video Tour"
+													}
+												}
+											}
+										},
+										{
+											"id": "second-banner-secondary-button-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Register New Deal"
+													}
+												}
+											}
+										},
+										{
+											"id": "first-welcome-banner-title",
+											"value": {
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "first-banner-secondary-button-text",
+											"value": {
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "first-welcome-banner-description",
+											"value": {
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "second-welcome-banner-title",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Partner Enablement"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginTop": "5"
+									},
+									"indexed": true
 								},
-								{
-								  "id": "second-banner-primary-button-text",
-								  "value": {
-									"fragmentLink": {},
-									"text": { "value_i18n": { "en_US": "Watch a Video Tour" } }
-								  }
-								},
-								{
-								  "id": "second-banner-secondary-button-text",
-								  "value": {
-									"fragmentLink": {},
-									"text": { "value_i18n": { "en_US": "Register New Deal" } }
-								  }
-								},
-								{
-								  "id": "first-welcome-banner-title",
-								  "value": { "fragmentLink": {} }
-								},
-								{
-								  "id": "first-banner-secondary-button-text",
-								  "value": { "fragmentLink": {} }
-								},
-								{
-								  "id": "first-welcome-banner-description",
-								  "value": { "fragmentLink": {} }
-								},
-								{
-								  "id": "second-welcome-banner-title",
-								  "value": {
-									"fragmentLink": {},
-									"text": { "value_i18n": { "en_US": "Partner Enablement" } }
-								  }
-								}
-							  ],
-							  "fragmentStyle": { "marginTop": "5" },
-							  "indexed": true
-							},
-							"type": "Fragment"
-						  }
+								"type": "Fragment"
+							}
 						],
 						"type": "Section"
-					  },
-					  {
+					},
+					{
 						"definition": {
-						  "fragment": { "key": "BASIC_COMPONENT-heading" },
-						  "fragmentConfig": { "headingLevel": "h3" },
-						  "fragmentFields": [
-							{
-							  "id": "element-text",
-							  "value": {
-								"fragmentLink": {},
-								"text": { "value_i18n": { "en_US": "Select your learning path" } }
-							  }
-							}
-						  ],
-						  "fragmentStyle": {
-							"fontWeight": "fontWeightBold",
-							"marginBottom": "4",
-							"marginRight": "6",
-							"marginTop": "5",
-							"textAlign": ""
-						  },
-						  "indexed": true
+							"fragment": {
+								"key": "BASIC_COMPONENT-heading"
+							},
+							"fragmentConfig": {
+								"headingLevel": "h3"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Select your learning path"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"fontWeight": "fontWeightBold",
+								"marginBottom": "4",
+								"marginRight": "6",
+								"marginTop": "5",
+								"textAlign": ""
+							},
+							"indexed": true
 						},
 						"type": "Fragment"
-					  },
-					  {
+					},
+					{
 						"definition": {
-						  "gutters": true,
-						  "indexed": true,
-						  "modulesPerRow": 3,
-						  "numberOfColumns": 3,
-						  "reverseOrder": false,
-						  "rowViewports": [
-							{
-							  "id": "landscapeMobile",
-							  "rowViewportDefinition": { "modulesPerRow": 1 }
-							},
-							{ "id": "portraitMobile", "rowViewportDefinition": {} },
-							{ "id": "tablet", "rowViewportDefinition": {} }
-						  ],
-						  "verticalAlignment": "top"
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 3,
+							"numberOfColumns": 3,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
 						},
 						"pageElements": [
-						  {
-							"definition": {
-							  "columnViewports": [
-								{
-								  "columnViewportDefinition": { "size": 12 },
-								  "id": "landscapeMobile"
-								},
-								{ "columnViewportDefinition": {}, "id": "portraitMobile" },
-								{ "columnViewportDefinition": {}, "id": "tablet" }
-							  ],
-							  "size": 4
-							},
-							"pageElements": [
-							  {
+							{
 								"definition": {
-								  "fragmentStyle": { "width": "388px" },
-								  "indexed": true,
-								  "layout": {
-									"borderWidth": 0,
-									"marginBottom": 0,
-									"marginLeft": 0,
-									"marginRight": 0,
-									"marginTop": 0,
-									"paddingBottom": 0,
-									"paddingLeft": 0,
-									"paddingRight": 0,
-									"paddingTop": 0,
-									"widthType": "Fluid"
-								  }
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
 								},
 								"pageElements": [
-								  {
-									"definition": {
-									  "fragmentStyle": {
-										"borderColor": "colorNeutral5",
-										"borderRadius": "borderRadiusSm",
-										"borderWidth": "1",
-										"paddingBottom": "4"
-									  },
-									  "widgetInstance": {
-										"widgetConfig": {
-										  "ddmTemplateKey": "",
-										  "assetEntryId": "44843",
-										  "userToolAssetAddonEntryKeys": "false",
-										  "groupId": "43267",
-										  "enableViewCountIncrement": "false",
-										  "articleId": "44837",
-										  "contentMetadataAssetAddonEntryKeys": "false"
+									{
+										"definition": {
+											"fragmentStyle": {
+												"width": "388px"
+											},
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
 										},
-										"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet"
-									  }
-									},
-									"type": "Widget"
-								  }
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderColor": "colorNeutral5",
+														"borderRadius": "borderRadiusSm",
+														"borderWidth": "1",
+														"paddingBottom": "4"
+													},
+													"widgetInstance": {
+														"widgetConfig": {
+															"articleId": "44837",
+															"assetEntryId": "44843",
+															"contentMetadataAssetAddonEntryKeys": "false",
+															"ddmTemplateKey": "",
+															"enableViewCountIncrement": "false",
+															"groupId": "43267",
+															"userToolAssetAddonEntryKeys": "false"
+														},
+														"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Section"
+									}
 								],
-								"type": "Section"
-							  }
-							],
-							"type": "Column"
-						  },
-						  {
-							"definition": {
-							  "columnViewports": [
-								{
-								  "columnViewportDefinition": { "size": 12 },
-								  "id": "landscapeMobile"
-								},
-								{ "columnViewportDefinition": {}, "id": "portraitMobile" },
-								{ "columnViewportDefinition": {}, "id": "tablet" }
-							  ],
-							  "size": 4
+								"type": "Column"
 							},
-							"pageElements": [
-							  {
+							{
 								"definition": {
-								  "fragmentStyle": { "width": "388px" },
-								  "indexed": true,
-								  "layout": {
-									"borderWidth": 0,
-									"marginBottom": 0,
-									"marginLeft": 0,
-									"marginRight": 0,
-									"marginTop": 0,
-									"paddingBottom": 0,
-									"paddingLeft": 0,
-									"paddingRight": 0,
-									"paddingTop": 0,
-									"widthType": "Fluid"
-								  }
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
 								},
 								"pageElements": [
-								  {
-									"definition": {
-									  "fragmentStyle": {
-										"borderColor": "colorNeutral5",
-										"borderRadius": "borderRadiusSm",
-										"borderWidth": "1",
-										"paddingBottom": "4",
-										"width": "388px"
-									  },
-									  "widgetInstance": {
-										"widgetConfig": {
-										  "ddmTemplateKey": "",
-										  "assetEntryId": "44922",
-										  "userToolAssetAddonEntryKeys": "false",
-										  "groupId": "43267",
-										  "enableViewCountIncrement": "false",
-										  "articleId": "44916",
-										  "contentMetadataAssetAddonEntryKeys": "false"
+									{
+										"definition": {
+											"fragmentStyle": {
+												"width": "388px"
+											},
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
 										},
-										"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
-										"widgetPermissions": [
-										  {
-											"actionKeys": [
-											  "PERMISSIONS",
-											  "PREFERENCES",
-											  "CONFIGURATION",
-											  "VIEW",
-											  "ADD_TO_PAGE"
-											],
-											"roleKey": "Owner"
-										  },
-										  { "actionKeys": ["VIEW"], "roleKey": "Site Member" },
-										  { "actionKeys": ["VIEW"], "roleKey": "Guest" }
-										]
-									  }
-									},
-									"type": "Widget"
-								  }
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderColor": "colorNeutral5",
+														"borderRadius": "borderRadiusSm",
+														"borderWidth": "1",
+														"paddingBottom": "4",
+														"width": "388px"
+													},
+													"widgetInstance": {
+														"widgetConfig": {
+															"articleId": "44916",
+															"assetEntryId": "44922",
+															"contentMetadataAssetAddonEntryKeys": "false",
+															"ddmTemplateKey": "",
+															"enableViewCountIncrement": "false",
+															"groupId": "43267",
+															"userToolAssetAddonEntryKeys": "false"
+														},
+														"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
+														"widgetPermissions": [
+															{
+																"actionKeys": [
+																	"PERMISSIONS",
+																	"PREFERENCES",
+																	"CONFIGURATION",
+																	"VIEW",
+																	"ADD_TO_PAGE"
+																],
+																"roleKey": "Owner"
+															},
+															{
+																"actionKeys": [
+																	"VIEW"
+																],
+																"roleKey": "Site Member"
+															},
+															{
+																"actionKeys": [
+																	"VIEW"
+																],
+																"roleKey": "Guest"
+															}
+														]
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Section"
+									}
 								],
-								"type": "Section"
-							  }
-							],
-							"type": "Column"
-						  },
-						  {
-							"definition": {
-							  "columnViewports": [
-								{
-								  "columnViewportDefinition": { "size": 12 },
-								  "id": "landscapeMobile"
-								},
-								{ "columnViewportDefinition": {}, "id": "portraitMobile" },
-								{ "columnViewportDefinition": {}, "id": "tablet" }
-							  ],
-							  "size": 4
+								"type": "Column"
 							},
-							"pageElements": [
-							  {
+							{
 								"definition": {
-								  "fragmentStyle": { "width": "388px" },
-								  "indexed": true,
-								  "layout": {
-									"borderWidth": 0,
-									"marginBottom": 0,
-									"marginLeft": 0,
-									"marginRight": 0,
-									"marginTop": 0,
-									"paddingBottom": 0,
-									"paddingLeft": 0,
-									"paddingRight": 0,
-									"paddingTop": 0,
-									"widthType": "Fluid"
-								  }
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
 								},
 								"pageElements": [
-								  {
-									"definition": {
-									  "fragmentStyle": {
-										"borderColor": "colorNeutral5",
-										"borderRadius": "borderRadiusSm",
-										"borderWidth": "1",
-										"paddingBottom": "4"
-									  },
-									  "widgetInstance": {
-										"widgetConfig": {
-										  "ddmTemplateKey": "",
-										  "assetEntryId": "44933",
-										  "userToolAssetAddonEntryKeys": "false",
-										  "groupId": "43267",
-										  "enableViewCountIncrement": "false",
-										  "articleId": "44927",
-										  "contentMetadataAssetAddonEntryKeys": "false"
+									{
+										"definition": {
+											"fragmentStyle": {
+												"width": "388px"
+											},
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
 										},
-										"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet"
-									  }
-									},
-									"type": "Widget"
-								  }
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderColor": "colorNeutral5",
+														"borderRadius": "borderRadiusSm",
+														"borderWidth": "1",
+														"paddingBottom": "4"
+													},
+													"widgetInstance": {
+														"widgetConfig": {
+															"articleId": "44927",
+															"assetEntryId": "44933",
+															"contentMetadataAssetAddonEntryKeys": "false",
+															"ddmTemplateKey": "",
+															"enableViewCountIncrement": "false",
+															"groupId": "43267",
+															"userToolAssetAddonEntryKeys": "false"
+														},
+														"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Section"
+									}
 								],
-								"type": "Section"
-							  }
-							],
-							"type": "Column"
-						  }
+								"type": "Column"
+							}
 						],
 						"type": "Row"
-					  }
-					],
-					"type": "Section"
-				  }				  
-			
+					}
+				],
+				"type": "Section"
+			}
 		],
 		"type": "Root"
 	},

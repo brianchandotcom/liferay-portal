@@ -24,6 +24,10 @@ definition {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
 
+		task ("Login on OKTA") {
+			CustomerPortal.loginOktaToUpdateCP();
+		}
+
 		task ("Go to Customer Portal Site") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 

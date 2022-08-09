@@ -185,6 +185,35 @@ definition {
 	}
 
 	@priority = "5"
+	test CanRetrieveSiteKeywordsWithHeadlessAdminTaxonomyOpenAPI {
+		property portal.acceptance = "true";
+
+		task ("Given navigate to headless admin taxonomy endpoint") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-taxonomy",
+				version = "v1.0");
+		}
+
+		task ("When executing getSiteKeywordsPage with siteID as the parameter") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "getSiteKeywordsPage",
+				parameter = "siteId",
+				service = "Keyword");
+		}
+
+		task ("Then the shown response code is 200") {
+			AssertTextEquals(
+				locator1 = "OpenAPI#RESPONSE_CODE",
+				method = "getSiteKeywordsPage",
+				value1 = "200");
+		}
+	}
+
+	@priority = "5"
 	test CanRetrieveSiteStructuredContentsWithHeadlessAdminContentOpenAPI {
 		property portal.acceptance = "true";
 

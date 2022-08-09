@@ -228,7 +228,7 @@ export default function SearchBar({
 					</ClaySelect>
 				</ClayInput.GroupItem>
 
-				<ClayInput.GroupItem append shrink>
+				<ClayInput.GroupItem append className="mr-0" shrink>
 					<ClayButton
 						aria-label={Liferay.Language.get('submit')}
 						displayType="secondary"

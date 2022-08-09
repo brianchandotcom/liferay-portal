@@ -838,7 +838,7 @@ definition {
 					Type(
 						key_inputOption = "Name",
 						key_sectionOption = "${sectionOption}",
-						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_TIMERS_BY_POSITION",
 						value1 = "${name}");
 				}
 
@@ -846,7 +846,7 @@ definition {
 					Type(
 						key_inputOption = "Description",
 						key_sectionOption = "${sectionOption}",
-						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_TIMERS_BY_POSITION",
 						value1 = "${description}");
 				}
 
@@ -854,7 +854,7 @@ definition {
 					Select(
 						key_sectionOption = "${sectionOption}",
 						key_selectorField = "Scale",
-						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_TIMERS_BY_POSITION",
 						value1 = "${scaleTypeOption}");
 				}
 
@@ -862,7 +862,7 @@ definition {
 					Type(
 						key_inputOption = "Duration",
 						key_sectionOption = "${sectionOption}",
-						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_TIMERS_BY_POSITION",
 						value1 = "${durationValue} ${sectionOption}");
 				}
 
@@ -870,7 +870,7 @@ definition {
 					Select(
 						key_sectionOption = "${sectionOption}",
 						key_selectorField = "Type",
-						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_TIMERS_BY_POSITION",
 						value1 = "${actionTypeOption}");
 				}
 
@@ -878,7 +878,7 @@ definition {
 					Type(
 						key_inputOption = "Name*",
 						key_sectionOption = "${sectionOption}",
-						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_TIMERS_BY_POSITION",
 						value1 = "${actionName}");
 				}
 
@@ -886,14 +886,14 @@ definition {
 					Type(
 						key_inputOption = "Description",
 						key_sectionOption = "${sectionOption}",
-						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_TIMERS_BY_POSITION",
 						value1 = "${actionDescription}");
 				}
 
 				if (isSet(actionsTemplateValue)) {
 					Type(
 						key_sectionOption = "${sectionOption}",
-						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA_BY_POSITION",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA_TIMERS_BY_POSITION",
 						value1 = "${actionsTemplateValue}");
 				}
 
@@ -901,7 +901,7 @@ definition {
 					Type(
 						key_inputOption = "Priority",
 						key_sectionOption = "${sectionOption}",
-						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_TIMERS_BY_POSITION",
 						value1 = "${priorityValue}");
 				}
 

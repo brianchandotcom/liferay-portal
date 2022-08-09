@@ -29,19 +29,26 @@ import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sample.sql.builder.io.CharPipe;
 import com.liferay.portal.tools.sample.sql.builder.io.UnsyncTeeWriter;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
+
+import java.net.URL;
 
 import java.nio.channels.FileChannel;
 
 import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -251,6 +258,8 @@ public class SampleSQLBuilder {
 						createFileWriter(
 							new File(_OUTPUT_DIR, "sample.sql")))) {
 
+					_loadCreateSQLs(sampleSQLWriter);
+
 					FreeMarkerUtil.process(
 						BenchmarksPropsValues.SCRIPT,
 						HashMapBuilder.<String, Object>put(
@@ -333,11 +342,59 @@ public class SampleSQLBuilder {
 		insertSQLWriter.write(insertSQL);
 	}
 
+	private void _loadCreateSQL(InputStream inputStream, Writer writer)
+		throws IOException {
+
+		try (BufferedReader reader = new BufferedReader(
+				new InputStreamReader(inputStream))) {
+
+			String line;
+
+			while ((line = reader.readLine()) != null) {
+				writer.append(line);
+				writer.append(System.lineSeparator());
+			}
+		}
+	}
+
+	private void _loadCreateSQLs(Writer writer) throws IOException {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		for (String sqlFileName : _createSQLTemplateFileNames) {
+			if (sqlFileName.contains("META-INF")) {
+				Enumeration<URL> enumeration = classLoader.getResources(
+					sqlFileName);
+
+				while (enumeration.hasMoreElements()) {
+					URL url = enumeration.nextElement();
+
+					_loadCreateSQL(url.openStream(), writer);
+				}
+			}
+			else {
+				_loadCreateSQL(
+					classLoader.getResourceAsStream(sqlFileName), writer);
+			}
+		}
+
+		writer.flush();
+	}
+
 	private static final String _OUTPUT_DIR = System.getProperty("user.dir");
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
+
+	private static final List<String> _createSQLTemplateFileNames =
+		Arrays.asList(
+			"com/liferay/portal/tools/sql/dependencies/portal-tables.sql",
+			"com/liferay/portal/tools/sql/dependencies/portal-data-common.sql",
+			"com/liferay/portal/tools/sql/dependencies/portal-data-counter.sql",
+			"com/liferay/portal/tools/sql/dependencies/indexes.sql",
+			"META-INF/sql/tables.sql", "META-INF/sql/indexes.sql");
 
 	private volatile Throwable _freeMarkerThrowable;
 

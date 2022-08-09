@@ -58,8 +58,19 @@ public class UpgradeVersionTreeMapTest {
 		_checkTreeMapValues(treeMap, upgradeProcesses);
 	}
 
+	@Test
+	public void testSingleMultiStepUpgrade() {
+		UpgradeVersionTreeMap treeMap = new UpgradeVersionTreeMap();
+
+		treeMap.put(new Version(1, 0, 0), new MultiStepUpgrade());
+
+		Collection<UpgradeStep> upgradeSteps = treeMap.values();
+
+		_checkTreeMapValues(treeMap, upgradeSteps.toArray(new UpgradeStep[0]));
+	}
+
 	private void _checkTreeMapValues(
-		UpgradeVersionTreeMap treeMap, UpgradeProcess[] upgradeProcesses) {
+		UpgradeVersionTreeMap treeMap, UpgradeStep[] upgradeProcesses) {
 
 		Assert.assertEquals(
 			treeMap.toString(), upgradeProcesses.length, treeMap.size());
@@ -88,6 +99,20 @@ public class UpgradeVersionTreeMapTest {
 
 			i++;
 		}
+	}
+
+	private class MultiStepUpgrade extends DummyUpgradeProcess {
+
+		@Override
+		protected UpgradeStep[] getPostUpgradeSteps() {
+			return new UpgradeStep[] {new DummyUpgradeProcess()};
+		}
+
+		@Override
+		protected UpgradeStep[] getPreUpgradeSteps() {
+			return new UpgradeStep[] {new DummyUpgradeProcess()};
+		}
+
 	}
 
 }

@@ -85,7 +85,7 @@ const VerticalNavigationBar = ({
 				)
 		);
 
-		if (currentActivePanelKey) {
+		if (currentActivePanelKey && currentActivePanelKey !== activePanel) {
 			const href = items.find(({key}) => key === currentActivePanelKey)
 				?.href;
 

@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.version;
+package com.liferay.portal.kernel.upgrade.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.version.Version;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -27,11 +29,11 @@ import org.junit.Test;
 /**
  * @author Luis Ortiz
  */
-public class VersionTreeMapTest {
+public class UpgradeVersionTreeMapTest {
 
 	@Test
 	public void testPutMultipleUpgradeProcesses() {
-		VersionTreeMap<UpgradeProcess> treeMap = new VersionTreeMap<>();
+		UpgradeVersionTreeMap treeMap = new UpgradeVersionTreeMap();
 
 		UpgradeProcess[] upgradeProcesses = {
 			new DummyUpgradeProcess(), new DummyUpgradeProcess(),
@@ -45,7 +47,7 @@ public class VersionTreeMapTest {
 
 	@Test
 	public void testPutSingleUpgradeProcess() {
-		VersionTreeMap<UpgradeProcess> treeMap = new VersionTreeMap<>();
+		UpgradeVersionTreeMap treeMap = new UpgradeVersionTreeMap();
 
 		UpgradeProcess upgradeProcess = new DummyUpgradeProcess();
 
@@ -57,8 +59,7 @@ public class VersionTreeMapTest {
 	}
 
 	private void _checkTreeMapValues(
-		VersionTreeMap<UpgradeProcess> treeMap,
-		UpgradeProcess[] upgradeProcesses) {
+		UpgradeVersionTreeMap treeMap, UpgradeProcess[] upgradeProcesses) {
 
 		Assert.assertEquals(
 			treeMap.toString(), upgradeProcesses.length, treeMap.size());
@@ -72,9 +73,9 @@ public class VersionTreeMapTest {
 		while (iterator.hasNext()) {
 			Version version = iterator.next();
 
-			UpgradeProcess upgradeProcess = treeMap.get(version);
+			UpgradeStep upgradeStep = treeMap.get(version);
 
-			Assert.assertEquals(upgradeProcesses[i], upgradeProcess);
+			Assert.assertEquals(upgradeProcesses[i], upgradeStep);
 
 			String step = version.getQualifier();
 

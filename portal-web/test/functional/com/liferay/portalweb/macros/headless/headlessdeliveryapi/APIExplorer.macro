@@ -1,12 +1,42 @@
 definition {
 
+	macro addHeaders {
+		Variables.assertDefined(parameterList = "${headerKey},${headerValue}");
+
+		Click(
+			locator1 = "Button#BUTTON_WITH_VALUE",
+			value = "Headers");
+
+		Type(
+			locator1 = "OpenAPI#HEADER_PARAMETER",
+			name = "key",
+			value1 = "${headerKey}");
+
+		Type(
+			locator1 = "OpenAPI#HEADER_PARAMETER",
+			name = "value",
+			value1 = "${headerValue}");
+
+		Button.clickSave();
+	}
+
 	macro executeAPIMethodWithParameters {
-		Variables.assertDefined(parameterList = "${service},${method},${parameter},${value}");
+		Variables.assertDefined(parameterList = "${service},${method},${parameter}");
 
 		Click(
 			locator1 = "OpenAPI#API_METHOD",
 			method = "${method}",
 			service = "${service}");
+
+		if ("${parameter}" == "siteId") {
+			if (!(isSet(groupName))) {
+				var groupName = "Guest";
+			}
+
+			var value = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "${groupName}",
+				site = "true");
+		}
 
 		Type(
 			locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",

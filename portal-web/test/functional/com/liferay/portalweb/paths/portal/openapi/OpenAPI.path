@@ -38,6 +38,16 @@
 	<td>//div[contains(@id,'${method}')]//textarea[@class='body-param__text']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>HEADER_PARAMETER</td>
+	<td>//input[contains(@name,'${name}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURL_COMMAND</td>
+	<td>//*[@id="operations-${service}-${method}"]//div[contains(@class,'curl-command')]</td>
+	<td></td>
+</tr>
 
 <!--GRAPHQL-->
 

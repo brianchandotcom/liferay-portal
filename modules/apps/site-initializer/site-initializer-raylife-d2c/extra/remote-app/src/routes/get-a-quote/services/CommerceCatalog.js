@@ -22,7 +22,7 @@ const headlessAPI = 'o/headless-commerce-admin-catalog/v1.0';
  */
 export async function getProductQuotes() {
 	const catalog = await axios.get(
-		`${headlessAPI}/catalogs?filter=name eq 'Raylife'`
+		`${headlessAPI}/catalogs?filter=contains(name,'Raylife D2C')`
 	);
 
 	const catalogId = catalog?.data?.items[0]?.id;

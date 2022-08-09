@@ -28,7 +28,7 @@ import {redirectTo} from '../../../common/utils/liferay';
 import LoadingIndicator from '../../applications/components/LoadingIndicator';
 import Modal from '../../applications/components/Modal';
 import InsuranceCard from '../../applications/contents/InsuranceCard';
-import ProductCardPersona from '../../applications/contents/ProductCardPersona';
+import InsuranceProducts from '../../applications/contents/InsuranceProducts';
 
 const HEADERS = [
 	{
@@ -77,13 +77,11 @@ enum ModalType {
 	insuranceProducts = 2,
 }
 
-const insuranceCards = ['Personal', 'Business'];
-
 const RecentApplications = () => {
 	const [applications, setApplications] = useState<TableContent[]>([]);
 	const [visible, setVisible] = useState(false);
 	const [contentModal, setContentModal] = useState(ModalType.insurance);
-	const [cardSelected, setCardSelected] = useState(insuranceCards[0]);
+	const [selectedCard, setSelectedCard] = useState<any[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false),
@@ -101,7 +99,6 @@ const RecentApplications = () => {
 
 	const handleModal = () => {
 		setContentModal(ModalType.insurance);
-		setCardSelected(insuranceCards[0]);
 		setIsLoading(true);
 		setVisible(!visible);
 		setTimeout(() => setIsLoading(false), 1000);
@@ -156,8 +153,8 @@ const RecentApplications = () => {
 		setContentModal(ModalType.insurance);
 	};
 
-	const onClickInsuranceCard = (index: number) => {
-		setCardSelected(insuranceCards[index]);
+	const getSelectedCard = (selectCard: any[]) => {
+		setSelectedCard(selectCard);
 	};
 
 	const ButtonsInsurance = () => (
@@ -221,12 +218,15 @@ const RecentApplications = () => {
 					<LoadingIndicator />
 				) : contentModal === ModalType.insurance ? (
 					<InsuranceCard
-						cardSelected={cardSelected}
-						cards={insuranceCards}
-						onClickInsuranceCard={onClickInsuranceCard}
+						getSelectedCard={getSelectedCard}
+						loadedCategories={selectedCard}
 					/>
 				) : (
-					<ProductCardPersona />
+					<InsuranceProducts
+						selectedCard={selectedCard.filter(
+							(card) => card.active
+						)}
+					/>
 				)}
 			</Modal>
 

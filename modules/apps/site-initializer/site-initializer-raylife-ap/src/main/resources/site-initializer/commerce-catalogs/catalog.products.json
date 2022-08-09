@@ -1,0 +1,127 @@
+[
+	{
+		"availabilityEstimate": "",
+		"backOrders": true,
+		"categories": [
+			"Personal"
+		],
+		"description": "",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "RAYAP-001",
+		"height": 2,
+		"images": [
+		],
+		"length": 7,
+		"minStockQuantity": "",
+		"name": "Auto",
+		"price": "",
+		"promoPrice": "",
+		"shippable": false,
+		"sku": "RAYAP-001",
+		"specificationOptions": [
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": ""
+	},
+	{
+		"availabilityEstimate": "",
+		"backOrders": true,
+		"categories": [
+			"Personal"
+		],
+		"description": "",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "RAYAP-002",
+		"height": 2,
+		"images": [
+		],
+		"length": 7,
+		"minStockQuantity": "",
+		"name": "Home",
+		"price": "",
+		"promoPrice": "",
+		"shippable": false,
+		"sku": "RAYAP-002",
+		"specificationOptions": [
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": ""
+	},
+	{
+		"availabilityEstimate": "",
+		"backOrders": true,
+		"categories": [
+			"Personal"
+		],
+		"description": "",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "RAYAP-003",
+		"height": 2,
+		"images": [
+		],
+		"length": 7,
+		"minStockQuantity": "",
+		"name": "Property",
+		"price": "",
+		"promoPrice": "",
+		"shippable": false,
+		"sku": "RAYAP-003",
+		"specificationOptions": [
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": ""
+	},
+	{
+		"availabilityEstimate": "",
+		"backOrders": true,
+		"categories": [
+			"Personal"
+		],
+		"description": "",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "RAYAP-004",
+		"height": 2,
+		"images": [
+		],
+		"length": 7,
+		"minStockQuantity": "",
+		"name": "Life",
+		"price": "",
+		"promoPrice": "",
+		"shippable": false,
+		"sku": "RAYAP-004",
+		"specificationOptions": [
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": ""
+	},
+	{
+		"availabilityEstimate": "",
+		"backOrders": true,
+		"categories": [
+			"Personal"
+		],
+		"description": "",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "RAYAP-005",
+		"height": 2,
+		"images": [
+		],
+		"length": 7,
+		"minStockQuantity": "",
+		"name": "Health",
+		"price": "",
+		"promoPrice": "",
+		"shippable": false,
+		"sku": "RAYAP-005",
+		"specificationOptions": [
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": ""
+	}
+]

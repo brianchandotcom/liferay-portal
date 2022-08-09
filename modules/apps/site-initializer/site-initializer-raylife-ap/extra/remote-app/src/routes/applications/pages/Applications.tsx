@@ -21,7 +21,7 @@ import {redirectTo} from '../../../common/utils/liferay';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Modal from '../components/Modal';
 import InsuranceCard from '../contents/InsuranceCard';
-import ProductCardPersona from '../contents/ProductCardPersona';
+import InsuranceProducts from '../contents/InsuranceProducts';
 
 enum ModalType {
 	insurance = 1,
@@ -29,10 +29,9 @@ enum ModalType {
 }
 const Applications = () => {
 	const [visible, setVisible] = useState(false);
-	const insuranceCards = ['Personal', 'Business'];
 	const [isLoading, setIsLoading] = useState(false);
 	const [contentModal, setContentModal] = useState(ModalType.insurance);
-	const [cardSelected, setCardSelected] = useState(insuranceCards[0]);
+	const [selectedCard, setSelectedCard] = useState<any[]>([]);
 
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false),
@@ -50,8 +49,8 @@ const Applications = () => {
 		setContentModal(ModalType.insurance);
 	};
 
-	const onClickInsuranceCard = (index: number) => {
-		setCardSelected(insuranceCards[index]);
+	const getSelectedCard = (selectCard: any[]) => {
+		setSelectedCard(selectCard);
 	};
 
 	const ButtonsInsurance = () => (
@@ -98,7 +97,7 @@ const Applications = () => {
 	useEffect(() => {
 		const handler = () => setVisible(!visible);
 		setContentModal(ModalType.insurance);
-		setCardSelected(insuranceCards[0]);
+
 		setIsLoading(true);
 		setTimeout(() => setIsLoading(false), 1000);
 
@@ -128,12 +127,15 @@ const Applications = () => {
 					<LoadingIndicator />
 				) : contentModal === ModalType.insurance ? (
 					<InsuranceCard
-						cardSelected={cardSelected}
-						cards={insuranceCards}
-						onClickInsuranceCard={onClickInsuranceCard}
+						getSelectedCard={getSelectedCard}
+						loadedCategories={selectedCard}
 					/>
 				) : (
-					<ProductCardPersona />
+					<InsuranceProducts
+						selectedCard={selectedCard.filter(
+							(card) => card.active
+						)}
+					/>
 				)}
 			</Modal>
 		</>

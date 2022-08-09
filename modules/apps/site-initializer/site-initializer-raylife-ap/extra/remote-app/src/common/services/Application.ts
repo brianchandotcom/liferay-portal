@@ -67,7 +67,8 @@ const adaptToFormApplicationRequest = (state: any, status: any) => ({
 	firstName: state?.contactInfo?.form?.firstName,
 	lastName: state?.contactInfo?.form?.lastName,
 	phone: state?.contactInfo?.form?.phone,
-	productName: 'Auto',
+	productName: JSON.parse(localStorage.getItem('raylife-ap-storage') || '')
+		.productName,
 	state: state?.contactInfo?.form?.state,
 	zip: state?.contactInfo?.form?.zipCode,
 });

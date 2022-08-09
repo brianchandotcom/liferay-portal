@@ -34,6 +34,7 @@ import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.helper.CollectionPaginationHelper;
+import com.liferay.layout.page.template.util.LayoutStructureUtil;
 import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.taglib.internal.display.context.RenderCollectionLayoutStructureItemDisplayContext;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
@@ -148,21 +149,47 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	protected int processStartTag() throws Exception {
 		super.processStartTag();
 
-		RenderLayoutStructureDisplayContext
-			renderLayoutStructureDisplayContext =
-				new RenderLayoutStructureDisplayContext(
-					getRequest(), getLayoutStructure(), getMainItemId(),
-					getMode(), isShowPreview());
+		if (_layoutStructure == null) {
+			_layoutStructure = _getLayoutStructure();
+		}
 
-		_renderLayoutStructure(
-			renderLayoutStructureDisplayContext.getMainChildrenItemIds(),
-			renderLayoutStructureDisplayContext);
+		if (_layoutStructure != null) {
+			RenderLayoutStructureDisplayContext
+				renderLayoutStructureDisplayContext =
+					new RenderLayoutStructureDisplayContext(
+						getRequest(), getLayoutStructure(), getMainItemId(),
+						getMode(), isShowPreview());
+
+			_renderLayoutStructure(
+				renderLayoutStructureDisplayContext.getMainChildrenItemIds(),
+				renderLayoutStructureDisplayContext);
+		}
 
 		return SKIP_BODY;
 	}
 
 	protected static final String COLLECTION_ELEMENT_INDEX =
 		RenderLayoutStructureTag.class.getName() + "#COLLECTION_ELEMENT_INDEX";
+
+	private LayoutStructure _getLayoutStructure() {
+		HttpServletRequest httpServletRequest = getRequest();
+
+		LayoutStructure layoutStructure =
+			(LayoutStructure)httpServletRequest.getAttribute(
+				LayoutWebKeys.LAYOUT_STRUCTURE);
+
+		if (layoutStructure != null) {
+			return layoutStructure;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return LayoutStructureUtil.getLayoutStructure(
+			themeDisplay.getPlid(),
+			SegmentsExperienceUtil.getSegmentsExperienceId(httpServletRequest));
+	}
 
 	private void _renderCollectionStyledLayoutStructureItem(
 			InfoForm infoForm,

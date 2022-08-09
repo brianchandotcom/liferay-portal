@@ -15,13 +15,7 @@
 package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.layout.constants.LayoutWebKeys;
-import com.liferay.layout.page.template.util.LayoutStructureUtil;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
-import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,7 +61,6 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_layoutStructure = null;
 		_mainItemId = null;
 		_mode = FragmentEntryLinkConstants.VIEW;
 		_showPreview = false;
@@ -83,9 +76,6 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		super.setAttributes(httpServletRequest);
 
 		httpServletRequest.setAttribute(
-			"liferay-layout:render-fragment-layout:layoutStructure",
-			_getLayoutStructure(httpServletRequest));
-		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:mainItemId", _mainItemId);
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:mode", _mode);
@@ -93,34 +83,8 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			"liferay-layout:render-fragment-layout:showPreview", _showPreview);
 	}
 
-	private LayoutStructure _getLayoutStructure(
-		HttpServletRequest httpServletRequest) {
-
-		if (_layoutStructure != null) {
-			return _layoutStructure;
-		}
-
-		_layoutStructure = (LayoutStructure)httpServletRequest.getAttribute(
-			LayoutWebKeys.LAYOUT_STRUCTURE);
-
-		if (_layoutStructure != null) {
-			return _layoutStructure;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		_layoutStructure = LayoutStructureUtil.getLayoutStructure(
-			themeDisplay.getPlid(),
-			SegmentsExperienceUtil.getSegmentsExperienceId(httpServletRequest));
-
-		return _layoutStructure;
-	}
-
 	private static final String _PAGE = "/render_fragment_layout/page.jsp";
 
-	private LayoutStructure _layoutStructure;
 	private String _mainItemId;
 	private String _mode = FragmentEntryLinkConstants.VIEW;
 	private boolean _showPreview;

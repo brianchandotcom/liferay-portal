@@ -17,7 +17,6 @@
 <%@ include file="/render_fragment_layout/init.jsp" %>
 
 <%
-LayoutStructure layoutStructure = (LayoutStructure)request.getAttribute("liferay-layout:render-fragment-layout:layoutStructure");
 String mainItemId = (String)request.getAttribute("liferay-layout:render-fragment-layout:mainItemId");
 String mode = (String)request.getAttribute("liferay-layout:render-fragment-layout:mode");
 boolean showPreview = GetterUtil.getBoolean(request.getAttribute("liferay-layout:render-fragment-layout:showPreview"));
@@ -25,37 +24,32 @@ boolean showPreview = GetterUtil.getBoolean(request.getAttribute("liferay-layout
 
 <liferay-util:dynamic-include key="com.liferay.layout,taglib#/render_fragment_layout/page.jsp#pre" />
 
-<c:if test="<%= layoutStructure != null %>">
+<%
+try {
+	request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
+%>
+
+	<liferay-util:buffer
+		var="content"
+	>
+		<liferay-layout:render-layout-structure
+			mainItemId="<%= mainItemId %>"
+			mode="<%= mode %>"
+			showPreview="<%= showPreview %>"
+		/>
+	</liferay-util:buffer>
 
 	<%
-	try {
-		request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
+	LayoutAdaptiveMediaProcessor layoutAdaptiveMediaProcessor = ServletContextUtil.getLayoutAdaptiveMediaProcessor();
 	%>
 
-		<liferay-util:buffer
-			var="content"
-		>
-			<liferay-layout:render-layout-structure
-				layoutStructure="<%= layoutStructure %>"
-				mainItemId="<%= mainItemId %>"
-				mode="<%= mode %>"
-				showPreview="<%= showPreview %>"
-			/>
-		</liferay-util:buffer>
+	<%= layoutAdaptiveMediaProcessor.processAdaptiveMediaContent(content) %>
 
-		<%
-		LayoutAdaptiveMediaProcessor layoutAdaptiveMediaProcessor = ServletContextUtil.getLayoutAdaptiveMediaProcessor();
-		%>
-
-		<%= layoutAdaptiveMediaProcessor.processAdaptiveMediaContent(content) %>
-
-	<%
-	}
-	finally {
-		request.removeAttribute(WebKeys.SHOW_PORTLET_TOPPER);
-	}
-	%>
-
-</c:if>
+<%
+}
+finally {
+	request.removeAttribute(WebKeys.SHOW_PORTLET_TOPPER);
+}
+%>
 
 <liferay-util:dynamic-include key="com.liferay.layout,taglib#/render_fragment_layout/page.jsp#post" />

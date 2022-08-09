@@ -20,5 +20,4 @@
 
 <%@ page import="com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor" %><%@
 page import="com.liferay.layout.taglib.internal.servlet.ServletContextUtil" %><%@
-page import="com.liferay.layout.util.structure.LayoutStructure" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>

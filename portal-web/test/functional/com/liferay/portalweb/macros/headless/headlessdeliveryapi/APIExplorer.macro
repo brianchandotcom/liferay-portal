@@ -1,6 +1,8 @@
 definition {
 
 	macro executeAPIMethodWithParameters {
+		Variables.assertDefined(parameterList = "${service},${method},${parameter},${value}");
+
 		Click(
 			locator1 = "OpenAPI#API_METHOD",
 			method = "${method}",
@@ -22,6 +24,26 @@ definition {
 		Click(
 			locator1 = "Button#EXECUTE",
 			method = "${method}");
+	}
+
+	macro executeGraphqlQuery {
+		Click(
+			locator1 = "Button#BUTTON_WITH_VALUE",
+			value = "GraphQL");
+
+		AssertElementPresent.assertVisible(locator1 = "OpenAPI#GRAPHQL_EDITOR_LINE");
+
+		Click(
+			editor = "query-editor",
+			locator1 = "OpenAPI#GRAPHQL_EDITOR_LINE");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + a");
+
+		RobotType(locator1 = "${query}");
+
+		Click(
+			locator1 = "Button#BUTTON_WITH_VALUE",
+			value = "Execute Query (Ctrl-Enter)");
 	}
 
 	macro navigateToOpenAPI {

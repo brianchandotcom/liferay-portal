@@ -990,6 +990,11 @@
 	<td>//li[contains(@class,'nav-item')]//button[contains(@title,'${key_webContentTitle}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BUTTON_WITH_VALUE</td>
+	<td>//button[contains(.,'${value}') or contains(@title,'${value}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

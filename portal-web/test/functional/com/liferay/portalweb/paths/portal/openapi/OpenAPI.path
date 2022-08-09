@@ -38,6 +38,19 @@
 	<td>//div[contains(@id,'${method}')]//textarea[@class='body-param__text']</td>
 	<td></td>
 </tr>
+
+<!--GRAPHQL-->
+
+<tr>
+	<td>GRAPHQL_EDITOR_LINE</td>
+	<td>//section[contains(@class,'query-editor')]//span[contains(@class,'cm-comment')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GRAPHQL_RESPONSE</td>
+	<td>//section[contains(@class,'result-window')]//div[contains(@class,'CodeMirror-lines')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

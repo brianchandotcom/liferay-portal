@@ -17,8 +17,6 @@ package com.liferay.journal.web.internal.frontend.taglib.form.navigator;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.ServletContext;
@@ -43,11 +41,7 @@ public class JournalScheduleFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
-		if (!PropsValues.SCHEDULER_ENABLED ||
-			(isEditDefaultValues(article) &&
-			 !GetterUtil.getBoolean(
-				 PropsUtil.get("feature.flag.LPS-156908")))) {
-
+		if (!PropsValues.SCHEDULER_ENABLED) {
 			return false;
 		}
 

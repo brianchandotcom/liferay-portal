@@ -278,6 +278,59 @@ definition {
 	}
 
 	@priority = "5"
+	test CanReturnExceptionOfUnacceptableHeaderWithHeadlessAdminContentOpenAPI {
+		property portal.acceptance = "true";
+
+		task ("Given Navigate to headless admin taxonomy endpoint") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-taxonomy",
+				version = "v1.0");
+		}
+
+		task ("Given add Accept-Language header and set value to test") {
+			APIExplorer.addHeaders(
+				headerKey = "Accept-Language",
+				headerValue = "test");
+		}
+
+		task ("When executing getSiteTaxonomyVocabulariesPage with siteID as the parameter") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "getSiteTaxonomyVocabulariesPage",
+				parameter = "siteId",
+				requestBody = "${requestBody}",
+				service = "TaxonomyVocabulary");
+		}
+
+		task ("Then header Accept-Language is included in request under Curl section") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#CURL_COMMAND",
+				method = "getSiteTaxonomyVocabulariesPage",
+				service = "TaxonomyVocabulary",
+				value1 = "-H 'Accept-Language: test'");
+		}
+
+		task ("And Then BAD request is included in response section") {
+			AssertTextEquals(
+				locator1 = "OpenAPI#RESPONSE_CODE",
+				method = "getSiteTaxonomyVocabulariesPage",
+				value1 = "406");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getSiteTaxonomyVocabulariesPage",
+				value1 = "&quot;status&quot;: &quot;NOT_ACCEPTABLE&quot;");
+		}
+
+		task ("And Then assert details message in console") {
+			AssertConsoleTextPresent(value1 = "NotAcceptableException: No locales match the accepted languages: test");
+		}
+	}
+
+	@priority = "5"
 	test HeaderWorksInNegativeCaseWithHeadlessAdminContentOpenAPI {
 		property portal.acceptance = "true";
 

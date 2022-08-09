@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -236,6 +237,14 @@ public class BasicSuggestionsContributorTest {
 			document
 		).getStrings(
 			Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			RandomTestUtil.randomString()
+		).when(
+			document
+		).getString(
+			Field.ENTRY_CLASS_NAME
 		);
 
 		return document;

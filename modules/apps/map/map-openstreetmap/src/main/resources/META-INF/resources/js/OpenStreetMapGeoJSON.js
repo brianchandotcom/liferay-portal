@@ -25,10 +25,12 @@ export default class OpenStreetMapGeoJSONBase extends GeoJSONBase {
 	 * @param {Array} args List of arguments to be passed to State
 	 * @review
 	 */
-	constructor(...args) {
-		super(...args);
+	constructor(args) {
+		super(args);
 
 		this._handleFeatureClicked = this._handleFeatureClicked.bind(this);
+
+		this.map = args.map;
 	}
 
 	/**

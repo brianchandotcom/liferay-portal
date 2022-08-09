@@ -21,11 +21,13 @@ export default class OpenStreetMapDialog {
 	 * Creates a new map dialog using OpenStreetMap's API
 	 * @review
 	 */
-	constructor() {
+	constructor(args) {
 		this._dialog = L.popup({
 			className: 'leaflet-popup',
 			minWidth: 400,
 		});
+
+		this.map = args.map;
 	}
 
 	/**

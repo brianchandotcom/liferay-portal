@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.internal.suggestions.SuggestionBuilderFactoryImpl;
+import com.liferay.portal.search.internal.suggestions.SuggestionsContributorResultsBuilderFactoryImpl;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -81,6 +83,8 @@ public class SXPBlueprintSuggestionsContributorTest {
 
 		_sxpBlueprintSuggestionsContributor =
 			new SXPBlueprintSuggestionsContributor();
+		_suggestionsContributorConfiguration =
+			new SuggestionsContributorConfiguration();
 
 		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSuggestionsContributor, "_assetEntryLocalService",
@@ -95,11 +99,11 @@ public class SXPBlueprintSuggestionsContributorTest {
 			_sxpBlueprintSuggestionsContributor, "_searcher", _searcher);
 		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSuggestionsContributor, "_suggestionBuilderFactory",
-			_suggestionBuilderFactory);
+			new SuggestionBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSuggestionsContributor,
 			"_suggestionsContributorResultsBuilderFactory",
-			_suggestionsContributorResultsBuilderFactory);
+			new SuggestionsContributorResultsBuilderFactoryImpl());
 	}
 
 	@Test

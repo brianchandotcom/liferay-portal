@@ -32,6 +32,9 @@ definition {
 	@description = "LPS-152541 Add an alert to Segments Service in Instance Settings when those configurations are disabled in System Settings"
 	@priority = "4"
 	test CheckAssignRolesDisabledAlertAtInstanceSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationDisabledAtSystem#CheckAssignRolesDisabledAlertAtInstanceSettings";
+
 		task ("Given the 'Assign Roles by Segments' is disabled at System Settings") {
 			Segmentation.disableConfigurationAtSystemSettings(checkLabel = "Enable Assign Roles by Segment");
 		}
@@ -54,6 +57,9 @@ definition {
 	@description = "LPS-152541 Add an alert to Segments Service in Instance Settings when those configurations are disabled in System Settings"
 	@priority = "4"
 	test CheckSegmentationDisabledAlertAtInstanceSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationDisabledAtSystem#CheckSegmentationDisabledAlertAtInstanceSettings";
+
 		task ("Given the 'Enable Segmentation' is disabled at System Settings") {
 			Segmentation.disableConfigurationAtSystemSettings(checkLabel = "Enable Segmentation");
 		}

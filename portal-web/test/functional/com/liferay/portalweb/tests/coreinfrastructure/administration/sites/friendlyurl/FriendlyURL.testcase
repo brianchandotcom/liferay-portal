@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "If virtual.hosts.strict.access=true is set, do not redirect to a default instance if there is no associated company"
-	@priority = "3"
+	@priority = "4"
 	test DoNotRedirectToDefaultInstanceWithNoCompany {
 		property custom.properties = "virtual.hosts.strict.access=true";
 

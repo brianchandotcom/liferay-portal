@@ -1,0 +1,9 @@
+[
+	{
+		"active": true,
+		"name": "Notification Template Action",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterAdd",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TeamMembersInvitation$]"
+	}
+]

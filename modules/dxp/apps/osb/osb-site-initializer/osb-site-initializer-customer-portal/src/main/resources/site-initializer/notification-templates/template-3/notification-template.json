@@ -2,7 +2,6 @@
 	"bcc": "",
 	"cc": "",
 	"description": "",
-	"enabled": true,
 	"from": "solutions@liferay.com",
 	"fromName": {
 		"en-US": "Customer Portal"
@@ -11,6 +10,7 @@
 	"subject": {
 		"en-US": "Customer Portal email"
 	},
-	"to": "provisioning@liferay.cloud",
-	"type": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AnalyticsCloudWorkspace$]#create"
+	"to": {
+		"en-US": "provisioning@liferay.cloud"
+	}
 }

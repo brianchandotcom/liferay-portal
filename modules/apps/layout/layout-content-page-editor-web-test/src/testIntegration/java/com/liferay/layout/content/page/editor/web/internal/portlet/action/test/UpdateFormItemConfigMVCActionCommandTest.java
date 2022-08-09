@@ -82,6 +82,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.TreeSet;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -362,14 +363,16 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	public void testUpdateFormItemConfigMVCActionCommandMoreThanOneFragmentEntryNotAvailable()
 		throws Exception {
 
-		String expectedFieldTypeLabel1 = RandomTestUtil.randomString();
-		String expectedFieldTypeLabel2 = RandomTestUtil.randomString();
+		TreeSet<String> expectedFieldTypeLabels = new TreeSet<>();
+
+		expectedFieldTypeLabels.add(RandomTestUtil.randomString());
+		expectedFieldTypeLabels.add(RandomTestUtil.randomString());
 
 		InfoFieldType infoFieldType1 = new InfoFieldType() {
 
 			@Override
 			public String getLabel(Locale locale) {
-				return expectedFieldTypeLabel1;
+				return expectedFieldTypeLabels.first();
 			}
 
 			@Override
@@ -383,7 +386,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			@Override
 			public String getLabel(Locale locale) {
-				return expectedFieldTypeLabel2;
+				return expectedFieldTypeLabels.last();
 			}
 
 			@Override
@@ -442,9 +445,11 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 					"some-fragments-are-missing.-x-and-x-fields-cannot-have-" +
 						"an-associated-fragment-or-cannot-be-available-in-" +
 							"master",
-					new String[] {
-						expectedFieldTypeLabel1, expectedFieldTypeLabel2
-					}),
+					ArrayUtil.sortedUnique(
+						new String[] {
+							expectedFieldTypeLabels.first(),
+							expectedFieldTypeLabels.last()
+						})),
 				0);
 
 			_assertFormStyledLayoutStructureItem(

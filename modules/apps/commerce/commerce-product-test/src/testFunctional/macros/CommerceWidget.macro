@@ -1,5 +1,59 @@
 definition {
 
+	macro addAccountAndChildToOrganization {
+		Navigator.openSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
+
+		Click(locator1 = "Button#EXPAND");
+
+		Click(
+			key_nodeName = "${key_nodeName}",
+			locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+
+		DragAndDrop.dragAndDropPortletToPortletNoError(
+			key_nodeDestination = "${key_nodeDestination}",
+			key_nodeOrigin = "${key_nodeOrigin}",
+			locator1 = "CommerceOrganizationManagementWidget#NODE_ORIGIN",
+			locator2 = "CommerceOrganizationManagementWidget#NODE_DESTINATION",
+			value1 = "Commerce Account");
+
+		AssertConfirm(value1 = "Commerce Account will be moved into Organization 1.");
+
+		DragAndDrop.dragAndDropPortletToPortletNoError(
+			key_nodeDestination = "Organization 1",
+			key_nodeOrigin = "Child Org 1",
+			locator1 = "CommerceOrganizationManagementWidget#NODE_ORIGIN",
+			locator2 = "CommerceOrganizationManagementWidget#NODE_DESTINATION",
+			value1 = "Child Org 1");
+
+		AssertConfirm(value1 = "Child Org 1 will be moved into Organization 1.");
+	}
+
+	macro addAccountViaOrganizationManagementWidget {
+		Click.clickAtNotVisible(
+			key_radioOption = "${key_radioOption}",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${value}");
+
+		Button.clickSave();
+	}
+
+	macro addUserViaOrganizationManagementWidget {
+		Type(
+			locator1 = "CommerceOrganizationManagementWidget#INVITE_EMAIL_INPUT",
+			value1 = "${value}");
+
+		Click(
+			key_roleOption = "${key_roleOption}",
+			locator1 = "CommerceOrganizationManagementWidget#SELECT_ROLE");
+
+		Button.clickSave();
+	}
+
 	macro assertOptionFacetsCount {
 		var optionName = "${optionName}";
 
@@ -22,6 +76,12 @@ definition {
 		}
 	}
 
+	macro assertOrganizationManagementWigetTitlePresent {
+		AssertElementPresent(
+			key_nodeName = "${key_nodeName}",
+			locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+	}
+
 	macro assertSpecificationPanel2FacetsCount {
 		var specificationGroup = "${specificationGroup}";
 
@@ -42,6 +102,102 @@ definition {
 		if ("${count}" != "${expectedLabels}") {
 			fail("Labels number is not correct");
 		}
+	}
+
+	macro associateAccountWithOrganization {
+		Click.clickAtNotVisible(
+			key_radioOption = "${key_radioOption}",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Type(
+			locator1 = "CommerceOrganizationManagementWidget#SEARCH_ACCOUNT_INPUT",
+			value1 = "${value}");
+
+		KeyPress(
+			locator1 = "CommerceOrganizationManagementWidget#SEARCH_ACCOUNT_INPUT",
+			value1 = "\ENTER");
+
+		Button.clickSave();
+	}
+
+	macro canCreateChildOrganization {
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${value}");
+
+		Button.clickSave();
+	}
+
+	macro canDragAndDropOrganizaitionAndChildOrganization {
+		Click(locator1 = "Button#EXPAND");
+
+		Click(
+			key_nodeName = "${key_nodeName}",
+			locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+
+		DragAndDrop.dragAndDropPortletToPortletNoError(
+			key_nodeDestination = "${key_nodeDestination}",
+			key_nodeOrigin = "${key_nodeOrigin}",
+			locator1 = "CommerceOrganizationManagementWidget#NODE_ORIGIN",
+			locator2 = "CommerceOrganizationManagementWidget#NODE_DESTINATION",
+			value1 = "${key_nodeOrigin}");
+
+		AssertConfirm(value1 = "${key_nodeOrigin} will be moved into ${key_nodeDestination}.");
+
+		DragAndDrop.dragAndDropPortletToPortletNoError(
+			key_nodeDestination = "Organization 1",
+			key_nodeOrigin = "${key_nodeChild}",
+			locator1 = "CommerceOrganizationManagementWidget#NODE_ORIGIN",
+			locator2 = "CommerceOrganizationManagementWidget#NODE_DESTINATION",
+			value1 = "${key_nodeChild}");
+
+		AssertConfirm(value1 = "${key_nodeChild} will be moved into ${key_nodeDestination}.");
+
+		Refresh();
+	}
+
+	macro gotoSVGNode {
+		Click(locator1 = "Button#EXPAND");
+
+		Click(
+			key_nodeName = "${key_nodeName}",
+			locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+
+		Click(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+
+		Click(
+			key_orgType = "${key_orgType}",
+			locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
+	}
+
+	macro openOrganizationWidget {
+		Navigator.openSitePage(
+			pageName = "Organization Management Widget Page",
+			siteName = "Minium");
+
+		Click(locator1 = "Button#EXPAND");
+	}
+
+	macro removeChildOrganization {
+		Click(locator1 = "Button#EXPAND");
+
+		Click(
+			key_nodeName = "${key_nodeName}",
+			locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+
+		Click(
+			key_nodeName = "${key_nodeChild}",
+			locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
+
+		ClickNoError(
+			key_menuItem = "Remove",
+			locator1 = "CommerceEntry#ANY_MENU_ITEM");
+
+		AssertConfirm(value1 = "${key_nodeChild} will be removed from ${key_nodeName}.");
+
+		Refresh();
+
+		Click(locator1 = "Button#EXPAND");
 	}
 
 	macro updateFacetConfiguration {

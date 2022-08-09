@@ -56,13 +56,25 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
+				{"guestbook", "com.liferay.docs.guestbook", "7.1.10.7"},
+				{"guestbook", "com.liferay.docs.guestbook", "7.2.10.7"},
 				{"guestbook", "com.liferay.docs.guestbook", "7.3.7"},
 				{"guestbook", "com.liferay.docs.guestbook", "7.4.3.16"},
+				{
+					"backend-integration", "com.liferay.docs.guestbook",
+					"7.1.10.7"
+				},
+				{
+					"backend-integration", "com.liferay.docs.guestbook",
+					"7.2.10.7"
+				},
 				{"backend-integration", "com.liferay.docs.guestbook", "7.3.7"},
 				{
 					"backend-integration", "com.liferay.docs.guestbook",
-					"7.4.3.16"
+					"7.4.3.36"
 				},
+				{"sample", "com.test.sample", "7.1.10.7"},
+				{"sample", "com.test.sample", "7.2.10.7"},
 				{"sample", "com.test.sample", "7.3.7"},
 				{"sample", "com.test.sample", "7.4.3.16"}
 			});
@@ -100,9 +112,17 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
 			mavenExecutor);
 
-		if (_liferayVersion.startsWith("7.2")) {
+		if (_liferayVersion.startsWith("7.0")) {
 			writeGradlePropertiesInWorkspace(
-				gradleWorkspaceDir, "liferay.workspace.product=portal-7.2-ga2");
+				gradleWorkspaceDir, "liferay.workspace.product=portal-7.0-ga7");
+		}
+		else if (_liferayVersion.startsWith("7.1")) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir, "liferay.workspace.product=dxp-7.1-sp7");
+		}
+		else if (_liferayVersion.startsWith("7.2")) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir, "liferay.workspace.product=dxp-7.2-sp7");
 		}
 		else if (_liferayVersion.startsWith("7.3")) {
 			writeGradlePropertiesInWorkspace(
@@ -134,12 +154,52 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 				"compile project(\":modules:nested:path:sample:sample-api\")");
 		}
 
-		testContains(
-			gradleProjectDir, _name + "-api/build.gradle",
-			DEPENDENCY_RELEASE_PORTAL_API);
-		testContains(
-			gradleProjectDir, _name + "-impl/build.gradle",
-			DEPENDENCY_RELEASE_PORTAL_API);
+		if (_liferayVersion.startsWith("7.1")) {
+			testContains(
+				gradleProjectDir, _name + "-api/build.gradle",
+				"compileOnly group: \"javax.servlet\", name: " +
+					"\"javax.servlet-api\"");
+			testContains(
+				gradleProjectDir, _name + "-impl/build.gradle",
+				"compileOnly group: \"javax.servlet\", name: " +
+					"\"javax.servlet-api\"");
+
+			testNotContains(
+				gradleProjectDir, _name + "-api/build.gradle",
+				"compileOnly group: \"org.apache.felix\", name: \"org.apache." +
+					"felix.http.servlet-api\", version: \"1.1.2\"");
+			testNotContains(
+				gradleProjectDir, _name + "-impl/build.gradle",
+				"compileOnly group: \"org.apache.felix\", name: \"org.apache." +
+					"felix.http.servlet-api\", version: \"1.1.2\"");
+		}
+		else if (_liferayVersion.startsWith("7.2")) {
+			testContains(
+				gradleProjectDir, _name + "-api/build.gradle",
+				"compileOnly group: \"org.apache.felix\", name: \"org.apache." +
+					"felix.http.servlet-api\", version: \"1.1.2\"");
+			testContains(
+				gradleProjectDir, _name + "-impl/build.gradle",
+				"compileOnly group: \"org.apache.felix\", name: \"org.apache." +
+					"felix.http.servlet-api\", version: \"1.1.2\"");
+
+			testNotContains(
+				gradleProjectDir, _name + "-api/build.gradle",
+				"compileOnly group: \"javax.servlet\", name: " +
+					"\"javax.servlet-api\"");
+			testNotContains(
+				gradleProjectDir, _name + "-impl/build.gradle",
+				"compileOnly group: \"javax.servlet\", name: " +
+					"\"javax.servlet-api\"");
+		}
+		else {
+			testContains(
+				gradleProjectDir, _name + "-api/build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API);
+			testContains(
+				gradleProjectDir, _name + "-impl/build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API);
+		}
 
 		File mavenWorkspaceDir = buildWorkspace(
 			temporaryFolder, "maven", "mavenWS", _liferayVersion,

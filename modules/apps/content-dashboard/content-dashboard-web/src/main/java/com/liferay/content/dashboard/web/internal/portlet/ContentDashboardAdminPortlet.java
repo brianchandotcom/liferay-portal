@@ -26,6 +26,7 @@ import com.liferay.content.dashboard.web.internal.display.context.ContentDashboa
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminSharingDisplayContext;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
+import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactoryTracker;
 import com.liferay.content.dashboard.web.internal.provider.AssetVocabulariesProvider;
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardItemSearchClassMapperTracker;
@@ -158,7 +159,9 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 			contentDashboardAdminManagementToolbarDisplayContext =
 				new ContentDashboardAdminManagementToolbarDisplayContext(
 					_assetCategoryLocalService, _assetVocabularyLocalService,
-					contentDashboardAdminDisplayContext, _groupLocalService,
+					contentDashboardAdminDisplayContext,
+					_contentDashboardItemFilterProviderTracker,
+					_groupLocalService,
 					_portal.getHttpServletRequest(renderRequest), _language,
 					liferayPortletRequest, liferayPortletResponse,
 					_portal.getLocale(renderRequest), _userLocalService);
@@ -199,6 +202,10 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 	@Reference
 	private ContentDashboardItemFactoryTracker
 		_contentDashboardItemFactoryTracker;
+
+	@Reference
+	private ContentDashboardItemFilterProviderTracker
+		_contentDashboardItemFilterProviderTracker;
 
 	@Reference
 	private ContentDashboardItemSearchClassMapperTracker

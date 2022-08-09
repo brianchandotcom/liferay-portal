@@ -19,6 +19,10 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
+import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
+import com.liferay.content.dashboard.item.filter.provider.ContentDashboardItemFilterProvider;
+import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
@@ -75,6 +79,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetVocabularyLocalService assetVocabularyLocalService,
 		ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext,
+		ContentDashboardItemFilterProviderTracker
+			contentDashboardItemFilterProviderTracker,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		LiferayPortletRequest liferayPortletRequest,
@@ -89,6 +95,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_contentDashboardAdminDisplayContext =
 			contentDashboardAdminDisplayContext;
+		_contentDashboardItemFilterProviderTracker =
+			contentDashboardItemFilterProviderTracker;
 		_groupLocalService = groupLocalService;
 		_language = language;
 		_liferayPortletRequest = liferayPortletRequest;
@@ -99,25 +107,54 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		return PortletURLBuilder.create(
-			getPortletURL()
-		).setKeywords(
-			StringPool.BLANK
-		).setParameter(
-			"assetCategoryId", (String)null
-		).setParameter(
-			"assetTagId", (String)null
-		).setParameter(
-			"authorIds", (String)null
-		).setParameter(
-			"contentDashboardItemSubtypePayload", (String)null
-		).setParameter(
-			"fileExtension", (String)null
-		).setParameter(
-			"scopeId", (String)null
-		).setParameter(
-			"status", WorkflowConstants.STATUS_ANY
-		).buildString();
+		PortletURLBuilder.AfterParameterStep afterParameterStep =
+			PortletURLBuilder.create(
+				getPortletURL()
+			).setKeywords(
+				StringPool.BLANK
+			).setParameter(
+				"assetCategoryId", (String)null
+			).setParameter(
+				"assetTagId", (String)null
+			).setParameter(
+				"authorIds", (String)null
+			).setParameter(
+				"contentDashboardItemSubtypePayload", (String)null
+			).setParameter(
+				"fileExtension", (String)null
+			).setParameter(
+				"scopeId", (String)null
+			).setParameter(
+				"status", WorkflowConstants.STATUS_ANY
+			);
+
+		List<ContentDashboardItemFilterProvider>
+			contentDashboardItemFilterProviders =
+				_contentDashboardItemFilterProviderTracker.
+					getContentDashboardItemFilterProviders();
+
+		try {
+			for (ContentDashboardItemFilterProvider
+					contentDashboardItemFilterProvider :
+						contentDashboardItemFilterProviders) {
+
+				ContentDashboardItemFilter contentDashboardItemFilter =
+					contentDashboardItemFilterProvider.
+						getContentDashboardItemFilter(
+							_liferayPortletRequest.getHttpServletRequest());
+
+				afterParameterStep.setParameter(
+					contentDashboardItemFilter.getParameterName(),
+					(String)null);
+			}
+		}
+		catch (ContentDashboardItemActionException
+					contentDashboardItemActionException) {
+
+			_log.error(contentDashboardItemActionException);
+		}
+
+		return afterParameterStep.buildString();
 	}
 
 	@Override
@@ -158,6 +195,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper =
 			new LabelItemListBuilder.LabelItemListWrapper();
+
+		_addContentDashboardItemFilterProviders(labelItemListWrapper);
 
 		for (Long assetCategoryId : assetCategoryIds) {
 			labelItemListWrapper.add(
@@ -440,6 +479,64 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		return new String[] {"title", "modified-date"};
 	}
 
+	private void _addContentDashboardItemFilterProviders(
+		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper) {
+
+		List<ContentDashboardItemFilterProvider>
+			contentDashboardItemFilterProviders =
+				_contentDashboardItemFilterProviderTracker.
+					getContentDashboardItemFilterProviders();
+
+		for (ContentDashboardItemFilterProvider
+				contentDashboardItemFilterProvider :
+					contentDashboardItemFilterProviders) {
+
+			try {
+				ContentDashboardItemFilter contentDashboardItemFilter =
+					contentDashboardItemFilterProvider.
+						getContentDashboardItemFilter(
+							_liferayPortletRequest.getHttpServletRequest());
+
+				List<String> parameterValues =
+					contentDashboardItemFilter.getParameterValues();
+
+				for (String parameterValue : parameterValues) {
+					labelItemListWrapper.add(
+						labelItem -> {
+							labelItem.putData(
+								"removeLabelURL",
+								_getRemoveLabelURL(
+									contentDashboardItemFilter.
+										getParameterName(),
+									() -> {
+										Stream<String> stream =
+											parameterValues.stream();
+
+										return stream.filter(
+											curFileExtension -> !Objects.equals(
+												curFileExtension,
+												parameterValue)
+										).toArray(
+											String[]::new
+										);
+									}));
+							labelItem.setCloseable(true);
+							labelItem.setLabel(
+								_getLabel(
+									contentDashboardItemFilter.
+										getParameterLabel(_locale),
+									parameterValue));
+						});
+				}
+			}
+			catch (ContentDashboardItemActionException
+						contentDashboardItemActionException) {
+
+				_log.error(contentDashboardItemActionException);
+			}
+		}
+	}
+
 	private PortletURL _getAssetCategorySelectorURL() throws PortalException {
 		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
@@ -535,6 +632,60 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		).buildPortletURL();
 	}
 
+	private List<DropdownItem>
+		_getContentDashboardItemFilterProviderDropdownItems() {
+
+		List<ContentDashboardItemFilterProvider>
+			contentDashboardItemFilterProviders =
+				_contentDashboardItemFilterProviderTracker.
+					getContentDashboardItemFilterProviders();
+
+		Stream<ContentDashboardItemFilterProvider> stream =
+			contentDashboardItemFilterProviders.stream();
+
+		return stream.map(
+			ContentDashboardItemFilterProvider -> {
+				try {
+					return ContentDashboardItemFilterProvider.
+						getContentDashboardItemFilter(
+							_liferayPortletRequest.getHttpServletRequest());
+				}
+				catch (ContentDashboardItemActionException
+							contentDashboardItemActionException) {
+
+					_log.error(contentDashboardItemActionException);
+				}
+
+				return null;
+			}
+		).filter(
+			Objects::nonNull
+		).map(
+			contentDashboardItemFilter -> DropdownItemBuilder.putData(
+				"action", "selectFileExtension"
+			).putData(
+				"dialogTitle", contentDashboardItemFilter.getLabel(_locale)
+			).putData(
+				"redirectURL",
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					contentDashboardItemFilter.getParameterName(), (String)null
+				).buildString()
+			).putData(
+				"selectFileExtensionURL", contentDashboardItemFilter.getURL()
+			).setActive(
+				!ListUtil.isEmpty(
+					contentDashboardItemFilter.getParameterValues())
+			).setLabel(
+				_language.get(httpServletRequest, "extension") +
+					StringPool.TRIPLE_PERIOD
+			).build()
+		).collect(
+			Collectors.toList()
+		);
+	}
+
 	private List<DropdownItem> _getFilterAuthorDropdownItems() {
 		List<Long> authorIds =
 			_contentDashboardAdminDisplayContext.getAuthorIds();
@@ -605,7 +756,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	}
 
 	private List<DropdownItem> _getFilterDropdownItems() {
-		return DropdownItemList.of(
+		DropdownItemList dropdownItemList = DropdownItemList.of(
 			() -> DropdownItemBuilder.putData(
 				"action", "selectAssetCategory"
 			).putData(
@@ -682,30 +833,6 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					StringPool.TRIPLE_PERIOD
 			).build(),
 			() -> DropdownItemBuilder.putData(
-				"action", "selectFileExtension"
-			).putData(
-				"dialogTitle",
-				_language.get(httpServletRequest, "filter-by-extension")
-			).putData(
-				"redirectURL",
-				PortletURLBuilder.create(
-					getPortletURL()
-				).setParameter(
-					"fileExtension", (String)null
-				).buildString()
-			).putData(
-				"selectFileExtensionURL",
-				String.valueOf(
-					_contentDashboardAdminDisplayContext.
-						getFileExtensionItemSelectorURL())
-			).setActive(
-				!ListUtil.isEmpty(
-					_contentDashboardAdminDisplayContext.getFileExtensions())
-			).setLabel(
-				_language.get(httpServletRequest, "extension") +
-					StringPool.TRIPLE_PERIOD
-			).build(),
-			() -> DropdownItemBuilder.putData(
 				"action", "selectAssetTag"
 			).putData(
 				"dialogTitle", _language.get(httpServletRequest, "select-tags")
@@ -725,6 +852,11 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				_language.get(httpServletRequest, "tags") +
 					StringPool.TRIPLE_PERIOD
 			).build());
+
+		dropdownItemList.addAll(
+			_getContentDashboardItemFilterProviderDropdownItems());
+
+		return dropdownItemList;
 	}
 
 	private List<DropdownItem> _getFilterStatusDropdownItems() {
@@ -843,6 +975,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final ContentDashboardAdminDisplayContext
 		_contentDashboardAdminDisplayContext;
+	private final ContentDashboardItemFilterProviderTracker
+		_contentDashboardItemFilterProviderTracker;
 	private final GroupLocalService _groupLocalService;
 	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;

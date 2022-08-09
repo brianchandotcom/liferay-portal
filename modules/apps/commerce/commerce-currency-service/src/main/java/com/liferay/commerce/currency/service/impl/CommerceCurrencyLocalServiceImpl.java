@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -82,7 +83,7 @@ public class CommerceCurrencyLocalServiceImpl
 			double priority, boolean active)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		if (primary) {
 			rate = BigDecimal.ONE;
@@ -514,5 +515,8 @@ public class CommerceCurrencyLocalServiceImpl
 	private ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
 
 	private ServiceRegistration<?> _serviceRegistration;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

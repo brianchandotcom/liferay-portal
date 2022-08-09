@@ -38,6 +38,16 @@ definition {
 			value1 = "Unknown Virtual Hostname: www.able.com");
 	}
 
+	@description = "If virtual.hosts.strict.access=true is not set, redirect to a default instance even if there is no associated company"
+	@priority = "3"
+	test RedirectToDefaultInstanceWithNoCompany {
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		AssertTextNotPresent(
+			locator1 = "//body",
+			value1 = "Unknown Virtual Hostname: www.able.com");
+	}
+
 	@priority = "4"
 	test VerifyFriendlyURLsOnlyDisplayLocaleOnce {
 		JSONLayout.addPublicLayout(

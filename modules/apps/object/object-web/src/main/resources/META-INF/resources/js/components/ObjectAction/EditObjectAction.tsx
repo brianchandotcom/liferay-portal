@@ -12,13 +12,14 @@
  * details.
  */
 
-import {CustomItem} from '@liferay/object-js-components-web';
+import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import ObjectAction from './index';
 
 export default function EditObjectAction({
 	objectAction: {id, ...values},
+	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectActionTriggers,
 	objectDefinitionsRelationshipsURL,
@@ -28,6 +29,7 @@ export default function EditObjectAction({
 	return (
 		<ObjectAction
 			objectAction={values}
+			objectActionCodeEditorElements={objectActionCodeEditorElements}
 			objectActionExecutors={objectActionExecutors}
 			objectActionTriggers={objectActionTriggers}
 			objectDefinitionsRelationshipsURL={
@@ -49,6 +51,7 @@ export default function EditObjectAction({
 
 interface IProps {
 	objectAction: ObjectAction;
+	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
 	objectDefinitionsRelationshipsURL: string;

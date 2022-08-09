@@ -25,7 +25,5 @@ declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponen
 >>;
 export default _default;
 export interface ICodeMirrorEditor extends CodeMirror.EditorConfiguration {
-	className?: string;
-	fixed?: boolean;
 	onChange: (value?: string, lineCount?: number) => void;
 }

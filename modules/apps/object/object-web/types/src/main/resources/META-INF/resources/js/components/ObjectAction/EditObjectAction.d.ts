@@ -14,9 +14,10 @@
 
 /// <reference types="react" />
 
-import {CustomItem} from '@liferay/object-js-components-web';
+import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
 export default function EditObjectAction({
 	objectAction: {id, ...values},
+	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectActionTriggers,
 	objectDefinitionsRelationshipsURL,
@@ -25,6 +26,7 @@ export default function EditObjectAction({
 }: IProps): JSX.Element;
 interface IProps {
 	objectAction: ObjectAction;
+	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
 	objectDefinitionsRelationshipsURL: string;

@@ -21,8 +21,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import CodeEditor, {SidebarCategory} from './CodeEditor/index';
 import {FieldBase} from './FieldBase';
 
-import './ExpressionBuilder.scss';
-
 export function ExpressionBuilder({
 	buttonDisabled,
 	className,
@@ -168,7 +166,7 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 				{Liferay.Language.get('expression-builder')}
 			</ClayModal.Header>
 
-			<ClayModal.Body className="lfr-objects__expression-builder-modal-body">
+			<ClayModal.Body>
 				<CodeEditor
 					error={error}
 					onChange={() => {}}

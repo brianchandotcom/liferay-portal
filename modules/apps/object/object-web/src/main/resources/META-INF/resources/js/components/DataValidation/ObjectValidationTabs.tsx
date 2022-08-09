@@ -103,7 +103,6 @@ export function Conditions({
 			<Card
 				title={values.engineLabel!}
 				tooltip={engine === 'ddm' ? ddmTooltip : null}
-				viewMode="no-padding"
 			>
 				<CodeEditor
 					error={errors.script}

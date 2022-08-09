@@ -25,6 +25,7 @@ import {
 	FormCustomSelect,
 	Input,
 	SelectWithOption,
+	SidebarCategory,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -46,6 +47,7 @@ type ObjectsOptionsList = Array<
 
 export default function ActionBuilder({
 	errors,
+	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectActionTriggers,
 	objectDefinitionsRelationshipsURL,
@@ -540,7 +542,6 @@ export default function ActionBuilder({
 				{values.objectActionExecutorKey === 'groovy' && (
 					<CodeEditor
 						error={errors.script}
-						fixed
 						mode="groovy"
 						onChange={(script, lineCount) =>
 							setValues({
@@ -551,6 +552,9 @@ export default function ActionBuilder({
 								},
 							})
 						}
+						sidebarElements={objectActionCodeEditorElements.filter(
+							(element) => element.label === 'Fields'
+						)}
 						value={values.parameters?.script ?? ''}
 					/>
 				)}
@@ -561,6 +565,7 @@ export default function ActionBuilder({
 
 interface IProps {
 	errors: ActionError;
+	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
 	objectDefinitionsRelationshipsURL: string;

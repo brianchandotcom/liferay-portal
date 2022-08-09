@@ -14,11 +14,12 @@
 
 /// <reference types="react" />
 
-import {CustomItem} from '@liferay/object-js-components-web';
+import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
 import './ActionBuilder.scss';
 import {ActionError} from '../index';
 export default function ActionBuilder({
 	errors,
+	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectActionTriggers,
 	objectDefinitionsRelationshipsURL,
@@ -29,6 +30,7 @@ export default function ActionBuilder({
 }: IProps): JSX.Element;
 interface IProps {
 	errors: ActionError;
+	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
 	objectDefinitionsRelationshipsURL: string;

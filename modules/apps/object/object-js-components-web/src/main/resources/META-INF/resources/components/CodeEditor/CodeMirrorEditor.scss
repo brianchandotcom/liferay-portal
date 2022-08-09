@@ -1,6 +1,8 @@
 @import 'atlas-variables';
 
 .lfr-objects__editor {
+	width: 100%;
+
 	.CodeMirror {
 		height: 100%;
 	}
@@ -13,16 +15,8 @@
 		word-break: break-word;
 	}
 
-	&.form-control {
-		height: 100%;
-		overflow: hidden;
-		padding: 0;
-	}
-
-	&--fixed {
-		&.form-control {
-			height: 300px;
-		}
+	.CodeMirror-gutters {
+		background-color: $light-l1;
 	}
 }
 

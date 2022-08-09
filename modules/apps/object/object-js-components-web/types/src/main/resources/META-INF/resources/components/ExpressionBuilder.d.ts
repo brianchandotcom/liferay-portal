@@ -14,7 +14,6 @@
 
 import React from 'react';
 import {SidebarCategory} from './CodeEditor/index';
-import './ExpressionBuilder.scss';
 export declare function ExpressionBuilder({
 	buttonDisabled,
 	className,

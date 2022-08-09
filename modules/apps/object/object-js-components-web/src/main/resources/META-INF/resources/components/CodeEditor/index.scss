@@ -2,22 +2,20 @@
 
 .lfr-objects__code-editor {
 	display: flex;
-	height: 472px;
+	flex-direction: column;
+	margin-bottom: 0;
+	width: 100%;
 
 	&-source {
-		border-right: 1px solid $gray-300;
+		border: 1px solid $gray-300;
+		border-radius: 0.25rem;
 		display: flex;
-		flex-direction: column;
-		margin-bottom: 0;
-		padding: 1.5rem;
-		width: 100%;
+		overflow: hidden;
 
-		&--no-sidebar {
+		&.form-control {
+			height: 472px;
+			overflow: hidden;
 			padding: 0;
 		}
-	}
-
-	&--no-sidebar {
-		height: unset;
 	}
 }

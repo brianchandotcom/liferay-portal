@@ -48,34 +48,25 @@ const CodeEditor = React.forwardRef<CodeMirror.Editor, IProps>(
 		};
 
 		return (
-			<div
-				className={classNames(
-					'lfr-objects__code-editor',
-					{'lfr-objects__code-editor--no-sidebar': !sidebarElements},
-					className
-				)}
+			<FieldBase
+				className={classNames('lfr-objects__code-editor', className)}
+				errorMessage={error}
 			>
-				<FieldBase
-					className={classNames(
-						'lfr-objects__code-editor-source',
-						{
-							'lfr-objects__code-editor-source--no-sidebar': !sidebarElements,
-						},
-						className
-					)}
-					errorMessage={error}
-				>
+				<div className="form-control lfr-objects__code-editor-source">
 					<CodeMirrorEditor
 						lineWrapping={true}
 						ref={handleDomNodeChange}
 						{...options}
 					/>
-				</FieldBase>
 
-				{sidebarElements && (
-					<Sidebar editorRef={editorRef} elements={sidebarElements} />
-				)}
-			</div>
+					{sidebarElements && (
+						<Sidebar
+							editorRef={editorRef}
+							elements={sidebarElements}
+						/>
+					)}
+				</div>
+			</FieldBase>
 		);
 	}
 );
@@ -83,6 +74,7 @@ const CodeEditor = React.forwardRef<CodeMirror.Editor, IProps>(
 export default CodeEditor;
 
 interface IProps extends ICodeMirrorEditor {
+	className?: string;
 	error?: string;
 	sidebarElements?: SidebarCategory[];
 }

@@ -24,6 +24,7 @@ declare const CodeEditor: React.ForwardRefExoticComponent<
 >;
 export default CodeEditor;
 interface IProps extends ICodeMirrorEditor {
+	className?: string;
 	error?: string;
 	sidebarElements?: SidebarCategory[];
 }

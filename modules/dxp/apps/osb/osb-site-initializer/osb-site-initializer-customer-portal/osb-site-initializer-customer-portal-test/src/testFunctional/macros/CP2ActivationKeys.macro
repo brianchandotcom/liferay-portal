@@ -167,4 +167,10 @@ definition {
 
 		return "${rowCount}";
 	}
+
+	macro goToNextTablePage() {
+		ScrollWebElementIntoView(locator1 = "CP2ActivationKeys#NEXT_PAGE_BUTTON");
+
+		Click(locator1 = "CP2ActivationKeys#NEXT_PAGE_BUTTON");
+	}
 }

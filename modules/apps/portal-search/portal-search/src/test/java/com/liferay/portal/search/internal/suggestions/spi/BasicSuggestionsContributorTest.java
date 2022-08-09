@@ -107,7 +107,7 @@ public class BasicSuggestionsContributorTest {
 		throws Exception {
 
 		_setUpAssetEntryLocalService();
-		_setUpAssetRendererFactoryRegistryUtil("Title");
+		_setUpAssetRendererFactoryRegistryUtilNotNull("Title");
 		_setUpLayoutLocalService();
 		_setUpLiferayPortletRequest();
 		_setUpSearchContext();
@@ -143,13 +143,15 @@ public class BasicSuggestionsContributorTest {
 	public void testGetSuggestionWithAssetRendererFactoryNull()
 		throws Exception {
 
+		_setUpAssetRendererFactoryRegistryUtilNull();
 		_setUpLayoutLocalService();
 		_setUpLiferayPortletRequest();
 		_setUpSearchContext();
-		_setUpSearchHits(_setUpDocument("test"));
+		_setUpSearchHits(_setUpDocument("testField"));
 		_setUpSearchRequestBuilderFactory();
 		_setUpSearcher(1L);
 		_setUpSuggestionBuilderFactory();
+		_setUpSuggestionsContributorConfiguration("testField");
 
 		SuggestionsContributorResults suggestionsContributorResults =
 			_basicSuggestionsContributor.getSuggestionsContributorResults(
@@ -158,7 +160,12 @@ public class BasicSuggestionsContributorTest {
 				_suggestionsContributorConfiguration);
 
 		Assert.assertEquals(
-			"test", suggestionsContributorResults.getDisplayGroupName());
+			"testField", suggestionsContributorResults.getDisplayGroupName());
+
+		List<Suggestion> suggestions =
+			suggestionsContributorResults.getSuggestions();
+
+		Assert.assertEquals(suggestions.toString(), 0, suggestions.size());
 
 		Mockito.verify(
 			_assetRendererFactory, Mockito.never()
@@ -169,14 +176,14 @@ public class BasicSuggestionsContributorTest {
 
 	@Test
 	public void testSearchHitsWithZeroTotalHits() throws Exception {
+		_setUpSearchContext();
 		_setUpSearchRequestBuilderFactory();
 		_setUpSearcher(0L);
 
 		Assert.assertNull(
 			_basicSuggestionsContributor.getSuggestionsContributorResults(
 				_liferayPortletRequest,
-				Mockito.mock(LiferayPortletResponse.class),
-				Mockito.mock(SearchContext.class),
+				Mockito.mock(LiferayPortletResponse.class), _searchContext,
 				Mockito.mock(SuggestionsContributorConfiguration.class)));
 
 		Mockito.verify(
@@ -196,7 +203,7 @@ public class BasicSuggestionsContributorTest {
 		);
 	}
 
-	private void _setUpAssetRendererFactoryRegistryUtil(String title)
+	private void _setUpAssetRendererFactoryRegistryUtilNotNull(String title)
 		throws Exception {
 
 		AssetRenderer<?> assetRenderer = Mockito.mock(AssetRenderer.class);
@@ -231,6 +238,21 @@ public class BasicSuggestionsContributorTest {
 			assetRenderer
 		).getTitle(
 			Mockito.any()
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			AssetRendererFactoryRegistryUtil.class,
+			"_classNameAssetRenderFactoriesServiceTrackerMap",
+			_serviceTrackerMap);
+	}
+
+	private void _setUpAssetRendererFactoryRegistryUtilNull() {
+		Mockito.doReturn(
+			null
+		).when(
+			_serviceTrackerMap
+		).getService(
+			Mockito.anyString()
 		);
 
 		ReflectionTestUtil.setFieldValue(

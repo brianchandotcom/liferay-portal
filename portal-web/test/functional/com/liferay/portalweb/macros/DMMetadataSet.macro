@@ -103,7 +103,9 @@ definition {
 	}
 
 	macro gotoBack {
-		Click.pauseClickAt(locator1 = "DocumentsAndMediaMetadataSets#SIDEBAR_BACK");
+		WaitForVisible(locator1 = "DocumentsAndMediaMetadataSets#SIDEBAR_BACK");
+
+		Click(locator1 = "DocumentsAndMediaMetadataSets#SIDEBAR_BACK");
 	}
 
 	macro gotoBasicTab {

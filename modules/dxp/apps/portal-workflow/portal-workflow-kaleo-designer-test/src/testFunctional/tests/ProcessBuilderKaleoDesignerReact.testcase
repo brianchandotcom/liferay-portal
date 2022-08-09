@@ -212,8 +212,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
 			propertyName = "Timer",
 			propertyValue = "Duration: 13 minute");
-
-			
 	}
 
 	@description = "Verify that is possible to add new languages"

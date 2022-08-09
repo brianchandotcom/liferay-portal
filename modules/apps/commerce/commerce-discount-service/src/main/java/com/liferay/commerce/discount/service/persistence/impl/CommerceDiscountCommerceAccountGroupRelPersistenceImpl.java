@@ -21,7 +21,9 @@ import com.liferay.commerce.discount.model.impl.CommerceDiscountCommerceAccountG
 import com.liferay.commerce.discount.model.impl.CommerceDiscountCommerceAccountGroupRelModelImpl;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelUtil;
+import com.liferay.commerce.discount.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -29,11 +31,13 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -41,7 +45,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -54,6 +57,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * The persistence implementation for the commerce discount commerce account group rel service.
  *
@@ -64,6 +74,12 @@ import java.util.Set;
  * @author Marco Leo
  * @generated
  */
+@Component(
+	service = {
+		CommerceDiscountCommerceAccountGroupRelPersistence.class,
+		BasePersistence.class
+	}
+)
 public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	extends BasePersistenceImpl<CommerceDiscountCommerceAccountGroupRel>
 	implements CommerceDiscountCommerceAccountGroupRelPersistence {
@@ -2091,7 +2107,8 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	/**
 	 * Initializes the commerce discount commerce account group rel persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
@@ -2162,7 +2179,8 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 		_setCommerceDiscountCommerceAccountGroupRelUtilPersistence(this);
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		_setCommerceDiscountCommerceAccountGroupRelUtilPersistence(null);
 
 		entityCache.removeCache(
@@ -2187,10 +2205,36 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 		}
 	}
 
-	@ServiceReference(type = EntityCache.class)
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+	}
+
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String
@@ -2228,5 +2272,9 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private CommerceDiscountCommerceAccountGroupRelModelArgumentsResolver
+		_commerceDiscountCommerceAccountGroupRelModelArgumentsResolver;
 
 }

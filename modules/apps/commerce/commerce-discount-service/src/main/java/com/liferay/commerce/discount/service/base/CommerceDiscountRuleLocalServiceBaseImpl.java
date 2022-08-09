@@ -20,7 +20,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountRuleLocalServiceUti
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRuleFinder;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRulePersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -38,12 +38,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -52,6 +51,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce discount rule local service.
@@ -66,7 +68,8 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceDiscountRuleLocalService, IdentifiableOSGiService {
+	implements AopService, CommerceDiscountRuleLocalService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -403,107 +406,25 @@ public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 		return commerceDiscountRulePersistence.update(commerceDiscountRule);
 	}
 
-	/**
-	 * Returns the commerce discount rule local service.
-	 *
-	 * @return the commerce discount rule local service
-	 */
-	public CommerceDiscountRuleLocalService
-		getCommerceDiscountRuleLocalService() {
-
-		return commerceDiscountRuleLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce discount rule local service.
-	 *
-	 * @param commerceDiscountRuleLocalService the commerce discount rule local service
-	 */
-	public void setCommerceDiscountRuleLocalService(
-		CommerceDiscountRuleLocalService commerceDiscountRuleLocalService) {
-
-		this.commerceDiscountRuleLocalService =
-			commerceDiscountRuleLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceDiscountRuleLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce discount rule persistence.
-	 *
-	 * @return the commerce discount rule persistence
-	 */
-	public CommerceDiscountRulePersistence
-		getCommerceDiscountRulePersistence() {
-
-		return commerceDiscountRulePersistence;
-	}
-
-	/**
-	 * Sets the commerce discount rule persistence.
-	 *
-	 * @param commerceDiscountRulePersistence the commerce discount rule persistence
-	 */
-	public void setCommerceDiscountRulePersistence(
-		CommerceDiscountRulePersistence commerceDiscountRulePersistence) {
-
-		this.commerceDiscountRulePersistence = commerceDiscountRulePersistence;
-	}
-
-	/**
-	 * Returns the commerce discount rule finder.
-	 *
-	 * @return the commerce discount rule finder
-	 */
-	public CommerceDiscountRuleFinder getCommerceDiscountRuleFinder() {
-		return commerceDiscountRuleFinder;
-	}
-
-	/**
-	 * Sets the commerce discount rule finder.
-	 *
-	 * @param commerceDiscountRuleFinder the commerce discount rule finder
-	 */
-	public void setCommerceDiscountRuleFinder(
-		CommerceDiscountRuleFinder commerceDiscountRuleFinder) {
-
-		this.commerceDiscountRuleFinder = commerceDiscountRuleFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.discount.model.CommerceDiscountRule",
-			commerceDiscountRuleLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceDiscountRuleLocalService =
+			(CommerceDiscountRuleLocalService)aopProxy;
 
 		_setLocalServiceUtilService(commerceDiscountRuleLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.discount.model.CommerceDiscountRule");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -566,23 +487,16 @@ public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommerceDiscountRuleLocalService.class)
 	protected CommerceDiscountRuleLocalService commerceDiscountRuleLocalService;
 
-	@BeanReference(type = CommerceDiscountRulePersistence.class)
+	@Reference
 	protected CommerceDiscountRulePersistence commerceDiscountRulePersistence;
 
-	@BeanReference(type = CommerceDiscountRuleFinder.class)
+	@Reference
 	protected CommerceDiscountRuleFinder commerceDiscountRuleFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

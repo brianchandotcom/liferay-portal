@@ -20,7 +20,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountRelLocalServiceUtil
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelFinder;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -38,12 +38,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -52,6 +51,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce discount rel local service.
@@ -66,7 +68,8 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceDiscountRelLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceDiscountRelLocalService, IdentifiableOSGiService {
+	implements AopService, CommerceDiscountRelLocalService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -403,104 +406,25 @@ public abstract class CommerceDiscountRelLocalServiceBaseImpl
 		return commerceDiscountRelPersistence.update(commerceDiscountRel);
 	}
 
-	/**
-	 * Returns the commerce discount rel local service.
-	 *
-	 * @return the commerce discount rel local service
-	 */
-	public CommerceDiscountRelLocalService
-		getCommerceDiscountRelLocalService() {
-
-		return commerceDiscountRelLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce discount rel local service.
-	 *
-	 * @param commerceDiscountRelLocalService the commerce discount rel local service
-	 */
-	public void setCommerceDiscountRelLocalService(
-		CommerceDiscountRelLocalService commerceDiscountRelLocalService) {
-
-		this.commerceDiscountRelLocalService = commerceDiscountRelLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceDiscountRelLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce discount rel persistence.
-	 *
-	 * @return the commerce discount rel persistence
-	 */
-	public CommerceDiscountRelPersistence getCommerceDiscountRelPersistence() {
-		return commerceDiscountRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce discount rel persistence.
-	 *
-	 * @param commerceDiscountRelPersistence the commerce discount rel persistence
-	 */
-	public void setCommerceDiscountRelPersistence(
-		CommerceDiscountRelPersistence commerceDiscountRelPersistence) {
-
-		this.commerceDiscountRelPersistence = commerceDiscountRelPersistence;
-	}
-
-	/**
-	 * Returns the commerce discount rel finder.
-	 *
-	 * @return the commerce discount rel finder
-	 */
-	public CommerceDiscountRelFinder getCommerceDiscountRelFinder() {
-		return commerceDiscountRelFinder;
-	}
-
-	/**
-	 * Sets the commerce discount rel finder.
-	 *
-	 * @param commerceDiscountRelFinder the commerce discount rel finder
-	 */
-	public void setCommerceDiscountRelFinder(
-		CommerceDiscountRelFinder commerceDiscountRelFinder) {
-
-		this.commerceDiscountRelFinder = commerceDiscountRelFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.discount.model.CommerceDiscountRel",
-			commerceDiscountRelLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceDiscountRelLocalService =
+			(CommerceDiscountRelLocalService)aopProxy;
 
 		_setLocalServiceUtilService(commerceDiscountRelLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.discount.model.CommerceDiscountRel");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -563,23 +487,16 @@ public abstract class CommerceDiscountRelLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommerceDiscountRelLocalService.class)
 	protected CommerceDiscountRelLocalService commerceDiscountRelLocalService;
 
-	@BeanReference(type = CommerceDiscountRelPersistence.class)
+	@Reference
 	protected CommerceDiscountRelPersistence commerceDiscountRelPersistence;
 
-	@BeanReference(type = CommerceDiscountRelFinder.class)
+	@Reference
 	protected CommerceDiscountRelFinder commerceDiscountRelFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

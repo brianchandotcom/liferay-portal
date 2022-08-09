@@ -16,41 +16,53 @@ package com.liferay.commerce.discount.service.persistence.impl;
 
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.commerce.discount.service.persistence.impl.constants.CommercePersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  * @generated
  */
-public class CommerceDiscountRelFinderBaseImpl
+public abstract class CommerceDiscountRelFinderBaseImpl
 	extends BasePersistenceImpl<CommerceDiscountRel> {
 
 	public CommerceDiscountRelFinderBaseImpl() {
 		setModelClass(CommerceDiscountRel.class);
 	}
 
-	/**
-	 * Returns the commerce discount rel persistence.
-	 *
-	 * @return the commerce discount rel persistence
-	 */
-	public CommerceDiscountRelPersistence getCommerceDiscountRelPersistence() {
-		return commerceDiscountRelPersistence;
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
 	}
 
-	/**
-	 * Sets the commerce discount rel persistence.
-	 *
-	 * @param commerceDiscountRelPersistence the commerce discount rel persistence
-	 */
-	public void setCommerceDiscountRelPersistence(
-		CommerceDiscountRelPersistence commerceDiscountRelPersistence) {
-
-		this.commerceDiscountRelPersistence = commerceDiscountRelPersistence;
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = CommerceDiscountRelPersistence.class)
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected CommerceDiscountRelPersistence commerceDiscountRelPersistence;
 
 }

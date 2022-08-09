@@ -19,7 +19,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleServiceUtil;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRuleFinder;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRulePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -28,11 +28,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce discount rule remote service.
@@ -47,130 +49,31 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceDiscountRuleServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceDiscountRuleService, IdentifiableOSGiService {
+	implements AopService, CommerceDiscountRuleService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceDiscountRuleService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceDiscountRuleServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce discount rule local service.
-	 *
-	 * @return the commerce discount rule local service
-	 */
-	public
-		com.liferay.commerce.discount.service.CommerceDiscountRuleLocalService
-			getCommerceDiscountRuleLocalService() {
-
-		return commerceDiscountRuleLocalService;
-	}
-
-	/**
-	 * Sets the commerce discount rule local service.
-	 *
-	 * @param commerceDiscountRuleLocalService the commerce discount rule local service
-	 */
-	public void setCommerceDiscountRuleLocalService(
-		com.liferay.commerce.discount.service.CommerceDiscountRuleLocalService
-			commerceDiscountRuleLocalService) {
-
-		this.commerceDiscountRuleLocalService =
-			commerceDiscountRuleLocalService;
-	}
-
-	/**
-	 * Returns the commerce discount rule remote service.
-	 *
-	 * @return the commerce discount rule remote service
-	 */
-	public CommerceDiscountRuleService getCommerceDiscountRuleService() {
-		return commerceDiscountRuleService;
-	}
-
-	/**
-	 * Sets the commerce discount rule remote service.
-	 *
-	 * @param commerceDiscountRuleService the commerce discount rule remote service
-	 */
-	public void setCommerceDiscountRuleService(
-		CommerceDiscountRuleService commerceDiscountRuleService) {
-
-		this.commerceDiscountRuleService = commerceDiscountRuleService;
-	}
-
-	/**
-	 * Returns the commerce discount rule persistence.
-	 *
-	 * @return the commerce discount rule persistence
-	 */
-	public CommerceDiscountRulePersistence
-		getCommerceDiscountRulePersistence() {
-
-		return commerceDiscountRulePersistence;
-	}
-
-	/**
-	 * Sets the commerce discount rule persistence.
-	 *
-	 * @param commerceDiscountRulePersistence the commerce discount rule persistence
-	 */
-	public void setCommerceDiscountRulePersistence(
-		CommerceDiscountRulePersistence commerceDiscountRulePersistence) {
-
-		this.commerceDiscountRulePersistence = commerceDiscountRulePersistence;
-	}
-
-	/**
-	 * Returns the commerce discount rule finder.
-	 *
-	 * @return the commerce discount rule finder
-	 */
-	public CommerceDiscountRuleFinder getCommerceDiscountRuleFinder() {
-		return commerceDiscountRuleFinder;
-	}
-
-	/**
-	 * Sets the commerce discount rule finder.
-	 *
-	 * @param commerceDiscountRuleFinder the commerce discount rule finder
-	 */
-	public void setCommerceDiscountRuleFinder(
-		CommerceDiscountRuleFinder commerceDiscountRuleFinder) {
-
-		this.commerceDiscountRuleFinder = commerceDiscountRuleFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceDiscountRuleService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceDiscountRuleService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceDiscountRuleService = (CommerceDiscountRuleService)aopProxy;
+
+		_setServiceUtilService(commerceDiscountRuleService);
 	}
 
 	/**
@@ -233,25 +136,20 @@ public abstract class CommerceDiscountRuleServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.discount.service.CommerceDiscountRuleLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.commerce.discount.service.CommerceDiscountRuleLocalService
 			commerceDiscountRuleLocalService;
 
-	@BeanReference(type = CommerceDiscountRuleService.class)
 	protected CommerceDiscountRuleService commerceDiscountRuleService;
 
-	@BeanReference(type = CommerceDiscountRulePersistence.class)
+	@Reference
 	protected CommerceDiscountRulePersistence commerceDiscountRulePersistence;
 
-	@BeanReference(type = CommerceDiscountRuleFinder.class)
+	@Reference
 	protected CommerceDiscountRuleFinder commerceDiscountRuleFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

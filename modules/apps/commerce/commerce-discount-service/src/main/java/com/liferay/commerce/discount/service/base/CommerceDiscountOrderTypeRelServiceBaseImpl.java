@@ -18,7 +18,7 @@ import com.liferay.commerce.discount.model.CommerceDiscountOrderTypeRel;
 import com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelServiceUtil;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountOrderTypeRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce discount order type rel remote service.
@@ -46,117 +48,33 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceDiscountOrderTypeRelServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceDiscountOrderTypeRelService, IdentifiableOSGiService {
+	implements AopService, CommerceDiscountOrderTypeRelService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceDiscountOrderTypeRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceDiscountOrderTypeRelServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce discount order type rel local service.
-	 *
-	 * @return the commerce discount order type rel local service
-	 */
-	public com.liferay.commerce.discount.service.
-		CommerceDiscountOrderTypeRelLocalService
-			getCommerceDiscountOrderTypeRelLocalService() {
-
-		return commerceDiscountOrderTypeRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce discount order type rel local service.
-	 *
-	 * @param commerceDiscountOrderTypeRelLocalService the commerce discount order type rel local service
-	 */
-	public void setCommerceDiscountOrderTypeRelLocalService(
-		com.liferay.commerce.discount.service.
-			CommerceDiscountOrderTypeRelLocalService
-				commerceDiscountOrderTypeRelLocalService) {
-
-		this.commerceDiscountOrderTypeRelLocalService =
-			commerceDiscountOrderTypeRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce discount order type rel remote service.
-	 *
-	 * @return the commerce discount order type rel remote service
-	 */
-	public CommerceDiscountOrderTypeRelService
-		getCommerceDiscountOrderTypeRelService() {
-
-		return commerceDiscountOrderTypeRelService;
-	}
-
-	/**
-	 * Sets the commerce discount order type rel remote service.
-	 *
-	 * @param commerceDiscountOrderTypeRelService the commerce discount order type rel remote service
-	 */
-	public void setCommerceDiscountOrderTypeRelService(
-		CommerceDiscountOrderTypeRelService
-			commerceDiscountOrderTypeRelService) {
-
-		this.commerceDiscountOrderTypeRelService =
-			commerceDiscountOrderTypeRelService;
-	}
-
-	/**
-	 * Returns the commerce discount order type rel persistence.
-	 *
-	 * @return the commerce discount order type rel persistence
-	 */
-	public CommerceDiscountOrderTypeRelPersistence
-		getCommerceDiscountOrderTypeRelPersistence() {
-
-		return commerceDiscountOrderTypeRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce discount order type rel persistence.
-	 *
-	 * @param commerceDiscountOrderTypeRelPersistence the commerce discount order type rel persistence
-	 */
-	public void setCommerceDiscountOrderTypeRelPersistence(
-		CommerceDiscountOrderTypeRelPersistence
-			commerceDiscountOrderTypeRelPersistence) {
-
-		this.commerceDiscountOrderTypeRelPersistence =
-			commerceDiscountOrderTypeRelPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceDiscountOrderTypeRelService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceDiscountOrderTypeRelService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceDiscountOrderTypeRelService =
+			(CommerceDiscountOrderTypeRelService)aopProxy;
+
+		_setServiceUtilService(commerceDiscountOrderTypeRelService);
 	}
 
 	/**
@@ -220,24 +138,19 @@ public abstract class CommerceDiscountOrderTypeRelServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.discount.service.
 		CommerceDiscountOrderTypeRelLocalService
 			commerceDiscountOrderTypeRelLocalService;
 
-	@BeanReference(type = CommerceDiscountOrderTypeRelService.class)
 	protected CommerceDiscountOrderTypeRelService
 		commerceDiscountOrderTypeRelService;
 
-	@BeanReference(type = CommerceDiscountOrderTypeRelPersistence.class)
+	@Reference
 	protected CommerceDiscountOrderTypeRelPersistence
 		commerceDiscountOrderTypeRelPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

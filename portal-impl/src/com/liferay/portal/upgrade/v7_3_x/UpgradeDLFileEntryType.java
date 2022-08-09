@@ -18,6 +18,8 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.sql.PreparedStatement;
@@ -30,9 +32,15 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_upgradeSchema();
-
 		_populateFields();
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"DLFileEntryType", "dataDefinitionId LONG")
+		};
 	}
 
 	private void _populateFields() throws Exception {
@@ -76,10 +84,6 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 
 			preparedStatement3.executeBatch();
 		}
-	}
-
-	private void _upgradeSchema() throws Exception {
-		alterTableAddColumn("DLFileEntryType", "dataDefinitionId", "LONG");
 	}
 
 }

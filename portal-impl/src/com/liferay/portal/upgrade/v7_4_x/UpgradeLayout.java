@@ -15,6 +15,8 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Marcell Gyopos
@@ -24,8 +26,14 @@ public class UpgradeLayout extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL("update Layout set classNameId = 0 where classNameId is null");
+	}
 
-		alterColumnType("Layout", "title", "TEXT null");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.alterColumnType(
+				"Layout", "title", "TEXT null")
+		};
 	}
 
 }

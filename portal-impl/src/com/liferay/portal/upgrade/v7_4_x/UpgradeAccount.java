@@ -17,6 +17,8 @@ package com.liferay.portal.upgrade.v7_4_x;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.sql.PreparedStatement;
@@ -30,24 +32,6 @@ public class UpgradeAccount extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addColumnToCompanyTable("userId", "LONG");
-		_addColumnToCompanyTable("userName", "VARCHAR(75) null");
-		_addColumnToCompanyTable("createDate", "DATE null");
-		_addColumnToCompanyTable("modifiedDate", "DATE null");
-		_addColumnToCompanyTable("name", "VARCHAR(75) null");
-		_addColumnToCompanyTable("legalName", "VARCHAR(75) null");
-		_addColumnToCompanyTable("legalId", "VARCHAR(75) null");
-		_addColumnToCompanyTable("legalType", "VARCHAR(75) null");
-		_addColumnToCompanyTable("sicCode", "VARCHAR(75) null");
-		_addColumnToCompanyTable("tickerSymbol", "VARCHAR(75) null");
-		_addColumnToCompanyTable("industry", "VARCHAR(75) null");
-		_addColumnToCompanyTable("type_", "VARCHAR(75) null");
-		_addColumnToCompanyTable("size_", "VARCHAR(75) null");
-
-		alterTableDropColumn("Company", "accountId");
-
-		alterTableDropColumn("Contact", "accountId");
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update ListType set type_ = ? where type_ = ?")) {
 
@@ -163,10 +147,20 @@ public class UpgradeAccount extends UpgradeProcess {
 		runSQL("drop table Account_");
 	}
 
-	private void _addColumnToCompanyTable(String columnName, String columnType)
-		throws Exception {
-
-		alterTableAddColumn("Company", columnName, columnType);
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"Company", "userId LONG", "userName VARCHAR(75) null",
+				"createDate DATE null", "modifiedDate DATE null",
+				"name VARCHAR(75) null", "legalName VARCHAR(75) null",
+				"legalId VARCHAR(75) null", "legalType VARCHAR(75) null",
+				"sicCode VARCHAR(75) null", "tickerSymbol VARCHAR(75) null",
+				"industry VARCHAR(75) null", "type_ VARCHAR(75) null",
+				"size_ VARCHAR(75) null"),
+			UpgradeProcessFactory.dropColumns("Company", "accountId"),
+			UpgradeProcessFactory.dropColumns("Contact", "accountId")
+		};
 	}
 
 	private String _getUpdateClassNameIdClassPKSQL(String tableName) {

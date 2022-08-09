@@ -15,6 +15,8 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Marcos Martins
@@ -23,11 +25,17 @@ public class UpgradeExpandoColumn extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("ExpandoColumn", "modifiedDate", "DATE");
-
 		runSQL(
 			"update ExpandoColumn set modifiedDate = CURRENT_TIMESTAMP where " +
 				"modifiedDate is null");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"ExpandoColumn", "modifiedDate DATE")
+		};
 	}
 
 }

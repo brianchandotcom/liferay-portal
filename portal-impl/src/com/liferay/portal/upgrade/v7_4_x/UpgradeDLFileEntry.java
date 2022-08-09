@@ -16,6 +16,8 @@ package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,9 +36,15 @@ public class UpgradeDLFileEntry extends UpgradeProcess {
 
 			_populateExternalReferenceCode();
 		}
+	}
 
-		alterTableAddColumn("DLFileEntry", "expirationDate", "DATE null");
-		alterTableAddColumn("DLFileEntry", "reviewDate", "DATE null");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"DLFileEntry", "expirationDate DATE null",
+				"reviewDate DATE null")
+		};
 	}
 
 	private void _populateExternalReferenceCode() throws Exception {

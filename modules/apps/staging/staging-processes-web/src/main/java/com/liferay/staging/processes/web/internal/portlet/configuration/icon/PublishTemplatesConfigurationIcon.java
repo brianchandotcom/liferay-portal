@@ -16,7 +16,7 @@ package com.liferay.staging.processes.web.internal.portlet.configuration.icon;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -55,7 +55,7 @@ public class PublishTemplatesConfigurationIcon
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getLocale(portletRequest), getClass());
 
-		return LanguageUtil.get(resourceBundle, "publish-templates");
+		return _language.get(resourceBundle, "publish-templates");
 	}
 
 	@Override
@@ -140,6 +140,9 @@ public class PublishTemplatesConfigurationIcon
 
 	@Reference
 	private GroupPermission _groupPermission;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

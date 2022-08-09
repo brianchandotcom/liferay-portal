@@ -16,7 +16,7 @@ package com.liferay.staging.bar.web.internal.template;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -102,8 +102,7 @@ public class StagingBarTemplateContextContributor
 
 		if (themeDisplay.isShowStagingIcon()) {
 			contextObjects.put(
-				"staging_text",
-				LanguageUtil.get(httpServletRequest, "staging"));
+				"staging_text", _language.get(httpServletRequest, "staging"));
 		}
 	}
 
@@ -118,6 +117,9 @@ public class StagingBarTemplateContextContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingBarTemplateContextContributor.class);
+
+	@Reference
+	private Language _language;
 
 	private StagingBarControlMenuJSPDynamicInclude
 		_stagingBarControlMenuJSPDynamicInclude;

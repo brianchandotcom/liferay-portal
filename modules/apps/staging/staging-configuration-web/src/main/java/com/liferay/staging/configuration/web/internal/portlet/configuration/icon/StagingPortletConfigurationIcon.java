@@ -18,7 +18,7 @@ import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -56,7 +56,7 @@ public class StagingPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(getLocale(portletRequest)), "staging");
 	}
 
@@ -85,7 +85,7 @@ public class StagingPortletConfigurationIcon
 		sb.append("_', portletId: '");
 		sb.append(portletDisplay.getId());
 		sb.append("', title: '");
-		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "staging"));
+		sb.append(_language.get(themeDisplay.getLocale(), "staging"));
 		sb.append("', url: '");
 		sb.append(HtmlUtil.escapeJS(portletDisplay.getURLStaging()));
 		sb.append("'}); return false;");
@@ -178,6 +178,9 @@ public class StagingPortletConfigurationIcon
 
 	@Reference
 	private GroupPermission _groupPermission;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

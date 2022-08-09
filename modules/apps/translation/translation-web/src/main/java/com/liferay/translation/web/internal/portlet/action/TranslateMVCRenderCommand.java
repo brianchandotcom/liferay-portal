@@ -26,7 +26,7 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -201,7 +201,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		boolean hasUpdatePermission = infoItemPermissionProvider.hasPermission(
 			themeDisplay.getPermissionChecker(), object, ActionKeys.UPDATE);
 
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+		Set<Locale> availableLocales = _language.getAvailableLocales(
 			themeDisplay.getSiteGroupId());
 
 		Stream<Locale> stream = availableLocales.stream();
@@ -358,6 +358,9 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

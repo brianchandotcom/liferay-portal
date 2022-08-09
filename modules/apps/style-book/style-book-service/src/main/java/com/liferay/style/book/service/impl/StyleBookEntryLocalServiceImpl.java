@@ -22,7 +22,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
@@ -128,7 +128,7 @@ public class StyleBookEntryLocalServiceImpl
 		String name = StringBundler.concat(
 			styleBookEntry.getName(), StringPool.SPACE,
 			StringPool.OPEN_PARENTHESIS,
-			LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "copy"),
+			_language.get(LocaleUtil.getMostRelevantLocale(), "copy"),
 			StringPool.CLOSE_PARENTHESIS);
 
 		StyleBookEntry copyStyleBookEntry = addStyleBookEntry(
@@ -538,6 +538,9 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private UserLocalService _userLocalService;

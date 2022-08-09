@@ -14,7 +14,7 @@
 
 package com.liferay.social.bookmark.twitter.internal;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.social.bookmarks.SocialBookmark;
 
@@ -45,7 +45,7 @@ public class TwitterSocialBookmark implements SocialBookmark {
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "twitter");
+		return _language.get(locale, "twitter");
 	}
 
 	@Override
@@ -67,6 +67,9 @@ public class TwitterSocialBookmark implements SocialBookmark {
 
 		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.social.bookmark.twitter)"

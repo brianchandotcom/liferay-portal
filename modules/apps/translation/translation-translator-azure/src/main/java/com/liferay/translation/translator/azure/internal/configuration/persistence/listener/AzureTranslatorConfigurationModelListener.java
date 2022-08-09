@@ -16,7 +16,7 @@ package com.liferay.translation.translator.azure.internal.configuration.persiste
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,6 +25,7 @@ import com.liferay.translation.translator.azure.internal.configuration.AzureTran
 import java.util.Dictionary;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -52,12 +53,15 @@ public class AzureTranslatorConfigurationModelListener
 			 Validator.isNull(resourceLocation))) {
 
 			throw new ConfigurationModelListenerException(
-				LanguageUtil.get(
+				_language.get(
 					LocaleThreadLocal.getThemeDisplayLocale(),
 					"the-subscription-key-and-resource-location-must-not-be-" +
 						"empty"),
 				AzureTranslatorConfiguration.class, getClass(), properties);
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 }

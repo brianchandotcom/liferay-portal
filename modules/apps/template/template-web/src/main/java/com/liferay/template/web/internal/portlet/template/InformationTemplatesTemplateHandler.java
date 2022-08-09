@@ -15,7 +15,7 @@
 package com.liferay.template.web.internal.portlet.template;
 
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.template.BaseTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -55,7 +55,7 @@ public class InformationTemplatesTemplateHandler extends BaseTemplateHandler {
 			TemplatePortletKeys.TEMPLATE,
 			ResourceBundleUtil.getBundle(locale, getClass()));
 
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return _language.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override
@@ -109,6 +109,9 @@ public class InformationTemplatesTemplateHandler extends BaseTemplateHandler {
 	public boolean isDisplayTemplateHandler() {
 		return false;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

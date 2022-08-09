@@ -23,7 +23,7 @@ import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -149,7 +149,7 @@ public class ExportTranslationServlet extends HttpServlet {
 					_getZipFileName(
 						translationRequestHelper.getModelClassName(),
 						translationRequestHelper.getModelClassPK(),
-						LanguageUtil.get(
+						_language.get(
 							_portal.getLocale(httpServletRequest),
 							"model.resource." + className),
 						_isMultipleModels(
@@ -178,7 +178,7 @@ public class ExportTranslationServlet extends HttpServlet {
 
 		String infoItemTitle = infoItemTitleOptional.orElseGet(
 			() ->
-				LanguageUtil.get(locale, "model.resource." + className) +
+				_language.get(locale, "model.resource." + className) +
 					StringPool.SPACE + classPK);
 
 		Optional<TranslationInfoItemFieldValuesExporter>
@@ -260,7 +260,7 @@ public class ExportTranslationServlet extends HttpServlet {
 
 		if (multipleModels) {
 			return classNameTitle + StringPool.SPACE +
-				LanguageUtil.get(locale, "translations");
+				_language.get(locale, "translations");
 		}
 
 		return infoItemTitleOptional.orElseGet(
@@ -308,6 +308,9 @@ public class ExportTranslationServlet extends HttpServlet {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

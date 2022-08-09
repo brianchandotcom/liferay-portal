@@ -25,7 +25,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -143,13 +143,13 @@ public class AddTemplateEntryMVCActionCommand
 		if (portalException instanceof TemplateNameException) {
 			return JSONUtil.put(
 				"name",
-				LanguageUtil.get(
+				_language.get(
 					themeDisplay.getLocale(), "please-enter-a-valid-name"));
 		}
 		else if (portalException instanceof TemplateScriptException) {
 			return JSONUtil.put(
 				"other",
-				LanguageUtil.get(
+				_language.get(
 					themeDisplay.getLocale(), "please-enter-a-valid-script"));
 		}
 
@@ -159,7 +159,7 @@ public class AddTemplateEntryMVCActionCommand
 
 		return JSONUtil.put(
 			"other",
-			LanguageUtil.get(
+			_language.get(
 				themeDisplay.getLocale(), "an-unexpected-error-occurred"));
 	}
 
@@ -181,6 +181,9 @@ public class AddTemplateEntryMVCActionCommand
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

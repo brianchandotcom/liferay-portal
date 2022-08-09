@@ -456,6 +456,28 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro clearProperty {
+		ACUtils.searchBar(searchItem = "${propertyName}");
+
+		ACNavigation.openItem(itemName = "${propertyName}");
+
+		ACUtils.clickAnyButton(buttonName = "Clear Data");
+
+		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
+
+		// This pause is necessary as it takes time for the data to be cleared from the property. See LRAC-11595
+
+		Pause(locator1 = "10000");
+	}
+
 	macro clickGenericAddOrConfirmationButton {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 	}

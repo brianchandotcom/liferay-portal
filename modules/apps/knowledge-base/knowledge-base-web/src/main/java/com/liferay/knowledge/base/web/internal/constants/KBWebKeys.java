@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.util.WebKeys;
  */
 public class KBWebKeys implements WebKeys {
 
-	public static final String KB_ARTICLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-		"KB_ARTICLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
-
 	public static final String KNOWLEDGE_BASE_EXACT_MATCH =
 		"KNOWLEDGE_BASE_EXACT_MATCH";
 

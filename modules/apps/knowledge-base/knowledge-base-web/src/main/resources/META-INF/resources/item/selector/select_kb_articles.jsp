@@ -17,7 +17,7 @@
 <%@ include file="/item/selector/init.jsp" %>
 
 <%
-KBArticleItemSelectorViewDisplayContext kbArticleItemSelectorViewDisplayContext = (KBArticleItemSelectorViewDisplayContext)request.getAttribute(KBWebKeys.KB_ARTICLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
+KBArticleItemSelectorViewDisplayContext kbArticleItemSelectorViewDisplayContext = (KBArticleItemSelectorViewDisplayContext)request.getAttribute(KBArticleItemSelectorViewDisplayContext.class.getName());
 %>
 
 <clay:container-fluid

@@ -27,7 +27,6 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
-import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.knowledge.base.web.internal.display.context.KBArticleItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -128,7 +127,7 @@ public class KBArticleItemSelectorView
 					portletURL, search);
 
 		servletRequest.setAttribute(
-			KBWebKeys.KB_ARTICLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			KBArticleItemSelectorViewDisplayContext.class.getName(),
 			kbArticleItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();

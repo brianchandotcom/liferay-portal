@@ -108,7 +108,7 @@ public class BasicSuggestionsContributorTest {
 		throws Exception {
 
 		_setUpAssetEntryLocalService();
-		_setUpAssetRendererFactoryRegistryUtil();
+		_setUpAssetRendererFactoryRegistryUtil("Title");
 		_setUpLayoutLocalService();
 		_setUpLiferayPortletRequest();
 		_setUpSearchContext();
@@ -123,13 +123,15 @@ public class BasicSuggestionsContributorTest {
 				_liferayPortletRequest, _setUpLiferayPortletResponse(),
 				_searchContext, _suggestionsContributorConfiguration);
 
-		Assert.assertEquals(
-			"testField", suggestionsContributorResults.getDisplayGroupName());
-
 		List<Suggestion> suggestions =
 			suggestionsContributorResults.getSuggestions();
 
-		Assert.assertEquals("testField", suggestions.get(0));
+		Suggestion suggestion = suggestions.get(0);
+
+		Assert.assertEquals("Title", suggestion.getText());
+
+		Assert.assertEquals(
+			"testField", suggestionsContributorResults.getDisplayGroupName());
 
 		Mockito.verify(
 			_assetRendererFactory, Mockito.times(1)
@@ -195,7 +197,9 @@ public class BasicSuggestionsContributorTest {
 		);
 	}
 
-	private void _setUpAssetRendererFactoryRegistryUtil() throws Exception {
+	private void _setUpAssetRendererFactoryRegistryUtil(String title)
+		throws Exception {
+
 		AssetRenderer<?> assetRenderer = Mockito.mock(AssetRenderer.class);
 
 		Mockito.doReturn(
@@ -219,6 +223,14 @@ public class BasicSuggestionsContributorTest {
 		).when(
 			assetRenderer
 		).getSearchSummary(
+			Mockito.any()
+		);
+
+		Mockito.doReturn(
+			title
+		).when(
+			assetRenderer
+		).getTitle(
 			Mockito.any()
 		);
 

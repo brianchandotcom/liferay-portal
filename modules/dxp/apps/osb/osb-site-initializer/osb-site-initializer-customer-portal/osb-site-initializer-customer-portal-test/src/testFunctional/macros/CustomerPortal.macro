@@ -307,7 +307,7 @@ definition {
 	}
 
 	macro loginOktaToUpdateCP {
-		var userEmailAddress = "garrettz@mbopartners.com.broken";
+		var userEmailAddress = "dbace26d5dadb9eed597@uat.com.broken";
 		var userPassword = "q4F63ZEH3njnnA34S761";
 
 		Open.openInTheNewTab(locator1 = "https://login-dev.liferay.com/");
@@ -321,6 +321,10 @@ definition {
 			value1 = "${userPassword}");
 
 		Click(locator1 = "CustomerPortalSite#OKTA_SUBMIT");
+
+		CustomerPortal.waitToLiferayPage();
+
+		Navigator.closeWindow();
 	}
 
 	macro notViewProduct {

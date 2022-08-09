@@ -121,7 +121,7 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Edit");
 
-		AssertElementPresent.pauseAssertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+		WaitForElementPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
@@ -198,7 +198,7 @@ definition {
 	}
 
 	macro subscribePG {
-		AssertElementPresent.pauseAssertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		WaitForVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		AssertClick(
 			locator1 = "Button#SUBSCRIBE",

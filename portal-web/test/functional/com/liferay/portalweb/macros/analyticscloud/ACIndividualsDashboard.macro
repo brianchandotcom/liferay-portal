@@ -51,9 +51,9 @@ definition {
 	}
 
 	macro deleteBreakdown {
-		Click(
-			breakdownName = "${breakdownName}",
-			locator1 = "ACIndividualsDashboard#DELETE_BREAKDOWN_BUTTON");
+		while (IsElementPresent(locator1 = "ACIndividualsDashboard#DELETE_BREAKDOWN_BUTTON")) {
+			Click(locator1 = "ACIndividualsDashboard#DELETE_BREAKDOWN_BUTTON");
+		}
 	}
 
 	macro expandActivity {

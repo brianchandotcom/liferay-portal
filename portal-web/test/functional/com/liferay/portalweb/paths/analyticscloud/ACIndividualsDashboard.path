@@ -63,7 +63,7 @@
 </tr>
 <tr>
 	<td>DELETE_BREAKDOWN_BUTTON</td>
-	<td>//div[contains(@class,'distribution-card')]//div[contains(@class,'tab-title')][normalize-space(text())='${breakdownName}']//button[*[name()='svg'][contains(@class,'icon-times')]]</td>
+	<td>//div[contains(@class,'distribution-card')]//div[contains(@class,'tab-title')]//button[*[name()='svg'][contains(@class,'icon-times')]]</td>
 	<td></td>
 </tr>
 <tr>

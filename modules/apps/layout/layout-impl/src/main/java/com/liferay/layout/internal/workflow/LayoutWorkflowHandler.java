@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -106,11 +107,18 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
+		long originalUserId = PrincipalThreadLocal.getUserId();
+
+		PrincipalThreadLocal.setName(userId);
+
 		try {
 			_layoutCopyHelper.copyLayout(draftLayout, layout);
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalUserId);
 		}
 
 		_layoutLocalService.updateStatus(

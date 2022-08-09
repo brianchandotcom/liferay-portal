@@ -473,9 +473,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		// This pause is necessary as it takes time for the data to be cleared from the property. See LRAC-11595
-
-		Pause(locator1 = "10000");
+		ACUtils.waitForClearProperty();
 	}
 
 	macro clickGenericAddOrConfirmationButton {

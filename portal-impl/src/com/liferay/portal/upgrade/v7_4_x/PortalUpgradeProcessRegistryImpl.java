@@ -33,7 +33,19 @@ public class PortalUpgradeProcessRegistryImpl
 	public void registerUpgradeProcesses(
 		UpgradeVersionTreeMap upgradeVersionTreeMap) {
 
-		upgradeVersionTreeMap.put(new Version(9, 0, 0), new UpgradeAddress());
+		upgradeVersionTreeMap.put(
+			new Version(9, 0, 0),
+			UpgradeProcessFactory.addColumns(
+				"Address", "externalReferenceCode VARCHAR(75) null",
+				"description STRING null", "latitude DOUBLE",
+				"longitude DOUBLE", "name VARCHAR(255) null",
+				"validationDate DATE null", "validationStatus INTEGER"),
+			UpgradeProcessFactory.alterColumnType(
+				"Address", "street1", "VARCHAR(255) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"Address", "street2", "VARCHAR(255) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"Address", "street3", "VARCHAR(255) null"));
 
 		upgradeVersionTreeMap.put(
 			new Version(9, 0, 1),

@@ -70,7 +70,15 @@ public class PortalUpgradeProcessRegistryImpl
 				"AssetCategory", "name", "VARCHAR(255) null"));
 
 		upgradeVersionTreeMap.put(
-			new Version(8, 2, 0), new UpgradeAssetEntryMappingTables());
+			new Version(8, 2, 0),
+			UpgradeProcessFactory.dropColumns(
+				"AssetEntries_AssetCategories", "changeType"),
+			UpgradeProcessFactory.dropColumns(
+				"AssetEntries_AssetTags", "changeType"),
+			UpgradeProcessFactory.addColumns(
+				"AssetEntries_AssetCategories", "ctChangeType BOOLEAN"),
+			UpgradeProcessFactory.addColumns(
+				"AssetEntries_AssetTags", "ctChangeType BOOLEAN"));
 
 		upgradeVersionTreeMap.put(
 			new Version(8, 3, 0), new UpgradeUserGroupGroupRole());

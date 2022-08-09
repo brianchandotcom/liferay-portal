@@ -11,10 +11,13 @@
 
 import {FormikHelpers} from 'formik';
 
+import {StepType} from '../enums/stepType';
+
 export default interface MDFRequestStepProps<T> {
 	onCancel: () => void;
 	onContinue?: (
-		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
+		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>,
+		nextStep: StepType
 	) => void;
 	onPrevious?: () => void;
 	onSaveAsDraft?: (

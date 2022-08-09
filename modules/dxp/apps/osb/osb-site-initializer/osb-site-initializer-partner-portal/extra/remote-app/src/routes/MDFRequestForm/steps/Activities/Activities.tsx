@@ -16,6 +16,7 @@ import {useState} from 'react';
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
+import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import Form from './Form';
 import Listing from './Listing';
@@ -99,7 +100,7 @@ const Activities = ({
 						onClick={() =>
 							isForm
 								? setIsForm(false)
-								: onContinue?.(formikHelpers)
+								: onContinue?.(formikHelpers, StepType.REVIEW)
 						}
 					>
 						Continue

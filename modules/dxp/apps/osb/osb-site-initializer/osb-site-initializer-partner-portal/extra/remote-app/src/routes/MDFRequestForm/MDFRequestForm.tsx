@@ -37,39 +37,23 @@ type StepComponent = {
 	[key in StepType]?: JSX.Element;
 };
 
-const onSubmit = (
-	value: MDFRequest,
-	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
-) => {
-	// eslint-disable-next-line no-console
-	console.log(value);
-	formikHelpers.setSubmitting(false);
-};
+const onSubmit = () => {};
 
-const onSaveAsDraft = (
-	value: MDFRequest,
-	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
-) => {
-	// eslint-disable-next-line no-console
-	console.log(value);
-	formikHelpers.setSubmitting(true);
-};
+const onSaveAsDraft = () => {};
 
-const onCancel = () => {
-	// eslint-disable-next-line no-console
-	console.log('Cancel!');
-};
+const onCancel = () => {};
 
 const MDFRequestForm = () => {
 	const [step, setStep] = useState<StepType>(StepType.GOALS);
 
 	const onContinue = async (
-		formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
+		formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,
+		nextStep: StepType
 	) => {
 		const validationErrors = await formikHelpers.validateForm();
 
 		if (isObjectEmpty(validationErrors)) {
-			setStep(StepType.ACTIVITIES);
+			setStep(nextStep);
 
 			return;
 		}

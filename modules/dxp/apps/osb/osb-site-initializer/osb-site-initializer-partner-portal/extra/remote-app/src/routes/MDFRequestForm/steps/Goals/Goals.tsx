@@ -18,6 +18,7 @@ import PRMFormik from '../../../../common/components/PRMFormik';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
+import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import useCountryCompanyExtender from './hooks/useCountryCompanyExtender';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
@@ -167,7 +168,9 @@ const Goals = ({
 
 					<Button
 						disabled={!isValid}
-						onClick={() => onContinue?.(formikHelpers)}
+						onClick={() =>
+							onContinue?.(formikHelpers, StepType.ACTIVITIES)
+						}
 					>
 						Continue
 					</Button>

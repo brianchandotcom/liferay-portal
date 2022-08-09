@@ -324,6 +324,9 @@ public class UserResourceDTOConverter
 			{
 				descriptiveName = group.getDescriptiveName(
 					dtoConverterContext.getLocale());
+				descriptiveName_i18n = LocalizedMapUtil.getI18nMap(
+					dtoConverterContext.isAcceptAllLanguages(),
+					group.getDescriptiveNameMap());
 				id = group.getGroupId();
 				name = group.getName(dtoConverterContext.getLocale());
 				name_i18n = LocalizedMapUtil.getI18nMap(

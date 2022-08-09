@@ -45,6 +45,11 @@ import org.json.JSONObject;
 public abstract class BaseTestrayServer implements TestrayServer {
 
 	@Override
+	public JenkinsResultsParserUtil.HTTPAuthorization getHTTPAuthorization() {
+		return _httpAuthorization;
+	}
+
+	@Override
 	public TestrayProject getTestrayProjectByID(int projectID) {
 		_initTestrayProjects();
 
@@ -81,6 +86,13 @@ public abstract class BaseTestrayServer implements TestrayServer {
 		if (TestrayS3Bucket.googleCredentialsAvailable()) {
 			_importCaseResultsToGCP(topLevelBuild);
 		}
+	}
+
+	@Override
+	public void setHTTPAuthorization(
+		JenkinsResultsParserUtil.HTTPAuthorization httpAuthorization) {
+
+		_httpAuthorization = httpAuthorization;
 	}
 
 	@Override
@@ -264,7 +276,7 @@ public abstract class BaseTestrayServer implements TestrayServer {
 					"&orderByCol=testrayProjectId");
 
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					projectAPIURL, true);
+					projectAPIURL, true, getHTTPAuthorization());
 
 				JSONArray dataJSONArray = jsonObject.getJSONArray("data");
 
@@ -295,6 +307,7 @@ public abstract class BaseTestrayServer implements TestrayServer {
 
 	private static final int _DELTA = 50;
 
+	private JenkinsResultsParserUtil.HTTPAuthorization _httpAuthorization;
 	private Map<Integer, TestrayProject> _testrayProjectsByID;
 	private Map<String, TestrayProject> _testrayProjectsByName;
 	private final URL _url;

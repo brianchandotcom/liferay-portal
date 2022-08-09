@@ -927,11 +927,12 @@ public class BundleSiteInitializerTest {
 	private void _assertNotificationTemplate(ServiceContext serviceContext)
 		throws Exception {
 
-		NotificationTemplateResource.Builder builder =
-			_notificationTemplateResourceFactory.create();
+		NotificationTemplateResource.Builder
+			notificationTemplateResourceBuilder =
+				_notificationTemplateResourceFactory.create();
 
 		NotificationTemplateResource notificationTemplateResource =
-			builder.user(
+			notificationTemplateResourceBuilder.user(
 				serviceContext.fetchUser()
 			).build();
 

@@ -1066,12 +1066,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public int getElementHeight(String locator) {
+	public Long getElementHeight(String locator) {
 		WebElement webElement = getWebElement(locator);
 
 		Dimension dimension = webElement.getSize();
 
-		return dimension.getHeight();
+		return GetterUtil.getLong(dimension.getHeight());
 	}
 
 	@Override
@@ -1088,12 +1088,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public int getElementWidth(String locator) {
+	public Long getElementWidth(String locator) {
 		WebElement webElement = getWebElement(locator);
 
 		Dimension dimension = webElement.getSize();
 
-		return dimension.getWidth();
+		return GetterUtil.getLong(dimension.getHeight());
 	}
 
 	@Override
@@ -3680,15 +3680,15 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		};
 	}
 
-	protected int getElementPositionBottom(String locator) {
+	protected Long getElementPositionBottom(String locator) {
 		return getElementPositionTop(locator) + getElementHeight(locator);
 	}
 
-	protected int getElementPositionCenterX(String locator) {
+	protected Long getElementPositionCenterX(String locator) {
 		return getElementPositionLeft(locator) + (getElementWidth(locator) / 2);
 	}
 
-	protected int getElementPositionCenterY(String locator) {
+	protected Long getElementPositionCenterY(String locator) {
 		return getElementPositionTop(locator) + (getElementHeight(locator) / 2);
 	}
 
@@ -3700,7 +3700,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return point.getX();
 	}
 
-	protected int getElementPositionRight(String locator) {
+	protected Long getElementPositionRight(String locator) {
 		return getElementPositionLeft(locator) + getElementWidth(locator);
 	}
 

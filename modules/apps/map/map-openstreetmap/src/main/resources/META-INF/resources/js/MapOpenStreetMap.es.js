@@ -12,8 +12,7 @@
  * details.
  */
 
-import MapBase from '@liferay/map-common/js/MapBase.es';
-import {Config} from 'metal-state';
+import MapBase from '@liferay/map-common/js/MapBase';
 
 import OpenStreetMapDialog from './OpenStreetMapDialog';
 import OpenStreetMapGeoJSON from './OpenStreetMapGeoJSON';
@@ -41,6 +40,7 @@ class MapOpenStreetMap extends MapBase {
 		super(...args);
 
 		this._map = null;
+		this.tileURI = '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 	}
 
 	/**
@@ -145,23 +145,6 @@ MapOpenStreetMap.POSITION_MAP = {
 	[MapBase.POSITION.TOP_CENTER]: 'topright',
 	[MapBase.POSITION.TOP_LEFT]: 'topleft',
 	[MapBase.POSITION.TOP_RIGHT]: 'topright',
-};
-
-/**
- * State definition.
- * @type {!Object}
- * @static
- */
-MapOpenStreetMap.STATE = {
-	...MapBase.STATE,
-
-	/**
-	 * Url used for fetching map tile information
-	 * @type {string}
-	 */
-	tileURI: Config.string().value(
-		'//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-	),
 };
 
 export default MapOpenStreetMap;

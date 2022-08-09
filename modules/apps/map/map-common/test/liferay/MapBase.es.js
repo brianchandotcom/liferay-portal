@@ -12,7 +12,7 @@
  * details.
  */
 
-import MapBase from '../../src/main/resources/META-INF/resources/js/MapBase.es';
+import MapBase from '../../src/main/resources/META-INF/resources/js/MapBase';
 
 describe('MapBase', () => {
 	const getLocation = () => ({lat: Math.random(), lng: Math.random()});

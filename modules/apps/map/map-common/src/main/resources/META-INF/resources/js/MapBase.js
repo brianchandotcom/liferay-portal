@@ -12,12 +12,10 @@
  * details.
  */
 
-import {buildFragment} from 'frontend-js-web';
-import State, {Config} from 'metal-state';
+import {EventEmitter, buildFragment} from 'frontend-js-web';
 
 import GeoJSONBase from './GeoJSONBase';
 import MarkerBase from './MarkerBase';
-import {isSubsetOf} from './validators';
 
 /**
  * HTML template string used for generating the home button that is
@@ -62,15 +60,39 @@ const pendingCallbacks = {};
  * @abstract
  * @review
  */
-class MapBase extends State {
+class MapBase extends EventEmitter {
+	get position() {
+		return this._STATE_.position;
+	}
+
+	set position(position) {
+		this.emit('positionChange', {
+			newVal: {
+				address: position.address,
+				location: position.location,
+			},
+		});
+
+		this._STATE_.position = position;
+	}
 
 	/**
 	 * MapBase constructor
 	 * @param  {Array} args List of arguments to be sent to State constructor
 	 * @review
 	 */
-	constructor(...args) {
-		super(...args);
+	constructor({boundingBox, controls, geolocation, position}) {
+		super({boundingBox, controls, geolocation, position});
+
+		this._STATE_ = {
+			position,
+		};
+
+		this.boundingBox = boundingBox;
+		this.controls = controls;
+		this.geolocation = geolocation;
+		this.position = position;
+		this.zoom = 11;
 
 		this._customControls = {};
 		this._dialog = null;
@@ -100,12 +122,12 @@ class MapBase extends State {
 
 		this.on('positionChange', this._handlePositionChanged);
 
-		const geolocation =
+		const location =
 			this.position && this.position.location
 				? this.position.location
 				: {};
 
-		if (!geolocation.lat && !geolocation.lng) {
+		if (!location.lat && !location.lng) {
 			Liferay.Util.getGeolocation(
 				(lat, lng) => {
 					this._initializeLocation({lat, lng});
@@ -117,7 +139,7 @@ class MapBase extends State {
 			);
 		}
 		else {
-			this._initializeLocation(geolocation);
+			this._initializeLocation(location);
 		}
 	}
 
@@ -250,12 +272,7 @@ class MapBase extends State {
 	 * @return {Object} Created map
 	 * @review
 	 */
-	_createMap(
-		/* eslint-disable no-unused-vars */
-		location,
-		controlsConfig
-		/* eslint-enable no-unused-vars */
-	) {
+	_createMap(_location, _controlsConfig) {
 		throw new Error('This method must be implemented');
 	}
 
@@ -510,12 +527,7 @@ class MapBase extends State {
 	 * @param {MapBase.POSITION} position Position defined in MapBase class
 	 * @review
 	 */
-	addControl(
-		/* eslint-disable no-unused-vars */
-		control,
-		position
-		/* eslint-enable no-unused-vars */
-	) {
+	addControl(_control, _position) {
 		throw new Error('This method must be implemented');
 	}
 
@@ -535,11 +547,7 @@ class MapBase extends State {
 	 * @param {Object} location
 	 * @review
 	 */
-	setCenter(
-		/* eslint-disable no-unused-vars */
-		location
-		/* eslint-enable no-unused-vars */
-	) {
+	setCenter(_location) {
 		throw new Error('This method must be implemented');
 	}
 
@@ -579,7 +587,7 @@ class MapBase extends State {
 
 	/**
 	 * Adds a listener for the given event using the given context. This
-	 * methods uses MetalJS' functionality, but overrides the context binding
+	 * methods uses EventEmitter's functionality, but overrides the context binding
 	 * in order to avoid breaking changes with the old implementation.
 	 * @param {string} eventName Event name that will be listened.
 	 * @param {function} callback Callback executed when the event fires.
@@ -612,23 +620,6 @@ class MapBase extends State {
 		if (dialog) {
 			dialog.open(dialogConfig);
 		}
-	}
-
-	/**
-	 * Setter called everytime the position attribute is changed.
-	 * @param {Object} position New position
-	 * @return {Object} The given position object
-	 * @review
-	 */
-	setPosition(position) {
-		this.emit('positionChange', {
-			newVal: {
-				address: position.address,
-				location: position.location,
-			},
-		});
-
-		return position;
 	}
 }
 
@@ -763,75 +754,6 @@ MapBase.POSITION = {
  * @review
  */
 MapBase.POSITION_MAP = {};
-
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-MapBase.STATE = {
-
-	/**
-	 * DOM node selector identifying the element that will be used
-	 * for rendering the map
-	 * @review
-	 * @type {string}
-	 */
-	boundingBox: Config.string().value(''),
-
-	/**
-	 * List of controls that will be shown on the map.
-	 * The full control list is kept inside MapBase.CONTROLS.
-	 * @review
-	 * @type {Array<string>}
-	 */
-	controls: Config.validator(
-		isSubsetOf(Object.values(MapBase.CONTROLS))
-	).value([
-		MapBase.CONTROLS.PAN,
-		MapBase.CONTROLS.TYPE,
-		MapBase.CONTROLS.ZOOM,
-	]),
-
-	/**
-	 * Data that will be parsed as GeoJSONData
-	 * @review
-	 * @type {Object}
-	 */
-	data: Config.object(),
-
-	/**
-	 * If true, the geolocation API will be used (if implemented)
-	 * @review
-	 * @type {boolean}
-	 */
-	geolocation: Config.bool().value(false),
-
-	/**
-	 * Position being shown on the map. This value will be updated
-	 * if the position is changed internally.
-	 * @review
-	 * @type {{ lat: number, lng: number }}
-	 */
-	position: Config.shapeOf({
-		location: Config.shapeOf({
-			lat: Config.number().value(0),
-			lng: Config.number().value(0),
-		}),
-	})
-		.value({
-			location: {lat: 0, lng: 0},
-		})
-		.setter('setPosition'),
-
-	/**
-	 * Zoom being used on the map.
-	 * @review
-	 * @type {number}
-	 */
-	zoom: Config.number().value(11),
-};
 
 Liferay.MapBase = MapBase;
 

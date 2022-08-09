@@ -12,7 +12,7 @@
  * details.
  */
 
-import MapBase from '@liferay/map-common/js/MapBase.es';
+import MapBase from '@liferay/map-common/js/MapBase';
 
 export default function ({inputName, mapName}) {
 	MapBase.get(mapName, (map) => {

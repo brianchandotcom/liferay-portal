@@ -17,12 +17,14 @@ package com.liferay.commerce.account.service.base;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
 import com.liferay.commerce.account.service.CommerceAccountGroupServiceUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce account group remote service.
@@ -37,87 +39,31 @@ import java.lang.reflect.Field;
  */
 public abstract class CommerceAccountGroupServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceAccountGroupService, IdentifiableOSGiService {
+	implements AopService, CommerceAccountGroupService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceAccountGroupService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAccountGroupServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce account group local service.
-	 *
-	 * @return the commerce account group local service
-	 */
-	public com.liferay.commerce.account.service.CommerceAccountGroupLocalService
-		getCommerceAccountGroupLocalService() {
-
-		return commerceAccountGroupLocalService;
-	}
-
-	/**
-	 * Sets the commerce account group local service.
-	 *
-	 * @param commerceAccountGroupLocalService the commerce account group local service
-	 */
-	public void setCommerceAccountGroupLocalService(
-		com.liferay.commerce.account.service.CommerceAccountGroupLocalService
-			commerceAccountGroupLocalService) {
-
-		this.commerceAccountGroupLocalService =
-			commerceAccountGroupLocalService;
-	}
-
-	/**
-	 * Returns the commerce account group remote service.
-	 *
-	 * @return the commerce account group remote service
-	 */
-	public CommerceAccountGroupService getCommerceAccountGroupService() {
-		return commerceAccountGroupService;
-	}
-
-	/**
-	 * Sets the commerce account group remote service.
-	 *
-	 * @param commerceAccountGroupService the commerce account group remote service
-	 */
-	public void setCommerceAccountGroupService(
-		CommerceAccountGroupService commerceAccountGroupService) {
-
-		this.commerceAccountGroupService = commerceAccountGroupService;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceAccountGroupService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceAccountGroupService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceAccountGroupService = (CommerceAccountGroupService)aopProxy;
+
+		_setServiceUtilService(commerceAccountGroupService);
 	}
 
 	/**
@@ -155,19 +101,14 @@ public abstract class CommerceAccountGroupServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.account.service.CommerceAccountGroupLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.commerce.account.service.CommerceAccountGroupLocalService
 			commerceAccountGroupLocalService;
 
-	@BeanReference(type = CommerceAccountGroupService.class)
 	protected CommerceAccountGroupService commerceAccountGroupService;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

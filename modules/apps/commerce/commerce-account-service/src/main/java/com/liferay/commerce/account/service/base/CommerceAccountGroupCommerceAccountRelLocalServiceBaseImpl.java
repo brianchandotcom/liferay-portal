@@ -17,12 +17,14 @@ package com.liferay.commerce.account.service.base;
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService;
 import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalServiceUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce account group commerce account rel local service.
@@ -37,7 +39,7 @@ import java.lang.reflect.Field;
  */
 public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceAccountGroupCommerceAccountRelLocalService,
+	implements AopService, CommerceAccountGroupCommerceAccountRelLocalService,
 			   IdentifiableOSGiService {
 
 	/*
@@ -45,61 +47,26 @@ public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceAccountGroupCommerceAccountRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAccountGroupCommerceAccountRelLocalServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce account group commerce account rel local service.
-	 *
-	 * @return the commerce account group commerce account rel local service
-	 */
-	public CommerceAccountGroupCommerceAccountRelLocalService
-		getCommerceAccountGroupCommerceAccountRelLocalService() {
-
-		return commerceAccountGroupCommerceAccountRelLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce account group commerce account rel local service.
-	 *
-	 * @param commerceAccountGroupCommerceAccountRelLocalService the commerce account group commerce account rel local service
-	 */
-	public void setCommerceAccountGroupCommerceAccountRelLocalService(
-		CommerceAccountGroupCommerceAccountRelLocalService
-			commerceAccountGroupCommerceAccountRelLocalService) {
-
-		this.commerceAccountGroupCommerceAccountRelLocalService =
-			commerceAccountGroupCommerceAccountRelLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceAccountGroupCommerceAccountRelLocalService.class,
+			IdentifiableOSGiService.class
+		};
 	}
 
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceAccountGroupCommerceAccountRelLocalService =
+			(CommerceAccountGroupCommerceAccountRelLocalService)aopProxy;
 
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
 		_setLocalServiceUtilService(
 			commerceAccountGroupCommerceAccountRelLocalService);
-	}
-
-	public void destroy() {
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -139,15 +106,10 @@ public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = CommerceAccountGroupCommerceAccountRelLocalService.class
-	)
 	protected CommerceAccountGroupCommerceAccountRelLocalService
 		commerceAccountGroupCommerceAccountRelLocalService;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

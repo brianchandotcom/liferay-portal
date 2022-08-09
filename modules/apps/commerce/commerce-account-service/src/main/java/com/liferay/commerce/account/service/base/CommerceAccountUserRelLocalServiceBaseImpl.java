@@ -17,12 +17,14 @@ package com.liferay.commerce.account.service.base;
 import com.liferay.commerce.account.model.CommerceAccountUserRel;
 import com.liferay.commerce.account.service.CommerceAccountUserRelLocalService;
 import com.liferay.commerce.account.service.CommerceAccountUserRelLocalServiceUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce account user rel local service.
@@ -37,66 +39,33 @@ import java.lang.reflect.Field;
  */
 public abstract class CommerceAccountUserRelLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceAccountUserRelLocalService, IdentifiableOSGiService {
+	implements AopService, CommerceAccountUserRelLocalService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceAccountUserRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAccountUserRelLocalServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce account user rel local service.
-	 *
-	 * @return the commerce account user rel local service
-	 */
-	public CommerceAccountUserRelLocalService
-		getCommerceAccountUserRelLocalService() {
-
-		return commerceAccountUserRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce account user rel local service.
-	 *
-	 * @param commerceAccountUserRelLocalService the commerce account user rel local service
-	 */
-	public void setCommerceAccountUserRelLocalService(
-		CommerceAccountUserRelLocalService commerceAccountUserRelLocalService) {
-
-		this.commerceAccountUserRelLocalService =
-			commerceAccountUserRelLocalService;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setLocalServiceUtilService(commerceAccountUserRelLocalService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setLocalServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceAccountUserRelLocalService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceAccountUserRelLocalService =
+			(CommerceAccountUserRelLocalService)aopProxy;
+
+		_setLocalServiceUtilService(commerceAccountUserRelLocalService);
 	}
 
 	/**
@@ -134,13 +103,10 @@ public abstract class CommerceAccountUserRelLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommerceAccountUserRelLocalService.class)
 	protected CommerceAccountUserRelLocalService
 		commerceAccountUserRelLocalService;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

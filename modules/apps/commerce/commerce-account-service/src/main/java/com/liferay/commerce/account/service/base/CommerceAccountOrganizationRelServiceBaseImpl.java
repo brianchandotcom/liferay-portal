@@ -17,12 +17,14 @@ package com.liferay.commerce.account.service.base;
 import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
 import com.liferay.commerce.account.service.CommerceAccountOrganizationRelService;
 import com.liferay.commerce.account.service.CommerceAccountOrganizationRelServiceUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce account organization rel remote service.
@@ -37,93 +39,33 @@ import java.lang.reflect.Field;
  */
 public abstract class CommerceAccountOrganizationRelServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceAccountOrganizationRelService, IdentifiableOSGiService {
+	implements AopService, CommerceAccountOrganizationRelService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceAccountOrganizationRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAccountOrganizationRelServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce account organization rel local service.
-	 *
-	 * @return the commerce account organization rel local service
-	 */
-	public com.liferay.commerce.account.service.
-		CommerceAccountOrganizationRelLocalService
-			getCommerceAccountOrganizationRelLocalService() {
-
-		return commerceAccountOrganizationRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce account organization rel local service.
-	 *
-	 * @param commerceAccountOrganizationRelLocalService the commerce account organization rel local service
-	 */
-	public void setCommerceAccountOrganizationRelLocalService(
-		com.liferay.commerce.account.service.
-			CommerceAccountOrganizationRelLocalService
-				commerceAccountOrganizationRelLocalService) {
-
-		this.commerceAccountOrganizationRelLocalService =
-			commerceAccountOrganizationRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce account organization rel remote service.
-	 *
-	 * @return the commerce account organization rel remote service
-	 */
-	public CommerceAccountOrganizationRelService
-		getCommerceAccountOrganizationRelService() {
-
-		return commerceAccountOrganizationRelService;
-	}
-
-	/**
-	 * Sets the commerce account organization rel remote service.
-	 *
-	 * @param commerceAccountOrganizationRelService the commerce account organization rel remote service
-	 */
-	public void setCommerceAccountOrganizationRelService(
-		CommerceAccountOrganizationRelService
-			commerceAccountOrganizationRelService) {
-
-		this.commerceAccountOrganizationRelService =
-			commerceAccountOrganizationRelService;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceAccountOrganizationRelService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceAccountOrganizationRelService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceAccountOrganizationRelService =
+			(CommerceAccountOrganizationRelService)aopProxy;
+
+		_setServiceUtilService(commerceAccountOrganizationRelService);
 	}
 
 	/**
@@ -162,20 +104,15 @@ public abstract class CommerceAccountOrganizationRelServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.account.service.
 		CommerceAccountOrganizationRelLocalService
 			commerceAccountOrganizationRelLocalService;
 
-	@BeanReference(type = CommerceAccountOrganizationRelService.class)
 	protected CommerceAccountOrganizationRelService
 		commerceAccountOrganizationRelService;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

@@ -126,6 +126,35 @@ definition {
 	}
 
 	@priority = "5"
+	test CanRetrieveSiteStructuredContentsWithHeadlessAdminContentOpenAPI {
+		property portal.acceptance = "true";
+
+		task ("Given navigate to headless admin content endpoint") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-content",
+				version = "v1.0");
+		}
+
+		task ("When executing getSiteStructuredContentsPage with siteID as the parameter") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "getSiteStructuredContentsPage",
+				parameter = "siteId",
+				service = "StructuredContent");
+		}
+
+		task ("Then the shown response code is 200") {
+			AssertTextEquals(
+				locator1 = "OpenAPI#RESPONSE_CODE",
+				method = "getSiteStructuredContentsPage",
+				value1 = "200");
+		}
+	}
+
+	@priority = "5"
 	test HeaderWorksInNegativeCaseWithHeadlessDeliveryOpenAPI {
 		property portal.acceptance = "true";
 

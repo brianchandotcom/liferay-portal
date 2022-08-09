@@ -16,7 +16,6 @@ package com.liferay.knowledge.base.web.internal.display.context;
 
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
-import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -397,8 +396,6 @@ public class KBArticleItemSelectorViewDisplayContext {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAndSearch(false);
-		searchContext.setAttribute(
-			Field.CLASS_NAME_ID, KBArticleConstants.CLASS_NAME_ID_DEFAULT);
 		searchContext.setAttribute(Field.CONTENT, getKeywords());
 		searchContext.setAttribute(Field.DESCRIPTION, getKeywords());
 		searchContext.setAttribute(

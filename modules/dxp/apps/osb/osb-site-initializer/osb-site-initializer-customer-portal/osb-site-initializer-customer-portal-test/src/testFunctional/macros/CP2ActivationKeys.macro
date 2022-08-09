@@ -129,6 +129,11 @@ definition {
 	}
 
 
+	macro goToKeyTab {
+		var key_licenseTab = CP2ActivationKeys._formatCamelCase(camelCase = "${licenseTab}");
+		Click(locator1 = "CP2ActivationKeys#LICENSE_TAB_BUTTON");
+	}
+
 	macro selectPaginationQuantity {
 		if (IsElementPresent(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON")) {
 			Click(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON");

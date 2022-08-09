@@ -57,17 +57,6 @@ public class WorkflowMetricsIndexCreator {
 	public void reindex(Company company) {
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				int count = _backgroundTaskLocalService.getBackgroundTasksCount(
-					company.getGroupId(),
-					WorkflowMetricsIndexCreator.class.getSimpleName(),
-					WorkflowMetricsReindexBackgroundTaskExecutor.class.
-						getName(),
-					false);
-
-				if (count > 0) {
-					return null;
-				}
-
 				User user = company.getDefaultUser();
 
 				_backgroundTaskLocalService.addBackgroundTask(

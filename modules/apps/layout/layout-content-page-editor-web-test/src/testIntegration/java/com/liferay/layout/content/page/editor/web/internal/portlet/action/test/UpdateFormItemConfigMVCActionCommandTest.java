@@ -359,6 +359,101 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	}
 
 	@Test
+	public void testUpdateFormItemConfigMVCActionCommandMoreThanOneFragmentEntryNotAvailable()
+		throws Exception {
+
+		String expectedFieldTypeLabel1 = RandomTestUtil.randomString();
+		String expectedFieldTypeLabel2 = RandomTestUtil.randomString();
+
+		InfoFieldType infoFieldType1 = new InfoFieldType() {
+
+			@Override
+			public String getLabel(Locale locale) {
+				return expectedFieldTypeLabel1;
+			}
+
+			@Override
+			public String getName() {
+				return RandomTestUtil.randomString();
+			}
+
+		};
+
+		InfoFieldType infoFieldType2 = new InfoFieldType() {
+
+			@Override
+			public String getLabel(Locale locale) {
+				return expectedFieldTypeLabel2;
+			}
+
+			@Override
+			public String getName() {
+				return RandomTestUtil.randomString();
+			}
+
+		};
+
+		InfoField<?>[] allInfoFields = ArrayUtil.append(
+			_INFO_FIELDS,
+			new InfoField<?>[] {
+				_getInfoField(infoFieldType1), _getInfoField(infoFieldType2)
+			});
+
+		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
+				new ComponentEnablerTemporarySwapper(
+					_BUNDLE_SYMBOLIC_NAME, _COMPONENT_CLASS_NAME, true);
+			MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(allInfoFields)
+						).build(),
+						_editPageInfoItemCapability);
+			PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper("feature.flag.LPS-157738", true)) {
+
+			JSONObject addItemJSONObject =
+				ContentLayoutTestUtil.addItemToLayout(
+					_layout, "{}", LayoutDataItemTypeConstants.TYPE_FORM,
+					_segmentsExperienceId);
+
+			long classNameId = _portal.getClassNameId(
+				MockObject.class.getName());
+
+			String formItemId = addItemJSONObject.getString("addedItemId");
+
+			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				_getMockLiferayPortletActionRequest(
+					JSONUtil.put(
+						"classNameId", classNameId
+					).put(
+						"classTypeId", "0"
+					).toString(),
+					formItemId, _layout),
+				new MockLiferayPortletActionResponse());
+
+			_assertUpdateFormStyledLayoutStructureItemConfigJSONObject(
+				updateFormJSONObject, _INFO_FIELDS.length + 1, StringPool.BLANK,
+				_language.format(
+					_portal.getSiteDefaultLocale(_group),
+					"some-fragments-are-missing.-x-and-x-fields-cannot-have-" +
+						"an-associated-fragment-or-cannot-be-available-in-" +
+							"master",
+					new String[] {
+						expectedFieldTypeLabel1, expectedFieldTypeLabel2
+					}),
+				0);
+
+			_assertFormStyledLayoutStructureItem(
+				classNameId, _INFO_FIELDS.length + 1, formItemId, _INFO_FIELDS,
+				true, true);
+		}
+	}
+
+	@Test
 	public void testUpdateFormItemConfigMVCActionCommandNoMappingChange()
 		throws Exception {
 

@@ -264,6 +264,56 @@ definition {
 	}
 
 	@priority = "5"
+	test HeaderWorksInPositiveCaseWithHeadlessAdminContentOpenAPI {
+		property portal.acceptance = "true";
+
+		task ("Given a web content with en-US and es-ES languages included") {
+			JSONWebcontent.addBasicWebContentLocalized(
+				contentMap = "en_US:WC Content,es_ES:WC Contenido",
+				groupName = "Guest",
+				titleMap = "en_US:WC Title,es_ES:WC Titulo");
+		}
+
+		task ("Given navigate to headless admin content endpoint") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-content",
+				version = "v1.0");
+		}
+
+		task ("Given add Accept-Language header and set value to es-ES") {
+			APIExplorer.addHeaders(
+				headerKey = "Accept-Language",
+				headerValue = "es-ES");
+		}
+
+		task ("When executing getSiteStructuredContentsPage with siteID as the parameter") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "getSiteStructuredContentsPage",
+				parameter = "siteId",
+				service = "StructuredContent");
+		}
+
+		task ("Then header Accept-Language is included in request under Curl section") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#CURL_COMMAND",
+				method = "getSiteStructuredContentsPage",
+				service = "StructuredContent",
+				value1 = "-H 'Accept-Language: es-ES'");
+		}
+
+		task ("And Then the es-ES content is included in response") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getSiteStructuredContentsPage",
+				value1 = "WC Contenido");
+		}
+	}
+
+	@priority = "5"
 	test HeaderWorksInPositiveCaseWithHeadlessDeliveryOpenAPI {
 		property portal.acceptance = "true";
 

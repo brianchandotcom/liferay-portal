@@ -9,6 +9,16 @@
  * distribution rights of the Software.
  */
 
-export default interface PRMFormikPageProps {
-	validationSchema?: any | (() => any);
+import {FormikHelpers} from 'formik';
+
+export default interface MDFRequestStepProps<T> {
+	onCancel: () => void;
+	onContinue?: (
+		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
+	) => void;
+	onPrevious?: () => void;
+	onSaveAsDraft?: (
+		values: T,
+		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
+	) => void;
 }

@@ -10,21 +10,12 @@
  */
 
 import {RequestStatus} from '../enums/requestStatus';
+import LiferayObject from './liferayObject';
 import LiferayPicklist from './liferayPicklist';
-
-interface LiferayObject {
-	dateCreated: Date;
-	dateModified: Date;
-	externalReferenceCode: string;
-	id: number;
-}
-
-interface Activity extends Partial<LiferayObject> {
-	name: string;
-}
+import MDFRequestActivity from './mdfRequestActivity';
 
 export default interface MDFRequest extends Partial<LiferayObject> {
-	activities: Activity[];
+	activities: MDFRequestActivity[];
 	country: LiferayPicklist | {};
 	liferayBusinessSalesGoals: string[];
 	overallCampaign: string;

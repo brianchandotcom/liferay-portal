@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
-export default interface PRMFormikPageProps {
-	validationSchema?: any | (() => any);
+import LiferayObject from './liferayObject';
+
+export default interface MDFRequestActivity extends Partial<LiferayObject> {
+	name: string;
 }

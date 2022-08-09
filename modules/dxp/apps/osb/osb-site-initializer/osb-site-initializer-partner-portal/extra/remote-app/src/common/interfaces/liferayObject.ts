@@ -9,6 +9,9 @@
  * distribution rights of the Software.
  */
 
-export default interface PRMFormikPageProps {
-	validationSchema?: any | (() => any);
+export default interface LiferayObject {
+	dateCreated: Date;
+	dateModified: Date;
+	externalReferenceCode: string;
+	id: number;
 }

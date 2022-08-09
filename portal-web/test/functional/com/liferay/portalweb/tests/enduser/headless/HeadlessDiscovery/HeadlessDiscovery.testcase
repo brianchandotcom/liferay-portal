@@ -17,6 +17,42 @@ definition {
 		}
 		else {
 			BlogPostingAPI.deleteAllBlogPostings();
+
+			var response = HeadlessWebcontentAPI.returnAllstructuredContentId();
+
+			HeadlessWebcontentAPI.deleteAllStructuredContent(structuredContentId = "${response}");
+		}
+	}
+
+	@priority = "5"
+	test CanConsumeGraphQLAPIsForHeadlessAdminContent {
+		property portal.acceptance = "true";
+
+		task ("Given a basic web content is created") {
+			HeadlessWebcontent.addBasicWebContent(
+				content = "Web Content Content",
+				groupName = "Guest",
+				title = "Web Content Title");
+		}
+
+		task ("Given navigate to headless admin content endpoint") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-content",
+				version = "v1.0");
+		}
+
+		task ("When executing query structured content title") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			APIExplorer.executeGraphqlQuery(query = "query {structuredContents(siteKey:&quot;${siteId}&quot;){items{title}}}");
+		}
+
+		task ("Then the value in respone equals to the one we created") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#GRAPHQL_RESPONSE",
+				value1 = "&quot;title&quot;: &quot;Web Content Title&quot;");
 		}
 	}
 

@@ -78,6 +78,10 @@ public class DXPCloudClientTestrayImporter {
 					"&type=poshi"),
 				httpAuthorization);
 
+			TestrayBuild testrayBuild = _getTestrayBuild();
+
+			System.out.println("Imported results to " + testrayBuild.getURL());
+
 			return;
 		}
 
@@ -112,6 +116,8 @@ public class DXPCloudClientTestrayImporter {
 
 		JenkinsResultsParserUtil.delete(testrayResultsDir);
 		JenkinsResultsParserUtil.delete(resultsTarGzFile);
+
+		System.out.println("Imported results to " + testrayBuild.getURL());
 	}
 
 	private static void _fixImageURLs(File htmlFile) {
@@ -332,6 +338,14 @@ public class DXPCloudClientTestrayImporter {
 
 		TestrayServer testrayServer = TestrayFactory.newTestrayServer(
 			_testrayServerURL);
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserName) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserPassword)) {
+
+			testrayServer.setHTTPAuthorization(
+				new JenkinsResultsParserUtil.BasicHTTPAuthorization(
+					_testrayUserPassword, _testrayUserName));
+		}
 
 		TestrayProject testrayProject = testrayServer.getTestrayProjectByName(
 			_testrayProjectName);

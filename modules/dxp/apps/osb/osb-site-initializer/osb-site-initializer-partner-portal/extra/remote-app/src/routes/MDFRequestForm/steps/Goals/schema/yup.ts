@@ -11,11 +11,13 @@
 
 import {array, object, string} from 'yup';
 
+import isObjectEmpty from '../../../utils/isObjectEmpty';
+
 const goalsSchema = object({
 	country: object({
-		key: string().defined(),
-		name: string().defined(),
-	}).required('Required'),
+		key: string(),
+		name: string(),
+	}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 	liferayBusinessSalesGoals: array()
 		.min(1, 'Required')
 		.max(3, 'You have exceed the choose limit'),

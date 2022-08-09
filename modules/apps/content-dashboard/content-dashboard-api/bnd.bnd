@@ -4,4 +4,7 @@ Bundle-Version: 2.4.0
 Export-Package:\
 	com.liferay.content.dashboard.item.action,\
 	com.liferay.content.dashboard.item.action.exception,\
-	com.liferay.content.dashboard.item.action.provider
+	com.liferay.content.dashboard.item.action.provider,\
+	com.liferay.content.dashboard.item.filter,\
+	com.liferay.content.dashboard.item.filter.exception,\
+	com.liferay.content.dashboard.item.filter.provider

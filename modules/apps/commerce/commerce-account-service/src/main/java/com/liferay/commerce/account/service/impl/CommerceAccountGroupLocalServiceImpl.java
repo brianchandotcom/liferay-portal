@@ -26,11 +26,14 @@ import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRelTable;
 import com.liferay.commerce.account.model.impl.CommerceAccountGroupImpl;
+import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService;
+import com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService;
 import com.liferay.commerce.account.service.base.CommerceAccountGroupLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -42,7 +45,9 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -92,7 +97,7 @@ public class CommerceAccountGroupLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addResources(
+		_resourceLocalService.addResources(
 			accountGroup.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			accountGroup.getUserId(), CommerceAccountGroup.class.getName(),
 			commerceAccountGroup.getCommerceAccountGroupId(), false, false,
@@ -113,14 +118,14 @@ public class CommerceAccountGroupLocalServiceImpl
 			CommerceAccountGroupImpl.fromAccountGroup(
 				_accountGroupLocalService.checkGuestAccountGroup(companyId));
 
-		User user = userLocalService.getDefaultUser(companyId);
+		User user = _userLocalService.getDefaultUser(companyId);
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(companyId);
 		serviceContext.setUserId(user.getUserId());
 
-		commerceAccountGroupCommerceAccountRelLocalService.
+		_commerceAccountGroupCommerceAccountRelLocalService.
 			addCommerceAccountGroupCommerceAccountRel(
 				commerceAccountGroup.getCommerceAccountGroupId(),
 				CommerceAccountConstants.ACCOUNT_ID_GUEST, serviceContext);
@@ -139,7 +144,7 @@ public class CommerceAccountGroupLocalServiceImpl
 
 		// Commerce account group generic rels
 
-		commerceAccountGroupRelLocalService.deleteCommerceAccountGroupRels(
+		_commerceAccountGroupRelLocalService.deleteCommerceAccountGroupRels(
 			commerceAccountGroup.getCommerceAccountGroupId());
 
 		// Commerce account group
@@ -149,7 +154,7 @@ public class CommerceAccountGroupLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			commerceAccountGroup, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		// Expando
@@ -230,7 +235,7 @@ public class CommerceAccountGroupLocalServiceImpl
 
 		List<CommerceAccountGroupCommerceAccountRel>
 			commerceAccountGroupCommerceAccountRels =
-				commerceAccountGroupCommerceAccountRelLocalService.
+				_commerceAccountGroupCommerceAccountRelLocalService.
 					getCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
 						commerceAccountId, start, end);
 
@@ -255,7 +260,7 @@ public class CommerceAccountGroupLocalServiceImpl
 	public int getCommerceAccountGroupsByCommerceAccountIdCount(
 		long commerceAccountId) {
 
-		return commerceAccountGroupCommerceAccountRelLocalService.
+		return _commerceAccountGroupCommerceAccountRelLocalService.
 			getCommerceAccountGroupCommerceAccountRelsCountByCommerceAccountId(
 				commerceAccountId);
 	}
@@ -388,7 +393,23 @@ public class CommerceAccountGroupLocalServiceImpl
 	@ServiceReference(type = AccountGroupLocalService.class)
 	private AccountGroupLocalService _accountGroupLocalService;
 
+	@BeanReference(
+		type = CommerceAccountGroupCommerceAccountRelLocalService.class
+	)
+	private CommerceAccountGroupCommerceAccountRelLocalService
+		_commerceAccountGroupCommerceAccountRelLocalService;
+
+	@BeanReference(type = CommerceAccountGroupRelLocalService.class)
+	private CommerceAccountGroupRelLocalService
+		_commerceAccountGroupRelLocalService;
+
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@ServiceReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collections;
 import java.util.List;
@@ -207,7 +209,7 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 			String keywords, Boolean active, int start, int end)
 		throws PortalException {
 
-		User user = userLocalService.fetchUser(userId);
+		User user = _userLocalService.fetchUser(userId);
 
 		if (user == null) {
 			return Collections.emptyList();
@@ -279,7 +281,7 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 			String keywords, Boolean active)
 		throws PortalException {
 
-		User user = userLocalService.fetchUser(userId);
+		User user = _userLocalService.fetchUser(userId);
 
 		if (user == null) {
 			return 0;
@@ -430,5 +432,8 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 				CommerceAccountServiceImpl.class,
 				"_commerceAccountModelResourcePermission",
 				CommerceAccount.class);
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

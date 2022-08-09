@@ -31,9 +31,12 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import java.util.List;
 
 /**
  * @author Ethan Bustad
@@ -74,8 +77,7 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 
 		// Commerce product definitions
 
-		_cpDefinitionLocalService.deleteCPDefinitions(
-			cProduct.getCProductId(), WorkflowConstants.STATUS_ANY);
+		cpDefinitionPersistence.removeByCProductId(cProduct.getCProductId());
 
 		// Commerce product definition links
 

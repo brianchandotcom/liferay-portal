@@ -971,8 +971,8 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product
 
-		int cpDefinitionsCount = cpDefinitionPersistence.countByC_S(
-			cpDefinition.getCProductId(), WorkflowConstants.STATUS_ANY);
+		int cpDefinitionsCount = cpDefinitionPersistence.countByCProductId(
+			cpDefinition.getCProductId());
 
 		if (cpDefinitionsCount == 1) {
 			_cProductLocalService.deleteCProduct(cpDefinition.getCProductId());

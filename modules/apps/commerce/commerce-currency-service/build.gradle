@@ -12,9 +12,9 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:commerce:commerce-currency-api")
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
+	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
-	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:osgi-service-tracker-collections")

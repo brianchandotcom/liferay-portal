@@ -18,9 +18,9 @@ import com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.service.base.CommerceCurrencyServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -30,10 +30,21 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceCurrency"
+	},
+	service = AopService.class
+)
 public class CommerceCurrencyServiceImpl
 	extends CommerceCurrencyServiceBaseImpl {
 
@@ -219,10 +230,9 @@ public class CommerceCurrencyServiceImpl
 		commerceCurrencyLocalService.updateExchangeRates();
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				CommerceCurrencyServiceImpl.class, "_portletResourcePermission",
-				CommerceCurrencyConstants.RESOURCE_NAME);
+	@Reference(
+		target = "(resource.name=" + CommerceCurrencyConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

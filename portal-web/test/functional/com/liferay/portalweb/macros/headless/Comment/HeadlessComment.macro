@@ -1,0 +1,31 @@
+definition {
+
+	macro getBlogPostingComments {
+		Variables.assertDefined(parameterList = "${blogPostingId}");
+
+		var commentsFromBlogPosting = HeadlessCommentAPI._getBlogPostingComment(blogPostingId = "${blogPostingId}");
+
+		return "${commentsFromBlogPosting}";
+	}
+
+	macro createBlogPostingComment {
+		Variables.assertDefined(parameterList = "${blogPostingId},${textComment}");
+
+		if (!(isSet(commentExternalReferenceCode))) {
+			var commentExternalReferenceCode = "";
+		}
+
+		if (!(isSet(parentCommentId))) {
+			var parentCommentId = "0";
+		}
+
+		var response = HeadlessCommentAPI._postBlogPostingComment(
+			blogPostingId = "${blogPostingId}",
+			commentExternalReferenceCode = "${commentExternalReferenceCode}",
+			parentCommentId = "${parentCommentId}",
+			textComment = "${textComment}");
+
+		return "${response}";
+	}
+
+}

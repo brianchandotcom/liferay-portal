@@ -20,6 +20,7 @@ import com.liferay.dispatch.exception.DispatchTriggerStartDateException;
 import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.internal.helper.DispatchTriggerHelper;
+import com.liferay.dispatch.internal.security.HTMLPatternCheck;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.base.DispatchTriggerLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
@@ -335,6 +336,11 @@ public class DispatchTriggerLocalServiceImpl
 		if (Validator.isNull(name)) {
 			throw new DispatchTriggerNameException(
 				"Dispatch trigger name is null for company " + companyId);
+		}
+
+		if (HTMLPatternCheck.hasHtml(name)) {
+			throw new DispatchTriggerNameException(
+				"Illegal characters in trigger name ");
 		}
 
 		DispatchTrigger dispatchTrigger = dispatchTriggerPersistence.fetchByC_N(

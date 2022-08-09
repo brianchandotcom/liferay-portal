@@ -14,13 +14,14 @@
 
 package com.liferay.portal.upgrade.util;
 
-import com.liferay.portal.kernel.version.VersionTreeMap;
+import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
 
 /**
  * @author Alberto Chaparro
  */
 public interface PortalUpgradeProcessRegistry {
 
-	public void registerUpgradeProcesses(VersionTreeMap upgradeProcesses);
+	public void registerUpgradeProcesses(
+		UpgradeVersionTreeMap upgradeProcesses);
 
 }

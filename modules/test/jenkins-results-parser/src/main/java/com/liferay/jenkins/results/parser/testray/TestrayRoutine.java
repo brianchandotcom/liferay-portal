@@ -85,7 +85,8 @@ public class TestrayRoutine {
 			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.combine(
 					serverURL, "/home/-/testray/routines/",
-					matcher.group("routineID"), ".json"));
+					matcher.group("routineID"), ".json"),
+				_testrayServer.getHTTPAuthorization());
 
 			_jsonObject = jsonObject.getJSONObject("data");
 
@@ -153,7 +154,8 @@ public class TestrayRoutine {
 
 		try {
 			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				buildAddURL, 2, 5, sb.toString());
+				buildAddURL, 2, 5, sb.toString(),
+				_testrayServer.getHTTPAuthorization());
 
 			if (jsonObject.has("data")) {
 				return new TestrayBuild(this, jsonObject.getJSONObject("data"));
@@ -194,7 +196,7 @@ public class TestrayRoutine {
 
 		try {
 			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				buildAPIURL, true);
+				buildAPIURL, true, _testrayServer.getHTTPAuthorization());
 
 			if (!jsonObject.has("data")) {
 				return null;
@@ -239,7 +241,7 @@ public class TestrayRoutine {
 					String.valueOf(getID()));
 
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					buildAPIURL, true);
+					buildAPIURL, true, _testrayServer.getHTTPAuthorization());
 
 				JSONArray dataJSONArray = jsonObject.getJSONArray("data");
 
@@ -310,7 +312,7 @@ public class TestrayRoutine {
 					String.valueOf(getID()));
 
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					buildAPIURL, true);
+					buildAPIURL, true, _testrayServer.getHTTPAuthorization());
 
 				JSONArray dataJSONArray = jsonObject.getJSONArray("data");
 

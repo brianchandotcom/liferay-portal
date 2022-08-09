@@ -124,7 +124,8 @@ public class TestrayCaseResult {
 		try {
 			_testrayCase = new TestrayCase(
 				getTestrayProject(),
-				JenkinsResultsParserUtil.toJSONObject(testrayCaseURL));
+				JenkinsResultsParserUtil.toJSONObject(
+					testrayCaseURL, testrayServer.getHTTPAuthorization()));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

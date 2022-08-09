@@ -99,7 +99,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 		try {
 			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				caseResultsAPIURLString);
+				caseResultsAPIURLString, _testrayServer.getHTTPAuthorization());
 
 			JSONArray dataJSONArray = jsonObject.getJSONArray("data");
 

@@ -197,8 +197,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				updateFormJSONObject, _INFO_FIELDS.length + 1, StringPool.BLANK,
 				_language.format(
 					_portal.getSiteDefaultLocale(_group),
-					"some-fragments-are-missing.-x-fields-do-not-have-an-" +
-						"associated-fragment",
+					"some-fragments-are-missing.-x-fields-cannot-have-an-" +
+						"associated-fragment-or-cannot-be-available-in-master",
 					expectedFieldTypeLabel),
 				0);
 

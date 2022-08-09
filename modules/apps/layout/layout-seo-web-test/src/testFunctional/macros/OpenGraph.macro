@@ -46,12 +46,12 @@ definition {
 		if (isSet(customImage)) {
 			var key_uploadFileName = "${uploadFileName}";
 
-			AssertElementPresent.pauseAssertVisible(
+			WaitForVisible(
 				key_fieldLabel = "Image",
 				key_text = "Select",
 				locator1 = "Button#ANY_WITH_LABEL");
 
-			Click.pauseClickAt(
+			Click(
 				key_fieldLabel = "Image",
 				key_text = "Select",
 				locator1 = "Button#ANY_WITH_LABEL");
@@ -75,7 +75,7 @@ definition {
 					locator1 = "TextInput#FILE",
 					value1 = "${uploadFileName}");
 
-				AssertElementPresent.pauseAssertVisible(
+				WaitForVisible(
 					locator1 = "ItemSelector#ADD_BUTTON",
 					value1 = "Add");
 

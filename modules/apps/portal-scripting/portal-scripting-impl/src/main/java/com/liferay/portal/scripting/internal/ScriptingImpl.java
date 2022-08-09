@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
+import com.liferay.portal.kernel.scripting.ScriptingSyntaxValidator;
+import com.liferay.portal.kernel.scripting.SyntaxException;
 import com.liferay.portal.kernel.scripting.UnsupportedLanguageException;
 
 import java.io.IOException;
@@ -113,6 +115,16 @@ public class ScriptingImpl implements Scripting {
 		return _scriptingExecutors.keySet();
 	}
 
+	@Override
+	public void validateSyntax(String language, String script)
+		throws SyntaxException {
+
+		ScriptingSyntaxValidator scriptingSyntaxValidator =
+			_scriptingSyntaxValidatorMap.get(language);
+
+		scriptingSyntaxValidator.validate(script);
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -123,10 +135,29 @@ public class ScriptingImpl implements Scripting {
 			scriptingExecutor.getLanguage(), scriptingExecutor);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setScriptingSyntaxValidator(
+		ScriptingSyntaxValidator scriptingSyntaxValidator) {
+
+		_scriptingSyntaxValidatorMap.put(
+			scriptingSyntaxValidator.getLanguage(), scriptingSyntaxValidator);
+	}
+
 	protected void unsetScriptingExecutors(
 		ScriptingExecutor scriptingExecutor) {
 
 		_scriptingExecutors.remove(scriptingExecutor.getLanguage());
+	}
+
+	protected void unsetScriptingSyntaxValidator(
+		ScriptingSyntaxValidator scriptingSyntaxValidator) {
+
+		_scriptingSyntaxValidatorMap.remove(
+			scriptingSyntaxValidator.getLanguage());
 	}
 
 	private String _getErrorMessage(String script, Exception exception) {
@@ -172,5 +203,7 @@ public class ScriptingImpl implements Scripting {
 
 	private final Map<String, ScriptingExecutor> _scriptingExecutors =
 		new ConcurrentHashMap<>();
+	private final Map<String, ScriptingSyntaxValidator>
+		_scriptingSyntaxValidatorMap = new ConcurrentHashMap<>();
 
 }

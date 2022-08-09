@@ -18,11 +18,12 @@ import com.liferay.object.runtime.scripting.exception.GroovyScriptingException;
 import com.liferay.object.runtime.scripting.validator.GroovyScriptingValidator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.scripting.Scripting;
+import com.liferay.portal.kernel.scripting.SyntaxException;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import groovy.lang.GroovyShell;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Feliphe Marinho
@@ -32,24 +33,31 @@ public class GroovyScriptingValidatorImpl implements GroovyScriptingValidator {
 
 	@Override
 	public void validate(String script) throws GroovyScriptingException {
-		if (StringUtil.count(script, _NEW_LINE) >
-				_MAXIMUM_NUMBER_OF_LINES) {
-
+		if (StringUtil.count(script, _NEW_LINE) > _MAXIMUM_NUMBER_OF_LINES) {
 			throw new GroovyScriptingException(
 				"the-maximum-number-of-lines-available-is-2987");
 		}
 
-		try {
-			GroovyShell groovyShell = new GroovyShell();
+		Thread currentThread = Thread.currentThread();
 
-			groovyShell.parse(script);
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		Class<?> clazz = getClass();
+
+		currentThread.setContextClassLoader(clazz.getClassLoader());
+
+		try {
+			_scripting.validateSyntax("groovy", script);
 		}
-		catch (Exception exception) {
+		catch (SyntaxException syntaxException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				_log.debug(syntaxException);
 			}
 
 			throw new GroovyScriptingException("syntax-error");
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
@@ -59,5 +67,8 @@ public class GroovyScriptingValidatorImpl implements GroovyScriptingValidator {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroovyScriptingValidatorImpl.class);
+
+	@Reference
+	private Scripting _scripting;
 
 }

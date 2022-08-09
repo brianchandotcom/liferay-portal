@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URI;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -72,11 +71,7 @@ public class LayoutAdaptiveMediaProcessorImpl
 					"data-" + viewportSize.getViewportSizeId() +
 						"-configuration");
 
-				Iterator<Element> iterator = elements.iterator();
-
-				while (iterator.hasNext()) {
-					Element element = iterator.next();
-
+				for (Element element : elements) {
 					if (!StringUtil.equalsIgnoreCase(
 							element.tagName(), "img")) {
 

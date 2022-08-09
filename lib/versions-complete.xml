@@ -321,7 +321,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-01 13:14:40</current-version-publish-date>
-				<latest-version-publish-date>2022-07-11 16:08:47</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-03 11:48:43</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.comment.sanitizer.jar!error_prone_annotations.jar</file-name>
@@ -334,7 +334,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2018-01-08 15:29:52</current-version-publish-date>
-				<latest-version-publish-date>2022-05-24 14:43:34</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-03 15:30:44</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.comment.sanitizer.jar!failureaccess.jar</file-name>
@@ -1367,7 +1367,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-01-14 20:21:33</current-version-publish-date>
-				<latest-version-publish-date>2022-05-24 14:43:34</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-03 15:30:44</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.opener.google.drive.web.jar!google-api-client-jackson2.jar</file-name>
@@ -2899,7 +2899,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-05-31 04:45:35</current-version-publish-date>
-				<latest-version-publish-date>2022-07-22 00:17:19</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-08 23:30:40</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.oauth2.provider.rest.jar!javax.annotation-api.jar</file-name>
@@ -4007,8 +4007,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-cli.jar</file-name>
-				<version>7.17.1</version>
-				<project-name>org.elasticsearch#elasticsearch-cli;7.17.1</project-name>
+				<version>7.16.3</version>
+				<project-name>org.elasticsearch#elasticsearch-cli;7.16.3</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -4016,13 +4016,13 @@
 						<license-url>https://www.mongodb.com/licensing/server-side-public-license</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-02-28 05:44:23</current-version-publish-date>
+				<current-version-publish-date>2022-01-12 11:50:47</current-version-publish-date>
 				<latest-version-publish-date>2022-07-27 11:07:32</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-core.jar</file-name>
-				<version>7.17.1</version>
-				<project-name>org.elasticsearch#elasticsearch-core;7.17.1</project-name>
+				<version>7.16.3</version>
+				<project-name>org.elasticsearch#elasticsearch-core;7.16.3</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -4030,13 +4030,13 @@
 						<license-url>https://www.mongodb.com/licensing/server-side-public-license</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-02-28 05:44:23</current-version-publish-date>
+				<current-version-publish-date>2022-01-12 11:50:48</current-version-publish-date>
 				<latest-version-publish-date>2022-07-27 11:07:33</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-geo.jar</file-name>
-				<version>7.17.1</version>
-				<project-name>org.elasticsearch#elasticsearch-geo;7.17.1</project-name>
+				<version>7.16.3</version>
+				<project-name>org.elasticsearch#elasticsearch-geo;7.16.3</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -4044,13 +4044,13 @@
 						<license-url>https://www.mongodb.com/licensing/server-side-public-license</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-02-28 05:44:26</current-version-publish-date>
+				<current-version-publish-date>2022-01-12 11:50:51</current-version-publish-date>
 				<latest-version-publish-date>2022-07-27 11:07:36</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-lz4.jar</file-name>
-				<version>7.17.1</version>
-				<project-name>org.elasticsearch#elasticsearch-lz4;7.17.1</project-name>
+				<version>7.16.3</version>
+				<project-name>org.elasticsearch#elasticsearch-lz4;7.16.3</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -4058,13 +4058,13 @@
 						<license-url>https://www.mongodb.com/licensing/server-side-public-license</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-02-28 05:44:27</current-version-publish-date>
+				<current-version-publish-date>2022-01-12 11:50:51</current-version-publish-date>
 				<latest-version-publish-date>2022-07-27 11:07:36</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-rest-client.jar</file-name>
-				<version>7.17.1</version>
-				<project-name>org.elasticsearch.client#rest;7.17.1</project-name>
+				<version>7.16.3</version>
+				<project-name>org.elasticsearch.client#rest;7.16.3</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -4072,27 +4072,27 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-02-28 05:44:29</current-version-publish-date>
+				<current-version-publish-date>2022-01-12 11:50:53</current-version-publish-date>
 				<latest-version-publish-date>2022-07-27 11:07:38</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-rest-high-level-client.jar</file-name>
-				<version>7.17.1</version>
-				<project-name>org.elasticsearch.client#rest-high-level;7.17.1</project-name>
+				<version>7.16.3</version>
+				<project-name>org.elasticsearch.client#rest-high-level;7.16.3</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
 						<license-name>Elastic License 2.0</license-name>
-						<license-url>https://raw.githubusercontent.com/elastic/elasticsearch/v7.17.1/licenses/ELASTIC-LICENSE-2.0.txt</license-url>
+						<license-url>https://raw.githubusercontent.com/elastic/elasticsearch/v7.16.3/licenses/ELASTIC-LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-02-28 05:44:30</current-version-publish-date>
+				<current-version-publish-date>2022-01-12 11:50:55</current-version-publish-date>
 				<latest-version-publish-date>2022-06-27 08:09:25</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-x-content.jar</file-name>
-				<version>7.17.1</version>
-				<project-name>org.elasticsearch#elasticsearch-x-content;7.17.1</project-name>
+				<version>7.16.3</version>
+				<project-name>org.elasticsearch#elasticsearch-x-content;7.16.3</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -4100,13 +4100,13 @@
 						<license-url>https://www.mongodb.com/licensing/server-side-public-license</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-02-28 05:44:26</current-version-publish-date>
+				<current-version-publish-date>2022-01-12 11:50:50</current-version-publish-date>
 				<latest-version-publish-date>2022-07-27 11:07:35</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch.jar</file-name>
-				<version>7.17.1</version>
-				<project-name>org.elasticsearch#server;7.17.1</project-name>
+				<version>7.16.3</version>
+				<project-name>org.elasticsearch#server;7.16.3</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -4114,7 +4114,7 @@
 						<license-url>https://www.mongodb.com/licensing/server-side-public-license</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-02-28 05:44:20</current-version-publish-date>
+				<current-version-publish-date>2022-01-12 11:50:45</current-version-publish-date>
 				<latest-version-publish-date>2022-07-27 11:07:29</latest-version-publish-date>
 			</library>
 			<library>
@@ -4257,8 +4257,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!lang-mustache-client.jar</file-name>
-				<version>7.17.1</version>
-				<project-name>org.elasticsearch.plugin#lang-mustache;7.17.1</project-name>
+				<version>7.16.3</version>
+				<project-name>org.elasticsearch.plugin#lang-mustache;7.16.3</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -4266,7 +4266,7 @@
 						<license-url>https://www.mongodb.com/licensing/server-side-public-license</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-02-28 05:44:35</current-version-publish-date>
+				<current-version-publish-date>2022-01-12 11:51:03</current-version-publish-date>
 				<latest-version-publish-date>2022-06-27 08:09:35</latest-version-publish-date>
 			</library>
 			<library>
@@ -4390,8 +4390,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!parent-join-client.jar</file-name>
-				<version>7.17.1</version>
-				<project-name>org.elasticsearch.plugin#parent-join;7.17.1</project-name>
+				<version>7.16.3</version>
+				<project-name>org.elasticsearch.plugin#parent-join;7.16.3</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -4399,13 +4399,13 @@
 						<license-url>https://www.mongodb.com/licensing/server-side-public-license</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-02-28 05:44:37</current-version-publish-date>
+				<current-version-publish-date>2022-01-12 11:51:02</current-version-publish-date>
 				<latest-version-publish-date>2022-06-27 08:09:37</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!percolator-client.jar</file-name>
-				<version>7.17.1</version>
-				<project-name>org.elasticsearch.plugin#percolator;7.17.1</project-name>
+				<version>7.16.3</version>
+				<project-name>org.elasticsearch.plugin#percolator;7.16.3</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -4413,13 +4413,13 @@
 						<license-url>https://www.mongodb.com/licensing/server-side-public-license</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-02-28 05:44:36</current-version-publish-date>
+				<current-version-publish-date>2022-01-12 11:50:59</current-version-publish-date>
 				<latest-version-publish-date>2022-06-27 08:09:36</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!rank-eval-client.jar</file-name>
-				<version>7.17.1</version>
-				<project-name>org.elasticsearch.plugin#rank-eval;7.17.1</project-name>
+				<version>7.16.3</version>
+				<project-name>org.elasticsearch.plugin#rank-eval;7.16.3</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -4427,7 +4427,7 @@
 						<license-url>https://www.mongodb.com/licensing/server-side-public-license</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-02-28 05:44:38</current-version-publish-date>
+				<current-version-publish-date>2022-01-12 11:51:01</current-version-publish-date>
 				<latest-version-publish-date>2022-06-27 08:09:38</latest-version-publish-date>
 			</library>
 			<library>
@@ -4798,7 +4798,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-05-31 04:45:35</current-version-publish-date>
-				<latest-version-publish-date>2022-07-22 00:17:19</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-08 23:30:40</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!api-common.jar</file-name>
@@ -4867,7 +4867,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-01-14 20:21:33</current-version-publish-date>
-				<latest-version-publish-date>2022-05-24 14:43:34</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-03 15:30:44</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!failureaccess.jar</file-name>
@@ -4976,7 +4976,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-10 19:10:47</current-version-publish-date>
-				<latest-version-publish-date>2022-08-03 08:08:23</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-03 22:16:25</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!google-cloud-core.jar</file-name>
@@ -4990,7 +4990,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-10 19:10:45</current-version-publish-date>
-				<latest-version-publish-date>2022-08-03 08:08:22</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-03 22:16:21</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!google-cloud-storage.jar</file-name>
@@ -5004,7 +5004,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-11 14:22:38</current-version-publish-date>
-				<latest-version-publish-date>2022-07-14 13:24:14</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-08 07:51:02</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!google-http-client-apache-v2.jar</file-name>
@@ -5281,7 +5281,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 13:54:32</current-version-publish-date>
-				<latest-version-publish-date>2022-08-02 16:12:34</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-08 13:57:49</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-kms.jar</file-name>
@@ -5295,7 +5295,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 13:54:29</current-version-publish-date>
-				<latest-version-publish-date>2022-08-02 16:12:52</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-08 13:57:13</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-s3.jar</file-name>
@@ -5309,7 +5309,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 13:53:45</current-version-publish-date>
-				<latest-version-publish-date>2022-08-02 16:12:03</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-08 13:57:38</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!commons-codec.jar</file-name>
@@ -6043,7 +6043,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2019-05-22 13:49:18</current-version-publish-date>
-				<latest-version-publish-date>2021-09-20 00:35:48</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-05 07:35:54</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!graphql-java.jar</file-name>
@@ -6056,8 +6056,8 @@
 						<license-url>https://github.com/graphql-java/graphql-java/blob/master/LICENSE.md</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2021-07-07 20:59:51</current-version-publish-date>
-				<latest-version-publish-date>2022-08-02 02:43:04</latest-version-publish-date>
+				<current-version-publish-date>2021-07-09 15:24:33</current-version-publish-date>
+				<latest-version-publish-date>2022-08-08 21:24:11</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!guava.jar</file-name>
@@ -6084,7 +6084,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-05-06 07:24:51</current-version-publish-date>
-				<latest-version-publish-date>2022-08-03 03:36:48</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-04 03:40:57</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!jackson-dataformat-xml.jar</file-name>
@@ -8113,7 +8113,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/postgresql.jar</file-name>
-				<version>42.3.3</version>
+				<version>42.4.1</version>
 				<project-name>PostgreSQL JDBC Driver</project-name>
 				<project-url>http://jdbc.postgresql.org</project-url>
 				<licenses>

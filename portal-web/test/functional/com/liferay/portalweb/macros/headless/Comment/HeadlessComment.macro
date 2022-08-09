@@ -1,13 +1,5 @@
 definition {
 
-	macro getBlogPostingComments {
-		Variables.assertDefined(parameterList = "${blogPostingId}");
-
-		var commentsFromBlogPosting = HeadlessCommentAPI._getBlogPostingComment(blogPostingId = "${blogPostingId}");
-
-		return "${commentsFromBlogPosting}";
-	}
-
 	macro createBlogPostingComment {
 		Variables.assertDefined(parameterList = "${blogPostingId},${textComment}");
 
@@ -26,6 +18,14 @@ definition {
 			textComment = "${textComment}");
 
 		return "${response}";
+	}
+
+	macro getBlogPostingComments {
+		Variables.assertDefined(parameterList = "${blogPostingId}");
+
+		var commentsFromBlogPosting = HeadlessCommentAPI._getBlogPostingComment(blogPostingId = "${blogPostingId}");
+
+		return "${commentsFromBlogPosting}";
 	}
 
 }

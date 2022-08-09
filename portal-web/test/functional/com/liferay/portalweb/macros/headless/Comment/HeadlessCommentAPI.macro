@@ -16,6 +16,14 @@ definition {
 		return "${curl}";
 	}
 
+	macro _getFieldValueOfExistingBlogPostingComment {
+		Variables.assertDefined(parameterList = "${response},${fieldName}");
+
+		var fieldValue = JSONUtil.getWithJSONPath("${response}", "$..['items'][?(@.creator)].${fieldName}");
+
+		return "${fieldValue}";
+	}
+
 	macro _postBlogPostingComment {
 		Variables.assertDefined(parameterList = "${blogPostingId},${textComment}");
 
@@ -44,14 +52,6 @@ definition {
 		var curl = JSONCurlUtil.post("${curl}");
 
 		return "${curl}";
-	}
-
-	macro _getFieldValueOfExistingBlogPostingComment {
-		Variables.assertDefined(parameterList = "${response},${fieldName}");
-
-		var fieldValue = JSONUtil.getWithJSONPath("${response}", "$..['items'][?(@.creator)].${fieldName}");
-			
-		return "${fieldValue}";
 	}
 
 }

@@ -11,12 +11,14 @@
 
 import ClayButton from '@clayui/button';
 import {useFormikContext} from 'formik';
+import {useCallback, useEffect} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
+import useCountryCompanyExtender from './hooks/useCountryCompanyExtender';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 
 const Goals = ({
@@ -25,27 +27,42 @@ const Goals = ({
 	onSaveAsDraft,
 }: PRMFormikPageProps<MDFRequest>) => {
 	const {
+		isSubmitting,
+		isValid,
+		setFieldValue,
+		values,
+		...formikHelpers
+	} = useFormikContext<MDFRequest>();
+
+	const {
 		additionalOptionsEntries,
 		companiesEntries,
 		fieldEntries,
 	} = useDynamicFieldEntries();
 
-	const {isSubmitting, isValid, values, ...formikHelpers} = useFormikContext<
-		MDFRequest
-	>();
+	const {setSelectedAccountEntryId} = useCountryCompanyExtender(
+		useCallback((country) => setFieldValue('country', country), [
+			setFieldValue,
+		])
+	);
 
 	const countryOptions = fieldEntries[LiferayPicklistName.COUNTRIES];
-
 	const onCountrySelected = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const countrySelected = countryOptions.find(
 			(countryOption) => countryOption.value === event.target.value
 		);
 
-		formikHelpers.setFieldValue('country', {
+		setFieldValue('country', {
 			key: countrySelected?.value,
 			name: countrySelected?.label,
 		});
 	};
+
+	useEffect(() => {
+		if (values.r_company_accountEntryId) {
+			setSelectedAccountEntryId(values.r_company_accountEntryId);
+		}
+	}, [setSelectedAccountEntryId, values.r_company_accountEntryId]);
 
 	return (
 		<PRMForm name="Goals" title="Campaign Information">

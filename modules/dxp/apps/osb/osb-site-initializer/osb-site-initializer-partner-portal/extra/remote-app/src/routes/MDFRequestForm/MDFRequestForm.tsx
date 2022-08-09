@@ -41,7 +41,7 @@ const MDFRequestForm = () => {
 
 	const onSubmit = (
 		value: MDFRequest,
-		formikHelpers: FormikHelpers<MDFRequest>
+		formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
 	) => {
 		// eslint-disable-next-line no-console
 		console.log(value);
@@ -50,14 +50,16 @@ const MDFRequestForm = () => {
 
 	const onSaveAsDraft = (
 		value: MDFRequest,
-		formikHelpers: FormikHelpers<MDFRequest>
+		formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
 	) => {
 		// eslint-disable-next-line no-console
 		console.log(value);
 		formikHelpers.setSubmitting(true);
 	};
 
-	const onContinue = async (formikHelpers: FormikHelpers<MDFRequest>) => {
+	const onContinue = async (
+		formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
+	) => {
 		const validationErrors = await formikHelpers.validateForm();
 
 		if (isObjectEmpty(validationErrors)) {

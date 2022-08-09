@@ -13,7 +13,12 @@ import {FormikHelpers} from 'formik';
 
 export default interface PRMFormikPageProps<T> {
 	onCancel: () => void;
-	onContinue?: (formikHelpers: FormikHelpers<T>) => void;
-	onSaveAsDraft?: (values: T, formikHelpers: FormikHelpers<T>) => void;
+	onContinue?: (
+		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
+	) => void;
+	onSaveAsDraft?: (
+		values: T,
+		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
+	) => void;
 	validationSchema?: any | (() => any);
 }

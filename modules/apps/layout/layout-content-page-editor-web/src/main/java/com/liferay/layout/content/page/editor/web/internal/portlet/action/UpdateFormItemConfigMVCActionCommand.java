@@ -40,6 +40,7 @@ import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLin
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
+import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -323,6 +324,36 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			groupId);
 
 		return infoForm.getAllInfoFields();
+	}
+
+	private boolean _isAllowedFragmentEntryKey(
+		String fragmentEntryKey,
+		DropZoneLayoutStructureItem masterDropZoneLayoutStructureItem) {
+
+		if (masterDropZoneLayoutStructureItem == null) {
+			return true;
+		}
+
+		List<String> fragmentEntryKeys =
+			masterDropZoneLayoutStructureItem.getFragmentEntryKeys();
+
+		if (masterDropZoneLayoutStructureItem.isAllowNewFragmentEntries()) {
+			if (ListUtil.isEmpty(fragmentEntryKeys) ||
+				!fragmentEntryKeys.contains(fragmentEntryKey)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		if (ListUtil.isNotEmpty(fragmentEntryKeys) &&
+			fragmentEntryKeys.contains(fragmentEntryKey)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private JSONArray _removeLayoutStructureItemsJSONArray(

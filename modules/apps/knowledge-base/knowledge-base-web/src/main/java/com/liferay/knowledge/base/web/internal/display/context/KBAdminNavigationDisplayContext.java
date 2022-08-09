@@ -24,7 +24,7 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticleTitleComparator;
-import com.liferay.knowledge.base.util.comparator.KBObjectsTitleComparator;
+import com.liferay.knowledge.base.util.comparator.KBObjectsPriorityComparator;
 import com.liferay.knowledge.base.web.internal.display.context.helper.KBArticleURLHelper;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -346,7 +346,7 @@ public class KBAdminNavigationDisplayContext {
 		List<Object> kbObjects = KBFolderServiceUtil.getKBFoldersAndKBArticles(
 			_themeDisplay.getScopeGroupId(), parentFolderId,
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new KBObjectsTitleComparator<Object>(true));
+			new KBObjectsPriorityComparator<>(true));
 
 		for (Object kbObject : kbObjects) {
 			JSONObject articleNavigationJSONObject =

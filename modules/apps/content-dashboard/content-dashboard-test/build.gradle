@@ -3,6 +3,7 @@ dependencies {
 	testIntegrationCompile group: "org.apache.commons", name: "commons-collections4", version: "4.4"
 	testIntegrationCompile group: "org.apache.commons", name: "commons-compress", version: "1.21"
 	testIntegrationCompile project(":apps:application-list:application-list-api")
+	testIntegrationCompile project(":apps:content-dashboard:content-dashboard-api")
 	testIntegrationCompile project(":apps:content-dashboard:content-dashboard-web")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")

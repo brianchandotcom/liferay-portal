@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -44,7 +43,6 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.suggestions.Suggestion;
-import com.liferay.portal.search.suggestions.SuggestionBuilder;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -115,7 +113,6 @@ public class BasicSuggestionsContributorTest {
 		_setUpSearchHits(_setUpDocument("testField"));
 		_setUpSearchRequestBuilderFactory();
 		_setUpSearcher(1L);
-		_setUpSuggestionBuilderFactory();
 		_setUpSuggestionsContributorConfiguration("testField");
 
 		SuggestionsContributorResults suggestionsContributorResults =
@@ -151,7 +148,6 @@ public class BasicSuggestionsContributorTest {
 		_setUpSearchHits(_setUpDocument("testField"));
 		_setUpSearchRequestBuilderFactory();
 		_setUpSearcher(1L);
-		_setUpSuggestionBuilderFactory();
 		_setUpSuggestionsContributorConfiguration("testField");
 
 		SuggestionsContributorResults suggestionsContributorResults =
@@ -343,12 +339,6 @@ public class BasicSuggestionsContributorTest {
 		).when(
 			_searchContext
 		).getKeywords();
-
-		Mockito.doReturn(
-			LocaleUtil.US
-		).when(
-			_searchContext
-		).getLocale();
 	}
 
 	private void _setUpSearcher(long totalHits) {
@@ -437,41 +427,6 @@ public class BasicSuggestionsContributorTest {
 			searchRequestBuilder
 		).withSearchContext(
 			Mockito.any(Consumer.class)
-		);
-	}
-
-	private void _setUpSuggestionBuilderFactory() {
-		SuggestionBuilder suggestionBuilder = Mockito.mock(
-			SuggestionBuilder.class);
-
-		Mockito.doReturn(
-			suggestionBuilder
-		).when(
-			suggestionBuilder
-		).attribute(
-			Mockito.anyString(), Mockito.anyMap()
-		);
-
-		Mockito.doReturn(
-			Mockito.mock(Suggestion.class)
-		).when(
-			suggestionBuilder
-		).build();
-
-		Mockito.doReturn(
-			suggestionBuilder
-		).when(
-			suggestionBuilder
-		).score(
-			Mockito.anyFloat()
-		);
-
-		Mockito.doReturn(
-			suggestionBuilder
-		).when(
-			suggestionBuilder
-		).text(
-			Mockito.anyString()
 		);
 	}
 

@@ -9,8 +9,4 @@
  * distribution rights of the Software.
  */
 
-export enum StepType {
-	ACTIVITIES = 'activities',
-	GOALS = 'goals',
-	REVIEW = 'review',
-}
+export {default} from './Listing';

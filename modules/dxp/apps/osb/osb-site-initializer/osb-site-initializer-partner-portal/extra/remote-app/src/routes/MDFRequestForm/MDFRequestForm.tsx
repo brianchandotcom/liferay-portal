@@ -16,6 +16,7 @@ import PRMFormik from '../../common/components/PRMFormik';
 import {RequestStatus} from '../../common/enums/requestStatus';
 import MDFRequest from '../../common/interfaces/mdfRequest';
 import {StepType} from './enums/stepType';
+import Activities from './steps/Activities';
 import Goals from './steps/Goals';
 import goalsSchema from './steps/Goals/schema/yup';
 import isObjectEmpty from './utils/isObjectEmpty';
@@ -36,26 +37,31 @@ type StepComponent = {
 	[key in StepType]?: JSX.Element;
 };
 
+const onSubmit = (
+	value: MDFRequest,
+	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
+) => {
+	// eslint-disable-next-line no-console
+	console.log(value);
+	formikHelpers.setSubmitting(false);
+};
+
+const onSaveAsDraft = (
+	value: MDFRequest,
+	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
+) => {
+	// eslint-disable-next-line no-console
+	console.log(value);
+	formikHelpers.setSubmitting(true);
+};
+
+const onCancel = () => {
+	// eslint-disable-next-line no-console
+	console.log('Cancel!');
+};
+
 const MDFRequestForm = () => {
 	const [step, setStep] = useState<StepType>(StepType.GOALS);
-
-	const onSubmit = (
-		value: MDFRequest,
-		formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
-	) => {
-		// eslint-disable-next-line no-console
-		console.log(value);
-		formikHelpers.setSubmitting(false);
-	};
-
-	const onSaveAsDraft = (
-		value: MDFRequest,
-		formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
-	) => {
-		// eslint-disable-next-line no-console
-		console.log(value);
-		formikHelpers.setSubmitting(true);
-	};
 
 	const onContinue = async (
 		formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
@@ -71,10 +77,7 @@ const MDFRequestForm = () => {
 		formikHelpers.setTouched(setNestedObjectValues(validationErrors, true));
 	};
 
-	const onCancel = () => {
-		// eslint-disable-next-line no-console
-		console.log('Cancel!');
-	};
+	const onPrevious = () => setStep(StepType.GOALS);
 
 	const StepFormComponent: StepComponent = {
 		[StepType.GOALS]: (
@@ -83,6 +86,14 @@ const MDFRequestForm = () => {
 				onContinue={onContinue}
 				onSaveAsDraft={onSaveAsDraft}
 				validationSchema={goalsSchema}
+			/>
+		),
+		[StepType.ACTIVITIES]: (
+			<Activities
+				onCancel={onCancel}
+				onContinue={onContinue}
+				onPrevious={onPrevious}
+				onSaveAsDraft={onSaveAsDraft}
 			/>
 		),
 	};

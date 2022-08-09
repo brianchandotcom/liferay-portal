@@ -9,8 +9,26 @@
  * distribution rights of the Software.
  */
 
-export enum StepType {
-	ACTIVITIES = 'activities',
-	GOALS = 'goals',
-	REVIEW = 'review',
+import PRMForm from '../../../../../common/components/PRMForm';
+import PRMFormik from '../../../../../common/components/PRMFormik';
+
+interface IProps {
+	currentIndex: number;
 }
+
+const Form = ({currentIndex}: IProps) => {
+	return (
+		<>
+			<div>
+				<PRMFormik.Field
+					component={PRMForm.InputText}
+					label="Provide a name and short description of the overall campaign"
+					name={`activities[${currentIndex}].name`}
+					required
+				/>
+			</div>
+		</>
+	);
+};
+
+export default Form;

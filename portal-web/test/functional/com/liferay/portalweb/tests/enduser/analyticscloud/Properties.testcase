@@ -375,6 +375,139 @@ definition {
 		}
 	}
 
+	@description = "Bug ID: LRAC-8093 | Automation ID: LRAC-11533 | Test Summary: Able to clear property data"
+	@priority = "4"
+	test ClearPropertyData {
+		property analytics.cloud.upstream = "false";
+		property test.name.skip.portal.instance = "Properties#ClearPropertyData";
+
+		var acProperty = "Clear Property";
+
+		task ("Launch AC and go to settings and add a new property") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACProperties.addNewProperty(propertyName = "${acProperty}");
+		}
+
+		task ("Connect the DXP to Analytics Cloud") {
+			ACUtils.launchDXP();
+
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.connectAnalyticsCloud();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assign the new site to existing property") {
+			ACDXPSettings.navToSyncedSitesMenu();
+
+			ACDXPSettings.assignSiteToExistingProperty(
+				assignedPropertyName = "${acProperty}",
+				siteName = "Site Name");
+		}
+
+		task ("Sync Users to AC") {
+			ACDXPSettings.navToSyncedContactDataMenu();
+
+			ACDXPSettings.syncContactData();
+		}
+
+		task ("Login new user and view page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Interact with page") {
+			ACUtils.navigateToSitePageWithUser(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			TestUtils.hardRefresh();
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Launch AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${acProperty}");
+
+			ACNavigation.goToSites();
+		}
+
+		task ("Go to Sites overview") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Assert the unique visitors is shown") {
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Unique Visitors",
+				metricValue = "1",
+				timeFilter = "Last 24 hours");
+		}
+
+		task ("Navigate to the Individuals and view individual count") {
+			ACNavigation.goToIndividuals();
+
+			ACCards.viewTotalCount(
+				cardName = "Total Individuals",
+				count = "1");
+		}
+
+		task ("Go to AC Properties") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+		}
+
+		task ("Clear Property") {
+			ACSettings.clearProperty(propertyName = "${acProperty}");
+		}
+
+		task ("Exit Settings") {
+			ACNavigation.exitSettings();
+		}
+
+		task ("Go to Sites overview") {
+			ACNavigation.goToSites();
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Assert the unique visitors is shown") {
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Unique Visitors",
+				metricValue = "0",
+				timeFilter = "Last 24 hours");
+		}
+
+		task ("Navigate to the Individuals and view individual count") {
+			ACNavigation.goToIndividuals();
+
+			ACCards.viewTotalCount(
+				cardName = "Total Individuals",
+				count = "0");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9103 | Test Summary: [AC] Properties created when no data source was connected, and then the admin connect data sources to workspace"
 	@priority = "3"
 	test CreatePropertiesWhenNoDataSourceIsConnected {

@@ -302,6 +302,8 @@ definition {
 		}
 
 		task ("Delete the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+
 			Collection.deleteCollection(collectionName = "Collection Name");
 		}
 

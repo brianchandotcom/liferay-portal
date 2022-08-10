@@ -1,8 +1,6 @@
 definition {
 
 	macro deleteCollection {
-		Navigator.gotoNavNested(navNested = "${collectionName}");
-
 		Click(
 			key_index = "3",
 			key_text = "${collectionName}",

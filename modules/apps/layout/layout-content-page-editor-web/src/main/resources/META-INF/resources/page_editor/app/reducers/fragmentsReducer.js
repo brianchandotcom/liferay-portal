@@ -77,28 +77,22 @@ export default function fragmentsReducer(fragments = [], action) {
 				fragmentCollectionId: 'layout-elements',
 				fragmentEntries: [
 					{
-						data: {
-							itemType: LAYOUT_DATA_ITEM_TYPES.container,
-						},
+						fragmentEntryKey: 'container',
 						icon: 'container',
-						itemId: 'container',
-						label:
+						itemType: LAYOUT_DATA_ITEM_TYPES.container,
+						name:
 							LAYOUT_DATA_ITEM_TYPE_LABELS[
 								LAYOUT_DATA_ITEM_TYPES.container
 							],
-						type: 'container',
 					},
 					{
-						data: {
-							itemType: LAYOUT_DATA_ITEM_TYPES.row,
-						},
+						fragmentEntryKey: 'row',
 						icon: 'table',
-						itemId: 'row',
-						label:
+						itemType: LAYOUT_DATA_ITEM_TYPES.row,
+						name:
 							LAYOUT_DATA_ITEM_TYPE_LABELS[
 								LAYOUT_DATA_ITEM_TYPES.row
 							],
-						type: 'row',
 					},
 				],
 				name: Liferay.Language.get('layout-elements'),
@@ -122,16 +116,13 @@ export default function fragmentsReducer(fragments = [], action) {
 					fragmentCollectionId: 'form-components',
 					fragmentEntries: [
 						{
-							data: {
-								itemType: LAYOUT_DATA_ITEM_TYPES.form,
-							},
+							fragmentEntryKey: 'form',
 							icon: 'container',
-							itemId: 'form',
-							label:
+							itemType: LAYOUT_DATA_ITEM_TYPES.form,
+							name:
 								LAYOUT_DATA_ITEM_TYPE_LABELS[
 									LAYOUT_DATA_ITEM_TYPES.form
 								],
-							type: 'form',
 						},
 						...formComponentsCollection.fragmentEntries,
 					],
@@ -150,13 +141,10 @@ export default function fragmentsReducer(fragments = [], action) {
 					).fragmentEntries,
 
 					{
-						data: {
-							itemType: LAYOUT_DATA_ITEM_TYPES.collection,
-						},
+						fragmentEntryKey: 'collection-display',
 						icon: 'list',
-						itemId: 'collection-display',
-						label: Liferay.Language.get('collection-display'),
-						type: LAYOUT_DATA_ITEM_TYPES.collection,
+						itemType: LAYOUT_DATA_ITEM_TYPES.collection,
+						name: Liferay.Language.get('collection-display'),
 					},
 				],
 			});

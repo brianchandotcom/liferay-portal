@@ -55,6 +55,7 @@ export default function TabItem({displayStyle, item}) {
 			dispatch(
 				thunk({
 					...item.data,
+					itemType: item.type,
 					parentItemId: parentId,
 					position,
 					store: {segmentsExperienceId},

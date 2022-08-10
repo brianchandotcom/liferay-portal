@@ -109,24 +109,18 @@ const normalizeCollections = (collection) => {
 	return normalizedElement;
 };
 
-const normalizeFragmentEntry = (fragmentEntry) => {
-	if (!fragmentEntry.fragmentEntryKey) {
-		return fragmentEntry;
-	}
-
-	return {
-		data: {
-			fragmentEntryKey: fragmentEntry.fragmentEntryKey,
-			groupId: fragmentEntry.groupId,
-			type: fragmentEntry.type,
-		},
-		icon: fragmentEntry.icon,
-		itemId: fragmentEntry.fragmentEntryKey,
-		label: fragmentEntry.name,
-		preview: fragmentEntry.imagePreviewURL,
-		type: LAYOUT_DATA_ITEM_TYPES.fragment,
-	};
-};
+const normalizeFragmentEntry = (fragmentEntry) => ({
+	data: {
+		fragmentEntryKey: fragmentEntry.fragmentEntryKey,
+		groupId: fragmentEntry.groupId,
+		type: fragmentEntry.type,
+	},
+	icon: fragmentEntry.icon,
+	itemId: fragmentEntry.fragmentEntryKey,
+	label: fragmentEntry.name,
+	preview: fragmentEntry.imagePreviewURL,
+	type: fragmentEntry.itemType || LAYOUT_DATA_ITEM_TYPES.fragment,
+});
 
 export default function FragmentsSidebar() {
 	const fragments = useSelector((state) => state.fragments);

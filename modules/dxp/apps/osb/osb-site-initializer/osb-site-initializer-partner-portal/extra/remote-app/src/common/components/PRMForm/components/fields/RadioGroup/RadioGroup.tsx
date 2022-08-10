@@ -10,6 +10,7 @@
  */
 
 import {ClayRadio} from '@clayui/form';
+import classNames from 'classnames';
 
 import WrapperInput from '../common/components/WrapperInput';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
@@ -17,6 +18,7 @@ import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps'
 
 interface IProps {
 	items: React.OptionHTMLAttributes<HTMLOptionElement>[];
+	small?: boolean;
 }
 
 const RadioGroup = ({
@@ -25,12 +27,16 @@ const RadioGroup = ({
 	items = [],
 	label,
 	required,
+	small,
 }: IProps & PRMFormFieldProps & PRMFormFieldStateProps<string>) => {
 	return (
 		<WrapperInput {...meta} label={label} required={required}>
 			{items.map((item, index) => (
 				<div
-					className="border border-neutral-5 mb-2 p-3 rounded-lg"
+					className={classNames({
+						'border border-neutral-5 mb-2 p-3 rounded-lg': !small,
+						'my-2': small,
+					})}
 					key={index}
 				>
 					<ClayRadio

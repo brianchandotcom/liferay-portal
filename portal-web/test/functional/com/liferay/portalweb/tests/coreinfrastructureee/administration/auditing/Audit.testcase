@@ -40,7 +40,7 @@ definition {
 
 			var runGet = JSONCurlUtil.get("${curl}");
 
-			for (var logString : list "xRequestId,sessionId,companyId=${companyId},virtualHostName,clientIP,emailAddress,serverName,userId=${userId}") {
+			for (var logString : list "xRequestId,companyId=${companyId},virtualHostName,clientIP,emailAddress,serverName,userId=${userId}") {
 				AuditLog.viewLogFileContent(logString = "${logString}");
 			}
 		}

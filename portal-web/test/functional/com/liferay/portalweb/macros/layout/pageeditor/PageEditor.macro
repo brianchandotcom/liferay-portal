@@ -3949,6 +3949,11 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				action = "${action}",
 				warningMessage = "Purchase Order form has a hidden or missing submit button. If you continue, your users may not be able to submit the form. Are you sure you want to publish it?");
 		}
+		else if ((IsElementPresent(locator1 = "Modal#BODY")) && (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Fragment Mapping Missing"))) {
+			Modal.publish(
+				action = "${action}",
+				warningMessage = "Purchase Order form has some fragments not mapped to object fields. Unmapped fragments data will not be stored. Are you sure you want to publish?");
+		}
 		else {
 			Alert.viewSuccessMessage();
 		}

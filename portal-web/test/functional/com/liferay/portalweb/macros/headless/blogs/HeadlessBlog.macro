@@ -30,13 +30,4 @@ definition {
 
 		return "${entryId}";
 	}
-
-	macro getAllBlogsPostingId {
-		var response = HeadlessBlogAPI._getBlogsPosting();
-
-		var blogsPostingId = JSONUtil.getWithJSONPath("${response}", "$..['items'][?(@.creator)].id");
-
-		return "${blogsPostingId}";
-	}
-
 }

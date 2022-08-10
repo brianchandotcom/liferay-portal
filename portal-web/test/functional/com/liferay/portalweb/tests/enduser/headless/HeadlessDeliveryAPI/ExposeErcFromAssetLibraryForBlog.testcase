@@ -29,7 +29,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When with POST request I create a comment with a custom external reference code") {
-			var response = HeadlessBlog.getAllBlogsPostingId();
+			var response = BlogPostingAPI.getBlogPostingsIdList();
 
 			var createBlogPostingComment = CommentAPI.createBlogPostingComment(
 				blogPostingId = "${response}",
@@ -56,7 +56,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When with POST request I create a comment with a custom external reference code") {
-			var response = HeadlessBlog.getAllBlogsPostingId();
+			var response = BlogPostingAPI.getBlogPostingsIdList();
 
 			var response1 = CommentAPI.createBlogPostingComment(
 				blogPostingId = "${response}",

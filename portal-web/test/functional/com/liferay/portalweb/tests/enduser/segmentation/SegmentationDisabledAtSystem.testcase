@@ -91,9 +91,9 @@ definition {
 		task ("And user does not has permission to System Settings") {
 			task ("Create an second instance") {
 				HeadlessPortalInstanceAPI.addPortalInstance(
-					domain = "tango.com",
-					portalInstanceId = "tango.com",
-					virtualHost = "tango.com");
+					domain = "www.able.com",
+					portalInstanceId = "www.able.com",
+					virtualHost = "www.able.com");
 			}
 
 			task ("Login at the second instance") {
@@ -141,9 +141,9 @@ definition {
 		task ("And user does not has permission to System Settings") {
 			task ("Create an second instance") {
 				HeadlessPortalInstanceAPI.addPortalInstance(
-					domain = "tango.com",
-					portalInstanceId = "tango.com",
-					virtualHost = "tango.com");
+					domain = "www.able.com",
+					portalInstanceId = "www.able.com",
+					virtualHost = "www.able.com");
 			}
 
 			task ("Login at the second instance") {

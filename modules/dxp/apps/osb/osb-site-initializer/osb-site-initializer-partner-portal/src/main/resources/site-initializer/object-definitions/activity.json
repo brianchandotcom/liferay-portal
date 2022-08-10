@@ -5,8 +5,7 @@
 	"name": "Activity",
 	"objectFields": [
 		{
-			"DBType": "String",
-			"businessType": "Text",
+			"DBType": "Clob",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -68,8 +67,7 @@
 			"required": false
 		},
 		{
-			"DBType": "String",
-			"businessType": "Text",
+			"DBType": "Clob",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -79,8 +77,7 @@
 			"required": false
 		},
 		{
-			"DBType": "String",
-			"businessType": "Text",
+			"DBType": "Clob",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

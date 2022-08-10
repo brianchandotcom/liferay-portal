@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "Account"
+		"en-US": "Company"
 	},
 	"name": "accountToMDFRequests",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",

@@ -1,0 +1,82 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Display Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a display page") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-153356. View Page Content tab on sidebar of display page template."
+	@priority = "4"
+	test ViewPageContentOnSidebarOfDisplayPageTemplate {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("Given a page creator has a display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+		}
+
+		task ("When the page creator clicks on Content Panel on sidebar of display page template") {
+			Click(
+				key_tabName = "Page Content",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+		}
+
+		task ("Then the page creator can validate Page Content tab") {
+			task ("View paperclip icon is shown") {
+				AssertElementPresent(
+					key_text = "paperclip",
+					locator1 = "Icon#ANY");
+			}
+
+			task ("View title and info message on Page Content tab") {
+				AssertTextEquals(
+					key_sidebarButton = "Page Content",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE",
+					value1 = "Page Content");
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "Message#INFO_2",
+					value1 = "There is no content on this page.");
+			}
+
+			task ("View the order of Page Content is the fourth") {
+				PageEditor.viewSideBarButtonOrder(
+					buttonNameList = "Page Content",
+					position = "4");
+			}
+		}
+	}
+
+}

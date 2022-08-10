@@ -730,38 +730,17 @@ definition {
 			}
 		}
 
-		task ("When the page designer tries to hide the Container") {
-			Click.clickNoWaitForVisible(
-				key_index = "2",
-				key_nodeName = "Container",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
-		}
-
-		task ("Then the page designer could view a warning message for required form fragment") {
-			AssertTextEquals(
-				locator1 = "Modal#BODY",
-				value1 = "This fragment contains a required form field or a submit element. Are you sure you want to hide it?");
-		}
-
-		task ("When the page designer cancels the hide action") {
-			Click(
-				key_text = "Cancel",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-		}
-
-		task ("Then the page designer can see the fragments") {
-			for (var fragmentName : list "Form Container,Container,Text Input") {
-				PageEditor.viewFragment(fragmentName = "${fragmentName}");
-			}
-		}
-
 		task ("When the page designer hides the Container") {
 			PageEditor.hideFragmentViaPageStructure(
 				fragmentName = "Container",
 				index = "2");
 		}
 
-		task ("Then the page designer cannot see hidden fragments") {
+		task ("Then the page designer can see a warning message") {
+			AssertTextPresent(
+				locator1 = "Message#ALERT_DISMISSIBLE",
+				value1 = "The hidden fragment contained required fields. A form with missing required fields will not generate a valid entry.");
+
 			PageEditor.viewFragment(fragmentName = "Form Container");
 
 			for (var fragmentName : list "Container,Text Input") {
@@ -769,15 +748,15 @@ definition {
 			}
 		}
 
-		task ("When the page designer publishes the page") {
-			PageEditor.publish(warningMessage = "This page contains one or several forms with missing or hidden form components. Are you sure you want to publish it?");
-		}
+		task ("When the page designer accesses published content page at view mode") {
+			PageEditor.publish();
 
-		task ("Then the page designer cannot see hidden fragments at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
+		}
 
+		task ("Then the page designer cannot see hidden fragments at view mode") {
 			AssertElementNotPresent(
 				key_text = "Region*",
 				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
@@ -831,36 +810,15 @@ definition {
 			}
 		}
 
-		task ("When the page designer tries to hide the Container") {
-			Click.clickNoWaitForVisible(
-				key_index = "1",
-				key_nodeName = "Grid",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
-		}
-
-		task ("Then the page designer could view a warning message for required form fragment") {
-			AssertTextEquals(
-				locator1 = "Modal#BODY",
-				value1 = "This fragment contains a required form field or a submit element. Are you sure you want to hide it?");
-		}
-
-		task ("When the page designer cancels the hide action") {
-			Click(
-				key_text = "Cancel",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-		}
-
-		task ("Then the page designer can see the fragments") {
-			for (var fragmentName : list "Form Container,Grid,Text Input") {
-				PageEditor.viewFragment(fragmentName = "${fragmentName}");
-			}
-		}
-
-		task ("When the page designer hides the Container") {
+		task ("When the page designer hides the Grid") {
 			PageEditor.hideFragmentViaPageStructure(fragmentName = "Grid");
 		}
 
-		task ("Then the page designer cannot see hidden fragments") {
+		task ("Then the page designer can see a warning message") {
+			AssertTextPresent(
+				locator1 = "Message#ALERT_DISMISSIBLE",
+				value1 = "The hidden fragment contained required fields. A form with missing required fields will not generate a valid entry.");
+
 			PageEditor.viewFragment(fragmentName = "Form Container");
 
 			for (var fragmentName : list "Grid,Text Input") {
@@ -869,7 +827,7 @@ definition {
 		}
 
 		task ("When the page designer marks the display page template as default") {
-			PageEditor.publish(warningMessage = "This page contains one or several forms with missing or hidden form components. Are you sure you want to publish it?");
+			PageEditor.publish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}

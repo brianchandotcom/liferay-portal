@@ -122,7 +122,12 @@ public class SXPBlueprintSuggestionsContributorTest {
 		_setUpSuggestionBuilderFactory();
 		_setUpSuggestionsContributorResultsBuilderFactory();
 
-		_setUpSuggestionsContributorConfiguration("testField");
+		List<String> field = ListUtil.fromArray("field");
+		Long sxpBlueprintId = RandomTestUtil.randomLong();
+		String textField = "testField";
+
+		_setUpSuggestionsContributorConfiguration(
+			field, sxpBlueprintId, textField);
 
 		SuggestionsContributorResults suggestionsContributorResults =
 			_sxpBlueprintSuggestionsContributor.
@@ -144,11 +149,11 @@ public class SXPBlueprintSuggestionsContributorTest {
 
 		Assert.assertEquals(
 			HashMapBuilder.<String, Object>put(
-				"fields", ListUtil.fromArray("field")
+				"fields", field
 			).put(
-				"sxpBlueprintId", RandomTestUtil.randomLong()
+				"sxpBlueprintId", sxpBlueprintId
 			).put(
-				"textField", null
+				"textField", textField
 			).build(),
 			_suggestionsContributorConfiguration.getAttributes());
 
@@ -172,7 +177,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 		_setUpSearchRequestBuilderFactory();
 		_setUpAssetRendererFactoryRegistryUtil("Title");
 		_setUpSuggestionBuilderFactory();
-		_setUpSuggestionsContributorConfiguration(null);
+		_setUpSuggestionsContributorConfiguration(null, null, null);
 
 		_setUpSuggestionsContributorResultsBuilderFactory();
 
@@ -195,7 +200,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 		_setUpSearchRequestBuilderFactory();
 		_setUpSearchContext();
 		_setUpSearcher(0L);
-		_setUpSuggestionsContributorConfiguration(null);
+		_setUpSuggestionsContributorConfiguration(null, null, null);
 
 		Assert.assertNull(
 			_sxpBlueprintSuggestionsContributor.
@@ -505,12 +510,14 @@ public class SXPBlueprintSuggestionsContributorTest {
 		).builder();
 	}
 
-	private void _setUpSuggestionsContributorConfiguration(String textField) {
+	private void _setUpSuggestionsContributorConfiguration(
+		List<String> field, Long sxpBlueprintId, String textField) {
+
 		_suggestionsContributorConfiguration.setAttributes(
 			HashMapBuilder.<String, Object>put(
-				"fields", ListUtil.fromArray("field")
+				"fields", field
 			).put(
-				"sxpBlueprintId", RandomTestUtil.randomLong()
+				"sxpBlueprintId", sxpBlueprintId
 			).put(
 				"textField", textField
 			).build());

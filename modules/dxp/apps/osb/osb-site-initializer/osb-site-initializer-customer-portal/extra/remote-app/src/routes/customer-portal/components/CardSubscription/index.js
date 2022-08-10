@@ -16,7 +16,6 @@ import {StatusTag} from '../../../../common/components';
 import {useAppPropertiesContext} from '../../../../common/contexts/AppPropertiesContext';
 import {SLA_STATUS_TYPES} from '../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../common/utils/getDateCustomFormat';
-import getKebabCase from '../../../../common/utils/getKebabCase';
 import ModalCardSubscription from '../../containers/ModalCardSubscription';
 
 const dateFormat = {
@@ -82,9 +81,7 @@ const CardSubscription = ({
 
 				<div className="mt-4">
 					<h5 className="mb-1 text-center title">
-						{i18n.translate(
-							getKebabCase(cardSubscriptionData?.name)
-						) || ' - '}
+						{cardSubscriptionData?.name || ' - '}
 					</h5>
 
 					<p className="mb-1 text-center text-neutral-7 text-paragraph-sm">

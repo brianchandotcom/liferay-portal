@@ -12,7 +12,6 @@
 import {ApolloProvider} from '@apollo/client';
 import './common/styles/global.scss';
 import {ClayIconSpriteContext} from '@clayui/icon';
-
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ReactDOM from 'react-dom';
 import {AppPropertiesContext} from './common/contexts/AppPropertiesContext';

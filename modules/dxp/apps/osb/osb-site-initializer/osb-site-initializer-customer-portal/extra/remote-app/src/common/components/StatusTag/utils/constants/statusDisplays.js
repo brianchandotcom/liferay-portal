@@ -26,6 +26,10 @@ export const STATUS_DISPLAY = {
 		displayType: 'info',
 		label: i18n.translate('future'),
 	},
+	[STATUS_TAG_TYPES.active]: {
+		displayType: 'success',
+		label: i18n.translate('active'),
+	},
 	[STATUS_TAG_TYPES.inProgress]: {
 		displayType: 'warning',
 		label: i18n.translate('in-progress'),

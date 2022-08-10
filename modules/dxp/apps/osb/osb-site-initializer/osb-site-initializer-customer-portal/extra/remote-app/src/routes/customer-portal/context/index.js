@@ -177,7 +177,7 @@ const AppContextProvider = ({children}) => {
 				fetchPolicy: 'network-only',
 				query: getAccountSubscriptionGroups,
 				variables: {
-					filter: `accountKey eq '${accountKey}' and hasActivation eq true`,
+					filter: `accountKey eq '${accountKey}'`,
 				},
 			});
 
@@ -253,8 +253,7 @@ const AppContextProvider = ({children}) => {
 							accountBrief =
 								dataAccount?.accountByExternalReferenceCode;
 						}
-					}
-					else {
+					} else {
 						accountBrief = user.accountBriefs?.find(
 							(accountBrief) =>
 								accountBrief.externalReferenceCode ===

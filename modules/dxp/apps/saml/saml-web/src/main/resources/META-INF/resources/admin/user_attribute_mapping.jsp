@@ -113,7 +113,7 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 					).checked
 				)
 			);
-	};
+	}
 
 	function <portlet:namespace />evaluateAttributeMappingRow(
 		row,
@@ -148,7 +148,7 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 				radioTarget.closest('label').classList.toggle('disabled', true);
 			}
 		}
-	};
+	}
 
 	var userAttributeMappings = document.getElementById(
 		'<portlet:namespace />userAttributeMappings'

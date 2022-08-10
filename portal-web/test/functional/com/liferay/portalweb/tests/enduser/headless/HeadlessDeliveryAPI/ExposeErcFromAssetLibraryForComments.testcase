@@ -1,0 +1,85 @@
+@component-name = "portal-headless-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given a blog post is created") {
+			BlogPostingAPI.getIdOfCreatedBlogPosting(
+				articleBody = "Blogs Entry Content",
+				headline = "Blogs Title");
+		}
+	}
+
+	tearDown {
+		BlogPostingAPI.deleteAllBlogPostings();
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanCreateCommentWithCustomExternalReferenceCode {
+		property portal.acceptance = "true";
+
+		task ("When with POST request I create a comment with a custom external reference code") {
+			var blogPostingId = BlogPostingAPI.getBlogPostingsIdList();
+
+			CommentAPI.createCommentInBlogPosting(
+				blogPostingId = "${blogPostingId}",
+				commentText = "CommentOne",
+				externalReferenceCode = "ercComment");
+		}
+
+		task ("Then I can see the custom external reference code in the body response") {
+			var commentErc = CommentAPI.getFieldValueOfBlogPostingComments(
+				blogPostingId = "${blogPostingId}",
+				fieldName = "externalReferenceCode");
+
+			TestUtils.assertEquals(
+				actual = "${commentErc}",
+				expected = "ercComment");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CannotCreateTwoCommentsWithCustomExternalReferenceCode {
+		property portal.acceptance = "true";
+
+		task ("When with POST request I create a comment with a custom external reference code") {
+			var blogPostingId = BlogPostingAPI.getBlogPostingsIdList();
+
+			CommentAPI.createCommentInBlogPosting(
+				blogPostingId = "${blogPostingId}",
+				commentText = "CommentOne",
+				externalReferenceCode = "ercComment");
+		}
+
+		task ("When with POST request I create a comment with an already existing custom external reference code") {
+			var response = CommentAPI.createCommentInBlogPosting(
+				blogPostingId = "${blogPostingId}",
+				commentText = "CommentTwo",
+				externalReferenceCode = "ercComment");
+		}
+
+		task ("Then I receive an error code response about duplicate folder erc") {
+			TestUtils.assertPartialEquals(
+				actual = "${response}",
+				expected = "Duplicate message external reference code");
+		}
+
+		task ("And Then another comment with the same external reference code is not being created") {
+			var commentsTotalCount = CommentAPI.getFieldValueOfBlogPostingComments(
+				blogPostingId = "${blogPostingId}",
+				fieldName = "totalCount");
+
+			TestUtils.assertEquals(
+				actual = "${commentsTotalCount}",
+				expected = "1");
+		}
+	}
+
+}

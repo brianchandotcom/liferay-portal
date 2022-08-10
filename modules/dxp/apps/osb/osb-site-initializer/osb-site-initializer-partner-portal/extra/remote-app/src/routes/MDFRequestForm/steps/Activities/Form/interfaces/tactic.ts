@@ -9,9 +9,8 @@
  * distribution rights of the Software.
  */
 
-export default interface LiferayObject {
-	dateCreated: Date;
-	dateModified: Date;
-	externalReferenceCode: string;
-	id: number | string;
+import LiferayObject from '../../../../../../common/interfaces/liferayObject';
+
+export default interface Tactic extends Partial<LiferayObject> {
+	name: string;
 }

@@ -25,6 +25,7 @@ import {useActiveItemId} from '../../contexts/ControlsContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
+import {convertRGBtoHex} from '../../utils/convertRGBtoHex';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {ColorPaletteField} from './ColorPaletteField';
 
@@ -58,11 +59,11 @@ export function ColorPickerField({field, onValueSelect, value}) {
 			return;
 		}
 
-		setComputedValue(
-			globalContext.window
-				.getComputedStyle(element)
-				.getPropertyValue(field.cssProperty) || null
-		);
+		const propertyValue = globalContext.window
+			.getComputedStyle(element)
+			.getPropertyValue(field.cssProperty);
+
+		setComputedValue(propertyValue ? convertRGBtoHex(propertyValue) : null);
 	}, [activeItemId, field.cssProperty, globalContext, value]);
 
 	return Object.keys(tokenValues).length ? (

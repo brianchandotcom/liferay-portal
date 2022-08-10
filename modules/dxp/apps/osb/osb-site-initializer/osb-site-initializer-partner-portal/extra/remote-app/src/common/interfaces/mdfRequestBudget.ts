@@ -10,18 +10,9 @@
  */
 
 import LiferayObject from './liferayObject';
-import MDFRequestBudget from './mdfRequestBudget';
+import LiferayPicklist from './liferayPicklist';
 
-export default interface MDFRequestActivity extends Partial<LiferayObject> {
-	budgets: MDFRequestBudget[];
-	endDate: Date;
-	leadFollowUpStrategies: string;
-	leadGenerated: string;
-	mdfRequestAmount: string;
-	name: string;
-	r_tacticToActivities_c_tacticId: string;
-	r_typeActivityToActivities_c_typeActivityId: string;
-	startDate: Date;
-	targetofLeads: string;
-	totalCostOfExpense: string;
+export default interface MDFRequestBudget extends Partial<LiferayObject> {
+	cost: string;
+	expense: LiferayPicklist | {};
 }

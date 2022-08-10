@@ -10,6 +10,7 @@
  */
 
 import CheckboxGroup from './components/fields/CheckboxGroup';
+import DatePicker from './components/fields/DatePicker';
 import InputText from './components/fields/InputText';
 import RadioGroup from './components/fields/RadioGroup';
 import Select from './components/fields/Select';
@@ -56,5 +57,6 @@ PRMForm.CheckboxGroup = CheckboxGroup;
 PRMForm.InputText = InputText;
 PRMForm.RadioGroup = RadioGroup;
 PRMForm.Select = Select;
+PRMForm.DatePicker = DatePicker;
 
 export default PRMForm;

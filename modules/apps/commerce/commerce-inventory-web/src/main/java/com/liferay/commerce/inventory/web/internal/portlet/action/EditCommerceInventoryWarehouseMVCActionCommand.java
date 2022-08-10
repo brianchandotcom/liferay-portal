@@ -17,6 +17,7 @@ package com.liferay.commerce.inventory.web.internal.portlet.action;
 import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWarehouseItemException;
 import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
+import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -103,11 +104,15 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 	private void _deleteCommerceInventoryWarehouse(ActionRequest actionRequest)
 		throws PortalException {
 
+		long companyId = _portal.getCompanyId(actionRequest);
+
 		String sku = ParamUtil.getString(actionRequest, "sku");
 
 		_commerceInventoryWarehouseItemService.
-			deleteCommerceInventoryWarehouseItems(
-				_portal.getCompanyId(actionRequest), sku);
+			deleteCommerceInventoryWarehouseItems(companyId, sku);
+
+		_commerceInventoryReplenishmentItemService.
+			deleteCommerceInventoryReplenishmentItems(companyId, sku);
 	}
 
 	private void _updateCommerceInventoryWarehouse(ActionRequest actionRequest)
@@ -141,6 +146,10 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditCommerceInventoryWarehouseMVCActionCommand.class);
+
+	@Reference
+	private CommerceInventoryReplenishmentItemService
+		_commerceInventoryReplenishmentItemService;
 
 	@Reference
 	private CommerceInventoryWarehouseItemService

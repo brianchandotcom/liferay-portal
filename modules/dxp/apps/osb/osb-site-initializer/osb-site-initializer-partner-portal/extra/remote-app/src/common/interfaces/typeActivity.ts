@@ -9,19 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {RequestStatus} from '../enums/requestStatus';
 import LiferayObject from './liferayObject';
-import LiferayPicklist from './liferayPicklist';
-import MDFRequestActivity from './mdfRequestActivity';
 
-export default interface MDFRequest extends Partial<LiferayObject> {
-	activities: MDFRequestActivity[];
-	additionalOption: LiferayPicklist | {};
-	country: LiferayPicklist | {};
-	liferayBusinessSalesGoals: string[];
-	overallCampaign: string;
-	r_company_accountEntryId: string;
-	requestStatus: RequestStatus;
-	targetsAudienceRole: string[];
-	targetsMarket: string[];
+export interface TypeActivity extends Partial<LiferayObject> {
+	name: string;
 }

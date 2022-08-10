@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-export default interface LiferayObject {
-	dateCreated: Date;
-	dateModified: Date;
-	externalReferenceCode: string;
-	id: string;
+export enum TypeActivityExternalReferenceCode {
+	EVENT = 'PRMTACT-001',
+	DIGITAL_MARKETING = 'PRMTACT-002',
+	CONTENT_MARKETING = 'PRMTACT-003',
+	MISCELLANEOUS_MARKETING = 'PRMTACT-004',
 }

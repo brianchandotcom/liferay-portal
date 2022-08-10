@@ -9,7 +9,7 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-        task ("Copy the token from AC") {
+		task ("Copy the token from AC") {
 			ACUtils.launchAC();
 
 			ACSettings.takeTokenFromAnalyticsCloud();
@@ -24,12 +24,12 @@ definition {
 		task ("Add a new site with a public widget page") {
 			ACUtils.addSiteAndPage();
 
-            ACUtils.createWCAndAddToPage();
+			ACUtils.createWCAndAddToPage();
 		}
-    }
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		ACUtils.tearDownAC();
 
@@ -41,14 +41,14 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
-    }
+	}
 
-    @description = "Bug: LRAC-8084 | Automation ID: LRAC-11512 | Test Summary: It is possible to create an AB test"
-    @priority = "5"
-    test CanCreateStartABTest {
-        var nameABTest = "Create AB test"
-        
-        task ("Connect DXP to Analytics Cloud") {
+	@description = "Bug: LRAC-8084 | Automation ID: LRAC-11512 | Test Summary: It is possible to create an AB test"
+	@priority = "5"
+	test CanCreateStartABTest {
+		var nameABTest = "Create AB test";
+
+		task ("Connect DXP to Analytics Cloud") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
@@ -58,27 +58,27 @@ definition {
 				siteName = "Site Name");
 		}
 
-        task ("Start an AB test") {
-            ACUtils.createABtest(
-                goalAB = "Bounce Rate",
-                titleAB = "${nameABTest}");
-            
-            ACUtils.createABVariant(variantAB = "AB Variant");
+		task ("Start an AB test") {
+			ACUtils.createABtest(
+				goalAB = "Bounce Rate",
+				titleAB = "${nameABTest}");
 
-            ACUtils.runABTest();
-        }
+			ACUtils.createABVariant(variantAB = "AB Variant");
 
-        task ("Go to Tests") {
-            ACUtils.launchAC();
+			ACUtils.runABTest();
+		}
 
-            ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		task ("Go to Tests") {
+			ACUtils.launchAC();
 
-            ACNavigation.goToTests();
-        }
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 
-        task ("Assert AB test") {
-            ACUtils.viewABTest(testName = "${nameABTest}");
-        }
-    }
+			ACNavigation.goToTests();
+		}
+
+		task ("Assert AB test") {
+			ACUtils.viewABTest(testName = "${nameABTest}");
+		}
+	}
 
 }

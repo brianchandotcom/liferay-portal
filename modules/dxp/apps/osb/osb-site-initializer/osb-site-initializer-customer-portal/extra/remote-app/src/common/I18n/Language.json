@@ -105,7 +105,10 @@
 	"generate-x-key": "Generate {0} Key",
 	"generate-x-keys": "Generate {0} Keys",
 	"germany": "Germany",
+	"go-to-analytics-cloud-workspace": "Go to Analytics Cloud Workspace",
+	"go-to-liferay-experience-cloud": "Go to Liferay Experience Cloud",
 	"go-to-product-console": "Go to Product Console",
+	"go-to-uat": "Go to UAT",
 	"go-to-workspace": "Go to Workspace",
 	"gold": "Gold",
 	"group-id-confirmation": "Group ID Confirmation",
@@ -141,6 +144,7 @@
 	"liferay-contact": "Liferay Contact",
 	"liferay-dxp-version": "Liferay DXP Version",
 	"liferay-experience-cloud": "Liferay Experience Cloud",
+	"liferay-experience-cloud-activation": "Liferay Experience Cloud Activation",
 	"liferay-sales": "Liferay Sales",
 	"liferay-support": "Liferay Support",
 	"limited": "Limited",
@@ -330,12 +334,7 @@
 	"your-dxp-cloud-environments-are-being-set-up-and-will-be-available-soon": "Your DXP Cloud environments are being set up and will be available soon",
 	"your-dxp-cloud-environments-are-ready": "Your DXP Cloud environments are ready.",
 	"your-dxp-cloud-environments-are-ready-go-to-the-product-console-to-view-dxp-cloud-details": "Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details.",
-	"your-request-completed-successfully": "Your request completed successfully.",
-	"liferay-experience-cloud-activation": "Liferay Experience Cloud Activation",
-	"almost-there-setup-experience-cloud-by-finishing-the-activation-form": "Almost there! Setup Experience Cloud by finishing the activation form.",
-	"your-experience-cloud-project-is-being-set-up-and-will-be-available-soon": "Your Experience Cloud Project is being set up and will be available soon.",
 	"your-experience-cloud-environments-are-ready": "Your Experience Cloud Environments are ready.",
-	"go-to-analytics-cloud-workspace": "Go to Analytics Cloud Workspace",
-	"go-to-uat": "Go to UAT",
-	"go-to-liferay-experience-cloud": "Go to Liferay Experience Cloud"
+	"your-experience-cloud-project-is-being-set-up-and-will-be-available-soon": "Your Experience Cloud Project is being set up and will be available soon.",
+	"your-request-completed-successfully": "Your request completed successfully."
 }

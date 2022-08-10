@@ -323,7 +323,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 					'workflowDefinition' + fileEntryTypeId
 				);
 
-				<portlet:namespace />documentTypesChanged = true;
+				window.<portlet:namespace />documentTypesChanged = true;
 
 				searchContainer.addRow(
 					[fileEntryTypeName, workflowDefinitions, fileEntryTypeLink],
@@ -425,7 +425,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 
 			option.parentElement.removeChild(option);
 
-			<portlet:namespace />documentTypesChanged = true;
+			window.<portlet:namespace />documentTypesChanged = true;
 		},
 		'.modify-link'
 	);

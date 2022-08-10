@@ -168,13 +168,9 @@ public class CookiesPreAction extends Action {
 			return;
 		}
 
-		if (!cookiesPreferenceHandlingConfiguration.explicitConsentMode() ||
-			!userConsent) {
-
-			_expireCookies(
-				cookieValues, httpServletRequest, httpServletResponse,
-				CookiesConstants.NAME_USER_CONSENT_CONFIGURED);
-		}
+		_expireCookies(
+			cookieValues, httpServletRequest, httpServletResponse,
+			CookiesConstants.NAME_USER_CONSENT_CONFIGURED);
 
 		if (!necessaryConsent) {
 			_addCookies(
@@ -183,10 +179,7 @@ public class CookiesPreAction extends Action {
 					CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, "true"));
 		}
 
-		if (!optionalConsent ||
-			(cookiesPreferenceHandlingConfiguration.explicitConsentMode() &&
-			 !userConsent)) {
-
+		if (!optionalConsent || !userConsent) {
 			String cookieValue = "true";
 
 			if (cookiesPreferenceHandlingConfiguration.explicitConsentMode()) {

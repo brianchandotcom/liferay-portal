@@ -1843,6 +1843,12 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean isFromCompletedBuild() {
+		Build parentBuild = getParentBuild();
+
+		if (parentBuild != null) {
+			return parentBuild.isFromCompletedBuild();
+		}
+
 		return fromCompletedBuild;
 	}
 

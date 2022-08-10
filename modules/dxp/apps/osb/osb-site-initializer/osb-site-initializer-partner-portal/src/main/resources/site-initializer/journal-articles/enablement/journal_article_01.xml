@@ -3,7 +3,7 @@
 <root available-locales="en_US" default-locale="en_US" version="1.0">
 
 	<dynamic-element field-reference="BannerImage" index-type="text" instance-id="BknFtapj" name="BannerImage" type="image">
-		<dynamic-content language-id="en_US"><![CDATA[{"groupId":"58314","width":388,"alt":"","description":"","title":"business-Marketing-Sales.png","classNameId":29810,"type":"document","uuid":"9753852e-c5db-8329-389d-cc36a2cf36f3","url":"[$dl-reference=/group/58314/com.liferay.document.library.kernel.model.DLFileEntry/58351.xml$,$include-friendly-url=true$]?download=true","fileEntryId":"58351","resourcePrimKey":"59560","height":219}]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/enablement-resources/business-Marketing-Sales.png$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element field-reference="Subtext" index-type="text" instance-id="rgbEL0b6" name="Subtext" type="text">
 		<dynamic-content language-id="en_US"><![CDATA[COURSES]]></dynamic-content>

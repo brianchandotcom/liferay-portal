@@ -179,11 +179,11 @@
 								  "widgetInstance": {
 									"widgetConfig": {
 									  "ddmTemplateKey": "",
-									  "assetEntryId": "44843",
+									  "assetEntryId": "47376",
 									  "userToolAssetAddonEntryKeys": "false",
-									  "groupId": "43267",
+									  "groupId": "47060",
 									  "enableViewCountIncrement": "false",
-									  "articleId": "44837",
+									  "articleId": "WEB-CONTENT-ENABLEMENT-01",
 									  "contentMetadataAssetAddonEntryKeys": "false"
 									},
 									"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet"
@@ -237,11 +237,11 @@
 								  "widgetInstance": {
 									"widgetConfig": {
 									  "ddmTemplateKey": "",
-									  "assetEntryId": "44922",
+									  "assetEntryId": "47385",
 									  "userToolAssetAddonEntryKeys": "false",
-									  "groupId": "43267",
+									  "groupId": "47060",
 									  "enableViewCountIncrement": "false",
-									  "articleId": "44916",
+									  "articleId": "WEB-CONTENT-ENABLEMENT-02",
 									  "contentMetadataAssetAddonEntryKeys": "false"
 									},
 									"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
@@ -309,11 +309,11 @@
 								  "widgetInstance": {
 									"widgetConfig": {
 									  "ddmTemplateKey": "",
-									  "assetEntryId": "44933",
+									  "assetEntryId": "47394",
 									  "userToolAssetAddonEntryKeys": "false",
-									  "groupId": "43267",
+									  "groupId": "47060",
 									  "enableViewCountIncrement": "false",
-									  "articleId": "44927",
+									  "articleId": "WEB-CONTENT-ENABLEMENT-03",
 									  "contentMetadataAssetAddonEntryKeys": "false"
 									},
 									"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet"
@@ -332,7 +332,7 @@
 				  }
 				],
 				"type": "Section"
-			  }
+			  }			  
 		],
 		"type": "Root"
 	},

@@ -1,26 +1,26 @@
 <div>
-<#if (courseBannerImage.getData())?? && courseBannerImage.getData() != "">
-	<img alt="${courseBannerImage.getAttribute("alt")}" data-fileentryid="${courseBannerImage.getAttribute("fileEntryId")}" src="${courseBannerImage.getData()}" />
+<#if (BannerImage.getData())?? && BannerImage.getData() != "">
+	<img alt="${BannerImage.getAttribute("alt")}" data-fileentryid="${BannerImage.getAttribute("fileEntryId")}" src="${BannerImage.getData()}" />
 </#if>
 	<div>
 		<p class="courseSubtext">
 
-		<#if (courseSubText.getData())??>
-			${courseSubText.getData()}
-		</#if>
+<#if (Subtext.getData())??>
+	${Subtext.getData()}
+</#if>
 	</p>
 
 	<h4 class="courseTitle">
-		<#if (courseTitleText.getData())??>
-			${courseTitleText.getData()}
-		</#if>
+<#if (Title.getData())??>
+	${Title.getData()}
+</#if>
 	</h4>
 	</div>
 
-	<a class="btn btn-primary courseButton" href=${courseButtonLink.getData()}>
-		<#if (courseButton.getData())??>
-			${courseButton.getData()}
-		</#if>
+	<a class="btn btn-primary courseButton" href=${LinkButton.getData()}>
+<#if (Button.getData())??>
+	${Button.getData()}
+</#if>
 	</a>
 </div>
 

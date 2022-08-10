@@ -1,23 +1,28 @@
-body{
-    width: 90%;
-    margin: 3%;
+body {
+	width: 90%;
+	margin: 3%;
 }
 
-#collapseOne, #collapseTwo, #collapseThree{
+#collapseOne,
+#collapseTwo,
+#collapseThree {
 	margin: 2%;
 }
 
-#collapseTwo, #collapseThree, #parametersList, #addParameter{
+#collapseTwo,
+#collapseThree,
+#parametersList,
+#addParameter {
 	display: none;
 }
 
-#parametersList>div {
-    margin: 1%;
+#parametersList > div {
+	margin: 1%;
 }
-.message{
+.message {
 	font-size: 12px;
 }
 
-.alignRight{
-    text-align: right;
+.alignRight {
+	text-align: right;
 }

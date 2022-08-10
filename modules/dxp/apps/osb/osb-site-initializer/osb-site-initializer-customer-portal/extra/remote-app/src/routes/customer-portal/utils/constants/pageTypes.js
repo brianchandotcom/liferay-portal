@@ -22,6 +22,7 @@ export const PAGE_TYPES = {
 	dxpDeactivate: 'dxp_deactivate',
 	dxpNew: 'dxp_new',
 	home: 'home',
+	liferayExperienceCloud: 'liferay_experience_cloud',
 	overview: 'overview',
 	portalNew: 'portal_new',
 	teamMembers: 'team_members',

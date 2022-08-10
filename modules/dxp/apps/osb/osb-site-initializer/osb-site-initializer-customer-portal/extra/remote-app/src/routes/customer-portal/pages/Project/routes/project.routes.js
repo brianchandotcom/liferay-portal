@@ -21,6 +21,7 @@ import EnterpriseSearch from '../ActivationKeys/EnterpriseSearch';
 import AnalyticsCloud from '../AnalyticsCloud';
 import DXP from '../DXP';
 import DXPCloud from '../DXPCloud';
+import LiferayExperienceCloud from '../LiferayExperienceCloud';
 import Overview from '../Overview';
 import Portal from '../Portal';
 import TeamMembers from '../TeamMembers';
@@ -34,6 +35,21 @@ const ProjectRoutes = () => (
 
 			<Route element={<Layout />} path="/:accountKey">
 				<Route element={<Overview />} index />
+
+				<Route
+					element={
+						<ProductOutlet
+							product={PRODUCT_TYPES.liferayExperienceCloud}
+						/>
+					}
+				>
+					<Route
+						element={<LiferayExperienceCloud />}
+						path={getKebabCase(
+							PRODUCT_TYPES.liferayExperienceCloud
+						)}
+					/>
+				</Route>
 
 				<Route element={<ActivationOutlet />} path="activation">
 					<Route

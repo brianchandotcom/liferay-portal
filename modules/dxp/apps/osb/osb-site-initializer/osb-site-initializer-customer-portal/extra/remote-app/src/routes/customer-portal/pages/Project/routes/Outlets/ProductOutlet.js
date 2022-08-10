@@ -11,6 +11,7 @@
 
 import {useMemo} from 'react';
 import {Navigate, Outlet, useOutletContext} from 'react-router-dom';
+import i18n from '../../../../../../common/I18n';
 import {useCustomerPortal} from '../../../../context';
 
 const ProductOutlet = ({product}) => {
@@ -21,6 +22,10 @@ const ProductOutlet = ({product}) => {
 		() => !!subscriptionGroups?.find(({name}) => name === product),
 		[product, subscriptionGroups]
 	);
+
+	if (!project || !subscriptionGroups) {
+		return <> {i18n.translate('loading')}...</>;
+	}
 
 	if (!hasProduct) {
 		return <Navigate replace={true} to={`/${project?.accountKey}`} />;

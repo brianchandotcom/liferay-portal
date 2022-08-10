@@ -169,7 +169,8 @@ public class PortalUpgradeProcessRegistryImpl
 					"com.liferay.portal.security.sso.token.impl",
 					"com.liferay.push.notifications.web",
 					"com.liferay.saml.addon.keep.alive.web",
-					"com.liferay.saml.impl", "com.liferay.saml.web"
+					"com.liferay.saml.impl", "com.liferay.saml.web",
+					"com.liferay.segments.content.targeting.upgrade"
 				},
 				null));
 	}

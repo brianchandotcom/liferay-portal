@@ -120,19 +120,25 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 		%>
 
 		<div class="sidebar-header">
-			<div class="autofit-row sidebar-section">
-				<div class="autofit-col autofit-col-expand">
-					<h4 class="component-title"><%= HtmlUtil.escape(kbArticle.getTitle()) %></h4>
+			<clay:content-row
+				cssClass="sidebar-section"
+			>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<clay:content-section>
+						<h4 class="component-title"><%= HtmlUtil.escape(kbArticle.getTitle()) %></h4>
 
-					<clay:label
-						displayType="info"
-						label='<%= LanguageUtil.get(request, "version") + StringPool.SPACE + kbArticle.getPriority() %>'
-					/>
+						<clay:label
+							displayType="info"
+							label='<%= LanguageUtil.get(request, "version") + StringPool.SPACE + kbArticle.getPriority() %>'
+						/>
 
-					<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
-				</div>
+						<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+					</clay:content-section>
+				</clay:content-col>
 
-				<div class="autofit-col">
+				<clay:content-col>
 					<c:if test='<%= ParamUtil.getBoolean(request, "showSidebarHeader", GetterUtil.getBoolean(request.getAttribute(KBWebKeys.SHOW_SIDEBAR_HEADER))) %>'>
 						<ul class="autofit-padded-no-gutters autofit-row">
 							<li class="autofit-col">
@@ -143,8 +149,8 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 							</li>
 						</ul>
 					</c:if>
-				</div>
-			</div>
+				</clay:content-col>
+			</clay:content-row>
 		</div>
 
 		<div class="sidebar-body">

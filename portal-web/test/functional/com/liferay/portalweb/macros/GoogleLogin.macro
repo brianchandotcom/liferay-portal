@@ -1,15 +1,17 @@
 definition {
 
 	macro acceptConditions {
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "GoogleLogin#ALLOW")) {
+		WaitForElementPresent.waitForLastScript();
+
+		if (IsElementPresent(locator1 = "GoogleLogin#ALLOW")) {
 			Click(locator1 = "GoogleLogin#ALLOW");
 		}
 
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "Button#I_AGREE")) {
+		if (IsElementPresent(locator1 = "Button#I_AGREE")) {
 			Click(locator1 = "Button#I_AGREE");
 		}
 
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#ANSWER")) {
+		if (IsElementPresent(locator1 = "TextInput#ANSWER")) {
 			Type(
 				locator1 = "TextInput#ANSWER",
 				value1 = "test");

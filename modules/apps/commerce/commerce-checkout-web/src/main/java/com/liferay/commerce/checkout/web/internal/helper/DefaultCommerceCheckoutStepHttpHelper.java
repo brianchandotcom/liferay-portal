@@ -38,8 +38,10 @@ import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalSe
 import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
@@ -108,15 +110,77 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException {
 
+		CommerceAddress defaultBillingCommerceAddress = null;
+		CommerceAddress defaultShippingCommerceAddress = null;
+
 		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+
+		if (commerceAccount != null) {
+			AccountEntry accountEntry =
+				_accountEntryLocalService.fetchAccountEntry(
+					commerceAccount.getCommerceAccountId());
+
+			if (accountEntry != null) {
+				CommerceChannel commerceChannel =
+					_commerceChannelLocalService.
+						getCommerceChannelByOrderGroupId(
+							commerceOrder.getGroupId());
+
+				CommerceChannelAccountEntryRel
+					billingAddressCommerceChannelAccountEntryRel =
+						_commerceChannelAccountEntryRelLocalService.
+							fetchCommerceChannelAccountEntryRel(
+								accountEntry.getAccountEntryId(),
+								commerceChannel.getCommerceChannelId(),
+								CommerceChannelAccountEntryRelConstants.
+									TYPE_BILLING_ADDRESS);
+
+				if (billingAddressCommerceChannelAccountEntryRel != null) {
+					defaultBillingCommerceAddress =
+						_commerceAddressService.getCommerceAddress(
+							billingAddressCommerceChannelAccountEntryRel.
+								getClassPK());
+				}
+
+				CommerceChannelAccountEntryRel
+					shippingAddressCommerceChannelAccountEntryRel =
+						_commerceChannelAccountEntryRelLocalService.
+							fetchCommerceChannelAccountEntryRel(
+								accountEntry.getAccountEntryId(),
+								commerceChannel.getCommerceChannelId(),
+								CommerceChannelAccountEntryRelConstants.
+									TYPE_SHIPPING_ADDRESS);
+
+				if (shippingAddressCommerceChannelAccountEntryRel != null) {
+					defaultShippingCommerceAddress =
+						_commerceAddressService.getCommerceAddress(
+							shippingAddressCommerceChannelAccountEntryRel.
+								getClassPK());
+				}
+			}
+		}
+
+		long defaultBillingCommerceAddressId = 0;
+		long defaultShippingCommerceAddressId = 0;
+
+		if (defaultBillingCommerceAddress != null) {
+			defaultBillingCommerceAddressId =
+				defaultBillingCommerceAddress.getCommerceAddressId();
+		}
+
+		if (defaultShippingCommerceAddress != null) {
+			defaultShippingCommerceAddressId =
+				defaultShippingCommerceAddress.getCommerceAddressId();
+		}
+
 		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
 		CommerceAddress billingAddress = commerceOrder.getBillingAddress();
 
 		if (((commerceAccount != null) &&
-			 (commerceAccount.getDefaultBillingAddressId() != 0) &&
-			 (commerceAccount.getDefaultShippingAddressId() != 0) &&
-			 (commerceAccount.getDefaultBillingAddressId() ==
-				 commerceAccount.getDefaultShippingAddressId()) &&
+			 (defaultBillingCommerceAddressId != 0) &&
+			 (defaultShippingCommerceAddressId != 0) &&
+			 (defaultBillingCommerceAddressId ==
+				 defaultShippingCommerceAddressId) &&
 			 (billingAddress == null) && (shippingAddress == null) &&
 			 _commerceShippingHelper.isShippable(commerceOrder)) ||
 			((billingAddress != null) && (shippingAddress != null) &&
@@ -821,6 +885,9 @@ public class DefaultCommerceCheckoutStepHttpHelper
 	@Reference
 	private CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;

@@ -1483,6 +1483,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153356. View Page Content tab on sidebar of content page."
+	@priority = "4"
+	test ViewPageContentOnSidebarOfContentPage {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("Given a page creator has a content page with Heading fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page creator clicks on Content Panel on sidebar") {
+			Click(
+				key_tabName = "Page Content",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+		}
+
+		task ("Then the page creator can validate Page Content tab") {
+			task ("View paperclip icon is shown") {
+				AssertElementPresent(
+					key_text = "paperclip",
+					locator1 = "Icon#ANY");
+			}
+
+			task ("View title and description on Page Content tab") {
+				AssertTextEquals(
+					key_sidebarButton = "Page Content",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE",
+					value1 = "Page Content");
+
+				AssertTextPresent(value1 = "Access the content included in the page and the options to edit them.");
+			}
+
+			task ("View the order of Page Content is the fourth") {
+				PageEditor.viewSideBarButtonOrder(
+					buttonNameList = "Page Content",
+					position = "4");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-96794. View permissions and usage of mapped web content in Contents panel."
 	@priority = "4"
 	test ViewPermissionsAndUsageOfMappedWebContent {

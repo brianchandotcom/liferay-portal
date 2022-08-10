@@ -57,6 +57,32 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _addDiscountAccountGroup {
+		Variables.assertDefined(parameterList = "${accountGroupName},${discountTitle}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = "${discountTitle}");
+		var accountGroupId = CommerceJSONAccountGroupsAPI._getAccountGroupId(accountGroupName = "${accountGroupName}");
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId}/discount-account-groups \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+			-H 'Content-Type: application/json' \
+  			-d '{
+				"discountId": ${discountId},
+				"accountGroupId": ${accountGroupId}
+			}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _addDiscountProduct {
 		Variables.assertDefined(parameterList = "${discountTitle},${productName}");
 

@@ -29,6 +29,33 @@ definition {
 		}
 	}
 
+	macro _getAccountGroupId {
+		Variables.assertDefined(parameterList = "${accountGroupName}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(accountGroupCount)) {
+			var accountGroupCount = "${accountGroupCount}";
+		}
+		else {
+			var accountGroupCount = "100";
+		}
+
+		var curl = '''
+				${baseURL}/o/headless-commerce-admin-account/v1.0/accountGroups?pageSize=${accountGroupCount} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+			''';
+
+		var accountGroupId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${accountGroupName}')].['id']");
+
+		return "${accountGroupId}";
+	}
+
 	macro _getCommerceAccountGroupIds {
 		var baseURL = "${baseURL}";
 

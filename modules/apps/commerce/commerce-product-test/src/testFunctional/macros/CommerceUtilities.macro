@@ -16,6 +16,21 @@ definition {
 		return "${string}";
 	}
 
+	macro convertWholeNumberToDecimal {
+		Variables.assertDefined(parameterList = "${number}");
+
+		var isDecimal = StringUtil.contains("${number}", ".");
+
+		if ("${isDecimal}" == "true") {
+			return "${number}";
+		}
+		else {
+			var decimalNumber = StringUtil.concat("${number}", ".00");
+
+			return "${decimalNumber}";
+		}
+	}
+
 	macro getFutureDate {
 		if (isSet(monthFormat)) {
 			var dateMonth = DateUtil.getFormattedCurrentDate("${monthFormat}");

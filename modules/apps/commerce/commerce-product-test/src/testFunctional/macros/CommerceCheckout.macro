@@ -28,6 +28,29 @@ definition {
 		Click(locator1 = "Button#CONTINUE");
 	}
 
+	macro getDeliveryCost {
+		var deliveryExpeditedCost = "25";
+		var deliveryStandardCost = "15";
+
+		if ("${shippingMethod}" == "Expedited") {
+			var deliveryCost = "${deliveryExpeditedCost}";
+		}
+		else if ("${shippingMethod}" == "Standard") {
+			var deliveryCost = "${deliveryStandardCost}";
+		}
+		else if (isSet(customDeliveryValue)) {
+			var deliveryCost = "${customDeliveryValue}";
+		}
+
+		if (isSet(deliveryDiscountPercentage)) {
+			var deliverydiscountAmount = MathUtil.percent("${deliveryDiscountPercentage}","${deliveryCost}");
+
+			var deliveryCost = ${deliveryCost} - ${deliverydiscountAmount};
+		}
+
+		return "${deliveryCost}";
+	}
+
 	macro gotoCheckout {
 		CommerceNavigator.gotoMiniCart();
 

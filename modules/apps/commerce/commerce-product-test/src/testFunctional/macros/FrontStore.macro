@@ -84,6 +84,27 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 	}
 
+	macro applyCouponCode {
+		AssertElementPresent(locator1 = "TextInput#DISCOUNT");
+
+		Type(
+			locator1 = "TextInput#DISCOUNT",
+			value1 = "${discountCouponCode}");
+
+		Click(
+			key_tab = "Apply",
+			locator1 = "Button#TAB_SUBMIT_BTN");
+
+		if (isSet(errorMessage)) {
+			Alert.viewErrorMessage(errorMessage = "${errorMessage}");
+		}
+		else {
+			AssertElementPresent(
+				key_couponCode = "${discountCouponCode}",
+				locator1 = "CommerceFrontStore#COUPON_CODE_BODY");
+		}
+	}
+
 	macro assertMiniCompareItems {
 		for (var product : list "${products}") {
 			var productImageId = CommerceJSONProductsAPI._getCommerceProductImageIds(productName = "${product}");

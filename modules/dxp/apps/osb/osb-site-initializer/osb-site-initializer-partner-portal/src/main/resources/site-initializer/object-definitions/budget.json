@@ -1,0 +1,37 @@
+{
+	"label": {
+		"en-US": "Budget"
+	},
+	"name": "Budget",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Cost"
+			},
+			"name": "cost",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Expense"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:BudgetExpenses$]",
+			"name": "expense",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Budgets"
+	},
+	"scope": "company",
+	"system": false
+}

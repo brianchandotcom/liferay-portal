@@ -1,0 +1,23 @@
+{
+	"label": {
+		"en-US": "Type Of Activity"
+	},
+	"name": "TypeOfActivity",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Name"
+			},
+			"name": "name",
+			"required": true
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Type of Activities"
+	},
+	"scope": "company",
+	"system": false
+}

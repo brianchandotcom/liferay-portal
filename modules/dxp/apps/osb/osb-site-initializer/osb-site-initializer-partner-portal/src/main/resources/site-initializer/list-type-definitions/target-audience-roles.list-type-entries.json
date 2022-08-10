@@ -1,0 +1,66 @@
+[
+	{
+		"key": "cLevelExecutiveVP",
+		"name": "C-Level/Executive/VP",
+		"name_i18n": {
+			"en-US": "C-Level/Executive/VP"
+		},
+		"type": "string"
+	},
+	{
+		"key": "directorManager",
+		"name": "Director/Manager",
+		"name_i18n": {
+			"en-US": "Director/Manager"
+		},
+		"type": "string"
+	},
+	{
+		"key": "associateAnalyst",
+		"name": "Associate/Analyst",
+		"name_i18n": {
+			"en-US": "Associate/Analyst"
+		},
+		"type": "string"
+	},
+	{
+		"key": "independentContractor",
+		"name": "Independent Contractor",
+		"name_i18n": {
+			"en-US": "Independent Contractor"
+		},
+		"type": "string"
+	},
+	{
+		"key": "developerEngineer",
+		"name": "Developer/Engineer",
+		"name_i18n": {
+			"en-US": "Developer/Engineer"
+		},
+		"type": "string"
+	},
+	{
+		"key": "administrator",
+		"name": "Administrator",
+		"name_i18n": {
+			"en-US": "Administrator"
+		},
+		"type": "string"
+	},
+	{
+		"key": "projectManager",
+		"name": "Project Manager",
+		"name_i18n": {
+			"en-US": "Project Manager"
+		},
+		"type": "string"
+	},
+	{
+		"key": "eCommerceLeadership",
+		"name": "eCommerce Leadership",
+		"name_i18n": {
+			"en-US": "eCommerce Leadership"
+		},
+		"type": "string"
+	}
+]

@@ -1,0 +1,18 @@
+[
+	{
+		"key": "6xToDXPMigrationUpgrade",
+		"name": "6.x to DXP Migration/Upgrade",
+		"name_i18n": {
+			"en-US": "6.x to DXP Migration/Upgrade"
+		},
+		"type": "string"
+	},
+	{
+		"key": "migrationFromCompetitorPlatform",
+		"name": "Migration from competitor platform",
+		"name_i18n": {
+			"en-US": "Migration from competitor platform"
+		},
+		"type": "string"
+	}
+]

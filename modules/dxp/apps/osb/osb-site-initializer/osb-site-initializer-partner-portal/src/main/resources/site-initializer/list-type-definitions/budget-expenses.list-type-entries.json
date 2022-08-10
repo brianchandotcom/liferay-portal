@@ -1,0 +1,122 @@
+[
+	{
+		"key": "sponsorshipFee",
+		"name": "Sponsorship Fee",
+		"name_i18n": {
+			"en-US": "Sponsorship Fee"
+		},
+		"type": "string"
+	},
+	{
+		"key": "foodAndBeverage",
+		"name": "Food and Beverage",
+		"name_i18n": {
+			"en-US": "Food and Beverage"
+		},
+		"type": "string"
+	},
+	{
+		"key": "digitalAdvertising",
+		"name": "Digital Advertising",
+		"name_i18n": {
+			"en-US": "Digital Advertising"
+		},
+		"type": "string"
+	},
+	{
+		"key": "contentCreation",
+		"name": "Content Creation",
+		"name_i18n": {
+			"en-US": "Content Creation"
+		},
+		"type": "string"
+	},
+	{
+		"key": "socialMarketing",
+		"name": "Social Marketing",
+		"name_i18n": {
+			"en-US": "Social Marketing"
+		},
+		"type": "string"
+	},
+	{
+		"key": "directMail",
+		"name": "Direct Mail",
+		"name_i18n": {
+			"en-US": "Direct Mail"
+		},
+		"type": "string"
+	},
+	{
+		"key": "outboundTelesales",
+		"name": "Outbound Telesales",
+		"name_i18n": {
+			"en-US": "Outbound Telesales"
+		},
+		"type": "string"
+	},
+	{
+		"key": "printAdvertising",
+		"name": "Print Advertising",
+		"name_i18n": {
+			"en-US": "Print Advertising"
+		},
+		"type": "string"
+	},
+	{
+		"key": "broadcastAdvertising",
+		"name": "Broadcast Advertising",
+		"name_i18n": {
+			"en-US": "Broadcast Advertising"
+		},
+		"type": "string"
+	},
+	{
+		"key": "prospectListPurchase",
+		"name": "Prospect List Purchase",
+		"name_i18n": {
+			"en-US": "Prospect List Purchase"
+		},
+		"type": "string"
+	},
+	{
+		"key": "cobrandedMerchandise",
+		"name": "Cobranded Merchandise",
+		"name_i18n": {
+			"en-US": "Cobranded Merchandise"
+		},
+		"type": "string"
+	},
+	{
+		"key": "roomRentel",
+		"name": "Room Rentel",
+		"name_i18n": {
+			"en-US": "Room Rentel"
+		},
+		"type": "string"
+	},
+	{
+		"key": "digitalMarketing",
+		"name": "Digital Marketing",
+		"name_i18n": {
+			"en-US": "Digital Marketing"
+		},
+		"type": "string"
+	},
+	{
+		"key": "emailMarketing",
+		"name": "Email Marketing",
+		"name_i18n": {
+			"en-US": "Email Marketing"
+		},
+		"type": "string"
+	},
+	{
+		"key": "other",
+		"name": "Other",
+		"name_i18n": {
+			"en-US": "Other"
+		},
+		"type": "string"
+	}
+]

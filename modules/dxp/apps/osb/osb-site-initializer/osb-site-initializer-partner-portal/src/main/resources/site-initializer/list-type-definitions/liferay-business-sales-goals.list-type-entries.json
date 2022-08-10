@@ -1,0 +1,26 @@
+[
+	{
+		"key": "leadGeneration",
+		"name": "Lead generation",
+		"name_i18n": {
+			"en-US": "Lead generation"
+		},
+		"type": "string"
+	},
+	{
+		"key": "thoughtLeadership",
+		"name": "Thought leadership",
+		"name_i18n": {
+			"en-US": "Thought leadership"
+		},
+		"type": "string"
+	},
+	{
+		"key": "nurtureExistingProspects",
+		"name": "Nurture existing prospects",
+		"name_i18n": {
+			"en-US": "Nurture existing prospects"
+		},
+		"type": "string"
+	}
+]

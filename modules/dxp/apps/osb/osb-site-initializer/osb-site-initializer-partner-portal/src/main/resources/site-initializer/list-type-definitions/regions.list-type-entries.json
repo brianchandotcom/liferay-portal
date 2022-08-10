@@ -1,0 +1,194 @@
+[
+	{
+		"key": "global",
+		"name": "Global",
+		"name_i18n": {
+			"en-US": "Global"
+		},
+		"type": "string"
+	},
+	{
+		"key": "us",
+		"name": "US",
+		"name_i18n": {
+			"en-US": "US"
+		},
+		"type": "string"
+	},
+	{
+		"key": "canada",
+		"name": "Canada",
+		"name_i18n": {
+			"en-US": "Canada"
+		},
+		"type": "string"
+	},
+	{
+		"key": "mexico",
+		"name": "Mexico",
+		"name_i18n": {
+			"en-US": "Mexico"
+		},
+		"type": "string"
+	},
+	{
+		"key": "argentinaUraguayParaguay",
+		"name": "Argentina, Uraguay, Paraguay",
+		"name_i18n": {
+			"en-US": "Argentina, Uraguay, Paraguay"
+		},
+		"type": "string"
+	},
+	{
+		"key": "chilePeru",
+		"name": "Chile, Peru",
+		"name_i18n": {
+			"en-US": "Chile, Peru"
+		},
+		"type": "string"
+	},
+	{
+		"key": "colombiaEcuador",
+		"name": "Colombia, Ecuador",
+		"name_i18n": {
+			"en-US": "Colombia, Ecuador"
+		},
+		"type": "string"
+	},
+	{
+		"key": "centralAmerica",
+		"name": "Central America",
+		"name_i18n": {
+			"en-US": "Central America"
+		},
+		"type": "string"
+	},
+	{
+		"key": "latimAmerica",
+		"name": "Latim America",
+		"name_i18n": {
+			"en-US": "Latim America"
+		},
+		"type": "string"
+	},
+	{
+		"key": "middleEast",
+		"name": "Middle East",
+		"name_i18n": {
+			"en-US": "Middle East"
+		},
+		"type": "string"
+	},
+	{
+		"key": "africa",
+		"name": "Africa",
+		"name_i18n": {
+			"en-US": "Africa"
+		},
+		"type": "string"
+	},
+	{
+		"key": "anz",
+		"name": "ANZ",
+		"name_i18n": {
+			"en-US": "ANZ"
+		},
+		"type": "string"
+	},
+	{
+		"key": "benelux",
+		"name": "BENELUX",
+		"name_i18n": {
+			"en-US": "BENELUX"
+		},
+		"type": "string"
+	},
+	{
+		"key": "dach",
+		"name": "DACH",
+		"name_i18n": {
+			"en-US": "DACH"
+		},
+		"type": "string"
+	},
+	{
+		"key": "uk",
+		"name": "UK",
+		"name_i18n": {
+			"en-US": "UK"
+		},
+		"type": "string"
+	},
+	{
+		"key": "france",
+		"name": "France",
+		"name_i18n": {
+			"en-US": "France"
+		},
+		"type": "string"
+	},
+	{
+		"key": "itGrCy",
+		"name": "ItGrCy",
+		"name_i18n": {
+			"en-US": "ItGrCy"
+		},
+		"type": "string"
+	},
+	{
+		"key": "spainPortugal",
+		"name": "SpainPortugal",
+		"name_i18n": {
+			"en-US": "SpainPortugal"
+		},
+		"type": "string"
+	},
+	{
+		"key": "centralAndEasternEurope",
+		"name": "CENTRAL AND EASTERN EUROPE",
+		"name_i18n": {
+			"en-US": "CENTRAL AND EASTERN EUROPE"
+		},
+		"type": "string"
+	},
+	{
+		"key": "nordics",
+		"name": "Nordics",
+		"name_i18n": {
+			"en-US": "Nordics"
+		},
+		"type": "string"
+	},
+	{
+		"key": "india",
+		"name": "India",
+		"name_i18n": {
+			"en-US": "India"
+		},
+		"type": "string"
+	},
+	{
+		"key": "singapore",
+		"name": "Singapore",
+		"name_i18n": {
+			"en-US": "Singapore"
+		},
+		"type": "string"
+	},
+	{
+		"key": "china",
+		"name": "China",
+		"name_i18n": {
+			"en-US": "China"
+		},
+		"type": "string"
+	},
+	{
+		"key": "japan",
+		"name": "Japan",
+		"name_i18n": {
+			"en-US": "Japan"
+		},
+		"type": "string"
+	}
+]

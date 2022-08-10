@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Type Of Activity"
+	},
+	"name": "typeOfActivityToActivities",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:TypeOfActivity$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Activity$]",
+	"objectDefinitionName2": "Activity",
+	"type": "oneToMany"
+}

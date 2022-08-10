@@ -1,0 +1,42 @@
+[
+	{
+		"key": "callingByInsideSales",
+		"name": "Calling by Inside Sales",
+		"name_i18n": {
+			"en-US": "Calling by Inside Sales"
+		},
+		"type": "string"
+	},
+	{
+		"key": "callingByOutsideSales",
+		"name": "Calling by Outside Sales",
+		"name_i18n": {
+			"en-US": "Calling by Outside Sales"
+		},
+		"type": "string"
+	},
+	{
+		"key": "emailNurturing",
+		"name": "Email Nurturing",
+		"name_i18n": {
+			"en-US": "Email Nurturing"
+		},
+		"type": "string"
+	},
+	{
+		"key": "socialCampaign",
+		"name": "Social Campaign",
+		"name_i18n": {
+			"en-US": "Social Campaign"
+		},
+		"type": "string"
+	},
+	{
+		"key": "other",
+		"name": "Other",
+		"name_i18n": {
+			"en-US": "Other"
+		},
+		"type": "string"
+	}
+]

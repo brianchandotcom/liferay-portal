@@ -1,0 +1,39 @@
+{
+	"label": {
+		"en-US": "Company Extender"
+	},
+	"name": "CompanyExtender",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Country"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Countries$]",
+			"name": "country",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Level"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:PartnerLevels$]",
+			"name": "partnerLevel",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Company Extenders"
+	},
+	"scope": "company",
+	"system": false
+}

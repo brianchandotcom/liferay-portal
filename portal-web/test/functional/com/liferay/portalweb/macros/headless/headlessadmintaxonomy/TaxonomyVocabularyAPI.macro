@@ -1,5 +1,33 @@
 definition {
 
+	macro _curlTaxonomyKeywords {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(assetLibraryId)) {
+			var api = "asset-libraries/${assetLibraryId}/keywords";
+		}
+		else if (isSet(keywordId)) {
+			var api = "keywords/${keywordId}";
+		}
+		else {
+			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+
+			var api = "sites/${siteId}/keywords";
+		}
+
+		if (isSet(parameter)) {
+			var api = StringUtil.add("${api}", "?${parameter}=${parameterValue}", "");
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-admin-taxonomy/v1.0/${api} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+		''';
+
+		return "${curl}";
+	}
+
 	macro _curlTaxonomyVocabulary {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -7,6 +35,8 @@ definition {
 			var api = "asset-libraries/${assetLibraryId}/taxonomy-vocabularies";
 		}
 		else {
+			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+
 			var api = "sites/${siteId}/taxonomy-vocabularies";
 		}
 
@@ -20,6 +50,10 @@ definition {
 			var api = StringUtil.add("${api}", "?filter=${filterValue}", "");
 		}
 
+		if (isSet(parameter)) {
+			var api = StringUtil.add("${api}", "?${parameter}=${parameterValue}", "");
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-admin-taxonomy/v1.0/${api} \
 			-u test@liferay.com:test \
@@ -27,6 +61,16 @@ definition {
 		''';
 
 		return "${curl}";
+	}
+
+	macro assertInFacetsWithCorrectValue {
+		Variables.assertDefined(parameterList = "${expectedValue},${taxonomyVocabularyId}");
+
+		var actualValue = JSONUtil.getWithJSONPath("${responseToParse}", "$.facets..facetValues[?(@.term=='${taxonomyVocabularyId}' && @.numberOfOccurrences==${expectedValue})].numberOfOccurrences");
+
+		TestUtils.assertEquals(
+			actual = "${actualValue}",
+			expected = "${expectedValue}");
 	}
 
 	macro assertProperVocabularyTotalCount {
@@ -45,8 +89,29 @@ definition {
 			expected = "${expectedTotalCount}");
 	}
 
-	macro createTaxonomyVocabulary {
+	macro assertResponseHasNameFieldValueOnly {
+		var actualValue = JSONUtil.getWithJSONPath("${responseToParse}", "$.items");
+
+		TestUtils.assertEquals(
+			actual = "${actualValue}",
+			expected = "${expectedValue}");
+	}
+
+	macro createAssetLibraryWithKeyWords {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${name}");
+
+		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(assetLibraryId = "${assetLibraryId}");
+		var body = '''-d {"name": "${name}"}''';
+
+		var curl = StringUtil.add("${curl}", "${body}", " ");
+
+		var response = JSONCurlUtil.post("${curl}");
+
+		return "${response}";
+	}
+
+	macro createTaxonomyVocabulary {
+		Variables.assertDefined(parameterList = "${name}");
 
 		if (!(isSet(externalReferenceCode))) {
 			var externalReferenceCode = "";
@@ -54,7 +119,7 @@ definition {
 
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
 			assetLibraryId = "${assetLibraryId}",
-			siteId = "${siteId}");
+			groupName = "${groupName}");
 		var body = '''-d {
 				"name": "${name}",
 				"externalReferenceCode": "${externalReferenceCode}"
@@ -73,7 +138,7 @@ definition {
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
 			assetLibraryId = "${assetLibraryId}",
 			externalReferenceCode = "${externalReferenceCode}",
-			siteId = "${siteId}");
+			groupName = "${groupName}");
 
 		JSONCurlUtil.delete("${curl}");
 	}
@@ -84,7 +149,18 @@ definition {
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
 			assetLibraryId = "${assetLibraryId}",
 			filterValue = "${filterValue}",
-			siteId = "${siteId}");
+			groupName = "${groupName}");
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
+	}
+
+	macro getAssetLibraryKeywordsWithDifferentParameters {
+		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(
+			assetLibraryId = "${assetLibraryId}",
+			parameter = "${parameter}",
+			parameterValue = "${parameterValue}");
 
 		var response = JSONCurlUtil.get("${curl}");
 
@@ -105,7 +181,19 @@ definition {
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
 			assetLibraryId = "${assetLibraryId}",
 			externalReferenceCode = "${externalReferenceCode}",
-			siteId = "${siteId}");
+			groupName = "${groupName}");
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
+	}
+
+	macro getTaxonomyVocabularyWithDifferentParameters {
+		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
+			assetLibraryId = "${assetLibraryId}",
+			groupName = "${groupName}",
+			parameter = "${parameter}",
+			parameterValue = "${parameterValue}");
 
 		var response = JSONCurlUtil.get("${curl}");
 
@@ -124,7 +212,7 @@ definition {
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
 			assetLibraryId = "${assetLibraryId}",
 			externalReferenceCode = "${externalReferenceCode}",
-			siteId = "${siteId}");
+			groupName = "${groupName}");
 
 		var curl = StringUtil.add("${curl}", "${body}", " ");
 

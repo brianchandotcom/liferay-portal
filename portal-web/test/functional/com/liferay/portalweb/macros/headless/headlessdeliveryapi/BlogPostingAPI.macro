@@ -8,6 +8,10 @@ definition {
 			groupName = "Guest",
 			site = "true");
 
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings \
 			-u test@liferay.com:test \
@@ -15,6 +19,7 @@ definition {
             -d
 					{
      "headline": "${headline}",
+	 "externalReferenceCode": "${externalReferenceCode}",
      "articleBody": "${articleBody}"
 	}
 		''';

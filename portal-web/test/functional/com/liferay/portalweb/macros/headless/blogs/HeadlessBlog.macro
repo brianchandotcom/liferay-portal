@@ -20,7 +20,6 @@ definition {
 			content = "${content}",
 			coverImageId = "${coverImageId}",
 			description = "${description}",
-			externalReferenceCode = "${externalReferenceCode}",
 			groupId = "${groupId}",
 			subtitle = "${subtitle}",
 			title = "${title}",

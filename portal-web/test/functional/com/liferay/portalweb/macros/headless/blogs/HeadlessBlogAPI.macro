@@ -30,10 +30,6 @@ definition {
 			var description = "";
 		}
 
-		if (!(isSet(externalReferenceCode))) {
-			var externalReferenceCode = "";
-		}
-
 		if (isSet(assetTagNames)) {
 			var list = ListUtil.newList();
 
@@ -76,7 +72,6 @@ definition {
 					"articleBody": "${content}",
 					"headline": "${title}",
 					"description": "${description}",
-					"externalReferenceCode": "${externalReferenceCode}",
 					"image": {
 						"caption": "${coverImageCaption}",
 						"imageId": ${coverImageId}
@@ -90,23 +85,6 @@ definition {
 		var entryId = JSONCurlUtil.post("${curl}", "$.id");
 
 		return "${entryId}";
-	}
-
-	macro _getBlogsPosting {
-		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByName(
-			groupName = "Guest",
-			site = "true");
-
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings \
-  				-u test@liferay.com:test \
-				-H accept: application/json
-		''';
-
-		var curl = JSONCurlUtil.get("${curl}");
-
-		return "${curl}";
 	}
 
 }

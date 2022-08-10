@@ -164,12 +164,15 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		int scope = ParamUtil.getInteger(actionRequest, "scope");
-		String primKey = ParamUtil.getString(actionRequest, "primKey");
+		String[] primKeys = ParamUtil.getStringValues(
+			actionRequest, "primKeys");
 		String actionId = ParamUtil.getString(actionRequest, "actionId");
 
-		_resourcePermissionService.removeResourcePermission(
-			themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(), name,
-			scope, primKey, roleId, actionId);
+		for (String primKey : primKeys) {
+			_resourcePermissionService.removeResourcePermission(
+				themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
+				name, scope, primKey, roleId, actionId);
+		}
 
 		// Send redirect
 

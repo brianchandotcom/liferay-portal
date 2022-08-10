@@ -23,6 +23,7 @@ Object[] objArray = (Object[])row.getObject();
 
 Permission permission = (Permission)objArray[0];
 Role role = (Role)objArray[1];
+String[] primKeys = (String[])objArray[2];
 %>
 
 <liferay-ui:icon-menu
@@ -35,7 +36,7 @@ Role role = (Role)objArray[1];
 		<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 		<portlet:param name="name" value="<%= permission.getName() %>" />
 		<portlet:param name="scope" value="<%= String.valueOf(permission.getScope()) %>" />
-		<portlet:param name="primKey" value="<%= permission.getPrimKey() %>" />
+		<portlet:param name="primKeys" value="<%= StringUtil.merge(primKeys, StringPool.COMMA) %>" />
 		<portlet:param name="actionId" value="<%= String.valueOf(permission.getActionId()) %>" />
 	</portlet:actionURL>
 

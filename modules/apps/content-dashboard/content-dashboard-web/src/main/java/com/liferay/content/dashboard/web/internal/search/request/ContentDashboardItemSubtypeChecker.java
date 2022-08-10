@@ -14,7 +14,7 @@
 
 package com.liferay.content.dashboard.web.internal.search.request;
 
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
+import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 
 import java.util.List;

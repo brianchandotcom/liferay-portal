@@ -12,16 +12,23 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item.type;
+package com.liferay.content.dashboard.item.type;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.info.item.InfoItemReference;
+
+import java.util.Locale;
 
 /**
  * @author Cristina González
  */
-public interface ContentDashboardItemSubtypeFactory<T> {
+public interface ContentDashboardItemSubtype<T> {
 
-	public ContentDashboardItemSubtype<T> create(long classPK)
-		throws PortalException;
+	public String getFullLabel(Locale locale);
+
+	public InfoItemReference getInfoItemReference();
+
+	public String getLabel(Locale locale);
+
+	public String toJSONString(Locale locale);
 
 }

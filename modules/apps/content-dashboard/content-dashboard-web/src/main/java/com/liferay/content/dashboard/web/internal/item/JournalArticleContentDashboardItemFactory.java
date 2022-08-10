@@ -16,8 +16,8 @@ package com.liferay.content.dashboard.web.internal.item;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactoryTracker;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.info.item.InfoItemServiceTracker;

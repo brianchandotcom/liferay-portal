@@ -15,6 +15,7 @@
 package com.liferay.content.dashboard.web.internal.item.type;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.lang.HashUtil;

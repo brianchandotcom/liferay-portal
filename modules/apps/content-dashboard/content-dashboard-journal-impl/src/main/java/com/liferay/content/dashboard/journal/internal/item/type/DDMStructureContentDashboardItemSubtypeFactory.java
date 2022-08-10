@@ -14,8 +14,10 @@
 
 package com.liferay.content.dashboard.web.internal.item.type;
 
-import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
+import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
@@ -23,26 +25,26 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Cristina González
  */
 @Component(service = ContentDashboardItemSubtypeFactory.class)
-public class DLFileEntryTypeContentDashboardItemSubtypeFactory
-	implements ContentDashboardItemSubtypeFactory<DLFileEntryType> {
+public class DDMStructureContentDashboardItemSubtypeFactory
+	implements ContentDashboardItemSubtypeFactory<DDMStructure> {
 
 	@Override
-	public ContentDashboardItemSubtype<DLFileEntryType> create(long classPK)
+	public ContentDashboardItemSubtype<DDMStructure> create(long classPK)
 		throws PortalException {
 
-		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeLocalService.getFileEntryType(classPK);
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			classPK);
 
-		return new DLFileEntryTypeContentDashboardItemSubtype(
-			dlFileEntryType,
-			_groupLocalService.fetchGroup(dlFileEntryType.getGroupId()));
+		return new DDMStructureContentDashboardItemSubtype(
+			ddmStructure,
+			_groupLocalService.fetchGroup(ddmStructure.getGroupId()));
 	}
 
 	@Reference
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

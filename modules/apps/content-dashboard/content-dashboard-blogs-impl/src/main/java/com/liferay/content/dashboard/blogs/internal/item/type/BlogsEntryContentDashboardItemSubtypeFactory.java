@@ -15,6 +15,8 @@
 package com.liferay.content.dashboard.web.internal.item.type;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
+import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;

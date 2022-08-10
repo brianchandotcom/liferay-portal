@@ -2,9 +2,11 @@ Bundle-Name: Liferay Content Dashboard API
 Bundle-SymbolicName: com.liferay.content.dashboard.api
 Bundle-Version: 2.4.0
 Export-Package:\
+	com.liferay.content.dashboard.info.item,\
 	com.liferay.content.dashboard.item.action,\
 	com.liferay.content.dashboard.item.action.exception,\
 	com.liferay.content.dashboard.item.action.provider,\
 	com.liferay.content.dashboard.item.filter,\
 	com.liferay.content.dashboard.item.filter.exception,\
-	com.liferay.content.dashboard.item.filter.provider
+	com.liferay.content.dashboard.item.filter.provider,\
+	com.liferay.content.dashboard.item.type

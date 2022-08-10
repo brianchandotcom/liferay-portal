@@ -65,7 +65,7 @@ public class PreviewImageBlogsEntryContentDashboardItemActionProvider
 	public boolean isShow(
 		BlogsEntry blogsEntry, HttpServletRequest httpServletRequest) {
 
-		if (blogsEntry.isDraft() || blogsEntry.isInTrash()) {
+		if (blogsEntry.isInTrash()) {
 			return false;
 		}
 

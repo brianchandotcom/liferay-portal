@@ -35,6 +35,21 @@ public class UnrecognizedPropertyExceptionMapper
 	extends BaseExceptionMapper<UnrecognizedPropertyException> {
 
 	@Override
+	public Response toResponse(
+		UnrecognizedPropertyException unrecognizedPropertyException) {
+
+		Problem problem = getProblem(unrecognizedPropertyException);
+
+		return Response.status(
+			problem.getStatus()
+		).entity(
+			problem
+		).type(
+			getMediaType()
+		).build();
+	}
+
+	@Override
 	protected Problem getProblem(
 		UnrecognizedPropertyException unrecognizedPropertyException) {
 

@@ -214,6 +214,83 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-157740. The page creator can only drop Form fragments inside a mapped Form Container on display page template."
+	@priority = "4"
+	test CannotAddFragmentToOutsideFormContainerOnDisplayPageTemplate {
+		property test.name.skip.portal.instance = "FormContainer#CannotAddFragmentToOutsideFormContainerOnDisplayPageTemplate";
+		property testray.component.names = "Display Pages,Fragments";
+
+		task ("Given a page creator has a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("When the page creator tries to add a Select from List fragment to drop zone of display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.expandFragmentCollection(collectionName = "Form Components");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Form Components",
+				key_fragmentName = "Select from List",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
+		}
+
+		task ("Then the page creator should see an error message") {
+			AssertTextPresent(
+				locator1 = "Message#ERROR",
+				value1 = "Form components can only be placed inside a mapped form container.");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Select from List");
+		}
+
+		task ("When the page creator tries to add a Checkbox inside an unmapped Form Container") {
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Form Components",
+				key_fragmentName = "Checkbox",
+				key_position = "1",
+				key_targetFragmentName = "Form Container",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#FORM_CONTAINER_CONTAINER");
+		}
+
+		task ("Then the page creator should see an error message") {
+			AssertTextPresent(
+				locator1 = "Message#ERROR",
+				value1 = "Fragments cannot be placed inside an unmapped form container.");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Checkbox");
+		}
+
+		task ("When the page creator tries to add a Heading fragment inside an unmapped Form Container") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Heading",
+				key_position = "1",
+				key_targetFragmentName = "Form Container",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#FORM_CONTAINER_CONTAINER");
+		}
+
+		task ("Then the page creator should see an error message") {
+			AssertTextPresent(
+				locator1 = "Message#ERROR",
+				value1 = "Fragments cannot be placed inside an unmapped form container.");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
+		}
+	}
+
 	@description = "This is a test for LPS-151867 and LPS-149984. The page editor could add Form Container fragment from Form Components set to page. The page editor could map entity to Form Container in content page."
 	@priority = "5"
 	test MapEntityToFormContainerInContentPage {

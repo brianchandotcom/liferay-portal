@@ -134,6 +134,12 @@ definition {
 		Click(locator1 = "CP2ActivationKeys#LICENSE_TAB_BUTTON");
 	}
 
+	macro _formatCamelCase {
+		var camelCase = StringUtil.replace("${camelCase}", " ", "");
+        var camelCase = StringUtil.lowerCaseFirstLetter("${camelCase}");
+		return "${camelCase}";
+	}
+
 	macro selectPaginationQuantity {
 		if (IsElementPresent(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON")) {
 			Click(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON");

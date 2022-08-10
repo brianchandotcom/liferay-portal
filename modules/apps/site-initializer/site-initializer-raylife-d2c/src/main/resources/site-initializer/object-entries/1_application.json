@@ -3,37 +3,55 @@
 		{
 			"applicationCreateDate": "2022-03-09",
 			"applicationStatus": "incomplete",
+			"email": "test@liferay.com",
 			"externalReferenceCode": "RAYAPP-001",
+			"firstName": "Test",
+			"lastName": "Test",
 			"productName": "Home"
 		},
 		{
 			"applicationCreateDate": "2022-02-16",
 			"applicationStatus": "quoted",
+			"email": "raylife@liferay.com",
 			"externalReferenceCode": "RAYAPP-002",
+			"firstName": "Test",
+			"lastName": "Test",
 			"productName": "Auto"
 		},
 		{
 			"applicationCreateDate": "2022-02-10",
 			"applicationStatus": "reviewed",
+			"email": "test@liferay.com",
 			"externalReferenceCode": "RAYAPP-005",
+			"firstName": "Test",
+			"lastName": "Test",
 			"productName": "Life"
 		},
 		{
 			"applicationCreateDate": "2022-02-16",
 			"applicationStatus": "incomplete",
+			"email": "matt@liferay.com",
 			"externalReferenceCode": "RAYAPP-003",
+			"firstName": "Matt",
+			"lastName": "Test",
 			"productName": "Auto"
 		},
 		{
 			"applicationCreateDate": "2022-02-16",
 			"applicationStatus": "quoted",
+			"email": "test@liferay.com",
 			"externalReferenceCode": "RAYAPP-004",
+			"firstName": "Test",
+			"lastName": "Test",
 			"productName": "Home"
 		},
 		{
 			"applicationCreateDate": "2022-03-04",
 			"applicationStatus": "reviewed",
+			"email": "scott@liferay.com",
 			"externalReferenceCode": "RAYAPP-006",
+			"firstName": "Scott",
+			"lastName": "Test",
 			"productName": "Home"
 		}
 	],

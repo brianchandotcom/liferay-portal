@@ -56,27 +56,33 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"guestbook", "com.liferay.docs.guestbook", "7.1.10.7"},
-				{"guestbook", "com.liferay.docs.guestbook", "7.2.10.7"},
-				{"guestbook", "com.liferay.docs.guestbook", "7.3.7"},
-				{"guestbook", "com.liferay.docs.guestbook", "7.4.3.16"},
+				{"guestbook", "com.liferay.docs.guestbook", "7.1.10.7", "dxp"},
+				{"guestbook", "com.liferay.docs.guestbook", "7.2.10.7", "dxp"},
+				{"guestbook", "com.liferay.docs.guestbook", "7.3.7", "portal"},
 				{
-					"backend-integration", "com.liferay.docs.guestbook",
-					"7.1.10.7"
+					"guestbook", "com.liferay.docs.guestbook", "7.4.3.16",
+					"portal"
 				},
 				{
 					"backend-integration", "com.liferay.docs.guestbook",
-					"7.2.10.7"
+					"7.1.10.7", "dxp"
 				},
-				{"backend-integration", "com.liferay.docs.guestbook", "7.3.7"},
 				{
 					"backend-integration", "com.liferay.docs.guestbook",
-					"7.4.3.36"
+					"7.2.10.7", "dxp"
 				},
-				{"sample", "com.test.sample", "7.1.10.7"},
-				{"sample", "com.test.sample", "7.2.10.7"},
-				{"sample", "com.test.sample", "7.3.7"},
-				{"sample", "com.test.sample", "7.4.3.16"}
+				{
+					"backend-integration", "com.liferay.docs.guestbook",
+					"7.3.7", "portal"
+				},
+				{
+					"backend-integration", "com.liferay.docs.guestbook",
+					"7.4.3.36", "portal"
+				},
+				{"sample", "com.test.sample", "7.1.10.7", "dxp"},
+				{"sample", "com.test.sample", "7.2.10.7", "dxp"},
+				{"sample", "com.test.sample", "7.3.7", "portal"},
+				{"sample", "com.test.sample", "7.4.3.16", "portal"}
 			});
 	}
 
@@ -97,11 +103,13 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 	}
 
 	public ProjectTemplatesRESTBuilderWorkspaceTest(
-		String name, String packageName, String liferayVersion) {
+		String name, String packageName, String liferayVersion,
+		String product) {
 
 		_name = name;
 		_packageName = packageName;
 		_liferayVersion = liferayVersion;
+		_product = product;
 	}
 
 	@Test
@@ -119,10 +127,16 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 		else if (_liferayVersion.startsWith("7.1")) {
 			writeGradlePropertiesInWorkspace(
 				gradleWorkspaceDir, "liferay.workspace.product=dxp-7.1-sp7");
+			updateGradlePropertiesInWorkspace(
+				gradleWorkspaceDir, "liferay.workspace.target.platform.version",
+				"7.1.10.7");
 		}
 		else if (_liferayVersion.startsWith("7.2")) {
 			writeGradlePropertiesInWorkspace(
 				gradleWorkspaceDir, "liferay.workspace.product=dxp-7.2-sp7");
+			updateGradlePropertiesInWorkspace(
+				gradleWorkspaceDir, "liferay.workspace.target.platform.version",
+				"7.2.10.7");
 		}
 		else if (_liferayVersion.startsWith("7.3")) {
 			writeGradlePropertiesInWorkspace(
@@ -146,7 +160,8 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			gradleWorkspaceModulesDir, template, _name, "--package-name",
-			_packageName, "--liferay-version", _liferayVersion);
+			_packageName, "--liferay-version", _liferayVersion, "--product",
+			_product);
 
 		if (_name.contains("sample")) {
 			testContains(
@@ -339,5 +354,6 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 	private final String _liferayVersion;
 	private final String _name;
 	private final String _packageName;
+	private final String _product;
 
 }

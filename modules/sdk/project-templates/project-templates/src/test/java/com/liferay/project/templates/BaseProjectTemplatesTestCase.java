@@ -34,6 +34,8 @@ import difflib.Patch;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,6 +61,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -2043,6 +2046,33 @@ public interface BaseProjectTemplatesTestCase {
 		}
 
 		Assert.assertFalse(message.toString() + differences, realChange);
+	}
+
+	public default File updateGradlePropertiesInWorkspace(
+			File workspaceDir, String propertyKey, String propertyValue)
+		throws IOException {
+
+		File gradlePropertiesFile = new File(workspaceDir, "gradle.properties");
+
+		Properties gradleProperties = new Properties();
+
+		gradleProperties.load(new FileInputStream(gradlePropertiesFile));
+
+		if (gradleProperties.get(propertyKey) != null) {
+			gradleProperties.setProperty(propertyKey, propertyValue);
+
+			try (FileOutputStream fileOutputStream = new FileOutputStream(
+					gradlePropertiesFile)) {
+
+				gradleProperties.store(fileOutputStream, null);
+			}
+		}
+		else {
+			gradlePropertiesFile = writeGradlePropertiesInWorkspace(
+				workspaceDir, propertyKey + "=" + propertyValue);
+		}
+
+		return gradlePropertiesFile;
 	}
 
 	public default File writeGradlePropertiesInWorkspace(

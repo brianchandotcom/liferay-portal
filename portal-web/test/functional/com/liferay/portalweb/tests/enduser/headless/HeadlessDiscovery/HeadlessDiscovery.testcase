@@ -293,13 +293,16 @@ definition {
 				headerValue = "test");
 		}
 
-		task ("When executing getSiteTaxonomyVocabulariesPage with siteID as the parameter") {
+		task ("When executing postSiteTaxonomyVocabulary with siteID as the parameter") {
 			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 				groupName = "Guest",
 				site = "true");
+			var requestBody = '''{
+                "name": "Vocubulary Name"
+            }''';
 
 			APIExplorer.executeAPIMethodWithParameters(
-				method = "getSiteTaxonomyVocabulariesPage",
+				method = "postSiteTaxonomyVocabulary",
 				parameter = "siteId",
 				requestBody = "${requestBody}",
 				service = "TaxonomyVocabulary");
@@ -308,7 +311,7 @@ definition {
 		task ("Then header Accept-Language is included in request under Curl section") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#CURL_COMMAND",
-				method = "getSiteTaxonomyVocabulariesPage",
+				method = "postSiteTaxonomyVocabulary",
 				service = "TaxonomyVocabulary",
 				value1 = "-H 'Accept-Language: test'");
 		}
@@ -316,12 +319,12 @@ definition {
 		task ("And Then BAD request is included in response section") {
 			AssertTextEquals(
 				locator1 = "OpenAPI#RESPONSE_CODE",
-				method = "getSiteTaxonomyVocabulariesPage",
+				method = "postSiteTaxonomyVocabulary",
 				value1 = "406");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#RESPONSE_BODY",
-				method = "getSiteTaxonomyVocabulariesPage",
+				method = "postSiteTaxonomyVocabulary",
 				value1 = "&quot;status&quot;: &quot;NOT_ACCEPTABLE&quot;");
 		}
 

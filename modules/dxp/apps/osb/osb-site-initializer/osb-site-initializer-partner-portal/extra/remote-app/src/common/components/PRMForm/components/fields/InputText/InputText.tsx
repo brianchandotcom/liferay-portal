@@ -31,7 +31,12 @@ const InputText = ({
 		label={label}
 		required={required}
 	>
-		<ClayInput {...props} {...field} required={required} />
+		<ClayInput
+			{...props}
+			{...field}
+			required={required}
+			value={field.value || ''}
+		/>
 	</WrapperInput>
 );
 

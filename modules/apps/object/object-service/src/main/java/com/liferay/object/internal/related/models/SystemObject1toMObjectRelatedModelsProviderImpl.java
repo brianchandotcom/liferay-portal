@@ -17,6 +17,7 @@ package com.liferay.object.internal.related.models;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTableFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -275,17 +276,19 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			));
 	}
 
-	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable() {
+	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable()
+		throws PortalException {
 
 		// TODO Cache this across the cluster with proper invalidation when the
 		// object definition or its object fields are updated
 
-		return new DynamicObjectDefinitionTable(
-			_objectDefinition,
-			_objectFieldLocalService.getObjectFields(
-				_objectDefinition.getObjectDefinitionId(),
-				_objectDefinition.getExtensionDBTableName()),
-			_objectDefinition.getExtensionDBTableName());
+		return DynamicObjectDefinitionTableFactory.
+			createDynamicObjectDefinitionTable(
+				_objectDefinition,
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId(),
+					_objectDefinition.getExtensionDBTableName()),
+				_objectDefinition.getExtensionDBTableName());
 	}
 
 	private GroupByStep _getGroupByStep(

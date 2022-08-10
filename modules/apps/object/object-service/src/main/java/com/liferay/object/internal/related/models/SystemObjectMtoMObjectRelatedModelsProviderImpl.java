@@ -17,6 +17,7 @@ package com.liferay.object.internal.related.models;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTableFactory;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
@@ -267,12 +268,13 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 				objectRelationship.getObjectDefinitionId2());
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			new DynamicObjectDefinitionTable(
-				objectDefinition2,
-				_objectFieldLocalService.getObjectFields(
-					objectRelationship.getObjectDefinitionId2(),
-					objectDefinition2.getDBTableName()),
-				objectDefinition2.getDBTableName());
+			DynamicObjectDefinitionTableFactory.
+				createDynamicObjectDefinitionTable(
+					objectDefinition2,
+					_objectFieldLocalService.getObjectFields(
+						objectRelationship.getObjectDefinitionId2(),
+						objectDefinition2.getDBTableName()),
+					objectDefinition2.getDBTableName());
 
 		DynamicObjectRelationshipMappingTable
 			dynamicObjectRelationshipMappingTable =

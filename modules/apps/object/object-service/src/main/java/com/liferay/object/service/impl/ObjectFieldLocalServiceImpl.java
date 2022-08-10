@@ -33,6 +33,7 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessTypeTracker;
 import com.liferay.object.internal.field.setting.contributor.ObjectFieldSettingContributor;
 import com.liferay.object.internal.field.setting.contributor.ObjectFieldSettingContributorTracker;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTableFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryTable;
@@ -461,18 +462,21 @@ public class ObjectFieldLocalServiceImpl
 				objectField.getDBTableName(),
 				objectDefinition.getDBTableName())) {
 
-			return new DynamicObjectDefinitionTable(
-				objectDefinition,
-				objectFieldLocalService.getObjectFields(
-					objectDefinitionId, objectDefinition.getDBTableName()),
-				objectDefinition.getDBTableName());
+			return DynamicObjectDefinitionTableFactory.
+				createDynamicObjectDefinitionTable(
+					objectDefinition,
+					objectFieldLocalService.getObjectFields(
+						objectDefinitionId, objectDefinition.getDBTableName()),
+					objectDefinition.getDBTableName());
 		}
 
-		return new DynamicObjectDefinitionTable(
-			objectDefinition,
-			objectFieldLocalService.getObjectFields(
-				objectDefinitionId, objectDefinition.getExtensionDBTableName()),
-			objectDefinition.getExtensionDBTableName());
+		return DynamicObjectDefinitionTableFactory.
+			createDynamicObjectDefinitionTable(
+				objectDefinition,
+				objectFieldLocalService.getObjectFields(
+					objectDefinitionId,
+					objectDefinition.getExtensionDBTableName()),
+				objectDefinition.getExtensionDBTableName());
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

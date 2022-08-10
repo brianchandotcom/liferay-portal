@@ -16,6 +16,7 @@ package com.liferay.petra.sql.dsl.factory;
 
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 
 /**
@@ -26,6 +27,9 @@ public interface DSLQueryFactory {
 	public FromStep count();
 
 	public FromStep countDistinct(Expression<?> expression);
+
+	public <T> Expression<T> scalarSubdSLQuery(
+		DSLQuery dslQuery, Class<T> javaType, String name, int sqlType);
 
 	public FromStep select();
 

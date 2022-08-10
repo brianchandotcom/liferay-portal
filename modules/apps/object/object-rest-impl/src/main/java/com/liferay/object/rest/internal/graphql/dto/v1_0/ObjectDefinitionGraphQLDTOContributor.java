@@ -23,8 +23,8 @@ import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
-import com.liferay.object.rest.internal.petra.sql.dsl.expression.PredicateUtil;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -71,7 +71,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 		ObjectEntryManager objectEntryManager,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
-		ObjectScopeProvider objectScopeProvider) {
+		ObjectScopeProvider objectScopeProvider,
+		FilterPredicateFactory filterPredicateFactory) {
 
 		List<GraphQLDTOProperty> graphQLDTOProperties = new ArrayList<>();
 
@@ -162,8 +163,9 @@ public class ObjectDefinitionGraphQLDTOContributor
 			StringUtil.removeSubstring(
 				objectDefinition.getPKObjectFieldName(), "c_"),
 			objectDefinition, objectEntryManager, objectFieldLocalService,
-			objectScopeProvider, relationshipGraphQLDTOProperties,
-			objectDefinition.getShortName(), objectDefinition.getName());
+			objectScopeProvider, filterPredicateFactory,
+			relationshipGraphQLDTOProperties, objectDefinition.getShortName(),
+			objectDefinition.getName());
 	}
 
 	@Override
@@ -210,7 +212,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 			_objectDefinition,
 			(String)dtoConverterContext.getAttribute("scopeKey"), aggregation,
 			dtoConverterContext, pagination,
-			PredicateUtil.toPredicate(
+			_filterPredicateFactory.create(
 				_filterParserProvider,
 				(String)dtoConverterContext.getAttribute("filter"),
 				_objectDefinition.getObjectDefinitionId(),
@@ -334,6 +336,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		ObjectEntryManager objectEntryManager,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectScopeProvider objectScopeProvider,
+		FilterPredicateFactory filterPredicateFactory,
 		List<GraphQLDTOProperty> relationshipGraphQLDTOProperties,
 		String resourceName, String typeName) {
 
@@ -346,6 +349,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		_objectEntryManager = objectEntryManager;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectScopeProvider = objectScopeProvider;
+		_filterPredicateFactory = filterPredicateFactory;
 		_relationshipGraphQLDTOProperties = relationshipGraphQLDTOProperties;
 		_resourceName = resourceName;
 		_typeName = typeName;
@@ -419,6 +423,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 	private final long _companyId;
 	private final EntityModel _entityModel;
 	private final FilterParserProvider _filterParserProvider;
+	private final FilterPredicateFactory _filterPredicateFactory;
 	private final List<GraphQLDTOProperty> _graphQLDTOProperties;
 	private final String _idName;
 	private final ObjectDefinition _objectDefinition;

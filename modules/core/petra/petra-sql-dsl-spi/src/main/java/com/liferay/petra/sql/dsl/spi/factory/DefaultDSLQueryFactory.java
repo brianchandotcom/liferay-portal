@@ -17,9 +17,11 @@ package com.liferay.petra.sql.dsl.spi.factory;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.factory.DSLQueryFactory;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultAlias;
+import com.liferay.petra.sql.dsl.spi.expression.DefaultScalarDSLQueryAlias;
 import com.liferay.petra.sql.dsl.spi.expression.TableStar;
 import com.liferay.petra.sql.dsl.spi.query.Select;
 
@@ -44,6 +46,14 @@ public class DefaultDSLQueryFactory implements DSLQueryFactory {
 				new DefaultAlias<>(
 					new AggregateExpression<>(true, expression, "count"),
 					"COUNT_VALUE")));
+	}
+
+	@Override
+	public <T> Expression<T> scalarSubdSLQuery(
+		DSLQuery dslQuery, Class<T> javaType, String name, int sqlType) {
+
+		return new DefaultScalarDSLQueryAlias<>(
+			dslQuery, javaType, name, sqlType);
 	}
 
 	@Override

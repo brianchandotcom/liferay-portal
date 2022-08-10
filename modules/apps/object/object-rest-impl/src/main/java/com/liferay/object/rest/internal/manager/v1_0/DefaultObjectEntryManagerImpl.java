@@ -28,10 +28,10 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.internal.petra.sql.dsl.expression.OrderByExpressionUtil;
-import com.liferay.object.rest.internal.petra.sql.dsl.expression.PredicateUtil;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -56,7 +57,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.filter.ExpressionConvert;
-import com.liferay.portal.odata.filter.Filter;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
@@ -227,8 +227,7 @@ public class DefaultObjectEntryManagerImpl
 	public Page<ObjectEntry> getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination, String search, Sort[] sorts)
+			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
 
 		long groupId = getGroupId(objectDefinition, scopeKey);
@@ -393,10 +392,8 @@ public class DefaultObjectEntryManagerImpl
 					OrderByExpressionUtil.getOrderByExpressions(
 						objectDefinition.getObjectDefinitionId(),
 						_objectFieldLocalService, sorts)),
-				values -> getObjectEntry(
-					dtoConverterContext, objectDefinition,
-					GetterUtil.getLong(
-						values.get(objectDefinition.getPKObjectFieldName())))),
+				values -> _getObjectEntry(
+					dtoConverterContext, objectDefinition, values)),
 			pagination,
 			_objectEntryLocalService.getValuesListCount(
 				objectDefinition.getObjectDefinitionId(), groupId,
@@ -414,7 +411,7 @@ public class DefaultObjectEntryManagerImpl
 		return getObjectEntries(
 			companyId, objectDefinition, scopeKey, aggregation,
 			dtoConverterContext, pagination,
-			PredicateUtil.toPredicate(
+			_filterPredicateFactory.create(
 				_filterParserProvider, filterString,
 				objectDefinition.getObjectDefinitionId(),
 				_objectFieldLocalService),
@@ -585,6 +582,24 @@ public class DefaultObjectEntryManagerImpl
 
 	private String _getObjectEntriesPermissionName(long objectDefinitionId) {
 		return ObjectConstants.RESOURCE_NAME + "#" + objectDefinitionId;
+	}
+
+	private ObjectEntry _getObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, Map<String, Serializable> values)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry objectEntry =
+			_objectEntryService.getObjectEntry(
+				GetterUtil.getLong(
+					values.get(objectDefinition.getPKObjectFieldName())));
+
+		objectEntry.setValues(values);
+
+		_checkObjectEntryObjectDefinitionId(objectDefinition, objectEntry);
+
+		return _toObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry);
 	}
 
 	private String _getObjectEntryPermissionName(long objectDefinitionId) {
@@ -780,11 +795,13 @@ public class DefaultObjectEntryManagerImpl
 	@Reference(
 		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
 	)
-	private ExpressionConvert<com.liferay.portal.kernel.search.filter.Filter>
-		_expressionConvert;
+	private ExpressionConvert<Filter> _expressionConvert;
 
 	@Reference
 	private FilterParserProvider _filterParserProvider;
+
+	@Reference
+	private FilterPredicateFactory _filterPredicateFactory;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

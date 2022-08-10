@@ -14,7 +14,7 @@
 
 package com.liferay.object.internal.petra.sql.dsl;
 
-import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marco Leo
@@ -76,35 +77,54 @@ public class DynamicObjectDefinitionTable
 		return sql;
 	}
 
+	public static Class<?> getJavaClass(String type) {
+		Class<?> javaClass = _javaClasses.get(type);
+
+		if (javaClass == null) {
+			throw new IllegalArgumentException("Invalid type " + type);
+		}
+
+		return javaClass;
+	}
+
+	public static Integer getSQLType(String type) {
+		Integer sqlType = _sqlTypes.get(type);
+
+		if (sqlType == null) {
+			throw new IllegalArgumentException("Invalid type " + type);
+		}
+
+		return sqlType;
+	}
+
 	public DynamicObjectDefinitionTable(
-		ObjectDefinition objectDefinition, List<ObjectField> objectFields,
+		List<ObjectField> objectFields, String primaryKeyColumnName,
 		String tableName) {
 
 		super(tableName, () -> null);
 
 		_objectFields = objectFields;
+		_primaryKeyColumnName = primaryKeyColumnName;
 		_tableName = tableName;
+	}
 
-		_primaryKeyColumnName = objectDefinition.getPKObjectFieldDBColumnName();
+	public void addSelectExpression(Expression<?> selectExpression) {
+		_selectExpressions.add(selectExpression);
+	}
 
-		createColumn(
-			_primaryKeyColumnName, Long.class, Types.BIGINT,
-			Column.FLAG_PRIMARY);
+	public Column<DynamicObjectDefinitionTable, ?> createColumn(
+		ObjectField objectField) {
 
-		for (ObjectField objectField : objectFields) {
-			createColumn(
-				objectField.getDBColumnName(),
-				_javaClasses.get(objectField.getDBType()),
-				_sqlTypes.get(objectField.getDBType()), Column.FLAG_DEFAULT);
-		}
+		return createColumn(
+			objectField.getDBColumnName(),
+			_javaClasses.get(objectField.getDBType()),
+			_sqlTypes.get(objectField.getDBType()), Column.FLAG_DEFAULT);
+	}
 
-		List<Expression<?>> selectExpressions = new ArrayList<>();
+	public Column<DynamicObjectDefinitionTable, ?> createColumn(
+		String name, Class<?> javaType, int sqlType) {
 
-		for (Column<DynamicObjectDefinitionTable, ?> column : getColumns()) {
-			selectExpressions.add(column);
-		}
-
-		_selectExpressions = selectExpressions.toArray(new Expression<?>[0]);
+		return createColumn(name, javaType, sqlType, Column.FLAG_DEFAULT);
 	}
 
 	/**
@@ -121,6 +141,13 @@ public class DynamicObjectDefinitionTable
 		sb.append(" LONG not null primary key");
 
 		for (ObjectField objectField : _objectFields) {
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+
+				continue;
+			}
+
 			sb.append(", ");
 			sb.append(objectField.getDBColumnName());
 			sb.append(" ");
@@ -153,7 +180,7 @@ public class DynamicObjectDefinitionTable
 	}
 
 	public Expression<?>[] getSelectExpressions() {
-		return _selectExpressions;
+		return _selectExpressions.toArray(new Expression<?>[0]);
 	}
 
 	private static String _getDataType(String type) {
@@ -246,7 +273,7 @@ public class DynamicObjectDefinitionTable
 
 	private final List<ObjectField> _objectFields;
 	private final String _primaryKeyColumnName;
-	private final Expression<?>[] _selectExpressions;
+	private final List<Expression<?>> _selectExpressions = new ArrayList<>();
 	private final String _tableName;
 
 }

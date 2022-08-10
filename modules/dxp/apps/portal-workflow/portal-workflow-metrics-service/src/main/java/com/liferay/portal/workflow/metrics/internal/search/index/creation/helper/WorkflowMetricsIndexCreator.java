@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
+import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.background.task.WorkflowMetricsReindexBackgroundTaskExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
 
@@ -57,6 +60,25 @@ public class WorkflowMetricsIndexCreator {
 	public void reindex(Company company) {
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
+				CountSearchRequest countSearchRequest =
+					new CountSearchRequest();
+
+				countSearchRequest.setIndexNames(
+					_processWorkflowMetricsIndex.getIndexName(
+						company.getCompanyId()));
+
+				countSearchRequest.setQuery(_queries.booleanQuery());
+
+				countSearchRequest.setTypes(
+					_processWorkflowMetricsIndex.getIndexType());
+
+				CountSearchResponse countSearchResponse =
+					_searchEngineAdapter.execute(countSearchRequest);
+
+				if (countSearchResponse.getCount() > 0) {
+					return null;
+				}
+
 				User user = company.getDefaultUser();
 
 				_backgroundTaskLocalService.addBackgroundTask(
@@ -109,6 +131,9 @@ public class WorkflowMetricsIndexCreator {
 
 	@Reference(target = "(workflow.metrics.index.entity.name=process)")
 	private WorkflowMetricsIndex _processWorkflowMetricsIndex;
+
+	@Reference
+	private Queries _queries;
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private volatile SearchEngineAdapter _searchEngineAdapter;

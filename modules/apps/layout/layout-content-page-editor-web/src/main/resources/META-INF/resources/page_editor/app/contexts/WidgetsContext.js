@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import WidgetService from '../services/WidgetService';
@@ -21,7 +21,29 @@ import {useSelector, useSelectorRef} from './StoreContext';
 const WidgetsContext = React.createContext([]);
 
 export function useWidgets() {
-	return useContext(WidgetsContext);
+	const {widgets} = useContext(WidgetsContext);
+
+	return widgets;
+}
+
+export function useToggleWidgetHighlighted() {
+	const {setWidgets, widgets} = useContext(WidgetsContext);
+
+	return useCallback(
+		(portletId, highlighted) => {
+			const nextWidgets = widgets.map((category) => ({
+				...category,
+				portlets: category.portlets.map((widget) =>
+					widget.portletId === portletId
+						? {...widget, highlighted}
+						: widget
+				),
+			}));
+
+			setWidgets(nextWidgets);
+		},
+		[setWidgets, widgets]
+	);
 }
 
 function normalizePortlets(portlets, fragmentEntryLinks) {
@@ -124,7 +146,7 @@ export function WidgetsContextProvider({children}) {
 	}, [fragmentEntryLinksRef]);
 
 	return (
-		<WidgetsContext.Provider value={widgets}>
+		<WidgetsContext.Provider value={{setWidgets, widgets}}>
 			{children}
 		</WidgetsContext.Provider>
 	);

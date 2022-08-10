@@ -16,6 +16,7 @@ package com.liferay.commerce.term.service.impl;
 
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifierTable;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionQualifierTable;
 import com.liferay.commerce.term.constants.CommerceTermEntryConstants;
 import com.liferay.commerce.term.exception.CommerceTermEntryDisplayDateException;
@@ -195,7 +196,8 @@ public class CommerceTermEntryLocalServiceImpl
 			CommerceTermEntry commerceTermEntry)
 		throws PortalException {
 
-		commerceTermEntryPersistence.remove(commerceTermEntry);
+		commerceTermEntry = commerceTermEntryPersistence.remove(
+			commerceTermEntry);
 
 		resourceLocalService.deleteResource(
 			commerceTermEntry.getCompanyId(), CommerceTermEntry.class.getName(),
@@ -204,6 +206,11 @@ public class CommerceTermEntryLocalServiceImpl
 
 		_commerceTermEntryRelLocalService.deleteCommerceTermEntryRels(
 			commerceTermEntry.getCommerceTermEntryId());
+
+		_commerceChannelAccountEntryRelLocalService.
+			deleteCommerceChannelAccountEntryRels(
+				CommerceTermEntry.class.getName(),
+				commerceTermEntry.getCommerceTermEntryId());
 
 		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			commerceTermEntry.getCompanyId(), 0L,
@@ -896,6 +903,10 @@ public class CommerceTermEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceTermEntryLocalServiceImpl.class);
+
+	@Reference
+	private CommerceChannelAccountEntryRelLocalService
+		_commerceChannelAccountEntryRelLocalService;
 
 	@Reference
 	private CommerceTermEntryRelLocalService _commerceTermEntryRelLocalService;

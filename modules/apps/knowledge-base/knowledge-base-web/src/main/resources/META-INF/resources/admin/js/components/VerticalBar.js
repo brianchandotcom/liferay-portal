@@ -85,25 +85,30 @@ const VerticalNavigationBar = ({
 				)
 		);
 
-		if (currentActivePanelKey && currentActivePanelKey !== activePanel) {
-			const href = items.find(({key}) => key === currentActivePanelKey)
-				?.href;
+		if (currentActivePanelKey) {
+			if (currentActivePanelKey !== activePanel) {
+				setActivePanel(currentActivePanelKey);
 
-			setActivePanel(currentActivePanelKey);
+				const href = items.find(
+					({key}) => key === currentActivePanelKey
+				)?.href;
+
+				if (productMenuOpen) {
+					const productMenuOpenListener = productMenu.on(
+						'closed.lexicon.sidenav',
+						() => {
+							productMenuOpenListener.removeListener();
+							navigate(href);
+						}
+					);
+				}
+				else {
+					navigate(href);
+				}
+			}
 
 			if (productMenuOpen) {
 				productMenu.hide();
-
-				const productMenuOpenListener = productMenu.on(
-					'closed.lexicon.sidenav',
-					() => {
-						productMenuOpenListener.removeListener();
-						navigate(href);
-					}
-				);
-			}
-			else {
-				navigate(href);
 			}
 		}
 	};

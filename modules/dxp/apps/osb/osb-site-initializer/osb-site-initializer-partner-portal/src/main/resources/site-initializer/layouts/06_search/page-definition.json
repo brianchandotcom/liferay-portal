@@ -1,0 +1,241 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {"backgroundFragmentImage": {}},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundFragmentImage": {
+									"title": {
+										"value": "banner_background_partner_portal.svg"
+									},
+									"url": {
+										"value": "/documents/d/prm-01/banner_background_partner_portal-svg-1?download=true"
+									}
+								}
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {"key": "DIALECT-dialect-text"},
+									"fragmentConfig": {"textType": "h1"},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"en_US": "Search Results"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"backgroundFragmentImage": {},
+										"paddingBottom": "4",
+										"paddingTop": "6",
+										"textAlign": "center",
+										"textColor": "colorNeutral0"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"paddingBottom": "7",
+										"paddingLeft": "10",
+										"paddingRight": "10"
+									},
+									"widgetInstance": {
+										"widgetConfig": {},
+										"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "colorNeutral0"
+							},
+							"indexed": true,
+							"layout": {
+								"align": "Start",
+								"borderWidth": 0,
+								"contentDisplay": "FlexRow",
+								"justify": "Center",
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"backgroundColor": "colorNeutral1",
+										"marginLeft": "5",
+										"marginRight": "5",
+										"marginTop": "5"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 4,
+										"marginRight": 4,
+										"marginTop": 4,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {},
+												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"borderColor": "colorNeutral0",
+												"borderWidth": ""
+											},
+											"widgetInstance": {
+												"widgetConfig": {},
+												"widgetName": "com_liferay_portal_search_web_tag_facet_portlet_TagFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"borderColor": "colorNeutral0",
+												"borderWidth": ""
+											},
+											"widgetInstance": {
+												"widgetConfig": {},
+												"widgetName": "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"borderColor": "colorNeutral0",
+												"borderWidth": ""
+											},
+											"widgetInstance": {
+												"widgetConfig": {},
+												"widgetName": "com_liferay_portal_search_web_modified_facet_portlet_ModifiedFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"borderColor": "colorNeutral0",
+												"borderWidth": ""
+											},
+											"widgetInstance": {
+												"widgetConfig": {},
+												"widgetName": "com_liferay_portal_search_web_site_facet_portlet_SiteFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderColor": "colorNeutral0",
+										"borderWidth": ""
+									},
+									"widgetInstance": {
+										"widgetConfig": {},
+										"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+									}
+								},
+								"type": "Widget"
+							},
+							{
+								"definition": {
+									"widgetInstance": {
+										"widgetConfig": {},
+										"widgetName": "com_liferay_portal_search_web_suggestions_portlet_SuggestionsPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

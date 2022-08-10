@@ -360,6 +360,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_IMAGE</td>
+	<td>//*[contains(@class,'document-preview-figure')] //img[contains(@src,'${assetName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUICK_ACTION_MENU</td>
 	<td>//a[contains(@class, 'component-action quick-action-item') and contains(@label, '${keyAction}')]</td>
 	<td></td>

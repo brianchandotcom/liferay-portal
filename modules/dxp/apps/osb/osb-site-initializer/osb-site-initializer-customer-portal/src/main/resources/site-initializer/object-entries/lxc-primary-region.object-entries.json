@@ -1,0 +1,17 @@
+{
+	"object-entries": [
+		{
+			"name": "Europe",
+			"value": "Europe"
+		},
+		{
+			"name": "North America",
+			"value": "North America"
+		},
+		{
+			"name": "South America",
+			"value": "South America"
+		}
+	],
+	"objectDefinitionName": "LiferayExperienceCloudPrimaryRegion"
+}

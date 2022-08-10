@@ -1,5 +1,5 @@
 {
-	"name": "content-dashboard-document-library-impl",
+	"name": "@liferay/content-dashboard-document-library-impl",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",

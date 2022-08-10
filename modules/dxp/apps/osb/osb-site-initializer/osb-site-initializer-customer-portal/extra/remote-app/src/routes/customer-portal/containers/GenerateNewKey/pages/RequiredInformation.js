@@ -19,6 +19,7 @@ import i18n from '../../../../../common/I18n';
 import {Badge, Button, Input} from '../../../../../common/components';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
+import {updateCommerceOrderItems} from '../../../../../common/services/liferay/graphql/queries';
 import {createNewGenerateKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import getInitialGenerateNewKey from '../../../../../common/utils/constants/getInitialGenerateNewKey';
 import GenerateCardLayout from '../GenerateCardLayout';
@@ -37,7 +38,7 @@ const RequiredInformation = ({
 	urlPreviousPage,
 	values,
 }) => {
-	const {provisioningServerAPI} = useAppPropertiesContext();
+	const {client, provisioningServerAPI} = useAppPropertiesContext();
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [addButtonDisabled, setAddButtonDisabled] = useState(false);
@@ -115,8 +116,7 @@ const RequiredInformation = ({
 			);
 
 			setShowKeyEmptyError(true);
-		}
-		else {
+		} else {
 			const productName = `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`;
 			const sizing = `Sizing ${
 				infoSelectedKey?.selectedSubscription?.instanceSize || 1
@@ -151,8 +151,7 @@ const RequiredInformation = ({
 					sessionId,
 					licenseKey
 				);
-			}
-			else {
+			} else {
 				await Promise.all(
 					values?.keys?.map(
 						({hostName, ipAddresses, macAddresses}) => {
@@ -176,6 +175,25 @@ const RequiredInformation = ({
 					)
 				);
 			}
+
+			await client.mutate({
+				mutation: updateCommerceOrderItems,
+				variables: {
+					externalReferenceCode: licenseKey.productPurchaseKey,
+					orderItem: {
+						customFields: [
+							{
+								customValue: {
+									data:
+										infoSelectedKey.selectedSubscription
+											.provisionedCount + 1,
+								},
+								name: 'provisionedCount',
+							},
+						],
+					},
+				},
+			});
 
 			navigate(urlPreviousPage, {state: {newKeyGeneratedAlert: true}});
 		}

@@ -55,6 +55,18 @@ export const getCommerceOrderItems = gql`
 	}
 `;
 
+export const updateCommerceOrderItems = gql`
+	mutation updateCommerceOrderItems(
+		$externalReferenceCode: String
+		$orderItem: InputOrderItem
+	) {
+		updateOrderItemByExternalReferenceCode(
+			externalReferenceCode: $externalReferenceCode
+			orderItem: $orderItem
+		)
+	}
+`;
+
 export const getStructuredContentFolders = gql`
 	query getStructuredContentFolders($siteKey: String!, $filter: String) {
 		structuredContentFolders(siteKey: $siteKey, filter: $filter) {

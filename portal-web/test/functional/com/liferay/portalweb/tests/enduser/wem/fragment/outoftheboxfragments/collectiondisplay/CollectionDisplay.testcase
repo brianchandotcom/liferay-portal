@@ -197,6 +197,38 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-157740. View error message when dropping a fragment to unmapped Collection Display fragment."
+	@priority = "3"
+	test CannotAddFragmentToUnmappedCollectionDisplay {
+		task ("Given a page creator has a content page with an unmapped Collection Display") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.viewFragmentMessageInfo(fragmentName = "Collection Display");
+		}
+
+		task ("When the page creator tries to add a Heading fragment inside an unmapped Collection Display") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Heading",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "//div[@aria-label='Collection Display']//div[contains(@class,'page-editor__collection__message')]");
+		}
+
+		task ("Then the page creator should see an error message") {
+			AssertTextPresent(
+				locator1 = "Message#ERROR",
+				value1 = "Fragments cannot be placed inside an unmapped collection display fragment.");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
+		}
+	}
+
 	@description = "This is a use case for LPS-86141. The mapped content of asset entries in selected collection should be respectively shown in each cell of the Collection Display when map content to editable field of one fragment in one cell."
 	@priority = "4"
 	test MapContentToTextFragment {

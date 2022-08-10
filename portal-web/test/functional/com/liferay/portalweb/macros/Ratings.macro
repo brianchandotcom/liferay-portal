@@ -179,7 +179,9 @@ definition {
 	macro revokeStackedStarsRating {
 		Click(locator1 = "Icon#DELETE");
 
-		AssertElementNotPresent(locator1 = "Icon#DELETE");
+		AssertElementNotPresent(
+			key_text = "times-circle",
+			locator1 = "Icon#ANY");
 	}
 
 	macro revokeStarsRating {

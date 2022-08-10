@@ -38,7 +38,7 @@ const CheckboxGroup = ({
 			{items.map((item, index) => (
 				<ClayCheckbox
 					{...field}
-					checked={field.value.includes(item.label as string)}
+					checked={field.value?.includes(item.label as string)}
 					key={`${item.value}-${index}`}
 					label={item.label}
 					value={item.label}

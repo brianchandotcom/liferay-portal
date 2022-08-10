@@ -165,6 +165,20 @@ definition {
 
 		var extractedAddress = StringUtil.extractFirst("${currentURL}", "/workspace");
 
+		task ("Connect AC to DXP") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+
+			ACUtils.launchDXP();
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
+
+		task ("Close all sessions and go to AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+		}
+
 		task ("Navigate to Workspace Settings") {
 			ACNavigation.goToSettings();
 

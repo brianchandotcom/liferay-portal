@@ -17,19 +17,25 @@ import WrapperInput from '../common/components/WrapperInput';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 
+interface IProps {
+	emptyOptionMessage: string;
+}
+
 const Select = ({
 	field,
 	meta,
 	label,
+	emptyOptionMessage = 'No options available',
 	options = [],
 	required,
 	...props
 }: PRMFormFieldProps &
 	React.ComponentProps<typeof ClaySelectWithOption> &
-	PRMFormFieldStateProps<string | LiferayPicklist>) => {
+	PRMFormFieldStateProps<string | LiferayPicklist> &
+	IProps) => {
 	const defaultOptions = {
 		disabled: true,
-		label: options.length ? 'Choose a option' : 'No options available',
+		label: options.length ? 'Choose a option' : emptyOptionMessage,
 		value: '',
 	};
 
@@ -38,7 +44,7 @@ const Select = ({
 			return field.value.key || '';
 		}
 
-		return field.value;
+		return field.value || '';
 	};
 
 	return (

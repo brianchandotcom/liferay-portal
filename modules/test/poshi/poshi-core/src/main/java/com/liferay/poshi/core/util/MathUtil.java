@@ -21,11 +21,11 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class MathUtil {
 
-	public static long difference(long value1, long value2) {
+	public static long difference(Long value1, Long value2) {
 		return value1 - value2;
 	}
 
-	public static boolean isGreaterThan(long value1, long value2) {
+	public static boolean isGreaterThan(Long value1, Long value2) {
 		if (value1 > value2) {
 			return true;
 		}
@@ -33,7 +33,7 @@ public class MathUtil {
 		return false;
 	}
 
-	public static boolean isGreaterThanOrEqualTo(long value1, long value2) {
+	public static boolean isGreaterThanOrEqualTo(Long value1, Long value2) {
 		if (value1 >= value2) {
 			return true;
 		}
@@ -41,7 +41,7 @@ public class MathUtil {
 		return false;
 	}
 
-	public static boolean isLessThan(long value1, long value2) {
+	public static boolean isLessThan(Long value1, Long value2) {
 		if (value1 < value2) {
 			return true;
 		}
@@ -49,7 +49,7 @@ public class MathUtil {
 		return false;
 	}
 
-	public static boolean isLessThanOrEqualTo(long value1, long value2) {
+	public static boolean isLessThanOrEqualTo(Long value1, Long value2) {
 		if (value1 <= value2) {
 			return true;
 		}
@@ -57,19 +57,19 @@ public class MathUtil {
 		return false;
 	}
 
-	public static long percent(long percent, long value) {
+	public static long percent(Long percent, Long value) {
 		return quotient(product(percent, value), 100L, true);
 	}
 
-	public static long product(long value1, long value2) {
+	public static long product(Long value1, Long value2) {
 		return value1 * value2;
 	}
 
-	public static long quotient(long value1, long value2) {
+	public static long quotient(Long value1, Long value2) {
 		return value1 / value2;
 	}
 
-	public static long quotient(long value1, long value2, boolean ceil) {
+	public static long quotient(Long value1, Long value2, boolean ceil) {
 		if (ceil) {
 			return (value1 + value2 - 1) / value2;
 		}
@@ -77,13 +77,13 @@ public class MathUtil {
 		return quotient(value1, value2);
 	}
 
-	public static long randomNumber(long maxValue) {
+	public static long randomNumber(Long maxValue) {
 		ThreadLocalRandom current = ThreadLocalRandom.current();
 
 		return current.nextLong(maxValue) + 1;
 	}
 
-	public static long sum(long value1, long value2) {
+	public static long sum(Long value1, Long value2) {
 		return value1 + value2;
 	}
 

@@ -507,7 +507,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 					companyId, _objectDefinitions.get("Build"), null, null,
 					_defaultDTOConverterContext,
 					"routineId eq '" + testrayRoutineId + "'", null, null,
-					new Sort[] {new Sort("createDate_sortable", 3, false)});
+					new Sort[] {new Sort("createDate", 3, false)});
 
 		List<ObjectEntry> testrayBuildsObjectEntries =
 			(List<ObjectEntry>)testrayBuildsObjectEntriesPage.getItems();
@@ -517,8 +517,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				companyId, _objectDefinitions.get("Run"), null, null,
 				_defaultDTOConverterContext,
 				StringBundler.concat(
-					"environmentHash eq '", environmentHash, "' and id ne '",
-					testrayRunId, "'"),
+					"environmentHash eq '", environmentHash, "' and id ne ",
+					testrayRunId),
 				null, null, null);
 
 		List<ObjectEntry> testrayRunsObjectEntries =

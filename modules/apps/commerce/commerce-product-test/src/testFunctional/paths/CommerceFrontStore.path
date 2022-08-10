@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>COUPON_CODE_BODY</td>
+	<td>//div[@class='coupon-code-body']/h3[text()='${key_couponCode}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_COMPARISON_TABLE_SPECIFICATION</td>
 	<td>//td[contains(.,'${key_specification}')]/following-sibling::td[${key_columnNumber}][contains(.,'${key_value}')]</td>
 	<td></td>

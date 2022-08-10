@@ -372,6 +372,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKOUT_SUMMARY_DELIVERY_DISCOUNT_VALUE</td>
+	<td>//li[contains(@class,'commerce-delivery-discount')]/div[@class='commerce-value'][normalize-space(text())='${key_currency} ${key_discountValue}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_SUMMARY_DELIVERY_DISCOUNT_PERCENTAGE</td>
+	<td>//li[contains(@class,'commerce-delivery-discount')]/div[@class='commerce-value'][normalize-space(text())='${key_discountPercentage}%']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKOUT_SUMMARY_PAYMENT_METHOD</td>
 	<td>//div[contains(@class,'payment-method')]/div[contains(.,'${key_paymentMethod}')]</td>
 	<td></td>

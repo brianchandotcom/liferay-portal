@@ -40,12 +40,14 @@ definition {
 	test CheckAllAssetsMessagesWhenHasPropertyAndDataSource {
 		property test.name.skip.portal.instance = "EmptyState#CheckAllAssetsMessagesWhenHasPropertyAndDataSource";
 
-		task ("Close the onboarding modal") {
-			ACUtils.closeModal();
+		task ("Check the first screen of the onboarding modal") {
+			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");
 		}
 
-		task ("Copy the token from AC") {
-			ACSettings.takeTokenFromAnalyticsCloud();
+		task ("Copy the AC token through the modal") {
+			Button.clickNext();
+
+			Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
 		}
 
 		task ("Create the pages and assets in DXP") {
@@ -550,12 +552,14 @@ definition {
 	test CheckAllMessagesWhenHasPropertyAndDataSourceButNoData {
 		property test.name.skip.portal.instance = "EmptyState#CheckAllMessagesWhenHasPropertyAndDataSourceButNoData";
 
-		task ("Close the onboarding modal") {
-			ACUtils.closeModal();
+		task ("Check the first screen of the onboarding modal") {
+			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");
 		}
 
-		task ("Copy the token from AC") {
-			ACSettings.takeTokenFromAnalyticsCloud();
+		task ("Copy the AC token through the modal") {
+			Button.clickNext();
+
+			Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
 		}
 
 		task ("Connect DXP to AC no data") {
@@ -927,12 +931,14 @@ definition {
 		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "EmptyState#CheckAllPagesMessagesWhenHasPropertyAndDataSource";
 
-		task ("Close the onboarding modal") {
-			ACUtils.closeModal();
+		task ("Check the first screen of the onboarding modal") {
+			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");
 		}
 
-		task ("Copy the token from AC") {
-			ACSettings.takeTokenFromAnalyticsCloud();
+		task ("Copy the AC token through the modal") {
+			Button.clickNext();
+
+			Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
 		}
 
 		task ("Connect DXP to AC") {
@@ -1186,12 +1192,14 @@ definition {
 	test CheckAllSegmentMessagesWhenHasPropertyAndDataSourceButNoData {
 		property test.name.skip.portal.instance = "EmptyState#CheckAllSegmentMessagesWhenHasPropertyAndDataSourceButNoData";
 
-		task ("Close the onboarding modal") {
-			ACUtils.closeModal();
+		task ("Check the first screen of the onboarding modal") {
+			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");
 		}
 
-		task ("Copy the token from AC") {
-			ACSettings.takeTokenFromAnalyticsCloud();
+		task ("Copy the AC token through the modal") {
+			Button.clickNext();
+
+			Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
 		}
 
 		task ("Connect DXP to AC") {
@@ -1312,12 +1320,14 @@ definition {
 	test CheckAllSitesMessagesWhenHasPropertyAndDataSourceButNoData {
 		property test.name.skip.portal.instance = "EmptyState#CheckAllSitesMessagesWhenHasPropertyAndDataSourceButNoData";
 
-		task ("Close the onboarding modal") {
-			ACUtils.closeModal();
+		task ("Check the first screen of the onboarding modal") {
+			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");
 		}
 
-		task ("Copy the token from AC") {
-			ACSettings.takeTokenFromAnalyticsCloud();
+		task ("Copy the AC token through the modal") {
+			Button.clickNext();
+
+			Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
 		}
 
 		task ("Connect DXP to AC") {
@@ -1575,12 +1585,14 @@ definition {
 	test CheckSearchMessagesWithNoResults {
 		property test.name.skip.portal.instance = "EmptyState#CheckSearchMessagesWithNoResults";
 
-		task ("Close the onboarding modal") {
-			ACUtils.closeModal();
+		task ("Check the first screen of the onboarding modal") {
+			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");
 		}
 
-		task ("Copy the token from AC") {
-			ACSettings.takeTokenFromAnalyticsCloud();
+		task ("Copy the AC token through the modal") {
+			Button.clickNext();
+
+			Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
 		}
 
 		task ("Connect DXP to AC") {

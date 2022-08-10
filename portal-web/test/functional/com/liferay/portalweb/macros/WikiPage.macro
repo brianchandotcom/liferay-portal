@@ -7,7 +7,7 @@ definition {
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 			value1 = "This page is empty. Edit it to add some text.");
 
-		AssertElementPresent.pauseAssertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		WaitForElementPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
@@ -286,7 +286,7 @@ definition {
 				wikiPageTitle = "${wikiPageTitle}");
 		}
 		else {
-			AssertClick.assertTextClickAtAndPause(
+			AssertClick(
 				locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 				value1 = "This page is empty. Edit it to add some text.");
 		}
@@ -294,7 +294,7 @@ definition {
 		if ("${creoleSource}" == "true") {
 			Panel.expandPanel(panel = "Configuration");
 
-			Select.pauseSelect(
+			Select(
 				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
 				value1 = "Creole");
 
@@ -814,7 +814,7 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		AssertElementPresent.pauseAssertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+		WaitForVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 

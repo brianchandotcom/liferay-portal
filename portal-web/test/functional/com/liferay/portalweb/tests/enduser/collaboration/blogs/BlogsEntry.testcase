@@ -39,7 +39,7 @@ definition {
 
 		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Abstract Description");
 
-		Click.pauseClickAt(
+		Click.clickAt(
 			key_editor = "content",
 			locator1 = "AlloyEditor#EDITOR");
 

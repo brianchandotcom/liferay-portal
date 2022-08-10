@@ -1722,7 +1722,7 @@ definition {
 
 		var key_imageSourceURL = "${portalURL}/documents/${siteId}/0/Document_1";
 
-		AssertElementPresent.pauseAssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+		WaitForVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
 	@description = "This test covers LPS-104957. It ensures that the JPG file can be previewed."

@@ -42,9 +42,11 @@ definition {
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		PortletEntry.inputTitle(title = "Webcontent Title Edit");
+
+		CKEditor.addContentInWebContent(
+			content = "Webcontent Content Edit",
+			fieldLabel = "content");
 
 		PortletEntry.publish();
 

@@ -254,7 +254,7 @@ public class CookiesPreActionTest {
 
 		Cookie[] cookies = mockHttpServletResponse.getCookies();
 
-		Assert.assertEquals(Arrays.toString(cookies), 0, cookies.length);
+		Assert.assertEquals(Arrays.toString(cookies), 3, cookies.length);
 	}
 
 	@Test

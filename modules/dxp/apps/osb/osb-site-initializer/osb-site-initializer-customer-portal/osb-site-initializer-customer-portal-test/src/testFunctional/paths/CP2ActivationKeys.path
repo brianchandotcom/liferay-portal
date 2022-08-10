@@ -56,8 +56,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LICENSE_TAB_BUTTON_NUMBER</td>
+	<td>//*[contains(@type, 'button') and @value='${key_licenseTab}' and contains(., '${key_numberOfLicenses}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LICENSE_TAB_BUTTON</td>
-	<td>//*[contains(@type, 'button') and contains(@value, '${key_licenseTab}') and contains(., '${key_numberOfLicenses}')]</td>
+	<td>//*[contains(@type, 'button') and @value='${key_licenseTab}']</td>
 	<td></td>
 </tr>
 <tr>

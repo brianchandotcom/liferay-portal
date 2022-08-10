@@ -55,8 +55,7 @@ definition {
     macro assertLicenseQuantity {
 		var key_licenseTab = CP2ActivationKeys._formatCamelCase(camelCase = "${licenseTab}");
         var key_numberOfLicenses = "${numberOfLicenses}"; 
-        AssertElementPresent(
-			locator1 = "CP2ActivationKeys#LICENSE_TAB_BUTTON_NUMBER");
+        AssertElementPresent(locator1 = "CP2ActivationKeys#LICENSE_TAB_BUTTON_NUMBER");
     }
 	macro filterKeyTable {
 		var key_filterOption = "${filterOption}";

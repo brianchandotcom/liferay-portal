@@ -191,7 +191,7 @@ definition {
 			Pause(locator1 = "60000");
 
 			while (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-				Pause(localtor1 = "1000");
+				Pause(locator1 = "1000");
 
 				Refresh();
 			}
@@ -679,7 +679,7 @@ definition {
 			Pause(locator1 = "60000");
 
 			while (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-				Pause(localtor1 = "1000");
+				Pause(locator1 = "1000");
 
 				Refresh();
 			}

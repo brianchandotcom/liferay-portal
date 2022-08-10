@@ -144,7 +144,7 @@ definition {
 		if (isSet(embedVideo)) {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			Click.pauseClickAt(locator1 = "CKEditor#TOOLBAR_VIDEO_BUTTON");
+			Click(locator1 = "CKEditor#TOOLBAR_VIDEO_BUTTON");
 
 			if ("${navTab}" == "Documents and Media") {
 				ItemSelector.addVideoFromDM(
@@ -627,7 +627,7 @@ definition {
 		}
 
 		if (isSet(dmImage)) {
-			Click.pauseClickAt(locator1 = "CKEditor#TOOLBAR_IMAGE_BUTTON");
+			Click(locator1 = "CKEditor#TOOLBAR_IMAGE_BUTTON");
 
 			if ("${navTab}" == "Documents and Media") {
 				if (isSet(depotName)) {
@@ -1013,7 +1013,7 @@ definition {
 			key_kbArticleTitle = "${kbArticleTitle}",
 			locator1 = "KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_CHECKBOX");
 
-		AssertElementPresent.pauseAssertVisible(locator1 = "Icon#DELETE");
+		AssertVisible(locator1 = "Icon#DELETE");
 	}
 
 	macro selectAttachmentCP {

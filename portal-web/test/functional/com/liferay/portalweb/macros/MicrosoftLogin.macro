@@ -12,7 +12,7 @@ definition {
 			SelectWindow(locator1 = "MicrosoftLogin#LOGIN_PAGE_TITLE");
 		}
 
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "MicrosoftLogin#LOGIN_USER_CHOOSER")) {
+		if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_USER_CHOOSER")) {
 			AssertClick(
 				locator1 = "MicrosoftLogin#LOGIN_USER_CHOOSER",
 				value1 = "${key_userEmail}");
@@ -29,7 +29,7 @@ definition {
 				locator1 = "MicrosoftLogin#LOGIN_SIGN_IN_BUTTON",
 				value1 = "Sign in");
 		}
-		else if (IsElementPresent.pauseIsElementPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD")) {
+		else if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD")) {
 			Type(
 				locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD",
 				value1 = "${key_userEmail}");

@@ -1,7 +1,7 @@
 definition {
 
 	macro gotoDrive {
-		AssertElementPresent.pauseAssertVisible(locator1 = "Button#SELECT_FILE");
+		AssertVisible(locator1 = "Button#SELECT_FILE");
 
 		AssertClick.assertTextClickAtWaitForLastScript(
 			locator1 = "Button#SELECT_FILE",
@@ -36,7 +36,7 @@ definition {
 		if (IsElementNotPresent(locator1 = "GoogleDrive#GOOGLE_DRIVE_IFRAME")) {
 			Refresh();
 
-			AssertElementPresent.pauseAssertVisible(locator1 = "Button#SELECT_FILE");
+			AssertVisible(locator1 = "Button#SELECT_FILE");
 
 			AssertClick(
 				locator1 = "Button#SELECT_FILE",

@@ -33,7 +33,7 @@ definition {
 				locator1 = "Comments#ANY_BUTTON_IN_COMMENT",
 				value1 = "Reply");
 
-			AssertElementPresent.pauseAssertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+			AssertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 		}

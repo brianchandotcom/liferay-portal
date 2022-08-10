@@ -1204,6 +1204,15 @@ AUI.add(
 				_onFileSelect(event) {
 					const instance = this;
 
+					// LPS-159994
+
+					if (
+						event.details[0].currentTarget !==
+						instance._entriesContainer
+					) {
+						return;
+					}
+
 					const target = event.details[0].target;
 
 					const filesPartition = instance._validateFiles(

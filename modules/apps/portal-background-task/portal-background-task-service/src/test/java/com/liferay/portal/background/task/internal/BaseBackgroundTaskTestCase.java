@@ -19,12 +19,14 @@ import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -81,22 +83,50 @@ public abstract class BaseBackgroundTaskTestCase {
 		backgroundTaskThreadLocalManagerImpl.setPermissionCheckerFactory(
 			permissionCheckerFactory);
 
+		_companyId = 1234L;
+		_groupId = 1234L;
+
+		_principalName = String.valueOf(1234L);
+
+		User user = Mockito.mock(User.class);
+
+		Mockito.when(
+			user.getCompanyId()
+		).thenReturn(
+			_companyId
+		);
+
 		UserLocalService userLocalService = Mockito.mock(
 			UserLocalService.class);
 
 		Mockito.when(
 			userLocalService.fetchUser(Mockito.anyLong())
 		).thenReturn(
-			Mockito.mock(User.class)
+			user
 		);
 
 		backgroundTaskThreadLocalManagerImpl.setUserLocalService(
 			userLocalService);
 
-		_companyId = 1234L;
-		_groupId = 1234L;
+		Group group = Mockito.mock(Group.class);
 
-		_principalName = String.valueOf(1234L);
+		Mockito.when(
+			group.getCompanyId()
+		).thenReturn(
+			_companyId
+		);
+
+		GroupLocalService groupLocalService = Mockito.mock(
+			GroupLocalService.class);
+
+		Mockito.when(
+			groupLocalService.fetchGroup(_groupId)
+		).thenReturn(
+			group
+		);
+
+		backgroundTaskThreadLocalManagerImpl.setGroupLocalService(
+			groupLocalService);
 	}
 
 	@After

@@ -434,6 +434,16 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testMissingReferencePolicyDynamic() throws Exception {
+		test(
+			"MissingReferencePolicyDynamic.testjava",
+			"When using 'cardinality = ReferenceCardinality.OPTIONAL' and "+
+				"'policyOption = ReferencePolicyOption.GREEDY', always use "+
+					"'policy = ReferencePolicy.DYNAMIC' as well",
+			30);
+	}
+
+	@Test
 	public void testMissingSerialVersionUID() throws Exception {
 		test(
 			"MissingSerialVersionUID.testjava",

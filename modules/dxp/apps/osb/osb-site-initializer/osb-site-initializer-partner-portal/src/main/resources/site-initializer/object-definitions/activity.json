@@ -57,6 +57,17 @@
 			"required": false
 		},
 		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Target # of Leads"
+			},
+			"name": "targetofLeads",
+			"required": false
+		},
+		{
 			"DBType": "Boolean",
 			"indexed": true,
 			"indexedAsKeyword": false,

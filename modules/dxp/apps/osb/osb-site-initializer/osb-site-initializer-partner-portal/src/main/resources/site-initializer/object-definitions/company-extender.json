@@ -5,6 +5,17 @@
 	"name": "CompanyExtender",
 	"objectFields": [
 		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Claim Percent"
+			},
+			"name": "claimPercent",
+			"required": false
+		},
+		{
 			"DBType": "String",
 			"businessType": "Picklist",
 			"indexed": true,

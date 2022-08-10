@@ -47,10 +47,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.suggestions.Suggestion;
-import com.liferay.portal.search.suggestions.SuggestionBuilder;
-import com.liferay.portal.search.suggestions.SuggestionBuilderFactory;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
-import com.liferay.portal.search.suggestions.SuggestionsContributorResultsBuilder;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResultsBuilderFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -72,6 +69,7 @@ import org.mockito.MockitoAnnotations;
 
 /**
  * @author Wade Cao
+ * @author Gustavo Lima
  */
 public class SXPBlueprintSuggestionsContributorTest {
 
@@ -119,8 +117,6 @@ public class SXPBlueprintSuggestionsContributorTest {
 		_setUpSearchHits(_setUpDocument("Document"));
 		_setUpSearchRequestBuilderFactory();
 		_setUpSearcher(1L);
-		_setUpSuggestionBuilderFactory();
-		_setUpSuggestionsContributorResultsBuilderFactory();
 
 		List<String> field = ListUtil.fromArray("field");
 		Long sxpBlueprintId = RandomTestUtil.randomLong();
@@ -156,12 +152,6 @@ public class SXPBlueprintSuggestionsContributorTest {
 				"textField", textField
 			).build(),
 			_suggestionsContributorConfiguration.getAttributes());
-
-		Mockito.verify(
-			_suggestionBuilder, Mockito.times(1)
-		).text(
-			Mockito.anyString()
-		);
 	}
 
 	@Test
@@ -169,36 +159,54 @@ public class SXPBlueprintSuggestionsContributorTest {
 		throws Exception {
 
 		_setUpAssetEntryLocalService();
+		_setUpAssetRendererFactoryRegistryUtil("Title");
 		_setUpLayoutLocalService();
 		_setUpPortalUtil();
 		_setUpSearchContext();
-		_setUpSearcher(1L);
 		_setUpSearchHits(_setUpDocument(RandomTestUtil.randomString()));
 		_setUpSearchRequestBuilderFactory();
-		_setUpAssetRendererFactoryRegistryUtil("Title");
-		_setUpSuggestionBuilderFactory();
-		_setUpSuggestionsContributorConfiguration(null, null, null);
+		_setUpSearcher(1L);
 
-		_setUpSuggestionsContributorResultsBuilderFactory();
+		List<String> field = null;
+		Long sxpBlueprintId = null;
+		String textField = null;
 
-		SuggestionsContributorResults suggestionsContributorResults1 =
+		_setUpSuggestionsContributorConfiguration(
+			field, sxpBlueprintId, textField);
+
+		SuggestionsContributorResults suggestionsContributorResults =
 			_sxpBlueprintSuggestionsContributor.
 				getSuggestionsContributorResults(
 					_setUpLiferayPortletRequest(),
 					_setUpLiferayPortletResponse(), _searchContext,
 					_suggestionsContributorConfiguration);
 
-		Mockito.verify(
-			_suggestionBuilder, Mockito.times(1)
-		).text(
-			Mockito.anyString()
-		);
+		List<Suggestion> suggestions =
+			suggestionsContributorResults.getSuggestions();
+
+		Suggestion suggestion = suggestions.get(0);
+
+		Assert.assertEquals("Title", suggestion.getText());
+
+		Assert.assertEquals(
+			"displayGroup",
+			suggestionsContributorResults.getDisplayGroupName());
+
+		Assert.assertEquals(
+			HashMapBuilder.<String, Object>put(
+				"fields", field
+			).put(
+				"sxpBlueprintId", sxpBlueprintId
+			).put(
+				"textField", textField
+			).build(),
+			_suggestionsContributorConfiguration.getAttributes());
 	}
 
 	@Test
 	public void testSearchHitsWithZeroTotalHits() {
-		_setUpSearchRequestBuilderFactory();
 		_setUpSearchContext();
+		_setUpSearchRequestBuilderFactory();
 		_setUpSearcher(0L);
 		_setUpSuggestionsContributorConfiguration(null, null, null);
 
@@ -486,30 +494,6 @@ public class SXPBlueprintSuggestionsContributorTest {
 		);
 	}
 
-	private void _setUpSuggestionBuilderFactory() {
-		Mockito.doReturn(
-			_suggestionBuilder
-		).when(
-			_suggestionBuilder
-		).score(
-			Mockito.anyFloat()
-		);
-
-		Mockito.doReturn(
-			_suggestionBuilder
-		).when(
-			_suggestionBuilder
-		).text(
-			Mockito.anyString()
-		);
-
-		Mockito.doReturn(
-			_suggestionBuilder
-		).when(
-			_suggestionBuilderFactory
-		).builder();
-	}
-
 	private void _setUpSuggestionsContributorConfiguration(
 		List<String> field, Long sxpBlueprintId, String textField) {
 
@@ -527,34 +511,6 @@ public class SXPBlueprintSuggestionsContributorTest {
 
 		_suggestionsContributorConfiguration.setSize(
 			RandomTestUtil.randomInt());
-	}
-
-	private void _setUpSuggestionsContributorResultsBuilderFactory() {
-		SuggestionsContributorResultsBuilder
-			suggestionsContributorResultsBuilder = Mockito.mock(
-				SuggestionsContributorResultsBuilder.class);
-
-		Mockito.doReturn(
-			suggestionsContributorResultsBuilder
-		).when(
-			suggestionsContributorResultsBuilder
-		).displayGroupName(
-			Mockito.anyString()
-		);
-
-		Mockito.doReturn(
-			suggestionsContributorResultsBuilder
-		).when(
-			suggestionsContributorResultsBuilder
-		).suggestions(
-			Mockito.anyList()
-		);
-
-		Mockito.doReturn(
-			suggestionsContributorResultsBuilder
-		).when(
-			_suggestionsContributorResultsBuilderFactory
-		).builder();
 	}
 
 	@Mock
@@ -582,13 +538,6 @@ public class SXPBlueprintSuggestionsContributorTest {
 	private ServiceTrackerMap<String, AssetRendererFactory<?>>
 		_serviceTrackerMap;
 
-	@Mock
-	private SuggestionBuilder _suggestionBuilder;
-
-	@Mock
-	private SuggestionBuilderFactory _suggestionBuilderFactory;
-
-	@Mock
 	private SuggestionsContributorConfiguration
 		_suggestionsContributorConfiguration;
 

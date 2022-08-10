@@ -277,10 +277,8 @@ public class PoshiGetterUtil {
 				parameter = PoshiVariablesUtil.replaceCommandVars(arg);
 			}
 
-			if (className.endsWith("MathUtil") &&
-				(parameter instanceof Integer || parameter instanceof String)) {
-
-				parameter = GetterUtil.getLong((String)parameter);
+			if (className.endsWith("MathUtil")) {
+				parameter = GetterUtil.getLong(parameter);
 			}
 			else if (className.endsWith("StringUtil")) {
 				parameter = String.valueOf(parameter);

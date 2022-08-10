@@ -10,6 +10,7 @@
  */
 
 export default interface PRMFormFieldProps {
+	description?: string;
 	label?: string;
 	required?: boolean;
 }

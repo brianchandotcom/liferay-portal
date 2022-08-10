@@ -22,6 +22,7 @@ interface IProps {
 
 const WrapperInput = ({
 	children,
+	description,
 	error,
 	label,
 	required,
@@ -47,6 +48,10 @@ const WrapperInput = ({
 			<ClayForm.FeedbackGroup>
 				<ClayForm.FeedbackItem>{error}</ClayForm.FeedbackItem>
 			</ClayForm.FeedbackGroup>
+		)}
+
+		{description && (
+			<ClayForm.Text className="ml-0">{description}</ClayForm.Text>
 		)}
 	</ClayForm.Group>
 );

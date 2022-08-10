@@ -16,6 +16,7 @@ import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 
 const InputText = ({
+	description,
 	field,
 	label,
 	meta,
@@ -24,8 +25,13 @@ const InputText = ({
 }: PRMFormFieldProps &
 	PRMFormFieldStateProps<string> &
 	React.ComponentProps<typeof ClayInput>) => (
-	<WrapperInput {...meta} label={label} required={required}>
-		<ClayInput {...props} {...field} />
+	<WrapperInput
+		{...meta}
+		description={description}
+		label={label}
+		required={required}
+	>
+		<ClayInput {...props} {...field} required={required} />
 	</WrapperInput>
 );
 

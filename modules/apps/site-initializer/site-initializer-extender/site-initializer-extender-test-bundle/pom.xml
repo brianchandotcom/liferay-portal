@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.liferay</groupId>
+	<artifactId>com.liferay.site.initializer.extender.test.bundle</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	<dependencies/>
+	<repositories>
+		<repository>
+			<id>apache</id>
+			<name>Apache</name>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>liferay-public</id>
+			<name>Liferay Public</name>
+			<url>https://repository-cdn.liferay.com/nexus/content/repositories/public</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>jaspersoft-third-party</id>
+			<name>Jaspersoft Third-Party</name>
+			<url>http://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+</project>

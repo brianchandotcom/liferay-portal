@@ -124,9 +124,12 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 				<div class="autofit-col autofit-col-expand">
 					<h4 class="component-title"><%= HtmlUtil.escape(kbArticle.getTitle()) %></h4>
 
-					<h5>
-						<liferay-ui:message key="entry" />
-					</h5>
+					<clay:label
+						displayType="info"
+						label='<%= LanguageUtil.get(request, "version") + StringPool.SPACE + kbArticle.getPriority() %>'
+					/>
+
+					<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
 				</div>
 
 				<div class="autofit-col">

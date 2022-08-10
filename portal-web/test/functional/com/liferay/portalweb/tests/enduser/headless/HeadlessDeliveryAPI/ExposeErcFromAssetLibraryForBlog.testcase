@@ -25,7 +25,7 @@ definition {
 
 	@description = "Creates a comment in a blog posting with a custom external reference code"
 	@priority = "4"
-	test canCreateCommentWithCustomExternalReferenceCode {
+	test CanCreateCommentWithCustomExternalReferenceCode {
 		property portal.acceptance = "true";
 
 		task ("When with POST request I create a comment with a custom external reference code") {
@@ -40,7 +40,7 @@ definition {
 		task ("Then I can see the custom external reference code in the body response") {
 			var commentsFromBlogPosting = CommentAPI.getBlogPostingComments(blogPostingId = "${response}");
 
-			var ercComment = CommentAPI._getFieldValueOfExistingBlogPostingComment(
+			var ercComment = CommentAPI.getFieldValueOfExistingBlogPostingComment(
 				fieldName = "externalReferenceCode",
 				response = "${commentsFromBlogPosting}");
 
@@ -52,7 +52,7 @@ definition {
 
 	@description = "Can not creates two comments in a blog posting with same custom external reference code"
 	@priority = "4"
-	test canNotCreateTwoCommentsWithCustomExternalReferenceCode {
+	test CannotCreateTwoCommentsWithCustomExternalReferenceCode {
 		property portal.acceptance = "true";
 
 		task ("When with POST request I create a comment with a custom external reference code") {

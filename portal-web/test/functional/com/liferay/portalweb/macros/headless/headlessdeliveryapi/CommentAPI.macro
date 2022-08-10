@@ -62,42 +62,7 @@ definition {
 		return "${curl}";
 	}
 
-	macro getBlogCommentsText {
-		var response = CommentAPI._getCommentsOfBlogPosting(blogPostingId = "${blogPostingId}");
-
-		var commentsText = JSONUtil.getWithJSONPath("${response}", "$..text");
-
-		return "${commentsText}";
-	}
-
-	macro getIdOfCreateNCommentsInBlogPostingBatchEngineImportTask {
-		var response = CommentAPI._createNCommentsInBlogPosting(
-			blogPostingId = "${blogPostingId}",
-			createStrategy = "${createStrategy}",
-			numberOfCommentsToCreate = "${numberOfCommentsToCreate}");
-
-		var importTaskId = JSONUtil.getWithJSONPath("${response}", "$.id");
-
-		return "${importTaskId}";
-	}
-
-	macro _getBlogPostingComment {
-		Variables.assertDefined(parameterList = "${blogPostingId}");
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}/comments \
- 				-u test@liferay.com:test \
-				-H accept: application/json
-		''';
-
-		var curl = JSONCurlUtil.get("${curl}");
-
-		return "${curl}";
-	}
-
-	macro _getFieldValueOfExistingBlogPostingComment {
+	macro getFieldValueOfExistingBlogPostingComment {
 		Variables.assertDefined(parameterList = "${response},${fieldName}");
 
 		var fieldValue = JSONUtil.getWithJSONPath("${response}", "$..['items'][?(@.creator)].${fieldName}");
@@ -135,6 +100,14 @@ definition {
 		return "${curl}";
 	}
 
+	macro assertProperNumberOfItems {
+		var actualTotalElement = JSONUtil.getWithJSONPath("${responseToParse}", "$..['totalCount']");
+
+		TestUtils.assertEquals(
+			actual = "${actualTotalElement}",
+			expected = "${expectedTotalElement}");
+	}
+
 	macro createBlogPostingComment {
 		Variables.assertDefined(parameterList = "${blogPostingId},${textComment}");
 
@@ -155,20 +128,31 @@ definition {
 		return "${response}";
 	}
 
+	macro getBlogCommentsText {
+		var response = CommentAPI._getCommentsOfBlogPosting(blogPostingId = "${blogPostingId}");
+
+		var commentsText = JSONUtil.getWithJSONPath("${response}", "$..text");
+
+		return "${commentsText}";
+	}
+
 	macro getBlogPostingComments {
 		Variables.assertDefined(parameterList = "${blogPostingId}");
 
-		var commentsFromBlogPosting = CommentAPI._getBlogPostingComment(blogPostingId = "${blogPostingId}");
+		var commentsFromBlogPosting = CommentAPI._getCommentsOfBlogPosting(blogPostingId = "${blogPostingId}");
 
 		return "${commentsFromBlogPosting}";
 	}
 
-	macro assertProperNumberOfItems {
-		var actualTotalElement = JSONUtil.getWithJSONPath("${responseToParse}", "$..['totalCount']");
+	macro getIdOfCreateNCommentsInBlogPostingBatchEngineImportTask {
+		var response = CommentAPI._createNCommentsInBlogPosting(
+			blogPostingId = "${blogPostingId}",
+			createStrategy = "${createStrategy}",
+			numberOfCommentsToCreate = "${numberOfCommentsToCreate}");
 
-		TestUtils.assertEquals(
-			actual = "${actualTotalElement}",
-			expected = "${expectedTotalElement}");
+		var importTaskId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+		return "${importTaskId}";
 	}
 
 }

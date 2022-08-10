@@ -28,6 +28,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -162,6 +163,8 @@ public class FileExtensionGroupsProvider {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) throws Exception {
+		_extensionMimeTypes = new HashMap<>();
+
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
 

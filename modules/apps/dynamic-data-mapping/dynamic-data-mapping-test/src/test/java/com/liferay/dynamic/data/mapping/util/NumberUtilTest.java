@@ -37,6 +37,7 @@ public class NumberUtilTest {
 		Assert.assertEquals(-1, NumberUtil.getDecimalSeparatorIndex("2"));
 		Assert.assertEquals(1, NumberUtil.getDecimalSeparatorIndex("2,0"));
 		Assert.assertEquals(1, NumberUtil.getDecimalSeparatorIndex("2.0"));
+		Assert.assertEquals(1, NumberUtil.getDecimalSeparatorIndex("2٫0"));
 	}
 
 }

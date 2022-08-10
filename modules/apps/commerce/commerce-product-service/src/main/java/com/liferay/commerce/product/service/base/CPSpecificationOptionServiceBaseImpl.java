@@ -40,6 +40,7 @@ import com.liferay.commerce.product.service.persistence.CPTaxCategoryFinder;
 import com.liferay.commerce.product.service.persistence.CPTaxCategoryPersistence;
 import com.liferay.commerce.product.service.persistence.CProductPersistence;
 import com.liferay.commerce.product.service.persistence.CommerceCatalogPersistence;
+import com.liferay.commerce.product.service.persistence.CommerceChannelAccountEntryRelPersistence;
 import com.liferay.commerce.product.service.persistence.CommerceChannelPersistence;
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelFinder;
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelPersistence;
@@ -211,6 +212,83 @@ public abstract class CPSpecificationOptionServiceBaseImpl
 		CommerceChannelPersistence commerceChannelPersistence) {
 
 		this.commerceChannelPersistence = commerceChannelPersistence;
+	}
+
+	/**
+	 * Returns the commerce channel account entry rel local service.
+	 *
+	 * @return the commerce channel account entry rel local service
+	 */
+	public com.liferay.commerce.product.service.
+		CommerceChannelAccountEntryRelLocalService
+			getCommerceChannelAccountEntryRelLocalService() {
+
+		return commerceChannelAccountEntryRelLocalService;
+	}
+
+	/**
+	 * Sets the commerce channel account entry rel local service.
+	 *
+	 * @param commerceChannelAccountEntryRelLocalService the commerce channel account entry rel local service
+	 */
+	public void setCommerceChannelAccountEntryRelLocalService(
+		com.liferay.commerce.product.service.
+			CommerceChannelAccountEntryRelLocalService
+				commerceChannelAccountEntryRelLocalService) {
+
+		this.commerceChannelAccountEntryRelLocalService =
+			commerceChannelAccountEntryRelLocalService;
+	}
+
+	/**
+	 * Returns the commerce channel account entry rel remote service.
+	 *
+	 * @return the commerce channel account entry rel remote service
+	 */
+	public
+		com.liferay.commerce.product.service.
+			CommerceChannelAccountEntryRelService
+				getCommerceChannelAccountEntryRelService() {
+
+		return commerceChannelAccountEntryRelService;
+	}
+
+	/**
+	 * Sets the commerce channel account entry rel remote service.
+	 *
+	 * @param commerceChannelAccountEntryRelService the commerce channel account entry rel remote service
+	 */
+	public void setCommerceChannelAccountEntryRelService(
+		com.liferay.commerce.product.service.
+			CommerceChannelAccountEntryRelService
+				commerceChannelAccountEntryRelService) {
+
+		this.commerceChannelAccountEntryRelService =
+			commerceChannelAccountEntryRelService;
+	}
+
+	/**
+	 * Returns the commerce channel account entry rel persistence.
+	 *
+	 * @return the commerce channel account entry rel persistence
+	 */
+	public CommerceChannelAccountEntryRelPersistence
+		getCommerceChannelAccountEntryRelPersistence() {
+
+		return commerceChannelAccountEntryRelPersistence;
+	}
+
+	/**
+	 * Sets the commerce channel account entry rel persistence.
+	 *
+	 * @param commerceChannelAccountEntryRelPersistence the commerce channel account entry rel persistence
+	 */
+	public void setCommerceChannelAccountEntryRelPersistence(
+		CommerceChannelAccountEntryRelPersistence
+			commerceChannelAccountEntryRelPersistence) {
+
+		this.commerceChannelAccountEntryRelPersistence =
+			commerceChannelAccountEntryRelPersistence;
 	}
 
 	/**
@@ -1759,6 +1837,25 @@ public abstract class CPSpecificationOptionServiceBaseImpl
 
 	@BeanReference(type = CommerceChannelPersistence.class)
 	protected CommerceChannelPersistence commerceChannelPersistence;
+
+	@BeanReference(
+		type = com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService.class
+	)
+	protected com.liferay.commerce.product.service.
+		CommerceChannelAccountEntryRelLocalService
+			commerceChannelAccountEntryRelLocalService;
+
+	@BeanReference(
+		type = com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService.class
+	)
+	protected
+		com.liferay.commerce.product.service.
+			CommerceChannelAccountEntryRelService
+				commerceChannelAccountEntryRelService;
+
+	@BeanReference(type = CommerceChannelAccountEntryRelPersistence.class)
+	protected CommerceChannelAccountEntryRelPersistence
+		commerceChannelAccountEntryRelPersistence;
 
 	@BeanReference(
 		type = com.liferay.commerce.product.service.CommerceChannelRelLocalService.class

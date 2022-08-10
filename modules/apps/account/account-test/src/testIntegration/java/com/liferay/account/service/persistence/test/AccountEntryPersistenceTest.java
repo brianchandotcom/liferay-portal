@@ -145,12 +145,6 @@ public class AccountEntryPersistenceTest {
 		newAccountEntry.setDefaultCPaymentMethodKey(
 			RandomTestUtil.randomString());
 
-		newAccountEntry.setDefaultDeliveryCTermEntryId(
-			RandomTestUtil.nextLong());
-
-		newAccountEntry.setDefaultPaymentCTermEntryId(
-			RandomTestUtil.nextLong());
-
 		newAccountEntry.setDefaultShippingAddressId(RandomTestUtil.nextLong());
 
 		newAccountEntry.setParentAccountEntryId(RandomTestUtil.nextLong());
@@ -208,12 +202,6 @@ public class AccountEntryPersistenceTest {
 		Assert.assertEquals(
 			existingAccountEntry.getDefaultCPaymentMethodKey(),
 			newAccountEntry.getDefaultCPaymentMethodKey());
-		Assert.assertEquals(
-			existingAccountEntry.getDefaultDeliveryCTermEntryId(),
-			newAccountEntry.getDefaultDeliveryCTermEntryId());
-		Assert.assertEquals(
-			existingAccountEntry.getDefaultPaymentCTermEntryId(),
-			newAccountEntry.getDefaultPaymentCTermEntryId());
 		Assert.assertEquals(
 			existingAccountEntry.getDefaultShippingAddressId(),
 			newAccountEntry.getDefaultShippingAddressId());
@@ -324,12 +312,11 @@ public class AccountEntryPersistenceTest {
 			"externalReferenceCode", true, "accountEntryId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "defaultBillingAddressId", true,
-			"defaultCPaymentMethodKey", true, "defaultDeliveryCTermEntryId",
-			true, "defaultPaymentCTermEntryId", true,
-			"defaultShippingAddressId", true, "parentAccountEntryId", true,
-			"description", true, "domains", true, "emailAddress", true,
-			"logoId", true, "name", true, "taxExemptionCode", true,
-			"taxIdNumber", true, "type", true, "status", true);
+			"defaultCPaymentMethodKey", true, "defaultShippingAddressId", true,
+			"parentAccountEntryId", true, "description", true, "domains", true,
+			"emailAddress", true, "logoId", true, "name", true,
+			"taxExemptionCode", true, "taxIdNumber", true, "type", true,
+			"status", true);
 	}
 
 	@Test
@@ -632,10 +619,6 @@ public class AccountEntryPersistenceTest {
 		accountEntry.setDefaultBillingAddressId(RandomTestUtil.nextLong());
 
 		accountEntry.setDefaultCPaymentMethodKey(RandomTestUtil.randomString());
-
-		accountEntry.setDefaultDeliveryCTermEntryId(RandomTestUtil.nextLong());
-
-		accountEntry.setDefaultPaymentCTermEntryId(RandomTestUtil.nextLong());
 
 		accountEntry.setDefaultShippingAddressId(RandomTestUtil.nextLong());
 

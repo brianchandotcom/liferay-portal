@@ -37,12 +37,12 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 
 		<li class="list-group-item list-group-item-flex">
 			<div class="autofit-col autofit-col-expand">
-				<div class="h5">
+				<div class="list-group-title">
 					<liferay-ui:message arguments="<%= curKBArticle.getVersion() %>" key="version-x" />
 				</div>
 
-				<div class="h6 sidebar-caption">
-					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(curKBArticle.getUserName()), dateFormatDateTime.format(curKBArticle.getModifiedDate())} %>" key="by-x-on-x" />
+				<div class="list-group-subtitle">
+					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(curKBArticle.getUserName()), dateFormatDateTime.format(curKBArticle.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 				</div>
 			</div>
 

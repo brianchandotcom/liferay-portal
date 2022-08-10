@@ -5900,6 +5900,10 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Elements");
 
+		while (IsElementNotPresent(locator1 = "Pagination#RESULTS")) {
+			Refresh();
+		}
+
 		var paginationResults = selenium.getText("Pagination#RESULTS");
 
 		var totalElements = StringUtil.extractLast("${paginationResults}", " ");

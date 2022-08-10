@@ -1,6 +1,153 @@
 {
 	"object-entries": [
 		{
+			"accountKey": "ERC-001",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "LXC-SM",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-002",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "DXP",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-003",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "Analytics Cloud",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-004",
+			"hasActivation": true,
+			"menuOrder": 2,
+			"name": "Commerce",
+			"tabOrder": 3
+		},
+		{
+			"accountKey": "ERC-004",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "LXC-SM",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-004",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "Enterprise Search",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-005",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "Enterprise Search",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-006",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "Portal",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-008",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "LXC-SM",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-008",
+			"hasActivation": true,
+			"menuOrder": 2,
+			"name": "DXP",
+			"tabOrder": 3
+		},
+		{
+			"accountKey": "ERC-008",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "Analytics Cloud",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-008",
+			"hasActivation": true,
+			"menuOrder": 4,
+			"name": "Commerce",
+			"tabOrder": 5
+		},
+		{
+			"accountKey": "ERC-008",
+			"hasActivation": true,
+			"menuOrder": 5,
+			"name": "Enterprise Search",
+			"tabOrder": 6
+		},
+		{
+			"accountKey": "ERC-008",
+			"hasActivation": true,
+			"menuOrder": 6,
+			"name": "Portal",
+			"tabOrder": 7
+		},
+		{
+			"accountKey": "ERC-008",
+			"hasActivation": true,
+			"menuOrder": 7,
+			"name": "Partnership",
+			"tabOrder": 8
+		},
+		{
+			"accountKey": "ERC-009",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "DXP",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-009",
+			"hasActivation": true,
+			"menuOrder": 5,
+			"name": "Commerce",
+			"tabOrder": 6
+		},
+		{
+			"accountKey": "ERC-010",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "DXP",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-010",
+			"hasActivation": true,
+			"menuOrder": 5,
+			"name": "Commerce",
+			"tabOrder": 6
+		},
+		{
+			"accountKey": "ERC-011",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "DXP",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-011",
+			"hasActivation": true,
+			"menuOrder": 5,
+			"name": "Commerce",
+			"tabOrder": 6
+		},
+		{
 			"accountKey": "ERC-012",
 			"hasActivation": true,
 			"menuOrder": 3,
@@ -23,48 +170,6 @@
 		},
 		{
 			"accountKey": "ERC-013",
-			"hasActivation": true,
-			"menuOrder": 5,
-			"name": "Commerce",
-			"tabOrder": 6
-		},
-		{
-			"accountKey": "ERC-014",
-			"hasActivation": true,
-			"menuOrder": 3,
-			"name": "DXP",
-			"tabOrder": 4
-		},
-		{
-			"accountKey": "ERC-014",
-			"hasActivation": true,
-			"menuOrder": 5,
-			"name": "Commerce",
-			"tabOrder": 6
-		},
-		{
-			"accountKey": "ERC-015",
-			"hasActivation": true,
-			"menuOrder": 3,
-			"name": "DXP",
-			"tabOrder": 4
-		},
-		{
-			"accountKey": "ERC-015",
-			"hasActivation": true,
-			"menuOrder": 5,
-			"name": "Commerce",
-			"tabOrder": 6
-		},
-		{
-			"accountKey": "ERC-016",
-			"hasActivation": true,
-			"menuOrder": 3,
-			"name": "DXP",
-			"tabOrder": 4
-		},
-		{
-			"accountKey": "ERC-016",
 			"hasActivation": true,
 			"menuOrder": 5,
 			"name": "Commerce",

@@ -136,9 +136,10 @@ definition {
 	}
 
 	macro gotoPageTemplateEllipsisItem {
-		Click.waitForMenuToggleJSClick(
-			key_card = "${pageTemplateName}",
-			locator1 = "Card#CARD_ELLIPSIS");
+		Click(
+			key_index = "3",
+			key_text = "${pageTemplateName}",
+			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
 		MenuItem.click(menuItem = "${item}");
 	}

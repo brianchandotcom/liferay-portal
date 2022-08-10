@@ -196,11 +196,11 @@ public interface LiferaySelenium {
 
 	public String getConfirmation(String value);
 
-	public Long getElementHeight(String locator);
+	public long getElementHeight(String locator);
 
 	public String getElementValue(String locator) throws Exception;
 
-	public Long getElementWidth(String locator);
+	public long getElementWidth(String locator);
 
 	public String getEmailBody(String index) throws Exception;
 

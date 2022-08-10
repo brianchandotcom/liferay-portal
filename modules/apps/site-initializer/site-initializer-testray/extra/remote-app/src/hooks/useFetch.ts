@@ -19,7 +19,7 @@ export function useFetch<Data = any, Error = any>(
 	url: string | null,
 	transformData?: (data: Data) => Data
 ) {
-	const {data, error, mutate} = useSWR<Data, Error>(url);
+	const {data, error, isValidating, mutate} = useSWR<Data, Error>(url);
 
 	const memoizedData = useMemo(() => {
 		if (data && transformData) {
@@ -34,6 +34,7 @@ export function useFetch<Data = any, Error = any>(
 		called: data && url,
 		data: memoizedData,
 		error,
+		isValidating,
 		loading: !data,
 		mutate,
 	};

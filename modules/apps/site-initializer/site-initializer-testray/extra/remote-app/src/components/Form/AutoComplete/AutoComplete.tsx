@@ -38,7 +38,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
 
 	const debouncedValue = useDebounce(value, 1000);
 
-	const {called, data, error, loading} = useFetch(
+	const {called, data, error, isValidating} = useFetch(
 		debouncedValue
 			? `${resource}/?filter=${onSearch(debouncedValue)}`
 			: null,
@@ -46,21 +46,23 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
 	);
 
 	const items = data?.items || [];
-
 	const onClickItem = (name: string) => {
 		setShowValue(name);
 		setActive(false);
 	};
 
 	useEffect(() => {
-		setActive(true);
-	}, [called]);
+		if (debouncedValue) {
+			setActive(true);
+		}
+	}, [called, debouncedValue]);
 
 	return (
 		<ClayAutocomplete className="mb-4">
 			<label>{label}</label>
 
 			<ClayAutocomplete.Input
+				onBlur={() => setTimeout(() => setActive(false), 200)}
 				onChange={(event) => {
 					setValue(event.target.value);
 					setShowValue(event.target.value);
@@ -71,7 +73,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
 
 			<ClayAutocomplete.DropDown active={active}>
 				<ClayDropDown.ItemList>
-					{(error || (items && !items.length)) && (
+					{called && (error || (items && !items.length)) && (
 						<ClayDropDown.Item className="disabled">
 							No Results Found
 						</ClayDropDown.Item>
@@ -89,7 +91,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
 				</ClayDropDown.ItemList>
 			</ClayAutocomplete.DropDown>
 
-			{loading && <ClayAutocomplete.LoadingIndicator />}
+			{isValidating && <ClayAutocomplete.LoadingIndicator />}
 		</ClayAutocomplete>
 	);
 };

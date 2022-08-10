@@ -15,15 +15,17 @@
 package com.liferay.commerce.term.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryService;
-import com.liferay.commerce.term.constants.CommerceTermEntryConstants;
+import com.liferay.commerce.product.exception.DuplicateCommerceChannelAccountEntryRelException;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
+import com.liferay.commerce.term.model.CommerceTermEntry;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -33,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false, immediate = true,
@@ -51,28 +54,40 @@ public class EditAccountEntryDefaultCommerceTermEntryMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long accountEntryId = ParamUtil.getLong(
-			actionRequest, "accountEntryId");
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		long commerceTermEntryId = ParamUtil.getLong(
-			actionRequest, "commerceTermEntryId");
-		String type = ParamUtil.getString(actionRequest, "type");
+		try {
+			long commerceChannelAccountEntryRelId = ParamUtil.getLong(
+				actionRequest, "commerceChannelAccountEntryRelId");
 
-		AccountEntry accountEntry = _accountEntryService.getAccountEntry(
-			accountEntryId);
-
-		if (Objects.equals(
-				CommerceTermEntryConstants.TYPE_PAYMENT_TERMS, type)) {
-
-			accountEntry.setDefaultPaymentCTermEntryId(commerceTermEntryId);
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				_updateCommerceChannelAccountEntryRel(
+					actionRequest, commerceChannelAccountEntryRelId);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				_commerceChannelAccountEntryRelService.
+					deleteCommerceChannelAccountEntryRel(
+						commerceChannelAccountEntryRelId);
+			}
 		}
-		else if (Objects.equals(
-					CommerceTermEntryConstants.TYPE_DELIVERY_TERMS, type)) {
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
-			accountEntry.setDefaultDeliveryCTermEntryId(commerceTermEntryId);
+				actionResponse.setRenderParameter(
+					"mvcPath", "/account_entries_admin/error.jsp");
+			}
+			else if (exception instanceof
+						DuplicateCommerceChannelAccountEntryRelException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				hideDefaultErrorMessage(actionRequest);
+			}
+			else {
+				throw exception;
+			}
 		}
-
-		_accountEntryService.updateAccountEntry(accountEntry);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -81,7 +96,36 @@ public class EditAccountEntryDefaultCommerceTermEntryMVCActionCommand
 		}
 	}
 
+	private void _updateCommerceChannelAccountEntryRel(
+			ActionRequest actionRequest, long commerceChannelAccountEntryRelId)
+		throws PortalException {
+
+		long commerceChannelId = ParamUtil.getLong(
+			actionRequest, "commerceChannelId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+		boolean overrideEligibility = ParamUtil.getBoolean(
+			actionRequest, "overrideEligibility");
+
+		if (commerceChannelAccountEntryRelId > 0) {
+			_commerceChannelAccountEntryRelService.
+				updateCommerceChannelAccountEntryRel(
+					commerceChannelAccountEntryRelId, commerceChannelId,
+					classPK, overrideEligibility, 0);
+		}
+		else {
+			long accountEntryId = ParamUtil.getLong(
+				actionRequest, "accountEntryId");
+			int type = ParamUtil.getInteger(actionRequest, "type");
+
+			_commerceChannelAccountEntryRelService.
+				addCommerceChannelAccountEntryRel(
+					accountEntryId, CommerceTermEntry.class.getName(), classPK,
+					commerceChannelId, overrideEligibility, 0, type);
+		}
+	}
+
 	@Reference
-	private AccountEntryService _accountEntryService;
+	private CommerceChannelAccountEntryRelService
+		_commerceChannelAccountEntryRelService;
 
 }

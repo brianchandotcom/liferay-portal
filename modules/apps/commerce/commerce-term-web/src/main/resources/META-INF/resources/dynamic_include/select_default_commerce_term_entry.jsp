@@ -17,56 +17,59 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceAccountEntryDisplay commerceAccountEntryDisplay = CommerceAccountEntryDisplay.of(ParamUtil.getLong(request, "accountEntryId"));
+CommerceChannelAccountEntryRelDisplayContext commerceChannelAccountEntryRelDisplayContext = (CommerceChannelAccountEntryRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-long commerceTermEntryId = 0;
+AccountEntry accountEntry = commerceChannelAccountEntryRelDisplayContext.getAccountEntry();
 
-String type = ParamUtil.getString(request, "type");
-
-if (Objects.equals(CommerceTermEntryConstants.TYPE_PAYMENT_TERMS, type)) {
-	commerceTermEntryId = commerceAccountEntryDisplay.getDefaultPaymentCommerceTermEntryId();
-}
-else if (Objects.equals(CommerceTermEntryConstants.TYPE_DELIVERY_TERMS, type)) {
-	commerceTermEntryId = commerceAccountEntryDisplay.getDefaultDeliveryCommerceTermEntryId();
-}
-
-SearchContainer<CommerceTermEntryDisplay> accountEntryCommerceTermEntryDisplaySearchContainer = AccountEntryCommerceTermEntryDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
-
-accountEntryCommerceTermEntryDisplaySearchContainer.setRowChecker(null);
+CommerceChannelAccountEntryRel commerceChannelAccountEntryRel = commerceChannelAccountEntryRelDisplayContext.fetchCommerceChannelAccountEntryRel();
 %>
 
-<clay:container-fluid
-	id='<%= liferayPortletResponse.getNamespace() + "selectDefaultCommerceTermEntry" %>'
+<commerce-ui:modal-content
+	submitButtonLabel='<%= LanguageUtil.get(request, "save") %>'
+	title="<%= commerceChannelAccountEntryRelDisplayContext.getModalTitle() %>"
 >
-	<liferay-ui:search-container
-		searchContainer="<%= accountEntryCommerceTermEntryDisplaySearchContainer %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.commerce.term.web.internal.display.CommerceTermEntryDisplay"
-			keyProperty="commerceTermEntryId"
-			modelVar="commerceTermEntryDisplay"
-		>
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-small table-cell-minw-150"
-				name="name"
-				value="<%= commerceTermEntryDisplay.getName() %>"
-			/>
+	<portlet:actionURL name="/commerce_term_entry/edit_account_entry_default_commerce_term_entry" var="editAccountEntryDefaultCommerceTermEntryActionURL" />
 
-			<liferay-ui:search-container-column-text>
-				<clay:radio
-					checked="<%= commerceTermEntryDisplay.getCommerceTermEntryId() == commerceTermEntryId %>"
-					cssClass="selector-button"
-					data-entityid="<%= commerceTermEntryDisplay.getCommerceTermEntryId() %>"
-					label="<%= commerceTermEntryDisplay.getName() %>"
-					name='<%= liferayPortletResponse.getNamespace() + "selectCommerceTermEntry" %>'
-					showLabel="<%= false %>"
-					value="<%= String.valueOf(commerceTermEntryDisplay.getCommerceTermEntryId()) %>"
-				/>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+	<aui:form action="<%= editAccountEntryDefaultCommerceTermEntryActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="accountEntryId" type="hidden" value="<%= accountEntry.getAccountEntryId() %>" />
+		<aui:input name="commerceChannelAccountEntryRelId" type="hidden" value="<%= (commerceChannelAccountEntryRel == null) ? 0 : commerceChannelAccountEntryRel.getCommerceChannelAccountEntryRelId() %>" />
+		<aui:input name="type" type="hidden" value="<%= commerceChannelAccountEntryRelDisplayContext.getType() %>" />
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
-</clay:container-fluid>
+		<liferay-ui:error exception="<%= DuplicateCommerceChannelAccountEntryRelException.class %>" message="there-is-already-a-term-defined-for-the-selected-channel" />
+
+		<aui:model-context bean="<%= commerceChannelAccountEntryRelDisplayContext.fetchCommerceChannelAccountEntryRel() %>" model="<%= CommerceChannelAccountEntryRel.class %>" />
+
+		<aui:select label="channel" name="commerceChannelId">
+			<aui:option label="<%= LanguageUtil.get(request, commerceChannelAccountEntryRelDisplayContext.getCommerceChannelsEmptyOptionKey()) %>" selected="<%= commerceChannelAccountEntryRelDisplayContext.isCommerceChannelSelected(0) %>" value="0" />
+
+			<%
+			for (CommerceChannel commerceChannel : commerceChannelAccountEntryRelDisplayContext.getFilteredCommerceChannels()) {
+			%>
+
+				<aui:option label="<%= commerceChannel.getName() %>" selected="<%= commerceChannelAccountEntryRelDisplayContext.isCommerceChannelSelected(commerceChannel.getCommerceChannelId()) %>" value="<%= commerceChannel.getCommerceChannelId() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+
+		<aui:input checked="<%= (commerceChannelAccountEntryRel == null) ? false : commerceChannelAccountEntryRel.isOverrideEligibility() %>" helpMessage="override-eligibility-help" label="override-eligibility" name="overrideEligibility" type="toggle-switch" />
+
+		<aui:select label="term" name="classPK" required="<%= true %>">
+
+			<%
+			for (CommerceTermEntry commerceTermEntry : commerceChannelAccountEntryRelDisplayContext.getCommerceTermEntries()) {
+			%>
+
+				<aui:option label="<%= commerceTermEntry.getLabel(languageId) %>" selected="<%= commerceChannelAccountEntryRelDisplayContext.isCommerceTermEntrySelected(commerceTermEntry.getCommerceTermEntryId()) %>" value="<%= commerceTermEntry.getCommerceTermEntryId() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+	</aui:form>
+</commerce-ui:modal-content>

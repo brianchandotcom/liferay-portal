@@ -31,17 +31,30 @@ definition {
 				accountEntryType = "${accountType}");
 		}
 
-		JSONAccountEntryUser.addAccountEntryUser(
-			accountEntryName = "${accountName}",
-			userEmailAddress = "${userEmailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+		if (isSet(existingUser) && ("${existingUser}" == "true")) {
+			Accounts.openAccountsAdmin();
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "${agreeToTermsAndAnswerReminderQuery}",
-			requireReset = "${requireReset}",
-			userEmailAddress = "${userEmailAddress}");
+			LexiconEntry.gotoEntry(rowEntry = "${accountName}");
+
+			Accounts.assignUsers(
+				accountName = "${accountName}",
+				assigneeName = "${userEmailAddress}");
+		}
+		else {
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "${accountName}",
+				userEmailAddress = "${userEmailAddress}",
+				userFirstName = "${userFirstName}",
+				userLastName = "${userLastName}",
+				userScreenName = "${userScreenName}");
+		}
+
+		if (isSet(requireReset) || isSet(agreeToTermsAndAnswerReminderQuery)) {
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "${agreeToTermsAndAnswerReminderQuery}",
+				requireReset = "${requireReset}",
+				userEmailAddress = "${userEmailAddress}");
+		}
 
 		if (isSet(userSiteMembership)) {
 			JSONUser.addUserToSite(

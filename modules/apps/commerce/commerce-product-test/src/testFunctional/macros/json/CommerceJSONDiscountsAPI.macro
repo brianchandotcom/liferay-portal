@@ -33,6 +33,15 @@ definition {
 			var percentageLevel4 = "0";
 		}
 
+		if (!(isSet(useCouponCode))) {
+			var useCouponCode = "false";
+		}
+		else {
+			if (!(isSet(couponCode))) {
+				var couponCode = "TEST";
+			}
+		}
+
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts \
 			-u test@liferay.com:test \
@@ -40,6 +49,7 @@ definition {
 			-H 'Content-Type: application/json' \
   			-d '{
 				"active": ${active},
+				"couponCode": "${couponCode}",
 				"level": "${level}",
 				"limitationType": "${limitationType}",
 				"maximumDiscountAmount": ${maximumDiscountAmount},
@@ -50,6 +60,7 @@ definition {
 				"percentageLevel4": ${percentageLevel4},
 				"target": "${target}",
 				"title": "${title}",
+				"useCouponCode": ${useCouponCode},
 				"usePercentage": ${usePercentage}
 			}'
 		''';

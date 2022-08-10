@@ -43,7 +43,7 @@ definition {
 		}
 
 		if (isSet(deliveryDiscountPercentage)) {
-			var deliverydiscountAmount = MathUtil.percent("${deliveryDiscountPercentage}","${deliveryCost}");
+			var deliverydiscountAmount = MathUtil.percent("${deliveryDiscountPercentage}", "${deliveryCost}");
 
 			var deliveryCost = ${deliveryCost} - ${deliverydiscountAmount};
 		}
@@ -114,21 +114,12 @@ definition {
 
 		if (isSet(singleShippingOption)) {
 			if (isSet(shippingMethod)) {
-				if ("${shippingMethod}" == "Standard") {
-					var total = ${subtotal} + 15;
-				}
-				else if ("${shippingMethod}" == "Expedited") {
-					var total = ${subtotal} + 25;
-				}
-				else if (isSet(customDeliveryValue)) {
-					var total = ${subtotal} + ${customDeliveryValue};
-				}
-				else {
-					var total = "${subtotal}";
-				}
-			}
-			else {
-				var total = "${subtotal}";
+				var deliveryCost = CommerceCheckout.getDeliveryCost(
+					customDeliveryValue = "${customDeliveryValue}",
+					deliveryDiscountPercentage = "${deliveryDiscountPercentage}",
+					shippingMethod = "${shippingMethod}");
+
+				var total = ${subtotal} + ${deliveryCost};
 			}
 		}
 		else if (isSet(shippingMethod)) {
@@ -169,18 +160,12 @@ definition {
 					locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL");
 			}
 
-			if ("${shippingMethod}" == "Standard") {
-				var total = ${subtotal} + 15;
-			}
-			else if ("${shippingMethod}" == "Expedited") {
-				var total = ${subtotal} + 25;
-			}
-			else if (isSet(customDeliveryValue)) {
-				var total = ${subtotal} + ${customDeliveryValue};
-			}
-			else {
-				var total = "${subtotal}";
-			}
+			var deliveryCost = CommerceCheckout.getDeliveryCost(
+				customDeliveryValue = "${customDeliveryValue}",
+				deliveryDiscountPercentage = "${deliveryDiscountPercentage}",
+				shippingMethod = "${shippingMethod}");
+
+			var total = ${subtotal} + ${deliveryCost};
 		}
 		else {
 			var total = "${subtotal}";
@@ -269,6 +254,8 @@ definition {
 			billingAddressCity = "${billingAddressCity}",
 			billingAddressCountry = "${billingAddressCountry}",
 			billingAddressName = "${billingAddressName}",
+			deliveryDiscountPercentage = "${deliveryDiscountPercentage}",
+			deliveryDiscountValue = "${deliveryDiscountValue}",
 			deliveryTerm = "${deliveryTerm}",
 			deliveryValue = "${deliveryValue}",
 			paymentMethod = "${paymentMethod}",
@@ -342,6 +329,10 @@ definition {
 	}
 
 	macro viewCheckoutOrderSummary {
+		if (!(isSet(currency))) {
+			var currency = "$";
+		}
+
 		if (IsElementPresent(key_addressInfo = "", locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS")) {
 			AssertTextEquals.assertPartialText(
 				key_addressInfo = "${addressName}",
@@ -468,6 +459,21 @@ definition {
 				key_deliveryValue = "${deliveryValue}",
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_DELIVERY",
 				value1 = "${deliveryValue}");
+		}
+
+		if (isSet(deliveryDiscountValue)) {
+			AssertElementPresent(
+				key_currency = "${currency}",
+				key_discountValue = "${deliveryDiscountValue}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_DELIVERY_DISCOUNT_VALUE");
+		}
+
+		if (isSet(deliveryDiscountPercentage)) {
+			var deliveryDiscountPercentage = CommerceUtilities.convertWholeNumberToDecimal(number = "${deliveryDiscountPercentage}");
+
+			AssertElementPresent(
+				key_discountPercentage = "${deliveryDiscountPercentage}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_DELIVERY_DISCOUNT_PERCENTAGE");
 		}
 
 		if (isSet(taxValue)) {

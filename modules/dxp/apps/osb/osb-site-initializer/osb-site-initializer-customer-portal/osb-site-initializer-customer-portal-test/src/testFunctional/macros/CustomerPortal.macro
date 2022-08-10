@@ -353,6 +353,10 @@ definition {
 		}
 	}
 
+	macro waitToLiferayPage {
+        WaitForElementPresent(locator1 = "CustomerPortalSite#LIFERAY_SITE");
+    }
+
 	macro openAccountsAdminForCP {
 		Accounts.openAccountsAdmin();
 
@@ -730,10 +734,6 @@ definition {
 		WaitForVisible(
 			key_userFirstName = "${userFirstName}",
 			locator1 = "CustomerPortalSite#WELCOME_PAGE_USER_NAME");
-	}
-
-	macro waitToLiferayPage {
-		WaitForElementPresent(locator1 = "CustomerPortalSite#LIFERAY_SITE");
 	}
 
 }

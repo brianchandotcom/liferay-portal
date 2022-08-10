@@ -1341,12 +1341,6 @@ definition {
 				checkboxName = "Hide Fragment",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
-			if ((IsElementPresent(locator1 = "Modal#BODY")) && (IsTextEqual(locator1 = "Modal#BODY", value1 = "This fragment contains a required form field or a submit element. Are you sure you want to hide it?"))) {
-				Click(
-					key_text = "Hide",
-					locator1 = "Modal#MODAL_FOOTER_BUTTON");
-			}
-
 			AssertChecked.assertCheckedNotVisible(
 				checkboxName = "Hide Fragment",
 				locator1 = "Checkbox#ANY_CHECKBOX");
@@ -3890,12 +3884,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			key_index = "${index}",
 			key_nodeName = "${fragmentName}",
 			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
-
-		if ((IsElementPresent(locator1 = "Modal#BODY")) && (IsTextEqual(locator1 = "Modal#BODY", value1 = "This fragment contains a required form field or a submit element. Are you sure you want to hide it?"))) {
-			Click(
-				key_text = "Hide",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-		}
 
 		PageEditor.waitForAutoSave();
 	}

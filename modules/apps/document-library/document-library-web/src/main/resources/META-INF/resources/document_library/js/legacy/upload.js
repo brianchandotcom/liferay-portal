@@ -557,9 +557,10 @@ AUI.add(
 
 						instance._hideEmptyResultsMessage(searchContainer);
 
-						const searchContainerWrapper = document.querySelector(
-							'div.lfr-search-container-wrapper'
-						);
+						const searchContainerWrapper = instance
+							.get('entriesContainer')
+							.one('div.lfr-search-container-wrapper')
+							.getDOMNode();
 
 						if (searchContainerWrapper) {
 							searchContainerWrapper.style.display = 'block';

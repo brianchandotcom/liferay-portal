@@ -19,6 +19,7 @@ import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.login.web.internal.portlet.util.LoginUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.AddressCityException;
@@ -128,7 +129,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		String emailAddress = ParamUtil.getString(
 			actionRequest, "emailAddress");
 		long facebookId = ParamUtil.getLong(actionRequest, "facebookId");
-		String openId = ParamUtil.getString(actionRequest, "openId");
 		String languageId = ParamUtil.getString(actionRequest, "languageId");
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String middleName = ParamUtil.getString(actionRequest, "middleName");
@@ -159,11 +159,11 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		User user = _userService.addUserWithWorkflow(
 			company.getCompanyId(), autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
-			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
-			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
-			userGroupIds, sendEmail, serviceContext);
+			autoScreenName, screenName, emailAddress, facebookId,
+			StringPool.BLANK, LocaleUtil.fromLanguageId(languageId), firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
 
 		// Session messages
 
@@ -411,7 +411,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			password2 = password1;
 		}
 
-		String openId = ParamUtil.getString(actionRequest, "openId");
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String middleName = ParamUtil.getString(actionRequest, "middleName");
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
@@ -436,10 +435,11 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		User user = _userService.updateIncompleteUser(
 			themeDisplay.getCompanyId(), autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			themeDisplay.getLocale(), firstName, middleName, lastName, prefixId,
-			suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			updateUserInformation, sendEmail, serviceContext);
+			autoScreenName, screenName, emailAddress, facebookId,
+			StringPool.BLANK, themeDisplay.getLocale(), firstName, middleName,
+			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
+			birthdayYear, jobTitle, updateUserInformation, sendEmail,
+			serviceContext);
 
 		if (facebookId > 0) {
 			httpSession.removeAttribute(WebKeys.FACEBOOK_INCOMPLETE_USER_ID);

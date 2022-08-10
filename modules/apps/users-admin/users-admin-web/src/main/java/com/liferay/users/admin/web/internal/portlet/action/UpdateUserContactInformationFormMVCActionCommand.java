@@ -85,10 +85,6 @@ public class UpdateUserContactInformationFormMVCActionCommand
 			_saveContactInformation(
 				user, facebookSn, jabberSn, skypeSn, smsSn, twitterSn);
 
-			String openId = ParamUtil.getString(actionRequest, "openId");
-
-			_userLocalService.updateOpenId(user.getUserId(), openId);
-
 			String redirect = _portal.escapeRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));
 

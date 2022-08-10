@@ -69,9 +69,3 @@ request.setAttribute("contact_information.jsp-classPK", selContactId);
 
 	<liferay-util:include page="/user/social_network.jsp" servletContext="<%= application %>" />
 </clay:sheet-section>
-
-<clay:sheet-section>
-	<h3 class="sheet-subtitle"><liferay-ui:message key="openid" /></h3>
-
-	<liferay-util:include page="/user/openid.jsp" servletContext="<%= application %>" />
-</clay:sheet-section>

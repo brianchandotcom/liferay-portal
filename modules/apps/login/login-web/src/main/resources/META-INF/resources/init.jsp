@@ -42,7 +42,6 @@ page import="com.liferay.portal.kernel.exception.CompanyMaxUsersException" %><%@
 page import="com.liferay.portal.kernel.exception.ContactBirthdayException" %><%@
 page import="com.liferay.portal.kernel.exception.ContactNameException" %><%@
 page import="com.liferay.portal.kernel.exception.CookieNotSupportedException" %><%@
-page import="com.liferay.portal.kernel.exception.DuplicateOpenIdException" %><%@
 page import="com.liferay.portal.kernel.exception.EmailAddressException" %><%@
 page import="com.liferay.portal.kernel.exception.GroupFriendlyURLException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchCountryException" %><%@

@@ -19,7 +19,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String openId = ParamUtil.getString(request, "openId");
 boolean male = ParamUtil.getBoolean(request, "male", true);
 
 Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar();
@@ -31,12 +30,6 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 %>
 
-<c:if test="<%= Validator.isNotNull(openId) %>">
-	<div class="alert alert-info">
-		<liferay-ui:message arguments="<%= HtmlUtil.escape(openId) %>" key="you-are-about-to-create-an-account-with-openid-x" translateArguments="<%= false %>" />
-	</div>
-</c:if>
-
 <portlet:actionURL name="/login/create_account" secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccountURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/login/create_account" />
 </portlet:actionURL>
@@ -45,7 +38,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="openId" type="hidden" value="<%= openId %>" />
 
 	<liferay-ui:error exception="<%= AddressCityException.class %>" message="please-enter-a-valid-city" />
 	<liferay-ui:error exception="<%= AddressStreetException.class %>" message="please-enter-a-valid-street" />
@@ -58,7 +50,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 	<liferay-ui:error exception="<%= ContactNameException.MustHaveFirstName.class %>" message="please-enter-a-valid-first-name" />
 	<liferay-ui:error exception="<%= ContactNameException.MustHaveLastName.class %>" message="please-enter-a-valid-last-name" />
 	<liferay-ui:error exception="<%= ContactNameException.MustHaveValidFullName.class %>" message="please-enter-a-valid-first-middle-and-last-name" />
-	<liferay-ui:error exception="<%= DuplicateOpenIdException.class %>" message="a-user-with-that-openid-already-exists" />
 	<liferay-ui:error exception="<%= EmailAddressException.class %>" message="please-enter-a-valid-email-address" />
 
 	<liferay-ui:error exception="<%= GroupFriendlyURLException.class %>">
@@ -130,12 +121,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= WebsiteURLException.class %>" message="please-enter-a-valid-url" />
-
-	<c:if test='<%= SessionMessages.contains(request, "openIdUserInformationMissing") %>'>
-		<div class="alert alert-info">
-			<liferay-ui:message key="you-have-successfully-authenticated-please-provide-the-following-required-information-to-access-the-portal" />
-		</div>
-	</c:if>
 
 	<aui:model-context model="<%= Contact.class %>" />
 

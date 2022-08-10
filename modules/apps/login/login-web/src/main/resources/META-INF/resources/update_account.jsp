@@ -37,7 +37,6 @@ if (userId > 0) {
 
 String screenName = BeanParamUtil.getString(selUser, request, "screenName");
 String emailAddress = BeanParamUtil.getString(selUser, request, "emailAddress");
-String openId = BeanParamUtil.getString(selUser, request, "openId");
 String firstName = BeanParamUtil.getString(selUser, request, "firstName");
 String middleName = BeanParamUtil.getString(selUser, request, "middleName");
 String lastName = BeanParamUtil.getString(selUser, request, "lastName");
@@ -77,7 +76,6 @@ boolean male = BeanParamUtil.getBoolean(selUser, request, "male", true);
 
 		<aui:input name="screenName" type="hidden" value="<%= screenName %>" />
 		<aui:input name="emailAddress" type="hidden" value="<%= emailAddress %>" />
-		<aui:input name="openId" type="hidden" value="<%= openId %>" />
 		<aui:input name="firstName" type="hidden" value="<%= firstName %>" />
 		<aui:input name="middleName" type="hidden" value="<%= middleName %>" />
 		<aui:input name="lastName" type="hidden" value="<%= lastName %>" />

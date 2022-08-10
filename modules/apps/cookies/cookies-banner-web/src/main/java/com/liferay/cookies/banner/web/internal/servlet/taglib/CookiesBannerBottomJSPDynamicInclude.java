@@ -71,7 +71,6 @@ public class CookiesBannerBottomJSPDynamicInclude
 						group.getGroupId());
 
 			if (!cookiesPreferenceHandlingConfiguration.enabled()) {
-
 				return;
 			}
 		}

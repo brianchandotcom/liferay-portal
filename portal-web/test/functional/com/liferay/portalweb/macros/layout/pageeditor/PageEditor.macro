@@ -5153,6 +5153,25 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			value1 = "${numberOfItems}");
 	}
 
+	macro viewSideBarButtonOrder {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
+		for (var buttonName : list "${buttonNameList}") {
+			var actualButtonValue = selenium.getAttribute("//div[contains(@class,'page-editor__sidebar__buttons')]//button[contains(@data-tooltip-align,'left')][${position}]@title");
+
+			if (contains("${actualButtonValue}", "${buttonName}")) {
+				echo("PASSED");
+			}
+			else {
+				TestUtils.fail(message = "FAILED: expected '${buttonName}', actual was '${actualButtonValue}'");
+			}
+
+			var position = ${position} + 1;
+		}
+	}
+
 	macro waitForAutoSave {
 		SelectFrameTop();
 

@@ -44,6 +44,7 @@ jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/WidgetsContext',
 	() => ({
 		WidgetsContext: ({children}) => <>{children}</>,
+		useToggleWidgetHighlighted: jest.fn(),
 		useWidgets: jest.fn(),
 	})
 );

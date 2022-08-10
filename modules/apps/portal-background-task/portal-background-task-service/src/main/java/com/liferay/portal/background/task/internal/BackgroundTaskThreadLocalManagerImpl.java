@@ -17,12 +17,14 @@ package com.liferay.portal.background.task.internal;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
@@ -126,7 +128,11 @@ public class BackgroundTaskThreadLocalManagerImpl
 		long groupId = GetterUtil.getLong(threadLocalValues.get("groupId"));
 
 		if (groupId > 0) {
-			GroupThreadLocal.setGroupId(groupId);
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if ((group != null) && (group.getCompanyId() == companyId)) {
+				GroupThreadLocal.setGroupId(groupId);
+			}
 		}
 
 		String principalName = GetterUtil.getString(
@@ -136,7 +142,7 @@ public class BackgroundTaskThreadLocalManagerImpl
 			User user = _userLocalService.fetchUser(
 				GetterUtil.getLong(principalName));
 
-			if (user != null) {
+			if ((user != null) && (user.getCompanyId() == companyId)) {
 				PrincipalThreadLocal.setName(principalName);
 
 				PermissionThreadLocal.setPermissionChecker(
@@ -157,6 +163,11 @@ public class BackgroundTaskThreadLocalManagerImpl
 		if (themeDisplayLocale != null) {
 			LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -187,6 +198,7 @@ public class BackgroundTaskThreadLocalManagerImpl
 			"Unable to find company " + companyId);
 	}
 
+	private GroupLocalService _groupLocalService;
 	private PermissionCheckerFactory _permissionCheckerFactory;
 	private UserLocalService _userLocalService;
 

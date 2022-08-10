@@ -1,0 +1,84 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+        task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+
+            ACUtils.createWCAndAddToPage();
+		}
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownAC();
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+    }
+
+    @description = "Bug: LRAC-8084 | Automation ID: LRAC-11512 | Test Summary: It is possible to create an AB test"
+    @priority = "5"
+    test CanCreateStartABTest {
+        var nameABTest = "Create AB test"
+        
+        task ("Connect DXP to Analytics Cloud") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to Site Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+        task ("Start an AB test") {
+            ACUtils.createABtest(
+                goalAB = "Bounce Rate",
+                titleAB = "${nameABTest}");
+            
+            ACUtils.createABVariant(variantAB = "AB Variant");
+
+            ACUtils.runABTest();
+        }
+
+        task ("Go to Tests") {
+            ACUtils.launchAC();
+
+            ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+            ACNavigation.goToTests();
+        }
+
+        task ("Assert AB test") {
+            ACUtils.viewABTest(testName = "${nameABTest}");
+        }
+    }
+
+}

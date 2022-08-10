@@ -5138,12 +5138,27 @@ definition {
 	@priority = "3"
 	test PreviewBlogsImage {
 		task ("Given a blog contains only an image") {
+			var imageId = JSONBlog.uploadBlogImage(
+				groupName = "Test Site Name",
+				sourceFileName = "Document_1.jpg");
+
+			JSONBlog.addEntryWithImage(
+				coverImageId = "${imageId}",
+				entryContent = "Blogs Content",
+				entryTitle = "Blogs Title",
+				groupName = "Test Site Name");
 		}
 
 		task ("When the user opens asset Info Panel at Content Dashboard ") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.openInfoPanelByDropdownMenu();
 		}
 
 		task ("Then a preview of the blog image must appear in the Info Panel") {
+			AssertVisible(
+				assetName = "Document_1.jpg",
+				locator1 = "ContentDashboard#PREVIEW_IMAGE");
 		}
 	}
 

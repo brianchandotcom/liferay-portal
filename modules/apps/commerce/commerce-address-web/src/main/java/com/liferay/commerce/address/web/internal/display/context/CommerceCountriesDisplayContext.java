@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class CommerceCountriesDisplayContext
 		CommerceChannelRelService commerceChannelRelService,
 		CommerceChannelService commerceChannelService,
 		CommerceRegionsStarterRegistry commerceRegionsStarterRegistry,
-		CountryService countryService,
+		CountryService countryService, Portal portal,
 		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -65,7 +66,7 @@ public class CommerceCountriesDisplayContext
 		_countryService = countryService;
 
 		_commerceCountryRequestHelper = new CommerceCountryRequestHelper(
-			renderRequest);
+			portal.getHttpServletRequest(renderRequest));
 	}
 
 	public long[] getCommerceChannelRelCommerceChannelIds()

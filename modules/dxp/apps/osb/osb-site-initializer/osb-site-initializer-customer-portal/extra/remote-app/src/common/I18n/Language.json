@@ -327,8 +327,15 @@
 	"your-analytics-cloud-environments-are-ready-visit-the-workspace-to-view-analytics-cloud-details": "Your Analytics Cloud environments are ready. Visit the workspace to view Analytics Cloud details.",
 	"your-analytics-cloud-workspace-is-being-set-up-and-will-be-available-soon": "Your Analytics Cloud workspace is being set up and will be available soon",
 	"your-analytics-cloud-workspace-will-be-provisioned-in-1-2-business-days-an-email-will-be-sent-once-your-workspace-is-ready": "Your Analytics Cloud workspace will be provisioned in 1-2 business days. An email will be sent once your workspace is ready.",
-	"your-lxc-sm-environments-are-being-set-up-and-will-be-available-soon": "Your LXC-SM environments are being set up and will be available soon",
-	"your-lxc-sm-environments-are-ready": "Your LXC-SM environments are ready.",
-	"your-lxc-sm-environments-are-ready-go-to-the-product-console-to-view-lxc-sm-details": "Your LXC-SM environments are ready. Go to the Product Console to view LXC-SM details.",
-	"your-request-completed-successfully": "Your request completed successfully."
+	"your-dxp-cloud-environments-are-being-set-up-and-will-be-available-soon": "Your DXP Cloud environments are being set up and will be available soon",
+	"your-dxp-cloud-environments-are-ready": "Your DXP Cloud environments are ready.",
+	"your-dxp-cloud-environments-are-ready-go-to-the-product-console-to-view-dxp-cloud-details": "Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details.",
+	"your-request-completed-successfully": "Your request completed successfully.",
+	"liferay-experience-cloud-activation": "Liferay Experience Cloud Activation",
+	"almost-there-setup-experience-cloud-by-finishing-the-activation-form": "Almost there! Setup Experience Cloud by finishing the activation form.",
+	"your-experience-cloud-project-is-being-set-up-and-will-be-available-soon": "Your Experience Cloud Project is being set up and will be available soon.",
+	"your-experience-cloud-environments-are-ready": "Your Experience Cloud Environments are ready.",
+	"go-to-analytics-cloud-workspace": "Go to Analytics Cloud Workspace",
+	"go-to-uat": "Go to UAT",
+	"go-to-liferay-experience-cloud": "Go to Liferay Experience Cloud"
 }

@@ -1,0 +1,121 @@
+@component-name = "portal-headless-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		TaxonomyVocabularyAPI.deleteTaxonomyVocabularyByErc(
+			externalReferenceCode = "erc",
+			groupName = "Guest");
+
+		JSONDepot.deleteDepot(depotName = "Test Depot Name");
+	}
+
+	@priority = "4"
+	test CanReceiveABodyWithNameOnlyInResponse {
+		property portal.acceptance = "true";
+
+		task ("Given a AssetLibrary with keyword created") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			TaxonomyVocabularyAPI.createAssetLibraryWithKeyWords(
+				assetLibraryId = "${assetLibraryId}",
+				name = "Liferay");
+		}
+
+		task ("When with curl I request getAssetLibraryKeywordsPage with fields=name") {
+			var response = TaxonomyVocabularyAPI.getAssetLibraryKeywordsWithDifferentParameters(
+				assetLibraryId = "${assetLibraryId}",
+				parameter = "fields",
+				parameterValue = "name");
+
+			var name = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
+				element = "$..name",
+				responseToParse = "${response}");
+		}
+
+		task ("Then in a response I receive a body with name values only") {
+			TaxonomyVocabularyAPI.assertResponseHasNameFieldValueOnly(
+				expectedValue = "{name=${name}}",
+				responseToParse = "${response}");
+		}
+	}
+
+	@priority = "4"
+	test CanReceiveCorrectValueOfAggregationTermsInResponse {
+		property portal.acceptance = "true";
+
+		task ("Given a Taxonomy Vocabulary") {
+			TaxonomyVocabularyAPI.createTaxonomyVocabulary(
+				externalReferenceCode = "erc",
+				groupName = "Guest",
+				name = "Vocabulary Name");
+		}
+
+		task ("When with curl I request getSiteTaxonomyVocabulariesPage with aggregationTerms=id") {
+			var response = TaxonomyVocabularyAPI.getTaxonomyVocabularyWithDifferentParameters(
+				groupName = "Guest",
+				parameter = "aggregationTerms",
+				parameterValue = "id");
+
+			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
+				element = "$..[0]['id']",
+				responseToParse = "${response}");
+		}
+
+		task ("Then in a response I receive numberOfOccurrences and term with correct value in facets fields") {
+			TaxonomyVocabularyAPI.assertInFacetsWithCorrectValue(
+				expectedValue = "1",
+				responseToParse = "${response}",
+				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+		}
+	}
+
+	@priority = "4"
+	test CanReceiveNameFieldValuesOnlyInResponse {
+		property portal.acceptance = "true";
+
+		task ("Given a Taxonomy Vocabulary with assetLibrary") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			TaxonomyVocabularyAPI.createTaxonomyVocabulary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				name = "Vocabulary Name");
+		}
+
+		task ("When with curl I request getAssetLibraryTaxonomyVocabulariesPage with restrictFields equal all fields except name field") {
+			var response = TaxonomyVocabularyAPI.getTaxonomyVocabularyWithDifferentParameters(
+				assetLibraryId = "${assetLibraryId}",
+				parameter = "restrictFields",
+				parameterValue = "actions,assetLibraryKey,assetTypes,availableLanguages,creator,dateCreated,dateModified,description,externalReferenceCode,id,numberOfTaxonomyCategories");
+
+			var taxonomyVocabularyName = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
+				element = "$..name",
+				responseToParse = "${response}");
+		}
+
+		task ("Then in a response I receive a with name field values only") {
+			TaxonomyVocabularyAPI.assertResponseHasNameFieldValueOnly(
+				expectedValue = "{name=${taxonomyVocabularyName}}",
+				responseToParse = "${response}");
+		}
+	}
+
+}

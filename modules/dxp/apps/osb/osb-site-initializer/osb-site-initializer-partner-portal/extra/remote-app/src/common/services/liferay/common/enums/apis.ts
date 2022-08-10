@@ -10,7 +10,7 @@
  */
 
 export enum LiferayAPIs {
-	HEADERLESS_LIST_TYPE = 'headless-admin-list-type/v1.0',
+	HEADERLESS_ADMIN_LIST_TYPE = 'headless-admin-list-type/v1.0',
 	HEADERLESS_ADMIN_USER = 'headless-admin-user/v1.0',
 	OBJECT = 'c',
 }

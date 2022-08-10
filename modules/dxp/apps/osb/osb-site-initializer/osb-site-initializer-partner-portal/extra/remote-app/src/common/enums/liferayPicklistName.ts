@@ -10,8 +10,12 @@
  */
 
 export enum LiferayPicklistName {
-	COUNTRIES = 'Countries',
+	ADDITIONAL_OPTIONS = 'MDF Request: Additional Options',
+	BUDGET_EXPENSES = 'Budget Expenses',
+	LEAD_FOLLOW_UP_STRATEGIES = 'Lead Follow Up Strategies',
 	LIFERAY_BUSINESS_SALES_GOALS = 'Liferay Business/Sales Goals',
-	TARGETS_MARKET = 'Targets Market',
-	TARGETS_AUDIENCE_ROLE = 'Targets Audience/Role',
+	PARTNER_LEVELS = 'Partner Levels',
+	REGIONS = 'Regions',
+	TARGET_AUDIENCE_ROLES = 'Target Audience/Roles',
+	TARGET_MARKETS = 'Target Markets',
 }

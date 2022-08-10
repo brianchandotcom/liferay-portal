@@ -13,18 +13,17 @@ import {useMemo} from 'react';
 
 import {LiferayPicklistName} from '../../../../../common/enums/liferayPicklistName';
 import useGetListTypeDefinitions from '../../../../../common/services/liferay/list-type-definitions/useGetListTypeDefinitions';
-import useGetAdditionalOptions from '../../../../../common/services/liferay/object/additional-options/useGetAdditionalOptions';
 import useGetMyUserAccount from '../../../../../common/services/liferay/user-account/useGetMyUserAccount';
 import getEntriesByListTypeDefinitions from '../utils/getEntriesByListTypeDefinitions';
 
 export default function useDynamicFieldEntries() {
 	const {data: userAccount} = useGetMyUserAccount();
-	const {data: additionalOptions} = useGetAdditionalOptions();
 	const {data: listTypeDefinitions} = useGetListTypeDefinitions([
-		LiferayPicklistName.COUNTRIES,
+		LiferayPicklistName.ADDITIONAL_OPTIONS,
+		LiferayPicklistName.REGIONS,
 		LiferayPicklistName.LIFERAY_BUSINESS_SALES_GOALS,
-		LiferayPicklistName.TARGETS_AUDIENCE_ROLE,
-		LiferayPicklistName.TARGETS_MARKET,
+		LiferayPicklistName.TARGET_AUDIENCE_ROLES,
+		LiferayPicklistName.TARGET_MARKETS,
 	]);
 
 	const companiesEntries = useMemo(
@@ -41,18 +40,7 @@ export default function useDynamicFieldEntries() {
 		[listTypeDefinitions?.items]
 	);
 
-	const additionalOptionsEntries = useMemo(
-		() =>
-			additionalOptions?.items.map((additionalOption) => ({
-				description: additionalOption.description,
-				label: additionalOption.name,
-				value: String(additionalOption.id),
-			})),
-		[additionalOptions?.items]
-	);
-
 	return {
-		additionalOptionsEntries,
 		companiesEntries,
 		fieldEntries,
 	};

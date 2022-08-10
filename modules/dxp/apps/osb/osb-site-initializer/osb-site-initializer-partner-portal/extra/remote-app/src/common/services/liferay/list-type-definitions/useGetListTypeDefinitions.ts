@@ -24,7 +24,7 @@ export default function useGetListTypeDefinitions(
 	return useSWR(
 		[
 			`/o/${
-				LiferayAPIs.HEADERLESS_LIST_TYPE
+				LiferayAPIs.HEADERLESS_ADMIN_LIST_TYPE
 			}/list-type-definitions?filter=name in ('${names.join("', '")}')`,
 			Liferay.authToken,
 		],

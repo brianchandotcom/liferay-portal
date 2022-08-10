@@ -36,11 +36,7 @@ const Goals = ({
 		...formikHelpers
 	} = useFormikContext<MDFRequest>();
 
-	const {
-		additionalOptionsEntries,
-		companiesEntries,
-		fieldEntries,
-	} = useDynamicFieldEntries();
+	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
 
 	const {setSelectedAccountEntryId} = useCountryCompanyExtender(
 		useCallback((country) => setFieldValue('country', country), [
@@ -54,7 +50,7 @@ const Goals = ({
 		}
 	}, [setSelectedAccountEntryId, values.r_company_accountEntryId]);
 
-	const countryOptions = fieldEntries[LiferayPicklistName.COUNTRIES];
+	const countryOptions = fieldEntries[LiferayPicklistName.REGIONS];
 	const onCountrySelected = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const countrySelected = countryOptions.find(
 			(countryOption) => countryOption.value === event.target.value
@@ -83,7 +79,7 @@ const Goals = ({
 						label="Country"
 						name="country"
 						onChange={onCountrySelected}
-						options={fieldEntries[LiferayPicklistName.COUNTRIES]}
+						options={fieldEntries[LiferayPicklistName.REGIONS]}
 						required
 					/>
 				</PRMForm.Group>
@@ -113,7 +109,7 @@ const Goals = ({
 			<PRMForm.Section title="Target Market">
 				<PRMFormik.Field
 					component={PRMForm.CheckboxGroup}
-					items={fieldEntries[LiferayPicklistName.TARGETS_MARKET]}
+					items={fieldEntries[LiferayPicklistName.TARGET_MARKETS]}
 					label="Please select the target market(s) for this campaign (choose up to three)"
 					name="targetsMarket"
 					required
@@ -121,7 +117,7 @@ const Goals = ({
 
 				<PRMFormik.Field
 					component={PRMForm.RadioGroup}
-					items={additionalOptionsEntries}
+					items={fieldEntries[LiferayPicklistName.ADDITIONAL_OPTIONS]}
 					label="Additional options? Choose one if applicable"
 					name="r_additionalOption_mdfRequest"
 				/>
@@ -129,7 +125,7 @@ const Goals = ({
 				<PRMFormik.Field
 					component={PRMForm.CheckboxGroup}
 					items={
-						fieldEntries[LiferayPicklistName.TARGETS_AUDIENCE_ROLE]
+						fieldEntries[LiferayPicklistName.TARGET_AUDIENCE_ROLES]
 					}
 					label="Choose your target audience/role (Select all that apply)"
 					name="targetsAudienceRole"
@@ -138,7 +134,7 @@ const Goals = ({
 			</PRMForm.Section>
 
 			<PRMForm.Footer>
-				<div className="mr-auto pl-0 py-3">
+				<div className="d-flex mr-auto">
 					<Button
 						className="pl-0"
 						disabled={isSubmitting}
@@ -149,7 +145,7 @@ const Goals = ({
 					</Button>
 				</div>
 
-				<div className="p-2">
+				<div>
 					<Button
 						className="mr-4"
 						displayType="secondary"

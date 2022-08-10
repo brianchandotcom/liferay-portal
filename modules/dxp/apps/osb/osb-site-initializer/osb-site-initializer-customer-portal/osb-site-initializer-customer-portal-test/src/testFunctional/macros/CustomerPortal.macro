@@ -336,6 +336,10 @@ definition {
 		}
 	}
 
+	macro waitToLiferayPage {
+        WaitForElementPresent(locator1 = "CustomerPortalSite#LIFERAY_SITE");
+    }
+
 	macro onboardingFlow {
 		CustomerPortal.clickOnStartProjectSetup();
 

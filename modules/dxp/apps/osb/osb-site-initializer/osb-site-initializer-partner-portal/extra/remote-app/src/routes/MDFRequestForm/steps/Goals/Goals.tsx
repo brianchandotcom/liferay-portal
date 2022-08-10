@@ -22,6 +22,7 @@ import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import useCountryCompanyExtender from './hooks/useCountryCompanyExtender';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
+import optionSelection from './utils/optionSelection';
 
 const Goals = ({
 	onCancel,
@@ -51,16 +52,22 @@ const Goals = ({
 	}, [setSelectedAccountEntryId, values.r_company_accountEntryId]);
 
 	const countryOptions = fieldEntries[LiferayPicklistName.REGIONS];
-	const onCountrySelected = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const countrySelected = countryOptions.find(
-			(countryOption) => countryOption.value === event.target.value
-		);
+	const onCountrySelected = optionSelection(
+		countryOptions,
+		(countryOptionSelected) =>
+			setFieldValue('country', countryOptionSelected)
+	);
 
-		setFieldValue('country', {
-			key: countrySelected?.value,
-			name: countrySelected?.label,
-		});
-	};
+	const additionalOptions =
+		fieldEntries[LiferayPicklistName.ADDITIONAL_OPTIONS];
+	const onAdditionalOptionSelected = optionSelection(
+		additionalOptions,
+		(additionalOptionSelected) =>
+			setFieldValue('additionalOption', additionalOptionSelected)
+	);
+
+	// eslint-disable-next-line no-console
+	console.log(values);
 
 	return (
 		<PRMForm className="mb-4" name="Goals" title="Campaign Information">
@@ -117,9 +124,10 @@ const Goals = ({
 
 				<PRMFormik.Field
 					component={PRMForm.RadioGroup}
-					items={fieldEntries[LiferayPicklistName.ADDITIONAL_OPTIONS]}
+					items={additionalOptions}
 					label="Additional options? Choose one if applicable"
-					name="r_additionalOption_mdfRequest"
+					name="additionalOption"
+					onChange={onAdditionalOptionSelected}
 				/>
 
 				<PRMFormik.Field

@@ -1,19 +1,19 @@
 {
 	"label": {
-		"en-US": "Budget"
+		"en_US": "Budget"
 	},
 	"name": "Budget",
 	"objectFields": [
 		{
 			"DBType": "String",
+			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Cost"
+				"en_US": "Cost"
 			},
 			"name": "cost",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
 			"DBType": "String",
@@ -23,15 +23,13 @@
 			"label": {
 				"en_US": "Expense"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:BudgetExpenses$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Budget Expenses$]",
 			"name": "expense",
-			"required": false,
-			"type": "String"
+			"required": false
 		}
 	],
 	"pluralLabel": {
 		"en_US": "Budgets"
 	},
-	"scope": "company",
-	"system": false
+	"scope": "company"
 }

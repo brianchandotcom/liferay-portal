@@ -1,15 +1,16 @@
 {
 	"label": {
-		"en-US": "Activity"
+		"en_US": "Activity"
 	},
 	"name": "Activity",
 	"objectFields": [
 		{
 			"DBType": "String",
+			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Name"
+				"en_US": "Name"
 			},
 			"name": "name",
 			"required": false
@@ -19,7 +20,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Start Date"
+				"en_US": "Start Date"
 			},
 			"name": "startDate",
 			"required": false
@@ -29,27 +30,29 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "End Date"
+				"en_US": "End Date"
 			},
 			"name": "endDate",
 			"required": false
 		},
 		{
 			"DBType": "String",
+			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Total Cost of Expense"
+				"en_US": "Total Cost of Expense"
 			},
 			"name": "totalCostOfExpense",
 			"required": false
 		},
 		{
 			"DBType": "String",
+			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "MDF Requested Amount"
+				"en_US": "MDF Requested Amount"
 			},
 			"name": "mdfRequestAmount",
 			"required": false
@@ -59,27 +62,29 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Lead Generated?"
+				"en_US": "Lead Generated?"
 			},
 			"name": "leadGenerated",
 			"required": false
 		},
 		{
 			"DBType": "String",
+			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Lead Follow Up Strategies"
+				"en_US": "Lead Follow Up Strategies"
 			},
 			"name": "leadFollowUpStrategies",
 			"required": false
 		},
 		{
 			"DBType": "String",
+			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Details on Lead Follow Up"
+				"en_US": "Details on Lead Follow Up"
 			},
 			"name": "detailsLeadFollowUp",
 			"required": false
@@ -88,6 +93,5 @@
 	"pluralLabel": {
 		"en_US": "Activities"
 	},
-	"scope": "company",
-	"system": false
+	"scope": "company"
 }

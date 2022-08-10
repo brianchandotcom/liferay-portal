@@ -3,7 +3,10 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {"backgroundFragmentImage": {}},
+					"fragmentStyle": {
+						"backgroundFragmentImage": {
+						}
+					},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -48,13 +51,18 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragment": {"key": "DIALECT-dialect-text"},
-									"fragmentConfig": {"textType": "h1"},
+									"fragment": {
+										"key": "DIALECT-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "h1"
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Search Results"
@@ -64,7 +72,8 @@
 										}
 									],
 									"fragmentStyle": {
-										"backgroundFragmentImage": {},
+										"backgroundFragmentImage": {
+										},
 										"paddingBottom": "4",
 										"paddingTop": "6",
 										"textAlign": "center",
@@ -82,7 +91,8 @@
 										"paddingRight": "10"
 									},
 									"widgetInstance": {
-										"widgetConfig": {},
+										"widgetConfig": {
+										},
 										"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
 									}
 								},
@@ -140,7 +150,8 @@
 									{
 										"definition": {
 											"widgetInstance": {
-												"widgetConfig": {},
+												"widgetConfig": {
+												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
 										},
@@ -153,7 +164,8 @@
 												"borderWidth": ""
 											},
 											"widgetInstance": {
-												"widgetConfig": {},
+												"widgetConfig": {
+												},
 												"widgetName": "com_liferay_portal_search_web_tag_facet_portlet_TagFacetPortlet"
 											}
 										},
@@ -166,7 +178,8 @@
 												"borderWidth": ""
 											},
 											"widgetInstance": {
-												"widgetConfig": {},
+												"widgetConfig": {
+												},
 												"widgetName": "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet"
 											}
 										},
@@ -179,7 +192,8 @@
 												"borderWidth": ""
 											},
 											"widgetInstance": {
-												"widgetConfig": {},
+												"widgetConfig": {
+												},
 												"widgetName": "com_liferay_portal_search_web_modified_facet_portlet_ModifiedFacetPortlet"
 											}
 										},
@@ -192,7 +206,8 @@
 												"borderWidth": ""
 											},
 											"widgetInstance": {
-												"widgetConfig": {},
+												"widgetConfig": {
+												},
 												"widgetName": "com_liferay_portal_search_web_site_facet_portlet_SiteFacetPortlet"
 											}
 										},
@@ -208,7 +223,8 @@
 										"borderWidth": ""
 									},
 									"widgetInstance": {
-										"widgetConfig": {},
+										"widgetConfig": {
+										},
 										"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
 									}
 								},
@@ -217,7 +233,8 @@
 							{
 								"definition": {
 									"widgetInstance": {
-										"widgetConfig": {},
+										"widgetConfig": {
+										},
 										"widgetName": "com_liferay_portal_search_web_suggestions_portlet_SuggestionsPortlet"
 									}
 								},

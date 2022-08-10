@@ -15,17 +15,16 @@
 package com.liferay.commerce.address.web.internal.display.context.helper;
 
 import com.liferay.portal.kernel.display.context.helper.BaseRequestHelper;
-import com.liferay.portal.kernel.util.PortalUtil;
 
-import javax.portlet.RenderRequest;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
  */
 public class CommerceCountryRequestHelper extends BaseRequestHelper {
 
-	public CommerceCountryRequestHelper(RenderRequest renderRequest) {
-		super(PortalUtil.getHttpServletRequest(renderRequest));
+	public CommerceCountryRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 	}
 
 }

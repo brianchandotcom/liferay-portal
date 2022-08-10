@@ -24,6 +24,7 @@ import com.liferay.commerce.starter.CommerceRegionsStarterRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -74,8 +75,8 @@ public class CommerceCountryPortlet extends MVCPortlet {
 			new CommerceCountriesDisplayContext(
 				_actionHelper, _commerceChannelRelService,
 				_commerceChannelService, _commerceRegionsStarterRegistry,
-				_countryService, _portletResourcePermission, renderRequest,
-				renderResponse);
+				_countryService, _portal, _portletResourcePermission,
+				renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCountriesDisplayContext);
@@ -97,6 +98,9 @@ public class CommerceCountryPortlet extends MVCPortlet {
 
 	@Reference
 	private CountryService _countryService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_ADDRESS + ")"

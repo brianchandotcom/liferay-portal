@@ -62,14 +62,6 @@ definition {
 		return "${curl}";
 	}
 
-	macro getFieldValueOfExistingBlogPostingComment {
-		Variables.assertDefined(parameterList = "${response},${fieldName}");
-
-		var fieldValue = JSONUtil.getWithJSONPath("${response}", "$..['items'][?(@.creator)].${fieldName}");
-
-		return "${fieldValue}";
-	}
-
 	macro _postBlogPostingComment {
 		Variables.assertDefined(parameterList = "${blogPostingId},${textComment}");
 
@@ -128,12 +120,14 @@ definition {
 		return "${response}";
 	}
 
-	macro getBlogCommentsText {
+	macro getFieldValueOfAllExistingBlogPostingComments {
+		Variables.assertDefined(parameterList = "${blogPostingId},${fieldName}");
+
 		var response = CommentAPI._getCommentsOfBlogPosting(blogPostingId = "${blogPostingId}");
 
-		var commentsText = JSONUtil.getWithJSONPath("${response}", "$..text");
+		var commentsFieldValue = JSONUtil.getWithJSONPath("${response}", "$..${fieldName}");
 
-		return "${commentsText}";
+		return "${commentsFieldValue}";
 	}
 
 	macro getBlogPostingComments {
@@ -142,6 +136,14 @@ definition {
 		var commentsFromBlogPosting = CommentAPI._getCommentsOfBlogPosting(blogPostingId = "${blogPostingId}");
 
 		return "${commentsFromBlogPosting}";
+	}
+
+	macro getFieldValueOfExistingBlogPostingComment {
+		Variables.assertDefined(parameterList = "${response},${fieldName}");
+
+		var fieldValue = JSONUtil.getWithJSONPath("${response}", "$..['items'][?(@.creator)].${fieldName}");
+
+		return "${fieldValue}";
 	}
 
 	macro getIdOfCreateNCommentsInBlogPostingBatchEngineImportTask {

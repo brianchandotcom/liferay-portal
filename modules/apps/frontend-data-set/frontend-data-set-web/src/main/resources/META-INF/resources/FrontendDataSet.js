@@ -16,7 +16,6 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useIsMounted, useThunk} from '@liferay/frontend-js-react-web';
 import {fetch, openToast} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {
 	useCallback,
 	useEffect,
@@ -764,77 +763,6 @@ const FrontendDataSet = ({
 			</ViewsContext.Provider>
 		</FrontendDataSetContext.Provider>
 	);
-};
-
-FrontendDataSet.propTypes = {
-	activeViewSettings: PropTypes.string,
-	apiURL: PropTypes.string,
-	appURL: PropTypes.string,
-	bulkActions: PropTypes.array,
-	creationMenu: PropTypes.shape({
-		primaryItems: PropTypes.array,
-		secondaryItems: PropTypes.array,
-	}),
-	currentURL: PropTypes.string,
-	enableInlineAddModeSetting: PropTypes.shape({
-		defaultBodyContent: PropTypes.object,
-	}),
-	filters: PropTypes.array,
-	formId: PropTypes.string,
-	formName: PropTypes.string,
-	id: PropTypes.string.isRequired,
-	initialSelectedItemsValues: PropTypes.array,
-	inlineAddingSettings: PropTypes.shape({
-		apiURL: PropTypes.string.isRequired,
-		defaultBodyContent: PropTypes.object,
-	}),
-	inlineEditingSettings: PropTypes.oneOfType([
-		PropTypes.bool,
-		PropTypes.shape({
-			alwaysOn: PropTypes.bool,
-			defaultBodyContent: PropTypes.object,
-		}),
-	]),
-	items: PropTypes.array,
-	itemsActions: PropTypes.array,
-	namespace: PropTypes.string,
-	nestedItemsKey: PropTypes.string,
-	nestedItemsReferenceKey: PropTypes.string,
-	overrideEmptyResultView: PropTypes.bool,
-	pagination: PropTypes.shape({
-		deltas: PropTypes.arrayOf(
-			PropTypes.shape({
-				href: PropTypes.string,
-				label: PropTypes.number.isRequired,
-			}).isRequired
-		),
-		initialDelta: PropTypes.number.isRequired,
-	}),
-	portletId: PropTypes.string,
-	selectedItemsKey: PropTypes.string,
-	selectionType: PropTypes.oneOf(['single', 'multiple']),
-	showManagementBar: PropTypes.bool,
-	showPagination: PropTypes.bool,
-	showSearch: PropTypes.bool,
-	sidePanelId: PropTypes.string,
-	sorting: PropTypes.arrayOf(
-		PropTypes.shape({
-			direction: PropTypes.oneOf(['asc', 'desc']),
-			key: PropTypes.string,
-		})
-	),
-	style: PropTypes.oneOf(['default', 'fluid', 'stacked']),
-	views: PropTypes.arrayOf(
-		PropTypes.shape({
-			component: PropTypes.any,
-			contentRenderer: PropTypes.string,
-			contentRendererModuleURL: PropTypes.string,
-			label: PropTypes.string,
-			name: PropTypes.string,
-			schema: PropTypes.object,
-			thumbnail: PropTypes.string,
-		})
-	).isRequired,
 };
 
 FrontendDataSet.defaultProps = {

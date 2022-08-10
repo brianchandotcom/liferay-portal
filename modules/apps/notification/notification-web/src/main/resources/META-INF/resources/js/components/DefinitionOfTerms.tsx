@@ -13,9 +13,6 @@
  */
 
 import ClayPanel from '@clayui/panel';
-
-// @ts-ignore
-
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {
 	API,

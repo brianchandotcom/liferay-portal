@@ -64,7 +64,7 @@ const useCaseRequirementActions = (testrayCase: TestrayCase) => {
 		actions,
 		formModal: {
 			...modal,
-			forceRefetch: modalForceRefetch || forceRefetch,
+			forceRefetch: forceRefetch || modalForceRefetch,
 		},
 	};
 };

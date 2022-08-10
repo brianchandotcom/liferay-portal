@@ -19,6 +19,7 @@ import com.liferay.content.dashboard.info.item.ClassNameClassPKInfoItemIdentifie
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -89,7 +90,7 @@ public class DLFileEntryTypeContentDashboardItemSubtypeFactoryTest {
 				infoItemReference.getInfoItemIdentifier();
 
 		Assert.assertEquals(
-			DLFileEntry.class.getName(),
+			DLFileEntryType.class.getName(),
 			classNameClassPKInfoItemIdentifier.getClassName());
 
 		Assert.assertEquals(

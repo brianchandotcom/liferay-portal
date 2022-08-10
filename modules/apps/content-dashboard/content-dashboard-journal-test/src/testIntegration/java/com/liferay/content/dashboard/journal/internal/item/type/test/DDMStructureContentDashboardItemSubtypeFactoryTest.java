@@ -84,8 +84,7 @@ public class DDMStructureContentDashboardItemSubtypeFactoryTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				ddmStructure.getName(LocaleUtil.US),
-				StringPool.SPACE,
+				ddmStructure.getName(LocaleUtil.US), StringPool.SPACE,
 				StringPool.OPEN_PARENTHESIS,
 				_group.getDescriptiveName(LocaleUtil.US),
 				StringPool.CLOSE_PARENTHESIS),

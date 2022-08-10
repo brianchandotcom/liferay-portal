@@ -9,20 +9,18 @@
  * distribution rights of the Software.
  */
 
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 
+import {TypeActivity} from '../../../../../../common/interfaces/typeActivity';
 import useGetTacticsByTypeActivityId from '../../../../../../common/services/liferay/object/type-activities/useGetTacticsByTypeActivityId';
 import Tactic from '../interfaces/tactic';
 
 export default function useTacticsTypeActivity(
+	selectedTypeActivity: TypeActivity | undefined,
 	updateTacticOptions: (tactics: Tactic[]) => void
 ) {
-	const [selectedTypeActivityId, setSelectedTypeActivityId] = useState<
-		string
-	>();
-
 	const {data: tactics} = useGetTacticsByTypeActivityId(
-		selectedTypeActivityId
+		selectedTypeActivity?.id
 	);
 
 	useEffect(() => {
@@ -30,6 +28,4 @@ export default function useTacticsTypeActivity(
 			updateTacticOptions(tactics.items);
 		}
 	}, [tactics, updateTacticOptions]);
-
-	return {setSelectedTypeActivityId};
 }

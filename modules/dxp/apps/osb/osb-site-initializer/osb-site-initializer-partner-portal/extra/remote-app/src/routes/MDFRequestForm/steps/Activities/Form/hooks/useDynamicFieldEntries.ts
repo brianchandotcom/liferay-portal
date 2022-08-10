@@ -28,17 +28,8 @@ export default function useDynamicFieldEntries() {
 		[listTypeDefinitions?.items]
 	);
 
-	const typeOfActivitiesEntries = useMemo(
-		() =>
-			typeOfActivities?.items.map((typeOfActivity) => ({
-				label: typeOfActivity.name,
-				value: String(typeOfActivity.id),
-			})),
-		[typeOfActivities?.items]
-	);
-
 	return {
 		fieldEntries,
-		typeOfActivitiesEntries,
+		typeOfActivities: typeOfActivities?.items,
 	};
 }

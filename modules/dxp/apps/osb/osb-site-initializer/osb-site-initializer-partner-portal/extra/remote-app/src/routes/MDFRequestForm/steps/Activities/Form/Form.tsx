@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
 import PRMForm from '../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../common/components/PRMFormik';
@@ -17,7 +17,13 @@ import {LiferayPicklistName} from '../../../../../common/enums/liferayPicklistNa
 import MDFRequestActivity from '../../../../../common/interfaces/mdfRequestActivity';
 import getBooleanEntries from '../../../../../common/utils/getBooleanEntries';
 import BudgetBreakdownSection from './components/BudgetBreakdownSection';
+import ContentMarketingFields from './components/ContentMarketingFields';
+import DigitalMarketingFields from './components/DigitalMarketingFields';
+import EventFields from './components/EventFields';
+import MiscellaneousMarketingFields from './components/MiscellaneousMarketingFields';
+import {TypeActivityExternalReferenceCode} from './enums/typeActivityExternalReferenceCode';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
+import useSelectedTypeActivity from './hooks/useSelectedTypeActivity';
 import useTacticsTypeActivity from './hooks/useTacticsTypeActivity';
 
 interface IProps {
@@ -30,13 +36,33 @@ interface IProps {
 	) => void;
 }
 
+type TypeOfActivityComponent = {
+	[key in string]?: JSX.Element;
+};
+
 const Form = ({currentActivity, currentIndex, setFieldValue}: IProps) => {
 	const [tacticsByTypeActivity, setTacticsByTypeActivity] = useState<
 		React.OptionHTMLAttributes<HTMLOptionElement>[]
 	>();
-	const {fieldEntries, typeOfActivitiesEntries} = useDynamicFieldEntries();
 
-	const {setSelectedTypeActivityId} = useTacticsTypeActivity(
+	const {fieldEntries, typeOfActivities} = useDynamicFieldEntries();
+
+	const selectedTypeActivity = useSelectedTypeActivity(
+		currentActivity,
+		typeOfActivities
+	);
+
+	const typeOfActivitiesEntries = useMemo(
+		() =>
+			typeOfActivities?.map((typeOfActivity) => ({
+				label: typeOfActivity.name,
+				value: String(typeOfActivity.id),
+			})),
+		[typeOfActivities]
+	);
+
+	useTacticsTypeActivity(
+		selectedTypeActivity,
 		useCallback(
 			(tactics) =>
 				setTacticsByTypeActivity(
@@ -49,14 +75,20 @@ const Form = ({currentActivity, currentIndex, setFieldValue}: IProps) => {
 		)
 	);
 
-	useEffect(() => {
-		const selectedTypeActivityId =
-			currentActivity?.r_typeActivityToActivities_c_typeActivityId;
-
-		if (selectedTypeActivityId) {
-			setSelectedTypeActivityId(String(selectedTypeActivityId));
-		}
-	}, [setSelectedTypeActivityId, currentActivity]);
+	const typeOfActivityComponents: TypeOfActivityComponent = {
+		[TypeActivityExternalReferenceCode.DIGITAL_MARKETING]: (
+			<DigitalMarketingFields index={currentIndex} />
+		),
+		[TypeActivityExternalReferenceCode.CONTENT_MARKETING]: (
+			<ContentMarketingFields index={currentIndex} />
+		),
+		[TypeActivityExternalReferenceCode.EVENT]: (
+			<EventFields index={currentIndex} />
+		),
+		[TypeActivityExternalReferenceCode.MISCELLANEOUS_MARKETING]: (
+			<MiscellaneousMarketingFields index={currentIndex} />
+		),
+	};
 
 	return (
 		<>
@@ -86,6 +118,12 @@ const Form = ({currentActivity, currentIndex, setFieldValue}: IProps) => {
 						required
 					/>
 				</PRMForm.Group>
+
+				{
+					typeOfActivityComponents[
+						selectedTypeActivity?.externalReferenceCode || ''
+					]
+				}
 
 				<PRMForm.Group>
 					<PRMFormik.Field

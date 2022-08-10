@@ -45,7 +45,8 @@ public interface CommerceCheckoutStepHttpHelper {
 		throws PortalException;
 
 	public boolean isActivePaymentTermCommerceCheckoutStep(
-			CommerceOrder commerceOrder, String languageId)
+			CommerceOrder commerceOrder, HttpServletRequest httpServletRequest,
+			String languageId)
 		throws PortalException;
 
 	public boolean isActiveShippingMethodCommerceCheckoutStep(

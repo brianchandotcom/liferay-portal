@@ -314,7 +314,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="objectViewId" type="long" />
 		<field name="filterType" type="String" />
-		<field name="JSON" type="String" />
+		<field name="JSON" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="objectFieldName" type="String" />
 	</model>
 	<model name="com.liferay.object.model.ObjectViewSortColumn">

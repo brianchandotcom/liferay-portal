@@ -187,6 +187,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"3.19.2", "3.19.3",
 			new com.liferay.object.internal.upgrade.v3_19_3.
 				ObjectFieldUpgradeProcess());
+
+		registry.register(
+			"3.19.3", "3.19.4",
+			UpgradeProcessFactory.alterColumnType(
+				"ObjectViewFilterColumn", "json", "TEXT"));
 	}
 
 	@Reference

@@ -635,6 +635,16 @@ public class LayoutStagedModelDataHandler
 
 				return;
 			}
+
+			if (existingLayout != null) {
+				Map<Long, Long> layoutPlids =
+					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+						Layout.class);
+
+				layoutPlids.put(
+					layout.getMasterLayoutPlid(),
+					existingLayout.getMasterLayoutPlid());
+			}
 		}
 		else {
 

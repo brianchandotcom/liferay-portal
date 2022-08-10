@@ -1,6 +1,6 @@
 {
 	"label": {
-		"en-US": "MDF Request"
+		"en_US": "MDF Request"
 	},
 	"name": "MDFRequest",
 	"objectFields": [
@@ -12,37 +12,36 @@
 			"label": {
 				"en_US": "Country"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Countries$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Regions$]",
 			"name": "country",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
-			"DBType": "String",
+			"DBType": "Clob",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Overall Campaign"
+				"en_US": "Overall Campaign"
 			},
 			"name": "overallCampaign",
 			"required": false
 		},
 		{
-			"DBType": "String",
+			"DBType": "Clob",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Liferay Business/Sales Goals"
+				"en_US": "Liferay Business/Sales Goals"
 			},
 			"name": "liferayBusinessSalesGoals",
 			"required": false
 		},
 		{
-			"DBType": "String",
+			"DBType": "Clob",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Target Markets"
+				"en_US": "Target Markets"
 			},
 			"name": "targetMarkets",
 			"required": false
@@ -55,17 +54,16 @@
 			"label": {
 				"en_US": "Additional Option"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:AdditionalOptions$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:MDF Request: Additional Options$]",
 			"name": "additionalOption",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
-			"DBType": "String",
+			"DBType": "Clob",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Target Audience/Roles"
+				"en_US": "Target Audience/Roles"
 			},
 			"name": "targetAudienceRoles",
 			"required": false
@@ -74,6 +72,5 @@
 	"pluralLabel": {
 		"en_US": "MDF Requests"
 	},
-	"scope": "company",
-	"system": false
+	"scope": "company"
 }

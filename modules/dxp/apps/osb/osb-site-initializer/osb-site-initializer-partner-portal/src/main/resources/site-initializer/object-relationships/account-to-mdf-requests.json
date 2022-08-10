@@ -4,7 +4,7 @@
 		"en-US": "Account"
 	},
 	"name": "accountToMDFRequests",
-	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Account$]",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:MDFRequest$]",
 	"objectDefinitionName2": "MDFRequest",
 	"type": "oneToMany"

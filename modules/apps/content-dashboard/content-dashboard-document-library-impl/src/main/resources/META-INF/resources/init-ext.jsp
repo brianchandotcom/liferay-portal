@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,14 +12,4 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-package com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.file.extension.criterion;
-
-import com.liferay.item.selector.BaseItemSelectorCriterion;
-
-/**
- * @author Alejandro Tardín
- */
-public class ContentDashboardFileExtensionItemSelectorCriterion
-	extends BaseItemSelectorCriterion {
-}
+--%>

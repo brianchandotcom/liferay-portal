@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.display.context;
+package com.liferay.content.dashboard.document.library.internal.item.display.context;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.HashMapBuilder;

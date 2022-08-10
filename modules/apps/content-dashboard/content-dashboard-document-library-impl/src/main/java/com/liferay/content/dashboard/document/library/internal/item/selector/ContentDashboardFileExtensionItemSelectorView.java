@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item.selector;
+package com.liferay.content.dashboard.document.library.internal.item.selector;
 
-import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardFileExtensionItemSelectorViewDisplayContext;
-import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.file.extension.criterion.ContentDashboardFileExtensionItemSelectorCriterion;
-import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
+import com.liferay.content.dashboard.document.library.internal.item.display.context.ContentDashboardFileExtensionItemSelectorViewDisplayContext;
+import com.liferay.content.dashboard.document.library.internal.item.provider.FileExtensionGroupsProvider;
+import com.liferay.content.dashboard.document.library.internal.item.selector.file.extension.criterio.ContentDashboardFileExtensionItemSelectorCriterion;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -27,6 +28,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -73,6 +76,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alejandro Tardín
@@ -249,7 +255,17 @@ public class ContentDashboardFileExtensionItemSelectorView
 		searchContext.setGroupIds(new long[0]);
 
 		SearchRequestBuilder searchRequestBuilder =
-			_contentDashboardSearchRequestBuilderFactory.builder(searchContext);
+			_searchRequestBuilderFactory.builder(
+				searchContext
+			).emptySearchEnabled(
+				true
+			).entryClassNames(
+				DLFileEntry.class.getName()
+			).fields(
+				Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID
+			).highlightEnabled(
+				false
+			);
 
 		SearchResponse searchResponse = _searcher.search(
 			searchRequestBuilder.addAggregation(
@@ -291,14 +307,14 @@ public class ContentDashboardFileExtensionItemSelectorView
 	@Reference
 	private Aggregations _aggregations;
 
-	@Reference
-	private ContentDashboardSearchRequestBuilderFactory
-		_contentDashboardSearchRequestBuilderFactory;
-
 	private volatile DLConfiguration _dlConfiguration;
 
-	@Reference
-	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 	private volatile Map<String, String> _fileExtensionFileExtensionGroupKeys =
 		new HashMap<>();
@@ -311,8 +327,11 @@ public class ContentDashboardFileExtensionItemSelectorView
 	@Reference
 	private Searcher _searcher;
 
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.content.dashboard.web)"
+		target = "(osgi.web.symbolicname=com.liferay.content.dashboard.document.library.impl)"
 	)
 	private ServletContext _servletContext;
 

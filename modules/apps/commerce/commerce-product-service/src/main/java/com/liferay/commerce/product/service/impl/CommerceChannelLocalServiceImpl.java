@@ -173,30 +173,24 @@ public class CommerceChannelLocalServiceImpl
 			CommerceChannel commerceChannel)
 		throws PortalException {
 
-		// Commerce channel rel
-
 		commerceChannelRelLocalService.deleteCommerceChannelRels(
 			commerceChannel.getCommerceChannelId());
 
-		// Resources
+		commerceChannelAccountEntryRelLocalService.
+			deleteCommerceChannelAccountEntryRelsByCommerceChannelId(
+				commerceChannel.getCommerceChannelId());
 
 		resourceLocalService.deleteResource(
 			commerceChannel, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		// Group
-
 		Group group = fetchCommerceChannelGroup(
 			commerceChannel.getCommerceChannelId());
-
-		// Commerce channel
-
-		commerceChannel = commerceChannelPersistence.remove(commerceChannel);
 
 		if (group != null) {
 			_groupLocalService.deleteGroup(group);
 		}
 
-		return commerceChannel;
+		return commerceChannelPersistence.remove(commerceChannel);
 	}
 
 	@Override

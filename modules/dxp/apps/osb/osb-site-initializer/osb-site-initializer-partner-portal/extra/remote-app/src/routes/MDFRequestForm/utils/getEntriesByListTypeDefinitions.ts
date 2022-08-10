@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import ListTypeDefinition from '../../../../../common/interfaces/listTypeDefinition';
+import ListTypeDefinition from '../../../common/interfaces/listTypeDefinition';
 
 type EntryField = {
 	[key: string]: React.OptionHTMLAttributes<HTMLOptionElement>[];

@@ -173,8 +173,8 @@ public class CommerceAccountGroupLocalServiceWrapper
 	}
 
 	@Override
-	public int searchCommerceAccountsGroupCount(long companyId, String keywords)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public int searchCommerceAccountsGroupCount(
+		long companyId, String keywords) {
 
 		return _commerceAccountGroupLocalService.
 			searchCommerceAccountsGroupCount(companyId, keywords);

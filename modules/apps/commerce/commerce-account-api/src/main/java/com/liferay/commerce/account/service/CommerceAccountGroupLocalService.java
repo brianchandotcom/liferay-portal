@@ -121,8 +121,8 @@ public interface CommerceAccountGroupLocalService extends BaseLocalService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCommerceAccountsGroupCount(long companyId, String keywords)
-		throws PortalException;
+	public int searchCommerceAccountsGroupCount(
+		long companyId, String keywords);
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAccountGroup updateCommerceAccountGroup(

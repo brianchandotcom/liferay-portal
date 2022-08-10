@@ -346,8 +346,7 @@ public class CommerceAccountGroupRelServiceHttp {
 	}
 
 	public static int getCommerceAccountGroupRelsCount(
-			HttpPrincipal httpPrincipal, String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		HttpPrincipal httpPrincipal, String className, long classPK) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -364,13 +363,6 @@ public class CommerceAccountGroupRelServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}

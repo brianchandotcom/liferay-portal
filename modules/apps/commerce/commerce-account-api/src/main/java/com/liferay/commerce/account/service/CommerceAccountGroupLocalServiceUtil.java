@@ -142,8 +142,7 @@ public class CommerceAccountGroupLocalServiceUtil {
 	}
 
 	public static int searchCommerceAccountsGroupCount(
-			long companyId, String keywords)
-		throws PortalException {
+		long companyId, String keywords) {
 
 		return getService().searchCommerceAccountsGroupCount(
 			companyId, keywords);

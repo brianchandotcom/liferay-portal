@@ -85,8 +85,7 @@ public interface CommerceAccountGroupRelService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceAccountGroupRelsCount(String className, long classPK)
-		throws PortalException;
+	public int getCommerceAccountGroupRelsCount(String className, long classPK);
 
 	/**
 	 * Returns the OSGi service identifier.

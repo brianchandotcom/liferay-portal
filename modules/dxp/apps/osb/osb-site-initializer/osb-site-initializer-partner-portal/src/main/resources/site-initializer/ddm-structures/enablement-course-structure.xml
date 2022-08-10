@@ -19,7 +19,7 @@
 								"en_US": "Banner Image"
 							},
 							"localizable": true,
-							"name": "courseBannerImage",
+							"name": "BannerImage",
 							"predefinedValue": {
 								"en_US": ""
 							},
@@ -39,7 +39,7 @@
 								"en_US": "Subtext"
 							},
 							"localizable": true,
-							"name": "courseSubText",
+							"name": "Subtext",
 							"predefinedValue": {
 								"en_US": ""
 							},
@@ -59,7 +59,47 @@
 								"en_US": "Title"
 							},
 							"localizable": true,
-							"name": "courseTitleText",
+							"name": "Title",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"indexType": "none",
+							"label": {
+								"en_US": "			"
+							},
+							"localizable": true,
+							"name": "Button",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"indexType": "text",
+							"label": {
+								"en_US": "Link Button"
+							},
+							"localizable": true,
+							"name": "LinkButton",
 							"predefinedValue": {
 								"en_US": ""
 							},

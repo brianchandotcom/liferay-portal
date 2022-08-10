@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+
+	<dynamic-element field-reference="BannerImage" index-type="text" instance-id="BknFtapj" name="BannerImage" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[{"groupId":"58314","width":388,"alt":"","description":"","title":"business-Marketing-Sales.png","classNameId":29810,"type":"document","uuid":"9753852e-c5db-8329-389d-cc36a2cf36f3","url":"[$dl-reference=/group/58314/com.liferay.document.library.kernel.model.DLFileEntry/58351.xml$,$include-friendly-url=true$]?download=true","fileEntryId":"58351","resourcePrimKey":"59560","height":219}]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Subtext" index-type="text" instance-id="rgbEL0b6" name="Subtext" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[COURSES]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Title" index-type="text" instance-id="rDlGjwob" name="Title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Business/Marketing/Sales]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Button" index-type="none" instance-id="CHb0DoJ5" name="Button" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Start Learning]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="LinkButton" index-type="text" instance-id="9BMnsTe1" name="LinkButton" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[https://passport.liferay.com/page/business-and-sales-73]]></dynamic-content>
+	</dynamic-element>
+
+</root>

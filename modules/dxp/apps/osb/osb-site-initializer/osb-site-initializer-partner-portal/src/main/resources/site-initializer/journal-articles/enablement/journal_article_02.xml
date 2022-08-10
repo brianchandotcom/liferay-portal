@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+
+	<dynamic-element field-reference="BannerImage" index-type="text" instance-id="TTJyKZNm" name="BannerImage" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[{"groupId":"58314","width":388,"alt":"","description":"","title":"Pre-Sales.png","classNameId":29810,"type":"document","uuid":"bea90be7-3446-2a41-5878-9890f6c18fda","url":"[$dl-reference=/group/58314/com.liferay.document.library.kernel.model.DLFileEntry/58345.xml$,$include-friendly-url=true$]?download=true","fileEntryId":"58345","resourcePrimKey":"59583","height":219}]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Subtext" index-type="text" instance-id="8uFK1je5" name="Subtext" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[COURSES]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Title" index-type="text" instance-id="sf7aFFJk" name="Title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Pre-Sales Engineering]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Button" index-type="none" instance-id="J88hDpZ7" name="Button" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Start Learning]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="LinkButton" index-type="text" instance-id="nJRoiKfX" name="LinkButton" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[https://passport.liferay.com/page/pre-sales-engineers-73]]></dynamic-content>
+	</dynamic-element>
+	
+</root>

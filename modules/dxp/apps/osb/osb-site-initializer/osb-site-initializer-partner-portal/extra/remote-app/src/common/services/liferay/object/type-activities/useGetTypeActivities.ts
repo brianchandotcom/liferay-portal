@@ -12,14 +12,10 @@
 import useSWR from 'swr';
 
 import {Liferay} from '../..';
-import LiferayObject from '../../../../interfaces/liferayObject';
+import {TypeActivity} from '../../../../interfaces/typeActivity';
 import {LiferayAPIs} from '../../common/enums/apis';
 import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
-
-interface TypeActivity extends LiferayObject {
-	name: string;
-}
 
 export default function useGetTypeActivities() {
 	return useSWR(

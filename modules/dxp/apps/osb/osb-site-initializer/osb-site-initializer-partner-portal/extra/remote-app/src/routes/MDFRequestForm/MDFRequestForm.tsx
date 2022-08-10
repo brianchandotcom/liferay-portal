@@ -23,10 +23,10 @@ import isObjectEmpty from './utils/isObjectEmpty';
 
 const initialFormValues: MDFRequest = {
 	activities: [],
+	additionalOption: {},
 	country: {},
 	liferayBusinessSalesGoals: [],
 	overallCampaign: '',
-	r_additionalOption_mdfRequest: '',
 	r_company_accountEntryId: '',
 	requestStatus: RequestStatus.DRAFT,
 	targetsAudienceRole: [],

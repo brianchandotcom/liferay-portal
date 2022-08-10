@@ -32,30 +32,28 @@ const Listing = ({
 	return (
 		<>
 			<div>
-				<div>
-					{activities.length ? (
-						activities.map((activity, index) => (
-							<ActivityPanel
-								activity={activity}
-								key={index}
-								onRemove={() => remove(index)}
-								overallCampaign={overallCampaign}
-							/>
-						))
-					) : (
-						<ClayAlert displayType="info" title="Info:">
-							No entries were found
-						</ClayAlert>
-					)}
-				</div>
-
-				<Button className="d-flex" onClick={onAdd} outline small>
-					<span className="inline-item inline-item-before">
-						<ClayIcon symbol="plus" />
-					</span>
-					Add Activity
-				</Button>
+				{activities.length ? (
+					activities.map((activity, index) => (
+						<ActivityPanel
+							activity={activity}
+							key={index}
+							onRemove={() => remove(index)}
+							overallCampaign={overallCampaign}
+						/>
+					))
+				) : (
+					<ClayAlert displayType="info" title="Info:">
+						No entries were found
+					</ClayAlert>
+				)}
 			</div>
+
+			<Button className="d-flex" onClick={onAdd} outline small>
+				<span className="inline-item inline-item-before">
+					<ClayIcon symbol="plus" />
+				</span>
+				Add Activity
+			</Button>
 		</>
 	);
 };

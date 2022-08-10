@@ -66,7 +66,7 @@ const ActivityPanel = ({
 							MDF Requested:
 						</div>
 
-						<h5 className="mr-4">$1,250.00</h5>
+						<h5 className="mr-4">{activity.mdfRequestAmount}</h5>
 					</div>
 				</ClayPanel.Title>
 			}

@@ -51,7 +51,7 @@ const Activities = ({
 	};
 
 	const onPreviousForm = () => {
-		arrayHelpers.pop();
+		arrayHelpers.remove(currentIndex);
 		setIsForm(false);
 	};
 

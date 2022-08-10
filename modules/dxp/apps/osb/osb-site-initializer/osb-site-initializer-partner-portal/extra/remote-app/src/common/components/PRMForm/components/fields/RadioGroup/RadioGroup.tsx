@@ -12,6 +12,7 @@
 import {ClayRadio} from '@clayui/form';
 import classNames from 'classnames';
 
+import LiferayPicklist from '../../../../../interfaces/liferayPicklist';
 import WrapperInput from '../common/components/WrapperInput';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
@@ -28,7 +29,18 @@ const RadioGroup = ({
 	label,
 	required,
 	small,
-}: IProps & PRMFormFieldProps & PRMFormFieldStateProps<string>) => {
+	...props
+}: IProps &
+	PRMFormFieldProps &
+	PRMFormFieldStateProps<string | LiferayPicklist>) => {
+	const getValue = () => {
+		if (typeof field.value === 'object') {
+			return field.value.key || '';
+		}
+
+		return field.value || '';
+	};
+
 	return (
 		<WrapperInput {...meta} label={label} required={required}>
 			{items.map((item, index) => (
@@ -41,7 +53,8 @@ const RadioGroup = ({
 				>
 					<ClayRadio
 						{...field}
-						checked={field.value === item.value}
+						{...props}
+						checked={getValue() === item.value}
 						key={`${item.value}-${index}`}
 						label={item.label}
 						value={item.value as string}

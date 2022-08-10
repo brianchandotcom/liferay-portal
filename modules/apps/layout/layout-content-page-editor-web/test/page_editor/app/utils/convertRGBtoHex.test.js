@@ -16,14 +16,14 @@ import {convertRGBtoHex} from '../../../../src/main/resources/META-INF/resources
 
 describe('convertRGBtoHex', () => {
 	it('converts rgb colors', () => {
-		expect(convertRGBtoHex('rgb(100, 100, 100)')).toBe('646464');
-		expect(convertRGBtoHex('rgb(100,100,   100)')).toBe('646464');
+		expect(convertRGBtoHex('rgb(100, 100, 100)')).toBe('#646464');
+		expect(convertRGBtoHex('rgb(100,100,   100)')).toBe('#646464');
 	});
 
 	it('converts rgba colors', () => {
-		expect(convertRGBtoHex('rgba(100, 100, 100,   0)')).toBe('64646400');
-		expect(convertRGBtoHex('rgba(100,100,   100,1)')).toBe('646464FF');
-		expect(convertRGBtoHex('rgba(100, 100, 100, 0.8276)')).toBe('646464D3');
+		expect(convertRGBtoHex('rgba(100, 100, 100,   0)')).toBe('#64646400');
+		expect(convertRGBtoHex('rgba(100,100,   100,1)')).toBe('#646464FF');
+		expect(convertRGBtoHex('rgba(100, 100, 100, 0.827)')).toBe('#646464D2');
 	});
 
 	it('ignores invalid colors', () => {

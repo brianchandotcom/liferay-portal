@@ -35,10 +35,10 @@ export function convertRGBtoHex(rgbColor) {
 		.join('');
 
 	if (isNaN(alpha)) {
-		return hexColor;
+		return `#${hexColor}`;
 	}
 
-	return `${hexColor}${parseInt(`${alpha * 255}`, 10)
+	return `#${hexColor}${parseInt(`${alpha * 255}`, 10)
 		.toString(16)
 		.padStart(2, '0')
 		.toUpperCase()}`;

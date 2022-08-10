@@ -61,7 +61,7 @@ export function parseColorValue({editedTokenValues, field, token, value}) {
 		if (validValue) {
 			pickerColor = convertRGBtoHex(
 				window.getComputedStyle(element).backgroundColor
-			);
+			).replace(/^#/, '');
 		}
 		else {
 			return {error: ERROR_MESSAGES.valueNotExist};

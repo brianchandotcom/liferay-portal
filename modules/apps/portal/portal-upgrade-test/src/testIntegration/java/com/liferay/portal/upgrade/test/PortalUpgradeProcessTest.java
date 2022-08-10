@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
+import com.liferay.portal.kernel.upgrade.util.VersionTreeMap;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -159,9 +159,9 @@ public class PortalUpgradeProcessTest {
 
 	@Test
 	public void testGetRequiredSchemaVersionWhenMultipleSteps() {
-		UpgradeVersionTreeMap newUpgradeProcesses = new UpgradeVersionTreeMap();
+		VersionTreeMap newUpgradeProcesses = new VersionTreeMap();
 
-		UpgradeVersionTreeMap currentUpgradeProcesses =
+		VersionTreeMap currentUpgradeProcesses =
 			ReflectionTestUtil.getAndSetFieldValue(
 				PortalUpgradeProcess.class, "_upgradeProcesses",
 				newUpgradeProcesses);

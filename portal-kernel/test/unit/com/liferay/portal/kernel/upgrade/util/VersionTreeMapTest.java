@@ -29,53 +29,55 @@ import org.junit.Test;
 /**
  * @author Luis Ortiz
  */
-public class UpgradeVersionTreeMapTest {
+public class VersionTreeMapTest {
 
 	@Test
 	public void testPutMultipleUpgradeProcesses() {
-		UpgradeVersionTreeMap treeMap = new UpgradeVersionTreeMap();
+		VersionTreeMap versionTreeMap = new VersionTreeMap();
 
 		UpgradeProcess[] upgradeProcesses = {
 			new DummyUpgradeProcess(), new DummyUpgradeProcess(),
 			new DummyUpgradeProcess()
 		};
 
-		treeMap.put(new Version(1, 0, 0), upgradeProcesses);
+		versionTreeMap.put(new Version(1, 0, 0), upgradeProcesses);
 
-		_checkTreeMapValues(treeMap, upgradeProcesses);
+		_checkTreeMapValues(versionTreeMap, upgradeProcesses);
 	}
 
 	@Test
 	public void testPutSingleUpgradeProcess() {
-		UpgradeVersionTreeMap treeMap = new UpgradeVersionTreeMap();
+		VersionTreeMap versionTreeMap = new VersionTreeMap();
 
 		UpgradeProcess upgradeProcess = new DummyUpgradeProcess();
 
-		treeMap.put(new Version(1, 0, 0), upgradeProcess);
+		versionTreeMap.put(new Version(1, 0, 0), upgradeProcess);
 
 		UpgradeProcess[] upgradeProcesses = {upgradeProcess};
 
-		_checkTreeMapValues(treeMap, upgradeProcesses);
+		_checkTreeMapValues(versionTreeMap, upgradeProcesses);
 	}
 
 	@Test
 	public void testSingleMultiStepUpgrade() {
-		UpgradeVersionTreeMap treeMap = new UpgradeVersionTreeMap();
+		VersionTreeMap versionTreeMap = new VersionTreeMap();
 
-		treeMap.put(new Version(1, 0, 0), new MultiStepUpgrade());
+		versionTreeMap.put(new Version(1, 0, 0), new MultiStepUpgrade());
 
-		Collection<UpgradeStep> upgradeSteps = treeMap.values();
+		Collection<UpgradeStep> upgradeSteps = versionTreeMap.values();
 
-		_checkTreeMapValues(treeMap, upgradeSteps.toArray(new UpgradeStep[0]));
+		_checkTreeMapValues(
+			versionTreeMap, upgradeSteps.toArray(new UpgradeStep[0]));
 	}
 
 	private void _checkTreeMapValues(
-		UpgradeVersionTreeMap treeMap, UpgradeStep[] upgradeProcesses) {
+		VersionTreeMap versionTreeMap, UpgradeStep[] upgradeProcesses) {
 
 		Assert.assertEquals(
-			treeMap.toString(), upgradeProcesses.length, treeMap.size());
+			versionTreeMap.toString(), upgradeProcesses.length,
+			versionTreeMap.size());
 
-		Collection<Version> keys = treeMap.keySet();
+		Collection<Version> keys = versionTreeMap.keySet();
 
 		Iterator<Version> iterator = keys.iterator();
 
@@ -84,7 +86,7 @@ public class UpgradeVersionTreeMapTest {
 		while (iterator.hasNext()) {
 			Version version = iterator.next();
 
-			UpgradeStep upgradeStep = treeMap.get(version);
+			UpgradeStep upgradeStep = versionTreeMap.get(version);
 
 			Assert.assertEquals(upgradeProcesses[i], upgradeStep);
 

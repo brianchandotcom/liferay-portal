@@ -26,7 +26,7 @@ import java.util.TreeMap;
 /**
  * @author Luis Ortiz
  */
-public class UpgradeVersionTreeMap extends TreeMap<Version, UpgradeStep> {
+public class VersionTreeMap extends TreeMap<Version, UpgradeStep> {
 
 	public void put(Version key, UpgradeProcess value) {
 		_put(key, value.getUpgradeSteps());

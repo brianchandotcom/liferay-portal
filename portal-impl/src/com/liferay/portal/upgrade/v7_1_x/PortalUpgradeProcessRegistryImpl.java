@@ -17,7 +17,7 @@ package com.liferay.portal.upgrade.v7_1_x;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
-import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
+import com.liferay.portal.kernel.upgrade.util.VersionTreeMap;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 
@@ -28,12 +28,10 @@ public class PortalUpgradeProcessRegistryImpl
 	implements PortalUpgradeProcessRegistry {
 
 	@Override
-	public void registerUpgradeProcesses(
-		UpgradeVersionTreeMap upgradeVersionTreeMap) {
+	public void registerUpgradeProcesses(VersionTreeMap versionTreeMap) {
+		versionTreeMap.put(new Version(1, 0, 0), new UpgradeSchema());
 
-		upgradeVersionTreeMap.put(new Version(1, 0, 0), new UpgradeSchema());
-
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(1, 1, 0),
 			UpgradeModulesFactory.create(
 				new String[] {
@@ -51,56 +49,53 @@ public class PortalUpgradeProcessRegistryImpl
 				},
 				null));
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(1, 1, 1),
 			UpgradeProcessFactory.alterColumnType(
 				"Counter", "name", "VARCHAR(150) not null"));
 
-		upgradeVersionTreeMap.put(new Version(1, 1, 2), new UpgradeDB2());
+		versionTreeMap.put(new Version(1, 1, 2), new UpgradeDB2());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(2, 0, 0), new UpgradeAssetTagsPermission());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(2, 0, 1),
 			UpgradeProcessFactory.alterColumnType(
 				"DLFileEntryType", "fileEntryTypeKey", "VARCHAR(75) null"));
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(2, 0, 2),
 			UpgradeProcessFactory.alterColumnType(
 				"PasswordPolicy", "regex", "STRING null"));
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(2, 0, 3), new UpgradePortalPreferences());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(2, 0, 4),
 			UpgradeProcessFactory.alterColumnType(
 				"UserGroup", "name", "VARCHAR(255) null"));
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(2, 0, 5), new UpgradeAnnouncementsPortletId());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(2, 0, 6), new UpgradeAnnouncementsPortletPreferences());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(2, 0, 7),
 			new UpgradeCalendarTimeFormatPortletPreferences());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(2, 0, 8),
 			new UpgradeCalendarClassNameIdsPortletPreferences());
 
-		upgradeVersionTreeMap.put(
-			new Version(2, 0, 9), new DummyUpgradeProcess());
+		versionTreeMap.put(new Version(2, 0, 9), new DummyUpgradeProcess());
 
-		upgradeVersionTreeMap.put(
-			new Version(2, 0, 10), new DummyUpgradeProcess());
+		versionTreeMap.put(new Version(2, 0, 10), new DummyUpgradeProcess());
 
-		upgradeVersionTreeMap.put(
-			new Version(2, 0, 11), new DummyUpgradeProcess());
+		versionTreeMap.put(new Version(2, 0, 11), new DummyUpgradeProcess());
 	}
 
 }

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
-import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
+import com.liferay.portal.kernel.upgrade.util.VersionTreeMap;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 
@@ -30,10 +30,8 @@ public class PortalUpgradeProcessRegistryImpl
 	implements PortalUpgradeProcessRegistry {
 
 	@Override
-	public void registerUpgradeProcesses(
-		UpgradeVersionTreeMap upgradeVersionTreeMap) {
-
-		upgradeVersionTreeMap.put(
+	public void registerUpgradeProcesses(VersionTreeMap versionTreeMap) {
+		versionTreeMap.put(
 			new Version(9, 0, 0),
 			UpgradeProcessFactory.addColumns(
 				"Address", "externalReferenceCode VARCHAR(75) null",
@@ -47,7 +45,7 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeProcessFactory.alterColumnType(
 				"Address", "street3", "VARCHAR(255) null"));
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(9, 0, 1),
 			UpgradeModulesFactory.create(
 				new String[] {
@@ -67,98 +65,85 @@ public class PortalUpgradeProcessRegistryImpl
 					}
 				}));
 
-		upgradeVersionTreeMap.put(new Version(9, 1, 0), new UpgradeRegion());
+		versionTreeMap.put(new Version(9, 1, 0), new UpgradeRegion());
 
-		upgradeVersionTreeMap.put(new Version(9, 2, 0), new UpgradeCountry());
+		versionTreeMap.put(new Version(9, 2, 0), new UpgradeCountry());
 
-		upgradeVersionTreeMap.put(new Version(9, 2, 1), new UpgradeListType());
+		versionTreeMap.put(new Version(9, 2, 1), new UpgradeListType());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(10, 0, 0), new UpgradePortletPreferences());
 
-		upgradeVersionTreeMap.put(
-			new Version(11, 0, 0), new UpgradeAssetEntry());
+		versionTreeMap.put(new Version(11, 0, 0), new UpgradeAssetEntry());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(12, 0, 0), new UpgradePortalPreferences());
 
-		upgradeVersionTreeMap.put(
-			new Version(12, 0, 1), new UpgradeResourceAction());
+		versionTreeMap.put(new Version(12, 0, 1), new UpgradeResourceAction());
 
-		upgradeVersionTreeMap.put(
-			new Version(12, 0, 2), new UpgradeDLFileEntryType());
+		versionTreeMap.put(new Version(12, 0, 2), new UpgradeDLFileEntryType());
 
-		upgradeVersionTreeMap.put(
-			new Version(12, 1, 0), new UpgradeDLFileEntry());
+		versionTreeMap.put(new Version(12, 1, 0), new UpgradeDLFileEntry());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(12, 1, 1),
 			UpgradeProcessFactory.addColumns(
 				"DLFileVersion", "expirationDate DATE null",
 				"reviewDate DATE null"));
 
-		upgradeVersionTreeMap.put(
-			new Version(12, 2, 0), new UpgradeCompanyId());
+		versionTreeMap.put(new Version(12, 2, 0), new UpgradeCompanyId());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(12, 2, 1),
 			UpgradeProcessFactory.alterColumnType(
 				"AssetEntry", "title", "TEXT null"));
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(12, 2, 2), new UpgradePortalPreferenceValue());
 
-		upgradeVersionTreeMap.put(new Version(13, 0, 0), new UpgradeAccount());
+		versionTreeMap.put(new Version(13, 0, 0), new UpgradeAccount());
 
-		upgradeVersionTreeMap.put(new Version(13, 0, 1), new UpgradeLayout());
+		versionTreeMap.put(new Version(13, 0, 1), new UpgradeLayout());
 
-		upgradeVersionTreeMap.put(
-			new Version(13, 1, 0), new UpgradeAssetVocabulary());
+		versionTreeMap.put(new Version(13, 1, 0), new UpgradeAssetVocabulary());
 
-		upgradeVersionTreeMap.put(
-			new Version(13, 2, 0), new UpgradeAssetCategory());
+		versionTreeMap.put(new Version(13, 2, 0), new UpgradeAssetCategory());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(13, 3, 0),
 			new CTModelUpgradeProcess("Repository", "RepositoryEntry"));
 
-		upgradeVersionTreeMap.put(
-			new Version(13, 3, 1), new UpgradeRepository());
+		versionTreeMap.put(new Version(13, 3, 1), new UpgradeRepository());
 
-		upgradeVersionTreeMap.put(
-			new Version(13, 3, 2), new UpgradeMappingTables());
+		versionTreeMap.put(new Version(13, 3, 2), new UpgradeMappingTables());
 
-		upgradeVersionTreeMap.put(new Version(13, 3, 3), new UpgradeGroup());
+		versionTreeMap.put(new Version(13, 3, 3), new UpgradeGroup());
 
-		upgradeVersionTreeMap.put(
-			new Version(13, 3, 4), new UpgradeExpandoColumn());
+		versionTreeMap.put(new Version(13, 3, 4), new UpgradeExpandoColumn());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(13, 3, 5),
 			UpgradeProcessFactory.alterColumnType(
 				"Contact_", "prefixId", "LONG NULL"));
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(13, 3, 6),
 			UpgradeProcessFactory.alterColumnType(
 				"Contact_", "suffixId", "LONG NULL"));
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(14, 0, 0), new UpgradeExternalReferenceCode());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(14, 0, 1), new UpgradeFaviconFileEntryIdColumn());
 
-		upgradeVersionTreeMap.put(
-			new Version(14, 0, 2), new UpgradeCountryCode());
+		versionTreeMap.put(new Version(14, 0, 2), new UpgradeCountryCode());
 
-		upgradeVersionTreeMap.put(
-			new Version(15, 0, 0), new UpgradeOrgGroupRole());
+		versionTreeMap.put(new Version(15, 0, 0), new UpgradeOrgGroupRole());
 
-		upgradeVersionTreeMap.put(
-			new Version(16, 0, 0), new DummyUpgradeProcess());
+		versionTreeMap.put(new Version(16, 0, 0), new DummyUpgradeProcess());
 
-		upgradeVersionTreeMap.put(
+		versionTreeMap.put(
 			new Version(16, 1, 0),
 			new BaseExternalReferenceCodeUpgradeProcess() {
 

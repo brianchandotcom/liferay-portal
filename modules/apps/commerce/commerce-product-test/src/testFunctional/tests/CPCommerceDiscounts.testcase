@@ -227,6 +227,236 @@ definition {
 			value1 = "24.00");
 	}
 
+	@description = "COMMERCE-9787 | Apply a discount with eligibility only to account groups that are eligible"
+	@priority = "4"
+	test CanApplySpecificAccountGroupCouponCodeDiscount {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And 2 accounts associated with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account 2",
+				accountType = "Business",
+				createNewAccount = "true",
+				existingUser = "true",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And one of the accounts is part of an account group") {
+			JSONAccountGroup.addAccountGroup(accountGroupName = "AG1");
+
+			AccountGroups.openAccountGroupsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AG1");
+
+			AccountGroups.viewDefault(tabName = "Accounts");
+
+			AccountGroups.addAssignee(
+				accountGroupName = "AG1",
+				assigneeNames = "Commerce Account");
+		}
+
+		task ("And a discount with coupon code is created") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				couponCode = "FREESHIPPING",
+				level = "L1",
+				maximumDiscountAmount = "100",
+				percentageLevel1 = "100",
+				target = "shipping",
+				title = "Free Shipping Discount",
+				useCouponCode = "true",
+				usePercentage = "true");
+		}
+
+		task ("And AG1 is eligible for the discount") {
+			CommerceJSONDiscountsAPI._addDiscountAccountGroup(
+				accountGroupName = "AG1",
+				discountTitle = "Free Shipping Discount");
+		}
+
+		task ("And Coupon Code Entry widget is deployed on the Checkout page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/checkout");
+
+			CommerceAcceleratorsInitializer.addPortlet(portletName = "Coupon Code Entry");
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And a new order is created") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("Then the coupon code is successfully applied") {
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "View Details");
+
+			Button.click(button = "Checkout");
+
+			FrontStore.applyCouponCode(discountCouponCode = "FREESHIPPING");
+		}
+
+		task ("And on the Order Summary, the discount is shown applied to the shipping") {
+			CommerceCheckout.initializersCheckout(
+				deliveryDiscountPercentage = "100",
+				deliveryDiscountValue = "15.00",
+				deliveryValue = "$ 15.00",
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When Commerce Account 2 is set as active") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Commerce Account 2");
+		}
+
+		task ("And a new order is created") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("Then an error is thrown when the coupon code is applied") {
+			CommerceCheckout.gotoCheckout();
+
+			FrontStore.applyCouponCode(
+				discountCouponCode = "FREESHIPPING",
+				errorMessage = "Error: The account is not qualified to use the discount.");
+		}
+	}
+
+	@description = "COMMERCE-9789 | Apply coupon code discount to not eligible account group and assert the coupon is not applicable"
+	@priority = "4"
+	test CanAssertNotEligibleAccountGroupCouponCodeDiscountNotApplied {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an account associated with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And 2 account groups are created") {
+			for (var accountGroupName : list "AG1,AG2") {
+				JSONAccountGroup.addAccountGroup(accountGroupName = "${accountGroupName}");
+			}
+		}
+
+		task ("And the account is associated with AG2") {
+			AccountGroups.openAccountGroupsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AG2");
+
+			AccountGroups.viewDefault(tabName = "Accounts");
+
+			AccountGroups.addAssignee(
+				accountGroupName = "AG2",
+				assigneeNames = "Commerce Account");
+		}
+
+		task ("And a discount with coupon code is created") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				couponCode = "FREESHIPPING",
+				level = "L1",
+				maximumDiscountAmount = "100",
+				percentageLevel1 = "100",
+				target = "shipping",
+				title = "Free Shipping Discount",
+				useCouponCode = "true",
+				usePercentage = "true");
+		}
+
+		task ("And AG1 is eligible for the discount") {
+			CommerceJSONDiscountsAPI._addDiscountAccountGroup(
+				accountGroupName = "AG1",
+				discountTitle = "Free Shipping Discount");
+		}
+
+		task ("And Coupon Code Entry widget is deployed on the Checkout page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/checkout");
+
+			CommerceAcceleratorsInitializer.addPortlet(portletName = "Coupon Code Entry");
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And a new order is created") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("Then an error is thrown when the coupon code is applied") {
+			CommerceCheckout.gotoCheckout();
+
+			FrontStore.applyCouponCode(
+				discountCouponCode = "FREESHIPPING",
+				errorMessage = "Error: The account is not qualified to use the discount.");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9592."
 	@priority = "3"
 	test CanViewErrorNotificationWhenApplyingCouponCodeToWrongProduct {

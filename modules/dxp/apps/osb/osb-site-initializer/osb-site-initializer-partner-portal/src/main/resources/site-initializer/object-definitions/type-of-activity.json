@@ -1,8 +1,8 @@
 {
 	"label": {
-		"en-US": "Type Of Activity"
+		"en-US": "Type of Activity"
 	},
-	"name": "TypeOfActivity",
+	"name": "TypeActivity",
 	"objectFields": [
 		{
 			"DBType": "String",

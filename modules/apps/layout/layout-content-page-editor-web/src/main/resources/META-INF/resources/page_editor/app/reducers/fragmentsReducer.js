@@ -12,7 +12,11 @@
  * details.
  */
 
-import {ADD_FRAGMENT_COMPOSITION, INIT} from '../actions/types';
+import {
+	ADD_FRAGMENT_COMPOSITION,
+	INIT,
+	TOGGLE_FRAGMENT_HIGHLIGHTED,
+} from '../actions/types';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
@@ -150,6 +154,21 @@ export default function fragmentsReducer(fragments = [], action) {
 			});
 
 			return newFragments;
+		}
+
+		case TOGGLE_FRAGMENT_HIGHLIGHTED: {
+			const {fragmentEntryKey, highlighted} = action;
+
+			const nextFragments = fragments.map((collection) => ({
+				...collection,
+				fragmentEntries: collection.fragmentEntries.map((fragment) =>
+					fragment.fragmentEntryKey === fragmentEntryKey
+						? {...fragment, highlighted}
+						: fragment
+				),
+			}));
+
+			return nextFragments;
 		}
 
 		default:

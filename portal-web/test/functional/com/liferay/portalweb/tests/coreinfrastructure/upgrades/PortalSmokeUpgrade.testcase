@@ -79,6 +79,19 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
+	@description = "LPS-158183: This is a smoke test to directly upgrade from 6.1 to 7.4 version using DB Upgrade Tool."
+	@priority = "4"
+	test ViewPortalSmokeArchive6130 {
+		property custom.properties = "feature.flag.LPS-157670=true";
+		property data.archive.type = "data-archive-portal";
+		property database.types = "sybase,oracle,mariadb,mysql,postgresql,db2";
+		property portal.upgrades = "false";
+		property portal.version = "6.1.30";
+		property test.assert.warning.exceptions = "true";
+
+		Upgrade.viewUpgrade();
+	}
+
 	@priority = "5"
 	test ViewPortalSmokeArchive7110 {
 		property data.archive.type = "data-archive-portal";
@@ -189,6 +202,20 @@ definition {
 		property portal.upgrades = "true";
 		property portal.upstream = "quarantine";
 		property portal.version = "7.4.0";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "true";
+
+		Upgrade.viewUpgrade();
+	}
+
+	@description = "LPS-158183: This is a smoke test to directly upgrade from 6.1 to 7.4 version using Auto Upgrade."
+	@priority = "5"
+	test ViewPortalSmokeArchiveAutoUpgrade6130 {
+		property custom.properties = "feature.flag.LPS-157670=true${line.separator}upgrade.database.auto.run=true";
+		property data.archive.type = "data-archive-portal";
+		property database.types = "sybase,oracle,mariadb,mysql,postgresql,db2";
+		property portal.upgrades = "true";
+		property portal.version = "6.1.30";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
 

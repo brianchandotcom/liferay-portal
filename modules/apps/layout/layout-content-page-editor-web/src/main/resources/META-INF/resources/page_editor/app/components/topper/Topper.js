@@ -20,7 +20,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
-import {switchSidebarPanel} from '../../actions/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {config} from '../../config/index';
 import {
@@ -40,6 +39,7 @@ import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStr
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import moveItem from '../../thunks/moveItem';
+import switchSidebarPanel from '../../thunks/switchSidebarPanel';
 import {TARGET_POSITIONS} from '../../utils/drag-and-drop/constants/targetPositions';
 import {
 	useDragItem,

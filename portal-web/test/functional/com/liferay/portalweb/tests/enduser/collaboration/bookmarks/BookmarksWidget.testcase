@@ -39,6 +39,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddBookmark {
 		Bookmark.addPG(
 			bookmarkDescription = "Test Bookmark Description",
@@ -53,6 +54,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddFolder {
 		BookmarksFolder.addPG(
 			folderDescription = "Test Folder Description",
@@ -60,6 +62,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddFolderBookmark {
 		BookmarksFolder.addPG(
 			folderDescription = "Test Folder Description",
@@ -86,6 +89,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddFolderBookmarkURLInvalid {
 		BookmarksFolder.addPG(
 			folderDescription = "Test Folder Description",
@@ -103,6 +107,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DeleteFolder {
 		BookmarksFolder.addPG(
 			folderDescription = "Test Folder Description",
@@ -116,6 +121,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DeleteFolderBookmark {
 		BookmarksFolder.addPG(
 			folderDescription = "Test Folder Description",
@@ -138,6 +144,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditFolder {
 		BookmarksFolder.addPG(
 			folderDescription = "Test Folder Description",
@@ -153,6 +160,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditFolderBookmark {
 		BookmarksFolder.addPG(
 			folderDescription = "Test Folder Description",
@@ -179,6 +187,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test MoveFolderBookmarkToFolder {
 		BookmarksFolder.addPG(
 			folderDescription = "Test Folder Description 1",
@@ -221,11 +230,13 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test RemoveBookmarkPortlet {
 		Portlet.deletePG(portletName = "Bookmarks");
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchFolderBookmark {
 		BookmarksFolder.addPG(
 			folderDescription = "Test Folder Description",

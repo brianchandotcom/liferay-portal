@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item.selector.test;
+package com.liferay.content.dashboard.document.library.internal.item.selector.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.content.dashboard.web.test.util.ContentDashboardTestUtil;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -24,6 +23,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -180,8 +182,7 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());
 
-		ThemeDisplay themeDisplay = ContentDashboardTestUtil.getThemeDisplay(
-			_group);
+		ThemeDisplay themeDisplay = _getThemeDisplay(_group);
 
 		themeDisplay.setRequest(mockHttpServletRequest);
 		themeDisplay.setUser(TestPropsValues.getUser());
@@ -195,13 +196,27 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 
 		Object contentDashboardFileExtensionItemSelectorViewDisplayContext =
 			mockHttpServletRequest.getAttribute(
-				"com.liferay.content.dashboard.web.internal.display.context." +
-					"ContentDashboardFileExtensionItemSelectorViewDisplay" +
-						"Context");
+				"com.liferay.content.dashboard.document.library.internal." +
+					"item.display.context.ContentDashboardFileExtensionItem" +
+						"SelectorViewDisplayContext");
 
 		return ReflectionTestUtil.invoke(
 			contentDashboardFileExtensionItemSelectorViewDisplayContext,
 			"getData", new Class<?>[0], null);
+	}
+
+	private ThemeDisplay _getThemeDisplay(Group group) throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			CompanyLocalServiceUtil.fetchCompany(group.getCompanyId()));
+		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setScopeGroupId(group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		return themeDisplay;
 	}
 
 	@Inject(

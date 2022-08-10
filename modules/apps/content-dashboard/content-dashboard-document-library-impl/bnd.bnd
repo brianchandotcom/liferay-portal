@@ -1,3 +1,28 @@
 Bundle-Name: Liferay Content Dashboard Document Library Implementation
 Bundle-SymbolicName: com.liferay.content.dashboard.document.library.impl
 Bundle-Version: 1.0.15
+Import-Package:\
+	!com.graphbuilder.*,\
+	\
+	!org.apache.tools.ant.*,\
+	\
+	com.microsoft.schemas.office.powerpoint.*;resolution:=optional,\
+	com.microsoft.schemas.office.word.*;resolution:=optional,\
+	\
+	com.sun.*;resolution:=optional,\
+	\
+	net.sf.*;resolution:=optional,\
+	\
+	org.apache.batik.*;resolution:=optional,\
+	org.apache.commons.math3.*;resolution:=optional,\
+	org.apache.jcp.*;resolution:=optional,\
+	\
+	org.bouncycastle.*;resolution:=optional,\
+	\
+	org.etsi.*;resolution:=optional,\
+	\
+	org.openxmlformats.schemas.*;resolution:=optional,\
+	\
+	*
+Web-ContextPath: /content-dashboard-document-library-impl
+-dsannotations-options: inherit

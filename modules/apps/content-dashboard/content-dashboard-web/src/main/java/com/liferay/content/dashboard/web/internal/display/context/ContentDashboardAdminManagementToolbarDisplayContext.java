@@ -250,29 +250,55 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				_contentDashboardAdminDisplayContext.
 					getContentDashboardItemSubtypes();
 
-		List<String> fileExtensions =
-			_contentDashboardAdminDisplayContext.getFileExtensions();
+		List<ContentDashboardItemFilterProvider>
+			contentDashboardItemFilterProviders =
+				_contentDashboardItemFilterProviderTracker.
+					getContentDashboardItemFilterProviders();
 
-		for (String fileExtension : fileExtensions) {
-			labelItemListWrapper.add(
-				labelItem -> {
-					labelItem.putData(
-						"removeLabelURL",
-						_getRemoveLabelURL(
-							"fileExtension",
-							() -> {
-								Stream<String> stream = fileExtensions.stream();
+		for (ContentDashboardItemFilterProvider
+				contentDashboardItemFilterProvider :
+					contentDashboardItemFilterProviders) {
 
-								return stream.filter(
-									curFileExtension -> !Objects.equals(
-										curFileExtension, fileExtension)
-								).toArray(
-									String[]::new
-								);
-							}));
-					labelItem.setCloseable(true);
-					labelItem.setLabel(_getLabel("extension", fileExtension));
-				});
+			try {
+				ContentDashboardItemFilter contentDashboardItemFilter =
+					contentDashboardItemFilterProvider.
+						getContentDashboardItemFilter(
+							_liferayPortletRequest.getHttpServletRequest());
+
+				List<String> parameterValues =
+					contentDashboardItemFilter.getParameterValues();
+
+				for (String parameterValue : parameterValues) {
+					labelItemListWrapper.add(
+						labelItem -> {
+							labelItem.putData(
+								"removeLabelURL",
+								_getRemoveLabelURL(
+									contentDashboardItemFilter.
+										getParameterName(),
+									() -> {
+										Stream<String> stream =
+											parameterValues.stream();
+
+										return stream.filter(
+											curFileExtension -> !Objects.equals(
+												curFileExtension,
+												parameterValue)
+										).toArray(
+											String[]::new
+										);
+									}));
+							labelItem.setCloseable(true);
+							labelItem.setLabel(
+								_getLabel("extension", parameterValue));
+						});
+				}
+			}
+			catch (ContentDashboardItemActionException
+						contentDashboardItemActionException) {
+
+				_log.error(contentDashboardItemActionException);
+			}
 		}
 
 		for (ContentDashboardItemSubtype contentDashboardItemSubtype :

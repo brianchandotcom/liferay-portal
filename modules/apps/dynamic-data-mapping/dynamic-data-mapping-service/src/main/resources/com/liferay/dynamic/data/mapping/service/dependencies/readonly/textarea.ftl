@@ -25,6 +25,6 @@
 			/>
 		</#if>
 
-		<pre class="lfr-ddm-readonly-textarea">${fieldValue}</pre>
+		<pre class="lfr-ddm-readonly-textarea">${escape(fieldValue)}</pre>
 	</#if>
 </div>

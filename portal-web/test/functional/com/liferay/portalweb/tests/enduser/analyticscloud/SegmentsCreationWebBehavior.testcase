@@ -1373,4 +1373,48 @@ definition {
 		ACUtils.viewNameList(nameList = "ac ac");
 	}
 
+	@description = "Bug: LRAC-8233 | Automation ID: LRAC-11537 | Test Summary: Check web behavior shows which data source data came from"
+	@priority = "3"
+	test CheckWebBehaviorSegmentShowsWhichDataSourceDataCameFrom {
+
+		ACUtils.createBlogsAndAddToPage();
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		var dataSourceName = StringUtil.extractFirst("${propertyName}", "Combined");
+
+		var dataSourceName = StringUtil.trim("${dataSourceName}");
+
+		ACUtils.navigateToSitePage(
+			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title",
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessionsAndWait();
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createDynamicSegment();
+
+		ACUtils.setItemName(itemName = "Dynamic Segment Test");
+
+		ACSegments.addSegmentField(segmentField = "Viewed Page");
+
+		ACSegments.editWebBehaviorCriterion(
+			indexField = "1",
+			occurenceNumber = "4",
+			searchTerm = "Blogs AC Title - Site Name - Liferay DXP");
+
+		ACSegments.checkDataSourceOrigin(
+			indexField = "1",
+			documentTitle = "Blogs AC Title - Site Name - Liferay DXP",
+			dataSource = "${dataSourceName}");
+
+	}
+
 }

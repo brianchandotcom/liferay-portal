@@ -336,6 +336,19 @@ definition {
 		}
 	}
 
+	macro checkDataSourceOrigin {
+		var key_dataSource = "${dataSource}";
+
+		Click(locator1 = "ACSegments#SELECT_BUTTON");
+
+		ACSegments.searchSegment(findSegment = "${documentTitle}");
+
+		AssertElementPresent(locator1 = "ACSegments#DATA_SOURCE_SEGMENT");
+
+		Click(locator1 = "ACSegments#MODAL_CANCEL_BUTTON");
+		
+	}
+
 	macro editWebBehaviorCriterion {
 		if (isSet(activitiesOption)) {
 			Select(

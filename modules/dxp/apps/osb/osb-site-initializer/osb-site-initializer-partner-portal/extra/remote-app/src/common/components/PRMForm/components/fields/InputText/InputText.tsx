@@ -25,12 +25,7 @@ const InputText = ({
 	PRMFormFieldStateProps<string> &
 	React.ComponentProps<typeof ClayInput>) => (
 	<WrapperInput {...meta} label={label} required={required}>
-		<ClayInput
-			{...props}
-			name={field.name}
-			onBlur={field.onBlur}
-			onChange={field.onChange}
-		/>
+		<ClayInput {...props} {...field} />
 	</WrapperInput>
 );
 

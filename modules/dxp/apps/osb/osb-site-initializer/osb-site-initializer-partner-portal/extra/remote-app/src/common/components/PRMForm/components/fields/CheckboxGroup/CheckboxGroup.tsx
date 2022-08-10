@@ -29,7 +29,7 @@ const CheckboxGroup = ({
 }: IProps & PRMFormFieldProps & PRMFormFieldStateProps<string[]>) => (
 	<WrapperInput {...meta} label={label} required={required}>
 		<div
-			className={classNames('border p-3 rounded-lg', {
+			className={classNames('border px-3 pt-3 rounded-lg', {
 				'border-danger': meta.error && meta.touched,
 				'border-neutral-5': !meta.touched,
 				'border-success': !meta.error && meta.touched,

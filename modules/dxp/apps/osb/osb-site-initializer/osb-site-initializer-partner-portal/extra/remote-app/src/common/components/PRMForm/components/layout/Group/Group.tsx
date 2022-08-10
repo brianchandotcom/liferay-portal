@@ -16,7 +16,7 @@ interface IProps {
 }
 
 const Group = ({children}: IProps) => (
-	<div className="form-group-autofit">
+	<div className="form-group-autofit mb-0">
 		{Children.map(children, (child) => {
 			return <div className="form-group-item">{child}</div>;
 		})}

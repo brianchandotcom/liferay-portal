@@ -16,9 +16,7 @@ import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 
 interface IProps {
-	items: (React.OptionHTMLAttributes<HTMLOptionElement> & {
-		description?: string;
-	})[];
+	items: React.OptionHTMLAttributes<HTMLOptionElement>[];
 }
 
 const RadioGroup = ({
@@ -32,7 +30,7 @@ const RadioGroup = ({
 		<WrapperInput {...meta} label={label} required={required}>
 			{items.map((item, index) => (
 				<div
-					className="border border-neutral-5 mb-4 p-3 rounded-lg"
+					className="border border-neutral-5 mb-2 p-3 rounded-lg"
 					key={index}
 				>
 					<ClayRadio
@@ -42,12 +40,6 @@ const RadioGroup = ({
 						label={item.label}
 						value={item.value as string}
 					/>
-
-					{item.description && (
-						<div className="ml-4 sheet-text">
-							{item.description}
-						</div>
-					)}
 				</div>
 			))}
 		</WrapperInput>

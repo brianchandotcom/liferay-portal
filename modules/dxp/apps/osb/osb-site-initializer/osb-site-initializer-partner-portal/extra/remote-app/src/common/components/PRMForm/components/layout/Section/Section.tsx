@@ -16,7 +16,7 @@ interface IProps {
 
 const Section = ({children, title}: IProps) => (
 	<div>
-		<h5 className="font-weight-bold mb-0 sheet-subtitle">{title}</h5>
+		<h5 className="font-weight-bold sheet-subtitle">{title}</h5>
 
 		{children}
 	</div>

@@ -10,6 +10,7 @@
  */
 
 import Button from '@clayui/button';
+import classNames from 'classnames';
 import {ArrayHelpers, useFormikContext} from 'formik';
 import {useState} from 'react';
 
@@ -52,6 +53,10 @@ const Activities = ({
 
 	return (
 		<PRMForm
+			className={classNames({
+				'mb-3': !isForm,
+				'mb-4': isForm,
+			})}
 			description="Choose the activities that best match your Campaign MDF request"
 			name="Activities"
 			title={values.overallCampaign}
@@ -67,17 +72,16 @@ const Activities = ({
 			)}
 
 			<PRMForm.Footer>
-				<div className="mr-auto pl-0 py-3">
+				<div className="d-flex mr-auto">
 					<Button
 						className="mr-4"
-						displayType="secondary"
+						displayType={null}
 						onClick={isForm ? () => onPreviousForm() : onPrevious}
 					>
 						Previous
 					</Button>
 
 					<Button
-						className="pl-0"
 						disabled={isSubmitting}
 						displayType={null}
 						onClick={() => onSaveAsDraft?.(values, formikHelpers)}
@@ -86,7 +90,7 @@ const Activities = ({
 					</Button>
 				</div>
 
-				<div className="p-2">
+				<div>
 					<Button
 						className="mr-4"
 						displayType="secondary"

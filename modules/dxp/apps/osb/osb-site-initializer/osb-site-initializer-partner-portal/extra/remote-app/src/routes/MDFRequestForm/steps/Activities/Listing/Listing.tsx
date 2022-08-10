@@ -9,7 +9,9 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import Button from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import {ArrayHelpers} from 'formik';
 
 import MDFRequestActivity from '../../../../../common/interfaces/mdfRequestActivity';
@@ -33,11 +35,18 @@ const Listing = ({activities, onAdd, remove}: IProps & ArrayHelpers) => {
 							</div>
 						))
 					) : (
-						<div>No entries were found</div>
+						<ClayAlert displayType="info" title="Info:">
+							No entries were found
+						</ClayAlert>
 					)}
 				</div>
 
-				<Button onClick={onAdd}>Add Activity</Button>
+				<Button className="d-flex" onClick={onAdd} outline small>
+					<span className="inline-item inline-item-before">
+						<ClayIcon symbol="plus" />
+					</span>
+					Add Activity
+				</Button>
 			</div>
 		</>
 	);

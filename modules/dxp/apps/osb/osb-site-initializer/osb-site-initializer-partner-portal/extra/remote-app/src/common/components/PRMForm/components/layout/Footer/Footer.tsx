@@ -14,7 +14,9 @@ interface IProps {
 }
 
 const Footer = ({children}: IProps) => (
-	<div className="d-flex my-5">{children}</div>
+	<div className="border-neutral-2 border-top d-flex mt-4 pt-4">
+		{children}
+	</div>
 );
 
 export default Footer;

@@ -63,7 +63,7 @@ const Goals = ({
 	};
 
 	return (
-		<PRMForm name="Goals" title="Campaign Information">
+		<PRMForm className="mb-4" name="Goals" title="Campaign Information">
 			<PRMForm.Section title="Partner">
 				<PRMForm.Group>
 					<PRMFormik.Field
@@ -136,7 +136,6 @@ const Goals = ({
 			<PRMForm.Footer>
 				<div className="d-flex mr-auto">
 					<Button
-						className="pl-0"
 						disabled={isSubmitting}
 						displayType={null}
 						onClick={() => onSaveAsDraft?.(values, formikHelpers)}

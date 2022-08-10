@@ -27,14 +27,14 @@ const WrapperInput = ({
 	required,
 	touched,
 }: PRMFormFieldProps & IProps) => (
-	<div
+	<ClayForm.Group
 		className={classNames('mb-4', {
 			'has-error': touched && error,
 			'has-success': touched && !error,
 		})}
 	>
 		{label && (
-			<label>
+			<label className="font-weight-semi-bold ml-0">
 				{label}
 
 				{required && <span className="text-danger">*</span>}
@@ -44,9 +44,11 @@ const WrapperInput = ({
 		{children}
 
 		{error && touched && (
-			<ClayForm.FeedbackItem>{error}</ClayForm.FeedbackItem>
+			<ClayForm.FeedbackGroup>
+				<ClayForm.FeedbackItem>{error}</ClayForm.FeedbackItem>
+			</ClayForm.FeedbackGroup>
 		)}
-	</div>
+	</ClayForm.Group>
 );
 
 export default WrapperInput;

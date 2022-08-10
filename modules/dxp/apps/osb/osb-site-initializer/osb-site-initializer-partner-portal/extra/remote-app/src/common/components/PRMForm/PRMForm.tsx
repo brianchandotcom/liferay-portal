@@ -24,16 +24,24 @@ interface IProps {
 	title: string;
 }
 
-const PRMForm = ({children, description, name, title}: IProps) => (
-	<div className="pt-5 px-6 sheet sheet-lg">
-		<div>
-			<div className="font-weight-bold mb-1 text-primary">
-				{name.toUpperCase()}
+const PRMForm = ({
+	children,
+	className,
+	description,
+	name,
+	title,
+}: IProps & React.HTMLAttributes<HTMLDivElement>) => (
+	<div className="border-0 pb-3 pt-5 px-6 sheet sheet-lg">
+		<div className={className}>
+			<div className="font-weight-bold mb-1 text-primary text-small-caps">
+				{name}
 			</div>
 
-			{description && <div className="sheet-text">{description}</div>}
+			<h2 className="mb-0">{title}</h2>
 
-			<h2 className="mb-4">{title}</h2>
+			{description && (
+				<div className="mt-1 text-paragraph-sm">{description}</div>
+			)}
 		</div>
 
 		{children}

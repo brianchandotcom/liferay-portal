@@ -16,6 +16,7 @@ package com.liferay.cookies.configuration.banner;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
@@ -31,21 +32,25 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 )
 public interface CookiesBannerConfiguration {
 
+	@ExtendedAttributeDefinition(requiredInput = true)
 	@Meta.AD(
 		deflt = "${language:cookies-banner-content}", name = "content",
 		required = false
 	)
 	public LocalizedValuesMap content();
 
+	@ExtendedAttributeDefinition(requiredInput = true)
 	@Meta.AD(name = "privacy-policy-link", required = false)
 	public String privacyPolicyLink();
 
+	@ExtendedAttributeDefinition(requiredInput = true)
 	@Meta.AD(
 		deflt = "${language:visit-our-privacy-policy}",
 		name = "link-display-text", required = false
 	)
 	public LocalizedValuesMap linkDisplayText();
 
+	@ExtendedAttributeDefinition(requiredInput = true)
 	@Meta.AD(
 		deflt = "true", name = "include-decline-all-button", required = false
 	)

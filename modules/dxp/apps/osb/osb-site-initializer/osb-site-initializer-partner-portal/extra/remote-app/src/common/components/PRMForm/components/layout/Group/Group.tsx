@@ -9,14 +9,18 @@
  * distribution rights of the Software.
  */
 
+import classNames from 'classnames';
 import {Children} from 'react';
 
 interface IProps {
 	children?: React.ReactNode;
 }
 
-const Group = ({children}: IProps) => (
-	<div className="form-group-autofit mb-0">
+const Group = ({
+	children,
+	className,
+}: IProps & React.HTMLAttributes<HTMLDivElement>) => (
+	<div className={classNames('form-group-autofit mb-0', className)}>
 		{Children.map(children, (child) => {
 			return <div className="form-group-item">{child}</div>;
 		})}

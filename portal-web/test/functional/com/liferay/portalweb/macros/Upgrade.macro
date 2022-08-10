@@ -75,8 +75,6 @@ definition {
 			entryContent = "${entryContent}",
 			entryTitle = "${entryTitle}");
 
-		Pause(locator1 = "3000");
-
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
 
 		AssertClick.assertTextClickAt(
@@ -101,8 +99,6 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "${dmDocumentFile}",
 			dmDocumentTitle = "${dmDocumentTitle}");
-
-		Pause(locator1 = "3000");
 
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -2692,8 +2688,6 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Blogs");
-
-		Pause(locator1 = "3000");
 
 		Blogs.addWithWorkflow(
 			entryContent = "Blogs Entry Content",

@@ -55,6 +55,9 @@ const adaptToFormApplicationRequest = (state: any, status: any) => ({
 	},
 	city: state?.contactInfo?.form?.city,
 	dataJSON: JSON.stringify({
+		coverage: {
+			form: state?.coverage?.form,
+		},
 		driverInfo: {
 			form: state?.driverInfo?.form,
 		},

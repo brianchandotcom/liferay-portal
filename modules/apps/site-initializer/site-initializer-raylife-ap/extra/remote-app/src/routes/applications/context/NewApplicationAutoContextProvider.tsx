@@ -32,12 +32,14 @@ type ContactInfoFormTypes = {
 
 type CoverageFormTypes = {
 	bodilyInjury: string;
-	collision: string;
-	comprehensive: string;
 	medical: string;
 	propertyDamage: string;
 	uninsuredOrUnderinsuredMBI: string;
 	uninsuredOrUnderinsuredMPD: string;
+	vehicles: {
+		collision: string;
+		comprehensive: string;
+	}[];
 };
 
 type AccidentCitationTypes = {
@@ -133,12 +135,16 @@ const initialState: InitialStateTypes = {
 		coverage: {
 			form: {
 				bodilyInjury: '',
-				collision: '',
-				comprehensive: '',
 				medical: '',
 				propertyDamage: '',
 				uninsuredOrUnderinsuredMBI: '',
 				uninsuredOrUnderinsuredMPD: '',
+				vehicles: [
+					{
+						collision: '',
+						comprehensive: '',
+					},
+				],
 			},
 			index: 3,
 			name: 'Coverage',

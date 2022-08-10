@@ -32,6 +32,7 @@ import {
 
 type FormVehicleInfoTypes = {
 	form: any[];
+	formIndex: number;
 	formNumber: number;
 	id: number;
 };

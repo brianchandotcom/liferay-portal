@@ -18,13 +18,13 @@ import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import ClayPaginationBar from '@clayui/pagination-bar';
 import {useEffect, useState} from 'react';
 
-import Header from '../../../common/components/header';
-import Table from '../../../common/components/table';
+import Header from '../../../../common/components/header';
+import Table from '../../../../common/components/table';
 import {
 	deleteApplicationByExternalReferenceCode,
 	getApplications,
-} from '../../../common/services';
-import formatDate from '../../../common/utils/dateFormater';
+} from '../../../../common/services';
+import formatDate from '../../../../common/utils/dateFormater';
 
 const HEADERS = [
 	{
@@ -50,9 +50,11 @@ const HEADERS = [
 		value: 'Name',
 	},
 	{
+		clickable: true,
+		greyColor: true,
 		key: 'email',
-		type: 'email',
-		value: 'Email Adress',
+		type: 'link',
+		value: 'Email Address',
 	},
 	{
 		greyColor: true,

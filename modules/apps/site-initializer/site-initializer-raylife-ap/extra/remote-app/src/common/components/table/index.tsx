@@ -34,6 +34,10 @@ type TableHeaders = {
 	value: string;
 };
 
+const handleRedirectToGmail = (email: string) => {
+	window.location.href = `mailto:${email}`;
+};
+
 const Table: React.FC<TableProps> = ({data, headers, actions = []}) => {
 	return (
 		<table className="border-0 ray-table show-quick-actions-on-hover table table-autofit table-list table-responsive">
@@ -80,6 +84,16 @@ const Table: React.FC<TableProps> = ({data, headers, actions = []}) => {
 											'font-weight-bolder': !!item.bold,
 											'text-neutral-7': !!item.greyColor,
 										})}
+										onClick={() => {
+											if (
+												item.clickable &&
+												item.key === 'email'
+											) {
+												handleRedirectToGmail(
+													rowContent[item.key]
+												);
+											}
+										}}
 									>
 										{rowContent[item.key]}
 									</span>

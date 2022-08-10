@@ -14,12 +14,21 @@
 
 package com.liferay.commerce.term.web.internal.entry.constants;
 
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.commerce.term.constants.CommerceTermEntryPortletKeys;
 
 /**
  * @author Alessio Antonio Rendina
  */
 public class CommerceTermEntryFDSNames {
+
+	public static final String ACCOUNT_ENTRY_DELIVERY_TERM_ENTRIES =
+		AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN +
+			"-accountEntryDeliveryTermEntries";
+
+	public static final String ACCOUNT_ENTRY_PAYMENT_TERM_ENTRIES =
+		AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN +
+			"-accountEntryPaymentTermEntries";
 
 	public static final String TERM_ENTRIES =
 		CommerceTermEntryPortletKeys.COMMERCE_TERM_ENTRY + "-termEntries";

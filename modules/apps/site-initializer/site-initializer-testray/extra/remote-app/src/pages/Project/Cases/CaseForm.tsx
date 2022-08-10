@@ -94,7 +94,7 @@ const CaseForm = () => {
 	}, [setTabs, testrayProject]);
 
 	const {
-		form: {onClose, onError, onSave, onSubmit},
+		form: {onClose, onError, onSave, onSubmit, onSuccess},
 	} = useFormActions();
 
 	const {projectId} = useParams();
@@ -102,6 +102,7 @@ const CaseForm = () => {
 		formState: {errors},
 		handleSubmit,
 		register,
+		reset,
 		setValue,
 		watch,
 	} = useForm<CaseFormData>({
@@ -113,12 +114,15 @@ const CaseForm = () => {
 					priority: priorities[0].value,
 			  }
 			: {
+					addAnother: false,
 					estimatedDuration: 0,
 			  },
 		resolver: yupResolver(yupSchema.case),
 	});
 
 	const _onSubmit = (form: CaseFormData) => {
+		const addAnother = form?.addAnother === true;
+
 		onSubmit(
 			{...form, projectId},
 			{
@@ -127,7 +131,15 @@ const CaseForm = () => {
 			}
 		)
 			.then(mutateCase)
-			.then(() => onSave())
+			.then(() => {
+				if (addAnother) {
+					onSuccess();
+
+					return reset();
+				}
+
+				return onSave();
+			})
 			.catch(onError);
 	};
 

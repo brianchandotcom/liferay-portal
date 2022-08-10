@@ -14,7 +14,7 @@
 
 package com.liferay.cookies.internal.settings.definition;
 
-import com.liferay.cookies.configuration.CookiesBannerConfiguration;
+import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

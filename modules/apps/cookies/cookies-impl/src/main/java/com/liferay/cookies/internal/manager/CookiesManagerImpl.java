@@ -14,7 +14,7 @@
 
 package com.liferay.cookies.internal.manager;
 
-import com.liferay.cookies.configuration.CookiesConsentConfiguration;
+import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	configurationPid = "com.liferay.cookies.configuration.CookiesConsentConfiguration",
+	configurationPid = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration",
 	immediate = true, service = CookiesManager.class
 )
 public class CookiesManagerImpl implements CookiesManager {

@@ -1,4 +1,7 @@
 Bundle-Name: Liferay Cookies API
 Bundle-SymbolicName: com.liferay.cookies.api
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.cookies.configuration
+Export-Package:\
+	com.liferay.cookies.configuration,\
+	com.liferay.cookies.configuration.banner,\
+	com.liferay.cookies.configuration.consent

@@ -14,8 +14,8 @@
 
 package com.liferay.cookies.banner.web.internal.display.context;
 
-import com.liferay.cookies.configuration.CookiesBannerConfiguration;
-import com.liferay.cookies.configuration.CookiesConsentConfiguration;
+import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
+import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.portal.kernel.cookies.ConsentCookieType;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;

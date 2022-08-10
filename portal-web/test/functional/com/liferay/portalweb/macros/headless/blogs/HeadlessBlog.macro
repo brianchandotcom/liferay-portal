@@ -31,14 +31,6 @@ definition {
 		return "${entryId}";
 	}
 
-	macro assertProperNumberOfItems {
-		var actualTotalElement = JSONUtil.getWithJSONPath("${responseToParse}", "$..['totalCount']");
-
-		TestUtils.assertEquals(
-			actual = "${actualTotalElement}",
-			expected = "${expectedTotalElement}");
-	}
-
 	macro getAllBlogsPostingId {
 		var response = HeadlessBlogAPI._getBlogsPosting();
 

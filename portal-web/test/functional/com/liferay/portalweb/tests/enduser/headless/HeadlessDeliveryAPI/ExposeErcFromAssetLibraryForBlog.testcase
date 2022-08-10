@@ -31,16 +31,16 @@ definition {
 		task ("When with POST request I create a comment with a custom external reference code") {
 			var response = HeadlessBlog.getAllBlogsPostingId();
 
-			var createBlogPostingComment = HeadlessComment.createBlogPostingComment(
+			var createBlogPostingComment = CommentAPI.createBlogPostingComment(
 				blogPostingId = "${response}",
 				commentExternalReferenceCode = "ercComment",
 				textComment = "CommentOne");
 		}
 
 		task ("Then I can see the custom external reference code in the body response") {
-			var commentsFromBlogPosting = HeadlessComment.getBlogPostingComments(blogPostingId = "${response}");
+			var commentsFromBlogPosting = CommentAPI.getBlogPostingComments(blogPostingId = "${response}");
 
-			var ercComment = HeadlessCommentAPI._getFieldValueOfExistingBlogPostingComment(
+			var ercComment = CommentAPI._getFieldValueOfExistingBlogPostingComment(
 				fieldName = "externalReferenceCode",
 				response = "${commentsFromBlogPosting}");
 
@@ -58,14 +58,14 @@ definition {
 		task ("When with POST request I create a comment with a custom external reference code") {
 			var response = HeadlessBlog.getAllBlogsPostingId();
 
-			var response1 = HeadlessComment.createBlogPostingComment(
+			var response1 = CommentAPI.createBlogPostingComment(
 				blogPostingId = "${response}",
 				commentExternalReferenceCode = "ercComment",
 				textComment = "CommentOne");
 		}
 
 		task ("When with POST request I create a comment with an already existing custom external reference code") {
-			var response2 = HeadlessComment.createBlogPostingComment(
+			var response2 = CommentAPI.createBlogPostingComment(
 				blogPostingId = "${response}",
 				commentExternalReferenceCode = "ercComment",
 				textComment = "CommentTwo");
@@ -78,9 +78,9 @@ definition {
 		}
 
 		task ("And Then another comment with the same external reference code is not being created") {
-			var commentsBlogPosting = HeadlessComment.getBlogPostingComments(blogPostingId = "${response}");
+			var commentsBlogPosting = CommentAPI.getBlogPostingComments(blogPostingId = "${response}");
 
-			HeadlessBlog.assertProperNumberOfItems(
+			CommentAPI.assertProperNumberOfItems(
 				expectedTotalElement = "1",
 				responseToParse = "${commentsBlogPosting}");
 		}

@@ -2255,7 +2255,7 @@ definition {
 				Click(locator1 = "Button#SUBMIT");
 			}
 
-			SelectWindow.selectWindowNoSPARefresh(locator1 = "title=Terms of Use");
+			SelectWindow.selectWindowNoSPARefresh(locator1 = "title=Home - Liferay DXP");
 
 			if (IsElementPresent.pauseIsElementPresent(locator1 = "Button#I_AGREE", value1 = "I Agree")) {
 				AssertClick(

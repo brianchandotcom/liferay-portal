@@ -32,7 +32,7 @@ const RadioGroup = ({
 		<WrapperInput {...meta} label={label} required={required}>
 			{items.map((item, index) => (
 				<div
-					className="border border-neutral-3 mb-4 p-3 rounded-lg"
+					className="border border-neutral-5 mb-4 p-3 rounded-lg"
 					key={index}
 				>
 					<ClayRadio
@@ -43,7 +43,11 @@ const RadioGroup = ({
 						value={item.value as string}
 					/>
 
-					{item.description && <span>{item.description}</span>}
+					{item.description && (
+						<div className="ml-4 sheet-text">
+							{item.description}
+						</div>
+					)}
 				</div>
 			))}
 		</WrapperInput>

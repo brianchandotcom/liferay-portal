@@ -97,31 +97,27 @@ const Goals = ({
 					required
 				/>
 
-				<div className="border border-neutral-3 mb-4 p-3 rounded-lg">
-					<PRMFormik.Field
-						component={PRMForm.CheckboxGroup}
-						items={
-							fieldEntries[
-								LiferayPicklistName.LIFERAY_BUSINESS_SALES_GOALS
-							]
-						}
-						label="Select Liferay business/sales goals this Campaign serves (choose up to three)"
-						name="liferayBusinessSalesGoals"
-						required
-					/>
-				</div>
+				<PRMFormik.Field
+					component={PRMForm.CheckboxGroup}
+					items={
+						fieldEntries[
+							LiferayPicklistName.LIFERAY_BUSINESS_SALES_GOALS
+						]
+					}
+					label="Select Liferay business/sales goals this Campaign serves (choose up to three)"
+					name="liferayBusinessSalesGoals"
+					required
+				/>
 			</PRMForm.Section>
 
 			<PRMForm.Section title="Target Market">
-				<div className="border border-neutral-3 mb-4 p-3 rounded-lg">
-					<PRMFormik.Field
-						component={PRMForm.CheckboxGroup}
-						items={fieldEntries[LiferayPicklistName.TARGETS_MARKET]}
-						label="Please select the target market(s) for this campaign (choose up to three)"
-						name="targetsMarket"
-						required
-					/>
-				</div>
+				<PRMFormik.Field
+					component={PRMForm.CheckboxGroup}
+					items={fieldEntries[LiferayPicklistName.TARGETS_MARKET]}
+					label="Please select the target market(s) for this campaign (choose up to three)"
+					name="targetsMarket"
+					required
+				/>
 
 				<PRMFormik.Field
 					component={PRMForm.RadioGroup}
@@ -130,19 +126,15 @@ const Goals = ({
 					name="r_additionalOption_mdfRequest"
 				/>
 
-				<div className="border border-neutral-3 mb-4 p-3 rounded-lg">
-					<PRMFormik.Field
-						component={PRMForm.CheckboxGroup}
-						items={
-							fieldEntries[
-								LiferayPicklistName.TARGETS_AUDIENCE_ROLE
-							]
-						}
-						label="Choose your target audience/role (Select all that apply)"
-						name="targetsAudienceRole"
-						required
-					/>
-				</div>
+				<PRMFormik.Field
+					component={PRMForm.CheckboxGroup}
+					items={
+						fieldEntries[LiferayPicklistName.TARGETS_AUDIENCE_ROLE]
+					}
+					label="Choose your target audience/role (Select all that apply)"
+					name="targetsAudienceRole"
+					required
+				/>
 			</PRMForm.Section>
 
 			<PRMForm.Footer>

@@ -10,6 +10,7 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
+import classNames from 'classnames';
 
 import WrapperInput from '../common/components/WrapperInput';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
@@ -27,15 +28,23 @@ const CheckboxGroup = ({
 	required,
 }: IProps & PRMFormFieldProps & PRMFormFieldStateProps<string[]>) => (
 	<WrapperInput {...meta} label={label} required={required}>
-		{items.map((item, index) => (
-			<ClayCheckbox
-				{...field}
-				checked={field.value.includes(item.label as string)}
-				key={`${item.value}-${index}`}
-				label={item.label}
-				value={item.label}
-			/>
-		))}
+		<div
+			className={classNames('border p-3 rounded-lg', {
+				'border-danger': meta.error && meta.touched,
+				'border-neutral-5': !meta.touched,
+				'border-success': !meta.error && meta.touched,
+			})}
+		>
+			{items.map((item, index) => (
+				<ClayCheckbox
+					{...field}
+					checked={field.value.includes(item.label as string)}
+					key={`${item.value}-${index}`}
+					label={item.label}
+					value={item.label}
+				/>
+			))}
+		</div>
 	</WrapperInput>
 );
 export default CheckboxGroup;

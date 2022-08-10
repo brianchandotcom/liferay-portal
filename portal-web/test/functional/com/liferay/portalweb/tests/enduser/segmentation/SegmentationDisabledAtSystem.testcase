@@ -97,14 +97,10 @@ definition {
 			}
 
 			task ("Login at the second instance") {
-				User.logoutPG();
-
-				User.viewLoggedOutPG();
-
 				User.firstLoginUI(
 					password = "test",
-					specificURL = "http://tango.com:8080",
-					userEmailAddress = "test@tango.com");
+					specificURL = "http://able.com:8080",
+					userEmailAddress = "test@able.com");
 			}
 		}
 
@@ -147,14 +143,10 @@ definition {
 			}
 
 			task ("Login at the second instance") {
-				User.logoutPG();
-
-				User.viewLoggedOutPG();
-
 				User.firstLoginUI(
 					password = "test",
-					specificURL = "http://tango.com:8080",
-					userEmailAddress = "test@tango.com");
+					specificURL = "http://able.com:8080",
+					userEmailAddress = "test@able.com");
 			}
 		}
 

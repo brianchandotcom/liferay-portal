@@ -21,7 +21,6 @@ import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldSettingUt
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectFieldEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -128,14 +126,6 @@ public class ObjectFieldResourceImpl
 			Long objectDefinitionId, ObjectField objectField)
 		throws Exception {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149625")) &&
-			Objects.equals(
-				objectField.getBusinessTypeAsString(),
-				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
 				objectField.getListTypeDefinitionId(), objectDefinitionId,
@@ -162,14 +152,6 @@ public class ObjectFieldResourceImpl
 	public ObjectField putObjectField(
 			Long objectFieldId, ObjectField objectField)
 		throws Exception {
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149625")) &&
-			Objects.equals(
-				objectField.getBusinessTypeAsString(),
-				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
-
-			throw new UnsupportedOperationException();
-		}
 
 		return _toObjectField(
 			_objectFieldService.updateObjectField(

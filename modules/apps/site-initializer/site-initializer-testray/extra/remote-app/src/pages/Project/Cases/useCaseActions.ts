@@ -34,7 +34,7 @@ const useCaseActions = () => {
 			permission: 'UPDATE',
 		},
 		{
-			action: () => alert('Link'),
+			action: ({id}: TestrayCase) => navigate(`${id}/requirements`),
 			name: i18n.translate('link-requirements'),
 		},
 		{

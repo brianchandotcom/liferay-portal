@@ -33,9 +33,13 @@ const Activities = ({
 	onPrevious,
 	onSaveAsDraft,
 }: PRMFormikPageProps & MDFRequestStepProps<MDFRequest> & IProps) => {
-	const {isSubmitting, isValid, values, ...formikHelpers} = useFormikContext<
-		MDFRequest
-	>();
+	const {
+		isSubmitting,
+		isValid,
+		setFieldValue,
+		values,
+		...formikHelpers
+	} = useFormikContext<MDFRequest>();
 	const [isForm, setIsForm] = useState<boolean>(false);
 	const [currentIndex, setCurrentIndex] = useState<number>(
 		values.activities.length
@@ -62,12 +66,17 @@ const Activities = ({
 			title={values.overallCampaign}
 		>
 			{isForm ? (
-				<Form currentIndex={currentIndex} />
+				<Form
+					currentActivity={values.activities[currentIndex]}
+					currentIndex={currentIndex}
+					setFieldValue={setFieldValue}
+				/>
 			) : (
 				<Listing
 					{...arrayHelpers}
 					activities={values.activities}
 					onAdd={onAdd}
+					overallCampaign={values.overallCampaign}
 				/>
 			)}
 

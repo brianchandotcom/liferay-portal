@@ -15,24 +15,32 @@ import ClayIcon from '@clayui/icon';
 import {ArrayHelpers} from 'formik';
 
 import MDFRequestActivity from '../../../../../common/interfaces/mdfRequestActivity';
+import ActivityPanel from '../../../components/ActivityPanel';
 
 interface IProps {
 	activities: MDFRequestActivity[];
 	onAdd: () => void;
+	overallCampaign: string;
 }
 
-const Listing = ({activities, onAdd, remove}: IProps & ArrayHelpers) => {
+const Listing = ({
+	activities,
+	onAdd,
+	overallCampaign,
+	remove,
+}: IProps & ArrayHelpers) => {
 	return (
 		<>
 			<div>
 				<div>
 					{activities.length ? (
 						activities.map((activity, index) => (
-							<div key={index}>
-								{activity.name}
-
-								<Button onClick={() => remove(index)}>-</Button>
-							</div>
+							<ActivityPanel
+								activity={activity}
+								key={index}
+								onRemove={() => remove(index)}
+								overallCampaign={overallCampaign}
+							/>
 						))
 					) : (
 						<ClayAlert displayType="info" title="Info:">

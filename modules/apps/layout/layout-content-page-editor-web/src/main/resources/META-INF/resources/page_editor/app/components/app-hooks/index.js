@@ -17,6 +17,7 @@ import useExtendSession from './useExtendSession';
 import useLanguageDirection from './useLanguageDirection';
 import usePortletConfigurationListener from './usePortletConfigurationListener';
 import usePreviewURL from './usePreviewURL';
+import useProductMenuHandler from './useProductMenuHandler';
 import useURLParser from './useURLParser';
 
 export default function AppHooks() {
@@ -24,6 +25,7 @@ export default function AppHooks() {
 	useExtendSession();
 	useLanguageDirection();
 	usePortletConfigurationListener();
+	useProductMenuHandler();
 	usePreviewURL();
 	useURLParser();
 

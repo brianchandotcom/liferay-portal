@@ -946,7 +946,7 @@ public class BundleSiteInitializerTest {
 			notificationTemplatesPage.fetchFirstItem();
 
 		Assert.assertEquals(
-			"Test Notification Template 1", notificationTemplate.getName());
+			"Test Notification Template", notificationTemplate.getName());
 	}
 
 	private void _assertObjectActions(

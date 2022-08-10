@@ -157,12 +157,10 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 		if (_liferayVersion.startsWith("7.1")) {
 			testContains(
 				gradleProjectDir, _name + "-api/build.gradle",
-				"compileOnly group: \"javax.servlet\", name: " +
-					"\"javax.servlet-api\"");
+				DEPENDENCY_RELEASE_DXP_API);
 			testContains(
 				gradleProjectDir, _name + "-impl/build.gradle",
-				"compileOnly group: \"javax.servlet\", name: " +
-					"\"javax.servlet-api\"");
+				DEPENDENCY_RELEASE_DXP_API);
 
 			testNotContains(
 				gradleProjectDir, _name + "-api/build.gradle",
@@ -176,12 +174,10 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 		else if (_liferayVersion.startsWith("7.2")) {
 			testContains(
 				gradleProjectDir, _name + "-api/build.gradle",
-				"compileOnly group: \"org.apache.felix\", name: \"org.apache." +
-					"felix.http.servlet-api\", version: \"1.1.2\"");
+				DEPENDENCY_RELEASE_DXP_API);
 			testContains(
 				gradleProjectDir, _name + "-impl/build.gradle",
-				"compileOnly group: \"org.apache.felix\", name: \"org.apache." +
-					"felix.http.servlet-api\", version: \"1.1.2\"");
+				DEPENDENCY_RELEASE_DXP_API);
 
 			testNotContains(
 				gradleProjectDir, _name + "-api/build.gradle",

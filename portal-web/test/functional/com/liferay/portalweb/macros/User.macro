@@ -1269,61 +1269,6 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Thank you for creating an account. Use your password to log in.");
 	}
 
-	@description = "Create a new Portal user named ${userFirstName} that is associated with the OpenID ${openIDURL}."
-	macro createUserViaOpenID {
-		Navigator.openURL();
-
-		Navigator.gotoLoginPage();
-
-		AssertClick(
-			locator1 = "Link#OPENID",
-			value1 = "OpenID");
-
-		Type(
-			locator1 = "SignInOpenID#OPENID_FIELD",
-			value1 = "${openIdurl}");
-
-		Click(locator1 = "Button#SIGN_IN");
-
-		Type(
-			locator1 = "OpenIDLogin#YAHOO_LOGIN_USERNAME_FIELD",
-			value1 = "${openIdUsername}");
-
-		KeyPress(
-			locator1 = "OpenIDLogin#YAHOO_LOGIN_USERNAME_FIELD",
-			value1 = "\RETURN");
-
-		Type(
-			locator1 = "TextInput#PASSWORD_TYPE",
-			value1 = "${openIdPassword}");
-
-		KeyPress(
-			locator1 = "TextInput#PASSWORD_TYPE",
-			value1 = "\RETURN");
-
-		if (IsElementPresent(locator1 = "OpenIDLogin#YAHOO_LOGIN_SKIP_SECURE_BUTTON")) {
-			Click(locator1 = "OpenIDLogin#YAHOO_LOGIN_SKIP_SECURE_BUTTON");
-		}
-
-		Type(
-			locator1 = "TextInput#FIRST_NAME",
-			value1 = "${userFirstName}");
-
-		Type(
-			locator1 = "TextInput#LAST_NAME",
-			value1 = "${userLastName}");
-
-		Type(
-			locator1 = "TextInput#SCREEN_NAME",
-			value1 = "${userScreenName}");
-
-		Type(
-			locator1 = "TextInput#EMAIL_ADDRESS",
-			value1 = "${userEmailAddress}");
-
-		Button.clickSave();
-	}
-
 	macro deactivateCP {
 		if ("${deactivateType}" == "Actions") {
 			User.singleDeactivateCP(userFirstName = "${userFirstName}");
@@ -2298,43 +2243,6 @@ definition {
 		OpenIDConnect.acceptConditions();
 
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
-	}
-
-	@description = "Log into Portal as ${userFirstName} via OpenID ${openIDURL}."
-	macro loginUserWithOpenIDEnabledPG {
-		Navigator.openURL();
-
-		Navigator.gotoLoginPage();
-
-		AssertClick(
-			locator1 = "Link#OPENID",
-			value1 = "OpenID");
-
-		Type(
-			locator1 = "SignInOpenID#OPENID_FIELD",
-			value1 = "${openIdurl}");
-
-		Click(locator1 = "Button#SIGN_IN");
-
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "Button#I_AGREE", value1 = "I Agree")) {
-			AssertClick(
-				locator1 = "Button#I_AGREE",
-				value1 = "I Agree");
-		}
-
-		User.resetPassword();
-
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#ANSWER")) {
-			Type(
-				locator1 = "TextInput#ANSWER",
-				value1 = "test");
-
-			Button.clickSave();
-		}
-
-		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	@description = "Log into OpenAM as ${userScreenName} using the password ${password}."

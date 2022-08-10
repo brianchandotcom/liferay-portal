@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useContext, useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
 import {useNavigate} from 'react-router-dom';
 
 import Avatar from '../../../components/Avatar';
@@ -23,7 +24,9 @@ import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import {AccountContext} from '../../../context/AccountContext';
 import {useHeader} from '../../../hooks';
+import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
+import yupSchema, {yupResolver} from '../../../schema/yup';
 import {Liferay} from '../../../services/liferay';
 import {UserAccount} from '../../../services/rest';
 
@@ -32,9 +35,29 @@ type UserManagementProps = {
 };
 
 const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
-	const [form, setForm] = useState(myUserAccount);
+	const [form, setForm] = useState(myUserAccount || {});
+
+	const {
+		form: {onClose},
+	} = useFormActions();
+
+	const {
+		formState: {errors},
+
+		register,
+	} = useForm<UserManagementProps>({
+		defaultValues: {},
+		resolver: yupResolver(yupSchema.user),
+	});
+
+	const inputProps = {
+		errors,
+		register,
+		required: true,
+	};
 
 	const {setDropdownIcon, setHeading} = useHeader();
+
 	useEffect(() => {
 		setDropdownIcon('cog');
 	}, [setDropdownIcon]);
@@ -44,7 +67,7 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 			setHeading(
 				[
 					{
-						category: i18n.translate('Manage'),
+						category: i18n.translate('manage'),
 						title: i18n.translate('manage-users'),
 					},
 				],
@@ -75,35 +98,35 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 						<ClayLayout.Col size={3} sm={12} xl={7}>
 							<ClayForm.Group className="form-group-sm">
 								<Form.Input
+									{...inputProps}
 									label={i18n.translate('first-name')}
 									name="firstname"
-									onChange={onChange}
 									required
-									value={form?.givenName}
+									value={form.givenName}
 								/>
 
 								<Form.Input
+									{...inputProps}
 									label={i18n.translate('last-name')}
 									name="lastname"
-									onChange={onChange}
 									required
-									value={form?.familyName}
+									value={form.familyName}
 								/>
 
 								<Form.Input
+									{...inputProps}
 									label={i18n.translate('email-address')}
 									name="emailAddress"
-									onChange={onChange}
 									required
-									value={form?.emailAddress}
+									value={form.emailAddress}
 								/>
 
 								<Form.Input
+									{...inputProps}
 									label={i18n.translate('screen-name')}
 									name="screeName"
-									onChange={onChange}
 									required
-									value={form?.alternateName}
+									value={form.alternateName}
 								/>
 							</ClayForm.Group>
 						</ClayLayout.Col>
@@ -123,16 +146,12 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 								<Avatar
 									displayName
 									name={Liferay.ThemeDisplay.getUserName()}
-									url={form?.image}
+									url={form.image}
 								/>
 
 								<br />
 
-								<Form.File
-									name="inputFile"
-									onChange={onChange}
-									required={false}
-								/>
+								<Form.File name="inputFile" required={false} />
 							</ClayForm.Group>
 						</ClayLayout.Col>
 					</ClayLayout.Row>
@@ -224,29 +243,10 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 
-					<ClayLayout.Row>
-						<ClayLayout.Col>
-							<ClayButton.Group
-								className="form-group-sm mt-5"
-								key={3}
-								spaced
-							>
-								<ClayButton
-									className="bg-primary-2 borderless mr-2 primary text-primary-7"
-									displayType="primary"
-								>
-									{i18n.translate('save')}
-								</ClayButton>
-
-								<ClayButton
-									className="bg-neutral-2 borderless neutral text-neutral-7"
-									displayType="secondary"
-								>
-									{i18n.translate('cancel')}
-								</ClayButton>
-							</ClayButton.Group>
-						</ClayLayout.Col>
-					</ClayLayout.Row>
+					<Form.Footer
+						onClose={onClose}
+						onSubmit={() => alert('Test')}
+					/>
 				</ClayForm>
 			</Container>
 		</ClayLayout.Container>

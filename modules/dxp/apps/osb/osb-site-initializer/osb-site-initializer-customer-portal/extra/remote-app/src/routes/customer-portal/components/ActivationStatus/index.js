@@ -11,10 +11,12 @@
 
 import AnalyticsCloud from './AnalyticsCloud';
 import DXPCloud from './DXPCloud';
+import LiferayExperienceCloud from './LiferayExperienceCloud';
 
 const ActivationStatus = {
 	AnalyticsCloud,
 	DXPCloud,
+	LiferayExperienceCloud,
 };
 
 export default ActivationStatus;

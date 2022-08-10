@@ -375,7 +375,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		);
 	};
 
-	function <portlet:namespace />showEditClientSecretModal() {
+	window.<portlet:namespace />showEditClientSecretModal = function () {
 		var bodyContentDiv = A.one(
 			'#<portlet:namespace />edit-client-secret-modal'
 		);
@@ -392,7 +392,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			applyField,
 			populateFieldClientSecret
 		);
-	}
+	};
 
 	window.<portlet:namespace />showModal = function (
 		title,

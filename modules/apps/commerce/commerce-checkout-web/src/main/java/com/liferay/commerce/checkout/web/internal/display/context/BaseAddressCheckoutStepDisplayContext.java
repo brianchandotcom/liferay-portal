@@ -15,6 +15,7 @@
 package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
@@ -22,6 +23,11 @@ import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.util.comparator.CommerceAddressNameComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -37,21 +43,30 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Andrea Di Giorgi
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 public abstract class BaseAddressCheckoutStepDisplayContext {
 
 	public BaseAddressCheckoutStepDisplayContext(
-		AccountRoleLocalService accountRoleLocalService,
+		AccountEntryLocalService accountEntryLocalService,
 		ModelResourcePermission<AccountEntry>
 			accountEntryModelResourcePermission,
+		AccountRoleLocalService accountRoleLocalService,
 		CommerceAddressService commerceAddressService,
+		CommerceChannelAccountEntryRelLocalService
+			commerceChannelAccountEntryRelLocalService,
+		CommerceChannelLocalService commerceChannelLocalService,
 		HttpServletRequest httpServletRequest,
 		PortletResourcePermission portletResourcePermission) {
 
-		this.accountRoleLocalService = accountRoleLocalService;
+		this.accountEntryLocalService = accountEntryLocalService;
 		this.accountEntryModelResourcePermission =
 			accountEntryModelResourcePermission;
+		this.accountRoleLocalService = accountRoleLocalService;
 		this.commerceAddressService = commerceAddressService;
+		this.commerceChannelAccountEntryRelLocalService =
+			commerceChannelAccountEntryRelLocalService;
+		this.commerceChannelLocalService = commerceChannelLocalService;
 		this.portletResourcePermission = portletResourcePermission;
 
 		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
@@ -79,7 +94,8 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 		return _commerceOrder;
 	}
 
-	public abstract long getDefaultCommerceAddressId() throws PortalException;
+	public abstract long getDefaultCommerceAddressId(long commerceChannelId)
+		throws PortalException;
 
 	public abstract String getParamName();
 
@@ -123,15 +139,83 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 
 	public boolean isShippingUsedAsBilling() throws PortalException {
 		CommerceAccount commerceAccount = _commerceOrder.getCommerceAccount();
+
+		CommerceAddress defaultBillingCommerceAddress = null;
+		CommerceAddress defaultShippingCommerceAddress = null;
+
+		if (commerceAccount != null) {
+			AccountEntry accountEntry =
+				accountEntryLocalService.fetchAccountEntry(
+					commerceAccount.getCommerceAccountId());
+
+			if (accountEntry != null) {
+				CommerceChannel commerceChannel =
+					commerceChannelLocalService.
+						getCommerceChannelByOrderGroupId(
+							_commerceOrder.getGroupId());
+
+				CommerceChannelAccountEntryRel
+					billingAddressCommerceChannelAccountEntryRel =
+						commerceChannelAccountEntryRelLocalService.
+							fetchCommerceChannelAccountEntryRel(
+								accountEntry.getAccountEntryId(),
+								commerceChannel.getCommerceChannelId(),
+								CommerceChannelAccountEntryRelConstants.
+									TYPE_BILLING_ADDRESS);
+
+				if (billingAddressCommerceChannelAccountEntryRel != null) {
+					defaultBillingCommerceAddress =
+						commerceAddressService.getCommerceAddress(
+							billingAddressCommerceChannelAccountEntryRel.
+								getClassPK());
+				}
+
+				CommerceChannelAccountEntryRel
+					shippingAddressCommerceChannelAccountEntryRel =
+						commerceChannelAccountEntryRelLocalService.
+							fetchCommerceChannelAccountEntryRel(
+								accountEntry.getAccountEntryId(),
+								commerceChannel.getCommerceChannelId(),
+								CommerceChannelAccountEntryRelConstants.
+									TYPE_SHIPPING_ADDRESS);
+
+				if (shippingAddressCommerceChannelAccountEntryRel != null) {
+					defaultShippingCommerceAddress =
+						commerceAddressService.getCommerceAddress(
+							shippingAddressCommerceChannelAccountEntryRel.
+								getClassPK());
+				}
+			}
+		}
+
+		long defaultBillingCommerceAddressId = 0;
+		long defaultShippingCommerceAddressId = 0;
+
+		if (defaultBillingCommerceAddress != null) {
+			defaultBillingCommerceAddressId =
+				defaultBillingCommerceAddress.getCommerceAddressId();
+		}
+
+		if (defaultShippingCommerceAddress != null) {
+			defaultShippingCommerceAddressId =
+				defaultShippingCommerceAddress.getCommerceAddressId();
+		}
+
 		CommerceAddress shippingAddress = _commerceOrder.getShippingAddress();
 		CommerceAddress billingAddress = _commerceOrder.getBillingAddress();
 
 		if (((commerceAccount != null) &&
-			 (commerceAccount.getDefaultBillingAddressId() ==
-				 commerceAccount.getDefaultShippingAddressId()) &&
+			 (defaultBillingCommerceAddressId ==
+				 defaultShippingCommerceAddressId) &&
 			 (billingAddress == null) && (shippingAddress == null)) ||
 			((billingAddress != null) && (shippingAddress != null) &&
 			 (billingAddress.getCommerceAddressId() ==
+				 shippingAddress.getCommerceAddressId())) ||
+			((billingAddress != null) && (shippingAddress == null) &&
+			 (defaultShippingCommerceAddressId ==
+				 billingAddress.getCommerceAddressId())) ||
+			((billingAddress == null) && (shippingAddress != null) &&
+			 (defaultBillingCommerceAddressId ==
 				 shippingAddress.getCommerceAddressId()))) {
 
 			return true;
@@ -140,10 +224,14 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 		return false;
 	}
 
+	protected final AccountEntryLocalService accountEntryLocalService;
 	protected final ModelResourcePermission<AccountEntry>
 		accountEntryModelResourcePermission;
 	protected final AccountRoleLocalService accountRoleLocalService;
 	protected final CommerceAddressService commerceAddressService;
+	protected final CommerceChannelAccountEntryRelLocalService
+		commerceChannelAccountEntryRelLocalService;
+	protected final CommerceChannelLocalService commerceChannelLocalService;
 	protected PortletResourcePermission portletResourcePermission;
 
 	private final CommerceOrder _commerceOrder;

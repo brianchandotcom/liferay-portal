@@ -83,7 +83,7 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		boolean activePaymentTermCommerceCheckoutStep =
 			_commerceCheckoutStepHttpHelper.
 				isActivePaymentTermCommerceCheckoutStep(
-					commerceOrder,
+					commerceOrder, httpServletRequest,
 					_language.getLanguageId(
 						_portal.getLocale(httpServletRequest)));
 

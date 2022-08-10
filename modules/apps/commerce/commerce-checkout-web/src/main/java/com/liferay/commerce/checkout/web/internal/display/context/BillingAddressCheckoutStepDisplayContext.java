@@ -15,11 +15,16 @@
 package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -31,21 +36,28 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class BillingAddressCheckoutStepDisplayContext
 	extends BaseAddressCheckoutStepDisplayContext {
 
 	public BillingAddressCheckoutStepDisplayContext(
+		AccountEntryLocalService accountEntryLocalService,
 		AccountRoleLocalService accountRoleLocalService,
 		ModelResourcePermission<AccountEntry>
 			accountEntryModelResourcePermission,
 		CommerceAddressService commerceAddressService,
+		CommerceChannelAccountEntryRelLocalService
+			commerceChannelAccountEntryRelLocalService,
+		CommerceChannelLocalService commerceChannelLocalService,
 		HttpServletRequest httpServletRequest,
 		PortletResourcePermission portletResourcePermission) {
 
 		super(
-			accountRoleLocalService, accountEntryModelResourcePermission,
-			commerceAddressService, httpServletRequest,
+			accountEntryLocalService, accountEntryModelResourcePermission,
+			accountRoleLocalService, commerceAddressService,
+			commerceChannelAccountEntryRelLocalService,
+			commerceChannelLocalService, httpServletRequest,
 			portletResourcePermission);
 	}
 
@@ -69,22 +81,43 @@ public class BillingAddressCheckoutStepDisplayContext
 	}
 
 	@Override
-	public long getDefaultCommerceAddressId() throws PortalException {
+	public long getDefaultCommerceAddressId(long commerceChannelId)
+		throws PortalException {
+
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		long billingAddressId = commerceOrder.getBillingAddressId();
 
-		if (billingAddressId == 0) {
-			CommerceAccount commerceAccount =
-				commerceOrder.getCommerceAccount();
+		if (billingAddressId > 0) {
+			return billingAddressId;
+		}
 
-			CommerceAddress commerceAddress =
-				commerceAddressService.fetchCommerceAddress(
-					commerceAccount.getDefaultBillingAddressId());
+		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
 
-			if (commerceAddress != null) {
-				billingAddressId = commerceAddress.getCommerceAddressId();
-			}
+		AccountEntry accountEntry = accountEntryLocalService.fetchAccountEntry(
+			commerceAccount.getCommerceAccountId());
+
+		if (accountEntry == null) {
+			return billingAddressId;
+		}
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			commerceChannelAccountEntryRelLocalService.
+				fetchCommerceChannelAccountEntryRel(
+					accountEntry.getAccountEntryId(), commerceChannelId,
+					CommerceChannelAccountEntryRelConstants.
+						TYPE_BILLING_ADDRESS);
+
+		if (commerceChannelAccountEntryRel == null) {
+			return billingAddressId;
+		}
+
+		CommerceAddress commerceAddress =
+			commerceAddressService.fetchCommerceAddress(
+				commerceChannelAccountEntryRel.getClassPK());
+
+		if (commerceAddress != null) {
+			billingAddressId = commerceAddress.getCommerceAddressId();
 		}
 
 		return billingAddressId;

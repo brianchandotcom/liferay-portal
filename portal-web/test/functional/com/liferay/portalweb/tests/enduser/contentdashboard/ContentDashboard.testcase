@@ -5134,6 +5134,19 @@ definition {
 		}
 	}
 
+	@description = "LPS-152905: Add a Preview to the Info Panel of Blogs in the Content Dashboard :"
+	@priority = "3"
+	test PreviewBlogsImage {
+		task ("Given a blog contains only an image") {
+		}
+
+		task ("When the user opens asset Info Panel at Content Dashboard ") {
+		}
+
+		task ("Then a preview of the blog image must appear in the Info Panel") {
+		}
+	}
+
 	@description = "Validate if the user can open de Info side panel of a web content"
 	@priority = "5"
 	test SaveFiltersAfterEditing {

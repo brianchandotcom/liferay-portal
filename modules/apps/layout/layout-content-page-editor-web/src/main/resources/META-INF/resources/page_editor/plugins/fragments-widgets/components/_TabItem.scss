@@ -27,6 +27,10 @@ html#{$cadmin-selector} {
 							top: 0;
 							width: 100%;
 						}
+
+						.page-editor__fragments-widgets__tab-highlight-button {
+							opacity: 1;
+						}
 					}
 				}
 
@@ -102,6 +106,10 @@ html#{$cadmin-selector} {
 					box-shadow: 0 0 0 2px $cadmin-primary-l1,
 						0 4px 8px fade_out($cadmin-gray-900, 0.9);
 					transform: translateX(-4px);
+
+					.page-editor__fragments-widgets__tab-highlight-button {
+						opacity: 1;
+					}
 				}
 
 				&.disabled {
@@ -125,6 +133,27 @@ html#{$cadmin-selector} {
 						font-size: 12px;
 						font-weight: 600;
 					}
+				}
+			}
+
+			&-highlight-button {
+				height: 16px;
+				opacity: 0;
+				overflow: visible;
+				width: 16px;
+
+				&:focus,
+				&:hover {
+					background: none;
+				}
+
+				&.highlighted,
+				&:focus {
+					opacity: 1;
+				}
+
+				svg {
+					margin: 0;
 				}
 			}
 		}

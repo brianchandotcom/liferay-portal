@@ -398,7 +398,8 @@ public class BundleSiteInitializerTest {
 		List<AssetListEntry> assetListEntries =
 			_assetListEntryLocalService.getAssetListEntries(group.getGroupId());
 
-		Assert.assertTrue(assetListEntries.size() == 2);
+		Assert.assertEquals(
+			assetListEntries.toString(), 2, assetListEntries.size());
 
 		AssetListEntry assetListEntry1 = assetListEntries.get(0);
 
@@ -770,7 +771,8 @@ public class BundleSiteInitializerTest {
 		List<JournalFolder> journalFolders = _journalFolderService.getFolders(
 			group.getGroupId());
 
-		Assert.assertTrue(journalFolders.size() == 2);
+		Assert.assertEquals(
+			journalFolders.toString(), 2, journalFolders.size());
 
 		JournalFolder journalFolder1 = journalFolders.get(0);
 
@@ -940,7 +942,9 @@ public class BundleSiteInitializerTest {
 			notificationTemplateResource.getNotificationTemplatesPage(
 				null, null, null, null, null);
 
-		Assert.assertTrue(notificationTemplatesPage.getTotalCount() == 1);
+		Assert.assertEquals(
+			notificationTemplatesPage.toString(), 1,
+			notificationTemplatesPage.getTotalCount());
 
 		NotificationTemplate notificationTemplate =
 			notificationTemplatesPage.fetchFirstItem();
@@ -1170,7 +1174,8 @@ public class BundleSiteInitializerTest {
 		List<Layout> privateLayouts = _layoutLocalService.getLayouts(
 			group.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		Assert.assertTrue(privateLayouts.size() == 1);
+		Assert.assertEquals(
+			privateLayouts.toString(), 1, privateLayouts.size());
 
 		Layout privateLayout = privateLayouts.get(0);
 
@@ -1182,7 +1187,8 @@ public class BundleSiteInitializerTest {
 
 		List<Layout> privateChildLayouts = privateLayout.getAllChildren();
 
-		Assert.assertTrue(privateChildLayouts.size() == 1);
+		Assert.assertEquals(
+			privateChildLayouts.toString(), 1, privateChildLayouts.size());
 
 		Layout privateChildLayout = privateChildLayouts.get(0);
 
@@ -1251,7 +1257,8 @@ public class BundleSiteInitializerTest {
 
 		List<Layout> publicChildLayouts = publicLayout.getAllChildren();
 
-		Assert.assertTrue(publicChildLayouts.size() == 1);
+		Assert.assertEquals(
+			publicChildLayouts.toString(), 1, publicChildLayouts.size());
 
 		Layout publicChildLayout = publicChildLayouts.get(0);
 
@@ -1494,7 +1501,7 @@ public class BundleSiteInitializerTest {
 		List<UserGroup> userGroups = _userGroupLocalService.getGroupUserGroups(
 			group.getGroupId());
 
-		Assert.assertTrue(userGroups.size() == 2);
+		Assert.assertEquals(userGroups.toString(), 2, userGroups.size());
 
 		UserGroup userGroup1 =
 			_userGroupLocalService.fetchUserGroupByExternalReferenceCode(

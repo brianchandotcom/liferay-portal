@@ -661,7 +661,7 @@
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Performs several checks on classes with @Reference annotation." />
 			<message key="default.unbind.redundant" value="No need to specify default ''unbind'' method. See https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/component/annotations/Reference.html#unbind()" />
-			<message key="dynamic.policy.incorrect" value="When using ''cardinality = ReferenceCardinality.OPTIONAL'' and ''policyOption = ReferencePolicyOption.GREEDY'', always use ''policy = ReferencePolicy.DYNAMIC'' as well" />
+			<message key="dynamic.policy.missing" value="When using ''cardinality = ReferenceCardinality.OPTIONAL'' and ''policyOption = ReferencePolicyOption.GREEDY'', always use ''policy = ReferencePolicy.DYNAMIC'' as well" />
 			<message key="reference.move" value="Move @Reference from method ''{0}'' to field ''{1}''" />
 			<message key="target.value.incorrect" value="Do not use ''target = {0}''" />
 			<message key="unbind.dynamic.policy.missing" value="Always specify a valid ''unbind'' method when using ''policy = ReferencePolicy.DYNAMIC'' policy. See https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/component/annotations/Reference.html#unbind()" />

@@ -134,7 +134,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 			return;
 		}
 
-		log(annotationDetailAST, _MSG_INCORRECT_DYNAMIC_POLICY);
+		log(annotationDetailAST, _MSG_MISSING_DYNAMIC_POLICY);
 	}
 
 	private void _checkReferenceAnnotation(DetailAST detailAST) {
@@ -339,11 +339,11 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 	private static final String _FORBIDDEN_REFERENCE_TARGET_VALUES =
 		"forbiddenReferenceTargetValues";
 
-	private static final String _MSG_INCORRECT_DYNAMIC_POLICY =
-		"dynamic.policy.incorrect";
-
 	private static final String _MSG_INCORRECT_TARGET_VALUE =
 		"target.value.incorrect";
+
+	private static final String _MSG_MISSING_DYNAMIC_POLICY =
+		"dynamic.policy.missing";
 
 	private static final String _MSG_MISSING_DYNAMIC_POLICY_UNBIND =
 		"unbind.dynamic.policy.missing";

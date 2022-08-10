@@ -249,35 +249,6 @@ public interface AccountEntryModel
 	public void setDefaultCPaymentMethodKey(String defaultCPaymentMethodKey);
 
 	/**
-	 * Returns the default delivery c term entry ID of this account entry.
-	 *
-	 * @return the default delivery c term entry ID of this account entry
-	 */
-	public long getDefaultDeliveryCTermEntryId();
-
-	/**
-	 * Sets the default delivery c term entry ID of this account entry.
-	 *
-	 * @param defaultDeliveryCTermEntryId the default delivery c term entry ID of this account entry
-	 */
-	public void setDefaultDeliveryCTermEntryId(
-		long defaultDeliveryCTermEntryId);
-
-	/**
-	 * Returns the default payment c term entry ID of this account entry.
-	 *
-	 * @return the default payment c term entry ID of this account entry
-	 */
-	public long getDefaultPaymentCTermEntryId();
-
-	/**
-	 * Sets the default payment c term entry ID of this account entry.
-	 *
-	 * @param defaultPaymentCTermEntryId the default payment c term entry ID of this account entry
-	 */
-	public void setDefaultPaymentCTermEntryId(long defaultPaymentCTermEntryId);
-
-	/**
 	 * Returns the default shipping address ID of this account entry.
 	 *
 	 * @return the default shipping address ID of this account entry

@@ -1,3 +1,22 @@
+create table CChannelAccountEntryRel (
+	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
+	CChannelAccountEntryRelId LONG not null,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	accountEntryId LONG,
+	classNameId LONG,
+	classPK LONG,
+	commerceChannelId LONG,
+	overrideEligibility BOOLEAN,
+	priority DOUBLE,
+	type_ INTEGER,
+	primary key (CChannelAccountEntryRelId, ctCollectionId)
+);
+
 create table CPAttachmentFileEntry (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,

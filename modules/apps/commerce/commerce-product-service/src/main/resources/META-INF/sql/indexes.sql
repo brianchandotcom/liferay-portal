@@ -1,3 +1,11 @@
+create unique index IX_EBF9C243 on CChannelAccountEntryRel (accountEntryId, classNameId, classPK, commerceChannelId, type_, ctCollectionId);
+create index IX_14DAA0AE on CChannelAccountEntryRel (accountEntryId, commerceChannelId, type_, ctCollectionId);
+create index IX_48A2C58C on CChannelAccountEntryRel (accountEntryId, ctCollectionId);
+create index IX_80463745 on CChannelAccountEntryRel (accountEntryId, type_, ctCollectionId);
+create index IX_E558B2AD on CChannelAccountEntryRel (classNameId, classPK, ctCollectionId);
+create index IX_52525877 on CChannelAccountEntryRel (commerceChannelId, ctCollectionId);
+create index IX_CB0295FA on CChannelAccountEntryRel (commerceChannelId, type_, ctCollectionId);
+
 create index IX_8DE7A0B5 on CPAttachmentFileEntry (classNameId, classPK, cdnURL[$COLUMN_LENGTH:4000$], ctCollectionId);
 create index IX_E53AD4BF on CPAttachmentFileEntry (classNameId, classPK, ctCollectionId);
 create index IX_68966943 on CPAttachmentFileEntry (classNameId, classPK, displayDate, status, ctCollectionId);
@@ -86,7 +94,6 @@ create index IX_3B8BB0AB on CPInstance (companyId, sku[$COLUMN_LENGTH:75$], ctCo
 create index IX_BDD42A9C on CPInstance (displayDate, status, ctCollectionId);
 create index IX_921194A0 on CPInstance (groupId, ctCollectionId);
 create index IX_78B7E586 on CPInstance (groupId, status, ctCollectionId);
-create index IX_845761A5 on CPInstance (sku[$COLUMN_LENGTH:75$]);
 create index IX_B692DDBA on CPInstance (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_F137BAA on CPInstance (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_D664473C on CPInstance (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);

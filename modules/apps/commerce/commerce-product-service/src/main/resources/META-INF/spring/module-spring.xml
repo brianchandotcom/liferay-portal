@@ -15,6 +15,10 @@
 	<bean class="com.liferay.commerce.product.service.impl.CommerceChannelServiceImpl" id="com.liferay.commerce.product.service.CommerceChannelService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceChannelModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CommerceChannelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceChannelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceChannelPersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CommerceChannelAccountEntryRelLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CommerceChannelAccountEntryRelServiceImpl" id="com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceChannelAccountEntryRelModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CommerceChannelAccountEntryRelModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceChannelAccountEntryRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceChannelAccountEntryRelPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CommerceChannelRelLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceChannelRelLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CommerceChannelRelServiceImpl" id="com.liferay.commerce.product.service.CommerceChannelRelService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceChannelRelModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CommerceChannelRelModelArgumentsResolver" />

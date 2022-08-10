@@ -100,6 +100,7 @@ function PersonalMenu({
 							>
 								{userPortraitURL ? (
 									<img
+										alt=""
 										className="sticker-img"
 										src={userPortraitURL}
 									/>

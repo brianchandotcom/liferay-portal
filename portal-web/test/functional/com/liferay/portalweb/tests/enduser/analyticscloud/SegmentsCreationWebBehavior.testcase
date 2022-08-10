@@ -1376,7 +1376,6 @@ definition {
 	@description = "Bug: LRAC-8233 | Automation ID: LRAC-11537 | Test Summary: Check web behavior shows which data source data came from"
 	@priority = "3"
 	test CheckWebBehaviorSegmentShowsWhichDataSourceDataCameFrom {
-
 		ACUtils.createBlogsAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -1411,10 +1410,9 @@ definition {
 			searchTerm = "Blogs AC Title - Site Name - Liferay DXP");
 
 		ACSegments.checkDataSourceOrigin(
-			indexField = "1",
+			dataSource = "${dataSourceName}",
 			documentTitle = "Blogs AC Title - Site Name - Liferay DXP",
-			dataSource = "${dataSourceName}");
-
+			indexField = "1");
 	}
 
 }

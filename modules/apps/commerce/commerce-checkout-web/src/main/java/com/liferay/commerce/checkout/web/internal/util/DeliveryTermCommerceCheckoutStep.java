@@ -36,11 +36,9 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -121,21 +119,15 @@ public class DeliveryTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String commerceDeliveryTermId = ParamUtil.getString(
-			actionRequest, "commerceDeliveryTermId");
-
-		if (!Validator.isNumber(commerceDeliveryTermId)) {
-			SessionErrors.add(actionRequest, "deliveryTermsInvalid");
-
-			return;
-		}
-
 		CommerceOrder commerceOrder = (CommerceOrder)actionRequest.getAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
+		long deliveryCommerceTermEntryId = ParamUtil.getLong(
+			actionRequest, "deliveryCommerceTermEntryId",
+			commerceOrder.getDeliveryCommerceTermEntryId());
+
 		commerceOrder = _commerceOrderLocalService.updateTermsAndConditions(
-			commerceOrder.getCommerceOrderId(),
-			Long.valueOf(commerceDeliveryTermId), 0,
+			commerceOrder.getCommerceOrderId(), deliveryCommerceTermEntryId, 0,
 			_language.getLanguageId(actionRequest.getLocale()));
 
 		actionRequest.setAttribute(

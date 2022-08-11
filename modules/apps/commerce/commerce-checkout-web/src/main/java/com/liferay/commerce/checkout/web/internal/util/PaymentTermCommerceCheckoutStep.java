@@ -36,11 +36,9 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -121,21 +119,15 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String commercePaymentTermId = ParamUtil.getString(
-			actionRequest, "commercePaymentTermId");
-
-		if (!Validator.isNumber(commercePaymentTermId)) {
-			SessionErrors.add(actionRequest, "paymentTermsInvalid");
-
-			return;
-		}
-
 		CommerceOrder commerceOrder = (CommerceOrder)actionRequest.getAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
+		long paymentCommerceTermEntryId = ParamUtil.getLong(
+			actionRequest, "paymentCommerceTermEntryId",
+			commerceOrder.getPaymentCommerceTermEntryId());
+
 		commerceOrder = _commerceOrderLocalService.updateTermsAndConditions(
-			commerceOrder.getCommerceOrderId(), 0,
-			Long.valueOf(commercePaymentTermId),
+			commerceOrder.getCommerceOrderId(), 0, paymentCommerceTermEntryId,
 			_language.getLanguageId(actionRequest.getLocale()));
 
 		actionRequest.setAttribute(

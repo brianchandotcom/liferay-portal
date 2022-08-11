@@ -85,7 +85,11 @@ const Activities = ({
 					<Button
 						className="mr-4"
 						displayType={null}
-						onClick={isForm ? () => onPreviousForm() : onPrevious}
+						onClick={
+							isForm
+								? () => onPreviousForm()
+								: () => onPrevious?.(StepType.GOALS)
+						}
 					>
 						Previous
 					</Button>

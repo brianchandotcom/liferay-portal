@@ -11,10 +11,11 @@
 
 import Button from '@clayui/button';
 import {useFormikContext} from 'formik';
-import {useMemo, useState} from 'react';
+import {useMemo} from 'react';
 
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
+import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
 import ActivityPanel from '../../components/ActivityPanel';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
@@ -33,13 +34,6 @@ const Review = ({
 	const {isSubmitting, isValid, values, ...formikHelpers} = useFormikContext<
 		MDFRequest
 	>();
-	const [isForm, setIsForm] = useState<boolean>(false);
-
-	const onPreviousForm = () => {
-		// arrayHelpers.pop();
-
-		setIsForm(false);
-	};
 
 	const totalBudget = useMemo(
 		() =>
@@ -68,16 +62,18 @@ const Review = ({
 			</ReviewBody>
 
 			<ReviewBody name="Activities" title="Insurance Industry Lead Gen">
-				{values?.activities.map((value: any, index: number) => (
-					<ActivityPanel
-						activity={value}
-						detail={true}
-						key={index}
-						overallCampaign={values.overallCampaign}
-					>
-						<ActivitiesEntries key={index} values={value} />
-					</ActivityPanel>
-				))}
+				{values?.activities.map(
+					(value: MDFRequestActivity, index: number) => (
+						<ActivityPanel
+							activity={value}
+							detail={true}
+							key={index}
+							overallCampaign={values.overallCampaign}
+						>
+							<ActivitiesEntries key={index} values={value} />
+						</ActivityPanel>
+					)
+				)}
 			</ReviewBody>
 
 			<ReviewBody>
@@ -108,8 +104,8 @@ const Review = ({
 							<Button
 								className="mr-4"
 								displayType="secondary"
-								onClick={
-									isForm ? () => onPreviousForm() : onPrevious
+								onClick={() =>
+									onPrevious?.(StepType.ACTIVITIES)
 								}
 							>
 								Previous
@@ -139,12 +135,7 @@ const Review = ({
 							<Button
 								disabled={!isValid}
 								onClick={() =>
-									isForm
-										? setIsForm(false)
-										: onContinue?.(
-												formikHelpers,
-												StepType.REVIEW
-										  )
+									onContinue?.(formikHelpers, StepType.REVIEW)
 								}
 							>
 								Continue

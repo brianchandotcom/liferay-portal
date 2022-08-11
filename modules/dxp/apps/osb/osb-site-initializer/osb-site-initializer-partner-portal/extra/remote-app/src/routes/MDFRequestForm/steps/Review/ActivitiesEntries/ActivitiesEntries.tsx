@@ -59,11 +59,11 @@ const ActivitiesEntries = ({values}: IProps) => {
 					},
 					{
 						title: 'Start Date',
-						value: values.startDate.toString(),
+						value: values.startDate,
 					},
 					{
 						title: 'End Date',
-						value: values.endDate.toString(),
+						value: values.endDate,
 					},
 				]}
 				title="Campaign Activity"

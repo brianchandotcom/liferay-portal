@@ -132,6 +132,7 @@ const MDFRequestForm = () => {
 			<Review
 				onCancel={onCancel}
 				onContinue={onContinue}
+				onPrevious={onPrevious}
 				onSaveAsDraft={onSaveAsDraft}
 			/>
 		),

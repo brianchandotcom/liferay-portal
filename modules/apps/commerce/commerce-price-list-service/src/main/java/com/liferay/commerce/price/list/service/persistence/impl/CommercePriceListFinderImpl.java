@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -142,8 +142,7 @@ public class CommercePriceListFinderImpl
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			queryPos.add(
-				PortalUtil.getClassNameId(
-					CommercePricingClass.class.getName()));
+				_portal.getClassNameId(CommercePricingClass.class.getName()));
 			queryPos.add(commercePricingClassId);
 
 			if (Validator.isNotNull(name)) {
@@ -444,8 +443,7 @@ public class CommercePriceListFinderImpl
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			queryPos.add(
-				PortalUtil.getClassNameId(
-					CommercePricingClass.class.getName()));
+				_portal.getClassNameId(CommercePricingClass.class.getName()));
 			queryPos.add(commercePricingClassId);
 
 			if (Validator.isNotNull(name)) {
@@ -735,5 +733,8 @@ public class CommercePriceListFinderImpl
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private Portal _portal;
 
 }

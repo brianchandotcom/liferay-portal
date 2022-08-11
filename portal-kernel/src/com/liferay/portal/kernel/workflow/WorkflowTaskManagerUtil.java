@@ -23,6 +23,7 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -105,6 +106,13 @@ public class WorkflowTaskManagerUtil {
 		return _workflowTaskManager.getNotifiableUsers(workflowTaskId);
 	}
 
+	public static List<WorkflowTransition> getNextWorkflowTransitions(
+			long workflowTaskId)
+		throws WorkflowException {
+
+		return _workflowTaskManager.getNextWorkflowTransitions(workflowTaskId);
+	}
+
 	public static WorkflowTask getWorkflowTask(
 			long companyId, long workflowTaskId)
 		throws WorkflowException {
@@ -166,6 +174,14 @@ public class WorkflowTaskManagerUtil {
 
 		return _workflowTaskManager.getWorkflowTaskCountByWorkflowInstance(
 			companyId, userId, workflowInstanceId, completed);
+	}
+
+	public static String getWorkflowTaskLabel(
+			long workflowTaskId, Locale locale)
+		throws WorkflowException {
+
+		return _workflowTaskManager.getWorkflowTaskLabel(
+			workflowTaskId, locale);
 	}
 
 	public static WorkflowTaskManager getWorkflowTaskManager() {

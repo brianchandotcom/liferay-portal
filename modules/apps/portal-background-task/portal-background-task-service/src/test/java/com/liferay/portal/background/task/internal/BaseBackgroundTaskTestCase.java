@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -83,10 +84,10 @@ public abstract class BaseBackgroundTaskTestCase {
 		backgroundTaskThreadLocalManagerImpl.setPermissionCheckerFactory(
 			permissionCheckerFactory);
 
-		_companyId = 1234L;
-		_groupId = 1234L;
+		_companyId = RandomTestUtil.randomLong();
+		_groupId = RandomTestUtil.randomLong();
 
-		_principalName = String.valueOf(1234L);
+		_principalName = String.valueOf(RandomTestUtil.randomLong());
 
 		User user = Mockito.mock(User.class);
 

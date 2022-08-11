@@ -60,6 +60,12 @@ export default withRouter(({history, location}) => {
 		}
 	);
 
+	if (threads && threads.myUserAccountSubscriptions.items) {
+		threads.myUserAccountSubscriptions.items = threads.myUserAccountSubscriptions.items.filter(
+			(thread) => thread.graphQLNode.showAsQuestion
+		);
+	}
+
 	const {data: topics, refetch: refetchTopics} = useQuery(
 		getSubscriptionsQuery,
 		{

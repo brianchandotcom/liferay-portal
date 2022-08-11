@@ -951,6 +951,7 @@ export const getSubscriptionsQuery = `
 						myRating {
 							ratingValue
 						}
+						showAsQuestion
 						subscribed
 						viewCount
 					}

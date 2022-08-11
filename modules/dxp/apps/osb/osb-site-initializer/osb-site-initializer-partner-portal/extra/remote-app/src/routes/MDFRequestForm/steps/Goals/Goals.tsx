@@ -66,9 +66,6 @@ const Goals = ({
 			setFieldValue('additionalOption', additionalOptionSelected)
 	);
 
-	// eslint-disable-next-line no-console
-	console.log(values);
-
 	return (
 		<PRMForm className="mb-4" name="Goals" title="Campaign Information">
 			<PRMForm.Section title="Partner">

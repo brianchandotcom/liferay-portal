@@ -131,4 +131,32 @@ definition {
 			numberOfLicenses = "${keyCount}");
     }
 
+	@description = "Verify if the 'Expired' tab displays the number of keys for it"
+    @priority = "4"
+    test VerifyTheExpiredTabDisplaysTheNumberOfKeys {
+		property portal.upstream = "quarantine";
+
+		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
+
+		var keyStatus = "Expired";
+
+		CustomerPortal.search(searchItem = "2022 FIFA World Cup Qatar - FAN ID");
+
+		CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+		CP2NavigationMenu.goToProductActivation();
+
+		CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+		CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+
+		CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+
+		var keyCount = CP2ActivationKeys.countTableRows();
+
+		CP2ActivationKeys.assertLicenseQuantity(
+			licenseTab = "${keyStatus}",
+			numberOfLicenses = "${keyCount}");
+    }
+
 }

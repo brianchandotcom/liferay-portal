@@ -140,50 +140,36 @@ public class SystemRelatedModelsTableFDSView
 		long objectEntryId = ParamUtil.getLong(
 			httpServletRequest, "objectEntryId");
 
-		if (objectDefinition.isSystem()) {
-			return TransformUtil.transform(
-				(List<BaseModel<?>>)
-					objectRelatedModelsProvider.getRelatedModels(
-						objectScopeProvider.getGroupId(httpServletRequest),
-						objectRelationshipId, objectEntryId,
-						fdsPagination.getStartPosition(),
-						fdsPagination.getEndPosition()),
-				relatedModel -> {
-					String objectFieldDBColumnName =
-						objectDefinition.getPKObjectFieldDBColumnName();
-
-					if (objectDefinition.getTitleObjectFieldId() > 0) {
-						ObjectField objectField =
-							_objectFieldLocalService.getObjectField(
-								objectDefinition.getTitleObjectFieldId());
-
-						objectFieldDBColumnName = objectField.getDBColumnName();
-					}
-
-					Map<String, Object> modelAttributes =
-						relatedModel.getModelAttributes();
-
-					Object value = modelAttributes.get(objectFieldDBColumnName);
-
-					return new RelatedModel(
-						objectDefinition.getClassName(),
-						GetterUtil.getLong(
-							modelAttributes.get(
-								objectDefinition.
-									getPKObjectFieldDBColumnName())),
-						value.toString(), true);
-				});
-		}
-
 		return TransformUtil.transform(
-			(List<ObjectEntry>)objectRelatedModelsProvider.getRelatedModels(
+			(List<BaseModel<?>>)objectRelatedModelsProvider.getRelatedModels(
 				objectScopeProvider.getGroupId(httpServletRequest),
 				objectRelationshipId, objectEntryId,
 				fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition()),
-			objectEntry -> new RelatedModel(
-				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
-				objectEntry.getTitleValue(), false));
+			relatedModel -> {
+				String objectFieldDBColumnName =
+					objectDefinition.getPKObjectFieldDBColumnName();
+
+				if (objectDefinition.getTitleObjectFieldId() > 0) {
+					ObjectField objectField =
+						_objectFieldLocalService.getObjectField(
+							objectDefinition.getTitleObjectFieldId());
+
+					objectFieldDBColumnName = objectField.getDBColumnName();
+				}
+
+				Map<String, Object> modelAttributes =
+					relatedModel.getModelAttributes();
+
+				Object value = modelAttributes.get(objectFieldDBColumnName);
+
+				return new RelatedModel(
+					objectDefinition.getClassName(),
+					GetterUtil.getLong(
+						modelAttributes.get(
+							objectDefinition.getPKObjectFieldDBColumnName())),
+					value.toString(), true);
+			});
 	}
 
 	@Override

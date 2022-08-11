@@ -19,7 +19,6 @@ import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
@@ -31,14 +30,11 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.object.entries.constants.ObjectEntriesFDSNames;
 import com.liferay.object.web.internal.object.entries.frontend.data.set.data.model.RelatedModel;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -82,41 +78,6 @@ public class RelatedModelsFDSDataProvider
 
 		long objectEntryId = ParamUtil.getLong(
 			httpServletRequest, "objectEntryId");
-
-		if (objectDefinition.isSystem()) {
-			return TransformUtil.transform(
-				(List<BaseModel<?>>)
-					objectRelatedModelsProvider.getRelatedModels(
-						objectScopeProvider.getGroupId(httpServletRequest),
-						objectRelationshipId, objectEntryId,
-						fdsPagination.getStartPosition(),
-						fdsPagination.getEndPosition()),
-				relatedModel -> {
-					String objectFieldDBColumnName =
-						objectDefinition.getPKObjectFieldDBColumnName();
-
-					if (objectDefinition.getTitleObjectFieldId() > 0) {
-						ObjectField objectField =
-							_objectFieldLocalService.getObjectField(
-								objectDefinition.getTitleObjectFieldId());
-
-						objectFieldDBColumnName = objectField.getDBColumnName();
-					}
-
-					Map<String, Object> modelAttributes =
-						relatedModel.getModelAttributes();
-
-					Object value = modelAttributes.get(objectFieldDBColumnName);
-
-					return new RelatedModel(
-						objectDefinition.getClassName(),
-						GetterUtil.getLong(
-							modelAttributes.get(
-								objectDefinition.
-									getPKObjectFieldDBColumnName())),
-						value.toString(), true);
-				});
-		}
 
 		return TransformUtil.transform(
 			(List<ObjectEntry>)objectRelatedModelsProvider.getRelatedModels(

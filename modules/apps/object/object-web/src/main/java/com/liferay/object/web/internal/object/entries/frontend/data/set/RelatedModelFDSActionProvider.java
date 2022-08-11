@@ -27,7 +27,6 @@ import com.liferay.object.web.internal.object.entries.frontend.data.set.data.mod
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -61,30 +60,6 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 		}
 
 		RelatedModel relatedModel = (RelatedModel)model;
-
-		if (relatedModel.isSystem()) {
-
-			// TODO Alternative permission checker
-
-			return DropdownItemListBuilder.add(
-				dropdownItem -> {
-					dropdownItem.setHref(
-						_getDeleteURL(
-							relatedModel.getClassName(), relatedModel.getId(),
-							httpServletRequest));
-					dropdownItem.setIcon("trash");
-					dropdownItem.setLabel(
-						_language.get(httpServletRequest, Constants.DELETE));
-				}
-			).build();
-		}
-		else if (!_objectEntryService.hasModelResourcePermission(
-					_objectEntryLocalService.getObjectEntry(
-						relatedModel.getId()),
-					ActionKeys.UPDATE)) {
-
-			return null;
-		}
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {

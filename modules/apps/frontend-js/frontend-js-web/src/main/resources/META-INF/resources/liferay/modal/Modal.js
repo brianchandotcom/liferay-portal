@@ -37,6 +37,8 @@ const openAlertModal = ({message}) => {
 				},
 			},
 		],
+		center: true,
+		disableHeader: true,
 	});
 };
 
@@ -44,11 +46,13 @@ const Modal = ({
 	bodyComponent,
 	bodyHTML,
 	buttons,
+	center,
 	containerProps = {
 		className: 'cadmin',
 	},
 	customEvents,
 	disableAutoClose,
+	disableHeader,
 	footerCssClass,
 	headerCssClass,
 	headerHTML,
@@ -199,6 +203,7 @@ const Modal = ({
 		<>
 			{visible && (
 				<ClayModal
+					center={center}
 					className="liferay-modal"
 					containerProps={{...containerProps}}
 					disableAutoClose={disableAutoClose}
@@ -209,17 +214,19 @@ const Modal = ({
 					status={status}
 					zIndex={zIndex}
 				>
-					<ClayModal.Header className={headerCssClass}>
-						{headerHTML ? (
-							<div
-								dangerouslySetInnerHTML={{
-									__html: headerHTML,
-								}}
-							></div>
-						) : (
-							title
-						)}
-					</ClayModal.Header>
+					{!disableHeader && (
+						<ClayModal.Header className={headerCssClass}>
+							{headerHTML ? (
+								<div
+									dangerouslySetInnerHTML={{
+										__html: headerHTML,
+									}}
+								></div>
+							) : (
+								title
+							)}
+						</ClayModal.Header>
+					)}
 
 					<div
 						className={classNames('modal-body', {
@@ -324,6 +331,8 @@ const openConfirmModal = ({message, onConfirm, title}) => {
 					},
 				},
 			],
+			center: true,
+			disableHeader: true,
 			onClose: () => onConfirm(false),
 			title,
 		});
@@ -722,6 +731,7 @@ Modal.propTypes = {
 			type: PropTypes.oneOf(['cancel', 'submit']),
 		})
 	),
+	center: PropTypes.bool,
 	containerProps: PropTypes.object,
 	customEvents: PropTypes.arrayOf(
 		PropTypes.shape({
@@ -729,6 +739,7 @@ Modal.propTypes = {
 			onEvent: PropTypes.func,
 		})
 	),
+	disableHeader: PropTypes.bool,
 	headerHTML: PropTypes.string,
 	height: PropTypes.string,
 	id: PropTypes.string,

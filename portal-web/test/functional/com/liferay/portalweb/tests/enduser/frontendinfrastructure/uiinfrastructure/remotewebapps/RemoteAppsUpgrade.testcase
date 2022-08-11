@@ -24,6 +24,9 @@ definition {
 	@priority = "4"
 	test CanViewRemoteAppCustomElementPortletAfterUpgrade7413 {
 		property data.archive.type = "data-archive-remote-app";
+		property portal.acceptance = "false";
+		property portal.release = "false";
+		property portal.upstream = "quarantine";
 		property portal.version = "7.4.13";
 		property test.run.environment = "EE";
 

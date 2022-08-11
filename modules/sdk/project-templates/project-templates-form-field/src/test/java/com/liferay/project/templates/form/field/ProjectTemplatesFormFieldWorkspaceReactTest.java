@@ -104,7 +104,7 @@ public class ProjectTemplatesFormFieldWorkspaceReactTest
 					"\"release.portal.api\"",
 				"jsCompile group: \"com.liferay\", name: " +
 					"\"com.liferay.dynamic.data.mapping.form.field.type\"",
-				DEPENDENCY_PORTAL_RELEASE_API);
+				DEPENDENCY_RELEASE_PORTAL_API);
 		}
 
 		testContains(

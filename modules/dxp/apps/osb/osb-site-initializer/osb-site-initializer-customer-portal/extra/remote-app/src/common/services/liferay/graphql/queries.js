@@ -55,12 +55,12 @@ export const getCommerceOrderItems = gql`
 	}
 `;
 
-export const updateCommerceOrderItems = gql`
-	mutation updateCommerceOrderItems(
+export const patchOrderItemByExternalReferenceCode = gql`
+	mutation patchOrderItemByExternalReferenceCode(
 		$externalReferenceCode: String
 		$orderItem: InputOrderItem
 	) {
-		updateOrderItemByExternalReferenceCode(
+		patchOrderItemByExternalReferenceCode(
 			externalReferenceCode: $externalReferenceCode
 			orderItem: $orderItem
 		)

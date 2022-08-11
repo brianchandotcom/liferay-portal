@@ -19,7 +19,7 @@ import i18n from '../../../../../common/I18n';
 import {Badge, Button, Input} from '../../../../../common/components';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
-import {updateCommerceOrderItems} from '../../../../../common/services/liferay/graphql/queries';
+import {patchOrderItemByExternalReferenceCode} from '../../../../../common/services/liferay/graphql/queries';
 import {createNewGenerateKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import getInitialGenerateNewKey from '../../../../../common/utils/constants/getInitialGenerateNewKey';
 import GenerateCardLayout from '../GenerateCardLayout';
@@ -177,7 +177,7 @@ const RequiredInformation = ({
 			}
 
 			await client.mutate({
-				mutation: updateCommerceOrderItems,
+				mutation: patchOrderItemByExternalReferenceCode,
 				variables: {
 					externalReferenceCode: licenseKey.productPurchaseKey,
 					orderItem: {

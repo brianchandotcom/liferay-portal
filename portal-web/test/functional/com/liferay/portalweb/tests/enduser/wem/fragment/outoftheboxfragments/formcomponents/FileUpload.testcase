@@ -170,7 +170,7 @@ definition {
 				field = "Custom Attachment From Computer",
 				fragmentName = "File Upload");
 
-			PageEditor.publish();
+			PageEditor.publish(objectName = "Upload Object");
 		}
 
 		task ("Then the files from computer are added in object") {
@@ -226,7 +226,7 @@ definition {
 					field = "Custom Attachment From DM",
 					fragmentName = "File Upload");
 
-				PageEditor.publish();
+				PageEditor.publish(objectName = "Upload Object");
 			}
 		}
 

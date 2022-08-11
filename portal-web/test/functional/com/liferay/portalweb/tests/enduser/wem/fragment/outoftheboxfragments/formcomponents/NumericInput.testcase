@@ -364,7 +364,7 @@ definition {
 					field = "Tax",
 					fragmentName = "Numeric Input");
 
-				PageEditor.publish();
+				PageEditor.publish(objectName = "Purchase Order");
 			}
 		}
 

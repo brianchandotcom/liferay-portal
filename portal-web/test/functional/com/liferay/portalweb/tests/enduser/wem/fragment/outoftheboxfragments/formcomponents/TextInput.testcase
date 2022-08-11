@@ -117,7 +117,7 @@ definition {
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
-			PageEditor.publish();
+			PageEditor.publish(objectName = "Purchase Order");
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
@@ -155,7 +155,7 @@ definition {
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
-			PageEditor.publish();
+			PageEditor.publish(objectName = "Purchase Order");
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
@@ -254,7 +254,7 @@ definition {
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
-			PageEditor.publish();
+			PageEditor.publish(objectName = "Purchase Order");
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
@@ -717,6 +717,13 @@ definition {
 					fragmentName = "Container");
 			}
 
+			task ("Add a Submit Button fragment below Container inside Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "Container");
+			}
+
 			task ("Mark the Text Input fragment as required after added to Container") {
 				PageEditor.addElementToContainer(
 					collectionName = "Form Components",
@@ -749,7 +756,7 @@ definition {
 		}
 
 		task ("When the page designer accesses published content page at view mode") {
-			PageEditor.publish();
+			PageEditor.publish(objectName = "Purchase Order");
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
@@ -796,6 +803,14 @@ definition {
 					fragmentName = "Grid");
 			}
 
+			task ("Add a Submit Button fragment below Grid inside Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					height = "Tall",
+					targetFragmentName = "Grid");
+			}
+
 			task ("Mark the Text Input fragment as required after added to Grid") {
 				PageEditor.addElementToColumn(
 					collectionName = "Form Components",
@@ -827,7 +842,7 @@ definition {
 		}
 
 		task ("When the page designer marks the display page template as default") {
-			PageEditor.publish();
+			PageEditor.publish(objectName = "Purchase Order");
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}

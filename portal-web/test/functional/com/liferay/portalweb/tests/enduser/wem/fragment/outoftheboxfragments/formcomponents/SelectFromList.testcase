@@ -135,7 +135,7 @@ definition {
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
-			PageEditor.publish();
+			PageEditor.publish(objectName = "Purchase Order");
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
@@ -216,7 +216,7 @@ definition {
 		}
 
 		task ("When the page designer marks the display page template as default") {
-			PageEditor.publish();
+			PageEditor.publish(objectName = "Purchase Order");
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -352,7 +352,7 @@ definition {
 
 			MenuItem.viewNotPresent(menuItem = "Rice");
 
-			PageEditor.publish();
+			PageEditor.publish(objectName = "Purchase Order");
 		}
 
 		task ("When the page designer navigates to content page at view mode") {
@@ -471,7 +471,7 @@ definition {
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
-			PageEditor.publish();
+			PageEditor.publish(objectName = "Purchase Order");
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
@@ -552,7 +552,7 @@ definition {
 					field = "Type",
 					fragmentName = "Select from List");
 
-				PageEditor.publish();
+				PageEditor.publish(objectName = "Purchase Order");
 			}
 		}
 

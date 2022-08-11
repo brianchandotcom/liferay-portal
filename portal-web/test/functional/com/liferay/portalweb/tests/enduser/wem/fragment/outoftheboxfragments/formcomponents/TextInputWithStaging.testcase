@@ -125,7 +125,7 @@ definition {
 		}
 
 		task ("When the page designer navigates to published content page at view mode in staging site") {
-			PageEditor.publish();
+			PageEditor.publish(objectName = "Purchase Order");
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
@@ -183,7 +183,7 @@ definition {
 		}
 
 		task ("When the page designer navigates to published content page at view mode in staging site") {
-			PageEditor.publish();
+			PageEditor.publish(objectName = "Purchase Order");
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",

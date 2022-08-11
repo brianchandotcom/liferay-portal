@@ -201,7 +201,7 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "CAPTCHA");
 
-				PageEditor.publish();
+				PageEditor.publish(objectName = "Purchase Order");
 			}
 		}
 

@@ -2090,4 +2090,24 @@ public interface BaseProjectTemplatesTestCase {
 		return gradlePropertiesFile;
 	}
 
+	public default File updateMavenPomPropertiesInWorkspace(
+		File workspaceDir, String oldElementName, String newElementName,
+		String text) throws Exception {
+
+		File mavenPomFile = new File(workspaceDir, "pom.xml");
+
+		editXml(mavenPomFile,
+			document -> {
+				try {
+					replaceElementByName(
+						document, oldElementName, newElementName, text);
+				}
+				catch (XPathExpressionException xPathExpressionException) {
+					throw new RuntimeException(xPathExpressionException);
+				}
+			});
+
+		return mavenPomFile;
+	}
+
 }

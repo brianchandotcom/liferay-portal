@@ -216,6 +216,15 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 			temporaryFolder, "maven", "mavenWS", _liferayVersion,
 			mavenExecutor);
 
+		if (_liferayVersion.startsWith("7.1")) {
+			updateMavenPomPropertiesInWorkspace(mavenWorkspaceDir,
+				"liferay.bom.version", "liferay.bom.version", "7.1.10.7");
+		}
+		else if (_liferayVersion.startsWith("7.2")) {
+			updateMavenPomPropertiesInWorkspace(mavenWorkspaceDir,
+				"liferay.bom.version", "liferay.bom.version", "7.2.10.7");
+		}
+
 		File mavenModulesDir = new File(mavenWorkspaceDir, "modules");
 
 		if (_name.contains("sample")) {

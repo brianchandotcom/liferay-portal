@@ -24,7 +24,9 @@ function isVisible(element, globalContext) {
 		computedStyle.visibility !== 'hidden' &&
 		!element.hasAttribute('hidden') &&
 		!element.hasAttribute('aria-hidden') &&
-		(!parentElement || isVisible(parentElement, globalContext))
+		(!parentElement ||
+			parentElement.classList.contains('page-editor__form-children') ||
+			isVisible(parentElement, globalContext))
 	);
 }
 

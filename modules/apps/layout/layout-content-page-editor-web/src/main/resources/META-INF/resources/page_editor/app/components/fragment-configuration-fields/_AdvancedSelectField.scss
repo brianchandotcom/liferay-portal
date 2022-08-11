@@ -5,8 +5,8 @@ $prefix: '.page-editor__single-select-with-icon';
 html#{$cadmin-selector} .cadmin .page-editor__select-field {
 	&.has-value {
 		display: grid;
-		gap: 4px;
-		grid-template-columns: auto 32px;
+		gap: 8px;
+		grid-template-columns: auto 32px 32px;
 	}
 
 	#{$prefix} {

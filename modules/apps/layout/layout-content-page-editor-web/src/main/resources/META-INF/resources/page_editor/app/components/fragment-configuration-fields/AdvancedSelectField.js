@@ -20,6 +20,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {getResetLabelByViewport} from '../../../app/utils/getResetLabelByViewport';
 import {LengthField} from '../../../common/components/LengthField';
 import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
@@ -42,6 +43,9 @@ export function AdvancedSelectField({
 }) {
 	const canDetachTokenValues = useSelector(selectCanDetachTokenValues);
 	const helpTextId = useId();
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 	const triggerId = useId();
 
 	const [active, setActive] = useState(false);
@@ -115,65 +119,84 @@ export function AdvancedSelectField({
 			)}
 
 			{value ? (
-				isTokenValueOrInherited && canDetachTokenValues ? (
-					<ClayButtonWithIcon
-						className="border-0 mb-0 ml-1"
-						displayType="secondary"
-						onClick={() => {
-							setIsTokenValueOrInherited(false);
-							setNextValue(tokenValues[value].value);
-							onValueSelect(field.name, tokenValues[value].value);
-						}}
-						small
-						symbol="chain-broken"
-						title={Liferay.Language.get('detach-token')}
-					/>
-				) : (
-					<ClayDropDown
-						active={active}
-						alignmentPosition={Align.BottomRight}
-						menuElementAttrs={{
-							containerProps: {
-								className: 'cadmin',
-							},
-						}}
-						onActiveChange={setActive}
-						trigger={
-							<ClayButtonWithIcon
-								className="border-0 ml-1"
-								displayType="secondary"
-								id={triggerId}
-								small
-								symbol="theme"
-								title={Liferay.Language.get(
-									'value-from-stylebook'
-								)}
-							/>
-						}
-					>
-						<ClayDropDown.ItemList aria-labelledby={triggerId}>
-							{options.map(({label, value}) => {
-								if (!value) {
-									return;
-								}
-
-								return (
-									<ClayDropDown.Item
-										key={value}
-										onClick={() => {
-											setActive(false);
-											setIsTokenValueOrInherited(true);
-											setNextValue(value);
-											onValueSelect(field.name, value);
-										}}
-									>
-										{label}
-									</ClayDropDown.Item>
+				<>
+					{isTokenValueOrInherited && canDetachTokenValues ? (
+						<ClayButtonWithIcon
+							className="border-0 mb-0 page-editor__select-field__action-button"
+							displayType="secondary"
+							onClick={() => {
+								setIsTokenValueOrInherited(false);
+								setNextValue(tokenValues[value].value);
+								onValueSelect(
+									field.name,
+									tokenValues[value].value
 								);
-							})}
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
-				)
+							}}
+							small
+							symbol="chain-broken"
+							title={Liferay.Language.get('detach-token')}
+						/>
+					) : (
+						<ClayDropDown
+							active={active}
+							alignmentPosition={Align.BottomRight}
+							menuElementAttrs={{
+								containerProps: {
+									className: 'cadmin',
+								},
+							}}
+							onActiveChange={setActive}
+							trigger={
+								<ClayButtonWithIcon
+									className="border-0"
+									displayType="secondary"
+									id={triggerId}
+									small
+									symbol="theme"
+									title={Liferay.Language.get(
+										'value-from-stylebook'
+									)}
+								/>
+							}
+						>
+							<ClayDropDown.ItemList aria-labelledby={triggerId}>
+								{options.map(({label, value}) => {
+									if (!value) {
+										return;
+									}
+
+									return (
+										<ClayDropDown.Item
+											key={value}
+											onClick={() => {
+												setActive(false);
+												setIsTokenValueOrInherited(
+													true
+												);
+												setNextValue(value);
+												onValueSelect(
+													field.name,
+													value
+												);
+											}}
+										>
+											{label}
+										</ClayDropDown.Item>
+									);
+								})}
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
+					)}
+
+					<ClayButtonWithIcon
+						className="border-0 mb-0 page-editor__select-field__action-button"
+						displayType="secondary"
+						onClick={() => {}}
+						small
+						symbol="restore"
+						title={getResetLabelByViewport(selectedViewportSize)}
+					/>
+				</>
 			) : null}
 
 			{field.description ? (

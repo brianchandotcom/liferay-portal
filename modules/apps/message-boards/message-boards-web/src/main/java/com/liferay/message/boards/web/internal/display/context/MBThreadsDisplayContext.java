@@ -79,7 +79,7 @@ public class MBThreadsDisplayContext {
 			"there-are-no-threads-in-this-category");
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(
-			MBMessage.class.getName(), _searchContainer);
+			MBMessage.class.getName(), searchContainer);
 
 		assetEntryQuery.setEnablePermissions(true);
 		assetEntryQuery.setExcludeZeroViewCount(false);

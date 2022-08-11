@@ -26,12 +26,48 @@ definition {
 	}
 
 	@description = "Verify that, when the user adds a translation, the action reflects in the language selector"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test AddedTranslationsAreDisplayedOnLanguageSelector {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#AddedTranslationsAreDisplayedOnLanguageSelector";
 
-		// TODO AddedTranslationsAreDisplayedOnLanguageSelector pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationLanguageOptionPresent(
+			currentTranslationOption = "en-us",
+			translationOption = "ca_ES",
+			translationStatus = "warning");
+
+		ProcessBuilderKaleoDesignerReact.gotoManageTranslations();
+
+		ProcessBuilderKaleoDesignerReact.deleteLanguage(translationOption = "Catalan");
+
+		ProcessBuilderKaleoDesignerReact.clickButtonDone();
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationLanguageOptionNotPresent(
+			currentTranslationOption = "en-us",
+			translationOption = "ca_ES",
+			translationStatus = "warning");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.gotoManageTranslations();
+
+		ProcessBuilderKaleoDesignerReact.addLanguage(translationOptionSelected = "ca-es");
+
+		ProcessBuilderKaleoDesignerReact.clickButtonDone();
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationLanguageOptionPresent(
+			currentTranslationOption = "en-us",
+			translationOption = "ca_ES",
+			translationStatus = "warning");
 	}
 
 	@description = "Verify that Action can be added"

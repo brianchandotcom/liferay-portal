@@ -259,11 +259,13 @@ public class GetCollectionFieldMVCResourceCommand
 		Optional<AssetListEntry> assetListEntryOptional =
 			_getAssetListEntryOptional(listObjectReference);
 
-		String itemType = assetListEntryOptional.map(
+		String originalItemType = assetListEntryOptional.map(
 			AssetListEntryModel::getAssetEntryType
 		).orElse(
 			listObjectReference.getItemType()
 		);
+
+		String itemType = originalItemType;
 
 		if (Objects.equals(DLFileEntryConstants.getClassName(), itemType)) {
 			itemType = FileEntry.class.getName();
@@ -334,7 +336,7 @@ public class GetCollectionFieldMVCResourceCommand
 				null
 			)
 		).put(
-			"itemType", itemType
+			"itemType", originalItemType
 		).put(
 			"length",
 			layoutListRetriever.getListCount(

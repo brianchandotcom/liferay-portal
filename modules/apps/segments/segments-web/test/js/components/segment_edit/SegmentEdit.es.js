@@ -99,6 +99,10 @@ describe('SegmentEdit', () => {
 		};
 	});
 
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it('renders', () => {
 		const {asFragment} = _renderSegmentEditComponent();
 
@@ -200,7 +204,7 @@ describe('SegmentEdit', () => {
 
 			fireEvent.click(cancelButton);
 
-			expect(navigate).toHaveBeenCalledTimes(1);
+			expect(navigate).toHaveBeenCalledTimes(0);
 			expect(mockConfirm).toHaveBeenCalledTimes(1);
 			expect(mockConfirm).toHaveBeenCalledWith(
 				'criteria-cancel-confirmation-message'

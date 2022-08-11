@@ -19,6 +19,11 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -64,6 +69,22 @@ public class FieldConstantsTest {
 			LocaleUtil.US, LocaleUtil.US, FieldConstants.INTEGER, "3");
 
 		Assert.assertEquals(Integer.valueOf(3), (Integer)serializable);
+	}
+
+	@Test
+	public void testGetSerializableReturnNumberArray() {
+		List<Serializable> values = Arrays.asList(
+			Integer.valueOf(1000), "10000000000");
+
+		Serializable serializable = FieldConstants.getSerializable(
+			FieldConstants.DOUBLE, values);
+
+		Assert.assertTrue(serializable instanceof Number[]);
+
+		Number[] numbers = (Number[])serializable;
+
+		Assert.assertEquals(Integer.valueOf(1000), numbers[0]);
+		Assert.assertEquals(new BigDecimal("10000000000"), numbers[1]);
 	}
 
 }

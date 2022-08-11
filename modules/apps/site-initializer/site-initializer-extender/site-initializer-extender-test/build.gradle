@@ -21,7 +21,7 @@ dependencies {
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":apps:client-extension:client-extension-api")
 	testIntegrationCompile project(":apps:client-extension:client-extension-type-api")
-	compileOnly project(":apps:segments:segments-api")
+	testIntegrationCompile project(":apps:segments:segments-api")
 	testIntegrationCompile project(":apps:site-initializer:site-initializer-extender:site-initializer-extender-test-bundle")
 	testIntegrationCompile project(":apps:site:site-api")
 	testIntegrationCompile project(":apps:site-navigation:site-navigation-api")

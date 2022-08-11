@@ -146,6 +146,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
@@ -257,6 +259,7 @@ public class BundleSiteInitializerTest {
 			_assertPortletSettings(group);
 			_assertClientExtension(group);
 			_assertSAPEntries(group);
+			_assertSegmentsEntries(group.getGroupId());
 			_assertSiteConfiguration(group.getGroupId());
 			_assertSiteSettings(group.getGroupId());
 			_assertSiteNavigationMenu(group);
@@ -1383,6 +1386,22 @@ public class BundleSiteInitializerTest {
 			allowedServiceSignatures2.size());
 	}
 
+	private void _assertSegmentsEntries(Long groupId) {
+		List<SegmentsEntry> segmentsEntries =
+			_segmentsEntryLocalService.getSegmentsEntries(
+				groupId, true, -1, -1, null);
+
+		SegmentsEntry segmentsEntry1 = segmentsEntries.get(0);
+
+		Assert.assertNotNull(segmentsEntry1);
+		Assert.assertTrue(segmentsEntry1.isActive());
+		Assert.assertEquals(
+			"Segments Entries Test",
+			segmentsEntry1.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals(
+			"com.liferay.portal.kernel.model.User", segmentsEntry1.getType());
+	}
+
 	private void _assertSiteConfiguration(Long groupId) {
 		Group group = _groupLocalService.fetchGroup(groupId);
 
@@ -1786,6 +1805,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private SAPEntryLocalService _sapEntryLocalService;
+
+	@Inject
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Inject
 	private ServletContext _servletContext;

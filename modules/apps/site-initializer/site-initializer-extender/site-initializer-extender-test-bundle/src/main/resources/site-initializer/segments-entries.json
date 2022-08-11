@@ -1,0 +1,10 @@
+[
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Segments Entries Test"
+		},
+		"segmentsEntriesKey":"SEGMENTS-ENTRY-TEST",
+		"type": "com.liferay.portal.kernel.model.User"
+	}
+]

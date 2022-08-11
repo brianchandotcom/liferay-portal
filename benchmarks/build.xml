@@ -29,7 +29,6 @@
 			<then>
 				<echo>Sample SQL Build Successful! Use ${basedir}/sample-${sample.sql.db.type}.sql to insert into database.</echo>
 			</then>
-
 			<else>
 				<echo>Sample SQL Build Successful! Use sql files in ${basedir}/output to insert into database.</echo>
 			</else>

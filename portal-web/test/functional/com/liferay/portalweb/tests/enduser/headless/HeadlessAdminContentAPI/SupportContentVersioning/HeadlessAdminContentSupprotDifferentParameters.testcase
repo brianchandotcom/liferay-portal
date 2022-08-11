@@ -1,0 +1,163 @@
+@component-name = "portal-headless-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@priority = "4"
+	test CanReceiveABodyWithTitleOnlyInResponse {
+		property portal.acceptance = "true";
+
+		task ("Given a display page templates of a site") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+		}
+
+		task ("When with curl I request getSiteDisplayPageTemplatesPage with restrictFields equal all fields except title field") {
+			var response = DisplayPageTemplateAPI.getDisplayPageTemplatesWithDifferentParameters(
+				groupName = "Test Site Name",
+				parameter = "restrictFields",
+				parameterValue = "actions,availableLanguages,creator,customFields,dateCreated,dateModified,displayPageTemplateKey,displayPageTemplateSettings,openGraphSettingsMapping,seoSettingsMapping,markedAsDefault,pageDefinition,settings,siteId,uuid");
+		}
+
+		task ("Then in a response I receive a body with title field values only") {
+			var actualValue = HeadlessWebcontentAPI.getItemsDetail(responseToParse = "${response}");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "{title=Display Page Name}");
+		}
+	}
+
+	@priority = "4"
+	test CanReceiveCorrectValueOfAggregationTermsInResponse {
+		property portal.acceptance = "true";
+
+		task ("Given a content structure created") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "content-structure");
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+			FormFields.editFieldReference(key_fieldReference = "Text");
+
+			Button.clickSave();
+		}
+
+		task ("Given a web content created") {
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Test Site Name");
+
+			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				siteId = "${siteId}",
+				title = "WC WebContent Title");
+		}
+
+		task ("When with curl I request getSiteStructuredContentsPage with aggregationTerms=id") {
+			var response = HeadlessWebcontentAPI.getStructuredContentsWithDifferentParameters(
+				groupName = "Test Site Name",
+				parameter = "aggregationTerms",
+				parameterValue = "id");
+			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = "${responseFromCreate}");
+		}
+
+		task ("Then in a response I receive numberOfOccurrences and term with correct value in facets fields") {
+			HeadlessWebcontentAPI.assertInFacetsWithCorrectValue(
+				expectedValue = "1",
+				responseToParse = "${response}",
+				structuredContentId = "${structuredContentId}");
+		}
+	}
+
+	@priority = "4"
+	test CanReceiveIdFieldValuesOnlyInResponse {
+		property portal.acceptance = "true";
+
+		task ("Given a content structure created") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "content-structure");
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+			FormFields.editFieldReference(key_fieldReference = "Text");
+
+			Button.clickSave();
+		}
+
+		task ("Given a web content created") {
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Test Site Name");
+
+			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				siteId = "${siteId}",
+				title = "WC WebContent Title");
+		}
+
+		task ("When with curl I request getStructuredContentsVersionsPage with fields=id") {
+			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = "${responseFromCreate}");
+
+			var response = HeadlessWebcontentAPI.getStructuredContentsVersion(
+				groupName = "Test Site Name",
+				parameter = "fields",
+				parameterValue = "id",
+				structuredContentId = "${structuredContentId}",
+				updatedValueInAPI = "versions");
+		}
+
+		task ("Then in a response I receive a id values only") {
+			var actualValue = HeadlessWebcontentAPI.getItemsDetail(responseToParse = "${response}");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "{id=${structuredContentId}}");
+		}
+	}
+
+}

@@ -467,6 +467,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_TAB_BUTTON_BY_INDEX</td>
+	<td>xpath=(//div[contains(@class,'page-editor__sidebar__buttons')]//button)[${index}][@*='${key_tabName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_TITLE</td>
 	<td>//div[contains(@class,'content--open')]//div[contains(@class,'page-editor__sidebar__panel-header')][normalize-space()='${key_sidebarButton}']</td>
 	<td></td>

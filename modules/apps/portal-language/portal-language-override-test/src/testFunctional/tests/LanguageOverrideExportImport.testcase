@@ -59,6 +59,58 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that a user can export overridden translations for a single language key"
+	@priority = "5"
+	test CanExportOverriddenTranslations {
+		task ("Given that by default, Export function does not display") {
+			Portlet.viewPortletOptions(optionsName = "Import Translations");
+
+			Portlet.viewNoPortletOptions(optionsName = "Export Overridden Translations");
+		}
+
+		task ("When a user adds a language key with translation override,") {
+			LanguageOverride.addLanguageKey(
+				languageKey = "hello-world",
+				translationOverrideList = "en-US,fr-FR,pt-BR,es-ES",
+				translationOverrideValueList = "Hello world,bonjour le monde,ola mundo,hola mundo");
+		}
+
+		task ("Then a user can successfully export these overridden translations as properties file") {
+			LanguageOverride.exportOverriddenTranslations();
+
+			var originalFileDownloadName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
+
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "unzip-temp-file -DfileName=${originalFileDownloadName}");
+
+			for (var fileName : list "Language_en_US.properties,Language_fr_FR.properties,Language_pt_BR.properties,Language_es_ES.properties") {
+				DMDocument.assertFileNameFromTempFolder(fileName = "${fileName}");
+
+				if ("${fileName}" == "Language_en_US.properties") {
+					DMDocument.assertDownloadedFileContent(
+						downloadedContent = "hello-world=Hello world",
+						fileName = "Language_en_US.properties");
+				}
+				else if ("${fileName}" == "Language_fr_FR.properties") {
+					DMDocument.assertDownloadedFileContent(
+						downloadedContent = "hello-world=bonjour le monde",
+						fileName = "Language_fr_FR.properties");
+				}
+				else if ("${fileName}" == "Language_pt_BR.properties") {
+					DMDocument.assertDownloadedFileContent(
+						downloadedContent = "hello-world=ola mundo",
+						fileName = "Language_pt_BR.properties");
+				}
+				else {
+					DMDocument.assertDownloadedFileContent(
+						downloadedContent = "hello-world=hola mundo",
+						fileName = "Language_es_ES.properties");
+				}
+			}
+		}
+	}
+
 	@description = "This test asserts that the Export option only displays when we have language key with override."
 	@priority = "5"
 	test CanViewExportOptionWhenHasOverride {

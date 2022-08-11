@@ -14,9 +14,12 @@
 
 package com.liferay.redirect.internal.provider;
 
+import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.provider.RedirectProvider;
+import com.liferay.redirect.service.RedirectEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -28,7 +31,46 @@ public class RedirectProviderImpl implements RedirectProvider {
 	public Redirect getRedirect(
 		long groupId, String fullURL, String friendlyURL) {
 
-		throw new UnsupportedOperationException();
+		RedirectEntry redirectEntry =
+			_redirectEntryLocalService.fetchRedirectEntry(
+				groupId, fullURL, false);
+
+		if (redirectEntry == null) {
+			redirectEntry = _redirectEntryLocalService.fetchRedirectEntry(
+				groupId, friendlyURL, true);
+		}
+
+		if (redirectEntry != null) {
+			return new RedirectImpl(
+				redirectEntry.getDestinationURL(), redirectEntry.isPermanent());
+		}
+
+		return null;
+	}
+
+	@Reference
+	private RedirectEntryLocalService _redirectEntryLocalService;
+
+	private static class RedirectImpl implements Redirect {
+
+		public RedirectImpl(String destinationURL, boolean permanent) {
+			_destinationURL = destinationURL;
+			_permanent = permanent;
+		}
+
+		@Override
+		public String getDestinationURL() {
+			return _destinationURL;
+		}
+
+		@Override
+		public boolean isPermanent() {
+			return _permanent;
+		}
+
+		private final String _destinationURL;
+		private final boolean _permanent;
+
 	}
 
 }

@@ -67,7 +67,7 @@ const ActivationKeysInputs = ({
 				const items = data.c?.accountSubscriptions?.items;
 				setAccountSubscriptions(data.c?.accountSubscriptions?.items);
 
-				setSelectedAccountSubscriptionName(items[0].name);
+				setSelectedAccountSubscriptionName(getKebabCase(items[0].name));
 			}
 		};
 
@@ -79,6 +79,7 @@ const ActivationKeysInputs = ({
 			const filterAccountSubscriptionERC = `customFields/accountSubscriptionERC eq '${accountKey}_${productKey}_${selectedAccountSubscriptionName.toLowerCase()}'`;
 
 			const {data} = await client.query({
+				fetchPolicy: 'network-only',
 				query: getCommerceOrderItems,
 				variables: {
 					filter: filterAccountSubscriptionERC,
@@ -205,7 +206,7 @@ const ActivationKeysInputs = ({
 						<ClaySelect
 							onChange={(event) =>
 								setSelectedAccountSubscriptionName(
-									event.target.value
+									getKebabCase(event.target.value)
 								)
 							}
 							value={selectedAccountSubscriptionName}
@@ -215,9 +216,7 @@ const ActivationKeysInputs = ({
 									key={
 										accountSubscription.accountSubscriptionId
 									}
-									label={i18n.translate(
-										getKebabCase(accountSubscription.name)
-									)}
+									label={accountSubscription.name}
 									value={accountSubscription.name}
 								/>
 							))}

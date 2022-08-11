@@ -18,6 +18,7 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	assetsLiferayRequired: boolean;
 	budgets: MDFRequestBudget[];
 	description: string;
+	detailsLeadFollowUp: string;
 	endDate: Date;
 	gatedLandingPage: boolean;
 	goalOfContent: string;
@@ -40,4 +41,5 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	startDate: Date;
 	targetofLeads: string;
 	totalCostOfExpense: string;
+	venueName: string;
 }

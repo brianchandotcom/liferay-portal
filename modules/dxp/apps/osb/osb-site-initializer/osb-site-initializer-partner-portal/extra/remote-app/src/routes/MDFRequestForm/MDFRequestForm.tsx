@@ -24,6 +24,7 @@ import {StepType} from './enums/stepType';
 import Activities from './steps/Activities';
 import Goals from './steps/Goals';
 import goalsSchema from './steps/Goals/schema/yup';
+import Review from './steps/Review/Review';
 import isObjectEmpty from './utils/isObjectEmpty';
 
 const initialFormValues: MDFRequest = {
@@ -124,6 +125,13 @@ const MDFRequestForm = () => {
 				onCancel={onCancel}
 				onContinue={onContinue}
 				onPrevious={onPrevious}
+				onSaveAsDraft={onSaveAsDraft}
+			/>
+		),
+		[StepType.REVIEW]: (
+			<Review
+				onCancel={onCancel}
+				onContinue={onContinue}
 				onSaveAsDraft={onSaveAsDraft}
 			/>
 		),

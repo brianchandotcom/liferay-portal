@@ -1,20 +1,31 @@
-/*
-CryptoJS v3.1.2
-code.google.com/p/crypto-js
-(c) 2009-2013 by Jeff Mott. All rights reserved.
-code.google.com/p/crypto-js/wiki/License
-*/
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 (function () {
+
 	// Shortcuts
-	var C = CryptoJS;
-	var C_lib = C.lib;
-	var WordArray = C_lib.WordArray;
-	var C_enc = C.enc;
+
+	const C = CryptoJS;
+	const C_lib = C.lib;
+	const WordArray = C_lib.WordArray;
+	const C_enc = C.enc;
 
 	/**
 	 * Base64 encoding strategy.
 	 */
-	var Base64 = (C_enc.Base64 = {
+	const Base64 = (C_enc.Base64 = {
+
 		/**
 		 * Converts a word array to a Base64 string.
 		 *
@@ -28,27 +39,31 @@ code.google.com/p/crypto-js/wiki/License
 		 *
 		 *     var base64String = CryptoJS.enc.Base64.stringify(wordArray);
 		 */
-		stringify: function (wordArray) {
+		stringify(wordArray) {
+
 			// Shortcuts
-			var words = wordArray.words;
-			var sigBytes = wordArray.sigBytes;
-			var map = this._map;
+
+			const words = wordArray.words;
+			const sigBytes = wordArray.sigBytes;
+			const map = this._map;
 
 			// Clamp excess bits
+
 			wordArray.clamp();
 
 			// Convert
-			var base64Chars = [];
-			for (var i = 0; i < sigBytes; i += 3) {
-				var byte1 = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
-				var byte2 =
+
+			const base64Chars = [];
+			for (let i = 0; i < sigBytes; i += 3) {
+				const byte1 = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+				const byte2 =
 					(words[(i + 1) >>> 2] >>> (24 - ((i + 1) % 4) * 8)) & 0xff;
-				var byte3 =
+				const byte3 =
 					(words[(i + 2) >>> 2] >>> (24 - ((i + 2) % 4) * 8)) & 0xff;
 
-				var triplet = (byte1 << 16) | (byte2 << 8) | byte3;
+				const triplet = (byte1 << 16) | (byte2 << 8) | byte3;
 
-				for (var j = 0; j < 4 && i + j * 0.75 < sigBytes; j++) {
+				for (let j = 0; j < 4 && i + j * 0.75 < sigBytes; j++) {
 					base64Chars.push(
 						map.charAt((triplet >>> (6 * (3 - j))) & 0x3f)
 					);
@@ -56,7 +71,8 @@ code.google.com/p/crypto-js/wiki/License
 			}
 
 			// Add padding
-			var paddingChar = map.charAt(64);
+
+			const paddingChar = map.charAt(64);
 			if (paddingChar) {
 				while (base64Chars.length % 4) {
 					base64Chars.push(paddingChar);
@@ -79,28 +95,32 @@ code.google.com/p/crypto-js/wiki/License
 		 *
 		 *     var wordArray = CryptoJS.enc.Base64.parse(base64String);
 		 */
-		parse: function (base64Str) {
+		parse(base64Str) {
+
 			// Shortcuts
-			var base64StrLength = base64Str.length;
-			var map = this._map;
+
+			let base64StrLength = base64Str.length;
+			const map = this._map;
 
 			// Ignore padding
-			var paddingChar = map.charAt(64);
+
+			const paddingChar = map.charAt(64);
 			if (paddingChar) {
-				var paddingIndex = base64Str.indexOf(paddingChar);
+				const paddingIndex = base64Str.indexOf(paddingChar);
 				if (paddingIndex != -1) {
 					base64StrLength = paddingIndex;
 				}
 			}
 
 			// Convert
-			var words = [];
-			var nBytes = 0;
-			for (var i = 0; i < base64StrLength; i++) {
+
+			const words = [];
+			let nBytes = 0;
+			for (let i = 0; i < base64StrLength; i++) {
 				if (i % 4) {
-					var bits1 =
+					const bits1 =
 						map.indexOf(base64Str.charAt(i - 1)) << ((i % 4) * 2);
-					var bits2 =
+					const bits2 =
 						map.indexOf(base64Str.charAt(i)) >>> (6 - (i % 4) * 2);
 					words[nBytes >>> 2] |=
 						(bits1 | bits2) << (24 - (nBytes % 4) * 8);
@@ -111,6 +131,7 @@ code.google.com/p/crypto-js/wiki/License
 			return WordArray.create(words, nBytes);
 		},
 
-		_map: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
+		_map:
+			'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
 	});
 })();

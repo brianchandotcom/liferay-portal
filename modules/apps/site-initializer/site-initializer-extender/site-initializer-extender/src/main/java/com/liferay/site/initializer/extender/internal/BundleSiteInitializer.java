@@ -2898,12 +2898,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			SegmentsEntry segmentsEntry =
 				_segmentsEntryLocalService.fetchSegmentsEntry(
 					serviceContext.getScopeGroupId(),
-					jsonObject.getString("segmentsEntriesKey"), true);
+					jsonObject.getString("segmentsEntryKey"), true);
 
 			if (segmentsEntry == null) {
 				_segmentsEntryLocalService.addSegmentsEntry(
 					jsonObject.getString(
-						"segmentsEntriesKey", StringPool.NEW_LINE),
+						"segmentsEntryKey", StringPool.NEW_LINE),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),
 					null, jsonObject.getBoolean("active", true), null,
@@ -2913,7 +2913,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_segmentsEntryLocalService.updateSegmentsEntry(
 					segmentsEntry.getSegmentsEntryId(),
 					jsonObject.getString(
-						"segmentsEntriesKey", StringPool.NEW_LINE),
+						"segmentsEntryKey", StringPool.NEW_LINE),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),
 					null, jsonObject.getBoolean("active", true), null,

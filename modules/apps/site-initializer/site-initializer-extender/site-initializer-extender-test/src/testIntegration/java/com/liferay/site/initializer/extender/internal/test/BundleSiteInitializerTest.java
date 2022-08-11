@@ -1396,7 +1396,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(segmentsEntry1);
 		Assert.assertTrue(segmentsEntry1.isActive());
 		Assert.assertEquals(
-			"Segments Entries Test",
+			"Segments Entry Test",
 			segmentsEntry1.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals(
 			"com.liferay.portal.kernel.model.User", segmentsEntry1.getType());

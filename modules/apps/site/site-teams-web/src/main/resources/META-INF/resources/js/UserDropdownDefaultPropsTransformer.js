@@ -29,10 +29,25 @@ const ACTIONS = {
 	},
 };
 
-export default function propsTransformer({items, ...props}) {
+export default function propsTransformer({actions, items, ...props}) {
 	return {
 		...props,
-		items: items.map((item) => {
+		actions: actions?.map((item) => {
+			return {
+				...item,
+				onClick(event) {
+					const action = item.data?.action;
+
+					if (action) {
+						event.preventDefault();
+
+						ACTIONS[action](item.data);
+					}
+				},
+			};
+		}),
+
+		items: items?.map((item) => {
 			return {
 				...item,
 				onClick(event) {

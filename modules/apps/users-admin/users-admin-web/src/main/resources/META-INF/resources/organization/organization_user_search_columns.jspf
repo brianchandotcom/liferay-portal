@@ -50,10 +50,12 @@
 					</h6>
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/organization_action.jsp"
-				/>
+				<liferay-ui:search-container-column-text>
+					<clay:dropdown-actions
+						dropdownItems="<%= organizationActionDropdownItems.getActionDropdownItems() %>"
+						propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
+					/>
+				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:when test='<%= displayStyle.equals("icon") %>'>
 				<liferay-ui:search-container-column-text>
@@ -85,9 +87,12 @@
 					value=""
 				/>
 
-				<liferay-ui:search-container-column-jsp
-					path="/organization_action.jsp"
-				/>
+				<liferay-ui:search-container-column-text>
+					<clay:dropdown-actions
+						dropdownItems="<%= organizationActionDropdownItems.getActionDropdownItems() %>"
+						propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
+					/>
+				</liferay-ui:search-container-column-text>
 			</c:otherwise>
 		</c:choose>
 	</c:when>

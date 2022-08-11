@@ -111,27 +111,6 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that the Export option only displays when we have language key with override."
-	@priority = "5"
-	test CanViewExportOptionWhenHasOverride {
-		task ("Given assert the Export Overridden Translations option not displays by default") {
-			Portlet.viewPortletOptions(optionsName = "Import Translations");
-
-			Portlet.viewNoPortletOptions(optionsName = "Export Overridden Translations");
-		}
-
-		task ("When add a new language key with override") {
-			LanguageOverride.addLanguageKey(
-				languageKey = "new-key",
-				translationOverrideList = "en-US",
-				translationOverrideValueList = "New key");
-		}
-
-		task ("Then Export Overridden Translations appear in the options menu dropdown") {
-			Portlet.viewPortletOptions(optionsName = "Export Overridden Translations");
-		}
-	}
-
 	@description = "This test asserts that the File Upload field is required in Import Translations page."
 	@priority = "4"
 	test CanViewFileUploadFieldIsRequired {

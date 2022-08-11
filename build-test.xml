@@ -4132,6 +4132,24 @@ tell application "Safari" to quit
 			</if>
 
 			<if>
+				<isset property="openid.provider.azure.test.account.email.address" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.azure.test.account.email.address=${openid.provider.azure.test.account.email.address}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.azure.test.account.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.azure.test.account.password=${openid.provider.azure.test.account.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
 				<isset property="openid.provider.okta.test.account.email.address" />
 				<then>
 					<echo append="true" file="${test.ext.properties.file}">

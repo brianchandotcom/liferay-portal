@@ -79,7 +79,8 @@
 										{
 											"id": "first-banner-primary-button-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Watch a Video Tour",
@@ -102,7 +103,8 @@
 										{
 											"id": "second-banner-primary-button-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Watch a Video Tour",
@@ -125,7 +127,8 @@
 										{
 											"id": "second-banner-secondary-button-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Partner Marketing Guide",
@@ -148,7 +151,8 @@
 										{
 											"id": "first-welcome-banner-title",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Welcome to Partner Marketing",
@@ -171,7 +175,8 @@
 										{
 											"id": "first-banner-secondary-button-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Get Your Partner Marketing Guide",
@@ -194,7 +199,8 @@
 										{
 											"id": "first-welcome-banner-description",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
@@ -217,7 +223,8 @@
 										{
 											"id": "second-welcome-banner-title",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Partner Marketing",
@@ -302,7 +309,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Quick Links",
@@ -386,7 +394,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -484,7 +493,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -545,7 +555,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Marketing Development Funds (MDF)",
@@ -607,7 +618,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
@@ -693,7 +705,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"ar_SA": "Apply for Funds",
@@ -741,7 +754,8 @@
 																			"fragmentConfig": {
 																				"iconName": "order-arrow-right"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorBrandPrimary"
@@ -772,7 +786,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -862,7 +877,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -921,7 +937,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Marketing Resources",
@@ -973,7 +990,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Explore all of the marketing tools and assets you need as available digital resources.",
@@ -1123,7 +1141,8 @@
 																				"iconLink": "https://www.liferay.com/",
 																				"iconName": "order-arrow-right"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "linkColor"
@@ -1154,7 +1173,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -1250,7 +1270,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -1310,7 +1331,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Partner Program Resources",
@@ -1365,7 +1387,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
@@ -1508,7 +1531,8 @@
 																				"iconLink": "https://www.liferay.com/",
 																				"iconName": "order-arrow-right"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorBrandPrimary"
@@ -1539,7 +1563,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -1628,7 +1653,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -1679,7 +1705,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Events",
@@ -1731,7 +1758,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
@@ -1817,7 +1845,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"ar_SA": "View Liferay Events",
@@ -1866,7 +1895,8 @@
 																				"iconLink": "https://www.liferay.com/",
 																				"iconName": "order-arrow-right"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorBrandPrimary"
@@ -1944,7 +1974,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Quick Links",
@@ -2011,7 +2042,8 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
@@ -2033,7 +2065,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -2121,7 +2154,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -2192,7 +2226,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Marketing Development Funds (MDF)",
@@ -2242,7 +2277,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;",
@@ -2392,7 +2428,8 @@
 																				"iconLink": "https://www.liferay.com/",
 																				"iconName": "order-arrow-right"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorActionPrimaryDefault"
@@ -2423,7 +2460,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -2506,7 +2544,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -2569,7 +2608,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Marketing Resources",
@@ -2619,7 +2659,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Explore all of the marketing tools and assets you need as available digital resources.",
@@ -2746,7 +2787,8 @@
 																				"iconLink": "https://www.liferay.com/",
 																				"iconName": "order-arrow-right"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorActionPrimaryDefault"
@@ -2777,7 +2819,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -2865,7 +2908,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -2928,7 +2972,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Partner Program Resources",
@@ -2978,7 +3023,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications.&nbsp; &nbsp;&nbsp;",
@@ -3105,7 +3151,8 @@
 																				"iconLink": "https://www.liferay.com/",
 																				"iconName": "order-arrow-right"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorActionPrimaryDefault"
@@ -3136,7 +3183,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -3218,7 +3266,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -3281,7 +3330,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Events",
@@ -3331,7 +3381,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
@@ -3458,7 +3509,8 @@
 																				"iconLink": "https://www.liferay.com/",
 																				"iconName": "order-arrow-right"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"textAlign": "",
 																				"textColor": "colorActionPrimaryDefault"

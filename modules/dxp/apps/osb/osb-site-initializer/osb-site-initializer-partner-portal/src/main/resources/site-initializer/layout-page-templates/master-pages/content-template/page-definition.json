@@ -150,7 +150,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -170,7 +171,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"ar_SA": "Partner Portal",
@@ -247,11 +249,13 @@
 												"navType": "nav-primary",
 												"orientation": "nav-horizontal"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true,
 											"widgetInstances": [
 												{
-													"widgetConfig": {},
+													"widgetConfig": {
+													},
 													"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
 												}
 											]
@@ -286,7 +290,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -329,7 +334,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -373,7 +379,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -449,7 +456,8 @@
 					{
 						"definition": {
 							"fragmentSettings": {
-								"unallowedFragments": []
+								"unallowedFragments": [
+								]
 							}
 						},
 						"type": "DropZone"

@@ -15,7 +15,7 @@ import LiferayPicklist from './liferayPicklist';
 import MDFRequestActivity from './mdfRequestActivity';
 
 export default interface MDFRequest extends Partial<LiferayObject> {
-	activities?: MDFRequestActivity[];
+	activities: MDFRequestActivity[];
 	additionalOption: LiferayPicklist | {};
 	country: LiferayPicklist | {};
 	liferayBusinessSalesGoals: string[];

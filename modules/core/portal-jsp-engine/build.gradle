@@ -36,7 +36,3 @@ deployDependencies {
 	exclude "com.liferay.util.taglib-*.jar"
 	exclude "tomcat-servlet-api-*.jar"
 }
-
-liferay {
-	deployDir = file("${liferay.appServerPortalDir}/WEB-INF/shielded-container-lib")
-}

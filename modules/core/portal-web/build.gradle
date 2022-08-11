@@ -9,7 +9,3 @@ dependencies {
 
 	testCompile project(":core:petra:petra-process")
 }
-
-liferay {
-	deployDir = file("${liferay.appServerPortalDir}/WEB-INF/shielded-container-lib")
-}

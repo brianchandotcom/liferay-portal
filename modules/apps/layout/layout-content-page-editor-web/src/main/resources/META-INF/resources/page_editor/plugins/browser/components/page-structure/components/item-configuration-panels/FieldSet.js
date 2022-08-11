@@ -119,8 +119,8 @@ function FieldSetContent({fields, item, languageId, onValueSelect, values}) {
 				return (
 					<div
 						className={classNames(
-							'autofit-row',
-							'page-editor__sidebar__fieldset__field align-items-end',
+							field.cssClass,
+							'autofit-row page-editor__sidebar__fieldset__field align-items-end',
 							{
 								'page-editor__sidebar__fieldset__field-small':
 									field.displaySize === DISPLAY_SIZES.small,

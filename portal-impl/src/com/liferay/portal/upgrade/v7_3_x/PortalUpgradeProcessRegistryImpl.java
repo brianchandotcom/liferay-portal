@@ -64,14 +64,14 @@ public class PortalUpgradeProcessRegistryImpl
 
 		versionTreeMap.put(
 			new Version(8, 2, 0),
-			UpgradeProcessFactory.dropColumns(
-				"AssetEntries_AssetCategories", "changeType"),
-			UpgradeProcessFactory.dropColumns(
-				"AssetEntries_AssetTags", "changeType"),
 			UpgradeProcessFactory.addColumns(
 				"AssetEntries_AssetCategories", "ctChangeType BOOLEAN"),
 			UpgradeProcessFactory.addColumns(
-				"AssetEntries_AssetTags", "ctChangeType BOOLEAN"));
+				"AssetEntries_AssetTags", "ctChangeType BOOLEAN"),
+			UpgradeProcessFactory.dropColumns(
+				"AssetEntries_AssetCategories", "changeType"),
+			UpgradeProcessFactory.dropColumns(
+				"AssetEntries_AssetTags", "changeType"));
 
 		versionTreeMap.put(
 			new Version(8, 3, 0), new UpgradeUserGroupGroupRole());

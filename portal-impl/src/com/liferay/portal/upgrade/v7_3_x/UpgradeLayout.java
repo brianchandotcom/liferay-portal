@@ -52,9 +52,9 @@ public class UpgradeLayout extends UpgradeProcess {
 	@Override
 	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropColumns("Layout", "headId", "head"),
 			UpgradeProcessFactory.alterColumnType(
-				"Layout", "description", "TEXT null")
+				"Layout", "description", "TEXT null"),
+			UpgradeProcessFactory.dropColumns("Layout", "headId", "head")
 		};
 	}
 

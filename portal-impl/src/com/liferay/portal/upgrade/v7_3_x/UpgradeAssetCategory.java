@@ -89,10 +89,10 @@ public class UpgradeAssetCategory extends UpgradeProcess {
 	@Override
 	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropColumns(
-				"AssetCategory", "leftCategoryId", "rightCategoryId"),
 			UpgradeProcessFactory.addColumns(
-				"AssetCategory", "treePath STRING null")
+				"AssetCategory", "treePath STRING null"),
+			UpgradeProcessFactory.dropColumns(
+				"AssetCategory", "leftCategoryId", "rightCategoryId")
 		};
 	}
 

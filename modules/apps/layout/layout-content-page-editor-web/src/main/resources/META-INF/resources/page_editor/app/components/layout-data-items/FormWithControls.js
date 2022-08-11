@@ -50,21 +50,35 @@ const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 			ref={ref}
 		>
 			<ContainerWithControls {...rest} item={item}>
-				{showMessagePreview ? (
-					<FormSuccessMessage item={item} />
-				) : showLoadingState ? (
+				{showLoadingState ? (
 					<FormLoadingState />
 				) : isEmpty || !isMapped ? (
 					<FormEmptyState isMapped={isMapped} item={item} />
 				) : (
-					children
+					<FormWrapper item={item}>{children}</FormWrapper>
 				)}
 			</ContainerWithControls>
 		</form>
 	);
 });
 
-export default FormWithControls;
+function FormWrapper({children, item}) {
+	const {showMessagePreview} = item.config;
+
+	return (
+		<>
+			{showMessagePreview && <FormSuccessMessage item={item} />}
+
+			<div
+				className={classNames('page-editor__form-children', {
+					'd-none': showMessagePreview,
+				})}
+			>
+				{children}
+			</div>
+		</>
+	);
+}
 
 function FormEmptyState({isMapped, item}) {
 	const dispatch = useDispatch();
@@ -79,6 +93,10 @@ function FormEmptyState({isMapped, item}) {
 			),
 		[dispatch, item.itemId]
 	);
+
+	if (item.config.showMessagePreview) {
+		return <FormSuccessMessage item={item} />;
+	}
 
 	if (isMapped) {
 		return (
@@ -144,3 +162,5 @@ function FormSuccessMessage({item}) {
 		</div>
 	);
 }
+
+export default FormWithControls;

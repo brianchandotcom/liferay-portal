@@ -59,7 +59,7 @@ definition {
 		}
 
 		task ("Start an AB test") {
-			ACUtils.createABtest(
+			ACUtils.createABTest(
 				goalAB = "Bounce Rate",
 				titleAB = "${nameABTest}");
 

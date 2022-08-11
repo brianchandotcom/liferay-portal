@@ -149,11 +149,14 @@ if (organization != null) {
 
 					<%
 					Organization curOrganization = null;
+					OrganizationActionDropdownItems organizationActionDropdownItems = null;
 					Map<String, Object> rowData = new HashMap<String, Object>();
 					User user2 = null;
 
 					if (result instanceof Organization) {
 						curOrganization = (Organization)result;
+
+						organizationActionDropdownItems = new OrganizationActionDropdownItems(curOrganization, renderRequest, renderResponse);
 
 						rowData.put("actions", StringUtil.merge(viewTreeManagementToolbarDisplayContext.getAvailableActions(curOrganization)));
 					}

@@ -49,30 +49,10 @@
 		/>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
-		<liferay-util:buffer
-			var="organizationLogoHTML"
-		>
-			<div class="user-card">
-				<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
-					<span class="rounded-circle sticker sticker-primary">
-						<span class="sticker-overlay">
-							<img alt="thumbnail" class="img-fluid" src="<%= organization.getLogoURL() %>" />
-						</span>
-					</span>
-				</div>
-			</div>
-		</liferay-util:buffer>
-
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:html-vertical-card
-				actionJsp="/organization_action.jsp"
-				actionJspServletContext="<%= application %>"
-				html="<%= organizationLogoHTML %>"
-				resultRow="<%= row %>"
-				rowChecker="<%= organizationSearchContainer.getRowChecker() %>"
-				subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
-				title="<%= organization.getName() %>"
-				url="<%= String.valueOf(rowURL) %>"
+			<clay:vertical-card
+				propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
+				verticalCard="<%= new OrganizationVerticalCard(organizationActionDropdownItems.getActionDropdownItems(), organization, renderRequest, organizationSearchContainer.getRowChecker(), rowURL) %>"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>

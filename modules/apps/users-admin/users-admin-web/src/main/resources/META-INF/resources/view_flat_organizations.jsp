@@ -128,6 +128,8 @@ if (filterManageableOrganizations) {
 					if (!OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.VIEW)) {
 						rowURL = null;
 					}
+
+					OrganizationActionDropdownItems organizationActionDropdownItems = new OrganizationActionDropdownItems(organization, renderRequest, renderResponse);
 					%>
 
 					<%@ include file="/organization/search_columns.jspf" %>

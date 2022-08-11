@@ -388,7 +388,7 @@ function FormInputMappingOptions({configurationValues, form, onValueSelect}) {
 						'page-editor__mapping-panel__type-label',
 						{
 							'mb-1': subtype,
-							'mb-4': !subtype,
+							'mb-3': !subtype,
 						}
 					)}
 				>
@@ -401,7 +401,7 @@ function FormInputMappingOptions({configurationValues, form, onValueSelect}) {
 			)}
 
 			{subtype && (
-				<p className="mb-4 page-editor__mapping-panel__type-label">
+				<p className="mb-3 page-editor__mapping-panel__type-label">
 					<span className="mr-1">
 						{Liferay.Language.get('subtype')}:
 					</span>

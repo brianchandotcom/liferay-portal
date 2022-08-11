@@ -310,7 +310,7 @@ definition {
 			List fileEntries = DLFileEntryLocalServiceUtil.getFileEntries(0,1);
  
 			fileEntries.each { fileEntry ->
-				(1..20).each {
+				(1..60).each {
 					try {
 						InputStream is = DLStoreUtil.getFileAsStream(fileEntry.getCompanyId(), fileEntry.getRepositoryId(), fileEntry.getName())
 					} 
@@ -320,14 +320,6 @@ definition {
 				}
 			}
 		''';
-
-		ServerAdministration.executeScript(
-			language = "Groovy",
-			script = "${script}");
-
-		ServerAdministration.executeScript(
-			language = "Groovy",
-			script = "${script}");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",

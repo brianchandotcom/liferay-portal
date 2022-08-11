@@ -110,7 +110,7 @@ public class WorkspaceExtension {
 		_configsDir = _getProperty(
 			settings, "configs.dir",
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
-		_dockerAccessToken = _getProperty(settings, "docker.access.token");
+		_dockerAccessToken = _getProperty(settings, "docker.user.access.token");
 		_dockerDir = _getProperty(settings, "docker.dir", _DOCKER_DIR);
 		_dockerImageLiferay = _getProperty(
 			settings, "docker.image.liferay", _getDefaultDockerImage());

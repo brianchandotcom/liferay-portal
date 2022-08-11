@@ -1007,13 +1007,6 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#DETAILS_FIELDS");
 	}
 
-	macro viewInformationDetailsPresent {
-		AssertVisible(
-			key_fieldInformation = "${fieldInformation}",
-			key_fieldOption = "${fieldOption}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#INFORMATION_DETAILS");
-	}
-
 	macro viewDiagramEditor {
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#REACT_PANEL");
 
@@ -1114,6 +1107,13 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_NODE");
 	}
 
+	macro viewInformationDetailsPresent {
+		AssertVisible(
+			key_fieldInformation = "${fieldInformation}",
+			key_fieldOption = "${fieldOption}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#INFORMATION_DETAILS");
+	}
+
 	macro viewLanguageNotPresentAtManageTranslations {
 		AssertElementNotPresent(
 			key_language = "${languageName}",
@@ -1130,7 +1130,7 @@ definition {
 		AssertElementPresent(
 			key_language = "${languageOption}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#LANGUAGE_OPTION");
-	}	
+	}
 
 	macro viewLanguagePresentAtManageTranslations {
 		AssertElementPresent(

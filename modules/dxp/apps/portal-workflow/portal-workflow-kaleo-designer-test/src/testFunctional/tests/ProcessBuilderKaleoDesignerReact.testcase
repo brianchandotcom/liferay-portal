@@ -207,12 +207,27 @@ definition {
 	}
 
 	@description = "Verify that the user can add multiple notifications"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddMultipleNotifications {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddMultipleNotifications";
 
-		// TODO CanAddMultipleNotifications pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "Liferay Notification",
+			newNotification = "true",
+			newSection = "New Notification",
+			notificationTemplateValue = "Liferay Template",
+			notificationTypeOption = "email",
+			sectionOptionList = "1,2,");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationPresent(notificationName = "Liferay Notification 1,Liferay Notification 2");
 	}
 
 	@description = "Verify that the user can add multiple Timers to a task node"
@@ -2926,7 +2941,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewInformationDetailsPresent(
 			fieldInformation = "3 Revisions",
 			fieldOption = "TOTAL MODIFICATIONS");
-
 	}
 
 	@description = "LPS-129928 - Verify that when the user makes changes to the Process Builder these changes are reflected in the XML code"

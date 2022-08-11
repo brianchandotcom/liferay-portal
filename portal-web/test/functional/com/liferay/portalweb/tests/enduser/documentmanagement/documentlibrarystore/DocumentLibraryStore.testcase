@@ -291,7 +291,7 @@ definition {
 	@priority = "3"
 	test S3ConnectionDoesNotLeakWhenServingFileAsStream {
 		property aws.store.enabled = "true";
-		property test.name.skip.portal.instance = "DocumentLibraryStore#S3StoreHTTPConnections";
+		property test.name.skip.portal.instance = "DocumentLibraryStore#S3ConnectionDoesNotLeakWhenServingFileAsStream";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

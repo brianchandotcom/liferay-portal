@@ -21,6 +21,7 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.util.comparator.KBObjectsModifiedDateComparator;
@@ -219,7 +220,7 @@ public class KBArticleItemSelectorViewDisplayContext {
 	}
 
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries()
-		throws Exception {
+		throws PortalException, PortletException {
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
@@ -227,54 +228,49 @@ public class KBArticleItemSelectorViewDisplayContext {
 
 		breadcrumbEntries.add(_getHomeBreadcrumb());
 
+		if (_getParentResourcePrimKey() != 0) {
+			PortletURL portletURL = PortletURLBuilder.create(
+				getPortletURL()
+			).setParameter(
+				"kbFolderId", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID
+			).buildPortletURL();
+
+			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(
+				_getParentResourcePrimKey(), WorkflowConstants.STATUS_ANY);
+
+			breadcrumbEntries.addAll(
+				_getFolderBreadcrumbEntry(
+					kbArticle.getKbFolderId(), portletURL));
+
+			BreadcrumbEntry articleBreadcrumbEntry = new BreadcrumbEntry();
+
+			articleBreadcrumbEntry.setTitle(
+				LanguageUtil.get(_httpServletRequest, kbArticle.getTitle()));
+
+			portletURL.setParameter(
+				"kbFolderId", String.valueOf(kbArticle.getKbFolderId()));
+
+			articleBreadcrumbEntry.setURL(portletURL.toString());
+
+			breadcrumbEntries.add(articleBreadcrumbEntry);
+
+			return breadcrumbEntries;
+		}
+
 		KBFolder kbFolder = _getKBFolder();
 
 		if (kbFolder == null) {
 			return breadcrumbEntries;
 		}
 
-		KBFolder parentKBFolder = kbFolder.getParentKBFolder();
-
-		PortletURL portletURL = PortletURLBuilder.create(
-			getPortletURL()
-		).setParameter(
-			"kbFolderId", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID
-		).buildPortletURL();
-
-		BreadcrumbEntry folderBreadcrumbEntry = new BreadcrumbEntry();
-
-		if (parentKBFolder == null) {
-			folderBreadcrumbEntry.setTitle(
-				LanguageUtil.get(_httpServletRequest, "home"));
-			folderBreadcrumbEntry.setURL(portletURL.toString());
-		}
-		else {
-			folderBreadcrumbEntry.setTitle(parentKBFolder.getName());
-
-			portletURL.setParameter(
-				"kbFolderId", String.valueOf(parentKBFolder.getKbFolderId()));
-
-			folderBreadcrumbEntry.setURL(portletURL.toString());
-		}
-
-		breadcrumbEntries.add(folderBreadcrumbEntry);
-
-		if (kbFolder.getKbFolderId() !=
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			folderBreadcrumbEntry = new BreadcrumbEntry();
-
-			KBFolder unescapedFolder = kbFolder.toUnescapedModel();
-
-			folderBreadcrumbEntry.setTitle(unescapedFolder.getName());
-
-			portletURL.setParameter(
-				"kbFolderId", String.valueOf(kbFolder.getKbFolderId()));
-
-			folderBreadcrumbEntry.setURL(portletURL.toString());
-
-			breadcrumbEntries.add(folderBreadcrumbEntry);
-		}
+		breadcrumbEntries.addAll(
+			_getFolderBreadcrumbEntry(
+				kbFolder.getKbFolderId(),
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					"kbFolderId", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID
+				).buildPortletURL()));
 
 		return breadcrumbEntries;
 	}
@@ -464,6 +460,46 @@ public class KBArticleItemSelectorViewDisplayContext {
 		return searchContext;
 	}
 
+	private List<BreadcrumbEntry> _getFolderBreadcrumbEntry(
+			long resourcePrimKey, PortletURL portletURL)
+		throws PortalException {
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		if (resourcePrimKey == KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			BreadcrumbEntry folderBreadcrumbEntry = new BreadcrumbEntry();
+
+			folderBreadcrumbEntry.setTitle(
+				LanguageUtil.get(_httpServletRequest, "home"));
+			folderBreadcrumbEntry.setURL(portletURL.toString());
+
+			breadcrumbEntries.add(folderBreadcrumbEntry);
+
+			return breadcrumbEntries;
+		}
+
+		KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(resourcePrimKey);
+
+		breadcrumbEntries.addAll(
+			_getFolderBreadcrumbEntry(
+				kbFolder.getParentKBFolderId(), portletURL));
+
+		BreadcrumbEntry folderBreadcrumbEntry = new BreadcrumbEntry();
+
+		KBFolder unescapedFolder = kbFolder.toUnescapedModel();
+
+		folderBreadcrumbEntry.setTitle(unescapedFolder.getName());
+
+		portletURL.setParameter(
+			"kbFolderId", String.valueOf(kbFolder.getKbFolderId()));
+
+		folderBreadcrumbEntry.setURL(portletURL.toString());
+
+		breadcrumbEntries.add(folderBreadcrumbEntry);
+
+		return breadcrumbEntries;
+	}
+
 	private long _getGroupId() {
 		return ParamUtil.getLong(
 			_portletRequest, "groupId", _themeDisplay.getScopeGroupId());
@@ -474,7 +510,9 @@ public class KBArticleItemSelectorViewDisplayContext {
 			_themeDisplay.getScopeGroupId());
 	}
 
-	private BreadcrumbEntry _getHomeBreadcrumb() throws Exception {
+	private BreadcrumbEntry _getHomeBreadcrumb()
+		throws PortalException, PortletException {
+
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		Group group = GroupLocalServiceUtil.getGroup(_getGroupId());
@@ -549,7 +587,18 @@ public class KBArticleItemSelectorViewDisplayContext {
 		return _orderByType;
 	}
 
-	private BreadcrumbEntry _getSiteBreadcrumb() throws Exception {
+	private long _getParentResourcePrimKey() {
+		if (_parentResourcePrimKey != null) {
+			return _parentResourcePrimKey;
+		}
+
+		_parentResourcePrimKey = ParamUtil.getLong(
+			_httpServletRequest, "parentResourcePrimKey");
+
+		return _parentResourcePrimKey;
+	}
+
+	private BreadcrumbEntry _getSiteBreadcrumb() throws PortletException {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(
@@ -576,6 +625,7 @@ public class KBArticleItemSelectorViewDisplayContext {
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
+	private Long _parentResourcePrimKey;
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
 	private final PortletURL _portletURL;

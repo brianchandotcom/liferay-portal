@@ -176,11 +176,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXPIRE</td>
-	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-time') and not(contains(@class,'circle'))]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EXPORT</td>
 	<td>//*[*[name()='svg'][contains(@class,'icon-download')]]</td>
 	<td></td>

@@ -94,7 +94,7 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 				/>
 			</c:if>
 
-			<c:if test="<%= !group.isDepot() && !group.isCompany() %>">
+			<c:if test="<%= group != null && !group.isDepot() && !group.isCompany() %>">
 				<clay:button
 					cssClass="list-group-heading navigation-link panel-header-link"
 					disabled="<%= !siteAdministrationPanelCategoryDisplayContext.isShowLayoutsTree() %>"
@@ -114,7 +114,7 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 	</c:if>
 </c:if>
 
-<c:if test="<%= !group.isDepot() && !group.isCompany() %>">
+<c:if test="<%= group != null && !group.isDepot() && !group.isCompany() %>">
 	<aui:script sandbox="<%= true %>">
 		var pagesTreeToggle = document.getElementById(
 			'<portlet:namespace />pagesTreeSidenavToggleId'

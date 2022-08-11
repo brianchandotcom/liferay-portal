@@ -17,13 +17,15 @@ import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity
 
 interface IProps {
 	activity: MDFRequestActivity;
+	children?: React.ReactNode;
 	detail?: boolean;
-	onRemove: () => void;
+	onRemove?: () => void;
 	overallCampaign: string;
 }
 
 const ActivityPanel = ({
 	activity,
+	children,
 	detail,
 	onRemove,
 	overallCampaign,
@@ -72,7 +74,9 @@ const ActivityPanel = ({
 			}
 			displayType="secondary"
 			showCollapseIcon={detail}
-		></ClayPanel>
+		>
+			<ClayPanel.Body>{children}</ClayPanel.Body>
+		</ClayPanel>
 	);
 };
 

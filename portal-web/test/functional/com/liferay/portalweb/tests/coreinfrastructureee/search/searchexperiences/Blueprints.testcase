@@ -2366,7 +2366,7 @@ definition {
 
 		Type(
 			elementName = "Boost Contents in a Category for User Segments",
-			fieldLabel = "Asset Category ID",
+			fieldLabel = "Asset Category Name (ID)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "${categoryId}");
 

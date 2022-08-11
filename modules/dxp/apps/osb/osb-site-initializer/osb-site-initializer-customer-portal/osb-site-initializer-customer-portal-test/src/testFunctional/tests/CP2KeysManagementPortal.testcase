@@ -209,4 +209,30 @@ definition {
 		}
     }
 
+	@description = "Verify that by default pagination option is 'Show 5 Items'"
+    @priority = "4"
+	test VerifyTheDefaultPaginationOption {
+		property portal.upstream = "quarantine";		
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("When I click at the All tab") {
+			CP2ActivationKeys.goToKeyTab(licenseTab = "All");
+		}
+
+		task ("Then I should be able to see the pagination button with the text 'Show 5 Items' by default") {
+			CustomerPortal.assertButtonIsVisible(text = "Show 5 Items");
+		}
+	}
+
 }

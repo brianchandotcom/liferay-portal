@@ -92,19 +92,29 @@ public class EditSizeLimitsMVCActionCommand extends BaseMVCActionCommand {
 		Map<String, String[]> parameterMap = actionRequest.getParameterMap();
 
 		for (int i = 0; parameterMap.containsKey("mimeType_" + i); i++) {
-			String[] mimeType = parameterMap.get("mimeType_" + i);
+			String[] mimeTypeValues = parameterMap.get("mimeType_" + i);
 
-			if ((mimeType.length == 0) || Validator.isNull(mimeType[0])) {
-				continue;
+			String mimeType = null;
+
+			if ((mimeTypeValues.length != 0) &&
+				Validator.isNotNull(mimeTypeValues[0])) {
+
+				mimeType = mimeTypeValues[0];
 			}
 
-			String[] size = parameterMap.get("size_" + i);
+			String[] sizeValues = parameterMap.get("size_" + i);
 
-			if ((size.length == 0) || Validator.isNull(size[0])) {
-				continue;
+			Long size = null;
+
+			if ((sizeValues.length != 0) &&
+				Validator.isNotNull(sizeValues[0])) {
+
+				size = GetterUtil.getLong(sizeValues[0]);
 			}
 
-			mimeTypeSizeLimits.put(mimeType[0], GetterUtil.getLong(size[0]));
+			if ((mimeType != null) || (size != null)) {
+				mimeTypeSizeLimits.put(mimeType, size);
+			}
 		}
 
 		return mimeTypeSizeLimits;

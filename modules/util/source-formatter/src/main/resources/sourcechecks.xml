@@ -1042,6 +1042,10 @@
 			<category name="Naming Conventions" />
 			<description name="Checks if variable names follow naming conventions." />
 		</check>
+		<check name="JSPTagVariableStyleCheck">
+			<category name="Styling" />
+			<description name="Checks that tag styling." />
+		</check>
 		<check name="JSPUnusedTermsCheck">
 			<category name="Performance" />
 			<description name="Finds taglibs, variables and imports that are unused." />

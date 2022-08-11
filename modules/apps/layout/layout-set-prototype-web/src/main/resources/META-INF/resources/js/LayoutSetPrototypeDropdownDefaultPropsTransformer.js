@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal, openWindow} from 'frontend-js-web';
 
 const ACTIONS = {
 	activate(itemData) {
@@ -21,23 +21,27 @@ const ACTIONS = {
 
 	deactivate(itemData) {
 		openConfirmModal({
-			message: Liferay.Language.get('are-you-sure-you-want-to-deactivate-this'),
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-deactivate-this'
+			),
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
 					submitForm(document.hrefFm, itemData.deactivateURL);
 				}
-			}
+			},
 		});
 	},
 
 	delete(itemData) {
 		openConfirmModal({
-			message: Liferay.Language.get('are-you-sure-you-want-to-delete-this'),
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
 					submitForm(document.hrefFm, itemData.deleteURL);
 				}
-			}
+			},
 		});
 	},
 
@@ -46,7 +50,7 @@ const ACTIONS = {
 	},
 
 	permissions(itemData) {
-		Liferay.Util.openWindow({
+		openWindow({
 			dialog: {
 				destroyOnHide: true,
 				modal: true,

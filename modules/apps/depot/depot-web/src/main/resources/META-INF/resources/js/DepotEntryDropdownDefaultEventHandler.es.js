@@ -12,7 +12,11 @@
  * details.
  */
 
-import {DefaultEventHandler, openConfirmModal} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	openConfirmModal,
+	openWindow,
+} from 'frontend-js-web';
 
 class DepotEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	deleteDepotEntry(itemData) {
@@ -36,7 +40,7 @@ class DepotEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	_openWindow(label, url) {
-		Liferay.Util.openWindow({
+		openWindow({
 			dialog: {
 				destroyOnHide: true,
 				modal: true,

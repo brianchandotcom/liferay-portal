@@ -12,7 +12,11 @@
  * details.
  */
 
-import {DefaultEventHandler, openConfirmModal} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	openConfirmModal,
+	openWindow,
+} from 'frontend-js-web';
 
 class ElementsDefaultEventHandler extends DefaultEventHandler {
 	created(props) {
@@ -38,7 +42,7 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	permissions(itemData) {
-		Liferay.Util.openWindow({
+		openWindow({
 			dialog: {
 				destroyOnHide: true,
 				modal: true,

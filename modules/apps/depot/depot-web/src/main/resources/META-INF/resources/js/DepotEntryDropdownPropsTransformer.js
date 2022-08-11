@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal, openWindow} from 'frontend-js-web';
 
 const ACTIONS = {
 	deleteDepotEntry(itemData) {
@@ -29,7 +29,7 @@ const ACTIONS = {
 	},
 
 	openWindow(label, url) {
-		Liferay.Util.openWindow({
+		openWindow({
 			dialog: {
 				destroyOnHide: true,
 				modal: true,

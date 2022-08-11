@@ -13,9 +13,11 @@
  */
 
 import {
+	addParams,
 	delegate,
 	openSelectionModal,
 	sub,
+	toggleDisabled,
 	toggleSelectBox,
 } from 'frontend-js-web';
 
@@ -98,7 +100,7 @@ export default function ({classTypes, namespace}) {
 
 		if (enabledInput) {
 			popupButtons.forEach((popupButton) => {
-				Liferay.Util.toggleDisabled(popupButton, !enabledInputChecked);
+				toggleDisabled(popupButton, !enabledInputChecked);
 			});
 		}
 	};
@@ -372,19 +374,19 @@ export default function ({classTypes, namespace}) {
 	const openModal = ({delegateTarget}) => {
 		let url = delegateTarget.dataset.href;
 
-		url = Liferay.Util.addParams(
+		url = addParams(
 			`${namespace}ddmStructureDisplayFieldValue=${encodeURIComponent(
 				ddmStructureDisplayFieldValueInput.value
 			)}`,
 			url
 		);
-		url = Liferay.Util.addParams(
+		url = addParams(
 			`${namespace}ddmStructureFieldName=${encodeURIComponent(
 				ddmStructureFieldNameInput.value
 			)}`,
 			url
 		);
-		url = Liferay.Util.addParams(
+		url = addParams(
 			`${namespace}ddmStructureFieldValue=${encodeURIComponent(
 				ddmStructureFieldValueInput.value
 			)}`,

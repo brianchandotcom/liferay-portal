@@ -12,7 +12,13 @@
  * details.
  */
 
-import {fetch, openToast, runScriptsInElement} from 'frontend-js-web';
+import {
+	fetch,
+	openToast,
+	openWindow,
+	runScriptsInElement,
+	toggleDisabled,
+} from 'frontend-js-web';
 
 function hideEl(elementId) {
 	const element = document.getElementById(elementId);
@@ -172,7 +178,7 @@ export default function Comments({
 	function sendMessage(form, refreshPage) {
 		const commentButtons = form.querySelectorAll('.btn-comment');
 
-		Util.toggleDisabled(commentButtons, true);
+		toggleDisabled(commentButtons, true);
 
 		const formData = new FormData(form);
 
@@ -255,7 +261,7 @@ export default function Comments({
 					});
 				}
 
-				Util.toggleDisabled(commentButtons, false);
+				toggleDisabled(commentButtons, false);
 			})
 			.catch(() => {
 				openToast({
@@ -265,7 +271,7 @@ export default function Comments({
 					type: 'danger',
 				});
 
-				Util.toggleDisabled(commentButtons, false);
+				toggleDisabled(commentButtons, false);
 			});
 	}
 
@@ -294,7 +300,7 @@ export default function Comments({
 						runScriptsInElement(editorWrapper);
 					}
 
-					Util.toggleDisabled(
+					toggleDisabled(
 						'#' + options.name.replace('Body', 'Button'),
 						options.contents === ''
 					);
@@ -313,7 +319,7 @@ export default function Comments({
 	}
 
 	window[`${namespace}${randomNamespace}0ReplyOnChange`] = function (html) {
-		Util.toggleDisabled(
+		toggleDisabled(
 			`#${namespace}${randomNamespace}postReplyButton0`,
 			html.trim() === ''
 		);
@@ -374,7 +380,7 @@ export default function Comments({
 			window.namespace = namespace;
 			window.randomNamespace = randomNamespace;
 
-			Util.openWindow({
+			openWindow({
 				dialog: {
 					height: 450,
 					width: 560,

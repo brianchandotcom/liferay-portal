@@ -12,6 +12,8 @@
  * details.
  */
 
+import openWindow from './util/open_window';
+
 /**
  * Hides layout pane
  * @param {Object} options
@@ -93,7 +95,7 @@ export function proposeLayout(options) {
 
 	contents += '</form></div>';
 
-	Liferay.Util.openWindow({
+	openWindow({
 		dialog: {
 			destroyOnHide: true,
 		},
@@ -109,7 +111,7 @@ export function proposeLayout(options) {
 export function publishToLive(options) {
 	options = options || {};
 
-	Liferay.Util.openWindow({
+	openWindow({
 		dialog: {
 			constrain: true,
 			modal: true,

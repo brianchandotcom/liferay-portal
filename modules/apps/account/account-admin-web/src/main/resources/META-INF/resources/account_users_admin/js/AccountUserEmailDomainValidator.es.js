@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PortletBase, sub} from 'frontend-js-web';
+import {PortletBase, openWindow, sub} from 'frontend-js-web';
 
 class AccountUserEmailDomainValidator extends PortletBase {
 	created(props) {
@@ -165,7 +165,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 	}
 
 	openDialog_(url) {
-		Liferay.Util.openWindow({
+		openWindow({
 			dialog: {
 				destroyOnHide: true,
 				height: 400,

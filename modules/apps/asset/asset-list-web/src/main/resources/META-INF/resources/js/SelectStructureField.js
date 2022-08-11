@@ -16,6 +16,7 @@ import {
 	delegate,
 	fetch,
 	getOpener,
+	getWindow,
 	objectToFormData,
 	runScriptsInElement,
 } from 'frontend-js-web';
@@ -68,7 +69,7 @@ export default function ({
 						},
 					});
 
-					Liferay.Util.getWindow().destroy();
+					getWindow().destroy();
 				}
 				else {
 					message.classList.remove('hide');

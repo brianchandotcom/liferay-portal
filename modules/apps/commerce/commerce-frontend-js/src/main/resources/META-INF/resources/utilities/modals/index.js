@@ -12,6 +12,8 @@
  * details.
  */
 
+import {openWindow} from 'frontend-js-web';
+
 import {CLOSE_MODAL, IS_LOADING_MODAL} from '../eventsDefinitions';
 import {showErrorNotification} from '../notifications';
 import {CLAY_MODAL_SIZES_MAP, MODAL_HEIGHT_MAP} from './constants';
@@ -37,7 +39,7 @@ export function resolveModalHeight(size) {
 }
 
 export function openPermissionsModal(uri) {
-	Liferay.Util.openWindow({
+	openWindow({
 		dialog: {
 			destroyOnHide: true,
 		},

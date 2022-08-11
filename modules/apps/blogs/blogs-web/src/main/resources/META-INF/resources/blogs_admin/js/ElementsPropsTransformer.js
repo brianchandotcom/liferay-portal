@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal, openWindow} from 'frontend-js-web';
 
 const ACTIONS = {
 	delete(itemData, trashEnabled) {
@@ -34,7 +34,7 @@ const ACTIONS = {
 	},
 
 	permissions(itemData) {
-		Liferay.Util.openWindow({
+		openWindow({
 			dialog: {
 				destroyOnHide: true,
 				modal: true,

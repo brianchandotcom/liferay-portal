@@ -16,7 +16,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useEventListener} from '@liferay/frontend-js-react-web';
-import {navigate} from 'frontend-js-web';
+import {addParams, navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 import {
@@ -242,7 +242,7 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 			let uri = window.location.href;
 
 			if (!params.get('resetBarsCategoryFiltersURL')) {
-				uri = Liferay.Util.addParams(
+				uri = addParams(
 					'resetBarsCategoryFiltersURL=' + encodeURIComponent(uri),
 					uri
 				);
@@ -257,7 +257,7 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 
 			assetCategoryIds.forEach((assetCategoryId) => {
 				if (assetCategoryId !== 'none') {
-					uri = Liferay.Util.addParams(
+					uri = addParams(
 						namespace + 'assetCategoryId=' + assetCategoryId,
 						uri
 					);

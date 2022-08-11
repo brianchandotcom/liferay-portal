@@ -12,9 +12,11 @@
 import {getSpritemap} from '@liferay/frontend-icons-web';
 import {
 	fetch,
+	getWindow,
 	navigate,
 	openSimpleInputModal,
 	openToast,
+	openWindow,
 } from 'frontend-js-web';
 
 const TIME_POLLING = 500;
@@ -30,7 +32,7 @@ class DocumentLibraryOpener {
 	}
 
 	_hideLoading() {
-		Liferay.Util.getWindow(this._dialogLoadingId).hide();
+		getWindow(this._dialogLoadingId).hide();
 	}
 
 	_openExternal({externalURL}) {
@@ -83,7 +85,7 @@ class DocumentLibraryOpener {
 
 	_showLoading({dialogMessage}) {
 		return new Promise((resolve) => {
-			Liferay.Util.openWindow(
+			openWindow(
 				{
 					dialog: {
 						bodyContent: `<p>${dialogMessage}</p><div aria-hidden="true" class="loading-animation"></div>`,

@@ -28,7 +28,24 @@ import javax.mail.internet.InternetAddress;
  */
 public class InternetAddressUtil {
 
-	public static String toString(Address address) {
+	public static String toString(Address[] addresses) {
+		if (ArrayUtil.isEmpty(addresses)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler((addresses.length * 2) - 1);
+
+		for (int i = 0; i < (addresses.length - 1); i++) {
+			sb.append(_toString(addresses[i]));
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.append(_toString(addresses[addresses.length - 1]));
+
+		return sb.toString();
+	}
+
+	private static String _toString(Address address) {
 		InternetAddress internetAddress = (InternetAddress)address;
 
 		if (internetAddress != null) {
@@ -52,23 +69,6 @@ public class InternetAddressUtil {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	public static String toString(Address[] addresses) {
-		if (ArrayUtil.isEmpty(addresses)) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler((addresses.length * 2) - 1);
-
-		for (int i = 0; i < (addresses.length - 1); i++) {
-			sb.append(toString(addresses[i]));
-			sb.append(StringPool.COMMA);
-		}
-
-		sb.append(toString(addresses[addresses.length - 1]));
-
-		return sb.toString();
 	}
 
 }

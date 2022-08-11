@@ -300,16 +300,3 @@ else {
 			});
 	}
 </aui:script>
-
-<aui:script require='<%= npmResolvedPackageName + "/js/actions.es as actions" %>'>
-	window['<portlet:namespace />openSelectUsersDialog'] = function (
-		organizationId
-	) {
-		actions.ACTIONS.selectUsers({
-			basePortletURL:
-				'<%= String.valueOf(renderResponse.createRenderURL()) %>',
-			organizationId,
-			portletNamespace: '<portlet:namespace />',
-		});
-	};
-</aui:script>

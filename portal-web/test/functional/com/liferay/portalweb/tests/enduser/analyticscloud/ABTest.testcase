@@ -22,9 +22,12 @@ definition {
 		}
 
 		task ("Add a new site with a public widget page") {
-			ACUtils.addSiteAndPage();
+			JSONGroup.addGroup(groupName = "Site Name");
 
-			ACUtils.createWCAndAddToPage();
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "AC Page",
+				type = "content");
 		}
 	}
 

@@ -17,8 +17,6 @@ package com.liferay.source.formatter.check;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.IOException;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,7 +34,7 @@ public class PropertiesLiferayPluginPackageLiferayVersionsCheck
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws IOException {
+		throws Exception {
 
 		if (fileName.endsWith("/liferay-plugin-package.properties")) {
 			return _fixIncorrectLiferayVersions(absolutePath, content);
@@ -45,11 +43,23 @@ public class PropertiesLiferayPluginPackageLiferayVersionsCheck
 		return content;
 	}
 
+	protected String getLiferayVersion(String absolutePath) throws Exception {
+		return getPortalVersion(isModulesApp(absolutePath, true));
+	}
+
+	protected boolean skipFix(String absolutePath) {
+		if (!isPortalSource() || !isModulesApp(absolutePath, false)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _fixIncorrectLiferayVersions(
 			String absolutePath, String content)
-		throws IOException {
+		throws Exception {
 
-		if (!isPortalSource() || !isModulesApp(absolutePath, false)) {
+		if (skipFix(absolutePath)) {
 			return content;
 		}
 
@@ -59,17 +69,15 @@ public class PropertiesLiferayPluginPackageLiferayVersionsCheck
 			return content;
 		}
 
-		boolean privateApp = isModulesApp(absolutePath, true);
+		String liferayVersion = getLiferayVersion(absolutePath);
 
-		String portalVersion = getPortalVersion(privateApp);
-
-		if (Validator.isNull(portalVersion)) {
+		if (Validator.isNull(liferayVersion)) {
 			return content;
 		}
 
 		return StringUtil.replace(
 			content, "liferay-versions=" + matcher.group(1),
-			"liferay-versions=" + portalVersion + "+", matcher.start());
+			"liferay-versions=" + liferayVersion + "+", matcher.start());
 	}
 
 	private static final Pattern _liferayVersionsPattern = Pattern.compile(

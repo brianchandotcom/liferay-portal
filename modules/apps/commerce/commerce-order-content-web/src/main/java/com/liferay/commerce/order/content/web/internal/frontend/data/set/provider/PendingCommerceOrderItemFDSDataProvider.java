@@ -321,7 +321,8 @@ public class PendingCommerceOrderItemFDSDataProvider
 
 		Map<Long, List<CommerceOrderValidatorResult>>
 			commerceOrderValidatorResultsMap =
-				_getcommerceOrderValidatorResultsMap(commerceOrderItems, locale);
+				_getcommerceOrderValidatorResultsMap(
+					commerceOrderItems, locale);
 
 		return TransformUtil.transform(
 			commerceOrderItems,

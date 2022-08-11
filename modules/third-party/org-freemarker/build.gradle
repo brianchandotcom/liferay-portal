@@ -12,10 +12,6 @@ dependencies {
 	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.29"
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
 patch {
 	ext {
 		autoClean = false

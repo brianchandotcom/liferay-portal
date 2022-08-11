@@ -8,10 +8,6 @@ dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.configurator", transitive: false, version: "1.0.14"
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/static")
-}
-
 patch {
 	ext {
 		autoClean = false

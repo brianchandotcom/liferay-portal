@@ -8,10 +8,6 @@ dependencies {
 	compileOnly group: "org.glassfish", name: "javax.el", transitive: false, version: "3.0.1-b12"
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/static")
-}
-
 patch {
 	ext {
 		autoClean = false

@@ -24,9 +24,9 @@ const goalsSchema = object({
 	overallCampaign: string()
 		.max(350, 'You have exceeded the character limit')
 		.required('Required'),
-	r_company_accountEntryId: string().required('Required'),
-	targetsAudienceRole: array().min(1, 'Required'),
-	targetsMarket: array()
+	r_accountToMDFRequests_accountEntryId: string().required('Required'),
+	targetAudienceRoles: array().min(1, 'Required'),
+	targetMarkets: array()
 		.min(1, 'Required')
 		.max(3, 'You have exceed the choose limit'),
 });

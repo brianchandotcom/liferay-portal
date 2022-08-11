@@ -46,10 +46,15 @@ const Goals = ({
 	);
 
 	useEffect(() => {
-		if (values.r_company_accountEntryId) {
-			setSelectedAccountEntryId(values.r_company_accountEntryId);
+		if (values.r_accountToMDFRequests_accountEntryId) {
+			setSelectedAccountEntryId(
+				values.r_accountToMDFRequests_accountEntryId
+			);
 		}
-	}, [setSelectedAccountEntryId, values.r_company_accountEntryId]);
+	}, [
+		setSelectedAccountEntryId,
+		values.r_accountToMDFRequests_accountEntryId,
+	]);
 
 	const countryOptions = fieldEntries[LiferayPicklistName.REGIONS];
 	const onCountrySelected = optionSelection(
@@ -73,7 +78,7 @@ const Goals = ({
 					<PRMFormik.Field
 						component={PRMForm.Select}
 						label="Company Name"
-						name="r_company_accountEntryId"
+						name="r_accountToMDFRequests_accountEntryId"
 						options={companiesEntries}
 						required
 					/>
@@ -115,7 +120,7 @@ const Goals = ({
 					component={PRMForm.CheckboxGroup}
 					items={fieldEntries[LiferayPicklistName.TARGET_MARKETS]}
 					label="Please select the target market(s) for this campaign (choose up to three)"
-					name="targetsMarket"
+					name="targetMarkets"
 					required
 				/>
 
@@ -133,7 +138,7 @@ const Goals = ({
 						fieldEntries[LiferayPicklistName.TARGET_AUDIENCE_ROLES]
 					}
 					label="Choose your target audience/role (Select all that apply)"
-					name="targetsAudienceRole"
+					name="targetAudienceRoles"
 					required
 				/>
 			</PRMForm.Section>
@@ -159,7 +164,7 @@ const Goals = ({
 					</Button>
 
 					<Button
-						disabled={!isValid}
+						disabled={!isValid || isSubmitting}
 						onClick={() =>
 							onContinue?.(formikHelpers, StepType.ACTIVITIES)
 						}

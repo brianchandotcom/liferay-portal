@@ -20,7 +20,7 @@ import liferayFetcher from '../../common/utils/fetcher';
 interface CompanyExtender {
 	country: LiferayPicklist;
 	id: number;
-	r_company_accountEntryId: number;
+	r_accountToCompanyExtenders_accountEntryId: number;
 }
 
 export default function useGetCompanyExtenderByAccountEntryId(

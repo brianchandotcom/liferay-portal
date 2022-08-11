@@ -15,13 +15,13 @@ import LiferayPicklist from './liferayPicklist';
 import MDFRequestActivity from './mdfRequestActivity';
 
 export default interface MDFRequest extends Partial<LiferayObject> {
-	activities: MDFRequestActivity[];
+	activities?: MDFRequestActivity[];
 	additionalOption: LiferayPicklist | {};
 	country: LiferayPicklist | {};
 	liferayBusinessSalesGoals: string[];
 	overallCampaign: string;
-	r_company_accountEntryId: string;
+	r_accountToMDFRequests_accountEntryId: string;
 	requestStatus: RequestStatus;
-	targetsAudienceRole: string[];
-	targetsMarket: string[];
+	targetAudienceRoles: string[];
+	targetMarkets: string[];
 }

@@ -173,18 +173,15 @@ definition {
 					sourceFileName = "main.css");
 			}
 
-			RemoteApps.goToRemoteAppsPortlet();
-
-			RemoteApps.addCustomElementAllFields(
-				entryCssurl = "/documents/d/guest/main",
-				entryHtmlName = "es-element",
-				entryName = "ES Element",
-				entryProperties = "test-data-user=QAuser",
-				entryURL = "/documents/d/guest/index");
-
-			RemoteApps.viewTableEntries(
-				entryName = "ES Element",
-				entryType = "Custom Element");
+			task ("create custom element") {
+				JSONRemoteApp.addCustomElementRemoteAppEntry(
+					customElementCssurl = "/documents/d/guest/main",
+					customElementHtmlName = "es-element",
+					customElementName = "ES Element",
+					customElementProperties = "test-data-user=QAuser",
+					customElementURL = "/documents/d/guest/index",
+					customElementUseESM = "true");
+			}
 		}
 
 		task ("When ES Element is added to widget page") {
@@ -514,6 +511,56 @@ definition {
 
 		task ("Assert multiple URL fields are saved") {
 			RemoteApps.assertCustomElementMultipleURLFields();
+		}
+	}
+
+	@description = "LPS-159013 ES module custom element portlets render incorrect <script> node when dragged in the UI"
+	@priority = "4"
+	test CustomElementRendersCorrectlyWhenPlacedOnWidgetPage {
+		property portal.acceptance = "true";
+		property testray.component.names = "Remote Apps";
+
+		task ("Given a custom element with "Use ES Modules" option created") {
+			JSONRemoteApp.addCustomElementRemoteAppEntry(
+				customElementCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				customElementHtmlName = "vanilla-counter",
+				customElementName = "Vanilla Counter",
+				customElementProperties = "test-data-user=QAuser",
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js",
+				customElementUseESM = "true");
+		}
+
+		task ("And Given a widget page created") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "My Widget Page");
+		}
+
+		task ("When adding the app portlet to the page") {
+			Navigator.gotoPage(pageName = "My Widget Page");
+
+			Refresh();
+
+			Click(locator1 = "ControlMenu#ADD");
+
+			Type(
+				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
+				value1 = "Vanilla Counter");
+
+			Portlet._clickAddPortlet(portletName = "Vanilla Counter");
+
+			WaitForElementPresent(locator1 = "Message#SUCCESS");
+		}
+
+		task ("Then the custom element renders correctly") {
+			AssertElementPresent(locator1 = "//vanilla-counter[@test-data-user='QAuser']");
+
+			Refresh();
+
+			AssertAttributeValue(
+				attribute1 = "src",
+				locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_MODULE_SCRIPT",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 	}
 

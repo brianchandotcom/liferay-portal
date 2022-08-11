@@ -8,13 +8,11 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import {useQuery} from '@apollo/client';
 import DOMPurify from 'dompurify';
 import {useEffect, useState} from 'react';
 import i18n from '../../../../../../common/I18n';
 import {Table} from '../../../../../../common/components';
 import {fetchHeadless} from '../../../../../../common/services/liferay/api';
-import {getKoroneikiAccounts} from '../../../../../../common/services/liferay/graphql/queries';
 import {useCustomerPortal} from '../../../../context';
 import ActivationKeysLayout from '../../../../layouts/ActivationKeysLayout';
 
@@ -28,15 +26,7 @@ const Commerce = () => {
 		setIsLoadingActivationInstructions,
 	] = useState(false);
 
-	const [{accountKey, sessionId}] = useCustomerPortal();
-
-	const {data, loading} = useQuery(getKoroneikiAccounts, {
-		variables: {
-			filter: `accountKey eq '${accountKey}'`,
-		},
-	});
-
-	const dxpVersion = data?.c?.koroneikiAccounts?.items[0]?.dxpVersion;
+	const [{project, sessionId}] = useCustomerPortal();
 
 	const fetchCommerceActivationsKeysInstructions = async () => {
 		const webContentFolderName = 'commerce-activation';
@@ -119,15 +109,15 @@ const Commerce = () => {
 		},
 	];
 
-	if (loading) {
+	if (!project) {
 		return <ActivationKeysLayout.Skeleton />;
 	}
 
 	return (
 		<ActivationKeysLayout>
-			{dxpVersion && dxpVersion !== '7.3' ? (
+			{project.dxpVersion && project.dxpVersion < '7.3' ? (
 				<ActivationKeysLayout.Inputs
-					accountKey={accountKey}
+					accountKey={project.accountKey}
 					productKey="commerce"
 					productTitle="Commerce"
 					sessionId={sessionId}

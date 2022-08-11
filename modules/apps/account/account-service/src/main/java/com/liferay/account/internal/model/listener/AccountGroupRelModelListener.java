@@ -15,6 +15,7 @@
 package com.liferay.account.internal.model.listener;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -43,6 +44,7 @@ public class AccountGroupRelModelListener
 					AccountEntry.class.getName())) {
 
 			_reindexAccountEntry(accountGroupRel.getClassPK());
+			_reindexAccountGroup(accountGroupRel.getAccountGroupId());
 		}
 	}
 
@@ -55,6 +57,7 @@ public class AccountGroupRelModelListener
 					AccountEntry.class.getName())) {
 
 			_reindexAccountEntry(accountGroupRel.getClassPK());
+			_reindexAccountGroup(accountGroupRel.getAccountGroupId());
 		}
 	}
 
@@ -64,6 +67,18 @@ public class AccountGroupRelModelListener
 				IndexerRegistryUtil.nullSafeGetIndexer(AccountEntry.class);
 
 			indexer.reindex(AccountEntry.class.getName(), accountEntryId);
+		}
+		catch (SearchException searchException) {
+			throw new ModelListenerException(searchException);
+		}
+	}
+
+	private void _reindexAccountGroup(long accountGroupId) {
+		try {
+			Indexer<AccountGroup> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(AccountGroup.class);
+
+			indexer.reindex(AccountGroup.class.getName(), accountGroupId);
 		}
 		catch (SearchException searchException) {
 			throw new ModelListenerException(searchException);

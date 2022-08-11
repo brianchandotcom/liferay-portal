@@ -392,7 +392,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			}
 
 			String dockerAccessToken =
-				workspaceExtension.getDockerAccessToken();
+				workspaceExtension.getDockerUserAccessToken();
 
 			if (Objects.nonNull(dockerAccessToken)) {
 				Property<String> passwordProperty =
@@ -1229,7 +1229,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			userNameProperty.set(dockerUserName);
 		}
 
-		String dockerAccessToken = workspaceExtension.getDockerAccessToken();
+		String dockerAccessToken =
+			workspaceExtension.getDockerUserAccessToken();
 
 		if (Objects.nonNull(dockerAccessToken)) {
 			Property<String> passwordProperty =
@@ -1286,7 +1287,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			userNameProperty.set(dockerUserName);
 		}
 
-		String dockerAccessToken = workspaceExtension.getDockerAccessToken();
+		String dockerAccessToken =
+			workspaceExtension.getDockerUserAccessToken();
 
 		if (Objects.nonNull(dockerAccessToken)) {
 			Property<String> passwordProperty =

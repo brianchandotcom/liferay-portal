@@ -110,7 +110,6 @@ public class WorkspaceExtension {
 		_configsDir = _getProperty(
 			settings, "configs.dir",
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
-		_dockerAccessToken = _getProperty(settings, "docker.access.token");
 		_dockerDir = _getProperty(settings, "docker.dir", _DOCKER_DIR);
 		_dockerImageLiferay = _getProperty(
 			settings, "docker.image.liferay", _getDefaultDockerImage());
@@ -118,6 +117,8 @@ public class WorkspaceExtension {
 			settings, "docker.local.registry.address");
 		_dockerPullPolicy = _getProperty(
 			settings, "docker.pull.policy", _DOCKER_PULL_POLICY);
+		_dockerUserAccessToken = _getProperty(
+			settings, "docker.user.access.token");
 		_dockerUserName = _getProperty(settings, "docker.username");
 		_environment = _getProperty(
 			settings, "environment",
@@ -271,10 +272,6 @@ public class WorkspaceExtension {
 		);
 	}
 
-	public String getDockerAccessToken() {
-		return GradleUtil.toString(_dockerAccessToken);
-	}
-
 	public String getDockerContainerId() {
 		return GradleUtil.toString(_dockerContainerId);
 	}
@@ -297,6 +294,10 @@ public class WorkspaceExtension {
 
 	public boolean getDockerPullPolicy() {
 		return GradleUtil.toBoolean(_dockerPullPolicy);
+	}
+
+	public String getDockerUserAccessToken() {
+		return GradleUtil.toString(_dockerUserAccessToken);
 	}
 
 	public String getDockerUserName() {
@@ -401,10 +402,6 @@ public class WorkspaceExtension {
 		_configsDir = configsDir;
 	}
 
-	public void setDockerAccessToken(Object dockerAccessToken) {
-		_dockerAccessToken = dockerAccessToken;
-	}
-
 	public void setDockerContainerId(Object dockerContainerId) {
 		_dockerContainerId = dockerContainerId;
 	}
@@ -429,6 +426,10 @@ public class WorkspaceExtension {
 
 	public void setDockerPullPolicy(Object dockerPullPolicy) {
 		_dockerPullPolicy = dockerPullPolicy;
+	}
+
+	public void setDockerUserAccessToken(Object dockerAccessToken) {
+		_dockerUserAccessToken = dockerAccessToken;
 	}
 
 	public void setDockerUserName(Object dockerUserName) {
@@ -710,13 +711,13 @@ public class WorkspaceExtension {
 	private Object _bundleTokenPasswordFile;
 	private Object _bundleUrl;
 	private Object _configsDir;
-	private Object _dockerAccessToken;
 	private Object _dockerContainerId;
 	private Object _dockerDir;
 	private Object _dockerImageId;
 	private Object _dockerImageLiferay;
 	private Object _dockerLocalRegistryAddress;
 	private Object _dockerPullPolicy;
+	private Object _dockerUserAccessToken;
 	private Object _dockerUserName;
 	private Object _environment;
 	private final Gradle _gradle;

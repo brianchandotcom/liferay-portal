@@ -44,7 +44,11 @@ public class JSPTagVariableStyleCheck extends BaseFileCheck {
 
 		outLoop:
 		while (matcher.find()) {
-			String parameter = matcher.group(2);
+			if (!_insideQuotes(content, matcher.start())) {
+				continue;
+			}
+
+			String parameter = matcher.group(1);
 
 			String[] parameters = _splitParameters(parameter);
 
@@ -101,11 +105,11 @@ public class JSPTagVariableStyleCheck extends BaseFileCheck {
 				}
 			}
 
-			if (!StringUtil.equals(matcher.group(1), sb.toString()) &&
+			if (!StringUtil.equals(matcher.group(), sb.toString()) &&
 				changeFlg) {
 
 				return StringUtil.replaceFirst(
-					content, matcher.group(1), sb.toString(), matcher.start(1));
+					content, matcher.group(), sb.toString(), matcher.start());
 			}
 		}
 
@@ -125,6 +129,54 @@ public class JSPTagVariableStyleCheck extends BaseFileCheck {
 		}
 
 		return level;
+	}
+
+	private boolean _insideQuotes(String s, int pos) {
+		int start = s.lastIndexOf(10, pos);
+
+		if (start == -1) {
+			start = 0;
+		}
+
+		int end = s.indexOf(10, pos);
+
+		if (end == -1) {
+			end = s.length();
+		}
+
+		pos -= start;
+
+		String line = s.substring(start, end);
+		char delimeter = ' ';
+		boolean insideQuotes = false;
+
+		for (int i = 0; i < line.length(); ++i) {
+			char c = line.charAt(i);
+
+			if (!insideQuotes) {
+				if (c == '"') {
+					delimeter = c;
+					insideQuotes = true;
+				}
+			}
+			else if (c == delimeter) {
+				int precedingBackSlashCount = 0;
+
+				for (int j = i - 1; (j >= 0) && (line.charAt(j) == '\\'); --j) {
+					++precedingBackSlashCount;
+				}
+
+				if ((precedingBackSlashCount % 2) == 0) {
+					insideQuotes = false;
+				}
+			}
+
+			if (pos == i) {
+				return insideQuotes;
+			}
+		}
+
+		return false;
 	}
 
 	private String[] _splitParameters(String parameter) {
@@ -180,19 +232,32 @@ public class JSPTagVariableStyleCheck extends BaseFileCheck {
 
 					if ((frontPlusIndex == -1) && (behindPlusIndex == -1)) {
 						expression = null;
+
+						break;
 					}
 					else if (frontPlusIndex == -1) {
+						x = 0;
 						y = behindPlusIndex;
 					}
 					else if (behindPlusIndex == -1) {
-						x = frontPlusIndex;
+						x = frontPlusIndex + 1;
+						y = parameter.length();
 					}
 					else {
-						x = frontPlusIndex;
+						x = frontPlusIndex + 1;
 						y = behindPlusIndex;
 					}
 
-					break;
+					expression = parameter.substring(x, y);
+					expression = StringUtil.trim(expression);
+
+					if (expression.startsWith(StringPool.OPEN_PARENTHESIS) &&
+						expression.endsWith(StringPool.CLOSE_PARENTHESIS)) {
+
+						break;
+					}
+
+					x--;
 				}
 
 				expression = null;
@@ -221,6 +286,10 @@ public class JSPTagVariableStyleCheck extends BaseFileCheck {
 
 		parameters.add(expression);
 
+		if (y == parameter.length()) {
+			return parameters.toArray(new String[0]);
+		}
+
 		tmpExpression = parameter.substring(y + 1);
 
 		if (Validator.isNotNull(tmpExpression)) {
@@ -231,6 +300,6 @@ public class JSPTagVariableStyleCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _javaSourceParameterPattern = Pattern.compile(
-		"=\"(<%=(.+?)%>)\"");
+		"<%=(.+?)%>");
 
 }

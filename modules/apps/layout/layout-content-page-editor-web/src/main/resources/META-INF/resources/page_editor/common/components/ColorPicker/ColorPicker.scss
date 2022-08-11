@@ -6,10 +6,10 @@
 html#{$cadmin-selector} {
 	.cadmin {
 		.page-editor__color-picker {
-			> .input-group-item .form-control.page-editor__color-picker__input {
-				border-radius: 0 4px 4px 0;
-				font-weight: 600;
-				transition: none;
+			&.has-value {
+				display: grid;
+				gap: 8px;
+				grid-template-columns: auto 32px 32px;
 			}
 
 			.clay-color > .input-group-item > .input-group-text {
@@ -22,24 +22,11 @@ html#{$cadmin-selector} {
 				}
 			}
 
-			&.hovered .page-editor__color-picker__selector {
+			&.hovered .page-editor__dropdown-color-picker__selector {
 				background-color: $cadmin-gray-100;
 			}
 
-			&:not(.hovered) > .input-group-item > .input-group {
-				&:not(:hover):not(:focus-within) {
-					.form-control.page-editor__color-picker__input {
-						background-color: transparent;
-						border-color: transparent;
-					}
-
-					.clay-color > .input-group-item > .input-group-text {
-						border-color: transparent;
-					}
-				}
-			}
-
-			&:not(:hover):not(:focus-within):not(.hovered) {
+			&:not(:hover):not(:focus-within):not(.hovered):not(.custom) {
 				.page-editor__color-picker__action-button {
 					opacity: 0;
 				}

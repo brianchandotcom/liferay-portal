@@ -26,6 +26,7 @@ import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.util.comparator.KBObjectsModifiedDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBObjectsPriorityComparator;
 import com.liferay.knowledge.base.util.comparator.KBObjectsTitleComparator;
+import com.liferay.knowledge.base.util.comparator.KBObjectsViewCountComparator;
 import com.liferay.knowledge.base.web.internal.constants.KBField;
 import com.liferay.knowledge.base.web.internal.search.KBSearcher;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -145,6 +146,54 @@ public class KBArticleItemSelectorViewDisplayContext {
 					_themeDisplay.getLocale(), KBArticle.class.getName())
 			).toString()
 		).build();
+	}
+
+	public String getKBArticleDataReturnType() {
+		return InfoItemItemSelectorReturnType.class.getName();
+	}
+
+	public String getKBArticleDataValue(KBArticle kbArticle) {
+		return JSONUtil.put(
+			"className", KBArticle.class.getName()
+		).put(
+			"classNameId", PortalUtil.getClassNameId(KBArticle.class.getName())
+		).put(
+			"classPK", kbArticle.getResourcePrimKey()
+		).put(
+			"title", kbArticle.getTitle()
+		).put(
+			"type",
+			ResourceActionsUtil.getModelResource(
+				_themeDisplay.getLocale(), KBArticle.class.getName())
+		).toString();
+	}
+
+	public String getKBArticleRowURL(KBArticle kbArticle)
+		throws PortletException {
+
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"groupId", kbArticle.getGroupId()
+		).setParameter(
+			"kbFolderId", kbArticle.getResourcePrimKey()
+		).setParameter(
+			"parentResourceClassNameId", kbArticle.getClassNameId()
+		).setParameter(
+			"parentResourcePrimKey", kbArticle.getResourcePrimKey()
+		).buildString();
+	}
+
+	public String getKBFolderRowURL(long groupId, long kbFolderId)
+		throws PortletException {
+
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"groupId", groupId
+		).setParameter(
+			"kbFolderId", kbFolderId
+		).buildString();
 	}
 
 	public String getKeywords() {
@@ -323,7 +372,7 @@ public class KBArticleItemSelectorViewDisplayContext {
 		else {
 			articleAndFolderSearchContainer.setResultsAndTotal(
 				() -> {
-					OrderByComparator<Object> folderOrderByComparator = null;
+					OrderByComparator<Object> kbObjectOrderByComparator = null;
 
 					boolean orderByAsc = false;
 
@@ -331,19 +380,23 @@ public class KBArticleItemSelectorViewDisplayContext {
 						orderByAsc = true;
 					}
 
-					if (Objects.equals(_getOrderByCol(), "relevance")) {
-						folderOrderByComparator =
+					if (Objects.equals(_getOrderByCol(), "priority")) {
+						kbObjectOrderByComparator =
 							new KBObjectsPriorityComparator<>(orderByAsc);
 					}
 					else if (Objects.equals(
 								_getOrderByCol(), "modified-date")) {
 
-						folderOrderByComparator =
+						kbObjectOrderByComparator =
 							new KBObjectsModifiedDateComparator<>(orderByAsc);
 					}
 					else if (Objects.equals(_getOrderByCol(), "title")) {
-						folderOrderByComparator =
+						kbObjectOrderByComparator =
 							new KBObjectsTitleComparator<>(orderByAsc);
+					}
+					else if (Objects.equals(_getOrderByCol(), "view-count")) {
+						kbObjectOrderByComparator =
+							new KBObjectsViewCountComparator<>(orderByAsc);
 					}
 
 					return KBFolderServiceUtil.getKBFoldersAndKBArticles(
@@ -351,7 +404,7 @@ public class KBArticleItemSelectorViewDisplayContext {
 						_infoItemItemSelectorCriterion.getStatus(),
 						articleAndFolderSearchContainer.getStart(),
 						articleAndFolderSearchContainer.getEnd(),
-						folderOrderByComparator);
+						kbObjectOrderByComparator);
 				},
 				KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(
 					_getGroupId(), _getKBFolderId(),
@@ -364,29 +417,7 @@ public class KBArticleItemSelectorViewDisplayContext {
 	}
 
 	public boolean isSearch() {
-		if (_isEverywhereScopeFilter()) {
-			return true;
-		}
-
 		return _search;
-	}
-
-	public boolean isSearchEverywhere() {
-		if (_searchEverywhere != null) {
-			return _searchEverywhere;
-		}
-
-		if (Objects.equals(
-				ParamUtil.getString(_httpServletRequest, "scope"),
-				"everywhere")) {
-
-			_searchEverywhere = true;
-		}
-		else {
-			_searchEverywhere = false;
-		}
-
-		return _searchEverywhere;
 	}
 
 	protected SearchContext buildSearchContext(
@@ -507,7 +538,7 @@ public class KBArticleItemSelectorViewDisplayContext {
 			return _orderByType;
 		}
 
-		if (Objects.equals(_getOrderByCol(), "relevance")) {
+		if (Objects.equals(_getOrderByCol(), "priority")) {
 			return "desc";
 		}
 
@@ -535,17 +566,6 @@ public class KBArticleItemSelectorViewDisplayContext {
 		return breadcrumbEntry;
 	}
 
-	private boolean _isEverywhereScopeFilter() {
-		if (Objects.equals(
-				ParamUtil.getString(_httpServletRequest, "scope"),
-				"everywhere")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private SearchContainer<?> _articleSearchContainer;
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
@@ -560,7 +580,6 @@ public class KBArticleItemSelectorViewDisplayContext {
 	private final PortletResponse _portletResponse;
 	private final PortletURL _portletURL;
 	private final boolean _search;
-	private Boolean _searchEverywhere;
 	private final ThemeDisplay _themeDisplay;
 
 }

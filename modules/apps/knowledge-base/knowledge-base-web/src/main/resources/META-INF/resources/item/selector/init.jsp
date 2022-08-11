@@ -16,4 +16,5 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.knowledge.base.web.internal.display.context.KBArticleItemSelectorViewDisplayContext" %>
+<%@ page import="com.liferay.knowledge.base.web.internal.display.context.KBArticleItemSelectorViewDisplayContext" %><%@
+page import="com.liferay.knowledge.base.web.internal.display.context.KBArticleItemSelectorViewManagementToolbarDisplayContext" %>

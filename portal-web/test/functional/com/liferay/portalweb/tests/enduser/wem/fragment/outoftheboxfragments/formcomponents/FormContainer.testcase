@@ -105,6 +105,8 @@ definition {
 		}
 
 		task ("Then the page creator still see the Select a content type to start creating the form message shown in Form Container") {
+			Alert.viewErrorMessage(errorMessage = "Fragments cannot be placed inside an unmapped form container.");
+
 			AssertVisible(
 				key_fragmentName = "Form Container",
 				key_messageInfo = "Select a content type to start creating the form.",
@@ -170,46 +172,6 @@ definition {
 
 			PageEditor.viewFragmentNotPresent(fragmentName = "Text Input");
 		}
-
-		task ("When the page creator tries to add a Numeric Input fragment inside an unmapped Form Container") {
-			PageEditor.addFragment(
-				collectionName = "Form Components",
-				fragmentName = "Form Container");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Form Components",
-				key_fragmentName = "Numeric Input",
-				key_position = "1",
-				key_targetFragmentName = "Form Container",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#FORM_CONTAINER_CONTAINER");
-		}
-
-		task ("Then the page creator should see an error message") {
-			AssertTextPresent(
-				locator1 = "Message#ERROR",
-				value1 = "Fragments cannot be placed inside an unmapped form container.");
-
-			PageEditor.viewFragmentNotPresent(fragmentName = "Numeric Input");
-		}
-
-		task ("When the page creator tries to add a Button fragment inside an unmapped Form Container") {
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Basic Components",
-				key_fragmentName = "Button",
-				key_position = "1",
-				key_targetFragmentName = "Form Container",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#FORM_CONTAINER_CONTAINER");
-		}
-
-		task ("Then the page creator should see an error message") {
-			AssertTextPresent(
-				locator1 = "Message#ERROR",
-				value1 = "Fragments cannot be placed inside an unmapped form container.");
-
-			PageEditor.viewFragmentNotPresent(fragmentName = "Button");
-		}
 	}
 
 	@description = "This is a test for LPS-157740. The page creator can only drop Form fragments inside a mapped Form Container on display page template."
@@ -241,51 +203,9 @@ definition {
 		}
 
 		task ("Then the page creator should see an error message") {
-			AssertTextPresent(
-				locator1 = "Message#ERROR",
-				value1 = "Form components can only be placed inside a mapped form container.");
+			Alert.viewErrorMessage(errorMessage = "Form components can only be placed inside a mapped form container.");
 
 			PageEditor.viewFragmentNotPresent(fragmentName = "Select from List");
-		}
-
-		task ("When the page creator tries to add a Checkbox inside an unmapped Form Container") {
-			PageEditor.addFragment(
-				collectionName = "Form Components",
-				fragmentName = "Form Container");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Form Components",
-				key_fragmentName = "Checkbox",
-				key_position = "1",
-				key_targetFragmentName = "Form Container",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#FORM_CONTAINER_CONTAINER");
-		}
-
-		task ("Then the page creator should see an error message") {
-			AssertTextPresent(
-				locator1 = "Message#ERROR",
-				value1 = "Fragments cannot be placed inside an unmapped form container.");
-
-			PageEditor.viewFragmentNotPresent(fragmentName = "Checkbox");
-		}
-
-		task ("When the page creator tries to add a Heading fragment inside an unmapped Form Container") {
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Basic Components",
-				key_fragmentName = "Heading",
-				key_position = "1",
-				key_targetFragmentName = "Form Container",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#FORM_CONTAINER_CONTAINER");
-		}
-
-		task ("Then the page creator should see an error message") {
-			AssertTextPresent(
-				locator1 = "Message#ERROR",
-				value1 = "Fragments cannot be placed inside an unmapped form container.");
-
-			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
 		}
 	}
 

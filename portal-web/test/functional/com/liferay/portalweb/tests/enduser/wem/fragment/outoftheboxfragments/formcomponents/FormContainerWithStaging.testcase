@@ -103,46 +103,6 @@ definition {
 
 			PageEditor.viewFragmentNotPresent(fragmentName = "Date");
 		}
-
-		task ("When the page creator tries to add a File Upload fragment inside an unmapped Form Container") {
-			PageEditor.addFragment(
-				collectionName = "Form Components",
-				fragmentName = "Form Container");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Form Components",
-				key_fragmentName = "File Upload",
-				key_position = "1",
-				key_targetFragmentName = "Form Container",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#FORM_CONTAINER_CONTAINER");
-		}
-
-		task ("Then the page creator should see an error message") {
-			AssertTextPresent(
-				locator1 = "Message#ERROR",
-				value1 = "Fragments cannot be placed inside an unmapped form container.");
-
-			PageEditor.viewFragmentNotPresent(fragmentName = "File Upload");
-		}
-
-		task ("When the page creator tries to add a Paragraph fragment inside an unmapped Form Container") {
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Basic Components",
-				key_fragmentName = "Paragraph",
-				key_position = "1",
-				key_targetFragmentName = "Form Container",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#FORM_CONTAINER_CONTAINER");
-		}
-
-		task ("Then the page creator should see an error message") {
-			AssertTextPresent(
-				locator1 = "Message#ERROR",
-				value1 = "Fragments cannot be placed inside an unmapped form container.");
-
-			PageEditor.viewFragmentNotPresent(fragmentName = "Paragraph");
-		}
 	}
 
 	@description = "This is a test for LPS-155529. The page designer can submit a Form Container on staging site."

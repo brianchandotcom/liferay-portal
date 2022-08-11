@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>BUTTON</td>
+	<td>//*[contains(@class, btn) and text()='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TITLE</td>
 	<td>//h1[text()='${key_title}']</td>
 	<td></td>

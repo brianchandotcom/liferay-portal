@@ -49,11 +49,9 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -65,8 +63,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletException;
@@ -111,42 +107,6 @@ public class KBArticleItemSelectorViewDisplayContext {
 			"item-selector-display-style", "descriptive");
 
 		return _displayStyle;
-	}
-
-	public String getGroupCssIcon(long groupId) throws PortalException {
-		Group group = GroupServiceUtil.getGroup(groupId);
-
-		return group.getIconCssClass();
-	}
-
-	public String getGroupLabel(long groupId, Locale locale)
-		throws PortalException {
-
-		Group group = GroupServiceUtil.getGroup(groupId);
-
-		return group.getDescriptiveName(locale);
-	}
-
-	public Map<String, Object> getKBArticleContext(KBArticle kbArticle) {
-		return HashMapBuilder.<String, Object>put(
-			"returnType", InfoItemItemSelectorReturnType.class.getName()
-		).put(
-			"value",
-			() -> JSONUtil.put(
-				"className", KBArticle.class.getName()
-			).put(
-				"classNameId",
-				PortalUtil.getClassNameId(KBArticle.class.getName())
-			).put(
-				"classPK", kbArticle.getResourcePrimKey()
-			).put(
-				"title", kbArticle.getTitle()
-			).put(
-				"type",
-				ResourceActionsUtil.getModelResource(
-					_themeDisplay.getLocale(), KBArticle.class.getName())
-			).toString()
-		).build();
 	}
 
 	public String getKBArticleDataReturnType() {

@@ -18,7 +18,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import useDebounceCallback from '../../../hooks/useDebounceCallback';
-import {DEFAULT_HEADERS, fetchData} from '../../../utils/fetch';
+import {DEFAULT_HEADERS} from '../../../utils/fetch';
 import {removeDuplicates, toNumber} from '../../../utils/utils';
 import ThemeContext from '../../ThemeContext';
 import CategorySelectorModal from './CategorySelectorModal';
@@ -116,7 +116,10 @@ function CategorySelectorInput({
 	const _handleSetMatchingCategories = (inputValue, categoryTree, locale) => {
 		const categories = [];
 		const vocabularyIds = categoryTree
-			.map((site) => site.children.map((vocabulary) => vocabulary.id))
+			.map(
+				(site) =>
+					site.children?.map((vocabulary) => vocabulary.id) || []
+			)
 			.flat();
 
 		fetch(`/api/jsonws/invoke`, {
@@ -319,38 +322,52 @@ function CategorySelectorInput({
 		// be the start of the category tree, in which the children of the
 		// vocabulary get added on as the tree gets expanded (in modal).
 
-		fetchData(FETCH_URLS.getUserAccount()).then((userData) => {
-			const tree = [];
+		fetch(FETCH_URLS.getUserAccount(), {
+			headers: DEFAULT_HEADERS,
+			method: 'GET',
+		})
+			.then((response) => response.json())
+			.then((userData) => {
+				const tree = [];
 
-			userData.siteBriefs.forEach((site, siteIndex) => {
-				fetchData(FETCH_URLS.getVocabularies(site.id))
-					.then((vocabularies) => {
-						tree[siteIndex] = {
-							...site,
-							children: vocabularies.items.map(
-								({id, name, numberOfTaxonomyCategories}) => ({
-
-									// In certain responses, 'id' is a number,
-									// so JSON.stringify for consistency.
-
-									id: JSON.stringify(id),
-									name,
-									numberOfTaxonomyCategories,
-								})
-							),
-							id: JSON.stringify(site.id),
-						};
+				userData.siteBriefs.forEach((site, siteIndex) => {
+					fetch(FETCH_URLS.getVocabularies(site.id), {
+						headers: DEFAULT_HEADERS,
+						method: 'GET',
 					})
-					.catch(() => {
-						tree[siteIndex] = {
-							...site,
-							id: JSON.stringify(site.id),
-						};
-					});
-			});
+						.then((response) => response.json())
+						.then((vocabularies) => {
+							tree[siteIndex] = {
+								...site,
+								children: vocabularies.items.map(
+									({
+										id,
+										name,
+										numberOfTaxonomyCategories,
+									}) => ({
 
-			setCategoryTree(tree);
-		});
+										// In certain responses, 'id' is a number,
+										// so JSON.stringify for consistency.
+
+										id: JSON.stringify(id),
+										name,
+										numberOfTaxonomyCategories,
+									})
+								),
+								id: JSON.stringify(site.id),
+							};
+						})
+						.catch(() => {
+							tree[siteIndex] = {
+								...site,
+								id: JSON.stringify(site.id),
+							};
+						});
+				});
+
+				setCategoryTree(tree);
+			})
+			.catch(() => setCategoryTree([]));
 	}, []);
 
 	return (

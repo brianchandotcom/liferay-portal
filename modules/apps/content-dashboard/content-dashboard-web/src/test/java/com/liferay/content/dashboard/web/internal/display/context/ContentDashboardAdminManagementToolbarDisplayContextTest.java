@@ -37,6 +37,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -374,19 +376,19 @@ public class ContentDashboardAdminManagementToolbarDisplayContextTest {
 			contentDashboardAdminManagementToolbarDisplayContext.
 				getFilterLabelItems();
 
-		Assert.assertEquals(String.valueOf(labelItems), 3, labelItems.size());
-
-		LabelItem labelItem = labelItems.get(0);
+		Stream<LabelItem> stream = labelItems.stream();
 
 		Assert.assertEquals(
-			"contentDashboardItemFilterParameterLabel: value1",
-			labelItem.get("label"));
-
-		labelItem = labelItems.get(1);
-
-		Assert.assertEquals(
-			"contentDashboardItemFilterParameterLabel: value2",
-			labelItem.get("label"));
+			2,
+			stream.filter(
+				labelItem ->
+					Objects.equals(
+						labelItem.get("label"),
+						"contentDashboardItemFilterParameterLabel: value1") ||
+					Objects.equals(
+						labelItem.get("label"),
+						"contentDashboardItemFilterParameterLabel: value2")
+			).count());
 	}
 
 }

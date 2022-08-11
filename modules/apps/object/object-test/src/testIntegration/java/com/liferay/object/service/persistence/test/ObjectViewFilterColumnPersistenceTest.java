@@ -259,8 +259,7 @@ public class ObjectViewFilterColumnPersistenceTest {
 			"ObjectViewFilterColumn", "mvccVersion", true, "uuid", true,
 			"objectViewFilterColumnId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"objectViewId", true, "filterType", true, "json", true,
-			"objectFieldName", true);
+			"objectViewId", true, "filterType", true, "objectFieldName", true);
 	}
 
 	@Test

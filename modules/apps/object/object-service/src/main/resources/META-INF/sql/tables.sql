@@ -315,7 +315,7 @@ create table ObjectViewFilterColumn (
 	modifiedDate DATE null,
 	objectViewId LONG,
 	filterType VARCHAR(75) null,
-	json VARCHAR(75) null,
+	json TEXT null,
 	objectFieldName VARCHAR(75) null
 );
 

@@ -178,7 +178,9 @@ public class ObjectViewFilterColumnCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -193,7 +195,7 @@ public class ObjectViewFilterColumnCacheModel
 
 		objectViewId = objectInput.readLong();
 		filterType = objectInput.readUTF();
-		json = objectInput.readUTF();
+		json = (String)objectInput.readObject();
 		objectFieldName = objectInput.readUTF();
 	}
 
@@ -234,10 +236,10 @@ public class ObjectViewFilterColumnCacheModel
 		}
 
 		if (json == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(json);
+			objectOutput.writeObject(json);
 		}
 
 		if (objectFieldName == null) {

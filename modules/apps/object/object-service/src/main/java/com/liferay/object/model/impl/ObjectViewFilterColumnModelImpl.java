@@ -77,7 +77,7 @@ public class ObjectViewFilterColumnModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"objectViewId", Types.BIGINT}, {"filterType", Types.VARCHAR},
-		{"json", Types.VARCHAR}, {"objectFieldName", Types.VARCHAR}
+		{"json", Types.CLOB}, {"objectFieldName", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -94,12 +94,12 @@ public class ObjectViewFilterColumnModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("objectViewId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("filterType", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("json", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("objectFieldName", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectViewFilterColumn (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectViewFilterColumnId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectViewId LONG,filterType VARCHAR(75) null,json VARCHAR(75) null,objectFieldName VARCHAR(75) null)";
+		"create table ObjectViewFilterColumn (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectViewFilterColumnId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectViewId LONG,filterType VARCHAR(75) null,json TEXT null,objectFieldName VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table ObjectViewFilterColumn";

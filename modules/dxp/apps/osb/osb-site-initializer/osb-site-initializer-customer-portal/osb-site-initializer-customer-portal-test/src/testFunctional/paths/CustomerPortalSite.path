@@ -295,6 +295,16 @@
 	<td>//*[contains(@id,'customer-portal-user-name') and text()='${key_userFirstName}!']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LIFERAY_SITE</td>
+	<td>//*[contains(@content, 'https://www.liferay.com')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BAR</td>
+	<td>//*[contains(@class, 'cp-search-project')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

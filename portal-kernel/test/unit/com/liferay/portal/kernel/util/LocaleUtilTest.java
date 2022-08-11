@@ -125,28 +125,6 @@ public class LocaleUtilTest {
 	}
 
 	@Test
-	public void testFromLanguageIdConsistency() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		Language language = Mockito.mock(Language.class);
-
-		languageUtil.setLanguage(language);
-
-		Mockito.when(
-			language.isAvailableLocale(Locale.GERMANY)
-		).thenReturn(
-			false
-		);
-
-		Assert.assertNull(LocaleUtil.fromLanguageId("de_DE", true, false));
-
-		Assert.assertEquals(
-			Locale.GERMANY, LocaleUtil.fromLanguageId("de_DE", false));
-
-		Assert.assertNull(LocaleUtil.fromLanguageId("de_DE", true, false));
-	}
-
-	@Test
 	public void testFromLanguageIdLocaleIsCreatedAndRetrievableWhenNoValidationDone() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
@@ -165,6 +143,25 @@ public class LocaleUtilTest {
 		Assert.assertSame(
 			LocaleUtil.fromLanguageId("it_IT", false),
 			LocaleUtil.fromLanguageId("it_IT", false));
+	}
+
+	@Test
+	public void testFromLanguageValidation() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		Language language = Mockito.mock(Language.class);
+
+		languageUtil.setLanguage(language);
+
+		Mockito.when(
+			language.isAvailableLocale(Locale.GERMANY)
+		).thenReturn(
+			false
+		);
+
+		Assert.assertEquals(
+			Locale.GERMANY, LocaleUtil.fromLanguageId("de_DE", false, false));
+		Assert.assertNull(LocaleUtil.fromLanguageId("de_DE", true, false));
 	}
 
 	@Test

@@ -359,6 +359,12 @@ definition {
 			rowEntry = "Test Test");
 	}
 
+	macro search {
+		Type(
+			locator1 = "CustomerPortalSite#SEARCH_BAR",
+			value1 = "${searchItem}");
+	}
+
 	macro replaceCertificateAndPrivateKey {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 

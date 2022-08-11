@@ -849,7 +849,7 @@ public class ObjectEntryLocalServiceTest {
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			user.getUserId(), customObjectDefinition.getObjectDefinitionId());
 
-		long invalidAccountEntryId = RandomTestUtil.randomLong();
+		long invalidAccountEntryId = -1;
 
 		try {
 			_objectEntryLocalService.addObjectEntry(
@@ -862,8 +862,15 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectDefinitionAccountEntryRestrictedException
-					objectDefinitionAccountEntryRestrictedException) {
+		catch (Exception exception) {
+			Assert.assertTrue(
+				exception.getCause() instanceof
+					ObjectDefinitionAccountEntryRestrictedException);
+
+			ObjectDefinitionAccountEntryRestrictedException
+				objectDefinitionAccountEntryRestrictedException =
+					(ObjectDefinitionAccountEntryRestrictedException)
+						exception.getCause();
 
 			Assert.assertEquals(
 				StringBundler.concat(
@@ -899,8 +906,6 @@ public class ObjectEntryLocalServiceTest {
 			accountEntry1.getAccountEntryId(),
 			values.get("r_relationship_accountEntryId"));
 
-		invalidAccountEntryId = RandomTestUtil.randomLong();
-
 		try {
 			objectEntry = _objectEntryLocalService.updateObjectEntry(
 				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -911,8 +916,15 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectDefinitionAccountEntryRestrictedException
-					objectDefinitionAccountEntryRestrictedException) {
+		catch (Exception exception) {
+			Assert.assertTrue(
+				exception.getCause() instanceof
+					ObjectDefinitionAccountEntryRestrictedException);
+
+			ObjectDefinitionAccountEntryRestrictedException
+				objectDefinitionAccountEntryRestrictedException =
+					(ObjectDefinitionAccountEntryRestrictedException)
+						exception.getCause();
 
 			Assert.assertEquals(
 				StringBundler.concat(

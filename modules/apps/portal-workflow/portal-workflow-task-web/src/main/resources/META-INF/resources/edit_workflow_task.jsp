@@ -60,7 +60,7 @@ if (assetRenderer != null) {
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask));
+renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask, locale));
 %>
 
 <clay:container-fluid>
@@ -118,7 +118,7 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 
 					<aui:field-wrapper label="task-name">
 						<aui:fieldset>
-							<%= workflowTaskDisplayContext.getState(workflowTask) %>
+							<%= workflowTaskDisplayContext.getTaskLabel(workflowTask, locale) %>
 						</aui:fieldset>
 					</aui:field-wrapper>
 				</clay:col>

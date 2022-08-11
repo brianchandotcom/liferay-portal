@@ -369,6 +369,11 @@ definition {
 			rowEntry = "Test Test");
 	}
 
+	macro assertButtonIsVisible {
+		var key_text = "${text}";
+		AssertVisible(locator1 = "CustomerPortalSite#BUTTON");
+	}
+
 	macro replaceCertificateAndPrivateKey {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 

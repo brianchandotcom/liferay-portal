@@ -239,24 +239,4 @@ if (organization != null) {
 			url: '<%= removeOrganizationsAndUsersURL.toString() %>',
 		});
 	}
-
-	var selectUsers = function (organizationId) {
-		<portlet:namespace />openSelectUsersDialog(organizationId);
-	};
-
-	var ACTIONS = {
-		selectUsers: selectUsers,
-	};
-
-	Liferay.componentReady('viewTreeManagementToolbar').then(
-		(managementToolbar) => {
-			managementToolbar.on('creationMenuItemClicked', (event) => {
-				var itemData = event.data.item.data;
-
-				if (itemData && itemData.action && ACTIONS[itemData.action]) {
-					ACTIONS[itemData.action](itemData.organizationId);
-				}
-			});
-		}
-	);
 </aui:script>

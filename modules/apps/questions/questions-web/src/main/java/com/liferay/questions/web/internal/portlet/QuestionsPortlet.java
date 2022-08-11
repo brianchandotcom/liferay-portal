@@ -15,7 +15,7 @@
 package com.liferay.questions.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.flags.taglib.servlet.taglib.react.FlagsTagUtil;
+import com.liferay.flags.taglib.servlet.taglib.util.FlagsTagUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;

@@ -1389,7 +1389,9 @@ definition {
 				locator1 = "WC#ENTRY_LIST_CHECKBOX");
 		}
 
-		Click(locator1 = "Icon#EXPIRE");
+		Click(
+			key_text = "time",
+			locator1 = "ManagementBar#ANY_ICON");
 
 		Alert.viewSuccessMessage();
 	}
@@ -1412,7 +1414,9 @@ definition {
 				locator1 = "WCEditWebContent#VIEW_HISTORY_VERSION_CHECKBOX");
 		}
 
-		ClickNoError(locator1 = "Icon#EXPIRE");
+		ClickNoError(
+			key_text = "time",
+			locator1 = "ManagementBar#ANY_ICON");
 
 		AssertConfirm(value1 = "Are you sure you want to expire the selected version?");
 	}

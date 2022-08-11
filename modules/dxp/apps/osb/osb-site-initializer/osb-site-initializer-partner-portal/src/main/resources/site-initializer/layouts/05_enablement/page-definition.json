@@ -247,7 +247,7 @@
 															"contentMetadataAssetAddonEntryKeys": "false",
 															"ddmTemplateKey": "",
 															"enableViewCountIncrement": "false",
-															"groupId": "47060",
+															"groupId": "",
 															"userToolAssetAddonEntryKeys": "false"
 														},
 														"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet"
@@ -315,7 +315,7 @@
 															"contentMetadataAssetAddonEntryKeys": "false",
 															"ddmTemplateKey": "",
 															"enableViewCountIncrement": "false",
-															"groupId": "47060",
+															"groupId": "",
 															"userToolAssetAddonEntryKeys": "false"
 														},
 														"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
@@ -407,7 +407,7 @@
 															"contentMetadataAssetAddonEntryKeys": "false",
 															"ddmTemplateKey": "",
 															"enableViewCountIncrement": "false",
-															"groupId": "47060",
+															"groupId": "",
 															"userToolAssetAddonEntryKeys": "false"
 														},
 														"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet"

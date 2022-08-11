@@ -288,6 +288,7 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-127589."
 	@priority = "3"
 	test S3ConnectionDoesNotLeakWhenServingFileAsStream {
 		property aws.store.enabled = "true";

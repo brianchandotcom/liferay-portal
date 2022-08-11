@@ -27,6 +27,10 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf
 renderResponse.setTitle(accountEntryDisplay.getName());
 %>
 
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new AccountEntryAccountGroupManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountGroupDisplaySearchContainer) %>"
+/>
+
 <clay:container-fluid>
 	<liferay-ui:search-container
 		headerNames="name,description"

@@ -61,6 +61,7 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 		);
 
 		fields.push({
+			cssClass: 'mb-4',
 			defaultValue: isRequiredField,
 			disabled: isRequiredField,
 			label: Liferay.Language.get('mark-as-required'),
@@ -78,6 +79,7 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 			typeOptions: {displayType: 'toggle'},
 		},
 		{
+			cssClass: 'mb-4',
 			defaultValue: '',
 			label: Liferay.Language.get('label'),
 			localizable: true,
@@ -92,6 +94,7 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 			typeOptions: {displayType: 'toggle'},
 		},
 		{
+			cssClass: 'mb-4',
 			defaultValue: Liferay.Language.get('add-your-help-text-here'),
 			label: Liferay.Language.get('help-text'),
 			localizable: true,

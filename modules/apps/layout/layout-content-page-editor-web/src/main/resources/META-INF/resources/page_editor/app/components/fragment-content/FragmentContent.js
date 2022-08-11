@@ -159,14 +159,12 @@ const FragmentContent = ({
 				}
 			}
 
-			const editables = getAllEditables(fragmentElement);
-
-			if (!editables.length) {
+			if (fragmentEntryLink?.editableValues?.portletId) {
 				return;
 			}
 
 			Promise.all(
-				editables.map((editable) => {
+				getAllEditables(fragmentElement).map((editable) => {
 					const editableValue =
 						editableValues[editable.editableValueNamespace][
 							editable.editableId

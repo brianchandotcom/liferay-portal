@@ -297,7 +297,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_listTypeDefinitionResourceFactory = listTypeDefinitionResourceFactory;
 		_listTypeEntryResource = listTypeEntryResource;
 		_listTypeEntryResourceFactory = listTypeEntryResourceFactory;
-		_notificationTemplateResourceFactory = notificationTemplateResource;
 		_objectActionLocalService = objectActionLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
@@ -329,6 +328,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 		_workflowDefinitionResourceFactory = workflowDefinitionResourceFactory;
+
+		_notificationTemplateResourceFactory = notificationTemplateResource;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 

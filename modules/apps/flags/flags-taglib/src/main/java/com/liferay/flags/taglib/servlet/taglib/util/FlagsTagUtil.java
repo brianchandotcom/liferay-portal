@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.flags.taglib.servlet.taglib.react;
+package com.liferay.flags.taglib.servlet.taglib.util;
 
 import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;

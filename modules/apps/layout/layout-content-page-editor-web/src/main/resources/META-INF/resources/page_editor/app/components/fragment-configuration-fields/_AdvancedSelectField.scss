@@ -9,6 +9,10 @@ html#{$cadmin-selector} .cadmin .page-editor__select-field {
 		grid-template-columns: auto 32px 32px;
 	}
 
+	&:not(:hover):not(.custom) .page-editor__select-field__action-button {
+		opacity: 0;
+	}
+
 	#{$prefix} {
 		display: grid;
 		gap: 4px;

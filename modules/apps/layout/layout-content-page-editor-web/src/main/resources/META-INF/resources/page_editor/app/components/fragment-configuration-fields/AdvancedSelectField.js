@@ -88,6 +88,7 @@ export function AdvancedSelectField({
 	return (
 		<div
 			className={classNames('page-editor__select-field', {
+				'custom': !isTokenValueOrInherited,
 				'has-value': value,
 			})}
 		>

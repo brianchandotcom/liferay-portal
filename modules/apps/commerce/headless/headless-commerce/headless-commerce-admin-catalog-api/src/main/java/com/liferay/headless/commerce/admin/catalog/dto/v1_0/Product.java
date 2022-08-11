@@ -1457,6 +1457,34 @@ public class Product implements Serializable {
 	protected Map<String, String> urls;
 
 	@Schema
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	@JsonIgnore
+	public void setVersion(
+		UnsafeSupplier<Integer, Exception> versionUnsafeSupplier) {
+
+		try {
+			version = versionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Integer version;
+
+	@Schema
 	@Valid
 	public Status getWorkflowStatusInfo() {
 		return workflowStatusInfo;
@@ -2157,6 +2185,16 @@ public class Product implements Serializable {
 			sb.append("\"urls\": ");
 
 			sb.append(_toJSON(urls));
+		}
+
+		if (version != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"version\": ");
+
+			sb.append(version);
 		}
 
 		if (workflowStatusInfo != null) {

@@ -80,6 +80,14 @@ public interface ProductResource {
 			String externalReferenceCode, Product product)
 		throws Exception;
 
+	public void deleteProductByExternalReferenceCodeByVersion(
+			String externalReferenceCode, Integer version)
+		throws Exception;
+
+	public Product getProductByExternalReferenceCodeByVersion(
+			String externalReferenceCode, Integer version)
+		throws Exception;
+
 	public Product postProductByExternalReferenceCodeClone(
 			String externalReferenceCode, String catalogExternalReferenceCode)
 		throws Exception;
@@ -93,6 +101,12 @@ public interface ProductResource {
 	public Product getProduct(Long id) throws Exception;
 
 	public Response patchProduct(Long id, Product product) throws Exception;
+
+	public void deleteProductByVersion(Long id, Integer version)
+		throws Exception;
+
+	public Product getProductByVersion(Long id, Integer version)
+		throws Exception;
 
 	public Product postProductClone(Long id, Long catalogId) throws Exception;
 

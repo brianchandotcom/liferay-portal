@@ -649,6 +649,130 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteProductByExternalReferenceCodeByVersion()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Product product =
+			testDeleteProductByExternalReferenceCodeByVersion_addProduct();
+
+		assertHttpResponseStatusCode(
+			204,
+			productResource.
+				deleteProductByExternalReferenceCodeByVersionHttpResponse(
+					product.getExternalReferenceCode(), product.getVersion()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productResource.
+				getProductByExternalReferenceCodeByVersionHttpResponse(
+					product.getExternalReferenceCode(), product.getVersion()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productResource.
+				getProductByExternalReferenceCodeByVersionHttpResponse(
+					product.getExternalReferenceCode(), product.getVersion()));
+	}
+
+	protected Product
+			testDeleteProductByExternalReferenceCodeByVersion_addProduct()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetProductByExternalReferenceCodeByVersion()
+		throws Exception {
+
+		Product postProduct =
+			testGetProductByExternalReferenceCodeByVersion_addProduct();
+
+		Product getProduct =
+			productResource.getProductByExternalReferenceCodeByVersion(
+				postProduct.getExternalReferenceCode(),
+				postProduct.getVersion());
+
+		assertEquals(postProduct, getProduct);
+		assertValid(getProduct);
+	}
+
+	protected Product
+			testGetProductByExternalReferenceCodeByVersion_addProduct()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductByExternalReferenceCodeByVersion()
+		throws Exception {
+
+		Product product =
+			testGraphQLGetProductByExternalReferenceCodeByVersion_addProduct();
+
+		Assert.assertTrue(
+			equals(
+				product,
+				ProductSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productByExternalReferenceCodeByVersion",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												product.
+													getExternalReferenceCode() +
+														"\"");
+										put("version", product.getVersion());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/productByExternalReferenceCodeByVersion"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductByExternalReferenceCodeByVersionNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		Integer irrelevantVersion = RandomTestUtil.randomInt();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productByExternalReferenceCodeByVersion",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+								put("version", irrelevantVersion);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Product
+			testGraphQLGetProductByExternalReferenceCodeByVersion_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
+	}
+
+	@Test
 	public void testPostProductByExternalReferenceCodeClone() throws Exception {
 		Product randomProduct = randomProduct();
 
@@ -785,6 +909,98 @@ public abstract class BaseProductResourceTestCase {
 	@Test
 	public void testPatchProduct() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testDeleteProductByVersion() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Product product = testDeleteProductByVersion_addProduct();
+
+		assertHttpResponseStatusCode(
+			204,
+			productResource.deleteProductByVersionHttpResponse(
+				product.getId(), product.getVersion()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productResource.getProductByVersionHttpResponse(
+				product.getId(), product.getVersion()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productResource.getProductByVersionHttpResponse(
+				product.getId(), product.getVersion()));
+	}
+
+	protected Product testDeleteProductByVersion_addProduct() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetProductByVersion() throws Exception {
+		Product postProduct = testGetProductByVersion_addProduct();
+
+		Product getProduct = productResource.getProductByVersion(
+			postProduct.getId(), postProduct.getVersion());
+
+		assertEquals(postProduct, getProduct);
+		assertValid(getProduct);
+	}
+
+	protected Product testGetProductByVersion_addProduct() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductByVersion() throws Exception {
+		Product product = testGraphQLGetProductByVersion_addProduct();
+
+		Assert.assertTrue(
+			equals(
+				product,
+				ProductSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productByVersion",
+								new HashMap<String, Object>() {
+									{
+										put("id", product.getId());
+										put("version", product.getVersion());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/productByVersion"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductByVersionNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+		Integer irrelevantVersion = RandomTestUtil.randomInt();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productByVersion",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+								put("version", irrelevantVersion);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Product testGraphQLGetProductByVersion_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
 	}
 
 	@Test
@@ -1262,6 +1478,14 @@ public abstract class BaseProductResourceTestCase {
 
 			if (Objects.equals("urls", additionalAssertFieldName)) {
 				if (product.getUrls() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("version", additionalAssertFieldName)) {
+				if (product.getVersion() == null) {
 					valid = false;
 				}
 
@@ -1876,6 +2100,16 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("version", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						product1.getVersion(), product2.getVersion())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"workflowStatusInfo", additionalAssertFieldName)) {
 
@@ -2344,6 +2578,12 @@ public abstract class BaseProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("version")) {
+			sb.append(String.valueOf(product.getVersion()));
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("workflowStatusInfo")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2417,6 +2657,7 @@ public abstract class BaseProductResourceTestCase {
 					RandomTestUtil.randomString());
 				thumbnail = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				version = RandomTestUtil.randomInt();
 			}
 		};
 	}

@@ -1049,6 +1049,27 @@ public class Product implements Cloneable, Serializable {
 
 	protected Map<String, String> urls;
 
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public void setVersion(
+		UnsafeSupplier<Integer, Exception> versionUnsafeSupplier) {
+
+		try {
+			version = versionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer version;
+
 	public Status getWorkflowStatusInfo() {
 		return workflowStatusInfo;
 	}

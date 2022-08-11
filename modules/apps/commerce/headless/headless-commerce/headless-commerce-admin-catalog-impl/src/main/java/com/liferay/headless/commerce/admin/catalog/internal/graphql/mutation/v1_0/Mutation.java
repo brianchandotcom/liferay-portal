@@ -1051,6 +1051,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteProductByExternalReferenceCodeByVersion(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("version") Integer version)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_productResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productResource ->
+				productResource.deleteProductByExternalReferenceCodeByVersion(
+					externalReferenceCode, version));
+
+		return true;
+	}
+
+	@GraphQLField
 	public Product createProductByExternalReferenceCodeClone(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("catalogExternalReferenceCode") String
@@ -1098,6 +1114,20 @@ public class Mutation {
 			_productResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productResource -> productResource.patchProduct(id, product));
+	}
+
+	@GraphQLField
+	public boolean deleteProductByVersion(
+			@GraphQLName("id") Long id, @GraphQLName("version") Integer version)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_productResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productResource -> productResource.deleteProductByVersion(
+				id, version));
+
+		return true;
 	}
 
 	@GraphQLField

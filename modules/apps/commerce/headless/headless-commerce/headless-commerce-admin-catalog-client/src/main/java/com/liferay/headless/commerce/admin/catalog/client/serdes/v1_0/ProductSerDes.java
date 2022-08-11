@@ -720,6 +720,16 @@ public class ProductSerDes {
 			sb.append(_toJSON(product.getUrls()));
 		}
 
+		if (product.getVersion() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"version\": ");
+
+			sb.append(product.getVersion());
+		}
+
 		if (product.getWorkflowStatusInfo() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1120,6 +1130,13 @@ public class ProductSerDes {
 			map.put("urls", String.valueOf(product.getUrls()));
 		}
 
+		if (product.getVersion() == null) {
+			map.put("version", null);
+		}
+		else {
+			map.put("version", String.valueOf(product.getVersion()));
+		}
+
 		if (product.getWorkflowStatusInfo() == null) {
 			map.put("workflowStatusInfo", null);
 		}
@@ -1514,6 +1531,12 @@ public class ProductSerDes {
 				if (jsonParserFieldValue != null) {
 					product.setUrls(
 						(Map)ProductSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "version")) {
+				if (jsonParserFieldValue != null) {
+					product.setVersion(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

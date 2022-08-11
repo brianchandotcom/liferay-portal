@@ -12,7 +12,7 @@
 			},
 			"name": "field1",
 			"required": false,
-			"type": "String"
+			"DBType": "String"
 		}
 	],
 	"pluralLabel": {

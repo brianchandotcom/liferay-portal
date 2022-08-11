@@ -4,129 +4,21 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"marginBottom": "4",
-						"paddingBottom": "2"
+						"backgroundColor": "colorNeutral1",
+						"paddingBottom": "6",
+						"paddingTop": "4"
 					},
-					"gutters": true,
-					"indexed": true,
-					"modulesPerRow": 2,
-					"numberOfColumns": 2,
-					"reverseOrder": false,
-					"rowViewports": [
-						{
-							"id": "landscapeMobile",
-							"rowViewportDefinition": {
-								"modulesPerRow": 1
-							}
-						},
-						{
-							"id": "portraitMobile",
-							"rowViewportDefinition": {
-							}
-						},
-						{
-							"id": "tablet",
-							"rowViewportDefinition": {
-							}
-						}
-					],
-					"verticalAlignment": "top"
-				},
-				"pageElements": [
-					{
-						"definition": {
-							"columnViewports": [
-								{
-									"columnViewportDefinition": {
-										"size": 12
-									},
-									"id": "landscapeMobile"
-								},
-								{
-									"columnViewportDefinition": {
-									},
-									"id": "portraitMobile"
-								},
-								{
-									"columnViewportDefinition": {
-									},
-									"id": "tablet"
-								}
-							],
-							"size": 3
-						},
-						"type": "Column"
-					},
-					{
-						"definition": {
-							"columnViewports": [
-								{
-									"columnViewportDefinition": {
-										"size": 12
-									},
-									"id": "landscapeMobile"
-								},
-								{
-									"columnViewportDefinition": {
-									},
-									"id": "portraitMobile"
-								},
-								{
-									"columnViewportDefinition": {
-									},
-									"id": "tablet"
-								}
-							],
-							"size": 9
-						},
-						"pageElements": [
-							{
-								"definition": {
-									"fragment": {
-										"key": "heading-with-icon"
-									},
-									"fragmentConfig": {
-									},
-									"fragmentFields": [
-										{
-											"id": "heading-with-icon-title",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"en_US": "MDF Request"
-													}
-												}
-											}
-										}
-									],
-									"indexed": true
-								},
-								"type": "Fragment"
-							}
-						],
-						"type": "Column"
-					}
-				],
-				"type": "Row"
-			},
-			{
-				"definition": {
 					"indexed": true,
 					"layout": {
-						"align": "Start",
 						"borderWidth": 0,
-						"contentDisplay": "FlexRow",
-						"justify": "Center",
 						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
-						"paddingBottom": 0,
+						"paddingBottom": 6,
 						"paddingLeft": 0,
 						"paddingRight": 0,
-						"paddingTop": 0,
+						"paddingTop": 2,
 						"widthType": "Fluid"
 					}
 				},
@@ -134,15 +26,148 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"maxWidth": "680px"
+								"marginBottom": "4",
+								"paddingBottom": "2"
 							},
-							"widgetInstance": {
-								"widgetConfig": {
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
 								},
-								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-REACT-APP$]"
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 9
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "heading-with-icon"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "heading-with-icon-title",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "MDF Request"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					},
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"align": "Start",
+								"borderWidth": 0,
+								"contentDisplay": "FlexRow",
+								"justify": "Center",
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
 							}
 						},
-						"type": "Widget"
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"maxWidth": "680px"
+									},
+									"widgetInstance": {
+										"widgetConfig": {
+										},
+										"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-REACT-APP$]"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
 					}
 				],
 				"type": "Section"

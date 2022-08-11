@@ -706,6 +706,29 @@
 																					"id": "element-text",
 																					"value": {
 																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"mapping": {
+																										"itemReference": {
+																											"className": "com.liferay.portal.kernel.model.Layout",
+																											"fields": [
+																												{
+																													"fieldName": "friendlyURL",
+																													"fieldValue": "/marketing/mdf-requests/create"
+																												},
+																												{
+																													"fieldName": "privatePage",
+																													"fieldValue": "false"
+																												},
+																												{
+																													"fieldName": "siteKey",
+																													"fieldValue": "[$GROUP_KEY$]"
+																												}
+																											]
+																										}
+																									}
+																								}
+																							}
 																						},
 																						"text": {
 																							"value_i18n": {

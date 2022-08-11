@@ -79,7 +79,33 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testDeleteProductByExternalReferenceCodeByVersion()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testDeleteProductByVersion() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGetProduct() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetProductByExternalReferenceCodeByVersion()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetProductByVersion() throws Exception {
 	}
 
 	@Ignore
@@ -116,6 +142,22 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 	@Override
 	@Test
 	public void testGraphQLGetProduct() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetProductByExternalReferenceCodeByVersion()
+		throws Exception {
+
+		super.testGraphQLGetProductByExternalReferenceCodeByVersion();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetProductByVersion() throws Exception {
+		super.testGraphQLGetProductByVersion();
 	}
 
 	@Ignore

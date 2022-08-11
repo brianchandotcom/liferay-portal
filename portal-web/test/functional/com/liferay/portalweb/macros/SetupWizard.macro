@@ -150,7 +150,7 @@ definition {
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
-		if ("${testRunEnvironment}" == "EE") {
+		if (IsElementPresent(locator1 = "Button#DONE")) {
 			Click(locator1 = "Button#DONE");
 		}
 
@@ -231,7 +231,7 @@ definition {
 			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.Oracle10gDialect for Oracle");
 		}
 		else if ("${databaseType}" == "PostgreSQL") {
-			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.PostgreSQLDialect for PostgreSQL");
+			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.PostgreSQL10Dialect for PostgreSQL");
 		}
 		else if ("${databaseType}" == "Sybase") {
 			AssertConsoleTextPresent(value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.SybaseASE157Dialect for Adaptive Server Enterprise");

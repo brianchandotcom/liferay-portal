@@ -107,7 +107,7 @@ definition {
 		task ("Given: Cookie preference handling is saved with Explicit Consent mode is disabled.") {
 			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithoutCookieConsent();
 
-			CookieBanner.verifyCookieBannerIsNotPresent();
+			CookieBanner.verifyCookieBannerIsPresent();
 		}
 
 		task ("Then: Cookies are saved with true as value.") {

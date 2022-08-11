@@ -59,6 +59,41 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that separate language keys with overridden translation of the same locale will export successfully"
+	@priority = "4"
+	test CanExportMultipleLanguageKeysWithOverride {
+		task ("Given that there are two language keys with en-US override") {
+			LanguageOverride.addLanguageKey(
+				languageKey = "hello-world",
+				translationOverrideList = "en-US",
+				translationOverrideValueList = "Hello world");
+
+			LanguageOverride.addLanguageKey(
+				languageKey = "this-is-a-language-key",
+				translationOverrideList = "en-US",
+				translationOverrideValueList = "This is a language key");
+		}
+
+		task ("When a user exports overridden translations,") {
+			LanguageOverride.exportOverriddenTranslations();
+
+			var originalFileDownloadName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
+
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "unzip-temp-file -DfileName=${originalFileDownloadName}");
+		}
+
+		task ("Then the language properties file for en-US displays all translations") {
+			DMDocument.assertFileNameFromTempFolder(fileName = "Language_en_US.properties");
+
+			DMDocument.assertDownloadedFileContent(
+				downloadedContent = '''hello-world=Hello world
+this-is-a-language-key=This is a language key''',
+				fileName = "Language_en_US.properties");
+		}
+	}
+
 	@description = "This test ensures that a user can export overridden translations for a single language key"
 	@priority = "5"
 	test CanExportOverriddenTranslations {

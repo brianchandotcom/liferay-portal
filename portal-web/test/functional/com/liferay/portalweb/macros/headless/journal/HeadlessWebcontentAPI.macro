@@ -109,9 +109,15 @@ definition {
 		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title},${priority}");
 
 		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByName(
-			groupName = "Guest",
-			site = "true");
+
+		if (isSet(siteId)) {
+			var siteId = "${siteId}";
+		}
+		else {
+			var siteId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Guest",
+				site = "true");
+		}
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/structured-contents/ \
@@ -370,6 +376,36 @@ definition {
 		return "${curl}";
 	}
 
+	macro _getStructuredContentsWithDifferentParameters {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(groupName)) {
+			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+
+			var api = "sites/${siteId}/structured-contents";
+		}
+
+		if (isSet(structuredContentId)) {
+			var api = "structured-contents/${structuredContentId}";
+		}
+
+		if (isSet(updatedValueInAPI)) {
+			var api = StringUtil.add("${api}", "${updatedValueInAPI}", "/");
+		}
+
+		if (isSet(parameter)) {
+			var api = StringUtil.add("${api}", "?${parameter}=${parameterValue}", "");
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-admin-content/v1.0/${api} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+		''';
+
+		return "${curl}";
+	}
+
 	macro _sortStructureContent {
 		Variables.assertDefined(parameterList = "${sortvalue}");
 
@@ -452,6 +488,16 @@ definition {
 			expected = "${expectedExternalReferenceCodeValue}");
 	}
 
+	macro assertInFacetsWithCorrectValue {
+		Variables.assertDefined(parameterList = "${expectedValue},${structuredContentId}");
+
+		var actualValue = JSONUtil.getWithJSONPath("${responseToParse}", "$.facets..facetValues[?(@.term=='${structuredContentId}' && @.numberOfOccurrences==${expectedValue})].numberOfOccurrences");
+
+		TestUtils.assertEquals(
+			actual = "${actualValue}",
+			expected = "${expectedValue}");
+	}
+
 	macro assertPriorityFieldWithCorrectValue {
 		var actualPriorityValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..priority");
 
@@ -496,6 +542,7 @@ definition {
 			label = "${label}",
 			name = "${name}",
 			priority = "${priority}",
+			siteId = "${siteId}",
 			title = "${title}");
 
 		return "${response}";
@@ -610,6 +657,12 @@ definition {
 		return "${response}";
 	}
 
+	macro getItemsDetail {
+		var itemsDetail = JSONUtil.getWithJSONPath("${responseToParse}", "$.items");
+
+		return "${itemsDetail}";
+	}
+
 	macro getStructuredContentIdByTitle {
 		Variables.assertDefined(parameterList = "${title}");
 
@@ -626,6 +679,30 @@ definition {
 		var response = HeadlessWebcontentAPI._getStructuredContentsByErcInAssetLibrary(
 			assetLibraryId = "${assetLibraryId}",
 			externalReferenceCode = "${externalReferenceCode}");
+
+		return "${response}";
+	}
+
+	macro getStructuredContentsVersion {
+		var curl = HeadlessWebcontentAPI._getStructuredContentsWithDifferentParameters(
+			groupName = "${groupName}",
+			parameter = "${parameter}",
+			parameterValue = "${parameterValue}",
+			structuredContentId = "${structuredContentId}",
+			updatedValueInAPI = "${updatedValueInAPI}");
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
+	}
+
+	macro getStructuredContentsWithDifferentParameters {
+		var curl = HeadlessWebcontentAPI._getStructuredContentsWithDifferentParameters(
+			groupName = "${groupName}",
+			parameter = "${parameter}",
+			parameterValue = "${parameterValue}");
+
+		var response = JSONCurlUtil.get("${curl}");
 
 		return "${response}";
 	}

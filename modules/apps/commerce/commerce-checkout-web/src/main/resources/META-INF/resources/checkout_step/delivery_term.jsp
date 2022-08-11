@@ -55,7 +55,7 @@ long deliveryCommerceTermEntryId = BeanParamUtil.getLong(termCommerceCheckoutSte
 
 					<li class="commerce-delivery-types list-group-item list-group-item-flex">
 						<div class="autofit-col autofit-col-expand p-2 pl-3">
-							<aui:input checked="<%= deliveryCommerceTermEntryId == commerceTermEntry.getCommerceTermEntryId() %>" cssClass="mr-3" label="<%= commerceTermEntry.getLabel(LanguageUtil.getLanguageId(locale)) %>" labelCssClass="align-items-center d-inline-flex mb-0" name="commerceDeliveryTermId" type="radio" value="<%= commerceTermEntry.getCommerceTermEntryId() %>" />
+							<aui:input checked="<%= deliveryCommerceTermEntryId == commerceTermEntry.getCommerceTermEntryId() %>" cssClass="mr-3" label="<%= commerceTermEntry.getLabel(LanguageUtil.getLanguageId(locale)) %>" labelCssClass="align-items-center d-inline-flex mb-0" name="deliveryCommerceTermEntryId" type="radio" value="<%= commerceTermEntry.getCommerceTermEntryId() %>" />
 						</div>
 
 						<div class="autofit-col p-2 pr-3">

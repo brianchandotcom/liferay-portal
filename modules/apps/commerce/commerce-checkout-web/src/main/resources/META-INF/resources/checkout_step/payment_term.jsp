@@ -55,7 +55,7 @@ long paymentCommerceTermEntryId = BeanParamUtil.getLong(termCommerceCheckoutStep
 
 					<li class="commerce-payment-types list-group-item list-group-item-flex">
 						<div class="autofit-col autofit-col-expand p-2 pl-3">
-							<aui:input checked="<%= paymentCommerceTermEntryId == commerceTermEntry.getCommerceTermEntryId() %>" cssClass="mr-3" label="<%= commerceTermEntry.getLabel(LanguageUtil.getLanguageId(locale)) %>" labelCssClass="align-items-center d-inline-flex mb-0" name="commercePaymentTermId" type="radio" value="<%= commerceTermEntry.getCommerceTermEntryId() %>" />
+							<aui:input checked="<%= paymentCommerceTermEntryId == commerceTermEntry.getCommerceTermEntryId() %>" cssClass="mr-3" label="<%= commerceTermEntry.getLabel(LanguageUtil.getLanguageId(locale)) %>" labelCssClass="align-items-center d-inline-flex mb-0" name="paymentCommerceTermEntryId" type="radio" value="<%= commerceTermEntry.getCommerceTermEntryId() %>" />
 						</div>
 
 						<div class="autofit-col p-2 pr-3">

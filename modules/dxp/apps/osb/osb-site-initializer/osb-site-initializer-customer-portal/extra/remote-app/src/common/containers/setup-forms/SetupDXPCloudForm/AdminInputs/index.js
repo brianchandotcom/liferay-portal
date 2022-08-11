@@ -24,7 +24,7 @@ const AdminInputs = ({admin, id}) => {
 
 			<Input
 				groupStyle="pt-1"
-				label={i18n.translate('dxp-cloud-system-admin-s-email-address')}
+				label={i18n.translate('lxc-sm-system-admin-s-email-address')}
 				name={`dxp.admins[${id}].email`}
 				placeholder="email@example.com"
 				required

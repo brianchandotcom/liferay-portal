@@ -96,7 +96,7 @@ const ManageProductUser = ({project, subscriptionGroups}) => {
 								<ManageProductButton
 									activatedLink={activatedLinkDXPC}
 									activatedTitle={i18n.translate(
-										'manage-dxp-cloud-users'
+										'manage-lxc-sm-users'
 									)}
 								/>
 							)}

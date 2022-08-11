@@ -14,6 +14,6 @@ import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType
 
 export const ALERT_UPDATE_DXP_CLOUD_STATUS = {
 	[ALERT_DOWNLOAD_TYPE.success]: i18n.translate(
-		'your-dxp-cloud-environments-are-ready'
+		'your-lxc-sm-environments-are-ready'
 	),
 };

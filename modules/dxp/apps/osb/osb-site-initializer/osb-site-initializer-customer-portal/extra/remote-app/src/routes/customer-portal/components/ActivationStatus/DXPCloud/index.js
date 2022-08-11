@@ -44,9 +44,9 @@ const submittedModalTexts = {
 		'we-ll-need-a-few-details-to-finish-building-your-dxp-environment'
 	),
 	text: i18n.translate(
-		'another-user-already-submitted-the-dxp-cloud-activation-request'
+		'another-user-already-submitted-the-lxc-sm-activation-request'
 	),
-	title: i18n.translate('set-up-dxp-cloud'),
+	title: i18n.translate('set-up-lxc-sm'),
 };
 
 const SetupDXPCloudModal = ({
@@ -153,7 +153,7 @@ const ActivationStatusDXPCloud = ({
 			),
 			id: STATUS_TAG_TYPES.active,
 			subtitle: i18n.translate(
-				'your-dxp-cloud-environments-are-ready-go-to-the-product-console-to-view-dxp-cloud-details'
+				'your-lxc-sm-environments-are-ready-go-to-the-product-console-to-view-lxc-sm-details'
 			),
 			title: i18n.translate('activation-status'),
 		},
@@ -181,7 +181,7 @@ const ActivationStatusDXPCloud = ({
 			),
 			id: STATUS_TAG_TYPES.inProgress,
 			subtitle: i18n.translate(
-				'your-dxp-cloud-environments-are-being-set-up-and-will-be-available-soon'
+				'your-lxc-sm-environments-are-being-set-up-and-will-be-available-soon'
 			),
 			title: i18n.translate('activation-status'),
 		},
@@ -198,7 +198,7 @@ const ActivationStatusDXPCloud = ({
 			),
 			id: STATUS_TAG_TYPES.notActivated,
 			subtitle: i18n.translate(
-				'almost-there-setup-dxp-cloud-by-finishing-the-activation-form'
+				'almost-there-setup-lxc-sm-by-finishing-the-activation-form'
 			),
 			title: i18n.translate('activation-status'),
 		},
@@ -212,7 +212,7 @@ const ActivationStatusDXPCloud = ({
 
 	useEffect(() => {
 		const fetchCommerceOrderItems = async () => {
-			const filterAccountSubscriptionERC = `customFields/accountSubscriptionGroupERC eq '${project.accountKey}_dxp-cloud'`;
+			const filterAccountSubscriptionERC = `customFields/accountSubscriptionGroupERC eq '${project.accountKey}_lxc-sm'`;
 			const {data} = await client.query({
 				query: getCommerceOrderItems,
 				variables: {

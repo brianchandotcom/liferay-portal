@@ -13,7 +13,7 @@ export const PRODUCT_TYPES = {
 	analyticsCloud: 'Analytics Cloud',
 	commerce: 'Commerce',
 	dxp: 'DXP',
-	dxpCloud: 'DXP Cloud',
+	dxpCloud: 'LXC-SM',
 	enterpriseSearch: 'Enterprise Search',
 	liferayExperienceCloud: 'Liferay Experience Cloud',
 	partnership: 'Partnership',

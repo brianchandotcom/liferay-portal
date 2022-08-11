@@ -29,9 +29,9 @@ const successTexts = {
 			'we-ll-need-a-few-details-to-finish-building-your-dxp-environments'
 		),
 		paragraph: i18n.translate(
-			'thank-you-for-submitting-this-request-your-dxp-cloud-project-will-be-provisioned-in-2-3-business-days-at-that-time-dxp-cloud-administrators-will-receive-several-onboarding-emails-giving-them-access-to-all-the-dxp-cloud-environments-and-tools-included-in-your-subscription'
+			'thank-you-for-submitting-this-request-your-lxc-sm-project-will-be-provisioned-in-2-3-business-days-at-that-time-lxc-sm-administrators-will-receive-several-onboarding-emails-giving-them-access-to-all-the-lxc-sm-environments-and-tools-included-in-your-subscription'
 		),
-		title: i18n.translate('set-up-dxp-cloud'),
+		title: i18n.translate('set-up-lxc-sm'),
 	},
 };
 

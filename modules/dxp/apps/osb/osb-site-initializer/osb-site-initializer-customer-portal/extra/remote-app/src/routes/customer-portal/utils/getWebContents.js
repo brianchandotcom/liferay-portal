@@ -64,7 +64,7 @@ export function getWebContents(dxpVersion, slaCurrent, subscriptionGroups) {
 	const hasDXPOrDXPCloudActive = subscriptionGroups.find(
 		(subscriptionGroup) =>
 			subscriptionGroup.name === 'DXP' ||
-			(subscriptionGroup.name === 'DXP Cloud' &&
+			(subscriptionGroup.name === 'LXC-SM' &&
 				subscriptionGroup.activationStatus === 'Active')
 	);
 

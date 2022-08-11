@@ -995,6 +995,13 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#DETAILS_FIELDS");
 	}
 
+	macro viewInformationDetailsPresent {
+		AssertVisible(
+			key_fieldInformation = "${fieldInformation}",
+			key_fieldOption = "${fieldOption}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#INFORMATION_DETAILS");
+	}
+
 	macro viewDiagramEditor {
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#REACT_PANEL");
 

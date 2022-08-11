@@ -56,6 +56,11 @@
 	<td>//div[contains(@class,'CodeMirror-gutter-wrapper')]//..//pre[@class=' CodeMirror-line ']//span[contains(.,'${key_elementOption}')]//..//*[normalize-space(text())='${key_elementValue}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>INFORMATION_DETAILS</td>
+	<td>//div[@class='info-group']//label[contains(text() ,'${key_fieldOption}')]/..//span[contains(text() ,'${key_fieldInformation}')]</td>
+	<td></td>
+</tr>
 
 <!-- TRANSLATION_PATHS -->
 

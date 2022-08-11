@@ -185,7 +185,7 @@ export function AdvancedSelectField({
 			{error ? (
 				<span aria-live="assertive" className="sr-only">
 					{Liferay.Language.get(
-						'this-style-does-not-exist-or-is-empty'
+						'this-field-requires-a-valid-style-value'
 					)}
 				</span>
 			) : null}

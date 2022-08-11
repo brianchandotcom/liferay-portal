@@ -163,7 +163,6 @@ page import="com.liferay.portal.security.auth.ScreenNameValidatorFactory" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.roles.admin.kernel.util.RolesAdminUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.users.admin.constants.UserScreenNavigationEntryConstants" %><%@
@@ -187,6 +186,7 @@ page import="com.liferay.users.admin.web.internal.display.context.ViewFlatUsersD
 page import="com.liferay.users.admin.web.internal.display.context.ViewOrganizationsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.ViewTreeManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.frontend.taglib.clay.servlet.taglib.UserVerticalCard" %><%@
+page import="com.liferay.users.admin.web.internal.servlet.taglib.util.OrganizationActionDropdownItems" %><%@
 page import="com.liferay.users.admin.web.internal.util.CSSClasses" %><%@
 page import="com.liferay.users.admin.web.internal.util.UsersAdminPortletURLUtil" %>
 

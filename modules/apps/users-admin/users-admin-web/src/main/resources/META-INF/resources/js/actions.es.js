@@ -15,10 +15,30 @@
 import {
 	createActionURL,
 	createRenderURL,
+	openModal,
 	openSelectionModal,
 } from 'frontend-js-web';
 
 export const ACTIONS = {
+	assignOrganizationRoles(itemData) {
+		openModal({
+			title: itemData.label,
+			url: itemData.assignOrganizationRolesURL,
+		});
+	},
+
+	assignUsers(itemData, portletNamespace) {
+		this.selectUsers({
+			basePortletURL: itemData.basePortletURL,
+			organizationId: itemData.organizationId,
+			portletNamespace,
+		});
+	},
+
+	removeOrganization(itemData) {
+		submitForm(document.hrefFm, itemData.removeOrganizationURL);
+	},
+
 	selectUsers({basePortletURL, organizationId, portletNamespace}) {
 		if (!organizationId) {
 			return;

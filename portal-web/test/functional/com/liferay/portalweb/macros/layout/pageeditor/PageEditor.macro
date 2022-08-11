@@ -5153,22 +5153,18 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			value1 = "${numberOfItems}");
 	}
 
-	macro viewSideBarButtonOrder {
-		if (!(isSet(position))) {
-			var position = "1";
+	macro viewOrderOfSideBarButtons {
+		if (!(isSet(i))) {
+			var i = "1";
 		}
 
 		for (var buttonName : list "${buttonNameList}") {
-			var actualButtonValue = selenium.getAttribute("//div[contains(@class,'page-editor__sidebar__buttons')]//button[contains(@data-tooltip-align,'left')][${position}]@title");
+			AssertVisible(
+				index = "${i}",
+				key_tabName = "${buttonName}",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON_BY_INDEX");
 
-			if (contains("${actualButtonValue}", "${buttonName}")) {
-				echo("PASSED");
-			}
-			else {
-				TestUtils.fail(message = "FAILED: expected '${buttonName}', actual was '${actualButtonValue}'");
-			}
-
-			var position = ${position} + 1;
+			var i = ${i} + 1;
 		}
 	}
 

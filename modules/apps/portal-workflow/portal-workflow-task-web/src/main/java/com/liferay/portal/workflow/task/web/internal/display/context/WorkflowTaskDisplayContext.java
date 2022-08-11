@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowLogManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowTransition;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.workflow.task.web.internal.display.context.helper.WorkflowTaskRequestHelper;
@@ -285,11 +286,10 @@ public class WorkflowTaskDisplayContext {
 		).build();
 	}
 
-	public String getHeaderTitle(WorkflowTask workflowTask)
+	public String getHeaderTitle(WorkflowTask workflowTask, Locale locale)
 		throws PortalException {
 
-		String taskName = LanguageUtil.get(
-			_workflowTaskRequestHelper.getRequest(), workflowTask.getName());
+		String taskName = getTaskLabel(workflowTask, locale);
 
 		return taskName + ": " + getAssetTitle(workflowTask);
 	}
@@ -479,6 +479,14 @@ public class WorkflowTaskDisplayContext {
 		return HtmlUtil.escape(_getActorName(workflowLog));
 	}
 
+	public String getTaskLabel(WorkflowTask workflowTask, Locale locale)
+		throws PortalException {
+
+		return HtmlUtil.escape(
+			WorkflowTaskManagerUtil.getWorkflowTaskLabel(
+				workflowTask.getWorkflowTaskId(), locale));
+	}
+
 	public String getTaskName(WorkflowTask workflowTask) {
 		return HtmlUtil.escape(workflowTask.getName());
 	}
@@ -642,6 +650,14 @@ public class WorkflowTaskDisplayContext {
 	public String getWorkflowTaskUnassignedUserName() {
 		return LanguageUtil.get(
 			_workflowTaskRequestHelper.getRequest(), "nobody");
+	}
+
+	public List<WorkflowTransition> getWorkflowTransitions(
+			WorkflowTask workflowTask)
+		throws PortalException {
+
+		return WorkflowTaskManagerUtil.getNextWorkflowTransitions(
+			workflowTask.getWorkflowTaskId());
 	}
 
 	public boolean hasAssignableUsers(WorkflowTask workflowTask)

@@ -45,6 +45,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,8 +75,18 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
 		try {
-			BearerTokenProvider.AccessToken accessToken = _getAccessToken(
+			String accessTokenContent = _getAccessTokenContent(
 				accessControlContext);
+
+			if (Validator.isBlank(accessTokenContent)) {
+				authVerifierResult.setState(
+					AuthVerifierResult.State.NOT_APPLICABLE);
+
+				return authVerifierResult;
+			}
+
+			BearerTokenProvider.AccessToken accessToken = _getAccessToken(
+				accessTokenContent);
 
 			if (accessToken == null) {
 				authVerifierResult.setState(
@@ -120,42 +131,19 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 	}
 
 	private BearerTokenProvider.AccessToken _getAccessToken(
-			AccessControlContext accessControlContext)
+			String accessTokenContent)
 		throws PortalException {
-
-		HttpServletRequest httpServletRequest =
-			accessControlContext.getRequest();
-
-		String authorization = httpServletRequest.getHeader(
-			HttpHeaders.AUTHORIZATION);
-
-		if (Validator.isBlank(authorization)) {
-			return null;
-		}
-
-		String[] authorizationParts = authorization.split("\\s");
-
-		String scheme = authorizationParts[0];
-
-		if (!StringUtil.equalsIgnoreCase(scheme, _TOKEN_KEY)) {
-			return null;
-		}
-
-		String token = authorizationParts[1];
-
-		if (Validator.isBlank(token)) {
-			return null;
-		}
 
 		OAuth2Authorization oAuth2Authorization =
 			_oAuth2AuthorizationLocalService.
-				fetchOAuth2AuthorizationByAccessTokenContent(token);
+				fetchOAuth2AuthorizationByAccessTokenContent(
+					accessTokenContent);
 
 		if (oAuth2Authorization == null) {
 			return null;
 		}
 
-		String accessTokenContent = oAuth2Authorization.getAccessTokenContent();
+		accessTokenContent = oAuth2Authorization.getAccessTokenContent();
 
 		if (OAuth2ProviderConstants.EXPIRED_TOKEN.equals(accessTokenContent)) {
 			return null;
@@ -192,6 +180,30 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 			StringPool.BLANK, StringPool.BLANK, scopeAliasesList,
 			accessTokenContent, _TOKEN_KEY, oAuth2Authorization.getUserId(),
 			oAuth2Authorization.getUserName());
+	}
+
+	private String _getAccessTokenContent(
+		AccessControlContext accessControlContext) {
+
+		HttpServletRequest httpServletRequest =
+			accessControlContext.getRequest();
+
+		String authorization = httpServletRequest.getHeader(
+			HttpHeaders.AUTHORIZATION);
+
+		if (Validator.isBlank(authorization)) {
+			return null;
+		}
+
+		String[] authorizationParts = authorization.split("\\s");
+
+		String scheme = authorizationParts[0];
+
+		if (!StringUtil.equalsIgnoreCase(scheme, _TOKEN_KEY)) {
+			return null;
+		}
+
+		return authorizationParts[1];
 	}
 
 	private static final String _TOKEN_KEY = "Bearer";

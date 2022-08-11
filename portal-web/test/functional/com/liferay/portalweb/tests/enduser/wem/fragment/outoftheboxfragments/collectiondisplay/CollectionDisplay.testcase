@@ -221,9 +221,7 @@ definition {
 		}
 
 		task ("Then the page creator should see an error message") {
-			AssertTextPresent(
-				locator1 = "Message#ERROR",
-				value1 = "Fragments cannot be placed inside an unmapped collection display fragment.");
+			Alert.viewErrorMessage(errorMessage = "Fragments cannot be placed inside an unmapped collection display fragment.");
 
 			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
 		}

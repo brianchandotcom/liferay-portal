@@ -166,9 +166,7 @@ definition {
 		}
 
 		task ("Then the page creator should see an error message") {
-			AssertTextPresent(
-				locator1 = "Message#ERROR",
-				value1 = "Form components can only be placed inside a mapped form container.");
+			Alert.viewErrorMessage(errorMessage = "Form components can only be placed inside a mapped form container.");
 
 			PageEditor.viewFragmentNotPresent(fragmentName = "Text Input");
 		}

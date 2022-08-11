@@ -33,6 +33,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 		super(props);
 
 		const {
+			hasUnapprovedChanges,
 			learnLink,
 			publishURL,
 			redirect,
@@ -45,6 +46,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 			unresolvedConflicts,
 		} = props;
 
+		this.hasUnapprovedChanges = hasUnapprovedChanges;
 		this.learnLink = learnLink;
 		this.publishURL = publishURL;
 		this.redirect = redirect;
@@ -87,6 +89,19 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 						{Liferay.Language.get('conflicting-changes')}
 					</h2>
 
+					{this.hasUnapprovedChanges && (
+						<ClayAlert
+							displayType="warning"
+							spritemap={this.spritemap}
+						>
+							<span>
+								{Liferay.Language.get(
+									'this-publication-contains-unapproved-changes-that-must-be-approved-before-publishing'
+								)}
+							</span>
+						</ClayAlert>
+					)}
+
 					{!!this.unresolvedConflicts.length && (
 						<ClayAlert
 							displayType="warning"
@@ -104,15 +119,16 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 						</ClayAlert>
 					)}
 
-					{!this.unresolvedConflicts.length && (
-						<ClayAlert
-							displayType="success"
-							spritemap={this.spritemap}
-							title={Liferay.Language.get(
-								'no-unresolved-conflicts-ready-to-publish'
-							)}
-						/>
-					)}
+					{!this.hasUnapprovedChanges &&
+						!this.unresolvedConflicts.length && (
+							<ClayAlert
+								displayType="success"
+								spritemap={this.spritemap}
+								title={Liferay.Language.get(
+									'no-unresolved-conflicts-ready-to-publish'
+								)}
+							/>
+						)}
 
 					{this.showPageOverwriteWarning && (
 						<ClayAlert
@@ -236,7 +252,8 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 						<div className="btn-group-item">
 							<button
 								className={
-									this.unresolvedConflicts.length
+									!!this.unresolvedConflicts.length ||
+									this.hasUnapprovedChanges
 										? 'btn btn-primary disabled'
 										: 'btn btn-primary'
 								}

@@ -34,6 +34,7 @@ import {CSSTransition} from 'react-transition-group';
 import ChangeTrackingComments from './ChangeTrackingComments';
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
 import ManageCollaborators from './ManageCollaborators';
+import WorkflowStatusLabel from './components/WorkflowStatusLabel';
 
 const DIRECTION_NEXT = 'next';
 const DIRECTION_PREV = 'prev';
@@ -142,6 +143,7 @@ export default function ChangeTrackingChangesView({
 	const COLUMN_SITE = 'site';
 	const COLUMN_TITLE = 'title';
 	const COLUMN_USER = 'user';
+	const COLUMN_WORKFLOW_STATUS = 'status';
 	const GLOBAL_SITE_NAME = Liferay.Language.get('global');
 	const MENU_CHANGE_TYPES = 'MENU_CHANGE_TYPES';
 	const MENU_ROOT = 'MENU_ROOT';
@@ -1283,6 +1285,36 @@ export default function ChangeTrackingChangesView({
 				return 0;
 			});
 		}
+		else if (columnState === COLUMN_WORKFLOW_STATUS) {
+			nodes.sort((a, b) => {
+				const workflowStatusA = a.workflowStatus;
+				const workflowStatusB = b.workflowStatus;
+
+				if (
+					workflowStatusA < workflowStatusB ||
+					workflowStatusA === null
+				) {
+					if (ascendingState) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (
+					workflowStatusA > workflowStatusB ||
+					workflowStatusB === null
+				) {
+					if (ascendingState) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				return 0;
+			});
+		}
 		else {
 			nodes.sort((a, b) => {
 				if (a.modifiedTime < b.modifiedTime) {
@@ -1680,7 +1712,7 @@ export default function ChangeTrackingChangesView({
 
 				rows.push(
 					<ClayTable.Row divider>
-						<ClayTable.Cell colSpan={5}>
+						<ClayTable.Cell colSpan={6}>
 							{node.typeName}
 						</ClayTable.Cell>
 					</ClayTable.Row>
@@ -1722,6 +1754,12 @@ export default function ChangeTrackingChangesView({
 
 					<ClayTable.Cell className="publication-name table-cell-expand">
 						{node.title}
+					</ClayTable.Cell>
+
+					<ClayTable.Cell className="table-cell-expand-smallest">
+						<WorkflowStatusLabel
+							workflowStatus={node.workflowStatus}
+						/>
 					</ClayTable.Cell>
 
 					<ClayTable.Cell className="table-cell-expand-smallest">
@@ -2011,7 +2049,7 @@ export default function ChangeTrackingChangesView({
 				<ClayTable.Row>
 					<ClayTable.Cell
 						className="publications-header-td"
-						colSpan={5}
+						colSpan={6}
 					>
 						<ManagementToolbar.Container>
 							{renderFilterDropdown()}
@@ -2125,7 +2163,7 @@ export default function ChangeTrackingChangesView({
 				<ClayTable.Row>
 					<ClayTable.Cell
 						className="publications-header-td"
-						colSpan={renderState.nav === NAVIGATION_DATA ? 5 : 1}
+						colSpan={renderState.nav === NAVIGATION_DATA ? 6 : 1}
 					>
 						<ClayNavigationBar spritemap={spritemap}>
 							<ClayNavigationBar.Item
@@ -2543,7 +2581,7 @@ export default function ChangeTrackingChangesView({
 			return (
 				<ClayTable.Head>
 					<ClayTable.Row>
-						<ClayTable.Cell colSpan={5}>
+						<ClayTable.Cell colSpan={6}>
 							<div className="taglib-empty-result-message">
 								<div className="taglib-empty-search-result-message-header" />
 
@@ -2580,6 +2618,16 @@ export default function ChangeTrackingChangesView({
 						{getColumnHeader(
 							COLUMN_TITLE,
 							Liferay.Language.get('title')
+						)}
+					</ClayTable.Cell>
+
+					<ClayTable.Cell
+						className="table-cell-expand-smallest"
+						headingCell
+					>
+						{getColumnHeader(
+							COLUMN_WORKFLOW_STATUS,
+							Liferay.Language.get('status')
 						)}
 					</ClayTable.Cell>
 

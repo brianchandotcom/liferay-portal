@@ -259,7 +259,7 @@ public class BundleSiteInitializerTest {
 			_assertPortletSettings(group);
 			_assertClientExtension(group);
 			_assertSAPEntries(group);
-			_assertSegmentsEntries(group.getGroupId());
+			_assertSegmentsEntry(group.getGroupId());
 			_assertSiteConfiguration(group.getGroupId());
 			_assertSiteSettings(group.getGroupId());
 			_assertSiteNavigationMenu(group);
@@ -1386,20 +1386,20 @@ public class BundleSiteInitializerTest {
 			allowedServiceSignatures2.size());
 	}
 
-	private void _assertSegmentsEntries(Long groupId) {
+	private void _assertSegmentsEntry(Long groupId) {
 		List<SegmentsEntry> segmentsEntries =
 			_segmentsEntryLocalService.getSegmentsEntries(
-				groupId, true, -1, -1, null);
+				groupId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		SegmentsEntry segmentsEntry1 = segmentsEntries.get(0);
+		SegmentsEntry segmentsEntry = segmentsEntries.get(0);
 
-		Assert.assertNotNull(segmentsEntry1);
-		Assert.assertTrue(segmentsEntry1.isActive());
+		Assert.assertNotNull(segmentsEntry);
+		Assert.assertTrue(segmentsEntry.isActive());
 		Assert.assertEquals(
-			"Segments Entry Test",
-			segmentsEntry1.getName(LocaleUtil.getSiteDefault()));
+			"Test Segments Entry",
+			segmentsEntry.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals(
-			"com.liferay.portal.kernel.model.User", segmentsEntry1.getType());
+			"com.liferay.portal.kernel.model.User", segmentsEntry.getType());
 	}
 
 	private void _assertSiteConfiguration(Long groupId) {

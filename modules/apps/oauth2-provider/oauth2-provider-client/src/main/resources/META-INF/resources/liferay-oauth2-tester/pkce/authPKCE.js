@@ -1,13 +1,24 @@
-/*
- * Step PKCE 1: Obtain Authorization Code from Liferay Configured Application with ClientID (Callback URL must be this application)
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
+
 function authorizePKCE() {
 	if ($('#authFormPKCE').valid()) {
-		var clientId = $('#clientIdPCKE').val();
-		var liferayUrl = $('#liferayUrlPKCE').val();
-		var codeChallenge = $('#convertedCodeChallenge').val();
+		const clientId = $('#clientIdPCKE').val();
+		const liferayUrl = $('#liferayUrlPKCE').val();
+		const codeChallenge = $('#convertedCodeChallenge').val();
 
-		var redirectUri = encodeURIComponent(
+		const redirectUri = encodeURIComponent(
 			window.location.href +
 				'?url=' +
 				liferayUrl +
@@ -23,15 +34,16 @@ function authorizePKCE() {
 				.replace('{2}', codeChallenge);
 	}
 }
+
 /*
  * Generate random string as Code Challenge
  */
 function generateCodeChallenge() {
-	var length = 12;
-	var randomString = '';
-	var dictionary =
+	const length = 12;
+	let randomString = '';
+	const dictionary =
 		'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	for (var i = 0; i < length; i++) {
+	for (let i = 0; i < length; i++) {
 		randomString += dictionary.charAt(
 			Math.floor(Math.random() * dictionary.length)
 		);
@@ -47,11 +59,12 @@ function getEncodedCodeChallenge() {
 	CryptoJS.enc.Base64URL = {
 		parse: CryptoJS.enc.Base64.parse,
 		stringify: CryptoJS.enc.Base64.stringify,
-		_map: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_',
+		_map:
+			'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_',
 	};
 
-	var code = CryptoJS.enc.Utf8.parse($('#codeChallenge').val());
-	var codeSHA256 = CryptoJS.SHA256(code);
+	const code = CryptoJS.enc.Utf8.parse($('#codeChallenge').val());
+	const codeSHA256 = CryptoJS.SHA256(code);
 
 	$('#convertedCodeChallenge').val(
 		CryptoJS.enc.Base64URL.stringify(codeSHA256)
@@ -75,17 +88,17 @@ function copyModalData() {
 	}
 }
 
-$(document).ready(function () {
+$(document).ready(() => {
 	$('#callbackURI').text(location.origin + location.pathname);
 
 	/*
 	 * Recover Auth Code from URL and Obtain Token
 	 */
-	var urlParams = function getCodeParameter(parameterName) {
-		var pageUrl = window.location.search.substring(1);
-		var variablesUrl = pageUrl.split('&');
-		for (var i = 0; i < variablesUrl.length; i++) {
-			var parameter = variablesUrl[i].split('=');
+	const urlParams = function getCodeParameter(parameterName) {
+		const pageUrl = window.location.search.substring(1);
+		const variablesUrl = pageUrl.split('&');
+		for (let i = 0; i < variablesUrl.length; i++) {
+			const parameter = variablesUrl[i].split('=');
 			if (parameter[0] == parameterName) {
 				return parameter[1];
 			}
@@ -105,24 +118,24 @@ $(document).ready(function () {
 	/*
 	 * Function to generate parameter fields dynamically
 	 */
-	var parameterCount = 1;
-	$('#addParameter').click(function (e) {
+	let parameterCount = 1;
+	$('#addParameter').click((e) => {
 		e.preventDefault();
-		var addName = 'paramName' + parameterCount;
-		var addValue = 'paramValue' + parameterCount;
+		const addName = 'paramName' + parameterCount;
+		const addValue = 'paramValue' + parameterCount;
 
-		var newName = $(
+		const newName = $(
 			'<div class="col"><input type="text" id="' +
 				addName +
 				'" placeholder="Name" class="form-control form-control-sm" /></div>'
 		);
-		var newValue = $(
+		const newValue = $(
 			'<div class="col"><input type="text" id="' +
 				addValue +
 				'" placeholder="Value" class="form-control form-control-sm" /></div>'
 		);
 
-		var newSection = $(
+		const newSection = $(
 			'<div class="row" id="param' + parameterCount + '">'
 		);
 		newSection.append(newName);
@@ -138,7 +151,7 @@ $(document).ready(function () {
  */
 function getToken() {
 	if ($('#tokenForm').valid()) {
-		var locationUrl =
+		const locationUrl =
 			location.protocol + '//' + location.host + location.pathname;
 		$.ajax({
 			url: $('#tokenLiferayUrl').val() + $('#tokenUrl').val(),
@@ -160,7 +173,7 @@ function getToken() {
 				Accept: 'application/json',
 			},
 			dataType: 'json',
-			success: function (data) {
+			success(data) {
 				console.log(data);
 				$('#token').val(data.access_token);
 				$('#refreshToken').val(data.refresh_token);
@@ -168,7 +181,7 @@ function getToken() {
 				$('#tokenTab > h2 > button').css('color', 'green');
 				$('#collapseThree').show();
 			},
-			error: function (data) {
+			error(data) {
 				alert("There's a problem with your authorization access");
 				console.log(data);
 			},
@@ -196,15 +209,16 @@ function introspectAccessToken(e) {
 				Accept: 'application/json',
 			},
 			dataType: 'json',
-			success: function (data) {
+			success(data) {
 				$('#result').html(JSON.stringify(data));
 			},
-			error: function (data) {
+			error(data) {
 				alert("There's a problem with your authorization access");
 				console.log(data);
 			},
 		});
-	} else {
+	}
+	else {
 		alert('Please, insert a valid Access Token');
 	}
 }
@@ -229,15 +243,16 @@ function introspectRefreshToken(e) {
 				Accept: 'application/json',
 			},
 			dataType: 'json',
-			success: function (data) {
+			success(data) {
 				$('#result').html(JSON.stringify(data));
 			},
-			error: function (data) {
+			error(data) {
 				alert("There's a problem with your authorization access");
 				console.log(data);
 			},
 		});
-	} else {
+	}
+	else {
 		alert('Please, insert a valid Refresh Token');
 	}
 }
@@ -262,27 +277,29 @@ function refreshAccessToken(e) {
 				Accept: 'application/json',
 			},
 			dataType: 'json',
-			success: function (data) {
+			success(data) {
 				$('#token').val(data.access_token);
 				$('#refreshToken').val(data.refresh_token);
 			},
-			error: function (data) {
+			error(data) {
 				alert("There's a problem with your authorization access");
 				console.log(data);
 			},
 		});
-	} else {
+	}
+	else {
 		alert('Please, insert a valid Refresh Token');
 	}
 }
+
 /*
  * Step 3: Make Request
  */
 function request(e) {
 	e.preventDefault();
 	$('#result').html('');
-	var paramsData = getParamsData();
-	var token = $('#token').val();
+	const paramsData = getParamsData();
+	const token = $('#token').val();
 	if (token.trim() != '') {
 		$.ajax({
 			url: $('#url').val(),
@@ -294,26 +311,31 @@ function request(e) {
 			crossDomain: true,
 			data: JSON.stringify(paramsData),
 			dataType: 'json',
-			error: function (jqXHR, exception) {
-				var msg = '';
+			error(jqXHR, exception) {
+				let msg = '';
 				if (jqXHR.status === 403) {
 					msg = '403 - Unauthorized!';
-				} else if (jqXHR.status == 404) {
+				}
+				else if (jqXHR.status == 404) {
 					msg = '404 - Not Found';
-				} else if (jqXHR.status == 405) {
+				}
+				else if (jqXHR.status == 405) {
 					msg = '405 - Not Allowed';
-				} else if (jqXHR.status == 415) {
+				}
+				else if (jqXHR.status == 415) {
 					msg = '415 - Unsupported Media Type';
-				} else {
+				}
+				else {
 					msg = 'Error: ' + jqXHR.responseText;
 				}
 				alert(msg);
 			},
-			success: function (data) {
+			success(data) {
 				$('#result').html(JSON.stringify(data));
 			},
 		});
-	} else {
+	}
+	else {
 		alert('Please, insert a valid Access Token');
 	}
 }
@@ -323,11 +345,12 @@ function request(e) {
  */
 function checkMethod(e) {
 	e.preventDefault();
-	var method = $('#methodType').val();
+	const method = $('#methodType').val();
 	if (method != 'GET') {
 		$('#parametersList').show();
 		$('#addParameter').show();
-	} else {
+	}
+	else {
 		$('#parametersList').hide();
 		$('#addParameter').hide();
 	}
@@ -337,17 +360,18 @@ function checkMethod(e) {
  * Generate JSON for send parameters data
  */
 function getParamsData() {
-	var data;
+	let data;
 	if ($('#parametersList').is(':visible')) {
 		data = {};
-		var numParams = $('#parametersList').find($('input')).length / 2;
-		for (var i = 0; i < numParams; i++) {
-			var name = $('#paramName' + i).val();
-			var value = $('#paramValue' + i).val();
+		const numParams = $('#parametersList').find($('input')).length / 2;
+		for (let i = 0; i < numParams; i++) {
+			const name = $('#paramName' + i).val();
+			const value = $('#paramValue' + i).val();
 			if (name != '' && value != '') {
 				data[name] = value;
 			}
 		}
 	}
+
 	return data;
 }

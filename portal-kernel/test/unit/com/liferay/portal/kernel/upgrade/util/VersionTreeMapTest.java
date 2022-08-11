@@ -60,14 +60,15 @@ public class VersionTreeMapTest {
 
 	@Test
 	public void testSingleMultiStepUpgrade() {
+		MultiStepUpgradeProcess multiStepUpgradeProcess =
+			new MultiStepUpgradeProcess();
+
 		VersionTreeMap versionTreeMap = new VersionTreeMap();
 
-		versionTreeMap.put(new Version(1, 0, 0), new MultiStepUpgradeProcess());
-
-		Collection<UpgradeStep> upgradeSteps = versionTreeMap.values();
+		versionTreeMap.put(new Version(1, 0, 0), multiStepUpgradeProcess);
 
 		_checkTreeMapValues(
-			versionTreeMap, upgradeSteps.toArray(new UpgradeStep[0]));
+			versionTreeMap, multiStepUpgradeProcess.getUpgradeSteps());
 	}
 
 	private void _checkTreeMapValues(
@@ -107,13 +108,16 @@ public class VersionTreeMapTest {
 
 		@Override
 		protected UpgradeStep[] getPostUpgradeSteps() {
-			return new UpgradeStep[] {new DummyUpgradeProcess()};
+			return new UpgradeStep[] {_postUpgradeStep};
 		}
 
 		@Override
 		protected UpgradeStep[] getPreUpgradeSteps() {
-			return new UpgradeStep[] {new DummyUpgradeProcess()};
+			return new UpgradeStep[] {_preUpgradeStep};
 		}
+
+		private UpgradeProcess _postUpgradeStep = new DummyUpgradeProcess();
+		private UpgradeProcess _preUpgradeStep = new DummyUpgradeProcess();
 
 	}
 

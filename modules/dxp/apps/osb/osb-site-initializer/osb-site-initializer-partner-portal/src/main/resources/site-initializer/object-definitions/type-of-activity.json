@@ -13,7 +13,8 @@
 				"en_US": "Name"
 			},
 			"name": "name",
-			"required": true
+			"required": true,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

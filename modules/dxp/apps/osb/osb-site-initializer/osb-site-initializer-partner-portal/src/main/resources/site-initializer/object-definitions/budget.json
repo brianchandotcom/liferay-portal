@@ -13,7 +13,8 @@
 				"en_US": "Cost"
 			},
 			"name": "cost",
-			"required": false
+			"required": false,
+			"type": "String"
 		},
 		{
 			"DBType": "String",
@@ -25,7 +26,8 @@
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Budget Expenses$]",
 			"name": "expense",
-			"required": false
+			"required": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

@@ -14,37 +14,44 @@
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Regions$]",
 			"name": "country",
-			"required": false
+			"required": false,
+			"type": "String"
 		},
 		{
 			"DBType": "Clob",
+			"businessType": "LongText",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Overall Campaign"
 			},
 			"name": "overallCampaign",
-			"required": false
+			"required": false,
+			"type": "Clob"
 		},
 		{
 			"DBType": "Clob",
+			"businessType": "LongText",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Liferay Business/Sales Goals"
 			},
 			"name": "liferayBusinessSalesGoals",
-			"required": false
+			"required": false,
+			"type": "Clob"
 		},
 		{
 			"DBType": "Clob",
+			"businessType": "LongText",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Target Markets"
 			},
 			"name": "targetMarkets",
-			"required": false
+			"required": false,
+			"type": "Clob"
 		},
 		{
 			"DBType": "String",
@@ -56,17 +63,20 @@
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:MDF Request: Additional Options$]",
 			"name": "additionalOption",
-			"required": false
+			"required": false,
+			"type": "String"
 		},
 		{
 			"DBType": "Clob",
+			"businessType": "LongText",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Target Audience/Roles"
 			},
 			"name": "targetAudienceRoles",
-			"required": false
+			"required": false,
+			"type": "Clob"
 		}
 	],
 	"pluralLabel": {

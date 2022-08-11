@@ -1,8 +1,8 @@
 definition {
 
 	macro publish {
-		AssertTextEquals.assertPartialText(
-			locator1 = "Modal#BODY",
+		AssertTextEquals(
+			locator1 = "Modal#BODY_MESSAGE",
 			value1 = "${warningMessage}");
 
 		if ("${action}" == "Cancel") {

@@ -216,6 +216,13 @@ public class AccountGroupLocalServiceImpl
 			searchContext.setKeywords(keywords);
 
 			if (MapUtil.isNotEmpty(params)) {
+				long[] accountEntryIds = (long[])params.get("accountEntryIds");
+
+				if (ArrayUtil.isNotEmpty(accountEntryIds)) {
+					searchContext.setAttribute(
+						"accountEntryIds", accountEntryIds);
+				}
+
 				long permissionUserId = GetterUtil.getLong(
 					params.get("permissionUserId"));
 

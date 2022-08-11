@@ -27,6 +27,7 @@ import {
 	useSetStyleError,
 	useStyleErrors,
 } from '../../../app/contexts/StyleErrorsContext';
+import {getResetLabelByViewport} from '../../../app/utils/getResetLabelByViewport';
 import {useId} from '../../../app/utils/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {DropdownColorPicker} from './DropdownColorPicker';
@@ -64,6 +65,7 @@ export function ColorPicker({
 	onValueSelect,
 	showLabel = true,
 	tokenValues,
+	selectedViewportSize,
 	value,
 }) {
 	const activeItemId = useActiveItemId();
@@ -388,8 +390,21 @@ export function ColorPicker({
 									);
 								}}
 								small
-								symbol="times-circle"
-								title={Liferay.Language.get('clear-selection')}
+								symbol={
+									Liferay.FeatureFlags['LPS-143206']
+										? 'restore'
+										: 'times-circle'
+								}
+								title={
+									Liferay.FeatureFlags['LPS-143206'] &&
+									selectedViewportSize
+										? getResetLabelByViewport(
+												selectedViewportSize
+										  )
+										: Liferay.Language.get(
+												'clear-selection'
+										  )
+								}
 							/>
 						</ClayInput.GroupItem>
 					</>

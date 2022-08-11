@@ -34,6 +34,9 @@ export function ColorPickerField({field, onValueSelect, value}) {
 	const canDetachTokenValues = useSelector(selectCanDetachTokenValues);
 	const [computedValue, setComputedValue] = useState(null);
 	const globalContext = useGlobalContext();
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 	const {tokenValues} = useStyleBook();
 
 	useEffect(() => {
@@ -77,6 +80,7 @@ export function ColorPickerField({field, onValueSelect, value}) {
 			defaultTokenValue={computedValue}
 			field={field}
 			onValueSelect={onValueSelect}
+			selectedViewportSize={selectedViewportSize}
 			showLabel={!Liferay.FeatureFlags['LPS-143206']}
 			tokenValues={tokenValues}
 			value={value}

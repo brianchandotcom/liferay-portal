@@ -12,6 +12,8 @@ definition {
 	var testSiteTamplate = "Liferay OSB Site Initializer Customer Portal";
 	var testAccount = "Test Account QA 7.4";
 	var testUser = "Test Test";
+	var testUserFirstName = "Test";
+	var testProduct = "Portal";
 
     setUp {
 		task ("Set up instance and sign in") {
@@ -56,23 +58,35 @@ definition {
 
 		var keyStatus = "Activated";
 
-		CustomerPortal.search(searchItem = "2022 FIFA World Cup Qatar - FAN ID");
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-		CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
-		CP2NavigationMenu.goToProductActivation();
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
 
-		CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
 
-		CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		task ("And I select the pagination quantity to 50 items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		}
 
-		CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+		task ("And I click at the Activated tab") {
+			CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+		}
 
-		var keyCount = CP2ActivationKeys.countTableRows();
+		task ("When I count the numbers of rows") {
+			var keyCount = CP2ActivationKeys.countTableRows();
+		}
 
-		CP2ActivationKeys.assertLicenseQuantity(
-			licenseTab = "${keyStatus}",
-			numberOfLicenses = "${keyCount}");
+		task ("Then I assert that the amount of rows is equals to the number at the tab") {
+			CP2ActivationKeys.assertLicenseQuantity(
+				licenseTab = "${keyStatus}",
+				numberOfLicenses = "${keyCount}");
+		}
     }
 
 	@description = "Verify if the 'All' tab displays the number of keys for it"
@@ -84,23 +98,35 @@ definition {
 
 		var keyStatus = "All";
 
-		CustomerPortal.search(searchItem = "2022 FIFA World Cup Qatar - FAN ID");
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-		CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
-		CP2NavigationMenu.goToProductActivation();
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
 
-		CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
 
-		CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		task ("And I select the pagination quantity to 50 items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		}
 
-		CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+		task ("And I click at the All tab") {
+			CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+		}
 
-		var keyCount = CP2ActivationKeys.countTableRows();
+		task ("When I count the numbers of rows") {
+			var keyCount = CP2ActivationKeys.countTableRows();
+		}
 
-		CP2ActivationKeys.assertLicenseQuantity(
-			licenseTab = "${keyStatus}",
-			numberOfLicenses = "${keyCount}");
+		task ("Then I assert that the amount of rows is equals to the number at the tab") {
+			CP2ActivationKeys.assertLicenseQuantity(
+				licenseTab = "${keyStatus}",
+				numberOfLicenses = "${keyCount}");
+		}
     }
 
 	@description = "Verify if the 'Not Activated' tab displays the number of keys for it"
@@ -112,23 +138,35 @@ definition {
 
 		var keyStatus = "Not Activated";
 
-		CustomerPortal.search(searchItem = "2022 FIFA World Cup Qatar - FAN ID");
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-		CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
-		CP2NavigationMenu.goToProductActivation();
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
 
-		CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
 
-		CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		task ("And I select the pagination quantity to 50 items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		}
 
-		CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+		task ("And I click at the Not Activated tab") {
+			CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+		}
 
-		var keyCount = CP2ActivationKeys.countTableRows();
+		task ("When I count the numbers of rows") {
+			var keyCount = CP2ActivationKeys.countTableRows();
+		}
 
-		CP2ActivationKeys.assertLicenseQuantity(
-			licenseTab = "${keyStatus}",
-			numberOfLicenses = "${keyCount}");
+		task ("Then I assert that the amount of rows is equals to the number at the tab") {
+			CP2ActivationKeys.assertLicenseQuantity(
+				licenseTab = "${keyStatus}",
+				numberOfLicenses = "${keyCount}");
+		}
     }
 
 	@description = "Verify if the 'Expired' tab displays the number of keys for it"
@@ -140,23 +178,35 @@ definition {
 
 		var keyStatus = "Expired";
 
-		CustomerPortal.search(searchItem = "2022 FIFA World Cup Qatar - FAN ID");
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-		CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
-		CP2NavigationMenu.goToProductActivation();
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
 
-		CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
 
-		CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		task ("And I select the pagination quantity to 50 items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		}
 
-		CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+		task ("And I click at the Expired tab") {
+			CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+		}
 
-		var keyCount = CP2ActivationKeys.countTableRows();
+		task ("When I count the numbers of rows") {
+			var keyCount = CP2ActivationKeys.countTableRows();
+		}
 
-		CP2ActivationKeys.assertLicenseQuantity(
-			licenseTab = "${keyStatus}",
-			numberOfLicenses = "${keyCount}");
+		task ("Then I assert that the amount of rows is equals to the number at the tab") {
+			CP2ActivationKeys.assertLicenseQuantity(
+				licenseTab = "${keyStatus}",
+				numberOfLicenses = "${keyCount}");
+		}
     }
 
 }

@@ -1361,12 +1361,12 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(sapEntry1.isDefaultSAPEntry());
 		Assert.assertTrue(sapEntry1.isEnabled());
 
-		List<String> allowedServiceSignaturesList1 =
+		List<String> allowedServiceSignatures1 =
 			sapEntry1.getAllowedServiceSignaturesList();
 
 		Assert.assertEquals(
-			allowedServiceSignaturesList1.toString(), 3,
-			allowedServiceSignaturesList1.size());
+			allowedServiceSignatures1.toString(), 3,
+			allowedServiceSignatures1.size());
 
 		SAPEntry sapEntry2 = _sapEntryLocalService.fetchSAPEntry(
 			group.getCompanyId(), "TEST_SAP_ENTRY_2");
@@ -1375,12 +1375,12 @@ public class BundleSiteInitializerTest {
 		Assert.assertFalse(sapEntry2.isDefaultSAPEntry());
 		Assert.assertTrue(sapEntry2.isEnabled());
 
-		List<String> allowedServiceSignaturesList2 =
+		List<String> allowedServiceSignatures2 =
 			sapEntry2.getAllowedServiceSignaturesList();
 
 		Assert.assertEquals(
-			allowedServiceSignaturesList2.toString(), 5,
-			allowedServiceSignaturesList2.size());
+			allowedServiceSignatures2.toString(), 5,
+			allowedServiceSignatures2.size());
 	}
 
 	private void _assertSiteConfiguration(Long groupId) {

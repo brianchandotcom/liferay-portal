@@ -217,6 +217,26 @@ definition {
 			expectedCount = "1");
 	}
 
+	@description = "This is a use case for LPS-160064."
+	@priority = "3"
+	test CanAddAVirtualInstanceWithDBPartitioningEnabled {
+		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddAVirtualInstanceWithDBPartitioningEnabled";
+
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.baker.com",
+			portalInstanceId = "www.baker.com",
+			virtualHost = "www.baker.com");
+
+		AssertConsoleTextNotPresent(value1 = "org.hibernate.StaleStateException");
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Welcome to Liferay");
+	}
+
 	@priority = "4"
 	test CanSetVirtualHostViaPages {
 		property test.assert.warning.exceptions = "true";

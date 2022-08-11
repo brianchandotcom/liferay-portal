@@ -33,7 +33,7 @@ export default function useCheckFormsValidity() {
 
 	const validations = new Map();
 
-	return () => {
+	return async () => {
 		const {
 			fragmentEntryLinks,
 			layoutData,
@@ -46,21 +46,18 @@ export default function useCheckFormsValidity() {
 			return Promise.resolve(true);
 		}
 
-		forms.forEach((form) => {
+		for (const form of forms) {
 			if (!hasVisibleSubmitChild(form.itemId, globalContext)) {
 				addError(validations, form, FORM_ERROR_TYPES.missingSubmit);
 			}
 
-			if (
-				hasUnmappedInputChild(
-					form.itemId,
-					fragmentEntryLinks,
-					layoutData
-				)
-			) {
-				addError(validations, form, FORM_ERROR_TYPES.missingFragments);
-			}
-		});
+			await checkUnmappedInputChild(
+				form,
+				fragmentEntryLinks,
+				layoutData,
+				validations
+			);
+		}
 
 		const promises = forms.map((form) => {
 			const {
@@ -159,14 +156,19 @@ function getFormItems(layoutData) {
 	);
 }
 
-function hasUnmappedInputChild(formId, fragmentEntryLinks, layoutData) {
-	const descendantIds = getDescendantIds(layoutData, formId);
+async function checkUnmappedInputChild(
+	form,
+	fragmentEntryLinks,
+	layoutData,
+	validations
+) {
+	const descendantIds = getDescendantIds(layoutData, form.itemId);
 
-	return descendantIds.some((descendantId) => {
+	for (const descendantId of descendantIds) {
 		const item = layoutData.items[descendantId];
 
 		if (item.type !== LAYOUT_DATA_ITEM_TYPES.fragment) {
-			return false;
+			continue;
 		}
 
 		const fragmentEntryLink =
@@ -175,7 +177,7 @@ function hasUnmappedInputChild(formId, fragmentEntryLinks, layoutData) {
 		if (
 			fragmentEntryLink.fragmentEntryType !== FRAGMENT_ENTRY_TYPES.input
 		) {
-			return false;
+			continue;
 		}
 
 		const {inputFieldId} =
@@ -183,8 +185,24 @@ function hasUnmappedInputChild(formId, fragmentEntryLinks, layoutData) {
 				FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 			] || {};
 
-		return !inputFieldId;
-	});
+		if (inputFieldId) {
+			continue;
+		}
+
+		const allowedFieldTypes = await FormService.getFragmentEntryInputFieldTypes(
+			{
+				fragmentEntryKey: fragmentEntryLink.fragmentEntryKey,
+			}
+		);
+
+		const isCaptcha = allowedFieldTypes.includes('captcha');
+
+		if (isCaptcha) {
+			continue;
+		}
+
+		addError(validations, form, FORM_ERROR_TYPES.missingFragments);
+	}
 }
 
 function hasUnmappedRequiredField(

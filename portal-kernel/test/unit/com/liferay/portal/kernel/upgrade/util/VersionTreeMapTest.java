@@ -62,7 +62,7 @@ public class VersionTreeMapTest {
 	public void testSingleMultiStepUpgrade() {
 		VersionTreeMap versionTreeMap = new VersionTreeMap();
 
-		versionTreeMap.put(new Version(1, 0, 0), new MultiStepUpgrade());
+		versionTreeMap.put(new Version(1, 0, 0), new MultiStepUpgradeProcess());
 
 		Collection<UpgradeStep> upgradeSteps = versionTreeMap.values();
 
@@ -103,7 +103,7 @@ public class VersionTreeMapTest {
 		}
 	}
 
-	private class MultiStepUpgrade extends DummyUpgradeProcess {
+	private class MultiStepUpgradeProcess extends DummyUpgradeProcess {
 
 		@Override
 		protected UpgradeStep[] getPostUpgradeSteps() {

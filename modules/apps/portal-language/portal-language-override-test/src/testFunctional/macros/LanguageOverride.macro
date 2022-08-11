@@ -40,6 +40,22 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro exportOverriddenTranslations {
+		Portlet.gotoPortletOptions(portletOption = "Export Overridden Translations");
+
+		var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
+		var tempFileDirectory = selenium.getOutputDirName();
+
+		var exportedZipFile = FileUtil.exists("${tempFileDirectory}/${tempFileName}");
+
+		if ("${exportedZipFile}" == "true") {
+			echo("Overridden translations are exported");
+		}
+		else {
+			fail("FAIL! Cannot find the exported zip file for overridden translations");
+		}
+	}
+
 	macro goToLanguageKey {
 		var key_languageKey = "${languageKey}";
 

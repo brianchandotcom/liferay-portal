@@ -11,12 +11,15 @@
 
 export default async function liferayFetcher<T>(
 	url: string,
-	token: string
+	token: string,
+	options?: RequestInit
 ): Promise<T> {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(url, {
+		...options,
 		headers: {
-			'accept': 'application/json',
+			...options?.headers,
+			'Accept': 'application/json',
 			'x-csrf-token': token,
 		},
 	});
@@ -27,3 +30,30 @@ export default async function liferayFetcher<T>(
 
 	return response.json();
 }
+
+liferayFetcher.post = <T>(url: string, token: string, data: T) =>
+	liferayFetcher<T>(url, token, {
+		body: JSON.stringify(data),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+	});
+
+liferayFetcher.put = <T>(url: string, token: string, data: Partial<T>) =>
+	liferayFetcher<T>(url, token, {
+		body: JSON.stringify(data),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'PUT',
+	});
+
+liferayFetcher.patch = <T>(url: string, token: string, data: Partial<T>) =>
+	liferayFetcher<T>(url, token, {
+		body: JSON.stringify(data),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'PATCH',
+	});

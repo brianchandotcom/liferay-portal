@@ -13,8 +13,11 @@ import {FormikHelpers, setNestedObjectValues} from 'formik';
 import {useState} from 'react';
 
 import PRMFormik from '../../common/components/PRMFormik';
+import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import {RequestStatus} from '../../common/enums/requestStatus';
 import MDFRequest from '../../common/interfaces/mdfRequest';
+import createMDFRequest from '../../common/services/liferay/object/mdf-requests/createMDFRequest';
+import liferayNavigate from '../../common/utils/liferayNavigate';
 import {StepType} from './enums/stepType';
 import Activities from './steps/Activities';
 import Goals from './steps/Goals';
@@ -27,10 +30,10 @@ const initialFormValues: MDFRequest = {
 	country: {},
 	liferayBusinessSalesGoals: [],
 	overallCampaign: '',
-	r_company_accountEntryId: '',
+	r_accountToMDFRequests_accountEntryId: '',
 	requestStatus: RequestStatus.DRAFT,
-	targetsAudienceRole: [],
-	targetsMarket: [],
+	targetAudienceRoles: [],
+	targetMarkets: [],
 };
 
 type StepComponent = {
@@ -39,9 +42,20 @@ type StepComponent = {
 
 const onSubmit = () => {};
 
-const onSaveAsDraft = () => {};
+const onSaveAsDraft = async (
+	values: MDFRequest,
+	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
+) => {
+	formikHelpers.setSubmitting(true);
 
-const onCancel = () => {};
+	const dtoMDFRequest = await createMDFRequest(values);
+
+	if (dtoMDFRequest) {
+		liferayNavigate(PRMPageRoute.MDF_REQUESTS_LISTING);
+	}
+};
+
+const onCancel = () => liferayNavigate(PRMPageRoute.MDF_REQUESTS_LISTING);
 
 const MDFRequestForm = () => {
 	const [step, setStep] = useState<StepType>(StepType.GOALS);

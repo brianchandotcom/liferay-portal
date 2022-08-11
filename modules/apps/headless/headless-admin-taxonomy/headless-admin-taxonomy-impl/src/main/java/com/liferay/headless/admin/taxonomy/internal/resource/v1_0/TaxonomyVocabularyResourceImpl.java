@@ -719,6 +719,8 @@ public class TaxonomyVocabularyResourceImpl
 			"Document",
 			"com.liferay.document.library.kernel.model.DLFileEntry");
 		_map(
+			"Document", "com.liferay.portal.kernel.repository.model.FileEntry");
+		_map(
 			"KnowledgeBaseArticle",
 			"com.liferay.knowledge.base.model.KBArticle");
 		_map("Organization", Organization.class.getName());

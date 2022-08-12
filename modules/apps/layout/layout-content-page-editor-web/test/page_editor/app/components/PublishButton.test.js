@@ -17,7 +17,6 @@ import {act, fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import PublishButton from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/PublishButton';
-import {StyleErrorsContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StyleErrorsContext';
 import useCheckFormsValidity from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useCheckFormsValidity';
 
 jest.mock(
@@ -42,26 +41,16 @@ jest.mock(
 	() => jest.fn()
 );
 
-const ERRORS = {
-	defaultId: {background: {error: 'I am an error', value: 'error'}},
-};
-
-const renderComponent = ({
-	onPublish = () => {},
-	errors,
-	canPublish = true,
-} = {}) => {
+const renderComponent = ({onPublish = () => {}, canPublish = true} = {}) => {
 	const ref = React.createRef();
 
 	return render(
-		<StyleErrorsContextProvider initialState={errors}>
-			<PublishButton
-				canPublish={canPublish}
-				formRef={ref}
-				label="publish"
-				onPublish={onPublish}
-			/>
-		</StyleErrorsContextProvider>
+		<PublishButton
+			canPublish={canPublish}
+			formRef={ref}
+			label="publish"
+			onPublish={onPublish}
+		/>
 	);
 };
 
@@ -90,18 +79,6 @@ describe('PublishButton', () => {
 		await fireEvent.click(button);
 
 		expect(onPublish).toHaveBeenCalled();
-	});
-
-	it('opens a modal when the button is clicked and there are errors', async () => {
-		renderComponent({errors: ERRORS});
-
-		const button = screen.getByLabelText('publish');
-
-		fireEvent.click(button);
-
-		expect(
-			screen.getByLabelText('style-errors-detected')
-		).toBeInTheDocument();
 	});
 
 	it('does not allow to publish if canPublish is false', () => {

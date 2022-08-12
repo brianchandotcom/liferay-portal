@@ -269,33 +269,34 @@ describe('ColorPicker', () => {
 		});
 
 		describe('Input errors', () => {
-			it('renders an error when the written token does not exist', () => {
-				const {baseElement, getByText} = renderColorPicker({
-					value: '#fff',
+			it('restores previous value when the written token does not exist', () => {
+				const {baseElement} = renderColorPicker({
+					value: '#FFF',
 				});
 
-				onTypeValue(baseElement.querySelector('input'), 'prim');
+				const input = baseElement.querySelector('input');
 
-				expect(
-					getByText('this-token-does-not-exist')
-				).toBeInTheDocument();
+				onTypeValue(input, 'prim');
+
+				expect(input).toHaveValue('#FFF');
 			});
 
-			it('Clears an error when the clear selection button is clicked', () => {
+			it('clears an error when the clear selection button is clicked', () => {
 				const {
 					baseElement,
 					getByTitle,
 					queryByText,
 				} = renderColorPicker({
+					field: {...FIELD, name: 'orange'},
 					value: '#fff',
 				});
 
-				onTypeValue(baseElement.querySelector('input'), 'prim');
+				onTypeValue(baseElement.querySelector('input'), 'orange');
 
 				userEvent.click(getByTitle('clear-selection'));
 
 				expect(
-					queryByText('this-token-does-not-exist')
+					queryByText('tokens-cannot-reference-itself')
 				).not.toBeInTheDocument();
 			});
 

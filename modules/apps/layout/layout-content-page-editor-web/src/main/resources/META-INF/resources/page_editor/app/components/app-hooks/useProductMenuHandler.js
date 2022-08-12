@@ -25,11 +25,13 @@ export default function useProductMenuHandler() {
 	const sidebarOpen = useSelector((state) => state.sidebar.open);
 
 	useEffect(() => {
-		hideProductMenuIfPresent({
-			onHide: () => {
-				dispatch(switchSidebarPanel({sidebarOpen: true}));
-			},
-		});
+		if (Liferay.FeatureFlags['LPS-153452']) {
+			hideProductMenuIfPresent({
+				onHide: () => {
+					dispatch(switchSidebarPanel({sidebarOpen: true}));
+				},
+			});
+		}
 	}, [dispatch]);
 
 	useEffect(() => {

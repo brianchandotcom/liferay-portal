@@ -699,22 +699,6 @@ public class JournalContentDisplayContext {
 		return _contentMetadataAssetAddonEntries;
 	}
 
-	public long[] getSelectedGroupIds() {
-		Group scopeGroup = _themeDisplay.getScopeGroup();
-
-		if (scopeGroup.isStagingGroup() &&
-			!scopeGroup.isInStagingPortlet(JournalPortletKeys.JOURNAL)) {
-
-			return new long[] {scopeGroup.getLiveGroupId()};
-		}
-
-		if (_themeDisplay.getScopeGroupId() != _themeDisplay.getSiteGroupId()) {
-			return new long[] {_themeDisplay.getScopeGroupId()};
-		}
-
-		return null;
-	}
-
 	public List<UserToolAssetAddonEntry>
 		getSelectedUserToolAssetAddonEntries() {
 

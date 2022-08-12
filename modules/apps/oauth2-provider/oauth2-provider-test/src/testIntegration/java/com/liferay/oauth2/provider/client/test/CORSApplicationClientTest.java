@@ -111,9 +111,9 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		String corsHeaderString = response.getHeaderString(
 			"Access-Control-Allow-Origin");
 
-		Assert.assertEquals(_TEST_CORS_URI, corsHeaderString);
+		Assert.assertEquals(null, corsHeaderString);
 
-		Assert.assertEquals(403, response.getStatus());
+		Assert.assertEquals(401, response.getStatus());
 	}
 
 	@Test

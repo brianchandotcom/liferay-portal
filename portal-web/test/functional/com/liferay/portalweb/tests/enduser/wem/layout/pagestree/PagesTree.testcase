@@ -104,6 +104,8 @@ definition {
 		}
 
 		task ("View public page names in page tree") {
+			PagesFinder.goToPagesFinder();
+
 			PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
 
 			for (var pageType : list "Widget Page,Panel,Page Set,Link to a Page of This Site,Full Page Application,Embedded,Link to URL,Content Page") {
@@ -202,12 +204,12 @@ definition {
 		}
 
 		task ("View the collection name as draft in the page tree") {
+			PagesFinder.goToPagesFinder();
+
 			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 1*");
 		}
 
 		task ("Add a collection page based on Highest Rated Assets via page tree") {
-			PagesFinder.goToPagesFinder();
-
 			PagesFinder.addCollectionPage(
 				collectionName = "Highest Rated Assets",
 				pageName = "Test Collection Page Name 2",
@@ -241,6 +243,8 @@ definition {
 		}
 
 		task ("View the draft collection page name in the page tree") {
+			PagesFinder.goToPagesFinder();
+
 			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 1*");
 		}
 	}
@@ -266,6 +270,8 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection via page tree") {
+			PagesFinder.goToPagesFinder();
+
 			PagesFinder.addCollectionPage(
 				collectionName = "Dynamic Collection Name",
 				menuItem = "Dynamic Collection",
@@ -277,6 +283,8 @@ definition {
 		}
 
 		task ("View collection page names in page tree") {
+			PagesFinder.goToPagesFinder();
+
 			for (var text : list "Manual,Dynamic") {
 				PagesFinder.viewPageNameInPagesFinder(pageName = "${text} Collection Page Name");
 			}

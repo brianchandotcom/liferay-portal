@@ -297,6 +297,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_listTypeDefinitionResourceFactory = listTypeDefinitionResourceFactory;
 		_listTypeEntryResource = listTypeEntryResource;
 		_listTypeEntryResourceFactory = listTypeEntryResourceFactory;
+		_notificationTemplateResourceFactory = notificationTemplateResource;
 		_objectActionLocalService = objectActionLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
@@ -328,8 +329,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 		_workflowDefinitionResourceFactory = workflowDefinitionResourceFactory;
-
-		_notificationTemplateResourceFactory = notificationTemplateResource;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
@@ -2903,8 +2902,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			if (segmentsEntry == null) {
 				_segmentsEntryLocalService.addSegmentsEntry(
-					jsonObject.getString(
-						"segmentsEntryKey", StringPool.NEW_LINE),
+					jsonObject.getString("segmentsEntryKey"),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),
 					null, jsonObject.getBoolean("active", true), null,
@@ -2913,8 +2911,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			else {
 				_segmentsEntryLocalService.updateSegmentsEntry(
 					segmentsEntry.getSegmentsEntryId(),
-					jsonObject.getString(
-						"segmentsEntryKey", StringPool.NEW_LINE),
+					jsonObject.getString("segmentsEntryKey"),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),
 					null, jsonObject.getBoolean("active", true), null,

@@ -3906,6 +3906,17 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		PageEditor.configureFragment(hideFragment = "true");
 	}
 
+	macro mapFormContainerToObject {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Select(
+			key_position = "${index}",
+			locator1 = "PageEditor#FORM_CONTAINER_SELECT_FIELD",
+			value1 = "${contentType}");
+	}
+
 	macro openExperienceMenu {
 		if (IsElementNotPresent(locator1 = "PageEditor#EXPERIENCE_MENU")) {
 			Click(locator1 = "PageEditor#EXPERIENCE_MENU_BUTTON");

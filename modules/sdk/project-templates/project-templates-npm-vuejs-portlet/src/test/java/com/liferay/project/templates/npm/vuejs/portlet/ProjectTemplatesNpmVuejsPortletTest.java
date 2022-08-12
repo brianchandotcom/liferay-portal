@@ -53,22 +53,22 @@ public class ProjectTemplatesNpmVuejsPortletTest
 				{"foo", "foo", "Foo", "7.1.3-1", "yarn"},
 				{"foo", "foo", "Foo", "7.2.1-1", "yarn"},
 				{"foo", "foo", "Foo", "7.3.7", "yarn"},
-				{"foo", "foo", "Foo", "7.4.1-1", "yarn"},
+				{"foo", "foo", "Foo", "7.4.3.36", "yarn"},
 				{"foo-bar", "foo.bar", "FooBar", "7.0.6-2", "yarn"},
 				{"foo-bar", "foo.bar", "FooBar", "7.1.3-1", "yarn"},
 				{"foo-bar", "foo.bar", "FooBar", "7.2.1-1", "yarn"},
 				{"foo-bar", "foo.bar", "FooBar", "7.3.7", "yarn"},
-				{"foo-bar", "foo.bar", "FooBar", "7.4.1-1", "yarn"},
+				{"foo-bar", "foo.bar", "FooBar", "7.4.3.36", "yarn"},
 				{"foo", "foo", "Foo", "7.0.6-2", "npm"},
 				{"foo", "foo", "Foo", "7.1.3-1", "npm"},
 				{"foo", "foo", "Foo", "7.2.1-1", "npm"},
 				{"foo", "foo", "Foo", "7.3.7", "npm"},
-				{"foo", "foo", "Foo", "7.4.1-1", "npm"},
+				{"foo", "foo", "Foo", "7.4.3.36", "npm"},
 				{"foo-bar", "foo.bar", "FooBar", "7.0.6-2", "npm"},
 				{"foo-bar", "foo.bar", "FooBar", "7.1.3-1", "npm"},
 				{"foo-bar", "foo.bar", "FooBar", "7.2.1-1", "npm"},
 				{"foo-bar", "foo.bar", "FooBar", "7.3.7", "npm"},
-				{"foo-bar", "foo.bar", "FooBar", "7.4.1-1", "npm"}
+				{"foo-bar", "foo.bar", "FooBar", "7.4.3.36", "npm"}
 			});
 	}
 

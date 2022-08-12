@@ -68,7 +68,7 @@ definition {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-				item = "Change Thumbnail",
+				menuItem = "Change Thumbnail",
 				pageTemplateName = "Page Template Name");
 
 			ItemSelector.uploadFile(uploadFileName = "Document_1.png");

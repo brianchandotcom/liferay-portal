@@ -1114,7 +1114,7 @@ definition {
 
 		task ("Edit second master page template and uncheck All Fragments") {
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
-				item = "Edit",
+				menuItem = "Edit",
 				masterLayoutName = "Custom Masters Page Template 2");
 
 			AssertClick(

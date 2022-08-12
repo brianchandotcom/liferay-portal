@@ -1973,6 +1973,22 @@ public class OrganizationLocalServiceImpl
 			StringPool.BLANK, null, null, null, 0, 0, null);
 	}
 
+	@Override
+	public Organization updateLogo(long organizationId, byte[] logoBytes)
+		throws PortalException {
+
+		Organization organization = organizationPersistence.findByPrimaryKey(
+			organizationId);
+
+		PortalUtil.updateImageId(
+			organization, true, logoBytes, "logoId",
+			_userFileUploadsSettings.getImageMaxSize(),
+			_userFileUploadsSettings.getImageMaxHeight(),
+			_userFileUploadsSettings.getImageMaxWidth());
+
+		return organizationPersistence.update(organization);
+	}
+
 	/**
 	 * Updates the organization.
 	 *

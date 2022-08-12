@@ -1,14 +1,9 @@
 definition {
 
 	macro deleteCollection {
-		Click(
-			key_index = "3",
-			key_text = "${collectionName}",
-			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+		Navigator.gotoNavNested(navNested = "${collectionName}");
 
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		MenuItem.click(menuItem = "Delete");
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Delete");
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",
@@ -30,7 +25,12 @@ definition {
 	macro renameCollection {
 		Navigator.gotoNavNested(navNested = "${collectionName}");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		Click(
+			key_index = "4",
+			key_text = "${collectioName}",
+			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+		MenuItem.click(menuItem = "Edit");
 
 		Collection.editCollection(
 			collectionDescription = "${collectionDescription}",

@@ -161,9 +161,10 @@ definition {
 
 			FragmentsAdmin.viewEntryPresent(entry = "Link");
 
-			Click.waitForMenuToggleJSClick(
-				key_card = "Link",
-				locator1 = "Card#CARD_ELLIPSIS");
+			Click(
+				key_index = "4",
+				key_text = "Link",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
 			MenuItem.viewNotPresent(menuItem = "Delete");
 
@@ -171,7 +172,10 @@ definition {
 				collectionName = "Imported",
 				scope = "Global");
 
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+			Click(
+				key_index = "4",
+				key_text = "Link",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
 			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
@@ -183,9 +187,10 @@ definition {
 
 			FragmentsAdmin.viewEntryPresent(entry = "Image");
 
-			Click.waitForMenuToggleJSClick(
-				key_card = "Image",
-				locator1 = "Card#CARD_ELLIPSIS");
+			Click(
+				key_index = "4",
+				key_text = "Image",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
 			MenuItem.viewNotPresent(menuItem = "Delete");
 
@@ -193,7 +198,10 @@ definition {
 				collectionName = "Imported",
 				scope = "Default");
 
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+			Click(
+				key_index = "4",
+				key_text = "Image",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
 			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
@@ -239,9 +247,10 @@ definition {
 
 			FragmentsAdmin.viewEntryPresent(entry = "Image");
 
-			Click.waitForMenuToggleJSClick(
-				key_card = "Image",
-				locator1 = "Card#CARD_ELLIPSIS");
+			Click(
+				key_index = "4",
+				key_text = "Image",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
 			MenuItem.viewNotPresent(menuItem = "Delete");
 
@@ -249,7 +258,10 @@ definition {
 				collectionName = "Imported",
 				scope = "Default");
 
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+			Click(
+				key_index = "4",
+				key_text = "Image",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
 			MenuItem.viewNotPresent(menuItem = "Delete");
 		}

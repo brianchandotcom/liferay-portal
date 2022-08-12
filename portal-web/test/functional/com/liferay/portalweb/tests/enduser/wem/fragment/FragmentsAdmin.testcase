@@ -691,7 +691,10 @@ definition {
 		}
 
 		task ("When the Fragments creator opens the dropdown menu of custom fragment set") {
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+			Click(
+				key_index = "3",
+				key_text = "New Fragment Set Name",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 		}
 
 		task ("Then the Fragments creator can see the new icons on the dropdown menu of custom fragment set") {

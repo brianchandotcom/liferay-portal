@@ -120,7 +120,12 @@ definition {
 	macro deletePageTemplateSet {
 		Navigator.gotoNavNested(navNested = "${setName}");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Delete");
+		Click(
+			key_index = "3",
+			key_text = "${setName}",
+			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+		MenuItem.click(menuItem = "Delete");
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",

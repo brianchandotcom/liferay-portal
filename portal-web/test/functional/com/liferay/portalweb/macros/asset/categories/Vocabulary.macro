@@ -146,7 +146,12 @@ definition {
 	macro deleteAssociatedAssetTypeViaVocabularyCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		Click(
+			key_index = "3",
+			key_text = "${vocabularyName}",
+			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+		MenuItem.click(menuItem = "Edit");
 
 		Panel.expandPanel(panel = "Associated Asset Types");
 
@@ -353,7 +358,12 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Permissions");
+		Click(
+			key_index = "3",
+			key_text = "${vocabularyName}",
+			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+		MenuItem.click(menuItem = "Permissions");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -383,7 +393,12 @@ definition {
 	macro viewWithAssociatedAssetTypeCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		Click(
+			key_index = "3",
+			key_text = "${vocabularyName}",
+			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+		MenuItem.click(menuItem = "Edit");
 
 		Panel.expandPanel(panel = "Associated Asset Types");
 

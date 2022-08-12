@@ -195,11 +195,17 @@ definition {
 		}
 
 		task ("Assert the actions order of a collection") {
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+			Click.waitForMenuToggleJSClick(
+				key_index = "3",
+				key_text = "Colllection Name",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
 			MenuItem.viewOrder(menuItemList = "Edit,Export,Import,Delete");
 
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+			Click.waitForMenuToggleJSClick(
+				key_index = "3",
+				key_text = "Colllection Name",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 		}
 
 		task ("Assert the actions order of a draft fragment") {

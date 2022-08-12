@@ -107,7 +107,12 @@ definition {
 	macro exportCollection {
 		Navigator.gotoNavNested(navNested = "${collectionName}");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
+		Click.waitForMenuToggleJSClick(
+			key_index = "4",
+			key_text = "${collectionName}",
+			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+		MenuItem.click(menuItem = "${menuItem}");
 	}
 
 	macro exportFragment {

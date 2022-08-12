@@ -656,6 +656,7 @@ definition {
 	@priority = "3"
 	test AddRepeatingWithUserInviteAccept {
 		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -955,6 +956,7 @@ definition {
 	@priority = "4"
 	test CancelRepeatingDialog {
 		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Non-Repeating Event 1");
@@ -1012,11 +1014,6 @@ definition {
 		CalendarEvent.viewNoRepeating();
 
 		CalendarEvent.publish();
-
-
-
-
-		
 	}
 
 	@description = "LRQA-71887 - Verify that the user can edit the event after it has been published"

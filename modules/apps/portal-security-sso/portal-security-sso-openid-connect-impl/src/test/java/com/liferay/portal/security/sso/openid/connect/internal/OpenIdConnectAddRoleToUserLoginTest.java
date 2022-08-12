@@ -318,6 +318,21 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		_portalURL = "http://localhost:8080";
 
 		Mockito.when(
+			_companyLocalServiceMock.getCompany(_COMPANY_ID)
+		).thenReturn(
+			_companyMock
+		);
+		Mockito.when(
+			_companyMock.isStrangers()
+		).thenReturn(
+			true
+		);
+		Mockito.when(
+			_companyMock.isStrangersWithMx()
+		).thenReturn(
+			true
+		);
+		Mockito.when(
 			_userInfo.getEmailAddress()
 		).thenReturn(
 			emailAddress
@@ -336,21 +351,6 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 			_userInfo.getMiddleName()
 		).thenReturn(
 			emailAddress
-		);
-		Mockito.when(
-			_companyLocalServiceMock.getCompany(_COMPANY_ID)
-		).thenReturn(
-			_companyMock
-		);
-		Mockito.when(
-			_companyMock.isStrangers()
-		).thenReturn(
-			true
-		);
-		Mockito.when(
-			_companyMock.isStrangersWithMx()
-		).thenReturn(
-			true
 		);
 
 		User user = new UserImpl();

@@ -6,7 +6,7 @@
 	"fromName": {
 		"en-US": "Raylife"
 	},
-	"name": "Quote retrieve notification template",
+	"name": "Quote Retrieve Notification Template",
 	"subject": {
 		"en-US": "Continue your Raylife [%PRODUCTNAME%] quote"
 	},

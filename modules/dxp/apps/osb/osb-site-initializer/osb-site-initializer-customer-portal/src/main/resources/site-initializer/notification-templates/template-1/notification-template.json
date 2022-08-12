@@ -6,7 +6,7 @@
 	"fromName": {
 		"en-US": "Customer Portal"
 	},
-	"name": "Setup DXP Cloud Environment notification template",
+	"name": "Setup DXP Cloud Environment Notification Template",
 	"subject": {
 		"en-US": "Customer Portal email"
 	},

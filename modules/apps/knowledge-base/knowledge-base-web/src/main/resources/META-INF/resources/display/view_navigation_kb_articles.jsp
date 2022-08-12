@@ -21,10 +21,10 @@ KBNavigationDisplayContext kbNavigationDisplayContext = (KBNavigationDisplayCont
 
 KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-long parentResourcePrimKey = (long)request.getAttribute("view_navigation_articles.jsp-parentResourcePrimKey");
-int level = GetterUtil.getInteger(request.getAttribute("view_navigation_articles.jsp-level"));
+long parentResourcePrimKey = (long)request.getAttribute("view_navigation_kb_articles.jsp-parentResourcePrimKey");
+int level = GetterUtil.getInteger(request.getAttribute("view_navigation_kb_articles.jsp-level"));
 
-KBArticleURLHelper kbArticleURLHelper = (KBArticleURLHelper)request.getAttribute("view_navigation_articles.jsp-kbArticleURLHelper");
+KBArticleURLHelper kbArticleURLHelper = (KBArticleURLHelper)request.getAttribute("view_navigation_kb_articles.jsp-kbArticleURLHelper");
 
 for (KBArticle childKBArticle : kbNavigationDisplayContext.getChildKBArticles(themeDisplay.getScopeGroupId(), parentResourcePrimKey, level)) {
 %>
@@ -50,11 +50,11 @@ for (KBArticle childKBArticle : kbNavigationDisplayContext.getChildKBArticles(th
 			<c:if test="<%= kbNavigationDisplayContext.isFurtherExpansionRequired(parentResourcePrimKey, childKBArticle, level) %>">
 
 				<%
-				request.setAttribute("view_navigation_articles.jsp-level", level + 1);
-				request.setAttribute("view_navigation_articles.jsp-parentResourcePrimKey", childKBArticle.getResourcePrimKey());
+				request.setAttribute("view_navigation_kb_articles.jsp-level", level + 1);
+				request.setAttribute("view_navigation_kb_articles.jsp-parentResourcePrimKey", childKBArticle.getResourcePrimKey());
 				%>
 
-				<liferay-util:include page="/display/view_navigation_articles.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/display/view_navigation_kb_articles.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</li>
 	</ul>

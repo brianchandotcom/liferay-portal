@@ -44,7 +44,7 @@ request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_NAVIGATION_DISPLAY_CONTEXT, kbN
 					</div>
 				</c:if>
 
-				<liferay-util:include page="/display/view_article.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/display/view_kb_article.jsp" servletContext="<%= application %>" />
 			</clay:col>
 		</clay:row>
 	</c:when>

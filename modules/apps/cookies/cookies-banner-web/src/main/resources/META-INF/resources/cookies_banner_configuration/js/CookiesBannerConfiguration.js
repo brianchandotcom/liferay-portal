@@ -38,12 +38,13 @@ export default function ({
 	toggleSwitches.forEach((toggleSwitch) => {
 		const cookieKey = toggleSwitch.dataset.cookieKey;
 
-		toggleSwitch.addEventListener('click', () => {
+		const notifyCookiePreferenceUpdate = () =>
 			getOpener().Liferay.fire('cookiePreferenceUpdate', {
 				key: cookieKey,
 				value: toggleSwitch.checked ? 'true' : 'false',
 			});
-		});
+
+		toggleSwitch.addEventListener('click', notifyCookiePreferenceUpdate);
 
 		if (getCookie(userConfigCookieName)) {
 			toggleSwitch.checked = getCookie(cookieKey) === 'true';
@@ -51,6 +52,8 @@ export default function ({
 		else {
 			toggleSwitch.checked = toggleSwitch.dataset.prechecked === 'true';
 		}
+
+		notifyCookiePreferenceUpdate();
 
 		toggleSwitch.removeAttribute('disabled');
 	});

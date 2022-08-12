@@ -15,6 +15,7 @@
 package com.liferay.redirect.internal.provider;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -22,6 +23,7 @@ import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
@@ -57,7 +59,7 @@ public class RedirectProviderImplTest {
 
 	@Test
 	public void testEmptyPatterns() {
-		_redirectProviderImpl.setPatterns(Collections.emptyMap());
+		_setupPatterns(Collections.emptyMap());
 
 		Assert.assertNull(
 			_getRedirectProviderRedirect(StringUtil.randomString()));
@@ -67,7 +69,7 @@ public class RedirectProviderImplTest {
 
 	@Test
 	public void testFirstReplacementPatternMatches() {
-		_redirectProviderImpl.setPatterns(
+		_setupPatterns(
 			LinkedHashMapBuilder.put(
 				Pattern.compile("^a(b)c"), "u$1w"
 			).put(
@@ -84,7 +86,7 @@ public class RedirectProviderImplTest {
 
 	@Test
 	public void testFirstSimplePatternMatches() {
-		_redirectProviderImpl.setPatterns(
+		_setupPatterns(
 			LinkedHashMapBuilder.put(
 				Pattern.compile("^abc"), "xyz"
 			).put(
@@ -101,7 +103,7 @@ public class RedirectProviderImplTest {
 
 	@Test
 	public void testLastReplacementPatternMatches() {
-		_redirectProviderImpl.setPatterns(
+		_setupPatterns(
 			LinkedHashMapBuilder.put(
 				Pattern.compile("^uvw"), "xyz"
 			).put(
@@ -118,7 +120,7 @@ public class RedirectProviderImplTest {
 
 	@Test
 	public void testLastSimplePatternMatches() {
-		_redirectProviderImpl.setPatterns(
+		_setupPatterns(
 			LinkedHashMapBuilder.put(
 				Pattern.compile("^u(v)w"), "x$1z"
 			).put(
@@ -135,7 +137,7 @@ public class RedirectProviderImplTest {
 
 	@Test
 	public void testRewritePatternSingleMatch() {
-		_redirectProviderImpl.setPatterns(
+		_setupPatterns(
 			Collections.singletonMap(Pattern.compile("^a(b)c"), "x$1z"));
 
 		RedirectProvider.Redirect redirect = _getRedirectProviderRedirect(
@@ -148,7 +150,7 @@ public class RedirectProviderImplTest {
 
 	@Test
 	public void testRewritePatternSingleMismatch() {
-		_redirectProviderImpl.setPatterns(
+		_setupPatterns(
 			Collections.singletonMap(Pattern.compile("^a(b)c"), "x$1z"));
 
 		Assert.assertNull(_getRedirectProviderRedirect("123"));
@@ -158,7 +160,7 @@ public class RedirectProviderImplTest {
 
 	@Test
 	public void testSimplePatternSingleMatch() {
-		_redirectProviderImpl.setPatterns(
+		_setupPatterns(
 			Collections.singletonMap(Pattern.compile("^abc"), "xyz"));
 
 		RedirectProvider.Redirect redirect = _getRedirectProviderRedirect(
@@ -171,7 +173,7 @@ public class RedirectProviderImplTest {
 
 	@Test
 	public void testSimplePatternSingleMismatch() {
-		_redirectProviderImpl.setPatterns(
+		_setupPatterns(
 			Collections.singletonMap(Pattern.compile("^abc"), "xyz"));
 
 		Assert.assertNull(_getRedirectProviderRedirect("123"));
@@ -183,23 +185,31 @@ public class RedirectProviderImplTest {
 		String friendlyURL) {
 
 		return _redirectProviderImpl.getRedirect(
-			RandomTestUtil.randomLong(), StringUtil.randomString(),
-			friendlyURL);
+			_GROUP_ID, StringUtil.randomString(), friendlyURL);
+	}
+
+	private void _setupPatterns(Map<Pattern, String> patterns) {
+		_redirectProviderImpl.setGroupPatternsMap(
+			HashMapBuilder.put(
+				_GROUP_ID, patterns
+			).build());
 	}
 
 	private void _verifyMockInvocations() {
 		Mockito.verify(
 			_redirectEntryLocalService, Mockito.times(1)
 		).fetchRedirectEntry(
-			Mockito.anyLong(), Mockito.anyString(), Mockito.eq(false)
+			Mockito.eq(_GROUP_ID), Mockito.anyString(), Mockito.eq(false)
 		);
 
 		Mockito.verify(
 			_redirectEntryLocalService, Mockito.times(1)
 		).fetchRedirectEntry(
-			Mockito.anyLong(), Mockito.anyString(), Mockito.eq(true)
+			Mockito.eq(_GROUP_ID), Mockito.anyString(), Mockito.eq(true)
 		);
 	}
+
+	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 
 	private final RedirectEntryLocalService _redirectEntryLocalService =
 		Mockito.mock(RedirectEntryLocalService.class);

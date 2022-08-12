@@ -730,4 +730,67 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-156788. This test asserts that a user with the correct permissions can view and edit the External Reference Code for an Account Group."
+	@priority = "3"
+	test UserWithPermissionsCanEditExternalReferenceCode {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given an Account Group is created and a user is assigned to a role that can update and view Account Groups") {
+			JSONAccountGroup.addAccountGroup(accountGroupName = "AG Name");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.addRegularRole(roleTitle = "Update and View Account Groups");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Update and View Account Groups",
+				userEmailAddress = "userea@liferay.com");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_account_admin_web_internal_portlet_AccountGroupsAdminPortlet",
+				roleTitle = "Update and View Account Groups");
+
+			for (var resourceAction : list "UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceAction}",
+					resourceName = "com.liferay.account.model.AccountGroup",
+					roleTitle = "Update and View Account Groups");
+			}
+		}
+
+		task ("When that user goes to edit an Account Group") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			AccountGroups.openAccountGroupsAdmin();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "AG Name");
+		}
+
+		task ("Then the user is able to edit and view the External Reference Code") {
+			FormFields.editText(
+				fieldName = "externalReferenceCode",
+				fieldValue = "1234-5678");
+
+			PortletEntry.save();
+
+			FormFields.viewTextValue(
+				fieldName = "externalReferenceCode",
+				fieldValue = "1234-5678");
+		}
+	}
+
 }

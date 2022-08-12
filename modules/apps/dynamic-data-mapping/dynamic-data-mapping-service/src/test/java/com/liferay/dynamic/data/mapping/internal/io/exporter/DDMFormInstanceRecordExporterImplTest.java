@@ -236,6 +236,9 @@ public class DDMFormInstanceRecordExporterImplTest {
 		DDMFormInstanceRecordExporterImpl ddmFormInstanceRecordExporterImpl =
 			new DDMFormInstanceRecordExporterImpl();
 
+		ReflectionTestUtil.setFieldValue(
+			ddmFormInstanceRecordExporterImpl, "_language", _language);
+
 		Locale locale = new Locale("pt", "BR");
 
 		Mockito.when(
@@ -632,6 +635,9 @@ public class DDMFormInstanceRecordExporterImplTest {
 	public void testGetStatusMessage() {
 		DDMFormInstanceRecordExporterImpl ddmFormInstanceRecordExporterImpl =
 			new DDMFormInstanceRecordExporterImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			ddmFormInstanceRecordExporterImpl, "_language", _language);
 
 		Locale locale = new Locale("pt", "BR");
 

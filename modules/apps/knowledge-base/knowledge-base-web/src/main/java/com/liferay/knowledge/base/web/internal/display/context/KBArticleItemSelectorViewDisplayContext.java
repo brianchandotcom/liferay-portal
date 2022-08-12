@@ -180,7 +180,7 @@ public class KBArticleItemSelectorViewDisplayContext {
 	}
 
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries()
-		throws PortalException, PortletException {
+		throws Exception {
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
@@ -422,7 +422,7 @@ public class KBArticleItemSelectorViewDisplayContext {
 
 	private List<BreadcrumbEntry> _getFolderBreadcrumbEntry(
 			long resourcePrimKey, PortletURL portletURL)
-		throws PortalException {
+		throws Exception {
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
@@ -470,9 +470,7 @@ public class KBArticleItemSelectorViewDisplayContext {
 			_themeDisplay.getScopeGroupId());
 	}
 
-	private BreadcrumbEntry _getHomeBreadcrumb()
-		throws PortalException, PortletException {
-
+	private BreadcrumbEntry _getHomeBreadcrumb() throws Exception {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		Group group = GroupLocalServiceUtil.getGroup(_getGroupId());
@@ -558,7 +556,7 @@ public class KBArticleItemSelectorViewDisplayContext {
 		return _parentResourcePrimKey;
 	}
 
-	private BreadcrumbEntry _getSiteBreadcrumb() throws PortletException {
+	private BreadcrumbEntry _getSiteBreadcrumb() throws Exception {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(

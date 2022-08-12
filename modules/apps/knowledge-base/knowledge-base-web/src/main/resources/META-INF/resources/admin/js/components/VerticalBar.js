@@ -145,18 +145,15 @@ const VerticalNavigationBar = ({
 
 					return (
 						<VerticalBar.Panel key={item.key}>
-							<>
-								<div className="sidebar-header">
-									<div className="component-title">
-										{item.title}
-									</div>
+							<div className="sidebar-header">
+								<div className="component-title">
+									{item.title}
 								</div>
-								<div className="sidebar-body">
-									<PanelComponent
-										items={item.navigationItems}
-									/>
-								</div>
-							</>
+							</div>
+
+							<div className="sidebar-body">
+								<PanelComponent items={item.navigationItems} />
+							</div>
 						</VerticalBar.Panel>
 					);
 				}}
@@ -176,6 +173,7 @@ const itemShape = {
 VerticalNavigationBar.propTypes = {
 	items: PropTypes.arrayOf(PropTypes.shape(itemShape)),
 	parentContainerId: PropTypes.string.isRequired,
+	productMenuOpen: PropTypes.bool,
 };
 
 export default VerticalNavigationBar;

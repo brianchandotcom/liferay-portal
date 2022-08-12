@@ -2095,12 +2095,12 @@ public interface BaseProjectTemplatesTestCase {
 		return mavenPomFile;
 	}
 
-	public default File updateMavenPomPropertiesInWorkspace(
-			File workspaceDir, String oldElementName, String newElementName,
+	public default File updateMavenPomProperties(
+			File projectDir, String oldElementName, String newElementName,
 			String text)
 		throws Exception {
 
-		File mavenPomFile = new File(workspaceDir, "pom.xml");
+		File mavenPomFile = new File(projectDir, "pom.xml");
 
 		editXml(
 			mavenPomFile,

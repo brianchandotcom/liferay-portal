@@ -217,37 +217,35 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 			mavenExecutor);
 
 		if (_liferayVersion.startsWith("7.1")) {
-			updateMavenPomPropertiesInWorkspace(
+			updateMavenPomProperties(
 				mavenWorkspaceDir, "liferay.bom.version", "liferay.bom.version",
 				"7.1.10.7");
 			updateMavenPomElementText(
-				mavenWorkspaceDir,
-				"//id[contains(text(), 'release.portal.bom')]",
+				mavenWorkspaceDir, "//artifactId[text()='release.portal.bom']",
 				"release.dxp.bom");
 			updateMavenPomElementText(
 				mavenWorkspaceDir,
-				"//id[contains(text(), 'release.portal.bom.compile.only')]",
+				"//artifactId[text()='release.portal.bom.compile.only']",
 				"release.dxp.bom.compile.only");
 			updateMavenPomElementText(
 				mavenWorkspaceDir,
-				"//id[contains(text(), 'release.portal.bom.third.party')]",
+				"//artifactId[text()='release.portal.bom.third.party']",
 				"release.dxp.bom.third.party");
 		}
 		else if (_liferayVersion.startsWith("7.2")) {
-			updateMavenPomPropertiesInWorkspace(
+			updateMavenPomProperties(
 				mavenWorkspaceDir, "liferay.bom.version", "liferay.bom.version",
 				"7.2.10.7");
 			updateMavenPomElementText(
-				mavenWorkspaceDir,
-				"//id[contains(text(), 'release.portal.bom')]",
+				mavenWorkspaceDir, "//artifactId[text()='release.portal.bom']",
 				"release.dxp.bom");
 			updateMavenPomElementText(
 				mavenWorkspaceDir,
-				"//id[contains(text(), 'release.portal.bom.compile.only')]",
+				"//artifactId[text()='release.portal.bom.compile.only']",
 				"release.dxp.bom.compile.only");
 			updateMavenPomElementText(
 				mavenWorkspaceDir,
-				"//id[contains(text(), 'release.portal.bom.third.party')]",
+				"//artifactId[text()='release.portal.bom.third.party']",
 				"release.dxp.bom.third.party");
 		}
 
@@ -265,6 +263,19 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 			mavenExecutor, "-Dpackage=" + _packageName,
 			"-DliferayVersion=" + _liferayVersion, "-DbuildType=maven",
 			"-Dproduct=" + _product);
+
+		File projectDir = new File(mavenModulesDir, _name);
+
+		if (_liferayVersion.startsWith("7.1")) {
+			updateMavenPomProperties(
+				projectDir, "liferay.bom.version", "liferay.bom.version",
+				"7.1.10.7");
+		}
+		else if (_liferayVersion.startsWith("7.2")) {
+			updateMavenPomProperties(
+				projectDir, "liferay.bom.version", "liferay.bom.version",
+				"7.2.10.7");
+		}
 
 		if (isBuildProjects()) {
 			String projectPath;

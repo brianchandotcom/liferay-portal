@@ -20,10 +20,10 @@ import ActivityPanel from '../../components/ActivityPanel';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import BudgetResumeCard from '../Activities/Form/components/BudgetBreakdownSection/components/BudgetResumeCard';
-import ActivitiesEntries from './ActivitiesEntries/ActivitiesEntries';
-import GoalsEntries from './GoalsEntries/';
-import ReviewBody from './ReviewBody/ReviewBody';
-import ReviewHeader from './ReviewHeader/ReviewHeader';
+import ReviewBody from './components/ReviewBody';
+import ActivitiesEntries from './components/ReviewBody/components/ActivitiesEntries';
+import GoalsEntries from './components/ReviewBody/components/GoalsEntries';
+import ReviewHeader from './components/ReviewHeader';
 
 const Review = ({
 	onCancel,

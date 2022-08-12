@@ -25,8 +25,9 @@ const DatePicker = ({
 			className="form-control"
 			name={field.name}
 			onBlur={field.onBlur}
+			onChange={field.onChange}
 			type="date"
-			value={field.value}
+			value={field.value || ''}
 			{...props}
 		/>
 	</WrapperInput>

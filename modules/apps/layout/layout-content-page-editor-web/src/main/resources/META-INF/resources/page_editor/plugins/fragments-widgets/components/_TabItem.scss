@@ -43,8 +43,8 @@ html#{$cadmin-selector} {
 				}
 
 				.card {
+					aspect-ratio: 1;
 					box-shadow: 0 0 0 1px $cadmin-gray-300;
-					height: 120px;
 				}
 
 				.card-item-first {

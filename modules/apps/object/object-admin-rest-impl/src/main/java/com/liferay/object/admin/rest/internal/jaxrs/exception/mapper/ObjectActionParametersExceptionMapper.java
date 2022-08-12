@@ -47,21 +47,6 @@ public class ObjectActionParametersExceptionMapper
 	extends BaseExceptionMapper<ObjectActionParametersException> {
 
 	@Override
-	public Response toResponse(
-		ObjectActionParametersException objectActionParametersException) {
-
-		Problem problem = getProblem(objectActionParametersException);
-
-		return Response.status(
-			problem.getStatus()
-		).entity(
-			problem
-		).type(
-			getMediaType()
-		).build();
-	}
-
-	@Override
 	protected Problem getProblem(
 		ObjectActionParametersException objectActionParametersException) {
 
@@ -70,6 +55,11 @@ public class ObjectActionParametersExceptionMapper
 				_toJSONArray(objectActionParametersException.getMessageKeys())),
 			Response.Status.BAD_REQUEST, null,
 			"ObjectActionParametersException");
+	}
+
+	@Override
+	protected boolean isSanitizedMapper() {
+		return false;
 	}
 
 	private JSONArray _toJSONArray(Map<String, Object> messageKeys) {

@@ -29,27 +29,17 @@ public class ObjectEntryManagerHttpExceptionMapper
 	extends BaseExceptionMapper<ObjectEntryManagerHttpException> {
 
 	@Override
-	public Response toResponse(
-		ObjectEntryManagerHttpException objectEntryManagerHttpException) {
-
-		Problem problem = getProblem(objectEntryManagerHttpException);
-
-		return Response.status(
-			problem.getStatus()
-		).entity(
-			problem
-		).type(
-			getMediaType()
-		).build();
-	}
-
-	@Override
 	protected Problem getProblem(
 		ObjectEntryManagerHttpException objectEntryManagerHttpException) {
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,
 			objectEntryManagerHttpException.getMessage());
+	}
+
+	@Override
+	protected boolean isSanitizedMapper() {
+		return false;
 	}
 
 }

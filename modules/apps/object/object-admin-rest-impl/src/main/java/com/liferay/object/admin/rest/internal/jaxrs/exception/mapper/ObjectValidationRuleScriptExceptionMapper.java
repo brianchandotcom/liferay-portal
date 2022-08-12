@@ -43,22 +43,6 @@ public class ObjectValidationRuleScriptExceptionMapper
 	extends BaseExceptionMapper<ObjectValidationRuleScriptException> {
 
 	@Override
-	public Response toResponse(
-		ObjectValidationRuleScriptException
-			objectValidationRuleScriptException) {
-
-		Problem problem = getProblem(objectValidationRuleScriptException);
-
-		return Response.status(
-			problem.getStatus()
-		).entity(
-			problem
-		).type(
-			getMediaType()
-		).build();
-	}
-
-	@Override
 	protected Problem getProblem(
 		ObjectValidationRuleScriptException
 			objectValidationRuleScriptException) {
@@ -74,6 +58,11 @@ public class ObjectValidationRuleScriptExceptionMapper
 			).toString(),
 			Response.Status.BAD_REQUEST, null,
 			"ObjectValidationRuleScriptException");
+	}
+
+	@Override
+	protected boolean isSanitizedMapper() {
+		return false;
 	}
 
 	@Context

@@ -27,22 +27,6 @@ public class ObjectValidationRuleEngineExceptionMapper
 	extends BaseExceptionMapper<ObjectValidationRuleEngineException> {
 
 	@Override
-	public Response toResponse(
-		ObjectValidationRuleEngineException
-			objectValidationRuleEngineException) {
-
-		Problem problem = getProblem(objectValidationRuleEngineException);
-
-		return Response.status(
-			problem.getStatus()
-		).entity(
-			problem
-		).type(
-			getMediaType()
-		).build();
-	}
-
-	@Override
 	protected Problem getProblem(
 		ObjectValidationRuleEngineException
 			objectValidationRuleEngineException) {
@@ -50,6 +34,11 @@ public class ObjectValidationRuleEngineExceptionMapper
 		return new Problem(
 			Response.Status.BAD_REQUEST,
 			objectValidationRuleEngineException.getMessage());
+	}
+
+	@Override
+	protected boolean isSanitizedMapper() {
+		return false;
 	}
 
 }

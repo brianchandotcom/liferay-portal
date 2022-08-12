@@ -35,21 +35,6 @@ public class UnrecognizedPropertyExceptionMapper
 	extends BaseExceptionMapper<UnrecognizedPropertyException> {
 
 	@Override
-	public Response toResponse(
-		UnrecognizedPropertyException unrecognizedPropertyException) {
-
-		Problem problem = getProblem(unrecognizedPropertyException);
-
-		return Response.status(
-			problem.getStatus()
-		).entity(
-			problem
-		).type(
-			getMediaType()
-		).build();
-	}
-
-	@Override
 	protected Problem getProblem(
 		UnrecognizedPropertyException unrecognizedPropertyException) {
 
@@ -76,6 +61,11 @@ public class UnrecognizedPropertyExceptionMapper
 		}
 
 		return new Problem(Response.Status.BAD_REQUEST, sb.toString());
+	}
+
+	@Override
+	protected boolean isSanitizedMapper() {
+		return false;
 	}
 
 }

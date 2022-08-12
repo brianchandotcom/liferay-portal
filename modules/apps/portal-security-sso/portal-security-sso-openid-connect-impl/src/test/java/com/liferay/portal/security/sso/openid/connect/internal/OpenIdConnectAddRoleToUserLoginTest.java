@@ -384,30 +384,29 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		);
 		Mockito.when(
 			_userLocalServiceMock.addUser(
-				Mockito.anyLong(), Mockito.eq(_COMPANY_ID),
-				Mockito.eq(true), Mockito.eq(null), Mockito.eq(null),
-				Mockito.eq(true), Mockito.eq(StringPool.BLANK),
-				Mockito.eq(emailAddress), Mockito.any(Locale.class),
-				Mockito.eq(emailAddress), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong(),
-				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.anyInt(), Mockito.anyString(), Mockito.eq(null),
-				Mockito.any(), Mockito.eq(roleIds), Mockito.eq(null),
-				Mockito.anyBoolean(), Mockito.any(ServiceContext.class))
+				Mockito.anyLong(), Mockito.eq(_COMPANY_ID), Mockito.eq(true),
+				Mockito.eq(null), Mockito.eq(null), Mockito.eq(true),
+				Mockito.eq(StringPool.BLANK), Mockito.eq(emailAddress),
+				Mockito.any(Locale.class), Mockito.eq(emailAddress),
+				Mockito.anyString(), Mockito.anyString(), Mockito.anyLong(),
+				Mockito.anyLong(), Mockito.anyBoolean(), Mockito.anyInt(),
+				Mockito.anyInt(), Mockito.anyInt(), Mockito.anyString(),
+				Mockito.eq(null), Mockito.any(), Mockito.eq(roleIds),
+				Mockito.eq(null), Mockito.anyBoolean(),
+				Mockito.any(ServiceContext.class))
 		).thenReturn(
 			user
 		);
 		Mockito.when(
 			_userLocalServiceMock.addUser(
-				Mockito.anyLong(), Mockito.eq(_COMPANY_ID),
-				Mockito.eq(true), Mockito.eq(null), Mockito.eq(null),
-				Mockito.eq(true), Mockito.eq(StringPool.BLANK),
-				Mockito.eq(emailAddress), Mockito.any(Locale.class),
-				Mockito.eq(emailAddress), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong(),
-				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.anyInt(), Mockito.anyString(), Mockito.eq(null),
-				Mockito.any(long[].class),
+				Mockito.anyLong(), Mockito.eq(_COMPANY_ID), Mockito.eq(true),
+				Mockito.eq(null), Mockito.eq(null), Mockito.eq(true),
+				Mockito.eq(StringPool.BLANK), Mockito.eq(emailAddress),
+				Mockito.any(Locale.class), Mockito.eq(emailAddress),
+				Mockito.anyString(), Mockito.anyString(), Mockito.anyLong(),
+				Mockito.anyLong(), Mockito.anyBoolean(), Mockito.anyInt(),
+				Mockito.anyInt(), Mockito.anyInt(), Mockito.anyString(),
+				Mockito.eq(null), Mockito.any(long[].class),
 				AdditionalMatchers.not(Mockito.eq(roleIds)),
 				Mockito.any(long[].class), Mockito.anyBoolean(),
 				Mockito.any(ServiceContext.class))

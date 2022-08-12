@@ -91,8 +91,6 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION",
 			locator2 = "height",
 			value1 = "126px");
-
-			
 	}
 
 	@description = "LPS-97666 - Verify that the Performance by Assignee card are also considering inactive users"

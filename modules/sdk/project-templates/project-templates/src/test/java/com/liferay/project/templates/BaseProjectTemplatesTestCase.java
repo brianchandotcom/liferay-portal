@@ -697,7 +697,7 @@ public interface BaseProjectTemplatesTestCase {
 			else if (liferayVersion.startsWith("7.4")) {
 				writeGradlePropertiesInWorkspace(
 					workspaceDir,
-					"liferay.workspace.target.platform.version=7.4.3.4");
+					"liferay.workspace.target.platform.version=7.4.3.36");
 			}
 		}
 		else {

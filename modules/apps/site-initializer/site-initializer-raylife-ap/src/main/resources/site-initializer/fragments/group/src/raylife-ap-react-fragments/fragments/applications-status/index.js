@@ -29,93 +29,91 @@ export default function () {
 		type: 'donut',
 	});
 
-	const getTotalCount = (result) => {
-		return result?.value?.data?.totalCount || 0;
-	};
+	const loadChartData = async () => {
+		const colors = {
+			bound: '#D9E4FE',
+			incomplete: '#1F77D4',
+			open: '#FF7F0E',
+			quoted: '#81A8FF',
+			rejected: '#191970',
+			reviewed: '#4C84FF',
+			underwriting: '#B5CDFE',
+		};
 
-	const loadChartData = () => {
-		Promise.allSettled([
-			getApplicationsStatus(CONSTANTS.STATUS.BOUND),
-			getApplicationsStatus(CONSTANTS.STATUS.INCOMPLETE),
-			getApplicationsStatus(CONSTANTS.STATUS.QUOTED),
-			getApplicationsStatus(CONSTANTS.STATUS.OPEN),
-			getApplicationsStatus(CONSTANTS.STATUS.REJECTED),
-			getApplicationsStatus(CONSTANTS.STATUS.REVIEWED),
-			getApplicationsStatus(CONSTANTS.STATUS.UNDERWRITING),
-		]).then((results) => {
-			const [
-				boundApplicationsResult,
-				incompleteApplicationsResult,
-				quotedApplicationsResult,
-				openApplicationsResults,
-				rejectedApplicationsResult,
-				reviewedApplicationsResult,
-				underwritingApplicationsResult,
-			] = results;
+		const openStatus = await getApplicationsStatus(CONSTANTS.STATUS.OPEN);
 
-			const colors = {
-				bound: '#D9E4FE',
-				incomplete: '#1F77D4',
-				open: '#FF7F0E',
-				quoted: '#81A8FF',
-				rejected: '#191970',
-				reviewed: '#4C84FF',
-				underwriting: '#B5CDFE',
-			};
+		const incompleteStatus = await getApplicationsStatus(
+			CONSTANTS.STATUS.INCOMPLETE
+		);
 
-			const cols = [
-				[
-					CONSTANTS.STATUS.OPEN,
-					getTotalCount(openApplicationsResults),
-					setFirstLetterUpperCase(CONSTANTS.STATUS.OPEN),
-				],
-				[
-					CONSTANTS.STATUS.INCOMPLETE,
-					getTotalCount(incompleteApplicationsResult),
-					setFirstLetterUpperCase(CONSTANTS.STATUS.INCOMPLETE),
-				],
-				[
-					CONSTANTS.STATUS.QUOTED,
-					getTotalCount(quotedApplicationsResult),
-					setFirstLetterUpperCase(CONSTANTS.STATUS.QUOTED),
-				],
-				[
-					CONSTANTS.STATUS.UNDERWRITING,
-					getTotalCount(underwritingApplicationsResult),
-					setFirstLetterUpperCase(CONSTANTS.STATUS.UNDERWRITING),
-				],
-				[
-					CONSTANTS.STATUS.REVIEWED,
-					getTotalCount(reviewedApplicationsResult),
-					setFirstLetterUpperCase(CONSTANTS.STATUS.REVIEWED),
-				],
-				[
-					CONSTANTS.STATUS.REJECTED,
-					getTotalCount(rejectedApplicationsResult),
-					setFirstLetterUpperCase(CONSTANTS.STATUS.REJECTED),
-				],
-				[
-					CONSTANTS.STATUS.BOUND,
-					getTotalCount(boundApplicationsResult),
-					setFirstLetterUpperCase(CONSTANTS.STATUS.BOUND),
-				],
-			];
+		const quotedStatus = await getApplicationsStatus(
+			CONSTANTS.STATUS.QUOTED
+		);
 
-			const columns = cols.filter((col) => col[1] > 0);
+		const underwritingStatus = await getApplicationsStatus(
+			CONSTANTS.STATUS.UNDERWRITING
+		);
 
-			setChartData({...chartData, ...{colors, columns}});
+		const reviewedStatus = await getApplicationsStatus(
+			CONSTANTS.STATUS.REVIEWED
+		);
 
-			const title = columns
-				.map((array) => array[1])
-				.reduce((sum, i) => {
-					return sum + i;
-				})
-				.toString();
+		const rejectedStatus = await getApplicationsStatus(
+			CONSTANTS.STATUS.REJECTED
+		);
 
-			setChartTitle(title);
+		const boundStatus = await getApplicationsStatus(CONSTANTS.STATUS.BOUND);
 
-			setLoadData(true);
-		});
+		const columns = [
+			[
+				CONSTANTS.STATUS.OPEN,
+				openStatus?.data?.totalCount,
+				setFirstLetterUpperCase(CONSTANTS.STATUS.OPEN),
+			],
+			[
+				CONSTANTS.STATUS.INCOMPLETE,
+				incompleteStatus?.data?.totalCount,
+				setFirstLetterUpperCase(CONSTANTS.STATUS.INCOMPLETE),
+			],
+			[
+				CONSTANTS.STATUS.QUOTED,
+				quotedStatus?.data?.totalCount,
+				setFirstLetterUpperCase(CONSTANTS.STATUS.QUOTED),
+			],
+			[
+				CONSTANTS.STATUS.UNDERWRITING,
+				underwritingStatus?.data?.totalCount,
+				setFirstLetterUpperCase(CONSTANTS.STATUS.UNDERWRITING),
+			],
+			[
+				CONSTANTS.STATUS.REVIEWED,
+				reviewedStatus?.data?.totalCount,
+				setFirstLetterUpperCase(CONSTANTS.STATUS.REVIEWED),
+			],
+			[
+				CONSTANTS.STATUS.REJECTED,
+				rejectedStatus?.data?.totalCount,
+				setFirstLetterUpperCase(CONSTANTS.STATUS.REJECTED),
+			],
+			[
+				CONSTANTS.STATUS.BOUND,
+				boundStatus?.data?.totalCount,
+				setFirstLetterUpperCase(CONSTANTS.STATUS.BOUND),
+			],
+		];
+
+		const filteredColumns = columns.filter((column) => column[1] > 0);
+
+		setChartData({...chartData, ...{colors, columns: filteredColumns}});
+
+		const title = filteredColumns
+			.map((array) => array[1])
+			.reduce((sum, i) => sum + i, 0)
+			.toString();
+
+		setChartTitle(title);
+
+		setLoadData(true);
 	};
 
 	useEffect(() => {

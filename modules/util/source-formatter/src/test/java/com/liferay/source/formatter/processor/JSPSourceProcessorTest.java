@@ -52,11 +52,6 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testFormatTagVariableStyle () throws Exception {
-		test("FormatTagVariableStyle.testjsp");
-	}
-
-	@Test
 	public void testFormatTaglibs() throws Exception {
 		test("FormatTaglibs.testjsp");
 	}
@@ -64,6 +59,11 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testFormatTagLineBreaks() throws Exception {
 		test("FormatTagLineBreaks.testjsp");
+	}
+
+	@Test
+	public void testFormatTagVariableStyle() throws Exception {
+		test("FormatTagVariableStyle.testjsp");
 	}
 
 	@Test

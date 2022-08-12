@@ -497,7 +497,7 @@ public class JournalContentDisplayContext {
 
 	public PortletURL getItemSelectorURL() throws PortalException {
 		ItemSelector itemSelector = (ItemSelector)_portletRequest.getAttribute(
-			JournalWebKeys.ITEM_SELECTOR);
+			ItemSelector.class.getName());
 
 		LiferayRenderRequest liferayRenderRequest =
 			(LiferayRenderRequest)LiferayPortletUtil.getLiferayPortletRequest(

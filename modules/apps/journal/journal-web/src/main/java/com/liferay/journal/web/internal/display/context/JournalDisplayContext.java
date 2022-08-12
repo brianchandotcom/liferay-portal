@@ -30,7 +30,6 @@ import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalFolder;
@@ -1149,7 +1148,7 @@ public class JournalDisplayContext {
 		_trashHelper = trashHelper;
 
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
-			JournalWebKeys.ITEM_SELECTOR);
+			ItemSelector.class.getName());
 		_journalWebConfiguration =
 			(JournalWebConfiguration)_httpServletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());

@@ -170,12 +170,12 @@ public class JournalPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			FieldsToDDMFormValuesConverter.class.getName(),
 			_fieldsToDDMFormValuesConverter);
+		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
 		renderRequest.setAttribute(
 			JournalFileUploadsConfiguration.class.getName(),
 			_journalFileUploadsConfiguration);
 		renderRequest.setAttribute(
 			JournalWebConfiguration.class.getName(), _journalWebConfiguration);
-		renderRequest.setAttribute(JournalWebKeys.ITEM_SELECTOR, _itemSelector);
 		renderRequest.setAttribute(
 			JournalWebKeys.JOURNAL_CONTENT, _journalContent);
 		renderRequest.setAttribute(

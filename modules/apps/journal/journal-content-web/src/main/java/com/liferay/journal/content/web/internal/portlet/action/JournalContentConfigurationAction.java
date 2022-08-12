@@ -92,7 +92,7 @@ public class JournalContentConfigurationAction
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		httpServletRequest.setAttribute(
-			JournalWebKeys.ITEM_SELECTOR, _itemSelector);
+			ItemSelector.class.getName(), _itemSelector);
 		httpServletRequest.setAttribute(
 			JournalWebKeys.JOURNAL_CONTENT, _journalContent);
 

@@ -5893,10 +5893,6 @@ definition {
 	}
 
 	macro viewSXPBlueprintAndElements {
-		SearchAdministration.executeReindex(action = "Reindex com.liferay.search.experiences.model.SXPBlueprint.");
-
-		SearchAdministration.executeReindex(action = "Reindex com.liferay.search.experiences.model.SXPElement.");
-
 		Blueprints.openBlueprintsAdmin();
 
 		Navigator.gotoNavItem(navItem = "Elements");
@@ -5932,9 +5928,19 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION",
 			value1 = "Boost contents in a category for users belonging to the given user segments.");
 
+		Search.searchCP(searchTerm = "Search with Query String Syntax");
+
+		AssertElementPresent(
+			entryTitle = "Search with Query String Syntax",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
+
 		Navigator.gotoNavItem(navItem = "Blueprints");
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
+
+		AssertElementPresent(
+			index = "40",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_NTH_ELEMENT");
 
 		AssertElementPresent(
 			element = "Test Element",
@@ -5967,12 +5973,6 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN_OPTION",
 			option = "Morning (4am - 12pm)");
 
-		AssertElementPresent(
-			elementName = "Boost Contents in a Category for the Time of Day",
-			fieldLabel = "Boost",
-			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "100");
-
 		AssertTextPresent(
 			element = "Boost Contents in a Category for User Segments",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT",
@@ -5997,6 +5997,10 @@ definition {
 			elementName = "Boost Contents in a Category for a Period of Time",
 			fieldName = "Create Date: To",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			elementName = "Boost Proximity",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_ENABLE_DISABLE_TOGGLE");
 
 		Blueprints.searchBlueprintsPreview(searchTerm = "test");
 

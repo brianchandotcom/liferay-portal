@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_ADDED_ELEMENT_NTH_ELEMENT</td>
+	<td>xpath=(//div[contains(@id,'querySXPElement')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_VERTICAL_ELLIPSIS</td>
 	<td>//div[contains(@id,'querySXPElement')][.//*[contains(.,'${element}')]]//*[contains(@class,'icon-ellipsis')]</td>
 	<td></td>

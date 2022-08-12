@@ -306,6 +306,44 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-156908. The web content designer could define an expiration date when edit default values for the ootb Basic Web Content structure."
+	@priority = "4"
+	test PredefineExpirationDateInDefaultStructure {
+		property custom.properties = "feature.flag.LPS-156908=true";
+
+		task ("Given the web content designer accesses to Web Content admin in global site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+
+			NavItem.gotoStructures();
+		}
+
+		task ("When the web content designer define an expiration date as default values for Basic Web Content") {
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "Basic Web Content");
+
+			WebContent.addExpirationDateCP(expirationDate = "01/02/3000");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the web content designer could see the predefined expiration date in web content editor") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.viewExpirationDateCP(expirationDate = "01/02/3000");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "Basic Web Content");
+
+			WebContentStructures.resetStructureDefaultValuesCP();
+
+			PortletEntry.save();
+		}
+	}
+
 	@description = "This is a use case for LRQA-61632 and LPS-76981. Can select different type pages in Link to Page field."
 	@priority = "4"
 	test SelectDifferentTypePagesInLinkToPageField {

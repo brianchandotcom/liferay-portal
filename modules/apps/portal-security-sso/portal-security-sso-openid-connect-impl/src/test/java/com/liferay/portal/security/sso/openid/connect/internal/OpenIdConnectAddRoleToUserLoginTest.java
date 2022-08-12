@@ -322,19 +322,16 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		).thenReturn(
 			emailAddress
 		);
-
-		Mockito.when(
-			_userInfo.getGivenName()
-		).thenReturn(
-			emailAddress
-		);
-
 		Mockito.when(
 			_userInfo.getFamilyName()
 		).thenReturn(
 			emailAddress
 		);
-
+		Mockito.when(
+			_userInfo.getGivenName()
+		).thenReturn(
+			emailAddress
+		);
 		Mockito.when(
 			_userInfo.getMiddleName()
 		).thenReturn(

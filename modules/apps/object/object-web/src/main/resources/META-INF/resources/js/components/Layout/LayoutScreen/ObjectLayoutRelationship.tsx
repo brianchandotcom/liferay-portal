@@ -43,8 +43,20 @@ const ObjectLayoutRelationship: React.FC<IObjectLayoutRelationshipProps> = ({
 						{Liferay.Language.get('relationship')} |{' '}
 					</small>
 
-					<ClayLabel displayType="secondary">
-						{objectRelationship?.type}
+					<ClayLabel
+						displayType={
+							Liferay.FeatureFlags['LPS-158478']
+								? objectRelationship.reverse
+									? 'info'
+									: 'success'
+								: 'secondary'
+						}
+					>
+						{Liferay.FeatureFlags['LPS-158478']
+							? objectRelationship.reverse
+								? Liferay.Language.get('child')
+								: Liferay.Language.get('parent')
+							: objectRelationship?.type}
 					</ClayLabel>
 				</Panel.SimpleBody>
 			</Panel>

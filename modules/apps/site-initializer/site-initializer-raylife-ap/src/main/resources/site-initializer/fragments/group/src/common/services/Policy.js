@@ -31,7 +31,7 @@ export function getPoliciesStatus(totalCount) {
 	});
 }
 
-export function getPolicies() {
+export function getActivePolicies() {
 	return axios.get(
 		`${DeliveryAPI}/?fields=policyStatus,productName&pageSize=200&aggregationTerms=policyStatus&filter=policyStatus ne 'expired' and policyStatus ne 'declined'`
 	);

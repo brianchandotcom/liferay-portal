@@ -15,7 +15,7 @@
 import React, {useEffect, useState} from 'react';
 
 import DonutChart from '../../../common/components/donut-chart';
-import {getPolicies, getProductQuotes} from '../../../common/services';
+import {getActivePolicies, getProductQuotes} from '../../../common/services';
 
 export default function () {
 	const [chartTitle, setChartTitle] = useState('');
@@ -29,7 +29,7 @@ export default function () {
 	const MAX_NAME_LENGHT = 15;
 
 	useEffect(() => {
-		Promise.allSettled([getProductQuotes(), getPolicies()]).then(
+		Promise.allSettled([getProductQuotes(), getActivePolicies()]).then(
 			(results) => {
 				const [productQuotesResult, policiesResult] = results;
 
@@ -68,11 +68,14 @@ export default function () {
 						}
 
 						colorsObj[fullName] = colorsArray[index];
-						columnsArr[index] = [
-							fullName,
-							countActivePolicies,
-							productName,
-						];
+
+						if (countActivePolicies > 0) {
+							columnsArr[index] = [
+								fullName,
+								countActivePolicies,
+								productName,
+							];
+						}
 					}
 				);
 

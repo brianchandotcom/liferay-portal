@@ -17,7 +17,7 @@
 		<get-database-property property.name="database.host" />
 
 		<antcall inheritAll="false" target="start-docker-database-postgresql">
-			<param name="skip.rebuild-database" value="true" />
+			<param name="skip.rebuild.database" value="true" />
 			<param name="skip.prepare.portal.ext.properties" value="true" />
 		</antcall>
 

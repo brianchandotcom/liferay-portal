@@ -5228,7 +5228,7 @@ upgrade.report.enabled=true</echo>
 		<sequential>
 			<if>
 				<not>
-					<isset property="skip.rebuild-database" />
+					<isset property="skip.rebuild.database" />
 				</not>
 				<then>
 					<get-testcase-property property.name="database.hypersonic.embedded" />
@@ -14981,7 +14981,20 @@ url=${short.hostname}:8080</echo>
 
 		<if>
 			<not>
-				<isset property="skip.rebuild-database" />
+				<isset property="skip.prepare.portal.ext.properties" />
+			</not>
+			<then>
+				<antcall inheritAll="false" target="prepare-portal-ext-properties">
+					<param name="database.postgresql.schema" value="lportal" />
+					<param name="database.postgresql.url" value="jdbc:postgresql://localhost:5432/${database.postgresql.schema}" />
+					<param name="database.type" value="postgresql" />
+				</antcall>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset property="skip.rebuild.database" />
 			</not>
 			<then>
 				<antcall target="rebuild-database">
@@ -14990,19 +15003,6 @@ url=${short.hostname}:8080</echo>
 					<param name="database.type" value="postgresql" />
 					<param name="sql.dir" value="sql/create-bare/" />
 					<param name="sql.file" value="create-bare-postgresql.sql" />
-				</antcall>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<equals arg1="${skip.prepare.portal.ext.properties}" arg2="true" />
-			</not>
-			<then>
-				<antcall inheritAll="false" target="prepare-portal-ext-properties">
-					<param name="database.postgresql.schema" value="lportal" />
-					<param name="database.postgresql.url" value="jdbc:postgresql://localhost:5432/${database.postgresql.schema}" />
-					<param name="database.type" value="postgresql" />
 				</antcall>
 			</then>
 		</if>

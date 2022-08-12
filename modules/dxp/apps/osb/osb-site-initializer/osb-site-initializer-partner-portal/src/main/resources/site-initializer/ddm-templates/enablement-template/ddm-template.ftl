@@ -3,11 +3,9 @@
 	<img alt="${BannerImage.getAttribute("alt")}" data-fileentryid="${BannerImage.getAttribute("fileEntryId")}" src="${BannerImage.getData()}" />
 </#if>
 	<div>
+	
 		<p class="courseSubtext">
-
-<#if (Subtext.getData())??>
-	${Subtext.getData()}
-</#if>
+			COURSES
 	</p>
 
 	<h4 class="courseTitle">
@@ -18,9 +16,7 @@
 	</div>
 
 	<a class="btn btn-primary courseButton" href=${LinkButton.getData()}>
-<#if (Button.getData())??>
-	${Button.getData()}
-</#if>
+		Start learning
 	</a>
 </div>
 

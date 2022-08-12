@@ -36,50 +36,10 @@
 							"dataType": "string",
 							"indexType": "text",
 							"label": {
-								"en_US": "Subtext"
-							},
-							"localizable": true,
-							"name": "Subtext",
-							"predefinedValue": {
-								"en_US": ""
-							},
-							"readOnly": false,
-							"repeatable": false,
-							"required": false,
-							"showLabel": true,
-							"tip": {
-								"en_US": ""
-							},
-							"type": "text"
-						},
-						{
-							"dataType": "string",
-							"indexType": "text",
-							"label": {
 								"en_US": "Title"
 							},
 							"localizable": true,
 							"name": "Title",
-							"predefinedValue": {
-								"en_US": ""
-							},
-							"readOnly": false,
-							"repeatable": false,
-							"required": false,
-							"showLabel": true,
-							"tip": {
-								"en_US": ""
-							},
-							"type": "text"
-						},
-						{
-							"dataType": "string",
-							"indexType": "none",
-							"label": {
-								"en_US": "\t\t\t"
-							},
-							"localizable": true,
-							"name": "Button",
 							"predefinedValue": {
 								"en_US": ""
 							},

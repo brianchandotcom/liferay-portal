@@ -317,6 +317,90 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-157739. The page creator could remove automatically added input fragments and change mapping fields."
+	@priority = "4"
+	test RemoveAutomaticallyAddedInputFragmentsThenChangeMappingField {
+		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-150277=true";
+		property test.name.skip.portal.instance = "FormContainer#RemoveAutomaticallyAddedInputFragmentsThenChangeMappingField";
+
+		task ("Given a page creator has a Form Container on a content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "LongText",
+				fieldLabelName = "Address",
+				fieldName = "address",
+				fieldType = "Clob",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+		}
+
+		task ("When the page creator maps the Form Container to object") {
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditor.viewInputStyle(
+				label = "Address",
+				showLabel = "true",
+				type = "text-input");
+
+			PageEditor.viewInputStyle(
+				label = "Region",
+				position = "2",
+				showLabel = "true",
+				type = "text-input");
+
+			PageEditor.viewFragmentEditableText(
+				className = "button",
+				editableText = "Submit",
+				fragmentName = "Submit Button",
+				id = "submit-button");
+		}
+
+		task ("Then the page creator could remove automatically added input fragments") {
+			PageEditor.removeFragment(fragmentName = "Text Input");
+
+			PageEditor.removeFragment(fragmentName = "Text Input");
+
+			PageEditor.removeFragment(fragmentName = "Submit Button");
+
+			AssertVisible(
+				key_fragmentName = "Form Container",
+				key_messageInfo = "Place fragments here.",
+				key_position = "1",
+				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+		}
+
+		task ("When the page creator adds a Text Input fragment into Form Container") {
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Text Input");
+		}
+
+		task ("Then the page creator could map the Text Input to the Text field") {
+			PageEditor.editInput(
+				field = "Region",
+				fragmentName = "Text Input");
+
+			PageEditor.viewInputStyle(
+				label = "Region",
+				showLabel = "true",
+				type = "text-input");
+		}
+	}
+
 	@description = "This is a test for LPS-155529. The page designer can submit a Form Container with embedded success message."
 	@priority = "5"
 	test SubmitFormContainerWithEmbeddedSuccessMessage {

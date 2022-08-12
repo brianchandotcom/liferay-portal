@@ -49,7 +49,7 @@ const Review = ({
 	);
 
 	return (
-		<div>
+		<div className="d-flex flex-column">
 			<ReviewHeader
 				description="Please ensure that all the information below is accurate before submitting your request."
 				name="Review"
@@ -61,6 +61,8 @@ const Review = ({
 			</ReviewBody>
 
 			<ReviewBody name="Activities" title="Insurance Industry Lead Gen">
+				<div className="border mb-3"></div>
+
 				{values?.activities.map(
 					(value: MDFRequestActivity, index: number) => (
 						<ActivityPanel
@@ -96,7 +98,7 @@ const Review = ({
 						/>
 					</div>
 
-					<div className="sheet-subtitle"></div>
+					<div className="border mb-1"></div>
 
 					<div className="d-flex justify-content-between">
 						<div className="mr-auto pl-0 py-3">

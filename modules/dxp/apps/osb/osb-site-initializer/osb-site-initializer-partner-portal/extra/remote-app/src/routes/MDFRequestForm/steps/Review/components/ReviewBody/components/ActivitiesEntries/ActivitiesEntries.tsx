@@ -74,7 +74,7 @@ const ActivitiesEntries = ({values}: IProps) => {
 				title="Campaign Activity"
 			/>
 
-			<div className="sheet-subtitle"></div>
+			<div className="border"></div>
 
 			<QATable
 				items={values.budgets.map((budget) => ({
@@ -84,7 +84,7 @@ const ActivitiesEntries = ({values}: IProps) => {
 				title="Budget Breakdown"
 			/>
 
-			<div className="sheet-subtitle"></div>
+			<div className="border"></div>
 
 			<QATable
 				items={[
@@ -108,7 +108,7 @@ const ActivitiesEntries = ({values}: IProps) => {
 				title="Lead List"
 			/>
 
-			<div className="sheet-subtitle"></div>
+			<div className="border"></div>
 		</div>
 	);
 };

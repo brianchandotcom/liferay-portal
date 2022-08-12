@@ -49,9 +49,12 @@ const QATable: React.FC<QATableProps> = ({
 						key={index}
 					>
 						<td
-							className={classNames('large-heading pb-3 w-50', {
-								'd-flex': item.flexHeading,
-							})}
+							className={classNames(
+								'large-heading mt-3 pb-3 w-50',
+								{
+									'd-flex': item.flexHeading,
+								}
+							)}
 						>
 							{item.title}
 						</td>

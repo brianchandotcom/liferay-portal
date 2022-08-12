@@ -18,7 +18,7 @@ interface IProps {
 const GoalsEntries = ({values}: IProps) => {
 	return (
 		<div>
-			<div className="sheet-subtitle"></div>
+			<div className="border"></div>
 
 			<QATable
 				items={[
@@ -34,7 +34,7 @@ const GoalsEntries = ({values}: IProps) => {
 				title="Partner Summary"
 			/>
 
-			<div className="sheet-subtitle"></div>
+			<div className="border"></div>
 
 			<QATable
 				items={[
@@ -51,7 +51,7 @@ const GoalsEntries = ({values}: IProps) => {
 				title="Activity Summary"
 			/>
 
-			<div className="sheet-subtitle"></div>
+			<div className="border"></div>
 
 			<QATable
 				items={[

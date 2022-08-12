@@ -16,15 +16,17 @@ interface IProps {
 }
 
 const ReviewBod = ({description, name, title}: IProps) => (
-	<div className="pt-3 px-6 sheet sheet-lg">
+	<div className="border border-light mt-4 pt-3 px-6 rounded">
 		<div>
 			<div className="font-weight-bold mb-1 text-primary">
 				{name && <div> {name.toUpperCase()}</div>}
 			</div>
 
-			<h5 className="mb-4">{title}</h5>
+			<h5 className="h3 mb-2">{title}</h5>
 
-			{description && <div className="sheet-text">{description}</div>}
+			{description && (
+				<div className="mb-3 text-neutral-8">{description}</div>
+			)}
 		</div>
 	</div>
 );

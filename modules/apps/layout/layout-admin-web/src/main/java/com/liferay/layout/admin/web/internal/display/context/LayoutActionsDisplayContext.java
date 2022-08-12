@@ -85,6 +85,12 @@ public class LayoutActionsDisplayContext {
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "configure"));
+
+							if (GetterUtil.getBoolean(
+									PropsUtil.get("feature.flag.LPS-153452"))) {
+
+								dropdownItem.setTarget("_blank");
+							}
 						}
 					).add(
 						() -> GetterUtil.getBoolean(

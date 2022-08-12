@@ -23,7 +23,7 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	goalOfContent: string;
 	howLiferayBrandUsed: string;
 	keywordsForPPCCampaigns: string;
-	leadFollowUpStrategies: string;
+	leadFollowUpStrategies: string[];
 	leadGenerated: string;
 	liferayBranding: string;
 	liferayParticipationRequirements: string;

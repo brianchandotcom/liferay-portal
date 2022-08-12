@@ -24,7 +24,6 @@ import {EditableProcessorContextProvider} from '../contexts/EditableProcessorCon
 import {FormValidationContextProvider} from '../contexts/FormValidationContext';
 import {GlobalContextProvider} from '../contexts/GlobalContext';
 import {StoreContextProvider} from '../contexts/StoreContext';
-import {StyleErrorsContextProvider} from '../contexts/StyleErrorsContext';
 import {WidgetsContextProvider} from '../contexts/WidgetsContext';
 import {reducer} from '../reducers/index';
 import {DragAndDropContextProvider} from '../utils/drag-and-drop/useDragAndDrop';
@@ -55,29 +54,27 @@ export default function App({state}) {
 
 									<DragPreview />
 
-									<StyleErrorsContextProvider>
-										<FormValidationContextProvider>
-											<Toolbar />
+									<FormValidationContextProvider>
+										<Toolbar />
 
-											<ShortcutManager />
+										<ShortcutManager />
 
-											<GlobalContextProvider>
-												<CommonStylesManager />
+										<GlobalContextProvider>
+											<CommonStylesManager />
 
-												<LayoutViewport />
+											<LayoutViewport />
 
-												<StyleBookContextProvider>
-													<Sidebar />
+											<StyleBookContextProvider>
+												<Sidebar />
 
-													{Liferay.FeatureFlags[
-														'LPS-153452'
-													] && (
-														<ItemConfigurationSidebar />
-													)}
-												</StyleBookContextProvider>
-											</GlobalContextProvider>
-										</FormValidationContextProvider>
-									</StyleErrorsContextProvider>
+												{Liferay.FeatureFlags[
+													'LPS-153452'
+												] && (
+													<ItemConfigurationSidebar />
+												)}
+											</StyleBookContextProvider>
+										</GlobalContextProvider>
+									</FormValidationContextProvider>
 								</WidgetsContextProvider>
 							</DisplayPagePreviewItemContextProvider>
 						</EditableProcessorContextProvider>

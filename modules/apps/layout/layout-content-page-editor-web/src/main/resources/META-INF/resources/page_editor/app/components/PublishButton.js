@@ -17,16 +17,12 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {config} from '../config/index';
-import {useHasStyleErrors} from '../contexts/StyleErrorsContext';
 import useCheckFormsValidity from '../utils/useCheckFormsValidity';
 import {FormValidationModal} from './FormValidationModal';
-import {StyleErrorsModal} from './StyleErrorsModal';
 
 export default function PublishButton({canPublish, formRef, label, onPublish}) {
-	const hasStyleErrors = useHasStyleErrors();
 	const checkFormsValidity = useCheckFormsValidity();
 
-	const [openStyleErrorsModal, setOpenStyleErrorsModal] = useState(false);
 	const [openFormValidationModal, setOpenFormValidationModal] = useState(
 		false
 	);
@@ -45,32 +41,20 @@ export default function PublishButton({canPublish, formRef, label, onPublish}) {
 					disabled={config.pending || !canPublish}
 					displayType="primary"
 					onClick={() => {
-						if (hasStyleErrors) {
-							setOpenStyleErrorsModal(true);
-						}
-						else {
-							checkFormsValidity().then((valid) => {
-								if (valid) {
-									onPublish();
-								}
-								else {
-									setOpenFormValidationModal(true);
-								}
-							});
-						}
+						checkFormsValidity().then((valid) => {
+							if (valid) {
+								onPublish();
+							}
+							else {
+								setOpenFormValidationModal(true);
+							}
+						});
 					}}
 					small
 				>
 					{label}
 				</ClayButton>
 			</form>
-
-			{openStyleErrorsModal && hasStyleErrors && (
-				<StyleErrorsModal
-					onCloseModal={() => setOpenStyleErrorsModal(false)}
-					onPublish={onPublish}
-				/>
-			)}
 
 			{openFormValidationModal && (
 				<FormValidationModal

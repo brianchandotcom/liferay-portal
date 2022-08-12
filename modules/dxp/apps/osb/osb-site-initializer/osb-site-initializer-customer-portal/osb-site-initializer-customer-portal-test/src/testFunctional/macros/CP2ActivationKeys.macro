@@ -183,4 +183,9 @@ definition {
 
 		Click(locator1 = "CP2ActivationKeys#NEXT_PAGE_BUTTON");
 	}
+
+	macro putMouseOverElementAtTable {
+		var key_text = "${text}";
+		MouseOver(locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_TEXT");
+	}
 }

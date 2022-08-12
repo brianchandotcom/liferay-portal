@@ -217,12 +217,38 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 			mavenExecutor);
 
 		if (_liferayVersion.startsWith("7.1")) {
-			updateMavenPomPropertiesInWorkspace(mavenWorkspaceDir,
-				"liferay.bom.version", "liferay.bom.version", "7.1.10.7");
+			updateMavenPomPropertiesInWorkspace(
+				mavenWorkspaceDir, "liferay.bom.version", "liferay.bom.version",
+				"7.1.10.7");
+			updateMavenPomElementText(
+				mavenWorkspaceDir,
+				"//id[contains(text(), 'release.portal.bom')]",
+				"release.dxp.bom");
+			updateMavenPomElementText(
+				mavenWorkspaceDir,
+				"//id[contains(text(), 'release.portal.bom.compile.only')]",
+				"release.dxp.bom.compile.only");
+			updateMavenPomElementText(
+				mavenWorkspaceDir,
+				"//id[contains(text(), 'release.portal.bom.third.party')]",
+				"release.dxp.bom.third.party");
 		}
 		else if (_liferayVersion.startsWith("7.2")) {
-			updateMavenPomPropertiesInWorkspace(mavenWorkspaceDir,
-				"liferay.bom.version", "liferay.bom.version", "7.2.10.7");
+			updateMavenPomPropertiesInWorkspace(
+				mavenWorkspaceDir, "liferay.bom.version", "liferay.bom.version",
+				"7.2.10.7");
+			updateMavenPomElementText(
+				mavenWorkspaceDir,
+				"//id[contains(text(), 'release.portal.bom')]",
+				"release.dxp.bom");
+			updateMavenPomElementText(
+				mavenWorkspaceDir,
+				"//id[contains(text(), 'release.portal.bom.compile.only')]",
+				"release.dxp.bom.compile.only");
+			updateMavenPomElementText(
+				mavenWorkspaceDir,
+				"//id[contains(text(), 'release.portal.bom.third.party')]",
+				"release.dxp.bom.third.party");
 		}
 
 		File mavenModulesDir = new File(mavenWorkspaceDir, "modules");

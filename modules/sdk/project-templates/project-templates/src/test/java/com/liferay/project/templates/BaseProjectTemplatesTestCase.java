@@ -2075,6 +2075,48 @@ public interface BaseProjectTemplatesTestCase {
 		return gradlePropertiesFile;
 	}
 
+	public default File updateMavenPomElementText(
+			File projectDir, String expression, String newText)
+		throws Exception {
+
+		File mavenPomFile = new File(projectDir, "pom.xml");
+
+		editXml(
+			mavenPomFile,
+			document -> {
+				try {
+					modifyElementText(document, expression, newText);
+				}
+				catch (XPathExpressionException xPathExpressionException) {
+					throw new RuntimeException(xPathExpressionException);
+				}
+			});
+
+		return mavenPomFile;
+	}
+
+	public default File updateMavenPomPropertiesInWorkspace(
+			File workspaceDir, String oldElementName, String newElementName,
+			String text)
+		throws Exception {
+
+		File mavenPomFile = new File(workspaceDir, "pom.xml");
+
+		editXml(
+			mavenPomFile,
+			document -> {
+				try {
+					replaceElementByName(
+						document, oldElementName, newElementName, text);
+				}
+				catch (XPathExpressionException xPathExpressionException) {
+					throw new RuntimeException(xPathExpressionException);
+				}
+			});
+
+		return mavenPomFile;
+	}
+
 	public default File writeGradlePropertiesInWorkspace(
 			File workspaceDir, String gradleProperties)
 		throws IOException {
@@ -2088,26 +2130,6 @@ public interface BaseProjectTemplatesTestCase {
 			StandardOpenOption.APPEND);
 
 		return gradlePropertiesFile;
-	}
-
-	public default File updateMavenPomPropertiesInWorkspace(
-		File workspaceDir, String oldElementName, String newElementName,
-		String text) throws Exception {
-
-		File mavenPomFile = new File(workspaceDir, "pom.xml");
-
-		editXml(mavenPomFile,
-			document -> {
-				try {
-					replaceElementByName(
-						document, oldElementName, newElementName, text);
-				}
-				catch (XPathExpressionException xPathExpressionException) {
-					throw new RuntimeException(xPathExpressionException);
-				}
-			});
-
-		return mavenPomFile;
 	}
 
 }

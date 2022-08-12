@@ -130,10 +130,7 @@ function AssetVocabulariesCategoriesSelector({
 	};
 
 	const handleSelectButtonClick = () => {
-		const sub = (str, object) =>
-			str.replace(/\{([^}]+)\}/g, (_, m) => object[m]);
-
-		const url = sub(decodeURIComponent(portletURL), {
+		const url = createPortletURL(portletURL, {
 			selectedCategories: selectedItems.map((item) => item.value).join(),
 			singleSelect,
 			vocabularyIds: sourceItemsVocabularyIds.concat(),
@@ -167,9 +164,9 @@ function AssetVocabulariesCategoriesSelector({
 			selectEventName: eventName,
 			size: 'md',
 			title: label
-				? subUtil(Liferay.Language.get('select-x'), label)
+				? sub(Liferay.Language.get('select-x'), label)
 				: Liferay.Language.get('select-categories'),
-			url,
+			url: url.toString(),
 		});
 	};
 

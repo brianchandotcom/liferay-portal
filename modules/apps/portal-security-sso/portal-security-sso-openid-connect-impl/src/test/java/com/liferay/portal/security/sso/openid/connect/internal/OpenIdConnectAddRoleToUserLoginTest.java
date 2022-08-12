@@ -77,7 +77,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 	}
 
 	@Test
-	public void testBothPropertiesDefinedAndCorrectRole() {
+	public void testBothPropertiesDefinedAndCorrectRole() throws Exception {
 		String issuer = "issuer url";
 
 		String roleName = _ROLE_NAME_EXISTS;
@@ -96,23 +96,14 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		setUpPropsUtil(issuer, roleName);
 
-		long userId = _USERERROR_ID;
-
-		try {
-			userId = _openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL);
-
-			Assert.assertEquals(userId, _USEROK_ID);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		Assert.assertEquals(
+			_USEROK_ID,
+			_openIdConnectUserInfoProcessorImpl.processUserInfo(
+				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
 	}
 
 	@Test
-	public void testBothPropertiesDefinedAndFakeRole() {
+	public void testBothPropertiesDefinedAndFakeRole() throws Exception {
 		String issuer = "issuer url";
 		String roleName = "Fake Role";
 
@@ -124,23 +115,16 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		setUpPropsUtil(issuer, roleName);
 
-		long userId = _USERERROR_ID;
-
-		try {
-			userId = _openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL);
-
-			Assert.assertEquals(userId, _USEROK_ID);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		Assert.assertEquals(
+			_USEROK_ID,
+			_openIdConnectUserInfoProcessorImpl.processUserInfo(
+				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
 	}
 
 	@Test
-	public void testBothPropertiesDefinedAndRoleCorrectAndUserAlreadyExists() {
+	public void testBothPropertiesDefinedAndRoleCorrectAndUserAlreadyExists()
+		throws Exception {
+
 		String issuer = "issuer url";
 		String roleName = "Power User";
 
@@ -166,23 +150,16 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		setUpPropsUtil(issuer, roleName);
 
-		long userId = _USERERROR_ID;
-
-		try {
-			userId = _openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL);
-
-			Assert.assertEquals(userId, _USEROK_ID);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		Assert.assertEquals(
+			_USEROK_ID,
+			_openIdConnectUserInfoProcessorImpl.processUserInfo(
+				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
 	}
 
 	@Test
-	public void testBothPropertiesDefinedAndRoleExistsButDifferentIssuers() {
+	public void testBothPropertiesDefinedAndRoleExistsButDifferentIssuers()
+		throws Exception {
+
 		String issuer = "issuer url";
 		String roleName = _ROLE_NAME_EXISTS;
 
@@ -201,23 +178,16 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		_setUpEnvironment(role, roleIds, null);
 		setUpPropsUtil(issuer, roleName);
 
-		long userId = _USERERROR_ID;
-
-		try {
-			userId = _openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuerProvider, _mainPath, _portalURL);
-
-			Assert.assertEquals(userId, _USEROK_ID);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		Assert.assertEquals(
+			_USEROK_ID,
+			_openIdConnectUserInfoProcessorImpl.processUserInfo(
+				_userInfo, _COMPANY_ID, issuerProvider, _mainPath, _portalURL));
 	}
 
 	@Test
-	public void testBothPropertiesDefinedAndRoleNotRegularType() {
+	public void testBothPropertiesDefinedAndRoleNotRegularType()
+		throws Exception {
+
 		String issuer = "issuer url";
 		String roleName = _ROLE_NAME_EXISTS;
 
@@ -236,23 +206,14 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		setUpPropsUtil(issuer, roleName);
 
-		long userId = _USERERROR_ID;
-
-		try {
-			userId = _openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL);
-
-			Assert.assertEquals(userId, _USEROK_ID);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		Assert.assertEquals(
+			_USEROK_ID,
+			_openIdConnectUserInfoProcessorImpl.processUserInfo(
+				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
 	}
 
 	@Test
-	public void testBothPropertiesDefinedButRoleNameWrong1() {
+	public void testBothPropertiesDefinedButRoleNameWrong1() throws Exception {
 		String issuer = "issuer url";
 		String roleName = "Power User=Publications Owner";
 
@@ -264,23 +225,14 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		setUpPropsUtil(issuer, roleName);
 
-		long userId = _USERERROR_ID;
-
-		try {
-			userId = _openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL);
-
-			Assert.assertEquals(userId, _USEROK_ID);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		Assert.assertEquals(
+			_USEROK_ID,
+			_openIdConnectUserInfoProcessorImpl.processUserInfo(
+				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
 	}
 
 	@Test
-	public void testBothPropertiesDefinedButRoleNameWrong2() {
+	public void testBothPropertiesDefinedButRoleNameWrong2() throws Exception {
 		String issuer = "issuer url";
 		String roleName = "Power%20User";
 
@@ -292,23 +244,14 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		setUpPropsUtil(issuer, roleName);
 
-		long userId = _USERERROR_ID;
-
-		try {
-			userId = _openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL);
-
-			Assert.assertEquals(userId, _USEROK_ID);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		Assert.assertEquals(
+			_USEROK_ID,
+			_openIdConnectUserInfoProcessorImpl.processUserInfo(
+				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
 	}
 
 	@Test
-	public void testIssuerPropertyDefinedSoRoleNotExists() {
+	public void testIssuerPropertyDefinedSoRoleNotExists() throws Exception {
 		String issuer = "issuer url";
 		String roleName = null;
 
@@ -320,23 +263,14 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		setUpPropsUtil(issuer, roleName);
 
-		long userId = _USERERROR_ID;
-
-		try {
-			userId = _openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL);
-
-			Assert.assertEquals(userId, _USEROK_ID);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		Assert.assertEquals(
+			_USEROK_ID,
+			_openIdConnectUserInfoProcessorImpl.processUserInfo(
+				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
 	}
 
 	@Test
-	public void testRoleNamePropertyDefinedAndRoleExists() {
+	public void testRoleNamePropertyDefinedAndRoleExists() throws Exception {
 		String issuer = null;
 		String roleName = _ROLE_NAME_EXISTS;
 
@@ -355,19 +289,10 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		_setUpEnvironment(role, roleIds, null);
 		setUpPropsUtil(issuer, roleName);
 
-		long userId = _USERERROR_ID;
-
-		try {
-			userId = _openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuerProvider, _mainPath, _portalURL);
-
-			Assert.assertEquals(userId, _USEROK_ID);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		Assert.assertEquals(
+			_USEROK_ID,
+			_openIdConnectUserInfoProcessorImpl.processUserInfo(
+				_userInfo, _COMPANY_ID, issuerProvider, _mainPath, _portalURL));
 	}
 
 	protected void setUpPropsUtil(String issuer, String roleName) {

@@ -1,6 +1,6 @@
-<div>
+<div class="border rounded border-light">
 <#if (BannerImage.getData())?? && BannerImage.getData() != "">
-	<img alt="${BannerImage.getAttribute("alt")}" data-fileentryid="${BannerImage.getAttribute("fileEntryId")}" src="${BannerImage.getData()}" />
+	<img alt="${BannerImage.getAttribute("alt")}" data-fileentryid="${BannerImage.getAttribute("fileEntryId")}" src="${BannerImage.getData()}" class="rounded-top"/>
 </#if>
 	<div>
 	
@@ -39,5 +39,6 @@
 	.courseButton{
 		font-weight: bold;
 		margin-left: 24px;
+		margin-bottom: 24px;
 		}
 </>

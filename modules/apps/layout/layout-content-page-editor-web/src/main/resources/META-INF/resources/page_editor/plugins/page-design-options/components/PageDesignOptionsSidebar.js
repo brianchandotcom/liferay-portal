@@ -153,7 +153,7 @@ export default function PageDesignOptionsSidebar() {
 				</span>
 			</SidebarPanelHeader>
 
-			<ClayTabs className="page-editor__sidebar__page-design-options__tabs">
+			<ClayTabs className="flex-shrink-0 mx-3 page-editor__sidebar__page-design-options__tabs">
 				{tabs.map((tab, index) => (
 					<ClayTabs.Item
 						active={activeTabId === index}
@@ -169,7 +169,11 @@ export default function PageDesignOptionsSidebar() {
 				))}
 			</ClayTabs>
 
-			<ClayTabs.Content activeIndex={activeTabId} fade>
+			<ClayTabs.Content
+				activeIndex={activeTabId}
+				className="overflow-auto px-3"
+				fade
+			>
 				{tabs.map(({icon, options, type}, index) => (
 					<ClayTabs.TabPane
 						aria-labelledby={getTabId(index)}

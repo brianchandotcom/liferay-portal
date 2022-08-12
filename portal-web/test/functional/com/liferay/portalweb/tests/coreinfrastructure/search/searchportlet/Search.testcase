@@ -863,7 +863,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
-			value1 = "2");
+			value1 = "1");
 
 		IFrame.closeFrame();
 
@@ -877,22 +877,25 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
-			value1 = "2");
+			value1 = "1");
 
 		IFrame.closeFrame();
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "WC Title 1",
+			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
-			searchAssetTitle = "WC Title 3",
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.paginateAndViewSearchResults(
-			searchAssetTitle = "WC Title 3",
-			searchAssetType = "Web Content Article",
-			searchTerm = "WC Title");
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article");
 	}
 
 	@description = "This is a use case for LPS-112599."

@@ -23,9 +23,3 @@ export function getApplicationsStatus(status) {
 export function getApplications() {
 	return axios.get(`${DeliveryAPI}/`);
 }
-
-export function getApplicationsFilterProducts() {
-	return axios.get(
-		`${DeliveryAPI}/?filter=productName eq 'General Liability' or productName eq 'Professional Liability' or productName eq 'Workers Compensation' or productName eq 'Business Owners Policy'`
-	);
-}

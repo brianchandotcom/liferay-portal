@@ -15,11 +15,7 @@
 import React, {useEffect, useState} from 'react';
 
 import DonutChart from '../../../common/components/donut-chart';
-import {
-	getApplications,
-	getApplicationsFilterProducts,
-	getProductQuotes,
-} from '../../../common/services/';
+import {getApplications, getProducts} from '../../../common/services/';
 
 const MAX_NAME_LENGHT = 15;
 
@@ -30,68 +26,67 @@ export default function () {
 	const [chartTitle, setChartTitle] = useState('');
 	const [loadData, setLoadData] = useState(false);
 
-	const colorsArray = ['#7154E1', '#55C2FF', '#4BC286', '#FF9A24'];
+	const colorsArray = [
+		'#7154E1',
+		'#55C2FF',
+		'#4BC286',
+		'#FF9A24',
+		'#EC676A',
+		'#D9E4FE',
+		'#1F77B4',
+		'#D1D1D9',
+		'#B5CDFE',
+	];
+
+	const loadChartData = async () => {
+		const products = await getProducts();
+		const applications = await getApplications();
+
+		const columnsArr = [];
+		const colorsObj = {};
+
+		let totalCountApplications = 0;
+
+		products?.data?.items?.map((productQuote, index) => {
+			const countApplications = applications?.data?.items?.filter(
+				(application) => application.productName === productQuote.name
+			).length;
+
+			const shortDescription = productQuote.shortDescription;
+
+			const fullName = productQuote.name;
+			let productName = fullName;
+
+			const productAbbrevation = productName
+				.split(' ')
+				.map((product) => product.charAt(0))
+				.join('');
+
+			if (productName?.length > MAX_NAME_LENGHT) {
+				productName =
+					shortDescription === ''
+						? productAbbrevation
+						: shortDescription;
+			}
+
+			colorsObj[fullName] = colorsArray[index];
+
+			if (countApplications > 0) {
+				columnsArr[index] = [fullName, countApplications, productName];
+				totalCountApplications += countApplications;
+			}
+		});
+
+		setChartTitle(totalCountApplications);
+
+		setColumns(columnsArr);
+		setColors(colorsObj);
+
+		setLoadData(true);
+	};
 
 	useEffect(() => {
-		Promise.allSettled([
-			getProductQuotes(),
-			getApplications(),
-			getApplicationsFilterProducts(),
-		]).then((results) => {
-			const [
-				productQuotesResult,
-				applicationsResult,
-				applicationsFilteredProducts,
-			] = results;
-
-			const columnsArr = [];
-			const colorsObj = {};
-
-			setChartTitle(
-				applicationsFilteredProducts?.value?.data?.totalCount
-			);
-
-			productQuotesResult?.value?.data?.items?.map(
-				(productQuote, index) => {
-					const countApplications = applicationsResult?.value?.data?.items?.filter(
-						(application) =>
-							application.productName ===
-							Object.values(productQuote.name)[0]
-					).length;
-
-					const shortDescription = Object.values(
-						productQuote.shortDescription
-					)[0];
-
-					const [fullName] = Object.values(productQuote.name);
-					let productName = fullName;
-
-					const productAbbrevation = productName
-						.split(' ')
-						.map((product) => product.charAt(0))
-						.join('');
-
-					if (productName?.length > MAX_NAME_LENGHT) {
-						productName =
-							shortDescription === ''
-								? productAbbrevation
-								: shortDescription;
-					}
-
-					colorsObj[fullName] = colorsArray[index];
-					columnsArr[index] = [
-						fullName,
-						countApplications,
-						productName,
-					];
-				}
-			);
-
-			setColumns(columnsArr);
-			setColors(colorsObj);
-
-			setLoadData(true);
-		});
+		loadChartData();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

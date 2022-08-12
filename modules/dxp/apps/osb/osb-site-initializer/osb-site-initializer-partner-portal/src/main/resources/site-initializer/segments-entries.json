@@ -4,7 +4,7 @@
 		"name_i18n": {
 			"en-US": "Segments Entry 1"
 		},
-		"segmentsEntryKey": "TEST-SEGMENTS-ENTRY-1",
+		"segmentsEntryKey": "SEGMENTS-ENTRY-1",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -12,7 +12,7 @@
 		"name_i18n": {
 			"en-US": "Segments Entry 2"
 		},
-		"segmentsEntryKey": "TEST-SEGMENTS-ENTRY-TEST-2",
+		"segmentsEntryKey": "SEGMENTS-ENTRY-2",
 		"type": "com.liferay.portal.kernel.model.User"
 	}
 ]

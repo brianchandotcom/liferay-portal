@@ -1177,19 +1177,8 @@ public class JournalContentDisplayContext {
 		JournalContentDisplayContext.class);
 
 	private static final Comparator<AssetAddonEntry>
-		_assetAddonEntryComparator = new Comparator<AssetAddonEntry>() {
-
-			@Override
-			public int compare(
-				AssetAddonEntry assetAddonEntry1,
-				AssetAddonEntry assetAddonEntry2) {
-
-				return Double.compare(
-					assetAddonEntry1.getWeight(), assetAddonEntry2.getWeight());
-			}
-
-		};
-
+		_assetAddonEntryComparator = Comparator.comparingDouble(
+			AssetAddonEntry::getWeight);
 	private static final ServiceTrackerMap
 		<String, ContentMetadataAssetAddonEntry>
 			_contentMetadataAssetAddonEntryMap;

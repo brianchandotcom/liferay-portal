@@ -2907,7 +2907,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getString("segmentsEntryKey"),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),
-					null, jsonObject.getBoolean("active", true), null,
+					null, jsonObject.getBoolean("active", true),
+					jsonObject.getString("criteria"),
 					jsonObject.getString("type"), serviceContext);
 			}
 			else {
@@ -2916,8 +2917,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getString("segmentsEntryKey"),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),
-					null, jsonObject.getBoolean("active", true), null,
-					serviceContext);
+					null, jsonObject.getBoolean("active", true),
+					jsonObject.getString("criteria"), serviceContext);
 			}
 		}
 	}

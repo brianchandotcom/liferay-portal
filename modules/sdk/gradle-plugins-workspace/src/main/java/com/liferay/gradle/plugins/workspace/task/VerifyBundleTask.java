@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.workspace.task;
 
 import de.undercouch.gradle.tasks.download.Verify;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -30,13 +31,8 @@ import org.gradle.api.tasks.TaskAction;
  */
 public class VerifyBundleTask extends Verify {
 
-	/**
-	 * Starts verifying
-	 * @throws IOException if the file could not be verified
-	 * @throws NoSuchAlgorithmException if the given algorithm is not available
-	 */
-	@TaskAction
 	@Override
+	@TaskAction
 	public void verify() throws IOException, NoSuchAlgorithmException {
 		if (getSrc() == null) {
 			throw new IllegalArgumentException(
@@ -54,31 +50,29 @@ public class VerifyBundleTask extends Verify {
 				"Please provide a checksum to verify against");
 		}
 
-		// calculate file's checksum
-
-		MessageDigest md = MessageDigest.getInstance(getAlgorithm());
-		String calculatedChecksum;
+		String calculatedChecksum = null;
+		MessageDigest messageDigest = MessageDigest.getInstance(getAlgorithm());
 
 		try (FileInputStream fileInputStream = new FileInputStream(getSrc())) {
-			byte[] buf = new byte[1024];
-			int read;
+			byte[] bytes = new byte[1024];
+			int read = 0;
 
-			while ((read = fileInputStream.read(buf)) != -1) {
-				md.update(buf, 0, read);
+			while ((read = fileInputStream.read(bytes)) != -1) {
+				messageDigest.update(bytes, 0, read);
 			}
 
-			calculatedChecksum = _toHex(md.digest());
+			calculatedChecksum = _toHex(messageDigest.digest());
 		}
 
-		// verify checksum
-
 		if (!calculatedChecksum.equalsIgnoreCase(getChecksum())) {
+			File srcFile = getSrc();
+
 			throw new GradleException(
-				"Invalid checksum for file '" + getSrc().getName() +
+				"Invalid checksum for file '" + srcFile.getName() +
 					"'. Expected " + getChecksum().toLowerCase() + " but got " +
 						calculatedChecksum.toLowerCase() +
 							". Please remove file from " +
-								getSrc().getAbsolutePath() + ", try again.");
+								srcFile.getAbsolutePath() + " and try again.");
 		}
 	}
 

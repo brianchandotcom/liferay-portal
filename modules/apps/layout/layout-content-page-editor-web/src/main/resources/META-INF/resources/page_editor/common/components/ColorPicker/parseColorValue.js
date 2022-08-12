@@ -20,7 +20,6 @@ const ERROR_MESSAGES = {
 		'tokens-cannot-be-mutually-referenced'
 	),
 	selfReferenced: Liferay.Language.get('tokens-cannot-reference-itself'),
-	valueNotExist: Liferay.Language.get('this-token-does-not-exist'),
 };
 
 export function parseColorValue({editedTokenValues, field, token, value}) {
@@ -58,14 +57,13 @@ export function parseColorValue({editedTokenValues, field, token, value}) {
 
 		validValue = element.style.background;
 
-		if (validValue) {
-			pickerColor = convertRGBtoHex(
-				window.getComputedStyle(element).backgroundColor
-			).replace(/^#/, '');
+		if (!validValue) {
+			return {};
 		}
-		else {
-			return {error: ERROR_MESSAGES.valueNotExist};
-		}
+
+		pickerColor = convertRGBtoHex(
+			window.getComputedStyle(element).backgroundColor
+		).replace(/^#/, '');
 
 		element.parentElement.removeChild(element);
 	}

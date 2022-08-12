@@ -14,6 +14,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
+import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -45,6 +46,7 @@ export function openToast(options: {
 export function SidePanelContent({
 	children,
 	className,
+	customLabel,
 	onSave,
 	readOnly,
 	title,
@@ -59,7 +61,18 @@ export function SidePanelContent({
 			className={classNames('lfr-objects__side-panel-content', className)}
 		>
 			<div className="lfr-objects__side-panel-content-header">
-				<h3 className="mb-0">{title}</h3>
+				<div className="lfr-objects__side-panel-content-header-title">
+					<h3 className="mb-0">{title}</h3>
+
+					{customLabel && (
+						<ClayLabel
+							className="lfr-objects__side-panel-content-header-title-label"
+							displayType={customLabel?.displayType}
+						>
+							{customLabel?.message}
+						</ClayLabel>
+					)}
+				</div>
 
 				<ClayButtonWithIcon
 					displayType="unstyled"
@@ -89,13 +102,18 @@ export function SidePanelContent({
 
 export function SidePanelForm({
 	children,
+	customLabel,
 	onSubmit,
 	readOnly,
 	title,
 }: ISidePanelFormProps) {
 	return (
 		<ClayForm onSubmit={onSubmit}>
-			<SidePanelContent readOnly={readOnly} title={title}>
+			<SidePanelContent
+				customLabel={customLabel}
+				readOnly={readOnly}
+				title={title}
+			>
 				{children}
 			</SidePanelContent>
 		</ClayForm>
@@ -108,6 +126,10 @@ interface IContainerProps {
 }
 
 interface CommonProps extends IContainerProps {
+	customLabel?: {
+		displayType: 'success' | 'info';
+		message: string;
+	};
 	readOnly?: boolean;
 	title: string;
 }

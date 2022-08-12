@@ -23,12 +23,14 @@ export declare function openToast(options: {
 export declare function SidePanelContent({
 	children,
 	className,
+	customLabel,
 	onSave,
 	readOnly,
 	title,
 }: IProps): JSX.Element;
 export declare function SidePanelForm({
 	children,
+	customLabel,
 	onSubmit,
 	readOnly,
 	title,
@@ -38,6 +40,10 @@ interface IContainerProps {
 	className?: string;
 }
 interface CommonProps extends IContainerProps {
+	customLabel?: {
+		displayType: 'success' | 'info';
+		message: string;
+	};
 	readOnly?: boolean;
 	title: string;
 }

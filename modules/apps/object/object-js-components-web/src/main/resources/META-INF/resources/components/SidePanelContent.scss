@@ -19,5 +19,15 @@
 		position: sticky;
 		top: 0;
 		z-index: 10;
+
+		&-title {
+			display: flex;
+			flex-direction: column;
+			padding: 1rem;
+
+			&-label {
+				width: fit-content;
+			}
+		}
 	}
 }

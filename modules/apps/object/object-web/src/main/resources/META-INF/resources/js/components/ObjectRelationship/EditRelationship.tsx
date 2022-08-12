@@ -72,6 +72,16 @@ export default function EditRelationship({
 
 	return (
 		<SidePanelForm
+			customLabel={
+				Liferay.FeatureFlags['LPS-158478']
+					? {
+							displayType: values.reverse ? 'info' : 'success',
+							message: values.reverse
+								? Liferay.Language.get('child')
+								: Liferay.Language.get('parent'),
+					  }
+					: undefined
+			}
 			onSubmit={handleSubmit}
 			readOnly={readOnly}
 			title={Liferay.Language.get('relationship')}

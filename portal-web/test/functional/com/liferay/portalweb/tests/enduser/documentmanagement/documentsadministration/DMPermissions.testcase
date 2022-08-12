@@ -2879,12 +2879,9 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		JSONGroup.assignUserToGroup(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openSitePage(
 			pageName = "Documents and Media Page",

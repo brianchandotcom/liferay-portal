@@ -501,7 +501,7 @@ public class JournalContentDisplayContext {
 		return groupId;
 	}
 
-	public PortletURL getItemSelectorURL() throws PortalException {
+	public PortletURL getItemSelectorURL() {
 		ItemSelector itemSelector = (ItemSelector)_portletRequest.getAttribute(
 			ItemSelector.class.getName());
 
@@ -664,8 +664,7 @@ public class JournalContentDisplayContext {
 	}
 
 	public List<ContentMetadataAssetAddonEntry>
-			getSelectedContentMetadataAssetAddonEntries()
-		throws PortalException {
+		getSelectedContentMetadataAssetAddonEntries() {
 
 		if (_contentMetadataAssetAddonEntries != null) {
 			return _contentMetadataAssetAddonEntries;
@@ -716,8 +715,8 @@ public class JournalContentDisplayContext {
 		return null;
 	}
 
-	public List<UserToolAssetAddonEntry> getSelectedUserToolAssetAddonEntries()
-		throws PortalException {
+	public List<UserToolAssetAddonEntry>
+		getSelectedUserToolAssetAddonEntries() {
 
 		if (_userToolAssetAddonEntries != null) {
 			return _userToolAssetAddonEntries;

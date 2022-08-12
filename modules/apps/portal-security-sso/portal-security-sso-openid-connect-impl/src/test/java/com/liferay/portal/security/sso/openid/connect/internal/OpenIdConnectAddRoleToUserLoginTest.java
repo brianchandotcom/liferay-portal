@@ -95,7 +95,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_USEROK_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
+				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
 
 	@Test
@@ -114,7 +114,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_USEROK_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
+				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
 
 	@Test
@@ -149,7 +149,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_USEROK_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
+				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
 
 	@Test
@@ -177,7 +177,8 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_USEROK_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuerProvider, _mainPath, _portalURL));
+				_userInfo, _COMPANY_ID, issuerProvider, _MAIN_PATH,
+				_PORTAL_URL));
 	}
 
 	@Test
@@ -205,7 +206,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_USEROK_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
+				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
 
 	@Test
@@ -224,7 +225,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_USEROK_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
+				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
 
 	@Test
@@ -243,7 +244,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_USEROK_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
+				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
 
 	@Test
@@ -262,7 +263,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_USEROK_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _mainPath, _portalURL));
+				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
 
 	@Test
@@ -288,7 +289,8 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_USEROK_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuerProvider, _mainPath, _portalURL));
+				_userInfo, _COMPANY_ID, issuerProvider, _MAIN_PATH,
+				_PORTAL_URL));
 	}
 
 	protected void setUpPropsUtil(String issuer, String roleName) {
@@ -313,9 +315,6 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		_setUpLocaleUtil();
 
 		String emailAddress = "email@liferay.com";
-
-		_mainPath = "/c";
-		_portalURL = "http://localhost:8080";
 
 		Mockito.when(
 			_companyLocalServiceMock.getCompany(_COMPANY_ID)
@@ -453,6 +452,10 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 	private static final long _COMPANY_ID = 444444;
 
+	private static final String _MAIN_PATH = "/c";
+
+	private static final String _PORTAL_URL = "http://localhost:8080";
+
 	private static final String _ROLE_NAME_EXISTS = "Role exist";
 
 	private static final long _USERERROR_ID = 0;
@@ -465,8 +468,6 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 	private final CompanyLocalService _companyLocalServiceMock = Mockito.mock(
 		CompanyLocalService.class);
 	private final Company _companyMock = Mockito.mock(Company.class);
-	private String _mainPath;
-	private String _portalURL;
 	private final Props _props = Mockito.mock(Props.class);
 	private final RoleLocalService _roleLocalServiceMock = Mockito.mock(
 		RoleLocalService.class);

@@ -157,7 +157,7 @@
 </tr>
 <tr>
 	<td>INPUT_LABEL</td>
-	<td>xpath=(//div[contains(@id,'fragment-')]/div[contains(@class,'${type}')]//label[normalize-space()='${fieldLabel}'])[${index}]</td>
+	<td>xpath=(//div[contains(@id,'fragment-')]/div[contains(@class,'${type}')])[${index}]//label[normalize-space()='${fieldLabel}']</td>
 	<td></td>
 </tr>
 <tr>

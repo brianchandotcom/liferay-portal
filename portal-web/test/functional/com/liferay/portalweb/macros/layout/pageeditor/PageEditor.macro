@@ -3820,11 +3820,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				key_tabName = "${tabName}",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
 		}
-		else if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			Click(
-				key_tabName = "${tabName}",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
-		}
 		else {
 			WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 

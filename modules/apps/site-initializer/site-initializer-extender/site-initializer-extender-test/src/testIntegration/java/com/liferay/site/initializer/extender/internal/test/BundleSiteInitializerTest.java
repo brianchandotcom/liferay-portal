@@ -607,7 +607,7 @@ public class BundleSiteInitializerTest {
 					"TESTPROD001", group.getCompanyId());
 
 		CPInstance cpInstance1 = _cpInstanceLocalService.getCPInstance(
-			cpDefinition.getCPDefinitionId(), "Test Value 1");
+			cpDefinition.getCPDefinitionId(), "TEST VALUE 1");
 
 		Assert.assertNotNull(cpInstance1);
 
@@ -620,7 +620,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(25.0, actualPromoPrice.doubleValue(), 0.0001);
 
 		CPInstance cpInstance2 = _cpInstanceLocalService.getCPInstance(
-			cpDefinition.getCPDefinitionId(), "Test Value 2");
+			cpDefinition.getCPDefinitionId(), "TEST VALUE 2");
 
 		Assert.assertNotNull(cpInstance2);
 		Assert.assertTrue(cpInstance2.isSubscriptionEnabled());

@@ -27,7 +27,6 @@ import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import LayoutService from '../../../app/services/LayoutService';
 import changeMasterLayout from '../../../app/thunks/changeMasterLayout';
 import {useId} from '../../../app/utils/useId';
-import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import {useSetStyleBook, useStyleBook} from '../hooks/useStyleBook';
 
@@ -154,39 +153,33 @@ export default function PageDesignOptionsSidebar() {
 				</span>
 			</SidebarPanelHeader>
 
-			<SidebarPanelContent>
-				<ClayTabs className="page-editor__sidebar__page-design-options__tabs">
-					{tabs.map((tab, index) => (
-						<ClayTabs.Item
-							active={activeTabId === index}
-							innerProps={{
-								'aria-controls': getTabPanelId(index),
-								'id': getTabId(index),
-							}}
-							key={index}
-							onClick={() => setActiveTabId(index)}
-						>
-							{tab.label}
-						</ClayTabs.Item>
-					))}
-				</ClayTabs>
+			<ClayTabs className="page-editor__sidebar__page-design-options__tabs">
+				{tabs.map((tab, index) => (
+					<ClayTabs.Item
+						active={activeTabId === index}
+						innerProps={{
+							'aria-controls': getTabPanelId(index),
+							'id': getTabId(index),
+						}}
+						key={index}
+						onClick={() => setActiveTabId(index)}
+					>
+						{tab.label}
+					</ClayTabs.Item>
+				))}
+			</ClayTabs>
 
-				<ClayTabs.Content activeIndex={activeTabId} fade>
-					{tabs.map(({icon, options, type}, index) => (
-						<ClayTabs.TabPane
-							aria-labelledby={getTabId(index)}
-							id={getTabPanelId(index)}
-							key={index}
-						>
-							<OptionList
-								icon={icon}
-								options={options}
-								type={type}
-							/>
-						</ClayTabs.TabPane>
-					))}
-				</ClayTabs.Content>
-			</SidebarPanelContent>
+			<ClayTabs.Content activeIndex={activeTabId} fade>
+				{tabs.map(({icon, options, type}, index) => (
+					<ClayTabs.TabPane
+						aria-labelledby={getTabId(index)}
+						id={getTabPanelId(index)}
+						key={index}
+					>
+						<OptionList icon={icon} options={options} type={type} />
+					</ClayTabs.TabPane>
+				))}
+			</ClayTabs.Content>
 		</>
 	);
 }

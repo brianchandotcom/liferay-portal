@@ -28,7 +28,6 @@ import {config} from '../../../app/config/index';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import {useWidgets} from '../../../app/contexts/WidgetsContext';
 import SearchForm from '../../../common/components/SearchForm';
-import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import {useSessionState} from '../../../core/hooks/useSessionState';
 import SearchResultsPanel from './SearchResultsPanel';
@@ -248,7 +247,7 @@ export default function FragmentsSidebar() {
 				{Liferay.Language.get('fragments-and-widgets')}
 			</SidebarPanelHeader>
 
-			<SidebarPanelContent className="page-editor__sidebar__fragments-widgets-panel">
+			<div className="page-editor__sidebar__fragments-widgets-panel">
 				<div className="align-items-center d-flex justify-content-between mb-3">
 					<SearchForm
 						className="flex-grow-1 mb-0"
@@ -294,7 +293,7 @@ export default function FragmentsSidebar() {
 						tabs={tabs}
 					/>
 				)}
-			</SidebarPanelContent>
+			</div>
 		</div>
 	);
 }

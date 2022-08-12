@@ -20,7 +20,6 @@ import {
 	useSelectItem,
 } from '../../../app/contexts/ControlsContext';
 import {useSelector} from '../../../app/contexts/StoreContext';
-import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import NoCommentsMessage from './NoCommentsMessage';
 import ResolvedCommentsToggle from './ResolvedCommentsToggle';
@@ -55,23 +54,21 @@ export default function FragmentEntryLinksWithComments() {
 				{Liferay.Language.get('comments')}
 			</SidebarPanelHeader>
 
-			<SidebarPanelContent padded={false}>
-				<ResolvedCommentsToggle />
+			<ResolvedCommentsToggle />
 
-				{itemsWithComments.length ? (
-					<nav className="list-group">
-						{itemsWithComments.map(([item, fragmentEntryLink]) => (
-							<FragmentEntryLinkWithComments
-								fragmentEntryLink={fragmentEntryLink}
-								item={item}
-								key={fragmentEntryLink.fragmentEntryLinkId}
-							/>
-						))}
-					</nav>
-				) : (
-					<NoCommentsMessage />
-				)}
-			</SidebarPanelContent>
+			{itemsWithComments.length ? (
+				<nav className="list-group">
+					{itemsWithComments.map(([item, fragmentEntryLink]) => (
+						<FragmentEntryLinkWithComments
+							fragmentEntryLink={fragmentEntryLink}
+							item={item}
+							key={fragmentEntryLink.fragmentEntryLinkId}
+						/>
+					))}
+				</nav>
+			) : (
+				<NoCommentsMessage />
+			)}
 		</>
 	);
 }

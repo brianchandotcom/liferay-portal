@@ -133,7 +133,7 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		);
 		/* stylelint-enable */
 		left: $sidebarButtonWidth;
-		overflow-x: hidden;
+		overflow: hidden;
 		position: fixed;
 		transform: translateX(-100%);
 		transition: transform ease $defaultTransitionDuration;

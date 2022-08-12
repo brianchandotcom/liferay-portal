@@ -20,7 +20,6 @@ import React from 'react';
 import editFragmentEntryComment from '../../../app/actions/editFragmentEntryLinkComment';
 import {useSelectItem} from '../../../app/contexts/ControlsContext';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
-import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import AddCommentForm from './AddCommentForm';
 import FragmentComment from './FragmentComment';
@@ -56,36 +55,32 @@ export default function FragmentComments({fragmentEntryLink}) {
 				<span>{name}</span>
 			</SidebarPanelHeader>
 
-			<SidebarPanelContent padded={false}>
-				<ResolvedCommentsToggle />
+			<ResolvedCommentsToggle />
 
-				<div>
-					<AddCommentForm fragmentEntryLinkId={fragmentEntryLinkId} />
+			<AddCommentForm fragmentEntryLinkId={fragmentEntryLinkId} />
 
-					{fragmentEntryLinkComments.map((_, i) => {
-						const comment =
-							fragmentEntryLinkComments[
-								fragmentEntryLinkComments.length - 1 - i
-							];
+			{fragmentEntryLinkComments.map((_, i) => {
+				const comment =
+					fragmentEntryLinkComments[
+						fragmentEntryLinkComments.length - 1 - i
+					];
 
-						return (
-							<FragmentComment
-								comment={comment}
-								fragmentEntryLinkId={fragmentEntryLinkId}
-								key={comment.commentId}
-								onEdit={(fragmentEntryLinkComment) =>
-									dispatch(
-										editFragmentEntryComment({
-											fragmentEntryLinkComment,
-											fragmentEntryLinkId,
-										})
-									)
-								}
-							/>
-						);
-					})}
-				</div>
-			</SidebarPanelContent>
+				return (
+					<FragmentComment
+						comment={comment}
+						fragmentEntryLinkId={fragmentEntryLinkId}
+						key={comment.commentId}
+						onEdit={(fragmentEntryLinkComment) =>
+							dispatch(
+								editFragmentEntryComment({
+									fragmentEntryLinkComment,
+									fragmentEntryLinkId,
+								})
+							)
+						}
+					/>
+				);
+			})}
 		</>
 	);
 }

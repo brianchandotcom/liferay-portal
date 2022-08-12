@@ -163,7 +163,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		role.setType(RoleConstants.TYPE_REGULAR);
 
 		long[] roleIds = null;
-		String issuerProvider = "issuer Provicer";
+		String issuerProvider = "issuer Provider";
 
 		_setUpEnvironment(role, roleIds, null);
 		setUpPropsUtil(issuer, roleName);
@@ -271,7 +271,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		role.setType(RoleConstants.TYPE_REGULAR);
 
 		long[] roleIds = null;
-		String issuerProvider = "issuer Provicer";
+		String issuerProvider = "issuer Provider";
 
 		_setUpEnvironment(role, roleIds, null);
 		setUpPropsUtil(issuer, roleName);

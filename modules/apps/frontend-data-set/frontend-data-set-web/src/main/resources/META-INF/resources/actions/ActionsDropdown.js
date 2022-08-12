@@ -148,8 +148,16 @@ function ActionsDropdown({
 
 		const url = formatActionURL(action.href, itemData);
 
+		const elementWithIconSpecialProps = action.icon
+			? {
+					ariaLabel: action.label,
+					title: action.label,
+			  }
+			: {};
+
 		return isLink(action.target, action.onClick) ? (
 			<ClayLink
+				{...elementWithIconSpecialProps}
 				className="btn btn-secondary btn-sm"
 				href={url}
 				monospaced={Boolean(action.icon)}
@@ -167,6 +175,7 @@ function ActionsDropdown({
 			</ClayLink>
 		) : (
 			<ClayLink
+				{...elementWithIconSpecialProps}
 				className="btn btn-secondary btn-sm"
 				data-senna-off
 				href="#"

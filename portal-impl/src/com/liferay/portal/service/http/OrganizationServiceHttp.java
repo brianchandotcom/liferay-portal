@@ -995,6 +995,46 @@ public class OrganizationServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.Organization updateLogo(
+			HttpPrincipal httpPrincipal, long organizationId, byte[] logoBytes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				OrganizationServiceUtil.class, "updateLogo",
+				_updateLogoParameterTypes24);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, organizationId, logoBytes);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.model.Organization)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Organization
 			updateOrganization(
 				HttpPrincipal httpPrincipal, long organizationId,
@@ -1016,7 +1056,7 @@ public class OrganizationServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				OrganizationServiceUtil.class, "updateOrganization",
-				_updateOrganizationParameterTypes24);
+				_updateOrganizationParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, organizationId, parentOrganizationId, name, type,
@@ -1064,7 +1104,7 @@ public class OrganizationServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				OrganizationServiceUtil.class, "updateOrganization",
-				_updateOrganizationParameterTypes25);
+				_updateOrganizationParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, organizationId, parentOrganizationId, name, type,
@@ -1181,7 +1221,10 @@ public class OrganizationServiceHttp {
 		_unsetPasswordPolicyOrganizationsParameterTypes23 = new Class[] {
 			long.class, long[].class
 		};
-	private static final Class<?>[] _updateOrganizationParameterTypes24 =
+	private static final Class<?>[] _updateLogoParameterTypes24 = new Class[] {
+		long.class, byte[].class
+	};
+	private static final Class<?>[] _updateOrganizationParameterTypes25 =
 		new Class[] {
 			long.class, long.class, String.class, String.class, long.class,
 			long.class, long.class, String.class, boolean.class, byte[].class,
@@ -1189,7 +1232,7 @@ public class OrganizationServiceHttp {
 			java.util.List.class, java.util.List.class, java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateOrganizationParameterTypes25 =
+	private static final Class<?>[] _updateOrganizationParameterTypes26 =
 		new Class[] {
 			long.class, long.class, String.class, String.class, long.class,
 			long.class, long.class, String.class, boolean.class,

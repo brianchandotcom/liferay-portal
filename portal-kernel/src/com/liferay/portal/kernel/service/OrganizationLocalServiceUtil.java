@@ -1599,6 +1599,12 @@ public class OrganizationLocalServiceUtil {
 			userId, organization, assetCategoryIds, assetTagNames);
 	}
 
+	public static Organization updateLogo(long organizationId, byte[] logoBytes)
+		throws PortalException {
+
+		return getService().updateLogo(organizationId, logoBytes);
+	}
+
 	/**
 	 * Updates the organization.
 	 *

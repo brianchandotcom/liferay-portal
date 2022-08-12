@@ -411,6 +411,12 @@ public class OrganizationServiceUtil {
 			passwordPolicyId, organizationIds);
 	}
 
+	public static Organization updateLogo(long organizationId, byte[] logoBytes)
+		throws PortalException {
+
+		return getService().updateLogo(organizationId, logoBytes);
+	}
+
 	/**
 	 * Updates the organization with additional parameters.
 	 *

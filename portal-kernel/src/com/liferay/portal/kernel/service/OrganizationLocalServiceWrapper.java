@@ -1721,6 +1721,13 @@ public class OrganizationLocalServiceWrapper
 			userId, organization, assetCategoryIds, assetTagNames);
 	}
 
+	@Override
+	public Organization updateLogo(long organizationId, byte[] logoBytes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _organizationLocalService.updateLogo(organizationId, logoBytes);
+	}
+
 	/**
 	 * Updates the organization.
 	 *

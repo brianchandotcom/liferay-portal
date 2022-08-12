@@ -1304,6 +1304,9 @@ public interface OrganizationLocalService
 			String[] assetTagNames)
 		throws PortalException;
 
+	public Organization updateLogo(long organizationId, byte[] logoBytes)
+		throws PortalException;
+
 	/**
 	 * Updates the organization.
 	 *

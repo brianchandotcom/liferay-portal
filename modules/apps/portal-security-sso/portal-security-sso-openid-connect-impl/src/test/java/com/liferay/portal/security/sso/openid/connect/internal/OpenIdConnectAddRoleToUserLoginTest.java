@@ -15,9 +15,6 @@
 package com.liferay.portal.security.sso.openid.connect.internal;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -310,7 +307,9 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		);
 	}
 
-	private void _setUpEnvironment(Role role, long[] roleIds, User userExists) {
+	private void _setUpEnvironment(Role role, long[] roleIds, User userExists)
+		throws Exception {
+
 		_setUpLocaleUtil();
 
 		String emailAddress = "email@liferay.com";
@@ -341,26 +340,16 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		).thenReturn(
 			emailAddress
 		);
-
-		try {
-			Mockito.when(
-				_companyLocalServiceMock.getCompany(_COMPANY_ID)
-			).thenReturn(
-				_companyMock
-			);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
+		Mockito.when(
+			_companyLocalServiceMock.getCompany(_COMPANY_ID)
+		).thenReturn(
+			_companyMock
+		);
 		Mockito.when(
 			_companyMock.isStrangers()
 		).thenReturn(
 			true
 		);
-
 		Mockito.when(
 			_companyMock.isStrangersWithMx()
 		).thenReturn(
@@ -389,19 +378,11 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		).thenReturn(
 			userExists
 		);
-
-		try {
-			Mockito.when(
-				_companyMock.getLocale()
-			).thenReturn(
-				LocaleUtil.ENGLISH
-			);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		Mockito.when(
+			_companyMock.getLocale()
+		).thenReturn(
+			LocaleUtil.ENGLISH
+		);
 
 		Mockito.when(
 			_roleLocalServiceMock.fetchRole(
@@ -418,66 +399,52 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 			null
 		);
 
-		try {
-			Mockito.when(
-				_userLocalServiceMock.addUser(
-					Mockito.anyLong(), Mockito.eq(_COMPANY_ID),
-					Mockito.eq(true), Mockito.eq(null), Mockito.eq(null),
-					Mockito.eq(true), Mockito.eq(StringPool.BLANK),
-					Mockito.eq(emailAddress), Mockito.any(Locale.class),
-					Mockito.eq(emailAddress), Mockito.anyString(),
-					Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong(),
-					Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
-					Mockito.anyInt(), Mockito.anyString(), Mockito.eq(null),
-					Mockito.any(), Mockito.eq(roleIds), Mockito.eq(null),
-					Mockito.anyBoolean(), Mockito.any(ServiceContext.class))
-			).thenReturn(
-				user
-			);
-			Mockito.when(
-				_userLocalServiceMock.addUser(
-					Mockito.anyLong(), Mockito.eq(_COMPANY_ID),
-					Mockito.eq(true), Mockito.eq(null), Mockito.eq(null),
-					Mockito.eq(true), Mockito.eq(StringPool.BLANK),
-					Mockito.eq(emailAddress), Mockito.any(Locale.class),
-					Mockito.eq(emailAddress), Mockito.anyString(),
-					Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong(),
-					Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
-					Mockito.anyInt(), Mockito.anyString(), Mockito.eq(null),
-					Mockito.any(long[].class),
-					AdditionalMatchers.not(Mockito.eq(roleIds)),
-					Mockito.any(long[].class), Mockito.anyBoolean(),
-					Mockito.any(ServiceContext.class))
-			).thenReturn(
-				userError
-			);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		Mockito.when(
+			_userLocalServiceMock.addUser(
+				Mockito.anyLong(), Mockito.eq(_COMPANY_ID),
+				Mockito.eq(true), Mockito.eq(null), Mockito.eq(null),
+				Mockito.eq(true), Mockito.eq(StringPool.BLANK),
+				Mockito.eq(emailAddress), Mockito.any(Locale.class),
+				Mockito.eq(emailAddress), Mockito.anyString(),
+				Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong(),
+				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
+				Mockito.anyInt(), Mockito.anyString(), Mockito.eq(null),
+				Mockito.any(), Mockito.eq(roleIds), Mockito.eq(null),
+				Mockito.anyBoolean(), Mockito.any(ServiceContext.class))
+		).thenReturn(
+			user
+		);
+		Mockito.when(
+			_userLocalServiceMock.addUser(
+				Mockito.anyLong(), Mockito.eq(_COMPANY_ID),
+				Mockito.eq(true), Mockito.eq(null), Mockito.eq(null),
+				Mockito.eq(true), Mockito.eq(StringPool.BLANK),
+				Mockito.eq(emailAddress), Mockito.any(Locale.class),
+				Mockito.eq(emailAddress), Mockito.anyString(),
+				Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong(),
+				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
+				Mockito.anyInt(), Mockito.anyString(), Mockito.eq(null),
+				Mockito.any(long[].class),
+				AdditionalMatchers.not(Mockito.eq(roleIds)),
+				Mockito.any(long[].class), Mockito.anyBoolean(),
+				Mockito.any(ServiceContext.class))
+		).thenReturn(
+			userError
+		);
 
-		try {
-			Mockito.when(
-				_userLocalServiceMock.updatePasswordReset(
-					Mockito.eq(user.getUserId()), Mockito.eq(false))
-			).thenReturn(
-				user
-			);
+		Mockito.when(
+			_userLocalServiceMock.updatePasswordReset(
+				Mockito.eq(user.getUserId()), Mockito.eq(false))
+		).thenReturn(
+			user
+		);
 
-			Mockito.when(
-				_userLocalServiceMock.updatePasswordReset(
-					Mockito.eq(userError.getUserId()), Mockito.eq(false))
-			).thenReturn(
-				userError
-			);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		Mockito.when(
+			_userLocalServiceMock.updatePasswordReset(
+				Mockito.eq(userError.getUserId()), Mockito.eq(false))
+		).thenReturn(
+			userError
+		);
 	}
 
 	private void _setUpLocaleUtil() {
@@ -499,9 +466,6 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 	private static final long _USERERROR_ID = 0;
 
 	private static final long _USEROK_ID = 1;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdConnectAddRoleToUserLoginTest.class);
 
 	private static OpenIdConnectUserInfoProcessorImpl
 		_openIdConnectUserInfoProcessorImpl;

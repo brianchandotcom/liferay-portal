@@ -33,7 +33,14 @@ public abstract class BaseExceptionMapper<T extends Throwable>
 
 	@Override
 	public Response toResponse(T exception) {
-		Problem problem = _getSanitizedProblem(exception);
+		Problem problem = null;
+
+		if (isSanitizedMapper()) {
+			problem = _getSanitizedProblem(exception);
+		}
+		else {
+			problem = getProblem(exception);
+		}
 
 		return Response.status(
 			problem.getStatus()
@@ -59,6 +66,10 @@ public abstract class BaseExceptionMapper<T extends Throwable>
 	}
 
 	protected abstract Problem getProblem(T exception);
+
+	protected boolean isSanitizedMapper() {
+		return true;
+	}
 
 	@Context
 	protected HttpHeaders httpHeaders;

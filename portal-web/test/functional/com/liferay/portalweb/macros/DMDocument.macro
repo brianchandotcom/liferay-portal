@@ -3437,7 +3437,7 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_TOOLBAR_DOWNLOAD",
 			value1 = "Download");
 
-		Click(locator1 = "DocumentsAndMediaDocument#DOCUMENT_TOOLBAR_VERTICAL_ELLIPSIS");
+		Click(locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS");
 
 		AssertTextEquals.assertPartialText(
 			key_menuItem = "Download (${dmDocumentSize})",

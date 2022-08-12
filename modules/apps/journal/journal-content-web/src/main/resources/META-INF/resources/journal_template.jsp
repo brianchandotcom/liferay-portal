@@ -17,9 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalArticle article = journalContentDisplayContext.getArticle();
-DDMStructure ddmStructure = journalContentDisplayContext.getDDMStructure();
-
 String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 %>
 
@@ -66,42 +63,8 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 	</div>
 </clay:sheet-section>
 
-<%
-AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
-
-AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article, 0);
-
-String className = DDMTemplate.class.getName() + "_" + JournalArticle.class.getName();
-
-String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.BROWSE);
-%>
-
-<liferay-portlet:resourceURL portletName="<%= JournalContentPortletKeys.JOURNAL_CONTENT %>" var="actionURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="mvcPath" value="/journal_template_resources.jsp" />
-	<portlet:param name="articleResourcePrimKey" value="<%= String.valueOf(assetRenderer.getClassPK()) %>" />
-</liferay-portlet:resourceURL>
-
 <liferay-frontend:component
 	componentId="journalTemplate"
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"actionURL", actionURL
-		).put(
-			"ddmStructure", ddmStructure
-		).put(
-			"ddmStructureId", (ddmStructure != null) ? String.valueOf(ddmStructure.getStructureId()) : StringPool.BLANK
-		).put(
-			"eventName", PortalUtil.getPortletNamespace(portletId) + "selectDDMTemplate"
-		).put(
-			"portletNamespace", PortalUtil.getPortletNamespace(JournalContentPortletKeys.JOURNAL_CONTENT)
-		).put(
-			"portletURL",
-			PortletURLBuilder.create(
-				PortletProviderUtil.getPortletURL(renderRequest, className, PortletProvider.Action.BROWSE)
-			).buildString()
-		).put(
-			"windowState", LiferayWindowState.POP_UP.toString()
-		).build()
-	%>'
+	context="<%= journalContentDisplayContext.getJournalTemplateContext() %>"
 	module="js/JournalTemplate"
 />

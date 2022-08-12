@@ -29,6 +29,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.item.selector.criteria.constants.ItemSelectorCriteriaConstants;
+import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.content.asset.addon.entry.ContentMetadataAssetAddonEntry;
@@ -54,7 +55,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -67,6 +71,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -87,6 +92,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletMode;
@@ -528,6 +534,68 @@ public class JournalContentDisplayContext {
 			requestBackedPortletURLFactory,
 			liferayRenderResponse.getNamespace() + "selectedItem",
 			assetEntryItemSelectorCriterion);
+	}
+
+	public Map<String, Object> getJournalTemplateContext()
+		throws PortalException {
+
+		DDMStructure ddmStructure = getDDMStructure();
+
+		String className =
+			DDMTemplate.class.getName() + "_" + JournalArticle.class.getName();
+
+		return HashMapBuilder.<String, Object>put(
+			"actionURL",
+			() -> PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					_portletRequest, JournalContentPortletKeys.JOURNAL_CONTENT,
+					PortletRequest.RESOURCE_PHASE)
+			).setMVCPath(
+				"/journal_template_resources.jsp"
+			).setParameter(
+				"articleResourcePrimKey",
+				() -> {
+					AssetRendererFactory<JournalArticle> assetRendererFactory =
+						AssetRendererFactoryRegistryUtil.
+							getAssetRendererFactoryByClass(
+								JournalArticle.class);
+
+					AssetRenderer<JournalArticle> assetRenderer =
+						assetRendererFactory.getAssetRenderer(getArticle(), 0);
+
+					return assetRenderer.getClassPK();
+				}
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
+			).buildString()
+		).put(
+			"ddmStructure", ddmStructure
+		).put(
+			"ddmStructureId",
+			(ddmStructure != null) ?
+				String.valueOf(ddmStructure.getStructureId()) : StringPool.BLANK
+		).put(
+			"eventName",
+			() -> {
+				String portletId = PortletProviderUtil.getPortletId(
+					className, PortletProvider.Action.BROWSE);
+
+				return PortalUtil.getPortletNamespace(portletId) +
+					"selectDDMTemplate";
+			}
+		).put(
+			"portletNamespace",
+			PortalUtil.getPortletNamespace(
+				JournalContentPortletKeys.JOURNAL_CONTENT)
+		).put(
+			"portletURL",
+			() -> PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					_portletRequest, className, PortletProvider.Action.BROWSE)
+			).buildString()
+		).put(
+			"windowState", LiferayWindowState.POP_UP.toString()
+		).build();
 	}
 
 	public JournalArticle getLatestArticle() throws PortalException {

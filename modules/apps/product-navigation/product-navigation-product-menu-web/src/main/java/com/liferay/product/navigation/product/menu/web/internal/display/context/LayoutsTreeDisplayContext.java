@@ -298,6 +298,26 @@ public class LayoutsTreeDisplayContext {
 		return _namespace;
 	}
 
+	public String getPagesTreeURL() throws WindowStateException {
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_liferayPortletRequest,
+				ProductNavigationProductMenuPortletKeys.
+					PRODUCT_NAVIGATION_PRODUCT_MENU,
+				RenderRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/portlet/pages_tree.jsp"
+		).setRedirect(
+			_getRedirect()
+		).setBackURL(
+			_getBackURL()
+		).setParameter(
+			"selPpid", this::getSelPlid
+		).setWindowState(
+			LiferayWindowState.EXCLUSIVE
+		).buildString();
+	}
+
 	public Map<String, Object> getPageTypeSelectorData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"addCollectionLayoutURL", _setSelPlid(getAddCollectionLayoutURL())
@@ -314,6 +334,8 @@ public class LayoutsTreeDisplayContext {
 			}
 		).put(
 			"namespace", getNamespace()
+		).put(
+			"pagesTreeURL", getPagesTreeURL()
 		).put(
 			"pageTypeOptions", _getPageTypeOptionsJSONArray()
 		).put(

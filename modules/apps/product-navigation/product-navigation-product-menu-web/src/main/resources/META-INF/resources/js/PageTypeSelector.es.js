@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import {fetch, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
@@ -27,6 +28,7 @@ function PageTypeSelector({
 	pageTypeOptions,
 	pageTypeSelectedOption,
 	pageTypeSelectedOptionLabel,
+	pagesTreeURL,
 	showAddIcon,
 }) {
 	const [addPageDropdownActive, setAddPageDropdownActive] = useState(false);
@@ -39,7 +41,39 @@ function PageTypeSelector({
 			`${namespace}PAGE_TYPE_SELECTED_OPTION`,
 			type
 		).then(() => {
-			Liferay.Util.navigate(window.location.href);
+			Liferay.Portlet.destroy(`#p_p_id${namespace}`, true);
+
+			fetch(pagesTreeURL)
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error();
+					}
+
+					return response.text();
+				})
+				.then((productMenuContent) => {
+					const sidebar = document.querySelector(
+						'.lfr-product-menu-sidebar .sidebar-body .pages-tree'
+					);
+
+					sidebar.innerHTML = '';
+
+					const range = document.createRange();
+					range.selectNode(sidebar);
+
+					sidebar.appendChild(
+						range.createContextualFragment(productMenuContent)
+					);
+				})
+				.catch(() => {
+					openToast({
+						message: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+						title: Liferay.Language.get('error'),
+						type: 'danger',
+					});
+				});
 		});
 	};
 

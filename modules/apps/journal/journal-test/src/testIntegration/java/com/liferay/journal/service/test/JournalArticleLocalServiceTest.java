@@ -207,7 +207,13 @@ public class JournalArticleLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				companyGroup.getGroupId(), TestPropsValues.getUserId());
 
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
 			_stagingLocalService.enableLocalStaging(
 				TestPropsValues.getUserId(), companyGroup, false, false,
 				serviceContext);
@@ -229,7 +235,15 @@ public class JournalArticleLocalServiceTest {
 				friendlyURLMap, journalArticle.getFriendlyURLMap());
 		}
 		finally {
-			_stagingLocalService.disableStaging(companyGroup, serviceContext);
+			try {
+				_stagingLocalService.disableStaging(
+					companyGroup, serviceContext);
+			}
+			catch (Exception exception) {
+			}
+
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
 		}
 	}
 

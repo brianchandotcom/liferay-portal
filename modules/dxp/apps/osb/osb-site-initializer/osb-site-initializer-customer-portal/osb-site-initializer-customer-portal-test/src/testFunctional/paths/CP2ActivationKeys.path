@@ -105,6 +105,11 @@
 	<td>//*[@role='tooltip']//*[contains(@class, 'font-weight-bold') and text()='${key_environmentName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TOOLTIPS_ACCOUNT_NAME</td>
+	<td>//*[@role='tooltip']//*[contains(@class, 'font-weight-normal')and text()='${key_description}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

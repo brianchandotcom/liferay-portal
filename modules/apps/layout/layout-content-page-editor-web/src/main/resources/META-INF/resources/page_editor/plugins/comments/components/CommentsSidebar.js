@@ -54,6 +54,7 @@ export default function CommentsSidebar() {
 
 	return (
 		<div
+			className="d-flex flex-column"
 			onMouseDown={(event) =>
 				event.nativeEvent.stopImmediatePropagation()
 			}

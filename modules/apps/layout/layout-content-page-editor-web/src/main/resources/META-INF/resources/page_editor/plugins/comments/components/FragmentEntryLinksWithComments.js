@@ -57,7 +57,7 @@ export default function FragmentEntryLinksWithComments() {
 			<ResolvedCommentsToggle />
 
 			{itemsWithComments.length ? (
-				<nav className="list-group">
+				<nav className="list-group mb-0 overflow-auto">
 					{itemsWithComments.map(([item, fragmentEntryLink]) => (
 						<FragmentEntryLinkWithComments
 							fragmentEntryLink={fragmentEntryLink}
@@ -80,7 +80,7 @@ function FragmentEntryLinkWithComments({fragmentEntryLink, item}) {
 	return (
 		<button
 			aria-label={Liferay.Language.get('show-comments')}
-			className="border-0 list-group-item list-group-item-action"
+			className="border-0 flex-shrink-0 list-group-item list-group-item-action"
 			onClick={() => selectItem(item.itemId)}
 			onFocus={() => hoverItem(item.itemId)}
 			onMouseOut={() => hoverItem(null)}

@@ -41,46 +41,50 @@ export default function FragmentComments({fragmentEntryLink}) {
 
 	return (
 		<>
-			<SidebarPanelHeader>
-				<ClayButton
-					borderless
-					className="mr-3 p-0 text-dark"
-					displayType="secondary"
-					onClick={() => selectItem(null)}
-					small
-				>
-					<ClayIcon symbol="angle-left" />
-				</ClayButton>
+			<div className="flex-shrink-0">
+				<SidebarPanelHeader>
+					<ClayButton
+						borderless
+						className="mr-3 p-0 text-dark"
+						displayType="secondary"
+						onClick={() => selectItem(null)}
+						small
+					>
+						<ClayIcon symbol="angle-left" />
+					</ClayButton>
 
-				<span>{name}</span>
-			</SidebarPanelHeader>
+					<span>{name}</span>
+				</SidebarPanelHeader>
 
-			<ResolvedCommentsToggle />
+				<ResolvedCommentsToggle />
 
-			<AddCommentForm fragmentEntryLinkId={fragmentEntryLinkId} />
+				<AddCommentForm fragmentEntryLinkId={fragmentEntryLinkId} />
+			</div>
 
-			{fragmentEntryLinkComments.map((_, i) => {
-				const comment =
-					fragmentEntryLinkComments[
-						fragmentEntryLinkComments.length - 1 - i
-					];
+			<div className="overflow-auto">
+				{fragmentEntryLinkComments.map((_, i) => {
+					const comment =
+						fragmentEntryLinkComments[
+							fragmentEntryLinkComments.length - 1 - i
+						];
 
-				return (
-					<FragmentComment
-						comment={comment}
-						fragmentEntryLinkId={fragmentEntryLinkId}
-						key={comment.commentId}
-						onEdit={(fragmentEntryLinkComment) =>
-							dispatch(
-								editFragmentEntryComment({
-									fragmentEntryLinkComment,
-									fragmentEntryLinkId,
-								})
-							)
-						}
-					/>
-				);
-			})}
+					return (
+						<FragmentComment
+							comment={comment}
+							fragmentEntryLinkId={fragmentEntryLinkId}
+							key={comment.commentId}
+							onEdit={(fragmentEntryLinkComment) =>
+								dispatch(
+									editFragmentEntryComment({
+										fragmentEntryLinkComment,
+										fragmentEntryLinkId,
+									})
+								)
+							}
+						/>
+					);
+				})}
+			</div>
 		</>
 	);
 }

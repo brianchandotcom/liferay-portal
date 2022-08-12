@@ -104,6 +104,16 @@
 	<td>//tr//td[contains(text(),'${key_language}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SEARCH_BAR_INPUT</td>
+	<td>//input[contains(@class, 'input-group')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_NAME_RESULT</td>
+	<td>//td[contains(@class,'table-cell-expand') and contains(.,'${key_result}')]</td>
+	<td></td>
+</tr>
 
 <!-- DIAGRAM_VIEW_PATHS -->
 

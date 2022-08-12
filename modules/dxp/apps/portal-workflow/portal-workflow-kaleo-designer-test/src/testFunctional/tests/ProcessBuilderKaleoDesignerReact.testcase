@@ -1725,9 +1725,7 @@ definition {
 
 		Workflow.openWorkflowListView();
 
-
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-		
 
 		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
 
@@ -2309,9 +2307,19 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSearchLanguages {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSearchLanguages";
 
-		// TODO CanSearchLanguages pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.gotoManageTranslations();
+
+		ProcessBuilderKaleoDesignerReact.searchLanguage(languageName = "Netherlands");
+
+		ProcessBuilderKaleoDesignerReact.viewSearchTranslationResultPresent(result = "Dutch (Netherlands)");
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to see the Start and End nodes on the Diagram when creating a New Process"

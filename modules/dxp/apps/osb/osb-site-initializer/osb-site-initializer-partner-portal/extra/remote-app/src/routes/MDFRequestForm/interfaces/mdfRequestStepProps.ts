@@ -24,4 +24,8 @@ export default interface MDFRequestStepProps<T> {
 		values: T,
 		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
 	) => void;
+	onSubmit?: (
+		values: T,
+		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
+	) => void;
 }

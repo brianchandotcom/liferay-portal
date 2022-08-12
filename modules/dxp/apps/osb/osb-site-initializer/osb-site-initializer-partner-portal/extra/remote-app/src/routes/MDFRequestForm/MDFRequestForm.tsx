@@ -16,6 +16,8 @@ import PRMFormik from '../../common/components/PRMFormik';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import {RequestStatus} from '../../common/enums/requestStatus';
 import MDFRequest from '../../common/interfaces/mdfRequest';
+import createMDFRequestActivities from '../../common/services/liferay/object/activity/createMDFRequestActivities';
+import createMDFRequestActivityBudgets from '../../common/services/liferay/object/budgets/createMDFRequestActivityBudgets';
 import createMDFRequest from '../../common/services/liferay/object/mdf-requests/createMDFRequest';
 import liferayNavigate from '../../common/utils/liferayNavigate';
 import {StepType} from './enums/stepType';
@@ -40,9 +42,7 @@ type StepComponent = {
 	[key in StepType]?: JSX.Element;
 };
 
-const onSubmit = () => {};
-
-const onSaveAsDraft = async (
+const submitForm = async (
 	values: MDFRequest,
 	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
 ) => {
@@ -50,10 +50,41 @@ const onSaveAsDraft = async (
 
 	const dtoMDFRequest = await createMDFRequest(values);
 
-	if (dtoMDFRequest) {
+	if (values.activities.length && dtoMDFRequest) {
+		const dtoMDFRequestActivities = await createMDFRequestActivities(
+			dtoMDFRequest.id,
+			values.activities
+		);
+
+		if (dtoMDFRequestActivities.length) {
+			await Promise.all(
+				values.activities.map(async (activity, index) => {
+					if (
+						activity.budgets.length &&
+						dtoMDFRequestActivities[index]
+					) {
+						return await createMDFRequestActivityBudgets(
+							dtoMDFRequestActivities[index].id,
+							activity.budgets
+						);
+					}
+				})
+			);
+		}
+
 		liferayNavigate(PRMPageRoute.MDF_REQUESTS_LISTING);
 	}
 };
+
+const onSubmit = async (
+	values: MDFRequest,
+	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
+) => submitForm(values, formikHelpers);
+
+const onSaveAsDraft = async (
+	values: MDFRequest,
+	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
+) => submitForm(values, formikHelpers);
 
 const onCancel = () => liferayNavigate(PRMPageRoute.MDF_REQUESTS_LISTING);
 

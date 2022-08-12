@@ -43,7 +43,7 @@ public class PropertiesMultiLineValuesOrderCheck extends BaseFileCheck {
 		String shortFileName = fileName.substring(pos + 1);
 
 		if (!shortFileName.matches(
-				"(ci|compatibility|system(-ext)?|test)\\.properties")) {
+				"(ci|compatibility|system(-ext)?|test|poshi)\\.properties")) {
 
 			return content;
 		}

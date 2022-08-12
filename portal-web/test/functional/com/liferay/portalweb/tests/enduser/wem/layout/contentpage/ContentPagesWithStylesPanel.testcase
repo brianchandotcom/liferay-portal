@@ -107,17 +107,17 @@ definition {
 				AssertTextEquals(
 					key_fieldLabel = "Text Color",
 					locator1 = "Button#COLOR_PICKER",
-					value1 = "Inherited · rgb(39, 40, 51)");
+					value1 = "Inherited · #272833");
 
 				AssertTextEquals(
 					key_fieldLabel = "Background Color",
 					locator1 = "Button#COLOR_PICKER",
-					value1 = "Inherited · rgba(0, 0, 0, 0)");
+					value1 = "Inherited · #00000000");
 
 				AssertTextEquals(
 					key_fieldLabel = "Border Color",
 					locator1 = "Button#COLOR_PICKER",
-					value1 = "Inherited · rgb(39, 40, 51)");
+					value1 = "Inherited · #272833");
 			}
 
 			task ("View the tooltip shown when hover on icon of selectors") {

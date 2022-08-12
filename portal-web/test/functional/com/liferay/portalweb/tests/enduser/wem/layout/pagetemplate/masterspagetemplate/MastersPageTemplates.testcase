@@ -900,9 +900,9 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-				item = "Edit",
-				pageTemplateName = "Page Template Name");
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Page Template Name");
 
 			WaitForPageLoad();
 		}
@@ -1911,9 +1911,9 @@ definition {
 		task ("Edit the master page") {
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
-			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
-				item = "Edit",
-				masterLayoutName = "Custom Masters Page Template");
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Custom Masters Page Template");
 
 			PageEditor.assertFragmentSidebarLoaded();
 		}
@@ -1953,9 +1953,9 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-				item = "Edit",
-				pageTemplateName = "Page Template Name");
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Page Template Name");
 
 			// Workaround until LPS-141214 is resolved
 
@@ -1971,9 +1971,9 @@ definition {
 		task ("View the Google item is shown in display page template based on custom masters") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Name",
-				item = "Edit");
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Display Page Name");
 
 			// Workaround until LPS-141214 is resolved
 

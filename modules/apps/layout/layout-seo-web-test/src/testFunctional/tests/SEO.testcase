@@ -44,9 +44,9 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Configure",
+			rowEntry = "Display Page Template Name");
 
 		OpenGraph.viewDefaultMappedField(portlet = "SEO");
 
@@ -108,9 +108,9 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Configure",
+			rowEntry = "Display Page Template Name");
 
 		OpenGraph.viewDefaultMappedField(portlet = "SEO");
 
@@ -190,9 +190,9 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Configure",
+			rowEntry = "Display Page Template Name");
 
 		OpenGraph.viewDefaultMappedField(portlet = "SEO");
 

@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React from 'react';
 
 import ItemConfiguration from './ItemConfiguration';
@@ -19,7 +20,11 @@ import StructureTree from './StructureTree';
 
 export default function PageStructureSidebar() {
 	return (
-		<div className="page-editor__page-structure">
+		<div
+			className={classNames('page-editor__page-structure', {
+				'overflow-auto': Liferay.FeatureFlags['LPS-153452'],
+			})}
+		>
 			<StructureTree />
 
 			{!Liferay.FeatureFlags['LPS-153452'] && <ItemConfiguration />}

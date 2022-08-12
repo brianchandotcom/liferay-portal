@@ -144,15 +144,9 @@
 			</c:when>
 			<c:when test='<%= displayStyle.equals("icon") %>'>
 				<liferay-ui:search-container-column-text>
-					<liferay-frontend:user-vertical-card
-						actionJsp="/user_action.jsp"
-						actionJspServletContext="<%= application %>"
-						resultRow="<%= row %>"
-						rowChecker="<%= organizationUserSearchContainer.getRowChecker() %>"
-						subtitle='<%= LanguageUtil.get(request, "user") %>'
-						title="<%= user2.getFullName() %>"
-						url="<%= String.valueOf(rowURL) %>"
-						userId="<%= user2.getUserId() %>"
+					<clay:user-card
+						propsTransformer="js/UserDropdownDefaultPropsTransformer"
+						userCard="<%= new UserVerticalCard(renderRequest, renderResponse, organizationUserSearchContainer.getRowChecker(), true, user2) %>"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:when>

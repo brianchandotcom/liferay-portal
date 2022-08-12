@@ -13,24 +13,20 @@
  */
 
 export default function ({namespace}) {
-	const selectedFrameType = document.getElementById(
-		`${namespace}TypeSettingsProperties_selectFrame`
-	);
+	const targetType = document.getElementById(`${namespace}targetType`);
 
-	const specificFrame = document.getElementById(
-		`${namespace}TypeSettingsProperties_target`
-	);
+	targetType.addEventListener('change', (event) => {
+		const target = document.getElementById(`${namespace}target`);
 
-	const specificFrameWrapper = specificFrame.parentElement;
+		const specificFrameWrapper = target.parentElement;
 
-	selectedFrameType.addEventListener('change', (event) => {
-		if (event.target.value === 'open-in-a-specific-frame') {
-			specificFrame.value = '';
-			specificFrameWrapper.classList.remove('hide');
+		if (event.target.value === 'useNewTab') {
+			specificFrameWrapper.classList.add('hide');
+			target.value = '_blank';
 		}
 		else {
-			specificFrameWrapper.classList.add('hide');
-			specificFrame.value = '_blank';
+			specificFrameWrapper.classList.remove('hide');
+			target.value = '';
 		}
 	});
 }

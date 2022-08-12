@@ -44,22 +44,15 @@ Group group = layoutsAdminDisplayContext.getGroup();
 </c:if>
 
 <%
-String selectFrame = GetterUtil.getString(layoutTypeSettings.getProperty("select-frame"));
+String targetType = GetterUtil.getString(layoutTypeSettings.getProperty("targetType"));
 %>
 
-<aui:select cssClass="propagatable-field" id="TypeSettingsProperties_selectFrame" label="select-frame" name="TypeSettingsProperties--select-frame--" value="<%= selectFrame %>">
-	<aui:option label="open-in-a-specific-frame" />
-	<aui:option label="open-in-a-new-frame" />
+<aui:select cssClass="propagatable-field" id="targetType" label="target-type" name="TypeSettingsProperties--targetType--">
+	<aui:option label="open-page-in-a-specific-frame" selected='<%= !Objects.equals(targetType, "useNewTab") %>' value="" />
+	<aui:option label="open-page-in-a-new-tab" selected='<%= Objects.equals(targetType, "useNewTab") %>' value="useNewTab" />
 </aui:select>
 
-<c:choose>
-	<c:when test='<%= selectFrame.equals("open-in-a-specific-frame") || selectFrame.equals("") %>'>
-		<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" id="TypeSettingsProperties_target" label="target" name="TypeSettingsProperties--target--" size="15" type="text" value='<%= GetterUtil.getString(layoutTypeSettings.getProperty("target")) %>' />
-	</c:when>
-	<c:otherwise>
-		<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" id="TypeSettingsProperties_target" label="target" name="TypeSettingsProperties--target--" size="15" type="text" value='<%= GetterUtil.getString(layoutTypeSettings.getProperty("target")) %>' wrapperCssClass="hide" />
-	</c:otherwise>
-</c:choose>
+<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" id="target" label="target" name="TypeSettingsProperties--target--" size="15" type="text" value='<%= GetterUtil.getString(layoutTypeSettings.getProperty("target")) %>' wrapperCssClass='<%= Objects.equals(targetType, "useNewTab") ? "hide" : "" %>' />
 
 <aui:field-wrapper helpMessage="this-icon-will-be-shown-in-the-navigation-menu" label="icon" name="iconFileName">
 	<liferay-ui:logo-selector

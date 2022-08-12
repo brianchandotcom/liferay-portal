@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -220,6 +221,11 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 				Collections.emptyList(), Collections.emptyList(),
 				Collections.emptyList(), Collections.emptyList(),
 				serviceContext);
+
+			if (logoBytes != null) {
+				organization = _organizationLocalService.updateLogo(
+					organization.getOrganizationId(), logoBytes);
+			}
 		}
 		else {
 
@@ -244,6 +250,9 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
 	private OrganizationService _organizationService;

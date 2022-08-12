@@ -21,22 +21,24 @@ import TabCollection from './TabCollection';
 
 export default function SearchResultsPanel({filteredTabs}) {
 	return filteredTabs.length ? (
-		filteredTabs.map((tab, index) => (
-			<div key={index}>
-				<div className="font-weight-semi-bold page-editor__fragments-widgets__search-results-panel__filter-subtitle py-2">
-					{tab.label}
-				</div>
+		<div className="overflow-auto px-3">
+			{filteredTabs.map((tab, index) => (
+				<div key={index}>
+					<div className="font-weight-semi-bold page-editor__fragments-widgets__search-results-panel__filter-subtitle py-2">
+						{tab.label}
+					</div>
 
-				{tab.collections.map((collection, index) => (
-					<TabCollection
-						collection={collection}
-						initialOpen
-						isSearchResult
-						key={index}
-					/>
-				))}
-			</div>
-		))
+					{tab.collections.map((collection, index) => (
+						<TabCollection
+							collection={collection}
+							initialOpen
+							isSearchResult
+							key={index}
+						/>
+					))}
+				</div>
+			))}
+		</div>
 	) : (
 		<ClayEmptyState
 			description={Liferay.Language.get(

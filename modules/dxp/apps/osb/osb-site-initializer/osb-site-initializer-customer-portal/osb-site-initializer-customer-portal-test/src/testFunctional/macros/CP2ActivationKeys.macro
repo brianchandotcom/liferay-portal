@@ -188,4 +188,10 @@ definition {
 		var key_text = "${text}";
 		MouseOver(locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_TEXT");
 	}
+
+	macro assertTooltipIsVisible {
+		var key_text= "${text}";
+		AssertVisible(locator1 = "CP2ActivationKeys#TOOLTIPS_TEXT");
+	}
+
 }

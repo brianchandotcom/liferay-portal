@@ -3972,10 +3972,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 
 		MenuItem.click(menuItem = "Delete");
 
-		if (!(isSet(duplicateFragment))) {
-			PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
-		}
-
 		PageEditor.waitForAutoSave();
 	}
 

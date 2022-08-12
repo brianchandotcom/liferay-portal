@@ -22,7 +22,7 @@ KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_K
 
 <c:choose>
 	<c:when test="<%= kbArticle != null %>">
-		<liferay-util:include page="/article/view_article.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/article/view_kb_article.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
 

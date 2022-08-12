@@ -141,7 +141,7 @@ export default function PageStructureSidebar() {
 
 	return (
 		<PageStructureSidebarSection>
-			<div className="page-editor__page-structure__structure-tree">
+			<div className="overflow-auto page-editor__page-structure__structure-tree">
 				{!nodes.length && (
 					<ClayAlert
 						displayType="info"

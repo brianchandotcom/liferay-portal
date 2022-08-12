@@ -64,19 +64,16 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 			new OpenIdConnectUserInfoProcessorImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			_openIdConnectUserInfoProcessorImpl, "_userLocalService",
-			_userLocalServiceMock);
-
-		ReflectionTestUtil.setFieldValue(
 			_openIdConnectUserInfoProcessorImpl, "_companyLocalService",
 			_companyLocalServiceMock);
-
 		ReflectionTestUtil.setFieldValue(
 			_openIdConnectUserInfoProcessorImpl, "_props", _props);
-
 		ReflectionTestUtil.setFieldValue(
 			_openIdConnectUserInfoProcessorImpl, "_roleLocalService",
 			_roleLocalServiceMock);
+		ReflectionTestUtil.setFieldValue(
+			_openIdConnectUserInfoProcessorImpl, "_userLocalService",
+			_userLocalServiceMock);
 	}
 
 	@Test

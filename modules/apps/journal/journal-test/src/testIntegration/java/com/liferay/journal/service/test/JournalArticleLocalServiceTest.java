@@ -31,6 +31,7 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.exception.ArticleFriendlyURLException;
 import com.liferay.journal.exception.DuplicateArticleExternalReferenceCodeException;
@@ -193,6 +194,43 @@ public class JournalArticleLocalServiceTest {
 			Collections.emptyMap(), journalArticle);
 
 		Assert.assertEquals(friendlyURLMap, journalArticle.getFriendlyURLMap());
+	}
+
+	@Test
+	public void testArticleFriendlyURLValidationCompanyGroupStagingEnabled()
+		throws Exception {
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			_group.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				companyGroup.getGroupId(), TestPropsValues.getUserId());
+
+		try {
+			_stagingLocalService.enableLocalStaging(
+				TestPropsValues.getUserId(), companyGroup, false, false,
+				serviceContext);
+
+			Group stagingGroup = companyGroup.getStagingGroup();
+
+			JournalArticle journalArticle = JournalTestUtil.addArticle(
+				stagingGroup.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				Collections.emptyMap());
+
+			Map<Locale, String> friendlyURLMap =
+				journalArticle.getFriendlyURLMap();
+
+			journalArticle = _updateJournalArticle(
+				Collections.emptyMap(), journalArticle);
+
+			Assert.assertEquals(
+				friendlyURLMap, journalArticle.getFriendlyURLMap());
+		}
+		finally {
+			_stagingLocalService.disableStaging(companyGroup, serviceContext);
+		}
 	}
 
 	@Test(expected = ArticleFriendlyURLException.class)
@@ -808,6 +846,9 @@ public class JournalArticleLocalServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private StagingLocalService _stagingLocalService;
 
 	private ThemeDisplay _themeDisplay;
 

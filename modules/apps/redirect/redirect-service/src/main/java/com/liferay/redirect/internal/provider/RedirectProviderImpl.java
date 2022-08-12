@@ -14,17 +14,29 @@
 
 package com.liferay.redirect.internal.provider;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.redirect.internal.configuration.RedirectPatternConfiguration;
+import com.liferay.redirect.internal.util.PatternUtil;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = RedirectProvider.class)
+@Component(
+	configurationPid = "com.liferay.redirect.internal.configuration.RedirectPatternConfiguration",
+	immediate = true, service = RedirectProvider.class
+)
 public class RedirectProviderImpl implements RedirectProvider {
 
 	@Override
@@ -45,8 +57,32 @@ public class RedirectProviderImpl implements RedirectProvider {
 				redirectEntry.getDestinationURL(), redirectEntry.isPermanent());
 		}
 
+		for (Map.Entry<Pattern, String> entry : _patterns.entrySet()) {
+			Pattern pattern = entry.getKey();
+
+			Matcher matcher = pattern.matcher(friendlyURL);
+
+			if (matcher.matches()) {
+				return new RedirectImpl(
+					matcher.replaceFirst(entry.getValue()), false);
+			}
+		}
+
 		return null;
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		RedirectPatternConfiguration redirectPatternConfiguration =
+			ConfigurableUtil.createConfigurable(
+				RedirectPatternConfiguration.class, properties);
+
+		_patterns = PatternUtil.parsePatterns(
+			redirectPatternConfiguration.patterns());
+	}
+
+	private volatile Map<Pattern, String> _patterns;
 
 	@Reference
 	private RedirectEntryLocalService _redirectEntryLocalService;

@@ -107,11 +107,7 @@ const MDFRequestForm = () => {
 		formikHelpers.setTouched(setNestedObjectValues(validationErrors, true));
 	};
 
-	const onPrevious = async (previousStep: StepType) => {
-		setStep(previousStep);
-
-		return;
-	};
+	const onPrevious = (previousStep: StepType) => setStep(previousStep);
 
 	const StepFormComponent: StepComponent = {
 		[StepType.GOALS]: (

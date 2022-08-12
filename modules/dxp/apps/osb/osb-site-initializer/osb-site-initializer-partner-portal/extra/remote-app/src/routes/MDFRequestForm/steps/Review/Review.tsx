@@ -27,7 +27,6 @@ import ReviewHeader from './components/ReviewHeader';
 
 const Review = ({
 	onCancel,
-	onContinue,
 	onPrevious,
 	onSaveAsDraft,
 }: PRMFormikPageProps & MDFRequestStepProps<MDFRequest>) => {
@@ -133,12 +132,10 @@ const Review = ({
 							</Button>
 
 							<Button
-								disabled={!isValid}
-								onClick={() =>
-									onContinue?.(formikHelpers, StepType.REVIEW)
-								}
+								disabled={!isValid && isSubmitting}
+								type="submit"
 							>
-								Continue
+								Submit
 							</Button>
 						</div>
 					</div>

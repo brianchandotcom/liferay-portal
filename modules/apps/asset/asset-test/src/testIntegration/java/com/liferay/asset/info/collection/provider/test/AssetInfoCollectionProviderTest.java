@@ -112,7 +112,7 @@ public class AssetInfoCollectionProviderTest {
 
 		_ratingsEntryLocalService.updateEntry(
 			TestPropsValues.getUserId(), JournalArticle.class.getName(),
-			article2.getResourcePrimKey(), 1, serviceContext);
+			article2.getResourcePrimKey(), 0.5, serviceContext);
 
 		InfoCollectionProvider<AssetEntry> infoCollectionProvider =
 			_infoItemServiceTracker.getInfoItemService(
@@ -135,10 +135,6 @@ public class AssetInfoCollectionProviderTest {
 		Assert.assertEquals(
 			Long.valueOf(article1.getResourcePrimKey()),
 			_CLASS_PK_ACCESSOR.get(assetEntries.get(1)));
-
-		_ratingsEntryLocalService.deleteEntry(
-			TestPropsValues.getUserId(), JournalArticle.class.getName(),
-			article2.getResourcePrimKey());
 
 		_ratingsEntryLocalService.updateEntry(
 			TestPropsValues.getUserId(), JournalArticle.class.getName(),

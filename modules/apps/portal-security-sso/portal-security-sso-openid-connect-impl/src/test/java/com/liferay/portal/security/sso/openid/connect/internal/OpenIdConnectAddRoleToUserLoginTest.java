@@ -380,14 +380,6 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		).thenReturn(
 			LocaleUtil.ENGLISH
 		);
-
-		Mockito.when(
-			_roleLocalServiceMock.fetchRole(
-				Mockito.eq(_COMPANY_ID), Mockito.eq(_ROLE_NAME_EXISTS))
-		).thenReturn(
-			role
-		);
-
 		Mockito.when(
 			_roleLocalServiceMock.fetchRole(
 				Mockito.eq(_COMPANY_ID),
@@ -395,7 +387,12 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		).thenReturn(
 			null
 		);
-
+		Mockito.when(
+			_roleLocalServiceMock.fetchRole(
+				Mockito.eq(_COMPANY_ID), Mockito.eq(_ROLE_NAME_EXISTS))
+		).thenReturn(
+			role
+		);
 		Mockito.when(
 			_userLocalServiceMock.addUser(
 				Mockito.anyLong(), Mockito.eq(_COMPANY_ID),
@@ -428,14 +425,12 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		).thenReturn(
 			userError
 		);
-
 		Mockito.when(
 			_userLocalServiceMock.updatePasswordReset(
 				Mockito.eq(user.getUserId()), Mockito.eq(false))
 		).thenReturn(
 			user
 		);
-
 		Mockito.when(
 			_userLocalServiceMock.updatePasswordReset(
 				Mockito.eq(userError.getUserId()), Mockito.eq(false))

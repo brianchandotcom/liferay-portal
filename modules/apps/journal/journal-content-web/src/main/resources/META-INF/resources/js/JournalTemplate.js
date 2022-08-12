@@ -13,7 +13,6 @@
  */
 
 import {
-	createPortletURL,
 	delegate,
 	fetch,
 	openSelectionModal,
@@ -21,16 +20,7 @@ import {
 	toggleRadio,
 } from 'frontend-js-web';
 
-export default function ({
-	actionURL,
-	ddmStructure,
-	ddmStructureId,
-	eventName,
-	namespace,
-	portletNamespace,
-	portletURL,
-	windowState,
-}) {
+export default function ({actionURL, namespace, portletNamespace, portletURL}) {
 	const form = document.getElementById(`${namespace}fm`);
 	const templateKeyInput = document.getElementById(
 		`${namespace}ddmTemplateKey`
@@ -54,7 +44,9 @@ export default function ({
 
 		openSelectionModal({
 			onSelect: (selectedItem) => {
-				templateKeyInput.value = selectedItem.ddmtemplatekey;
+				const itemValue = JSON.parse(selectedItem.value);
+
+				templateKeyInput.value = itemValue.ddmtemplatekey;
 
 				createTemplatePreview({
 					className: 'loading-animation',
@@ -63,7 +55,7 @@ export default function ({
 
 				const data = new URLSearchParams(
 					Liferay.Util.ns(portletNamespace, {
-						ddmTemplateKey: selectedItem.ddmtemplatekey,
+						ddmTemplateKey: itemValue.ddmtemplatekey,
 					})
 				);
 
@@ -95,13 +87,9 @@ export default function ({
 					type: 'info',
 				});
 			},
-			selectEventName: eventName,
+			selectEventName: 'selectDDMTemplate',
 			title: Liferay.Language.get('templates'),
-			url: createPortletURL(portletURL, {
-				eventName,
-				p_p_state: windowState,
-				...(ddmStructure !== null && {ddmStructureId}),
-			}).toString(),
+			url: portletURL,
 		});
 	};
 

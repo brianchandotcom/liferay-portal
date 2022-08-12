@@ -202,6 +202,8 @@ public class JournalPortlet extends MVCPortlet {
 			FFJournalAutoSaveDraftConfiguration.class.getName(),
 			_ffJournalAutoSaveDraftConfiguration);
 		resourceRequest.setAttribute(
+			ItemSelector.class.getName(), _itemSelector);
+		resourceRequest.setAttribute(
 			JournalWebConfiguration.class.getName(), _journalWebConfiguration);
 		resourceRequest.setAttribute(
 			TranslationPermission.class.getName(), _translationPermission);

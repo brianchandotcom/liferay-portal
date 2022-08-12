@@ -175,8 +175,9 @@ export default function ({
 	if (selectDDMTemplateButton) {
 		const selectDDMTemplateButtonClick = () => {
 			openSelectionModal({
-				onSelect: (selectedItem) => changeDDMTemplate(selectedItem),
-				selectEventName: namespaceId('selectDDMTemplate'),
+				onSelect: (selectedItem) =>
+					changeDDMTemplate(JSON.parse(selectedItem.value)),
+				selectEventName: 'selectDDMTemplate',
 				title: Liferay.Language.get('templates'),
 				url: selectDDMTemplateURL,
 			});

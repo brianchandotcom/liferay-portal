@@ -21,6 +21,8 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
+import com.liferay.dynamic.data.mapping.item.selector.DDMTemplateItemSelectorReturnType;
+import com.liferay.dynamic.data.mapping.item.selector.criterion.DDMTemplateItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -55,8 +57,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -114,7 +114,8 @@ public class JournalContentDisplayContext {
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			long ddmStructureClassNameId,
 			ModelResourcePermission<DDMTemplate>
-				ddmTemplateModelResourcePermission)
+				ddmTemplateModelResourcePermission,
+			ItemSelector itemSelector)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -135,7 +136,8 @@ public class JournalContentDisplayContext {
 			journalContentDisplayContext = new JournalContentDisplayContext(
 				portletRequest, portletResponse, themeDisplay,
 				journalContentPortletInstanceConfiguration,
-				ddmStructureClassNameId, ddmTemplateModelResourcePermission);
+				ddmStructureClassNameId, ddmTemplateModelResourcePermission,
+				itemSelector);
 
 			portletRequest.setAttribute(
 				getRequestAttributeName(portletDisplay.getId()),
@@ -536,14 +538,7 @@ public class JournalContentDisplayContext {
 			assetEntryItemSelectorCriterion);
 	}
 
-	public Map<String, Object> getJournalTemplateContext()
-		throws PortalException {
-
-		DDMStructure ddmStructure = getDDMStructure();
-
-		String className =
-			DDMTemplate.class.getName() + "_" + JournalArticle.class.getName();
-
+	public Map<String, Object> getJournalTemplateContext() {
 		return HashMapBuilder.<String, Object>put(
 			"actionURL",
 			() -> PortletURLBuilder.create(
@@ -569,32 +564,38 @@ public class JournalContentDisplayContext {
 				LiferayWindowState.EXCLUSIVE
 			).buildString()
 		).put(
-			"ddmStructure", ddmStructure
-		).put(
-			"ddmStructureId",
-			(ddmStructure != null) ?
-				String.valueOf(ddmStructure.getStructureId()) : StringPool.BLANK
-		).put(
-			"eventName",
-			() -> {
-				String portletId = PortletProviderUtil.getPortletId(
-					className, PortletProvider.Action.BROWSE);
-
-				return PortalUtil.getPortletNamespace(portletId) +
-					"selectDDMTemplate";
-			}
-		).put(
 			"portletNamespace",
 			PortalUtil.getPortletNamespace(
 				JournalContentPortletKeys.JOURNAL_CONTENT)
 		).put(
 			"portletURL",
-			() -> PortletURLBuilder.create(
-				PortletProviderUtil.getPortletURL(
-					_portletRequest, className, PortletProvider.Action.BROWSE)
-			).buildString()
-		).put(
-			"windowState", LiferayWindowState.POP_UP.toString()
+			() -> {
+				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+					RequestBackedPortletURLFactoryUtil.create(_portletRequest);
+
+				DDMTemplateItemSelectorCriterion
+					ddmTemplateItemSelectorCriterion =
+						new DDMTemplateItemSelectorCriterion();
+
+				ddmTemplateItemSelectorCriterion.setClassNameId(
+					PortalUtil.getClassNameId(JournalArticle.class.getName()));
+
+				DDMStructure ddmStructure = getDDMStructure();
+
+				if (ddmStructure != null) {
+					ddmTemplateItemSelectorCriterion.setDDMStructureId(
+						ddmStructure.getStructureId());
+				}
+
+				ddmTemplateItemSelectorCriterion.
+					setDesiredItemSelectorReturnTypes(
+						new DDMTemplateItemSelectorReturnType());
+
+				return String.valueOf(
+					_itemSelector.getItemSelectorURL(
+						requestBackedPortletURLFactory, "selectDDMTemplate",
+						ddmTemplateItemSelectorCriterion));
+			}
 		).build();
 	}
 
@@ -1051,7 +1052,8 @@ public class JournalContentDisplayContext {
 				journalContentPortletInstanceConfiguration,
 			long ddmStructureClassNameId,
 			ModelResourcePermission<DDMTemplate>
-				ddmTemplateModelResourcePermission)
+				ddmTemplateModelResourcePermission,
+			ItemSelector itemSelector)
 		throws PortalException {
 
 		_portletRequest = portletRequest;
@@ -1062,6 +1064,7 @@ public class JournalContentDisplayContext {
 		_ddmStructureClassNameId = ddmStructureClassNameId;
 		_ddmTemplateModelResourcePermission =
 			ddmTemplateModelResourcePermission;
+		_itemSelector = itemSelector;
 
 		AssetEntry assetEntry = _getAssetEntry();
 
@@ -1211,6 +1214,7 @@ public class JournalContentDisplayContext {
 	private DDMTemplate _defaultDDMTemplate;
 	private Boolean _expired;
 	private Boolean _hasViewPermission;
+	private final ItemSelector _itemSelector;
 	private final JournalContentPortletInstanceConfiguration
 		_journalContentPortletInstanceConfiguration;
 	private JournalArticle _latestArticle;

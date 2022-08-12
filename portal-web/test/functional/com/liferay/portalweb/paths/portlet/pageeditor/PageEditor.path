@@ -679,6 +679,11 @@
 	<td>xpath=(//div[@aria-label='Form Container'])[${key_position}]/div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'page-editor__container')]${key_elementHeader}</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FORM_CONTAINER_SELECT_FIELD</td>
+	<td>xpath=(//div[@aria-label='Form Container'])[${key_position}]//label[normalize-space(text())='Content Type']//following-sibling::select</td>
+	<td></td>
+</tr>
 
 <!--LAYOUT ELEMENTS-->
 

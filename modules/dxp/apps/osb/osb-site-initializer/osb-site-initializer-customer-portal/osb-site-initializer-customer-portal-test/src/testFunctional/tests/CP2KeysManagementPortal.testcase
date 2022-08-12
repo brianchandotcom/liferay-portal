@@ -289,4 +289,43 @@ definition {
 		}
 	}
 
+	@description = "Verify if when you hover the mouse over any cell 'Environment name' it shows a tooltip with the name of the environment and its description"
+	@priority = "3"
+	test VerifyTheMouserOverWorksInAnyCellEnvironmentName {
+		property portal.upstream = "quarantine";
+
+		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
+
+		var keyStatus = "All";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("And I select the pagination quantity to 50 items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		}
+
+		task ("When I put the mouse over the Enviroment Name of a key at the table"){
+			CP2ActivationKeys.putMouseOverElementAtTable(text = "Redacted");
+		}
+
+		task ("Then I should see a tooltip with the Environment Name and Description") {
+			CP2ActivationKeys.assertTooltipIsVisible(text = "Redacted");
+		}
+
+		task ("Then I should see a tooltip with the Environment Description") {
+			CP2ActivationKeys.assertTooltipIsVisible(text = "Redacted");
+		}
+
+	}
+
 }

@@ -137,10 +137,16 @@
 					</h6>
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/user_action.jsp"
-				/>
+				<%
+				UserActionDropdownItems userActionDropdownItems = new UserActionDropdownItems(renderRequest, renderResponse, user2);
+				%>
+
+				<liferay-ui:search-container-column-text>
+					<clay:dropdown-actions
+						dropdownItems="<%= userActionDropdownItems.getActionDropdownItems() %>"
+						propsTransformer="js/UserDropdownDefaultPropsTransformer"
+					/>
+				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:when test='<%= displayStyle.equals("icon") %>'>
 				<liferay-ui:search-container-column-text>
@@ -173,10 +179,16 @@
 					value="<%= LanguageUtil.get(request, userStatus) %>"
 				/>
 
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/user_action.jsp"
-				/>
+				<%
+				UserActionDropdownItems userActionDropdownItems = new UserActionDropdownItems(renderRequest, renderResponse, user2);
+				%>
+
+				<liferay-ui:search-container-column-text>
+					<clay:dropdown-actions
+						dropdownItems="<%= userActionDropdownItems.getActionDropdownItems() %>"
+						propsTransformer="js/UserDropdownDefaultPropsTransformer"
+					/>
+				</liferay-ui:search-container-column-text>
 			</c:otherwise>
 		</c:choose>
 	</c:otherwise>

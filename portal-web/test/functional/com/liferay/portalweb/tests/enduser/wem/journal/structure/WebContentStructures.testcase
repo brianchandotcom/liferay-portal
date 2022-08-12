@@ -268,6 +268,44 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-156908. The web content designer could define an expiration date when edit default values for a new structure."
+	@priority = "5"
+	test PredefineExpirationDateInCustomStructure {
+		property custom.properties = "feature.flag.LPS-156908=true";
+
+		task ("Given the web content designer has a custom structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When the web content designer define an expiration date as default values") {
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
+
+			WebContent.addExpirationDateCP(expirationDate = "01/02/3000");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the web content designer could see the predefined expiration date in web content editor") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WaitForVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+			WebContent.viewExpirationDateCP(expirationDate = "01/02/3000");
+		}
+	}
+
 	@description = "This is a use case for LRQA-61632 and LPS-76981. Can select different type pages in Link to Page field."
 	@priority = "4"
 	test SelectDifferentTypePagesInLinkToPageField {

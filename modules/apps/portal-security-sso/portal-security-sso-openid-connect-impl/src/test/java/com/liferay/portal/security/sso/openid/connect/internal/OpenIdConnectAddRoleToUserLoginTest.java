@@ -79,10 +79,8 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		String roleName = _ROLE_NAME_EXISTS;
 
 		Role role = new RoleImpl();
-		long roleId = 3333;
 
-		role.setRoleId(roleId);
-
+		role.setRoleId(3333);
 		role.setName(roleName);
 		role.setType(RoleConstants.TYPE_REGULAR);
 
@@ -125,10 +123,8 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		String roleName = "Power User";
 
 		Role role = new RoleImpl();
-		long roleId = 3333;
 
-		role.setRoleId(roleId);
-
+		role.setRoleId(3333);
 		role.setCompanyId(_COMPANY_ID);
 		role.setName(roleName);
 		role.setType(RoleConstants.TYPE_REGULAR);
@@ -160,10 +156,8 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		String roleName = _ROLE_NAME_EXISTS;
 
 		Role role = new RoleImpl();
-		long roleId = 3333;
 
-		role.setRoleId(roleId);
-
+		role.setRoleId(3333);
 		role.setCompanyId(_COMPANY_ID);
 		role.setName(roleName);
 		role.setType(RoleConstants.TYPE_REGULAR);
@@ -189,10 +183,8 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		String roleName = _ROLE_NAME_EXISTS;
 
 		Role role = new RoleImpl();
-		long roleId = 3333;
 
-		role.setRoleId(roleId);
-
+		role.setRoleId(3333);
 		role.setCompanyId(_COMPANY_ID);
 		role.setName(roleName);
 		role.setType(RoleConstants.TYPE_SITE);
@@ -272,10 +264,8 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		String roleName = _ROLE_NAME_EXISTS;
 
 		Role role = new RoleImpl();
-		long roleId = 3333;
 
-		role.setRoleId(roleId);
-
+		role.setRoleId(3333);
 		role.setCompanyId(_COMPANY_ID);
 		role.setName(roleName);
 		role.setType(RoleConstants.TYPE_REGULAR);

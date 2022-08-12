@@ -27,7 +27,7 @@ export default function ContentFilter({
 	const [active, setActive] = useState(false);
 
 	return (
-		<div className="page-editor__page-contents__content-filter">
+		<div className="flex-shrink-0 page-editor__page-contents__content-filter px-3">
 			<p className="page-editor__page-contents__content-filter__help">
 				{Liferay.Language.get('content-filtering-help')}
 			</p>

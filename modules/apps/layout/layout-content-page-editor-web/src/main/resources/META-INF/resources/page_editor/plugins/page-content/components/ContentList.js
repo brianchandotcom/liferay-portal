@@ -24,26 +24,37 @@ export default function ContentList({contents, selectedType}) {
 	const filteredContentTypes = Object.keys(contents);
 	const hasSelectedType = selectedType !== CONTENT_TYPE_LABELS.allContent;
 
-	return (filteredContentTypes.includes(selectedType) || !hasSelectedType) &&
-		filteredContentTypes.length ? (
-		hasSelectedType ? (
-			<PageContentList pageContents={contents} type={selectedType} />
-		) : (
-			Object.keys(contents).map((type) => (
-				<Collapse key={type} label={type} open>
-					<PageContentList pageContents={contents} type={type} />
-				</Collapse>
-			))
-		)
-	) : (
-		<ClayEmptyState
-			description={Liferay.Language.get(
-				'try-again-with-a-different-search'
+	return (
+		<div className="overflow-auto px-3">
+			{(filteredContentTypes.includes(selectedType) ||
+				!hasSelectedType) &&
+			!!filteredContentTypes.length ? (
+				hasSelectedType ? (
+					<PageContentList
+						pageContents={contents}
+						type={selectedType}
+					/>
+				) : (
+					Object.keys(contents).map((type) => (
+						<Collapse key={type} label={type} open>
+							<PageContentList
+								pageContents={contents}
+								type={type}
+							/>
+						</Collapse>
+					))
+				)
+			) : (
+				<ClayEmptyState
+					description={Liferay.Language.get(
+						'try-again-with-a-different-search'
+					)}
+					imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+					small
+					title={Liferay.Language.get('no-results-found')}
+				/>
 			)}
-			imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
-			small
-			title={Liferay.Language.get('no-results-found')}
-		/>
+		</div>
 	);
 }
 

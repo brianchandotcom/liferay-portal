@@ -82,6 +82,16 @@ public class RedirectProviderImpl implements RedirectProvider {
 			redirectPatternConfiguration.patterns());
 	}
 
+	protected void setPatterns(Map<Pattern, String> patterns) {
+		_patterns = patterns;
+	}
+
+	protected void setRedirectEntryLocalService(
+		RedirectEntryLocalService redirectEntryLocalService) {
+
+		_redirectEntryLocalService = redirectEntryLocalService;
+	}
+
 	private volatile Map<Pattern, String> _patterns;
 
 	@Reference

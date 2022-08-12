@@ -387,12 +387,6 @@ public class WorkflowTaskDisplayContext {
 		).buildString();
 	}
 
-	public String getState(WorkflowTask workflowTask) {
-		return LanguageUtil.get(
-			_workflowTaskRequestHelper.getRequest(),
-			HtmlUtil.escape(workflowTask.getName()));
-	}
-
 	public String getTaglibEditURL(WorkflowTask workflowTask)
 		throws PortalException, PortletException {
 
@@ -485,10 +479,6 @@ public class WorkflowTaskDisplayContext {
 		return HtmlUtil.escape(
 			WorkflowTaskManagerUtil.getWorkflowTaskLabel(
 				workflowTask.getWorkflowTaskId(), locale));
-	}
-
-	public String getTaskName(WorkflowTask workflowTask) {
-		return HtmlUtil.escape(workflowTask.getName());
 	}
 
 	public String getTaskUpdateMessageArguments(WorkflowLog workflowLog) {

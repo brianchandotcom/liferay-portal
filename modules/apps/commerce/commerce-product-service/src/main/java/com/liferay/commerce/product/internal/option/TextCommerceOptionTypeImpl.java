@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.internal.option;
 
 import com.liferay.commerce.product.option.CommerceOptionType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -47,7 +48,7 @@ public class TextCommerceOptionTypeImpl
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, KEY);
+		return _language.get(locale, KEY);
 	}
 
 	@Override
@@ -57,5 +58,8 @@ public class TextCommerceOptionTypeImpl
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 	}
+
+	@Reference
+	private Language _language;
 
 }

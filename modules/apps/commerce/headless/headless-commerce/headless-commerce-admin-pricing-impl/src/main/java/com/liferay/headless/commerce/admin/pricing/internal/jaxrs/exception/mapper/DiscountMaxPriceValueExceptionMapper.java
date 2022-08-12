@@ -17,7 +17,7 @@ package com.liferay.headless.commerce.admin.pricing.internal.jaxrs.exception.map
 import com.liferay.commerce.constants.CommercePriceConstants;
 import com.liferay.commerce.discount.exception.CommerceDiscountMaxPriceValueException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import javax.ws.rs.core.Response;
@@ -25,6 +25,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Christian Chiappa
@@ -44,7 +45,7 @@ public class DiscountMaxPriceValueExceptionMapper
 
 	@Override
 	public String getErrorDescription() {
-		return LanguageUtil.format(
+		return _language.format(
 			LocaleUtil.US, "price-max-value-is-x",
 			CommercePriceConstants.PRICE_VALUE_MAX);
 	}
@@ -53,5 +54,8 @@ public class DiscountMaxPriceValueExceptionMapper
 	public Response.Status getStatus() {
 		return Response.Status.BAD_REQUEST;
 	}
+
+	@Reference
+	private Language _language;
 
 }

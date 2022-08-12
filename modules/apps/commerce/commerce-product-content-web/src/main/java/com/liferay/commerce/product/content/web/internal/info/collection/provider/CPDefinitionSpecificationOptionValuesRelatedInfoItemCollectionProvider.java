@@ -26,7 +26,7 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
@@ -84,7 +84,7 @@ public class
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "product-specifications");
+		return _language.get(locale, "product-specifications");
 	}
 
 	private List<CPDefinitionSpecificationOptionValue>
@@ -124,5 +124,8 @@ public class
 
 	@Reference
 	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
+
+	@Reference
+	private Language _language;
 
 }

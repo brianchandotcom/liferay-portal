@@ -38,7 +38,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.comparator.FormInstanceVersionVersionComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -128,14 +128,12 @@ public class DDMFormInstanceRecordExporterImpl
 					localizedValue.getString(locale));
 			});
 
+		ddmFormFieldsLabel.put(_KEY_AUTHOR, _language.get(locale, _KEY_AUTHOR));
 		ddmFormFieldsLabel.put(
-			_KEY_AUTHOR, LanguageUtil.get(locale, _KEY_AUTHOR));
+			_KEY_LANGUAGE_ID, _language.get(locale, "default-language"));
 		ddmFormFieldsLabel.put(
-			_KEY_LANGUAGE_ID, LanguageUtil.get(locale, "default-language"));
-		ddmFormFieldsLabel.put(
-			_KEY_MODIFIED_DATE, LanguageUtil.get(locale, "modified-date"));
-		ddmFormFieldsLabel.put(
-			_KEY_STATUS, LanguageUtil.get(locale, _KEY_STATUS));
+			_KEY_MODIFIED_DATE, _language.get(locale, "modified-date"));
+		ddmFormFieldsLabel.put(_KEY_STATUS, _language.get(locale, _KEY_STATUS));
 
 		return ddmFormFieldsLabel;
 	}
@@ -258,8 +256,7 @@ public class DDMFormInstanceRecordExporterImpl
 	}
 
 	protected String getStatusMessage(int status, Locale locale) {
-		return LanguageUtil.get(
-			locale, WorkflowConstants.getStatusLabel(status));
+		return _language.get(locale, WorkflowConstants.getStatusLabel(status));
 	}
 
 	protected List<DDMStructureVersion> getStructureVersions(
@@ -335,5 +332,8 @@ public class DDMFormInstanceRecordExporterImpl
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private Language _language;
 
 }

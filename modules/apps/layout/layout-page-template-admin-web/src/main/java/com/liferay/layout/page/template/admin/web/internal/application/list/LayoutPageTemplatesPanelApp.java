@@ -19,7 +19,7 @@ import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -60,7 +60,7 @@ public class LayoutPageTemplatesPanelApp extends BasePanelApp {
 			serviceContext.getScopeGroupId());
 
 		if ((scopeGroup != null) && scopeGroup.isCompany()) {
-			return LanguageUtil.get(locale, "widget-page-templates");
+			return _language.get(locale, "widget-page-templates");
 		}
 
 		return super.getLabel(locale);
@@ -95,6 +95,9 @@ public class LayoutPageTemplatesPanelApp extends BasePanelApp {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

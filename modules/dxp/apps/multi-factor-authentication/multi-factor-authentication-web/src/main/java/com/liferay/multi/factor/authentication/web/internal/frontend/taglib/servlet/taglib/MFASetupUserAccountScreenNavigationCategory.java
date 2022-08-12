@@ -17,7 +17,7 @@ package com.liferay.multi.factor.authentication.web.internal.frontend.taglib.ser
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.multi.factor.authentication.web.internal.constants.MFASetupUserAccountScreenNavigationConstants;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marta Medio
@@ -53,7 +54,7 @@ public class MFASetupUserAccountScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale, getClass()),
 			getCategoryKey());
@@ -75,5 +76,8 @@ public class MFASetupUserAccountScreenNavigationCategory
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 	}
+
+	@Reference
+	private Language _language;
 
 }

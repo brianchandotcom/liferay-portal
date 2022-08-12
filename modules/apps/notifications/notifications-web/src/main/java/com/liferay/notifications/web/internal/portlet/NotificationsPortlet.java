@@ -15,7 +15,7 @@
 package com.liferay.notifications.web.internal.portlet;
 
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
@@ -326,7 +326,7 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		SessionMessages.add(
 			actionRequest, "requestProcessed",
-			LanguageUtil.get(themeDisplay.getLocale(), message));
+			_language.get(themeDisplay.getLocale(), message));
 	}
 
 	private void _deleteSubscription(long userId, long subscriptionId)
@@ -432,6 +432,9 @@ public class NotificationsPortlet extends MVCPortlet {
 		_userNotificationDeliveryLocalService.updateUserNotificationDelivery(
 			userNotificationDeliveryId, deliver);
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

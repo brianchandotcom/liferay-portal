@@ -17,7 +17,7 @@ package com.liferay.notifications.web.internal.portlet.configuration.icon;
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -35,6 +35,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -49,7 +50,7 @@ public class DeliveryPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(getLocale(portletRequest)), "configuration");
 	}
 
@@ -78,7 +79,7 @@ public class DeliveryPortletConfigurationIcon
 		sb.append("_', portletId: '");
 		sb.append(portletDisplay.getId());
 		sb.append("', title: '");
-		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "configuration"));
+		sb.append(_language.get(themeDisplay.getLocale(), "configuration"));
 		sb.append("', url: '");
 		sb.append(
 			HtmlUtil.escapeJS(String.valueOf(_getDeliveryURL(portletRequest))));
@@ -132,5 +133,8 @@ public class DeliveryPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeliveryPortletConfigurationIcon.class);
+
+	@Reference
+	private Language _language;
 
 }

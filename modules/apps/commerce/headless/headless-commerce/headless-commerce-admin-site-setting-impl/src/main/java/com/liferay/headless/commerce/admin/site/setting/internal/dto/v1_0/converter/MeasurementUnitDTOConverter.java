@@ -19,7 +19,7 @@ import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.MeasurementUnit;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -62,7 +62,7 @@ public class MeasurementUnitDTOConverter
 				primary = cpMeasurementUnit.isPrimary();
 				priority = cpMeasurementUnit.getPriority();
 				rate = cpMeasurementUnit.getRate();
-				type = LanguageUtil.get(
+				type = _language.get(
 					dtoConverterContext.getLocale(),
 					StringUtil.toLowerCase(
 						CPMeasurementUnitConstants.typesMap.get(
@@ -73,5 +73,8 @@ public class MeasurementUnitDTOConverter
 
 	@Reference
 	private CPMeasurementUnitService _cpMeasurementUnitService;
+
+	@Reference
+	private Language _language;
 
 }

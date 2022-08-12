@@ -17,7 +17,7 @@ package com.liferay.commerce.product.content.web.internal.info.item.renderer;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
@@ -44,7 +44,7 @@ public class CPDefinitionSpecificationOptionValueInfoItemRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "product-specification");
+		return _language.get(locale, "product-specification");
 	}
 
 	@Override
@@ -82,6 +82,9 @@ public class CPDefinitionSpecificationOptionValueInfoItemRenderer
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
+
+	@Reference
+	private Language _language;
 
 	private ServletContext _servletContext;
 

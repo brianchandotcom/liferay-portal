@@ -24,7 +24,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
@@ -60,7 +60,7 @@ public class MBMessageModelDocumentContributor
 		document.addKeyword(Field.CATEGORY_ID, mbMessage.getCategoryId());
 
 		for (Locale locale :
-				LanguageUtil.getAvailableLocales(mbMessage.getGroupId())) {
+				_language.getAvailableLocales(mbMessage.getGroupId())) {
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -170,5 +170,8 @@ public class MBMessageModelDocumentContributor
 
 	@Reference
 	private HtmlParser _htmlParser;
+
+	@Reference
+	private Language _language;
 
 }

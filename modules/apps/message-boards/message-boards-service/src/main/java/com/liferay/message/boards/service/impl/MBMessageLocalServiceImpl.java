@@ -68,7 +68,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -2640,7 +2640,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	private String _getLocalizedRootCategoryName(Group group, Locale locale) {
 		try {
-			return LanguageUtil.get(locale, "home") + " - " +
+			return _language.get(locale, "home") + " - " +
 				group.getDescriptiveName(locale);
 		}
 		catch (PortalException portalException) {
@@ -2649,7 +2649,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					group.getGroupId(),
 				portalException);
 
-			return LanguageUtil.get(locale, "home");
+			return _language.get(locale, "home");
 		}
 	}
 
@@ -2913,6 +2913,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Reference
 	private HtmlParser _htmlParser;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

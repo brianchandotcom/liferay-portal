@@ -20,7 +20,7 @@ import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.io.IOException;
 
@@ -59,7 +59,7 @@ public class CETItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return LanguageUtil.get(locale, "extensions");
+		return _language.get(locale, "extensions");
 	}
 
 	@Override
@@ -87,5 +87,8 @@ public class CETItemSelectorView
 	@Reference
 	private ItemSelectorViewDescriptorRenderer<CETItemSelectorCriterion>
 		_itemSelectorViewDescriptorRenderer;
+
+	@Reference
+	private Language _language;
 
 }

@@ -21,7 +21,7 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.service.AssetCategoryService;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -97,7 +97,7 @@ public class EditAssetCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 			MultiSessionMessages.add(
 				actionRequest, "categoryAdded",
-				LanguageUtil.format(
+				_language.format(
 					_portal.getHttpServletRequest(actionRequest),
 					"x-was-created-successfully",
 					new Object[] {
@@ -118,7 +118,7 @@ public class EditAssetCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 			MultiSessionMessages.add(
 				actionRequest, "categoryUpdated",
-				LanguageUtil.format(
+				_language.format(
 					_portal.getHttpServletRequest(actionRequest),
 					"x-was-updated-successfully",
 					new Object[] {
@@ -163,6 +163,9 @@ public class EditAssetCategoryMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private AssetDisplayPageEntryFormProcessor
 		_assetDisplayPageEntryFormProcessor;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

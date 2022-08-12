@@ -20,7 +20,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -101,7 +101,7 @@ public class GetAttachmentsMVCResourceCommand extends BaseMVCResourceCommand {
 					"id", fileEntry.getFileEntryId()
 				).put(
 					"size",
-					LanguageUtil.formatStorageSize(
+					_language.formatStorageSize(
 						fileEntry.getSize(), resourceRequest.getLocale())
 				).put(
 					"title", fileEntry.getTitle()
@@ -141,6 +141,9 @@ public class GetAttachmentsMVCResourceCommand extends BaseMVCResourceCommand {
 			"messageId", message.getMessageId()
 		).buildPortletURL();
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

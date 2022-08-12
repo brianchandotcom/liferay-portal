@@ -18,7 +18,7 @@ import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -42,6 +42,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -91,8 +92,7 @@ public class MBAdminConfigurationAction
 			WebKeys.THEME_DISPLAY);
 
 		for (Locale locale :
-				LanguageUtil.getAvailableLocales(
-					themeDisplay.getSiteGroupId())) {
+				_language.getAvailableLocales(themeDisplay.getSiteGroupId())) {
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -133,8 +133,7 @@ public class MBAdminConfigurationAction
 			WebKeys.THEME_DISPLAY);
 
 		for (Locale locale :
-				LanguageUtil.getAvailableLocales(
-					themeDisplay.getSiteGroupId())) {
+				_language.getAvailableLocales(themeDisplay.getSiteGroupId())) {
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -176,5 +175,8 @@ public class MBAdminConfigurationAction
 			setPreference(actionRequest, preferenceName, ranks);
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 }

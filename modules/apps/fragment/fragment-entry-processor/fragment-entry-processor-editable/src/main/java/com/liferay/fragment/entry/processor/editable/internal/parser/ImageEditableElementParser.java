@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -274,7 +274,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 				"content.Language", getClass());
 
 			throw new FragmentEntryContentException(
-				LanguageUtil.format(
+				_language.format(
 					resourceBundle,
 					"each-editable-image-element-must-contain-an-img-tag",
 					new Object[] {"<em>", "</em>"}, false));
@@ -312,5 +312,8 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private Language _language;
 
 }

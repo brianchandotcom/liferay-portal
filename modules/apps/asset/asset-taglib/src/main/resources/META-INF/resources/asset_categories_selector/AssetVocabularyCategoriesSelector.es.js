@@ -19,11 +19,9 @@ import ClayIcon from '@clayui/icon';
 import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {openSelectionModal, sub as subUtil} from 'frontend-js-web';
+import {createPortletURL, openSelectionModal, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
-
-import Lang from '../utils/lang.es';
 
 function AssetVocabulariesCategoriesSelector({
 	eventName,
@@ -238,15 +236,14 @@ function AssetVocabulariesCategoriesSelector({
 								<ClayForm.FeedbackItem aria-live="polite">
 									<ClayForm.FeedbackIndicator symbol="info-circle" />
 
-									{Lang.sub(
+									{sub(
 										Liferay.Language.get(
 											`category-x-does-not-exist`
 										),
-										[
-											invalidItems
-												.map((item) => item.label)
-												.join(','),
-										]
+
+										invalidItems
+											.map((item) => item.label)
+											.join(',')
 									)}
 								</ClayForm.FeedbackItem>
 							</ClayForm.FeedbackGroup>

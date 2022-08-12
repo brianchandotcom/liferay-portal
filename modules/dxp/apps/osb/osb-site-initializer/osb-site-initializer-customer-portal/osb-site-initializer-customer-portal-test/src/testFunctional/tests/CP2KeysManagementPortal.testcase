@@ -235,4 +235,58 @@ definition {
 		}
 	}
 
+	@description = "Verify if the drop-down list contains the following options: Show 5 items - 10 items - 20 items - 50 items"
+	@priority = "4"
+	test VerifyTheOptionsOfTheDropdownList {
+		property portal.upstream = "quarantine";		
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("And I click at the All tab") {
+			CP2ActivationKeys.goToKeyTab(licenseTab = "All");
+		}
+
+		task ("When I select 5 Items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "5");
+		}
+
+		task ("Then I should be able to see the pagination button with the text 'Show 5 Items'") {
+			CustomerPortal.assertButtonIsVisible(text = "Show 5 Items");
+		}
+
+		task ("When I select 10 Items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "10");
+		}
+
+		task ("Then I should be able to see the pagination button with the text 'Show 10 Items'") {
+			CustomerPortal.assertButtonIsVisible(text = "Show 10 Items");
+		}
+
+		task ("When I select 20 Items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "20");
+		}
+
+		task ("Then I should be able to see the pagination button with the text 'Show 20 Items'") {
+			CustomerPortal.assertButtonIsVisible(text = "Show 20 Items");
+		}
+
+		task ("When I select 15 Items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		}
+
+		task ("Then I should be able to see the pagination button with the text 'Show 50 Items'") {
+			CustomerPortal.assertButtonIsVisible(text = "Show 50 Items");
+		}
+	}
+
 }

@@ -14,12 +14,10 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
-import {
-	StyleErrorsModal,
-	useHasStyleErrors,
-} from '@liferay/layout-content-page-editor-web';
+import {useHasStyleErrors} from '@liferay/layout-content-page-editor-web';
 import React, {useRef, useState} from 'react';
 
+import {StyleErrorsModal} from './StyleErrorsModal';
 import {config} from './config';
 
 export default function PublishButton() {
@@ -115,7 +113,7 @@ export default function PublishButton() {
 									onClick={handleSubmit}
 									type="submit"
 								>
-									{Liferay.Language.get('continue')}
+									{Liferay.Language.get('publish')}
 								</ClayButton>
 							</ClayButton.Group>
 						}

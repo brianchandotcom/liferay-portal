@@ -317,6 +317,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-157739. The page creator could map new field to new input fragment after mapping Form Container to object."
+	@priority = "4"
+	test MapNewFieldToNewInputFragmentInMappedFormContainer {
+		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-150277=true";
+		property test.name.skip.portal.instance = "FormContainer#MapNewFieldToNewInputFragmentInMappedFormContainer";
+
+		task ("Given a page creator has a mapped Form Container on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("When the page creator add a new Date field to object") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Date",
+				fieldLabelName = "Purchase Date",
+				fieldName = "purchaseDate",
+				fieldType = "Date",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+		}
+
+		task ("Then the page creator could map the new field to a new input fragment in mapped Form Container") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Date",
+				targetFragmentName = "Text Input");
+
+			PageEditor.editInput(
+				field = "Purchase Date",
+				fragmentName = "Date");
+
+			PageEditor.viewInputStyle(
+				label = "Purchase Date",
+				showLabel = "true",
+				type = "date-input");
+		}
+	}
+
 	@description = "This is a test for LPS-157739. The page creator could remove automatically added input fragments and change mapping fields."
 	@priority = "4"
 	test RemoveAutomaticallyAddedInputFragmentsThenChangeMappingField {

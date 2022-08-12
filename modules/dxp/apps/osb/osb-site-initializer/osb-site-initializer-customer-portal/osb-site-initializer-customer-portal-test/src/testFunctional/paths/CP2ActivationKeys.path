@@ -95,6 +95,11 @@
 	<td>//*[contains(@aria-label,'Next') and @disabled='']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TABLE_ELEMENT</td>
+	<td>//*[contains(@class, 'cp-activation-key-table')]/tbody/tr[${key_linePosition}]/td[${key_colunmPosition}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

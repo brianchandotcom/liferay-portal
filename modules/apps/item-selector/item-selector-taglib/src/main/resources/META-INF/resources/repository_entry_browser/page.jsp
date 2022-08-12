@@ -276,12 +276,9 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text>
-								<clay:button
-									borderless="<%= true %>"
-									cssClass="component-action icon-view"
-									displayType="secondary"
-									icon="view"
-								/>
+								<c:if test="<%= repositoryEntryBrowserDisplayContext.isPreviewable(latestFileVersion) %>">
+										<liferay-util:include page="/repository_entry_browser/action_button_preview.jsp" servletContext="<%= application %>" />
+								</c:if>
 							</liferay-ui:search-container-column-text>
 						</c:if>
 
@@ -614,12 +611,9 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 									</liferay-ui:search-container-column-text>
 
 									<liferay-ui:search-container-column-text>
-										<clay:button
-											borderless="<%= true %>"
-											cssClass="component-action icon-view"
-											displayType="secondary"
-											icon="view"
-										/>
+										<c:if test="<%= repositoryEntryBrowserDisplayContext.isPreviewable(latestFileVersion) %>">
+												<liferay-util:include page="/repository_entry_browser/action_button_preview.jsp" servletContext="<%= application %>" />
+										</c:if>
 									</liferay-ui:search-container-column-text>
 								</c:if>
 							</c:otherwise> </c:choose>

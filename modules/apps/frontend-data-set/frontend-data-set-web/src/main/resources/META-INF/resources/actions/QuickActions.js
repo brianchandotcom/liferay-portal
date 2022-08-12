@@ -26,7 +26,7 @@ function QuickActions({actions, itemData, itemId, onClick}) {
 			{actions.map((action) => {
 				return (
 					<LinkOrButton
-						aria-label={action.icon}
+						aria-label={action.label || action.icon}
 						className="component-action quick-action-item"
 						displayType="unstyled"
 						href={

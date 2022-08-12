@@ -32,6 +32,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.exception.ArticleFriendlyURLException;
 import com.liferay.journal.exception.DuplicateArticleExternalReferenceCodeException;
 import com.liferay.journal.exception.DuplicateArticleIdException;
 import com.liferay.journal.model.JournalArticle;
@@ -73,9 +74,12 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -85,6 +89,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -141,6 +147,43 @@ public class JournalArticleLocalServiceTest {
 		_themeDisplay.setScopeGroupId(_group.getGroupId());
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setUser(user);
+	}
+
+	@Test
+	public void testArticleFriendlyURLValidation() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			Collections.emptyMap());
+
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+
+		String friendlyURL = FriendlyURLNormalizerUtil.normalize(
+			RandomTestUtil.randomString());
+
+		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+
+		journalArticle = _updateJournalArticle(
+			HashMapBuilder.put(
+				locale, friendlyURL
+			).build(),
+			journalArticle);
+
+		friendlyURLMap.put(locale, friendlyURL);
+
+		Assert.assertEquals(friendlyURLMap, journalArticle.getFriendlyURLMap());
+	}
+
+	@Test(expected = ArticleFriendlyURLException.class)
+	public void testArticleFriendlyURLValidationThrowsArticleFriendlyURLException()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			Collections.emptyMap());
+
+		_updateJournalArticle(Collections.emptyMap(), journalArticle);
 	}
 
 	@Test
@@ -655,6 +698,38 @@ public class JournalArticleLocalServiceTest {
 				serviceContext);
 
 		return new Tuple(article, ddmStructure);
+	}
+
+	private JournalArticle _updateJournalArticle(
+			Map<Locale, String> friendlyURLMap, JournalArticle journalArticle)
+		throws Exception {
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		calendar.setTime(journalArticle.getDisplayDate());
+
+		int displayDateMonth = calendar.get(Calendar.MONTH);
+		int displayDateDay = calendar.get(Calendar.DATE);
+		int displayDateYear = calendar.get(Calendar.YEAR);
+		int displayDateHour = calendar.get(Calendar.HOUR);
+		int displayDateMinute = calendar.get(Calendar.MINUTE);
+
+		if (calendar.get(Calendar.AM_PM) == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		return _journalArticleLocalService.updateArticle(
+			TestPropsValues.getUserId(), journalArticle.getGroupId(),
+			journalArticle.getFolderId(), journalArticle.getArticleId(),
+			journalArticle.getVersion(), journalArticle.getTitleMap(),
+			journalArticle.getDescriptionMap(), friendlyURLMap,
+			journalArticle.getContent(), journalArticle.getDDMStructureKey(),
+			journalArticle.getDDMTemplateKey(), journalArticle.getLayoutUuid(),
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true,
+			journalArticle.isIndexable(), false, null, null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				journalArticle.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Inject(

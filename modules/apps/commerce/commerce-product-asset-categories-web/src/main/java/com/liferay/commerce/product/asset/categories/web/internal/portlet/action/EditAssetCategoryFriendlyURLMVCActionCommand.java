@@ -23,10 +23,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -94,11 +92,8 @@ public class EditAssetCategoryFriendlyURLMVCActionCommand
 				_log.debug(exception);
 			}
 
-			Group companyGroup = _groupLocalService.getCompanyGroup(
-				assetCategory.getCompanyId());
-
 			_friendlyURLEntryLocalService.addFriendlyURLEntry(
-				companyGroup.getGroupId(),
+				assetCategory.getGroupId(),
 				_portal.getClassNameId(AssetCategory.class), categoryId,
 				_getUniqueUrlTitles(assetCategory, urlTitleMap),
 				serviceContext);
@@ -111,9 +106,6 @@ public class EditAssetCategoryFriendlyURLMVCActionCommand
 
 		Map<String, String> newUrlTitleMap = new HashMap<>();
 
-		Group companyGroup = _groupLocalService.getCompanyGroup(
-			assetCategory.getCompanyId());
-
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
 		for (Map.Entry<Locale, String> entry : urlTitleMap.entrySet()) {
@@ -125,7 +117,7 @@ public class EditAssetCategoryFriendlyURLMVCActionCommand
 				((urlTitle != null) && urlTitle.equals(StringPool.BLANK))) {
 
 				urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
-					companyGroup.getGroupId(), classNameId,
+					assetCategory.getGroupId(), classNameId,
 					assetCategory.getCategoryId(), urlTitle);
 
 				newUrlTitleMap.put(LocaleUtil.toLanguageId(locale), urlTitle);
@@ -143,9 +135,6 @@ public class EditAssetCategoryFriendlyURLMVCActionCommand
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

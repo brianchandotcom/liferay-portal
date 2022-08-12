@@ -560,8 +560,20 @@ function AggregationSourceProperty({
 
 	useEffect(() => {
 		const makeFetch = async () => {
+			const objectRelationshipsData = await API.getObjectRelationships(
+				objectDefinitionId
+			);
+
 			setObjectRelationships(
-				await API.getObjectRelationships(objectDefinitionId)
+				objectRelationshipsData.filter(
+					(objectRelationship) =>
+						!(
+							objectRelationship.type === 'manyToMany' &&
+							objectRelationship.reverse &&
+							objectRelationship.objectDefinitionId1 ===
+								objectRelationship.objectDefinitionId2
+						)
+				)
 			);
 		};
 

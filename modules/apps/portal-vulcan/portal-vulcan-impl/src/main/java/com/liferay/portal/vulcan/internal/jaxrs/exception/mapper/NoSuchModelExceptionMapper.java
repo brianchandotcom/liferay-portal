@@ -46,15 +46,7 @@ public class NoSuchModelExceptionMapper
 			).build();
 		}
 
-		Problem problem = getProblem(noSuchModelException);
-
-		return Response.status(
-			problem.getStatus()
-		).entity(
-			problem
-		).type(
-			getMediaType()
-		).build();
+		return super.toResponse(noSuchModelException);
 	}
 
 	@Override

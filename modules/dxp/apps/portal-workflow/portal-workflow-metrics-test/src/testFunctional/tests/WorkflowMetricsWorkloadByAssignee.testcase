@@ -45,6 +45,7 @@ definition {
 	@priority = "3"
 	test AssigneeImagesRetrievedFromGlobalUserProfile {
 		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -915,8 +916,8 @@ definition {
 	@description = "LPS-97669 - Verify that the card (Workload by Assignee) has no more than 10 users"
 	@priority = "4"
 	test WorkloadByAssigneeCardDisplaysUpTo10Users {
-		property portal.upstream = "quarantine";
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#WorkloadByAssigneeCardDisplaysUpTo10Users";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -952,9 +953,6 @@ definition {
 		AssertElementNotPresent(
 			key_assigneeName = "11user user11",
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME");
-
-
-			
 	}
 
 }

@@ -33,7 +33,7 @@ export function StyleErrorsModal({onCloseModal, onPublish}) {
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<p>
+				<p className="text-secondary">
 					{Liferay.Language.get(
 						'some-of-the-fields-have-invalid-values-if-you-continue-publishing-the-latest-valid-values-will-display'
 					)}

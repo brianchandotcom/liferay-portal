@@ -38,15 +38,7 @@ public class BaseOrderValidatorExceptionMapper
 	public Response toResponse(
 		CommerceOrderValidatorException commerceOrderValidatorException) {
 
-		Problem problem = getProblem(commerceOrderValidatorException);
-
-		return Response.status(
-			problem.getStatus()
-		).entity(
-			problem
-		).type(
-			getMediaType()
-		).build();
+		return super.toResponse(commerceOrderValidatorException);
 	}
 
 	@Override
@@ -70,6 +62,11 @@ public class BaseOrderValidatorExceptionMapper
 			),
 			Response.Status.BAD_REQUEST, "CommerceOrderValidatorException",
 			"CommerceOrderValidatorException");
+	}
+
+	@Override
+	protected boolean isSanitizedMapper() {
+		return false;
 	}
 
 }

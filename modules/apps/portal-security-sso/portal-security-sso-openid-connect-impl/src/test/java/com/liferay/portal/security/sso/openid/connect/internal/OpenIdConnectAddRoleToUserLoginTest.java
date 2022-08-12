@@ -79,7 +79,6 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 	@Test
 	public void testBothPropertiesDefinedAndCorrectRole() throws Exception {
 		String issuer = "issuer url";
-
 		String roleName = _ROLE_NAME_EXISTS;
 
 		Role role = new RoleImpl();

@@ -24,8 +24,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LICENSE_FORM_H3</td>
-	<td>//form[contains(@class,'license-form')]//h3</td>
+	<td>LICENSE_FORM_H2</td>
+	<td>//form[contains(@class,'license-form')]//h2</td>
 	<td></td>
 </tr>
 <tr>

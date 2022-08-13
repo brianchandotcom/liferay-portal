@@ -15,7 +15,6 @@
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {Security} from '../../../security';
 import {TestrayFactorOptions, deleteResource} from '../../../services/rest';
 import {Action} from '../../../types';
 
@@ -42,7 +41,7 @@ const useFactorOptionsActions = () => {
 	];
 
 	return {
-		actions: (row: any) => Security.filterActions(actions, row.actions),
+		actions,
 		formModal,
 	};
 };

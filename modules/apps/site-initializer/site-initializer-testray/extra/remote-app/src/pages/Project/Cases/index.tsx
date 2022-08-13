@@ -21,13 +21,13 @@ import {FormModal} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';
 import {casesResource, getCasesTransformData} from '../../../services/rest';
-import {ActionList} from '../../../types';
+import {Action} from '../../../types';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
 import useCaseActions from './useCaseActions';
 
 type CaseListViewProps = {
-	actions?: ActionList;
+	actions?: Action[];
 	formModal?: FormModal;
 	projectId?: number | string;
 	variables?: any;

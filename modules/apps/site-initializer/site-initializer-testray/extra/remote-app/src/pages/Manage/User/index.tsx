@@ -20,11 +20,11 @@ import {TableProps} from '../../../components/Table';
 import {FormModal} from '../../../hooks/useFormModal';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
-import {ActionList} from '../../../types';
+import {Action} from '../../../types';
 import useUserActions from './useUserActions';
 
 type UserListViewProps = {
-	actions?: ActionList;
+	actions?: Action[];
 	formModal?: FormModal;
 	variables?: any;
 } & {listViewProps?: Partial<ListViewProps>; tableProps?: Partial<TableProps>};

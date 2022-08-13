@@ -26,12 +26,12 @@ import {
 	getRequirementsTransformData,
 	requirementsResource,
 } from '../../../services/rest';
-import {ActionList} from '../../../types';
+import {Action} from '../../../types';
 import {searchUtil} from '../../../util/search';
 import useRequirementActions from './useRequirementActions';
 
 type RequirementListViewProps = {
-	actions?: ActionList;
+	actions?: Action[];
 	projectId?: number | string;
 	variables?: any;
 } & {listViewProps?: Partial<ListViewProps>; tableProps?: Partial<TableProps>};

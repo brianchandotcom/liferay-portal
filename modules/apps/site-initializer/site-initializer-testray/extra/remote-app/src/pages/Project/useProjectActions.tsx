@@ -16,7 +16,6 @@ import useFormModal from '../../hooks/useFormModal';
 import useModalContext from '../../hooks/useModalContext';
 import useMutate from '../../hooks/useMutate';
 import i18n from '../../i18n';
-import {Security} from '../../security';
 import {TestrayProject, deleteResource} from '../../services/rest';
 import {Action} from '../../types';
 import ComponentsModal from '../Standalone/Components/ComponentsModal';
@@ -77,7 +76,7 @@ const useProjectActions = () => {
 	];
 
 	return {
-		actions: (row: any) => Security.filterActions(actions, row.actions),
+		actions,
 		formModal,
 	};
 };

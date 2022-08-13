@@ -17,7 +17,6 @@ import {useNavigate, useParams} from 'react-router-dom';
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {Security} from '../../../security';
 import {TestraySuiteCase, deleteResource} from '../../../services/rest';
 import {Action} from '../../../types';
 
@@ -52,7 +51,7 @@ const useSuiteCasesActions = ({isSmartSuite}: {isSmartSuite: boolean}) => {
 	];
 
 	return {
-		actions: (row: any) => Security.filterActions(actions, row.actions),
+		actions,
 		formModal,
 	};
 };

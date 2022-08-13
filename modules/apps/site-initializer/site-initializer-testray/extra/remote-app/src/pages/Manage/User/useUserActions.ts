@@ -16,7 +16,6 @@ import {useNavigate} from 'react-router-dom';
 
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
-import {Security} from '../../../security';
 import {UserAccount} from '../../../services/rest';
 import {Action} from '../../../types';
 
@@ -34,7 +33,7 @@ const useUserActions = () => {
 	];
 
 	return {
-		actions: (row: any) => Security.filterActions(actions, row.actions),
+		actions,
 		formModal,
 	};
 };

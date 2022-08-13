@@ -17,7 +17,6 @@ import {useNavigate} from 'react-router-dom';
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {Security} from '../../../security';
 import {TestrayCase, deleteResource} from '../../../services/rest';
 import {Action} from '../../../types';
 
@@ -49,7 +48,7 @@ const useCaseActions = () => {
 	];
 
 	return {
-		actions: (row: any) => Security.filterActions(actions, row.actions),
+		actions,
 		formModal,
 	};
 };

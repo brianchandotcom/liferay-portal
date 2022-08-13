@@ -17,7 +17,6 @@ import {useNavigate} from 'react-router-dom';
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {Security} from '../../../security';
 import {
 	TestrayCase,
 	TestrayProject,
@@ -49,7 +48,7 @@ const useRequirementActions = () => {
 	];
 
 	return {
-		actions: (row: any) => Security.filterActions(actions, row.actions),
+		actions,
 		formModal,
 	};
 };

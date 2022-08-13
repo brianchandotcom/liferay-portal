@@ -22,7 +22,8 @@ import {KeyedMutator} from 'swr';
 
 import {Sort} from '../../context/ListViewContext';
 import useContextMenu from '../../hooks/useContextMenu';
-import {ActionList, SortDirection, SortOption} from '../../types';
+import {Action, SortDirection, SortOption} from '../../types';
+import {Permission} from '../../util/permission';
 import ContextMenu from '../ContextMenu';
 import DropDown from '../DropDown/DropDown';
 
@@ -36,7 +37,7 @@ type Column<T = any> = {
 };
 
 export type TableProps<T = any> = {
-	actions?: ActionList;
+	actions?: Action[];
 	columns: Column[];
 	items: T[];
 	mutate: KeyedMutator<T>;
@@ -64,12 +65,13 @@ const Table: React.FC<TableProps> = ({
 	selectedRows = [],
 	sort,
 }) => {
-	const displayActionColumn = actions
-		? !!(typeof actions === 'function'
-				? actions({} as any)
-				: (actions as any[])
-		  )?.length
-		: false;
+	const [firstRowAction] = items;
+
+	const filteredActions = actions
+		? Permission.filterActions(actions, firstRowAction?.actions)
+		: [];
+
+	const displayActionColumn = !!filteredActions.length;
 
 	const {
 		contextMenuState,
@@ -155,17 +157,12 @@ const Table: React.FC<TableProps> = ({
 							</ClayTable.Cell>
 						))}
 
-						{displayActionColumn && <ClayTable.Cell headingCell />}
+						{displayActionColumn && <ClayTable.Cell />}
 					</ClayTable.Row>
 				</ClayTable.Head>
 
 				<ClayTable.Body>
 					{items.map((item, rowIndex) => {
-						const _actions =
-							typeof actions === 'function'
-								? actions(item)
-								: actions;
-
 						return (
 							<ClayTable.Row
 								active={
@@ -177,7 +174,7 @@ const Table: React.FC<TableProps> = ({
 								onContextMenu={(event) => {
 									if (displayActionColumn) {
 										handleContext({
-											actions: _actions,
+											actions: filteredActions,
 											event,
 											item,
 											rowIndex,
@@ -240,7 +237,7 @@ const Table: React.FC<TableProps> = ({
 									>
 										{activeRow === rowIndex ? (
 											<DropDown
-												actions={_actions as any}
+												actions={filteredActions as any}
 												item={item}
 												mutate={mutate}
 											/>

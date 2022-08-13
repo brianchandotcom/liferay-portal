@@ -25,7 +25,7 @@ type ObjectPermission = {
 	update?: PermissionObj;
 };
 
-export class Security {
+export class Permission {
 	static filterActions(
 		actions: Action[],
 		permissions: ObjectPermission = {}

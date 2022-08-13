@@ -59,14 +59,15 @@ if (Validator.isNotNull(script)) {
 	refresh="<%= false %>"
 >
 	<c:if test="<%= hasDocumentsAndMediaField %>">
-		<div class="alert alert-info lfr-message-response ddm-documents-and-media-field">
+		<div class="alert alert-info ddm-documents-and-media-field lfr-message-response">
 			<liferay-ui:message key="document-permissions-are-not-inherited-from-the-DDL-record" />
 		</div>
 	</c:if>
 
-	<div class="alert alert-info lfr-message-response ddm-documents-and-media-field hide">
+	<div class="alert alert-info ddm-documents-and-media-field hide lfr-message-response">
 		<liferay-ui:message key="document-permissions-are-not-inherited-from-the-DDL-record" />
 	</div>
+
 	<liferay-ui:section>
 		<div id="<portlet:namespace />formBuilderTab">
 			<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= changeableDefaultLanguage %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" initialize="<%= false %>" readOnly="<%= false %>" />

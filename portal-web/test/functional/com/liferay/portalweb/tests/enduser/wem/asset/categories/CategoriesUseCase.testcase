@@ -278,6 +278,82 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-143509. The sites creator can add a site with required vocabulary."
+	@priority = "4"
+	test AddSiteWithRequiredVocabulary {
+		task ("Given a site creator has a required vocabulary on Global site") {
+			task ("Add a vocabulary with site as associated asset type") {
+				Category.openCategoriesAdmin(siteURLKey = "global");
+
+				Vocabulary.addWithAssociatedAssetTypeCP(
+					assetType = "Site",
+					required = "true",
+					vocabularyName = "Vocabulary Name");
+			}
+
+			task ("Add category to vocabulary") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "Category Name",
+					vocabularyName = "Vocabulary Name");
+			}
+		}
+
+		task ("When the site creator tries to add a new site without select required category") {
+			Site.openSitesAdmin();
+
+			LexiconEntry.gotoAdd();
+
+			LexiconCard.clickCard(card = "Blank Site");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "Second Site Name");
+
+			Button.clickAdd();
+		}
+
+		task ("Then the site creator should see an error message") {
+			Alert.viewErrorMessage(errorMessage = "Error:Please select at least one category for Vocabulary Name.");
+		}
+
+		task ("When the site creator selects a category on vocabulary field") {
+			Button.clickSelect();
+
+			AssetCategorization.gotoSelectCategory();
+
+			Check.checkNotVisible(
+				key_nodeName = "Category Name",
+				locator1 = "Treeview#NODE_CHECKBOX");
+
+			SelectFrameTop();
+
+			SelectFrame(
+				key_title = "Add Site",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click(
+				key_text = "Done",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		task ("Then the site creator can successfully create the site") {
+			task ("View site is successfully created") {
+				Button.clickAdd();
+
+				Alert.viewSuccessMessage();
+
+				ControlMenu.viewHeaderTitle(headerTitle = "Site Settings");
+			}
+
+			task ("Delete global category") {
+				JSONCategory.deleteVocabulary(
+					groupName = "Global",
+					vocabularyName = "Vocabulary Name");
+			}
+		}
+	}
+
 	@description = "Add a web content with a category from parent site."
 	@priority = "4"
 	test AddWebContentWithCategoryFromParentSite {

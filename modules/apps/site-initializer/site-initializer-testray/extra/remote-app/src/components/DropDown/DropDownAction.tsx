@@ -25,6 +25,7 @@ type DropDownActionProps<T = any> = {
 	};
 	item: T;
 	mutate: KeyedMutator<T>;
+	onBeforeClickAction?: () => any;
 	setActive: (active: boolean) => void;
 };
 
@@ -32,6 +33,7 @@ const DropDownAction: React.FC<DropDownActionProps> = ({
 	action: {action, disabled, name},
 	item,
 	mutate,
+	onBeforeClickAction,
 	setActive,
 }) => {
 	if (name === 'divider') {
@@ -47,6 +49,10 @@ const DropDownAction: React.FC<DropDownActionProps> = ({
 				setActive(false);
 
 				if (action) {
+					if (onBeforeClickAction) {
+						onBeforeClickAction();
+					}
+
 					action(item, mutate);
 				}
 			}}

@@ -490,4 +490,72 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140988. The Menu Display fragment should be visible to guest with default permissions."
+	@priority = "4"
+	test ViewMenuDisplayAsGuest {
+		task ("Given a page creator has a content page based on master template with a Menu Display") {
+			task ("Add a master template") {
+				JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+					groupName = "Test Site Name",
+					masterPageTemplateEntryName = "Custom Masters Page Template");
+			}
+
+			task ("Add a Menu Display to master template") {
+				MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+				MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+				PageEditor.addFragment(
+					collectionName = "Menu Display",
+					dropTarget = "Header",
+					fragmentName = "Menu Display",
+					scope = "Master");
+
+				MastersPageTemplates.publishMaster();
+			}
+
+			task ("Add a content page based on master") {
+				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+				ContentPages.addPage(
+					masterLayoutName = "Custom Masters Page Template",
+					pageName = "Test Page Name 1");
+
+				PageEditor.publish();
+			}
+
+			task ("Add a Heading fragment to second page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name 2",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name 2",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the guest accesses the new site") {
+			User.logoutPG();
+
+			Navigator.openSiteURL(siteName = "Test Site Name");
+		}
+
+		task ("Then the guest could navigate through pages via Menu Display") {
+			Navigator.gotoNavTab(navTab = "Test Page Name 2");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+		}
+	}
+
 }

@@ -974,6 +974,10 @@
 			<category name="Styling" />
 			<description name="Checks the order of exceptions in `.jsp` files." />
 		</check>
+		<check name="JSPExpressionTagCheck">
+			<category name="Styling" />
+			<description name="Applies rules to enforce consistency in code style." />
+		</check>
 		<check name="JSPFileNameCheck">
 			<category name="Naming Conventions" />
 			<description name="Checks if the file name of `.jsp` or `.jspf` follows the naming conventions." />
@@ -1041,10 +1045,6 @@
 		<check name="JSPTaglibVariableCheck">
 			<category name="Naming Conventions" />
 			<description name="Checks if variable names follow naming conventions." />
-		</check>
-		<check name="JSPTagVariableStyleCheck">
-			<category name="Styling" />
-			<description name="Checks that tag styling." />
 		</check>
 		<check name="JSPUnusedTermsCheck">
 			<category name="Performance" />

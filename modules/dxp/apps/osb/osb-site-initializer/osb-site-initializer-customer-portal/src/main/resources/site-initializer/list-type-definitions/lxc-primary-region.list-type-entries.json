@@ -1,0 +1,26 @@
+[
+	{
+		"key": "europe",
+		"name": "Europe",
+		"name_i18n": {
+			"en-US": "Europe"
+		},
+		"type": "string"
+	},
+	{
+		"key": "northAmerica",
+		"name": "North America",
+		"name_i18n": {
+			"en-US": "North America"
+		},
+		"type": "string"
+	},
+	{
+		"key": "southAmerica",
+		"name": "South America",
+		"name_i18n": {
+			"en-US": "South America"
+		},
+		"type": "string"
+	}
+]

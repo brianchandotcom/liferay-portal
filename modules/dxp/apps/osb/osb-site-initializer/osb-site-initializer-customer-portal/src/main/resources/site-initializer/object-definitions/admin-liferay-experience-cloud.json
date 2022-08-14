@@ -1,17 +1,17 @@
 {
 	"label": {
-		"en-US": "Incident Management Contact LXC"
+		"en-US": "Admin Liferay ExperienceCloud"
 	},
-	"name": "IncidentManagementContactLXC",
+	"name": "AdminLiferayExperienceCloud",
 	"objectFields": [
 		{
 			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "First Name"
+				"en-US": "Full Name"
 			},
-			"name": "firstName",
+			"name": "fullName",
 			"required": true
 		},
 		{
@@ -19,9 +19,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Last Name"
+				"en-US": "Github Username"
 			},
-			"name": "lastName",
+			"name": "githubUsername",
 			"required": true
 		},
 		{
@@ -46,8 +46,8 @@
 		}
 	],
 	"pluralLabel": {
-		"en_US": "Incident Management Contacts LXC"
+		"en_US": "Admins Liferay Experience Cloud"
 	},
-	"scope": "site",
+	"scope": "company",
 	"system": false
 }

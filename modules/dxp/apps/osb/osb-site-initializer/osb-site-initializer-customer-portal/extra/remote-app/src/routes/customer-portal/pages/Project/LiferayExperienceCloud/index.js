@@ -25,12 +25,9 @@ const LiferayExperienceCloud = () => {
 		setHasSideMenu(true);
 	}, [setHasSideMenu, setHasQuickLinksPanel]);
 
-	const {data} = useGetLiferayExperienceCloudEnvironments(
-		Liferay.ThemeDisplay.getScopeGroupId(),
-		{
-			filter: `accountKey eq '${project?.accountKey}'`,
-		}
-	);
+	const {data} = useGetLiferayExperienceCloudEnvironments({
+		filter: `accountKey eq '${project?.accountKey}'`,
+	});
 
 	const lxcEnvironment =
 		data?.c?.liferayExperienceCloudEnvironments?.items[0];

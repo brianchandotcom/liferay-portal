@@ -24,3 +24,4 @@ export * from './statusTag';
 export * from './subscriptionsStatus';
 export * from './webContentDXPVersionTypes';
 export * from './analyticsStepsTypes';
+export * from './lxcSetupStepsTypes';

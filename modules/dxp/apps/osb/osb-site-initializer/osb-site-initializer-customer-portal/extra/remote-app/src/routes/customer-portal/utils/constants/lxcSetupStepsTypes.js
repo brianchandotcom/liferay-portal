@@ -9,8 +9,9 @@
  * distribution rights of the Software.
  */
 
-export const LIST_TYPES = {
-	dxpVersion: 'DXP Version',
-	lxcPrimaryRegion: 'LXC Primary Region',
-	portalVersion: 'Portal Version',
+const LXC_STEPS_TYPES = {
+	confirmationForm: 1,
+	setupForm: 2,
 };
+
+export {LXC_STEPS_TYPES};

@@ -9,8 +9,10 @@
  * distribution rights of the Software.
  */
 
-export const LIST_TYPES = {
-	dxpVersion: 'DXP Version',
-	lxcPrimaryRegion: 'LXC Primary Region',
-	portalVersion: 'Portal Version',
-};
+export default function getInitialLxcAdmins() {
+	return {
+		email: '',
+		fullName: '',
+		github: '',
+	};
+}

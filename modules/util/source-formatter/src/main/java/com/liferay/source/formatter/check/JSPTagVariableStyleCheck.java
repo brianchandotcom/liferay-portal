@@ -41,7 +41,10 @@ public class JSPTagVariableStyleCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			String jspExpressionTag = matcher.group();
 
-			if (getLevel(jspExpressionTag, "(", ")") != 0) {
+			if ((jspExpressionTag.contains(StringPool.COLON) &&
+				 jspExpressionTag.contains(StringPool.QUESTION)) ||
+				(getLevel(jspExpressionTag, "(", ")") != 0)) {
+
 				continue;
 			}
 

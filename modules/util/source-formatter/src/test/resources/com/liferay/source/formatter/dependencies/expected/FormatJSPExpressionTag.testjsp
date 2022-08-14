@@ -18,6 +18,3 @@
 
 <a class="<%= variable1 %>variable1">
 <a class="variable2<%= variable2 %>">
-<a class="<%= booleanVariable ? true : false %>variable3">
-<a class="variable3<%= booleanVariable ? true : false %>">
-<a class="<%= booleanVariable ? true : false + "variable3" %>">

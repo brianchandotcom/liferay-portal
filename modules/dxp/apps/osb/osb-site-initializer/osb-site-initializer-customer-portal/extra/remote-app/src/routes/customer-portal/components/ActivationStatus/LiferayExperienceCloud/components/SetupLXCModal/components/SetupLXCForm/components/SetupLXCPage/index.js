@@ -11,7 +11,7 @@
 
 import ClayForm from '@clayui/form';
 import {FieldArray} from 'formik';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import i18n from '../../../../../../../../../../../common/I18n';
 import {
 	Button,
@@ -19,22 +19,12 @@ import {
 	Select,
 } from '../../../../../../../../../../../common/components';
 import Layout from '../../../../../../../../../../../common/containers/setup-forms/Layout';
-import {useAppPropertiesContext} from '../../../../../../../../../../../common/contexts/AppPropertiesContext';
-import {
-	createAdminLiferayExperienceCloud,
-	createLiferayExperienceCloudEnvironment,
-	getListTypeDefinitions,
-	updateAccountSubscriptionGroups,
-} from '../../../../../../../../../../../common/services/liferay/graphql/queries';
-import {
-	LIST_TYPES,
-	STATUS_TAG_TYPE_NAMES,
-} from '../../../../../../../../../utils/constants';
 import getInitialLxcAdmins from '../../utils/getInitialLxcAdmins';
 import AdminInputs from './components/AdminsInput';
+import useGetPrimaryRegionList from './hooks/useGetPrimaryRegionList';
+import useSubmitLxcEnvironment from './hooks/useSubmitLxcEnvironment';
 
 const INITIAL_SETUP_ADMIN_COUNT = 1;
-const listType = LIST_TYPES.lxcPrimaryRegion;
 
 const SetupLiferayExperienceCloudPage = ({
 	errors,
@@ -47,8 +37,8 @@ const SetupLiferayExperienceCloudPage = ({
 	values,
 }) => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
-	const [listItem, setListItem] = useState([]);
-	const {client} = useAppPropertiesContext();
+
+	const primaryRegionList = useGetPrimaryRegionList();
 
 	useEffect(() => {
 		const hasTouched = !Object.keys(touched).length;
@@ -57,78 +47,12 @@ const SetupLiferayExperienceCloudPage = ({
 		setBaseButtonDisabled(hasTouched || hasError);
 	}, [touched, errors]);
 
-	useEffect(() => {
-		const fetchListPrimaryRegions = async () => {
-			const {data} = await client.query({
-				query: getListTypeDefinitions,
-				variables: {filter: `name eq '${listType}'`},
-			});
-			const items = data?.listTypeDefinitions?.items[0].listTypeEntries;
-			setListItem(items);
-		};
-		fetchListPrimaryRegions();
-	}, [client]);
-
-	const primaryRegionList = useMemo(
-		() => listItem.map(({name}) => ({label: name, value: name})) || [],
-		[listItem]
+	const handleSubmitLxcEnvironment = useSubmitLxcEnvironment(
+		handleChangeForm,
+		project,
+		subscriptionGroupLxcId,
+		values
 	);
-
-	const handleSubmitLxcEnvironment = async () => {
-		const lxcActivationFields = values?.lxc;
-
-		const {data} = await client.mutate({
-			mutation: createLiferayExperienceCloudEnvironment,
-			variables: {
-				LiferayExperienceCloudEnvironment: {
-					accountKey: project.accountKey,
-					incidentManagementEmailAddress:
-						lxcActivationFields.incidentManagementEmail,
-					incidentManagementFullName:
-						lxcActivationFields.incidentManagementfullName,
-					primaryRegion: lxcActivationFields.primaryRegion,
-					projectId: lxcActivationFields.projectId,
-				},
-			},
-		});
-
-		if (data) {
-			const liferayExperienceCloudEnvironmentId =
-				data.c?.createLiferayExperienceCloudEnvironment
-					?.liferayExperienceCloudEnvironmentId;
-
-			await client.mutate({
-				mutation: updateAccountSubscriptionGroups,
-				variables: {
-					accountSubscriptionGroup: {
-						accountKey: project.accountKey,
-						activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
-					},
-					id: subscriptionGroupLxcId,
-				},
-			});
-
-			await Promise.all(
-				lxcActivationFields?.admins?.map(
-					({email, fullName, github}) => {
-						return client.mutate({
-							mutation: createAdminLiferayExperienceCloud,
-							variables: {
-								AdminLiferayExperienceCloud: {
-									emailAddress: email,
-									fullName,
-									githubUsername: github,
-									liferayExperienceCloudEnvironmentId,
-								},
-							},
-						});
-					}
-				)
-			);
-		}
-
-		handleChangeForm(true);
-	};
 
 	return (
 		<Layout

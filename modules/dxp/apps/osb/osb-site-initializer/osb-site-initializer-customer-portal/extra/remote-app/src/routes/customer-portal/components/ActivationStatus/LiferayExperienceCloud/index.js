@@ -8,16 +8,13 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import {useModal} from '@clayui/modal';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
-import {getAccountSubscriptionGroups} from '../../../../../common/services/liferay/graphql/queries';
-import {useCustomerPortal} from '../../../context';
-import {actionTypes} from '../../../context/reducer';
-import {STATUS_TAG_TYPE_NAMES} from '../../../utils/constants';
+import {useGetAccountSubscriptionGroups} from '../../../../../common/services/liferay/graphql/account-subscription-groups/queries/useGetAccountSubscriptionGroups';
 import ActivationStatusLayout from '../Layout';
 import SetupLiferayExperienceCloudModal from './components/SetupLXCModal';
 import useActivationStatusDate from './hooks/useActivationStatusDate';
 import useGetActivationStatusCardLayout from './hooks/useGetActivationStatusCardLayout';
+import useOnCloseSetupModal from './utils/useOnCloseSetupModal';
 
 const ActivationStatusLiferayExperienceCloud = ({
 	lxcEnvironment,
@@ -25,13 +22,7 @@ const ActivationStatusLiferayExperienceCloud = ({
 	subscriptionGroupLxcEnvironment,
 	userAccount,
 }) => {
-	const {client, liferayWebDAV} = useAppPropertiesContext();
-
-	const {observer, onClose} = useModal({
-		onClose: () => setIsVisibleSetupLxcModal(false),
-	});
-
-	const [, dispatch] = useCustomerPortal();
+	const {liferayWebDAV} = useAppPropertiesContext();
 
 	const {activationStatusDate} = useActivationStatusDate(project);
 	const {
@@ -46,39 +37,22 @@ const ActivationStatusLiferayExperienceCloud = ({
 		subscriptionGroupLxcEnvironment
 	);
 
-	const onCloseSetupModal = async (isSuccess) => {
-		onClose();
+	const {data: dataSubscriptionGroups} = useGetAccountSubscriptionGroups({
+		filter: `accountKey eq '${project.accountKey}'`,
+	});
 
-		if (isSuccess) {
-			const getSubscriptionGroups = async (accountKey) => {
-				const {data: dataSubscriptionGroups} = await client.query({
-					query: getAccountSubscriptionGroups,
-					variables: {
-						filter: `accountKey eq '${accountKey}'`,
-					},
-				});
-				if (dataSubscriptionGroups) {
-					const items =
-						dataSubscriptionGroups?.c?.accountSubscriptionGroups
-							?.items;
-					dispatch({
-						payload: items,
-						type: actionTypes.UPDATE_SUBSCRIPTION_GROUPS,
-					});
-
-					setStatusActivation(STATUS_TAG_TYPE_NAMES.inProgress);
-				}
-			};
-			getSubscriptionGroups(project.accountKey);
-		}
-	};
+	const {handleSubmitLxcEnvironment, observer} = useOnCloseSetupModal(
+		dataSubscriptionGroups,
+		setIsVisibleSetupLxcModal,
+		setStatusActivation
+	);
 
 	return (
 		<div>
 			{isVisibleSetupLxcModal && (
 				<SetupLiferayExperienceCloudModal
 					observer={observer}
-					onClose={onCloseSetupModal}
+					onClose={handleSubmitLxcEnvironment}
 					project={project}
 					setIsVisibleSetupLxcModal={setIsVisibleSetupLxcModal}
 					subscriptionGroupLxcId={

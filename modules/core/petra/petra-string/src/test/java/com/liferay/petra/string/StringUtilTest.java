@@ -14,9 +14,15 @@
 
 package com.liferay.petra.string;
 
+import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.io.ByteArrayInputStream;
+
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,8 +53,28 @@ public class StringUtilTest {
 
 				@Override
 				public void appendAssertClasses(List<Class<?>> assertClasses) {
+					assertClasses.clear();
+
 					assertClasses.add(CharPool.class);
 					assertClasses.add(StringPool.class);
+				}
+
+				@Override
+				public List<Method> getAssertMethods()
+					throws ReflectiveOperationException {
+
+					List<Method> assertMethods = new ArrayList<>(
+						Arrays.asList(StringUtil.class.getDeclaredMethods()));
+
+					assertMethods.removeAll(
+						Arrays.asList(
+							StringUtil.class.getDeclaredMethod(
+								"read", ClassLoader.class, String.class,
+								boolean.class),
+							StringUtil.class.getDeclaredMethod(
+								"read", ClassLoader.class, String.class)));
+
+					return assertMethods;
 				}
 
 			},
@@ -237,6 +263,24 @@ public class StringUtilTest {
 			StringUtil.merge(
 				new HashSet<>(Arrays.asList("a", "b")), s -> s + "x",
 				StringPool.COMMA));
+	}
+
+	@Test
+	public void testRead() throws Exception {
+		Assert.assertEquals(
+			StringPool.BLANK,
+			StringUtil.read(new ByteArrayInputStream(new byte[0])));
+
+		String expected = RandomTestUtil.randomString(
+			8193,
+			(RandomizerBumper<String>)randomValue ->
+				(randomValue.indexOf(CharPool.RETURN) == -1) &&
+				!Character.isWhitespace(randomValue.charAt(0)) &&
+				!Character.isWhitespace(randomValue.charAt(8192)));
+
+		Assert.assertEquals(
+			expected,
+			StringUtil.read(new ByteArrayInputStream(expected.getBytes())));
 	}
 
 	@Test

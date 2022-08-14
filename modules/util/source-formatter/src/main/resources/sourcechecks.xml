@@ -977,6 +977,7 @@
 		<check name="JSPExpressionTagCheck">
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JSPFileNameCheck">
 			<category name="Naming Conventions" />

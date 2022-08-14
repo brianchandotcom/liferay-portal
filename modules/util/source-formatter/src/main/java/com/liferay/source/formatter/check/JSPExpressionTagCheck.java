@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -79,6 +80,26 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 				x = x + 1;
 
 				continue;
+			}
+
+			if (x < (expression.length() - 1)) {
+				char c = expression.charAt(x + 1);
+
+				if (c == CharPool.PLUS) {
+					x = x + 1;
+
+					continue;
+				}
+			}
+
+			if (x > 0) {
+				char c = expression.charAt(x - 1);
+
+				if (c == CharPool.PLUS) {
+					x = x + 1;
+
+					continue;
+				}
 			}
 
 			String operand = expression.substring(startPosition, x);

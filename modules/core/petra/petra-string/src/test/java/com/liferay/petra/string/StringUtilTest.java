@@ -240,6 +240,27 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testReplace() {
+
+		// replace char, char
+
+		Assert.assertNull(StringUtil.replace(null, '.', '_'));
+		Assert.assertEquals(
+			"127_0_0_1", StringUtil.replace("127.0.0.1", '.', '_'));
+
+		// replace String, String
+
+		Assert.assertNull(StringUtil.replace(null, "hello", "HELLO", 0));
+		Assert.assertEquals(
+			"hello world", StringUtil.replace("hello world", null, "HELLO", 0));
+		Assert.assertEquals(
+			"hello world",
+			StringUtil.replace("hello world", StringPool.BLANK, "HELLO", 0));
+		Assert.assertEquals(
+			"world", StringUtil.replace("hello world", "hello ", null, 0));
+	}
+
+	@Test
 	public void testSplit() {
 		Assert.assertSame(Collections.emptyList(), StringUtil.split(null));
 		Assert.assertSame(

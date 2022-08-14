@@ -48,10 +48,8 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String newJspExpressionTag = _formatJspExpressionTag(
-				matcher.group(1));
-
-			matcher.appendReplacement(sb, newJspExpressionTag);
+			matcher.appendReplacement(
+				sb, _formatJspExpressionTag(matcher.group(1)));
 		}
 
 		if (sb.length() > 0) {

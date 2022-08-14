@@ -21,11 +21,12 @@ import {
 
 export default function useGetActivationStatusCardLayout(
 	lxcEnvironment,
-	userAccount,
 	project,
+	userAccount,
 	subscriptionGroupLxcEnvironment
 ) {
-	const [lxcStatusActivation] = useState(
+	const [isVisibleSetupLxcModal, setIsVisibleSetupLxcModal] = useState(false);
+	const [lxcStatusActivation, setStatusActivation] = useState(
 		subscriptionGroupLxcEnvironment?.activationStatus
 	);
 
@@ -106,6 +107,7 @@ export default function useGetActivationStatusCardLayout(
 					appendIcon="order-arrow-right"
 					className="btn btn-link font-weight-semi-bold p-0 text-brand-primary text-paragraph"
 					displayType="link"
+					onClick={() => setIsVisibleSetupLxcModal(true)}
 				>
 					{i18n.translate('finish-activation')}
 				</Button>
@@ -123,5 +125,10 @@ export default function useGetActivationStatusCardLayout(
 			lxcStatusActivation || STATUS_TAG_TYPE_NAMES.notActivated
 		];
 
-	return {activationStatus};
+	return {
+		activationStatus,
+		isVisibleSetupLxcModal,
+		setIsVisibleSetupLxcModal,
+		setStatusActivation,
+	};
 }

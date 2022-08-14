@@ -336,5 +336,16 @@
 	"your-dxp-cloud-environments-are-ready-go-to-the-product-console-to-view-dxp-cloud-details": "Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details.",
 	"your-experience-cloud-environments-are-ready": "Your Experience Cloud Environments are ready.",
 	"your-experience-cloud-project-is-being-set-up-and-will-be-available-soon": "Your Experience Cloud Project is being set up and will be available soon.",
-	"your-request-completed-successfully": "Your request completed successfully."
+	"your-request-completed-successfully": "Your request completed successfully.",
+	"primary-region": "Primary Region",
+	"project-admin-s-first-and-last-name": "Project Admins First and Last Name",
+	"project-admin-s-email-address": "Project Admins Email Address",
+	"project-admin-s-github-username": "Project Admins GitHub Username",
+	"incident-management-contacts-first-and-last-name": "Incident Management Contacts First and Last Name",
+	"incident-management-contacts-email-address": "Incident Management Contacts Email Address",
+	"lowercase-letters-and-numbers-only-project-ids-cannot-be-changed": "Lowercase letters and numbers only. Project IDs cannot be changed",
+	"set-up-liferay-experience-cloud": "Set Up Liferay Experience Cloud",
+	"we-ll-need-a-few-details-to-finish-creating-your-liferay-experience-cloud-workspace": "We need a few details to finish creating your Liferay Experience Cloud Workspace",
+	"organization-name": "Organization Name",
+	"your-liferay-experience-cloud-workspace-will-be-provisioned-in-1-2-business-days-an-email-will-be-sent-once-your-workspace-is-ready": "Your Liferay Experience Cloud Workspace will be provisioned in 1-2 business days and will be sent once your workspace is ready"
 }

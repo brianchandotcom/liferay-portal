@@ -58,6 +58,7 @@ JSONStylingCheck | .ipynb, .json or .npmbridgerc | Applies rules to enforce cons
 JSPCoreTaglibCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where a `c:choose` or `c:if` tag can be used instead of an if-statement. |
 JSPEmptyLinesCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds missing and unnecessary empty lines. |
 JSPExceptionOrderCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks the order of exceptions in `.jsp` files. |
+JSPExpressionTagCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Applies rules to enforce consistency in code style. |
 [JSPImportsCheck](check/jsp_imports_check.markdown#jspimportscheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Sorts and groups imports in `.jsp` files. |
 JSPIndentationCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds incorrect indentation in `.jsp` files. |
 JSPInlineVariableCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where variables can be inlined. |

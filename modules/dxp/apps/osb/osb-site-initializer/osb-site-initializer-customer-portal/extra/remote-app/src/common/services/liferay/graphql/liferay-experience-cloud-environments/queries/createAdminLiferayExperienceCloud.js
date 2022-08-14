@@ -9,6 +9,21 @@
  * distribution rights of the Software.
  */
 
-export * from './queries/useGetLiferayExperienceEnvironments';
-export * from './queries/createLiferayExperienceCloudEnvironment';
-export * from './queries/createAdminLiferayExperienceCloud';
+import {gql} from '@apollo/client';
+
+export const createAdminsLiferayExperienceCloud = gql`
+	mutation createAdminLiferayExperienceCloud(
+		$AdminLiferayExperienceCloud: InputC_AdminLiferayExperienceCloud!
+	) {
+		c {
+			createAdminLiferayExperienceCloud(
+				AdminLiferayExperienceCloud: $AdminLiferayExperienceCloud
+			) {
+				emailAddress
+				fullName
+				githubUsername
+				liferayExperienceCloudEnvironmentId
+			}
+		}
+	}
+`;

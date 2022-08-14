@@ -9,6 +9,29 @@
  * distribution rights of the Software.
  */
 
-export * from './queries/useGetLiferayExperienceEnvironments';
-export * from './queries/createLiferayExperienceCloudEnvironment';
-export * from './queries/createAdminLiferayExperienceCloud';
+import {gql, useQuery} from '@apollo/client';
+
+const GET_LIST_TYPE_DEFINITIONS = gql`
+	query getListTypeDefinitions($filter: String) {
+		listTypeDefinitions(filter: $filter) {
+			items {
+				listTypeEntries {
+					key
+					name
+				}
+			}
+		}
+	}
+`;
+
+export function useGetListTypeDefinitions(
+	options = {
+		filter: '',
+	}
+) {
+	return useQuery(GET_LIST_TYPE_DEFINITIONS, {
+		variables: {
+			filter: options.filter || '',
+		},
+	});
+}

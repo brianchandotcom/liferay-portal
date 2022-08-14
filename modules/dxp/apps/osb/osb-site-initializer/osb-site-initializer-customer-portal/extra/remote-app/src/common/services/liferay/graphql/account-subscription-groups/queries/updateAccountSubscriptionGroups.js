@@ -8,7 +8,23 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+import {gql} from '@apollo/client';
 
-export * from './queries/useGetLiferayExperienceEnvironments';
-export * from './queries/createLiferayExperienceCloudEnvironment';
-export * from './queries/createAdminLiferayExperienceCloud';
+export const updateAccountSubscriptionGroups = gql`
+	mutation putAccountSubscriptionGroups(
+		$id: Long!
+		$accountSubscriptionGroup: InputC_AccountSubscriptionGroup!
+	) {
+		c {
+			updateAccountSubscriptionGroup(
+				accountSubscriptionGroupId: $id
+				AccountSubscriptionGroup: $accountSubscriptionGroup
+			) {
+				accountSubscriptionGroupId
+				accountKey
+				activationStatus
+				name
+			}
+		}
+	}
+`;

@@ -12,12 +12,13 @@
  * details.
  */
 
+import ClayLabel from '@clayui/label';
 import {
 	API,
+	AutoComplete,
 	FormCustomSelect,
 	FormError,
 	Input,
-	Select,
 	invalidateRequired,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -52,6 +53,8 @@ const ONE_TO_ONE = {
 };
 
 const REQUIRED_MSG = Liferay.Language.get('required');
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function useObjectRelationshipForm({
 	initialValues,
@@ -111,6 +114,7 @@ export function ObjectRelationshipFormBase({
 	const [objectDefinitions, setObjectDefinitions] = useState<
 		ObjectDefinition[]
 	>([]);
+	const [query, setQuery] = useState<string>('');
 
 	const [types, selectedType] = useMemo(() => {
 		const types = [ONE_TO_MANY, MANY_TO_MANY];
@@ -144,6 +148,7 @@ export function ObjectRelationshipFormBase({
 			setObjectDefinitions([
 				{
 					id: values.objectDefinitionId2 as number,
+					label: values.label as LocalizedValue<string>,
 					name: values.objectDefinitionName2 as string,
 					system: false,
 				},
@@ -164,6 +169,23 @@ export function ObjectRelationshipFormBase({
 				: objectDefinitions,
 		[objectDefinitions, values.objectDefinitionId1, values.type]
 	);
+
+	const filteredRelationships = useMemo(() => {
+		if (Liferay.FeatureFlags['LPS-158478']) {
+			return objectDefinitions.filter(({label}) => {
+				return label[defaultLanguageId]
+					?.toLocaleLowerCase()
+					.includes(query.toLowerCase());
+			});
+		}
+		else {
+			return filteredObjectDefinitions.filter(({label}) => {
+				return label[defaultLanguageId]
+					?.toLocaleLowerCase()
+					.includes(query.toLowerCase());
+			});
+		}
+	}, [filteredObjectDefinitions, objectDefinitions, query]);
 
 	return (
 		<>
@@ -187,21 +209,36 @@ export function ObjectRelationshipFormBase({
 				value={selectedType}
 			/>
 
-			<Select
-				disabled={readonly}
+			<AutoComplete
+				emptyStateMessage={Liferay.Language.get(
+					'no-objects-were-found'
+				)}
 				error={errors.objectDefinitionId2}
+				items={filteredRelationships}
 				label={Liferay.Language.get('object')}
-				onChange={({target: {value}}) => {
-					const {id, name} = filteredObjectDefinitions[Number(value)];
+				onChangeQuery={setQuery}
+				onSelectItem={(item: ObjectDefinition) => {
 					setValues({
-						objectDefinitionId2: id,
-						objectDefinitionName2: name,
+						objectDefinitionId2: item.id,
+						objectDefinitionName2: item.name,
 					});
 				}}
-				options={filteredObjectDefinitions.map(({name}) => name)}
+				query={query}
 				required
 				value={values.objectDefinitionName2}
-			/>
+			>
+				{({label, name, system}) => (
+					<div className="d-flex justify-content-between">
+						<div>{label[defaultLanguageId] ?? name}</div>
+
+						<ClayLabel displayType={system ? 'info' : 'warning'}>
+							{system
+								? Liferay.Language.get('system')
+								: Liferay.Language.get('custom')}
+						</ClayLabel>
+					</div>
+				)}
+			</AutoComplete>
 		</>
 	);
 }
@@ -223,6 +260,7 @@ interface IPros {
 
 type ObjectDefinition = {
 	id: number;
+	label: LocalizedValue<string>;
 	name: string;
 	system: boolean;
 };

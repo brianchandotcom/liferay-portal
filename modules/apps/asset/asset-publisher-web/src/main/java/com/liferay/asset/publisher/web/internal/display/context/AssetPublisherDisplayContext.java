@@ -47,6 +47,7 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
@@ -77,6 +78,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -1254,6 +1256,13 @@ public class AssetPublisherDisplayContext {
 				for (long classNameId : classNameIds) {
 					if (classNameId == 0) {
 						return true;
+					}
+
+					if (classNameId == PortalUtil.getClassNameId(
+							FileEntry.class.getName())) {
+
+						classNameId = PortalUtil.getClassNameId(
+							DLFileEntry.class.getName());
 					}
 
 					AssetRendererFactory<?> assetRendererFactory =

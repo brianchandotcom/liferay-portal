@@ -128,6 +128,12 @@ definition {
 
 		SelectFrameTop();
 
+		if (isSet(modalTitle)) {
+			SelectFrame(
+				key_title = "${modalTitle}",
+				locator1 = "IFrame#MODAL_ANY");
+		}
+
 		if (IsElementPresent(key_text = "Add", locator1 = "Modal#MODAL_FOOTER_BUTTON")) {
 			Click(
 				key_text = "Add",

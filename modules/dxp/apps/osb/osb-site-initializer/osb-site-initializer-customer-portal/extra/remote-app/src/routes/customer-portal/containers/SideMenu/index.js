@@ -53,11 +53,8 @@ const SideMenu = () => {
 
 	const accountSubscriptionGroupsMenuItem = useMemo(
 		() =>
-			subscriptionGroups
-				?.filter(
-					({name}) => name !== PRODUCT_TYPES.liferayExperienceCloud
-				)
-				.map(({name}, index) => {
+			subscriptionGroups?.map(({name}, index) => {
+				if (name !== PRODUCT_TYPES.liferayExperienceCloud) {
 					const redirectPage = getKebabCase(name);
 
 					const menuUpdateStatus = (isActive) =>
@@ -86,7 +83,8 @@ const SideMenu = () => {
 							{name}
 						</MenuItem>
 					);
-				}),
+				}
+			}),
 		[subscriptionGroups]
 	);
 

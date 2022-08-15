@@ -328,4 +328,41 @@ definition {
 
 	}
 
+	@description = "Verify if the date from Expiration Date has a format like this (Month, Day, Year)"
+	@priority = "4"
+	test VerifyTheExpirationDateFormat {
+		property portal.upstream = "quarantine";
+
+		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
+
+		var keyStatus = "All";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("And I select the pagination quantity to 50 items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		}
+
+		task ("And I generate full start and end date for the license") {
+			CP2DataUtil.generateStaticFullStartAndEndDate();
+		}
+
+		task ("Then I assert the the date is correct") {
+			CP2ActivationKeys.assertTextAtTable(
+				linePosition = "1",
+				lineColunm = "5",
+				text = "${staticFullEndDate}");
+		}
+	}
+
 }

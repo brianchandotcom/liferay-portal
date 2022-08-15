@@ -117,10 +117,7 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 			startPosition = x;
 		}
 
-		if (x == -1) {
-			operandList.add(
-				StringUtil.trim(expression.substring(startPosition)));
-		}
+		operandList.add(StringUtil.trim(expression.substring(startPosition)));
 
 		StringBundler sb = new StringBundler();
 

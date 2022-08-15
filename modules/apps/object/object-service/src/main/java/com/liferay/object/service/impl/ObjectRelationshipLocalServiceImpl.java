@@ -546,14 +546,6 @@ public class ObjectRelationshipLocalServiceImpl
 			throw new ObjectRelationshipTypeException("Invalid type " + type);
 		}
 
-		if (Objects.equals(
-				type, ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
-			(objectDefinitionId1 == objectDefinitionId2)) {
-
-			throw new ObjectRelationshipTypeException(
-				"Many to many self relationships are not allowed");
-		}
-
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId1);
 		ObjectDefinition objectDefinition2 =

@@ -52,7 +52,6 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -147,7 +146,8 @@ public class QuestionsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(QuestionsWebKeys.DEFAULT_RANK, lowestRank);
 
 		renderRequest.setAttribute(
-			QuestionsWebKeys.FLAGS_PROPERTIES, HashMapBuilder.<String, Object>put(
+			QuestionsWebKeys.FLAGS_PROPERTIES,
+			HashMapBuilder.<String, Object>put(
 				"context",
 				HashMapBuilder.<String, Object>put(
 					"namespace", _portal.getPortletNamespace(PortletKeys.FLAGS)

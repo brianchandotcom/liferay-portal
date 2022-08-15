@@ -15,10 +15,10 @@
 import ClayAlert from '@clayui/alert';
 import {useModal} from '@clayui/modal';
 import {BuilderScreen} from '@liferay/object-js-components-web';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {ModalAddDefaultSortColumn} from '../ModalAddDefaultSortColumn/ModalAddDefaultSortColumn';
-import ViewContext, {TYPES} from '../context';
+import {TYPES, useViewContext} from '../objectViewContext';
 
 export function DefaultSortScreen() {
 	const [
@@ -26,7 +26,7 @@ export function DefaultSortScreen() {
 			objectView: {objectViewSortColumns},
 		},
 		dispatch,
-	] = useContext(ViewContext);
+	] = useViewContext();
 
 	const [visibleModal, setVisibleModal] = useState(false);
 	const [isEditingSort, setIsEditingSort] = useState(false);

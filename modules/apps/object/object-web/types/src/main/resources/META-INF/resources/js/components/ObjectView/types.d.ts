@@ -12,7 +12,7 @@
  * details.
  */
 
-import {TYPES} from './context';
+import {TYPES} from './objectViewContext';
 export declare type TName = {
 	[key: string]: string;
 };

@@ -20,13 +20,13 @@ import {
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import BasicInfoScreen from './BasicInfoScreen/BasicInfoScreen';
 import {DefaultSortScreen} from './DefaultSortScreen/DefaultSortScreen';
 import {FilterScreen} from './FilterScreen/FilterScreen';
 import ViewBuilderScreen from './ViewBuilderScreen/ViewBuilderScreen';
-import ViewContext, {TYPES, ViewContextProvider} from './context';
+import {TYPES, ViewContextProvider, useViewContext} from './objectViewContext';
 import {TObjectView, TWorkflowStatus} from './types';
 
 const TABS = [
@@ -49,9 +49,7 @@ const TABS = [
 ];
 
 const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const [{isViewOnly, objectView, objectViewId}, dispatch] = useContext(
-		ViewContext
-	);
+	const [{isViewOnly, objectView, objectViewId}, dispatch] = useViewContext();
 
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [loading, setLoading] = useState<boolean>(true);

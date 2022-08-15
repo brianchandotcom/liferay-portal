@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {createContext, useReducer} from 'react';
+import React, {createContext, useContext, useReducer} from 'react';
 
 import {
 	TAction,
@@ -717,4 +717,6 @@ export function ViewContextProvider({
 	);
 }
 
-export default ViewContext;
+export function useViewContext() {
+	return useContext(ViewContext);
+}

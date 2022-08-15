@@ -1138,7 +1138,8 @@ public class BundleSiteInitializerTest {
 		Organization organization2 = organizationsPage2.fetchFirstItem();
 
 		Assert.assertNotNull(organization2);
-		Assert.assertEquals(1,organizationsPage2.getTotalCount());
+
+		Assert.assertEquals(1, organizationsPage2.getTotalCount());
 
 		_assertUserOrganizations(organization2.getId(), 1, userAccountResource);
 

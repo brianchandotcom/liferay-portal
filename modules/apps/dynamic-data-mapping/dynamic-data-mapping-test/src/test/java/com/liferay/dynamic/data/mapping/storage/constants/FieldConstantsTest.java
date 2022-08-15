@@ -74,17 +74,27 @@ public class FieldConstantsTest {
 	@Test
 	public void testGetSerializableReturnNumberArray() {
 		List<Serializable> values = Arrays.asList(
-			Integer.valueOf(1000), "10000000000");
+			"1", 1.0, 1000, "10000000000");
 
 		Serializable serializable = FieldConstants.getSerializable(
 			FieldConstants.DOUBLE, values);
 
-		Assert.assertTrue(serializable instanceof Number[]);
-
 		Number[] numbers = (Number[])serializable;
 
-		Assert.assertEquals(Integer.valueOf(1000), numbers[0]);
-		Assert.assertEquals(new BigDecimal("10000000000"), numbers[1]);
+		Assert.assertEquals(new BigDecimal("1"), numbers[0]);
+		Assert.assertEquals(1.0, numbers[1]);
+		Assert.assertEquals(1000, numbers[2]);
+		Assert.assertEquals(new BigDecimal("10000000000"), numbers[3]);
+
+		serializable = FieldConstants.getSerializable(
+			FieldConstants.INTEGER, values);
+
+		numbers = (Number[])serializable;
+
+		Assert.assertEquals(new BigDecimal("1"), numbers[0]);
+		Assert.assertEquals(1.0, numbers[1]);
+		Assert.assertEquals(1000, numbers[2]);
+		Assert.assertEquals(new BigDecimal("10000000000"), numbers[3]);
 	}
 
 }

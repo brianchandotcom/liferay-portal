@@ -173,7 +173,8 @@ public class NotificationQueueEntryLocalServiceImpl
 	public void sendNotificationQueueEntries() throws PortalException {
 		try {
 			for (NotificationQueueEntry notificationQueueEntry :
-					notificationQueueEntryPersistence.findBySent(false)) {
+					notificationQueueEntryPersistence.findByStatus(
+						NotificationsQueryEntryConstants.STATUS_UNSENT)) {
 
 				MailMessage mailMessage = new MailMessage(
 					new InternetAddress(

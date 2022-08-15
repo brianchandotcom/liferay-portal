@@ -15,13 +15,14 @@ import MDFRequestBudget from './mdfRequestBudget';
 export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	activityPromotion: string;
 	ad: string;
-	assetsLiferayRequired: boolean;
+	assetsLiferayRequired: string;
 	budgets: MDFRequestBudget[];
 	description: string;
 	detailsLeadFollowUp: string;
 	endDate: Date;
-	gatedLandingPage: boolean;
+	gatedLandingPage: string;
 	goalOfContent: string;
+	hiringOutsideWriterOrAgency: string;
 	howLiferayBrandUsed: string;
 	keywordsForPPCCampaigns: string;
 	leadFollowUpStrategies: string[];

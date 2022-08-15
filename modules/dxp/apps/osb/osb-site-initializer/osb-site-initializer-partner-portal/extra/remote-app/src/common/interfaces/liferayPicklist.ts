@@ -11,6 +11,6 @@
 
 export default interface LiferayPicklist {
 	id?: number;
-	key: string;
-	name: string;
+	key?: string;
+	name?: string;
 }

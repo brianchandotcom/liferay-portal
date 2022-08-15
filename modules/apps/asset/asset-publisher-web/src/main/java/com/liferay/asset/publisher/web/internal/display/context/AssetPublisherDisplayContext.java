@@ -1269,6 +1269,16 @@ public class AssetPublisherDisplayContext {
 						AssetRendererFactoryRegistryUtil.
 							getAssetRendererFactoryByClassNameId(classNameId);
 
+					if (assetRendererFactory == null) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Unable to get AssetRendererFactory by " +
+									"classNameId: " + classNameId);
+						}
+
+						continue;
+					}
+
 					if (assetRendererFactory.isSelectable()) {
 						return true;
 					}

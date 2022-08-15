@@ -37,7 +37,10 @@ function changeResource(resource: RequestInfo) {
 	return `${liferayHost}/o/c${resource}`;
 }
 
-const fetcher = async (resource: RequestInfo, options?: RequestInit) => {
+const fetcher = async <T = any>(
+	resource: RequestInfo,
+	options?: RequestInit
+): Promise<T | undefined> => {
 	const response = await fetch(changeResource(resource), {
 		...options,
 		headers: {

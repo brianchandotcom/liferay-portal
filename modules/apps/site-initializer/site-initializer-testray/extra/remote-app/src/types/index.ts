@@ -14,10 +14,13 @@
 
 import {KeyedMutator} from 'swr';
 
+export type ActionsHookParameter = {isHeaderActions?: boolean};
+
 export type Action<T = any> = {
 	action?: (item: T, mutate: KeyedMutator<any>) => void;
 	disabled?: boolean;
-	name: string;
+	icon?: string;
+	name: ((item: T) => string) | string;
 	permission?: keyof typeof TestrayActions | boolean;
 };
 

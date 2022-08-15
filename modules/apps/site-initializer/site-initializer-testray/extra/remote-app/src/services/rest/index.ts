@@ -12,10 +12,13 @@
  * details.
  */
 
+import i18n from '../../i18n';
 import fetcher from '../fetcher';
 
 const deleteResource = (resource: RequestInfo) => {
-	return fetcher.delete(resource);
+	if (confirm(i18n.translate('are-you-sure-you-want-to-delete-this-item'))) {
+		return fetcher.delete(resource);
+	}
 };
 
 export {deleteResource};

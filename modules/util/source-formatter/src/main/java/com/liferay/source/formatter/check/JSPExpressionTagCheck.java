@@ -160,6 +160,6 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _jspExpressionTagPattern = Pattern.compile(
-		"(?<=\")<%=(.+?)%>(?=\")");
+		"(?<=\")<%=(.+?)%>");
 
 }

@@ -59,24 +59,14 @@ definition {
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
-		task ("Check in Content Dashboard and open Content Performance Panel") {
+		task ("Navigate to Content Dashboard and open Metrics Panel") {
 			ContentDashboard.goToContentDashboard();
 
 			ContentDashboard.openViewMetricsByIcon();
 		}
 
-		task ("Check at panel that DXP is not connected to AC") {
-			AssertVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
-		}
-
 		task ("Click on the button for do not show again") {
 			ContentPerformance.clickDoNotShowMeThisAgain();
-		}
-
-		task ("Assert the Metrics button is not shown anymore") {
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
-
-			AssertElementNotPresent(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
 		}
 
 		task ("Launch AC and get Token") {
@@ -106,7 +96,7 @@ definition {
 				key_text = "Do not show me this again",
 				locator1 = "Link#ANY");
 
-			AssertElementPresent(
+			AssertVisible(
 				locator1 = "ContentPerformance#INSTRUCTIONS_SYNC_AC",
 				value1 = "Sync to Liferay Analytics Cloud");
 		}

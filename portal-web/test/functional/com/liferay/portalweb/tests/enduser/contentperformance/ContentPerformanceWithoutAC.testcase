@@ -224,10 +224,7 @@ definition {
 		}
 
 		task ("Check in Content Dashboard and open Content Performance Panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			ContentDashboard.openViewMetricsByIcon();
 		}

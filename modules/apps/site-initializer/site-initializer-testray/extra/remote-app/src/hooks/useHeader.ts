@@ -12,23 +12,23 @@
  * details.
  */
 
-import {useCallback, useContext, useEffect} from 'react';
+import {useCallback, useContext, useEffect, useRef} from 'react';
 
 import {
 	Dropdown,
+	HeaderActions,
 	HeaderContext,
 	HeaderTabs,
 	HeaderTitle,
 	HeaderTypes,
-	initialState,
 } from '../context/HeaderContext';
 
 type UseHeader = {
 	shouldUpdate?: boolean;
 	timeout?: number;
 	title?: string;
-	useAction?: Dropdown;
 	useDropdown?: Dropdown;
+	useHeaderActions?: HeaderActions;
 	useHeading?: HeaderTitle[];
 	useIcon?: string;
 	useTabs?: HeaderTabs[];
@@ -39,26 +39,26 @@ const DEFAULT_TIMEOUT = 0;
 const useHeader = ({
 	shouldUpdate = true,
 	timeout = DEFAULT_TIMEOUT,
-	title,
-	useHeading = initialState.heading,
-	useAction,
-	useIcon = initialState.symbol,
+	useHeading,
+	useHeaderActions,
+	useIcon,
 	useDropdown,
-	useTabs = initialState.tabs,
+	useTabs = [],
 }: UseHeader = {}) => {
 	const [context, dispatch] = useContext(HeaderContext);
 
-	const useActionString = JSON.stringify(useAction);
-	const useDropdownString = JSON.stringify(useDropdown);
-	const useHeadingString = JSON.stringify(useHeading);
-	const useTabsString = JSON.stringify(useTabs);
-	const useDropdownIcon = JSON.stringify(useIcon);
+	const useDropdownRef = useRef(useDropdown);
+	const useHeaderActionsRef = useRef(useHeaderActions);
+	const useHeadingRef = useRef(useHeading);
+	const useTabsRef = useRef(useTabs);
 
-	const setActions = useCallback(
-		(newActions: Dropdown) => {
-			dispatch({payload: newActions, type: HeaderTypes.SET_ACTIONS});
+	const actTimeout = useCallback(
+		(fn: () => void) => {
+			if (shouldUpdate) {
+				setTimeout(() => fn(), timeout);
+			}
 		},
-		[dispatch]
+		[shouldUpdate, timeout]
 	);
 
 	const setDropdown = useCallback(
@@ -78,72 +78,74 @@ const useHeader = ({
 		[dispatch]
 	);
 
+	const setHeaderActions = useCallback(
+		(newActions: HeaderActions) => {
+			actTimeout(() =>
+				dispatch({
+					payload: newActions,
+					type: HeaderTypes.SET_HEADER_ACTIONS,
+				})
+			);
+		},
+		[actTimeout, dispatch]
+	);
+
 	const setHeading = useCallback(
 		(newHeading: HeaderTitle[] = [], append?: boolean) => {
-			dispatch({
-				payload: {append, heading: newHeading},
-				type: HeaderTypes.SET_HEADING,
-			});
+			actTimeout(() =>
+				dispatch({
+					payload: {append, heading: newHeading},
+					type: HeaderTypes.SET_HEADING,
+				})
+			);
 		},
-		[dispatch]
+		[actTimeout, dispatch]
 	);
 
 	const setTabs = useCallback(
 		(newTabs: HeaderTabs[] = []) =>
-			dispatch({payload: newTabs, type: HeaderTypes.SET_TABS}),
-		[dispatch]
+			actTimeout(() =>
+				dispatch({payload: newTabs, type: HeaderTypes.SET_TABS})
+			),
+		[actTimeout, dispatch]
 	);
 
 	useEffect(() => {
-		if (shouldUpdate && useHeadingString) {
-			setTimeout(() => {
-				setHeading(JSON.parse(useHeadingString));
-			}, timeout);
+		if (shouldUpdate && useHeadingRef.current) {
+			actTimeout(() => setHeading(useHeadingRef.current));
 		}
-	}, [setHeading, shouldUpdate, timeout, useHeadingString]);
+	}, [actTimeout, setHeading, shouldUpdate]);
 
 	useEffect(() => {
 		if (shouldUpdate && useIcon) {
-			setTimeout(() => {
-				setDropdownIcon(JSON.parse(useDropdownIcon));
-			}, timeout);
+			setDropdownIcon(useIcon);
 		}
-	}, [setDropdownIcon, shouldUpdate, timeout, useDropdownIcon, useIcon]);
+	}, [setDropdownIcon, shouldUpdate, useIcon]);
 
 	useEffect(() => {
-		if (shouldUpdate && useTabsString) {
-			setTimeout(() => {
-				setTabs(JSON.parse(useTabsString));
-			}, timeout);
+		if (shouldUpdate && useTabsRef.current) {
+			setTabs(useTabsRef.current);
 		}
-	}, [setTabs, shouldUpdate, timeout, useTabsString]);
+	}, [setTabs, shouldUpdate]);
 
 	useEffect(() => {
-		if (useActionString) {
-			setActions(JSON.parse(useActionString));
+		if (shouldUpdate && useHeaderActionsRef.current) {
+			setHeaderActions(useHeaderActionsRef.current);
 		}
-	}, [setActions, useActionString]);
+	}, [setHeaderActions, shouldUpdate]);
 
 	useEffect(() => {
-		if (useDropdownString) {
-			setDropdown(JSON.parse(useDropdownString));
+		if (shouldUpdate && useDropdownRef.current) {
+			setDropdown(useDropdownRef.current);
 		}
-	}, [setDropdown, useDropdownString]);
-
-	useEffect(() => {
-		if (title) {
-			setTimeout(() => {
-				document.title = title;
-			}, timeout);
-		}
-	}, [title, timeout]);
+	}, [setDropdown, shouldUpdate]);
 
 	return {
 		context,
 		dispatch,
-		setActions,
 		setDropdown,
 		setDropdownIcon,
+		setHeaderActions,
 		setHeading,
 		setTabs,
 	};

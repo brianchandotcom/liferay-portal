@@ -24,10 +24,16 @@ const {ItemList} = ClayDropDown;
 type DropDownProps = {
 	actions: any[];
 	item: any;
-	mutate: KeyedMutator<any>;
+	mutate?: KeyedMutator<any>;
+	position?: any;
 };
 
-const DropDown: React.FC<DropDownProps> = ({actions, item, mutate}) => {
+const DropDown: React.FC<DropDownProps> = ({
+	actions,
+	item,
+	mutate,
+	position = Align.RightCenter,
+}) => {
 	const [active, setActive] = useState(false);
 
 	if (!actions.length) {
@@ -37,9 +43,9 @@ const DropDown: React.FC<DropDownProps> = ({actions, item, mutate}) => {
 	return (
 		<ClayDropDown
 			active={active}
-			alignmentPosition={Align.RightCenter}
+			alignmentPosition={position}
 			className="dropdown-action"
-			onActiveChange={(newVal: boolean) => setActive(newVal)}
+			onActiveChange={setActive}
 			trigger={
 				<ClayButtonWithIcon
 					className="page-link"

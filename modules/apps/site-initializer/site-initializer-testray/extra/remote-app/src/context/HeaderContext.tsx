@@ -15,7 +15,13 @@
 import {ReactNode, createContext, useEffect, useReducer} from 'react';
 
 import i18n from '../i18n';
-import {ActionMap} from '../types';
+import {Action, ActionMap} from '../types';
+
+export type HeaderActions = {
+	actions: Action[];
+	item?: any;
+	mutate?: any;
+};
 
 type DropdownItem = {
 	divider?: boolean;
@@ -45,16 +51,16 @@ export type HeaderTitle = {
 };
 
 type InitialState = {
-	actions: Dropdown;
 	dropdown: Dropdown;
+	headerActions: HeaderActions;
 	heading: HeaderTitle[];
 	symbol: string;
 	tabs: HeaderTabs[];
 };
 
 export const initialState: InitialState = {
-	actions: [],
 	dropdown: [],
+	headerActions: {actions: []},
 	heading: [
 		{
 			category: i18n.translate('project'),
@@ -70,8 +76,8 @@ export const HeaderContext = createContext<
 >([initialState, () => null]);
 
 export enum HeaderTypes {
-	SET_ACTIONS = 'SET_ACTIONS',
 	SET_DROPDOWN = 'SET_DROPDOWN',
+	SET_HEADER_ACTIONS = 'SET_HEADER_ACTIONS',
 	SET_HEADING = 'SET_HEADING',
 	SET_RESET_HEADER = 'SET_RESET_HEADER',
 	SET_SYMBOL = 'SET_SYMBOL',
@@ -79,8 +85,8 @@ export enum HeaderTypes {
 }
 
 export type HeaderActionsPayload = {
-	[HeaderTypes.SET_ACTIONS]: Dropdown;
 	[HeaderTypes.SET_DROPDOWN]: Dropdown;
+	[HeaderTypes.SET_HEADER_ACTIONS]: HeaderActions;
 	[HeaderTypes.SET_HEADING]: {append?: boolean; heading: HeaderTitle[]};
 	[HeaderTypes.SET_RESET_HEADER]: null;
 	[HeaderTypes.SET_SYMBOL]: string;
@@ -93,10 +99,10 @@ export type AppActions = ActionMap<HeaderActionsPayload>[keyof ActionMap<
 
 const reducer = (state: InitialState, action: AppActions): InitialState => {
 	switch (action.type) {
-		case HeaderTypes.SET_ACTIONS: {
+		case HeaderTypes.SET_HEADER_ACTIONS: {
 			return {
 				...state,
-				actions: action.payload,
+				headerActions: action.payload,
 			};
 		}
 

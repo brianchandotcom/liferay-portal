@@ -12,7 +12,6 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
 import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
@@ -22,6 +21,7 @@ import {useNavigate} from 'react-router-dom';
 
 import {HeaderContext} from '../../context/HeaderContext';
 import DropDown from '../DropDown';
+import DropDownWithActions from '../DropDown/DropDown';
 
 const Divider = () => <p className="mx-2 text-paragraph-lg">/</p>;
 
@@ -30,7 +30,7 @@ type BreadCrumbTriggerProps = {
 };
 
 const Header = () => {
-	const [{actions, dropdown, heading, symbol, tabs}] = useContext(
+	const [{dropdown, headerActions, heading, symbol, tabs}] = useContext(
 		HeaderContext
 	);
 
@@ -123,16 +123,12 @@ const Header = () => {
 						})}
 					</div>
 
-					{!!actions.length && (
-						<DropDown
-							items={actions}
+					{!!headerActions.actions.length && (
+						<DropDownWithActions
+							actions={headerActions.actions}
+							item={headerActions.item}
+							mutate={headerActions.mutate}
 							position={Align.BottomLeft}
-							trigger={
-								<ClayButtonWithIcon
-									displayType="unstyled"
-									symbol="ellipsis-v"
-								/>
-							}
 						/>
 					)}
 				</div>

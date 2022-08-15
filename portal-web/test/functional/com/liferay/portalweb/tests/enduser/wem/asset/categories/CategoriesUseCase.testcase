@@ -320,25 +320,17 @@ definition {
 		task ("When the site creator selects a category on vocabulary field") {
 			Button.clickSelect();
 
-			AssetCategorization.gotoSelectCategory();
-
-			Check.checkNotVisible(
-				key_nodeName = "Category Name",
-				locator1 = "Treeview#NODE_CHECKBOX");
-
-			SelectFrameTop();
-
-			SelectFrame(
-				key_title = "Add Site",
-				locator1 = "IFrame#MODAL_ANY");
-
-			Click(
-				key_text = "Done",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+			AssetCategorization.selectCategories(
+				categoryNameList = "Category Name",
+				modalTitle = "Add Site");
 		}
 
 		task ("Then the site creator can successfully create the site") {
 			task ("View site is successfully created") {
+				SelectFrameTop();
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 				Button.clickAdd();
 
 				Alert.viewSuccessMessage();

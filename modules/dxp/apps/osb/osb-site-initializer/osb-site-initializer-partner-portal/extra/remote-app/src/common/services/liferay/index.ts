@@ -10,7 +10,7 @@
  */
 
 interface IThemeDisplay {
-	getBCP47LanguageId(): () => string;
+	getBCP47LanguageId: () => string;
 	getCompanyGroupId: () => number;
 	getDefaultLanguageId: () => string;
 	getLanguageId: () => string;

@@ -9,19 +9,11 @@
  * distribution rights of the Software.
  */
 
-interface MetaState {
-	error?: string;
-	touched: boolean;
-}
+import {Liferay} from '../services/liferay';
 
-interface FieldState<T> {
-	name: string;
-	onBlur: (event: React.FocusEvent) => void;
-	onChange: (event: React.ChangeEvent) => void;
-	value: T;
-}
-
-export default interface PRMFormFieldStateProps<T> {
-	field: FieldState<T>;
-	meta: MetaState;
+export default function getIntlNumberFormat() {
+	return new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
+		currency: 'USD',
+		style: 'currency',
+	});
 }

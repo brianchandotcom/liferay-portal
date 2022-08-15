@@ -15000,8 +15000,8 @@ url=${short.hostname}:8080</echo>
 			<param name="database.postgresql.docker.run.options" value="--env=POSTGRES_USER=root --expose=5432 -p 5432:5432 --env=POSTGRES_HOST_AUTH_METHOD=trust" />
 			<param name="database.postgresql.host" value="${database.host}_postgresql" />
 			<param name="database.postgresql.name" value="PostgreSQL" />
+			<param name="database.postgresql.version" value="${database.version}" />
 			<param name="database.type" value="postgresql" />
-			<param name="database.version" value="${database.version}" />
 		</antcall>
 
 		<if>

@@ -1093,7 +1093,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		Dimension dimension = webElement.getSize();
 
-		return GetterUtil.getLong(dimension.getHeight());
+		return GetterUtil.getLong(dimension.getWidth());
 	}
 
 	@Override

@@ -150,8 +150,6 @@ definition {
 			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
 		}
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
-
 		if (isSet(userMiddleName)) {
 			LexiconCard.checkCardCheckbox(card = "${userFirstName} ${userMiddleName} ${userLastName}");
 		}

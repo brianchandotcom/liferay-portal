@@ -484,7 +484,7 @@ definition {
 
 		var browserType = PropsUtil.get("browser.type");
 
-		if ("${browserType}" == "safari") {
+		if (("${browserType}" == "safari") || ("${clickMagnifyingGlassIcon}" == "true")) {
 			Click(locator1 = "Icon#BASIC_SEARCH");
 		}
 		else {
@@ -501,9 +501,14 @@ definition {
 			locator1 = "Search#SEARCH_BAR_WIDGET",
 			value1 = "${searchTerm}");
 
-		KeyPress(
-			locator1 = "Search#SEARCH_BAR_WIDGET",
-			value1 = "\RETURN");
+		if ("${clickMagnifyingGlassIcon}" == "true") {
+			Click(locator1 = "Search#SEARCH_BAR_WIDGET_MAGNIFYING_GLASSS_BUTTON");
+		}
+		else {
+			KeyPress(
+				locator1 = "Search#SEARCH_BAR_WIDGET",
+				value1 = "\RETURN");
+		}
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}

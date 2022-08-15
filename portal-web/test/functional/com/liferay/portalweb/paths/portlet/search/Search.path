@@ -112,6 +112,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_BAR_WIDGET_MAGNIFYING_GLASSS_BUTTON</td>
+	<td>//div[input[not(ancestor::header[@id='banner'])][contains(@data-qa-id,'searchInput')]]//button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_RESULT_WIDGET</td>
 	<td>//div//a[contains(text(), '${key_contentName}')]/../../div//strong[text()='${key_contentType}']</td>
 	<td></td>

@@ -425,7 +425,7 @@ public class CommerceOrderItemServiceImpl
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, boolean validateOrder)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
@@ -437,7 +437,8 @@ public class CommerceOrderItemServiceImpl
 			ActionKeys.UPDATE);
 
 		return commerceOrderItemLocalService.updateCommerceOrderItem(
-			commerceOrderItemId, cpMeasurementUnitId, quantity, serviceContext);
+			commerceOrderItemId, cpMeasurementUnitId, quantity, serviceContext,
+			validateOrder);
 	}
 
 	@Override

@@ -89,7 +89,7 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 		String accessTokenContent = _getAccessTokenContent(
 			accessControlContext);
 
-		if (Validator.isBlank(accessTokenContent)) {
+		if (accessTokenContent == null) {
 			authVerifierResult.setState(
 				AuthVerifierResult.State.NOT_APPLICABLE);
 
@@ -274,6 +274,10 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 
 		if (!StringUtil.equalsIgnoreCase(scheme, _TOKEN_KEY)) {
 			return null;
+		}
+
+		if (authorizationParts.length < 2) {
+			return StringPool.BLANK;
 		}
 
 		return authorizationParts[1];

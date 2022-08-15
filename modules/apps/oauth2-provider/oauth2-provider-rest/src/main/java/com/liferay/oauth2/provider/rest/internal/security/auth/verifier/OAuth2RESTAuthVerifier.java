@@ -78,7 +78,7 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 			String accessTokenContent = _getAccessTokenContent(
 				accessControlContext);
 
-			if (Validator.isBlank(accessTokenContent)) {
+			if (accessTokenContent == null) {
 				authVerifierResult.setState(
 					AuthVerifierResult.State.NOT_APPLICABLE);
 
@@ -139,6 +139,10 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 	private BearerTokenProvider.AccessToken _getAccessToken(
 			String accessTokenContent)
 		throws PortalException {
+
+		if (Validator.isBlank(accessTokenContent)) {
+			return null;
+		}
 
 		OAuth2Authorization oAuth2Authorization =
 			_oAuth2AuthorizationLocalService.
@@ -207,6 +211,10 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 
 		if (!StringUtil.equalsIgnoreCase(scheme, _TOKEN_KEY)) {
 			return null;
+		}
+
+		if (authorizationParts.length < 2) {
+			return StringPool.BLANK;
 		}
 
 		return authorizationParts[1];

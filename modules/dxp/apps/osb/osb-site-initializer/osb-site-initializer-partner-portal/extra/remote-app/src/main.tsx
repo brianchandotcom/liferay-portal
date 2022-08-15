@@ -26,22 +26,18 @@ class PartnerPortalRemoteAppComponent extends HTMLElement {
 			this.root = createRoot(this);
 
 			this.root.render(
-				<React.StrictMode>
-					<SWRConfig
-						value={{
-							onError: (error) => handleError(error),
-							revalidateOnFocus: false,
-							revalidateOnReconnect: false,
-							shouldRetryOnError: false,
-						}}
-					>
-						<ClayIconSpriteContext.Provider
-							value={getIconSpriteMap()}
-						>
-							<MDFRequestForm />
-						</ClayIconSpriteContext.Provider>
-					</SWRConfig>
-				</React.StrictMode>
+				<SWRConfig
+					value={{
+						onError: (error) => handleError(error),
+						revalidateOnFocus: false,
+						revalidateOnReconnect: false,
+						shouldRetryOnError: false,
+					}}
+				>
+					<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
+						<MDFRequestForm />
+					</ClayIconSpriteContext.Provider>
+				</SWRConfig>
 			);
 		}
 	}

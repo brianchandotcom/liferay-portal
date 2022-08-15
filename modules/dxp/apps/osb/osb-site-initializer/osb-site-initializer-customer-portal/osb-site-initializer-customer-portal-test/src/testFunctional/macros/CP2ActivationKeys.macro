@@ -194,12 +194,13 @@ definition {
 		AssertVisible(locator1 = "CP2ActivationKeys#TOOLTIPS_TEXT");
 	}
 
-	macro assertDateFormat {
+	macro assertTextAtTable {
 		var key_linePosition = "${linePosition}";
-		var key_colunmPosition = "5";
+		var key_colunmPosition = "${lineColunm}";
+		var key_text = "${text}";
 		AssertTextEquals(
-			locator1 = "CP2ActivationKeys#TABLE_ELEMENT",
-			value1 = "${date}");
+			locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_POSITION",
+			value1 = "${text}");
 	}
 
 }

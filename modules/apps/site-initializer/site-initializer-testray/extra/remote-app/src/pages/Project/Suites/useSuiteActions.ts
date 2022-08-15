@@ -36,7 +36,7 @@ const useSuiteActions = () => {
 		{
 			action: ({id}: TestraySuite, mutate) =>
 				deleteResource(`/suites/${id}`)
-					.then(() => removeItemFromList(mutate, id))
+					?.then(() => removeItemFromList(mutate, id))
 					.catch(modal.onError),
 			name: i18n.translate('delete'),
 			permission: 'DELETE',

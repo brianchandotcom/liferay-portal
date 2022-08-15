@@ -23,7 +23,7 @@ import {TestraySuite} from '../../../services/rest';
 const SuiteOutlet = () => {
 	const {projectId, suiteId} = useParams();
 	const {testrayProject}: any = useOutletContext();
-	const {setHeading} = useHeader();
+	const {setHeading} = useHeader({timeout: 100});
 
 	const {data: testraySuite, mutate: mutateSuite} = useFetch<TestraySuite>(
 		`/suites/${suiteId}`
@@ -31,19 +31,17 @@ const SuiteOutlet = () => {
 
 	useEffect(() => {
 		if (testraySuite && testrayProject) {
-			setTimeout(() => {
-				setHeading([
-					{
-						category: i18n.translate('project').toUpperCase(),
-						path: `/project/${testrayProject.id}/suites`,
-						title: testrayProject.name,
-					},
-					{
-						category: i18n.translate('suite').toUpperCase(),
-						title: testraySuite.name,
-					},
-				]);
-			});
+			setHeading([
+				{
+					category: i18n.translate('project').toUpperCase(),
+					path: `/project/${testrayProject.id}/suites`,
+					title: testrayProject.name,
+				},
+				{
+					category: i18n.translate('suite').toUpperCase(),
+					title: testraySuite.name,
+				},
+			]);
 		}
 	}, [testraySuite, testrayProject, setHeading]);
 

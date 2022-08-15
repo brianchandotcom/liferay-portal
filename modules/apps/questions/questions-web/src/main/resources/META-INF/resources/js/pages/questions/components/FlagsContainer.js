@@ -36,7 +36,7 @@ const FlagsContainer = ({
 		...flagsProps,
 		baseData: {
 			[`${namespace}className`]: 'com.liferay.message.boards.model.MBMessage',
-			[`${namespace}classPK`]: content.rootMessageId ?? content.id,
+			[`${namespace}classPK`]: content.messageBoardRootMessageId ?? content.id,
 			[`${namespace}contentTitle`]:
 				content.headline || content.articleBody,
 			[`${namespace}contentURL`]: window.location.href,

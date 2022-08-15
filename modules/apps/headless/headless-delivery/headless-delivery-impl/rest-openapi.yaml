@@ -2919,6 +2919,12 @@ components:
                         A flag that indicates whether this thread is locked.
                     readOnly: true
                     type: boolean
+                messageBoardRootMessageId:
+                    description:
+                        The ID of the Thread's body.
+                    format: int64
+                    readOnly: true
+                    type: integer
                 messageBoardSectionId:
                     # @review
                     description:
@@ -2943,12 +2949,6 @@ components:
                         $ref: "#/components/schemas/RelatedContent"
                     readOnly: true
                     type: array
-                rootMessageId:
-                    description:
-                        The ID of the Thread's body.
-                    format: int64
-                    readOnly: true
-                    type: integer
                 seen:
                     # @review
                     description:

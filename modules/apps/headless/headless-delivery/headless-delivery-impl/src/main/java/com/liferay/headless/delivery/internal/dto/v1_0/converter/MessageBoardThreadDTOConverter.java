@@ -118,6 +118,7 @@ public class MessageBoardThreadDTOConverter
 					AssetTag.NAME_ACCESSOR);
 				locked = mbThread.isLocked();
 				messageBoardSectionId = mbMessage.getCategoryId();
+				messageBoardRootMessageId = mbThread.getRootMessageId();
 				numberOfMessageBoardAttachments =
 					mbMessage.getAttachmentsFileEntriesCount();
 				numberOfMessageBoardMessages =
@@ -129,7 +130,6 @@ public class MessageBoardThreadDTOConverter
 					dtoConverterContext.getDTOConverterRegistry(),
 					mbMessage.getModelClassName(), mbMessage.getMessageId(),
 					dtoConverterContext.getLocale());
-				rootMessageId = mbThread.getRootMessageId();
 				seen = _mbThreadFlagLocalService.hasThreadFlag(
 					dtoConverterContext.getUserId(), mbThread);
 				showAsQuestion = mbThread.isQuestion();

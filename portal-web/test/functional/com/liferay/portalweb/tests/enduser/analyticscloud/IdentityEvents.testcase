@@ -198,6 +198,224 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-10998 | Automation ID: LRAC-11382 | Test Summary: Check that the Identify event is not resent if the user stays logged in for less than 7 days"
+	@priority = "3"
+	test CheckIdentityEventNotResentIfUserStaysLoggedForLessThan7days {
+		property proxy.server.enabled = "true";
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+		}
+
+		task ("Visit the AC Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Form the date to convert to milliseconds") {
+			var currentDay = DateUtil.getCurrentDate();
+			var currentMonth = DateUtil.getCurrentMonth();
+			var currentYear = DateUtil.getCurrentYear();
+			var isLessThan9 = MathUtil.isLessThan("${currentDay}", "9");
+
+			if ("${currentDay}" == "1") {
+				var day = "28";
+
+				if ("${currentMonth}" == "1") {
+					var month = "12";
+					var year = ${currentYear} - 1;
+				}
+				else {
+					var month = ${currentMonth} - 1;
+				}
+			}
+			else {
+				var day = DateUtil.getDate("-1");
+				var month = "${currentMonth}";
+				var year = "${currentYear}";
+			}
+		}
+
+		task ("Convert date to milliseconds") {
+			var millisecondsValue = ACUtils.convertDateToMilliseconds(
+				day = "${day}",
+				month = "${month}",
+				year = "${year}");
+		}
+
+		task ("Visit the AC Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Change the local storage with the new value") {
+			ACUtils.setLocalStorageValue(
+				keyName = "ac_client_identity_last_updated_date",
+				keyValue = "${millisecondsValue}");
+		}
+
+		task ("Get number from local storage") {
+			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		}
+
+		task ("Check if the present value in the local storage is equal to the converted") {
+			TestUtils.assertEquals(
+				actual = "${localStorageItem1}",
+				expected = "${millisecondsValue}");
+		}
+
+		task ("Hard refresh the page") {
+			TestUtils.hardRefresh();
+		}
+
+		task ("Get number from local storage") {
+			var actualMillisecondsValue = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		}
+
+		task ("Check if the present value in the local storage is equal to the converted") {
+			TestUtils.assertEquals(
+				actual = "${actualMillisecondsValue}",
+				expected = "${millisecondsValue}");
+		}
+	}
+
+	@description = "Feature ID: LRAC-10998 | Automation ID: LRAC-11381 | Test Summary: Check that the Identify event is resent if the user stays logged in for more than 7 days and check if the same individual has not been counted twice when the event is resent"
+	@priority = "5"
+	test CheckIdentityEventResentIfUserStaysLoggedForMoreThan7days {
+		property proxy.server.enabled = "true";
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "user2@liferay.com",
+				userFirstName = "user2",
+				userLastName = "user2",
+				userScreenName = "user2");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user2@liferay.com");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user2@liferay.com",
+				userLoginFullName = "user2 user2");
+		}
+
+		task ("Visit the AC Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Form the date to convert to milliseconds") {
+			var currentDay = DateUtil.getCurrentDate();
+			var currentMonth = DateUtil.getCurrentMonth();
+			var currentYear = DateUtil.getCurrentYear();
+			var isLessThan9 = MathUtil.isLessThan("${currentDay}", "9");
+
+			if ("${isLessThan9}" == "true") {
+				var day = "15";
+
+				if ("${currentMonth}" == "1") {
+					var month = "12";
+					var year = ${currentYear} - 1;
+				}
+				else {
+					var month = ${currentMonth} - 1;
+				}
+			}
+			else {
+				var day = DateUtil.getDate("-8");
+				var month = "${currentMonth}";
+				var year = "${currentYear}";
+			}
+		}
+
+		task ("Convert date to milliseconds") {
+			var millisecondsValue = ACUtils.convertDateToMilliseconds(
+				day = "${day}",
+				month = "${month}",
+				year = "${year}");
+		}
+
+		task ("Visit the AC Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Change the local storage with the new value") {
+			ACUtils.setLocalStorageValue(
+				keyName = "ac_client_identity_last_updated_date",
+				keyValue = "${millisecondsValue}");
+		}
+
+		task ("Get number from local storage") {
+			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		}
+
+		task ("Check if the present value in the local storage is equal to the converted") {
+			TestUtils.assertEquals(
+				actual = "${localStorageItem1}",
+				expected = "${millisecondsValue}");
+		}
+
+		task ("Hard refresh the page") {
+			TestUtils.hardRefresh();
+		}
+
+		task ("Get number from local storage") {
+			var actualMillisecondsValue = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		}
+
+		task ("Check if the present value in the local storage is different to the converted") {
+			TestUtils.assertNotEquals(
+				actual = "${actualMillisecondsValue}",
+				expected = "${millisecondsValue}");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to the Overview on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("Check that the same individual has not been counted more than once in the AC") {
+			ACCards.viewTotalCount(
+				cardName = "Total Individuals",
+				count = "1");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8715 | Test Summary: Check identity is triggered when logging in after a unintended session close"
 	@priority = "3"
 	test CheckIdentityTriggeredWhenLoginAfterASessionClose {
@@ -513,104 +731,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-10998 | Automation ID: LRAC-11382 | Test Summary: Check that the Identify event is not resent if the user stays logged in for less than 7 days"
-	@priority = "3"
-	test CheckIdentityEventNotResentIfUserStaysLoggedForLessThan7days {
-		property proxy.server.enabled = "true";
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "user1@liferay.com",
-				userFirstName = "user1",
-				userLastName = "user1",
-				userScreenName = "user1");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user1@liferay.com");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user1@liferay.com",
-				userLoginFullName = "user1 user1");
-		}
-
-		task ("Visit the AC Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Form the date to convert to milliseconds") {
-			var currentDay = DateUtil.getCurrentDate();
-			var currentMonth = DateUtil.getCurrentMonth();
-			var currentYear = DateUtil.getCurrentYear();
-			var isLessThan9 = MathUtil.isLessThan("${currentDay}", "9");
-
-			if ("${currentDay}" == "1") {
-				var day = "28";
-
-				if ("${currentMonth}" == "1") {
-					var month = "12";
-					var year = ${currentYear} - 1;
-				}
-				else {
-					var month = ${currentMonth} - 1;
-				}
-			}
-			else {
-				var day = DateUtil.getDate("-1");
-				var month = "${currentMonth}";
-				var year = "${currentYear}";
-			}
-		}
-
-		task ("Convert date to milliseconds") {
-			var millisecondsValue = ACUtils.convertDateToMilliseconds(
-				day = "${day}",
-				month = "${month}",
-				year = "${year}");
-		}
-
-		task ("Visit the AC Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Change the local storage with the new value") {
-			ACUtils.setLocalStorageValue(
-				keyName = "ac_client_identity_last_updated_date",
-				keyValue = "${millisecondsValue}");
-		}
-
-		task ("Get number from local storage") {
-			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
-		}
-
-		task ("Check if the present value in the local storage is equal to the converted") {
-			TestUtils.assertEquals(
-				actual = "${localStorageItem1}",
-				expected = "${millisecondsValue}");
-		}
-
-		task ("Hard refresh the page") {
-			TestUtils.hardRefresh();
-		}
-
-		task ("Get number from local storage") {
-			var actualMillisecondsValue = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
-		}
-
-		task ("Check if the present value in the local storage is equal to the converted") {
-			TestUtils.assertEquals(
-				actual = "${actualMillisecondsValue}",
-				expected = "${millisecondsValue}");
-		}
-	}
-
 	@description = "Feature ID: LRAC-10999 | Automation ID: LRAC-11310 | Test Summary: Login as same user keeps userid"
 	@priority = "3"
 	test CheckLoginSameUserKeepUserId {
@@ -716,126 +836,6 @@ definition {
 			TestUtils.assertEquals(
 				actual = "${localStorageItem3}",
 				expected = "${localStorageItem2}");
-		}
-	}
-
-	@description = "Feature ID: LRAC-10998 | Automation ID: LRAC-11381 | Test Summary: Check that the Identify event is resent if the user stays logged in for more than 7 days and check if the same individual has not been counted twice when the event is resent"
-	@priority = "5"
-	test CheckIdentityEventResentIfUserStaysLoggedForMoreThan7days {
-		property proxy.server.enabled = "true";
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "user2@liferay.com",
-				userFirstName = "user2",
-				userLastName = "user2",
-				userScreenName = "user2");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user2@liferay.com");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user2@liferay.com",
-				userLoginFullName = "user2 user2");
-		}
-
-		task ("Visit the AC Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Form the date to convert to milliseconds") {
-			var currentDay = DateUtil.getCurrentDate();
-			var currentMonth = DateUtil.getCurrentMonth();
-			var currentYear = DateUtil.getCurrentYear();
-			var isLessThan9 = MathUtil.isLessThan("${currentDay}", "9");
-
-			if ("${isLessThan9}" == "true") {
-				var day = "15";
-
-				if ("${currentMonth}" == "1") {
-					var month = "12";
-					var year = ${currentYear} - 1;
-				}
-				else {
-					var month = ${currentMonth} - 1;
-				}
-			}
-			else {
-				var day = DateUtil.getDate("-8");
-				var month = "${currentMonth}";
-				var year = "${currentYear}";
-			}
-		}
-
-		task ("Convert date to milliseconds") {
-			var millisecondsValue = ACUtils.convertDateToMilliseconds(
-				day = "${day}",
-				month = "${month}",
-				year = "${year}");
-		}
-
-		task ("Visit the AC Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Change the local storage with the new value") {
-			ACUtils.setLocalStorageValue(
-				keyName = "ac_client_identity_last_updated_date",
-				keyValue = "${millisecondsValue}");
-		}
-
-		task ("Get number from local storage") {
-			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
-		}
-
-		task ("Check if the present value in the local storage is equal to the converted") {
-			TestUtils.assertEquals(
-				actual = "${localStorageItem1}",
-				expected = "${millisecondsValue}");
-		}
-
-		task ("Hard refresh the page") {
-			TestUtils.hardRefresh();
-		}
-
-		task ("Get number from local storage") {
-			var actualMillisecondsValue = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
-		}
-
-		task ("Check if the present value in the local storage is different to the converted") {
-			TestUtils.assertNotEquals(
-				actual = "${actualMillisecondsValue}",
-				expected = "${millisecondsValue}");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Navigate to the Overview on the Individuals dashboard") {
-			ACNavigation.goToIndividuals();
-
-			ACIndividualsDashboard.goToOverviewTab();
-		}
-
-		task ("Check that the same individual has not been counted more than once in the AC") {
-			ACCards.viewTotalCount(
-				cardName = "Total Individuals",
-				count = "1");
 		}
 	}
 

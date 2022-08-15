@@ -453,6 +453,36 @@ definition {
 		Click(locator1 = "ACUtils#MODAL_CLOSE_BUTTON");
 	}
 
+	macro convertDateToMilliseconds {
+		Open.openInTheNewTab(locator1 = "https://currentmillis.com/");
+
+		if (isSet(day)) {
+			Type(
+				key_inputField = "rightDay",
+				locator1 = "ACUtils#INPUT_DATE",
+				value1 = "${day}");
+		}
+
+		if (isSet(month)) {
+			Type(
+				key_inputField = "rightMonth",
+				locator1 = "ACUtils#INPUT_DATE",
+				value1 = "${month}");
+		}
+
+		if (isSet(year)) {
+			Type(
+				key_inputField = "rightYear",
+				locator1 = "ACUtils#INPUT_DATE",
+				value1 = "${year}");
+		}
+
+		var key_inputField = "rightMillis";
+		var millisecondsValue = selenium.getElementValue("ACUtils#INPUT_DATE");
+
+		return "${millisecondsValue}";
+	}
+
 	macro createBlogsAndAddToPage {
 		if (!(isSet(layoutName))) {
 			var layoutName = "AC Page";
@@ -662,14 +692,6 @@ definition {
 		var localStorageItem = StringUtil.replace("${localStorageItem}", "\"", "");
 
 		return "${localStorageItem}";
-	}
-
-	macro setLocalStorageValue {
-		var javaScript = '''
-		localStorage.setItem('${keyName}', '${keyValue}');
-		''';
-
-		var localStorageItem = selenium.getEval("${javaScript}");
 	}
 
 	macro getPageRefRequestPropertyValue {
@@ -897,6 +919,14 @@ definition {
 		Type.sendKeys(
 			locator1 = "ACUtils#NAME_FIELD",
 			value1 = "${itemName}");
+	}
+
+	macro setLocalStorageValue {
+		var javaScript = '''
+		localStorage.setItem('${keyName}', '${keyValue}');
+		''';
+
+		var localStorageItem = selenium.getEval("${javaScript}");
 	}
 
 	macro tearDownAC {
@@ -1131,28 +1161,6 @@ definition {
 
 			Pause(locator1 = "5000");
 		}
-	macro convertDateToMilliseconds {
-
-			Type(
-				locator1 = "ACUtils#INPUT_DATE",
-		}
-		if (isSet(month)) {
-				key_inputField = "rightMonth",
-				locator1 = "ACUtils#INPUT_DATE",
-				value1 = "${month}");
 	}
 
-		if (isSet(year)) {
-			Type(
-				key_inputField = "rightYear",
-				locator1 = "ACUtils#INPUT_DATE",
-				value1 = "${year}");
 }
-
-		var key_inputField = "rightMillis";
-
-		var millisecondsValue = selenium.getElementValue("ACUtils#INPUT_DATE");
-
-		return "${millisecondsValue}";
-	}
-

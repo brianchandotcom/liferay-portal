@@ -12,29 +12,65 @@
  * details.
  */
 
-import React from 'react';
-export declare enum TYPES {
+import React, {createContext, useContext, useReducer} from 'react';
+
+export enum TYPES {
 	CHANGE_PANEL_EXPANDED = 'CHANGE_PANEL_EXPANDED',
 }
-declare type TState = {
+
+type TState = {
 	expanded: boolean;
 };
-declare type TAction = {
-	payload: {
-		expanded: boolean;
-	};
+
+type TAction = {
+	payload: {expanded: boolean};
 	type: TYPES.CHANGE_PANEL_EXPANDED;
 };
-declare type TDispatch = React.Dispatch<
+
+type TDispatch = React.Dispatch<
 	React.ReducerAction<React.Reducer<TState, TAction>>
 >;
-declare const initialState: {
-	expanded: boolean;
+
+const initialState = {
+	expanded: true,
 };
+
 interface IPanelContextProps extends Array<TState | TDispatch> {
 	0: typeof initialState;
 	1: TDispatch;
 }
-export declare const PanelContext: React.Context<IPanelContextProps>;
-declare const PanelContextProvider: React.FC<React.HTMLAttributes<HTMLElement>>;
+
+export const PanelContext = createContext({} as IPanelContextProps);
+
+const reducer = (state: TState, action: TAction) => {
+	switch (action.type) {
+		case TYPES.CHANGE_PANEL_EXPANDED: {
+			const {expanded} = action.payload;
+
+			return {
+				...state,
+				expanded,
+			};
+		}
+		default:
+			return state;
+	}
+};
+
+const PanelContextProvider: React.FC<React.HTMLAttributes<HTMLElement>> = ({
+	children,
+}) => {
+	const [state, dispatch] = useReducer(reducer, initialState);
+
+	return (
+		<PanelContext.Provider value={[state, dispatch]}>
+			{children}
+		</PanelContext.Provider>
+	);
+};
+
 export default PanelContextProvider;
+
+export function usePanelContext() {
+	return useContext(PanelContext);
+}

@@ -2923,9 +2923,6 @@ definition {
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
 
 		MouseOver.mouseOverNotVisible(locator1 = "WorkflowAllItems#WORKFLOW_DROPDOWN_DISABLED");
-
-
-		
 	}
 
 	@description = "LPS-98517 - Verify that the usernames in the result table are separated by a comma when there is more than one assignee per item"

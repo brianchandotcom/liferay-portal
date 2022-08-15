@@ -15,7 +15,7 @@ definition {
 			  -d classTypeId=${classTypeId} \
 			  -d name=${displayPageTemplateEntryName} \
 			  -d masterLayoutPlid=${masterLayoutPlid} \
-			  -d status=2 \
+			  -d status=${status} \
 			  -d serviceContext=${serviceContext}
 		''';
 

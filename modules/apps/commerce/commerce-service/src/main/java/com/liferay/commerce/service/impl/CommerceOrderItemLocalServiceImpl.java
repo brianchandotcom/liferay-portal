@@ -659,7 +659,7 @@ public class CommerceOrderItemLocalServiceImpl
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, boolean validateOrder)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
@@ -668,7 +668,7 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem =
 			commerceOrderItemLocalService.updateCommerceOrderItem(
 				commerceOrderItemId, commerceOrderItem.getJson(), quantity,
-				serviceContext);
+				serviceContext, validateOrder);
 
 		commerceOrderItem.setCPMeasurementUnitId(cpMeasurementUnitId);
 
@@ -749,7 +749,7 @@ public class CommerceOrderItemLocalServiceImpl
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, String json, int quantity,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, boolean validateOrder)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
@@ -763,7 +763,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 		if (childCommerceOrderItems.isEmpty()) {
 			return _updateCommerceOrderItem(
-				commerceOrderItemId, quantity, json, serviceContext);
+				commerceOrderItemId, quantity, json, serviceContext,
+				validateOrder);
 		}
 
 		List<CommerceOptionValue> commerceOptionValues =
@@ -789,11 +790,11 @@ public class CommerceOrderItemLocalServiceImpl
 			_updateCommerceOrderItem(
 				childCommerceOrderItem.getCommerceOrderItemId(),
 				currentQuantity, childCommerceOrderItem.getJson(),
-				serviceContext);
+				serviceContext, validateOrder);
 		}
 
 		return _updateCommerceOrderItem(
-			commerceOrderItemId, quantity, json, serviceContext);
+			commerceOrderItemId, quantity, json, serviceContext, validateOrder);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1244,7 +1245,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 	protected void validate(
 			Locale locale, CommerceOrder commerceOrder,
-			CPDefinition cpDefinition, CPInstance cpInstance, int quantity)
+			CPDefinition cpDefinition, CPInstance cpInstance, int quantity,
+			boolean validateOrder)
 		throws PortalException {
 
 		if (commerceOrder.getUserId() == 0) {
@@ -1269,7 +1271,7 @@ public class CommerceOrderItemLocalServiceImpl
 					cpDefinition.getCPDefinitionId()));
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
+		if (!ExportImportThreadLocal.isImportInProcess() && validateOrder) {
 			List<CommerceOrderValidatorResult> commerceCartValidatorResults =
 				_commerceOrderValidatorRegistry.validate(
 					locale, commerceOrder, cpInstance, quantity);
@@ -1307,7 +1309,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		validate(
 			serviceContext.getLocale(), commerceOrder, cpDefinition, cpInstance,
-			quantity);
+			quantity, true);
 
 		long commerceOrderItemId = counterLocalService.increment();
 
@@ -1879,7 +1881,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		validate(
 			serviceContext.getLocale(), commerceOrder, cpDefinition, cpInstance,
-			quantity);
+			quantity, true);
 
 		commerceOrderItem.setExternalReferenceCode(externalReferenceCode);
 		commerceOrderItem.setGroupId(commerceOrder.getGroupId());
@@ -1944,7 +1946,7 @@ public class CommerceOrderItemLocalServiceImpl
 		validate(
 			serviceContext.getLocale(), commerceOrder,
 			commerceOrderItem.getCPDefinition(),
-			commerceOrderItem.fetchCPInstance(), quantity);
+			commerceOrderItem.fetchCPInstance(), quantity, true);
 
 		_updateBookedQuantity(
 			serviceContext.getUserId(), commerceOrderItem,
@@ -1990,7 +1992,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 	private CommerceOrderItem _updateCommerceOrderItem(
 			long commerceOrderItemId, int quantity, String json,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, boolean validateOrder)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
@@ -2001,7 +2003,7 @@ public class CommerceOrderItemLocalServiceImpl
 		validate(
 			serviceContext.getLocale(), commerceOrder,
 			commerceOrderItem.getCPDefinition(),
-			commerceOrderItem.fetchCPInstance(), quantity);
+			commerceOrderItem.fetchCPInstance(), quantity, validateOrder);
 
 		_updateBookedQuantity(
 			serviceContext.getUserId(), commerceOrderItem,

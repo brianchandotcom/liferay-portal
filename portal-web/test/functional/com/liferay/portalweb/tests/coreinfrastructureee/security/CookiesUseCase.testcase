@@ -115,4 +115,18 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-156903. Verify the order of menu items after Cookie Preference Handling is enabled"
+	@priority = "3"
+	test VerifyOrderOfMenuItemsInSiteSettings {
+		property test.name.skip.portal.instance = "CookiesUseCase#CookiesLifetimeIsSixMonthsWhenTheyAreSaved";
+
+		task ("Given: Cookie Banner is present on the Site.") {
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
+		}
+
+		task ("Verify the order of menu items in Site Settings") {
+			AssertVisible(locator1 = "CookieBannerAdmin#MENU_ITEMS_IN_ORDER");
+		}
+	}
+
 }

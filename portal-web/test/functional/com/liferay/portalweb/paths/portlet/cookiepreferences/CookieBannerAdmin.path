@@ -50,6 +50,11 @@
 	<td>//input[contains(@name,'includeDeclineAllButton') and @type='checkbox']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MENU_ITEMS_IN_ORDER</td>
+	<td>//*[@class="nav nav-stacked"]/li/a[contains(.,'Preference Handling')]/../following-sibling::li/a[contains(.,'Banner')]/../following-sibling::li/a[contains(.,'Consent Panel')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

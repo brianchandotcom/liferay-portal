@@ -1,12 +1,12 @@
 {
+	"friendlyURL": "/",
 	"hidden": false,
 	"name_i18n": {
 		"en_US": "Test Public Permissions Layout"
 	},
 	"permissions": [
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Guest",
 			"scope": 4
 		},

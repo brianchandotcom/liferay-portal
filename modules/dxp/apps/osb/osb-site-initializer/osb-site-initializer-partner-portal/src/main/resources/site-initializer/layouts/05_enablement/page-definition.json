@@ -53,7 +53,7 @@
 										"key": "enablement-welcome-banner"
 									},
 									"fragmentConfig": {
-										"secondaryButtonLink": "https://www.liferay.com/pt/home"
+										"secondaryButtonLink": "https://www.liferay.com/home"
 									},
 									"fragmentFields": [
 										{
@@ -70,7 +70,19 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "Watch a Video Tour"
+														"ar_SA": "Watch a Video Tour",
+														"ca_ES": "Watch a Video Tour",
+														"de_DE": "Watch a Video Tour",
+														"en_US": "Watch a Video Tour",
+														"es_ES": "Watch a Video Tour",
+														"fi_FI": "Watch a Video Tour",
+														"fr_FR": "Watch a Video Tour",
+														"hu_HU": "Watch a Video Tour",
+														"ja_JP": "Watch a Video Tour",
+														"nl_NL": "Watch a Video Tour",
+														"pt_BR": "Watch a Video Tour",
+														"sv_SE": "Watch a Video Tour",
+														"zh_CN": "Watch a Video Tour"
 													}
 												}
 											}
@@ -82,7 +94,19 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "Register New Deal"
+														"ar_SA": "Register New Deal",
+														"ca_ES": "Register New Deal",
+														"de_DE": "Register New Deal",
+														"en_US": "Register New Deal",
+														"es_ES": "Register New Deal",
+														"fi_FI": "Register New Deal",
+														"fr_FR": "Register New Deal",
+														"hu_HU": "Register New Deal",
+														"ja_JP": "Register New Deal",
+														"nl_NL": "Register New Deal",
+														"pt_BR": "Register New Deal",
+														"sv_SE": "Register New Deal",
+														"zh_CN": "Register New Deal"
 													}
 												}
 											}
@@ -115,7 +139,19 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "Partner Enablement"
+														"ar_SA": "Partner Enablement",
+														"ca_ES": "Partner Enablement",
+														"de_DE": "Partner Enablement",
+														"en_US": "Partner Enablement",
+														"es_ES": "Partner Enablement",
+														"fi_FI": "Partner Enablement",
+														"fr_FR": "Partner Enablement",
+														"hu_HU": "Partner Enablement",
+														"ja_JP": "Partner Enablement",
+														"nl_NL": "Partner Enablement",
+														"pt_BR": "Partner Enablement",
+														"sv_SE": "Partner Enablement",
+														"zh_CN": "Partner Enablement"
 													}
 												}
 											}
@@ -148,7 +184,19 @@
 										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Select your learning path"
+												"ar_SA": "Select your learning path",
+												"ca_ES": "Select your learning path",
+												"de_DE": "Select your learning path",
+												"en_US": "Select your learning path",
+												"es_ES": "Select your learning path",
+												"fi_FI": "Select your learning path",
+												"fr_FR": "Select your learning path",
+												"hu_HU": "Select your learning path",
+												"ja_JP": "Select your learning path",
+												"nl_NL": "Select your learning path",
+												"pt_BR": "Select your learning path",
+												"sv_SE": "Select your learning path",
+												"zh_CN": "Select your learning path"
 											}
 										}
 									}

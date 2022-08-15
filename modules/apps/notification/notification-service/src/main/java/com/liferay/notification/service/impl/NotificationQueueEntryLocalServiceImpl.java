@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -171,10 +173,21 @@ public class NotificationQueueEntryLocalServiceImpl
 
 	@Override
 	public void sendNotificationQueueEntries() throws PortalException {
+		List<NotificationQueueEntry> notificationQueueEntries;
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-159052"))) {
+			notificationQueueEntries =
+				notificationQueueEntryPersistence.findByStatus(
+					NotificationsQueryEntryConstants.STATUS_UNSENT);
+		}
+		else {
+			notificationQueueEntries =
+				notificationQueueEntryPersistence.findBySent(false);
+		}
+
 		try {
 			for (NotificationQueueEntry notificationQueueEntry :
-					notificationQueueEntryPersistence.findByStatus(
-						NotificationsQueryEntryConstants.STATUS_UNSENT)) {
+					notificationQueueEntries) {
 
 				MailMessage mailMessage = new MailMessage(
 					new InternetAddress(

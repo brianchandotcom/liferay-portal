@@ -66,10 +66,6 @@ definition {
 		}
 
 		task ("Check at panel that DXP is not connected to AC") {
-			AssertVisible(
-				key_text = "Start Free Trial",
-				locator1 = "Button#ANY");
-
 			AssertVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
 		}
 

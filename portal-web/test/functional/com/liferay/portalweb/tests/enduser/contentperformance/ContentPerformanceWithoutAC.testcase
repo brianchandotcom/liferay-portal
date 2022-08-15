@@ -36,10 +36,6 @@ definition {
 	test ContentPerformanceClosed {
 		task ("Open Content Performance panel") {
 			ContentPerformance.openContentPerformance();
-
-			AssertVisible(
-				key_text = "Start Free Trial",
-				locator1 = "Button#ANY");
 		}
 
 		task ("Logout and login") {
@@ -49,9 +45,7 @@ definition {
 		}
 
 		task ("Check if panel is closed") {
-			AssertElementNotPresent(
-				key_text = "Start Free Trial",
-				locator1 = "Button#ANY");
+			AssertNotVisible(locator1 = "ContentPerformance#SIDEBAR");
 		}
 	}
 
@@ -74,11 +68,7 @@ definition {
 			ContentPerformance.openContentPerformance();
 		}
 
-		task ("Assert that Free trial and dismiss buttons are displayed") {
-			AssertVisible(
-				key_text = "Start Free Trial",
-				locator1 = "Button#ANY");
-
+		task ("Assert that Dismiss buttons are displayed") {
 			AssertVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
 		}
 	}
@@ -243,10 +233,6 @@ definition {
 		}
 
 		task ("Check if elements present") {
-			AssertVisible(
-				key_text = "Start Free Trial",
-				locator1 = "Button#ANY");
-
 			AssertVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
 		}
 	}

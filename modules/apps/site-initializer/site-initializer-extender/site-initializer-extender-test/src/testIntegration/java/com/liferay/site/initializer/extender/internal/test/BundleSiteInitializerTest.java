@@ -137,6 +137,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -167,6 +168,7 @@ import java.math.BigDecimal;
 
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -965,6 +967,15 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"Test Notification Template", notificationTemplate.getName());
+
+		Map<String, String> subjectMap = notificationTemplate.getSubject();
+
+		Assert.assertNotNull(subjectMap);
+
+		String subject = subjectMap.get("en_US");
+
+		Assert.assertTrue(
+			subject.equals(StringUtil.getTitleCase(subject, true, "DXP")));
 	}
 
 	private void _assertObjectActions(

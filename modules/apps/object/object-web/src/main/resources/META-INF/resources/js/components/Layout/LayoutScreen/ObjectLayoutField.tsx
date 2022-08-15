@@ -12,10 +12,10 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import React from 'react';
 
 import Panel from '../../Panel/Panel';
-import LayoutContext, {TYPES} from '../context';
+import {TYPES, useLayoutContext} from '../objectLayoutContext';
 import HeaderDropdown from './HeaderDropdown';
 import RequiredLabel from './RequiredLabel';
 
@@ -36,9 +36,7 @@ const ObjectLayoutField: React.FC<IObjectLayoutFieldProps> = ({
 	rowIndex,
 	tabIndex,
 }) => {
-	const [{objectFieldTypes, objectFields}, dispatch] = useContext(
-		LayoutContext
-	);
+	const [{objectFieldTypes, objectFields}, dispatch] = useLayoutContext();
 
 	const objectField = objectFields.find(({id}) => id === objectFieldId)!;
 

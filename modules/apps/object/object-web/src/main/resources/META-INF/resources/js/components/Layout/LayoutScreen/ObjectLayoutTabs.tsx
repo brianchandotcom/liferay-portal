@@ -16,10 +16,10 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import {useModal} from '@clayui/modal';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
 import Panel from '../../Panel/Panel';
-import LayoutContext, {TYPES} from '../context';
+import {TYPES, useLayoutContext} from '../objectLayoutContext';
 import HeaderDropdown from './HeaderDropdown';
 import ModalAddObjectLayoutBox from './ModalAddObjectLayoutBox';
 import ObjectLayoutBox from './ObjectLayoutBox';
@@ -28,7 +28,7 @@ import ObjectLayoutRelationship from './ObjectLayoutRelationship';
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const [{isViewOnly, objectLayout}, dispatch] = useContext(LayoutContext);
+	const [{isViewOnly, objectLayout}, dispatch] = useLayoutContext();
 	const [visibleModal, setVisibleModal] = useState(false);
 	const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 	const {observer, onClose} = useModal({

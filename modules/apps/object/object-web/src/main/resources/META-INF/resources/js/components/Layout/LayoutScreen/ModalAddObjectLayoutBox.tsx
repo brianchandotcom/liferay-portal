@@ -17,9 +17,9 @@ import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
 import {FormError, Input, useForm} from '@liferay/object-js-components-web';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import LayoutContext, {TYPES} from '../context';
+import {TYPES, useLayoutContext} from '../objectLayoutContext';
 
 type TInitialValues = {
 	name: string;
@@ -36,7 +36,7 @@ const ModalAddObjectLayoutBox: React.FC<IModalAddObjectLayoutBoxProps> = ({
 	onClose,
 	tabIndex,
 }) => {
-	const [, dispatch] = useContext(LayoutContext);
+	const [, dispatch] = useLayoutContext();
 
 	const initialValues: TInitialValues = {
 		name: '',

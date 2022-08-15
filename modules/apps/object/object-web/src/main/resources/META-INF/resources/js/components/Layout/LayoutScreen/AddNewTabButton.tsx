@@ -15,13 +15,13 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
-import LayoutContext from '../context';
+import {useLayoutContext} from '../objectLayoutContext';
 import ModalAddObjectLayoutTab from './ModalAddObjectLayoutTab';
 
 const AddNewTabButton: React.FC<{}> = () => {
-	const [{isViewOnly}] = useContext(LayoutContext);
+	const [{isViewOnly}] = useLayoutContext();
 	const [visibleModal, setVisibleModal] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),

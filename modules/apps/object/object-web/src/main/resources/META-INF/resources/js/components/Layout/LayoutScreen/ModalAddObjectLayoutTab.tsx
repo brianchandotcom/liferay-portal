@@ -25,10 +25,10 @@ import {
 	useForm,
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {separateCamelCase} from '../../../utils/string';
-import LayoutContext, {TYPES as EVENT_TYPES} from '../context';
+import {TYPES as EVENT_TYPES, useLayoutContext} from '../objectLayoutContext';
 import {TObjectLayoutTab, TObjectRelationship} from '../types';
 
 import './ModalAddObjectLayoutTab.scss';
@@ -126,7 +126,7 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 			objectRelationships,
 		},
 		dispatch,
-	] = useContext(LayoutContext);
+	] = useLayoutContext();
 	const [selectedType, setSelectedType] = useState(TYPES.FIELDS);
 	const [query, setQuery] = useState<string>('');
 	const [selectedRelationship, setSelectedRelationship] = useState<

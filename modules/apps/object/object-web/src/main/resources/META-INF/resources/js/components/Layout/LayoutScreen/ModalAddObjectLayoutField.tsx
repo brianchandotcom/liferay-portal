@@ -22,9 +22,9 @@ import {
 	useForm,
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
-import LayoutContext, {TYPES} from '../context';
+import {TYPES, useLayoutContext} from '../objectLayoutContext';
 import {TObjectField} from '../types';
 import RequiredLabel from './RequiredLabel';
 
@@ -90,7 +90,7 @@ export default function ModalAddObjectLayoutField({
 	onClose,
 	tabIndex,
 }: IProps) {
-	const [{objectFields}, dispatch] = useContext(LayoutContext);
+	const [{objectFields}, dispatch] = useLayoutContext();
 	const [query, setQuery] = useState<string>('');
 	const [selectedObjectField, setSelectedObjectField] = useState<
 		TObjectField

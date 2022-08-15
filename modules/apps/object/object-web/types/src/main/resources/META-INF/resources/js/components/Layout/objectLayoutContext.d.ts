@@ -121,7 +121,6 @@ interface ILayoutContextProps extends Array<TState | Function> {
 	0: typeof initialState;
 	1: React.Dispatch<React.ReducerAction<React.Reducer<TState, TAction>>>;
 }
-declare const LayoutContext: React.Context<ILayoutContextProps>;
 export declare enum TYPES {
 	ADD_OBJECT_FIELDS = 'ADD_OBJECT_FIELDS',
 	ADD_OBJECT_LAYOUT = 'ADD_OBJECT_LAYOUT',
@@ -149,4 +148,5 @@ export declare function LayoutContextProvider({
 	children,
 	value,
 }: ILayoutContextProviderProps): JSX.Element;
-export default LayoutContext;
+export declare function useLayoutContext(): ILayoutContextProps;
+export {};

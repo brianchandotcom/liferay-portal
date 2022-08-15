@@ -66,6 +66,19 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void addOrUpdateExtensionDynamicObjectDefinitionTableValues(
+			long userId,
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			long primaryKey, java.util.Map<String, java.io.Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectEntryLocalService.
+			addOrUpdateExtensionDynamicObjectDefinitionTableValues(
+				userId, objectDefinition, primaryKey, values, serviceContext);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntry addOrUpdateObjectEntry(
 			String externalReferenceCode, long userId, long groupId,
 			long objectDefinitionId,
@@ -100,6 +113,17 @@ public class ObjectEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.createPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public void deleteExtensionDynamicObjectDefinitionTableValues(
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			long primaryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectEntryLocalService.
+			deleteExtensionDynamicObjectDefinitionTableValues(
+				objectDefinition, primaryKey);
 	}
 
 	/**
@@ -322,6 +346,18 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.Map<String, java.io.Serializable>
+			getExtensionDynamicObjectDefinitionTableValues(
+				com.liferay.object.model.ObjectDefinition objectDefinition,
+				long primaryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.
+			getExtensionDynamicObjectDefinitionTableValues(
+				objectDefinition, primaryKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
@@ -525,11 +561,11 @@ public class ObjectEntryLocalServiceWrapper
 	@Override
 	public java.util.Map<String, Object> getSystemModelAttributes(
 			com.liferay.object.model.ObjectDefinition objectDefinition,
-			long objectEntryId)
+			long primaryKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getSystemModelAttributes(
-			objectDefinition, objectEntryId);
+			objectDefinition, primaryKey);
 	}
 
 	@Override

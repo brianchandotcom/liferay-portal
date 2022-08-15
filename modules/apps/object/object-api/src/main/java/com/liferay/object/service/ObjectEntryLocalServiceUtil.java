@@ -69,6 +69,17 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().addObjectEntry(objectEntry);
 	}
 
+	public static void addOrUpdateExtensionDynamicObjectDefinitionTableValues(
+			long userId,
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			long primaryKey, Map<String, Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		getService().addOrUpdateExtensionDynamicObjectDefinitionTableValues(
+			userId, objectDefinition, primaryKey, values, serviceContext);
+	}
+
 	public static ObjectEntry addOrUpdateObjectEntry(
 			String externalReferenceCode, long userId, long groupId,
 			long objectDefinitionId, Map<String, Serializable> values,
@@ -98,6 +109,15 @@ public class ObjectEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static void deleteExtensionDynamicObjectDefinitionTableValues(
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			long primaryKey)
+		throws PortalException {
+
+		getService().deleteExtensionDynamicObjectDefinitionTableValues(
+			objectDefinition, primaryKey);
 	}
 
 	/**
@@ -286,6 +306,16 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	public static Map<String, Serializable>
+			getExtensionDynamicObjectDefinitionTableValues(
+				com.liferay.object.model.ObjectDefinition objectDefinition,
+				long primaryKey)
+		throws PortalException {
+
+		return getService().getExtensionDynamicObjectDefinitionTableValues(
+			objectDefinition, primaryKey);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {
@@ -462,11 +492,11 @@ public class ObjectEntryLocalServiceUtil {
 
 	public static Map<String, Object> getSystemModelAttributes(
 			com.liferay.object.model.ObjectDefinition objectDefinition,
-			long objectEntryId)
+			long primaryKey)
 		throws PortalException {
 
 		return getService().getSystemModelAttributes(
-			objectDefinition, objectEntryId);
+			objectDefinition, primaryKey);
 	}
 
 	public static Map<String, Serializable> getValues(long objectEntryId)

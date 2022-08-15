@@ -149,12 +149,7 @@ definition {
 		}
 
 		task ("Then the page creator could add Custom CSS to Button") {
-			var customCSS = '''
-.[$FRAGMENT_CLASS$] {
-	background-color: var(--success);
-}''';
-
-			PageEditor.configureFragment(customCSS = "${customCSS}");
+			PageEditor.configureFragment(customCSS = ".[$FRAGMENT_CLASS$] { background-color: var(--success); }");
 
 			for (var i : list "1,2,3") {
 				PageEditor.viewFragmentStyle(

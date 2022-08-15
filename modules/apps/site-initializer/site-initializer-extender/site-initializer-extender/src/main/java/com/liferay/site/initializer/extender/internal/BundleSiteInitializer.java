@@ -1463,21 +1463,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			SiteInitializerUtil.toMap(
 				jsonObject.getString("friendlyURL_i18n")));
 
-		String friendlyURL;
-
 		if (!friendlyURLMap.containsKey(siteDefaultLocale)) {
 			friendlyURLMap.put(
 				siteDefaultLocale, jsonObject.getString("friendlyURL"));
-			friendlyURL = jsonObject.getString("friendlyURL");
-		}
-		else {
-			friendlyURL = StringUtil.toLowerCase(
-				"/" + _replace(nameMap.get(siteDefaultLocale), " ", "-"));
 		}
 
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			serviceContext.getScopeGroupId(), jsonObject.getBoolean("private"),
-			friendlyURL);
+			jsonObject.getString("friendlyURL"));
 
 		if (layout == null) {
 			layout = _layoutLocalService.addLayout(

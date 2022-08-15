@@ -540,9 +540,9 @@
 <!--RATE_STARS-->
 
 <tr>
-    <td>RATING_STAR_RESULT_COUNT</td>
-    <td>//div[contains(@class,'ratings-stars')]//button[contains(@value,'${key_ratingStarCount}')]</td>
-    <td></td>
+	<td>RATING_STAR_RESULT_COUNT</td>
+	<td>//div[contains(@class,'ratings-stars')]//button[contains(@value,'${key_ratingStarCount}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>RATING_STAR</td>

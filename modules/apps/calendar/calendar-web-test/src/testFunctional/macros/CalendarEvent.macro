@@ -931,6 +931,18 @@ definition {
 		Click(locator1 = "CalendarEditEvent#REPEAT_CHECKBOX");
 	}
 
+	macro inputRateStar {
+		Click(locator1 = "CalendarEditEvent#RATING_STAR");
+
+		if (isSet(checkDeleteButton)) {
+			AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_DELETE_DISABLE");
+		}
+
+		Click.javaScriptClick(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "Ratings#YOUR_RATING_STAR_COUNT");
+	}
+
 	macro inviteResource {
 		CalendarEvent._expandPanel(panelName = "Invitations");
 
@@ -1454,6 +1466,22 @@ definition {
 		AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		AssertElementNotPresent(locator1 = "CalendarViewEventDetails#CALENDAR_COMMENT_DEFAULT_MESSAGE");
+	}
+
+	macro viewCalendarRateStar {
+		AssertElementPresent(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "CalendarEditEvent#RATING_STAR_RESULT_COUNT");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Ratings#AVERAGE_STAR_RESULT",
+			value1 = "${averageRatingStarCount}");
+
+		MouseOver(locator1 = "CalendarEditEvent#RATING_STAR");
+
+		AssertElementPresent(
+			key_message = "${message}",
+			locator1 = "Ratings#RATED_TOOLTIP_MESSAGE");
 	}
 
 	macro viewCalendarRatingNotPresent {
@@ -2058,33 +2086,5 @@ definition {
 
 		CalendarScheduler.viewAgenda(eventTitle = "${eventTitle}");
 	}
-
-	macro inputRateStar {
-        Click(locator1 = "CalendarEditEvent#RATING_STAR");
-
-        if (isSet(checkDeleteButton)) {
-            AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_DELETE_DISABLE");
-        }
-
-        Click.javaScriptClick(
-            key_ratingStarCount = "${ratingStarCount}",
-            locator1 = "Ratings#YOUR_RATING_STAR_COUNT");
-    }
-
-	macro viewCalendarRateStar {
-        AssertElementPresent(
-         key_ratingStarCount = "${ratingStarCount}",
-         locator1 = "CalendarEditEvent#RATING_STAR_RESULT_COUNT");
-
-        AssertTextEquals.assertPartialText(
-            locator1 = "Ratings#AVERAGE_STAR_RESULT",
-            value1 = "${averageRatingStarCount}");
-
-        MouseOver(locator1 = "CalendarEditEvent#RATING_STAR");
-
-        AssertElementPresent(
-            key_message = "${message}",
-            locator1 = "Ratings#RATED_TOOLTIP_MESSAGE");
-    }
 
 }

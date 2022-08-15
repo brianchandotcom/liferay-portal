@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {createContext, useReducer} from 'react';
+import React, {createContext, useContext, useReducer} from 'react';
 
 import {
 	findObjectFieldIndex,
@@ -381,4 +381,6 @@ export function LayoutContextProvider({
 	);
 }
 
-export default LayoutContext;
+export function useLayoutContext() {
+	return useContext(LayoutContext);
+}

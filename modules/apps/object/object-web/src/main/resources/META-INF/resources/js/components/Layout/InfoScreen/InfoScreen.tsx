@@ -18,14 +18,14 @@ import {
 	Input,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import LayoutContext, {TYPES} from '../context';
+import {TYPES, useLayoutContext} from '../objectLayoutContext';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const [{isViewOnly, objectLayout}, dispatch] = useContext(LayoutContext);
+	const [{isViewOnly, objectLayout}, dispatch] = useLayoutContext();
 
 	let error: string | undefined;
 

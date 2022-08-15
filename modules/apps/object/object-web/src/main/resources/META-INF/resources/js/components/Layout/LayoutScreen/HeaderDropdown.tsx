@@ -14,9 +14,9 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import React, {FC, MouseEventHandler, useContext, useState} from 'react';
+import React, {FC, MouseEventHandler, useState} from 'react';
 
-import LayoutContext from '../context';
+import {useLayoutContext} from '../objectLayoutContext';
 
 const HeaderDropdown: FC<IHeaderDropdown> = ({
 	addCategorization,
@@ -28,7 +28,7 @@ const HeaderDropdown: FC<IHeaderDropdown> = ({
 			isViewOnly,
 			objectLayout: {objectLayoutTabs},
 		},
-	] = useContext(LayoutContext);
+	] = useLayoutContext();
 
 	const handleOnClick = (handler: Function) => {
 		handler();

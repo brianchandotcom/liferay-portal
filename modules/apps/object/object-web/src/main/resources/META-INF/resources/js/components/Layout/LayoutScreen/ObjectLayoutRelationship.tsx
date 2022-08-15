@@ -13,10 +13,10 @@
  */
 
 import ClayLabel from '@clayui/label';
-import React, {useContext} from 'react';
+import React from 'react';
 
 import Panel from '../../Panel/Panel';
-import LayoutContext from '../context';
+import {useLayoutContext} from '../objectLayoutContext';
 
 interface IObjectLayoutRelationshipProps
 	extends React.HTMLAttributes<HTMLElement> {
@@ -27,7 +27,7 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const ObjectLayoutRelationship: React.FC<IObjectLayoutRelationshipProps> = ({
 	objectRelationshipId,
 }) => {
-	const [{objectRelationships}] = useContext(LayoutContext);
+	const [{objectRelationships}] = useLayoutContext();
 
 	const objectRelationship = objectRelationships.find(
 		({id}) => id === objectRelationshipId

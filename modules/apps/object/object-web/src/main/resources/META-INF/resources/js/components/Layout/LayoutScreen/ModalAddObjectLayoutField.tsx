@@ -17,9 +17,9 @@ import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {AutoComplete, useForm} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
-import LayoutContext, {TYPES} from '../context';
+import {TYPES, useLayoutContext} from '../objectLayoutContext';
 import {TObjectField} from '../types';
 import RequiredLabel from './RequiredLabel';
 
@@ -93,7 +93,7 @@ const ModalAddObjectLayoutField: React.FC<IModalAddObjectLayoutFieldProps> = ({
 	onClose,
 	tabIndex,
 }) => {
-	const [{objectFields}, dispatch] = useContext(LayoutContext);
+	const [{objectFields}, dispatch] = useLayoutContext();
 	const [query, setQuery] = useState<string>('');
 	const [selectedObjectField, setSelectedObjectField] = useState<
 		TObjectField

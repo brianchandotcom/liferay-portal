@@ -77,7 +77,7 @@ String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderRe
 
 			<aui:input id="priority" name="position" />
 
-			<aui:input checked="<%= (country == null) ? false : country.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
+			<aui:input checked="<%= (country == null) ? true : country.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

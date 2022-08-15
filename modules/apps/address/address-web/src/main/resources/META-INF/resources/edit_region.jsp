@@ -68,7 +68,7 @@ renderResponse.setTitle((region == null) ? LanguageUtil.get(request, "add-region
 
 			<aui:input id="priority" name="position" />
 
-			<aui:input checked="<%= (region == null) ? false : region.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
+			<aui:input checked="<%= (region == null) ? true : region.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

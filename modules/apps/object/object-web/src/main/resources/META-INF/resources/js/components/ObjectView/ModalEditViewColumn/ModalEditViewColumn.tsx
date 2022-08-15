@@ -17,9 +17,9 @@ import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
 import {Input, InputLocalized} from '@liferay/object-js-components-web';
-import React, {FormEvent, useContext, useState} from 'react';
+import React, {FormEvent, useState} from 'react';
 
-import ViewContext, {TYPES} from '../context';
+import {TYPES, useViewContext} from '../objectViewContext';
 
 interface IProps {
 	editingObjectFieldName: string;
@@ -39,7 +39,7 @@ export function ModalEditViewColumn({
 			objectView: {objectViewColumns},
 		},
 		dispatch,
-	] = useContext(ViewContext);
+	] = useViewContext();
 
 	const [editingColumn] = objectViewColumns.filter(
 		(viewColumn) => viewColumn.objectFieldName === editingObjectFieldName

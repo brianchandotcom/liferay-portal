@@ -14,10 +14,10 @@
 
 import {useModal} from '@clayui/modal';
 import {BuilderScreen} from '@liferay/object-js-components-web';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
 import {ModalEditViewColumn} from '../ModalEditViewColumn/ModalEditViewColumn';
-import ViewContext, {TYPES} from '../context';
+import {TYPES, useViewContext} from '../objectViewContext';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
@@ -35,7 +35,7 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 			objectView: {objectViewColumns},
 		},
 		dispatch,
-	] = useContext(ViewContext);
+	] = useViewContext();
 
 	const objectFieldNames = new Set(
 		objectViewColumns.map(({objectFieldName}) => objectFieldName)

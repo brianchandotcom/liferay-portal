@@ -14,16 +14,16 @@
 
 import {useModal} from '@clayui/modal';
 import {BuilderScreen} from '@liferay/object-js-components-web';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
 import {ModalAddFilter} from '../../ModalAddFilter';
-import ViewContext, {TYPES} from '../context';
+import {TYPES, useViewContext} from '../objectViewContext';
 
 export function FilterScreen() {
 	const [
 		{filterOperators, objectFields, objectView, workflowStatusJSONArray},
 		dispatch,
-	] = useContext(ViewContext);
+	] = useViewContext();
 
 	const {objectViewFilterColumns} = objectView;
 

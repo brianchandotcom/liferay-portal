@@ -20,15 +20,9 @@ import {
 	AutoComplete,
 	FormCustomSelect,
 } from '@liferay/object-js-components-web';
-import React, {
-	FormEvent,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import React, {FormEvent, useEffect, useMemo, useState} from 'react';
 
-import ViewContext, {TYPES} from '../context';
+import {TYPES, useViewContext} from '../objectViewContext';
 import {TObjectViewColumn, TObjectViewSortColumn} from '../types';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
@@ -68,7 +62,7 @@ export function ModalAddDefaultSortColumn({
 			objectView: {objectViewColumns, objectViewSortColumns},
 		},
 		dispatch,
-	] = useContext(ViewContext);
+	] = useViewContext();
 
 	const [availableViewColumns, setAvailableViewColumns] = useState<
 		TObjectViewColumn[]

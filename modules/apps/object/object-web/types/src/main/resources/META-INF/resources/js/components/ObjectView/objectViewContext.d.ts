@@ -24,7 +24,6 @@ interface IViewContextProps extends Array<TState | Function> {
 	0: typeof initialState;
 	1: React.Dispatch<React.ReducerAction<React.Reducer<TState, TAction>>>;
 }
-declare const ViewContext: React.Context<IViewContextProps>;
 export declare enum TYPES {
 	ADD_OBJECT_FIELDS = 'ADD_OBJECT_FIELDS',
 	ADD_OBJECT_VIEW = 'ADD_OBJECT_VIEW',
@@ -164,4 +163,5 @@ export declare function ViewContextProvider({
 	children,
 	value,
 }: IViewContextProviderProps): JSX.Element;
-export default ViewContext;
+export declare function useViewContext(): IViewContextProps;
+export {};

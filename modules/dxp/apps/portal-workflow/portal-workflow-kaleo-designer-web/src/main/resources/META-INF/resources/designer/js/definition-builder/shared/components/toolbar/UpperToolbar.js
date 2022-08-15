@@ -33,7 +33,12 @@ import {
 } from '../../../util/fetchUtil';
 import {isObjectEmpty} from '../../../util/utils';
 
-export default function UpperToolbar({displayNames, isView, languageIds}) {
+export default function UpperToolbar({
+	displayNames,
+	isView,
+	languageIds,
+	portletNamespace,
+}) {
 	const {
 		active,
 		alertMessage,
@@ -153,6 +158,18 @@ export default function UpperToolbar({displayNames, isView, languageIds}) {
 
 	const definitionNotPublished = version === 0 || !active;
 
+	const redirectToSavedDefinition = (name, version) => {
+		const definitionURL = new URL(window.location.href);
+
+		definitionURL.searchParams.set(
+			portletNamespace + 'draftVersion',
+			Number.parseFloat(version).toFixed(1)
+		);
+		definitionURL.searchParams.set(portletNamespace + 'name', name);
+
+		window.location.replace(definitionURL);
+	};
+
 	const publishDefinition = () => {
 		let alertMessage;
 
@@ -203,6 +220,9 @@ export default function UpperToolbar({displayNames, isView, languageIds}) {
 					response.json().then(({name, version}) => {
 						setDefinitionId(name);
 						setVersion(parseInt(version, 10));
+						if (version === '1') {
+							redirectToSavedDefinition(name, version);
+						}
 					});
 				}
 				else {
@@ -246,6 +266,9 @@ export default function UpperToolbar({displayNames, isView, languageIds}) {
 					response.json().then(({name, version}) => {
 						setDefinitionId(name);
 						setVersion(parseInt(version, 10));
+						if (version === '1') {
+							redirectToSavedDefinition(name, version);
+						}
 					});
 				}
 			});

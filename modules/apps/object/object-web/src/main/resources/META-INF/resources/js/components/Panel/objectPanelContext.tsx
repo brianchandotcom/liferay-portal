@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {createContext, useReducer} from 'react';
+import React, {createContext, useContext, useReducer} from 'react';
 
 type TState = {
 	expanded: boolean;
@@ -70,3 +70,7 @@ const PanelContextProvider: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 };
 
 export default PanelContextProvider;
+
+export function usePanelContext() {
+	return useContext(PanelContext);
+}

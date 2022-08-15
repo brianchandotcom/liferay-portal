@@ -38,3 +38,4 @@ export declare const TYPES: {
 };
 declare const PanelContextProvider: React.FC<React.HTMLAttributes<HTMLElement>>;
 export default PanelContextProvider;
+export declare function usePanelContext(): IPanelContextProps;

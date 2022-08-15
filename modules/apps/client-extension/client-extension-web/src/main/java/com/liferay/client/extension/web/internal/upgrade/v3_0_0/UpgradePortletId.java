@@ -14,6 +14,7 @@
 
 package com.liferay.client.extension.web.internal.upgrade.v3_0_0;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
@@ -29,6 +30,39 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class UpgradePortletId extends BasePortletIdUpgradeProcess {
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		try (Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
+				"select externalReferenceCode, clientExtensionEntryId from " +
+					"ClientExtensionEntry")) {
+
+			while (resultSet.next()) {
+				String externalReferenceCode = resultSet.getString(
+					"externalReferenceCode");
+
+				runSQL(
+					StringBundler.concat(
+						"delete from Portlet where portletId = '",
+						"com_liferay_client_extension_web_internal_portlet_",
+						"ClientExtensionEntryPortlet_", externalReferenceCode,
+						"'"));
+
+				runSQL(
+					StringBundler.concat(
+						"delete from ResourcePermission where name = '",
+						"com_liferay_client_extension_web_internal_portlet_",
+						"ClientExtensionEntryPortlet_", externalReferenceCode,
+						"'"));
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		super.doUpgrade();
+	}
 
 	@Override
 	protected String[][] getRenamePortletIdsArray() {

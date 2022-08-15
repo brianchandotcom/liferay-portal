@@ -22,7 +22,7 @@ import ClayForm, {
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {
 	ACTIONS,
@@ -123,10 +123,6 @@ const DriverInfoForm = ({
 		</div>
 	);
 
-	const [accidentCitationValue, setAccidentCitationValue] = useState<boolean>(
-		false
-	);
-
 	const accidentCitations = form.map((form) => {
 		const accidentCitationList = form.accidentCitation || [];
 
@@ -136,39 +132,25 @@ const DriverInfoForm = ({
 		);
 	});
 
-	const handleUpdateField = useCallback(
-		(formId: number, currentId: number, index: number, value: string) => {
-			const payload = {
-				formId,
-				id: currentId,
-				index,
-				value,
-			};
-
-			dispatch({payload, type: ACTIONS.UPDATE_DRIVER_INFO_FORM});
-		},
-		[dispatch]
-	);
-
-	const handleAddCitationClick = () => {
-		const currentId = Number((Math.random() * 1000000).toFixed(0));
-		const driverInfoObject = {
-			accidentCitation: [{id: currentId, value: ''}],
-			ageFirstLicenced: '',
-			firstName: '',
-			gender: '',
-			governmentAffiliation: '',
-			hasAccidentOrCitations: '',
-			highestEducation: '',
-			id,
-			lastName: '',
-			maritalStatus: '',
-			millitaryAffiliation: '',
-			occupation: '',
-			otherOccupation: '',
-			relationToContact: '',
+	const handleUpdateField = (
+		formId: number,
+		currentId: number,
+		index: number,
+		value: string
+	) => {
+		const payload = {
+			formId,
+			id: currentId,
+			index,
+			value,
 		};
 
+		dispatch({payload, type: ACTIONS.UPDATE_DRIVER_INFO_FORM});
+	};
+
+	const currentId = Number((Math.random() * 1000000).toFixed(0));
+
+	const handleAccidentCitation = () => {
 		const newAccidentCitationOptions = accidentCitationOptions.map(
 			(accidentCitationOption) => {
 				return {
@@ -189,17 +171,33 @@ const DriverInfoForm = ({
 			...newAccidentCitations,
 			newAccidentCitationOptions,
 		]);
+	};
+
+	const handleAddCitationClick = () => {
+		const driverInfoObject = {
+			accidentCitation: [{id: currentId, value: ''}],
+			ageFirstLicenced: '',
+			firstName: '',
+			gender: '',
+			governmentAffiliation: '',
+			hasAccidentOrCitations: '',
+			highestEducation: '',
+			id,
+			lastName: '',
+			maritalStatus: '',
+			millitaryAffiliation: '',
+			occupation: '',
+			otherOccupation: '',
+			relationToContact: '',
+		};
+
+		handleAccidentCitation();
 
 		dispatch({
 			payload: driverInfoObject,
 			type: ACTIONS.SET_NEW_ACCIDENT_CITATION,
 		});
 	};
-
-	useEffect(() => {
-		handleAddCitationClick();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	const handleChangeField = (
 		fieldName: string,
@@ -859,7 +857,10 @@ const DriverInfoForm = ({
 									'yes',
 									id
 								);
-								setAccidentCitationValue(true);
+
+								if (!form[formIndex].accidentCitation.length) {
+									handleAddCitationClick();
+								}
 							}}
 							value="yes"
 						/>
@@ -872,16 +873,15 @@ const DriverInfoForm = ({
 									'no',
 									id
 								);
-								setAccidentCitationValue(false);
 							}}
 							value="no"
 						/>
 					</ClayRadioGroup>
 				</div>
 
-				{accidentCitationValue && (
+				{form[formIndex]?.hasAccidentOrCitations === 'yes' && (
 					<div className="row">
-						{accidentCitations[formIndex].map(
+						{accidentCitations[formIndex]?.map(
 							(
 								currentAccidentCitations: number,
 								index: number
@@ -906,7 +906,10 @@ const DriverInfoForm = ({
 													dropdownAlign.bottomCenter
 												}
 												items={
-													newAccidentCitations[index]
+													newAccidentCitations[
+														index
+													] ||
+													handleAccidentCitation()
 												}
 												searchable={true}
 												trigger={

@@ -17,6 +17,7 @@ import React, {useEffect, useState} from 'react';
 import PRMForm from '../../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../../common/components/PRMFormik';
 import MDFRequestBudget from '../../../../../../../common/interfaces/mdfRequestBudget';
+import getIntlNumberFormat from '../../../../../../../common/utils/getIntlNumberFormat';
 import BudgetResumeCard from './components/BudgetResumeCard';
 import getNewBudget from './utils/getNewBudget';
 
@@ -100,9 +101,15 @@ const BudgetBreakdownSection = ({
 							/>
 
 							<PRMFormik.Field
-								component={PRMForm.InputText}
+								component={PRMForm.InputCurrency}
 								label="Budget"
 								name={`activities[${currentActivityIndex}].budgets[${index}].cost`}
+								onChange={(value: number) =>
+									setFieldValue(
+										`activities[${currentActivityIndex}].budgets[${index}].cost`,
+										value
+									)
+								}
 								required
 							/>
 						</PRMForm.Group>
@@ -133,13 +140,13 @@ const BudgetBreakdownSection = ({
 			<div className="my-3">
 				<BudgetResumeCard
 					leftContent="Total MDF Requested Amount"
-					rightContent={String(budgetsAmount)}
+					rightContent={getIntlNumberFormat().format(budgetsAmount)}
 				/>
 
 				<BudgetResumeCard
 					className="mt-3"
 					leftContent="Claim Percent"
-					rightContent={String(0.5)}
+					rightContent={`${0.5 * 100}%`}
 				/>
 			</div>
 

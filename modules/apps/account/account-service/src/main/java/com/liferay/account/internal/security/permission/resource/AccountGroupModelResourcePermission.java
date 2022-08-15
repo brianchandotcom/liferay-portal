@@ -14,15 +14,21 @@
 
 package com.liferay.account.internal.security.permission.resource;
 
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
+import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -91,6 +97,23 @@ public class AccountGroupModelResourcePermission
 			return true;
 		}
 
+		if (Objects.equals(actionId, ActionKeys.VIEW)) {
+			for (AccountGroupRel accountGroupRel :
+					_accountGroupRelLocalService.
+						getAccountGroupRelsByAccountGroupId(accountGroupId)) {
+
+				if (Objects.equals(
+						accountGroupRel.getClassName(),
+						AccountEntry.class.getName()) &&
+					_accountEntryModelResourcePermission.contains(
+						permissionChecker, accountGroupRel.getClassPK(),
+						AccountActionKeys.VIEW_ACCOUNT_GROUPS)) {
+
+					return true;
+				}
+			}
+		}
+
 		return permissionChecker.hasPermission(
 			null, AccountGroup.class.getName(), accountGroupId, actionId);
 	}
@@ -105,8 +128,17 @@ public class AccountGroupModelResourcePermission
 		return _portletResourcePermission;
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
+
 	@Reference
 	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Reference
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Reference(
 		target = "(resource.name=" + AccountConstants.RESOURCE_NAME + ")"

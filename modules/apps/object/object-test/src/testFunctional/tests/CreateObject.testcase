@@ -6616,7 +6616,7 @@ definition {
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are displayed again on the workflow pages (My Workflow Tasks, My Submissions, and Submissions) when reactivated"
 	@priority = "4"
 	test ObjectEntriesReappearsWorkflowPagesWhenReactivated {
-		property portal.upstream = "quarantine";
+		
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 140887",
@@ -7341,7 +7341,7 @@ definition {
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship Many to Many won't allow the user to delete an entry with relation"
 	@priority = "4"
 	test PreventDeletionManyToManyWontAllowDelete {
-		property portal.upstream = "quarantine";
+		
 
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(

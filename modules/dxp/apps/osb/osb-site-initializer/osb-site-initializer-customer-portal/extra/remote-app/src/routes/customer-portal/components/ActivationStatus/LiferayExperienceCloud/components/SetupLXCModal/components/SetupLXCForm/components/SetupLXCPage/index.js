@@ -31,6 +31,7 @@ const SetupLiferayExperienceCloudPage = ({
 	handleChangeForm,
 	leftButton,
 	project,
+	setFormAlreadySubmitted,
 	setIsVisibleSetupLxcModal,
 	subscriptionGroupLxcId,
 	touched,
@@ -50,6 +51,7 @@ const SetupLiferayExperienceCloudPage = ({
 	const handleSubmitLxcEnvironment = useSubmitLxcEnvironment(
 		handleChangeForm,
 		project,
+		setFormAlreadySubmitted,
 		subscriptionGroupLxcId,
 		values
 	);

@@ -13,6 +13,7 @@ import {useMutation} from '@apollo/client';
 import {
 	createAdminsLiferayExperienceCloud,
 	createLiferayExperienceCloudEnvironments,
+	useGetLiferayExperienceCloudEnvironments,
 } from '../../../../../../../../../../../../common/services/liferay/graphql/liferay-experience-cloud-environments/';
 import {updateAccountSubscriptionGroups} from '../../../../../../../../../../../../common/services/liferay/graphql/queries';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../../../../../../../utils/constants';
@@ -20,6 +21,7 @@ import {STATUS_TAG_TYPE_NAMES} from '../../../../../../../../../../utils/constan
 export default function useSubmitLxcEnvironment(
 	handleChangeForm,
 	project,
+	setFormAlreadySubmitted,
 	subscriptionGroupLxcId,
 	values
 ) {
@@ -33,57 +35,80 @@ export default function useSubmitLxcEnvironment(
 		createAdminsLiferayExperienceCloud
 	);
 
+	const {data} = useGetLiferayExperienceCloudEnvironments({
+		filter: `accountKey eq '${project?.accountKey}'`,
+	});
+
 	const handleSubmitLxcEnvironment = async () => {
 		const lxcActivationFields = values?.lxc;
 
-		const {data} = await createLiferayExperienceCloudEnvironment({
-			variables: {
-				LiferayExperienceCloudEnvironment: {
-					accountKey: project.accountKey,
-					incidentManagementEmailAddress:
-						lxcActivationFields.incidentManagementEmail,
-					incidentManagementFullName:
-						lxcActivationFields.incidentManagementfullName,
-					primaryRegion: lxcActivationFields.primaryRegion,
-					projectId: lxcActivationFields.projectId,
-				},
-			},
-		});
+		const liferayExperienceCloudStatus = () => {
+			if (data) {
+				const status =
+					data?.c?.liferayExperienceCloudEnvironments?.items?.length;
 
-		if (data) {
-			const liferayExperienceCloudEnvironmentId =
-				data.c?.createLiferayExperienceCloudEnvironment
-					?.liferayExperienceCloudEnvironmentId;
+				return status;
+			}
 
-			await updateAccountSubscriptionGroupsInfo({
+			return false;
+		};
+
+		const alreadySubmitted = await liferayExperienceCloudStatus();
+
+		if (alreadySubmitted) {
+			setFormAlreadySubmitted(true);
+		}
+
+		if (!alreadySubmitted) {
+			const {data} = await createLiferayExperienceCloudEnvironment({
 				variables: {
-					accountSubscriptionGroup: {
+					LiferayExperienceCloudEnvironment: {
 						accountKey: project.accountKey,
-						activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
+						incidentManagementEmailAddress:
+							lxcActivationFields.incidentManagementEmail,
+						incidentManagementFullName:
+							lxcActivationFields.incidentManagementFullName,
+						primaryRegion: lxcActivationFields.primaryRegion,
+						projectId: lxcActivationFields.projectId,
 					},
-					id: subscriptionGroupLxcId,
 				},
 			});
 
-			await Promise.all(
-				lxcActivationFields?.admins?.map(
-					({email, fullName, github}) => {
-						return createAdminLiferayExperienceCloud({
-							variables: {
-								AdminLiferayExperienceCloud: {
-									emailAddress: email,
-									fullName,
-									githubUsername: github,
-									liferayExperienceCloudEnvironmentId,
-								},
-							},
-						});
-					}
-				)
-			);
-		}
+			if (data) {
+				const liferayExperienceCloudEnvironmentId =
+					data.c?.createLiferayExperienceCloudEnvironment
+						?.liferayExperienceCloudEnvironmentId;
 
-		handleChangeForm(true);
+				await updateAccountSubscriptionGroupsInfo({
+					variables: {
+						accountSubscriptionGroup: {
+							accountKey: project.accountKey,
+							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
+						},
+						id: subscriptionGroupLxcId,
+					},
+				});
+
+				await Promise.all(
+					lxcActivationFields?.admins?.map(
+						({email, fullName, github}) => {
+							return createAdminLiferayExperienceCloud({
+								variables: {
+									AdminLiferayExperienceCloud: {
+										emailAddress: email,
+										fullName,
+										githubUsername: github,
+										liferayExperienceCloudEnvironmentId,
+									},
+								},
+							});
+						}
+					)
+				);
+			}
+
+			handleChangeForm(true);
+		}
 	};
 
 	return handleSubmitLxcEnvironment;

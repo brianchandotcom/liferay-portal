@@ -44,8 +44,16 @@ const ComponentFormModal: React.FC<ComponentProps> = ({
 		formState: {errors},
 		handleSubmit,
 		register,
+		watch,
 	} = useForm<ComponentForm>({
-		defaultValues: modalState,
+		defaultValues: modalState
+			? {
+					id: modalState.id,
+					name: modalState.name,
+
+					teamId: modalState.team?.id,
+			  }
+			: {},
 		resolver: yupResolver(yupSchema.component),
 	});
 
@@ -54,10 +62,13 @@ const ComponentFormModal: React.FC<ComponentProps> = ({
 	);
 
 	const teams = teamsResponse?.items || [];
-
+	const teamId = watch('teamId');
 	const _onSubmit = (componentForm: ComponentForm) => {
 		onSubmit(
-			{...componentForm, projectId},
+			{
+				...componentForm,
+				projectId,
+			},
 			{
 				create: createComponent,
 				update: updateComponent,
@@ -83,21 +94,23 @@ const ComponentFormModal: React.FC<ComponentProps> = ({
 			)}
 			visible
 		>
-			<Form.Select
-				errors={errors}
-				label={i18n.translate('team')}
-				name="teamId"
-				options={teams.map(({id, name}) => ({label: name, value: id}))}
-				register={register}
-				required
-			/>
-
 			<Form.Input
 				errors={errors}
 				label={i18n.translate('name')}
 				name="name"
 				register={register}
 				required
+			/>
+
+			<Form.Select
+				defaultOption={false}
+				errors={errors}
+				label={i18n.translate('team')}
+				name="teamId"
+				options={teams.map(({id, name}) => ({label: name, value: id}))}
+				register={register}
+				required
+				value={teamId}
 			/>
 		</Modal>
 	);

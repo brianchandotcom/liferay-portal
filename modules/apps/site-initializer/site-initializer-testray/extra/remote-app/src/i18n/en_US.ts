@@ -109,6 +109,7 @@ export default {
 	'edit': 'Edit',
 	'edit-case-type': 'Edit Case Type',
 	'edit-category': 'Edit Category',
+	'edit-component': 'Edit Component',
 	'edit-option': 'Edit Option',
 	'edit-project': 'Edit Project',
 	'edit-requirement': 'Edit Requirement',

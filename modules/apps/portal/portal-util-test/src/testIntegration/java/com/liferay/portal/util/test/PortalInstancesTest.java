@@ -152,15 +152,20 @@ public class PortalInstancesTest {
 	private void _updateLayoutSetVirtualHostname(
 		Layout layout, String layoutHostname) {
 
-		LayoutSet layoutSet = layout.getLayoutSet();
+		_updateLayoutSetVirtualHostname(
+			layout.getLayoutSet(), layoutHostname, StringPool.BLANK);
+
+		layout.setLayoutSet(null);
+	}
+
+	private void _updateLayoutSetVirtualHostname(
+		LayoutSet layoutSet, String layoutHostname, String languageId) {
 
 		_virtualHostLocalService.updateVirtualHosts(
 			_company.getCompanyId(), layoutSet.getLayoutSetId(),
 			TreeMapBuilder.put(
-				layoutHostname, StringPool.BLANK
+				StringUtil.toLowerCase(layoutHostname), languageId
 			).build());
-
-		layout.setLayoutSet(null);
 	}
 
 	private Company _company;

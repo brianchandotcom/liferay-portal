@@ -755,7 +755,7 @@ definition {
 			key_number = "${number}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#CURRENT_VERSION_FIELD");
 	}
-	
+
 	macro viewAndFillTimers {
 		if (isSet(newTimer)) {
 			Click(
@@ -1136,6 +1136,12 @@ definition {
 		AssertElementNotPresent(
 			key_language = "${languageOption}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#LANGUAGE_OPTION");
+	}
+
+	macro viewRevisionHistoryVersion {
+		AssertVisible(
+			key_number = "${number}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#REVISION_HISTORY_VERSION");
 	}
 
 	macro viewLanguageOptionPresent {

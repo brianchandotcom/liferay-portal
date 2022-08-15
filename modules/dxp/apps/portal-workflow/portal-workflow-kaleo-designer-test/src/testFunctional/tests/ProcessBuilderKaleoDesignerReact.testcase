@@ -2863,9 +2863,55 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewPreviousVersionsListInOrderAtRevisionHistoryTab {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewPreviousVersionsListInOrderAtRevisionHistoryTab";
 
-		// TODO CanViewPreviousVersionsListInOrderAtRevisionHistoryTab pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start-End Connector",
+			connectorOut = "start",
+			key_direction = "bottom");
+
+		PortletEntry.publish();
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Transition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-200,-250");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "task",
+			connectorLabel = "Start-Task Connector",
+			connectorOut = "start",
+			key_direction = "bottom");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Task-End Connector",
+			connectorOut = "task",
+			key_direction = "bottom");
+
+		Button.click(button = "Update");
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow updated successfully.");
+
+		ProcessBuilderKaleoDesignerReact.gotoInfoWorkflowDefinition();
+
+		Navigator.gotoNavTab(navTab = "Revision History");
+
+		ProcessBuilderKaleoDesignerReact.restorePreviousVersion(number = "1");
+
+		ProcessBuilderKaleoDesignerReact.viewCurrentVersionAtRevisionHistoryTab(number = "3");
+
+		ProcessBuilderKaleoDesignerReact.viewRevisionHistoryVersion(number = "2");
+
+		ProcessBuilderKaleoDesignerReact.viewRevisionHistoryVersion(number = "1");
 	}
 
 	@description = "Verify that the user can see a tooltip with 'Enter the comma separated resource actions (e.g. ADD, DELETE, UPDATE).' at Resource Actions "

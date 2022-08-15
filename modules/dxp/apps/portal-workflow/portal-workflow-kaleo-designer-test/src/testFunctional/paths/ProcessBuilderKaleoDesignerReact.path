@@ -372,6 +372,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REVISION_HISTORY_VERSION</td>
+	<td>//div[contains(@class,'version-row')and contains(.,'Version ${key_number}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CURRENT_VERSION_FIELD</td>
 	<td>//div[@class='info-group']//label[contains(text() ,'Current Version') and contains(.,'${key_number}')]</td>
 	<td></td>

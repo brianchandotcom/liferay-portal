@@ -112,7 +112,7 @@ definition {
 			key_text = "${collectionName}",
 			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
-		MenuItem.click(menuItem = "${menuItem}");
+		MenuItem.click(menuItem = "Export");
 	}
 
 	macro exportFragment {

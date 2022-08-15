@@ -268,11 +268,13 @@ public class CommerceOrderItemServiceUtil {
 
 	public static CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			boolean validateOrder)
 		throws PortalException {
 
 		return getService().updateCommerceOrderItem(
-			commerceOrderItemId, cpMeasurementUnitId, quantity, serviceContext);
+			commerceOrderItemId, cpMeasurementUnitId, quantity, serviceContext,
+			validateOrder);
 	}
 
 	public static CommerceOrderItem updateCommerceOrderItem(

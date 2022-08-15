@@ -549,7 +549,13 @@ definition {
 		}
 
 		task ("Then the guest could navigate through pages via Menu Display") {
-			Navigator.gotoNavTab(navTab = "Test Page Name 2");
+			Click(
+				key_tab = "Test Page Name 2",
+				locator1 = "NavTab#TAB_LINK");
+
+			AssertVisible(
+				key_pageName = "Test Page Name 2",
+				locator1 = "Home#PAGE_ACTIVE");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",

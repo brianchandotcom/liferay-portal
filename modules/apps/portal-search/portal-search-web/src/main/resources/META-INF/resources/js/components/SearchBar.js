@@ -96,10 +96,7 @@ export default function SearchBar({
 
 	const _handleKeyDown = (event) => {
 		if (event.key === 'Enter') {
-			event.preventDefault();
-			event.stopPropagation();
-
-			_handleSubmit();
+			_handleSubmit(event);
 		}
 	};
 
@@ -107,7 +104,10 @@ export default function SearchBar({
 		setScope(event.target.value);
 	};
 
-	const _handleSubmit = () => {
+	const _handleSubmit = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+
 		if (!!inputValue.trim().length || emptySearchEnabled) {
 			const queryString = _updateQueryString(document.location.search);
 

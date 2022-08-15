@@ -175,7 +175,7 @@ definition {
 
 		DERenderer.assertDataInImageField(
 			fieldLabel = "Image",
-			imageFile = "Document_2.jpg",
+			imageFile = "",
 			imageTitle = "Document Title 2");
 
 		Button.clickPublish();
@@ -184,7 +184,7 @@ definition {
 
 		DERenderer.assertDataInImageField(
 			fieldLabel = "Image",
-			imageFile = "Document_2.jpg",
+			imageFile = "Document_2",
 			imageTitle = "Document Title 2");
 	}
 
@@ -445,7 +445,7 @@ definition {
 
 		DERenderer.assertDataInImageField(
 			fieldLabel = "Image",
-			imageFile = "Document_1.jpg",
+			imageFile = "",
 			imageTitle = "Document Title");
 
 		Button.clickPublish();
@@ -454,7 +454,7 @@ definition {
 
 		DERenderer.assertDataInImageField(
 			fieldLabel = "Image",
-			imageFile = "Document_1.jpg",
+			imageFile = "Document_1",
 			imageTitle = "Document Title");
 	}
 

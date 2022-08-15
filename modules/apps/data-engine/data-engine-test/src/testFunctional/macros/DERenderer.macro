@@ -75,25 +75,18 @@ definition {
 	}
 
 	macro assertDataInImageField {
-		if (!(isSet(index))) {
-			var index = "1";
-		}
-
-		AssertTextEquals.assertValue(
-			index = "${index}",
+		AssertElementPresent(
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "DataEngineRenderer#IMAGE_INPUT_INDEXED",
 			value1 = "${imageTitle}");
 
 		AssertElementPresent(
-			index = "${index}",
 			key_fieldLabel = "${fieldLabel}",
 			key_image = "${imageFile}",
 			locator1 = "DataEngineRenderer#IMAGE_PICKER_PREVIEW_INDEXED");
 
 		if (isSet(imageDescription)) {
 			AssertTextEquals(
-				index = "${index}",
 				key_fieldLabel = "${fieldLabel}",
 				locator1 = "DataEngineRenderer#IMAGE_DESCRIPTION_INDEXED",
 				value1 = "${imageDescription}");
@@ -207,12 +200,7 @@ definition {
 	}
 
 	macro assertImageNotPresent {
-		if (!(isSet(index))) {
-			var index = "1";
-		}
-
 		AssertElementNotPresent(
-			index = "${index}",
 			key_fieldLabel = "${fieldLabel}",
 			key_image = "${imageField}",
 			locator1 = "DataEngineRenderer#IMAGE_PICKER_PREVIEW_INDEXED");

@@ -5,7 +5,7 @@ definition {
 
 		Click(
 			key_index = "4",
-			key_text = "${collectioName}",
+			key_text = "${collectionName}",
 			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
 		MenuItem.click(menuItem = "Delete");
@@ -32,7 +32,7 @@ definition {
 
 		Click(
 			key_index = "4",
-			key_text = "${collectioName}",
+			key_text = "${collectionName}",
 			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
 		MenuItem.click(menuItem = "Edit");

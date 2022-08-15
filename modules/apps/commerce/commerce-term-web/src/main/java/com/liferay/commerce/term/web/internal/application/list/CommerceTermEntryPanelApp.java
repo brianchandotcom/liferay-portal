@@ -37,17 +37,18 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceTermEntryPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return CommerceTermEntryPortletKeys.COMMERCE_TERM_ENTRY;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CommerceTermEntryPortletKeys.COMMERCE_TERM_ENTRY + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + CommerceTermEntryPortletKeys.COMMERCE_TERM_ENTRY + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

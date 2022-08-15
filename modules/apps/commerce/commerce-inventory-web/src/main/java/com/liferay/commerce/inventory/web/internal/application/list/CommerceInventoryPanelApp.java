@@ -38,17 +38,18 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceInventoryPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return CPPortletKeys.COMMERCE_INVENTORY;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CPPortletKeys.COMMERCE_INVENTORY + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + CPPortletKeys.COMMERCE_INVENTORY + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

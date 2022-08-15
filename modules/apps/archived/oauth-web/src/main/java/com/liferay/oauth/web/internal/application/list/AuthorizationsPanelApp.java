@@ -37,17 +37,18 @@ import org.osgi.service.component.annotations.Reference;
 public class AuthorizationsPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return OAuthPortletKeys.OAUTH_AUTHORIZATIONS;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + OAuthPortletKeys.OAUTH_AUTHORIZATIONS + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + OAuthPortletKeys.OAUTH_AUTHORIZATIONS + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

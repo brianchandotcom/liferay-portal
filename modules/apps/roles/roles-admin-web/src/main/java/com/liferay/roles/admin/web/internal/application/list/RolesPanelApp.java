@@ -37,17 +37,18 @@ import org.osgi.service.component.annotations.Reference;
 public class RolesPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return RolesAdminPortletKeys.ROLES_ADMIN;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + RolesAdminPortletKeys.ROLES_ADMIN + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + RolesAdminPortletKeys.ROLES_ADMIN + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

@@ -37,17 +37,18 @@ import org.osgi.service.component.annotations.Reference;
 public class WikiPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return WikiPortletKeys.WIKI_ADMIN;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

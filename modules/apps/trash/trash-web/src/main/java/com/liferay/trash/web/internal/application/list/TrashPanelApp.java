@@ -41,17 +41,16 @@ import org.osgi.service.component.annotations.Reference;
 public class TrashPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return TrashPortletKeys.TRASH;
 	}
 
-	@Override
-	@Reference(
-		target = "(javax.portlet.name=" + TrashPortletKeys.TRASH + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	@Reference(target = "(javax.portlet.name=" + TrashPortletKeys.TRASH + ")")
+	private Portlet _portlet;
 
 }

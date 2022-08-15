@@ -42,6 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 public class MarketplacePurchasedPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED;
 	}
@@ -57,16 +62,12 @@ public class MarketplacePurchasedPanelApp extends BasePanelApp {
 		return super.isShow(permissionChecker, group);
 	}
 
-	@Override
-	@Reference(
-		target = "(javax.portlet.name=" + MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
-
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(javax.portlet.name=" + MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED + ")"
+	)
+	private Portlet _portlet;
 
 }

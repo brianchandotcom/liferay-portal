@@ -36,17 +36,18 @@ import org.osgi.service.component.annotations.Reference;
 public class ListTypeDefinitionsPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return ObjectPortletKeys.LIST_TYPE_DEFINITIONS;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + ObjectPortletKeys.LIST_TYPE_DEFINITIONS + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + ObjectPortletKeys.LIST_TYPE_DEFINITIONS + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

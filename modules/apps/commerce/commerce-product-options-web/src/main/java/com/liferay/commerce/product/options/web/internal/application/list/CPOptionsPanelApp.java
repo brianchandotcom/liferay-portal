@@ -37,17 +37,16 @@ import org.osgi.service.component.annotations.Reference;
 public class CPOptionsPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return CPPortletKeys.CP_OPTIONS;
 	}
 
-	@Override
-	@Reference(
-		target = "(javax.portlet.name=" + CPPortletKeys.CP_OPTIONS + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	@Reference(target = "(javax.portlet.name=" + CPPortletKeys.CP_OPTIONS + ")")
+	private Portlet _portlet;
 
 }

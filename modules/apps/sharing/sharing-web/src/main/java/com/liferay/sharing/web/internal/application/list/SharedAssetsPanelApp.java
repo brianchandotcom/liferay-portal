@@ -43,6 +43,11 @@ import org.osgi.service.component.annotations.Reference;
 public class SharedAssetsPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return SharingPortletKeys.SHARED_ASSETS;
 	}
@@ -61,14 +66,10 @@ public class SharedAssetsPanelApp extends BasePanelApp {
 		return super.isShow(permissionChecker, group);
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + SharingPortletKeys.SHARED_ASSETS + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + SharingPortletKeys.SHARED_ASSETS + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 	@Reference
 	private SharingConfigurationFactory _sharingConfigurationFactory;

@@ -37,17 +37,18 @@ import org.osgi.service.component.annotations.Reference;
 public class SocialActivityPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return SocialActivityPortletKeys.SOCIAL_ACTIVITY;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + SocialActivityPortletKeys.SOCIAL_ACTIVITY + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + SocialActivityPortletKeys.SOCIAL_ACTIVITY + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

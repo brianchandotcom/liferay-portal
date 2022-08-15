@@ -37,17 +37,18 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceCountryPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return CommercePortletKeys.COMMERCE_COUNTRY;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CommercePortletKeys.COMMERCE_COUNTRY + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + CommercePortletKeys.COMMERCE_COUNTRY + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

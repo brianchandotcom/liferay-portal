@@ -37,17 +37,18 @@ import org.osgi.service.component.annotations.Reference;
 public class SamlAdminPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return SamlPortletKeys.SAML_ADMIN;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + SamlPortletKeys.SAML_ADMIN + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + SamlPortletKeys.SAML_ADMIN + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

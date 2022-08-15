@@ -36,17 +36,18 @@ import org.osgi.service.component.annotations.Reference;
 public class MyWorkflowTaskPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.MY_WORKFLOW_TASK;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + PortletKeys.MY_WORKFLOW_TASK + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + PortletKeys.MY_WORKFLOW_TASK + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

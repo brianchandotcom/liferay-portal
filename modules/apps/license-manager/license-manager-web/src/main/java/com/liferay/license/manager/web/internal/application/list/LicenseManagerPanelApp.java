@@ -37,17 +37,18 @@ import org.osgi.service.component.annotations.Reference;
 public class LicenseManagerPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return LicenseManagerPortletKeys.LICENSE_MANAGER;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + LicenseManagerPortletKeys.LICENSE_MANAGER + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + LicenseManagerPortletKeys.LICENSE_MANAGER + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

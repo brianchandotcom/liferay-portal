@@ -40,6 +40,11 @@ import org.osgi.service.component.annotations.Reference;
 public class StyleBookPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return StyleBookPortletKeys.STYLE_BOOK;
 	}
@@ -55,13 +60,9 @@ public class StyleBookPanelApp extends BasePanelApp {
 		return super.isShow(permissionChecker, group);
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + StyleBookPortletKeys.STYLE_BOOK + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + StyleBookPortletKeys.STYLE_BOOK + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

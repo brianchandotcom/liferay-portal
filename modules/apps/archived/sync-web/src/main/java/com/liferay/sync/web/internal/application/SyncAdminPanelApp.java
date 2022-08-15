@@ -37,17 +37,18 @@ import org.osgi.service.component.annotations.Reference;
 public class SyncAdminPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return SyncPortletKeys.SYNC_ADMIN_PORTLET;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + SyncPortletKeys.SYNC_ADMIN_PORTLET + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + SyncPortletKeys.SYNC_ADMIN_PORTLET + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

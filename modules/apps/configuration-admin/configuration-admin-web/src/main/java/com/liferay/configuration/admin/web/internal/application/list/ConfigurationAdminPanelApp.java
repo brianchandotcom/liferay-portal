@@ -37,17 +37,18 @@ import org.osgi.service.component.annotations.Reference;
 public class ConfigurationAdminPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return ConfigurationAdminPortletKeys.SYSTEM_SETTINGS;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

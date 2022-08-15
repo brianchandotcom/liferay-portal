@@ -46,6 +46,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DepotAdminPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return DepotPortletKeys.DEPOT_ADMIN;
 	}
@@ -55,15 +60,6 @@ public class DepotAdminPanelApp extends BasePanelApp {
 		return _portal.getControlPanelPortletURL(
 			httpServletRequest, getGroup(httpServletRequest), getPortletId(), 0,
 			0, PortletRequest.RENDER_PHASE);
-	}
-
-	@Override
-	@Reference(
-		target = "(javax.portlet.name=" + DepotPortletKeys.DEPOT_ADMIN + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
 	}
 
 	@Override
@@ -77,5 +73,10 @@ public class DepotAdminPanelApp extends BasePanelApp {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(javax.portlet.name=" + DepotPortletKeys.DEPOT_ADMIN + ")"
+	)
+	private Portlet _portlet;
 
 }

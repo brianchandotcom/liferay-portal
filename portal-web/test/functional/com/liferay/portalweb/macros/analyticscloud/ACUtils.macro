@@ -1131,6 +1131,28 @@ definition {
 
 			Pause(locator1 = "5000");
 		}
+	macro convertDateToMilliseconds {
+
+			Type(
+				locator1 = "ACUtils#INPUT_DATE",
+		}
+		if (isSet(month)) {
+				key_inputField = "rightMonth",
+				locator1 = "ACUtils#INPUT_DATE",
+				value1 = "${month}");
 	}
 
+		if (isSet(year)) {
+			Type(
+				key_inputField = "rightYear",
+				locator1 = "ACUtils#INPUT_DATE",
+				value1 = "${year}");
 }
+
+		var key_inputField = "rightMillis";
+
+		var millisecondsValue = selenium.getElementValue("ACUtils#INPUT_DATE");
+
+		return "${millisecondsValue}";
+	}
+

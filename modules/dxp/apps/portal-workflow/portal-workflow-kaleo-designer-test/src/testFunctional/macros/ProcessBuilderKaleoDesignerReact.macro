@@ -750,6 +750,12 @@ definition {
 		}
 	}
 
+	macro viewCurrentVersionAtRevisionHistoryTab {
+		AssertVisible(
+			key_number = "${number}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#CURRENT_VERSION_FIELD");
+	}
+	
 	macro viewAndFillTimers {
 		if (isSet(newTimer)) {
 			Click(

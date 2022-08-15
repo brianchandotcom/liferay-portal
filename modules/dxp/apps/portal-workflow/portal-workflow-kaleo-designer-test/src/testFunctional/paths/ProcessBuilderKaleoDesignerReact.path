@@ -372,6 +372,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CURRENT_VERSION_FIELD</td>
+	<td>//div[@class='info-group']//label[contains(text() ,'Current Version') and contains(.,'${key_number}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATIONS_TYPE_DROPDOWN_BY_POSITION</td>
 	<td>//div[contains(@class,'panel-group panel-group-flush') and contains(@role,'tablist')][${key_sectionOption}]//input[contains(@value,'Select')]
 </td>

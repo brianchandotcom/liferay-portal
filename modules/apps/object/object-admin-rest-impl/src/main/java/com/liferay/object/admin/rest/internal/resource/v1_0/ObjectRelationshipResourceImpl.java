@@ -18,6 +18,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectRelationshipEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.util.LocalizedMapUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -34,6 +36,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -108,6 +111,17 @@ public class ObjectRelationshipResourceImpl
 	public ObjectRelationship postObjectDefinitionObjectRelationship(
 			Long objectDefinitionId, ObjectRelationship objectRelationship)
 		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158478")) &&
+			Objects.equals(
+				objectRelationship.getTypeAsString(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
+			Objects.equals(
+				objectRelationship.getObjectDefinitionId1(),
+				objectRelationship.getObjectDefinitionId2())) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		return _toObjectRelationship(
 			_objectRelationshipService.addObjectRelationship(

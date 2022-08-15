@@ -96,8 +96,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TABLE_ELEMENT</td>
-	<td>//*[contains(@class, 'cp-activation-key-table')]/tbody/tr[${key_linePosition}]/td[${key_colunmPosition}]</td>
+	<td>TABLE_ELEMENT_BY_POSITION</td>
+	<td>//*[contains(@class, 'cp-activation-key-table')]/tbody/tr[${key_linePosition}]/td[${key_colunmPosition}]//*[contains(@class, 'font-weight') and text()='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ELEMENT_BY_TEXT</td>
+	<td>//*[contains(@class, 'cp-activation-key-table')]//*[contains(@class, 'font-weight') and text()='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>

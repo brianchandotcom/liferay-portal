@@ -92,7 +92,6 @@ definition {
 	@description = "This is a test for LPS-157806. Add custom text on Button Text field of File Upload fragment on content page."
 	@priority = "4"
 	test AddCustomTextOnButtonTextFieldOnContentPage {
-		property custom.properties = "feature.flag.LPS-150277=true";
 		property test.name.skip.portal.instance = "FileUpload#AddCustomTextOnButtonTextFieldOnContentPage";
 
 		task ("Given a content page has a File Upload fragment mapped to Attachment field with Show Files in Documents and Media") {
@@ -178,7 +177,6 @@ definition {
 	@description = "This is a test for LPS-157806. Add custom text on Button Text field of File Upload fragment on display page template."
 	@priority = "4"
 	test AddCustomTextOnButtonTextFieldOnDisplayPage {
-		property custom.properties = "feature.flag.LPS-150277=true";
 		property test.name.skip.portal.instance = "FileUpload#AddCustomTextOnButtonTextFieldOnDisplayPage";
 
 		task ("Given a display page has a File Upload fragment mapped to Attachment field with Show Files in Documents and Media") {

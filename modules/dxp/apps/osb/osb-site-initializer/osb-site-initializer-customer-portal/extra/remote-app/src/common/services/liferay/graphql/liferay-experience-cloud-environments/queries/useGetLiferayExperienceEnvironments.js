@@ -13,7 +13,6 @@ import {gql, useQuery} from '@apollo/client';
 
 export const GET_LIFERAY_EXPERIENCE_CLOUD_ENVIRONMENTS = gql`
 	query getLiferayExperienceCloudEnvironments(
-		$scopeKey: String
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
@@ -23,7 +22,6 @@ export const GET_LIFERAY_EXPERIENCE_CLOUD_ENVIRONMENTS = gql`
 				filter: $filter
 				page: $page
 				pageSize: $pageSize
-				scopeKey: $scopeKey
 			) {
 				items {
 					liferayExperienceCloudEnvironmentId
@@ -35,7 +33,6 @@ export const GET_LIFERAY_EXPERIENCE_CLOUD_ENVIRONMENTS = gql`
 `;
 
 export function useGetLiferayExperienceCloudEnvironments(
-	scopeKey,
 	options = {
 		filter: '',
 		notifyOnNetworkStatusChange: false,
@@ -52,7 +49,6 @@ export function useGetLiferayExperienceCloudEnvironments(
 			filter: options.filter || '',
 			page: options.page || 1,
 			pageSize: options.pageSize || 20,
-			scopeKey,
 		},
 	});
 }

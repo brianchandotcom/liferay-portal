@@ -20,8 +20,8 @@ export const createLiferayExperienceCloudEnvironments = gql`
 				LiferayExperienceCloudEnvironment: $LiferayExperienceCloudEnvironment
 			) {
 				accountKey
-				incidentManagementFullName
 				incidentManagementEmailAddress
+				incidentManagementFullName
 				liferayExperienceCloudEnvironmentId
 				primaryRegion
 				projectId

@@ -23,7 +23,7 @@ export default function useGetPrimaryRegionList() {
 	const items = data?.listTypeDefinitions?.items[0].listTypeEntries;
 
 	const primaryRegionList = useMemo(
-		() => items.map(({name}) => ({label: name, value: name})) || [],
+		() => items?.map(({name}) => ({label: name, value: name})) || [],
 		[items]
 	);
 

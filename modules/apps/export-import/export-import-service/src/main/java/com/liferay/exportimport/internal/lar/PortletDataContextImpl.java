@@ -1497,6 +1497,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public void importPortletPermissions(String resourceName)
 		throws PortalException {
 
+		if (getScopeGroupId() != getGroupId()) {
+			return;
+		}
+
 		importPermissions(resourceName, getSourceGroupId(), getScopeGroupId());
 	}
 

@@ -26,7 +26,7 @@ String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderRe
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle((country == null) ? LanguageUtil.get(request, "add-country") : LanguageUtil.format(request, "edit-x", country.getName(locale), false));
+renderResponse.setTitle((country == null) ? LanguageUtil.get(request, "add-country") : LanguageUtil.format(request, "edit-x", country.getTitle(locale), false));
 %>
 
 <liferay-frontend:screen-navigation

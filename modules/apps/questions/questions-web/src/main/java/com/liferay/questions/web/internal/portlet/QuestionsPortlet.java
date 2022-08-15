@@ -114,8 +114,40 @@ public class QuestionsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		HashMap<String, Object> flagsHashMap =
-			HashMapBuilder.<String, Object>put(
+		ItemSelectorCriterion itemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new FileEntryItemSelectorReturnType(),
+			new URLItemSelectorReturnType());
+
+		PortletURL portletURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			"EDITOR_NAME_selectItem", itemSelectorCriterion);
+
+		renderRequest.setAttribute(
+			QuestionsWebKeys.IMAGE_BROWSE_URL, portletURL.toString());
+
+		String lowestRank = Stream.of(
+			_portal.getPortalProperties()
+		).map(
+			properties -> properties.getProperty("message.boards.user.ranks")
+		).map(
+			s -> s.split(",")
+		).flatMap(
+			Arrays::stream
+		).min(
+			Comparator.comparing(rank -> rank.split("=")[1])
+		).map(
+			rank -> rank.split("=")[0]
+		).orElse(
+			"Youngling"
+		);
+
+		renderRequest.setAttribute(QuestionsWebKeys.DEFAULT_RANK, lowestRank);
+
+		renderRequest.setAttribute(
+			QuestionsWebKeys.FLAGS_PROPERTIES, HashMapBuilder.<String, Object>put(
 				"context",
 				HashMapBuilder.<String, Object>put(
 					"namespace", _portal.getPortletNamespace(PortletKeys.FLAGS)
@@ -153,42 +185,7 @@ public class QuestionsPortlet extends MVCPortlet {
 							themeDisplay.getRequest(), "p_l_mode",
 							Constants.VIEW))
 				).build()
-			).build();
-
-		ItemSelectorCriterion itemSelectorCriterion =
-			new ImageItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType(),
-			new URLItemSelectorReturnType());
-
-		PortletURL portletURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			"EDITOR_NAME_selectItem", itemSelectorCriterion);
-
-		renderRequest.setAttribute(
-			QuestionsWebKeys.IMAGE_BROWSE_URL, portletURL.toString());
-
-		String lowestRank = Stream.of(
-			_portal.getPortalProperties()
-		).map(
-			properties -> properties.getProperty("message.boards.user.ranks")
-		).map(
-			s -> s.split(",")
-		).flatMap(
-			Arrays::stream
-		).min(
-			Comparator.comparing(rank -> rank.split("=")[1])
-		).map(
-			rank -> rank.split("=")[0]
-		).orElse(
-			"Youngling"
-		);
-
-		renderRequest.setAttribute(QuestionsWebKeys.DEFAULT_RANK, lowestRank);
-
-		renderRequest.setAttribute(
-			QuestionsWebKeys.FLAGS_PROPERTIES, flagsHashMap);
+			).build());
 		renderRequest.setAttribute(
 			QuestionsWebKeys.TAG_SELECTOR_URL,
 			_getTagSelectorURL(renderRequest, renderResponse));

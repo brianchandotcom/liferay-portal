@@ -2059,4 +2059,32 @@ definition {
 		CalendarScheduler.viewAgenda(eventTitle = "${eventTitle}");
 	}
 
+	macro inputRateStar {
+        Click(locator1 = "CalendarEditEvent#RATING_STAR");
+
+        if (isSet(checkDeleteButton)) {
+            AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_DELETE_DISABLE");
+        }
+
+        Click.javaScriptClick(
+            key_ratingStarCount = "${ratingStarCount}",
+            locator1 = "Ratings#YOUR_RATING_STAR_COUNT");
+    }
+
+	macro viewCalendarRateStar {
+        AssertElementPresent(
+         key_ratingStarCount = "${ratingStarCount}",
+         locator1 = "CalendarEditEvent#RATING_STAR_RESULT_COUNT");
+
+        AssertTextEquals.assertPartialText(
+            locator1 = "Ratings#AVERAGE_STAR_RESULT",
+            value1 = "${averageRatingStarCount}");
+
+        MouseOver(locator1 = "CalendarEditEvent#RATING_STAR");
+
+        AssertElementPresent(
+            key_message = "${message}",
+            locator1 = "Ratings#RATED_TOOLTIP_MESSAGE");
+    }
+
 }

@@ -114,10 +114,11 @@ definition {
 
 		CalendarScheduler.gotoDetailsViaDialogBox();
 
-		Ratings.rateStar(ratingStarCount = "3");
+		CalendarEvent.inputRateStar(ratingStarCount = "3");
 
-		Ratings.viewRateStar(
+		CalendarEvent.viewCalendarRateStar(
 			averageRatingStarCount = "3.0",
+			message = "You have rated this 3 stars out of 5",
 			ratingStarCount = "3");
 
 		Ratings.revokeStarsRating();
@@ -176,20 +177,12 @@ definition {
 
 		CalendarScheduler.gotoDetailsViaDialogBox();
 
-		Ratings.rateStar(ratingStarCount = "3");
+		CalendarEvent.inputRateStar(ratingStarCount = "3");
 
-		Ratings.viewRateStar(
+		CalendarEvent.viewCalendarRateStar(
 			averageRatingStarCount = "3.0",
+			message = "You have rated this 3 stars out of 5",
 			ratingStarCount = "3");
-
-		MouseOver(
-			key_ratingStarCount = "3",
-			locator1 = "Ratings#YOUR_RATING_STAR_RESULT");
-
-		AssertElementPresent(
-			key_message = "You have rated this 3 stars out of 5.",
-			locator1 = "Ratings#RATED_TOOLTIP_MESSAGE",
-			value1 = "${key_message}");
 	}
 
 	@description = "LRQA-71888 - Verify that the user can view the fields Title, Starts, Ends, Rresources in event details page"

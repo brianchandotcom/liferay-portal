@@ -536,6 +536,19 @@
 	<td>//button[@type='button' and contains(.,'Cancel This Change')]</td>
 	<td></td>
 </tr>
+
+<!--RATE_STARS-->
+
+<tr>
+    <td>RATING_STAR_RESULT_COUNT</td>
+    <td>//div[contains(@class,'ratings-stars')]//button[contains(@value,'${key_ratingStarCount}')]</td>
+    <td></td>
+</tr>
+<tr>
+	<td>RATING_STAR</td>
+	<td>//div[contains(@class,'ratings-stars')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

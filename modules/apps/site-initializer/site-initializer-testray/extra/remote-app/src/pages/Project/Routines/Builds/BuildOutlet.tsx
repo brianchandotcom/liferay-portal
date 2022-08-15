@@ -31,14 +31,17 @@ import {
 } from '../../../../services/rest';
 import BuildAlertBar from './BuildAlertBar';
 import BuildOverview from './BuildOverview';
+import useBuildActions from './useBuildActions';
 
 type BuildOutletProps = {
 	ignorePaths: string[];
 };
 
 const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
-	const {pathname} = useLocation();
+	const {actions} = useBuildActions({isHeaderActions: true});
 	const {buildId, projectId, routineId} = useParams();
+	const {pathname} = useLocation();
+	const {setHeaderActions, setHeading, setTabs} = useHeader({timeout: 200});
 	const {testrayProject, testrayRoutine}: any = useOutletContext();
 
 	const {data: testrayBuild, mutate: mutateBuild} = useFetch(
@@ -63,65 +66,63 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}`;
 
-	const {setHeading, setTabs} = useHeader({shouldUpdate: false});
-
 	const buildName = testrayBuild?.name;
 
 	useEffect(() => {
+		setHeaderActions({actions, item: testrayBuild, mutate: mutateBuild});
+	}, [actions, mutateBuild, setHeaderActions, testrayBuild]);
+
+	useEffect(() => {
 		if (buildName) {
-			setTimeout(() => {
-				setHeading([
-					{
-						category: i18n.translate('project').toUpperCase(),
-						path: `/project/${testrayProject.id}/routines`,
-						title: testrayProject.name,
-					},
-					{
-						category: i18n.translate('routine').toUpperCase(),
-						path: `/project/${testrayProject.id}/routines/${testrayRoutine.id}`,
-						title: testrayRoutine.name,
-					},
-					{
-						category: i18n.translate('build').toUpperCase(),
-						path: basePath,
-						title: buildName,
-					},
-				]);
-			}, 0);
+			setHeading([
+				{
+					category: i18n.translate('project').toUpperCase(),
+					path: `/project/${testrayProject.id}/routines`,
+					title: testrayProject.name,
+				},
+				{
+					category: i18n.translate('routine').toUpperCase(),
+					path: `/project/${testrayProject.id}/routines/${testrayRoutine.id}`,
+					title: testrayRoutine.name,
+				},
+				{
+					category: i18n.translate('build').toUpperCase(),
+					path: basePath,
+					title: buildName,
+				},
+			]);
 		}
 	}, [basePath, setHeading, buildName, testrayProject, testrayRoutine]);
 
 	useEffect(() => {
 		if (!isCurrentPathIgnored) {
-			setTimeout(() => {
-				setTabs([
-					{
-						active: pathname === basePath,
-						path: basePath,
-						title: i18n.translate('results'),
-					},
-					{
-						active: pathname === `${basePath}/runs`,
-						path: `${basePath}/runs`,
-						title: i18n.translate('runs'),
-					},
-					{
-						active: pathname === `${basePath}/teams`,
-						path: `${basePath}/teams`,
-						title: i18n.translate('teams'),
-					},
-					{
-						active: pathname === `${basePath}/components`,
-						path: `${basePath}/components`,
-						title: i18n.translate('components'),
-					},
-					{
-						active: pathname === `${basePath}/case-types`,
-						path: `${basePath}/case-types`,
-						title: i18n.translate('case-types'),
-					},
-				]);
-			}, 5);
+			setTabs([
+				{
+					active: pathname === basePath,
+					path: basePath,
+					title: i18n.translate('results'),
+				},
+				{
+					active: pathname === `${basePath}/runs`,
+					path: `${basePath}/runs`,
+					title: i18n.translate('runs'),
+				},
+				{
+					active: pathname === `${basePath}/teams`,
+					path: `${basePath}/teams`,
+					title: i18n.translate('teams'),
+				},
+				{
+					active: pathname === `${basePath}/components`,
+					path: `${basePath}/components`,
+					title: i18n.translate('components'),
+				},
+				{
+					active: pathname === `${basePath}/case-types`,
+					path: `${basePath}/case-types`,
+					title: i18n.translate('case-types'),
+				},
+			]);
 		}
 	}, [basePath, isCurrentPathIgnored, pathname, setTabs]);
 

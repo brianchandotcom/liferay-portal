@@ -12,6 +12,7 @@
  * details.
  */
 
+import {useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import useFormModal from '../../../../hooks/useFormModal';
@@ -22,24 +23,30 @@ import {
 	deleteResource,
 	updateBuild,
 } from '../../../../services/rest';
-import {Action} from '../../../../types';
+import {Action, ActionsHookParameter} from '../../../../types';
 
-const useBuildActions = () => {
+const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const formModal = useFormModal();
 	const {removeItemFromList, updateItemFromList} = useMutate();
 	const navigate = useNavigate();
 
 	const modal = formModal.modal;
 
-	const actions: Action[] = [
+	const actionsRef = useRef([
 		{
 			action: () => alert('Archive'),
+			icon: 'archive',
 			name: i18n.translate('archive'),
 		},
 		{
 			action: (testrayBuild: TestrayBuild) =>
-				navigate(`build/${testrayBuild.id}/update`),
-			name: i18n.translate('edit'),
+				navigate(
+					isHeaderActions
+						? 'update'
+						: `build/${testrayBuild.id}/update`
+				),
+			icon: 'pencil',
+			name: i18n.translate(isHeaderActions ? 'edit-build' : 'edit'),
 			permission: 'UPDATE',
 		},
 		{
@@ -53,22 +60,25 @@ const useBuildActions = () => {
 						})
 					)
 					.then(modal.onSuccess),
-			name: i18n.translate('promote'),
+			icon: 'star',
+			name: ({promoted}) =>
+				i18n.translate(promoted ? 'demote' : 'promote'),
 			permission: 'UPDATE',
 		},
 		{
 			action: ({id}: TestrayBuild, mutate) =>
 				deleteResource(`/builds/${id}`)
-					.then(() => removeItemFromList(mutate, id))
+					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),
-			name: i18n.translate('delete'),
+			icon: 'trash',
+			name: i18n.translate(isHeaderActions ? 'delete-build' : 'delete'),
 			permission: 'DELETE',
 		},
-	];
+	] as Action[]);
 
 	return {
-		actions,
+		actions: actionsRef.current,
 		formModal,
 	};
 };

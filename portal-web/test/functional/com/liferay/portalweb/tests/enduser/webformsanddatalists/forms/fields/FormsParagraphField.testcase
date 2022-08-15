@@ -624,8 +624,6 @@ definition {
 	@description = "Verify that an Image can be uploaded to the Body Text"
 	@priority = "5"
 	test CanSupportImages {
-		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportImages";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -649,7 +647,15 @@ definition {
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		AssertElementPresent(
-			key_imageName = "Document_1",
+			key_imageName = "document_1",
+			locator1 = "AdaptiveMedia#IMAGE_VARIANT_SOURCE_URL");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		AssertElementPresent(
+			key_imageName = "document_1",
 			locator1 = "AdaptiveMedia#IMAGE_VARIANT_SOURCE_URL");
 	}
 

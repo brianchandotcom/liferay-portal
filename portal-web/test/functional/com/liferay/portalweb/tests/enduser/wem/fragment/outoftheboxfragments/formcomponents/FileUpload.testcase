@@ -175,6 +175,119 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-157806. Add custom text on Button Text field of File Upload fragment on display page template."
+	@priority = "4"
+	test AddCustomTextOnButtonTextFieldOnDisplayPage {
+		property custom.properties = "feature.flag.LPS-150277=true";
+		property test.name.skip.portal.instance = "FileUpload#AddCustomTextOnButtonTextFieldOnDisplayPage";
+
+		task ("Given a display page has a File Upload fragment mapped to Attachment field with Show Files in Documents and Media") {
+			task ("Add a web content based on Basic Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Add a display page template for Web Content Article and Basic Web Content") {
+				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+					contentType = "Web Content Article",
+					displayPageTemplateEntryName = "Display Page Name",
+					groupName = "Test Site Name",
+					subType = "Basic Web Content");
+			}
+
+			task ("Add a Form Container framgment to display page") {
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Add a File Upload fragment and Submit Button fragment into Form Container") {
+				PageEditor.editFormContainer(
+					contentType = "Upload Object",
+					panel = "General");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "File Upload");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "File Upload");
+			}
+
+			task ("Map the File Upload fragment to Attachment field and publish") {
+				PageEditor.editInput(
+					field = "From Computer And Show Files In DM",
+					fragmentName = "File Upload");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When adding a custom text on Button Text field") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Edit");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.editFragmentText(
+				className = "button",
+				fragmentName = "Submit Button",
+				id = "text",
+				text = "Custom Text");
+		}
+
+		task ("Then the custom text is shown") {
+			task ("View custom text is shown at edit mode") {
+				PageEditor.viewFragmentEditableText(
+					className = "button",
+					editableText = "Custom Text",
+					fragmentName = "Submit Button",
+					id = "submit-button-text");
+			}
+
+			task ("View custom text is shown at preview") {
+				PageEditor.openPreviewMode();
+
+				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+				ContentPages.viewFragmentText(
+					fragmentName = "button",
+					id = "submit-button-text",
+					text = "Custom Text");
+
+				IFrame.closeFrame();
+			}
+
+			task ("Publish the display page template and mark it as default") {
+				PageEditor.publish();
+
+				DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			}
+
+			task ("Navigate to the display page template at view mode") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/web-content-title");
+			}
+
+			task ("View custom text is shown at view mode") {
+				ContentPages.viewFragmentText(
+					fragmentName = "button",
+					id = "submit-button-text",
+					text = "Custom Text");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-155170. File Upload fragment could add file from computer."
 	@priority = "3"
 	test AddFileFromComputerDiectly {

@@ -1404,12 +1404,16 @@ public class BundleSiteInitializerTest {
 				groupId, "TEST-SEGMENTS-ENTRY-2", true);
 
 		Assert.assertNotNull(segmentsEntry2);
-		Assert.assertTrue(segmentsEntry2.isActive());
+		Assert.assertFalse(segmentsEntry2.isActive());
 		Assert.assertEquals(
 			"Test Segments Entry 2",
 			segmentsEntry2.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals(
 			"com.liferay.portal.kernel.model.User", segmentsEntry2.getType());
+
+		Assert.assertEquals(
+			2,
+			_segmentsEntryLocalService.getSegmentsEntriesCount(groupId, true));
 	}
 
 	private void _assertSiteConfiguration(Long groupId) {

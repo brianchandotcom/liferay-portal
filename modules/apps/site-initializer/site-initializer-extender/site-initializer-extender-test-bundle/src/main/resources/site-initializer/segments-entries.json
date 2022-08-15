@@ -8,7 +8,7 @@
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
-		"active": "true",
+		"active": "false",
 		"name_i18n": {
 			"en-US": "Test Segments Entry 2"
 		},

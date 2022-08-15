@@ -43,14 +43,16 @@ const LiferayExperienceCloud = () => {
 
 	return (
 		<div>
-			<ActivationStatus.LiferayExperienceCloud
-				lxcEnvironment={lxcEnvironment}
-				project={project}
-				subscriptionGroupLxcEnvironment={
-					subscriptionGroupLxcEnvironment
-				}
-				userAccount={userAccount}
-			/>
+			{Liferay.FeatureFlags['LPS-153478'] && (
+				<ActivationStatus.LiferayExperienceCloud
+					lxcEnvironment={lxcEnvironment}
+					project={project}
+					subscriptionGroupLxcEnvironment={
+						subscriptionGroupLxcEnvironment
+					}
+					userAccount={userAccount}
+				/>
+			)}
 		</div>
 	);
 };

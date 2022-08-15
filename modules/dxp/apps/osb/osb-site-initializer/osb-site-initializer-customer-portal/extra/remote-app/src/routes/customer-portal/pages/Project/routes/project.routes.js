@@ -36,20 +36,22 @@ const ProjectRoutes = () => (
 			<Route element={<Layout />} path="/:accountKey">
 				<Route element={<Overview />} index />
 
-				<Route
-					element={
-						<ProductOutlet
-							product={PRODUCT_TYPES.liferayExperienceCloud}
-						/>
-					}
-				>
+				{Liferay.FeatureFlags['LPS-153478'] && (
 					<Route
-						element={<LiferayExperienceCloud />}
-						path={getKebabCase(
-							PRODUCT_TYPES.liferayExperienceCloud
-						)}
-					/>
-				</Route>
+						element={
+							<ProductOutlet
+								product={PRODUCT_TYPES.liferayExperienceCloud}
+							/>
+						}
+					>
+						<Route
+							element={<LiferayExperienceCloud />}
+							path={getKebabCase(
+								PRODUCT_TYPES.liferayExperienceCloud
+							)}
+						/>
+					</Route>
+				)}
 
 				<Route element={<ActivationOutlet />} path="activation">
 					<Route

@@ -95,6 +95,7 @@ const Applications = () => {
 	);
 
 	useEffect(() => {
+		localStorage.removeItem('raylife-ap-storage');
 		const handler = () => setVisible(!visible);
 		setContentModal(ModalType.insurance);
 

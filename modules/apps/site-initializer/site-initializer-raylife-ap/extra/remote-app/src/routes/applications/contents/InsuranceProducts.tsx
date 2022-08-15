@@ -55,6 +55,15 @@ const InsuranceProducts: React.FC<InsuranceProductsProps> = ({
 	};
 
 	useEffect(() => {
+		const newApplicationStorage: NewApplicationStorageTypes = {
+			productName: cardPersonalSelected,
+		};
+
+		localStorage.setItem(
+			'raylife-ap-storage',
+			JSON.stringify(newApplicationStorage)
+		);
+
 		getChannelId(selectedCard[0].channelName).then((response) => {
 			getProducts(response.data.items[0].id, selectedCard[0].id);
 		});

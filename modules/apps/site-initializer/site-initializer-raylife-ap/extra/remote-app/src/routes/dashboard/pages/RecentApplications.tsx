@@ -117,6 +117,7 @@ const RecentApplications = () => {
 	};
 
 	useEffect(() => {
+		localStorage.removeItem('raylife-ap-storage');
 		getApplications(PARAMETERS).then((results) => {
 			const applicationsList: TableContent[] = [];
 			results?.data?.items.forEach(

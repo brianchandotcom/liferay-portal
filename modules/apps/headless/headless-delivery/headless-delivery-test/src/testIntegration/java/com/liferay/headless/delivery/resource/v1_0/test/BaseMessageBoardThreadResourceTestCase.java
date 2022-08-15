@@ -2249,6 +2249,16 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"messageBoardRootMessageId", additionalAssertFieldName)) {
+
+				if (messageBoardThread.getMessageBoardRootMessageId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"messageBoardSectionId", additionalAssertFieldName)) {
 
 				if (messageBoardThread.getMessageBoardSectionId() == null) {
@@ -2286,14 +2296,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
 				if (messageBoardThread.getRelatedContents() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("rootMessageId", additionalAssertFieldName)) {
-				if (messageBoardThread.getRootMessageId() == null) {
 					valid = false;
 				}
 
@@ -2718,6 +2720,19 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"messageBoardRootMessageId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						messageBoardThread1.getMessageBoardRootMessageId(),
+						messageBoardThread2.getMessageBoardRootMessageId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"messageBoardSectionId", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
@@ -2765,17 +2780,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardThread1.getRelatedContents(),
 						messageBoardThread2.getRelatedContents())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("rootMessageId", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardThread1.getRootMessageId(),
-						messageBoardThread2.getRootMessageId())) {
 
 					return false;
 				}
@@ -3223,6 +3227,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("messageBoardRootMessageId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("messageBoardSectionId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3245,11 +3254,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		if (entityFieldName.equals("relatedContents")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("rootMessageId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -3367,10 +3371,10 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				locked = RandomTestUtil.randomBoolean();
+				messageBoardRootMessageId = RandomTestUtil.randomLong();
 				messageBoardSectionId = RandomTestUtil.randomLong();
 				numberOfMessageBoardAttachments = RandomTestUtil.randomInt();
 				numberOfMessageBoardMessages = RandomTestUtil.randomInt();
-				rootMessageId = RandomTestUtil.randomLong();
 				seen = RandomTestUtil.randomBoolean();
 				showAsQuestion = RandomTestUtil.randomBoolean();
 				siteId = testGroup.getGroupId();

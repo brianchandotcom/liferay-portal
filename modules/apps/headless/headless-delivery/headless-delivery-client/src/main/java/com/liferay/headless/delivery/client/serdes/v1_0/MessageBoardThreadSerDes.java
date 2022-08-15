@@ -271,6 +271,16 @@ public class MessageBoardThreadSerDes {
 			sb.append(messageBoardThread.getLocked());
 		}
 
+		if (messageBoardThread.getMessageBoardRootMessageId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"messageBoardRootMessageId\": ");
+
+			sb.append(messageBoardThread.getMessageBoardRootMessageId());
+		}
+
 		if (messageBoardThread.getMessageBoardSectionId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -322,16 +332,6 @@ public class MessageBoardThreadSerDes {
 			}
 
 			sb.append("]");
-		}
-
-		if (messageBoardThread.getRootMessageId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"rootMessageId\": ");
-
-			sb.append(messageBoardThread.getRootMessageId());
 		}
 
 		if (messageBoardThread.getSeen() != null) {
@@ -628,6 +628,16 @@ public class MessageBoardThreadSerDes {
 			map.put("locked", String.valueOf(messageBoardThread.getLocked()));
 		}
 
+		if (messageBoardThread.getMessageBoardRootMessageId() == null) {
+			map.put("messageBoardRootMessageId", null);
+		}
+		else {
+			map.put(
+				"messageBoardRootMessageId",
+				String.valueOf(
+					messageBoardThread.getMessageBoardRootMessageId()));
+		}
+
 		if (messageBoardThread.getMessageBoardSectionId() == null) {
 			map.put("messageBoardSectionId", null);
 		}
@@ -664,15 +674,6 @@ public class MessageBoardThreadSerDes {
 			map.put(
 				"relatedContents",
 				String.valueOf(messageBoardThread.getRelatedContents()));
-		}
-
-		if (messageBoardThread.getRootMessageId() == null) {
-			map.put("rootMessageId", null);
-		}
-		else {
-			map.put(
-				"rootMessageId",
-				String.valueOf(messageBoardThread.getRootMessageId()));
 		}
 
 		if (messageBoardThread.getSeen() == null) {
@@ -878,6 +879,14 @@ public class MessageBoardThreadSerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "messageBoardRootMessageId")) {
+
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setMessageBoardRootMessageId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "messageBoardSectionId")) {
 
 				if (jsonParserFieldValue != null) {
@@ -912,12 +921,6 @@ public class MessageBoardThreadSerDes {
 						).toArray(
 							size -> new RelatedContent[size]
 						));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "rootMessageId")) {
-				if (jsonParserFieldValue != null) {
-					messageBoardThread.setRootMessageId(
-						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "seen")) {

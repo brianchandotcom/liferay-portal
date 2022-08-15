@@ -539,6 +539,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getLocked());
 		}
 
+		if (messageBoardThread.getMessageBoardRootMessageId() != null) {
+			existingMessageBoardThread.setMessageBoardRootMessageId(
+				messageBoardThread.getMessageBoardRootMessageId());
+		}
+
 		if (messageBoardThread.getMessageBoardSectionId() != null) {
 			existingMessageBoardThread.setMessageBoardSectionId(
 				messageBoardThread.getMessageBoardSectionId());
@@ -552,11 +557,6 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		if (messageBoardThread.getNumberOfMessageBoardMessages() != null) {
 			existingMessageBoardThread.setNumberOfMessageBoardMessages(
 				messageBoardThread.getNumberOfMessageBoardMessages());
-		}
-
-		if (messageBoardThread.getRootMessageId() != null) {
-			existingMessageBoardThread.setRootMessageId(
-				messageBoardThread.getRootMessageId());
 		}
 
 		if (messageBoardThread.getSeen() != null) {

@@ -352,6 +352,29 @@ public class MessageBoardThread implements Cloneable, Serializable {
 
 	protected Boolean locked;
 
+	public Long getMessageBoardRootMessageId() {
+		return messageBoardRootMessageId;
+	}
+
+	public void setMessageBoardRootMessageId(Long messageBoardRootMessageId) {
+		this.messageBoardRootMessageId = messageBoardRootMessageId;
+	}
+
+	public void setMessageBoardRootMessageId(
+		UnsafeSupplier<Long, Exception>
+			messageBoardRootMessageIdUnsafeSupplier) {
+
+		try {
+			messageBoardRootMessageId =
+				messageBoardRootMessageIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long messageBoardRootMessageId;
+
 	public Long getMessageBoardSectionId() {
 		return messageBoardSectionId;
 	}
@@ -444,27 +467,6 @@ public class MessageBoardThread implements Cloneable, Serializable {
 	}
 
 	protected RelatedContent[] relatedContents;
-
-	public Long getRootMessageId() {
-		return rootMessageId;
-	}
-
-	public void setRootMessageId(Long rootMessageId) {
-		this.rootMessageId = rootMessageId;
-	}
-
-	public void setRootMessageId(
-		UnsafeSupplier<Long, Exception> rootMessageIdUnsafeSupplier) {
-
-		try {
-			rootMessageId = rootMessageIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long rootMessageId;
 
 	public Boolean getSeen() {
 		return seen;

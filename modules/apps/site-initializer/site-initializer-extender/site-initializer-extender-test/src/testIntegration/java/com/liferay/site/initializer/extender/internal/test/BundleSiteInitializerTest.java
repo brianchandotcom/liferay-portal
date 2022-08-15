@@ -1138,7 +1138,7 @@ public class BundleSiteInitializerTest {
 		Organization organization2 = organizationsPage2.fetchFirstItem();
 
 		Assert.assertNotNull(organization2);
-		Assert.assertTrue(organization2.getNumberOfOrganizations() == 1);
+		Assert.assertEquals(1,organizationsPage2.getTotalCount());
 
 		_assertUserOrganizations(organization2.getId(), 1, userAccountResource);
 
@@ -1207,7 +1207,7 @@ public class BundleSiteInitializerTest {
 		int publicLayoutsCount = _layoutLocalService.getLayoutsCount(
 			group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		Assert.assertTrue(publicLayoutsCount == 4);
+		Assert.assertEquals(4, publicLayoutsCount);
 
 		Layout publicLayout = _layoutLocalService.getLayoutByFriendlyURL(
 			group.getGroupId(), false, "/test-public-layout");
@@ -1387,6 +1387,10 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertSegmentsEntries(Long groupId) {
+		Assert.assertEquals(
+			2,
+			_segmentsEntryLocalService.getSegmentsEntriesCount(groupId, true));
+
 		SegmentsEntry segmentsEntry1 =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
 				groupId, "TEST-SEGMENTS-ENTRY-1", true);
@@ -1410,10 +1414,6 @@ public class BundleSiteInitializerTest {
 			segmentsEntry2.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals(
 			"com.liferay.portal.kernel.model.User", segmentsEntry2.getType());
-
-		Assert.assertEquals(
-			2,
-			_segmentsEntryLocalService.getSegmentsEntriesCount(groupId, true));
 	}
 
 	private void _assertSiteConfiguration(Long groupId) {

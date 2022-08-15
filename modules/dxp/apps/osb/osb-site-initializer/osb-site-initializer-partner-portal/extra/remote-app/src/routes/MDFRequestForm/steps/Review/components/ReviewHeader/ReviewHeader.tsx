@@ -15,7 +15,7 @@ interface IProps {
 	title?: string;
 }
 
-const ReviewBod = ({description, name, title}: IProps) => (
+const ReviewHeader = ({description, name, title}: IProps) => (
 	<div className="border border-light mt-4 pt-3 px-6 rounded">
 		<div>
 			<div className="font-weight-bold mb-1 text-primary">
@@ -31,4 +31,4 @@ const ReviewBod = ({description, name, title}: IProps) => (
 	</div>
 );
 
-export default ReviewBod;
+export default ReviewHeader;

@@ -20,10 +20,10 @@ import ActivityPanel from '../../components/ActivityPanel';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import BudgetResumeCard from '../Activities/Form/components/BudgetBreakdownSection/components/BudgetResumeCard';
-import ReviewBody from './components/ReviewBody';
-import ActivitiesEntries from './components/ReviewBody/components/ActivitiesEntries';
-import GoalsEntries from './components/ReviewBody/components/GoalsEntries';
-import ReviewHeader from './components/ReviewHeader';
+import Body from './components/Body';
+import ActivitiesEntries from './components/Body/components/ActivitiesEntries';
+import GoalsEntries from './components/Body/components/GoalsEntries';
+import Header from './components/Header';
 
 const Review = ({
 	onCancel,
@@ -50,17 +50,13 @@ const Review = ({
 
 	return (
 		<div className="d-flex flex-column">
-			<ReviewHeader
-				description="Please ensure that all the information below is accurate before submitting your request."
-				name="Review"
-				title="Review Campaign MDF Request"
-			/>
+			<Header />
 
-			<ReviewBody name="Goals" title="Campaign Information">
+			<Body name="Goals" title="Campaign Information">
 				<GoalsEntries values={values} />
-			</ReviewBody>
+			</Body>
 
-			<ReviewBody name="Activities" title="Insurance Industry Lead Gen">
+			<Body name="Activities" title="Insurance Industry Lead Gen">
 				<div className="border mb-3"></div>
 
 				{values?.activities.map(
@@ -75,9 +71,9 @@ const Review = ({
 						</ActivityPanel>
 					)
 				)}
-			</ReviewBody>
+			</Body>
 
-			<ReviewBody>
+			<Body>
 				<div>
 					<div className="my-3">
 						<BudgetResumeCard
@@ -142,7 +138,7 @@ const Review = ({
 						</div>
 					</div>
 				</div>
-			</ReviewBody>
+			</Body>
 		</div>
 	);
 };

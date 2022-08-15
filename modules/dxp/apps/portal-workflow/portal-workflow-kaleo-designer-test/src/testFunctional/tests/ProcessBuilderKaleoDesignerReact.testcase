@@ -1482,7 +1482,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.gotoTimer(
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
 			propertyName = "Timer",
 			propertyValue = "Duration: 1 minute");
 
@@ -1494,7 +1494,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.gotoTimer(
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
 			propertyName = "Timer",
 			propertyValue = "Duration: 1 minute");
 
@@ -1524,7 +1524,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.gotoTimer(
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
 			propertyName = "Timer",
 			propertyValue = "Duration: 1 minute");
 
@@ -1534,7 +1534,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.gotoTimer(
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
 			propertyName = "Timer",
 			propertyValue = "Duration: 1 minute");
 
@@ -1545,7 +1545,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.gotoTimer(
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
 			propertyName = "Timer",
 			propertyValue = "Duration: 2 minute");
 
@@ -1577,7 +1577,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.gotoTimer(
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
 			propertyName = "Timer",
 			propertyValue = "Duration: 1 minute");
 
@@ -1589,7 +1589,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.gotoTimer(
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
 			propertyName = "Timer",
 			propertyValue = "Duration: 1 minute");
 
@@ -1620,7 +1620,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.gotoTimer(
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
 			propertyName = "Timer",
 			propertyValue = "Recurrence: 1 hour");
 
@@ -3661,9 +3661,21 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test SingleApproverComesWithAccountMemberAndAdmRoleName {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#SingleApproverComesWithAccountMemberAndAdmRoleName";
 
-		// TODO SingleApproverComesWithAccountMemberAndAdmRoleName pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "review");
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Assignments",
+			propertyValue = "Role Type:Account Administrator");
+
+		ProcessBuilderKaleoDesignerReact.viewRoleNamePresentInSidebar(roleName = "Account Member");
+
+		ProcessBuilderKaleoDesignerReact.viewRoleNamePresentInSidebar(roleName = "Account Administrator");
 	}
 
 	@description = "Verify that the Single Approver Workflow comes with the Account role assigned"

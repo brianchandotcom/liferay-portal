@@ -294,7 +294,7 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_VALUE_NODE_SIDEBAR");
 	}
 
-	macro gotoTimer {
+	macro gotoSideBarProperty {
 		Click(
 			key_propertyName = "${propertyName}",
 			key_propertyValue = "${propertyValue}",
@@ -750,12 +750,6 @@ definition {
 		}
 	}
 
-	macro viewCurrentVersionAtRevisionHistoryTab {
-		AssertVisible(
-			key_number = "${number}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#CURRENT_VERSION_FIELD");
-	}
-
 	macro viewAndFillTimers {
 		if (isSet(newTimer)) {
 			Click(
@@ -978,6 +972,12 @@ definition {
 			value1 = "${connectorLabel}");
 	}
 
+	macro viewCurrentVersionAtRevisionHistoryTab {
+		AssertVisible(
+			key_number = "${number}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#CURRENT_VERSION_FIELD");
+	}
+
 	macro viewDefaultToggleStatus {
 		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "${connectorLabel}");
 
@@ -1136,12 +1136,6 @@ definition {
 		AssertElementNotPresent(
 			key_language = "${languageOption}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#LANGUAGE_OPTION");
-	}
-
-	macro viewRevisionHistoryVersion {
-		AssertVisible(
-			key_number = "${number}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#REVISION_HISTORY_VERSION");
 	}
 
 	macro viewLanguageOptionPresent {
@@ -1449,6 +1443,18 @@ definition {
 		AssertVisible(
 			key_fieldOption = "Current Version",
 			locator1 = "ProcessBuilderKaleoDesignerReact#DETAILS_FIELDS");
+	}
+
+	macro viewRevisionHistoryVersion {
+		AssertVisible(
+			key_number = "${number}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#REVISION_HISTORY_VERSION");
+	}
+
+	macro viewRoleNamePresentInSidebar {
+		AssertVisible(
+			key_roleName = "${roleName}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_NAME_FIELD");
 	}
 
 	macro viewSaveButtonPresent {

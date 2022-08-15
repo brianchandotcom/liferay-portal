@@ -243,7 +243,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_PROPERTY</td>
-	<td>//span[contains(., '${key_propertyName}')]/../..//div[@class='panel-body']/..//span[contains(.,'${key_propertyValue}')]</td>
+	<td>//span[contains(., '${key_propertyName}')]/../..//div[@class='panel-body']/..//span[contains(.,'${key_propertyValue}')] | //span[contains(., '${key_propertyName}')]/../..//div[@class='panel-body']//*[contains(@class,'d-flex') and contains(., '${key_propertyValue}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -364,6 +364,11 @@
 <tr>
 	<td>SIDEBAR_FIELD_LABEL</td>
 	<td>//div[@class='sidebar']//span[contains(text(),'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_NAME_FIELD</td>
+	<td>//input[contains(@id,'role-name')]/..//input[@type='text' and @value ='${key_roleName}']</td>
 	<td></td>
 </tr>
 <tr>

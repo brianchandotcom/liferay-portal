@@ -26,7 +26,7 @@ const LiferayExperienceCloud = () => {
 	}, [setHasSideMenu, setHasQuickLinksPanel]);
 
 	const {data} = useGetLiferayExperienceCloudEnvironments({
-		filter: `accountKey eq '${project?.accountKey}'`,
+		filter: `accountKey eq '${project?.accountKey}' and hasActivation eq true`,
 	});
 
 	const lxcEnvironment =

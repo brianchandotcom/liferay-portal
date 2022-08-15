@@ -36,7 +36,7 @@ export default function useSubmitLxcEnvironment(
 	);
 
 	const {data} = useGetLiferayExperienceCloudEnvironments({
-		filter: `accountKey eq '${project?.accountKey}'`,
+		filter: `accountKey eq '${project?.accountKey}' and hasActivation eq true`,
 	});
 
 	const handleSubmitLxcEnvironment = async () => {

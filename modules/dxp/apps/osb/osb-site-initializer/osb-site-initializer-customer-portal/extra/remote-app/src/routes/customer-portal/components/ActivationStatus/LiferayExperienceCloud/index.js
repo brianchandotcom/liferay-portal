@@ -38,7 +38,7 @@ const ActivationStatusLiferayExperienceCloud = ({
 	);
 
 	const {data: dataSubscriptionGroups} = useGetAccountSubscriptionGroups({
-		filter: `accountKey eq '${project.accountKey}'`,
+		filter: `accountKey eq '${project.accountKey}' and hasActivation eq true`,
 	});
 
 	const {handleSubmitLxcEnvironment, observer} = useOnCloseSetupModal(

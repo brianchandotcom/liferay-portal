@@ -347,10 +347,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		Path parentFilePath = parentFile.toPath();
 
-		if (parentFilePath.equals(modulesBaseDirPath)) {
-			return concatedPQL;
-		}
-
 		if (!canonicalFile.isDirectory()) {
 			return _concatPQL(parentFile, concatedPQL);
 		}

@@ -2921,7 +2921,7 @@ components:
                     type: boolean
                 messageBoardRootMessageId:
                     description:
-                        The ID of the Thread's body.
+                        The ID of the Thread's message.
                     format: int64
                     readOnly: true
                     type: integer

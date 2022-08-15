@@ -21,36 +21,13 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragmentLink": {
-								"href": {
-									"mapping": {
-										"itemReference": {
-											"className": "com.liferay.portal.kernel.model.Layout",
-											"fields": [
-												{
-													"fieldName": "friendlyURL",
-													"fieldValue": "/search"
-												},
-												{
-													"fieldName": "privatePage",
-													"fieldValue": "false"
-												},
-												{
-													"fieldName": "siteKey",
-													"fieldValue": "[$GROUP_KEY$]"
-												}
-											]
-										}
-									}
-								}
-							},
 							"fragmentStyle": {
 								"backgroundFragmentImage": {
 									"title": {
 										"value": "banner_background_partner_portal.svg"
 									},
 									"url": {
-										"value": "[$DOCUMENT_URL:/site-initializer/documents/group/banner_background_partner_portal.svg$]"
+										"value": "/documents/d/prm-test11/banner_background_partner_portal-svg"
 									}
 								},
 								"borderWidth": "0",
@@ -101,12 +78,15 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"marginLeft": "10",
-										"marginRight": "10",
-										"paddingBottom": "6"
+										"borderRadius": "borderRadiusCircle",
+										"paddingBottom": "7",
+										"paddingLeft": "10",
+										"paddingRight": "10"
 									},
 									"widgetInstance": {
-										"widgetConfig": {},
+										"widgetConfig": {
+											"searchScope": "this-site"
+										},
 										"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
 									}
 								},

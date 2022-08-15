@@ -215,13 +215,15 @@ export default function UpperToolbar({
 				version,
 			}).then((response) => {
 				if (response.ok) {
-					setAlert(alertMessage, 'success', true);
-
 					response.json().then(({name, version}) => {
 						setDefinitionId(name);
 						setVersion(parseInt(version, 10));
 						if (version === '1') {
+							localStorage.setItem('firstPublished', true);
 							redirectToSavedDefinition(name, version);
+						}
+						else {
+							setAlert(alertMessage, 'success', true);
 						}
 					});
 				}
@@ -261,13 +263,15 @@ export default function UpperToolbar({
 				version,
 			}).then((response) => {
 				if (response.ok) {
-					setAlert(successMessage, 'success', true);
-
 					response.json().then(({name, version}) => {
 						setDefinitionId(name);
 						setVersion(parseInt(version, 10));
 						if (version === '1') {
+							localStorage.setItem('firstSaved', true);
 							redirectToSavedDefinition(name, version);
+						}
+						else {
+							setAlert(successMessage, 'success', true);
 						}
 					});
 				}
@@ -286,6 +290,22 @@ export default function UpperToolbar({
 			setDefinitionTitle(translations[selectedLanguageId]);
 		}
 	}, [selectedLanguageId, setDefinitionTitle, setTranslations, translations]);
+
+	useEffect(() => {
+		if (localStorage.getItem('firstSaved')) {
+			setAlert(Liferay.Language.get('workflow-saved'), 'success', true);
+			localStorage.removeItem('firstSaved');
+		}
+		else if (localStorage.getItem('firstPublished')) {
+			setAlert(
+				Liferay.Language.get('workflow-published-successfully'),
+				'success',
+				true
+			);
+			localStorage.removeItem('firstPublished');
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<>

@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ACTIONS_DROPDOWN</td>
+	<td>//button[contains(@class, 'dropdown-item')]//div[contains(text(), '${key_action}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OVERVIEW</td>
 	<td>//button[contains(text(),'Overview')]</td>
 	<td></td>

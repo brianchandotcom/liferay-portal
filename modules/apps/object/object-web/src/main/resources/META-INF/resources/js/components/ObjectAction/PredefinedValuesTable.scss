@@ -1,24 +1,25 @@
 @import 'atlas-variables';
 
+.lfr-object-web__predefined-values-card {
+	.lfr-objects__card-body {
+		padding-top: 0;
+	}
+}
+
 .lfr-object-web__predefined-values-table {
-	&-add-modal-button {
-		display: flex;
-		justify-content: end;
-	}
-
-	&-cell-field,
-	&-cell-input-method {
-		min-width: 200px;
-	}
-
-	&-cell-new-value {
-		min-width: 400px;
-	}
-
 	&-field,
 	&-input-method {
-		align-items: center;
 		display: flex;
+	}
+
+	&-input-method {
+		.custom-checkbox {
+			margin-bottom: 0;
+		}
+	}
+
+	&-new-value {
+		width: 100%;
 	}
 
 	&-reference-mark {

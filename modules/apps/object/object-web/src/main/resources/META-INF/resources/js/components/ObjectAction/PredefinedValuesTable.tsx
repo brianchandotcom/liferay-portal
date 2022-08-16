@@ -12,20 +12,79 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
-import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayTable from '@clayui/table';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+
+// @ts-ignore
+
+import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {
 	Card,
 	ExpressionBuilder,
+	onActionDropdownItemClick,
 	openToast,
 } from '@liferay/object-js-components-web';
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 
 import './PredefinedValuesTable.scss';
+
+function getDataSetProps(items: Item[]) {
+	return {
+		creationMenu: {
+			primaryItems: [
+				{
+					href: 'handleAddFields',
+					id: 'handleAddFields',
+					label: Liferay.Language.get('add-fields'),
+					target: 'event',
+				},
+			],
+		},
+		id: 'PredefinedValuesTable',
+		items,
+		itemsActions: [
+			{
+				href: 'deletePredefinedValueField',
+				icon: 'trash',
+				id: 'deletePredefinedValueField',
+				target: 'event',
+			},
+		],
+		namespace: '',
+
+		onActionDropdownItemClick,
+
+		selectedItemsKey: 'id',
+		showManagementBar: true,
+		showPagination: false,
+		showSearch: false,
+		views: [
+			{
+				contentRenderer: 'table',
+				label: 'Table',
+				name: 'table',
+				schema: {
+					fields: [
+						{
+							fieldName: 'name',
+							label: Liferay.Language.get('field'),
+						},
+						{
+							fieldName: 'inputAsValue',
+							label: Liferay.Language.get('input-method'),
+						},
+						{
+							fieldName: 'newValue',
+							label: Liferay.Language.get('new-value'),
+						},
+					],
+				},
+				thumbnail: 'table',
+			},
+		],
+	};
+}
 
 export default function PredefinedValuesTable({
 	currentObjectDefinitionFields,
@@ -36,20 +95,8 @@ export default function PredefinedValuesTable({
 	values,
 }: IProps) {
 	const {predefinedValues = []} = values.parameters as ObjectActionParameters;
-	const getSelectedFields = () => {
-		const objectFields: ObjectField[] = [];
 
-		predefinedValues?.forEach(({name}) => {
-			if (objectFieldsMap.has(name)) {
-				const field = objectFieldsMap.get(name);
-				objectFields.push(field as ObjectField);
-			}
-		});
-
-		return objectFields;
-	};
-
-	const getTableRows = useMemo(() => {
+	const props = useMemo(() => {
 		const updatePredefinedValues = (name: string, value: string) => {
 			const updatedPredefinedValues = predefinedValues.map((field) => {
 				return field.name === name ? {...field, value} : field;
@@ -66,159 +113,118 @@ export default function PredefinedValuesTable({
 			});
 		}
 
-		const rows = predefinedValues.map(({inputAsValue, name, value}) => {
-			return (
-				<ClayTable.Row key={name}>
-					<ClayTable.Cell className="lfr-object-web__predefined-values-table-cell-field">
-						<div className="lfr-object-web__predefined-values-table-field">
-							{name}
-
-							{objectFieldsMap.get(name)?.required === true && (
-								<span className="lfr-object-web__predefined-values-table-reference-mark">
-									<ClayIcon symbol="asterisk" />
-								</span>
-							)}
-						</div>
-					</ClayTable.Cell>
-
-					<ClayTable.Cell className="lfr-object-web__predefined-values-table-cell-input-method">
-						<div className="lfr-object-web__predefined-values-table-input-method">
-							<ClayCheckbox
-								checked={inputAsValue}
-								disabled={false}
-								label={Liferay.Language.get('input-as-a-value')}
-								onChange={({target: {checked}}) => {
-									const newPredefinedValues = predefinedValues.map(
-										(field) => {
-											return field.name === name
-												? {
-														...field,
-														inputAsValue: checked,
-												  }
-												: field;
-										}
-									);
-									setValues({
-										parameters: {
-											...values.parameters,
-											predefinedValues: newPredefinedValues,
-										},
-									});
-								}}
-							/>
-
-							<ClayTooltipProvider>
-								<div
-									data-tooltip-align="top"
-									title={Liferay.Language.get(
-										'by-checking-this-option,-expressions-will-not-be-used-for-filling-the-predefined-value-field'
-									)}
-								>
-									<ClayIcon
-										className="lfr-object-web__predefined-values-table-tooltip-icon"
-										symbol="question-circle-full"
-									/>
-								</div>
-							</ClayTooltipProvider>
-						</div>
-					</ClayTable.Cell>
-
-					<ClayTable.Cell className="lfr-object-web__predefined-values-table-cell-new-value">
-						<div className="lfr-object-web__predefined-values-table-new-value">
-							<ExpressionBuilder
-								buttonDisabled={inputAsValue}
-								error={predefinedErrors.get(name)}
-								hideFeedback
-								onChange={({target: {value}}) => {
-									setValues({
-										parameters: {
-											...values.parameters,
-											predefinedValues: updatePredefinedValues(
-												name,
-												value
-											),
-										},
-									});
-								}}
-								onOpenModal={() => {
-									const parentWindow = Liferay.Util.getOpener();
-
-									parentWindow.Liferay.fire(
-										'openExpressionBuilderModal',
-										{
-											onSave: (value: string) => {
-												setValues({
-													parameters: {
-														...values.parameters,
-														predefinedValues: updatePredefinedValues(
-															name,
-															value
-														),
-													},
-												});
-											},
-											required: objectFieldsMap.get(name)
-												?.required,
-											source: value,
-											validateExpressionURL,
-										}
-									);
-								}}
-								placeholder={
-									inputAsValue
-										? Liferay.Language.get('input-a-value')
-										: Liferay.Language.get(
-												'input-a-value-or-create-an-expression'
-										  )
-								}
-								value={value}
-							/>
-						</div>
-					</ClayTable.Cell>
-
-					<ClayTable.Cell
-						className="lfr-object-web__predefined-values-table-cell-delete-button"
-						columnTextAlignment="end"
-					>
-						<div className="lfr-object-web__predefined-values-table-delete-button">
-							<ClayButtonWithIcon
-								className="reorder-page-button"
-								displayType="secondary"
-								id={name}
-								onClick={() => {
-									if (objectFieldsMap.get(name)?.required) {
-										openToast({
-											message: Liferay.Language.get(
-												'required-fields-cannot-be-deleted'
-											),
-											type: 'danger',
-										});
-
-										return;
+		const items = predefinedValues.map(({inputAsValue, name, value}) => {
+			return {
+				inputAsValue: (
+					<div className="lfr-object-web__predefined-values-table-input-method">
+						<ClayCheckbox
+							checked={inputAsValue}
+							disabled={false}
+							label={Liferay.Language.get('input-as-a-value')}
+							onChange={({target: {checked}}) => {
+								const newPredefinedValues = predefinedValues.map(
+									(field) => {
+										return field.name === name
+											? {
+													...field,
+													inputAsValue: checked,
+											  }
+											: field;
 									}
+								);
+								setValues({
+									parameters: {
+										...values.parameters,
+										predefinedValues: newPredefinedValues,
+									},
+								});
+							}}
+						/>
 
-									const newPredefinedValues = predefinedValues?.filter(
-										(field) => field.name !== name
-									);
+						<ClayTooltipProvider>
+							<div
+								data-tooltip-align="top"
+								title={Liferay.Language.get(
+									'by-checking-this-option,-expressions-will-not-be-used-for-filling-the-predefined-value-field'
+								)}
+							>
+								<ClayIcon
+									className="lfr-object-web__predefined-values-table-tooltip-icon"
+									symbol="question-circle-full"
+								/>
+							</div>
+						</ClayTooltipProvider>
+					</div>
+				),
 
-									setValues({
-										parameters: {
-											...values.parameters,
-											predefinedValues: newPredefinedValues,
+				name: (
+					<div className="lfr-object-web__predefined-values-table-field">
+						{name}
+
+						{objectFieldsMap.get(name)?.required === true && (
+							<span className="lfr-object-web__predefined-values-table-reference-mark">
+								<ClayIcon symbol="asterisk" />
+							</span>
+						)}
+					</div>
+				),
+
+				newValue: (
+					<div className="lfr-object-web__predefined-values-table-new-value">
+						<ExpressionBuilder
+							buttonDisabled={inputAsValue}
+							error={predefinedErrors.get(name)}
+							hideFeedback
+							onChange={({target: {value}}) => {
+								setValues({
+									parameters: {
+										...values.parameters,
+										predefinedValues: updatePredefinedValues(
+											name,
+											value
+										),
+									},
+								});
+							}}
+							onOpenModal={() => {
+								const parentWindow = Liferay.Util.getOpener();
+
+								parentWindow.Liferay.fire(
+									'openExpressionBuilderModal',
+									{
+										onSave: (value: string) => {
+											setValues({
+												parameters: {
+													...values.parameters,
+													predefinedValues: updatePredefinedValues(
+														name,
+														value
+													),
+												},
+											});
 										},
-									});
-								}}
-								small
-								symbol="trash"
-								title={Liferay.Language.get('delete')}
-							/>
-						</div>
-					</ClayTable.Cell>
-				</ClayTable.Row>
-			);
+										required: objectFieldsMap.get(name)
+											?.required,
+										source: value,
+										validateExpressionURL,
+									}
+								);
+							}}
+							placeholder={
+								inputAsValue
+									? Liferay.Language.get('input-a-value')
+									: Liferay.Language.get(
+											'input-a-value-or-create-an-expression'
+									  )
+							}
+							value={value}
+						/>
+					</div>
+				),
+			};
 		});
 
-		return rows;
+		return getDataSetProps(items);
 	}, [
 		errors,
 		objectFieldsMap,
@@ -228,89 +234,112 @@ export default function PredefinedValuesTable({
 		values.parameters,
 	]);
 
-	const handleAddFields = () => {
-		const parentWindow = Liferay.Util.getOpener();
+	useEffect(() => {
+		const getSelectedFields = () => {
+			const objectFields: ObjectField[] = [];
 
-		parentWindow.Liferay.fire('openModalAddColumns', {
-			disableRequired: true,
-			getName: ({name}: ObjectField) => name,
-			header: Liferay.Language.get('add-fields'),
-			items: currentObjectDefinitionFields,
-			onSave: (items: ObjectField[]) => {
-				const predefinedValuesMap = new Map<string, PredefinedValue>();
+			predefinedValues?.forEach(({name}) => {
+				if (objectFieldsMap.has(name)) {
+					const field = objectFieldsMap.get(name);
+					objectFields.push(field as ObjectField);
+				}
+			});
 
-				predefinedValues.forEach((field) => {
-					predefinedValuesMap.set(field.name, field);
+			return objectFields;
+		};
+
+		const deletePredefinedValueField = ({itemData}: {itemData: Item}) => {
+			const [name] = itemData.name.props.children;
+
+			if (objectFieldsMap.get(name)?.required) {
+				openToast({
+					message: Liferay.Language.get(
+						'required-fields-cannot-be-deleted'
+					),
+					type: 'danger',
 				});
 
-				const newPredefinedValues = items.map(({name}) => {
-					const value = predefinedValuesMap.get(name);
+				return;
+			}
 
-					return value
-						? value
-						: {
-								inputAsValue: false,
-								name,
-								value: '',
-						  };
-				});
-				setValues({
-					parameters: {
-						...values.parameters,
-						predefinedValues: newPredefinedValues,
-					},
-				});
-			},
-			selected: getSelectedFields(),
-			title: Liferay.Language.get('select-the-fields'),
-		});
-	};
+			const newPredefinedValues = predefinedValues?.filter(
+				(field) => field.name !== name
+			);
+
+			setValues({
+				parameters: {
+					...values.parameters,
+					predefinedValues: newPredefinedValues,
+				},
+			});
+		};
+
+		const handleAddFields = () => {
+			const parentWindow = Liferay.Util.getOpener();
+
+			parentWindow.Liferay.fire('openModalAddColumns', {
+				disableRequired: true,
+				getName: ({name}: ObjectField) => name,
+				header: Liferay.Language.get('add-fields'),
+				items: currentObjectDefinitionFields,
+				onSave: (items: ObjectField[]) => {
+					const predefinedValuesMap = new Map<
+						string,
+						PredefinedValue
+					>();
+
+					predefinedValues.forEach((field) => {
+						predefinedValuesMap.set(field.name, field);
+					});
+
+					const newPredefinedValues = items.map(({name}) => {
+						const value = predefinedValuesMap.get(name);
+
+						return value
+							? value
+							: {
+									inputAsValue: false,
+									name,
+									value: '',
+							  };
+					});
+					setValues({
+						parameters: {
+							...values.parameters,
+							predefinedValues: newPredefinedValues,
+						},
+					});
+				},
+				selected: getSelectedFields(),
+				title: Liferay.Language.get('select-the-fields'),
+			});
+		};
+
+		Liferay.on('deletePredefinedValueField', deletePredefinedValueField);
+		Liferay.on('handleAddFields', handleAddFields);
+
+		return () => {
+			Liferay.detach('deletePredefinedValueField');
+			Liferay.detach('handleAddFields');
+		};
+	}, [
+		currentObjectDefinitionFields,
+		objectFieldsMap,
+		predefinedValues,
+		setValues,
+		values.parameters,
+	]);
 
 	return (
 		<>
 			<Card
+				className="lfr-object-web__predefined-values-card"
 				title={Liferay.Language.get('predefined-values')}
 				viewMode="no-margin"
 			>
-				<div className="lfr-object-web__predefined-values-table-add-modal-button">
-					<ClayButtonWithIcon
-						className="add-modal-button"
-						displayType="primary"
-						onClick={handleAddFields}
-						symbol="plus"
-						title={Liferay.Language.get('add-fields')}
-					/>
+				<div className="lfr-object-web__predefined-values-table">
+					<FrontendDataSet {...props} />
 				</div>
-
-				{predefinedValues.length ? (
-					<ClayTable className="predefined-values-table">
-						<ClayTable.Head>
-							<ClayTable.Row>
-								<ClayTable.Cell headingCell>
-									{Liferay.Language.get('field')}
-								</ClayTable.Cell>
-
-								<ClayTable.Cell headingCell>
-									{Liferay.Language.get('input-method')}
-								</ClayTable.Cell>
-
-								<ClayTable.Cell headingCell>
-									{Liferay.Language.get('new-value')}
-								</ClayTable.Cell>
-							</ClayTable.Row>
-						</ClayTable.Head>
-
-						<ClayTable.Body>{getTableRows}</ClayTable.Body>
-					</ClayTable>
-				) : (
-					<ClayEmptyState
-						description={Liferay.Language.get(
-							'add-fields-to-be-reused-on-the-newly-created-entry'
-						)}
-						imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.gif`}
-						title={Liferay.Language.get('no-fields-added-yet')}
-					/>
-				)}
 			</Card>
 		</>
 	);
@@ -324,4 +353,10 @@ interface IProps {
 	setValues: (params: Partial<ObjectAction>) => void;
 	validateExpressionURL: string;
 	values: Partial<ObjectAction>;
+}
+
+interface Item {
+	inputAsValue: JSX.Element;
+	name: JSX.Element;
+	newValue: JSX.Element;
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
+package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 /**
  * @author Eudaldo Alonso

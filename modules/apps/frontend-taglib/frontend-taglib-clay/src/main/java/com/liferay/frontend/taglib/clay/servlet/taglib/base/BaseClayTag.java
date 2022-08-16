@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.servlet.taglib.soy.base;
+package com.liferay.frontend.taglib.clay.servlet.taglib.base;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.internal.ClayTagContextContributorsProvider;

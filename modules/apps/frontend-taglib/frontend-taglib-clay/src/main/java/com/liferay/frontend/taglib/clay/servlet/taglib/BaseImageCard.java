@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
+package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
@@ -36,10 +36,10 @@ import javax.portlet.RenderRequest;
 /**
  * @author Eudaldo Alonso
  */
-public abstract class BaseFileCard
-	extends BaseBaseClayCard implements FileCard {
+public abstract class BaseImageCard
+	extends BaseBaseClayCard implements ImageCard {
 
-	public BaseFileCard(
+	public BaseImageCard(
 		BaseModel<?> baseModel, RenderRequest renderRequest,
 		RowChecker rowChecker) {
 
@@ -115,6 +115,6 @@ public abstract class BaseFileCard
 	protected final RenderRequest renderRequest;
 	protected final ThemeDisplay themeDisplay;
 
-	private static final Log _log = LogFactoryUtil.getLog(BaseFileCard.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseImageCard.class);
 
 }

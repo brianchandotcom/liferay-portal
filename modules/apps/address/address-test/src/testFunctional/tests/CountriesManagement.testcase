@@ -1,0 +1,58 @@
+@component-name = "portal-user-management-and-portal-configuration"
+definition {
+
+	property custom.properties = "feature.flag.LPS-122223=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Address";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This test asserts that a user can add a new country and by default this country will have the Active status, will not allow Billing and Shipping, and will not be subject to VAT."
+	@priority = "5"
+	test CanAddCountry {
+		task ("Given that a user is in the Countries Management portlet") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Countries Management");
+		}
+
+		task ("When a user adds a new country, only filling out the required fields") {
+			CountriesManagement.addCountry(
+				countryName = "Test Country",
+				countryNumber = "01",
+				threeLetterISOCode = "AAA",
+				twoLetterISOCode = "AA");
+		}
+
+		task ("Then the country is saved successfully") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			Search.searchCP(searchTerm = "Test Country");
+		}
+
+		task ("and by default, status is active, billing and shipping are not allowed, and country is not subject to VAT") {
+			CountriesManagement.viewCountryInTable(
+				billingAllowed = "false",
+				countryName = "Test Country",
+				countryPriority = "0.0",
+				countryStatus = "Inactive",
+				shippingAllowed = "false",
+				twoLetterISOCode = "AA");
+		}
+	}
+
+}

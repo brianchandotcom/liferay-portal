@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -70,7 +69,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		return _upgradeProcesses.lastKey();
 	}
 
-	public static SortedMap<Version, UpgradeStep> getPendingUpgradeProcesses(
+	public static SortedMap<Version, UpgradeProcess> getPendingUpgradeProcesses(
 		Version schemaVersion) {
 
 		return _upgradeProcesses.tailMap(schemaVersion, false);
@@ -204,8 +203,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		for (Version pendingSchemaVersion :
 				getPendingSchemaVersions(getCurrentSchemaVersion(connection))) {
 
-			upgrade(
-				(UpgradeProcess)_upgradeProcesses.get(pendingSchemaVersion));
+			upgrade(_upgradeProcesses.get(pendingSchemaVersion));
 
 			updateSchemaVersion(pendingSchemaVersion);
 		}
@@ -214,7 +212,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected Set<Version> getPendingSchemaVersions(Version fromSchemaVersion) {
-		SortedMap<Version, UpgradeStep> pendingUpgradeProcesses =
+		SortedMap<Version, UpgradeProcess> pendingUpgradeProcesses =
 			_upgradeProcesses.tailMap(fromSchemaVersion, false);
 
 		return pendingUpgradeProcesses.keySet();

@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.version.Version;
@@ -307,7 +308,7 @@ public class ReleaseManagerOSGiCommands {
 			Version currentSchemaVersion =
 				PortalUpgradeProcess.getCurrentSchemaVersion(connection);
 
-			SortedMap<Version, UpgradeStep> pendingUpgradeProcesses =
+			SortedMap<Version, UpgradeProcess> pendingUpgradeProcesses =
 				PortalUpgradeProcess.getPendingUpgradeProcesses(
 					currentSchemaVersion);
 
@@ -327,18 +328,18 @@ public class ReleaseManagerOSGiCommands {
 				if (showUpgradeSteps) {
 					sb.append(StringPool.COLON);
 
-					for (SortedMap.Entry<Version, UpgradeStep> entry :
+					for (SortedMap.Entry<Version, UpgradeProcess> entry :
 							pendingUpgradeProcesses.entrySet()) {
 
 						sb.append(StringPool.NEW_LINE);
 						sb.append(StringPool.TAB);
 
-						UpgradeStep upgradeStep = entry.getValue();
+						UpgradeProcess upgradeProcess = entry.getValue();
 						Version version = entry.getKey();
 
 						sb.append(
 							_getPendingUpgradeProcessMessage(
-								upgradeStep.getClass(),
+								upgradeProcess.getClass(),
 								currentSchemaVersion.toString(),
 								version.toString()));
 

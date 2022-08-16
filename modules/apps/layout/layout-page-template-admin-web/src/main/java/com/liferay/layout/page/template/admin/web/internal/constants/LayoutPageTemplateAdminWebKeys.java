@@ -19,6 +19,9 @@ package com.liferay.layout.page.template.admin.web.internal.constants;
  */
 public class LayoutPageTemplateAdminWebKeys {
 
+	public static final String ASSET_DISPLAY_PAGE_USAGES_DISPLAY_CONTEXT =
+		"ASSET_DISPLAY_PAGE_USAGES_DISPLAY_CONTEXT";
+
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
 }

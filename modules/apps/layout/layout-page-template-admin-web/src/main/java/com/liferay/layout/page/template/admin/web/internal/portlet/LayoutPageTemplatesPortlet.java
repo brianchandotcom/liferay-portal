@@ -14,12 +14,16 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet;
 
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryService;
+import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.configuration.LayoutPageTemplateAdminWebConfiguration;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
+import com.liferay.layout.page.template.admin.web.internal.display.context.AssetDisplayPageUsagesDisplayContext;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -36,6 +40,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.StagingGroupHelper;
 
@@ -144,6 +149,14 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 			InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER,
 			_infoItemServiceTracker);
 		renderRequest.setAttribute(
+			LayoutPageTemplateAdminWebKeys.
+				ASSET_DISPLAY_PAGE_USAGES_DISPLAY_CONTEXT,
+			new AssetDisplayPageUsagesDisplayContext(
+				_assetDisplayPageEntryService, _assetEntryService,
+				_portal.getHttpServletRequest(renderRequest),
+				_infoSearchClassMapperTracker, _infoItemServiceTracker, _portal,
+				renderRequest, renderResponse));
+		renderRequest.setAttribute(
 			LayoutPageTemplateAdminWebConfiguration.class.getName(),
 			_layoutPageTemplateAdminWebConfiguration);
 		renderRequest.setAttribute(
@@ -162,7 +175,16 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 		LayoutPageTemplatesPortlet.class);
 
 	@Reference
+	private AssetDisplayPageEntryService _assetDisplayPageEntryService;
+
+	@Reference
+	private AssetEntryService _assetEntryService;
+
+	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;
@@ -179,6 +201,9 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

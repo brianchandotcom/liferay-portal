@@ -429,8 +429,6 @@ definition {
 			widgetName = "Blogs");
 
 		Permissions.setUpSiteTeamRoleLoginUserPG(
-			page = "Public Pages",
-			portletName = "Blogs",
 			siteName = "Site Name",
 			teamDescription = "Site Team Description",
 			teamName = "Site Team Name",
@@ -979,7 +977,6 @@ definition {
 			widgetName = "Blogs");
 
 		Permissions.setUpSiteTeamRoleLoginUserPG(
-			page = "Public Pages",
 			siteName = "Site Name",
 			teamDescription = "Site Team Description",
 			teamName = "Site Team Name",

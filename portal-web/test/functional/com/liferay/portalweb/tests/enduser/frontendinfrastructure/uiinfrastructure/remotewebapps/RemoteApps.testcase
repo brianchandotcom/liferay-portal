@@ -538,9 +538,7 @@ definition {
 
 		task ("When adding the app portlet to the page") {
 			Navigator.gotoPage(pageName = "My Widget Page");
-
-			Refresh();
-
+			
 			Click(locator1 = "ControlMenu#ADD");
 
 			Type(

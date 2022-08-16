@@ -319,11 +319,11 @@ definition {
 		}
 
 		task ("Then I should see a tooltip with the Environment Name and Description") {
-			CP2ActivationKeys.assertTooltipIsVisible(text = "Redacted");
+			CP2ActivationKeys.assertTooltipIsVisible(text = "Test Entitlement Name");
 		}
 
 		task ("Then I should see a tooltip with the Environment Description") {
-			CP2ActivationKeys.assertTooltipIsVisible(text = "Redacted");
+			CP2ActivationKeys.assertTooltipIsVisible(text = "Test Entitlement Description");
 		}
 
 	}
@@ -472,7 +472,7 @@ definition {
 			CP2ActivationKeys.assertTextAtTable(
 				linePosition = "2",
 				lineColunm = "3",
-				text = "Redacted");
+				text = "${testAccount}");
 		}
 	}
 

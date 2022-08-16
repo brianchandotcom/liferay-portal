@@ -1,5 +1,41 @@
 # Poshi Runner Change Log
 
+## 1.0.368
+
+### IDE
+
+* [POSHI-235](https://issues.liferay.com/browse/POSHI-235) - Research and prototype creating a basic VSCode plugin config file for Poshi syntax
+* [POSHI-337](https://issues.liferay.com/browse/POSHI-337) - Create a Github Action to build the Poshi VSCode Extension
+
+### Logger
+
+* [POSHI-16](https://issues.liferay.com/browse/POSHI-16) - Take screenshots for external methods
+* [POSHI-34](https://issues.liferay.com/browse/POSHI-34) - Poshi Runner Logger JS updates/bug fix
+* [POSHI-370](https://issues.liferay.com/browse/POSHI-370) - Update summary logger frontend urls
+
+### Other
+
+* [LPS-157934](https://issues.liferay.com/browse/LPS-157934) - Update commons-io to version 2.11.0 as a preparation for ticket  LPS-149258
+* [LPS-51081](https://issues.liferay.com/browse/LPS-51081) - As a developer, I would like to have a SDK based on gradle
+
+### Script
+
+* [POSHI-76](https://issues.liferay.com/browse/POSHI-76) - Fix poshi script parsing for parenthesis in while/if condition
+
+### Utils
+
+* [POSHI-336](https://issues.liferay.com/browse/POSHI-336) - Poshi support for API Post requests
+* [POSHI-374](https://issues.liferay.com/browse/POSHI-374) - Refactor MathUtil to accept larger than 32bit Integers
+* [POSHI-375](https://issues.liferay.com/browse/POSHI-375) - Add getTimeinMilisecondsFromDate method into DateUtil
+* [POSHI-376](https://issues.liferay.com/browse/POSHI-376) - Add PATCH to JSONCurlUtil
+* [POSHI-383](https://issues.liferay.com/browse/POSHI-383) - MathUtil not checking for instanceof Integer
+
+### WebDriver
+
+* [POSHI-378](https://issues.liferay.com/browse/POSHI-378) - Investigate Java heap space sometimes happens on JSONSmoke#RunAllJSONMacros
+* [POSHI-379](https://issues.liferay.com/browse/POSHI-379) - QA websites dependencies folder not being set and recognized automatically during CI runs
+* [POSHI-385](https://issues.liferay.com/browse/POSHI-385) - Fix typo from getElementWidth
+
 ## 1.0.359
 
 ### Logger

@@ -89,13 +89,11 @@ definition {
 			var masterLayoutPlid = "0";
 		}
 
-		if (isSet(status)) {
-			var status = "0";
-		}
-		else {
-			var status = "2";
+		if (!(isSet(statusKey))) {
+			var statusKey = "DRAFT";
 		}
 
+		var status = JSONLayoutpagetemplateSetter.setStatus(statusKey = "${statusKey}");
 		var serviceContext = JSONLayoutpagetemplateSetter.setServiceContext(
 			addGuestPermissions = "true",
 			assetCategoryIds = "${assetCategoryIds}",

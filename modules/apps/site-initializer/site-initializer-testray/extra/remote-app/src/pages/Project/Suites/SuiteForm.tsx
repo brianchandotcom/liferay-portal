@@ -55,7 +55,7 @@ const SuiteForm = () => {
 	const [cases, setCases] = useState<number[]>([]);
 	const {projectId} = useParams();
 	const context: {
-		mutateSuite: KeyedMutator<any>;
+		mutateTestraySuite: KeyedMutator<any>;
 		testrayProject?: any;
 		testraySuite?: TestraySuite;
 	} = useOutletContext();
@@ -103,7 +103,7 @@ const SuiteForm = () => {
 					);
 				}
 			})
-			.then(context.mutateSuite)
+			.then(context.mutateTestraySuite)
 			.then(() => onSave())
 			.catch(() => onError());
 	};

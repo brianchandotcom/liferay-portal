@@ -1100,7 +1100,7 @@ definition {
 			task ("Add 21 web contents") {
 				var i = "1";
 
-				while ("${i}" != "22" && (maxIterations = "25")) {
+				while (("${i}" != "22") && (maxIterations = "25")) {
 					JSONWebcontent.addWebContent(
 						content = "Web Content Content ${i}",
 						groupName = "Test Site Name",

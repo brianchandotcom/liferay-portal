@@ -115,7 +115,7 @@ definition {
 		var key_metricTitle = "${metricTitle}";
 		var key_metricValue = "${metricValue}";
 
-		while (IsElementNotPresent(locator1 = "ACAssets#METRIC_VALUE") && (maxIterations = "50")) {
+		while ((IsElementNotPresent(locator1 = "ACAssets#METRIC_VALUE")) && (maxIterations = "50")) {
 			TestUtils.hardRefresh();
 
 			if ("${timeFilter}" != "Custom Range") {

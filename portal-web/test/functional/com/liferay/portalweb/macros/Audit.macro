@@ -103,7 +103,7 @@ definition {
 	macro verifyConfigurationElementIsConfigured {
 		Audit.gotoSystemSettings(portlet = "${portlet}");
 
-		while (IsTextNotEqual(locator1 = "${element}", value1 = "${text}") && (maxIterations = "10")) {
+		while ((IsTextNotEqual(locator1 = "${element}", value1 = "${text}")) && (maxIterations = "10")) {
 			Refresh();
 		}
 	}

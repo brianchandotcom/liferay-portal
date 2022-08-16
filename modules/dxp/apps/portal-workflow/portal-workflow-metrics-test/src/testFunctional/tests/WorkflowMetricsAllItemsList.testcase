@@ -994,7 +994,7 @@ definition {
 
 		var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		while (IsElementNotPresent(key_status = "check", locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS") && (maxIterations = "20")) {
+		while ((IsElementNotPresent(key_status = "check", locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS")) && (maxIterations = "20")) {
 			Refresh();
 		}
 
@@ -1100,7 +1100,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		while (IsElementNotPresent(key_status = "check", locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS") && (maxIterations = "30")) {
+		while ((IsElementNotPresent(key_status = "check", locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS")) && (maxIterations = "30")) {
 			Refresh();
 		}
 
@@ -1177,7 +1177,7 @@ definition {
 			workflowMetricsTab = "PERFORMANCE",
 			workflowProcess = "Single Approver");
 
-		while (IsElementNotPresent(key_itemSubject = "Blogs Entry: Blogs Entry Title 1", key_value = "-", locator1 = "WorkflowMetricsAllItemsList#DUE_DATE_COLUMN_VALUE") && (maxIterations = "30")) {
+		while ((IsElementNotPresent(key_itemSubject = "Blogs Entry: Blogs Entry Title 1", key_value = "-", locator1 = "WorkflowMetricsAllItemsList#DUE_DATE_COLUMN_VALUE")) && (maxIterations = "30")) {
 			Refresh();
 		}
 
@@ -1215,7 +1215,7 @@ definition {
 			workflowMetricsTab = "PERFORMANCE",
 			workflowProcess = "Single Approver");
 
-		while (IsElementNotPresent(key_itemSubject = "Blogs Entry: Blogs Entry Title 2", key_value = "-", locator1 = "WorkflowMetricsAllItemsList#DUE_DATE_COLUMN_VALUE") && (maxIterations = "30")) {
+		while ((IsElementNotPresent(key_itemSubject = "Blogs Entry: Blogs Entry Title 2", key_value = "-", locator1 = "WorkflowMetricsAllItemsList#DUE_DATE_COLUMN_VALUE")) && (maxIterations = "30")) {
 			Refresh();
 		}
 
@@ -1564,7 +1564,7 @@ definition {
 			key_index = "4",
 			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON");
 
-		while (IsElementNotPresent(key_status = "Overdue", locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_DEFINITION_RESOLVED") && (maxIterations = "10")) {
+		while ((IsElementNotPresent(key_status = "Overdue", locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_DEFINITION_RESOLVED")) && (maxIterations = "10")) {
 			Refresh();
 		}
 
@@ -1677,7 +1677,7 @@ definition {
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		while (IsElementPresent(key_slaStatusTitle = "OPEN", locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_STATUS_TITLE") && (maxIterations = "24")) {
+		while ((IsElementPresent(key_slaStatusTitle = "OPEN", locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_STATUS_TITLE")) && (maxIterations = "24")) {
 			echo("Waiting 5 seconds to recheck");
 
 			Click(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
@@ -1761,7 +1761,7 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
 
-		while (IsElementNotPresent(key_status = "check", locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS") && (maxIterations = "30")) {
+		while ((IsElementNotPresent(key_status = "check", locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS")) && (maxIterations = "30")) {
 			Refresh();
 		}
 
@@ -2178,7 +2178,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		while (IsElementNotPresent(key_itemPosition = "1", key_rowNumber = "3", locator1 = "WorkflowAllItems#METRICS_INSTANCE_ITEMS_POSITION") && (maxIterations = "20")) {
+		while ((IsElementNotPresent(key_itemPosition = "1", key_rowNumber = "3", locator1 = "WorkflowAllItems#METRICS_INSTANCE_ITEMS_POSITION")) && (maxIterations = "20")) {
 			Refresh();
 		}
 
@@ -2351,7 +2351,7 @@ definition {
 			keyCompare = "Blogs Entry: Blogs Entry Title 1",
 			rowNumber = "2");
 
-		while (IsElementNotPresent(locator1 = "WorkflowAllItems#assertTableOrder", rowNumber = "1") && (maxIterations = "10")) {
+		while ((IsElementNotPresent(locator1 = "WorkflowAllItems#assertTableOrder", rowNumber = "1")) && (maxIterations = "10")) {
 			Refresh();
 		}
 
@@ -3031,7 +3031,7 @@ definition {
 			nameOfAssignee = "Test Test",
 			taskList = "task3");
 
-		while (IsElementNotPresent(key_workflowInstanceAssignee = "Test Test, Unassigned, User User", key_workflowInstanceName = "Blogs Entry", locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE") && (maxIterations = "10")) {
+		while ((IsElementNotPresent(key_workflowInstanceAssignee = "Test Test, Unassigned, User User", key_workflowInstanceName = "Blogs Entry", locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE")) && (maxIterations = "10")) {
 			Refresh();
 		}
 
@@ -3147,7 +3147,7 @@ definition {
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		while (IsElementNotPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_PAUSED") && (maxIterations = "20")) {
+		while ((IsElementNotPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_PAUSED")) && (maxIterations = "20")) {
 			Refresh();
 
 			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");

@@ -862,7 +862,7 @@ definition {
 
 		Button.clickPublish();
 
-		while (IsElementPresent(key_status = "Approved", locator1 = "CommerceEntry#WORKFLOW_STATUS") && (maxIterations = "40")) {
+		while ((IsElementPresent(key_status = "Approved", locator1 = "CommerceEntry#WORKFLOW_STATUS")) && (maxIterations = "40")) {
 
 			// We need this pause for waiting for the Discount to expire
 

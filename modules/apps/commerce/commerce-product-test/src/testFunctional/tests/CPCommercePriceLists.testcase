@@ -1207,7 +1207,7 @@ definition {
 		}
 
 		task ("When the first price entry expires and the buyer views the U-Joint product") {
-			while (IsElementPresent(key_productName = "U-Joint", key_productPrice = "20.00", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_VALUE") && (maxIterations = "50")) {
+			while ((IsElementPresent(key_productName = "U-Joint", key_productPrice = "20.00", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_VALUE")) && (maxIterations = "50")) {
 
 				// We need this pause for waiting for the Price List to expire
 
@@ -1225,7 +1225,7 @@ definition {
 		}
 
 		task ("When the second price entry is published and the buyer views the U-Joint product") {
-			while (IsElementPresent(key_productName = "U-Joint", key_productPrice = "24.00", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_VALUE") && (maxIterations = "50")) {
+			while ((IsElementPresent(key_productName = "U-Joint", key_productPrice = "24.00", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_VALUE")) && (maxIterations = "50")) {
 
 				// We need this pause for waiting for the second price entry to be published
 
@@ -1977,7 +1977,7 @@ definition {
 			panel = "Commerce",
 			portlet = "Price Lists");
 
-		while (IsElementPresent(key_name = "Test Price List", locator1 = "CommerceEntry#ASSERT_PRICE_LIST_STATUS", value1 = "APPROVED") && (maxIterations = "40")) {
+		while ((IsElementPresent(key_name = "Test Price List", locator1 = "CommerceEntry#ASSERT_PRICE_LIST_STATUS", value1 = "APPROVED")) && (maxIterations = "40")) {
 
 			// We need this pause for waiting for the Price List to expire
 
@@ -2132,7 +2132,7 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
 			value1 = "$ 30.00");
 
-		while (IsElementPresent(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "$ 30.00") && (maxIterations = "40")) {
+		while ((IsElementPresent(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "$ 30.00")) && (maxIterations = "40")) {
 
 			// We need this pause for waiting for the Price List to expire
 
@@ -2315,7 +2315,7 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
 			value1 = "$ 10.00");
 
-		while (IsElementPresent(key_cartItemSku = "MIN55861", key_productPrice = "10.00", locator1 = "CommerceAccelerators#MINI_CART_ITEM_LIST_PRICE_VALUE") && (maxIterations = "40")) {
+		while ((IsElementPresent(key_cartItemSku = "MIN55861", key_productPrice = "10.00", locator1 = "CommerceAccelerators#MINI_CART_ITEM_LIST_PRICE_VALUE")) && (maxIterations = "40")) {
 			Button.click(button = "Remove All Items");
 
 			Button.click(button = "Yes");
@@ -2491,7 +2491,7 @@ definition {
 
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Relevance");
 
-		while (IsElementPresent(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "$ 30.00") && (maxIterations = "40")) {
+		while ((IsElementPresent(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "$ 30.00")) && (maxIterations = "40")) {
 
 			// We need this pause for waiting for the Price List to expire
 

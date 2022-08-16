@@ -86,7 +86,7 @@ definition {
 
 		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 
-		while (IsElementNotPresent(locator1 = "ACSegments#TABLE_CHECKBOX") && (maxIterations = "50")) {
+		while ((IsElementNotPresent(locator1 = "ACSegments#TABLE_CHECKBOX")) && (maxIterations = "50")) {
 			ACSegments.searchSegment(findSegment = "${tableMember}");
 
 			ACUtils.clearSearchBar();
@@ -105,7 +105,7 @@ definition {
 
 			ACSegments.searchSegment(findSegment = "${tableMember}");
 
-			while (IsElementNotPresent(locator1 = "ACSegments#TABLE_CHECKBOX") && (maxIterations = "50")) {
+			while ((IsElementNotPresent(locator1 = "ACSegments#TABLE_CHECKBOX")) && (maxIterations = "50")) {
 				ACUtils.clearSearchBar();
 
 				ACSegments.searchSegment(findSegment = "${tableMember}");
@@ -566,7 +566,7 @@ definition {
 
 		ACSegments.searchSegment(findSegment = "${documentTitle}");
 
-		while (IsElementNotPresent(locator1 = "ACSegments#TABLE_CHECKBOX") && (maxIterations = "50")) {
+		while ((IsElementNotPresent(locator1 = "ACSegments#TABLE_CHECKBOX")) && (maxIterations = "50")) {
 			ACUtils.clearSearchBar();
 
 			ACSegments.searchSegment(findSegment = "${documentTitle}");

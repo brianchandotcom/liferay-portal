@@ -121,7 +121,7 @@ definition {
 			locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE",
 			value1 = "Processing report. This may take several minutes.");
 
-		while (IsElementPresent(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE") && (maxIterations = "40")) {
+		while ((IsElementPresent(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE")) && (maxIterations = "40")) {
 			Refresh();
 		}
 

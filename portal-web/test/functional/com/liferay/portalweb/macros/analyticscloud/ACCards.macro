@@ -123,7 +123,7 @@ definition {
 
 		WaitForPageLoad();
 
-		while (IsElementNotPresent(locator1 = "ACCards#METRIC_VALUE") && (maxIterations = "50")) {
+		while ((IsElementNotPresent(locator1 = "ACCards#METRIC_VALUE")) && (maxIterations = "50")) {
 			TestUtils.hardRefresh();
 
 			if ("${timeFilter}" != "Custom Range") {

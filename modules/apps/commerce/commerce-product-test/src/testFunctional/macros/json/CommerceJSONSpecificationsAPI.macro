@@ -18,7 +18,7 @@ definition {
 		var i = "1";
 		var payload = "[";
 
-		while ("${i}" != "${size}" && (maxIterations = "101")) {
+		while (("${i}" != "${size}") && (maxIterations = "101")) {
 			var array = '''
     		{
 				"active": true,

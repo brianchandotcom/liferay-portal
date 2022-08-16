@@ -40,7 +40,7 @@ definition {
 				"productOptionValues": [
 				''';
 
-		while ("${i}" != "${size}" && (maxIterations = "100")) {
+		while (("${i}" != "${size}") && (maxIterations = "100")) {
 			var valuesArray = '''
 					{
 					"key": "optionValue${i}",

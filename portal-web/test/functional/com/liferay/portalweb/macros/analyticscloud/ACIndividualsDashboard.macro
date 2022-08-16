@@ -112,7 +112,7 @@ definition {
 	macro goToKnownIndividualDetails {
 		var key_individualName = "${individualName}";
 
-		while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUALS_LIST_ITEMS") && (maxIterations = "50")) {
+		while ((IsElementNotPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUALS_LIST_ITEMS")) && (maxIterations = "50")) {
 			Refresh();
 		}
 
@@ -150,7 +150,7 @@ definition {
 	}
 
 	macro viewActivitiesOnGraph {
-		while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART") && (maxIterations = "50")) {
+		while ((IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART")) && (maxIterations = "50")) {
 			TestUtils.hardRefresh();
 
 			ACTimeFilter.clickTimeFilterButton();
@@ -173,7 +173,7 @@ definition {
 			var type = ListUtil.get("${list1}", "${i}");
 			var value = ListUtil.get("${list2}", "${i}");
 
-			while (IsElementNotPresent(key_value = "${value}", key_visitors = "${type}", locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS") && (maxIterations = "50")) {
+			while ((IsElementNotPresent(key_value = "${value}", key_visitors = "${type}", locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS")) && (maxIterations = "50")) {
 				TestUtils.hardRefresh();
 
 				ACTimeFilter.clickTimeFilterButton();

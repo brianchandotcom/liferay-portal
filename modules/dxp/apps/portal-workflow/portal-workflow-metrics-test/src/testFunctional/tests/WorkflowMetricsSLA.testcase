@@ -257,7 +257,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		while (IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1") && (maxIterations = "45")) {
+		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1")) && (maxIterations = "45")) {
 			Refresh();
 		}
 
@@ -327,7 +327,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		while (IsElementNotPresent(locator1 = "WorkflowMetrics#WARNING_SLA_BLOCKED") && (maxIterations = "45")) {
+		while ((IsElementNotPresent(locator1 = "WorkflowMetrics#WARNING_SLA_BLOCKED")) && (maxIterations = "45")) {
 			Refresh();
 		}
 
@@ -968,7 +968,7 @@ definition {
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		while (IsElementNotPresent(key_slaName = "${slaName}", locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_ENGLISH_HOUR_FORMAT") && (maxIterations = "45")) {
+		while ((IsElementNotPresent(key_slaName = "${slaName}", locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_ENGLISH_HOUR_FORMAT")) && (maxIterations = "45")) {
 			Click(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
 
 			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
@@ -1289,7 +1289,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		while (IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1") && (maxIterations = "45")) {
+		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1")) && (maxIterations = "45")) {
 			Refresh();
 		}
 
@@ -1320,7 +1320,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		while (IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1") && (maxIterations = "45")) {
+		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1")) && (maxIterations = "45")) {
 			Refresh();
 		}
 

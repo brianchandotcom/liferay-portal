@@ -33,7 +33,7 @@ definition {
 
 		Click(locator1 = "LiferayOnline#SAVE");
 
-		while (IsElementNotPresent(locator1 = "AppBuilder#CUSTOM_OBJECT_NAME_ON_HEADER", value1 = "Virtual Instances") && (maxIterations = "10")) {
+		while ((IsElementNotPresent(locator1 = "AppBuilder#CUSTOM_OBJECT_NAME_ON_HEADER", value1 = "Virtual Instances")) && (maxIterations = "10")) {
 			WaitForPageLoad();
 		}
 	}

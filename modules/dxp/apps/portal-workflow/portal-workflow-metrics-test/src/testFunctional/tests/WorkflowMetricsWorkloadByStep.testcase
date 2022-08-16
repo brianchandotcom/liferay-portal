@@ -149,7 +149,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		while (IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE", value1 = "1") && (maxIterations = "45")) {
+		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE", value1 = "1")) && (maxIterations = "45")) {
 			Refresh();
 		}
 
@@ -206,7 +206,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		while (IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1") && (maxIterations = "45")) {
+		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1")) && (maxIterations = "45")) {
 			Refresh();
 		}
 

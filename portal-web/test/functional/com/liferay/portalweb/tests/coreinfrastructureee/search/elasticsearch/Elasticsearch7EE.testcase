@@ -60,7 +60,7 @@ definition {
 		var assetEntryTitleListNoLtr = "";
 		var iterator = "1";
 
-		while ("${iterator}" != "21" && (maxIterations = "20")) {
+		while (("${iterator}" != "21") && (maxIterations = "20")) {
 			var assetEntryTitle = selenium.getText("//div[contains(@id,'SearchResultsPortlet')]//li[${iterator}]/div//a");
 
 			var assetEntryTitleListNoLtr = StringUtil.add("${assetEntryTitleListNoLtr}", "${assetEntryTitle}");
@@ -92,7 +92,7 @@ definition {
 		var assetEntryTitleListLtr = "";
 		var iterator = "1";
 
-		while ("${iterator}" != "21" && (maxIterations = "20")) {
+		while (("${iterator}" != "21") && (maxIterations = "20")) {
 			var assetEntryTitle = selenium.getText("//div[contains(@id,'SearchResultsPortlet')]//li[${iterator}]/div//a");
 
 			var assetEntryTitleListLtr = StringUtil.add("${assetEntryTitleListLtr}", "${assetEntryTitle}");

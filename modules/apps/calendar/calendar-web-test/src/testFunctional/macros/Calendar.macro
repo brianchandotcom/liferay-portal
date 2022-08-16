@@ -658,11 +658,11 @@ definition {
 		it reaches ${dateMonth}.
 		*/
 
-		while (IsTextNotEqual(locator1 = "Calendar#SCHEDULER_VIEW_MONTH_DATE", value1 = "February 2016") && (maxIterations = "100")) {
+		while ((IsTextNotEqual(locator1 = "Calendar#SCHEDULER_VIEW_MONTH_DATE", value1 = "February 2016")) && (maxIterations = "100")) {
 			Click(locator1 = "Calendar#VIEW_PREVIOUS_BUTTON");
 		}
 
-		while (IsTextNotEqual(locator1 = "Calendar#SCHEDULER_VIEW_MONTH_DATE", value1 = "${dateMonth}") && (maxIterations = "100")) {
+		while ((IsTextNotEqual(locator1 = "Calendar#SCHEDULER_VIEW_MONTH_DATE", value1 = "${dateMonth}")) && (maxIterations = "100")) {
 			Click(locator1 = "Calendar#VIEW_NEXT_BUTTON");
 		}
 	}

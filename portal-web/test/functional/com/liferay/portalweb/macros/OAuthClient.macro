@@ -165,7 +165,7 @@ definition {
 			baseURL = "${baseURL}",
 			navbar = "Clients");
 
-		while (IsElementNotPresent(key_rowIndexNumber = "1", locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N") && (maxIterations = "10")) {
+		while ((IsElementNotPresent(key_rowIndexNumber = "1", locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N")) && (maxIterations = "10")) {
 			Refresh();
 		}
 	}

@@ -123,7 +123,7 @@ definition {
 		}
 
 		task ("Assert that the cohort analysis card shows which individuals are returning after their first views") {
-			while (IsElementNotPresent(locator1 = "ACSites#COHORT_ANALYSIS_DAY_ZERO_PERCENTAGE") && (maxIterations = "50")) {
+			while ((IsElementNotPresent(locator1 = "ACSites#COHORT_ANALYSIS_DAY_ZERO_PERCENTAGE")) && (maxIterations = "50")) {
 				TestUtils.hardRefresh();
 			}
 

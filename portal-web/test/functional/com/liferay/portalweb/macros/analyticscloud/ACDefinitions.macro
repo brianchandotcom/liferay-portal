@@ -167,7 +167,7 @@ definition {
 
 		WaitForPageLoad();
 
-		while (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST") && (maxIterations = "50")) {
+		while ((IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
 			ACUtils.searchBar(searchItem = "${customEventName}");
 		}
 

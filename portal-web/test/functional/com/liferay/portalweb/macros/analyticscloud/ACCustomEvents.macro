@@ -34,7 +34,7 @@ definition {
 
 		WaitForPageLoad();
 
-		while (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST") && (maxIterations = "50")) {
+		while ((IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
 			ACUtils.searchBar(searchItem = "${customEventName}");
 		}
 
@@ -252,7 +252,7 @@ definition {
 
 		WaitForPageLoad();
 
-		while (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST") && (maxIterations = "50")) {
+		while ((IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
 			ACUtils.searchBar(searchItem = "${customEventName}");
 		}
 
@@ -283,7 +283,7 @@ definition {
 
 		WaitForPageLoad();
 
-		while (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST") && (maxIterations = "50")) {
+		while ((IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
 			ACUtils.searchBar(searchItem = "${customEventName}");
 		}
 
@@ -293,7 +293,7 @@ definition {
 	}
 
 	macro viewAlertLimitReached {
-		while (IsElementNotPresent(locator1 = "ACCustomEvents#ALERT_LIMIT_REACHED") && (maxIterations = "50")) {
+		while ((IsElementNotPresent(locator1 = "ACCustomEvents#ALERT_LIMIT_REACHED")) && (maxIterations = "50")) {
 			TestUtils.hardRefresh();
 		}
 

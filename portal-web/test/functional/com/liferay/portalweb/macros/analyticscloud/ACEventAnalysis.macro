@@ -25,7 +25,7 @@ definition {
 
 		ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
 
-		while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON") && (maxIterations = "50")) {
+		while ((IsElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON")) && (maxIterations = "50")) {
 			TestUtils.hardRefresh();
 
 			ACEventAnalysis.clickToAddEventButton();
@@ -278,7 +278,7 @@ definition {
 		for (var name : list "${eventList}") {
 			var key_buttonName = "${name}";
 
-			while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON") && (maxIterations = "100")) {
+			while ((IsElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON")) && (maxIterations = "100")) {
 				ACEventAnalysis.searchEventAnalysis(searchItem = "${name}");
 			}
 

@@ -254,7 +254,7 @@ definition {
 				optionName = "Suppressed Users",
 				optionValue = "Manage");
 
-			while (IsElementNotPresent(itemName = "${userEmail}", locator1 = "ACSettings#ITEM_ON_LIST") && (maxIterations = "50")) {
+			while ((IsElementNotPresent(itemName = "${userEmail}", locator1 = "ACSettings#ITEM_ON_LIST")) && (maxIterations = "50")) {
 				ACUtils.searchBar(searchItem = "${userName}");
 
 				ACUtils.clearSearchBar();
@@ -331,7 +331,7 @@ definition {
 				optionName = "Suppressed Users",
 				optionValue = "Manage");
 
-			while (IsElementNotPresent(itemName = "${userEmail}", locator1 = "ACSettings#ITEM_ON_LIST") && (maxIterations = "50")) {
+			while ((IsElementNotPresent(itemName = "${userEmail}", locator1 = "ACSettings#ITEM_ON_LIST")) && (maxIterations = "50")) {
 				Refresh();
 			}
 

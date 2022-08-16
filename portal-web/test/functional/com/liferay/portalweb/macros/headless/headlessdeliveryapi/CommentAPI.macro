@@ -9,7 +9,7 @@ definition {
 		[
 				''';
 
-		while ("${i}" != "${size}" && (maxIterations = "100")) {
+		while (("${i}" != "${size}") && (maxIterations = "100")) {
 			var commentBody = '''
 					{
 					"text": "commentText${i}"

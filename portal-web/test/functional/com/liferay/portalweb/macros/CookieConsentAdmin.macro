@@ -112,7 +112,7 @@ definition {
 	macro verifyAllConfigurationElementsAreConfigured {
 		WaitForElementPresent(locator1 = "CookieConsentAdmin#MENU_TITLE");
 
-		while (IsTextNotEqual(locator1 = "CookieConsentAdmin#TITLE", value1 = "${text}") && (maxIterations = "10")) {
+		while ((IsTextNotEqual(locator1 = "CookieConsentAdmin#TITLE", value1 = "${text}")) && (maxIterations = "10")) {
 			Refresh();
 		}
 

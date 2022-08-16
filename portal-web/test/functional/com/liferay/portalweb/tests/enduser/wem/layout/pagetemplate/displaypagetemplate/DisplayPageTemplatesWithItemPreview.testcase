@@ -229,7 +229,7 @@ definition {
 		task ("Add 21 web contents based on Basic Web Content") {
 			var n = "1";
 
-			while ("${n}" != "22" && (maxIterations = "30")) {
+			while (("${n}" != "22") && (maxIterations = "30")) {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content ${n}",
 					groupName = "Test Site Name",
@@ -267,7 +267,7 @@ definition {
 		task ("Preview 16 different web contents via preview item selector") {
 			var n = "1";
 
-			while ("${n}" != "17" && (maxIterations = "30")) {
+			while (("${n}" != "17") && (maxIterations = "30")) {
 				DisplayPageTemplate.selectPreviewItem(
 					assetTitle = "Web Content Title ${n}",
 					assetType = "Web Content Article",

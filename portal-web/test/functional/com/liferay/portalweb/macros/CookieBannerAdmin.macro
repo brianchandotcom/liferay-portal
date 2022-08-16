@@ -100,7 +100,7 @@ definition {
 	macro verifyAllConfigurationElementsAreConfigured {
 		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_TITLE");
 
-		while (IsTextNotEqual(locator1 = "CookieBannerAdmin#CONTENT", value1 = "${text}") && (maxIterations = "10")) {
+		while ((IsTextNotEqual(locator1 = "CookieBannerAdmin#CONTENT", value1 = "${text}")) && (maxIterations = "10")) {
 			Refresh();
 		}
 

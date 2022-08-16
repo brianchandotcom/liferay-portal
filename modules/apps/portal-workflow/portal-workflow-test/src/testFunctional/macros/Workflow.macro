@@ -1471,7 +1471,7 @@ definition {
 
 		Workflow._gotoPendingFilter();
 
-		while (IsElementNotPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK") && (maxIterations = "10")) {
+		while ((IsElementNotPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK")) && (maxIterations = "10")) {
 			Refresh();
 
 			Workflow._gotoPendingFilter();
@@ -1550,7 +1550,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
-		while (IsElementNotPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE") && (maxIterations = "10")) {
+		while ((IsElementNotPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE")) && (maxIterations = "10")) {
 			Navigator.gotoNavTab(navTab = "Assigned to Me");
 
 			Navigator.gotoNavTab(navTab = "Assigned to My Roles");

@@ -420,7 +420,7 @@ definition {
 			panel = "Applications",
 			portlet = "Metrics");
 
-		while (IsElementNotPresent(key_value = "down", locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER") && (maxIterations = "20")) {
+		while ((IsElementNotPresent(key_value = "down", locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER")) && (maxIterations = "20")) {
 			Refresh();
 		}
 

@@ -44,8 +44,11 @@ import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -84,7 +87,7 @@ public class MicroblogsEntryLocalServiceImpl
 
 		// Microblogs entry
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		Date date = new Date();
 
@@ -115,7 +118,8 @@ public class MicroblogsEntryLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(microblogsEntry, serviceContext);
+		_resourceLocalService.addModelResources(
+			microblogsEntry, serviceContext);
 
 		// Asset
 
@@ -134,7 +138,7 @@ public class MicroblogsEntryLocalServiceImpl
 
 		// Microblogs entry
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		Date date = new Date();
 
@@ -155,7 +159,7 @@ public class MicroblogsEntryLocalServiceImpl
 		microblogsEntry.setCreateDate(date);
 		microblogsEntry.setModifiedDate(date);
 		microblogsEntry.setCreatorClassNameId(
-			classNameLocalService.getClassNameId(User.class));
+			_classNameLocalService.getClassNameId(User.class));
 		microblogsEntry.setCreatorClassPK(user.getUserId());
 		microblogsEntry.setContent(content);
 		microblogsEntry.setType(type);
@@ -166,7 +170,8 @@ public class MicroblogsEntryLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(microblogsEntry, serviceContext);
+		_resourceLocalService.addModelResources(
+			microblogsEntry, serviceContext);
 
 		// Asset
 
@@ -245,7 +250,7 @@ public class MicroblogsEntryLocalServiceImpl
 
 			// Resource
 
-			resourceLocalService.deleteResource(
+			_resourceLocalService.deleteResource(
 				curMicroblogsEntry.getCompanyId(),
 				MicroblogsEntry.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
@@ -565,7 +570,7 @@ public class MicroblogsEntryLocalServiceImpl
 			microblogsEntry.getContent());
 
 		for (String screenName : screenNames) {
-			long userId = userLocalService.getUserIdByScreenName(
+			long userId = _userLocalService.getUserIdByScreenName(
 				serviceContext.getCompanyId(), screenName);
 
 			_subscriptionLocalService.addSubscription(
@@ -627,16 +632,25 @@ public class MicroblogsEntryLocalServiceImpl
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private MessageBus _messageBus;
 
 	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
 	private SocialActivityLocalService _socialActivityLocalService;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserNotificationEventLocalService

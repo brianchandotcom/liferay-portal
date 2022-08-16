@@ -190,9 +190,6 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		FilterBuilder filterBuilder = new FilterBuilder();
 
 		filterBuilder.addFilter(
-			"individualCount",
-			FilterConstants.COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL, 1);
-		filterBuilder.addFilter(
 			"status", FilterConstants.COMPARISON_OPERATOR_EQUALS,
 			IndividualSegment.Status.ACTIVE.name());
 

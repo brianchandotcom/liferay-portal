@@ -32,6 +32,9 @@ export default function useProductMenuHandler() {
 				},
 			});
 		}
+		else {
+			dispatch(switchSidebarPanel({sidebarOpen: true}));
+		}
 	}, [dispatch]);
 
 	useEffect(() => {

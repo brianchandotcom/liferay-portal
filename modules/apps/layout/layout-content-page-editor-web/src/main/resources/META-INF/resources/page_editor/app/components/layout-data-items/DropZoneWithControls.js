@@ -26,10 +26,6 @@ const DropZone = React.forwardRef(({item}, ref) => {
 				className="align-items-center bg-lighter d-flex flex-column justify-content-center page-editor__drop-zone text-3 text-center text-secondary"
 				ref={ref}
 			>
-				<p className="font-weight-bold mb-1">
-					{Liferay.Language.get('drop-zone')}
-				</p>
-
 				<p>
 					{Liferay.Language.get(
 						'fragments-and-widgets-for-pages-based-on-this-master-will-be-placed-here'

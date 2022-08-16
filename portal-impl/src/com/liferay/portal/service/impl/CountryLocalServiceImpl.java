@@ -351,13 +351,8 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 							)
 						);
 
-						if (keywordsPredicate == null) {
-							keywordsPredicate = termPredicate;
-						}
-						else {
-							keywordsPredicate = keywordsPredicate.or(
-								termPredicate);
-						}
+						keywordsPredicate = Predicate.or(
+							keywordsPredicate, termPredicate);
 					}
 
 					if (keywordsPredicate != null) {

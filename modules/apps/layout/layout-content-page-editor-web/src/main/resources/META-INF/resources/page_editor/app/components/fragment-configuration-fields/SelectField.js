@@ -22,6 +22,8 @@ import React, {useState} from 'react';
 import useControlledState from '../../../core/hooks/useControlledState';
 import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+import {useSelector} from '../../contexts/StoreContext';
+import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
 import isNullOrUndefined from '../../utils/isNullOrUndefined';
 import {useId} from '../../utils/useId';
 import {AdvancedSelectField} from './AdvancedSelectField';
@@ -30,10 +32,15 @@ export function SelectField({
 	className,
 	disabled,
 	field,
+	item,
 	onValueSelect,
 	value,
 }) {
+	const canDetachTokenValues = useSelector(selectCanDetachTokenValues);
 	const {tokenValues} = useStyleBook();
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 
 	const validValues = field.typeOptions?.validValues || field.validValues;
 
@@ -78,10 +85,13 @@ export function SelectField({
 				/>
 			) : field.icon && Liferay.FeatureFlags['LPS-143206'] ? (
 				<AdvancedSelectField
+					canDetachTokenValues={canDetachTokenValues}
 					disabled={disabled}
 					field={field}
+					item={item}
 					onValueSelect={onValueSelect}
 					options={getOptions(validValues)}
+					selectedViewportSize={selectedViewportSize}
 					tokenValues={tokenValues}
 					value={
 						isNullOrUndefined(value) ? field.defaultValue : value

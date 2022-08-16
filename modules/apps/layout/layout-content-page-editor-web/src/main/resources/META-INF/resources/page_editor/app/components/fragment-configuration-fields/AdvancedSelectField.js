@@ -26,26 +26,24 @@ import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useActiveItemId} from '../../contexts/ControlsContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';
-import {useSelector} from '../../contexts/StoreContext';
-import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
+import getPreviousResponsiveStyle from '../../utils/getPreviousResponsiveStyle';
 import isNullOrUndefined from '../../utils/isNullOrUndefined';
 import isValidStyleValue from '../../utils/isValidStyleValue';
 import {useId} from '../../utils/useId';
 
 export function AdvancedSelectField({
+	canDetachTokenValues,
 	disabled,
 	field,
+	item,
 	onValueSelect,
 	options,
+	selectedViewportSize,
 	tokenValues,
 	value,
 }) {
-	const canDetachTokenValues = useSelector(selectCanDetachTokenValues);
 	const helpTextId = useId();
-	const selectedViewportSize = useSelector(
-		(state) => state.selectedViewportSize
-	);
 	const triggerId = useId();
 
 	const [active, setActive] = useState(false);
@@ -83,6 +81,28 @@ export function AdvancedSelectField({
 		if (event.key === 'Enter') {
 			handleInputBlur(event);
 		}
+	};
+
+	const onSetValue = ({isTokenValue, value}) => {
+		if (value === null) {
+			const previousViewportValue = getPreviousResponsiveStyle(
+				field.name,
+				item.config,
+				selectedViewportSize
+			);
+
+			if (previousViewportValue === nextValue) {
+				return;
+			}
+
+			setNextValue(previousViewportValue);
+		}
+		else {
+			setNextValue(value);
+		}
+
+		setIsTokenValueOrInherited(isTokenValue);
+		onValueSelect(field.name, value);
 	};
 
 	return (
@@ -125,14 +145,12 @@ export function AdvancedSelectField({
 						<ClayButtonWithIcon
 							className="border-0 mb-0 page-editor__select-field__action-button"
 							displayType="secondary"
-							onClick={() => {
-								setIsTokenValueOrInherited(false);
-								setNextValue(tokenValues[value].value);
-								onValueSelect(
-									field.name,
-									tokenValues[value].value
-								);
-							}}
+							onClick={() =>
+								onSetValue({
+									isTokenValue: false,
+									value: tokenValues[value].value,
+								})
+							}
 							small
 							symbol="chain-broken"
 							title={Liferay.Language.get('detach-token')}
@@ -171,14 +189,10 @@ export function AdvancedSelectField({
 											key={value}
 											onClick={() => {
 												setActive(false);
-												setIsTokenValueOrInherited(
-													true
-												);
-												setNextValue(value);
-												onValueSelect(
-													field.name,
-													value
-												);
+												onSetValue({
+													isTokenValue: true,
+													value,
+												});
 											}}
 										>
 											{label}
@@ -192,7 +206,9 @@ export function AdvancedSelectField({
 					<ClayButtonWithIcon
 						className="border-0 mb-0 page-editor__select-field__action-button"
 						displayType="secondary"
-						onClick={() => {}}
+						onClick={() =>
+							onSetValue({isTokenValue: true, value: null})
+						}
 						small
 						symbol="restore"
 						title={getResetLabelByViewport(selectedViewportSize)}

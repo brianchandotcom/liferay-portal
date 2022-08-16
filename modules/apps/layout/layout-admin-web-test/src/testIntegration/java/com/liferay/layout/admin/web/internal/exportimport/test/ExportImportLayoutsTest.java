@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.layout.admin.web.internal.portlet.constants.LayoutAdminWebPortletKeys;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -114,8 +115,7 @@ public class ExportImportLayoutsTest {
 
 		LayoutTestUtil.addPortletToLayout(
 			templateLayout,
-			LayoutPageTemplateAdminWebTestPortletKeys.
-				LAYOUT_PAGE_TEMPLATE_ADMIN_WEB_TEST_PORTLET);
+			LayoutAdminWebPortletKeys.LAYOUT_ADMIN_WEB_TEST_PORTLET);
 
 		LayoutPrototype layoutPrototype =
 			LayoutPrototypeLocalServiceUtil.getLayoutPrototype(

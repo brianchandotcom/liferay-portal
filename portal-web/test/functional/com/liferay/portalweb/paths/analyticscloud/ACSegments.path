@@ -144,11 +144,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DATA_SOURCE_SEGMENT</td>
-	<td>//tr[.//*[normalize-space(text())='${key_dataSource}']]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ORGANIZATION_NAME_INPUT</td>
 	<td>//input[contains(@data-testid,'string-input')]</td>
 	<td></td>
@@ -265,7 +260,7 @@
 </tr>
 <tr>
 	<td>SELECT_BUTTON</td>
-	<td>//div[@class='criterion']//div[contains(@class,'input-group-append')]</td>
+	<td>//div[@class='criterion'][${key_indexField}]//div[contains(@class,'input-group-append')]</td>
 	<td></td>
 </tr>
 <tr>

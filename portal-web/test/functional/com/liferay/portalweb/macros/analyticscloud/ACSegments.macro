@@ -171,18 +171,6 @@ definition {
 		Click(locator1 = "ACSegments#CANCEL_SEGMENT");
 	}
 
-	macro checkDataSourceOrigin {
-		var key_dataSource = "${dataSource}";
-
-		Click(locator1 = "ACSegments#SELECT_BUTTON");
-
-		ACSegments.searchSegment(findSegment = "${documentTitle}");
-
-		AssertElementPresent(locator1 = "ACSegments#DATA_SOURCE_SEGMENT");
-
-		Click(locator1 = "ACSegments#MODAL_CANCEL_BUTTON");
-	}
-
 	macro clickCheckboxMember {
 		var key_tableMember = "${tableMember}";
 

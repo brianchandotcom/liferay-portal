@@ -1376,43 +1376,52 @@ definition {
 	@description = "Bug: LRAC-8233 | Automation ID: LRAC-11537 | Test Summary: Check web behavior shows which data source data came from"
 	@priority = "3"
 	test CheckWebBehaviorSegmentShowsWhichDataSourceDataCameFrom {
-		ACUtils.createBlogsAndAddToPage();
+		task ("Create a blog page and view page") {
+			ACUtils.createBlogsAndAddToPage();
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		var dataSourceName = StringUtil.extractFirst("${propertyName}", "Combined");
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "Combined");
 
-		var dataSourceName = StringUtil.trim("${dataSourceName}");
+			var dataSourceName = StringUtil.trim("${dataSourceName}");
 
-		ACUtils.navigateToSitePage(
-			actionType = "View Blog",
-			documentTitleList = "Blogs AC Title",
-			pageName = "AC Page",
-			siteName = "Site Name");
+			ACUtils.navigateToSitePage(= "AC Page", actionType = "View Blog", documentTitleList = "Blogs AC Title", siteName = "Site Name");
 
-		ACUtils.closeAllSessionsAndWait();
+			ACUtils.closeAllSessionsAndWait();
+		}
 
-		ACUtils.launchAC();
+		task ("Go to AC") {
+			ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
 
-		ACNavigation.goToSegments();
+		task ("Create new Dynamic Segment") {
+			ACNavigation.goToSegments();
 
-		ACSegments.createDynamicSegment();
+			ACSegments.createDynamicSegment();
 
-		ACUtils.setItemName(itemName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
-		ACSegments.addSegmentField(segmentField = "Viewed Page");
+			ACSegments.addSegmentField(segmentField = "Viewed Page");
 
-		ACSegments.editWebBehaviorCriterion(
-			indexField = "1",
-			occurenceNumber = "4",
-			searchTerm = "Blogs AC Title - Site Name - Liferay DXP");
+			ACSegments.editWebBehaviorCriterion(
+				indexField = "1",
+				occurenceNumber = "4",
+				searchTerm = "Blogs AC Title - Site Name - Liferay DXP");
+		}
 
-		ACSegments.checkDataSourceOrigin(
-			dataSource = "${dataSourceName}",
-			documentTitle = "Blogs AC Title - Site Name - Liferay DXP",
-			indexField = "1");
+		task ("Check for data source origin") {
+			var key_indexField = "1";
+
+			Click(locator1 = "ACSegments#SELECT_BUTTON");
+
+			ACSegments.searchSegment(findSegment = "${documentTitle}");
+
+			ACUtils.viewGenericText(textValueList = "${dataSourceName}");
+
+			Click(locator1 = "ACSegments#MODAL_CANCEL_BUTTON");
+		}
 	}
 
 }

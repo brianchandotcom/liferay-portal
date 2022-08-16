@@ -61,7 +61,7 @@ RepositoryEntryBrowserDisplayContext repositoryEntryBrowserDisplayContext = new 
 
 ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositoryEntryManagementToolbarDisplayContext = new ItemSelectorRepositoryEntryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, repositoryEntryBrowserDisplayContext);
 
-if (showDragAndDropZone && FFItemSelectorSingleFileUploaderConfigurationUtil.enabled()) {
+if (showDragAndDropZone) {
 	emptyResultsMessage = null;
 }
 
@@ -116,63 +116,39 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 	</c:if>
 
 	<c:if test="<%= showDragAndDropZone && !showSearchInfo %>">
-		<c:choose>
-			<c:when test="<%= FFItemSelectorSingleFileUploaderConfigurationUtil.enabled() %>">
-				<div class="dropzone-wrapper <%= (repositoryEntriesCount == 0) ? "dropzone-wrapper-search-container-empty" : StringPool.BLANK %>">
-					<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
+		<div class="dropzone-wrapper <%= (repositoryEntriesCount == 0) ? "dropzone-wrapper-search-container-empty" : StringPool.BLANK %>">
+			<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
 
-					<react:component
-						data='<%=
-							HashMapBuilder.<String, Object>put(
-								"closeCaption", LanguageUtil.get(request, tabName)
-							).put(
-								"editImageURL",
-								() -> {
-									if (editImageURL != null) {
-										return editImageURL.toString();
-									}
+			<react:component
+				data='<%=
+					HashMapBuilder.<String, Object>put(
+						"closeCaption", LanguageUtil.get(request, tabName)
+					).put(
+						"editImageURL",
+						() -> {
+							if (editImageURL != null) {
+								return editImageURL.toString();
+							}
 
-									return null;
-								}
-							).put(
-								"itemSelectedEventName", itemSelectedEventName
-							).put(
-								"maxFileSize", maxFileSize
-							).put(
-								"mimeTypeRestriction", mimeTypeRestriction
-							).put(
-								"uploadItemReturnType", HtmlUtil.escapeAttribute(returnType)
-							).put(
-								"uploadItemURL", uploadURL.toString()
-							).put(
-								"validExtensions", StringUtil.merge(extensions)
-							).build()
-						%>'
-						module="item_selector_uploader/js/SingleFileUploader"
-					/>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<liferay-util:buffer
-					var="selectFileHTML"
-				>
-					<input accept="<%= ListUtil.isEmpty(extensions) ? "*" : StringUtil.merge(extensions) %>" class="input-file" id="<%= randomNamespace %>InputFile" type="file" />
-
-					<label class="btn btn-secondary" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
-				</liferay-util:buffer>
-
-				<div class="drop-enabled drop-zone">
-					<c:choose>
-						<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
-							<%= selectFileHTML %>
-						</c:when>
-						<c:otherwise>
-							<strong><liferay-ui:message arguments="<%= selectFileHTML %>" key="drag-and-drop-to-upload-or-x" /></strong>
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</c:otherwise>
-		</c:choose>
+							return null;
+						}
+					).put(
+						"itemSelectedEventName", itemSelectedEventName
+					).put(
+						"maxFileSize", maxFileSize
+					).put(
+						"mimeTypeRestriction", mimeTypeRestriction
+					).put(
+						"uploadItemReturnType", HtmlUtil.escapeAttribute(returnType)
+					).put(
+						"uploadItemURL", uploadURL.toString()
+					).put(
+						"validExtensions", StringUtil.merge(extensions)
+					).build()
+				%>'
+				module="item_selector_uploader/js/SingleFileUploader"
+			/>
+		</div>
 	</c:if>
 
 	<c:if test="<%= (existingFileEntryReturnType != null) || (itemSelectorReturnTypeResolver != null) %>">
@@ -647,7 +623,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 			editImageURL: '<%= editImageURL.toString() %>',
 		</c:if>
 
-		ffItemSelectorSingleFileUploaderEnabled: <%= FFItemSelectorSingleFileUploaderConfigurationUtil.enabled() %>,
+		itemSelectorSingleFileUploaderEnabled: <%= true %>,
 
 		maxFileSize: '<%= maxFileSize %>',
 
@@ -656,7 +632,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 		validExtensions:
 			'<%= ListUtil.isEmpty(extensions) ? "*" : StringUtil.merge(extensions) %>',
 
-		<c:if test="<%= (uploadURL != null) && !FFItemSelectorSingleFileUploaderConfigurationUtil.enabled() %>">
+		<c:if test="<%= uploadURL != null %>">
 			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(returnType) %>',
 			uploadItemURL: '<%= uploadURL.toString() %>',
 		</c:if>

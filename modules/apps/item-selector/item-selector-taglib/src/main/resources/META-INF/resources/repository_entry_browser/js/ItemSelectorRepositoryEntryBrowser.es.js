@@ -45,7 +45,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 		const {
 			closeCaption,
 			editImageURL,
-			ffItemSelectorSingleFileUploaderEnabled = false,
+			itemSelectorSingleFileUploaderEnabled = false,
 			maxFileSize = Liferay.PropsValues
 				.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
 			rootNode,
@@ -56,7 +56,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 		this.closeCaption = closeCaption;
 		this.editImageURL = editImageURL;
-		this.ffItemSelectorSingleFileUploaderEnabled = ffItemSelectorSingleFileUploaderEnabled;
+		this.itemSelectorSingleFileUploaderEnabled = itemSelectorSingleFileUploaderEnabled;
 		this.maxFileSize = this._convertMaxFileSize(maxFileSize);
 		this.rootNode = rootNode;
 		this.validExtensions = validExtensions;
@@ -147,7 +147,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			)
 		);
 
-		if (!this.ffItemSelectorSingleFileUploaderEnabled) {
+		if (!this.itemSelectorSingleFileUploaderEnabled) {
 			const inputFileNode = this.one('input[type="file"]');
 
 			if (inputFileNode) {

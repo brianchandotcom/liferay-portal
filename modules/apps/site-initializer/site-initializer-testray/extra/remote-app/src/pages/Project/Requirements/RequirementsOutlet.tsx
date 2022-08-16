@@ -38,7 +38,11 @@ const RequirementsOutlet = () => {
 	const {pathname} = useLocation();
 	const basePath = `/project/${projectId}/cases/${caseId}`;
 
-	const {data: testrayRequirement, loading} = useFetch(
+	const {
+		data: testrayRequirement,
+		loading,
+		mutate: requirementsMutate,
+	} = useFetch(
 		getRequirementQuery(requirementId),
 		getRequirementTransformData
 	);
@@ -88,7 +92,7 @@ const RequirementsOutlet = () => {
 		return null;
 	}
 
-	return <Outlet context={testrayRequirement} />;
+	return <Outlet context={{requirementsMutate, testrayRequirement}} />;
 };
 
 export default RequirementsOutlet;

@@ -1014,6 +1014,317 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-157739. The page creator could receive an object entry after submitting form."
+	@priority = "5"
+	test ViewCreatedObjectEntryAfterSubmitForm {
+		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-157738=true";
+		property test.name.skip.portal.instance = "FormContainer#ViewCreatedObjectEntryAfterSubmitForm";
+
+		task ("Given a page creator has a Form Container on a content page") {
+			task ("Add a picklist with two items") {
+				Picklist.addPicklistViaAPI(picklistName = "Ticket Type");
+
+				Picklist.addPicklistItemViaAPI(
+					itemKey = "firstClass",
+					itemName = "First Class",
+					picklistName = "Ticket Type");
+
+				Picklist.addPicklistItemViaAPI(
+					itemKey = "businessClass",
+					itemName = "Business Class",
+					picklistName = "Ticket Type");
+			}
+
+			task ("Add the second object then add relationship with the first object") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "Preference",
+					objectName = "Preference",
+					pluralLabelName = "Preferences");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Food Preferences",
+					fieldName = "foodPreferences",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "Preference");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "Preference");
+
+				ObjectAdmin.addObjectRelationshipViaAPI(
+					objectName_1 = "Preference",
+					objectName_2 = "PurchaseOrder",
+					relationshipLabel = "Favorite Food",
+					relationshipName = "favoriteFood",
+					relationshipType = "oneToMany");
+
+				ObjectAdmin.openObjectAdmin();
+
+				ObjectPortlet.selectCustomObject(label = "Preference");
+
+				CreateObject.selectTitleField(fieldLabel = "Food Preferences");
+
+				CreateObject.saveObject();
+
+				for (var entryName : list "Fish,Salad,Rice") {
+					ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+						fieldName = "foodPreferences",
+						objectName = "Preference",
+						value = "${entryName}");
+				}
+			}
+
+			task ("Add fields to the first object") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Picklist",
+					fieldLabelName = "Type",
+					fieldName = "type",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "PurchaseOrder",
+					picklistName = "Ticket Type");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "LongInteger",
+					fieldLabelName = "Amount",
+					fieldName = "amount",
+					fieldType = "Long",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Integer",
+					fieldLabelName = "Age",
+					fieldName = "age",
+					fieldType = "Integer",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "PrecisionDecimal",
+					fieldLabelName = "Price",
+					fieldName = "price",
+					fieldType = "BigDecimal",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Decimal",
+					fieldLabelName = "Tax",
+					fieldName = "tax",
+					fieldType = "Double",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Date",
+					fieldLabelName = "Purchase Date",
+					fieldName = "purchaseDate",
+					fieldType = "Date",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Attachment",
+					fieldLabelName = "Custom Attachment From Computer",
+					fieldName = "customAttachmentFromComputer",
+					fieldType = "Long",
+					fileSource = "userComputer",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Attachment",
+					fieldLabelName = "Custom Attachment From DM",
+					fieldName = "customAttachmentFromDM",
+					fieldType = "Long",
+					fileSource = "documentsAndMedia",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Boolean",
+					fieldLabelName = "I accept the terms of use and Privacy Policy",
+					fieldName = "iAcceptTheTermsOfUseAndPrivacyPolicy",
+					fieldType = "Boolean",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "LongText",
+					fieldLabelName = "Address",
+					fieldName = "address",
+					fieldType = "Clob",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+			}
+
+			task ("Add a Form Container to a content page then map to the first object") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+
+				PageEditor.waitForAutoSave();
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the page creator submits the form with data at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Type(
+				key_text = "Address",
+				locator1 = "TextInput#ANY",
+				value1 = "Dalian");
+
+			Type(
+				key_text = "Age",
+				locator1 = "TextInput#ANY",
+				value1 = "30");
+
+			Type(
+				key_text = "Amount",
+				locator1 = "TextInput#ANY",
+				value1 = "100");
+
+			UploadDependencyFile.uploadFile(fileName = "Document_1.jpg");
+
+			Click(locator1 = "xpath=(//label[contains(.,'Select File')])[2]");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			UploadDependencyFile.uploadFile(fileName = "Document_2.jpg");
+
+			WaitForElementPresent(
+				key_text = "Add",
+				locator1 = "Button#ANY_ENABLED");
+
+			Button.clickAdd();
+
+			Check.checkNotVisible(
+				index = "1",
+				locator1 = "Fragment#INPUT_FIELD",
+				type = "checkbox");
+
+			Type(
+				key_text = "Price",
+				locator1 = "TextInput#ANY",
+				value1 = "3000");
+
+			Type.sendKeys(
+				key_text = "Purchase Date",
+				locator1 = "TextInput#ANY",
+				value1 = "08082020");
+
+			Click(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			MenuItem.click(menuItem = "Fish");
+
+			Type(
+				key_text = "Region",
+				locator1 = "TextInput#ANY",
+				value1 = "China");
+
+			Type(
+				key_text = "Tax",
+				locator1 = "TextInput#ANY",
+				value1 = "3");
+
+			Click(
+				index = "2",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			MenuItem.click(menuItem = "First Class");
+
+			Button.clickSubmitButton();
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+		}
+
+		task ("Then the page creator could see the created object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "PurchaseOrder");
+
+			ObjectPortlet.viewEntryDetails(entry = "Dalian");
+
+			AssertTextEquals(
+				key_label = "Address",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "Dalian");
+
+			AssertTextEquals(
+				key_text = "Age",
+				locator1 = "TextInput#ANY",
+				value1 = "30");
+
+			AssertTextEquals(
+				key_text = "Amount",
+				locator1 = "TextInput#ANY",
+				value1 = "100");
+
+			AssertVisible(
+				key_fieldLabel = "Custom Attachment From Computer",
+				key_text = "Document_1.jpg",
+				locator1 = "Button#ANY_WITH_LABEL");
+
+			AssertVisible(
+				key_fieldLabel = "Custom Attachment From DM",
+				key_text = "Document_2.jpg",
+				locator1 = "Button#ANY_WITH_LABEL");
+
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "I accept the terms of use and Privacy Policy",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			AssertTextEquals(
+				key_text = "Price",
+				locator1 = "TextInput#ANY",
+				value1 = "3000.0000000000000000");
+
+			AssertTextEquals(
+				key_text = "Favorite Food",
+				locator1 = "TextInput#ANY",
+				value1 = "Fish");
+
+			AssertTextEquals(
+				key_text = "Purchase Date",
+				locator1 = "TextInput#ANY",
+				value1 = "08/08/2020");
+
+			AssertTextEquals(
+				key_text = "Region",
+				locator1 = "TextInput#ANY",
+				value1 = "China");
+
+			AssertTextEquals(
+				key_text = "Tax",
+				locator1 = "TextInput#ANY",
+				value1 = "3.0");
+
+			AssertTextEquals(
+				key_fieldFieldLabel = "Type",
+				locator1 = "DDMField#SELECT_FROM_LIST",
+				value1 = "First Class");
+		}
+	}
+
 	@description = "This is a test for LPS-151402. The user could only see the first error message when multiple validation issues happen on submitting a form."
 	@priority = "4"
 	test ViewOnlyTheFirstErrorMessageShownWhenMultipleValidationIssuesHappen {

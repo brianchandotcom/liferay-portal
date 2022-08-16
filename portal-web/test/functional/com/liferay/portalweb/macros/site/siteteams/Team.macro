@@ -38,6 +38,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
+		WaitForPageLoad();
+
 		Search.searchCP(searchTerm = "${userScreenName}");
 
 		if ("${userNameIsNotFound}" == "true") {

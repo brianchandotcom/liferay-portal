@@ -12,40 +12,43 @@
  * details.
  */
 
+import {useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import useFormModal from '../../../hooks/useFormModal';
+import useFormActions from '../../../hooks/useFormActions';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
 import {TestraySuite, deleteResource} from '../../../services/rest';
-import {Action} from '../../../types';
+import {Action, ActionsHookParameter} from '../../../types';
 
-const useSuiteActions = () => {
+const useSuiteActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
+	const {form} = useFormActions();
 	const navigate = useNavigate();
 	const {removeItemFromList} = useMutate();
 
-	const formModal = useFormModal();
-	const modal = formModal.modal;
-
-	const actions: Action[] = [
+	const actionsRef = useRef([
 		{
-			action: ({id}: TestraySuite) => navigate(`${id}/update`),
-			name: i18n.translate('edit'),
+			action: (suite: TestraySuite) =>
+				navigate(isHeaderActions ? 'update' : `${suite.id}/update`),
+			icon: 'pencil',
+			name: i18n.translate(isHeaderActions ? 'edit-suite' : 'edit'),
 			permission: 'UPDATE',
 		},
 		{
 			action: ({id}: TestraySuite, mutate) =>
 				deleteResource(`/suites/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
-					.catch(modal.onError),
-			name: i18n.translate('delete'),
+					.then(form.onSuccess)
+					.catch(form.onError),
+			icon: 'trash',
+			name: i18n.translate(isHeaderActions ? 'delete-suite' : 'delete'),
 			permission: 'DELETE',
 		},
-	];
+	] as Action[]);
 
 	return {
-		actions,
-		formModal,
+		actions: actionsRef.current,
+		navigate,
 	};
 };
 

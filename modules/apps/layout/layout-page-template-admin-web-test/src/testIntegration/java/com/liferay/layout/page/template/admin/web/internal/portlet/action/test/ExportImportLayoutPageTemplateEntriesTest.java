@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -335,7 +336,7 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
 					TestPropsValues.getUserId(), group.getGroupId(),
-					"Page Template Collection", StringPool.BLANK,
+					RandomTestUtil.randomString(), StringPool.BLANK,
 					serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -343,7 +344,7 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Page Template One",
+				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE, 0,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -354,11 +355,13 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			templateLayout,
 			"com_liferay_asset_publisher_web_AssetPublisherPortlet");
 
-		_addLayoutFromTemplateWithAnOldFriendlyURL(
-			group, layoutPageTemplateEntry, "/test1");
+		String layoutName = RandomTestUtil.randomString();
 
 		_addLayoutFromTemplateWithAnOldFriendlyURL(
-			group, layoutPageTemplateEntry, "/test2");
+			group, layoutPageTemplateEntry, layoutName);
+
+		_addLayoutFromTemplateWithAnOldFriendlyURL(
+			group, layoutPageTemplateEntry, layoutName);
 
 		long[] layoutIds = ListUtil.toLongArray(
 			_layoutLocalService.getLayouts(group.getGroupId(), false),
@@ -373,7 +376,7 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 		_exportImportConfiguration =
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(), "export-group",
+					TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 					exportLayoutSettingsMap);
 
@@ -392,7 +395,8 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			_exportImportConfiguration =
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
-						TestPropsValues.getUserId(), "import-group",
+						TestPropsValues.getUserId(),
+						RandomTestUtil.randomString(),
 						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
 						importLayoutSettingsMap);
 
@@ -426,11 +430,11 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 
 	private Layout _addLayoutFromTemplateWithAnOldFriendlyURL(
 			Group group, LayoutPageTemplateEntry layoutPageTemplateEntry,
-			String newFriendlyURL)
+			String name)
 		throws Exception {
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			group.getGroupId(), "Test", false);
+			group.getGroupId(), name, false);
 
 		Layout templateLayout = LayoutLocalServiceUtil.getLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -447,15 +451,21 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 
 		layout = _layoutLocalService.updateLayout(layout);
 
+		String newFriendlyURL = FriendlyURLNormalizerUtil.normalize(
+			RandomTestUtil.randomString());
+
 		layout = _layoutLocalService.updateFriendlyURL(
-			layout.getUserId(), layout.getPlid(), newFriendlyURL, "en_US");
+			layout.getUserId(), layout.getPlid(),
+			StringPool.SLASH + newFriendlyURL, "en_US");
 
 		String className = "com.liferay.portal.kernel.model.Layout-false";
+
+		String oldFriendlyURL = FriendlyURLNormalizerUtil.normalize(name);
 
 		FriendlyURLEntry oldFriendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				layout.getGroupId(), PortalUtil.getClassNameId(className),
-				"/test");
+				StringPool.SLASH + oldFriendlyURL);
 
 		Assert.assertNotNull(oldFriendlyURLEntry);
 

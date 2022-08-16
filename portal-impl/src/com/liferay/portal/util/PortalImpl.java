@@ -274,6 +274,7 @@ import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
@@ -282,6 +283,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.PreferencesValidator;
+import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.ValidatorException;
@@ -870,21 +872,21 @@ public class PortalImpl implements Portal {
 		StateAwareResponse stateAwareResponse =
 			(StateAwareResponse)liferayPortletResponse;
 
-		Map<String, String[]> renderParameters =
-			stateAwareResponse.getRenderParameterMap();
+		MutableRenderParameters mutableRenderParameters =
+			stateAwareResponse.getRenderParameters();
 
-		actionResponse.setRenderParameter("p_p_lifecycle", "1");
+		mutableRenderParameters.setValue("p_p_lifecycle", "1");
 
-		Enumeration<String> enumeration = actionRequest.getParameterNames();
+		RenderParameters renderParameters = actionRequest.getRenderParameters();
 
-		while (enumeration.hasMoreElements()) {
-			String param = enumeration.nextElement();
+		for (String param : renderParameters.getNames()) {
+			String[] paramValues = mutableRenderParameters.getValues(
+				actionResponse.getNamespace() + param);
 
-			if ((renderParameters.get(actionResponse.getNamespace() + param) ==
-					null) &&
-				!param.equals("password1") && !param.equals("password2")) {
+			if ((paramValues == null) && !param.equals("password1") &&
+				!param.equals("password2")) {
 
-				String[] values = actionRequest.getParameterValues(param);
+				String[] values = renderParameters.getValues(param);
 
 				if (values == null) {
 					values = new String[0];
@@ -901,7 +903,7 @@ public class PortalImpl implements Portal {
 						});
 				}
 
-				actionResponse.setRenderParameter(param, values);
+				mutableRenderParameters.setValues(param, values);
 			}
 		}
 	}

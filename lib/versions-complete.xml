@@ -2885,7 +2885,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-04-09 03:08:17</current-version-publish-date>
-				<latest-version-publish-date>2022-05-28 03:31:18</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-16 03:28:12</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.oauth.client.persistence.service.jar!oauth2-oidc-sdk.jar</file-name>
@@ -4770,7 +4770,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-04-09 03:08:17</current-version-publish-date>
-				<latest-version-publish-date>2022-05-28 03:31:18</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-16 03:28:12</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!oauth2-oidc-sdk.jar</file-name>
@@ -5267,7 +5267,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 13:54:32</current-version-publish-date>
-				<latest-version-publish-date>2022-08-12 13:14:20</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-15 13:37:18</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-kms.jar</file-name>
@@ -5281,7 +5281,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 13:54:29</current-version-publish-date>
-				<latest-version-publish-date>2022-08-12 13:14:45</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-15 13:39:32</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-s3.jar</file-name>
@@ -5295,7 +5295,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 13:53:45</current-version-publish-date>
-				<latest-version-publish-date>2022-08-12 13:14:43</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-15 13:39:33</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!commons-codec.jar</file-name>
@@ -6029,7 +6029,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2019-05-22 13:49:18</current-version-publish-date>
-				<latest-version-publish-date>2022-08-05 07:35:54</latest-version-publish-date>
+				<latest-version-publish-date>2022-08-16 00:27:42</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!graphql-java.jar</file-name>
@@ -6042,8 +6042,8 @@
 						<license-url>https://github.com/graphql-java/graphql-java/blob/master/LICENSE.md</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2021-07-12 15:08:38</current-version-publish-date>
-				<latest-version-publish-date>2022-08-15 03:31:38</latest-version-publish-date>
+				<current-version-publish-date>2021-07-12 22:18:43</current-version-publish-date>
+				<latest-version-publish-date>2022-08-16 03:35:12</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!guava.jar</file-name>
@@ -7054,6 +7054,20 @@
 				<latest-version-publish-date>2021-12-28 09:21:29</latest-version-publish-date>
 			</library>
 			<library>
+				<file-name>com.liferay.shared.dependencies.woodstox.core.jar!woodstox-core.jar</file-name>
+				<version>6.2.6</version>
+				<project-name>Woodstox</project-name>
+				<project-url>https://github.com/FasterXML/woodstox</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+				<current-version-publish-date>2021-04-19 14:19:59</current-version-publish-date>
+				<latest-version-publish-date>2022-08-13 14:21:20</latest-version-publish-date>
+			</library>
+			<library>
 				<file-name>com.liferay.shared.dependencies.xstream.jar!kxml2.jar</file-name>
 				<version>2.3.0</version>
 				<project-name>kXML 2 is a small XML pull parser based on the common XML pull API</project-name>
@@ -7187,20 +7201,6 @@
 				</licenses>
 				<current-version-publish-date>2020-05-13 21:15:53</current-version-publish-date>
 				<latest-version-publish-date>2020-05-13 21:15:53</latest-version-publish-date>
-			</library>
-			<library>
-				<file-name>com.liferay.translation.service.jar!woodstox-core.jar</file-name>
-				<version>6.2.6</version>
-				<project-name>Woodstox</project-name>
-				<project-url>https://github.com/FasterXML/woodstox</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-				<current-version-publish-date>2021-04-19 14:19:59</current-version-publish-date>
-				<latest-version-publish-date>2022-08-13 14:21:20</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.translation.translator.aws.jar!commons-codec.jar</file-name>

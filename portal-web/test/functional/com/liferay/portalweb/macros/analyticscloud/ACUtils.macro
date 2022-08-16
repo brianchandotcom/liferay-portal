@@ -9,9 +9,17 @@ definition {
 			var layoutName = "AC Page";
 		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "${siteName}",
-			layoutName = "${layoutName}");
+		if (!(isSet(type))) {
+			JSONLayout.addPublicLayout(
+				groupName = "${siteName}",
+				layoutName = "${layoutName}");
+		}
+		else {
+			JSONLayout.addPublicLayout(
+				groupName = "${siteName}",
+				layoutName = "${layoutName}",
+				type = "${type}");
+		}
 	}
 
 	macro addSiteAndPage {
@@ -25,9 +33,17 @@ definition {
 			var layoutName = "AC Page";
 		}
 
-		ACUtils.addPage(
-			layoutName = "${layoutName}",
-			siteName = "${siteName}");
+		if (!(isSet(type))) {
+			ACUtils.addPage(
+				layoutName = "${layoutName}",
+				siteName = "${siteName}");
+		}
+		else {
+			ACUtils.addPage(
+				layoutName = "${layoutName}",
+				siteName = "${siteName}",
+				type = "${type}");
+		}
 	}
 
 	macro addWidgetToPage {

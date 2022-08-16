@@ -1,7 +1,149 @@
 definition {
 
+	macro _inputCountryDetails {
+		PortletEntry.inputName(name = "${countryName}");
+
+		if (isSet(key)) {
+			PortletEntry.inputText(
+				fieldLabel = "Key",
+				text = "${key}");
+		}
+
+		if (isSet(twoLetterISOCode)) {
+			PortletEntry.inputText(
+				fieldLabel = "Two-Letter ISO Code",
+				text = "${twoLetterISOCode}");
+		}
+
+		if (isSet(threeLetterISOCode)) {
+			PortletEntry.inputText(
+				fieldLabel = "Three-Letter ISO Code",
+				text = "${threeLetterISOCode}");
+		}
+
+		if (isSet(countryNumber)) {
+			PortletEntry.inputText(
+				fieldLabel = "Number",
+				text = "${countryNumber}");
+		}
+
+		if (isSet(countryCallingCode)) {
+			PortletEntry.inputText(
+				fieldLabel = "Country Calling Code",
+				text = "${countryCallingCode}");
+		}
+
+		if (isSet(countryPosition)) {
+			PortletEntry.inputText(
+				fieldLabel = "Position",
+				text = "${countryPosition}");
+		}
+	}
+
+	macro addCountry {
+		LexiconEntry.gotoAdd();
+
+		CountriesManagement._inputCountryDetails(
+			countryCallingCode = "${countryCallingCode}",
+			countryKey = "${countryKey}",
+			countryName = "${countryName}",
+			countryNumber = "${countryNumber}",
+			countryPosition = "${countryPosition}",
+			threeLetterISOCode = "${threeLetterISOCode}",
+			twoLetterISOCode = "${twoLetterISOCode}");
+
+		if (isSet(billingAllowed)) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Billing Allowed",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		if (isSet(shippingAllowed)) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Shipping Allowed",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		if (isSet(subjectToVAT)) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Subject to VAT",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		if ("${countryStatus}" == "Inactive") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Active",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${countryStatus}" == "Active") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Active",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro openCountriesManagementPortlet {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_address_web_internal_portlet_CountriesManagementAdminPortlet");
+	}
+
+	@description = "Assert values in country table. Need to set countryName, billingAllowed, shippingAllowed, twoLetterISOCode, countryStatus"
+	macro viewCountryInTable {
+		LexiconTable.viewTableEntryTitle(tableEntry = "${countryName}");
+
+		if ("${billingAllowed}" == "true") {
+			AssertElementPresent(
+				key_columnName = "billing-allowed",
+				key_tableEntry = "${countryName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO_CHECK");
+		}
+		else if ("${billingAllowed}" == "false") {
+			AssertElementPresent(
+				key_columnName = "billing-allowed",
+				key_tableEntry = "${countryName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO_TIMES");
+		}
+
+		if ("${shippingAllowed}" == "true") {
+			AssertElementPresent(
+				key_columnName = "shipping-allowed",
+				key_tableEntry = "${countryName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO_CHECK");
+		}
+		else if ("${shippingAllowed}" == "false") {
+			AssertElementPresent(
+				key_columnName = "shipping-allowed",
+				key_tableEntry = "${countryName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO_TIMES");
+		}
+
+		LexiconTable.viewTableEntryInfo(
+			columnName = "two-letter-iso-code",
+			tableEntry = "${countryName}",
+			tableEntryInfo = "${twoLetterISOCode}");
+
+		if ("${countryStatus}" == "Active") {
+			AssertElementPresent(
+				key_columnName = "active",
+				key_tableEntry = "${countryName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO_CHECK");
+		}
+		else if ("${countryStatus}" == "Inactive") {
+			AssertElementPresent(
+				key_columnName = "active",
+				key_tableEntry = "${countryName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO_TIMES");
+		}
+
+		if (isSet(countryPriority)) {
+			LexiconTable.viewTableEntryInfo(
+				columnName = "priority",
+				tableEntry = "${countryName}",
+				tableEntryInfo = "${countryPriority}");
+		}
 	}
 
 }

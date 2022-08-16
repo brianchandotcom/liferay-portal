@@ -61,6 +61,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_INFO_CHECK</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'${key_columnName}-column')]//*[*[name()='svg'][contains(@class,'check')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_INFO_TIMES</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'${key_columnName}-column')]//*[*[name()='svg'][contains(@class,'times')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_COLUMN_LINK</td>
 	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'${key_columnName}-column')]//a</td>
 	<td></td>

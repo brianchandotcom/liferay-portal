@@ -15,12 +15,15 @@
 package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -152,6 +155,41 @@ public class PortalUpgradeProcessTest {
 
 		Assert.assertEquals(
 			latestSchemaVersion.getMajor(), requiredSchemaVersion.getMajor());
+	}
+
+	@Test
+	public void testGetRequiredSchemaVersionWhenMultipleSteps() {
+		UpgradeVersionTreeMap newUpgradeProcesses = new UpgradeVersionTreeMap();
+
+		UpgradeVersionTreeMap currentUpgradeProcesses =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PortalUpgradeProcess.class, "_upgradeProcesses",
+				newUpgradeProcesses);
+
+		try {
+			newUpgradeProcesses.put(
+				new Version(2, 3, 2), new DummyUpgradeProcess());
+			newUpgradeProcesses.put(
+				new Version(2, 4, 0), new DummyUpgradeProcess(),
+				new DummyUpgradeProcess(), new DummyUpgradeProcess());
+			newUpgradeProcesses.put(
+				new Version(2, 4, 1), new DummyUpgradeProcess());
+
+			Version requiredSchemaVersion =
+				PortalUpgradeProcess.getRequiredSchemaVersion();
+
+			Assert.assertEquals(2, requiredSchemaVersion.getMajor());
+			Assert.assertEquals(4, requiredSchemaVersion.getMinor());
+			Assert.assertEquals(0, requiredSchemaVersion.getMicro());
+
+			Assert.assertEquals(
+				StringPool.BLANK, requiredSchemaVersion.getQualifier());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PortalUpgradeProcess.class, "_upgradeProcesses",
+				currentUpgradeProcesses);
+		}
 	}
 
 	@Test

@@ -14,10 +14,7 @@
 
 package com.liferay.portal.upgrade.util;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.version.Version;
-
-import java.util.TreeMap;
+import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
 
 /**
  * @author Alberto Chaparro
@@ -25,6 +22,6 @@ import java.util.TreeMap;
 public interface PortalUpgradeProcessRegistry {
 
 	public void registerUpgradeProcesses(
-		TreeMap<Version, UpgradeProcess> upgradeProcesses);
+		UpgradeVersionTreeMap upgradeProcesses);
 
 }

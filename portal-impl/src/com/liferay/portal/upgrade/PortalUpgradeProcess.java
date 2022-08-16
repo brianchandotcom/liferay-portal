@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 import com.liferay.portal.upgrade.v7_1_x.PortalUpgradeProcessRegistryImpl;
@@ -37,7 +37,6 @@ import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.Set;
 import java.util.SortedMap;
-import java.util.TreeMap;
 
 /**
  * @author Alberto Chaparro
@@ -95,7 +94,11 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 				break;
 			}
 
-			requiredSchemaVersion = nextSchemaVersion;
+			if (requiredSchemaVersion.getMicro() !=
+					nextSchemaVersion.getMicro()) {
+
+				requiredSchemaVersion = nextSchemaVersion;
+			}
 		}
 
 		return requiredSchemaVersion;
@@ -258,10 +261,12 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		PortalUpgradeProcess.class);
 
 	private static final Version _initialSchemaVersion = new Version(0, 1, 0);
-	private static final TreeMap<Version, UpgradeProcess> _upgradeProcesses =
-		TreeMapBuilder.<Version, UpgradeProcess>put(
-			_initialSchemaVersion, new DummyUpgradeProcess()
-		).build();
+	private static final UpgradeVersionTreeMap _upgradeProcesses =
+		new UpgradeVersionTreeMap() {
+			{
+				put(_initialSchemaVersion, new DummyUpgradeProcess());
+			}
+		};
 
 	static {
 		try {

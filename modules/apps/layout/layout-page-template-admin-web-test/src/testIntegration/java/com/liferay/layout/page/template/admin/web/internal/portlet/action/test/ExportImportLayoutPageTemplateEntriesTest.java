@@ -458,7 +458,7 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 
 		layout = _layoutLocalService.updateFriendlyURL(
 			layout.getUserId(), layout.getPlid(),
-			StringPool.SLASH + newFriendlyURL, "en_US");
+			StringPool.SLASH + newFriendlyURL, layout.getDefaultLanguageId());
 
 		long classNameId = _layoutFriendlyURLEntryHelper.getClassNameId(false);
 
@@ -472,7 +472,8 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 		Assert.assertNotNull(oldFriendlyURLEntry);
 
 		_friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
-			oldFriendlyURLEntry.getFriendlyURLEntryId(), "en_US");
+			oldFriendlyURLEntry.getFriendlyURLEntryId(),
+			layout.getDefaultLanguageId());
 		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
 			oldFriendlyURLEntry);
 

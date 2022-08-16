@@ -1,0 +1,7 @@
+definition {
+
+	macro openCountriesManagementPortlet {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_address_web_internal_portlet_CountriesManagementAdminPortlet");
+	}
+
+}

@@ -30,6 +30,7 @@ Export-Package:\
 	com.liferay.info.localized,\
 	com.liferay.info.localized.bundle,\
 	com.liferay.info.pagination,\
+	com.liferay.info.search,\
 	com.liferay.info.sort,\
 	com.liferay.info.type,\
 	com.liferay.info.type.categorization

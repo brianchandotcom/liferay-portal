@@ -14,15 +14,14 @@
 
 import ClayTabs from '@clayui/tabs';
 import {
+	API,
 	SidePanelForm,
 	SidebarCategory,
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
-import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {HEADERS} from '../utils/constants';
 import {BasicInfo, Conditions} from './DataValidation/ObjectValidationTabs';
 import {
 	ObjectValidationErrors,
@@ -53,16 +52,11 @@ export default function EditObjectValidation({
 	const onSubmit = async (objectValidation: ObjectValidation) => {
 		delete objectValidation.lineCount;
 
-		const response = await fetch(
-			`/o/object-admin/v1.0/object-validation-rules/${objectValidation.id}`,
-			{
-				body: JSON.stringify(objectValidation),
-				headers: HEADERS,
-				method: 'PUT',
-			}
-		);
-
-		if (response.ok) {
+		try {
+			await API.save(
+				`/o/object-admin/v1.0/object-validation-rules/${objectValidation.id}`,
+				objectValidation
+			);
 			saveAndReload();
 			openToast({
 				message: Liferay.Language.get(
@@ -70,18 +64,18 @@ export default function EditObjectValidation({
 				),
 			});
 		}
-		else {
-			const {detail}: {detail: string} = await response.json();
-			const {fieldName, message} = JSON.parse(detail) as {
+		catch (error) {
+			const {detail, message} = error as ErrorDetails;
+			const {fieldName, message: detailMessage} = JSON.parse(
+				detail as string
+			) as {
 				fieldName: keyof ObjectValidationErrors;
 				message: string;
 			};
 
-			setErrorMessage({[fieldName]: message});
-			openToast({
-				message: Liferay.Language.get('an-error-occurred'),
-				type: 'danger',
-			});
+			setErrorMessage({[fieldName]: detailMessage});
+
+			openToast({message, type: 'danger'});
 		}
 	};
 
@@ -154,4 +148,8 @@ interface IProps {
 	objectValidationRule: ObjectValidation;
 	objectValidationRuleElements: SidebarCategory[];
 	readOnly: boolean;
+}
+
+interface ErrorDetails extends Error {
+	detail?: string;
 }

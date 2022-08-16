@@ -16,6 +16,10 @@ import {fetch} from 'frontend-js-web';
 
 import {ERRORS} from './errors';
 
+interface ErrorDetails extends Error {
+	detail?: string;
+}
+
 interface NotificationTemplate {
 	attachmentObjectFieldIds: string[] | number[];
 	bcc: string;
@@ -46,7 +50,6 @@ interface ObjectRelationship {
 	reverse?: boolean;
 	type: ObjectRelationshipType;
 }
-
 interface PickListItem {
 	id: number;
 	key: string;
@@ -156,9 +159,11 @@ export async function save(
 	}
 	else if (!response.ok) {
 		const {
+			detail,
 			title,
 			type,
 		}: {
+			detail?: string;
 			title?: string;
 			type?: string;
 		} = await response.json();
@@ -168,7 +173,14 @@ export async function save(
 			title ??
 			Liferay.Language.get('an-error-occurred');
 
-		throw new Error(errorMessage);
+		const ErrorDetails = () => {
+			return {
+				detail,
+				message: errorMessage,
+				name: '',
+			} as ErrorDetails;
+		};
+		throw ErrorDetails();
 	}
 }
 

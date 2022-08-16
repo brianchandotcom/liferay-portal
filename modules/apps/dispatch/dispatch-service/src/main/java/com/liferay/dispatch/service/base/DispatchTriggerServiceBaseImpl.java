@@ -17,7 +17,6 @@ package com.liferay.dispatch.service.base;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerService;
 import com.liferay.dispatch.service.DispatchTriggerServiceUtil;
-import com.liferay.dispatch.service.persistence.DispatchLogPersistence;
 import com.liferay.dispatch.service.persistence.DispatchTriggerPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -134,9 +133,6 @@ public abstract class DispatchTriggerServiceBaseImpl
 	}
 
 	@Reference
-	protected DispatchLogPersistence dispatchLogPersistence;
-
-	@Reference
 	protected com.liferay.dispatch.service.DispatchTriggerLocalService
 		dispatchTriggerLocalService;
 
@@ -148,24 +144,5 @@ public abstract class DispatchTriggerServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserService userService;
 
 }

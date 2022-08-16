@@ -432,10 +432,6 @@ definition {
 	test CanTranslateTextBoxFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateTextBoxFieldIndependently";
 
-		JSONWebcontent.deleteWebContent(
-			groupName = "Site Name",
-			title = "This is the title of a web article");
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		NavItem.gotoStructures();
@@ -459,7 +455,7 @@ definition {
 			fieldType = "Multiple Lines",
 			webContentText = "This is the content of the text box field",
 			webContentTextFieldLabel = "Text Box",
-			webContentTitle = "This is the title of a web article");
+			webContentTitle = "WC title");
 
 		PortletEntry.publish();
 
@@ -468,7 +464,7 @@ definition {
 			siteURLKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "ja_JP",
-			webContentTitle = "This is the title of a web article");
+			webContentTitle = "WC title");
 
 		// End the test if the Google refresh token limit is exceeded.
 
@@ -477,13 +473,13 @@ definition {
 		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
 				webContentTextBox = "This is the content of the text box field",
-				webContentTitle = "これはウェブ記事のタイトルです");
+				webContentTitle = "WCタイトル");
 
 			Translations.translateSpecificField(fieldName = "Text Box");
 
 			Translations.viewTargetFields(
 				webContentTextBox = "これはテキストボックスフィールドの内容です",
-				webContentTitle = "これはウェブ記事のタイトルです");
+				webContentTitle = "WCタイトル");
 
 			PortletEntry.publish();
 
@@ -492,11 +488,11 @@ definition {
 				siteURLKey = "site-name",
 				sourceLanguageId = "en_US",
 				targetLanguageId = "ja_JP",
-				webContentTitle = "This is the title of a web article");
+				webContentTitle = "WC title");
 
 			Translations.viewTargetFields(
 				webContentTextBox = "これはテキストボックスフィールドの内容です",
-				webContentTitle = "これはウェブ記事のタイトルです");
+				webContentTitle = "WCタイトル");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
 			echo("There is a Google network issue. Ending test.");

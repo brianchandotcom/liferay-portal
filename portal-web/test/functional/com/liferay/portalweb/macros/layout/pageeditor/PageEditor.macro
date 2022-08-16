@@ -3942,7 +3942,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		else if ((IsElementPresent(locator1 = "Modal#BODY")) && (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Form Errors"))) {
 			Modal.publish(
 				action = "${action}",
-				warningMessage = "The following errors have been found in the page forms. Publishing without fixing these errors may affect form performance. Are you sure you want to publish?");
+				warningMessage = "The following errors have been found on the page. Publishing without fixing these errors may affect form performance. Are you sure you want to publish?");
 		}
 		else if ((IsElementPresent(locator1 = "Modal#BODY")) && (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Submit Button Missing"))) {
 			Modal.publish(

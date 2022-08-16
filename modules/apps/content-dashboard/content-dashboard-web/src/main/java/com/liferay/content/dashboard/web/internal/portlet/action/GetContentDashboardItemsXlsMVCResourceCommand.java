@@ -21,8 +21,8 @@ import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPort
 import com.liferay.content.dashboard.web.internal.dao.search.ContentDashboardItemSearchContainerFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
-import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardItemSearchClassMapperTracker;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
@@ -136,9 +136,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 				ContentDashboardItemSearchContainerFactory.getInstance(
 					_assetCategoryLocalService, _assetVocabularyLocalService,
 					_contentDashboardItemFactoryTracker,
-					_contentDashboardItemSearchClassMapperTracker,
-					_contentDashboardSearchRequestBuilderFactory, _portal,
-					resourceRequest, resourceResponse, _searcher);
+					_contentDashboardSearchRequestBuilderFactory,
+					_infoSearchClassMapperTracker, _portal, resourceRequest,
+					resourceResponse, _searcher);
 
 		SearchContainer<ContentDashboardItem<?>> searchContainer =
 			contentDashboardItemSearchContainerFactory.createWithAllResults();
@@ -279,12 +279,11 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		_contentDashboardItemFactoryTracker;
 
 	@Reference
-	private ContentDashboardItemSearchClassMapperTracker
-		_contentDashboardItemSearchClassMapperTracker;
-
-	@Reference
 	private ContentDashboardSearchRequestBuilderFactory
 		_contentDashboardSearchRequestBuilderFactory;
+
+	@Reference
+	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 	@Reference
 	private Language _language;

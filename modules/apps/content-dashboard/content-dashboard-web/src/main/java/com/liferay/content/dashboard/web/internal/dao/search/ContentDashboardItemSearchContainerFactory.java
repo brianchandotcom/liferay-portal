@@ -20,9 +20,9 @@ import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPort
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
-import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardItemSearchClassMapperTracker;
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardSearchContextBuilder;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -59,18 +59,17 @@ public class ContentDashboardItemSearchContainerFactory {
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetVocabularyLocalService assetVocabularyLocalService,
 		ContentDashboardItemFactoryTracker contentDashboardItemFactoryTracker,
-		ContentDashboardItemSearchClassMapperTracker
-			contentDashboardItemSearchClassMapperTracker,
 		ContentDashboardSearchRequestBuilderFactory
 			contentDashboardSearchRequestBuilderFactory,
+		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
 		Portal portal, PortletRequest portletRequest,
 		PortletResponse portletResponse, Searcher searcher) {
 
 		return new ContentDashboardItemSearchContainerFactory(
 			assetCategoryLocalService, assetVocabularyLocalService,
 			contentDashboardItemFactoryTracker,
-			contentDashboardItemSearchClassMapperTracker,
-			contentDashboardSearchRequestBuilderFactory, portal, portletRequest,
+			contentDashboardSearchRequestBuilderFactory,
+			infoSearchClassMapperTracker, portal, portletRequest,
 			portletResponse, searcher);
 	}
 
@@ -98,10 +97,9 @@ public class ContentDashboardItemSearchContainerFactory {
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetVocabularyLocalService assetVocabularyLocalService,
 		ContentDashboardItemFactoryTracker contentDashboardItemFactoryTracker,
-		ContentDashboardItemSearchClassMapperTracker
-			contentDashboardItemSearchClassMapperTracker,
 		ContentDashboardSearchRequestBuilderFactory
 			contentDashboardSearchRequestBuilderFactory,
+		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
 		Portal portal, PortletRequest portletRequest,
 		PortletResponse portletResponse, Searcher searcher) {
 
@@ -109,10 +107,9 @@ public class ContentDashboardItemSearchContainerFactory {
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_contentDashboardItemFactoryTracker =
 			contentDashboardItemFactoryTracker;
-		_contentDashboardItemSearchClassMapperTracker =
-			contentDashboardItemSearchClassMapperTracker;
 		_contentDashboardSearchRequestBuilderFactory =
 			contentDashboardSearchRequestBuilderFactory;
+		_infoSearchClassMapperTracker = infoSearchClassMapperTracker;
 		_portal = portal;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
@@ -255,7 +252,7 @@ public class ContentDashboardItemSearchContainerFactory {
 	private ContentDashboardItem<?> _toContentDashboardItem(Document document) {
 		ContentDashboardItemFactory<?> contentDashboardItemFactory =
 			_contentDashboardItemFactoryTracker.getContentDashboardItemFactory(
-				_contentDashboardItemSearchClassMapperTracker.getClassName(
+				_infoSearchClassMapperTracker.getClassName(
 					document.get(Field.ENTRY_CLASS_NAME)));
 
 		if (contentDashboardItemFactory == null) {
@@ -272,10 +269,9 @@ public class ContentDashboardItemSearchContainerFactory {
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final ContentDashboardItemFactoryTracker
 		_contentDashboardItemFactoryTracker;
-	private final ContentDashboardItemSearchClassMapperTracker
-		_contentDashboardItemSearchClassMapperTracker;
 	private final ContentDashboardSearchRequestBuilderFactory
 		_contentDashboardSearchRequestBuilderFactory;
+	private final InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 	private final Locale _locale;
 	private String _orderByCol;
 	private String _orderByType;

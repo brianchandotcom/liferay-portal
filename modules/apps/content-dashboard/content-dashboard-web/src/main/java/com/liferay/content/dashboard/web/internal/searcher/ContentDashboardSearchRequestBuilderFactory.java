@@ -15,7 +15,7 @@
 package com.liferay.content.dashboard.web.internal.searcher;
 
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
-import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardItemSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -64,7 +64,7 @@ public class ContentDashboardSearchRequestBuilderFactory {
 		Stream<String> stream = classNames.stream();
 
 		return stream.map(
-			_contentDashboardItemSearchClassMapperTracker::getSearchClassName
+			_infoSearchClassMapperTracker::getSearchClassName
 		).toArray(
 			size -> new String[size]
 		);
@@ -75,8 +75,7 @@ public class ContentDashboardSearchRequestBuilderFactory {
 		_contentDashboardItemFactoryTracker;
 
 	@Reference
-	private ContentDashboardItemSearchClassMapperTracker
-		_contentDashboardItemSearchClassMapperTracker;
+	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;

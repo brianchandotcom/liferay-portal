@@ -19,8 +19,8 @@ import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardConstants;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
-import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardItemSearchClassMapperTracker;
 import com.liferay.content.dashboard.web.internal.util.AssetVocabularyUtil;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -66,8 +66,8 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 		Set<Long> searchClassNameIds = stream.map(
 			classNameId -> _portal.getClassNameId(
-				_contentDashboardItemSearchClassMapperTracker.
-					getSearchClassName(_portal.getClassName(classNameId)))
+				_infoSearchClassMapperTracker.getSearchClassName(
+					_portal.getClassName(classNameId)))
 		).collect(
 			Collectors.toSet()
 		);
@@ -131,8 +131,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 		_contentDashboardItemFactoryTracker;
 
 	@Reference
-	private ContentDashboardItemSearchClassMapperTracker
-		_contentDashboardItemSearchClassMapperTracker;
+	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 	@Reference
 	private Language _language;

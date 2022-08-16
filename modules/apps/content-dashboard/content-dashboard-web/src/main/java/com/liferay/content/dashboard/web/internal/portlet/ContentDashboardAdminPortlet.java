@@ -29,11 +29,11 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFacto
 import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactoryTracker;
 import com.liferay.content.dashboard.web.internal.provider.AssetVocabulariesProvider;
-import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardItemSearchClassMapperTracker;
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardSearchContextBuilder;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.content.dashboard.web.internal.servlet.taglib.util.ContentDashboardDropdownItemsProvider;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardUtil;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
@@ -124,9 +124,9 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 				ContentDashboardItemSearchContainerFactory.getInstance(
 					_assetCategoryLocalService, _assetVocabularyLocalService,
 					_contentDashboardItemFactoryTracker,
-					_contentDashboardItemSearchClassMapperTracker,
-					_contentDashboardSearchRequestBuilderFactory, _portal,
-					renderRequest, renderResponse, _searcher);
+					_contentDashboardSearchRequestBuilderFactory,
+					_infoSearchClassMapperTracker, _portal, renderRequest,
+					renderResponse, _searcher);
 
 		SearchContainer<ContentDashboardItem<?>> searchContainer =
 			contentDashboardItemSearchContainerFactory.create();
@@ -176,8 +176,8 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 				CONTENT_DASHBOARD_ADMIN_SHARING_DISPLAY_CONTEXT,
 			new ContentDashboardAdminSharingDisplayContext(
 				_contentDashboardItemFactoryTracker,
-				_contentDashboardItemSearchClassMapperTracker,
-				_portal.getHttpServletRequest(liferayPortletRequest)));
+				_portal.getHttpServletRequest(liferayPortletRequest),
+				_infoSearchClassMapperTracker));
 
 		_sharingJavaScriptFactory.requestSharingJavascript();
 
@@ -208,10 +208,6 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 		_contentDashboardItemFilterProviderTracker;
 
 	@Reference
-	private ContentDashboardItemSearchClassMapperTracker
-		_contentDashboardItemSearchClassMapperTracker;
-
-	@Reference
 	private ContentDashboardItemSubtypeFactoryTracker
 		_contentDashboardItemSubtypeFactoryTracker;
 
@@ -221,6 +217,9 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;

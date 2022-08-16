@@ -52,11 +52,11 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 		size="6"
 		sm="8"
 	>
-		<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getName()) %>">
+		<c:if test="<%= Validator.isNotNull(selTheme.getName()) %>">
 			<h2 class="h4"><liferay-ui:message key="name" /></h2>
 
 			<p class="text-default">
-				<%= HtmlUtil.escape(selPluginPackage.getName()) %>
+				<%= HtmlUtil.escape(selTheme.getName()) %>
 			</p>
 		</c:if>
 

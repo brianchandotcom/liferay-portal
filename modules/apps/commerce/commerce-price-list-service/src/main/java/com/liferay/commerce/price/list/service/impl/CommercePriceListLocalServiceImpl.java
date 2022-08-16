@@ -322,7 +322,7 @@ public class CommercePriceListLocalServiceImpl
 	public void cleanPriceListCache() {
 		PortalCache<String, Serializable> portalCache =
 			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
-				"PRICE_LISTS_" + CompanyThreadLocal.getCompanyId());
+				"PRICE_LISTS", false, true);
 
 		portalCache.removeAll();
 	}
@@ -570,11 +570,9 @@ public class CommercePriceListLocalServiceImpl
 			groupId, StringPool.POUND, commerceAccountId, StringPool.POUND,
 			StringUtil.merge(commerceAccountGroupIds));
 
-		long companyId = CompanyThreadLocal.getCompanyId();
-
 		PortalCache<String, Serializable> portalCache =
 			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
-				"PRICE_LISTS_" + companyId);
+				"PRICE_LISTS", false, true);
 
 		boolean priceListCalculated = GetterUtil.getBoolean(
 			portalCache.get(cacheKey + "_calculated"));
@@ -587,7 +585,8 @@ public class CommercePriceListLocalServiceImpl
 		}
 
 		SearchContext searchContext = buildSearchContext(
-			companyId, groupId, commerceAccountId, commerceAccountGroupIds);
+			CompanyThreadLocal.getCompanyId(), groupId, commerceAccountId,
+			commerceAccountGroupIds);
 
 		Indexer<CommercePriceList> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);

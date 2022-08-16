@@ -344,7 +344,14 @@ function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 	if (!state.droppable) {
 		let message = Liferay.Language.get('an-unexpected-error-occurred');
 
-		if (state.dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.collection) {
+		if (state.dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
+			message = Liferay.Language.get(
+				'fragments-and-widgets-cannot-be-placed-inside-this-area'
+			);
+		}
+		else if (
+			state.dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.collection
+		) {
 			message = Liferay.Language.get(
 				'fragments-cannot-be-placed-inside-an-unmapped-collection-display-fragment'
 			);

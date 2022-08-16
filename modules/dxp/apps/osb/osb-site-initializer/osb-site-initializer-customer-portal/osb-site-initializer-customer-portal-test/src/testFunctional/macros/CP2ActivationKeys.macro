@@ -43,4 +43,32 @@ definition {
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX");
 	}
 
+	macro formatLicenseFileName {
+		if(!(isSet(licenseType))) {
+			var licenseType = "";
+		}
+		if(!(isSet(product))) {
+			var product = "";
+		}
+		if(!(isSet(version))) {
+			var version = "";
+		}
+		if(!(isSet(licenseName))) {
+			var licenseName = "";
+		}
+		if(!(isSet(copy))) {
+			var copy = "";
+		}
+
+		var downloadedFileName = "${licenseType}-${product}-${version}-${licenseName}";
+
+		var downloadedFileName = StringUtil.toLowerCase("${downloadedFileName}");
+
+		var downloadedFileName = StringUtil.replace("${downloadedFileName}", " ", "");
+
+		var downloadedFileName = "${downloadedFileName}${copy}.${fileType}";
+
+		return "${downloadedFileName}";
+	}
+
 }

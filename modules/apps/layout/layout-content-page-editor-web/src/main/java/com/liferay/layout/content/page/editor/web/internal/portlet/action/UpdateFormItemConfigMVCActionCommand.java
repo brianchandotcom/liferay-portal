@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
@@ -35,6 +34,7 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -308,16 +307,9 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			long groupId)
 		throws Exception {
 
-		String itemClassName = _portal.getClassName(
-			formStyledLayoutStructureItem.getClassNameId());
-
-		// LPS-111037
-
-		if (Objects.equals(
-				DLFileEntryConstants.getClassName(), itemClassName)) {
-
-			itemClassName = FileEntry.class.getName();
-		}
+		String itemClassName = _infoSearchClassMapperTracker.getClassName(
+			_portal.getClassName(
+				formStyledLayoutStructureItem.getClassNameId()));
 
 		InfoItemFormProvider<?> infoItemFormProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
@@ -579,6 +571,9 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 	@Reference
 	private Language _language;

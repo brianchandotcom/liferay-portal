@@ -23,7 +23,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -34,6 +33,7 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.model.LayoutQueryStringComposite;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -251,6 +250,9 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	protected InfoItemServiceTracker infoItemServiceTracker;
 
 	@Reference
+	protected InfoSearchClassMapperTracker infoSearchClassMapperTracker;
+
+	@Reference
 	protected LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker;
 
 	@Reference
@@ -268,15 +270,13 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	private AssetEntry _getAssetEntry(
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider) {
 
-		long classNameId = layoutDisplayPageObjectProvider.getClassNameId();
-
-		if (classNameId == portal.getClassNameId(FileEntry.class)) {
-			classNameId = portal.getClassNameId(DLFileEntry.class);
-		}
+		String className = infoSearchClassMapperTracker.getSearchClassName(
+			portal.getClassName(
+				layoutDisplayPageObjectProvider.getClassNameId()));
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				portal.getClassName(classNameId));
+				className);
 
 		if (assetRendererFactory == null) {
 			return null;
@@ -286,7 +286,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 		try {
 			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-				portal.getClassName(classNameId), classPK);
+				className, classPK);
 
 			AssetDisplayPageConfiguration assetDisplayPageConfiguration =
 				ConfigurationProviderUtil.getSystemConfiguration(

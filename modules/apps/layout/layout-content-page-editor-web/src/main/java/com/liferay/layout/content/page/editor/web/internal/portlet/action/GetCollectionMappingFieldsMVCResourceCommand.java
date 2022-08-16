@@ -14,12 +14,12 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
 import com.liferay.petra.string.StringPool;
@@ -30,12 +30,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -69,11 +66,8 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 		String itemSubtype = ParamUtil.getString(
 			resourceRequest, "itemSubtype");
 
-		String itemType = ParamUtil.getString(resourceRequest, "itemType");
-
-		if (Objects.equals(DLFileEntryConstants.getClassName(), itemType)) {
-			itemType = FileEntry.class.getName();
-		}
+		String itemType = _infoSearchClassMapperTracker.getClassName(
+			ParamUtil.getString(resourceRequest, "itemType"));
 
 		String itemSubtypeLabel = StringPool.BLANK;
 
@@ -133,6 +127,9 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 	@Reference
 	private Language _language;

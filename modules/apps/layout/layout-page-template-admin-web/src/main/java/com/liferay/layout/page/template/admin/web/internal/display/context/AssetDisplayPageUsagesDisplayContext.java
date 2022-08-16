@@ -19,7 +19,6 @@ import com.liferay.asset.display.page.service.AssetDisplayPageEntryServiceUtil;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -27,6 +26,7 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.admin.web.internal.util.InfoSearchClassMapperTrackerUtil;
 import com.liferay.layout.page.template.admin.web.internal.util.comparator.AssetDisplayPageEntryModifiedDateComparator;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -188,11 +187,8 @@ public class AssetDisplayPageUsagesDisplayContext {
 			AssetDisplayPageEntry assetDisplayPageEntry, Locale locale)
 		throws PortalException {
 
-		String className = assetDisplayPageEntry.getClassName();
-
-		if (Objects.equals(className, FileEntry.class.getName())) {
-			className = DLFileEntry.class.getName();
-		}
+		String className = InfoSearchClassMapperTrackerUtil.getSearchClassName(
+			assetDisplayPageEntry.getClassName());
 
 		try {
 			AssetEntry assetEntry = AssetEntryServiceUtil.getEntry(

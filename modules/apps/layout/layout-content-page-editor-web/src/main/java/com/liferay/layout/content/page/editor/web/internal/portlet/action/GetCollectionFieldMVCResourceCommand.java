@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryModel;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
@@ -40,6 +39,7 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.info.type.WebImage;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
@@ -265,11 +265,8 @@ public class GetCollectionFieldMVCResourceCommand
 			listObjectReference.getItemType()
 		);
 
-		String itemType = originalItemType;
-
-		if (Objects.equals(DLFileEntryConstants.getClassName(), itemType)) {
-			itemType = FileEntry.class.getName();
-		}
+		String itemType = _infoSearchClassMapperTracker.getClassName(
+			originalItemType);
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			(InfoItemFieldValuesProvider<Object>)
@@ -385,14 +382,8 @@ public class GetCollectionFieldMVCResourceCommand
 
 		sourceItemTypes.add(itemType);
 
-		String className = itemType;
-
-		if (Objects.equals(className, FileEntry.class.getName())) {
-
-			// LPS-159039
-
-			className = DLFileEntry.class.getName();
-		}
+		String className = _infoSearchClassMapperTracker.getSearchClassName(
+			itemType);
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -566,6 +557,9 @@ public class GetCollectionFieldMVCResourceCommand
 
 	@Reference
 	private InfoListRendererTracker _infoListRendererTracker;
+
+	@Reference
+	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;

@@ -16,13 +16,13 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -481,6 +480,9 @@ public abstract class BaseLayoutStructureItemImporter {
 	protected InfoItemServiceTracker infoItemServiceTracker;
 
 	@Reference
+	protected InfoSearchClassMapperTracker infoSearchClassMapperTracker;
+
+	@Reference
 	protected LayoutLocalService layoutLocalService;
 
 	@Reference
@@ -547,16 +549,12 @@ public abstract class BaseLayoutStructureItemImporter {
 			return false;
 		}
 
-		String className = portal.getClassName(
-			layoutPageTemplateEntry.getClassNameId());
-
-		if (Objects.equals(DLFileEntryConstants.getClassName(), className)) {
-			className = FileEntry.class.getName();
-		}
-
 		InfoItemFormProvider<Object> infoItemFormProvider =
 			infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFormProvider.class, className);
+				InfoItemFormProvider.class,
+				infoSearchClassMapperTracker.getClassName(
+					portal.getClassName(
+						layoutPageTemplateEntry.getClassNameId())));
 
 		if (infoItemFormProvider == null) {
 			return false;

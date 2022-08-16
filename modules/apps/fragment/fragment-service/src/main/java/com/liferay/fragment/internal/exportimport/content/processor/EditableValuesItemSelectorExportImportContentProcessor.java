@@ -28,6 +28,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -87,13 +88,8 @@ public class EditableValuesItemSelectorExportImportContentProcessor
 		_exportDDMTemplateReference(
 			portletDataContext, stagedModel, configurationValueJSONObject);
 
-		// LPS-111037
-
-		String className = _portal.getClassName(classNameId);
-
-		if (Objects.equals(className, FileEntry.class.getName())) {
-			className = DLFileEntry.class.getName();
-		}
+		String className = _infoSearchClassMapperTracker.getSearchClassName(
+			_portal.getClassName(classNameId));
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			className, classPK);
@@ -276,6 +272,9 @@ public class EditableValuesItemSelectorExportImportContentProcessor
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 	@Reference
 	private Portal _portal;

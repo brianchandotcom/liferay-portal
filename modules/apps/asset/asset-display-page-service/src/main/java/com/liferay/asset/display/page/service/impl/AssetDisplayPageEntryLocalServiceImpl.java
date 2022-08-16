@@ -24,6 +24,7 @@ import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -345,16 +345,12 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			classNameId
 		).and(
 			() -> {
-				if (classNameId == _portal.getClassNameId(
-						FileEntry.class.getName())) {
+				String searchClassName =
+					_infoSearchClassMapperTracker.getSearchClassName(
+						_portal.getClassName(classNameId));
 
-					return AssetEntryTable.INSTANCE.classNameId.eq(
-						_portal.getClassNameId(
-							"com.liferay.document.library.kernel.model." +
-								"DLFileEntry"));
-				}
-
-				return AssetEntryTable.INSTANCE.classNameId.eq(classNameId);
+				return AssetEntryTable.INSTANCE.classNameId.eq(
+					_portal.getClassNameId(searchClassName));
 			}
 		).and(
 			AssetDisplayPageEntryTable.INSTANCE.layoutPageTemplateEntryId.eq(
@@ -389,6 +385,9 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 	@Reference
 	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;

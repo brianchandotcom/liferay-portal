@@ -16,7 +16,6 @@ package com.liferay.info.collection.provider.item.selector.web.internal.layout.l
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
@@ -32,6 +31,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.layout.list.retriever.KeyListObjectReference;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverContext;
@@ -264,14 +264,8 @@ public class InfoCollectionProviderLayoutListRetriever
 		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 			(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
-		String className = infoItemReference.getClassName();
-
-		if (Objects.equals(className, FileEntry.class.getName())) {
-
-			// LPS-111037
-
-			className = DLFileEntry.class.getName();
-		}
+		String className = _infoSearchClassMapperTracker.getSearchClassName(
+			infoItemReference.getClassName());
 
 		return _assetEntryLocalService.fetchEntry(
 			className, classPKInfoItemIdentifier.getClassPK());
@@ -295,6 +289,9 @@ public class InfoCollectionProviderLayoutListRetriever
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 	@Reference
 	private UserLocalService _userLocalService;

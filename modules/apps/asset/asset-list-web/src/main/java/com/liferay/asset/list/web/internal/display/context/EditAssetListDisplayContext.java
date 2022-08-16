@@ -37,10 +37,10 @@ import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
 import com.liferay.asset.list.web.internal.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
@@ -69,7 +69,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -121,12 +120,14 @@ public class EditAssetListDisplayContext {
 
 	public EditAssetListDisplayContext(
 		AssetRendererFactoryClassProvider assetRendererFactoryClassProvider,
+		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
 		ItemSelector itemSelector, PortletRequest portletRequest,
 		PortletResponse portletResponse,
 		SegmentsConfigurationProvider segmentsConfigurationProvider,
 		UnicodeProperties unicodeProperties) {
 
 		_assetRendererFactoryClassProvider = assetRendererFactoryClassProvider;
+		_infoSearchClassMapperTracker = infoSearchClassMapperTracker;
 		_itemSelector = itemSelector;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
@@ -1022,16 +1023,13 @@ public class EditAssetListDisplayContext {
 						return true;
 					}
 
-					if (classNameId == PortalUtil.getClassNameId(
-							FileEntry.class.getName())) {
-
-						classNameId = PortalUtil.getClassNameId(
-							DLFileEntry.class.getName());
-					}
+					String className =
+						_infoSearchClassMapperTracker.getSearchClassName(
+							PortalUtil.getClassName(classNameId));
 
 					AssetRendererFactory<?> assetRendererFactory =
 						AssetRendererFactoryRegistryUtil.
-							getAssetRendererFactoryByClassNameId(classNameId);
+							getAssetRendererFactoryByClassName(className);
 
 					if (assetRendererFactory == null) {
 						if (_log.isDebugEnabled()) {
@@ -1438,6 +1436,7 @@ public class EditAssetListDisplayContext {
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
 	private final HttpServletRequest _httpServletRequest;
+	private final InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 	private final ItemSelector _itemSelector;
 	private Boolean _liveGroup;
 	private String _orderByColumn1;

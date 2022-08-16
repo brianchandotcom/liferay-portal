@@ -14,7 +14,6 @@
 
 package com.liferay.layout.taglib.internal.display.context;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.collection.filter.constants.FragmentCollectionFilterConstants;
 import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -36,6 +35,7 @@ import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.taglib.internal.util.InfoSearchClassMapperTrackerUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -43,7 +43,6 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -61,7 +60,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -196,14 +194,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker =
 			ServletContextUtil.getLayoutDisplayPageProviderTracker();
 
-		String className = listObjectReference.getItemType();
-
-		if (Objects.equals(className, DLFileEntry.class.getName())) {
-			className = FileEntry.class.getName();
-		}
-
 		return layoutDisplayPageProviderTracker.
-			getLayoutDisplayPageProviderByClassName(className);
+			getLayoutDisplayPageProviderByClassName(
+				InfoSearchClassMapperTrackerUtil.getClassName(
+					listObjectReference.getItemType()));
 	}
 
 	public InfoListRenderer<?> getInfoListRenderer() {

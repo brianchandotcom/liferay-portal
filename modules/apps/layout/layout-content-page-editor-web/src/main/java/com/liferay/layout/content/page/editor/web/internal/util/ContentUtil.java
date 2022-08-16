@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -253,14 +252,9 @@ public class ContentUtil {
 	private static AssetRendererFactory<?> _getAssetRendererFactory(
 		String className) {
 
-		// LPS-111037
-
-		if (Objects.equals(className, FileEntry.class.getName())) {
-			className = DLFileEntry.class.getName();
-		}
-
 		return AssetRendererFactoryRegistryUtil.
-			getAssetRendererFactoryByClassName(className);
+			getAssetRendererFactoryByClassName(
+				InfoSearchClassMapperTrackerUtil.getSearchClassName(className));
 	}
 
 	private static Set<LayoutDisplayPageObjectProvider<?>>

@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemDetails;
@@ -31,13 +30,11 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,11 +45,13 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 	public DisplayPageLayoutTypeControllerDisplayContext(
 			HttpServletRequest httpServletRequest,
-			InfoItemServiceTracker infoItemServiceTracker)
+			InfoItemServiceTracker infoItemServiceTracker,
+			InfoSearchClassMapperTracker infoSearchClassMapperTracker)
 		throws Exception {
 
 		_httpServletRequest = httpServletRequest;
 		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoSearchClassMapperTracker = infoSearchClassMapperTracker;
 
 		long assetEntryId = ParamUtil.getLong(
 			_httpServletRequest, "assetEntryId");
@@ -69,11 +68,8 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 				assetEntryId);
 
-			String className = assetEntry.getClassName();
-
-			if (Objects.equals(className, DLFileEntry.class.getName())) {
-				className = FileEntry.class.getName();
-			}
+			String className = _infoSearchClassMapperTracker.getClassName(
+				assetEntry.getClassName());
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
 				(InfoItemObjectProvider<Object>)
@@ -161,5 +157,6 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	private final Object _infoItem;
 	private final InfoItemDetails _infoItemDetails;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 }

@@ -46,6 +46,7 @@ import java.io.Serializable;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
@@ -233,7 +234,23 @@ public class ExportConfigurationMVCResourceCommand
 			}
 		}
 
-		String fileName = "liferay-system-settings.zip";
+		String fileName;
+
+		if (Objects.equals(
+				ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
+				themeDisplay.getPpid())) {
+
+			fileName = "liferay-system-settings.zip";
+		}
+		else if (Objects.equals(
+					ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
+					themeDisplay.getPpid())) {
+
+			fileName = "liferay-instance-settings.zip";
+		}
+		else {
+			fileName = "liferay-site-settings.zip";
+		}
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, fileName,

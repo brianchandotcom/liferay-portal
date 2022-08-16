@@ -90,10 +90,9 @@ const RoutineBuildForm = () => {
 		resolver: yupResolver(yupSchema.build),
 	});
 
-	const {setTabs} = useHeader({
-		shouldUpdate: false,
+	useHeader({
 		timeout: 150,
-		title: i18n.translate('new-build'),
+		useTabs: [],
 	});
 
 	const {data: routinesData} = useFetch<APIResponse<TestrayRoutine>>(
@@ -144,10 +143,6 @@ const RoutineBuildForm = () => {
 			setValue('productVersionId', productVersions[0].id.toString());
 		}
 	}, [productVersions, setValue]);
-
-	useEffect(() => {
-		setTabs([]);
-	}, [setTabs]);
 
 	return (
 		<Container className="container">

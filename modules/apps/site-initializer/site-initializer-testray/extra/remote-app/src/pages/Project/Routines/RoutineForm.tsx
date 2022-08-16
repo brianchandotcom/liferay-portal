@@ -19,6 +19,7 @@ import {KeyedMutator} from 'swr';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
+import {useHeader} from '../../../hooks';
 import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
@@ -29,22 +30,22 @@ import {
 	updateRoutine,
 } from '../../../services/rest';
 
-type RoutineFormType = {
-	autoanalyze: boolean;
-	id: number;
-	name: string;
+type RoutineFormType = typeof yupSchema.routine.__outputType;
+
+type OutletContext = {
+	mutateTestrayRoutine: KeyedMutator<TestrayRoutine>;
+	testrayProject: TestrayProject;
+	testrayRoutine?: TestrayRoutine;
 };
 
 const RoutineForm = () => {
+	useHeader({timeout: 110, useTabs: []});
+
 	const {
 		mutateTestrayRoutine,
 		testrayProject,
 		testrayRoutine,
-	} = useOutletContext<{
-		mutateTestrayRoutine: KeyedMutator<TestrayRoutine>;
-		testrayProject: TestrayProject;
-		testrayRoutine?: TestrayRoutine;
-	}>();
+	} = useOutletContext<OutletContext>();
 
 	const {
 		formState: {errors},
@@ -56,8 +57,6 @@ const RoutineForm = () => {
 		defaultValues: {autoanalyze: false, ...testrayRoutine},
 		resolver: yupResolver(yupSchema.routine),
 	});
-
-	const autoanalyze = watch('autoanalyze');
 
 	const {
 		form: {onClose, onError, onSave, onSubmit},
@@ -79,6 +78,8 @@ const RoutineForm = () => {
 			.catch(onError);
 	};
 
+	const autoanalyze = watch('autoanalyze');
+
 	return (
 		<Container className="container">
 			<Form.Input
@@ -95,11 +96,7 @@ const RoutineForm = () => {
 				onChange={() => setValue('autoanalyze', !autoanalyze)}
 			/>
 
-			<Form.Footer
-				isModal
-				onClose={onClose}
-				onSubmit={handleSubmit(_onSubmit)}
-			/>
+			<Form.Footer onClose={onClose} onSubmit={handleSubmit(_onSubmit)} />
 		</Container>
 	);
 };

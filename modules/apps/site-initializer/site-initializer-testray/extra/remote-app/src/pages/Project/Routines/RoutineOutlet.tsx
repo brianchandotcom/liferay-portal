@@ -23,22 +23,22 @@ import {
 import {useFetch} from '../../../hooks/useFetch';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
-import {TestrayRoutine} from '../../../services/rest';
+import {TestrayProject, TestrayRoutine} from '../../../services/rest';
 import useRoutineActions from './useRoutineActions';
 
 const RoutineOutlet = () => {
+	const {actions} = useRoutineActions({isHeaderActions: true});
 	const {pathname} = useLocation();
 	const {projectId, routineId, ...otherParams} = useParams();
-	const {testrayProject}: any = useOutletContext();
-
-	const hasOtherParams = !!Object.values(otherParams).length;
+	const {
+		testrayProject,
+	}: {testrayProject: TestrayProject} = useOutletContext();
 
 	const {data: testrayRoutine, mutate} = useFetch<TestrayRoutine>(
 		`/routines/${routineId}`
 	);
-	const {actions} = useRoutineActions({isHeaderActions: true});
 
-	const basePath = `/project/${projectId}/routines/${routineId}`;
+	const hasOtherParams = !!Object.values(otherParams).length;
 
 	const {setHeaderActions, setHeading, setTabs} = useHeader({
 		shouldUpdate: !hasOtherParams,
@@ -48,6 +48,8 @@ const RoutineOutlet = () => {
 	useEffect(() => {
 		setHeaderActions({actions, item: testrayRoutine, mutate});
 	}, [actions, mutate, setHeaderActions, testrayRoutine]);
+
+	const basePath = `/project/${projectId}/routines/${routineId}`;
 
 	useEffect(() => {
 		setTabs([

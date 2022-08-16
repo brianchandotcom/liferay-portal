@@ -281,10 +281,16 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 					Predicate keywordsPredicate = null;
 
 					for (String term : terms) {
-						Predicate namePredicate = DSLFunctionFactoryUtil.lower(
+						Predicate termPredicate = DSLFunctionFactoryUtil.lower(
 							RegionTable.INSTANCE.name
 						).like(
 							term
+						).or(
+							DSLFunctionFactoryUtil.lower(
+								RegionTable.INSTANCE.regionCode
+							).like(
+								term
+							)
 						).or(
 							DSLFunctionFactoryUtil.lower(
 								RegionLocalizationTable.INSTANCE.title
@@ -294,7 +300,7 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 						);
 
 						keywordsPredicate = Predicate.or(
-							keywordsPredicate, namePredicate);
+							keywordsPredicate, termPredicate);
 					}
 
 					return Predicate.withParentheses(keywordsPredicate);

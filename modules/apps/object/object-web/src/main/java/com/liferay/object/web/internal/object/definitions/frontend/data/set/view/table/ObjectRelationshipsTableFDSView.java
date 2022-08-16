@@ -20,6 +20,8 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsFDSNames;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Locale;
 
@@ -40,6 +42,18 @@ public class ObjectRelationshipsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158478"))) {
+			return fdsTableSchemaBuilder.add(
+				"label.LANG", "label",
+				fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+					"actionLink")
+			).add(
+				"objectDefinitionName2", "related-object"
+			).add(
+				"type", "type"
+			).build();
+		}
+
 		return fdsTableSchemaBuilder.add(
 			"label.LANG", "label",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
@@ -48,6 +62,10 @@ public class ObjectRelationshipsTableFDSView extends BaseTableFDSView {
 			"objectDefinitionName2", "related-object"
 		).add(
 			"type", "type"
+		).add(
+			"reverse", "hierarchy",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"hierarchyDataRenderer")
 		).build();
 	}
 

@@ -12,24 +12,10 @@
  * details.
  */
 
-import {HierarchyDataRenderer} from './HierarchyDataRenderer';
-export default function propsTransformer({
-	...otherProps
-}: {
-	[x: string]: any;
-}): {
-	customDataRenderers: {
-		hierarchyDataRenderer: typeof HierarchyDataRenderer;
-	};
-	onActionDropdownItemClick({
-		action,
-		itemData,
-	}: {
-		action: {
-			data: {
-				id: string;
-			};
-		};
-		itemData: ObjectRelationship;
-	}): void;
-};
+/// <reference types="react" />
+
+export declare function HierarchyDataRenderer({value}: IProps): JSX.Element;
+interface IProps {
+	value: boolean;
+}
+export {};

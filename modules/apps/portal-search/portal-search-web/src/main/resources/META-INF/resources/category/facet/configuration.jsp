@@ -14,21 +14,27 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.search.web.internal.category.facet.configuration.CategoryFacetPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferences" %><%@
 page import="com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferencesImpl" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 
 <portlet:defineObjects />
 
@@ -73,8 +79,6 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 				collapsible="<%= true %>"
 				label="advanced-configuration"
 			>
-				<aui:input label="vocabulary-ids" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS) %>" value="<%= StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds()) %>" />
-
 				<aui:input label="category-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= categoryFacetPortletPreferences.getParameterName() %>" />
 
 				<aui:input label="max-terms" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>" value="<%= categoryFacetPortletPreferences.getMaxTerms() %>" />
@@ -82,6 +86,25 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 				<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= categoryFacetPortletPreferences.getFrequencyThreshold() %>" />
 
 				<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= categoryFacetPortletPreferences.isFrequenciesVisible() %>" />
+
+				<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156503")) %>'>
+					<div id="<portlet:namespace />selectVocabularies">
+						<react:component
+							module="js/components/SelectVocabularies"
+							props='<%=
+								HashMapBuilder.<String, Object>put(
+									"isDisplayInfoSelectedVocabulariesHidden", true
+								).put(
+									"namespace", liferayPortletResponse.getNamespace()
+								).put(
+									"vocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())
+								).put(
+									"vocabularyIdsInputName", PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS)
+								).build()
+							%>'
+						/>
+					</div>
+				</c:if>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

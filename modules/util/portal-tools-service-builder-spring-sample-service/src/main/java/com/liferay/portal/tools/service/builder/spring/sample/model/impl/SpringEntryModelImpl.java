@@ -67,7 +67,7 @@ public class SpringEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"SpringEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"springEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}
 	};
 
@@ -77,21 +77,21 @@ public class SpringEntryModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("SpringEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("springEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SpringEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,SpringEntryId LONG not null primary key,companyId LONG,createDate DATE null)";
+		"create table SpringEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,springEntryId LONG not null primary key,companyId LONG,createDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SpringEntry";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY springEntry.SpringEntryId ASC";
+		" ORDER BY springEntry.springEntryId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY SpringEntry.SpringEntryId ASC";
+		" ORDER BY SpringEntry.springEntryId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -146,7 +146,7 @@ public class SpringEntryModelImpl
 
 	@Override
 	public long getPrimaryKey() {
-		return _SpringEntryId;
+		return _springEntryId;
 	}
 
 	@Override
@@ -156,7 +156,7 @@ public class SpringEntryModelImpl
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _SpringEntryId;
+		return _springEntryId;
 	}
 
 	@Override
@@ -246,9 +246,9 @@ public class SpringEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<SpringEntry, String>)SpringEntry::setUuid);
 		attributeGetterFunctions.put(
-			"SpringEntryId", SpringEntry::getSpringEntryId);
+			"springEntryId", SpringEntry::getSpringEntryId);
 		attributeSetterBiConsumers.put(
-			"SpringEntryId",
+			"springEntryId",
 			(BiConsumer<SpringEntry, Long>)SpringEntry::setSpringEntryId);
 		attributeGetterFunctions.put("companyId", SpringEntry::getCompanyId);
 		attributeSetterBiConsumers.put(
@@ -309,16 +309,16 @@ public class SpringEntryModelImpl
 
 	@Override
 	public long getSpringEntryId() {
-		return _SpringEntryId;
+		return _springEntryId;
 	}
 
 	@Override
-	public void setSpringEntryId(long SpringEntryId) {
+	public void setSpringEntryId(long springEntryId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_SpringEntryId = SpringEntryId;
+		_springEntryId = springEntryId;
 	}
 
 	@Override
@@ -434,7 +434,7 @@ public class SpringEntryModelImpl
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		springEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		springEntryImpl.setSpringEntryId(
-			this.<Long>getColumnOriginalValue("SpringEntryId"));
+			this.<Long>getColumnOriginalValue("springEntryId"));
 		springEntryImpl.setCompanyId(
 			this.<Long>getColumnOriginalValue("companyId"));
 		springEntryImpl.setCreateDate(
@@ -525,7 +525,7 @@ public class SpringEntryModelImpl
 			springEntryCacheModel.uuid = null;
 		}
 
-		springEntryCacheModel.SpringEntryId = getSpringEntryId();
+		springEntryCacheModel.springEntryId = getSpringEntryId();
 
 		springEntryCacheModel.companyId = getCompanyId();
 
@@ -632,7 +632,7 @@ public class SpringEntryModelImpl
 
 	private long _mvccVersion;
 	private String _uuid;
-	private long _SpringEntryId;
+	private long _springEntryId;
 	private long _companyId;
 	private Date _createDate;
 
@@ -667,7 +667,7 @@ public class SpringEntryModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
-		_columnOriginalValues.put("SpringEntryId", _SpringEntryId);
+		_columnOriginalValues.put("springEntryId", _springEntryId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("createDate", _createDate);
 	}
@@ -697,7 +697,7 @@ public class SpringEntryModelImpl
 
 		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("SpringEntryId", 4L);
+		columnBitmasks.put("springEntryId", 4L);
 
 		columnBitmasks.put("companyId", 8L);
 

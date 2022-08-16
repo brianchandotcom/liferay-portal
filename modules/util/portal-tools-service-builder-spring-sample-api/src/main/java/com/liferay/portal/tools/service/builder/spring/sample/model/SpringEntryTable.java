@@ -36,8 +36,8 @@ public class SpringEntryTable extends BaseTable<SpringEntryTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<SpringEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<SpringEntryTable, Long> SpringEntryId = createColumn(
-		"SpringEntryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<SpringEntryTable, Long> springEntryId = createColumn(
+		"springEntryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<SpringEntryTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SpringEntryTable, Date> createDate = createColumn(

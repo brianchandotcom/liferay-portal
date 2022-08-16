@@ -156,14 +156,14 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 	/**
 	 * Returns the spring entries before and after the current spring entry in the ordered set where uuid = &#63;.
 	 *
-	 * @param SpringEntryId the primary key of the current spring entry
+	 * @param springEntryId the primary key of the current spring entry
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next spring entry
 	 * @throws NoSuchSpringEntryException if a spring entry with the primary key could not be found
 	 */
 	public SpringEntry[] findByUuid_PrevAndNext(
-			long SpringEntryId, String uuid,
+			long springEntryId, String uuid,
 			com.liferay.portal.kernel.util.OrderByComparator<SpringEntry>
 				orderByComparator)
 		throws NoSuchSpringEntryException;
@@ -308,7 +308,7 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 	/**
 	 * Returns the spring entries before and after the current spring entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param SpringEntryId the primary key of the current spring entry
+	 * @param springEntryId the primary key of the current spring entry
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -316,7 +316,7 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 	 * @throws NoSuchSpringEntryException if a spring entry with the primary key could not be found
 	 */
 	public SpringEntry[] findByUuid_C_PrevAndNext(
-			long SpringEntryId, String uuid, long companyId,
+			long springEntryId, String uuid, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<SpringEntry>
 				orderByComparator)
 		throws NoSuchSpringEntryException;
@@ -454,14 +454,14 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 	/**
 	 * Returns the spring entries before and after the current spring entry in the ordered set where companyId = &#63;.
 	 *
-	 * @param SpringEntryId the primary key of the current spring entry
+	 * @param springEntryId the primary key of the current spring entry
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next spring entry
 	 * @throws NoSuchSpringEntryException if a spring entry with the primary key could not be found
 	 */
 	public SpringEntry[] findByCompanyId_PrevAndNext(
-			long SpringEntryId, long companyId,
+			long springEntryId, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<SpringEntry>
 				orderByComparator)
 		throws NoSuchSpringEntryException;
@@ -498,19 +498,19 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 	/**
 	 * Creates a new spring entry with the primary key. Does not add the spring entry to the database.
 	 *
-	 * @param SpringEntryId the primary key for the new spring entry
+	 * @param springEntryId the primary key for the new spring entry
 	 * @return the new spring entry
 	 */
-	public SpringEntry create(long SpringEntryId);
+	public SpringEntry create(long springEntryId);
 
 	/**
 	 * Removes the spring entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry that was removed
 	 * @throws NoSuchSpringEntryException if a spring entry with the primary key could not be found
 	 */
-	public SpringEntry remove(long SpringEntryId)
+	public SpringEntry remove(long springEntryId)
 		throws NoSuchSpringEntryException;
 
 	public SpringEntry updateImpl(SpringEntry springEntry);
@@ -518,20 +518,20 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 	/**
 	 * Returns the spring entry with the primary key or throws a <code>NoSuchSpringEntryException</code> if it could not be found.
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry
 	 * @throws NoSuchSpringEntryException if a spring entry with the primary key could not be found
 	 */
-	public SpringEntry findByPrimaryKey(long SpringEntryId)
+	public SpringEntry findByPrimaryKey(long springEntryId)
 		throws NoSuchSpringEntryException;
 
 	/**
 	 * Returns the spring entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry, or <code>null</code> if a spring entry with the primary key could not be found
 	 */
-	public SpringEntry fetchByPrimaryKey(long SpringEntryId);
+	public SpringEntry fetchByPrimaryKey(long springEntryId);
 
 	/**
 	 * Returns all the spring entries.

@@ -49,7 +49,7 @@ public class SpringEntryCacheModel
 		SpringEntryCacheModel springEntryCacheModel =
 			(SpringEntryCacheModel)object;
 
-		if ((SpringEntryId == springEntryCacheModel.SpringEntryId) &&
+		if ((springEntryId == springEntryCacheModel.springEntryId) &&
 			(mvccVersion == springEntryCacheModel.mvccVersion)) {
 
 			return true;
@@ -60,7 +60,7 @@ public class SpringEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, SpringEntryId);
+		int hashCode = HashUtil.hash(0, springEntryId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -83,8 +83,8 @@ public class SpringEntryCacheModel
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
-		sb.append(", SpringEntryId=");
-		sb.append(SpringEntryId);
+		sb.append(", springEntryId=");
+		sb.append(springEntryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", createDate=");
@@ -107,7 +107,7 @@ public class SpringEntryCacheModel
 			springEntryImpl.setUuid(uuid);
 		}
 
-		springEntryImpl.setSpringEntryId(SpringEntryId);
+		springEntryImpl.setSpringEntryId(springEntryId);
 		springEntryImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
@@ -127,7 +127,7 @@ public class SpringEntryCacheModel
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
-		SpringEntryId = objectInput.readLong();
+		springEntryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
@@ -144,7 +144,7 @@ public class SpringEntryCacheModel
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(SpringEntryId);
+		objectOutput.writeLong(springEntryId);
 
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
@@ -152,7 +152,7 @@ public class SpringEntryCacheModel
 
 	public long mvccVersion;
 	public String uuid;
-	public long SpringEntryId;
+	public long springEntryId;
 	public long companyId;
 	public long createDate;
 

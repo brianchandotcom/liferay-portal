@@ -71,15 +71,15 @@ public class SpringEntryLocalServiceWrapper
 	/**
 	 * Creates a new spring entry with the primary key. Does not add the spring entry to the database.
 	 *
-	 * @param SpringEntryId the primary key for the new spring entry
+	 * @param springEntryId the primary key for the new spring entry
 	 * @return the new spring entry
 	 */
 	@Override
 	public
 		com.liferay.portal.tools.service.builder.spring.sample.model.SpringEntry
-			createSpringEntry(long SpringEntryId) {
+			createSpringEntry(long springEntryId) {
 
-		return _springEntryLocalService.createSpringEntry(SpringEntryId);
+		return _springEntryLocalService.createSpringEntry(springEntryId);
 	}
 
 	/**
@@ -100,17 +100,17 @@ public class SpringEntryLocalServiceWrapper
 	 * <strong>Important:</strong> Inspect SpringEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry that was removed
 	 * @throws PortalException if a spring entry with the primary key could not be found
 	 */
 	@Override
 	public
 		com.liferay.portal.tools.service.builder.spring.sample.model.SpringEntry
-				deleteSpringEntry(long SpringEntryId)
+				deleteSpringEntry(long springEntryId)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _springEntryLocalService.deleteSpringEntry(SpringEntryId);
+		return _springEntryLocalService.deleteSpringEntry(springEntryId);
 	}
 
 	/**
@@ -238,9 +238,9 @@ public class SpringEntryLocalServiceWrapper
 	@Override
 	public
 		com.liferay.portal.tools.service.builder.spring.sample.model.SpringEntry
-			fetchSpringEntry(long SpringEntryId) {
+			fetchSpringEntry(long springEntryId) {
 
-		return _springEntryLocalService.fetchSpringEntry(SpringEntryId);
+		return _springEntryLocalService.fetchSpringEntry(springEntryId);
 	}
 
 	/**
@@ -326,17 +326,17 @@ public class SpringEntryLocalServiceWrapper
 	/**
 	 * Returns the spring entry with the primary key.
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry
 	 * @throws PortalException if a spring entry with the primary key could not be found
 	 */
 	@Override
 	public
 		com.liferay.portal.tools.service.builder.spring.sample.model.SpringEntry
-				getSpringEntry(long SpringEntryId)
+				getSpringEntry(long springEntryId)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _springEntryLocalService.getSpringEntry(SpringEntryId);
+		return _springEntryLocalService.getSpringEntry(springEntryId);
 	}
 
 	/**

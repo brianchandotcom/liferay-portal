@@ -4,7 +4,7 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.portal.tools.service.builder.spring.sample.model.SpringEntry" />
 	<class dynamic-update="true" name="com.liferay.portal.tools.service.builder.spring.sample.model.impl.SpringEntryImpl" table="SpringEntry">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="SpringEntryId" type="long">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="springEntryId" type="long">
 			<generator class="assigned" />
 		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />

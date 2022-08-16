@@ -374,7 +374,7 @@ public class SpringEntryPersistenceImpl
 	/**
 	 * Returns the spring entries before and after the current spring entry in the ordered set where uuid = &#63;.
 	 *
-	 * @param SpringEntryId the primary key of the current spring entry
+	 * @param springEntryId the primary key of the current spring entry
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next spring entry
@@ -382,13 +382,13 @@ public class SpringEntryPersistenceImpl
 	 */
 	@Override
 	public SpringEntry[] findByUuid_PrevAndNext(
-			long SpringEntryId, String uuid,
+			long springEntryId, String uuid,
 			OrderByComparator<SpringEntry> orderByComparator)
 		throws NoSuchSpringEntryException {
 
 		uuid = Objects.toString(uuid, "");
 
-		SpringEntry springEntry = findByPrimaryKey(SpringEntryId);
+		SpringEntry springEntry = findByPrimaryKey(springEntryId);
 
 		Session session = null;
 
@@ -936,7 +936,7 @@ public class SpringEntryPersistenceImpl
 	/**
 	 * Returns the spring entries before and after the current spring entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param SpringEntryId the primary key of the current spring entry
+	 * @param springEntryId the primary key of the current spring entry
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -945,13 +945,13 @@ public class SpringEntryPersistenceImpl
 	 */
 	@Override
 	public SpringEntry[] findByUuid_C_PrevAndNext(
-			long SpringEntryId, String uuid, long companyId,
+			long springEntryId, String uuid, long companyId,
 			OrderByComparator<SpringEntry> orderByComparator)
 		throws NoSuchSpringEntryException {
 
 		uuid = Objects.toString(uuid, "");
 
-		SpringEntry springEntry = findByPrimaryKey(SpringEntryId);
+		SpringEntry springEntry = findByPrimaryKey(springEntryId);
 
 		Session session = null;
 
@@ -1477,7 +1477,7 @@ public class SpringEntryPersistenceImpl
 	/**
 	 * Returns the spring entries before and after the current spring entry in the ordered set where companyId = &#63;.
 	 *
-	 * @param SpringEntryId the primary key of the current spring entry
+	 * @param springEntryId the primary key of the current spring entry
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next spring entry
@@ -1485,11 +1485,11 @@ public class SpringEntryPersistenceImpl
 	 */
 	@Override
 	public SpringEntry[] findByCompanyId_PrevAndNext(
-			long SpringEntryId, long companyId,
+			long springEntryId, long companyId,
 			OrderByComparator<SpringEntry> orderByComparator)
 		throws NoSuchSpringEntryException {
 
-		SpringEntry springEntry = findByPrimaryKey(SpringEntryId);
+		SpringEntry springEntry = findByPrimaryKey(springEntryId);
 
 		Session session = null;
 
@@ -1788,15 +1788,15 @@ public class SpringEntryPersistenceImpl
 	/**
 	 * Creates a new spring entry with the primary key. Does not add the spring entry to the database.
 	 *
-	 * @param SpringEntryId the primary key for the new spring entry
+	 * @param springEntryId the primary key for the new spring entry
 	 * @return the new spring entry
 	 */
 	@Override
-	public SpringEntry create(long SpringEntryId) {
+	public SpringEntry create(long springEntryId) {
 		SpringEntry springEntry = new SpringEntryImpl();
 
 		springEntry.setNew(true);
-		springEntry.setPrimaryKey(SpringEntryId);
+		springEntry.setPrimaryKey(springEntryId);
 
 		String uuid = _portalUUID.generate();
 
@@ -1810,15 +1810,15 @@ public class SpringEntryPersistenceImpl
 	/**
 	 * Removes the spring entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry that was removed
 	 * @throws NoSuchSpringEntryException if a spring entry with the primary key could not be found
 	 */
 	@Override
-	public SpringEntry remove(long SpringEntryId)
+	public SpringEntry remove(long springEntryId)
 		throws NoSuchSpringEntryException {
 
-		return remove((Serializable)SpringEntryId);
+		return remove((Serializable)springEntryId);
 	}
 
 	/**
@@ -1994,26 +1994,26 @@ public class SpringEntryPersistenceImpl
 	/**
 	 * Returns the spring entry with the primary key or throws a <code>NoSuchSpringEntryException</code> if it could not be found.
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry
 	 * @throws NoSuchSpringEntryException if a spring entry with the primary key could not be found
 	 */
 	@Override
-	public SpringEntry findByPrimaryKey(long SpringEntryId)
+	public SpringEntry findByPrimaryKey(long springEntryId)
 		throws NoSuchSpringEntryException {
 
-		return findByPrimaryKey((Serializable)SpringEntryId);
+		return findByPrimaryKey((Serializable)springEntryId);
 	}
 
 	/**
 	 * Returns the spring entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry, or <code>null</code> if a spring entry with the primary key could not be found
 	 */
 	@Override
-	public SpringEntry fetchByPrimaryKey(long SpringEntryId) {
-		return fetchByPrimaryKey((Serializable)SpringEntryId);
+	public SpringEntry fetchByPrimaryKey(long springEntryId) {
+		return fetchByPrimaryKey((Serializable)springEntryId);
 	}
 
 	/**
@@ -2207,7 +2207,7 @@ public class SpringEntryPersistenceImpl
 
 	@Override
 	protected String getPKDBName() {
-		return "SpringEntryId";
+		return "springEntryId";
 	}
 
 	@Override

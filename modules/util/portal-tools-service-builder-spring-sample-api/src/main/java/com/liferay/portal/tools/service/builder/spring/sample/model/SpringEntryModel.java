@@ -99,9 +99,9 @@ public interface SpringEntryModel
 	/**
 	 * Sets the spring entry ID of this spring entry.
 	 *
-	 * @param SpringEntryId the spring entry ID of this spring entry
+	 * @param springEntryId the spring entry ID of this spring entry
 	 */
-	public void setSpringEntryId(long SpringEntryId);
+	public void setSpringEntryId(long springEntryId);
 
 	/**
 	 * Returns the company ID of this spring entry.

@@ -44,7 +44,7 @@ public class SpringEntryWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
-		attributes.put("SpringEntryId", getSpringEntryId());
+		attributes.put("springEntryId", getSpringEntryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 
@@ -65,10 +65,10 @@ public class SpringEntryWrapper
 			setUuid(uuid);
 		}
 
-		Long SpringEntryId = (Long)attributes.get("SpringEntryId");
+		Long springEntryId = (Long)attributes.get("springEntryId");
 
-		if (SpringEntryId != null) {
-			setSpringEntryId(SpringEntryId);
+		if (springEntryId != null) {
+			setSpringEntryId(springEntryId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -197,11 +197,11 @@ public class SpringEntryWrapper
 	/**
 	 * Sets the spring entry ID of this spring entry.
 	 *
-	 * @param SpringEntryId the spring entry ID of this spring entry
+	 * @param springEntryId the spring entry ID of this spring entry
 	 */
 	@Override
-	public void setSpringEntryId(long SpringEntryId) {
-		model.setSpringEntryId(SpringEntryId);
+	public void setSpringEntryId(long springEntryId) {
+		model.setSpringEntryId(springEntryId);
 	}
 
 	/**

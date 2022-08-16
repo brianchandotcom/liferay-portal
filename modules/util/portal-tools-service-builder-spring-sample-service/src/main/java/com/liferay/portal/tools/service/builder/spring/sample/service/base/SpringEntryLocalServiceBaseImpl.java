@@ -94,13 +94,13 @@ public abstract class SpringEntryLocalServiceBaseImpl
 	/**
 	 * Creates a new spring entry with the primary key. Does not add the spring entry to the database.
 	 *
-	 * @param SpringEntryId the primary key for the new spring entry
+	 * @param springEntryId the primary key for the new spring entry
 	 * @return the new spring entry
 	 */
 	@Override
 	@Transactional(enabled = false)
-	public SpringEntry createSpringEntry(long SpringEntryId) {
-		return springEntryPersistence.create(SpringEntryId);
+	public SpringEntry createSpringEntry(long springEntryId) {
+		return springEntryPersistence.create(springEntryId);
 	}
 
 	/**
@@ -110,16 +110,16 @@ public abstract class SpringEntryLocalServiceBaseImpl
 	 * <strong>Important:</strong> Inspect SpringEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry that was removed
 	 * @throws PortalException if a spring entry with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public SpringEntry deleteSpringEntry(long SpringEntryId)
+	public SpringEntry deleteSpringEntry(long springEntryId)
 		throws PortalException {
 
-		return springEntryPersistence.remove(SpringEntryId);
+		return springEntryPersistence.remove(springEntryId);
 	}
 
 	/**
@@ -238,8 +238,8 @@ public abstract class SpringEntryLocalServiceBaseImpl
 	}
 
 	@Override
-	public SpringEntry fetchSpringEntry(long SpringEntryId) {
-		return springEntryPersistence.fetchByPrimaryKey(SpringEntryId);
+	public SpringEntry fetchSpringEntry(long springEntryId) {
+		return springEntryPersistence.fetchByPrimaryKey(springEntryId);
 	}
 
 	/**
@@ -260,15 +260,15 @@ public abstract class SpringEntryLocalServiceBaseImpl
 	/**
 	 * Returns the spring entry with the primary key.
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry
 	 * @throws PortalException if a spring entry with the primary key could not be found
 	 */
 	@Override
-	public SpringEntry getSpringEntry(long SpringEntryId)
+	public SpringEntry getSpringEntry(long springEntryId)
 		throws PortalException {
 
-		return springEntryPersistence.findByPrimaryKey(SpringEntryId);
+		return springEntryPersistence.findByPrimaryKey(springEntryId);
 	}
 
 	@Override
@@ -280,7 +280,7 @@ public abstract class SpringEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SpringEntry.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("SpringEntryId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("springEntryId");
 
 		return actionableDynamicQuery;
 	}
@@ -298,7 +298,7 @@ public abstract class SpringEntryLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(SpringEntry.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"SpringEntryId");
+			"springEntryId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -310,7 +310,7 @@ public abstract class SpringEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SpringEntry.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("SpringEntryId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("springEntryId");
 	}
 
 	/**

@@ -72,11 +72,11 @@ public class SpringEntryLocalServiceUtil {
 	/**
 	 * Creates a new spring entry with the primary key. Does not add the spring entry to the database.
 	 *
-	 * @param SpringEntryId the primary key for the new spring entry
+	 * @param springEntryId the primary key for the new spring entry
 	 * @return the new spring entry
 	 */
-	public static SpringEntry createSpringEntry(long SpringEntryId) {
-		return getService().createSpringEntry(SpringEntryId);
+	public static SpringEntry createSpringEntry(long springEntryId) {
+		return getService().createSpringEntry(springEntryId);
 	}
 
 	/**
@@ -96,14 +96,14 @@ public class SpringEntryLocalServiceUtil {
 	 * <strong>Important:</strong> Inspect SpringEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry that was removed
 	 * @throws PortalException if a spring entry with the primary key could not be found
 	 */
-	public static SpringEntry deleteSpringEntry(long SpringEntryId)
+	public static SpringEntry deleteSpringEntry(long springEntryId)
 		throws PortalException {
 
-		return getService().deleteSpringEntry(SpringEntryId);
+		return getService().deleteSpringEntry(springEntryId);
 	}
 
 	/**
@@ -205,8 +205,8 @@ public class SpringEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static SpringEntry fetchSpringEntry(long SpringEntryId) {
-		return getService().fetchSpringEntry(SpringEntryId);
+	public static SpringEntry fetchSpringEntry(long springEntryId) {
+		return getService().fetchSpringEntry(springEntryId);
 	}
 
 	/**
@@ -280,14 +280,14 @@ public class SpringEntryLocalServiceUtil {
 	/**
 	 * Returns the spring entry with the primary key.
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry
 	 * @throws PortalException if a spring entry with the primary key could not be found
 	 */
-	public static SpringEntry getSpringEntry(long SpringEntryId)
+	public static SpringEntry getSpringEntry(long springEntryId)
 		throws PortalException {
 
-		return getService().getSpringEntry(SpringEntryId);
+		return getService().getSpringEntry(springEntryId);
 	}
 
 	/**

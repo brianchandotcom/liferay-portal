@@ -84,11 +84,11 @@ public interface SpringEntryLocalService
 	/**
 	 * Creates a new spring entry with the primary key. Does not add the spring entry to the database.
 	 *
-	 * @param SpringEntryId the primary key for the new spring entry
+	 * @param springEntryId the primary key for the new spring entry
 	 * @return the new spring entry
 	 */
 	@Transactional(enabled = false)
-	public SpringEntry createSpringEntry(long SpringEntryId);
+	public SpringEntry createSpringEntry(long springEntryId);
 
 	/**
 	 * @throws PortalException
@@ -104,12 +104,12 @@ public interface SpringEntryLocalService
 	 * <strong>Important:</strong> Inspect SpringEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry that was removed
 	 * @throws PortalException if a spring entry with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public SpringEntry deleteSpringEntry(long SpringEntryId)
+	public SpringEntry deleteSpringEntry(long springEntryId)
 		throws PortalException;
 
 	/**
@@ -198,7 +198,7 @@ public interface SpringEntryLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SpringEntry fetchSpringEntry(long SpringEntryId);
+	public SpringEntry fetchSpringEntry(long springEntryId);
 
 	/**
 	 * Returns the spring entry with the matching UUID and company.
@@ -257,12 +257,12 @@ public interface SpringEntryLocalService
 	/**
 	 * Returns the spring entry with the primary key.
 	 *
-	 * @param SpringEntryId the primary key of the spring entry
+	 * @param springEntryId the primary key of the spring entry
 	 * @return the spring entry
 	 * @throws PortalException if a spring entry with the primary key could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SpringEntry getSpringEntry(long SpringEntryId)
+	public SpringEntry getSpringEntry(long springEntryId)
 		throws PortalException;
 
 	/**

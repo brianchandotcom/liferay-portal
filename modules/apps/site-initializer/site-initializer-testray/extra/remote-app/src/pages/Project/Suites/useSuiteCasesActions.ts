@@ -41,7 +41,7 @@ const useSuiteCasesActions = ({isSmartSuite}: {isSmartSuite: boolean}) => {
 		{
 			action: (suiteCase: TestraySuiteCase, mutate) =>
 				deleteResource(`/suitescaseses/${suiteCase.id}`)
-					.then(() => removeItemFromList(mutate, suiteCase.id))
+					?.then(() => removeItemFromList(mutate, suiteCase.id))
 					.then(modal.onSuccess)
 					.catch(modal.onError),
 			disabled: isSmartSuite,

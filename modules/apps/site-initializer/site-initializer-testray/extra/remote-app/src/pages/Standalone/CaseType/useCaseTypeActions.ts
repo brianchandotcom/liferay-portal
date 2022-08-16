@@ -33,7 +33,7 @@ const useCaseTypeActions = () => {
 		{
 			action: ({id}: TestrayCaseType, mutate) =>
 				deleteResource(`/casetypes/${id}`)
-					.then(() => removeItemFromList(mutate, id))
+					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),
 			name: i18n.translate('delete'),

@@ -53,7 +53,7 @@ const useCaseRequirementActions = (testrayCase: TestrayCase) => {
 		{
 			action: ({id}: TestrayRequirementCase, mutate) =>
 				deleteResource(`/requirementscaseses/${id}`)
-					.then(() => removeItemFromList(mutate, id))
+					?.then(() => removeItemFromList(mutate, id))
 					.then(() => modal.onSave())
 					.catch(modal.onError),
 			name: i18n.translate('delete'),

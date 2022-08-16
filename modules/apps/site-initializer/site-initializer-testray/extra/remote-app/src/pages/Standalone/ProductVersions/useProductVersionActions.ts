@@ -33,7 +33,7 @@ const useProductVersionActions = () => {
 		{
 			action: ({id}: TestrayProductVersion, mutate) =>
 				deleteResource(`/productversions/${id}`)
-					.then(() => removeItemFromList(mutate, id))
+					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),
 			name: i18n.translate('delete'),

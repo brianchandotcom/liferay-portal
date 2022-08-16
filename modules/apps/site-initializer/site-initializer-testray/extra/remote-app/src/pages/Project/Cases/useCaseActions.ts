@@ -39,7 +39,7 @@ const useCaseActions = () => {
 		{
 			action: ({id}: TestrayCase, mutate) =>
 				deleteResource(`/cases/${id}`)
-					.then(() => removeItemFromList(mutate, id))
+					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSuccess)
 					.catch(modal.onError),
 			name: i18n.translate('delete'),

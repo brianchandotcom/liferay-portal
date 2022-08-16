@@ -32,7 +32,7 @@ const useTeamActions = () => {
 		{
 			action: ({id}: TestrayTeam, mutate) =>
 				deleteResource(`/teams/${id}`)
-					.then(() => removeItemFromList(mutate, id))
+					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),
 			name: i18n.translate('delete'),

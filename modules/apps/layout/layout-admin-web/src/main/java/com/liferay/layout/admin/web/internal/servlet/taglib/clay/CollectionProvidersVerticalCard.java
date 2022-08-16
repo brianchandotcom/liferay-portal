@@ -14,7 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.clay;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;

@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;

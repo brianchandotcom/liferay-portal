@@ -14,7 +14,7 @@
 
 package com.liferay.info.collection.provider.item.selector.web.internal.servlet.taglib.clay;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.web.internal.constants.InfoCollectionProviderItemSelectorWebKeys;
 import com.liferay.info.collection.provider.item.selector.web.internal.display.context.RelatedInfoItemCollectionProviderItemSelectorDisplayContext;

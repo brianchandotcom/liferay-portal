@@ -15,7 +15,7 @@
 package com.liferay.product.navigation.control.menu.web.internal.servlet.taglib.clay;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;

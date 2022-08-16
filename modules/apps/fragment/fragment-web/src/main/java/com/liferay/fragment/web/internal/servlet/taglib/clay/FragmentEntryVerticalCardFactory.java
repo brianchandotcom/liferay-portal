@@ -17,7 +17,7 @@ package com.liferay.fragment.web.internal.servlet.taglib.clay;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.web.internal.constants.FragmentTypeConstants;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 
 import java.util.Objects;

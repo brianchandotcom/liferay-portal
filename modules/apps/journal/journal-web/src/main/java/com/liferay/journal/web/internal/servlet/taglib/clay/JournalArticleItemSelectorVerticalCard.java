@@ -14,7 +14,7 @@
 
 package com.liferay.journal.web.internal.servlet.taglib.clay;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;

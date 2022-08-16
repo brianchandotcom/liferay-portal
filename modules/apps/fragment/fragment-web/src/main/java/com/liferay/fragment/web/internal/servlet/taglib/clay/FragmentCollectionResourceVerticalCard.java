@@ -16,7 +16,7 @@ package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.web.internal.servlet.taglib.util.FragmentCollectionResourceActionDropdownItemsProvider;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;

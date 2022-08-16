@@ -15,7 +15,7 @@
 package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
 import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.NavigationCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.NavigationCard;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;

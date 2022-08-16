@@ -14,7 +14,7 @@
 
 package com.liferay.item.selector.web.internal.servlet.taglib.clay;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseHorizontalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.BaseHorizontalCard;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 

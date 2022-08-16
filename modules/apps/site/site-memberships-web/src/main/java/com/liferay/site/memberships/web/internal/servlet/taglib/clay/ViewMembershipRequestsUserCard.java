@@ -14,7 +14,7 @@
 
 package com.liferay.site.memberships.web.internal.servlet.taglib.clay;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseUserCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.BaseUserCard;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;

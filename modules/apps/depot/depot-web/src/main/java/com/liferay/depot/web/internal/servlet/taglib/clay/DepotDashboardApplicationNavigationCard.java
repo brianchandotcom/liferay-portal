@@ -14,7 +14,7 @@
 
 package com.liferay.depot.web.internal.servlet.taglib.clay;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.NavigationCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.NavigationCard;
 
 /**
  * @author Adolfo Pérez

@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringPool;
 

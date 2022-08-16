@@ -14,7 +14,7 @@
 
 package com.liferay.journal.web.internal.servlet.taglib.clay;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseHorizontalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.BaseHorizontalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;

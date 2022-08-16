@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.NavigationCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.NavigationCard;
 
 /**
  * @author Marko Cikos

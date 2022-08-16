@@ -16,7 +16,7 @@ package com.liferay.blogs.web.internal.servlet.taglib.clay;
 
 import com.liferay.blogs.web.internal.servlet.taglib.util.BlogsEntryImageActionDropdownItemsProvider;
 import com.liferay.document.library.util.DLURLHelperUtil;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;

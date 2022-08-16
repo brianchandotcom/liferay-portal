@@ -15,7 +15,7 @@
 package com.liferay.journal.web.internal.servlet.taglib.clay;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;

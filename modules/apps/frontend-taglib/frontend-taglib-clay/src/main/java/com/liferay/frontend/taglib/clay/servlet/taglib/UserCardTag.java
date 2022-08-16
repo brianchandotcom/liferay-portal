@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.util.DropdownItemListUtil;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.UserCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;

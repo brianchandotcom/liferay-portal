@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.ReflectionUtil;

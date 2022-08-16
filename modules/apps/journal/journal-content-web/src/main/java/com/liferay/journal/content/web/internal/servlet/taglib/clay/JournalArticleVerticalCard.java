@@ -15,7 +15,7 @@
 package com.liferay.journal.content.web.internal.servlet.taglib.clay;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

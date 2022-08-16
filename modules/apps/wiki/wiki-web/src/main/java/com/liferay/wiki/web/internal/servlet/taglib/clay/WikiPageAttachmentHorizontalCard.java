@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.web.internal.servlet.taglib.clay;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;

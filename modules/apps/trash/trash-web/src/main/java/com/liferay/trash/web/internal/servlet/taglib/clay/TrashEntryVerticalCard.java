@@ -14,7 +14,7 @@
 
 package com.liferay.trash.web.internal.servlet.taglib.clay;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;

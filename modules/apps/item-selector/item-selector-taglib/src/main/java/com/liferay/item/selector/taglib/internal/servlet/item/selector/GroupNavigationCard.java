@@ -14,7 +14,7 @@
 
 package com.liferay.item.selector.taglib.internal.servlet.item.selector;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.NavigationCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.NavigationCard;
 import com.liferay.item.selector.taglib.internal.display.context.GroupSelectorDisplayContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

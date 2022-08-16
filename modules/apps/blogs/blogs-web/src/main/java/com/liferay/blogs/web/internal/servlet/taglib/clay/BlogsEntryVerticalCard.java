@@ -19,7 +19,7 @@ import com.liferay.blogs.web.internal.constants.BlogsWebConstants;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
 import com.liferay.blogs.web.internal.servlet.taglib.util.BlogsEntryActionDropdownItemsProvider;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;

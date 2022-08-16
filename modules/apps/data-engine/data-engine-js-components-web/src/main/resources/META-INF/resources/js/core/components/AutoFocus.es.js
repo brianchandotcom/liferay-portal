@@ -36,7 +36,8 @@ export function AutoFocus({children}) {
 			else {
 				if (
 					!document.activeElement ||
-					(document.activeElement.querySelector('input') &&
+					(!Liferay.ThemeDisplay.isControlPanel() &&
+						document.activeElement.querySelector('input') &&
 						document.activeElement.querySelector('input').type ===
 							'hidden')
 				) {

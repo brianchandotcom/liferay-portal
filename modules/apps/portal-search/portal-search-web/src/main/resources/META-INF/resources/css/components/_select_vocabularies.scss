@@ -1,0 +1,20 @@
+.select-vocabularies {
+	.select-vocabularies-label {
+		margin-bottom: 16px;
+	}
+
+	.btn-group-item:first-of-type {
+		margin-right: 6px;
+	}
+
+	.treeview-group {
+		.treeview-link {
+			cursor: unset;
+			padding-left: 36px !important;
+
+			.c-inner {
+				margin-right: -36px !important;
+			}
+		}
+	}
+}

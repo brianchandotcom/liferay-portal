@@ -174,7 +174,8 @@ definition {
 			instanceSettings = "true",
 			maximumFileSizeValue = "10240",
 			mimeTypeValue = "",
-			validateInvalidValue = "true");
+			validateInvalidValue = "true",
+			viewErrorAlert = "true");
 
 		for (var fieldName : list "Mime Type,Maximum File Size") {
 			AssertValue(
@@ -187,7 +188,8 @@ definition {
 			instanceSettings = "true",
 			maximumFileSizeValue = "",
 			mimeTypeValue = "image/png",
-			validateInvalidValue = "true");
+			validateInvalidValue = "true",
+			viewErrorAlert = "true");
 
 		for (var fieldName : list "Mime Type,Maximum File Size") {
 			AssertValue(

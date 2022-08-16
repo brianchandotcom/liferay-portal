@@ -132,7 +132,7 @@ definition {
 	macro setStatus {
 		Variables.assertDefined(parameterList = "${statusKey}");
 
-		if ("${statusKey}" == "APPROVE") {
+		if ("${statusKey}" == "APPROVED") {
 			var status = "0";
 		}
 

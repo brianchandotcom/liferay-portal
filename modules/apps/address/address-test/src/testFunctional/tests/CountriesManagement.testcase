@@ -20,6 +20,45 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that a user can activate an inactive country."
+	@priority = "5"
+	test CanActivateAnInactiveCountry {
+		task ("Given that Brazil is set to inactive") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.deactivateCountry(countryName = "Brazil");
+
+			CountriesManagement.openCountriesManagementPortlet();
+
+			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+		}
+
+		task ("When a user activates this country") {
+			CountriesManagement.activateCountry(countryName = "Brazil");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "There are no inactive countries.");
+		}
+
+		task ("and searches for country in Active filter") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			ManagementBar.setFilterAndOrder(filterBy = "Active");
+
+			Search.searchCP(searchTerm = "Brazil");
+		}
+
+		task ("Then the country is active and displays in that filter") {
+			CountriesManagement.viewCountryInTable(
+				billingAllowed = "true",
+				countryName = "Brazil",
+				countryStatus = "Active",
+				shippingAllowed = "true",
+				twoLetterISOCode = "BR");
+		}
+	}
+
 	@description = "This test asserts that a user can add a new country and by default this country will have the Active status, will not allow Billing and Shipping, and will not be subject to VAT."
 	@priority = "5"
 	test CanAddCountry {
@@ -52,6 +91,42 @@ definition {
 				countryStatus = "Inactive",
 				shippingAllowed = "false",
 				twoLetterISOCode = "AA");
+		}
+	}
+
+	@description = "This test asserts that a user can deactivate an active country"
+	@priority = "5"
+	test CanDeactivateAnActiveCountry {
+		task ("Given that China is set to Active") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			Search.searchCP(searchTerm = "China");
+
+			CountriesManagement.viewCountryInTable(
+				billingAllowed = "true",
+				countryName = "China",
+				countryStatus = "Active",
+				shippingAllowed = "true",
+				twoLetterISOCode = "CN");
+		}
+
+		task ("When a user deactivates this country") {
+			CountriesManagement.deactivateCountry(countryName = "China");
+		}
+
+		task ("and filters by Inactive Status") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+		}
+
+		task ("Then the country is inactive and displays in that filter") {
+			CountriesManagement.viewCountryInTable(
+				billingAllowed = "true",
+				countryName = "China",
+				countryStatus = "Inactive",
+				shippingAllowed = "true",
+				twoLetterISOCode = "CN");
 		}
 	}
 

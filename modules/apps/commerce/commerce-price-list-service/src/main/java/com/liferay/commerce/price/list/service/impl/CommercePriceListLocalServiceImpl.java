@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -69,7 +68,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -558,8 +556,6 @@ public class CommercePriceListLocalServiceImpl
 			long[] commerceAccountGroupIds)
 		throws PortalException {
 
-		Company company = _companyLocalService.getCompany(companyId);
-
 		if (commerceAccountGroupIds == null) {
 			commerceAccountGroupIds = new long[0];
 		}
@@ -575,7 +571,7 @@ public class CommercePriceListLocalServiceImpl
 
 		PortalCache<String, Serializable> portalCache =
 			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
-				"PRICE_LISTS_" + company.getCompanyId());
+				"PRICE_LISTS_" + companyId);
 
 		boolean priceListCalculated = GetterUtil.getBoolean(
 			portalCache.get(cacheKey + "_calculated"));
@@ -588,8 +584,7 @@ public class CommercePriceListLocalServiceImpl
 		}
 
 		SearchContext searchContext = buildSearchContext(
-			company.getCompanyId(), groupId, commerceAccountId,
-			commerceAccountGroupIds);
+			companyId, groupId, commerceAccountId, commerceAccountGroupIds);
 
 		Indexer<CommercePriceList> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
@@ -1765,9 +1760,6 @@ public class CommercePriceListLocalServiceImpl
 	@ServiceReference(type = CommercePriceModifierLocalService.class)
 	private CommercePriceModifierLocalService
 		_commercePriceModifierLocalService;
-
-	@ServiceReference(type = CompanyLocalService.class)
-	private CompanyLocalService _companyLocalService;
 
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;

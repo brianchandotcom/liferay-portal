@@ -75,8 +75,7 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 
 		reindexPriceList(commercePriceListId);
 
-		commercePriceListLocalService.cleanPriceListCache(
-			serviceContext.getCompanyId());
+		commercePriceListLocalService.cleanPriceListCache();
 
 		return commercePriceListCommerceAccountGroupRel;
 	}
@@ -107,8 +106,7 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 		reindexPriceList(
 			commercePriceListCommerceAccountGroupRel.getCommercePriceListId());
 
-		commercePriceListLocalService.cleanPriceListCache(
-			commercePriceListCommerceAccountGroupRel.getCompanyId());
+		commercePriceListLocalService.cleanPriceListCache();
 
 		return commercePriceListCommerceAccountGroupRel;
 	}
@@ -228,8 +226,7 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 
 		// Cache
 
-		commercePriceListLocalService.cleanPriceListCache(
-			serviceContext.getScopeGroupId());
+		commercePriceListLocalService.cleanPriceListCache();
 
 		return commercePriceListCommerceAccountGroupRelPersistence.update(
 			commercePriceListCommerceAccountGroupRel);

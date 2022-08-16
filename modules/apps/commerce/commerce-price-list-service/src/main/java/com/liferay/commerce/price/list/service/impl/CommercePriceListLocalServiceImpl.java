@@ -234,7 +234,7 @@ public class CommercePriceListLocalServiceImpl
 
 		// Cache
 
-		cleanPriceListCache(user.getCompanyId());
+		cleanPriceListCache();
 
 		// Resources
 
@@ -491,7 +491,7 @@ public class CommercePriceListLocalServiceImpl
 
 		// Cache
 
-		cleanPriceListCache(commercePriceList.getCompanyId());
+		cleanPriceListCache();
 
 		return commercePriceList;
 	}
@@ -1172,7 +1172,7 @@ public class CommercePriceListLocalServiceImpl
 		commercePriceList = startWorkflowInstance(
 			user.getUserId(), commercePriceList, serviceContext);
 
-		cleanPriceListCache(commercePriceList.getCompanyId());
+		cleanPriceListCache();
 
 		return commercePriceList;
 	}
@@ -1191,7 +1191,7 @@ public class CommercePriceListLocalServiceImpl
 			commercePriceList = commercePriceListPersistence.update(
 				commercePriceList);
 
-			cleanPriceListCache(commercePriceList.getCompanyId());
+			cleanPriceListCache();
 
 			doReindex(commercePriceList.getCommercePriceListId());
 		}
@@ -1212,7 +1212,7 @@ public class CommercePriceListLocalServiceImpl
 		commercePriceList = commercePriceListPersistence.update(
 			commercePriceList);
 
-		cleanPriceListCache(commercePriceList.getCompanyId());
+		cleanPriceListCache();
 
 		return commercePriceList;
 	}
@@ -1260,7 +1260,7 @@ public class CommercePriceListLocalServiceImpl
 		commercePriceList = commercePriceListPersistence.update(
 			commercePriceList);
 
-		cleanPriceListCache(commercePriceList.getCompanyId());
+		cleanPriceListCache();
 
 		return commercePriceList;
 	}
@@ -1362,7 +1362,7 @@ public class CommercePriceListLocalServiceImpl
 				WorkflowConstants.STATUS_APPROVED, serviceContext,
 				new HashMap<String, Serializable>());
 
-			cleanPriceListCache(commercePriceList.getCompanyId());
+			cleanPriceListCache();
 		}
 	}
 
@@ -1397,7 +1397,7 @@ public class CommercePriceListLocalServiceImpl
 					WorkflowConstants.STATUS_EXPIRED, serviceContext,
 					new HashMap<String, Serializable>());
 
-				cleanPriceListCache(commercePriceList.getCompanyId());
+				cleanPriceListCache();
 			}
 		}
 	}

@@ -189,8 +189,7 @@ public class TierPriceTag extends IncludeTag {
 			cpInstanceId);
 
 		return _commercePriceListLocalService.getCommercePriceList(
-			commerceAccount.getCompanyId(), cpInstance.getGroupId(),
-			commerceAccount.getCommerceAccountId(),
+			cpInstance.getGroupId(), commerceAccount.getCommerceAccountId(),
 			commerceContext.getCommerceAccountGroupIds());
 	}
 

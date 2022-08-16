@@ -17,6 +17,7 @@ package com.liferay.redirect.internal.provider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.redirect.internal.configuration.RedirectPatternConfiguration;
 import com.liferay.redirect.internal.util.PatternUtil;
 import com.liferay.redirect.model.RedirectEntry;
@@ -74,6 +75,10 @@ public class RedirectProviderImpl
 		if (redirectEntry != null) {
 			return new RedirectImpl(
 				redirectEntry.getDestinationURL(), redirectEntry.isPermanent());
+		}
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-160332"))) {
+			return null;
 		}
 
 		Map<Pattern, String> patterns = _groupPatternsMap.getOrDefault(

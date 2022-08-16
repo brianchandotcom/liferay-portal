@@ -203,4 +203,9 @@ definition {
 			value1 = "${text}");
 	}
 
+	macro clickAtDownloadButton {
+		var key_entitlementName = "${entitlementName}";
+		Click(locator1 = "CP2ActivationKeys#TABLES_DOWNLOAD_BUTTON");
+		DownloadTempFile();
+	}
 }

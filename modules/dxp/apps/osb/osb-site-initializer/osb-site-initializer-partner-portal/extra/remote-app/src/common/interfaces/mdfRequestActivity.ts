@@ -35,6 +35,7 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	name: string;
 	overallMessageContentCTA: string;
 	primaryThemeOrMessage: string;
+	r_mdfRequestToActivities_c_mdfRequestId?: string;
 	r_tacticToActivities_c_tacticId: string;
 	r_typeActivityToActivities_c_typeActivityId: string;
 	sourceAndSizeOfInviteeList: string;

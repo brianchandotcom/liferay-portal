@@ -11,7 +11,6 @@
 
 import Button from '@clayui/button';
 import {useFormikContext} from 'formik';
-import {useMemo} from 'react';
 
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
@@ -24,29 +23,18 @@ import Body from './components/Body';
 import ActivitiesEntries from './components/Body/components/ActivitiesEntries';
 import GoalsEntries from './components/Body/components/GoalsEntries';
 import Header from './components/Header';
+import GetTotalBudget from './utils/GetTotalBudget';
 
 const Review = ({
 	onCancel,
 	onPrevious,
 	onSaveAsDraft,
 }: PRMFormikPageProps & MDFRequestStepProps<MDFRequest>) => {
-	const {isSubmitting, isValid, values, ...formikHelpers} = useFormikContext<
+	const {isSubmitting, values, ...formikHelpers} = useFormikContext<
 		MDFRequest
 	>();
 
-	const totalBudget = useMemo(
-		() =>
-			values.activities.reduce((previousValue, currentValue) => {
-				const sumBudgets = currentValue.budgets.reduce<number>(
-					(previousValue, currentValue) =>
-						previousValue + +currentValue.cost,
-					0
-				);
-
-				return previousValue + sumBudgets;
-			}, 0),
-		[values.activities]
-	);
+	const totalBudget = GetTotalBudget(values);
 
 	return (
 		<div className="d-flex flex-column">
@@ -63,11 +51,11 @@ const Review = ({
 					(value: MDFRequestActivity, index: number) => (
 						<ActivityPanel
 							activity={value}
-							detail={true}
+							detail
 							key={index}
 							overallCampaign={values.overallCampaign}
 						>
-							<ActivitiesEntries key={index} values={value} />
+							<ActivitiesEntries values={value} />
 						</ActivityPanel>
 					)
 				)}
@@ -129,10 +117,7 @@ const Review = ({
 								Cancel
 							</Button>
 
-							<Button
-								disabled={!isValid && isSubmitting}
-								type="submit"
-							>
+							<Button disabled={isSubmitting} type="submit">
 								Submit
 							</Button>
 						</div>

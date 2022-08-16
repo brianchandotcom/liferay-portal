@@ -131,7 +131,6 @@ const MDFRequestForm = () => {
 		[StepType.REVIEW]: (
 			<Review
 				onCancel={onCancel}
-				onContinue={onContinue}
 				onPrevious={onPrevious}
 				onSaveAsDraft={onSaveAsDraft}
 			/>

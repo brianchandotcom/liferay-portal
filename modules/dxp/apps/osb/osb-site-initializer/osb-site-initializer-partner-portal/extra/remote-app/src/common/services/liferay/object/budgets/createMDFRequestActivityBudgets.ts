@@ -18,19 +18,15 @@ export default async function createMDFRequestActivityBudgets(
 	activityId: string | undefined,
 	budgets: MDFRequestBudget[]
 ) {
-	const dtoMDFRequestActivityBudgets = budgets.map((budget) => {
-		return {
-			...budget,
-			r_activityToBudgets_c_activityId: activityId,
-		};
-	});
-
 	return await Promise.all(
-		dtoMDFRequestActivityBudgets.map((budget) =>
-			liferayFetcher.post<typeof budget>(
+		budgets.map((budget) =>
+			liferayFetcher.post(
 				`/o/${LiferayAPIs.OBJECT}/budgets`,
 				Liferay.authToken,
-				budget
+				{
+					...budget,
+					r_activityToBudgets_c_activityId: activityId,
+				}
 			)
 		)
 	);

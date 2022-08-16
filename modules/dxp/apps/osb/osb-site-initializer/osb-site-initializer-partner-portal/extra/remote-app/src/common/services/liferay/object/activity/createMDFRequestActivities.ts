@@ -18,20 +18,18 @@ export default async function createMDFRequestActivities(
 	mdfRequestId: string | undefined,
 	mdfRequestActivities: MDFRequestActivity[]
 ) {
-	const dtoMDFRequestActivities = mdfRequestActivities.map((activity) => {
-		return {
-			...activity,
-			leadFollowUpStrategies: activity.leadFollowUpStrategies.join(', '),
-			r_mdfRequestToActivities_c_mdfRequestId: mdfRequestId,
-		};
-	});
-
 	return await Promise.all(
-		dtoMDFRequestActivities.map((activity) =>
-			liferayFetcher.post<typeof activity>(
+		mdfRequestActivities.map((activity) =>
+			liferayFetcher.post(
 				`/o/${LiferayAPIs.OBJECT}/activities`,
 				Liferay.authToken,
-				activity
+				{
+					...activity,
+					leadFollowUpStrategies: activity.leadFollowUpStrategies.join(
+						', '
+					),
+					r_mdfRequestToActivities_c_mdfRequestId: mdfRequestId,
+				}
 			)
 		)
 	);

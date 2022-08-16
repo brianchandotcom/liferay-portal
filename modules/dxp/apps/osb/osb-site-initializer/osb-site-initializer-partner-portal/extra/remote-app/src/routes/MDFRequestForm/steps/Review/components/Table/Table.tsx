@@ -11,48 +11,46 @@
 
 import ClayTable from '@clayui/table';
 
-type ITable = {
+interface ITable {
 	title?: string;
 	value?: string;
-};
+}
 
-type IProps = {
+interface IProps {
 	items: ITable[];
 	title?: string;
-};
+}
 
 const Table = ({items, title}: IProps) => (
-	<div>
-		<ClayTable className="border-0">
-			<ClayTable.Head>
-				<ClayTable.Row>
-					<ClayTable.Cell
-						className="border-neutral-2 border-top"
-						expanded
-						headingCell
-					>
-						{title}
+	<ClayTable className="border-0">
+		<ClayTable.Head>
+			<ClayTable.Row>
+				<ClayTable.Cell
+					className="border-neutral-2 border-top"
+					expanded
+					headingCell
+				>
+					{title}
+				</ClayTable.Cell>
+
+				<ClayTable.Cell className="border-neutral-2 border-top"></ClayTable.Cell>
+			</ClayTable.Row>
+		</ClayTable.Head>
+
+		<ClayTable.Body>
+			{items?.map((value: ITable, index: number) => (
+				<ClayTable.Row key={index}>
+					<ClayTable.Cell className="border-0 w-50">
+						{value.title}
 					</ClayTable.Cell>
 
-					<ClayTable.Cell className="border-neutral-2 border-top"></ClayTable.Cell>
+					<ClayTable.Cell className="border-0 w-50">
+						{value.value}
+					</ClayTable.Cell>
 				</ClayTable.Row>
-			</ClayTable.Head>
-
-			<ClayTable.Body>
-				{items?.map((value: ITable, index: number) => (
-					<ClayTable.Row key={index}>
-						<ClayTable.Cell className="border-0 w-50">
-							{value.title}
-						</ClayTable.Cell>
-
-						<ClayTable.Cell className="border-0 w-50">
-							{value.value}
-						</ClayTable.Cell>
-					</ClayTable.Row>
-				))}
-			</ClayTable.Body>
-		</ClayTable>
-	</div>
+			))}
+		</ClayTable.Body>
+	</ClayTable>
 );
 
 export default Table;

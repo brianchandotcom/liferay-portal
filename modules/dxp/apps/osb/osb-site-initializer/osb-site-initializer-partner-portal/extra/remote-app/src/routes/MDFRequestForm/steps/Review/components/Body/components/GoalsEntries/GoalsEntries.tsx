@@ -10,6 +10,7 @@
  */
 
 import MDFRequest from '../../../../../../../../common/interfaces/mdfRequest';
+import useGetCompanyName from '../../../../Hooks/useGetCompanyName';
 import Table from '../../../Table';
 
 interface IProps {
@@ -17,13 +18,17 @@ interface IProps {
 }
 
 const GoalsEntries = ({values}: IProps) => {
+	const companyName = useGetCompanyName(
+		values.r_accountToMDFRequests_accountEntryId
+	);
+
 	return (
 		<div>
 			<Table
 				items={[
 					{
 						title: 'Company Name',
-						value: values.r_accountToMDFRequests_accountEntryId,
+						value: companyName,
 					},
 					{
 						title: 'Region',

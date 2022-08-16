@@ -75,7 +75,7 @@ const ActivityPanel = ({
 			displayType="secondary"
 			showCollapseIcon={detail}
 		>
-			<ClayPanel.Body>{children}</ClayPanel.Body>
+			{detail && <ClayPanel.Body>{children}</ClayPanel.Body>}
 		</ClayPanel>
 	);
 };

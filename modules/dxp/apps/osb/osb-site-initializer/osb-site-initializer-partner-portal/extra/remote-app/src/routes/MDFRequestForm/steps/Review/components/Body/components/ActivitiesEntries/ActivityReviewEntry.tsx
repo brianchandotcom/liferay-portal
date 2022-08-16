@@ -12,11 +12,13 @@
 import {TypeActivityExternalReferenceCode} from '../../../../../../../../common/enums/typeActivityExternalReferenceCode';
 import useSelectedTypeActivity from '../../../../../../../../common/hooks/useSelectedTypeActivity';
 import MDFRequestActivity from '../../../../../../../../common/interfaces/mdfRequestActivity';
-import useDynamicFieldEntries from '../../../../../Activities/Form/hooks/useDynamicFieldEntries';
-import ContentMarket from './components/ContentMarket/ContentMarket';
-import DigitalMarket from './components/DigitalMarket/DigitalMarket';
-import Event from './components/Event/Event';
-import MiscellaneousMarket from './components/MiscellaneousMarket/MiscellaneousMarket';
+import useGetTypeActivities from '../../../../../../../../common/services/liferay/object/type-activities/useGetTypeActivities';
+import ActivityContent from './components/ActivityContent';
+import ContentMarket from './components/ContentMarket';
+import DigitalMarket from './components/DigitalMarket';
+import Event from './components/Event';
+import MiscellaneousMarket from './components/MiscellaneousMarket';
+
 interface IProps {
 	values: MDFRequestActivity;
 }
@@ -25,12 +27,12 @@ type TypeOfActivityComponent = {
 	[key in string]?: JSX.Element;
 };
 
-const ActivitiesEntries = ({values}: IProps) => {
-	const {typeOfActivities} = useDynamicFieldEntries();
+const ActivityReviewEntry = ({values}: IProps) => {
+	const {data: typeOfActivities} = useGetTypeActivities();
 
 	const selectedTypeActivity = useSelectedTypeActivity(
 		values,
-		typeOfActivities
+		typeOfActivities?.items
 	);
 
 	const typeOfActivityComponents: TypeOfActivityComponent = {
@@ -47,13 +49,15 @@ const ActivitiesEntries = ({values}: IProps) => {
 	};
 
 	return (
-		<div>
+		<>
 			{
 				typeOfActivityComponents[
 					selectedTypeActivity?.externalReferenceCode || ''
 				]
 			}
-		</div>
+
+			<ActivityContent values={values} />
+		</>
 	);
 };
-export default ActivitiesEntries;
+export default ActivityReviewEntry;

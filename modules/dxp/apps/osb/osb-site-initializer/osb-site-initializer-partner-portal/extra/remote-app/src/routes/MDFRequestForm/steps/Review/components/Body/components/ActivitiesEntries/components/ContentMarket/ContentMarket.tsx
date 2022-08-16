@@ -11,98 +11,64 @@
 
 import MDFRequestActivity from '../../../../../../../../../../common/interfaces/mdfRequestActivity';
 import {Liferay} from '../../../../../../../../../../common/services/liferay';
+import GetBooleanValue from '../../../../../../utils/GetBooleanValue';
 import Table from '../../../../../Table';
+
 interface IProps {
 	values: MDFRequestActivity;
 }
 
-const ContentMarket = ({values}: IProps) => {
-	return (
-		<div>
-			<Table
-				items={[
-					{
-						title: 'Activity name',
-						value: values.name,
-					},
-					{
-						title: 'Type of Activity',
-						value:
-							values.r_typeActivityToActivities_c_typeActivityId,
-					},
-					{
-						title: 'Tactic',
-						value: values.r_tacticToActivities_c_tacticId,
-					},
-					{
-						title:
-							'Will this content be gated and have a landing page?',
-						value:
-							values.gatedLandingPage === 'true' ? 'Yes' : 'No',
-					},
-					{
-						title: 'Primary theme or message of your content',
-						value: values.primaryThemeOrMessage,
-					},
+const ContentMarket = ({values}: IProps) => (
+	<div>
+		<Table
+			items={[
+				{
+					title: 'Activity name',
+					value: values.name,
+				},
+				{
+					title: 'Type of Activity',
+					value: values.r_typeActivityToActivities_c_typeActivityId,
+				},
+				{
+					title: 'Tactic',
+					value: values.r_tacticToActivities_c_tacticId,
+				},
+				{
+					title:
+						'Will this content be gated and have a landing page?',
+					value: GetBooleanValue(values.gatedLandingPage),
+				},
+				{
+					title: 'Primary theme or message of your content',
+					value: values.primaryThemeOrMessage,
+				},
 
-					{
-						title: 'Goal of Content',
-						value: values.goalOfContent,
-					},
-					{
-						title:
-							'Are you hiring an outside writer or agency to prepare the content?',
-						value:
-							values.hiringOutsideWriterOrAgency === 'true'
-								? 'Yes'
-								: 'No',
-					},
-					{
-						title: 'Start Date',
-						value: new Date(values.startDate).toLocaleDateString(
-							Liferay.ThemeDisplay.getBCP47LanguageId()
-						),
-					},
-					{
-						title: 'End Date',
-						value: new Date(values.endDate).toLocaleDateString(
-							Liferay.ThemeDisplay.getBCP47LanguageId()
-						),
-					},
-				]}
-				title="Campaign Activity"
-			/>
+				{
+					title: 'Goal of Content',
+					value: values.goalOfContent,
+				},
+				{
+					title:
+						'Are you hiring an outside writer or agency to prepare the content?',
+					value: GetBooleanValue(values.hiringOutsideWriterOrAgency),
+				},
+				{
+					title: 'Start Date',
+					value: new Date(values.startDate).toLocaleDateString(
+						Liferay.ThemeDisplay.getBCP47LanguageId()
+					),
+				},
+				{
+					title: 'End Date',
+					value: new Date(values.endDate).toLocaleDateString(
+						Liferay.ThemeDisplay.getBCP47LanguageId()
+					),
+				},
+			]}
+			title="Campaign Activity"
+		/>
+	</div>
+);
 
-			<Table
-				items={values.budgets.map((budget) => ({
-					title: budget.expense?.name,
-					value: '$' + budget.cost,
-				}))}
-				title="Budget Breakdown"
-			/>
-
-			<Table
-				items={[
-					{
-						title: 'Is a lead list an outcome of this activity?',
-						value: values.leadGenerated === 'true' ? 'Yes' : 'No',
-					},
-					{
-						title: 'Target # of Leads',
-						value: values.targetofLeads,
-					},
-					{
-						title: 'Lead Follow Up strategy',
-						value: values.leadFollowUpStrategies.join(', '),
-					},
-					{
-						title: 'Details on Lead Follow Up',
-						value: values.detailsLeadFollowUp,
-					},
-				]}
-				title="Lead List"
-			/>
-		</div>
-	);
-};
 export default ContentMarket;

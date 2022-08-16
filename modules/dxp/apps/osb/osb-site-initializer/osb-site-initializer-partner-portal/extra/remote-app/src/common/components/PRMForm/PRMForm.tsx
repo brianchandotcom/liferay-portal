@@ -22,7 +22,6 @@ interface IProps {
 	children?: React.ReactNode;
 	description?: string;
 	name: string;
-	subtitle?: string;
 	title: string;
 }
 

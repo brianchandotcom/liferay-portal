@@ -186,4 +186,20 @@ definition {
 		return "${masterLayoutPlid}";
 	}
 
+	@summary = "Set the layoutPageTemplateEntry as default by using layoutPageTemplateEntryId"
+	macro _setDisplayPageTemplateEntryAsDefault {
+		Variables.assertDefined(parameterList = "${layoutPageTemplateEntryId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/update-layout-page-template-entry \
+				-u test@liferay.com:test \
+				-d layoutPageTemplateEntryId=${layoutPageTemplateEntryId} \
+				-d defaultTemplate=true
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

@@ -438,4 +438,42 @@ definition {
 		}
 	}
 
+	@description = "Verify that for local keys the subtext is 'On-Premise'"
+	@priority = "4"
+	test VerifyTheSubTextForLocalKeys {
+		property portal.upstream = "quarantine";
+
+		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
+
+		var keyStatus = "All";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("And I select the pagination quantity to 50 items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		}
+
+		task ("Then I assert that local keys has key type as 'On-Premise'") {
+			CP2ActivationKeys.assertTextAtTable(
+				linePosition = "2",
+				lineColunm = "3",
+				text = "On-Premise");
+			
+			CP2ActivationKeys.assertTextAtTable(
+				linePosition = "2",
+				lineColunm = "3",
+				text = "Redacted");
+		}
+	}
+
 }

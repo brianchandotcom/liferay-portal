@@ -129,4 +129,18 @@ definition {
 		return "${serviceContext}";
 	}
 
+	macro setStatus {
+		Variables.assertDefined(parameterList = "${statusKey}");
+
+		if ("${statusKey}" == "APPROVE") {
+			var status = "0";
+		}
+
+		if ("${statusKey}" == "DRAFT") {
+			var status = "2";
+		}
+
+		return "${status}";
+	}
+
 }

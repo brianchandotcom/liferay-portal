@@ -247,4 +247,20 @@ definition {
 		JSONLayoutpagetemplateAPI._deleteLayoutPageTemplateEntry(layoutPageTemplateEntryId = "${layoutPageTemplateEntryId}");
 	}
 
+	@summary = "Set a layoutPageTemplateEntry as default"
+	macro setLayoutPageTemplateEntryAsDefault {
+		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${type}");
+
+		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
+			groupKey = "${groupName}",
+			site = "${site}");
+
+		var layoutPageTemplateEntryId = JSONLayoutpagetemplateSetter.setLayoutPageTemplateEntryId(
+			groupId = "${groupId}",
+			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}",
+			type = "${type}");
+
+		JSONLayoutpagetemplateAPI._setDisplayPageTemplateEntryAsDefault(layoutPageTemplateEntryId = "${layoutPageTemplateEntryId}");
+	}
+
 }

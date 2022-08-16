@@ -152,8 +152,10 @@ AUI.add(
 					const instance = this;
 
 					return (
-						Liferay.Util.Cookie.get(instance._cookieKey, Liferay.Util.Cookie.TYPES.NECESSARY) ||
-						instance._initTimestamp
+						Liferay.Util.Cookie.get(
+							instance._cookieKey,
+							Liferay.Util.Cookie.TYPES.NECESSARY
+						) || instance._initTimestamp
 					);
 				},
 

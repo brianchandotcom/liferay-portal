@@ -669,9 +669,7 @@ definition {
 		}
 
 		task ("Assert 'empty state' image appears") {
-			AssertElementPresent.pauseAssertVisible(
-				key_image = "/o/segments-experiment-web/images/no_experiment.svg",
-				locator1 = "ABTest#IMAGE_SOURCE");
+			AssertVisible(locator1 = "ABTest#IMAGE_EMPTY_STATE");
 		}
 	}
 
@@ -691,9 +689,7 @@ definition {
 
 			ClickNoError(locator1 = "ABTest#RUN_TEST_BUTTON");
 
-			AssertElementPresent.pauseAssertVisible(
-				key_image = "/o/segments-experiment-web/images/success.gif",
-				locator1 = "ABTest#IMAGE_SOURCE");
+			AssertVisible(locator1 = "ABTest#IMAGE_SUCCESS");
 
 			Click(locator1 = "ABTest#OK_BUTTON");
 		}

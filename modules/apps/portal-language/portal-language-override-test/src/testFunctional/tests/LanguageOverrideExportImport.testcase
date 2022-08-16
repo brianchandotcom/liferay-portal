@@ -159,13 +159,15 @@ this-is-a-language-key=This is a language key''',
 			Button.clickSave();
 		}
 
-		task ("Then assert the error message and the language key was not uploaded") {
+		task ("Then the file does not upload") {
 			Alert.viewRequestFailedToComplete();
 
 			Alert.viewErrorMessage(errorMessage = "Error: Keys longer than 1000 characters are not allowed.");
 
 			AssertConsoleTextNotPresent(value1 = "Data truncation");
+		}
 
+		task ("and the translation was not imported") {
 			LanguageOverride.openLanguageOverridePortlet();
 
 			Search.searchCP(searchTerm = "newkey");

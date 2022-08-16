@@ -32,6 +32,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -106,14 +108,23 @@ public class JournalArticleExportImportContentProcessor
 			return content;
 		}
 
-		StringBundler sb = new StringBundler(3);
+		boolean journalArticleExportImportCacheEnabled =
+			_isJournalArticleExportImportProcessorCacheEnabled(
+				stagedModel.getCompanyId());
 
-		sb.append(stagedModel.getUuid());
-		sb.append(exportReferencedContent);
-		sb.append(escapeContent);
+		StringBundler sb = null;
+		String processedContent = null;
 
-		String processedContent = _journalArticleExportImportCache.get(
-			sb.toString());
+		if (journalArticleExportImportCacheEnabled) {
+			sb = new StringBundler(3);
+
+			sb.append(stagedModel.getUuid());
+			sb.append(exportReferencedContent);
+			sb.append(escapeContent);
+
+			processedContent = _journalArticleExportImportCache.get(
+				sb.toString());
+		}
 
 		String path = ExportImportPathUtil.getModelPath(stagedModel);
 
@@ -160,7 +171,9 @@ public class JournalArticleExportImportContentProcessor
 					portletDataContext, stagedModel, content,
 					exportReferencedContent, escapeContent);
 
-		_journalArticleExportImportCache.put(sb.toString(), content);
+		if (journalArticleExportImportCacheEnabled) {
+			_journalArticleExportImportCache.put(sb.toString(), content);
+		}
 
 		return content;
 	}
@@ -359,6 +372,18 @@ public class JournalArticleExportImportContentProcessor
 
 			return null;
 		}
+	}
+
+	private boolean _isJournalArticleExportImportProcessorCacheEnabled(
+			long companyId)
+		throws Exception {
+
+		JournalServiceConfiguration journalServiceConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				JournalServiceConfiguration.class, companyId);
+
+		return journalServiceConfiguration.
+			journalArticleExportImportProcessorCacheEnabled();
 	}
 
 	private String _replaceExportJournalArticleReferences(
@@ -655,6 +680,9 @@ public class JournalArticleExportImportContentProcessor
 
 	private static final Pattern _htmlCommentRegexPattern = Pattern.compile(
 		"\\<!--([\\s\\S]*)--\\>");
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues)"

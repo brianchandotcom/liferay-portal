@@ -22,6 +22,71 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
+
+		for (var vocabulary : list "Topic,Audience,Stage") {
+			JSONCategory.tearDownCategories(
+				groupName = "Global",
+				vocabularyName = "${vocabulary}");
+		}
+	}
+
+	@description = "LPS-148882: Given blogs entry editor screen
+	When user expands Categorization section
+	Then user can add categories from Audience and Stage Vocabularies"
+	@priority = "5"
+	test AddCategoriesToBlogs {
+		property portal.acceptance = "true";
+
+		task ("Add a global category") {
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience 1",
+				vocabularyName = "Audience");
+
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Stage 1",
+				vocabularyName = "Stage");
+		}
+
+		task ("Create a blog") {
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("Go to Blogs Admin and click to edit") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Add categories from Audience and Stage Vocabularies") {
+			Panel.expandPanel(panel = "Categorization");
+
+			Click(
+				key_fieldName = "Audience",
+				locator1 = "Button#SELECT_BUTTON");
+
+			AssetCategorization.selectCategories(categoryNameList = "Audience 1");
+
+			Click(
+				key_fieldName = "Stage",
+				locator1 = "Button#SELECT_BUTTON");
+
+			AssetCategorization.selectCategories(categoryNameList = "Stage 1");
+
+			AssertTextEquals(
+				key_categoryName = "Audience 1",
+				locator1 = "AssetCategorization#CATEGORY",
+				value1 = "Audience 1");
+
+			AssertTextEquals(
+				key_categoryName = "Stage 1",
+				locator1 = "AssetCategorization#CATEGORY",
+				value1 = "Stage 1");
+		}
 	}
 
 	@description = "LPS-131793 Given select modal window in the the categorization section in Documents and Media
@@ -195,6 +260,518 @@ definition {
 			Vocabulary.viewVocabularyAssociatedAssetTypesRequirement(
 				label = "Required",
 				vocabularyName = "Stage");
+		}
+	}
+
+	@description = "LPS-148882: Given a Blog Entry with Audience and/or Stage categories
+	When user navigates to Content Dashboard
+	Then user can see the asset's categories under the respective column"
+	@priority = "4"
+	test CheckBlogCategoriesColumnAtContentDashboard {
+		property portal.acceptance = "true";
+
+		task ("Add a global category") {
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience 1",
+				vocabularyName = "Audience");
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Stage 1",
+				vocabularyName = "Stage");
+		}
+
+		task ("Create a blog") {
+			HeadlessBlog.addBlogEntry(
+				assetCategoryIds = "${categoryId1},${categoryId2}",
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("Go to Content Dashboard and check the asset's categories under the respective column") {
+			ContentDashboard.goToContentDashboard();
+
+			AssertElementPresent(
+				key_tableHeader = "Audience",
+				locator1 = "LexiconTable#TABLE_HEADER");
+
+			AssertElementPresent(
+				key_tableHeader = "Stage",
+				locator1 = "LexiconTable#TABLE_HEADER");
+		}
+	}
+
+	@description = "LPS-148882: Given a Blog Entry with Audience and/or Stage categories
+	When user navigates to Content Dashboard
+	Then the asset is being counted at graph"
+	@priority = "4"
+	test CheckBlogCategoriesGraphAtContentDashboard {
+		property portal.acceptance = "true";
+
+		task ("Add a global category") {
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience 1",
+				vocabularyName = "Audience");
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Stage 1",
+				vocabularyName = "Stage");
+		}
+
+		task ("Create a blog") {
+			HeadlessBlog.addBlogEntry(
+				assetCategoryIds = "${categoryId1},${categoryId2}",
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("Go to Content Dashboard and check the asset is being counted at graph") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			ContentDashboard.goToContentDashboard();
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
+				value1 = "Audience 1",
+				xAxisCategoryName = "Audience 1");
+
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
+				value1 = "Stage 1",
+				xAxisCategoryName = "Stage 1");
+		}
+	}
+
+	@description = "LPS-148882: Given a Blog Entry with Audience and/or Stage categories
+	When the user filters by category using Filter and Order
+	Then the Blogs Entry is listed"
+	@priority = "4"
+	test CheckBlogFilterByCategory {
+		property portal.acceptance = "true";
+
+		task ("Add a global category") {
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience 1",
+				vocabularyName = "Audience");
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Stage 1",
+				vocabularyName = "Stage");
+		}
+
+		task ("Create a blog") {
+			HeadlessBlog.addBlogEntry(
+				assetCategoryIds = "${categoryId1},${categoryId2}",
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("Go to Content Dashboard and check the asset is being counted at graph") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByCategory(
+				categoryNameList = "Audience 1,Stage 1",
+				filterOption = "Categories");
+
+			AssertTextEquals(
+				key_tableEntry = "Blogs Entry Title",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
+				value1 = "Blogs Entry Title");
+		}
+	}
+
+	@description = "LPS-148882: Given a Dynamic Collection has a Blogs Entry item type
+	And is filtered by Audience's or Stage's audience
+	When the Collection is selected at Asset Publisher
+	Then all blogs entries with the corresponding category is shown"
+	@priority = "4"
+	test CheckBlogFilterByCategoryAtAssetPublisher {
+		property portal.acceptance = "true";
+
+		task ("Add a global category") {
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience 1",
+				vocabularyName = "Audience");
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Stage 1",
+				vocabularyName = "Stage");
+		}
+
+		task ("Create a blog") {
+			HeadlessBlog.addBlogEntry(
+				assetCategoryIds = "${categoryId1},${categoryId2}",
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Blogs Entry",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Filter blogs entry by category") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Audience 1,Stage 1",
+				queryAndOperator = "All",
+				queryContains = "Contains");
+		}
+
+		task ("Add a Collection Display to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+
+			Button.clickPublish();
+		}
+
+		task ("Assert the correct asset is shown") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+
+			AssertTextEquals.assertPartialText(
+				key_assetTitle = "Blogs Entry Title",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "Blogs Entry Title");
+
+			AssertTextEquals.assertPartialText(
+				key_assetContent = "Blogs Entry Content",
+				locator1 = "APAsset#ASSET_CONTENT",
+				value1 = "Blogs Entry Content");
+		}
+	}
+
+	@description = "LPS-148882: Given a Blog Entry with Audience and/or Stage categories
+	And those categories are filtered at Dynamic Collection
+	When user clicks at View Items
+	Then the blog asset should be listed"
+	@priority = "3"
+	test CheckBlogFilterByCategoryAtCollection {
+		property portal.acceptance = "true";
+
+		task ("Add a global category") {
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience 1",
+				vocabularyName = "Audience");
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Stage 1",
+				vocabularyName = "Stage");
+		}
+
+		task ("Create a blog") {
+			HeadlessBlog.addBlogEntry(
+				assetCategoryIds = "${categoryId1},${categoryId2}",
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Blogs Entry",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Create a first variation for the collection and filter web contents by category") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Audience 1,Stage 1",
+				queryAndOperator = "All",
+				queryContains = "Contains");
+		}
+
+		task ("Go to Content Dashboard and check the asset is being counted at graph") {
+			AssetListsAdmin.gotoEllipsisMenuItemInItemSelector();
+
+			AssertTextEquals(
+				key_tableEntry = "Blogs Entry Title",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
+				value1 = "Blogs Entry Title");
+		}
+	}
+
+	@description = "LPS-148882: Given a Dynamic Collection has a Blogs Entry item type
+	And is filtered by Audience's or Stage's audience
+	When the Collection is selected at Collection Display Fragment
+	Then all blogs entries with the corresponding category is shown"
+	@priority = "4"
+	test CheckBlogFilterByCategoryAtCollectionWithFragment {
+		property portal.acceptance = "true";
+
+		task ("Add a global category") {
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience 1",
+				vocabularyName = "Audience");
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Stage 1",
+				vocabularyName = "Stage");
+		}
+
+		task ("Create a blog") {
+			HeadlessBlog.addBlogEntry(
+				assetCategoryIds = "${categoryId1},${categoryId2}",
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Blogs Entry",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Filter blogs entry by category") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Audience 1,Stage 1",
+				queryAndOperator = "All",
+				queryContains = "Contains");
+		}
+
+		task ("Add a Collection Display to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection in the Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection Test",
+				fragmentName = "Collection Display",
+				styleDisplay = "Bulleted List");
+
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Assert the correct asset is shown") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_BULLET_LIST_TEXT",
+				value1 = "Blogs Entry");
+		}
+	}
+
+	@description = "LPS-148882: Given a Blog Entry with Audience and/or Stage categories
+	When the user filters by clicking at category's bar
+	Then the Blogs Entry is listed"
+	@priority = "4"
+	test CheckBlogFilterByCategoryBar {
+		property portal.acceptance = "true";
+
+		task ("Add a global category") {
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience 1",
+				vocabularyName = "Audience");
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Stage 1",
+				vocabularyName = "Stage");
+		}
+
+		task ("Create a blog") {
+			HeadlessBlog.addBlogEntry(
+				assetCategoryIds = "${categoryId1},${categoryId2}",
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("Go to Content Dashboard and check the asset is being counted at graph") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.clickOnFirstBar();
+
+			WaitForPageLoad();
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Blogs Entry Title");
+		}
+	}
+
+	@description = "LPS-148882: Given there are two or more sites created
+	When user is creating a Blog Entry
+	Then s/he can add Audience and Stage categories across all sites"
+	@priority = "4"
+	@uitest
+	test CheckBlogsCategoriesMoreThanOneSite {
+		property portal.acceptance = "true";
+
+		task ("Add the second site") {
+			JSONGroup.addGroup(groupName = "Test Site Name 2");
+		}
+
+		task ("Add a global category") {
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience 1",
+				vocabularyName = "Audience");
+
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Stage 1",
+				vocabularyName = "Stage");
+		}
+
+		task ("Create two blogs") {
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content 1",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title 1");
+
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content 2",
+				groupName = "Test Site Name 2",
+				title = "Blogs Entry Title 2");
+		}
+
+		task ("Go to Blogs Admin and click to edit the first blog") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title 1");
+		}
+
+		task ("Add categories from Audience and Stage Vocabularies") {
+			Panel.expandPanel(panel = "Categorization");
+
+			Click(
+				key_fieldName = "Audience",
+				locator1 = "Button#SELECT_BUTTON");
+
+			AssetCategorization.selectCategories(categoryNameList = "Audience 1");
+
+			Click(
+				key_fieldName = "Stage",
+				locator1 = "Button#SELECT_BUTTON");
+
+			AssetCategorization.selectCategories(categoryNameList = "Stage 1");
+
+			AssertTextEquals(
+				key_categoryName = "Audience 1",
+				locator1 = "AssetCategorization#CATEGORY",
+				value1 = "Audience 1");
+
+			AssertTextEquals(
+				key_categoryName = "Stage 1",
+				locator1 = "AssetCategorization#CATEGORY",
+				value1 = "Stage 1");
+		}
+
+		task ("Go to Blogs Admin and click to edit the second blog") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name-2");
+
+			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title 2");
+		}
+
+		task ("Add categories from Audience and Stage Vocabularies") {
+			Panel.expandPanel(panel = "Categorization");
+
+			Click(
+				key_fieldName = "Audience",
+				locator1 = "Button#SELECT_BUTTON");
+
+			AssetCategorization.selectCategories(categoryNameList = "Audience 1");
+
+			Click(
+				key_fieldName = "Stage",
+				locator1 = "Button#SELECT_BUTTON");
+
+			AssetCategorization.selectCategories(categoryNameList = "Stage 1");
+
+			AssertTextEquals(
+				key_categoryName = "Audience 1",
+				locator1 = "AssetCategorization#CATEGORY",
+				value1 = "Audience 1");
+
+			AssertTextEquals(
+				key_categoryName = "Stage 1",
+				locator1 = "AssetCategorization#CATEGORY",
+				value1 = "Stage 1");
+		}
+	}
+
+	@description = "LPS-148882: Given blogs entry editor screen
+	When user expands Categorization section
+	Then Audience and Stage vocabularies are visible"
+	@priority = "5"
+	test CheckCategoriesAtBlogs {
+		property portal.acceptance = "true";
+
+		task ("Create a blog") {
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("Go to Blogs Admin and click to edit") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Click to see categorization, assert if Audience and Stage are visible") {
+			Panel.expandPanel(panel = "Categorization");
+
+			AssertElementPresent(
+				key_categoryName = "Audience",
+				locator1 = "Categories#VOCABULARY_CATEGORY");
+
+			AssertElementPresent(
+				key_categoryName = "Stage",
+				locator1 = "Categories#VOCABULARY_CATEGORY");
 		}
 	}
 

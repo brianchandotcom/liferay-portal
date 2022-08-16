@@ -278,6 +278,27 @@ definition {
 			value1 = "10240");
 	}
 
+	@description = "This test ensures that the configured file size limites can be removed."
+	@priority = "3"
+	test CanRemoveConfiguredFileSizeLimits {
+		property test.name.skip.portal.instance = "DMFileSizeLimits#CanRemoveConfiguredFileSizeLimits";
+
+		DMDocument.updateMimeTypeSizeLimit(
+			maximumFileSizeValue = "10240",
+			mimeTypeValue = "image/png");
+
+		DMDocument.updateMimeTypeSizeLimit(
+			maximumFileSizeValue = "",
+			mimeTypeValue = "");
+
+		for (var fieldName : list "Mime Type,Maximum File Size") {
+			AssertValue(
+				key_text = "${fieldName}",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+		}
+	}
+
 	@description = "This test ensures that when setting the Mime Type Size Limit at different levels(Instance Settings and System Settings), the lower limit from Instance Settings will take effect."
 	@priority = "4"
 	@uitest

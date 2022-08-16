@@ -141,6 +141,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE_EMPTY_STATE</td>
+	<td>//*[contains(@class,'segments-experiments-empty-state__image') and (@src)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMAGE_SUCCESS</td>
+	<td>//img[contains(@src,'/o/segments-experiment-web/images/success.gif')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INVALID_ID_MESSAGE</td>
 	<td>//*[contains(@class,'form-feedback-item')]</td>
 	<td></td>
@@ -318,11 +328,6 @@
 <tr>
 	<td>VIEW_TEST_STATUS_ANALYTICS_CLOUD</td>
 	<td>//h3[contains(.,'t') and contains(text(),'${status}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>IMAGE_SOURCE</td>
-	<td>//div[contains(@class,'text-center')]//img[contains(@src,'${key_image}')]</td>
 	<td></td>
 </tr>
 <tr>

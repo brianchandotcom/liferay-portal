@@ -22,8 +22,8 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="countryId" type="long" />
+		<column name="listTypeId" type="long" />
 		<column name="regionId" type="long" />
-		<column name="typeId" type="long" />
 		<column name="city" type="String" />
 		<column name="description" type="String" />
 		<column name="latitude" type="double" />
@@ -71,7 +71,7 @@
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
-			<finder-column arrayable-operator="true" name="typeId" />
+			<finder-column arrayable-operator="true" name="listTypeId" />
 		</finder>
 		<finder name="C_C_C_M" return-type="Collection">
 			<finder-column name="companyId" />

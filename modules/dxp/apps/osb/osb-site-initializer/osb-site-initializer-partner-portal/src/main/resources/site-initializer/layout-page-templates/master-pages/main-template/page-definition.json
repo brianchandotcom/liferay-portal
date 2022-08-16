@@ -80,6 +80,29 @@
 						"pageElements": [
 							{
 								"definition": {
+									"fragmentLink": {
+										"href": {
+											"mapping": {
+												"itemReference": {
+													"className": "com.liferay.portal.kernel.model.Layout",
+													"fields": [
+														{
+															"fieldName": "friendlyURL",
+															"fieldValue": "/home"
+														},
+														{
+															"fieldName": "privatePage",
+															"fieldValue": "false"
+														},
+														{
+															"fieldName": "siteKey",
+															"fieldValue": "[$GROUP_KEY$]"
+														}
+													]
+												}
+											}
+										}
+									},
 									"fragmentStyle": {
 										"borderWidth": "0",
 										"marginRight": "2",
@@ -244,6 +267,29 @@
 									},
 									{
 										"definition": {
+											"fragmentLink": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/search"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																},
+																{
+																	"fieldName": "siteKey",
+																	"fieldValue": "[$GROUP_KEY$]"
+																}
+															]
+														}
+													}
+												}
+											},
 											"fragmentStyle": {
 												"borderWidth": "0",
 												"marginLeft": "4",
@@ -271,7 +317,7 @@
 														"key": "clay-icon-link"
 													},
 													"fragmentConfig": {
-														"iconLink": "./search",
+														"iconLink": "",
 														"iconName": "search"
 													},
 													"fragmentFields": [
@@ -2151,7 +2197,6 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"css": "/*Source Serif Pro*/\n@font-face {\n\tfont-display: swap;\n\tfont-family: 'Source Sans Pro';\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: url(/documents/d/prm-01/sourcesanspro-regular-ttf);\n}",
 		"themeName": "Dialect",
 		"themeSettings": {
 			"lfr-theme:regular:show-footer": "false",

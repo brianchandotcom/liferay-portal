@@ -1,6 +1,17 @@
+$product-performance-border-config: 1px solid hsl(209, 36%, 85%);
+
 .ray-dashboard-product-performance {
+	@media screen and (min-width: $breakpoint-tablet) and (max-width: 1163px) {
+		max-height: 630px;
+	}
+
+	@media screen and (min-width: $breakpoint-tablet) {
+		max-height: 602px;
+		overflow-y: hidden;
+	}
+
 	.header-row {
-		border-bottom: 1px solid hsl(209, 36%, 85%);
+		border-bottom: $product-performance-border-config;
 		height: 62px;
 
 		.product-performance-select {
@@ -8,8 +19,14 @@
 			width: 85px;
 		}
 
-		.general-filter:focus {
-			box-shadow: none !important;
+		.general-filter {
+			&.disabled {
+				cursor: default !important;
+			}
+
+			&:focus {
+				box-shadow: none !important;
+			}
 		}
 
 		@media screen and (min-width: $breakpoint-tablet) and (max-width: 1163px) {
@@ -18,6 +35,19 @@
 	}
 
 	.left-container {
-		border-right: 1px solid hsl(209, 36%, 85%);
+		border-right: $product-performance-border-config;
+
+		@media screen and (max-width: $breakpoint-phone) {
+			border-bottom: $product-performance-border-config;
+			border-right: none;
+		}
+	}
+
+	.right-container {
+		@media screen and (max-width: $breakpoint-phone) {
+			.header-row {
+				border-bottom: none;
+			}
+		}
 	}
 }

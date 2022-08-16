@@ -1,0 +1,62 @@
+.ray-product-list {
+	height: 540px;
+	overflow-y: auto;
+
+	@media screen and (max-width: $breakpoint-phone) {
+		height: 80px;
+	}
+
+	.product-item {
+		&:hover {
+			cursor: pointer;
+		}
+
+		@media screen and (max-width: $breakpoint-phone) {
+			padding-left: 12px;
+			padding-right: 12px;
+
+			&.product-selected:after {
+				background-color: #4c84ff;
+				bottom: 2px;
+				content: '';
+				display: block;
+				height: 2px;
+				position: absolute;
+				width: 50px;
+			}
+		}
+
+		@media screen and (min-width: $breakpoint-phone) {
+			&.product-selected {
+				box-shadow: 0 5px 20px rgb(0 0 0 / 10%), inset 7px 0 0 #4c84ff,
+					inset 0 1px 0 #fff;
+			}
+		}
+
+		.product-container {
+			.product-icon {
+				width: 40px;
+			}
+
+			.product-title {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			@media screen and (max-width: $breakpoint-phone) {
+				max-width: 140px;
+			}
+		}
+
+		.goals-container {
+			.yearly-goal {
+				color: rgba(39, 40, 50, 0.35);
+			}
+		}
+
+		.grey-title-color {
+			color: rgba(39, 40, 50, 0.7);
+		}
+	}
+}

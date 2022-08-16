@@ -10,6 +10,7 @@
  */
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {useGetAccountSubscriptionGroups} from '../../../../../common/services/liferay/graphql/account-subscription-groups/queries/useGetAccountSubscriptionGroups';
+import {STATUS_TAG_TYPE_NAMES} from '../../../utils/constants';
 import ActivationStatusLayout from '../Layout';
 import SetupLiferayExperienceCloudModal from './components/SetupLXCModal';
 import useActivationStatusDate from './hooks/useActivationStatusDate';
@@ -26,8 +27,9 @@ const ActivationStatusLiferayExperienceCloud = ({
 
 	const {activationStatusDate} = useActivationStatusDate(project);
 	const {
-		activationStatus,
+		currentActivationStatus,
 		isVisibleSetupLxcModal,
+		lxcStatusActivation,
 		setIsVisibleSetupLxcModal,
 		setStatusActivation,
 	} = useGetActivationStatusCardLayout(
@@ -46,6 +48,11 @@ const ActivationStatusLiferayExperienceCloud = ({
 		setIsVisibleSetupLxcModal,
 		setStatusActivation
 	);
+
+	const activationStatus =
+		currentActivationStatus[
+			lxcStatusActivation || STATUS_TAG_TYPE_NAMES.notActivated
+		];
 
 	return (
 		<div>

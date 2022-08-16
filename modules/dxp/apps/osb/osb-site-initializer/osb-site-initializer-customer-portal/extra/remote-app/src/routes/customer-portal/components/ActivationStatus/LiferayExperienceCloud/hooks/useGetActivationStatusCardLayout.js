@@ -30,6 +30,10 @@ export default function useGetActivationStatusCardLayout(
 		subscriptionGroupLxcEnvironment?.activationStatus
 	);
 
+	function onNotActivatedClick() {
+		setIsVisibleSetupLxcModal(true);
+	}
+
 	const currentActivationStatus = {
 		[STATUS_TAG_TYPE_NAMES.active]: {
 			buttonLink: (
@@ -107,7 +111,7 @@ export default function useGetActivationStatusCardLayout(
 					appendIcon="order-arrow-right"
 					className="btn btn-link font-weight-semi-bold p-0 text-brand-primary text-paragraph"
 					displayType="link"
-					onClick={() => setIsVisibleSetupLxcModal(true)}
+					onClick={() => onNotActivatedClick()}
 				>
 					{i18n.translate('finish-activation')}
 				</Button>
@@ -120,14 +124,10 @@ export default function useGetActivationStatusCardLayout(
 		},
 	};
 
-	const activationStatus =
-		currentActivationStatus[
-			lxcStatusActivation || STATUS_TAG_TYPE_NAMES.notActivated
-		];
-
 	return {
-		activationStatus,
+		currentActivationStatus,
 		isVisibleSetupLxcModal,
+		lxcStatusActivation,
 		setIsVisibleSetupLxcModal,
 		setStatusActivation,
 	};

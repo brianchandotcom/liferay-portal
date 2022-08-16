@@ -14,14 +14,14 @@ import {useAppPropertiesContext} from '../../../../../../../../../../../../commo
 import {
 	createAdminsLiferayExperienceCloud,
 	createLiferayExperienceCloudEnvironments,
-} from '../../../../../../../../../../../../common/services/liferay/graphql/liferay-experience-cloud-environments/';
+} from '../../../../../../../../../../../../common/services/liferay/graphql/liferay-experience-cloud-environments';
 import {
 	getLiferayExperienceCloudEnvironments,
 	updateAccountSubscriptionGroups,
 } from '../../../../../../../../../../../../common/services/liferay/graphql/queries';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../../../../../../../utils/constants';
 
-export default function useSubmitLxcEnvironment(
+export default function useSubmitLXCEnvironment(
 	handleChangeForm,
 	project,
 	setFormAlreadySubmitted,

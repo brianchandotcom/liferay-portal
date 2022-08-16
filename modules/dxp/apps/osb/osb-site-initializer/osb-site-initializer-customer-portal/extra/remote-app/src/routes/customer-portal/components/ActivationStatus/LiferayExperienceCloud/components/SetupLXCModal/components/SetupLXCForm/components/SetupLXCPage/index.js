@@ -22,7 +22,7 @@ import Layout from '../../../../../../../../../../../common/containers/setup-for
 import getInitialLxcAdmins from '../../utils/getInitialLxcAdmins';
 import AdminInputs from './components/AdminsInput';
 import useGetPrimaryRegionList from './hooks/useGetPrimaryRegionList';
-import useSubmitLxcEnvironment from './hooks/useSubmitLxcEnvironment';
+import useSubmitLXCEnvironment from './hooks/useSubmitLXCEnvironment';
 
 const INITIAL_SETUP_ADMIN_COUNT = 1;
 
@@ -48,7 +48,7 @@ const SetupLiferayExperienceCloudPage = ({
 		setBaseButtonDisabled(hasTouched || hasError);
 	}, [touched, errors]);
 
-	const handleSubmitLxcEnvironment = useSubmitLxcEnvironment(
+	const handleSubmitLxcEnvironment = useSubmitLXCEnvironment(
 		handleChangeForm,
 		project,
 		setFormAlreadySubmitted,

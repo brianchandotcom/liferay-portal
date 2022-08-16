@@ -26,7 +26,7 @@ const LiferayExperienceCloud = () => {
 	}, [setHasSideMenu, setHasQuickLinksPanel]);
 
 	const {data} = useGetLiferayExperienceCloudEnvironments({
-		filter: `accountKey eq '${project?.accountKey}' and hasActivation eq true`,
+		filter: `accountKey eq '${project?.accountKey}'`,
 	});
 
 	const lxcEnvironment =
@@ -43,16 +43,14 @@ const LiferayExperienceCloud = () => {
 
 	return (
 		<div>
-			{Liferay.FeatureFlags['LPS-153478'] && (
-				<ActivationStatus.LiferayExperienceCloud
-					lxcEnvironment={lxcEnvironment}
-					project={project}
-					subscriptionGroupLxcEnvironment={
-						subscriptionGroupLxcEnvironment
-					}
-					userAccount={userAccount}
-				/>
-			)}
+			<ActivationStatus.LiferayExperienceCloud
+				lxcEnvironment={lxcEnvironment}
+				project={project}
+				subscriptionGroupLxcEnvironment={
+					subscriptionGroupLxcEnvironment
+				}
+				userAccount={userAccount}
+			/>
 		</div>
 	);
 };

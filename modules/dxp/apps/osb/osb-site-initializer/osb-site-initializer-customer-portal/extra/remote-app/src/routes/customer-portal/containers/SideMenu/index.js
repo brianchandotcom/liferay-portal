@@ -47,8 +47,12 @@ const SideMenu = () => {
 		isOpenedProductsMenu,
 	]);
 
-	const isLiferayExperienceCloud = subscriptionGroups?.some(
-		({name}) => name === PRODUCT_TYPES.liferayExperienceCloud
+	const hasLiferayExperienceCloud = useMemo(
+		() =>
+			subscriptionGroups?.some(
+				({name}) => name === PRODUCT_TYPES.liferayExperienceCloud
+			),
+		[subscriptionGroups]
 	);
 
 	const accountSubscriptionGroupsMenuItem = useMemo(
@@ -100,7 +104,7 @@ const SideMenu = () => {
 				</MenuItem>
 
 				{Liferay.FeatureFlags['LPS-153478'] &&
-					isLiferayExperienceCloud && (
+					hasLiferayExperienceCloud && (
 						<MenuItem
 							to={getKebabCase(
 								PRODUCT_TYPES.liferayExperienceCloud

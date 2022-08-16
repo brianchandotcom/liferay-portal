@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item.type;
+package com.liferay.content.dashboard.blogs.internal.item.type;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.item.InfoItemReference;

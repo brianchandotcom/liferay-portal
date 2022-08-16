@@ -404,6 +404,12 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 
 			_exportImportLocalService.importLayouts(
 				_exportImportConfiguration, file);
+
+			for (long layoutId : layoutIds) {
+				Assert.assertNotNull(
+					_layoutLocalService.getLayout(
+						_group2.getGroupId(), false, layoutId));
+			}
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

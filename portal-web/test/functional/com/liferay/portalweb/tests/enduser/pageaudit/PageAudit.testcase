@@ -88,6 +88,10 @@ definition {
 			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
 		}
 
+		task ("Configure canonical URL") {
+			PageAudit.configurationSEOCanonicalURL();
+		}
+
 		task ("Add a translation for that page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -135,6 +139,10 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Configure canonical URL") {
+			PageAudit.configurationSEOCanonicalURL();
 		}
 
 		task ("Open Page Audit panel and change locale/language") {
@@ -199,6 +207,10 @@ definition {
 			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
 		}
 
+		task ("Configure canonical URL") {
+			PageAudit.configurationSEOCanonicalURL();
+		}
+
 		task ("Go to display page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-2");
 
@@ -235,6 +247,10 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
 
 			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Configure canonical URL") {
+			PageAudit.configurationSEOCanonicalURL();
 		}
 
 		task ("Open Page Audit panel and change locale/language") {

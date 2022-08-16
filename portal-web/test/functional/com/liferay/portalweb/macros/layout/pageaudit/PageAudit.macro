@@ -18,6 +18,29 @@ definition {
 			locator1 = "Translation#DROPDOWN_MENU_ITEM");
 	}
 
+	macro configurationSEOCanonicalURL {
+		PortalSettings.openInstanceSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "SEO",
+			configurationScope = "Virtual Instance Scope");
+
+		SystemSettings.selectOptionSetting(
+			fieldName = "Canonical URL",
+			selectOption = "Use Localized URL");
+
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			Click(locator1 = "Button#SAVE");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Click(locator1 = "Button#UPDATE");
+		}
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro configurationTeardown {
 		PageAudit.goToGooglePageSpeedInsightsSystemSettingConfiguration();
 

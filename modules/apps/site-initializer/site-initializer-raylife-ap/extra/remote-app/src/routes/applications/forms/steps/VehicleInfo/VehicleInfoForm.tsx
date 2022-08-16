@@ -37,7 +37,12 @@ type FormVehicleInfoTypes = {
 	id: number;
 };
 
-const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
+const FormVehicleInfo = ({
+	form,
+	formIndex,
+	formNumber,
+	id,
+}: FormVehicleInfoTypes) => {
 	const [_state, dispatch] = useContext(NewApplicationAutoContext);
 
 	const [_makeOptions, setMakeOptions] = useState<any[]>([]);
@@ -116,8 +121,8 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 		dispatch({payload: true, type: ACTIONS.SET_HAS_FORM_CHANGE});
 	};
 
-	const handleRemoveFormClick = (id: number) => {
-		const payload = {id};
+	const handleRemoveFormClick = (formIndex: number) => {
+		const payload = {id: formIndex};
 		dispatch({payload, type: ACTIONS.SET_REMOVE_VEHICLE});
 	};
 
@@ -191,7 +196,7 @@ const FormVehicleInfo = ({form, formNumber, id}: FormVehicleInfoTypes) => {
 						<ClayButton
 							className="border-white font-weight-bolder text-paragraph-sm"
 							displayType="secondary"
-							onClick={() => handleRemoveFormClick(id)}
+							onClick={() => handleRemoveFormClick(formIndex)}
 						>
 							<ClayIcon symbol="times-circle" />
 							&nbsp;REMOVE VEHICLE

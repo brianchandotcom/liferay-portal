@@ -92,7 +92,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 			}
 		);
 
-		if (state.currentStep < steps.length) {
+		if (state.currentStep < steps.length - 1) {
 			dispatch({
 				payload: state.currentStep + 1,
 				type: ACTIONS.SET_CURRENT_STEP,

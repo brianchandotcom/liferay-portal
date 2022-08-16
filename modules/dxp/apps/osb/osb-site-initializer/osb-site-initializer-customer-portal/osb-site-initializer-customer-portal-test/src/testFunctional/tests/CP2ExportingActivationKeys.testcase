@@ -41,11 +41,19 @@ definition {
 		}
 	}
 
-	@description = "LPS-148063 - Verify if the option to 'Export all key details (csv)' is available."
+	@description = "LPS-148063 - Verify if the option to 'Export all key details (csv)' is available when clicking Actions."
 	@priority = "4"
-	test IfExportAllKeyOptionsIsPresent {
-        task ("Given") {
-            
+	test ExportAllKeyOptionsIsPresent {
+        task ("When a user selects a project in Customer Portal") {
+            CustomerPortal.enterOnProject(title = "Test Account 01");
+		
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+		}
+
+		task ("Then the user should be able to assert the 'Export All Key Details (csv)' option in the Actions dropdown") {
+			CP2NavigationMenu.assertActionsOption(key_action = "Export All Key Details (csv)");
         }
     } 
 

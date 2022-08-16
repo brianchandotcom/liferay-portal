@@ -179,6 +179,20 @@ public class CountryLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchCountriesByISOCodes() throws Exception {
+		String a2 = "a1";
+		String a3 = "a11";
+		String number = "aaa";
+
+		Country country = _addCountry(
+			a2, a3, true, RandomTestUtil.randomString(), number);
+
+		_testSearchCountries(a2, true, country);
+		_testSearchCountries(a3, true, country);
+		_testSearchCountries(number, true, country);
+	}
+
+	@Test
 	public void testSearchCountriesPagination() throws Exception {
 		String keywords = RandomTestUtil.randomString();
 
@@ -254,9 +268,16 @@ public class CountryLocalServiceTest {
 			String a2, String a3, boolean active, String name)
 		throws Exception {
 
+		return _addCountry(a2, a3, active, name, RandomTestUtil.randomString());
+	}
+
+	private Country _addCountry(
+			String a2, String a3, boolean active, String name, String number)
+		throws Exception {
+
 		return _countryLocalService.addCountry(
 			a2, a3, active, RandomTestUtil.randomBoolean(),
-			RandomTestUtil.randomString(), name, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), name, number,
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
 			ServiceContextTestUtil.getServiceContext());

@@ -193,6 +193,19 @@ public class RegionLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchRegionsByRegionCode() throws Exception {
+		Country country = _addCountry();
+
+		String regionCode = "regionCode";
+
+		Region region = _addRegion(
+			true, country.getCountryId(), RandomTestUtil.randomString(),
+			regionCode);
+
+		_testSearchRegions(true, regionCode, null, region);
+	}
+
+	@Test
 	public void testSearchRegionsPagination() throws Exception {
 		String keywords = RandomTestUtil.randomString();
 
@@ -270,9 +283,15 @@ public class RegionLocalServiceTest {
 	private Region _addRegion(boolean active, long countryId, String name)
 		throws Exception {
 
+		return _addRegion(active, countryId, name);
+	}
+
+	private Region _addRegion(
+			boolean active, long countryId, String name, String regionCode)
+		throws Exception {
+
 		return _regionLocalService.addRegion(
-			countryId, active, name, RandomTestUtil.randomDouble(),
-			RandomTestUtil.randomString(),
+			countryId, active, name, RandomTestUtil.randomDouble(), regionCode,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

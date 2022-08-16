@@ -30,17 +30,13 @@ else {
 }
 %>
 
-<h1 class="c-mb-4 h4 text-default"><liferay-ui:message key="current-theme" /></h1>
+<p class="h4 mb-3 mt-3"><liferay-ui:message key="current-theme" /></p>
 
-<div class="card">
-	<div class="card-body">
-		<div id="<portlet:namespace />currentThemeContainer">
-			<liferay-util:include page="/look_and_feel_theme_details.jsp" servletContext="<%= application %>" />
-		</div>
-
-		<aui:input label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" placeholder="css" type="textarea" value="<%= (selLayout != null) ? selLayout.getCssText() : selLayoutSet.getCss() %>" />
-	</div>
+<div id="<portlet:namespace />currentThemeContainer">
+	<liferay-util:include page="/look_and_feel_theme_details.jsp" servletContext="<%= application %>" />
 </div>
+
+<aui:input label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" placeholder="css" type="textarea" value="<%= (selLayout != null) ? selLayout.getCssText() : selLayoutSet.getCss() %>" />
 
 <aui:button id="changeTheme" value="change-current-theme" />
 

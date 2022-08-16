@@ -21,9 +21,11 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.model.impl.DispatchLogModelImpl;
 import com.liferay.dispatch.service.base.DispatchLogLocalServiceBaseImpl;
+import com.liferay.dispatch.service.persistence.DispatchTriggerPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 
@@ -31,6 +33,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -54,9 +57,9 @@ public class DispatchLogLocalServiceImpl
 		_checkDispatchTaskStatus(dispatchTaskStatus);
 
 		DispatchTrigger dispatchTrigger =
-			dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
+			_dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		DispatchLog dispatchLog = dispatchLogPersistence.create(
 			counterLocalService.increment());
@@ -182,5 +185,11 @@ public class DispatchLogLocalServiceImpl
 				"Dispatch task status is required");
 		}
 	}
+
+	@Reference
+	private DispatchTriggerPersistence _dispatchTriggerPersistence;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

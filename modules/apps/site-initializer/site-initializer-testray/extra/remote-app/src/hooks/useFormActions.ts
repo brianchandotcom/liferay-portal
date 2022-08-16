@@ -52,7 +52,7 @@ const onError = (error: any) => {
 	console.error(error);
 
 	Liferay.Util.openToast({
-		message: i18n.translate('an-unexpected-error-occurred'),
+		message: i18n.translate(error ? error : 'an-unexpected-error-occurred'),
 		type: 'danger',
 	});
 };

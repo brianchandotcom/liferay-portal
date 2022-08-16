@@ -120,6 +120,7 @@ export default {
 	'edit-project': 'Edit Project',
 	'edit-requirement': 'Edit Requirement',
 	'edit-routine': 'Edit Routine',
+	'edit-team': 'Edit Team',
 	'edit-user-account': 'Edit User Account',
 	'email-address': 'Email Address',
 	'enter-the-case-name': 'Enter the Case Name',

@@ -119,6 +119,7 @@ const yupSchema = {
 		id: yup.string(),
 		name: yup.string().required(),
 		projectId: yup.string(),
+		teamId: yup.string(),
 	}),
 	user: yup.object({
 		alternateName: yup.string().required(),

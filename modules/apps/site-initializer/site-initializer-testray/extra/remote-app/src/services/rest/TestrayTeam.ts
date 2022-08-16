@@ -13,6 +13,7 @@
  */
 
 import yupSchema from '../../schema/yup';
+import {searchUtil} from '../../util/search';
 import fetcher from '../fetcher';
 import {APIResponse, TestrayTeam} from './types';
 
@@ -23,7 +24,19 @@ const adapter = ({name, projectId: r_projectToTeams_c_projectId}: Team) => ({
 	r_projectToTeams_c_projectId,
 });
 
-const createTeam = (team: Team) => fetcher.post('/teams', adapter(team));
+const createTeam = async (team: Team) => {
+	const data = await fetcher(
+		`/teams?filter=${searchUtil.eq('name', team.name)}`
+	);
+
+	const teams = data?.items;
+
+	if (teams.length) {
+		throw new Error('The team name already exists');
+	}
+
+	return fetcher.post('/teams', adapter(team));
+};
 
 const updateTeam = (id: number, team: Team) =>
 	fetcher.put(`/teams/${id}`, adapter(team));

@@ -32,6 +32,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
+import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebTestPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
@@ -353,7 +354,8 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 
 		LayoutTestUtil.addPortletToLayout(
 			templateLayout,
-			"com_liferay_asset_publisher_web_AssetPublisherPortlet");
+			LayoutPageTemplateAdminWebTestPortletKeys.
+				LAYOUT_PAGE_TEMPLATE_ADMIN_WEB_TEST_PORTLET);
 
 		String layoutName = RandomTestUtil.randomString();
 

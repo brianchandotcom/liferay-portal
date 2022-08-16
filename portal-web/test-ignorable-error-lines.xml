@@ -272,6 +272,10 @@
 			<contains>com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException: Unable to load external repository class com.liferay.portal.repository.liferayrepository.LiferayRepository because its plugin is not deployed</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-150491 - temporarily ignore until fixed">
+			<contains>Unable to handle received message {destinationName=liferay/cache_replication, response=null, responseDestinationName=null, responseId=null, payload=</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LPS-150714">
 			<contains></contains>
 			<matches>.*/o/frontend-js-aui-web/build/aui-skin-deprecated/images/common/state_default_bg.png.* uri=/o/frontend-js-aui-web/build/aui-skin-deprecated/images/common/state_default_bg.png.*</matches>

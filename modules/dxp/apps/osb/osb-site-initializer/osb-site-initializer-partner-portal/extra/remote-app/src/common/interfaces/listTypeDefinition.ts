@@ -13,6 +13,6 @@ import LiferayPicklist from './liferayPicklist';
 
 export default interface ListTypeDefinition {
 	id: number;
-	listTypeEntries?: LiferayPicklist[];
+	listTypeEntries: LiferayPicklist[];
 	name: string;
 }

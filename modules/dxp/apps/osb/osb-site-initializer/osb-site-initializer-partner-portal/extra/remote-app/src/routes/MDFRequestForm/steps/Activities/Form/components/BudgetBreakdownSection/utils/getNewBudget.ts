@@ -15,5 +15,6 @@ export default function getNewBudget(): MDFRequestBudget {
 	return {
 		cost: '',
 		expense: {},
+		r_activityToBudgets_c_activityId: '',
 	};
 }

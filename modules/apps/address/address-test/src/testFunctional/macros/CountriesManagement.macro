@@ -86,6 +86,42 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro deleteCountry {
+		Search.searchCP(searchTerm = "${countryName}");
+
+		if ("${deleteType}" == "Delete Icon") {
+			LexiconEntry.selectEntry(key_rowEntry = "${countryName}");
+
+			ClickNoError(locator1 = "Icon#DELETE");
+
+			AssertConfirm(value1 = "Are you sure you want to delete the selected countries?");
+
+			Alert.viewSuccessMessage();
+		}
+		else if ("${deleteType}" == "Management Toolbar") {
+			LexiconEntry.selectEntry(key_rowEntry = "${countryName}");
+
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete the selected countries?");
+
+			Alert.viewSuccessMessage();
+		}
+		else {
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Delete",
+				rowEntry = "${countryName}");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+			Alert.viewSuccessMessage();
+		}
+
+		LexiconEntry.viewNoEntry(rowEntry = "${countryName}");
+	}
+
 	macro openCountriesManagementPortlet {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_address_web_internal_portlet_CountriesManagementAdminPortlet");
 	}

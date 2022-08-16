@@ -10,12 +10,15 @@
  */
 
 import {useMutation} from '@apollo/client';
+import {useAppPropertiesContext} from '../../../../../../../../../../../../common/contexts/AppPropertiesContext';
 import {
 	createAdminsLiferayExperienceCloud,
 	createLiferayExperienceCloudEnvironments,
-	useGetLiferayExperienceCloudEnvironments,
 } from '../../../../../../../../../../../../common/services/liferay/graphql/liferay-experience-cloud-environments/';
-import {updateAccountSubscriptionGroups} from '../../../../../../../../../../../../common/services/liferay/graphql/queries';
+import {
+	getLiferayExperienceCloudEnvironments,
+	updateAccountSubscriptionGroups,
+} from '../../../../../../../../../../../../common/services/liferay/graphql/queries';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../../../../../../../utils/constants';
 
 export default function useSubmitLxcEnvironment(
@@ -25,6 +28,8 @@ export default function useSubmitLxcEnvironment(
 	subscriptionGroupLxcId,
 	values
 ) {
+	const {client} = useAppPropertiesContext();
+
 	const [createLiferayExperienceCloudEnvironment] = useMutation(
 		createLiferayExperienceCloudEnvironments
 	);
@@ -35,23 +40,25 @@ export default function useSubmitLxcEnvironment(
 		createAdminsLiferayExperienceCloud
 	);
 
-	const {data} = useGetLiferayExperienceCloudEnvironments({
-		filter: `accountKey eq '${project?.accountKey}'`,
-	});
-
-	const liferayExperienceCloudStatus = async () => {
-		if (data) {
-			const status =
-				data?.c?.liferayExperienceCloudEnvironments?.items?.length;
-
-			return status;
-		}
-
-		return false;
-	};
-
 	const handleSubmitLxcEnvironment = async () => {
 		const lxcActivationFields = values?.lxc;
+
+		const liferayExperienceCloudStatus = async () => {
+			const {data} = await client.query({
+				query: getLiferayExperienceCloudEnvironments,
+				variables: {
+					filter: `accountKey eq '${project.accountKey}'`,
+				},
+			});
+			if (data) {
+				const status = !!data?.c?.liferayExperienceCloudEnvironments
+					?.items?.length;
+
+				return status;
+			}
+
+			return false;
+		};
 
 		const alreadySubmitted = await liferayExperienceCloudStatus();
 

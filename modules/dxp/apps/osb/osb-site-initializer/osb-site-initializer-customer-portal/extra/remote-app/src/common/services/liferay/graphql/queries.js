@@ -227,6 +227,19 @@ export const getAnalyticsCloudWorkspace = gql`
 	}
 `;
 
+export const getLiferayExperienceCloudEnvironments = gql`
+	query getLiferayExperienceCloudEnvironments($filter: String) {
+		c {
+			liferayExperienceCloudEnvironments(filter: $filter) {
+				items {
+					liferayExperienceCloudEnvironmentId
+					projectId
+				}
+			}
+		}
+	}
+`;
+
 export const getAnalyticsCloudPageInfo = gql`
 	query getAnalyticsCloudPageInfo($accountSubscriptionsFilter: String) {
 		c {

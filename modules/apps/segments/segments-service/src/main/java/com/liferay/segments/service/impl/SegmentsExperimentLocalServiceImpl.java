@@ -30,8 +30,10 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
@@ -57,6 +59,7 @@ import com.liferay.segments.model.SegmentsExperimentRelTable;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.segments.service.base.SegmentsExperimentLocalServiceBaseImpl;
+import com.liferay.segments.service.persistence.SegmentsExperiencePersistence;
 
 import java.math.RoundingMode;
 
@@ -102,7 +105,7 @@ public class SegmentsExperimentLocalServiceImpl
 		segmentsExperiment.setUuid(serviceContext.getUuid());
 		segmentsExperiment.setGroupId(serviceContext.getScopeGroupId());
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		segmentsExperiment.setCompanyId(user.getCompanyId());
 		segmentsExperiment.setUserId(user.getUserId());
@@ -136,7 +139,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(
+		_resourceLocalService.addModelResources(
 			segmentsExperiment, serviceContext);
 
 		// Segments experiment rel
@@ -184,7 +187,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			segmentsExperiment, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		// Segments experiment rels
@@ -496,7 +499,7 @@ public class SegmentsExperimentLocalServiceImpl
 		SegmentsExperience variantSegmentsExperience) {
 
 		SegmentsExperience segmentsExperience =
-			segmentsExperiencePersistence.fetchByG_C_C_Last(
+			_segmentsExperiencePersistence.fetchByG_C_C_Last(
 				controlSegmentsExperience.getGroupId(),
 				controlSegmentsExperience.getClassNameId(),
 				controlSegmentsExperience.getClassPK(), null);
@@ -509,16 +512,16 @@ public class SegmentsExperimentLocalServiceImpl
 		controlSegmentsExperience.setPriority(
 			segmentsExperience.getPriority() - 1);
 
-		controlSegmentsExperience = segmentsExperiencePersistence.update(
+		controlSegmentsExperience = _segmentsExperiencePersistence.update(
 			controlSegmentsExperience);
 
 		variantSegmentsExperience.setPriority(
 			segmentsExperience.getPriority() - 2);
 
-		variantSegmentsExperience = segmentsExperiencePersistence.update(
+		variantSegmentsExperience = _segmentsExperiencePersistence.update(
 			variantSegmentsExperience);
 
-		segmentsExperiencePersistence.flush();
+		_segmentsExperiencePersistence.flush();
 
 		controlSegmentsExperience.setPriority(
 			variantSegmentsExperiencePriority);
@@ -753,11 +756,20 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Reference
+	private SegmentsExperiencePersistence _segmentsExperiencePersistence;
 
 	@Reference
 	private SegmentsExperimentRelLocalService
 		_segmentsExperimentRelLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserNotificationEventLocalService

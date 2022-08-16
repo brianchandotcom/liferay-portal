@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.base.SegmentsExperimentRelServiceBaseImpl;
+import com.liferay.segments.service.persistence.SegmentsExperimentPersistence;
 
 import java.util.List;
 
@@ -105,10 +107,10 @@ public class SegmentsExperimentRelServiceImpl
 		throws PortalException {
 
 		SegmentsExperiment segmentsExperiment =
-			segmentsExperimentPersistence.findByPrimaryKey(
+			_segmentsExperimentPersistence.findByPrimaryKey(
 				segmentsExperimentId);
 
-		if (!userLocalService.hasRoleUser(
+		if (!_userLocalService.hasRoleUser(
 				segmentsExperiment.getCompanyId(),
 				RoleConstants.ANALYTICS_ADMINISTRATOR, getUserId(), true)) {
 
@@ -155,10 +157,16 @@ public class SegmentsExperimentRelServiceImpl
 			segmentsExperimentRelId, name, serviceContext);
 	}
 
+	@Reference
+	private SegmentsExperimentPersistence _segmentsExperimentPersistence;
+
 	@Reference(
 		target = "(model.class.name=com.liferay.segments.model.SegmentsExperiment)"
 	)
 	private ModelResourcePermission<SegmentsExperiment>
 		_segmentsExperimentResourcePermission;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

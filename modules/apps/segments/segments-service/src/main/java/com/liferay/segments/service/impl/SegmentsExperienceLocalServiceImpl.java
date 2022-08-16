@@ -21,8 +21,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -39,6 +42,8 @@ import com.liferay.segments.exception.SegmentsExperiencePriorityException;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.base.SegmentsExperienceLocalServiceBaseImpl;
+import com.liferay.segments.service.persistence.SegmentsExperimentPersistence;
+import com.liferay.segments.service.persistence.SegmentsExperimentRelPersistence;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,7 +75,7 @@ public class SegmentsExperienceLocalServiceImpl
 		return addSegmentsExperience(
 			userId, layout.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
 			SegmentsExperienceConstants.KEY_DEFAULT,
-			classNameLocalService.getClassNameId(Layout.class),
+			_classNameLocalService.getClassNameId(Layout.class),
 			layout.getPlid(),
 			Collections.singletonMap(
 				LocaleUtil.getSiteDefault(),
@@ -122,7 +127,7 @@ public class SegmentsExperienceLocalServiceImpl
 
 		// Segments experience
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		long publishedClassPK = _getPublishedLayoutClassPK(classPK);
 
@@ -158,7 +163,7 @@ public class SegmentsExperienceLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(
+		_resourceLocalService.addModelResources(
 			segmentsExperience, serviceContext);
 
 		return segmentsExperience;
@@ -249,7 +254,7 @@ public class SegmentsExperienceLocalServiceImpl
 		// Segments experiments
 
 		for (SegmentsExperiment segmentsExperiment :
-				segmentsExperimentPersistence.findByS_C_C(
+				_segmentsExperimentPersistence.findByS_C_C(
 					segmentsExperience.getSegmentsExperienceId(),
 					segmentsExperience.getClassNameId(),
 					_getPublishedLayoutClassPK(
@@ -260,7 +265,7 @@ public class SegmentsExperienceLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			segmentsExperience, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		return segmentsExperience;
@@ -275,11 +280,11 @@ public class SegmentsExperienceLocalServiceImpl
 
 		SegmentsExperience defaultSegmentsExperience = fetchSegmentsExperience(
 			groupId, SegmentsExperienceConstants.KEY_DEFAULT,
-			classNameLocalService.getClassNameId(Layout.class), classPK);
+			_classNameLocalService.getClassNameId(Layout.class), classPK);
 
 		if (defaultSegmentsExperience != null) {
 			for (SegmentsExperiment segmentsExperiment :
-					segmentsExperimentPersistence.findByS_C_C(
+					_segmentsExperimentPersistence.findByS_C_C(
 						defaultSegmentsExperience.getSegmentsExperienceId(),
 						classNameId, _getPublishedLayoutClassPK(classPK))) {
 
@@ -309,7 +314,7 @@ public class SegmentsExperienceLocalServiceImpl
 
 		SegmentsExperience segmentsExperience = fetchSegmentsExperience(
 			layout.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
-			classNameLocalService.getClassNameId(Layout.class), plid);
+			_classNameLocalService.getClassNameId(Layout.class), plid);
 
 		if (segmentsExperience == null) {
 			return SegmentsExperienceConstants.ID_DEFAULT;
@@ -599,12 +604,12 @@ public class SegmentsExperienceLocalServiceImpl
 			SegmentsExperiment segmentsExperiment)
 		throws PortalException {
 
-		segmentsExperimentPersistence.remove(segmentsExperiment);
+		_segmentsExperimentPersistence.remove(segmentsExperiment);
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			segmentsExperiment, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		segmentsExperimentRelPersistence.removeBySegmentsExperimentId(
+		_segmentsExperimentRelPersistence.removeBySegmentsExperimentId(
 			segmentsExperiment.getSegmentsExperimentId());
 	}
 
@@ -724,9 +729,24 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private SegmentsExperimentPersistence _segmentsExperimentPersistence;
+
+	@Reference
+	private SegmentsExperimentRelPersistence _segmentsExperimentRelPersistence;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

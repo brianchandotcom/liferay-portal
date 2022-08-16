@@ -24,11 +24,13 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRole;
 import com.liferay.segments.service.base.SegmentsEntryRoleLocalServiceBaseImpl;
+import com.liferay.segments.service.persistence.SegmentsEntryPersistence;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -59,9 +61,9 @@ public class SegmentsEntryRoleLocalServiceImpl
 		// Segments entry role
 
 		_roleLocalService.getRole(roleId);
-		segmentsEntryPersistence.findByPrimaryKey(segmentsEntryId);
+		_segmentsEntryPersistence.findByPrimaryKey(segmentsEntryId);
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		long segmentsEntryRoleId = counterLocalService.increment();
 
@@ -225,7 +227,7 @@ public class SegmentsEntryRoleLocalServiceImpl
 
 	private void _reindex(long segmentsEntryId) throws PortalException {
 		SegmentsEntry segmentsEntry =
-			segmentsEntryPersistence.fetchByPrimaryKey(segmentsEntryId);
+			_segmentsEntryPersistence.fetchByPrimaryKey(segmentsEntryId);
 
 		if (segmentsEntry == null) {
 			return;
@@ -249,5 +251,11 @@ public class SegmentsEntryRoleLocalServiceImpl
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SegmentsEntryPersistence _segmentsEntryPersistence;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

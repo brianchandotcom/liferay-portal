@@ -34,7 +34,9 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -58,6 +60,7 @@ import com.liferay.segments.service.SegmentsEntryRelLocalService;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.base.SegmentsEntryLocalServiceBaseImpl;
+import com.liferay.segments.service.persistence.SegmentsExperiencePersistence;
 
 import java.io.Serializable;
 
@@ -103,7 +106,7 @@ public class SegmentsEntryLocalServiceImpl
 
 		// Segments entry
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
 		if (Validator.isNull(segmentsEntryKey)) {
@@ -141,7 +144,7 @@ public class SegmentsEntryLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(segmentsEntry, serviceContext);
+		_resourceLocalService.addModelResources(segmentsEntry, serviceContext);
 
 		// Indexer
 
@@ -209,7 +212,7 @@ public class SegmentsEntryLocalServiceImpl
 		// Segments entry
 
 		if (!GroupThreadLocal.isDeleteInProcess()) {
-			int count = segmentsExperiencePersistence.countBySegmentsEntryId(
+			int count = _segmentsExperiencePersistence.countBySegmentsEntryId(
 				segmentsEntry.getSegmentsEntryId());
 
 			if (count > 0) {
@@ -223,7 +226,7 @@ public class SegmentsEntryLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			segmentsEntry, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		// Segments experiences
@@ -614,6 +617,9 @@ public class SegmentsEntryLocalServiceImpl
 	private Portal _portal;
 
 	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
 	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
 
 	@Reference
@@ -621,5 +627,11 @@ public class SegmentsEntryLocalServiceImpl
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Reference
+	private SegmentsExperiencePersistence _segmentsExperiencePersistence;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

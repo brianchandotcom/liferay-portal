@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -327,7 +328,7 @@ public class SegmentsExperimentServiceImpl
 			SegmentsExperiment segmentsExperiment, String actionId)
 		throws PortalException {
 
-		if (userLocalService.hasRoleUser(
+		if (_userLocalService.hasRoleUser(
 				segmentsExperiment.getCompanyId(),
 				RoleConstants.ANALYTICS_ADMINISTRATOR, getUserId(), true)) {
 
@@ -363,5 +364,8 @@ public class SegmentsExperimentServiceImpl
 	)
 	private ModelResourcePermission<SegmentsExperiment>
 		_segmentsExperimentResourcePermission;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -1236,7 +1236,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param listTypeId the list type ID
 	 * @return the matching addresses
 	 */
-	public java.util.List<Address> findByC_C_C_T(
+	public java.util.List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId);
 
 	/**
@@ -1254,7 +1254,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @return the range of matching addresses
 	 */
-	public java.util.List<Address> findByC_C_C_T(
+	public java.util.List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		int start, int end);
 
@@ -1274,7 +1274,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching addresses
 	 */
-	public java.util.List<Address> findByC_C_C_T(
+	public java.util.List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
@@ -1297,7 +1297,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
-	public java.util.List<Address> findByC_C_C_T(
+	public java.util.List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
@@ -1315,7 +1315,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the first matching address
 	 * @throws NoSuchAddressException if a matching address could not be found
 	 */
-	public Address findByC_C_C_T_First(
+	public Address findByC_C_C_L_First(
 			long companyId, long classNameId, long classPK, long listTypeId,
 			com.liferay.portal.kernel.util.OrderByComparator<Address>
 				orderByComparator)
@@ -1331,7 +1331,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching address, or <code>null</code> if a matching address could not be found
 	 */
-	public Address fetchByC_C_C_T_First(
+	public Address fetchByC_C_C_L_First(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
 			orderByComparator);
@@ -1347,7 +1347,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the last matching address
 	 * @throws NoSuchAddressException if a matching address could not be found
 	 */
-	public Address findByC_C_C_T_Last(
+	public Address findByC_C_C_L_Last(
 			long companyId, long classNameId, long classPK, long listTypeId,
 			com.liferay.portal.kernel.util.OrderByComparator<Address>
 				orderByComparator)
@@ -1363,7 +1363,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching address, or <code>null</code> if a matching address could not be found
 	 */
-	public Address fetchByC_C_C_T_Last(
+	public Address fetchByC_C_C_L_Last(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
 			orderByComparator);
@@ -1380,7 +1380,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the previous, current, and next address
 	 * @throws NoSuchAddressException if a address with the primary key could not be found
 	 */
-	public Address[] findByC_C_C_T_PrevAndNext(
+	public Address[] findByC_C_C_L_PrevAndNext(
 			long addressId, long companyId, long classNameId, long classPK,
 			long listTypeId,
 			com.liferay.portal.kernel.util.OrderByComparator<Address>
@@ -1400,7 +1400,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param listTypeIds the list type IDs
 	 * @return the matching addresses
 	 */
-	public java.util.List<Address> findByC_C_C_T(
+	public java.util.List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds);
 
 	/**
@@ -1418,7 +1418,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @return the range of matching addresses
 	 */
-	public java.util.List<Address> findByC_C_C_T(
+	public java.util.List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds,
 		int start, int end);
 
@@ -1438,7 +1438,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching addresses
 	 */
-	public java.util.List<Address> findByC_C_C_T(
+	public java.util.List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
@@ -1461,7 +1461,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
-	public java.util.List<Address> findByC_C_C_T(
+	public java.util.List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
@@ -1476,7 +1476,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param classPK the class pk
 	 * @param listTypeId the list type ID
 	 */
-	public void removeByC_C_C_T(
+	public void removeByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId);
 
 	/**
@@ -1488,7 +1488,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param listTypeId the list type ID
 	 * @return the number of matching addresses
 	 */
-	public int countByC_C_C_T(
+	public int countByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId);
 
 	/**
@@ -1500,7 +1500,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param listTypeIds the list type IDs
 	 * @return the number of matching addresses
 	 */
-	public int countByC_C_C_T(
+	public int countByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds);
 
 	/**

@@ -4264,10 +4264,10 @@ public class AddressPersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_C_CLASSPK_2 =
 		"address.classPK = ?";
 
-	private FinderPath _finderPathWithPaginationFindByC_C_C_T;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_C_T;
-	private FinderPath _finderPathCountByC_C_C_T;
-	private FinderPath _finderPathWithPaginationCountByC_C_C_T;
+	private FinderPath _finderPathWithPaginationFindByC_C_C_L;
+	private FinderPath _finderPathWithoutPaginationFindByC_C_C_L;
+	private FinderPath _finderPathCountByC_C_C_L;
+	private FinderPath _finderPathWithPaginationCountByC_C_C_L;
 
 	/**
 	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
@@ -4279,10 +4279,10 @@ public class AddressPersistenceImpl
 	 * @return the matching addresses
 	 */
 	@Override
-	public List<Address> findByC_C_C_T(
+	public List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId) {
 
-		return findByC_C_C_T(
+		return findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -4303,11 +4303,11 @@ public class AddressPersistenceImpl
 	 * @return the range of matching addresses
 	 */
 	@Override
-	public List<Address> findByC_C_C_T(
+	public List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		int start, int end) {
 
-		return findByC_C_C_T(
+		return findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeId, start, end, null);
 	}
 
@@ -4328,11 +4328,11 @@ public class AddressPersistenceImpl
 	 * @return the ordered range of matching addresses
 	 */
 	@Override
-	public List<Address> findByC_C_C_T(
+	public List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		int start, int end, OrderByComparator<Address> orderByComparator) {
 
-		return findByC_C_C_T(
+		return findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeId, start, end,
 			orderByComparator, true);
 	}
@@ -4355,7 +4355,7 @@ public class AddressPersistenceImpl
 	 * @return the ordered range of matching addresses
 	 */
 	@Override
-	public List<Address> findByC_C_C_T(
+	public List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		int start, int end, OrderByComparator<Address> orderByComparator,
 		boolean useFinderCache) {
@@ -4367,14 +4367,14 @@ public class AddressPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_C_C_T;
+				finderPath = _finderPathWithoutPaginationFindByC_C_C_L;
 				finderArgs = new Object[] {
 					companyId, classNameId, classPK, listTypeId
 				};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_C_C_T;
+			finderPath = _finderPathWithPaginationFindByC_C_C_L;
 			finderArgs = new Object[] {
 				companyId, classNameId, classPK, listTypeId, start, end,
 				orderByComparator
@@ -4415,13 +4415,13 @@ public class AddressPersistenceImpl
 
 			sb.append(_SQL_SELECT_ADDRESS_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_CLASSNAMEID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_CLASSPK_2);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_LISTTYPEID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_LISTTYPEID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -4482,12 +4482,12 @@ public class AddressPersistenceImpl
 	 * @throws NoSuchAddressException if a matching address could not be found
 	 */
 	@Override
-	public Address findByC_C_C_T_First(
+	public Address findByC_C_C_L_First(
 			long companyId, long classNameId, long classPK, long listTypeId,
 			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 
-		Address address = fetchByC_C_C_T_First(
+		Address address = fetchByC_C_C_L_First(
 			companyId, classNameId, classPK, listTypeId, orderByComparator);
 
 		if (address != null) {
@@ -4526,11 +4526,11 @@ public class AddressPersistenceImpl
 	 * @return the first matching address, or <code>null</code> if a matching address could not be found
 	 */
 	@Override
-	public Address fetchByC_C_C_T_First(
+	public Address fetchByC_C_C_L_First(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		OrderByComparator<Address> orderByComparator) {
 
-		List<Address> list = findByC_C_C_T(
+		List<Address> list = findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeId, 0, 1,
 			orderByComparator);
 
@@ -4553,12 +4553,12 @@ public class AddressPersistenceImpl
 	 * @throws NoSuchAddressException if a matching address could not be found
 	 */
 	@Override
-	public Address findByC_C_C_T_Last(
+	public Address findByC_C_C_L_Last(
 			long companyId, long classNameId, long classPK, long listTypeId,
 			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 
-		Address address = fetchByC_C_C_T_Last(
+		Address address = fetchByC_C_C_L_Last(
 			companyId, classNameId, classPK, listTypeId, orderByComparator);
 
 		if (address != null) {
@@ -4597,17 +4597,17 @@ public class AddressPersistenceImpl
 	 * @return the last matching address, or <code>null</code> if a matching address could not be found
 	 */
 	@Override
-	public Address fetchByC_C_C_T_Last(
+	public Address fetchByC_C_C_L_Last(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		OrderByComparator<Address> orderByComparator) {
 
-		int count = countByC_C_C_T(companyId, classNameId, classPK, listTypeId);
+		int count = countByC_C_C_L(companyId, classNameId, classPK, listTypeId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Address> list = findByC_C_C_T(
+		List<Address> list = findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeId, count - 1, count,
 			orderByComparator);
 
@@ -4631,7 +4631,7 @@ public class AddressPersistenceImpl
 	 * @throws NoSuchAddressException if a address with the primary key could not be found
 	 */
 	@Override
-	public Address[] findByC_C_C_T_PrevAndNext(
+	public Address[] findByC_C_C_L_PrevAndNext(
 			long addressId, long companyId, long classNameId, long classPK,
 			long listTypeId, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
@@ -4645,13 +4645,13 @@ public class AddressPersistenceImpl
 
 			Address[] array = new AddressImpl[3];
 
-			array[0] = getByC_C_C_T_PrevAndNext(
+			array[0] = getByC_C_C_L_PrevAndNext(
 				session, address, companyId, classNameId, classPK, listTypeId,
 				orderByComparator, true);
 
 			array[1] = address;
 
-			array[2] = getByC_C_C_T_PrevAndNext(
+			array[2] = getByC_C_C_L_PrevAndNext(
 				session, address, companyId, classNameId, classPK, listTypeId,
 				orderByComparator, false);
 
@@ -4665,7 +4665,7 @@ public class AddressPersistenceImpl
 		}
 	}
 
-	protected Address getByC_C_C_T_PrevAndNext(
+	protected Address getByC_C_C_L_PrevAndNext(
 		Session session, Address address, long companyId, long classNameId,
 		long classPK, long listTypeId,
 		OrderByComparator<Address> orderByComparator, boolean previous) {
@@ -4683,13 +4683,13 @@ public class AddressPersistenceImpl
 
 		sb.append(_SQL_SELECT_ADDRESS_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_C_C_L_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
+		sb.append(_FINDER_COLUMN_C_C_C_L_CLASSNAMEID_2);
 
-		sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
+		sb.append(_FINDER_COLUMN_C_C_C_L_CLASSPK_2);
 
-		sb.append(_FINDER_COLUMN_C_C_C_T_LISTTYPEID_2);
+		sb.append(_FINDER_COLUMN_C_C_C_L_LISTTYPEID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -4800,10 +4800,10 @@ public class AddressPersistenceImpl
 	 * @return the matching addresses
 	 */
 	@Override
-	public List<Address> findByC_C_C_T(
+	public List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds) {
 
-		return findByC_C_C_T(
+		return findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeIds, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -4824,11 +4824,11 @@ public class AddressPersistenceImpl
 	 * @return the range of matching addresses
 	 */
 	@Override
-	public List<Address> findByC_C_C_T(
+	public List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds,
 		int start, int end) {
 
-		return findByC_C_C_T(
+		return findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeIds, start, end, null);
 	}
 
@@ -4849,11 +4849,11 @@ public class AddressPersistenceImpl
 	 * @return the ordered range of matching addresses
 	 */
 	@Override
-	public List<Address> findByC_C_C_T(
+	public List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds,
 		int start, int end, OrderByComparator<Address> orderByComparator) {
 
-		return findByC_C_C_T(
+		return findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeIds, start, end,
 			orderByComparator, true);
 	}
@@ -4876,7 +4876,7 @@ public class AddressPersistenceImpl
 	 * @return the ordered range of matching addresses
 	 */
 	@Override
-	public List<Address> findByC_C_C_T(
+	public List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds,
 		int start, int end, OrderByComparator<Address> orderByComparator,
 		boolean useFinderCache) {
@@ -4889,7 +4889,7 @@ public class AddressPersistenceImpl
 		}
 
 		if (listTypeIds.length == 1) {
-			return findByC_C_C_T(
+			return findByC_C_C_L(
 				companyId, classNameId, classPK, listTypeIds[0], start, end,
 				orderByComparator);
 		}
@@ -4917,7 +4917,7 @@ public class AddressPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Address>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByC_C_C_T, finderArgs);
+				_finderPathWithPaginationFindByC_C_C_L, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Address address : list) {
@@ -4940,16 +4940,16 @@ public class AddressPersistenceImpl
 
 			sb.append(_SQL_SELECT_ADDRESS_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_CLASSNAMEID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_CLASSPK_2);
 
 			if (listTypeIds.length > 0) {
 				sb.append("(");
 
-				sb.append(_FINDER_COLUMN_C_C_C_T_LISTTYPEID_7);
+				sb.append(_FINDER_COLUMN_C_C_C_L_LISTTYPEID_7);
 
 				sb.append(StringUtil.merge(listTypeIds));
 
@@ -4993,7 +4993,7 @@ public class AddressPersistenceImpl
 
 				if (useFinderCache) {
 					FinderCacheUtil.putResult(
-						_finderPathWithPaginationFindByC_C_C_T, finderArgs,
+						_finderPathWithPaginationFindByC_C_C_L, finderArgs,
 						list);
 				}
 			}
@@ -5017,11 +5017,11 @@ public class AddressPersistenceImpl
 	 * @param listTypeId the list type ID
 	 */
 	@Override
-	public void removeByC_C_C_T(
+	public void removeByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId) {
 
 		for (Address address :
-				findByC_C_C_T(
+				findByC_C_C_L(
 					companyId, classNameId, classPK, listTypeId,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
@@ -5039,10 +5039,10 @@ public class AddressPersistenceImpl
 	 * @return the number of matching addresses
 	 */
 	@Override
-	public int countByC_C_C_T(
+	public int countByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId) {
 
-		FinderPath finderPath = _finderPathCountByC_C_C_T;
+		FinderPath finderPath = _finderPathCountByC_C_C_L;
 
 		Object[] finderArgs = new Object[] {
 			companyId, classNameId, classPK, listTypeId
@@ -5055,13 +5055,13 @@ public class AddressPersistenceImpl
 
 			sb.append(_SQL_COUNT_ADDRESS_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_CLASSNAMEID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_CLASSPK_2);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_LISTTYPEID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_LISTTYPEID_2);
 
 			String sql = sb.toString();
 
@@ -5107,7 +5107,7 @@ public class AddressPersistenceImpl
 	 * @return the number of matching addresses
 	 */
 	@Override
-	public int countByC_C_C_T(
+	public int countByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds) {
 
 		if (listTypeIds == null) {
@@ -5122,23 +5122,23 @@ public class AddressPersistenceImpl
 		};
 
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathWithPaginationCountByC_C_C_T, finderArgs);
+			_finderPathWithPaginationCountByC_C_C_L, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
 
 			sb.append(_SQL_COUNT_ADDRESS_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_CLASSNAMEID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
+			sb.append(_FINDER_COLUMN_C_C_C_L_CLASSPK_2);
 
 			if (listTypeIds.length > 0) {
 				sb.append("(");
 
-				sb.append(_FINDER_COLUMN_C_C_C_T_LISTTYPEID_7);
+				sb.append(_FINDER_COLUMN_C_C_C_L_LISTTYPEID_7);
 
 				sb.append(StringUtil.merge(listTypeIds));
 
@@ -5170,7 +5170,7 @@ public class AddressPersistenceImpl
 				count = (Long)query.uniqueResult();
 
 				FinderCacheUtil.putResult(
-					_finderPathWithPaginationCountByC_C_C_T, finderArgs, count);
+					_finderPathWithPaginationCountByC_C_C_L, finderArgs, count);
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -5183,19 +5183,19 @@ public class AddressPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_C_T_COMPANYID_2 =
+	private static final String _FINDER_COLUMN_C_C_C_L_COMPANYID_2 =
 		"address.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2 =
+	private static final String _FINDER_COLUMN_C_C_C_L_CLASSNAMEID_2 =
 		"address.classNameId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_C_C_T_CLASSPK_2 =
+	private static final String _FINDER_COLUMN_C_C_C_L_CLASSPK_2 =
 		"address.classPK = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_C_C_T_LISTTYPEID_2 =
+	private static final String _FINDER_COLUMN_C_C_C_L_LISTTYPEID_2 =
 		"address.listTypeId = ?";
 
-	private static final String _FINDER_COLUMN_C_C_C_T_LISTTYPEID_7 =
+	private static final String _FINDER_COLUMN_C_C_C_L_LISTTYPEID_7 =
 		"address.listTypeId IN (";
 
 	private FinderPath _finderPathWithPaginationFindByC_C_C_M;
@@ -7419,8 +7419,8 @@ public class AddressPersistenceImpl
 			},
 			new String[] {"companyId", "classNameId", "classPK"}, false);
 
-		_finderPathWithPaginationFindByC_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_T",
+		_finderPathWithPaginationFindByC_C_C_L = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName(),
@@ -7430,8 +7430,8 @@ public class AddressPersistenceImpl
 			new String[] {"companyId", "classNameId", "classPK", "listTypeId"},
 			true);
 
-		_finderPathWithoutPaginationFindByC_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C_T",
+		_finderPathWithoutPaginationFindByC_C_C_L = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName()
@@ -7439,8 +7439,8 @@ public class AddressPersistenceImpl
 			new String[] {"companyId", "classNameId", "classPK", "listTypeId"},
 			true);
 
-		_finderPathCountByC_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_T",
+		_finderPathCountByC_C_C_L = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName()
@@ -7448,8 +7448,8 @@ public class AddressPersistenceImpl
 			new String[] {"companyId", "classNameId", "classPK", "listTypeId"},
 			false);
 
-		_finderPathWithPaginationCountByC_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_C_T",
+		_finderPathWithPaginationCountByC_C_C_L = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_C_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName()

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.FullNameValidatorFactory;
@@ -32,6 +33,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -47,7 +49,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			long userId, String fullName, String emailAddress, String comments)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 		Date date = new Date();
 
 		validate(user.getCompanyId(), 0, userId, fullName, emailAddress);
@@ -166,12 +168,15 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			throw new DuplicateEntryEmailAddressException();
 		}
 
-		User user = userLocalService.fetchUserByEmailAddress(
+		User user = _userLocalService.fetchUserByEmailAddress(
 			companyId, emailAddress);
 
 		if (user != null) {
 			throw new DuplicateEntryEmailAddressException();
 		}
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

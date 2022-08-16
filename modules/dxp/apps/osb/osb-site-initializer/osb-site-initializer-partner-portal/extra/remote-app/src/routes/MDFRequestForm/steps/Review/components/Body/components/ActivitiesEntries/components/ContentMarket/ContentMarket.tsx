@@ -9,17 +9,14 @@
  * distribution rights of the Software.
  */
 
-import MDFRequestActivity from '../../../../../../../../../common/interfaces/mdfRequestActivity';
-import {Liferay} from '../../../../../../../../../common/services/liferay';
-import Table from '../../../../Table';
+import MDFRequestActivity from '../../../../../../../../../../common/interfaces/mdfRequestActivity';
+import {Liferay} from '../../../../../../../../../../common/services/liferay';
+import Table from '../../../../../Table';
 interface IProps {
 	values: MDFRequestActivity;
 }
 
-const DigitalMarket = ({values}: IProps) => {
-	// eslint-disable-next-line no-console
-	console.log(values);
-
+const ContentMarket = ({values}: IProps) => {
 	return (
 		<div>
 			<Table
@@ -38,34 +35,28 @@ const DigitalMarket = ({values}: IProps) => {
 						value: values.r_tacticToActivities_c_tacticId,
 					},
 					{
-						title: 'Overall message, content or CTA',
-						value: values.overallMessageContentCTA,
-					},
-					{
-						title: 'Specific sites to be used',
-						value: values.specificSites,
-					},
-					{
-						title: 'Keywords for PPC campaigns',
-						value: values.keywordsForPPCCampaigns,
-					},
-					{
-						title: 'Ad (any size/type)',
-						value: values.ad,
-					},
-					{
-						title: 'Do you require any assets from Liferay?',
+						title:
+							'Will this content be gated and have a landing page?',
 						value:
-							values.assetsLiferayRequired === 'true'
-								? 'Yes'
-								: 'No',
+							values.gatedLandingPage === 'true' ? 'Yes' : 'No',
+					},
+					{
+						title: 'Primary theme or message of your content',
+						value: values.primaryThemeOrMessage,
+					},
+
+					{
+						title: 'Goal of Content',
+						value: values.goalOfContent,
 					},
 					{
 						title:
-							'How will the Liferay brand be used in the campaign?',
-						value: values.howLiferayBrandUsed,
+							'Are you hiring an outside writer or agency to prepare the content?',
+						value:
+							values.hiringOutsideWriterOrAgency === 'true'
+								? 'Yes'
+								: 'No',
 					},
-
 					{
 						title: 'Start Date',
 						value: new Date(values.startDate).toLocaleDateString(
@@ -114,4 +105,4 @@ const DigitalMarket = ({values}: IProps) => {
 		</div>
 	);
 };
-export default DigitalMarket;
+export default ContentMarket;

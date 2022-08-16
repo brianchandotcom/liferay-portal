@@ -15,6 +15,7 @@ import PRMForm from '../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../common/components/PRMFormik';
 import {LiferayPicklistName} from '../../../../../common/enums/liferayPicklistName';
 import {TypeActivityExternalReferenceCode} from '../../../../../common/enums/typeActivityExternalReferenceCode';
+import useSelectedTypeActivity from '../../../../../common/hooks/useSelectedTypeActivity';
 import MDFRequestActivity from '../../../../../common/interfaces/mdfRequestActivity';
 import getBooleanEntries from '../../../../../common/utils/getBooleanEntries';
 import BudgetBreakdownSection from './components/BudgetBreakdownSection';
@@ -23,7 +24,6 @@ import DigitalMarketingFields from './components/DigitalMarketingFields';
 import EventFields from './components/EventFields';
 import MiscellaneousMarketingFields from './components/MiscellaneousMarketingFields';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
-import useSelectedTypeActivity from './hooks/useSelectedTypeActivity';
 import useTacticsTypeActivity from './hooks/useTacticsTypeActivity';
 
 interface IProps {

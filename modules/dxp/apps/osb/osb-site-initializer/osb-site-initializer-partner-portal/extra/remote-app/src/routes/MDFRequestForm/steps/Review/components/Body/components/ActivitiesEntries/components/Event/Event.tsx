@@ -9,14 +9,14 @@
  * distribution rights of the Software.
  */
 
-import MDFRequestActivity from '../../../../../../../../../common/interfaces/mdfRequestActivity';
-import {Liferay} from '../../../../../../../../../common/services/liferay';
-import Table from '../../../../Table';
+import MDFRequestActivity from '../../../../../../../../../../common/interfaces/mdfRequestActivity';
+import {Liferay} from '../../../../../../../../../../common/services/liferay';
+import Table from '../../../../../Table';
 interface IProps {
 	values: MDFRequestActivity;
 }
 
-const Events = ({values}: IProps) => {
+const Event = ({values}: IProps) => {
 	return (
 		<div>
 			<Table
@@ -106,4 +106,4 @@ const Events = ({values}: IProps) => {
 		</div>
 	);
 };
-export default Events;
+export default Event;

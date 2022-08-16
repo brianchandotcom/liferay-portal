@@ -10,13 +10,13 @@
  */
 
 import {TypeActivityExternalReferenceCode} from '../../../../../../../../common/enums/typeActivityExternalReferenceCode';
+import useSelectedTypeActivity from '../../../../../../../../common/hooks/useSelectedTypeActivity';
 import MDFRequestActivity from '../../../../../../../../common/interfaces/mdfRequestActivity';
 import useDynamicFieldEntries from '../../../../../Activities/Form/hooks/useDynamicFieldEntries';
-import useSelectedTypeActivity from '../../../../../Activities/Form/hooks/useSelectedTypeActivity';
-import ContentMarket from './components/ContentMarket';
-import DigitalMarket from './components/DigitalMarket';
-import Events from './components/Events';
-import MiscellaneousMarket from './components/MiscellaneousMarket';
+import ContentMarket from './components/ContentMarket/ContentMarket';
+import DigitalMarket from './components/DigitalMarket/DigitalMarket';
+import Event from './components/Event/Event';
+import MiscellaneousMarket from './components/MiscellaneousMarket/MiscellaneousMarket';
 interface IProps {
 	values: MDFRequestActivity;
 }
@@ -40,7 +40,7 @@ const ActivitiesEntries = ({values}: IProps) => {
 		[TypeActivityExternalReferenceCode.CONTENT_MARKETING]: (
 			<ContentMarket values={values} />
 		),
-		[TypeActivityExternalReferenceCode.EVENT]: <Events values={values} />,
+		[TypeActivityExternalReferenceCode.EVENT]: <Event values={values} />,
 		[TypeActivityExternalReferenceCode.MISCELLANEOUS_MARKETING]: (
 			<MiscellaneousMarket values={values} />
 		),

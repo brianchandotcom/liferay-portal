@@ -11,8 +11,8 @@
 
 import {useEffect, useState} from 'react';
 
-import MDFRequestActivity from '../../../../../../common/interfaces/mdfRequestActivity';
-import {TypeActivity} from '../../../../../../common/interfaces/typeActivity';
+import MDFRequestActivity from '../interfaces/mdfRequestActivity';
+import {TypeActivity} from '../interfaces/typeActivity';
 
 export default function useSelectedTypeActivity(
 	currentActivity: MDFRequestActivity,

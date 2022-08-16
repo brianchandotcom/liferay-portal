@@ -7,7 +7,7 @@
 
 		<!-- PK fields -->
 
-		<column name="SpringEntryId" primary="true" type="long" />
+		<column name="springEntryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

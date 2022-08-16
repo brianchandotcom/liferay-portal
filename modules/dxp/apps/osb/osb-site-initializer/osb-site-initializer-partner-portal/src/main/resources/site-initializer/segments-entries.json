@@ -2,17 +2,193 @@
 	{
 		"active": "true",
 		"name_i18n": {
-			"en-US": "Segments Entry 1"
+			"en-US": "Global"
 		},
-		"segmentsEntryKey": "SEGMENTS-ENTRY-1",
+		"segmentsEntryKey": "Global",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
 		"active": "true",
 		"name_i18n": {
-			"en-US": "Segments Entry 2"
+			"en-US": "US"
 		},
-		"segmentsEntryKey": "SEGMENTS-ENTRY-2",
+		"segmentsEntryKey": "US",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Canada"
+		},
+		"segmentsEntryKey": "Canada",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Mexico"
+		},
+		"segmentsEntryKey": "Mexico",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Argentina, Uruguay, Paraguay"
+		},
+		"segmentsEntryKey": "Argentina, Uruguay, Paraguay",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Chile, Peru"
+		},
+		"segmentsEntryKey": "Chile, Peru",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Colombia, Ecuador"
+		},
+		"segmentsEntryKey": "Colombia, Ecuador",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Central America"
+		},
+		"segmentsEntryKey": "Central America",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Latin America"
+		},
+		"segmentsEntryKey": "Latin America",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Middle East"
+		},
+		"segmentsEntryKey": "Middle East",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Africa"
+		},
+		"segmentsEntryKey": "Africa",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "ANZ"
+		},
+		"segmentsEntryKey": "ANZ",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "BENELUX"
+		},
+		"segmentsEntryKey": "BENELUX",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "DACH"
+		},
+		"segmentsEntryKey": "DACH",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "UK"
+		},
+		"segmentsEntryKey": "UK",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "France"
+		},
+		"segmentsEntryKey": "France",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "ItGrCy"
+		},
+		"segmentsEntryKey": "ItGrCy",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "SpainPortugal"
+		},
+		"segmentsEntryKey": "SpainPortugal",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "CENTRAL AND EASTERN EUROPE"
+		},
+		"segmentsEntryKey": "CENTRAL AND EASTERN EUROPE",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Nordics"
+		},
+		"segmentsEntryKey": "Nordics",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "India"
+		},
+		"segmentsEntryKey": "India",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Singapore"
+		},
+		"segmentsEntryKey": "Singapore",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "China"
+		},
+		"segmentsEntryKey": "China",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Japan"
+		},
+		"segmentsEntryKey": "Japan",
 		"type": "com.liferay.portal.kernel.model.User"
 	}
 ]

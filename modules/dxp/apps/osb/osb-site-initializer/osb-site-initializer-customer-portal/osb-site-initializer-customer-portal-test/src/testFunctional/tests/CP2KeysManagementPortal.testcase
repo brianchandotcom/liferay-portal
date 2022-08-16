@@ -49,7 +49,7 @@ definition {
 		}
 	}
 
-    @description = "Verify if the 'Activated' tab displays the number of keys for it"
+    @description = "LPS-150784 - Verify if the 'Activated' tab displays the number of keys for it"
 	@ignore = "true"
     @priority = "4"
     test VerifyTheActivatedTabDisplaysTheNumberOfKeys {
@@ -90,7 +90,7 @@ definition {
 		}
     }
 
-	@description = "Verify if the 'All' tab displays the number of keys for it"
+	@description = "LPS-160211 - Verify if the 'All' tab displays the number of keys for it"
 	@ignore = "true"
     @priority = "4"
     test VerifyTheAllTabDisplaysTheNumberOfKeys {
@@ -131,7 +131,7 @@ definition {
 		}
     }
 
-	@description = "Verify if the 'Not Activated' tab displays the number of keys for it"
+	@description = "LPS-150785 - Verify if the 'Not Activated' tab displays the number of keys for it"
 	@ignore = "true"
     @priority = "4"
     test VerifyTheNotActivatedTabDisplaysTheNumberOfKeys {
@@ -172,7 +172,7 @@ definition {
 		}
     }
 
-	@description = "Verify if the 'Expired' tab displays the number of keys for it"
+	@description = "LPS-150786 - Verify if the 'Expired' tab displays the number of keys for it"
 	@ignore = "true"
     @priority = "4"
     test VerifyTheExpiredTabDisplaysTheNumberOfKeys {
@@ -213,7 +213,7 @@ definition {
 		}
     }
 
-	@description = "Verify that by default pagination option is 'Show 5 Items'"
+	@description = "LPS-150787 - Verify that by default pagination option is 'Show 5 Items'"
 	@ignore = "true"
     @priority = "4"
 	test VerifyTheDefaultPaginationOption {
@@ -240,7 +240,7 @@ definition {
 		}
 	}
 
-	@description = "Verify if the drop-down list contains the following options: Show 5 items - 10 items - 20 items - 50 items"
+	@description = "LPS-150788 - Verify if the drop-down list contains the following options: Show 5 items - 10 items - 20 items - 50 items"
 	@ignore = "true"
 	@priority = "4"
 	test VerifyTheOptionsOfTheDropdownList {
@@ -295,7 +295,7 @@ definition {
 		}
 	}
 
-	@description = "Verify if when you hover the mouse over any cell 'Environment name' it shows a tooltip with the name of the environment and its description"
+	@description = "LPS-150790 - Verify if when you hover the mouse over any cell 'Environment name' it shows a tooltip with the name of the environment and its description"
 	@ignore = "true"
 	@priority = "3"
 	test VerifyTheMouserOverWorksInAnyCellEnvironmentName {
@@ -335,7 +335,7 @@ definition {
 
 	}
 
-	@description = "Verify if the date from Expiration Date has a format like this (Month, Day, Year)"
+	@description = "LPS-150793 - Verify if the date from Expiration Date has a format like this (Month, Day, Year)"
 	@ignore = "true"
 	@priority = "4"
 	test VerifyTheExpirationDateFormat {
@@ -373,7 +373,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that when you hover the mouse over 'DNE' a tooltip appears with a message 'This key does not expire'"
+	@description = "LPS-150794 - Verify that when you hover the mouse over 'DNE' a tooltip appears with a message 'This key does not expire'"
 	@ignore = "true"
 	@priority = "3"
 	test VerifyTheMessageWhenMouseOverDNE {
@@ -409,7 +409,7 @@ definition {
 
 	}
 
-	@description = "Verify that for virtual keys the subtext is 'Cluster Nodes (Keys)'"
+	@description = "LPS-150791 - Verify that for virtual keys the subtext is 'Cluster Nodes (Keys)'"
 	@ignore = "true"
 	@priority = "4"
 	test VerifyTheSubTextForVirtualKeys {
@@ -448,7 +448,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that for local keys the subtext is 'On-Premise'"
+	@description = "LPS-150792 - Verify that for local keys the subtext is 'On-Premise'"
 	@ignore = "true"
 	@priority = "4"
 	test VerifyTheSubTextForLocalKeys {
@@ -487,7 +487,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that when the key is downloaded a success message appears"
+	@description = "LPS-150795 - Verify that when the key is downloaded a success message appears"
 	@ignore = "true"
 	@priority = "4"
 	test VerifyTheSuccessMessageWhenDownloadTheKey {

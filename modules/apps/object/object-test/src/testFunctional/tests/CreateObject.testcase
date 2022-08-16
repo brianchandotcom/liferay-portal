@@ -685,9 +685,11 @@ definition {
 			key_type = "One to Many",
 			locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
 
-		Select(
-			locator1 = "ObjectAdmin#SELECT_OBJECT_RELATIONSHIP",
-			value1 = "CustomObject13");
+		Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
+
+		Click(
+			key_columnOption = "Custom Object 13",
+			locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
 
 		Button.clickCancel();
 
@@ -1039,7 +1041,7 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			object = "ObjectB26",
+			object = "Object B 26",
 			type = "Many to Many");
 
 		AssertElementPresent(
@@ -1068,7 +1070,7 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			object = "CustomObjectB28",
+			object = "Custom Object B 28",
 			type = "One to Many");
 
 		AssertElementPresent(
@@ -1657,7 +1659,7 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			object = "CustomObject41",
+			object = "Custom Object 41",
 			type = "One to Many");
 
 		AssertTextEquals(
@@ -1833,7 +1835,7 @@ definition {
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
 			name = "",
-			object = "CustomObject49",
+			object = "Custom Object 49",
 			type = "One to Many");
 
 		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Name");
@@ -1876,7 +1878,7 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			object = "CustomObject51");
+			object = "Custom Object 51");
 
 		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Type");
 	}
@@ -7328,7 +7330,7 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			object = "CustomObject162",
+			object = "Custom Object 162",
 			type = "One to Many");
 
 		ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship");
@@ -7698,7 +7700,7 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship Label",
-			object = "CustomObjectB168",
+			object = "Custom Object B 168",
 			type = "One to Many");
 
 		ObjectAdmin.openObjectAdmin();

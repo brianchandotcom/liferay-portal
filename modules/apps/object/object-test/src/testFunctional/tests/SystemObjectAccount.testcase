@@ -635,7 +635,7 @@ definition {
 
 			ObjectAdmin.addObjectRelationshipViaUI(
 				label = "Relationship",
-				object = "CustomObject153530",
+				object = "Custom Object 153530",
 				type = "One to Many");
 		}
 

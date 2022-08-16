@@ -131,8 +131,13 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>SELECT_COLUMN_ON_DEFAULT_SORT</td>
+		<td>SELECT_AUTO_COMPLETE</td>
 		<td>//div[@class = 'custom-select__content form-control']//span[contains(text(),'Choose an Option')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_AUTO_COMPLETE_OPTION</td>
+		<td>//button[(@class='dropdown-item') and contains(.,'${key_columnOption}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -143,11 +148,6 @@
 	<tr>
 		<td>ADD_NEW_DEFAULT_SORT</td>
 		<td>//button[contains(text(),'New Default Sort')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>DEFAULT_SORT_COLUMN_OPTION</td>
-		<td>//button[(@class='dropdown-item') and contains(.,'${key_columnOption}')]</td>
 		<td></td>
 	</tr>
 	<tr>

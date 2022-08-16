@@ -39,7 +39,7 @@ definition {
 
 			ObjectAdmin.addObjectRelationshipViaUI(
 				label = "Relationship",
-				object = "CustomObject151498",
+				object = "Custom Object 151498",
 				type = "One to Many");
 
 			Refresh();

@@ -157,7 +157,7 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			object = "CustomObject153592",
+			object = "Custom Object 153592",
 			type = "One to Many");
 
 		Audit.openAuditAdmin();
@@ -554,7 +554,7 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			object = "CustomObject153589",
+			object = "Custom Object 153589",
 			type = "One to Many");
 
 		Audit.openAuditAdmin();

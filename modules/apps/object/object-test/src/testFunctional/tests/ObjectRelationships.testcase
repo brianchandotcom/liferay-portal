@@ -155,7 +155,7 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			object = "CustomObject290",
+			object = "Custom Object 290",
 			type = "One to Many");
 
 		AssertElementPresent(
@@ -267,7 +267,7 @@ definition {
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "",
 			name = "relationship",
-			object = "CustomObject147736",
+			object = "Custom Object 147736",
 			type = "One to Many");
 
 		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Label");
@@ -399,7 +399,7 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			object = "CustomObject292",
+			object = "Custom Object 292",
 			type = "One to Many");
 
 		Navigator.openURL();

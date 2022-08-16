@@ -216,9 +216,11 @@ definition {
 		}
 
 		if (isSet(object)) {
-			Select(
-				locator1 = "ObjectAdmin#SELECT_OBJECT_RELATIONSHIP",
-				value1 = "${object}");
+			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
+
+			Click(
+				key_columnOption = "${object}",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
 		}
 
 		if (isSet(name)) {

@@ -1,0 +1,27 @@
+definition {
+
+	macro addTeam {
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${siteName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/team/add-team \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d name=${teamName} \
+			-d description=${teamDescription} \
+		''';
+
+		echo("## Adding a 'Team' with the following info using JSONWS:");
+
+		echo("## * Name: ${teamName}");
+
+		echo("## * Description: ${teamDescription}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
+}

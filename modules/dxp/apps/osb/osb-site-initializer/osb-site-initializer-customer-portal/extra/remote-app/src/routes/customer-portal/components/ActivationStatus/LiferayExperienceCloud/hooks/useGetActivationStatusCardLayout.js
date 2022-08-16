@@ -11,7 +11,6 @@
 import {ButtonWithIcon} from '@clayui/core';
 import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {useState} from 'react';
 import i18n from '../../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../../common/components';
 import {
@@ -22,19 +21,10 @@ import {
 export default function useGetActivationStatusCardLayout(
 	lxcEnvironment,
 	project,
-	userAccount,
-	subscriptionGroupLxcEnvironment
+	onNotActivatedClick,
+	userAccount
 ) {
-	const [isVisibleSetupLxcModal, setIsVisibleSetupLxcModal] = useState(false);
-	const [lxcStatusActivation, setStatusActivation] = useState(
-		subscriptionGroupLxcEnvironment?.activationStatus
-	);
-
-	function onNotActivatedClick() {
-		setIsVisibleSetupLxcModal(true);
-	}
-
-	const currentActivationStatus = {
+	return {
 		[STATUS_TAG_TYPE_NAMES.active]: {
 			buttonLink: (
 				<div className="d-flex flex-column">
@@ -122,13 +112,5 @@ export default function useGetActivationStatusCardLayout(
 			),
 			title: i18n.translate('liferay-experience-cloud-activation'),
 		},
-	};
-
-	return {
-		currentActivationStatus,
-		isVisibleSetupLxcModal,
-		lxcStatusActivation,
-		setIsVisibleSetupLxcModal,
-		setStatusActivation,
 	};
 }

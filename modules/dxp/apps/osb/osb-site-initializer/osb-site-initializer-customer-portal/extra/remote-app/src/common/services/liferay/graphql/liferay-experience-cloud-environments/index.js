@@ -10,5 +10,5 @@
  */
 
 export * from './queries/useGetLiferayExperienceEnvironments';
-export * from './queries/createLiferayExperienceCloudEnvironment';
-export * from './queries/createAdminLiferayExperienceCloud';
+export * from './queries/useCreateLiferayExperienceCloudEnvironment';
+export * from './queries/useCreateAdminLiferayExperienceCloud';

@@ -16,13 +16,11 @@ import {STATUS_TAG_TYPE_NAMES} from '../../../../utils/constants';
 
 export default function useOnCloseSetupModal(
 	dataSubscriptionGroups,
-	setIsVisibleSetupLxcModal,
+	handleOncloseSetupModal,
 	setStatusActivation
 ) {
 	const [, dispatch] = useCustomerPortal();
-	const {observer, onClose} = useModal({
-		onClose: () => setIsVisibleSetupLxcModal(false),
-	});
+	const {observer, onClose} = useModal(() => handleOncloseSetupModal());
 
 	const handleSubmitLxcEnvironment = (isSuccess) => {
 		onClose();

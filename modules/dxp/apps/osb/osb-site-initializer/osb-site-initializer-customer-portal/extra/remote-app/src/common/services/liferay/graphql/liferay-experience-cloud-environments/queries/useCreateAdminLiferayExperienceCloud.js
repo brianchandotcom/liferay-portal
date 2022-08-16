@@ -11,7 +11,7 @@
 
 import {gql, useMutation} from '@apollo/client';
 
-export const CREATE_ADMINS_LIFERAY_EXPERIENCE_CLOUD = gql`
+export const CREATE_ADMIN_LIFERAY_EXPERIENCE_CLOUD = gql`
 	mutation createAdminLiferayExperienceCloud(
 		$AdminLiferayExperienceCloud: InputC_AdminLiferayExperienceCloud!
 	) {
@@ -29,7 +29,7 @@ export const CREATE_ADMINS_LIFERAY_EXPERIENCE_CLOUD = gql`
 `;
 
 export function useCreateAdminsLiferayExperienceCloud(variables) {
-	return useMutation(CREATE_ADMINS_LIFERAY_EXPERIENCE_CLOUD, {
+	return useMutation(CREATE_ADMIN_LIFERAY_EXPERIENCE_CLOUD, {
 		variables,
 	});
 }

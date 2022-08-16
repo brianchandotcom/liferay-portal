@@ -29,10 +29,10 @@ const INITIAL_SETUP_ADMIN_COUNT = 1;
 const SetupLiferayExperienceCloudPage = ({
 	errors,
 	handleChangeForm,
+	handleOnLeftButtonClick,
 	leftButton,
 	project,
 	setFormAlreadySubmitted,
-	setIsVisibleSetupLxcModal,
 	subscriptionGroupLxcId,
 	touched,
 	values,
@@ -63,7 +63,7 @@ const SetupLiferayExperienceCloudPage = ({
 				leftButton: (
 					<Button
 						borderless
-						onClick={() => setIsVisibleSetupLxcModal(false)}
+						onClick={() => handleOnLeftButtonClick()}
 					>
 						{leftButton}
 					</Button>

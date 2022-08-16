@@ -8,6 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+import {useState} from 'react';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {useGetAccountSubscriptionGroups} from '../../../../../common/services/liferay/graphql/account-subscription-groups/queries/useGetAccountSubscriptionGroups';
 import {STATUS_TAG_TYPE_NAMES} from '../../../utils/constants';
@@ -24,19 +25,18 @@ const ActivationStatusLiferayExperienceCloud = ({
 	userAccount,
 }) => {
 	const {liferayWebDAV} = useAppPropertiesContext();
+	const [isVisibleSetupLxcModal, setIsVisibleSetupLxcModal] = useState(false);
+	const [lxcStatusActivation, setStatusLxcActivation] = useState(
+		subscriptionGroupLxcEnvironment?.activationStatus
+	);
 
 	const {activationStatusDate} = useActivationStatusDate(project);
-	const {
-		currentActivationStatus,
-		isVisibleSetupLxcModal,
-		lxcStatusActivation,
-		setIsVisibleSetupLxcModal,
-		setStatusActivation,
-	} = useGetActivationStatusCardLayout(
+
+	const currentActivationStatus = useGetActivationStatusCardLayout(
 		lxcEnvironment,
 		project,
-		userAccount,
-		subscriptionGroupLxcEnvironment
+		() => setIsVisibleSetupLxcModal(true),
+		userAccount
 	);
 
 	const {data: dataSubscriptionGroups} = useGetAccountSubscriptionGroups({
@@ -45,8 +45,8 @@ const ActivationStatusLiferayExperienceCloud = ({
 
 	const {handleSubmitLxcEnvironment, observer} = useOnCloseSetupModal(
 		dataSubscriptionGroups,
-		setIsVisibleSetupLxcModal,
-		setStatusActivation
+		() => setIsVisibleSetupLxcModal(false),
+		setStatusLxcActivation
 	);
 
 	const activationStatus =
@@ -58,10 +58,12 @@ const ActivationStatusLiferayExperienceCloud = ({
 		<div>
 			{isVisibleSetupLxcModal && (
 				<SetupLiferayExperienceCloudModal
+					handleOnLeftButtonClick={() =>
+						setIsVisibleSetupLxcModal(false)
+					}
 					observer={observer}
 					onClose={handleSubmitLxcEnvironment}
 					project={project}
-					setIsVisibleSetupLxcModal={setIsVisibleSetupLxcModal}
 					subscriptionGroupLxcId={
 						subscriptionGroupLxcEnvironment.accountSubscriptionGroupId
 					}

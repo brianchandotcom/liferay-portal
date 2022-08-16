@@ -18,10 +18,10 @@ import SetupLiferayExperienceCloudForm from './components/SetupLXCForm';
 import {submittedModalTexts} from './utils/submittedModalTexts';
 
 const SetupLiferayExperienceCloudModal = ({
+	handleOnLeftButtonClick,
 	observer,
 	onClose,
 	project,
-	setIsVisibleSetupLxcModal,
 	subscriptionGroupLxcId,
 }) => {
 	const [currentProcess, setCurrentProcess] = useState(
@@ -44,10 +44,10 @@ const SetupLiferayExperienceCloudModal = ({
 			[LXC_STEPS_TYPES.setupForm]: (
 				<SetupLiferayExperienceCloudForm
 					handleChangeForm={handleChangeForm}
+					handleOnLeftButtonClick={handleOnLeftButtonClick}
 					leftButton={i18n.translate('cancel')}
 					project={project}
 					setFormAlreadySubmitted={setFormAlreadySubmitted}
-					setIsVisibleSetupLxcModal={setIsVisibleSetupLxcModal}
 					subscriptionGroupLxcId={subscriptionGroupLxcId}
 				/>
 			),

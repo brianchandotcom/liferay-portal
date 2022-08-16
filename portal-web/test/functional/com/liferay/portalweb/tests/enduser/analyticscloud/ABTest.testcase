@@ -56,9 +56,9 @@ definition {
 		}
 
 		task ("Go to Site Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+			ACUtils.launchDXP();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/ac-page");
 		}
 
 		task ("Start an AB test") {

@@ -2024,11 +2024,9 @@ definition {
 
 		Search.searchCP(searchTerm = "${userScreenName}");
 
-		var key_rowEntry = "${userScreenName}";
-
-		Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Impersonate User");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Impersonate User",
+			rowEntry = "${userScreenName}");
 
 		if (isSet(siteName)) {
 			SelectWindow(locator1 = "title=Home - ${siteName}");

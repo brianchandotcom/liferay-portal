@@ -874,7 +874,9 @@ definition {
 			locator1 = "UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_TYPE",
 			value1 = "${suborgType}");
 
-		AssertElementPresent(locator1 = "UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_ACTIONS");
+		AssertVisible(
+			key_tableEntry = "${suborgName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 	}
 
 }

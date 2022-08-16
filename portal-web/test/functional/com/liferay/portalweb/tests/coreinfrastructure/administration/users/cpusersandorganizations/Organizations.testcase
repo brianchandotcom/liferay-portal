@@ -972,7 +972,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		UserNavigator.gotoPermissions(rowEntry = "usersn");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Permissions",
+			rowEntry = "usersn");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

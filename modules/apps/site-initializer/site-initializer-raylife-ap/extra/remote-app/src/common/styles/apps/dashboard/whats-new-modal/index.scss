@@ -1,0 +1,46 @@
+.dashboard-whats-new-modal-container {
+	.dashboard-whats-new-modal-title::before {
+		background-image: linear-gradient(
+			to right,
+			#aaa 0%,
+			#aaa 20%,
+			transparent 20%
+		);
+		background-repeat: repeat-x;
+		background-size: 6px 1px;
+		content: '';
+		height: 1px;
+		left: 0;
+		margin-bottom: 10px;
+		margin-left: 33px;
+		position: absolute;
+		right: 0;
+		width: inherit;
+	}
+
+	.dashboard-whats-new-modal-lines {
+		width: 530px;
+	}
+
+	.dashboard-whats-new-modal-buttons {
+		width: 538px;
+	}
+
+	.dashboard-whats-new-modal-options {
+		min-width: 100px;
+	}
+
+	.dashboard-whats-new-modal-active-buttons {
+		background-color: rgba(76, 132, 255, 0.1);
+		border: 1px solid #4c84ff;
+		color: #4c84ff;
+	}
+
+	.dashboard-whats-new-modal-period-options {
+		min-width: 250px;
+	}
+
+	.dashboard-whats-new-modal-period-buttons {
+		width: 54px;
+	}
+}

@@ -20,7 +20,7 @@ type ModalProps = {
 	children: ReactNode;
 	modalStyle: string;
 	observer: Observer;
-	size: 'full-screen' | 'lg';
+	size: any;
 	title: string;
 	visible: boolean;
 };

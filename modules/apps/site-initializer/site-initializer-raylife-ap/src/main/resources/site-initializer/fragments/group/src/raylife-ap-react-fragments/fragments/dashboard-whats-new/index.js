@@ -20,12 +20,24 @@ import ClayIconProvider from '../../../common/context/ClayIconProvider';
 import {getApplicationsStatus} from '../../../common/services/Application';
 import {CONSTANTS} from '../../../common/utils/constants';
 
+const settingsOnClick = () => {
+	const EVENT_OPTION = {
+		async: true,
+		fireOn: true,
+	};
+
+	const eventPublish = Liferay.publish(
+		'openSettingsModalEvent',
+		EVENT_OPTION
+	);
+
+	eventPublish.fire({
+		show: true,
+	});
+};
+
 export default function () {
 	const [sections, setSections] = useState([]);
-
-	const settingsOnClick = () => {
-		alert('Open Modal');
-	};
 
 	const getTotalCount = (result) => {
 		return result?.value?.data?.totalCount || 0;

@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
-import React from 'react';
+import React, {useMemo} from 'react';
 
 const Locale = ({children, editingLocale, locale, onLocaleClicked}) => (
 	<ClayTabs.Item
@@ -38,14 +38,16 @@ export default function LocalesList({
 	onLocaleClicked,
 	onLocaleRemoved,
 }) {
-	const availableLocalesArray = Array.from(availableLocales.values());
+	const sortedLocales = useMemo(() => {
+		const availableLocalesArray = Array.from(availableLocales.values());
 
-	const sortedLocales = [
-		availableLocalesArray.find((locale) => locale.id === defaultLocale),
-		...availableLocalesArray.filter(
-			(locale) => locale.id !== defaultLocale
-		),
-	];
+		return [
+			availableLocalesArray.find((locale) => locale.id === defaultLocale),
+			...availableLocalesArray.filter(
+				(locale) => locale.id !== defaultLocale
+			),
+		];
+	}, [availableLocales, defaultLocale]);
 
 	return (
 		<>

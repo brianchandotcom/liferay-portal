@@ -36,22 +36,22 @@ export default function useSubmitLxcEnvironment(
 	);
 
 	const {data} = useGetLiferayExperienceCloudEnvironments({
-		filter: `accountKey eq '${project?.accountKey}' and hasActivation eq true`,
+		filter: `accountKey eq '${project?.accountKey}'`,
 	});
+
+	const liferayExperienceCloudStatus = async () => {
+		if (data) {
+			const status =
+				data?.c?.liferayExperienceCloudEnvironments?.items?.length;
+
+			return status;
+		}
+
+		return false;
+	};
 
 	const handleSubmitLxcEnvironment = async () => {
 		const lxcActivationFields = values?.lxc;
-
-		const liferayExperienceCloudStatus = () => {
-			if (data) {
-				const status =
-					data?.c?.liferayExperienceCloudEnvironments?.items?.length;
-
-				return status;
-			}
-
-			return false;
-		};
 
 		const alreadySubmitted = await liferayExperienceCloudStatus();
 
@@ -67,7 +67,7 @@ export default function useSubmitLxcEnvironment(
 						incidentManagementEmailAddress:
 							lxcActivationFields.incidentManagementEmail,
 						incidentManagementFullName:
-							lxcActivationFields.incidentManagementFullName,
+							lxcActivationFields.incidentManagementfullName,
 						primaryRegion: lxcActivationFields.primaryRegion,
 						projectId: lxcActivationFields.projectId,
 					},

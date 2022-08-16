@@ -70,7 +70,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                 role="menu"
               >
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -118,7 +118,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -166,7 +166,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -214,7 +214,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -262,7 +262,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -310,7 +310,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -358,7 +358,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -406,7 +406,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -454,7 +454,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -502,7 +502,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -550,7 +550,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -598,7 +598,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -646,7 +646,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -779,7 +779,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
                 role="menu"
               >
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -827,7 +827,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -875,7 +875,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -923,7 +923,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -971,7 +971,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1019,7 +1019,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1067,7 +1067,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1115,7 +1115,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1163,7 +1163,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1211,7 +1211,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1259,7 +1259,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1307,7 +1307,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1355,7 +1355,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1488,7 +1488,7 @@ exports[`Field LocalizableText fills with the default language value when the se
                 role="menu"
               >
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1536,7 +1536,7 @@ exports[`Field LocalizableText fills with the default language value when the se
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1584,7 +1584,7 @@ exports[`Field LocalizableText fills with the default language value when the se
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1632,7 +1632,7 @@ exports[`Field LocalizableText fills with the default language value when the se
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1680,7 +1680,7 @@ exports[`Field LocalizableText fills with the default language value when the se
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1728,7 +1728,7 @@ exports[`Field LocalizableText fills with the default language value when the se
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1776,7 +1776,7 @@ exports[`Field LocalizableText fills with the default language value when the se
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1824,7 +1824,7 @@ exports[`Field LocalizableText fills with the default language value when the se
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1872,7 +1872,7 @@ exports[`Field LocalizableText fills with the default language value when the se
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1920,7 +1920,7 @@ exports[`Field LocalizableText fills with the default language value when the se
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -1968,7 +1968,7 @@ exports[`Field LocalizableText fills with the default language value when the se
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2016,7 +2016,7 @@ exports[`Field LocalizableText fills with the default language value when the se
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2064,7 +2064,7 @@ exports[`Field LocalizableText fills with the default language value when the se
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2197,7 +2197,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
                 role="menu"
               >
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2245,7 +2245,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2293,7 +2293,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2341,7 +2341,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2389,7 +2389,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2437,7 +2437,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2485,7 +2485,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2533,7 +2533,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2581,7 +2581,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2629,7 +2629,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2677,7 +2677,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2725,7 +2725,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2773,7 +2773,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2911,7 +2911,7 @@ exports[`Field LocalizableText has a label 1`] = `
                 role="menu"
               >
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -2959,7 +2959,7 @@ exports[`Field LocalizableText has a label 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3007,7 +3007,7 @@ exports[`Field LocalizableText has a label 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3055,7 +3055,7 @@ exports[`Field LocalizableText has a label 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3103,7 +3103,7 @@ exports[`Field LocalizableText has a label 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3151,7 +3151,7 @@ exports[`Field LocalizableText has a label 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3199,7 +3199,7 @@ exports[`Field LocalizableText has a label 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3247,7 +3247,7 @@ exports[`Field LocalizableText has a label 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3295,7 +3295,7 @@ exports[`Field LocalizableText has a label 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3343,7 +3343,7 @@ exports[`Field LocalizableText has a label 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3391,7 +3391,7 @@ exports[`Field LocalizableText has a label 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3439,7 +3439,7 @@ exports[`Field LocalizableText has a label 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3487,7 +3487,7 @@ exports[`Field LocalizableText has a label 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3625,7 +3625,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
                 role="menu"
               >
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3673,7 +3673,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3721,7 +3721,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3769,7 +3769,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3817,7 +3817,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3865,7 +3865,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3913,7 +3913,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -3961,7 +3961,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4009,7 +4009,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4057,7 +4057,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4105,7 +4105,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4153,7 +4153,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4201,7 +4201,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4334,7 +4334,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
                 role="menu"
               >
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4382,7 +4382,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4430,7 +4430,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4478,7 +4478,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4526,7 +4526,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4574,7 +4574,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4622,7 +4622,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4670,7 +4670,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4718,7 +4718,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4766,7 +4766,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4814,7 +4814,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4862,7 +4862,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -4910,7 +4910,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5043,7 +5043,7 @@ exports[`Field LocalizableText is not required 1`] = `
                 role="menu"
               >
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5091,7 +5091,7 @@ exports[`Field LocalizableText is not required 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5139,7 +5139,7 @@ exports[`Field LocalizableText is not required 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5187,7 +5187,7 @@ exports[`Field LocalizableText is not required 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5235,7 +5235,7 @@ exports[`Field LocalizableText is not required 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5283,7 +5283,7 @@ exports[`Field LocalizableText is not required 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5331,7 +5331,7 @@ exports[`Field LocalizableText is not required 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5379,7 +5379,7 @@ exports[`Field LocalizableText is not required 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5427,7 +5427,7 @@ exports[`Field LocalizableText is not required 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5475,7 +5475,7 @@ exports[`Field LocalizableText is not required 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5523,7 +5523,7 @@ exports[`Field LocalizableText is not required 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5571,7 +5571,7 @@ exports[`Field LocalizableText is not required 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5619,7 +5619,7 @@ exports[`Field LocalizableText is not required 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5752,7 +5752,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
                 role="menu"
               >
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5800,7 +5800,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5848,7 +5848,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5896,7 +5896,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5944,7 +5944,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -5992,7 +5992,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6040,7 +6040,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6088,7 +6088,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6136,7 +6136,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6184,7 +6184,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6232,7 +6232,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6280,7 +6280,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6328,7 +6328,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6461,7 +6461,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
                 role="menu"
               >
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6509,7 +6509,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6557,7 +6557,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6605,7 +6605,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6653,7 +6653,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6701,7 +6701,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6749,7 +6749,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6797,7 +6797,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6845,7 +6845,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6893,7 +6893,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6941,7 +6941,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -6989,7 +6989,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7037,7 +7037,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7170,7 +7170,7 @@ exports[`Field LocalizableText renders values 1`] = `
                 role="menu"
               >
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7218,7 +7218,7 @@ exports[`Field LocalizableText renders values 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7266,7 +7266,7 @@ exports[`Field LocalizableText renders values 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7314,7 +7314,7 @@ exports[`Field LocalizableText renders values 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7362,7 +7362,7 @@ exports[`Field LocalizableText renders values 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7410,7 +7410,7 @@ exports[`Field LocalizableText renders values 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7458,7 +7458,7 @@ exports[`Field LocalizableText renders values 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7506,7 +7506,7 @@ exports[`Field LocalizableText renders values 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7554,7 +7554,7 @@ exports[`Field LocalizableText renders values 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7602,7 +7602,7 @@ exports[`Field LocalizableText renders values 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7650,7 +7650,7 @@ exports[`Field LocalizableText renders values 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7698,7 +7698,7 @@ exports[`Field LocalizableText renders values 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7746,7 +7746,7 @@ exports[`Field LocalizableText renders values 1`] = `
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7879,7 +7879,7 @@ exports[`Field LocalizableText shows default language value when no other langua
                 role="menu"
               >
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7927,7 +7927,7 @@ exports[`Field LocalizableText shows default language value when no other langua
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -7975,7 +7975,7 @@ exports[`Field LocalizableText shows default language value when no other langua
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -8023,7 +8023,7 @@ exports[`Field LocalizableText shows default language value when no other langua
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -8071,7 +8071,7 @@ exports[`Field LocalizableText shows default language value when no other langua
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -8119,7 +8119,7 @@ exports[`Field LocalizableText shows default language value when no other langua
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -8167,7 +8167,7 @@ exports[`Field LocalizableText shows default language value when no other langua
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -8215,7 +8215,7 @@ exports[`Field LocalizableText shows default language value when no other langua
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -8263,7 +8263,7 @@ exports[`Field LocalizableText shows default language value when no other langua
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -8311,7 +8311,7 @@ exports[`Field LocalizableText shows default language value when no other langua
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -8359,7 +8359,7 @@ exports[`Field LocalizableText shows default language value when no other langua
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -8407,7 +8407,7 @@ exports[`Field LocalizableText shows default language value when no other langua
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"
@@ -8455,7 +8455,7 @@ exports[`Field LocalizableText shows default language value when no other langua
                   </button>
                 </li>
                 <li
-                  role="none"
+                  role="presentation"
                 >
                   <button
                     class="dropdown-item custom-dropdown-item-row"

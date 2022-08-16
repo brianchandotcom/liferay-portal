@@ -12,7 +12,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
     role="menu"
   >
     <li
-      role="none"
+      role="presentation"
     >
       <button
         class="dropdown-item"
@@ -59,7 +59,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
       </button>
     </li>
     <li
-      role="none"
+      role="presentation"
     >
       <button
         class="dropdown-item"
@@ -106,7 +106,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
       </button>
     </li>
     <li
-      role="none"
+      role="presentation"
     >
       <button
         class="dropdown-item"
@@ -164,7 +164,7 @@ exports[`TranslationAdminSelector renders a dropdown trigger with the selected l
     <button
       aria-controls="clay-dropdown-menu-1"
       aria-expanded="false"
-      aria-haspopup="menu"
+      aria-haspopup="true"
       class="dropdown-toggle btn btn-monospaced btn-secondary"
       style=""
       title="select-translation-language"
@@ -216,7 +216,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
     role="menu"
   >
     <li
-      role="none"
+      role="presentation"
     >
       <button
         class="dropdown-item"
@@ -263,7 +263,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
       </button>
     </li>
     <li
-      role="none"
+      role="presentation"
     >
       <button
         class="dropdown-item"
@@ -325,7 +325,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
     role="menu"
   >
     <li
-      role="none"
+      role="presentation"
     >
       <button
         class="dropdown-item"
@@ -372,7 +372,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
       </button>
     </li>
     <li
-      role="none"
+      role="presentation"
     >
       <button
         class="dropdown-item"
@@ -419,12 +419,11 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
       </button>
     </li>
     <li
-      aria-hidden="true"
       class="dropdown-divider"
-      role="presentation"
+      role="separator"
     />
     <li
-      role="none"
+      role="presentation"
     >
       <button
         class="dropdown-item"
@@ -470,7 +469,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
     role="menu"
   >
     <li
-      role="none"
+      role="presentation"
     >
       <button
         class="dropdown-item"
@@ -517,7 +516,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
       </button>
     </li>
     <li
-      role="none"
+      role="presentation"
     >
       <button
         class="dropdown-item"
@@ -564,7 +563,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
       </button>
     </li>
     <li
-      role="none"
+      role="presentation"
     >
       <button
         class="dropdown-item"
@@ -611,12 +610,11 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
       </button>
     </li>
     <li
-      aria-hidden="true"
       class="dropdown-divider"
-      role="presentation"
+      role="separator"
     />
     <li
-      role="none"
+      role="presentation"
     >
       <button
         class="dropdown-item"
@@ -658,7 +656,7 @@ exports[`TranslationAdminSelector selects the default locale if the current sele
     <button
       aria-controls="clay-dropdown-menu-8"
       aria-expanded="true"
-      aria-haspopup="menu"
+      aria-haspopup="true"
       class="dropdown-toggle btn btn-monospaced btn-secondary"
       style=""
       title="select-translation-language"

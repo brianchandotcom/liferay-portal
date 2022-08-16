@@ -110,6 +110,14 @@ public interface JournalServiceConfiguration {
 	public boolean syncContentSearchOnStartup();
 
 	@Meta.AD(
+		deflt = "true",
+		description = "journal-article-export-import-processor-cache-enabled-help",
+		name = "journal-article-export-import-processor-cache-enabled",
+		required = false
+	)
+	public boolean journalArticleExportImportProcessorCacheEnabled();
+
+	@Meta.AD(
 		deflt = "@page_break@",
 		description = "journal-article-token-page-break",
 		name = "journal-article-page-break-token", required = false

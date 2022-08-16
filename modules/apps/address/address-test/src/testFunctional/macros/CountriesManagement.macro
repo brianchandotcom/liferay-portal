@@ -40,6 +40,16 @@ definition {
 		}
 	}
 
+	macro activateCountry {
+		Search.searchCP(searchTerm = "${countryName}");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Activate",
+			rowEntry = "${countryName}");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addCountry {
 		LexiconEntry.gotoAdd();
 
@@ -82,6 +92,18 @@ definition {
 		}
 
 		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro deactivateCountry {
+		Search.searchCP(searchTerm = "${countryName}");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Deactivate",
+			rowEntry = "${countryName}");
+
+		AssertConfirm(value1 = "Are you sure you want to deactivate this?");
 
 		Alert.viewSuccessMessage();
 	}

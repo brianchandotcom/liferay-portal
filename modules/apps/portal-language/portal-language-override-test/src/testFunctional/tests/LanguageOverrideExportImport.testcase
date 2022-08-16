@@ -146,7 +146,7 @@ this-is-a-language-key=This is a language key''',
 		}
 	}
 
-	@description = "This test asserts that error message when importing a language key with overlength value."
+	@description = "This test asserts that a user cannot import translations that has more than 1000 characters"
 	@priority = "3"
 	test CannotImportTranslationsWithMoreThan1000Characters {
 		task ("When upload a language key with more than 1000 characters") {

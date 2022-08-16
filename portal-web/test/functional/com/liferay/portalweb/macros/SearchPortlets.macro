@@ -502,7 +502,7 @@ definition {
 			value1 = "${searchTerm}");
 
 		if ("${clickMagnifyingGlassIcon}" == "true") {
-			Click(locator1 = "Search#SEARCH_BAR_WIDGET_MAGNIFYING_GLASSS_BUTTON");
+			Click(locator1 = "Search#SEARCH_BAR_WIDGET_MAGNIFYING_GLASS_BUTTON");
 		}
 		else {
 			KeyPress(

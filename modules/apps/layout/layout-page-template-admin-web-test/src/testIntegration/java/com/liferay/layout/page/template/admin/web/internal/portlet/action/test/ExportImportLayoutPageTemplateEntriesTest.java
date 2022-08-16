@@ -15,12 +15,6 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
-import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
-import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
@@ -29,10 +23,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.friendly.url.model.FriendlyURLEntry;
-import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
-import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebTestPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
@@ -42,8 +32,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
@@ -52,20 +40,13 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -75,28 +56,19 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-import com.liferay.sites.kernel.util.Sites;
 
 import java.io.File;
-import java.io.Serializable;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -327,106 +299,6 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			fragmentStyledLayoutStructureItem2);
 	}
 
-	@Test
-	public void testExportImportLayoutsCreatedFromLayoutPrototypeWithSameName()
-		throws Exception {
-
-		Group group = GroupTestUtil.addGroup();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group, TestPropsValues.getUserId());
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				addLayoutPageTemplateCollection(
-					TestPropsValues.getUserId(), group.getGroupId(),
-					RandomTestUtil.randomString(), StringPool.BLANK,
-					serviceContext);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE, 0,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-		Layout templateLayout = LayoutLocalServiceUtil.getLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		LayoutTestUtil.addPortletToLayout(
-			templateLayout,
-			LayoutPageTemplateAdminWebTestPortletKeys.
-				LAYOUT_PAGE_TEMPLATE_ADMIN_WEB_TEST_PORTLET);
-
-		LayoutPrototype layoutPrototype =
-			LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
-				layoutPageTemplateEntry.getLayoutPrototypeId());
-
-		serviceContext.setAttribute(
-			"layoutPrototypeUuid", layoutPrototype.getUuid());
-
-		String layoutName = RandomTestUtil.randomString();
-
-		_addLayoutFromLayoutPrototypeAndChangeFriendlyURL(
-			group, layoutName, serviceContext);
-
-		_addLayoutFromLayoutPrototypeAndChangeFriendlyURL(
-			group, layoutName, serviceContext);
-
-		long[] layoutIds = ListUtil.toLongArray(
-			_layoutLocalService.getLayouts(group.getGroupId(), false),
-			Layout::getLayoutId);
-
-		Map<String, Serializable> exportLayoutSettingsMap =
-			_exportImportConfigurationSettingsMapFactory.
-				buildExportLayoutSettingsMap(
-					TestPropsValues.getUser(), group.getGroupId(), false,
-					layoutIds, _getExportParameterMap());
-
-		_exportImportConfiguration =
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					exportLayoutSettingsMap);
-
-		File file = _exportImportLocalService.exportLayoutsAsFile(
-			_exportImportConfiguration);
-
-		GroupTestUtil.deleteGroup(group);
-
-		try {
-			Map<String, Serializable> importLayoutSettingsMap =
-				_exportImportConfigurationSettingsMapFactory.
-					buildImportLayoutSettingsMap(
-						TestPropsValues.getUser(), _group2.getGroupId(), false,
-						layoutIds, _getImportParameterMap());
-
-			_exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					addDraftExportImportConfiguration(
-						TestPropsValues.getUserId(),
-						RandomTestUtil.randomString(),
-						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-						importLayoutSettingsMap);
-
-			_exportImportLocalService.importLayouts(
-				_exportImportConfiguration, file);
-
-			for (long layoutId : layoutIds) {
-				Assert.assertNotNull(
-					_layoutLocalService.getLayout(
-						_group2.getGroupId(), false, layoutId));
-			}
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
-	}
-
 	private FragmentEntry _addFragmentEntry(
 			long groupId, String key, String name, String html)
 		throws Exception {
@@ -447,57 +319,6 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
-	private Layout _addLayoutFromLayoutPrototypeAndChangeFriendlyURL(
-			Group group, String name, ServiceContext serviceContext)
-		throws Exception {
-
-		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			HashMapBuilder.put(
-				_portal.getSiteDefaultLocale(group.getGroupId()), name
-			).build(),
-			Collections.emptyMap(), Collections.emptyMap(),
-			Collections.emptyMap(), Collections.emptyMap(),
-			LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,
-			Collections.emptyMap(), serviceContext);
-
-		_sites.mergeLayoutPrototypeLayout(layout.getGroup(), layout);
-
-		String newFriendlyURL = FriendlyURLNormalizerUtil.normalize(
-			RandomTestUtil.randomString());
-
-		layout = _layoutLocalService.updateFriendlyURL(
-			layout.getUserId(), layout.getPlid(),
-			StringPool.SLASH + newFriendlyURL, layout.getDefaultLanguageId());
-
-		long classNameId = _layoutFriendlyURLEntryHelper.getClassNameId(false);
-
-		String oldFriendlyURL = FriendlyURLNormalizerUtil.normalize(name);
-
-		FriendlyURLEntry oldFriendlyURLEntry =
-			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-				layout.getGroupId(), classNameId,
-				StringPool.SLASH + oldFriendlyURL);
-
-		Assert.assertNotNull(oldFriendlyURLEntry);
-
-		_friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
-			oldFriendlyURLEntry.getFriendlyURLEntryId(),
-			layout.getDefaultLanguageId());
-		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-			oldFriendlyURLEntry);
-
-		List<FriendlyURLEntry> friendlyURLEntries =
-			_friendlyURLEntryLocalService.getFriendlyURLEntries(
-				layout.getGroupId(), classNameId, layout.getPlid());
-
-		Assert.assertEquals(
-			friendlyURLEntries.toString(), 1, friendlyURLEntries.size());
-
-		return layout;
-	}
-
 	private ContainerStyledLayoutStructureItem _getContainerLayoutStructureItem(
 		LayoutStructure layoutStructure) {
 
@@ -508,72 +329,6 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			layoutStructureItem instanceof ContainerStyledLayoutStructureItem);
 
 		return (ContainerStyledLayoutStructureItem)layoutStructureItem;
-	}
-
-	private Map<String, String[]> _getExportParameterMap() throws Exception {
-		return LinkedHashMapBuilder.put(
-			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			"_page-templates_page-template-sets",
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			"_page-templates_page-templates",
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			"_page-templates_page-template-setsDisplay",
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			Constants.CMD, new String[] {Constants.EXPORT}
-		).build();
-	}
-
-	private Map<String, String[]> _getImportParameterMap() throws Exception {
-		return LinkedHashMapBuilder.put(
-			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			"_page-templates_page-template-sets",
-			new String[] {Boolean.FALSE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			"_page-templates_page-templates",
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			Constants.CMD, new String[] {Constants.IMPORT}
-		).build();
 	}
 
 	private LayoutStructureItem _getMainChildLayoutStructureItem(
@@ -782,22 +537,6 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 	}
 
 	@Inject
-	private static FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
-
-	private ExportImportConfiguration _exportImportConfiguration;
-
-	@Inject
-	private ExportImportConfigurationLocalService
-		_exportImportConfigurationLocalService;
-
-	@Inject
-	private ExportImportConfigurationSettingsMapFactory
-		_exportImportConfigurationSettingsMapFactory;
-
-	@Inject
-	private ExportImportLocalService _exportImportLocalService;
-
-	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Inject
@@ -811,15 +550,6 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 
 	@DeleteAfterTestRun
 	private Group _group2;
-
-	@Inject
-	private LayoutCopyHelper _layoutCopyHelper;
-
-	@Inject
-	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
-
-	@Inject
-	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutPageTemplateCollectionLocalService
@@ -842,15 +572,9 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 	private MVCResourceCommand _mvcResourceCommand;
 
 	@Inject
-	private Portal _portal;
-
-	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext1;
 	private ServiceContext _serviceContext2;
-
-	@Inject
-	private Sites _sites;
 
 }

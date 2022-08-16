@@ -419,7 +419,7 @@ export default withRouter(
 
 		const [debounceCallback] = useDebounceCallback(
 			(search) => changePage(search, 1, 20),
-			500
+			1000
 		);
 
 		useEffect(() => {
@@ -759,7 +759,7 @@ export default withRouter(
 												<ClayButtonWithIcon
 													displayType="unstyled"
 													onClick={() => {
-														debounceCallback('');
+														setSearch('');
 													}}
 													symbol="times-circle"
 													type="submit"

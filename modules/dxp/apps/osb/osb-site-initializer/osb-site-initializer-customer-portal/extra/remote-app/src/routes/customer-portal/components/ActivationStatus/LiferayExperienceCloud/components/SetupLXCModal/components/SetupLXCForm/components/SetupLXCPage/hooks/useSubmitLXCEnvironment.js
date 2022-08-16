@@ -12,8 +12,8 @@
 import {useMutation} from '@apollo/client';
 import {useAppPropertiesContext} from '../../../../../../../../../../../../common/contexts/AppPropertiesContext';
 import {
-	createAdminsLiferayExperienceCloud,
-	createLiferayExperienceCloudEnvironments,
+	useCreateAdminsLiferayExperienceCloud,
+	useCreateLiferayExperienceCloudEnvironments,
 } from '../../../../../../../../../../../../common/services/liferay/graphql/liferay-experience-cloud-environments';
 import {
 	getLiferayExperienceCloudEnvironments,
@@ -30,15 +30,16 @@ export default function useSubmitLXCEnvironment(
 ) {
 	const {client} = useAppPropertiesContext();
 
-	const [createLiferayExperienceCloudEnvironment] = useMutation(
-		createLiferayExperienceCloudEnvironments
-	);
+	const [
+		createLiferayExperienceCloudEnvironment,
+	] = useCreateLiferayExperienceCloudEnvironments();
+
 	const [updateAccountSubscriptionGroupsInfo] = useMutation(
 		updateAccountSubscriptionGroups
 	);
-	const [createAdminLiferayExperienceCloud] = useMutation(
-		createAdminsLiferayExperienceCloud
-	);
+	const [
+		createAdminLiferayExperienceCloud,
+	] = useCreateAdminsLiferayExperienceCloud();
 
 	const handleSubmitLxcEnvironment = async () => {
 		const lxcActivationFields = values?.lxc;

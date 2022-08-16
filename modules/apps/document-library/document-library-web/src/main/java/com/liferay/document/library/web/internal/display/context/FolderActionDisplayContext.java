@@ -18,17 +18,23 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.document.library.web.internal.security.permission.resource.DLPermission;
 import com.liferay.document.library.web.internal.util.DLFolderUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.learn.LearnMessage;
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -43,6 +49,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -52,6 +59,9 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
+import com.liferay.taglib.security.PermissionsURLTag;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -73,6 +83,172 @@ public class FolderActionDisplayContext {
 		_httpServletRequest = httpServletRequest;
 
 		_dlRequestHelper = new DLRequestHelper(httpServletRequest);
+	}
+
+	public List<DropdownItem> getActionDropdownItems() throws PortalException {
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
+				DropdownItemListBuilder.add(
+					() -> isDownloadFolderActionVisible(),
+					dropdownItem -> {
+						dropdownItem.setHref(getDownloadFolderURL());
+						dropdownItem.setIcon("download");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_httpServletRequest, "download"));
+					}
+				).add(
+					() -> isEditFolderActionVisible(),
+					dropdownItem -> {
+						dropdownItem.setHref(getEditFolderURL());
+						dropdownItem.setIcon("pencil");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_httpServletRequest, "edit"));
+					}
+				).add(
+					() -> isMoveFolderActionVisible(),
+					dropdownItem -> {
+						dropdownItem.putData("action", "move");
+						dropdownItem.putData("parameterName", "rowIdsFolder");
+						dropdownItem.putData(
+							"parameterValue", String.valueOf(_getFolderId()));
+						dropdownItem.setIcon("move-folder");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_httpServletRequest, "move"));
+					}
+				).add(
+					() -> isDeleteExpiredTemporaryFileEntriesActionVisible(),
+					dropdownItem -> {
+						dropdownItem.putData(
+							"action", "deleteExpiredTemporaryFileEntries");
+						dropdownItem.putData(
+							"deleteExpiredTemporaryFileEntriesURL",
+							getDeleteExpiredTemporaryFileEntriesURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest,
+								"delete-expired-temporary-files"));
+					}
+				).add(
+					() -> isAddFolderActionVisible(),
+					dropdownItem -> {
+						dropdownItem.setHref(getAddFolderURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, "add-folder"));
+					}
+				).add(
+					() -> isAddRepositoryActionVisible(),
+					dropdownItem -> {
+						dropdownItem.setHref(getAddRepositoryURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, "add-repository"));
+					}
+				).add(
+					() -> isAddMediaActionVisible(),
+					dropdownItem -> {
+						dropdownItem.setHref(getAddMediaURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, "add-file-entry"));
+					}
+				).add(
+					() ->
+						isAddMediaActionVisible() &&
+						isMultipleUploadSupported(),
+					dropdownItem -> {
+						dropdownItem.setHref(getAddMultipleMediaURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, "multiple-media"));
+					}
+				).add(
+					() -> isViewSlideShowActionVisible(),
+					dropdownItem -> {
+						dropdownItem.putData("action", "slideShow");
+						dropdownItem.putData(
+							"viewSlideShowURL", getViewSlideShowURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, "view-slide-show"));
+					}
+				).add(
+					() -> isAddFileShortcutActionVisible(),
+					dropdownItem -> {
+						dropdownItem.setHref(getAddFileShortcutURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, "add-shortcut"));
+					}
+				).add(
+					() -> isAccessFromDesktopActionVisible(),
+					dropdownItem -> {
+						dropdownItem.putData("action", "accessFromDesktop");
+
+						LearnMessage learnMessage =
+							LearnMessageUtil.getLearnMessage(
+								"webdav",
+								LanguageUtil.getLanguageId(_httpServletRequest),
+								"document-library-web");
+
+						dropdownItem.putData(
+							"learnMessage", learnMessage.getMessage());
+						dropdownItem.putData(
+							"learnURL", learnMessage.getMessage());
+
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)_httpServletRequest.getAttribute(
+								WebKeys.THEME_DISPLAY);
+
+						dropdownItem.putData(
+							"webDavURL",
+							DLURLHelperUtil.getWebDavURL(
+								themeDisplay, _getFolder(), null));
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, "access-from-desktop"));
+					}
+				).add(
+					() -> isPermissionsActionVisible(),
+					dropdownItem -> {
+						dropdownItem.putData("action", "permissions");
+
+						String permissionsURL = PermissionsURLTag.doTag(
+							StringPool.BLANK, getModelResource(),
+							HtmlUtil.escape(getModelResourceDescription()),
+							null, String.valueOf(getResourcePrimKey()),
+							LiferayWindowState.POP_UP.toString(), null,
+							_httpServletRequest);
+
+						dropdownItem.putData("permissionsURL", permissionsURL);
+
+						dropdownItem.setIcon("password-policies");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, "permissions"));
+					}
+				).add(
+					() -> isDeleteFolderActionVisible(),
+					dropdownItem -> {
+						dropdownItem.putData("action", "delete");
+						dropdownItem.putData("deleteURL", getDeleteFolderURL());
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_httpServletRequest, "delete"));
+					}
+				).add(
+					() -> isPublishFolderActionVisible(),
+					dropdownItem -> {
+						dropdownItem.putData("action", "publish");
+						dropdownItem.putData(
+							"publishURL", getPublishFolderURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, "publish-to-live"));
+					}
+				).build())
+		).build();
 	}
 
 	public String getAddFileShortcutURL() {

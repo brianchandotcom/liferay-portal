@@ -476,4 +476,43 @@ definition {
 		}
 	}
 
+	@description = "Verify that when the key is downloaded a success message appears"
+	@priority = "4"
+	test VerifyTheSuccessMessageWhenDownloadTheKey {
+		property portal.upstream = "quarantine";
+
+		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
+
+		var keyStatus = "All";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("And I get the formated name for the activation key file") {
+			var expectedDownloadedFileName = CP2ActivationKeys.formatLicenseFileName(
+				licenseType = "activation-key",
+				product = "${testProduct}",
+				version = "6.2",
+				licenseName = "${testAccount}",
+				fileType = "xml");
+		}
+
+		task ("When I click on the download button at the Activation Keys Table") {
+			CP2ActivationKeys.clickAtDownloadButton(entitlementName = "${testAccount}");
+		}
+
+		task ("Then I should see the downloaded file") {
+			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${expectedDownloadedFileName}");
+		}
+	}
+
 }

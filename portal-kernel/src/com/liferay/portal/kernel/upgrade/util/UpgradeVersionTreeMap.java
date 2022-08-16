@@ -26,10 +26,13 @@ import java.util.TreeMap;
 /**
  * @author Luis Ortiz
  */
-public class UpgradeVersionTreeMap extends TreeMap<Version, UpgradeStep> {
+public class UpgradeVersionTreeMap extends TreeMap<Version, UpgradeProcess> {
 
-	public void put(Version key, UpgradeProcess value) {
+	@Override
+	public UpgradeProcess put(Version key, UpgradeProcess value) {
 		_put(key, value.getUpgradeSteps());
+
+		return value;
 	}
 
 	public void put(Version key, UpgradeProcess... values) {
@@ -51,13 +54,13 @@ public class UpgradeVersionTreeMap extends TreeMap<Version, UpgradeStep> {
 				key.getMajor(), key.getMinor(), key.getMicro(),
 				"step-" + (i + 1));
 
-			put(stepVersion, upgradeStep);
+			super.put(stepVersion, (UpgradeProcess)upgradeStep);
 		}
 
 		Version finalVersion = new Version(
 			key.getMajor(), key.getMinor(), key.getMicro());
 
-		put(finalVersion, values[values.length - 1]);
+		super.put(finalVersion, (UpgradeProcess)values[values.length - 1]);
 	}
 
 }

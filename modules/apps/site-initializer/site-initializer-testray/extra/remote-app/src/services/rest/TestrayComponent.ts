@@ -13,6 +13,7 @@
  */
 
 import yupSchema from '../../schema/yup';
+import {searchUtil} from '../../util/search';
 import fetcher from '../fetcher';
 import {APIResponse, TestrayComponent} from './types';
 
@@ -31,12 +32,15 @@ const adapter = ({
 const createComponent = (component: Component) =>
 	fetcher.post('/components', adapter(component));
 
-const updateComponent = (id: number, component: Component) =>
-	fetcher.put(`/components/${id}`, adapter(component));
+const updateComponent = (id: number, component: Partial<Component>) =>
+	fetcher.patch(`/components/${id}`, adapter(component as Component));
 
 const nestedFieldsParam = 'nestedFields=project,team';
 
 const componentsResource = `/components?${nestedFieldsParam}`;
+
+const getTeamsComponentsQuery = (teamId: number) =>
+	fetcher(`/components?filter=${searchUtil.eq('teamId', teamId)}`);
 
 const getComponentQuery = (componentId: number | string) =>
 	`/components/${componentId}?${nestedFieldsParam}`;
@@ -47,6 +51,7 @@ const getComponentTransformData = (
 	...testrayComponent,
 	project: testrayComponent?.r_projectToComponents_c_project,
 	team: testrayComponent?.r_teamToComponents_c_team,
+	teamId: testrayComponent.r_teamToComponents_c_teamId,
 });
 
 const getComponentsTransformData = (
@@ -63,4 +68,5 @@ export {
 	getComponentQuery,
 	getComponentTransformData,
 	getComponentsTransformData,
+	getTeamsComponentsQuery,
 };

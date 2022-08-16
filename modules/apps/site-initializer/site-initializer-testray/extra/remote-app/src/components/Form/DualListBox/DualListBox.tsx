@@ -20,7 +20,7 @@ export type BoxItem = {
 	value: string;
 };
 
-export type Boxes = Array<Array<BoxItem>>;
+export type Boxes<T = any> = Array<Array<BoxItem & T>>;
 
 type DualListBoxProps = {
 	boxes?: Boxes;

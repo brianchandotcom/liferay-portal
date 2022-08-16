@@ -12,15 +12,25 @@
  * details.
  */
 
+import {useCallback, useState} from 'react';
 import {useForm} from 'react-hook-form';
 
 import Form from '../../../components/Form';
+import DualListBox, {Boxes} from '../../../components/Form/DualListBox';
 import Modal from '../../../components/Modal';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
+import {useFetch} from '../../../hooks/useFetch';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
-import {createTeam, updateTeam} from '../../../services/rest';
+import {
+	APIResponse,
+	TestrayComponent,
+	createTeam,
+	updateComponent,
+	updateTeam,
+} from '../../../services/rest';
+import {searchUtil} from '../../../util/search';
 
 type TeamForm = typeof yupSchema.team.__outputType;
 
@@ -29,10 +39,76 @@ type TeamProps = {
 	projectId: number;
 };
 
+const onMapDefault = ({id, name, ...rest}: TestrayComponent) => ({
+	label: name,
+	teamId: rest.r_teamToComponents_c_teamId,
+	value: id.toString(),
+});
+
+export type SelectComponentsProps = {
+	projectId: number;
+	setState: any;
+	state: State;
+	teamId: number;
+};
+
+const UNASSIGNED_TEAM_ID = 0;
+
+const SelectComponents: React.FC<SelectComponentsProps> = ({
+	projectId,
+	setState,
+	teamId,
+}) => {
+	const {data: unassigned, isValidating} = useFetch<
+		APIResponse<TestrayComponent>
+	>(
+		`/components?filter=${searchUtil.eq(
+			'projectId',
+			projectId
+		)} and ${searchUtil.eq('teamId', UNASSIGNED_TEAM_ID)}`
+	);
+
+	const {data: current} = useFetch<APIResponse<TestrayComponent>>(
+		teamId && !isValidating
+			? `/components?filter=${searchUtil.eq(
+					'projectId',
+					projectId
+			  )} and ${searchUtil.eq('teamId', teamId)}`
+			: null
+	);
+
+	const getTeams = useCallback(() => {
+		const unassignedItems = unassigned?.items || [];
+		const currentItems = current?.items || [];
+
+		return [
+			unassignedItems.map(onMapDefault),
+			currentItems.map(onMapDefault),
+		];
+	}, [unassigned, current]);
+
+	const components = getTeams();
+
+	return (
+		<DualListBox
+			boxes={components}
+			leftLabel={i18n.translate('Unassigned')}
+			rightLabel={i18n.translate('current')}
+			setValue={setState}
+		/>
+	);
+};
+export type State = Boxes<{teamId: number}>;
+
+export const initialState = {
+	testrayComponents: [],
+};
+
 const TeamFormModal: React.FC<TeamProps> = ({
 	modal: {modalState, observer, onClose, onError, onSave, onSubmit},
 	projectId,
 }) => {
+	const [state, setState] = useState<State>([]);
 	const {
 		formState: {errors},
 		handleSubmit,
@@ -50,6 +126,27 @@ const TeamFormModal: React.FC<TeamProps> = ({
 				update: updateTeam,
 			}
 		)
+			.then(async (response) => {
+				const [unassignedItems = [], currentItems = []] = state;
+
+				for (const unassigned of unassignedItems) {
+					if (unassigned.teamId !== 0) {
+						await updateComponent(Number(unassigned.value), {
+							name: unassigned.label,
+							teamId: '0',
+						});
+					}
+				}
+
+				for (const current of currentItems) {
+					if (current.teamId === 0) {
+						await updateComponent(Number(current.value), {
+							name: current.label,
+							teamId: response?.id,
+						});
+					}
+				}
+			})
 			.then(onSave)
 			.catch(onError);
 	};
@@ -64,7 +161,7 @@ const TeamFormModal: React.FC<TeamProps> = ({
 				/>
 			}
 			observer={observer}
-			size="lg"
+			size="full-screen"
 			title={i18n.translate(modalState?.id ? 'edit-team' : 'new-team')}
 			visible
 		>
@@ -74,6 +171,13 @@ const TeamFormModal: React.FC<TeamProps> = ({
 				name="name"
 				register={register}
 				required
+			/>
+
+			<SelectComponents
+				projectId={projectId}
+				setState={setState}
+				state={state}
+				teamId={modalState?.id}
 			/>
 		</Modal>
 	);

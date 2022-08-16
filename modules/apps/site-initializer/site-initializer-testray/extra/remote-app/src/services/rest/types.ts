@@ -241,8 +241,10 @@ export type TestrayComponent = {
 	project?: TestrayProject;
 	r_projectToComponents_c_project?: TestrayProject;
 	r_teamToComponents_c_team?: TestrayTeam;
+	r_teamToComponents_c_teamId: number;
 	status: string;
 	team?: TestrayTeam;
+	teamId: number;
 };
 
 export type TestrayFactorCategory = {

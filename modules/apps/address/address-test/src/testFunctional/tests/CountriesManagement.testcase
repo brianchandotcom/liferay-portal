@@ -55,4 +55,36 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that a user can delete an existing country."
+	@priority = "5"
+	test CanDeleteCountry {
+		task ("Given that a country named Angola exists in Countries Management portlet") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			Search.searchCP(searchTerm = "Angola");
+
+			CountriesManagement.viewCountryInTable(
+				billingAllowed = "true",
+				countryName = "Angola",
+				countryPriority = "0.0",
+				countryStatus = "Active",
+				shippingAllowed = "true",
+				twoLetterISOCode = "AO");
+		}
+
+		task ("When a user deletes this country") {
+			CountriesManagement.deleteCountry(countryName = "Angola");
+		}
+
+		task ("Then the country does not display in search results") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			Search.searchCP(searchTerm = "Angola");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "There are no countries.");
+		}
+	}
+
 }

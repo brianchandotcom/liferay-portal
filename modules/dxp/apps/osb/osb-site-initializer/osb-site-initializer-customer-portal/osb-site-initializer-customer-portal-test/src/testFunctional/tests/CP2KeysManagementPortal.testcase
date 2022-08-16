@@ -50,6 +50,7 @@ definition {
 	}
 
     @description = "Verify if the 'Activated' tab displays the number of keys for it"
+	@ignore = "true"
     @priority = "4"
     test VerifyTheActivatedTabDisplaysTheNumberOfKeys {
 		property portal.upstream = "quarantine";
@@ -90,6 +91,7 @@ definition {
     }
 
 	@description = "Verify if the 'All' tab displays the number of keys for it"
+	@ignore = "true"
     @priority = "4"
     test VerifyTheAllTabDisplaysTheNumberOfKeys {
 		property portal.upstream = "quarantine";
@@ -130,6 +132,7 @@ definition {
     }
 
 	@description = "Verify if the 'Not Activated' tab displays the number of keys for it"
+	@ignore = "true"
     @priority = "4"
     test VerifyTheNotActivatedTabDisplaysTheNumberOfKeys {
 		property portal.upstream = "quarantine";
@@ -170,6 +173,7 @@ definition {
     }
 
 	@description = "Verify if the 'Expired' tab displays the number of keys for it"
+	@ignore = "true"
     @priority = "4"
     test VerifyTheExpiredTabDisplaysTheNumberOfKeys {
 		property portal.upstream = "quarantine";
@@ -210,6 +214,7 @@ definition {
     }
 
 	@description = "Verify that by default pagination option is 'Show 5 Items'"
+	@ignore = "true"
     @priority = "4"
 	test VerifyTheDefaultPaginationOption {
 		property portal.upstream = "quarantine";		
@@ -236,6 +241,7 @@ definition {
 	}
 
 	@description = "Verify if the drop-down list contains the following options: Show 5 items - 10 items - 20 items - 50 items"
+	@ignore = "true"
 	@priority = "4"
 	test VerifyTheOptionsOfTheDropdownList {
 		property portal.upstream = "quarantine";		
@@ -290,6 +296,7 @@ definition {
 	}
 
 	@description = "Verify if when you hover the mouse over any cell 'Environment name' it shows a tooltip with the name of the environment and its description"
+	@ignore = "true"
 	@priority = "3"
 	test VerifyTheMouserOverWorksInAnyCellEnvironmentName {
 		property portal.upstream = "quarantine";
@@ -329,6 +336,7 @@ definition {
 	}
 
 	@description = "Verify if the date from Expiration Date has a format like this (Month, Day, Year)"
+	@ignore = "true"
 	@priority = "4"
 	test VerifyTheExpirationDateFormat {
 		property portal.upstream = "quarantine";
@@ -366,6 +374,7 @@ definition {
 	}
 
 	@description = "Verify that when you hover the mouse over 'DNE' a tooltip appears with a message 'This key does not expire'"
+	@ignore = "true"
 	@priority = "3"
 	test VerifyTheMessageWhenMouseOverDNE {
 		property portal.upstream = "quarantine";
@@ -401,6 +410,7 @@ definition {
 	}
 
 	@description = "Verify that for virtual keys the subtext is 'Cluster Nodes (Keys)'"
+	@ignore = "true"
 	@priority = "4"
 	test VerifyTheSubTextForVirtualKeys {
 		property portal.upstream = "quarantine";
@@ -439,6 +449,7 @@ definition {
 	}
 
 	@description = "Verify that for local keys the subtext is 'On-Premise'"
+	@ignore = "true"
 	@priority = "4"
 	test VerifyTheSubTextForLocalKeys {
 		property portal.upstream = "quarantine";
@@ -477,6 +488,7 @@ definition {
 	}
 
 	@description = "Verify that when the key is downloaded a success message appears"
+	@ignore = "true"
 	@priority = "4"
 	test VerifyTheSuccessMessageWhenDownloadTheKey {
 		property portal.upstream = "quarantine";

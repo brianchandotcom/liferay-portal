@@ -313,6 +313,15 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
+		_portalCache =
+			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
+				"PRICE_LISTS", false, true);
+	}
+
+	@Override
 	public void checkCommercePriceLists() throws PortalException {
 		checkCommercePriceListsByDisplayDate();
 		checkCommercePriceListsByExpirationDate();
@@ -320,11 +329,7 @@ public class CommercePriceListLocalServiceImpl
 
 	@Override
 	public void cleanPriceListCache() {
-		PortalCache<String, Serializable> portalCache =
-			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
-				"PRICE_LISTS", false, true);
-
-		portalCache.removeAll();
+		_portalCache.removeAll();
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -365,6 +370,13 @@ public class CommercePriceListLocalServiceImpl
 			commercePriceListLocalService.forceDeleteCommercePriceList(
 				commercePriceList);
 		}
+	}
+
+	@Override
+	public void destroy() {
+		super.destroy();
+
+		_multiVMPool.removePortalCache(_portalCache.getPortalCacheName());
 	}
 
 	@Override
@@ -570,15 +582,11 @@ public class CommercePriceListLocalServiceImpl
 			groupId, StringPool.POUND, commerceAccountId, StringPool.POUND,
 			StringUtil.merge(commerceAccountGroupIds));
 
-		PortalCache<String, Serializable> portalCache =
-			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
-				"PRICE_LISTS", false, true);
-
 		boolean priceListCalculated = GetterUtil.getBoolean(
-			portalCache.get(cacheKey + "_calculated"));
+			_portalCache.get(cacheKey + "_calculated"));
 
 		CommercePriceList commercePriceList =
-			(CommercePriceList)portalCache.get(cacheKey);
+			(CommercePriceList)_portalCache.get(cacheKey);
 
 		if (priceListCalculated) {
 			return Optional.ofNullable(commercePriceList);
@@ -596,7 +604,7 @@ public class CommercePriceListLocalServiceImpl
 		List<Document> documents = hits.toList();
 
 		if (documents.isEmpty()) {
-			portalCache.put(cacheKey + "_calculated", true);
+			_portalCache.put(cacheKey + "_calculated", true);
 
 			return Optional.empty();
 		}
@@ -608,9 +616,9 @@ public class CommercePriceListLocalServiceImpl
 
 		commercePriceList = fetchCommercePriceList(commercePriceListId);
 
-		portalCache.put(cacheKey, commercePriceList);
+		_portalCache.put(cacheKey, commercePriceList);
 
-		portalCache.put(cacheKey + "_calculated", true);
+		_portalCache.put(cacheKey + "_calculated", true);
 
 		return Optional.ofNullable(commercePriceList);
 	}
@@ -1768,6 +1776,8 @@ public class CommercePriceListLocalServiceImpl
 
 	@ServiceReference(type = MultiVMPool.class)
 	private MultiVMPool _multiVMPool;
+
+	private PortalCache<String, Serializable> _portalCache;
 
 	@ServiceReference(type = WorkflowInstanceLinkLocalService.class)
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

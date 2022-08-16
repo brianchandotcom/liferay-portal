@@ -256,6 +256,13 @@ const filters = {
 		},
 	],
 	routines: [baseFilters.priority, baseFilters.caseType, baseFilters.team],
+	team: [
+		{
+			label: 'Team Name',
+			name: 'team',
+			type: 'text',
+		},
+	],
 };
 
 export {filters};

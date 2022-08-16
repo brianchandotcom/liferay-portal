@@ -149,9 +149,11 @@ this-is-a-language-key=This is a language key''',
 	@description = "This test asserts that a user cannot import translations that has more than 1000 characters"
 	@priority = "3"
 	test CannotImportTranslationsWithMoreThan1000Characters {
-		task ("When upload a language key with more than 1000 characters") {
+		task ("Given that a user can import translations") {
 			Portlet.gotoPortletOptions(portletOption = "Import Translations");
+		}
 
+		task ("When a user uploads a language key with translation that has more than 1000 characters") {
 			UploadDependencyFile.uploadFile(fileName = "language_key_with_more_than_1000_characters.properties");
 
 			Button.clickSave();

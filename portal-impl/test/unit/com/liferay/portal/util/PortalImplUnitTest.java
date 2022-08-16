@@ -15,6 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
@@ -44,15 +45,13 @@ import com.liferay.portlet.ActionResponseFactory;
 import com.liferay.portlet.internal.ActionRequestImpl;
 import com.liferay.portlet.internal.ActionResponseImpl;
 import com.liferay.portlet.internal.MutableRenderParametersImpl;
+import com.liferay.portlet.internal.RenderParametersImpl;
 import com.liferay.portlet.test.MockLiferayPortletContext;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -67,6 +66,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
+import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -105,10 +105,7 @@ public class PortalImplUnitTest {
 
 		Map<String, String[]> params = _createMapParams();
 
-		Enumeration<String> enumeration = _createEnumerationParams();
-
-		ActionRequest actionRequest = _createActionRequestMock(
-			params, enumeration);
+		ActionRequest actionRequest = _createActionRequestMock(params);
 
 		MockedStatic<PortalUtil> portalUtilMock = Mockito.mockStatic(
 			PortalUtil.class);
@@ -131,10 +128,7 @@ public class PortalImplUnitTest {
 		params.put(_PASSWORD1, new String[] {"abc_123"});
 		params.put(_PASSWORD2, new String[] {"def_456"});
 
-		Enumeration<String> enumeration = _createEnumerationParams();
-
-		ActionRequest actionRequestMock = _createActionRequestMock(
-			params, enumeration);
+		ActionRequest actionRequestMock = _createActionRequestMock(params);
 
 		MockedStatic<PortalUtil> portalUtilMock = Mockito.mockStatic(
 			PortalUtil.class);
@@ -911,39 +905,17 @@ public class PortalImplUnitTest {
 	}
 
 	private ActionRequest _createActionRequestMock(
-		Map<String, String[]> params, Enumeration<String> enumeration) {
+		Map<String, String[]> params) {
 
 		ActionRequest actionRequestMock = Mockito.mock(ActionRequest.class);
 
+		RenderParameters renderParameters = new RenderParametersImpl(
+			params, null, StringPool.BLANK);
+
 		Mockito.when(
-			actionRequestMock.getParameterNames()
+			actionRequestMock.getRenderParameters()
 		).thenReturn(
-			enumeration
-		);
-		Mockito.when(
-			actionRequestMock.getParameterValues(_REDIRECT)
-		).thenReturn(
-			params.get(_REDIRECT)
-		);
-		Mockito.when(
-			actionRequestMock.getParameterValues(_P_U_I_D)
-		).thenReturn(
-			params.get(_P_U_I_D)
-		);
-		Mockito.when(
-			actionRequestMock.getParameterValues(_PASSWORDRESET)
-		).thenReturn(
-			params.get(_PASSWORDRESET)
-		);
-		Mockito.when(
-			actionRequestMock.getParameterValues(_PASSWORD1)
-		).thenReturn(
-			params.get(_PASSWORD1)
-		);
-		Mockito.when(
-			actionRequestMock.getParameterValues(_PASSWORD2)
-		).thenReturn(
-			params.get(_PASSWORD2)
+			renderParameters
 		);
 
 		return actionRequestMock;
@@ -982,18 +954,6 @@ public class PortalImplUnitTest {
 		return (ActionResponseImpl)ActionResponseFactory.create(
 			_createActionRequest(portletMode), httpServletResponse,
 			new UserImpl(), new LayoutImpl());
-	}
-
-	private Enumeration<String> _createEnumerationParams() {
-		List<String> arrayList = new ArrayList<>();
-
-		arrayList.add(_REDIRECT);
-		arrayList.add(_P_U_I_D);
-		arrayList.add(_PASSWORDRESET);
-		arrayList.add(_PASSWORD1);
-		arrayList.add(_PASSWORD2);
-
-		return Collections.enumeration(arrayList);
 	}
 
 	private Map<String, String[]> _createMapParams() {

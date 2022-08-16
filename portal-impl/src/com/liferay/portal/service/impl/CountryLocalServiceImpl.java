@@ -321,20 +321,35 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 					Predicate keywordsPredicate = null;
 
 					for (String term : terms) {
-						Predicate namePredicate = DSLFunctionFactoryUtil.lower(
-							CountryTable.INSTANCE.name
+						Predicate termPredicate = DSLFunctionFactoryUtil.lower(
+							CountryTable.INSTANCE.a2
 						).like(
 							term
+						).or(
+							DSLFunctionFactoryUtil.lower(
+								CountryTable.INSTANCE.a3
+							).like(
+								term
+							)
+						).or(
+							DSLFunctionFactoryUtil.lower(
+								CountryTable.INSTANCE.name
+							).like(
+								term
+							)
+						).or(
+							DSLFunctionFactoryUtil.lower(
+								CountryTable.INSTANCE.number
+							).like(
+								term
+							)
+						).or(
+							DSLFunctionFactoryUtil.lower(
+								CountryLocalizationTable.INSTANCE.title
+							).like(
+								term
+							)
 						);
-
-						Predicate titlePredicate = DSLFunctionFactoryUtil.lower(
-							CountryLocalizationTable.INSTANCE.title
-						).like(
-							term
-						);
-
-						Predicate termPredicate = namePredicate.or(
-							titlePredicate);
 
 						if (keywordsPredicate == null) {
 							keywordsPredicate = termPredicate;

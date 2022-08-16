@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -56,13 +55,10 @@ public class TierPriceTag extends IncludeTag {
 				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
-			Optional<CommercePriceList> commercePriceListOptional =
-				_getPriceList(_cpInstanceId, commerceContext);
+			CommercePriceList commercePriceList = _getPriceList(
+				_cpInstanceId, commerceContext);
 
-			if (commercePriceListOptional.isPresent()) {
-				CommercePriceList commercePriceList =
-					commercePriceListOptional.get();
-
+			if (commercePriceList != null) {
 				CommercePriceEntry commercePriceEntry =
 					CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(
 						_cpInstanceId,
@@ -175,14 +171,14 @@ public class TierPriceTag extends IncludeTag {
 
 	protected CommercePriceFormatter commercePriceFormatter;
 
-	private Optional<CommercePriceList> _getPriceList(
+	private CommercePriceList _getPriceList(
 			long cpInstanceId, CommerceContext commerceContext)
 		throws PortalException {
 
 		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 
 		if (commerceAccount == null) {
-			return Optional.empty();
+			return null;
 		}
 
 		CPInstance cpInstance = CPInstanceLocalServiceUtil.getCPInstance(

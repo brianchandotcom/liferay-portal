@@ -1267,9 +1267,9 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "Widget Page Template Name");
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Edit",
+				pageTemplateName = "Widget Page Template Name");
 
 			Portlet.addPG(portletName = "Blogs");
 		}

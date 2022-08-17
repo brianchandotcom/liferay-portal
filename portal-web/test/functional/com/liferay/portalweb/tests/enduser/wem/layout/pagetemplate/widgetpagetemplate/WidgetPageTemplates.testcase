@@ -192,9 +192,9 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "Page Template Name");
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Edit",
+				pageTemplateName = "Page Template Name");
 
 			AssertTextEquals(
 				locator1 = "ControlMenu#HEADING",
@@ -434,9 +434,9 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "Page Template Name");
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Edit",
+				pageTemplateName = "Page Template Name");
 
 			Portlet.addPG(portletName = "Asset Publisher");
 

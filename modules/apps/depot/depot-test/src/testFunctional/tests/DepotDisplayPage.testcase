@@ -626,9 +626,9 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Configure",
-			rowEntry = "Display Page Template Name");
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Configure",
+			pageTemplateName = "Display Page Template Name");
 
 		Navigator.gotoNavNested(navNested = "Open Graph");
 
@@ -739,9 +739,9 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Configure",
-			rowEntry = "Display Page Template Name");
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Configure",
+			pageTemplateName = "Display Page Template Name");
 
 		OpenGraph.mapEditableTextToField(
 			field = "File Name",
@@ -822,9 +822,9 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Configure",
-			rowEntry = "Display Page Template Name");
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Configure",
+			pageTemplateName = "Display Page Template Name");
 
 		Navigator.gotoNavNested(navNested = "Open Graph");
 
@@ -961,9 +961,9 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Configure",
-			rowEntry = "Display Page Template Name");
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Configure",
+			pageTemplateName = "Display Page Template Name");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Text",

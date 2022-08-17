@@ -6,6 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -23,203 +24,250 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		CustomerPortal.customerPortalApisTearDown();
 
-		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-		PortalInstances.tearDownCP();
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
 	}
 
-	@description = "LPS-144449 - Verify if when the user clicks on a subscription card its a pop-up showing the detailed terms."
+	@description = "Automation ID: LPS-144449 | Test Automation: Verify if when the user clicks on a subscription card its a pop-up showing the detailed terms"
 	@priority = "4"
 	test ClickingSubscriptionCardPopUpShows {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		Click(
-			cardName = "Non-Production",
-			locator1 = "CustomerPortalSite#CARD_NAME");
+		task ("Assert that a modal with all details opens") {
+			Click(
+				cardName = "Non-Production",
+				locator1 = "CustomerPortalSite#CARD_NAME");
 
-		AssertElementPresent(
-			locator1 = "CustomerPortalSite#MODAL_TITLE",
-			modalTitle = "Non-Production");
-
-		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#MODAL_TITLE",
+				modalTitle = "Non-Production");
+		}
+		
+		task ("Close the modal") {
+			CustomerPortal.clickOnTheCloseButton();
+		}
 	}
 
-	@description = "LPS-144483 - Verify there if status Active shows up."
-	@ignore = "true"
+	@description = "Automation ID: LPS-144483 | Test Summary: Verify there if status Active shows up"
 	@priority = "3"
 	test IfActiveStatusShowsUp {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		Click(
-			cardName = "Non-Production",
-			locator1 = "CustomerPortalSite#CARD_NAME");
+		task ("Open the modal and assert the active status") {
+			Click(
+				cardName = "Non-Production",
+				locator1 = "CustomerPortalSite#CARD_NAME");
 
-		AssertTextEquals(
-			locator1 = "CustomerPortalSite#TABLE_HEAD",
-			title = "Status",
-			value1 = "Status");
+			AssertTextEquals(
+				locator1 = "CustomerPortalSite#TABLE_HEAD",
+				title = "Status",
+				value1 = "Status");
 
-		AssertTextEquals(
-			locator1 = "CustomerPortalSite#TABLE_STATUS",
-			status = "Active",
-			value1 = "Active");
+			AssertTextEquals(
+				locator1 = "CustomerPortalSite#TABLE_STATUS",
+				status = "Active",
+				value1 = "Active");
+		}
 
-		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+		task ("Close the modal") {
+			CustomerPortal.clickOnTheCloseButton();
+		}
 	}
 
-	@description = "LPS-144484 - Verify there if status Expired shows up."
+	@description = "Automation ID: LPS-144484 | Test Summary: Verify there if status Expired shows up"
 	@priority = "2"
 	test IfExpiredStatusShowsUp {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 02");
+			CustomerPortal.enterOnProject(title = "Test Account Commerce");
+		}
 
-		AssertTextEquals(
-			cardName = "Developer Tools",
-			locator1 = "CustomerPortalSite#CARD_STATUS",
-			status = "Expired",
-			value1 = "Expired");
+		task ("Assert the Expired status on the card") {
+			AssertTextEquals(
+				cardName = "Developer Tools",
+				locator1 = "CustomerPortalSite#CARD_STATUS",
+				status = "Expired",
+				value1 = "Expired");
+		}
 	}
 
-	@description = "LPS-144485 - Verify there if status Future shows up."
-	@ignore = "true"
+	@description = "Automation ID: LPS-144485 | Test Summary: Verify there if status Future shows up"
 	@priority = "2"
 	test IfFutureStatusShowsUp {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account Commerce");
+		}
+		
+		task ("Assert the Future status on the card") {
+			Click(
+				cardName = "Production",
+				locator1 = "CustomerPortalSite#CARD_NAME");
 
-		Click(
-			cardName = "Production",
-			locator1 = "CustomerPortalSite#CARD_NAME");
+			AssertTextEquals(
+				locator1 = "CustomerPortalSite#TABLE_HEAD",
+				title = "Status",
+				value1 = "Status");
 
-		AssertTextEquals(
-			locator1 = "CustomerPortalSite#TABLE_HEAD",
-			title = "Status",
-			value1 = "Status");
-
-		AssertTextEquals(
-			locator1 = "CustomerPortalSite#TABLE_STATUS",
-			status = "Future",
-			value1 = "Future");
-
-		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+			AssertTextEquals(
+				locator1 = "CustomerPortalSite#TABLE_STATUS",
+				status = "Future",
+				value1 = "Future");
+		}
+		
+		task ("Close the modal") {
+			CustomerPortal.clickOnTheCloseButton();
+		}
 	}
 
-	@description = "LPS-144452 - Check if when the user clicks out of the modal it closes."
+	@description = "Automation ID: LPS-144452 | Test Summary: Check if when the user clicks out of the modal it closes"
 	@priority = "3"
 	test ModalCloseIfClickedOut {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		Click(
-			cardName = "Production",
-			locator1 = "CustomerPortalSite#CARD_NAME");
+		task ("Open the modal and assert that it is being displayed") {
+			Click(
+				cardName = "Production",
+				locator1 = "CustomerPortalSite#CARD_NAME");
 
-		AssertElementPresent(
-			locator1 = "CustomerPortalSite#MODAL_TITLE",
-			modalTitle = "DXP Cloud");
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#MODAL_TITLE",
+				modalTitle = "LXC-SM");
+		}
+		
+		task ("Assert that the modal has closed") {
+			KeyPress(
+				locator1 = "//body",
+				value1 = "\ESCAPE");
 
-		KeyPress(
-			locator1 = "//body",
-			value1 = "\ESCAPE");
-
-		AssertElementNotPresent(locator1 = "CustomerPortalSite#MODAL");
+			AssertElementNotPresent(locator1 = "CustomerPortalSite#MODAL");
+		}
 	}
 
-	@description = "LPS-144464 - Verify that the Provisioned column appears for Commerce."
+	@description = "Automation ID: LPS-144464 | Test Summary: Verify that the Provisioned column appears for Commerce"
 	@priority = "3"
 	test ProvisionedColumnAppearsForCommerce {
-		SetWindowSize(value1 = "1920,1080");
+		task ("Width desktop") {
+			SetWindowSize(value1 = "1920,1080");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 04");
+			CustomerPortal.enterOnProject(title = "Test Account Commerce");
+		}
 
-		Click(
-			cardName = "Developer Tools",
-			locator1 = "CustomerPortalSite#CARD_NAME");
+		task ("Open the modal and assert the Provisioned column for Coomerce") {
+			Click(
+				cardName = "Developer Tools",
+				locator1 = "CustomerPortalSite#CARD_NAME");
 
-		AssertElementPresent(
-			locator1 = "CustomerPortalSite#TABLE_HEAD",
-			title = "Provisioned",
-			value1 = "Provisioned");
-
-		KeyPress(
-			locator1 = "//body",
-			value1 = "\ESCAPE");
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#TABLE_HEAD",
+				title = "Provisioned",
+				value1 = "Provisioned");
+		}
+		
+		task ("Close the modal") {
+			CustomerPortal.clickOnTheCloseButton();
+		}
 	}
 
-	@description = "LPS-144466 - Verify that the Provisioned column appears for DXP."
+	@description = "Automation ID: LPS-144466 | Test Summary: Verify that the Provisioned column appears for DXP."
 	@priority = "3"
 	test ProvisionedColumnAppearsForDXP {
-		SetWindowSize(value1 = "1920,1080");
+		task ("Width desktop") {
+			SetWindowSize(value1 = "1920,1080");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 02");
+			CustomerPortal.enterOnProject(title = "Test Account DXP");
+		}
 
-		Click(
-			locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
-			value = "DXP");
+		task ("Open the modal and assert the Provisioned column for DXP") {
+			Click(
+				cardName = "Production",
+				locator1 = "CustomerPortalSite#CARD_NAME");
 
-		Click(
-			cardName = "Production",
-			locator1 = "CustomerPortalSite#CARD_NAME");
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#TABLE_HEAD",
+				title = "Provisioned",
+				value1 = "Provisioned");
+		}
 
-		AssertElementPresent(
-			locator1 = "CustomerPortalSite#TABLE_HEAD",
-			title = "Provisioned",
-			value1 = "Provisioned");
-
-		KeyPress(
-			locator1 = "//body",
-			value1 = "\ESCAPE");
+		task ("Close the modal") {
+			CustomerPortal.clickOnTheCloseButton();
+		}
 	}
 
-	@description = "LPS-144470 - Verify that the Provisioned column does not appear for DXP Cloud"
+	@description = "Automation ID: LPS-144470 | Test Summary: Verify that the Provisioned column does not appear for DXP Cloud"
 	@priority = "3"
 	test ProvisionedColumnAppearsForDXPCloud {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		Click(
-			cardName = "Production",
-			locator1 = "CustomerPortalSite#CARD_NAME");
+		task ("Open modal and assert that the Provisioned column is not displayed for LXC-SM") {
+			Click(
+				cardName = "Production",
+				locator1 = "CustomerPortalSite#CARD_NAME");
 
-		AssertElementNotPresent(
-			locator1 = "CustomerPortalSite#TABLE_HEAD",
-			title = "Provisioned",
-			value1 = "Provisioned");
+			AssertElementNotPresent(
+				locator1 = "CustomerPortalSite#TABLE_HEAD",
+				title = "Provisioned",
+				value1 = "Provisioned");
+		}
 
-		KeyPress(
-			locator1 = "//body",
-			value1 = "\ESCAPE");
+		task ("Close the modal") {
+			CustomerPortal.clickOnTheCloseButton();
+		}
 	}
 
-	@description = "LPS-144454 - Verify there is value under the Start - End Date column."
-	@ignore = "true"
+	@description = "Automation ID: LPS-144454 | Test Summary: Verify there is value under the Start - End Date column"
 	@priority = "4"
 	test ValueUnderColumnFields {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
-		Click(
-			cardName = "Production",
-			locator1 = "CustomerPortalSite#CARD_NAME");
+		task ("Open the modal and assert the start and end dates of the subscription") {
+			Click(
+				cardName = "Production",
+				locator1 = "CustomerPortalSite#CARD_NAME");
 
-		CustomerPortal.viewTableValue();
-
-		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+			CustomerPortal.viewTableValue();
+		}
+		
+		task ("Close the modal") {
+			CustomerPortal.clickOnTheCloseButton();
+		}
 	}
 
 }

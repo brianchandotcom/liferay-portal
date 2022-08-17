@@ -19,6 +19,23 @@ definition {
 		Click(locator1 = "Button#SAVE");
 	}
 
+	macro addCPObject {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		ObjectPortlet.selectObject(label = "${title}");
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Content & Data");
+
+		CustomerPortal.checkToggleHideWidget();
+
+		CreateObject.saveObject();
+	}
+
 	macro addCustomerPortalSite {
 		Site.openSitesAdmin();
 
@@ -67,10 +84,6 @@ definition {
 		else if (isSet(idpAttributeMapping)) {
 			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMapping}");
 		}
-	}
-
-	macro clickOnFinishActivationButton {
-		Click(locator1 = "CustomerPortalSite#FINISH_ACTIVATION");
 	}
 
 	macro assertQuickLinksPanelInfo {
@@ -136,12 +149,12 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
-	macro clickOnTheCloseButton {
-		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
-	}
-
 	macro clickOnCancelButton {
 		Click(locator1 = "CustomerPortalSite#CANCEL_BUTTON");
+	}
+
+	macro clickOnFinishActivationButton {
+		Click(locator1 = "CustomerPortalSite#FINISH_ACTIVATION");
 	}
 
 	macro clickOnSkipForNowButton {
@@ -150,6 +163,10 @@ definition {
 
 	macro clickOnStartProjectSetup {
 		Click(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
+	}
+
+	macro clickOnTheCloseButton {
+		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
 	}
 
 	macro createCPSiteObjects {
@@ -258,6 +275,19 @@ definition {
 				key_product = "${productTab}",
 				locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
 				value = "${product}");
+		}
+	}
+
+	macro onboardingFlow {
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		if (isSet(cloudEnvironment)) {
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+		}
+		else {
+			CustomerPortal.clickOnSkipForNowButton();
 		}
 	}
 
@@ -583,40 +613,4 @@ definition {
 		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
 	}
 
-	macro waitCP20PageToLoad {
-		WaitForVisible(
-			key_userFirstName = "${userFirstName}",
-			locator1 = "CustomerPortalSite#WELCOME_PAGE_USER_NAME");
-	}
-
-	macro onboardingFlow {
-		CustomerPortal.clickOnStartProjectSetup();
-
-		CustomerPortal.clickOnSkipForNowButton();
-
-		if (isSet(cloudEnvironment)) {
-			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
-		}
-		
-		else {
-			CustomerPortal.clickOnSkipForNowButton();
-		}
-	}
-
-	macro addCPObject {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
-
-		ObjectPortlet.selectObject(label = "${title}");
-
-		CreateObject.checkToggleActive();
-
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Content & Data");
-
-		CustomerPortal.checkToggleHideWidget();
-
-		CreateObject.saveObject();
-	}
 }

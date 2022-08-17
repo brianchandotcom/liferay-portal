@@ -44,9 +44,9 @@
 			"name": "Test Account Analytics Cloud",
 			"partner": false,
 			"region": "India",
-			"slaExpired": "Gold Subscription",
 			"slaCurrentEndDate": "2022-08-24 00:00:00.0",
 			"slaCurrentStartDate": "2021-08-24 00:00:00.0",
+			"slaExpired": "Gold Subscription",
 			"slaFuture": ""
 		},
 		{
@@ -87,9 +87,9 @@
 			"name": "Test Account Portal",
 			"partner": false,
 			"region": "India",
-			"slaFuture": "Gold Subscription",
 			"slaCurrentEndDate": "2022-08-24 00:00:00.0",
-			"slaCurrentStartDate": "2021-08-24 00:00:00.0"
+			"slaCurrentStartDate": "2021-08-24 00:00:00.0",
+			"slaFuture": "Gold Subscription"
 		},
 		{
 			"accountKey": "ERC-007",

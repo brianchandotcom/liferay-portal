@@ -4,9 +4,9 @@ definition {
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
-	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -31,7 +31,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
@@ -59,13 +58,13 @@ definition {
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
-		
+
 		task ("Assert if the Active status reflects the dates") {
 			AssertElementPresent(
 				date = "03/31/2021 - 03/30/2022",
 				locator1 = "CustomerPortalSite#CARD_DATE",
 				status = "Active");
-		 }
+		}
 	}
 
 	@description = "Automation ID: LPS-147025 | Test Summary: Verify if the Expired status reflects the dates displayed"
@@ -125,16 +124,16 @@ definition {
 	@description = "Automation ID: LPS-147034 | Test Summary: Verify if when the project has up to 3 options in the tabs for subscription management, the tabs are listed side by side"
 	@priority = "4"
 	test LessThan5TabsAreSideBySide {
-		task ("Width desktop") {
+		task ("Given I set up the width of window desktop") {
 			SetWindowSize(value1 = "1920,1080");
 		}
-		
+
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 			CustomerPortal.enterOnProject(title = "Test Account Commerce");
 		}
-		
+
 		task ("Assert that the signatures are being displayed in the tab") {
 			CustomerPortal.viewSubscriptionManagementTab(productTab = "LXC-SM,Commerce,Enterprise Search");
 		}
@@ -143,7 +142,7 @@ definition {
 	@description = "Automation ID: LPS-147022 | Test Summary: Verify if when the user doesn't have a subscription then a tab will not be shown"
 	@priority = "4"
 	test TabDontAppearWithoutSubscription {
-		task ("Width desktop") {
+		task ("Given I set up the width of window desktop") {
 			SetWindowSize(value1 = "1920,1080");
 		}
 
@@ -161,7 +160,7 @@ definition {
 	@description = "Automation ID: LPS-147035 | Test Summary: Verify if when a project has at least 5 options in the tabs for subscription management, the tab list turns into a dropdown list"
 	@priority = "4"
 	test Tabs5OrMoreBecamesDropdownList {
-		task ("Width desktop") {
+		task ("Given I set up the width of window desktop") {
 			SetWindowSize(value1 = "1920,1080");
 		}
 
@@ -170,7 +169,7 @@ definition {
 
 			CustomerPortal.enterOnProject(title = "Test Account Others");
 		}
-		
+
 		task ("Assert the drop-down list") {
 			CustomerPortal.viewSubscriptionManagementList(productList = "LXC-SM,DXP,Analytics Cloud,Commerce,Enterprise Search,Portal,Partnership");
 		}

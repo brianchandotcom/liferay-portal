@@ -4,9 +4,9 @@ definition {
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
-	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -31,7 +31,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
@@ -55,7 +54,7 @@ definition {
 				locator1 = "CustomerPortalSite#MODAL_TITLE",
 				modalTitle = "Non-Production");
 		}
-		
+
 		task ("Close the modal") {
 			CustomerPortal.clickOnTheCloseButton();
 		}
@@ -117,7 +116,7 @@ definition {
 
 			CustomerPortal.enterOnProject(title = "Test Account Commerce");
 		}
-		
+
 		task ("Assert the Future status on the card") {
 			Click(
 				cardName = "Production",
@@ -133,7 +132,7 @@ definition {
 				status = "Future",
 				value1 = "Future");
 		}
-		
+
 		task ("Close the modal") {
 			CustomerPortal.clickOnTheCloseButton();
 		}
@@ -157,7 +156,7 @@ definition {
 				locator1 = "CustomerPortalSite#MODAL_TITLE",
 				modalTitle = "LXC-SM");
 		}
-		
+
 		task ("Assert that the modal has closed") {
 			KeyPress(
 				locator1 = "//body",
@@ -190,7 +189,7 @@ definition {
 				title = "Provisioned",
 				value1 = "Provisioned");
 		}
-		
+
 		task ("Close the modal") {
 			CustomerPortal.clickOnTheCloseButton();
 		}
@@ -264,7 +263,7 @@ definition {
 
 			CustomerPortal.viewTableValue();
 		}
-		
+
 		task ("Close the modal") {
 			CustomerPortal.clickOnTheCloseButton();
 		}

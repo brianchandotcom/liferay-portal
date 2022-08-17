@@ -4,9 +4,9 @@ definition {
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
-	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -35,7 +35,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
@@ -69,12 +68,12 @@ definition {
 				rowEmail = "0-mail.com",
 				rowRole = "User");
 		}
-		
+
 		task ("Assert the error message") {
 			AssertTextEquals(
 				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
 				value1 = "Please insert a valid e-mail.");
-		}	
+		}
 	}
 
 	@description = "Automation ID: LPS-144958 | Test Summary: Verify if when a Project has reached or is reaching the limit, the admin roles should be disabled in drop down"
@@ -98,7 +97,7 @@ definition {
 
 		task ("Start the project configuration and invite a user to the project") {
 			CustomerPortal.clickOnStartProjectSetup();
-		
+
 			CP2TeamMembers.addFieldsTeamMembersExtra(
 				addMembers = "true",
 				position = "0",
@@ -230,7 +229,7 @@ definition {
 		task ("Activate the Partner role via Koroneiki") {
 			CP2TeamMembers.activePartnersRole();
 		}
-		
+
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -261,7 +260,7 @@ definition {
 				locator1 = "CP2TeamMembers#ROLE_SELECT",
 				value1 = "Partner Manager");
 		}
-		
+
 		task ("Deactivate the Partner role via Koroneiki") {
 			CustomerPortal.deactivateKoroneikiAccount();
 		}
@@ -287,7 +286,7 @@ definition {
 				accountRoleTitle = "Partner Member",
 				accountUserName = "Test Test");
 		}
-		
+
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
@@ -303,9 +302,8 @@ definition {
 				key_rowNumber = "0",
 				locator1 = "CP2TeamMembers#ROLE_SELECT",
 				value1 = "Partner Member");
-
 		}
-		
+
 		task ("Deactivate the Partner role via Koroneiki") {
 			CustomerPortal.deactivateKoroneikiAccount();
 		}
@@ -378,7 +376,7 @@ definition {
 				rowEmail = "test",
 				rowRole = "User");
 		}
-		
+
 		task ("Assert that the Send Invitation button is disabled") {
 			AssertElementPresent(locator1 = "CP2TeamMembers#SEND_INVITATIONS_DISABLED");
 		}
@@ -423,7 +421,7 @@ definition {
 
 			CP2TeamMembers.clickTeamMembersSendInvitation();
 		}
-		
+
 		task ("Assert that the invitations were sent") {
 			Alert.viewSuccessMessage();
 		}

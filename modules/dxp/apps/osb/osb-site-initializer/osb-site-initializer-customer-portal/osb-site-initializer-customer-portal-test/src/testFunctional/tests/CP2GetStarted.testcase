@@ -4,9 +4,9 @@ definition {
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
-	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -31,7 +31,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
@@ -68,7 +67,6 @@ definition {
 			CustomerPortal.clickOnSkipForNowButton();
 		}
 
-		
 		task ("Go back to Homepage and join a project again") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
@@ -78,7 +76,7 @@ definition {
 		task ("Assert the Overview page") {
 			CustomerPortal.viewSubcriptionsPage();
 		}
-		
+
 		task ("Delete the entries and objects created") {
 			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
 
@@ -126,8 +124,7 @@ definition {
 		task ("Assert that the Get Start button appears") {
 			CustomerPortal.viewStartProjectSetupButton();
 		}
-		
-		
+
 		task ("Delete the entries and objects created") {
 			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
 
@@ -161,7 +158,7 @@ definition {
 		task ("Assert the Get Start modal") {
 			CustomerPortal.viewGetStartedModal();
 		}
-		
+
 		task ("Delete the entries and objects created") {
 			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
 
@@ -213,7 +210,7 @@ definition {
 		task ("Go to CP2.0") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 		}
-		
+
 		task ("Assert the list of projects on the homepage") {
 			CustomerPortal.viewAllProjectsTitlePage();
 		}

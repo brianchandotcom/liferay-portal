@@ -4,9 +4,9 @@ definition {
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
-	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -35,7 +35,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
@@ -81,7 +80,7 @@ definition {
 		task ("Create and activate object for disaster data center region") {
 			CP2DXPCloudSetup.activeDisasterRecoveryDataCenter();
 		}
-		
+
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -91,7 +90,7 @@ definition {
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
-		
+
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
@@ -129,7 +128,7 @@ definition {
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
-		
+
 		task ("Going through onboarding to Setup") {
 			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
 		}
@@ -157,11 +156,11 @@ definition {
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
-		
+
 		task ("Going through onboarding to Setup") {
 			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
 		}
-		
+
 		task ("Assert that the submit button is enabled") {
 			AssertElementPresent(locator1 = "CustomerPortalSite#SUBMIT_BUTTON");
 		}
@@ -205,7 +204,7 @@ definition {
 		task ("Creating objects for the DXP Cloud ") {
 			CP2DXPCloudSetup.createDXPCloudObjects();
 		}
-		
+
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -312,7 +311,7 @@ definition {
 			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 				label = "email",
 				value = "");
-			
+
 			Select(
 				locator1 = "CP2DXPCloudSetup#SELECT_DATA_CENTER_REGION",
 				value1 = "Iowa, USA");
@@ -577,7 +576,7 @@ definition {
 
 			CustomerPortal.clickOnSkipForNowButton();
 		}
-	
+
 		task ("Go to the product activation page and open the card activation modal") {
 			CP2NavigationMenu.goToProductActivation();
 
@@ -585,7 +584,7 @@ definition {
 
 			CustomerPortal.clickOnFinishActivationButton();
 		}
-		
+
 		task ("Assert the project name and version") {
 			AssertTextEquals(
 				key_name = "Test Account 01",
@@ -640,7 +639,7 @@ definition {
 		task ("Creating objects for the DXP Cloud ") {
 			CP2DXPCloudSetup.createDXPCloudObjects();
 		}
-		
+
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 

@@ -4,9 +4,9 @@ definition {
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
-	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -31,7 +31,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
@@ -63,11 +62,11 @@ definition {
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
-		
+
 		task ("Going through onboarding") {
 			CustomerPortal.onboardingFlow();
 		}
-		
+
 		task ("Go to the product activation page, fill out the form and submit it") {
 			CP2NavigationMenu.goToProductActivation();
 
@@ -83,13 +82,13 @@ definition {
 		task ("Change the activation card status to Active") {
 			CP2DXPCloudSetup.activeStatus();
 		}
-		
+
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
-		
+
 		task ("Assert that the activation card link has changed") {
 			CP2NavigationMenu.goToProductActivation();
 
@@ -119,6 +118,26 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-146843 | Test Summary: Verify that the Activation Form Card - DXP Cloud displays (Product logo - Subscription - Start Date - End Date - Page Subtitleis/Not Activated)"
+	@priority = "4"
+	test AssertTheCardDetails {
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
+
+		task ("Go to the product activation page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "LXC-SM");
+		}
+
+		task ("View card details") {
+			CP2DXPCloudSetup.viewActivationStatusCardValue();
+		}
+	}
+
 	@description = "Automation ID: LPS-146852 | Test Summary: Verify if when the status is 'In Progress' the page subtitle: 'Your DXP Cloud environments are being set up and will be available soon' appears"
 	@priority = "4"
 	test CanViewCaptionWhenTheStatusIsInProgress {
@@ -129,7 +148,7 @@ definition {
 
 			CustomerPortal.showCPObject(title = "Account Subscription Group");
 		}
-		
+
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -191,31 +210,11 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "LXC-SM");
 		}
-		
+
 		task ("Assert that the Finish Activation link is not present on the card") {
 			AssertElementNotPresent(
 				locator1 = "CustomerPortalSite#FINISH_ACTIVATION",
 				value1 = "Finish Activation");
-		}
-	}
-
-	@description = "Automation ID: LPS-146843 | Test Summary: Verify that the Activation Form Card - DXP Cloud displays (Product logo - Subscription - Start Date - End Date - Page Subtitleis/Not Activated)"
-	@priority = "4"
-	test AssertTheCardDetails {
-		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
-		}
-
-		task ("Go to the product activation page") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "LXC-SM");
-		}
-
-		task ("View card details") {
-			CP2DXPCloudSetup.viewActivationStatusCardValue();
 		}
 	}
 
@@ -239,11 +238,11 @@ definition {
 				locator1 = "CustomerPortalSite#FINISH_ACTIVATION",
 				value1 = "Finish Activation");
 		}
-		
+
 		task ("Create objects for CP2.0") {
 			CustomerPortal.showCPObject(title = "Account Flag");
 		}
-		
+
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -275,7 +274,7 @@ definition {
 				locator1 = "CustomerPortalSiteFINISH_ACTIVATION",
 				value1 = "Finish Activation");
 		}
-		
+
 		task ("Delete the entries and objects created") {
 			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
 

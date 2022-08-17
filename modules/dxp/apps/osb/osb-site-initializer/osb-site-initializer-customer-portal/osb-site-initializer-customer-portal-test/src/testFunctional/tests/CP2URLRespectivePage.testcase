@@ -4,9 +4,9 @@ definition {
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
-	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -31,7 +31,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
@@ -45,7 +44,7 @@ definition {
 
 			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-003/activation/analytics-cloud");
 		}
-		
+
 		task ("Assert that the URL displays the page of the Analytics Cloud product") {
 			AssertElementPresent(
 				locator1 = "CP2NavigationMenu#PRODUCT",
@@ -61,7 +60,7 @@ definition {
 
 			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-004/activation/commerce");
 		}
-		
+
 		task ("Assert that the URL displays the page of the Commerce product") {
 			AssertElementPresent(
 				locator1 = "CP2NavigationMenu#PRODUCT",
@@ -77,7 +76,7 @@ definition {
 
 			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-001/activation/lxc-sm");
 		}
-		
+
 		task ("Assert that the URL displays the page of the LXC-SM product") {
 			AssertElementPresent(
 				locator1 = "CP2NavigationMenu#PRODUCT",
@@ -92,15 +91,13 @@ definition {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-002/activation/dxp");
-
 		}
-		
+
 		task ("Assert that the URL displays the page of the DXP product") {
 			AssertElementPresent(
 				locator1 = "CP2NavigationMenu#PRODUCT",
 				product = "DXP");
 		}
-		
 	}
 
 	@description = "Automation ID: LPS-148481 | Test Summary: Verify if when the user choose the Riyad Bank - Corporate Website and clicks on the Enterprise Search product the url follow the respective page"
@@ -111,7 +108,7 @@ definition {
 
 			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-005/activation/enterprise-search");
 		}
-		
+
 		task ("Assert that the URL displays the page of the Enterprise Search product") {
 			AssertElementPresent(
 				locator1 = "CP2NavigationMenu#PRODUCT",
@@ -127,7 +124,7 @@ definition {
 
 			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-013/activation/partnership");
 		}
-		
+
 		task ("Assert that the URL displays the page of the Partnership product") {
 			AssertElementPresent(
 				locator1 = "CP2NavigationMenu#PRODUCT",
@@ -143,7 +140,7 @@ definition {
 
 			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-006/activation/portal");
 		}
-		
+
 		task ("Assert that the URL displays the page of the Portal product") {
 			AssertElementPresent(
 				locator1 = "CP2NavigationMenu#PRODUCT",
@@ -159,13 +156,13 @@ definition {
 
 			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-002/activation/dxp");
 		}
-		
+
 		task ("Assert that the URL displays the page of the DXP product") {
 			AssertElementPresent(
 				locator1 = "CP2NavigationMenu#PRODUCT",
 				product = "DXP");
 		}
-		
+
 		task ("Navigate to the homepage and assert that the URL displays the homepage") {
 			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site");
 

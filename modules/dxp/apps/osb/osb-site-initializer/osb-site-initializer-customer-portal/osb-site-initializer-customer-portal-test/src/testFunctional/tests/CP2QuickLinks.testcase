@@ -4,9 +4,9 @@ definition {
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
-	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -31,7 +31,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
@@ -116,7 +115,7 @@ definition {
 		}
 
 		task ("Assert that the Activate Analytics Cloud card is no longer present") {
-			AssertElementNotPresent(	
+			AssertElementNotPresent(
 				locator1 = "CP2NavigationMenu#QUICK_LINKS",
 				title = "Activate Analytics Cloud");
 		}
@@ -126,7 +125,6 @@ definition {
 
 			CustomerPortal.deleteCPObject(title = "Account Subscription Group");
 		}
-		
 	}
 
 	@description = "Automation ID: LPS-144932 | Test Summary: Verify if 'Activate Analytics Cloud' appears in Quick Links panel when Analytics Cloud is Not Active"
@@ -139,13 +137,13 @@ definition {
 				status = "Expired",
 				title = "Test Account Analytics Cloud");
 		}
-		
+
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
 		}
-		
+
 		task ("Assert the Activate Analytics Cloud card") {
 			CustomerPortal.assertQuickLinksPanelInfo(title = "Activate Analytics Cloud");
 		}
@@ -159,13 +157,13 @@ definition {
 
 			CustomerPortal.enterOnProject(title = "Test Account DXP");
 		}
-		
+
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 		}
-		
+
 		task ("Assert the Environment Details card") {
 			CustomerPortal.assertQuickLinksPanelInfo(title = "Environment Details");
 		}
@@ -199,13 +197,13 @@ definition {
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
-		
+
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = "LXC-SM");
 		}
-		
+
 		task ("Assert the Latest Fix Packs card") {
 			CustomerPortal.assertQuickLinksPanelInfo(title = "Latest Fix Packs");
 		}
@@ -237,7 +235,7 @@ definition {
 		task ("Check that subscriptions are present") {
 			CustomerPortal.viewSubscriptionManagementTab(productTab = "LXC-SM,Commerce");
 		}
-		
+
 		task ("Assert that the desired card appears in the panel") {
 			CustomerPortal.assertQuickLinksPanelInfo(title = "Environment Details");
 		}
@@ -253,11 +251,11 @@ definition {
 				status = "Expired",
 				title = "Test Account Analytics Cloud");
 		}
-		
+
 		task ("Check that the following subscriptions are not part of the project") {
 			CustomerPortal.notViewProduct(productTab = "DXP,DXP Cloud");
 		}
-		
+
 		task ("Assert that the card is not present in the panel") {
 			CustomerPortal.cannotAppearsQuickLinksPanelInfo(title = "Source Code Access");
 		}
@@ -289,11 +287,11 @@ definition {
 
 			CustomerPortal.enterOnProject(title = "Test Account Enterprise Search");
 		}
-		
+
 		task ("Assert the SLA card") {
 			CustomerPortal.assertSlaCard(type = "Limited");
 		}
-		
+
 		task ("Assert that the card is not present in the panel") {
 			CustomerPortal.cannotAppearsQuickLinksPanelInfo(title = "Large File Attachments");
 		}
@@ -395,7 +393,7 @@ definition {
 		task ("Go to the Team Members page") {
 			CP2NavigationMenu.goToTeamMembers();
 		}
-		
+
 		task ("Assert that the card is not present in the panel") {
 			CustomerPortal.cannotAppearsQuickLinksPanelInfo(title = "Quick Links");
 		}
@@ -415,7 +413,7 @@ definition {
 
 			CP2NavigationMenu.clickOnShowButton();
 		}
-		
+
 		task ("Assert that the desired card appears in the panel") {
 			CustomerPortal.assertQuickLinksPanelInfo(title = "Quick Links");
 		}

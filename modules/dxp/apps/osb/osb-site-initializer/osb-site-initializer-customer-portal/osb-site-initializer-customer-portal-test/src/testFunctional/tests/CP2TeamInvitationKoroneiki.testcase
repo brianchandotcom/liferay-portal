@@ -6,6 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -27,47 +28,63 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		CustomerPortal.customerPortalTearDown();
 
-		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-		PortalInstances.tearDownCP();
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
 	}
 
-	@description = "LPS-148181 - Verify if when the user types a email at Invite Your Team Members the same email appears at Accounts - Details - Project that you are testing"
+	@description = "Automation ID: LPS-148181 | Test Summary: Verify if when the user types a email at Invite Your Team Members the same email appears at Accounts - Details - Project that you are testing"
 	@priority = "5"
 	test IfInvitedIsSeenOnAccountRoles {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Start the project configuration and invite a user to the project") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CP2TeamMembers.addFieldsTeamMembersExtra(
-			position = "0",
-			positionNumber = "0",
-			rowEmail = "test01@liferay.com",
-			rowRole = "User");
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				position = "0",
+				positionNumber = "0",
+				rowEmail = "test01@liferay.com",
+				rowRole = "User");
 
-		CP2TeamMembers.clickTeamMembersSendInvitation();
+			CP2TeamMembers.clickTeamMembersSendInvitation();
+		}
+		
+		task ("Go to admin accounts") {
+			Accounts.openAccountsAdmin();
 
-		Accounts.openAccountsAdmin();
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
-
-		Navigator.gotoNavTab(navTab = "Users");
-
-		AssertElementPresent(
-			email = "test01@liferay.com",
-			locator1 = "CP2TeamMembers#ACCOUNT_USER_NAME");
+			Navigator.gotoNavTab(navTab = "Users");
+		}
+		
+		task ("Assert that the guest user is being shown") {
+			AssertElementPresent(
+				email = "test01@liferay.com",
+				locator1 = "CP2TeamMembers#ACCOUNT_USER_NAME");
+		}
 	}
 
 }

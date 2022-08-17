@@ -177,6 +177,51 @@ this-is-a-language-key=This is a language key''',
 				value1 = "0 Results for &quot;newkey&quot;");
 		}
 	}
+		
+	@description = "This test ensures that the exported properties file works and can be imported to portal"
+	@priority = "4"
+	test CanImportExportedPropertiesFile {
+		task ("Given a properties file for overridden translations was already exported") {
+			LanguageOverride.addLanguageKey(
+				languageKey = "hello-world",
+				translationOverrideList = "en-US",
+				translationOverrideValueList = "Hello world");
+
+			LanguageOverride.exportOverriddenTranslations();
+
+			var originalFileDownloadName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
+
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "unzip-temp-file -DfileName=${originalFileDownloadName}");
+		}
+
+		task ("and the overridden translation is removed from portal") {
+			LanguageOverride.openLanguageOverridePortlet();
+
+			ManagementBar.setFilterAndOrder(filterBy = "Any Language");
+
+			LanguageOverride.removeAllTranslationOverrides(languageKey = "hello-world");
+		}
+
+		task ("When a user imports the same property file") {
+			Portlet.gotoPortletOptions(portletOption = "Import Translations");
+
+			UploadTempFile.uploadTempFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "Language_en_US.properties");
+
+			Button.clickSave();
+		}
+
+		task ("Then the translation is imported successfully") {
+			Search.searchCP(searchTerm = "hello-world");
+
+			AssertElementPresent(
+				key_languageKey = "hello-world",
+				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY");
+		}
+	}
 
 	@description = "This test asserts that translation is imported based on the language selected in the Import Translations page."
 	@priority = "5"

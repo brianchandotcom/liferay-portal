@@ -247,11 +247,10 @@ public class InputTag extends IncludeTag {
 					getClassPK());
 
 			if (isLocalizable()) {
-				return HtmlUtil.escapeURL(
-					mainFriendlyURLEntry.getUrlTitleMapAsXML());
+				return mainFriendlyURLEntry.getUrlTitleMapAsXML();
 			}
 
-			return HtmlUtil.escapeURL(mainFriendlyURLEntry.getUrlTitle());
+			return mainFriendlyURLEntry.getUrlTitle();
 		}
 		catch (NoSuchFriendlyURLEntryMappingException
 					noSuchFriendlyURLEntryMappingException) {

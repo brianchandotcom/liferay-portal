@@ -248,6 +248,9 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(25, 0, 1),
 			UpgradeProcessFactory.alterColumnType(
 				"Role_", "description", "TEXT null"));
+
+		upgradeVersionTreeMap.put(
+			new Version(25, 1, 0), new CTModelUpgradeProcess("EmailAddress"));
 	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.mail.kernel.service;
 
+import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.Filter;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
@@ -79,6 +80,10 @@ public class MailServiceUtil {
 
 	public static Session getSession() {
 		return getService().getSession();
+	}
+
+	public static Session getSession(Account account) {
+		return getService().getSession(account);
 	}
 
 	public static void sendEmail(MailMessage mailMessage) {

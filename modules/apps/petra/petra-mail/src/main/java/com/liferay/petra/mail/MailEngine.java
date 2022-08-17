@@ -43,7 +43,6 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -76,20 +75,6 @@ import javax.mail.internet.MimeMultipart;
  * @see    com.liferay.util.mail.MailEngine
  */
 public class MailEngine {
-
-	public static Session getSession(Account account) {
-		Session session = Session.getInstance(_getProperties(account));
-
-		if (_log.isDebugEnabled()) {
-			session.setDebug(true);
-
-			Properties sessionProperties = session.getProperties();
-
-			sessionProperties.list(System.out);
-		}
-
-		return session;
-	}
 
 	public static void send(
 			InternetAddress from, InternetAddress[] to, InternetAddress[] cc,
@@ -337,38 +322,6 @@ public class MailEngine {
 		}
 
 		return ArrayUtil.subset(addresses, start, end);
-	}
-
-	private static Properties _getProperties(Account account) {
-		Properties properties = new Properties();
-
-		String protocol = account.getProtocol();
-
-		properties.setProperty("mail.transport.protocol", protocol);
-		properties.setProperty("mail." + protocol + ".host", account.getHost());
-		properties.setProperty(
-			"mail." + protocol + ".port", String.valueOf(account.getPort()));
-
-		if (account.isRequiresAuthentication()) {
-			properties.setProperty("mail." + protocol + ".auth", "true");
-			properties.setProperty(
-				"mail." + protocol + ".user", account.getUser());
-			properties.setProperty(
-				"mail." + protocol + ".password", account.getPassword());
-		}
-
-		if (account.isSecure()) {
-			properties.setProperty(
-				"mail." + protocol + ".socketFactory.class",
-				"javax.net.ssl.SSLSocketFactory");
-			properties.setProperty(
-				"mail." + protocol + ".socketFactory.fallback", "false");
-			properties.setProperty(
-				"mail." + protocol + ".socketFactory.port",
-				String.valueOf(account.getPort()));
-		}
-
-		return properties;
 	}
 
 	private static String _getSMTPProperty(Session session, String suffix) {

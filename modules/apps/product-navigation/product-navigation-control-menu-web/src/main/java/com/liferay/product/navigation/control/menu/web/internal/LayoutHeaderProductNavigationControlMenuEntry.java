@@ -81,9 +81,6 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Writer writer = httpServletResponse.getWriter();
 
-		String headerTitle = HtmlUtil.escapeAttribute(
-			_getHeaderTitle(httpServletRequest));
-
 		StringBundler sb = new StringBundler(17);
 
 		sb.append("<li class=\"");
@@ -92,7 +89,12 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		sb.append("control-menu-level-1-heading d-flex mr-1\" ");
 		sb.append("data-qa-id=\"headerTitle\"><span class=\"");
 		sb.append("lfr-portal-tooltip text-truncate\" title=\"");
+
+		String headerTitle = HtmlUtil.escapeAttribute(
+			_getHeaderTitle(httpServletRequest));
+
 		sb.append(headerTitle);
+
 		sb.append("\">");
 		sb.append(headerTitle);
 		sb.append("</span>");

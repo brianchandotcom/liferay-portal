@@ -71,6 +71,33 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-140258. TC-1: Assert that sessionId is not present in the audit log context."
+	@priority = "2"
+	test AssertSessionIdIsNotPresentInAuditLogContext {
+		property portal.acceptance = "ture";
+		property test.name.skip.portal.instance = "Audit#AssertSessionIdIsNotPresentInAuditLogContext";
+
+		task ("Given: Enable log context and Incoming X-Request-ID") {
+			Audit.gotoSystemSettings(portlet = "Audit Log Context");
+
+			Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_ENABLED_BUTTON");
+
+			Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_USE_X-REQUEST-ID");
+
+			PortletEntry.save();
+		}
+
+		task ("When: Trigger audit log") {
+			User.logoutPG();
+
+			Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
+		}
+
+		task ("Then: Assert that sessionId is not present in the audit log context") {
+			AssertConsoleTextNotPresent(value1 = "AuditLogContext.sessionId");
+		}
+	}
+
 	@description = "LPS-133646 and LPS-133653 TC-3: Verify that Console outputs the same X-Request-ID as inputted X-Request-ID."
 	@priority = "5"
 	test AssertValidXRequestId {

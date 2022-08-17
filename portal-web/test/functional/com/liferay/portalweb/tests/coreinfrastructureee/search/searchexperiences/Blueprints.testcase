@@ -439,6 +439,29 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	@description = "This is a use case for LPS-151209."
+	test AssertBlueprintsPreviewResultsPresentWithSkippedElement {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Boost Proximity");
+
+		Type(
+			elementName = "Boost Proximity",
+			fieldLabel = "Field",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "accountEntryId");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		Alert.viewWarningSpecific(key_warningMessage = "Element skippedInvalid element instance at: 0");
+
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "Test Test");
+	}
+
 	test AssertBlueprintStillAppliedAfterRename {
 		JSONWebcontent.addWebContent(
 			content = "apple apple apple",

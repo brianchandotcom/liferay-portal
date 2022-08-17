@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -82,10 +83,10 @@ public class KaleoInstanceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.fetchUser(serviceContext.getUserId());
+		User user = _userLocalService.fetchUser(serviceContext.getUserId());
 
 		if (user == null) {
-			user = userLocalService.getDefaultUser(
+			user = _userLocalService.getDefaultUser(
 				serviceContext.getCompanyId());
 		}
 
@@ -663,5 +664,8 @@ public class KaleoInstanceLocalServiceImpl
 
 	@Reference
 	private Staging _staging;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

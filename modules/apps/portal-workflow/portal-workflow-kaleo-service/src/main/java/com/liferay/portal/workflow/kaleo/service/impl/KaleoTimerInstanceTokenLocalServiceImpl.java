@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
 import com.liferay.portal.workflow.kaleo.definition.DurationScale;
@@ -40,6 +41,8 @@ import com.liferay.portal.workflow.kaleo.runtime.constants.KaleoRuntimeDestinati
 import com.liferay.portal.workflow.kaleo.runtime.util.SchedulerUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoTimerInstanceTokenLocalServiceBaseImpl;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceTokenPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerPersistence;
 
 import java.io.Serializable;
 
@@ -71,11 +74,12 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		User user = _userLocalService.getUser(
+			serviceContext.getGuestOrUserId());
 		KaleoInstanceToken kaleoInstanceToken =
-			kaleoInstanceTokenPersistence.findByPrimaryKey(
+			_kaleoInstanceTokenPersistence.findByPrimaryKey(
 				kaleoInstanceTokenId);
-		KaleoTimer kaleoTimer = kaleoTimerPersistence.findByPrimaryKey(
+		KaleoTimer kaleoTimer = _kaleoTimerPersistence.findByPrimaryKey(
 			kaleoTimerId);
 		Date date = new Date();
 
@@ -342,6 +346,12 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 	private DueDateCalculator _dueDateCalculator;
 
 	@Reference
+	private KaleoInstanceTokenPersistence _kaleoInstanceTokenPersistence;
+
+	@Reference
+	private KaleoTimerPersistence _kaleoTimerPersistence;
+
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference
@@ -349,5 +359,8 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 
 	@Reference
 	private TriggerFactory _triggerFactory;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

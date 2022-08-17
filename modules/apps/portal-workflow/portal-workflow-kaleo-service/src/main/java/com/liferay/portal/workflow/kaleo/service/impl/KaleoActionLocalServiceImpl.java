@@ -18,6 +18,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.workflow.kaleo.definition.Action;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
@@ -28,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -46,7 +48,8 @@ public class KaleoActionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		User user = _userLocalService.getUser(
+			serviceContext.getGuestOrUserId());
 		Date date = new Date();
 
 		long kaleoActionId = counterLocalService.increment();
@@ -112,5 +115,8 @@ public class KaleoActionLocalServiceImpl
 		return kaleoActionPersistence.findByC_KCN_KCPK_ET(
 			companyId, kaleoClassName, kaleoClassPK, executionType);
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

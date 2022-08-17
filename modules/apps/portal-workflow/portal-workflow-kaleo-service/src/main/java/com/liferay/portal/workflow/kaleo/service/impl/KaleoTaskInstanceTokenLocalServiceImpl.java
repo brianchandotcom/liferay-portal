@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -54,6 +55,9 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLoca
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskFormInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoTaskInstanceTokenLocalServiceBaseImpl;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceTokenPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskFormInstancePersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskFormPersistence;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenQuery;
 
 import java.io.Serializable;
@@ -92,10 +96,11 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		throws PortalException {
 
 		KaleoInstanceToken kaleoInstanceToken =
-			kaleoInstanceTokenPersistence.findByPrimaryKey(
+			_kaleoInstanceTokenPersistence.findByPrimaryKey(
 				kaleoInstanceTokenId);
 
-		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		User user = _userLocalService.getUser(
+			serviceContext.getGuestOrUserId());
 		Date date = new Date();
 
 		long kaleoTaskInstanceTokenId = counterLocalService.increment();
@@ -547,11 +552,11 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 			kaleoTaskInstanceTokenPersistence.findByPrimaryKey(
 				kaleoTaskInstanceTokenId);
 
-		int kaleoTaskFormsCount = kaleoTaskFormPersistence.countByKaleoTaskId(
+		int kaleoTaskFormsCount = _kaleoTaskFormPersistence.countByKaleoTaskId(
 			kaleoTaskInstanceToken.getKaleoTaskId());
 
 		int kaleoTaskFormInstancesCount =
-			kaleoTaskFormInstancePersistence.countByKaleoTaskInstanceTokenId(
+			_kaleoTaskFormInstancePersistence.countByKaleoTaskInstanceTokenId(
 				kaleoTaskInstanceTokenId);
 
 		if (kaleoTaskFormsCount > kaleoTaskFormInstancesCount) {
@@ -1091,6 +1096,9 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		).build();
 
 	@Reference
+	private KaleoInstanceTokenPersistence _kaleoInstanceTokenPersistence;
+
+	@Reference
 	private KaleoTaskAssignmentInstanceLocalService
 		_kaleoTaskAssignmentInstanceLocalService;
 
@@ -1099,10 +1107,19 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		_kaleoTaskFormInstanceLocalService;
 
 	@Reference
+	private KaleoTaskFormInstancePersistence _kaleoTaskFormInstancePersistence;
+
+	@Reference
+	private KaleoTaskFormPersistence _kaleoTaskFormPersistence;
+
+	@Reference
 	private KaleoTimerInstanceTokenLocalService
 		_kaleoTimerInstanceTokenLocalService;
 
 	@Reference
 	private Staging _staging;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

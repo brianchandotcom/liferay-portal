@@ -18,6 +18,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.workflow.kaleo.definition.Action;
 import com.liferay.portal.workflow.kaleo.definition.Assignment;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
@@ -55,7 +56,8 @@ public class KaleoTimerLocalServiceImpl extends KaleoTimerLocalServiceBaseImpl {
 
 		// Kaleo timer
 
-		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		User user = _userLocalService.getUser(
+			serviceContext.getGuestOrUserId());
 		Date date = new Date();
 
 		long kaleoTimerId = counterLocalService.increment();
@@ -154,5 +156,8 @@ public class KaleoTimerLocalServiceImpl extends KaleoTimerLocalServiceBaseImpl {
 
 	@Reference
 	private KaleoTaskAssignmentLocalService _kaleoTaskAssignmentLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

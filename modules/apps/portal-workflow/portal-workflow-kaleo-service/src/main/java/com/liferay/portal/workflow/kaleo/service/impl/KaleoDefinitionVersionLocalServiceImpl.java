@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -74,7 +75,8 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 		Date createDate = serviceContext.getCreateDate(new Date());
 		Date modifiedDate = serviceContext.getModifiedDate(new Date());
-		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		User user = _userLocalService.getUser(
+			serviceContext.getGuestOrUserId());
 
 		long kaleoDefinitionVersionId = counterLocalService.increment();
 
@@ -430,5 +432,8 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 	@Reference
 	private Staging _staging;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

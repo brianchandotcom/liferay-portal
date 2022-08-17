@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.BaseMapBuilder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -68,6 +69,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -582,7 +584,8 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		User user = _userLocalService.getUser(
+			serviceContext.getGuestOrUserId());
 		Date date = new Date();
 
 		long kaleoLogId = counterLocalService.increment();
@@ -746,5 +749,8 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		).put(
 			Field.MODIFIED_DATE, Sort.LONG_TYPE
 		).build();
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

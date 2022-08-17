@@ -18,6 +18,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.workflow.kaleo.definition.Condition;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
@@ -26,6 +27,7 @@ import com.liferay.portal.workflow.kaleo.service.base.KaleoConditionLocalService
 import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -45,7 +47,8 @@ public class KaleoConditionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		User user = _userLocalService.getUser(
+			serviceContext.getGuestOrUserId());
 		Date date = new Date();
 
 		long kaleoConditionId = counterLocalService.increment();
@@ -92,5 +95,8 @@ public class KaleoConditionLocalServiceImpl
 
 		return kaleoConditionPersistence.findByKaleoNodeId(kaleoNodeId);
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

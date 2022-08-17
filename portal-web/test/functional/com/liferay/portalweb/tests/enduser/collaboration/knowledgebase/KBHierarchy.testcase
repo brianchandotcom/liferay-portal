@@ -33,57 +33,6 @@ definition {
 
 	@priority = "3"
 	@refactorneeded
-	test ViewKBArticleGitHubSourceURL {
-		property test.name.skip.portal.instance = "KBUsecase#ViewKBArticleGitHubSourceURL";
-
-		Navigator.openURL();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Knowledge Base",
-			configurationName = "Service",
-			configurationScope = "Site Scope");
-
-		FormFields.enableCheckbox(fieldName = "sourceURLEnabled");
-
-		SystemSettings.saveConfiguration();
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleSourceURL = "http://www.google.com",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBArticle.viewSourceURLCP(
-			kbArticleSourceURL = "http://www.google.com",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "KB Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "KB Page",
-			widgetName = "Knowledge Base Display");
-
-		Navigator.gotoPage(pageName = "KB Page");
-
-		KBArticle.viewKBDisplayPG(
-			history = "true",
-			print = "true",
-			sourceURL = "true",
-			subscribe = "true");
-	}
-
-	@priority = "3"
-	@refactorneeded
 	test ViewKBArticleNoHierarchyInFolder {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

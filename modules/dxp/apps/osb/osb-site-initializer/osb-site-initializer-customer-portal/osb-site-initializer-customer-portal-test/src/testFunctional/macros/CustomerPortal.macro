@@ -69,10 +69,8 @@ definition {
 		}
 	}
 
-	macro assertPageTitle {
-		AssertElementPresent(
-			key_title = "${title}",
-			locator1 = "CustomerPortalSite#PAGE_TITLE");
+	macro clickOnFinishActivationButton {
+		Click(locator1 = "CustomerPortalSite#FINISH_ACTIVATION");
 	}
 
 	macro assertQuickLinksPanelInfo {
@@ -138,6 +136,10 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
+	macro clickOnTheCloseButton {
+		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+	}
+
 	macro clickOnCancelButton {
 		Click(locator1 = "CustomerPortalSite#CANCEL_BUTTON");
 	}
@@ -148,10 +150,6 @@ definition {
 
 	macro clickOnStartProjectSetup {
 		Click(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
-	}
-
-	macro clickOnSubmitButton {
-		Click(locator1 = "CP2DXPCloudSetup#SUBMIT_BUTTON");
 	}
 
 	macro createCPSiteObjects {
@@ -519,7 +517,7 @@ definition {
 
 	macro viewObjectInfo {
 		Click(
-			key_index = "4",
+			key_index = "${index}",
 			key_text = "",
 			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
@@ -596,6 +594,29 @@ definition {
 
 		CustomerPortal.clickOnSkipForNowButton();
 
-		CustomerPortal.clickOnSkipForNowButton();
+		if (isSet(cloudEnvironment)) {
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+		}
+		
+		else {
+			CustomerPortal.clickOnSkipForNowButton();
+		}
+	}
+
+	macro addCPObject {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		ObjectPortlet.selectObject(label = "${title}");
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Content & Data");
+
+		CustomerPortal.checkToggleHideWidget();
+
+		CreateObject.saveObject();
 	}
 }

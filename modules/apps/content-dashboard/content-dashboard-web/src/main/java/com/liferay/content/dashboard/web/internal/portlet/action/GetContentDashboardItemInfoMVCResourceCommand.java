@@ -388,7 +388,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		stream.sorted(
-			Comparator.comparing(entry -> entry.getKey())
+			Map.Entry.comparingByKey()
 		).forEach(
 			entry -> jsonObject.put(
 				entry.getKey(),

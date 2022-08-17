@@ -1221,8 +1221,6 @@ definition {
 		}
 
 		task ("Delete the global fragment collection") {
-			Navigator.gotoNavNested(navNested = "Global Collection Name");
-
 			Collection.deleteCollection(collectionName = "Global Collection Name");
 
 			Collection.viewNotPresent(collectionName = "Global Collection Name");

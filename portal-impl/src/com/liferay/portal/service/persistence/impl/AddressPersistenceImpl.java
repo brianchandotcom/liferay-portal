@@ -4270,25 +4270,25 @@ public class AddressPersistenceImpl
 	private FinderPath _finderPathWithPaginationCountByC_C_C_T;
 
 	/**
-	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeId the type ID
+	 * @param listTypeId the list type ID
 	 * @return the matching addresses
 	 */
 	@Override
 	public List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long typeId) {
+		long companyId, long classNameId, long classPK, long listTypeId) {
 
 		return findByC_C_C_T(
-			companyId, classNameId, classPK, typeId, QueryUtil.ALL_POS,
+			companyId, classNameId, classPK, listTypeId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
@@ -4297,22 +4297,22 @@ public class AddressPersistenceImpl
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeId the type ID
+	 * @param listTypeId the list type ID
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @return the range of matching addresses
 	 */
 	@Override
 	public List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long typeId, int start,
-		int end) {
+		long companyId, long classNameId, long classPK, long listTypeId,
+		int start, int end) {
 
 		return findByC_C_C_T(
-			companyId, classNameId, classPK, typeId, start, end, null);
+			companyId, classNameId, classPK, listTypeId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
@@ -4321,7 +4321,7 @@ public class AddressPersistenceImpl
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeId the type ID
+	 * @param listTypeId the list type ID
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -4329,16 +4329,16 @@ public class AddressPersistenceImpl
 	 */
 	@Override
 	public List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long typeId, int start,
-		int end, OrderByComparator<Address> orderByComparator) {
+		long companyId, long classNameId, long classPK, long listTypeId,
+		int start, int end, OrderByComparator<Address> orderByComparator) {
 
 		return findByC_C_C_T(
-			companyId, classNameId, classPK, typeId, start, end,
+			companyId, classNameId, classPK, listTypeId, start, end,
 			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
@@ -4347,7 +4347,7 @@ public class AddressPersistenceImpl
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeId the type ID
+	 * @param listTypeId the list type ID
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -4356,8 +4356,8 @@ public class AddressPersistenceImpl
 	 */
 	@Override
 	public List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long typeId, int start,
-		int end, OrderByComparator<Address> orderByComparator,
+		long companyId, long classNameId, long classPK, long listTypeId,
+		int start, int end, OrderByComparator<Address> orderByComparator,
 		boolean useFinderCache) {
 
 		FinderPath finderPath = null;
@@ -4369,14 +4369,14 @@ public class AddressPersistenceImpl
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_C_C_T;
 				finderArgs = new Object[] {
-					companyId, classNameId, classPK, typeId
+					companyId, classNameId, classPK, listTypeId
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_C_C_T;
 			finderArgs = new Object[] {
-				companyId, classNameId, classPK, typeId, start, end,
+				companyId, classNameId, classPK, listTypeId, start, end,
 				orderByComparator
 			};
 		}
@@ -4392,7 +4392,7 @@ public class AddressPersistenceImpl
 					if ((companyId != address.getCompanyId()) ||
 						(classNameId != address.getClassNameId()) ||
 						(classPK != address.getClassPK()) ||
-						(typeId != address.getTypeId())) {
+						(listTypeId != address.getListTypeId())) {
 
 						list = null;
 
@@ -4421,7 +4421,7 @@ public class AddressPersistenceImpl
 
 			sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_TYPEID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_T_LISTTYPEID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -4448,7 +4448,7 @@ public class AddressPersistenceImpl
 
 				queryPos.add(classPK);
 
-				queryPos.add(typeId);
+				queryPos.add(listTypeId);
 
 				list = (List<Address>)QueryUtil.list(
 					query, getDialect(), start, end);
@@ -4471,24 +4471,24 @@ public class AddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeId the type ID
+	 * @param listTypeId the list type ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching address
 	 * @throws NoSuchAddressException if a matching address could not be found
 	 */
 	@Override
 	public Address findByC_C_C_T_First(
-			long companyId, long classNameId, long classPK, long typeId,
+			long companyId, long classNameId, long classPK, long listTypeId,
 			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 
 		Address address = fetchByC_C_C_T_First(
-			companyId, classNameId, classPK, typeId, orderByComparator);
+			companyId, classNameId, classPK, listTypeId, orderByComparator);
 
 		if (address != null) {
 			return address;
@@ -4507,8 +4507,8 @@ public class AddressPersistenceImpl
 		sb.append(", classPK=");
 		sb.append(classPK);
 
-		sb.append(", typeId=");
-		sb.append(typeId);
+		sb.append(", listTypeId=");
+		sb.append(listTypeId);
 
 		sb.append("}");
 
@@ -4516,98 +4516,22 @@ public class AddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeId the type ID
+	 * @param listTypeId the list type ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching address, or <code>null</code> if a matching address could not be found
 	 */
 	@Override
 	public Address fetchByC_C_C_T_First(
-		long companyId, long classNameId, long classPK, long typeId,
+		long companyId, long classNameId, long classPK, long listTypeId,
 		OrderByComparator<Address> orderByComparator) {
 
 		List<Address> list = findByC_C_C_T(
-			companyId, classNameId, classPK, typeId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	@Override
-	public Address findByC_C_C_T_Last(
-			long companyId, long classNameId, long classPK, long typeId,
-			OrderByComparator<Address> orderByComparator)
-		throws NoSuchAddressException {
-
-		Address address = fetchByC_C_C_T_Last(
-			companyId, classNameId, classPK, typeId, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", typeId=");
-		sb.append(typeId);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Override
-	public Address fetchByC_C_C_T_Last(
-		long companyId, long classNameId, long classPK, long typeId,
-		OrderByComparator<Address> orderByComparator) {
-
-		int count = countByC_C_C_T(companyId, classNameId, classPK, typeId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Address> list = findByC_C_C_T(
-			companyId, classNameId, classPK, typeId, count - 1, count,
+			companyId, classNameId, classPK, listTypeId, 0, 1,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4618,13 +4542,90 @@ public class AddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param listTypeId the list type ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching address
+	 * @throws NoSuchAddressException if a matching address could not be found
+	 */
+	@Override
+	public Address findByC_C_C_T_Last(
+			long companyId, long classNameId, long classPK, long listTypeId,
+			OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
+
+		Address address = fetchByC_C_C_T_Last(
+			companyId, classNameId, classPK, listTypeId, orderByComparator);
+
+		if (address != null) {
+			return address;
+		}
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+
+		sb.append(", classPK=");
+		sb.append(classPK);
+
+		sb.append(", listTypeId=");
+		sb.append(listTypeId);
+
+		sb.append("}");
+
+		throw new NoSuchAddressException(sb.toString());
+	}
+
+	/**
+	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param listTypeId the list type ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching address, or <code>null</code> if a matching address could not be found
+	 */
+	@Override
+	public Address fetchByC_C_C_T_Last(
+		long companyId, long classNameId, long classPK, long listTypeId,
+		OrderByComparator<Address> orderByComparator) {
+
+		int count = countByC_C_C_T(companyId, classNameId, classPK, listTypeId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Address> list = findByC_C_C_T(
+			companyId, classNameId, classPK, listTypeId, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
 	 *
 	 * @param addressId the primary key of the current address
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeId the type ID
+	 * @param listTypeId the list type ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next address
 	 * @throws NoSuchAddressException if a address with the primary key could not be found
@@ -4632,7 +4633,7 @@ public class AddressPersistenceImpl
 	@Override
 	public Address[] findByC_C_C_T_PrevAndNext(
 			long addressId, long companyId, long classNameId, long classPK,
-			long typeId, OrderByComparator<Address> orderByComparator)
+			long listTypeId, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 
 		Address address = findByPrimaryKey(addressId);
@@ -4645,13 +4646,13 @@ public class AddressPersistenceImpl
 			Address[] array = new AddressImpl[3];
 
 			array[0] = getByC_C_C_T_PrevAndNext(
-				session, address, companyId, classNameId, classPK, typeId,
+				session, address, companyId, classNameId, classPK, listTypeId,
 				orderByComparator, true);
 
 			array[1] = address;
 
 			array[2] = getByC_C_C_T_PrevAndNext(
-				session, address, companyId, classNameId, classPK, typeId,
+				session, address, companyId, classNameId, classPK, listTypeId,
 				orderByComparator, false);
 
 			return array;
@@ -4666,8 +4667,8 @@ public class AddressPersistenceImpl
 
 	protected Address getByC_C_C_T_PrevAndNext(
 		Session session, Address address, long companyId, long classNameId,
-		long classPK, long typeId, OrderByComparator<Address> orderByComparator,
-		boolean previous) {
+		long classPK, long listTypeId,
+		OrderByComparator<Address> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
 
@@ -4688,7 +4689,7 @@ public class AddressPersistenceImpl
 
 		sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
 
-		sb.append(_FINDER_COLUMN_C_C_C_T_TYPEID_2);
+		sb.append(_FINDER_COLUMN_C_C_C_T_LISTTYPEID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -4765,7 +4766,7 @@ public class AddressPersistenceImpl
 
 		queryPos.add(classPK);
 
-		queryPos.add(typeId);
+		queryPos.add(listTypeId);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
@@ -4786,7 +4787,7 @@ public class AddressPersistenceImpl
 	}
 
 	/**
-	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = any &#63;.
+	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
@@ -4795,20 +4796,20 @@ public class AddressPersistenceImpl
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeIds the type IDs
+	 * @param listTypeIds the list type IDs
 	 * @return the matching addresses
 	 */
 	@Override
 	public List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long[] typeIds) {
+		long companyId, long classNameId, long classPK, long[] listTypeIds) {
 
 		return findByC_C_C_T(
-			companyId, classNameId, classPK, typeIds, QueryUtil.ALL_POS,
+			companyId, classNameId, classPK, listTypeIds, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = any &#63;.
+	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
@@ -4817,22 +4818,22 @@ public class AddressPersistenceImpl
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeIds the type IDs
+	 * @param listTypeIds the list type IDs
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @return the range of matching addresses
 	 */
 	@Override
 	public List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long[] typeIds,
+		long companyId, long classNameId, long classPK, long[] listTypeIds,
 		int start, int end) {
 
 		return findByC_C_C_T(
-			companyId, classNameId, classPK, typeIds, start, end, null);
+			companyId, classNameId, classPK, listTypeIds, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = any &#63;.
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
@@ -4841,7 +4842,7 @@ public class AddressPersistenceImpl
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeIds the type IDs
+	 * @param listTypeIds the list type IDs
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -4849,16 +4850,16 @@ public class AddressPersistenceImpl
 	 */
 	@Override
 	public List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long[] typeIds,
+		long companyId, long classNameId, long classPK, long[] listTypeIds,
 		int start, int end, OrderByComparator<Address> orderByComparator) {
 
 		return findByC_C_C_T(
-			companyId, classNameId, classPK, typeIds, start, end,
+			companyId, classNameId, classPK, listTypeIds, start, end,
 			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;, optionally using the finder cache.
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
@@ -4867,7 +4868,7 @@ public class AddressPersistenceImpl
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeIds the type IDs
+	 * @param listTypeIds the list type IDs
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -4876,20 +4877,20 @@ public class AddressPersistenceImpl
 	 */
 	@Override
 	public List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long[] typeIds,
+		long companyId, long classNameId, long classPK, long[] listTypeIds,
 		int start, int end, OrderByComparator<Address> orderByComparator,
 		boolean useFinderCache) {
 
-		if (typeIds == null) {
-			typeIds = new long[0];
+		if (listTypeIds == null) {
+			listTypeIds = new long[0];
 		}
-		else if (typeIds.length > 1) {
-			typeIds = ArrayUtil.sortedUnique(typeIds);
+		else if (listTypeIds.length > 1) {
+			listTypeIds = ArrayUtil.sortedUnique(listTypeIds);
 		}
 
-		if (typeIds.length == 1) {
+		if (listTypeIds.length == 1) {
 			return findByC_C_C_T(
-				companyId, classNameId, classPK, typeIds[0], start, end,
+				companyId, classNameId, classPK, listTypeIds[0], start, end,
 				orderByComparator);
 		}
 
@@ -4900,13 +4901,14 @@ public class AddressPersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					companyId, classNameId, classPK, StringUtil.merge(typeIds)
+					companyId, classNameId, classPK,
+					StringUtil.merge(listTypeIds)
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				companyId, classNameId, classPK, StringUtil.merge(typeIds),
+				companyId, classNameId, classPK, StringUtil.merge(listTypeIds),
 				start, end, orderByComparator
 			};
 		}
@@ -4922,7 +4924,8 @@ public class AddressPersistenceImpl
 					if ((companyId != address.getCompanyId()) ||
 						(classNameId != address.getClassNameId()) ||
 						(classPK != address.getClassPK()) ||
-						!ArrayUtil.contains(typeIds, address.getTypeId())) {
+						!ArrayUtil.contains(
+							listTypeIds, address.getListTypeId())) {
 
 						list = null;
 
@@ -4943,12 +4946,12 @@ public class AddressPersistenceImpl
 
 			sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
 
-			if (typeIds.length > 0) {
+			if (listTypeIds.length > 0) {
 				sb.append("(");
 
-				sb.append(_FINDER_COLUMN_C_C_C_T_TYPEID_7);
+				sb.append(_FINDER_COLUMN_C_C_C_T_LISTTYPEID_7);
 
-				sb.append(StringUtil.merge(typeIds));
+				sb.append(StringUtil.merge(listTypeIds));
 
 				sb.append(")");
 
@@ -5006,43 +5009,43 @@ public class AddressPersistenceImpl
 	}
 
 	/**
-	 * Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63; from the database.
+	 * Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeId the type ID
+	 * @param listTypeId the list type ID
 	 */
 	@Override
 	public void removeByC_C_C_T(
-		long companyId, long classNameId, long classPK, long typeId) {
+		long companyId, long classNameId, long classPK, long listTypeId) {
 
 		for (Address address :
 				findByC_C_C_T(
-					companyId, classNameId, classPK, typeId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
+					companyId, classNameId, classPK, listTypeId,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			remove(address);
 		}
 	}
 
 	/**
-	 * Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 * Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeId the type ID
+	 * @param listTypeId the list type ID
 	 * @return the number of matching addresses
 	 */
 	@Override
 	public int countByC_C_C_T(
-		long companyId, long classNameId, long classPK, long typeId) {
+		long companyId, long classNameId, long classPK, long listTypeId) {
 
 		FinderPath finderPath = _finderPathCountByC_C_C_T;
 
 		Object[] finderArgs = new Object[] {
-			companyId, classNameId, classPK, typeId
+			companyId, classNameId, classPK, listTypeId
 		};
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
@@ -5058,7 +5061,7 @@ public class AddressPersistenceImpl
 
 			sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
 
-			sb.append(_FINDER_COLUMN_C_C_C_T_TYPEID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_T_LISTTYPEID_2);
 
 			String sql = sb.toString();
 
@@ -5077,7 +5080,7 @@ public class AddressPersistenceImpl
 
 				queryPos.add(classPK);
 
-				queryPos.add(typeId);
+				queryPos.add(listTypeId);
 
 				count = (Long)query.uniqueResult();
 
@@ -5095,27 +5098,27 @@ public class AddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = any &#63;.
+	 * Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = any &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param typeIds the type IDs
+	 * @param listTypeIds the list type IDs
 	 * @return the number of matching addresses
 	 */
 	@Override
 	public int countByC_C_C_T(
-		long companyId, long classNameId, long classPK, long[] typeIds) {
+		long companyId, long classNameId, long classPK, long[] listTypeIds) {
 
-		if (typeIds == null) {
-			typeIds = new long[0];
+		if (listTypeIds == null) {
+			listTypeIds = new long[0];
 		}
-		else if (typeIds.length > 1) {
-			typeIds = ArrayUtil.sortedUnique(typeIds);
+		else if (listTypeIds.length > 1) {
+			listTypeIds = ArrayUtil.sortedUnique(listTypeIds);
 		}
 
 		Object[] finderArgs = new Object[] {
-			companyId, classNameId, classPK, StringUtil.merge(typeIds)
+			companyId, classNameId, classPK, StringUtil.merge(listTypeIds)
 		};
 
 		Long count = (Long)FinderCacheUtil.getResult(
@@ -5132,12 +5135,12 @@ public class AddressPersistenceImpl
 
 			sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
 
-			if (typeIds.length > 0) {
+			if (listTypeIds.length > 0) {
 				sb.append("(");
 
-				sb.append(_FINDER_COLUMN_C_C_C_T_TYPEID_7);
+				sb.append(_FINDER_COLUMN_C_C_C_T_LISTTYPEID_7);
 
-				sb.append(StringUtil.merge(typeIds));
+				sb.append(StringUtil.merge(listTypeIds));
 
 				sb.append(")");
 
@@ -5189,11 +5192,11 @@ public class AddressPersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_C_T_CLASSPK_2 =
 		"address.classPK = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_C_C_T_TYPEID_2 =
-		"address.typeId = ?";
+	private static final String _FINDER_COLUMN_C_C_C_T_LISTTYPEID_2 =
+		"address.listTypeId = ?";
 
-	private static final String _FINDER_COLUMN_C_C_C_T_TYPEID_7 =
-		"address.typeId IN (";
+	private static final String _FINDER_COLUMN_C_C_C_T_LISTTYPEID_7 =
+		"address.listTypeId IN (";
 
 	private FinderPath _finderPathWithPaginationFindByC_C_C_M;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_C_M;
@@ -7424,7 +7427,7 @@ public class AddressPersistenceImpl
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			},
-			new String[] {"companyId", "classNameId", "classPK", "typeId"},
+			new String[] {"companyId", "classNameId", "classPK", "listTypeId"},
 			true);
 
 		_finderPathWithoutPaginationFindByC_C_C_T = new FinderPath(
@@ -7433,7 +7436,7 @@ public class AddressPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"companyId", "classNameId", "classPK", "typeId"},
+			new String[] {"companyId", "classNameId", "classPK", "listTypeId"},
 			true);
 
 		_finderPathCountByC_C_C_T = new FinderPath(
@@ -7442,7 +7445,7 @@ public class AddressPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"companyId", "classNameId", "classPK", "typeId"},
+			new String[] {"companyId", "classNameId", "classPK", "listTypeId"},
 			false);
 
 		_finderPathWithPaginationCountByC_C_C_T = new FinderPath(
@@ -7451,7 +7454,7 @@ public class AddressPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"companyId", "classNameId", "classPK", "typeId"},
+			new String[] {"companyId", "classNameId", "classPK", "listTypeId"},
 			false);
 
 		_finderPathWithPaginationFindByC_C_C_M = new FinderPath(

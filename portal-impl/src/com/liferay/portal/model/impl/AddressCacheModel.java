@@ -102,10 +102,10 @@ public class AddressCacheModel
 		sb.append(classPK);
 		sb.append(", countryId=");
 		sb.append(countryId);
+		sb.append(", listTypeId=");
+		sb.append(listTypeId);
 		sb.append(", regionId=");
 		sb.append(regionId);
-		sb.append(", typeId=");
-		sb.append(typeId);
 		sb.append(", city=");
 		sb.append(city);
 		sb.append(", description=");
@@ -185,8 +185,8 @@ public class AddressCacheModel
 		addressImpl.setClassNameId(classNameId);
 		addressImpl.setClassPK(classPK);
 		addressImpl.setCountryId(countryId);
+		addressImpl.setListTypeId(listTypeId);
 		addressImpl.setRegionId(regionId);
-		addressImpl.setTypeId(typeId);
 
 		if (city == null) {
 			addressImpl.setCity("");
@@ -278,9 +278,9 @@ public class AddressCacheModel
 
 		countryId = objectInput.readLong();
 
-		regionId = objectInput.readLong();
+		listTypeId = objectInput.readLong();
 
-		typeId = objectInput.readLong();
+		regionId = objectInput.readLong();
 		city = objectInput.readUTF();
 		description = objectInput.readUTF();
 
@@ -341,9 +341,9 @@ public class AddressCacheModel
 
 		objectOutput.writeLong(countryId);
 
-		objectOutput.writeLong(regionId);
+		objectOutput.writeLong(listTypeId);
 
-		objectOutput.writeLong(typeId);
+		objectOutput.writeLong(regionId);
 
 		if (city == null) {
 			objectOutput.writeUTF("");
@@ -419,8 +419,8 @@ public class AddressCacheModel
 	public long classNameId;
 	public long classPK;
 	public long countryId;
+	public long listTypeId;
 	public long regionId;
-	public long typeId;
 	public String city;
 	public String description;
 	public double latitude;

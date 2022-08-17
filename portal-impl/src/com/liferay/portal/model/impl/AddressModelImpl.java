@@ -81,7 +81,7 @@ public class AddressModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
 		{"classPK", Types.BIGINT}, {"countryId", Types.BIGINT},
-		{"regionId", Types.BIGINT}, {"typeId", Types.BIGINT},
+		{"listTypeId", Types.BIGINT}, {"regionId", Types.BIGINT},
 		{"city", Types.VARCHAR}, {"description", Types.VARCHAR},
 		{"latitude", Types.DOUBLE}, {"longitude", Types.DOUBLE},
 		{"mailing", Types.BOOLEAN}, {"name", Types.VARCHAR},
@@ -107,8 +107,8 @@ public class AddressModelImpl
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("listTypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("regionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("typeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("city", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("latitude", Types.DOUBLE);
@@ -125,7 +125,7 @@ public class AddressModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Address (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,addressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,countryId LONG,regionId LONG,typeId LONG,city VARCHAR(75) null,description STRING null,latitude DOUBLE,longitude DOUBLE,mailing BOOLEAN,name VARCHAR(255) null,primary_ BOOLEAN,street1 VARCHAR(255) null,street2 VARCHAR(255) null,street3 VARCHAR(255) null,validationDate DATE null,validationStatus INTEGER,zip VARCHAR(75) null)";
+		"create table Address (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,addressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,countryId LONG,listTypeId LONG,regionId LONG,city VARCHAR(75) null,description STRING null,latitude DOUBLE,longitude DOUBLE,mailing BOOLEAN,name VARCHAR(255) null,primary_ BOOLEAN,street1 VARCHAR(255) null,street2 VARCHAR(255) null,street3 VARCHAR(255) null,validationDate DATE null,validationStatus INTEGER,zip VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Address";
 
@@ -193,25 +193,25 @@ public class AddressModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MAILING_COLUMN_BITMASK = 32L;
+	public static final long LISTTYPEID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIMARY_COLUMN_BITMASK = 64L;
+	public static final long MAILING_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long REGIONID_COLUMN_BITMASK = 128L;
+	public static final long PRIMARY_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPEID_COLUMN_BITMASK = 256L;
+	public static final long REGIONID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -370,12 +370,12 @@ public class AddressModelImpl
 		attributeGetterFunctions.put("countryId", Address::getCountryId);
 		attributeSetterBiConsumers.put(
 			"countryId", (BiConsumer<Address, Long>)Address::setCountryId);
+		attributeGetterFunctions.put("listTypeId", Address::getListTypeId);
+		attributeSetterBiConsumers.put(
+			"listTypeId", (BiConsumer<Address, Long>)Address::setListTypeId);
 		attributeGetterFunctions.put("regionId", Address::getRegionId);
 		attributeSetterBiConsumers.put(
 			"regionId", (BiConsumer<Address, Long>)Address::setRegionId);
-		attributeGetterFunctions.put("typeId", Address::getTypeId);
-		attributeSetterBiConsumers.put(
-			"typeId", (BiConsumer<Address, Long>)Address::setTypeId);
 		attributeGetterFunctions.put("city", Address::getCity);
 		attributeSetterBiConsumers.put(
 			"city", (BiConsumer<Address, String>)Address::setCity);
@@ -732,6 +732,31 @@ public class AddressModelImpl
 
 	@JSON
 	@Override
+	public long getListTypeId() {
+		return _listTypeId;
+	}
+
+	@Override
+	public void setListTypeId(long listTypeId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_listTypeId = listTypeId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalListTypeId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("listTypeId"));
+	}
+
+	@JSON
+	@Override
 	public long getRegionId() {
 		return _regionId;
 	}
@@ -753,30 +778,6 @@ public class AddressModelImpl
 	public long getOriginalRegionId() {
 		return GetterUtil.getLong(
 			this.<Long>getColumnOriginalValue("regionId"));
-	}
-
-	@JSON
-	@Override
-	public long getTypeId() {
-		return _typeId;
-	}
-
-	@Override
-	public void setTypeId(long typeId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_typeId = typeId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalTypeId() {
-		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("typeId"));
 	}
 
 	@JSON
@@ -1116,8 +1117,8 @@ public class AddressModelImpl
 		addressImpl.setClassNameId(getClassNameId());
 		addressImpl.setClassPK(getClassPK());
 		addressImpl.setCountryId(getCountryId());
+		addressImpl.setListTypeId(getListTypeId());
 		addressImpl.setRegionId(getRegionId());
-		addressImpl.setTypeId(getTypeId());
 		addressImpl.setCity(getCity());
 		addressImpl.setDescription(getDescription());
 		addressImpl.setLatitude(getLatitude());
@@ -1162,8 +1163,9 @@ public class AddressModelImpl
 		addressImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
 		addressImpl.setCountryId(
 			this.<Long>getColumnOriginalValue("countryId"));
+		addressImpl.setListTypeId(
+			this.<Long>getColumnOriginalValue("listTypeId"));
 		addressImpl.setRegionId(this.<Long>getColumnOriginalValue("regionId"));
-		addressImpl.setTypeId(this.<Long>getColumnOriginalValue("typeId"));
 		addressImpl.setCity(this.<String>getColumnOriginalValue("city"));
 		addressImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
@@ -1316,9 +1318,9 @@ public class AddressModelImpl
 
 		addressCacheModel.countryId = getCountryId();
 
-		addressCacheModel.regionId = getRegionId();
+		addressCacheModel.listTypeId = getListTypeId();
 
-		addressCacheModel.typeId = getTypeId();
+		addressCacheModel.regionId = getRegionId();
 
 		addressCacheModel.city = getCity();
 
@@ -1500,8 +1502,8 @@ public class AddressModelImpl
 	private long _classNameId;
 	private long _classPK;
 	private long _countryId;
+	private long _listTypeId;
 	private long _regionId;
-	private long _typeId;
 	private String _city;
 	private String _description;
 	private double _latitude;
@@ -1558,8 +1560,8 @@ public class AddressModelImpl
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
 		_columnOriginalValues.put("countryId", _countryId);
+		_columnOriginalValues.put("listTypeId", _listTypeId);
 		_columnOriginalValues.put("regionId", _regionId);
-		_columnOriginalValues.put("typeId", _typeId);
 		_columnOriginalValues.put("city", _city);
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("latitude", _latitude);
@@ -1621,9 +1623,9 @@ public class AddressModelImpl
 
 		columnBitmasks.put("countryId", 2048L);
 
-		columnBitmasks.put("regionId", 4096L);
+		columnBitmasks.put("listTypeId", 4096L);
 
-		columnBitmasks.put("typeId", 8192L);
+		columnBitmasks.put("regionId", 8192L);
 
 		columnBitmasks.put("city", 16384L);
 

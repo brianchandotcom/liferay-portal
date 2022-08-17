@@ -490,8 +490,8 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="countryId" type="long" />
+		<field name="listTypeId" type="long" />
 		<field name="regionId" type="long" />
-		<field name="typeId" type="long" />
 		<field name="city" type="String" />
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />

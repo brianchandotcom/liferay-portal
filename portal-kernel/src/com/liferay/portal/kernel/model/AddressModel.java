@@ -272,6 +272,20 @@ public interface AddressModel
 	public void setCountryId(long countryId);
 
 	/**
+	 * Returns the list type ID of this address.
+	 *
+	 * @return the list type ID of this address
+	 */
+	public long getListTypeId();
+
+	/**
+	 * Sets the list type ID of this address.
+	 *
+	 * @param listTypeId the list type ID of this address
+	 */
+	public void setListTypeId(long listTypeId);
+
+	/**
 	 * Returns the region ID of this address.
 	 *
 	 * @return the region ID of this address
@@ -284,20 +298,6 @@ public interface AddressModel
 	 * @param regionId the region ID of this address
 	 */
 	public void setRegionId(long regionId);
-
-	/**
-	 * Returns the type ID of this address.
-	 *
-	 * @return the type ID of this address
-	 */
-	public long getTypeId();
-
-	/**
-	 * Sets the type ID of this address.
-	 *
-	 * @param typeId the type ID of this address
-	 */
-	public void setTypeId(long typeId);
 
 	/**
 	 * Returns the city of this address.

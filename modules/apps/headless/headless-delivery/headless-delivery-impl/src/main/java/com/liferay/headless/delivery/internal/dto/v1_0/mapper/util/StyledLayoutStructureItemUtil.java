@@ -63,7 +63,7 @@ public class StyledLayoutStructureItemUtil {
 			styledLayoutStructureItem.getCustomCSSViewports();
 
 		if ((customCSSViewportsMap == null) ||
-			(customCSSViewportsMap.size() == 0)) {
+			customCSSViewportsMap.isEmpty()) {
 
 			return null;
 		}

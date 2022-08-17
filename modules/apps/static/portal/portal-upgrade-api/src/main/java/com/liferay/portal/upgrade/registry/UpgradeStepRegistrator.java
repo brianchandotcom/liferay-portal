@@ -35,7 +35,8 @@ public interface UpgradeStepRegistrator {
 		public void registerInitialDeploymentUpgradeSteps(
 			UpgradeStep... upgradeSteps);
 
-		public void registerInitialization();
+		public default void registerInitialization() {
+		}
 
 	}
 

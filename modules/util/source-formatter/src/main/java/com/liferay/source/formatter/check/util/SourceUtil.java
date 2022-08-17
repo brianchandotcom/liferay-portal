@@ -218,67 +218,6 @@ public class SourceUtil {
 		}
 	}
 
-	public static String getTitleCase(
-		String s, boolean allowDash, String... exceptions) {
-
-		if (!allowDash) {
-			s = StringUtil.replace(s, CharPool.DASH, CharPool.SPACE);
-		}
-
-		String[] words = s.split("\\s+");
-
-		if (ArrayUtil.isEmpty(words)) {
-			return s;
-		}
-
-		StringBundler sb = new StringBundler(words.length * 2);
-
-		outerLoop:
-		for (int i = 0; i < words.length; i++) {
-			String word = words[i];
-
-			if (Validator.isNull(word)) {
-				continue;
-			}
-
-			for (String exception : exceptions) {
-				if (StringUtil.equalsIgnoreCase(exception, word)) {
-					sb.append(exception);
-					sb.append(CharPool.SPACE);
-
-					continue outerLoop;
-				}
-			}
-
-			if ((i != 0) && (i != words.length)) {
-				String lowerCaseWord = StringUtil.toLowerCase(word);
-
-				if (ArrayUtil.contains(_ARTICLES, lowerCaseWord) ||
-					ArrayUtil.contains(_CONJUNCTIONS, lowerCaseWord) ||
-					ArrayUtil.contains(_PREPOSITIONS, lowerCaseWord)) {
-
-					sb.append(lowerCaseWord);
-					sb.append(CharPool.SPACE);
-
-					continue;
-				}
-			}
-
-			if (Character.isUpperCase(word.charAt(0))) {
-				sb.append(word);
-			}
-			else {
-				sb.append(StringUtil.upperCaseFirstLetter(word));
-			}
-
-			sb.append(CharPool.SPACE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
-	}
-
 	public static boolean hasTypo(String s1, String s2) {
 		if (Validator.isNull(s1) || Validator.isNull(s2) || s1.equals(s2) ||
 			(s1.charAt(0) != s2.charAt(0)) ||
@@ -419,29 +358,6 @@ public class SourceUtil {
 
 		return annotations;
 	}
-
-	private static final String[] _ARTICLES = {"a", "an", "the"};
-
-	private static final String[] _CONJUNCTIONS = {
-		"and", "but", "for", "nor", "or", "yet"
-	};
-
-	private static final String[] _PREPOSITIONS = {
-		"a", "abaft", "aboard", "about", "above", "absent", "across", "afore",
-		"after", "against", "along", "alongside", "amid", "amidst", "among",
-		"amongst", "an", "apropos", "apud", "around", "as", "aside", "astride",
-		"at", "athwart", "atop", "barring", "before", "behind", "below",
-		"beneath", "beside", "besides", "between", "beyond", "but", "by",
-		"circa", "concerning", "despite", "down", "during", "except",
-		"excluding", "failing", "for", "from", "given", "in", "including",
-		"inside", "into", "lest", "mid", "midst", "modulo", "near", "next",
-		"notwithstanding", "of", "off", "on", "onto", "opposite", "out",
-		"outside", "over", "pace", "past", "per", "plus", "pro", "qua",
-		"regarding", "sans", "since", "through", "throughout", "thru",
-		"thruout", "till", "to", "toward", "towards", "under", "underneath",
-		"unlike", "until", "unto", "up", "upon", "v", "versus", "via", "vice",
-		"vs", "with", "within", "without", "worth"
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(SourceUtil.class);
 

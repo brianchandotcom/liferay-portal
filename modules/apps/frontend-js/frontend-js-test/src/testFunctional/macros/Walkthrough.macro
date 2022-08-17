@@ -2,8 +2,44 @@ definition {
 
 	macro enablePopoverMode {
 		if (IsElementNotPresent(locator1 = "Walkthrough#POPOVER")) {
-			Click(locator1 = "Walkthrough#HOTSPOT");
+			if (IsElementPresent(key_portletName = "JS Walkthrough Sample", locator1 = "Portlet#TITLE")) {
+				Click(locator1 = "Walkthrough#HOTSPOT");
+			}
+			else {
+				Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
+			}
 		}
+	}
+
+	macro enableWalkthrough {
+		var jsonSnippet = Walkthrough.getWalkthroughSteps(fileName = "${fileName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Walkthrough",
+			configurationName = "Walkthrough",
+			configurationScope = "Site Scope");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enable Walkthrough");
+
+		SystemSettings.editTextAreaSetting(
+			settingName = "Steps",
+			settingValue = "${jsonSnippet}");
+
+		SystemSettings.saveConfiguration();
+	}
+
+	macro getWalkthroughSteps {
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${fileName}");
+
+		var fileContent = FileUtil.read("${dependencyFilePath}");
+
+		return "${fileContent}";
 	}
 
 	macro goToNextStep {

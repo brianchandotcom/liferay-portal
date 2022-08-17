@@ -36,7 +36,7 @@ public class PageCommentsWebUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "2.0.0", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		UpgradeStep upgradePortletId = new BasePortletIdUpgradeProcess() {
 

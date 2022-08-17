@@ -32,7 +32,7 @@ public class AMWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.2", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		registry.register(
 			"1.0.0", "1.0.1",

@@ -87,6 +87,7 @@
 			]
 		}
 	},
+	"externalReferenceCode": "BOOST_PROXIMITY",
 	"title_i18n": {
 		"en_US": "Boost Proximity"
 	}

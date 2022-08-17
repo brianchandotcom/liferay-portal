@@ -27,6 +27,7 @@
 		"uiConfiguration": {
 		}
 	},
+	"externalReferenceCode": "LIMIT_SEARCH_TO_THE_CURRENT_SITE",
 	"title_i18n": {
 		"en_US": "Limit Search to the Current Site"
 	}

@@ -62,6 +62,7 @@
 			]
 		}
 	},
+	"externalReferenceCode": "PASTE_ANY_ELASTICSEARCH_QUERY",
 	"title_i18n": {
 		"en_US": "Paste Any Elasticsearch Query"
 	}

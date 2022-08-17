@@ -48,6 +48,7 @@
 			]
 		}
 	},
+	"externalReferenceCode": "LIMIT_SEARCH_TO_CONTENTS_CREATED_WITHIN_A_PERIOD_OF_TIME",
 	"title_i18n": {
 		"en_US": "Limit Search to Contents Created Within a Period of Time"
 	}

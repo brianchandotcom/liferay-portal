@@ -82,6 +82,7 @@
 			]
 		}
 	},
+	"externalReferenceCode": "SEARCH_WITH_QUERY_STRING_SYNTAX",
 	"title_i18n": {
 		"en_US": "Search with Query String Syntax"
 	}

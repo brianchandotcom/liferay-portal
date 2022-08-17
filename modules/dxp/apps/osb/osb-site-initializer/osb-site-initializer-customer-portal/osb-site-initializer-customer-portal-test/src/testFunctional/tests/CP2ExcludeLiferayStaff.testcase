@@ -6,6 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -27,13 +28,19 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		CustomerPortal.deleteCPObject(title = "Account Flag");
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-		PortalInstances.tearDownCP();
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
 	}
 
 	@description = "Automation ID: LPS-147791 | Test Summary: Verify if the Liferay Staff user can view a project for which he is not a member/worker/does not participate/does not have a role in it"
@@ -42,13 +49,13 @@ definition {
 		task ("Check how many projects are available in CP2.0") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.tableListInAccountsAdmin(projectsList = "Test Account 01,Test Account 02,Test Account 03,Test Account 04,Test Account 05,Test Account 06,Test Account 07,Test Account 08,Test Account 09,Test Account 10,Test Account 11");
+			CustomerPortal.tableListInAccountsAdmin(projectsList = "Test Account LXC-SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account QA 7.0,Test Account QA 7.1,Test Account QA 7.2,Test Account QA 7.3,Test Account QA 7.4");
 		}
 
 		task ("Navigate to the Customer Portal 2.0 and assert the number of projects displayed on the homepage") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.tableListInHomepage(projectList = "Test Account 01,Test Account 02,Test Account 03,Test Account 04,Test Account 05,Test Account 06,Test Account 07,Test Account 08,Test Account 09,Test Account 10,Test Account 11");
+			CustomerPortal.tableListInHomepage(projectList = "Test Account LXC-SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account QA 7.0,Test Account QA 7.1,Test Account QA 7.2,Test Account QA 7.3,Test Account QA 7.4");
 		}
 	}
 
@@ -58,7 +65,7 @@ definition {
 		task ("Navigate to Account Administrator and make the user an admin of the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -68,7 +75,7 @@ definition {
 		task ("Assert that when the user is Liferay Staff and administrator of the project has gone through onboarding") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 
 			AssertElementPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
 		}
@@ -94,7 +101,7 @@ definition {
 		task ("Assert that the Liferay Staff user has not gone through onboarding") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 
 			AssertElementNotPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
 		}

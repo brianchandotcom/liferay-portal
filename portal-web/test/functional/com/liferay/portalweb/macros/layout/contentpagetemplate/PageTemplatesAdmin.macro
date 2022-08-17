@@ -105,7 +105,7 @@ definition {
 
 	macro deletePageTemplate {
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			menuItem = "Delete",
+			item = "Delete",
 			pageTemplateName = "${pageTemplateName}");
 
 		AssertTextEquals(
@@ -145,7 +145,7 @@ definition {
 			key_card = "${pageTemplateName}",
 			locator1 = "Card#CARD_ELLIPSIS");
 
-		MenuItem.click(menuItem = "${menuItem}");
+		MenuItem.click(menuItem = "${item}");
 	}
 
 	macro importPageTemplatesFromTempFolder {
@@ -178,7 +178,7 @@ definition {
 
 	macro renamePageTemplate {
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			menuItem = "Rename",
+			item = "Rename",
 			pageTemplateName = "${pageTemplateName}");
 
 		PortletEntry.inputName(name = "${newPageTemplateName}");

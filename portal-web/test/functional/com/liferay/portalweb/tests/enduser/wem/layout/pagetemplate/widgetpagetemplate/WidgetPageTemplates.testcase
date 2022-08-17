@@ -465,7 +465,7 @@ definition {
 			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-				menuItem = "Edit",
+				item = "Edit",
 				pageTemplateName = "College Landing Page");
 
 			for (var portletName : list "Media Gallery,Web Content Display,Web Content Display,Web Content Display,Asset Publisher") {
@@ -477,7 +477,7 @@ definition {
 			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-				menuItem = "Edit",
+				item = "Edit",
 				pageTemplateName = "Department Landing Page");
 
 			for (var portletName : list "Media Gallery,Web Content Display,Web Content Display,Menu Display,Members,Asset Publisher") {

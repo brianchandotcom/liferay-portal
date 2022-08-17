@@ -1478,6 +1478,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for LPS-151013. Old Fragment resources are removed during import."
+	@priority = "4"
+	test ReImportFragmentCollectionWithDifferentFragmentResource {
+		task ("Given an imported fragment on content page") {
+			task ("Import a fragment collection") {
+				FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragments-objects.zip");
+			}
+
+			task ("Add the imported fragment to content page and publish") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Sample",
+					fragmentName = "Sample");
+
+				PageEditor.publish();
+			}
+
+			task ("View the image displayed on content page") {
+				AssertVisible(locator1 = "//img[contains(@src,'image-jpg')]");
+			}
+		}
+
+		task ("When import fragment collection again with different Fragment resource") {
+			task ("Import fragment collection again with different Fragment resource") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+				FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragments-plant.zip");
+			}
+		}
+
+		task ("Then the old frgment resource in content does not change") {
+			task ("View the image in fragment does not change on content page") {
+				ContentPagesNavigator.openViewContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				AssertVisible(locator1 = "//img[contains(@src,'image-jpg')]");
+			}
+		}
+	}
+
 	@description = "This is a testcase for LPS-96113. All fragments in dependencies should validate successfully."
 	@priority = "5"
 	@uitest

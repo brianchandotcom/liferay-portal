@@ -63,8 +63,6 @@ public class CommercePriceListChannelRelLocalServiceImpl
 
 		reindexCommercePriceList(commercePriceListId);
 
-		commercePriceListLocalService.cleanPriceListCache();
-
 		return commercePriceListChannelRel;
 	}
 
@@ -82,8 +80,6 @@ public class CommercePriceListChannelRelLocalServiceImpl
 
 		reindexCommercePriceList(
 			commercePriceListChannelRel.getCommercePriceListId());
-
-		commercePriceListLocalService.cleanPriceListCache();
 
 		return commercePriceListChannelRel;
 	}

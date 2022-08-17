@@ -203,6 +203,8 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		deleteDocument(
 			commercePriceList.getCompanyId(),
 			commercePriceList.getCommercePriceListId());
+
+		_commercePriceListLocalService.cleanPriceListCache();
 	}
 
 	@Override
@@ -325,6 +327,8 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		_indexWriterHelper.updateDocument(
 			getSearchEngineId(), commercePriceList.getCompanyId(),
 			getDocument(commercePriceList), isCommitImmediately());
+
+		_commercePriceListLocalService.cleanPriceListCache();
 	}
 
 	@Override
@@ -337,6 +341,8 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		_reindexCommercePriceLists(companyId);
+
+		_commercePriceListLocalService.cleanPriceListCache();
 	}
 
 	private long _getCatalogId(CommercePriceList commercePriceList)

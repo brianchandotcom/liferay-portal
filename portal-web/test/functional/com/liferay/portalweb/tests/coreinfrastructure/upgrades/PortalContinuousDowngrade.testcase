@@ -1,0 +1,72 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property minimum.slave.ram = "24";
+	property portal.release = "true";
+	property portal.upgrades = "false";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Upgrades Core";
+
+	@priority = "4"
+	test DowngradeToLatest7413Update {
+		User.firstLoginPG();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewContent(entryTitle = "Blogs Entry Title");
+
+		Portlet.shutdownServer();
+
+		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
+		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL} -Ddowngrade.from.original.bundle=true");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "wait-for-license-activation");
+
+		Navigator.openURL();
+
+		// Workaround for LPS-160891
+
+		/*var releaseInfo = StringUtil.replace("${releaseBundleVersion}", ".u", " Update ");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "//*[contains(@class,'component-paragraph') and contains(@data-lfr-editable-id,'element-text')]",
+			value1 = "${releaseInfo}");*/
+
+		User.firstLoginPG();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsEntry.viewContent(entryTitle = "Blogs Entry Title");
+	}
+
+}

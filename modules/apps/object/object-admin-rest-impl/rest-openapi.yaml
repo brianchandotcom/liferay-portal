@@ -64,6 +64,10 @@ components:
                     format: date
                     readOnly: true
                     type: string
+                enableCategorization:
+                    type: boolean
+                enableComments:
+                    type: boolean
                 id:
                     format: int64
                     readOnly: true

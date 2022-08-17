@@ -46,6 +46,39 @@ definition {
 
 	@disable-webdriver = "true"
 	@priority = "4"
+	test CanCreateCommentWithValueInternalIdPreviouslyCreated {
+		property portal.acceptance = "true";
+
+		task ("When with POST request I create a comment with a custom external reference code") {
+			var blogPostingId = BlogPostingAPI.getBlogPostingsIdList();
+
+			CommentAPI.createCommentInBlogPosting(
+				blogPostingId = "${blogPostingId}",
+				commentText = "CommentOne",
+				externalReferenceCode = "ercComment");
+		}
+
+		task ("with POST request I create a comment with a custom external reference code with a value of the internal id of the previously created comment") {
+			var response = CommentAPI.createCommentInBlogPosting(
+				blogPostingId = "${blogPostingId}",
+				commentText = "CommentTwo",
+				externalReferenceCode = "ercComment2",
+				idComment = "1");
+		}
+
+		task ("And Then can see the custom external reference code in the body response") {
+			var externalReferenceCodes = CommentAPI.getFieldValueOfBlogPostingComments(
+				blogPostingId = "${blogPostingId}",
+				fieldName = "externalReferenceCode");
+
+			TestUtils.assertEquals(
+				actual = "${externalReferenceCodes}",
+				expected = "ercComment,ercComment2");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
 	test CannotCreateTwoCommentsWithCustomExternalReferenceCode {
 		property portal.acceptance = "true";
 
@@ -79,39 +112,6 @@ definition {
 			TestUtils.assertEquals(
 				actual = "${commentsTotalCount}",
 				expected = "1");
-		}
-	}
-
-	@disable-webdriver = "true"
-	@priority = "4"
-	test CanCreateCommentWithValueInternalIdPreviouslyCreated {
-		property portal.acceptance = "true";
-
-		task ("When with POST request I create a comment with a custom external reference code") {
-			var blogPostingId = BlogPostingAPI.getBlogPostingsIdList();
-
-			CommentAPI.createCommentInBlogPosting(
-				blogPostingId = "${blogPostingId}",
-				commentText = "CommentOne",
-				externalReferenceCode = "ercComment");
-		}
-
-		task ("with POST request I create a comment with a custom external reference code with a value of the internal id of the previously created comment") {
-			var response = CommentAPI.createCommentInBlogPosting(
-				blogPostingId = "${blogPostingId}",
-				idComment = "1",
-				commentText = "CommentTwo",
-				externalReferenceCode = "ercComment2");
-		}
-
-		task ("And Then can see the custom external reference code in the body response") {
-			var externalReferenceCodes = CommentAPI.getFieldValueOfBlogPostingComments(
-				blogPostingId = "${blogPostingId}",
-				fieldName = "externalReferenceCode");
-
-			TestUtils.assertEquals(
-				actual = "${externalReferenceCodes}",
-				expected = "ercComment,ercComment2");
 		}
 	}
 

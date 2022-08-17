@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.mail;
+package com.liferay.mail.internal;
 
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.FileAttachment;
@@ -72,7 +72,7 @@ import javax.mail.internet.MimeMultipart;
  * @author Neil Griffin
  * @author Thiago Moreira
  * @author Brett Swaim
- * @see    com.liferay.util.mail.MailEngine
+ * @author Julius Lee
  */
 public class MailEngine {
 

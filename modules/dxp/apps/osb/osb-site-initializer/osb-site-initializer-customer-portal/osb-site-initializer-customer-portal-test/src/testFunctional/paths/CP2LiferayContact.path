@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>CONTACT_NAME</td>
-	<td>//h5[contains(text(),'Liferay Contact')]</td>
+	<td>//h5[contains(text(),'${title}')]</td>
 	<td></td>
 </tr>
 <tr>

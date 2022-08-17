@@ -415,6 +415,14 @@ public class OAuth2ApplicationLocalServiceImpl
 		OAuth2Application oAuth2Application = fetchOAuth2Application(
 			oAuth2ApplicationId);
 
+		return deleteOAuth2Application(oAuth2Application);
+	}
+
+	@Override
+	public OAuth2Application deleteOAuth2Application(
+			OAuth2Application oAuth2Application)
+		throws PortalException {
+
 		oAuth2Application = oAuth2ApplicationPersistence.remove(
 			oAuth2Application);
 
@@ -423,8 +431,8 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		List<OAuth2Authorization> oAuth2Authorizations =
 			_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
-				oAuth2ApplicationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
+				oAuth2Application.getOAuth2ApplicationId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
 		for (OAuth2Authorization oAuth2Authorization : oAuth2Authorizations) {
 			_oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
@@ -434,8 +442,8 @@ public class OAuth2ApplicationLocalServiceImpl
 		List<OAuth2ApplicationScopeAliases> oAuth2ApplicationScopeAliaseses =
 			_oAuth2ApplicationScopeAliasesLocalService.
 				getOAuth2ApplicationScopeAliaseses(
-					oAuth2ApplicationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null);
+					oAuth2Application.getOAuth2ApplicationId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases :
 				oAuth2ApplicationScopeAliaseses) {

@@ -6,6 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -27,303 +28,405 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		CustomerPortal.customerPortalTearDown();
 
-		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-		PortalInstances.tearDownCP();
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
 	}
 
-	@description = "LPS-144966 - Verify if trying to send invitation to members with a banned email shows a error"
+	@description = "Automation ID: LPS-144966 | Test Summary: Verify if trying to send invitation to members with a banned email shows a error"
 	@priority = "5"
 	test CanViewErrorMessageForBannedEmail {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Start the project configuration and invite a user to the project") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CP2TeamMembers.addFieldsTeamMembersExtra(
-			position = "0",
-			positionNumber = "0",
-			rowEmail = "0-mail.com",
-			rowRole = "User");
-
-		AssertTextEquals(
-			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-			value1 = "Please insert a valid e-mail.");
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				position = "0",
+				positionNumber = "0",
+				rowEmail = "0-mail.com",
+				rowRole = "User");
+		}
+		
+		task ("Assert the error message") {
+			AssertTextEquals(
+				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+				value1 = "Please insert a valid e-mail.");
+		}	
 	}
 
-	@description = "LPS-144958 - Verify if when a Project has reached or is reaching the limit, the admin roles should be disabled in drop down"
+	@description = "Automation ID: LPS-144958 | Test Summary: Verify if when a Project has reached or is reaching the limit, the admin roles should be disabled in drop down"
 	@priority = "4"
 	test IfMaxAdminDropDisabled {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Start the project configuration and invite a user to the project") {
+			CustomerPortal.clickOnStartProjectSetup();
+		
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				addMembers = "true",
+				position = "0",
+				positionNumber = "0",
+				rowEmail = "test01@project.com",
+				rowRole = "Administrator");
+		}
 
-		CP2TeamMembers.addFieldsTeamMembersExtra(
-			addMembers = "true",
-			position = "0",
-			positionNumber = "0",
-			rowEmail = "test01@project.com",
-			rowRole = "Administrator");
-
-		AssertElementPresent(
-			key_index = "1",
-			locator1 = "CP2TeamMembers#ROLE_DISABLED",
-			role = "Administrator");
+		task ("Assert that administrative functions are disabled in the drop-down") {
+			AssertElementPresent(
+				key_index = "1",
+				locator1 = "CP2TeamMembers#ROLE_DISABLED",
+				role = "Administrator");
+		}
 	}
 
-	@description = "LPS-144956 - Verify if when a Project has reached or is reaching the limit, the ticket requestor role should be disabled in drop down"
+	@description = "Automation ID: LPS-144956 | Test Summary: Verify if when a Project has reached or is reaching the limit, the ticket requestor role should be disabled in drop down"
 	@priority = "4"
 	test IfMaxRequestorDropDisabled {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Start the project configuration and invite a user to the project") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CP2TeamMembers.addFieldsTeamMembersExtra(
-			addMembers = "true",
-			position = "0",
-			positionNumber = "0",
-			rowEmail = "test01@project.com",
-			rowRole = "Requester");
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				addMembers = "true",
+				position = "0",
+				positionNumber = "0",
+				rowEmail = "test01@project.com",
+				rowRole = "Requester");
+		}
 
-		AssertElementPresent(
-			key_index = "1",
-			locator1 = "CP2TeamMembers#ROLE_DISABLED",
-			role = "Requester");
+		task ("Assert that Requester functions are disabled in the drop-down") {
+			AssertElementPresent(
+				key_index = "1",
+				locator1 = "CP2TeamMembers#ROLE_DISABLED",
+				role = "Requester");
+		}
 	}
 
-	@description = "LPS-144960 - Verify if when the user selects 'Skip for Now' he is taken to the next step"
+	@description = "Automation ID: LPS-144960 | Test Summary: Verify if when the user selects 'Skip for Now' he is taken to the next step"
 	@priority = "5"
 	test IfSkipForNowJumpToNextStep {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Going through onboarding to Setup") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-		AssertElementPresent(locator1 = "CP2DXPCloudSetup#SETUP_DXP_CLOUD_PAGE");
+		task ("Assert the LCX-SM Setup page") {
+			AssertElementPresent(locator1 = "CP2DXPCloudSetup#SETUP_DXP_CLOUD_PAGE");
+		}
 	}
 
-	@description = "LPS-144961 - Verify max number of admin/ticket requestor"
+	@description = "Automation ID: LPS-144961 | Test Summary: Verify max number of admin/ticket requestor"
 	@priority = "2"
 	test IsMaxNumberCorrect {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Start the project configuration and assert de subtitle") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		AssertElementPresent(
-			locator1 = "CustomerPortalSite#SUBTITLE_SUPPORT",
-			value1 = "Only 3 members per project (including yourself) have role permissions (Admins & Support Seats) to open Support tickets.");
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#SUBTITLE_SUPPORT",
+				value1 = "Only 3 members per project (including yourself) have role permissions (Admins & Support Seats) to open Support tickets.");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Koroneiki Accounts");
+		task ("Assert that object Koroneiki reflects the same number as modal team members displays") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Koroneiki Accounts");
 
-		CustomerPortal.viewCPObjectInfo();
+			CustomerPortal.viewCPObjectInfo();
 
-		CustomerPortal.viewValueFieldKoroneiki(
-			field = "maxRequestors",
-			value = "3");
+			CustomerPortal.viewValueFieldKoroneiki(
+				field = "maxRequestors",
+				value = "3");
+		}
 	}
 
-	@description = "LPS-144964 - Verify if partner = true, show 'Partner Manager' on Roles"
+	@description = "Automation ID: LPS-144964 | Test Summary: Verify if partner = true, show 'Partner Manager' on Roles"
 	@priority = "4"
 	test IsPartnerManagerShowingUp {
-		CP2TeamMembers.activePartnersRole();
+		task ("Activate the Partner role via Koroneiki") {
+			CP2TeamMembers.activePartnersRole();
+		}
+		
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		Accounts.openAccountsAdmin();
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Partner Manager",
+				accountUserName = "Test Test");
+		}
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Partner Member",
-			accountUserName = "Test Test");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+		task ("Starting the Setup") {
+			CustomerPortal.clickOnStartProjectSetup();
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
-
-		AssertElementPresent(
-			key_rowNumber = "0",
-			locator1 = "CP2TeamMembers#ROLE_SELECT",
-			value1 = "Partner Manager");
-
-		CustomerPortal.deactivateKoroneikiAccount();
+		task ("Assert that the Partner Manager role is present in the drop-down") {
+			AssertElementPresent(
+				key_rowNumber = "0",
+				locator1 = "CP2TeamMembers#ROLE_SELECT",
+				value1 = "Partner Manager");
+		}
+		
+		task ("Deactivate the Partner role via Koroneiki") {
+			CustomerPortal.deactivateKoroneikiAccount();
+		}
 	}
 
-	@description = "LPS-144963 - Verify if partner = true, show 'Partner Member' on Roles"
+	@description = "Automation ID: LPS-144963 | Test Summary: Verify if partner = true, show 'Partner Member' on Roles"
 	@priority = "4"
 	test IsPartnerMemberShowingUp {
-		CP2TeamMembers.activePartnersRole();
+		task ("Activate the Partner role via Koroneiki") {
+			CP2TeamMembers.activePartnersRole();
+		}
 
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Partner Member",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Partner Member",
+				accountUserName = "Test Test");
+		}
+		
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+		task ("Starting the Setup") {
+			CustomerPortal.clickOnStartProjectSetup();
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Assert that the Partner Member role is present in the drop-down") {
+			AssertElementPresent(
+				key_rowNumber = "0",
+				locator1 = "CP2TeamMembers#ROLE_SELECT",
+				value1 = "Partner Member");
 
-		AssertElementPresent(
-			key_rowNumber = "0",
-			locator1 = "CP2TeamMembers#ROLE_SELECT",
-			value1 = "Partner Member");
-
-		CustomerPortal.deactivateKoroneikiAccount();
+		}
+		
+		task ("Deactivate the Partner role via Koroneiki") {
+			CustomerPortal.deactivateKoroneikiAccount();
+		}
 	}
 
-	@description = "LPS-144962 - Verify if slaCurrent = 'Gold' (or Platinum), show 'Requestor' on Roles"
+	@description = "Automation ID: LPS-144962 | Test Summary: Verify if slaCurrent = 'Gold' (or Platinum), show 'Requestor' on Roles"
 	@priority = "4"
 	test IsRequestorShowingUp {
-		CustomerPortal.viewValueFieldKoroneiki(
-			field = "slaCurrent",
-			value = "Platinum Subscription");
+		task ("Assert the current SLA via Koroneiki") {
+			CustomerPortal.viewValueFieldKoroneiki(
+				field = "slaCurrent",
+				value = "Platinum Subscription");
+		}
 
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Starting the Setup") {
+			CustomerPortal.clickOnStartProjectSetup();
+		}
 
-		AssertElementPresent(
-			key_rowNumber = "0",
-			locator1 = "CP2TeamMembers#ROLE_SELECT",
-			value1 = "Requester");
+		task ("Assert that the Requester role is present in the drop-down") {
+			AssertElementPresent(
+				key_rowNumber = "0",
+				locator1 = "CP2TeamMembers#ROLE_SELECT",
+				value1 = "Requester");
+		}
 	}
 
-	@description = "LPS-144968 - Verify if when the fields are empty the button 'Send Invitations' is disabled"
+	@description = "Automation ID: LPS-144968 | Test Summary: Verify if when the fields are empty the button 'Send Invitations' is disabled"
 	@priority = "3"
 	test IsSendInvitationsButtonDisabled {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Starting the Setup") {
+			CustomerPortal.clickOnStartProjectSetup();
+		}
 
-		CP2TeamMembers.addFieldsTeamMembersExtra(
-			position = "0",
-			positionNumber = "0",
-			rowEmail = "test",
-			rowRole = "User");
-
-		AssertElementPresent(locator1 = "CP2TeamMembers#SEND_INVITATIONS_DISABLED");
+		task ("Fill in the extra fields") {
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				position = "0",
+				positionNumber = "0",
+				rowEmail = "test",
+				rowRole = "User");
+		}
+		
+		task ("Assert that the Send Invitation button is disabled") {
+			AssertElementPresent(locator1 = "CP2TeamMembers#SEND_INVITATIONS_DISABLED");
+		}
 	}
 
-	@description = "LPS-144953 - Verify if the user can invite multiple emails with roles on team members on the same screen."
-	@ignore = "true"
+	@description = "Automation ID: LPS-144953 | Test Summary: Verify if the user can invite multiple emails with roles on team members on the same screen"
 	@priority = "4"
 	test MultipleEmailsWithRoleAtOnce {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Starting the Setup") {
+			CustomerPortal.clickOnStartProjectSetup();
+		}
 
-		CP2TeamMembers.addFieldsTeamMembersExtra(
-			addMembers = "true",
-			position = "0",
-			positionNumber = "0",
-			rowEmail = "test01@project.com",
-			rowRole = "Administrator");
+		task ("Fill in the fields by inviting two users") {
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				addMembers = "true",
+				position = "0",
+				positionNumber = "0",
+				rowEmail = "test01@project.com",
+				rowRole = "Administrator");
 
-		CP2TeamMembers.addFieldsTeamMembersExtra(
-			position = "1",
-			positionNumber = "1",
-			rowEmail = "test02@project.com",
-			rowRole = "User");
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				position = "1",
+				positionNumber = "1",
+				rowEmail = "test02@project.com",
+				rowRole = "User");
 
-		CP2TeamMembers.clickTeamMembersSendInvitation();
+			CP2TeamMembers.clickTeamMembersSendInvitation();
+		}
+		
+		task ("Assert that the invitations were sent") {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 }

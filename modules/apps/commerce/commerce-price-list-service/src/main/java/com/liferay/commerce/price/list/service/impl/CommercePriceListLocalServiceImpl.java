@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -318,10 +319,10 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
-	public void cleanPriceListCache(long companyId) {
+	public void cleanPriceListCache() {
 		PortalCache<String, Serializable> portalCache =
 			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
-				"PRICE_LISTS_" + companyId);
+				"PRICE_LISTS_" + CompanyThreadLocal.getCompanyId());
 
 		portalCache.removeAll();
 	}
@@ -552,7 +553,7 @@ public class CommercePriceListLocalServiceImpl
 
 	@Override
 	public Optional<CommercePriceList> getCommercePriceList(
-			long companyId, long groupId, long commerceAccountId,
+			long groupId, long commerceAccountId,
 			long[] commerceAccountGroupIds)
 		throws PortalException {
 
@@ -568,6 +569,8 @@ public class CommercePriceListLocalServiceImpl
 		String cacheKey = StringBundler.concat(
 			groupId, StringPool.POUND, commerceAccountId, StringPool.POUND,
 			StringUtil.merge(commerceAccountGroupIds));
+
+		long companyId = CompanyThreadLocal.getCompanyId();
 
 		PortalCache<String, Serializable> portalCache =
 			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(

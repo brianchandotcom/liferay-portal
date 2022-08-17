@@ -38,6 +38,16 @@ definition {
 		Click(locator1 = "CP2NavigationMenu#BUTTON_SAVE");
 	}
 
+	macro assertActionsOption {
+		Click(
+			locator1 = "Button#ANY",
+			key_text = "Actions");
+		
+		AssertElementPresent(
+			locator1 = "CP2NavigationMenu#ACTIONS_DROPDOWN",
+			key_action = "${key_action}");
+	}
+
 	macro cancelTeamMembersInvitation {
 		Click(locator1 = "CP2NavigationMenu#INVITE_MEMBERS_CANCEL_BUTTON");
 	}
@@ -68,6 +78,18 @@ definition {
 		Click(
 			locator1 = "CP2NavigationMenu#SELECT_STATUS_OVERVIEW",
 			status = "${status}");
+	}
+
+	macro exportAllKeyDetails {
+		Click(
+			locator1 = "Button#ANY",
+			key_text = "Actions");
+		
+		Click(
+			locator1 = "CP2NavigationMenu#ACTIONS_DROPDOWN",
+			key_action = "Export All Key Details (csv)");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro goToCP2 {

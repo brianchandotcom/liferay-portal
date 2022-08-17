@@ -2578,7 +2578,6 @@ definition {
 				value1 = "${fieldName}");
 
 			Close.closeAndSelectWindow(locator1 = "title=New Template for Structure: Contacts - ${siteName}");
-			
 		}
 	}
 

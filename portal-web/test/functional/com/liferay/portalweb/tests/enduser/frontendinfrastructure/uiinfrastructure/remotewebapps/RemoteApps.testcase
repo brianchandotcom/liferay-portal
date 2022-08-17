@@ -514,7 +514,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-159013 ES module custom element portlets render incorrect <script> node when dragged in the UI"
+	@description = "LPS-159013 ES module custom element portlets render incorrect script node when dragged in the UI"
 	@priority = "4"
 	test CustomElementRendersCorrectlyWhenPlacedOnWidgetPage {
 		property portal.acceptance = "true";

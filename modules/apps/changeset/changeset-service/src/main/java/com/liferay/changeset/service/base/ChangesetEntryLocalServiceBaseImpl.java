@@ -17,7 +17,6 @@ package com.liferay.changeset.service.base;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.changeset.service.ChangesetEntryLocalServiceUtil;
-import com.liferay.changeset.service.persistence.ChangesetCollectionPersistence;
 import com.liferay.changeset.service.persistence.ChangesetEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -458,9 +457,6 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 		}
 	}
 
-	@Reference
-	protected ChangesetCollectionPersistence changesetCollectionPersistence;
-
 	protected ChangesetEntryLocalService changesetEntryLocalService;
 
 	@Reference
@@ -469,17 +465,5 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 }

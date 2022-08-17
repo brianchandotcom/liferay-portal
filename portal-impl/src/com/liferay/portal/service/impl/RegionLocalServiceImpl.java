@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -264,11 +265,11 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 				companyId
 			).and(
 				() -> {
-					if (active != null) {
-						return RegionTable.INSTANCE.active.eq(active);
+					if (active == null) {
+						return null;
 					}
 
-					return null;
+					return RegionTable.INSTANCE.active.eq(active);
 				}
 			).and(
 				() -> {
@@ -276,31 +277,26 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 						return null;
 					}
 
-					String[] terms = CustomSQLUtil.keywords(keywords, true);
-
 					Predicate keywordsPredicate = null;
 
-					for (String term : terms) {
-						Predicate termPredicate = DSLFunctionFactoryUtil.lower(
-							RegionTable.INSTANCE.name
-						).like(
-							term
-						).or(
-							DSLFunctionFactoryUtil.lower(
-								RegionTable.INSTANCE.regionCode
-							).like(
-								term
-							)
-						).or(
-							DSLFunctionFactoryUtil.lower(
-								RegionLocalizationTable.INSTANCE.title
-							).like(
-								term
-							)
-						);
+					for (String keyword :
+							CustomSQLUtil.keywords(keywords, true)) {
 
-						keywordsPredicate = Predicate.or(
-							keywordsPredicate, termPredicate);
+						for (Column<?, String> column :
+								new Column[] {
+									RegionTable.INSTANCE.name,
+									RegionTable.INSTANCE.regionCode,
+									RegionLocalizationTable.INSTANCE.title
+								}) {
+
+							keywordsPredicate = Predicate.or(
+								keywordsPredicate,
+								DSLFunctionFactoryUtil.lower(
+									column
+								).like(
+									keyword
+								));
+						}
 					}
 
 					return Predicate.withParentheses(keywordsPredicate);

@@ -2873,18 +2873,15 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.doc");
 
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
+
 		Navigator.openSitePage(
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
 
 		DMDocument.enableActionsMenuOnPortlet();
-
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
 
 		Navigator.openSitePage(
 			pageName = "Documents and Media Page",

@@ -28,7 +28,7 @@ import {filters} from '../../../schema/filter';
 import {
 	TestrayRequirement,
 	TestrayRequirementCase,
-	getRequirementQuery,
+	requirementsCasesResource,
 } from '../../../services/rest';
 import {DescriptionType} from '../../../types';
 import {searchUtil} from '../../../util/search';
@@ -36,8 +36,10 @@ import RequirementCaseLinkModal from './RequirementCaseLinkModal';
 import useRequirementCaseActions from './useRequirementCaseActions';
 
 const Requirement = () => {
-	const {projectId, requirementId} = useParams();
-	const testrayRequirement: TestrayRequirement = useOutletContext();
+	const {projectId} = useParams();
+	const {
+		testrayRequirement,
+	}: {testrayRequirement: TestrayRequirement} = useOutletContext();
 	const {actions, formModal} = useRequirementCaseActions();
 
 	const {context, setHeading, setTabs} = useHeader({shouldUpdate: false});
@@ -142,7 +144,7 @@ const Requirement = () => {
 						filterFields: filters.requirementCase as any,
 						title: i18n.translate('cases'),
 					}}
-					resource={getRequirementQuery(requirementId)}
+					resource={requirementsCasesResource}
 					tableProps={{
 						actions,
 						columns: [

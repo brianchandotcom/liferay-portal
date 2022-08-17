@@ -41,11 +41,12 @@ const useMutate = () => {
 			mutate(
 				(response: APIResponse) => ({
 					...response,
-					items: response.items.filter((item) => item.id !== id),
+					items: response.items?.filter((item) => item.id !== id),
 					totalCount: response.totalCount - 1,
 				}),
 				{revalidate: false, ...options}
 			),
+
 		updateItemFromList: (
 			mutate: KeyedMutator<any>,
 			id: number,

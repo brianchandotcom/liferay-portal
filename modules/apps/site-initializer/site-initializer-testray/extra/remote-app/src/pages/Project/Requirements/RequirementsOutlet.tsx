@@ -13,55 +13,38 @@
  */
 
 import {useEffect} from 'react';
-import {
-	Outlet,
-	useLocation,
-	useOutletContext,
-	useParams,
-} from 'react-router-dom';
+import {Outlet, useOutletContext, useParams} from 'react-router-dom';
 
-import Loading from '../../../components/Loading';
 import {useHeader} from '../../../hooks';
 import {useFetch} from '../../../hooks/useFetch';
 import i18n from '../../../i18n';
 import {
 	TestrayProject,
+	TestrayRequirement,
 	getRequirementQuery,
 	getRequirementTransformData,
 } from '../../../services/rest';
+import useRequirementActions from './useRequirementActions';
 
 const RequirementsOutlet = () => {
+	const {actions} = useRequirementActions({isHeaderActions: true});
+	const {requirementId} = useParams();
 	const {
 		testrayProject,
 	}: {testrayProject: TestrayProject} = useOutletContext();
-	const {caseId, projectId, requirementId} = useParams();
-	const {pathname} = useLocation();
-	const basePath = `/project/${projectId}/cases/${caseId}`;
 
-	const {data: testrayRequirement, loading} = useFetch(
+	const {data: testrayRequirement, mutate} = useFetch<TestrayRequirement>(
 		getRequirementQuery(requirementId),
 		getRequirementTransformData
 	);
 
-	const {setHeading, setTabs} = useHeader({
-		shouldUpdate: false,
-		useTabs: [
-			{
-				active: pathname === basePath,
-				path: basePath,
-				title: i18n.translate('case-details'),
-			},
-			{
-				active: pathname === `${basePath}/requirements`,
-				path: `${basePath}/requirements`,
-				title: i18n.translate('requirements'),
-			},
-		],
+	const {setHeaderActions, setHeading} = useHeader({
+		timeout: 100,
 	});
 
 	useEffect(() => {
-		setTabs([]);
-	}, [setTabs]);
+		setHeaderActions({actions, item: testrayRequirement, mutate});
+	}, [actions, mutate, setHeaderActions, testrayRequirement]);
 
 	useEffect(() => {
 		if (testrayRequirement && testrayProject) {
@@ -69,10 +52,12 @@ const RequirementsOutlet = () => {
 				setHeading([
 					{
 						category: i18n.translate('project').toUpperCase(),
-						path: `/project/${testrayProject.id}/cases`,
+						path: `/project/${testrayProject.id}/requirements`,
 						title: testrayProject.name,
 					},
 					{
+						category: i18n.translate('requirement').toUpperCase(),
+						path: `/project/${testrayProject.id}/requirements/${testrayRequirement.id}`,
 						title: testrayRequirement?.key,
 					},
 				]);
@@ -80,15 +65,19 @@ const RequirementsOutlet = () => {
 		}
 	}, [testrayProject, setHeading, testrayRequirement]);
 
-	if (loading) {
-		return <Loading />;
+	if (testrayRequirement && testrayProject) {
+		return (
+			<Outlet
+				context={{
+					mutateTestrayRequirement: mutate,
+					testrayProject,
+					testrayRequirement,
+				}}
+			/>
+		);
 	}
 
-	if (!testrayRequirement) {
-		return null;
-	}
-
-	return <Outlet context={testrayRequirement} />;
+	return null;
 };
 
 export default RequirementsOutlet;

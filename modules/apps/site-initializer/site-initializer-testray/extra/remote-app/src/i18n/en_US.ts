@@ -106,6 +106,7 @@ export default {
 	'delete': 'Delete',
 	'delete-build': 'Delete Build',
 	'delete-project': 'Delete Project',
+	'delete-requirement': 'Delete Requirement',
 	'delete-routine': 'Delete Routine',
 	'demote': 'Demote',
 	'description': 'Description',

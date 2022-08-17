@@ -16,6 +16,7 @@ import ClayForm from '@clayui/form';
 import {FocusEvent, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
@@ -36,6 +37,11 @@ import {searchUtil} from '../../../util/search';
 
 type RequirementsFormType = typeof yupSchema.requirement.__outputType;
 
+type OutletContext = {
+	mutateTestrayRequirement: KeyedMutator<TestrayRequirement>;
+	testrayRequirement: TestrayRequirement;
+};
+
 const descriptionTypes = [
 	{
 		label: 'Markdown',
@@ -51,9 +57,12 @@ const RequirementsForm = () => {
 	const {
 		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
+	useHeader({timeout: 100, useTabs: []});
 	const {projectId, requirementId} = useParams();
-	const {setTabs} = useHeader({shouldUpdate: false});
-	const context: {requirement?: TestrayRequirement} = useOutletContext();
+	const {
+		mutateTestrayRequirement,
+		testrayRequirement,
+	}: OutletContext = useOutletContext();
 	const {
 		formState: {errors},
 		handleSubmit,
@@ -61,14 +70,9 @@ const RequirementsForm = () => {
 		setValue,
 		watch,
 	} = useForm<RequirementsFormType>({
-		defaultValues: requirementId
-			? ({
-					...context,
-			  } as any)
-			: {},
+		defaultValues: requirementId ? (testrayRequirement as any) : {},
 		resolver: yupResolver(yupSchema.requirement),
 	});
-
 	const {data: testrayComponentsData} = useFetch<
 		APIResponse<TestrayComponent>
 	>(
@@ -93,6 +97,7 @@ const RequirementsForm = () => {
 				update: updateRequirement,
 			}
 		)
+			.then(mutateTestrayRequirement)
 			.then(onSave)
 			.catch(onError);
 	};
@@ -120,14 +125,6 @@ const RequirementsForm = () => {
 			setValue('componentId', String(testrayComponents[0].id));
 		}
 	}, [testrayComponents, setValue]);
-
-	useEffect(() => {
-		if (!context.requirement) {
-			setTimeout(() => {
-				setTabs([]);
-			}, 10);
-		}
-	}, [context.requirement, setTabs]);
 
 	return (
 		<Container className="container">

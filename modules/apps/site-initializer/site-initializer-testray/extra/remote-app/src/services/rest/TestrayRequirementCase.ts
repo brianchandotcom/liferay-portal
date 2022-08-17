@@ -15,7 +15,7 @@
 import fetcher from '../fetcher';
 
 const nestedFieldsParam =
-	'nestedFields=component,team.project&nestedFieldsDepth=2';
+	'nestedFields=case.component,requirement.component.team&nestedFieldsDepth=3';
 
 const requirementsCasesResource = `/requirementscaseses?${nestedFieldsParam}`;
 

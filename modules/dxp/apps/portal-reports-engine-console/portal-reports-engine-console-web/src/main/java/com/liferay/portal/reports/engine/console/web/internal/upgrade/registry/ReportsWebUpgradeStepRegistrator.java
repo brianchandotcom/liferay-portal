@@ -15,7 +15,6 @@
 package com.liferay.portal.reports.engine.console.web.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.reports.engine.console.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 

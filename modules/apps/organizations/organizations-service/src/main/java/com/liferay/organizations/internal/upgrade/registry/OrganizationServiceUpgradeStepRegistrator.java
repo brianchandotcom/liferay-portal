@@ -17,7 +17,6 @@ package com.liferay.organizations.internal.upgrade.registry;
 import com.liferay.organizations.internal.configuration.OrganizationTypeConfiguration;
 import com.liferay.organizations.internal.upgrade.v1_0_0.OrganizationTypesConfigurationUpgradeProcess;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 

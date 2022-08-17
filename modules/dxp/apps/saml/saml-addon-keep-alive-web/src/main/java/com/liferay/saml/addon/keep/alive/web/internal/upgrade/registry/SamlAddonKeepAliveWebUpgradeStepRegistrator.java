@@ -14,7 +14,6 @@
 
 package com.liferay.saml.addon.keep.alive.web.internal.upgrade.registry;
 
-import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.saml.addon.keep.alive.web.internal.upgrade.v1_0_0.PortletIdUpgradeProcess;
 

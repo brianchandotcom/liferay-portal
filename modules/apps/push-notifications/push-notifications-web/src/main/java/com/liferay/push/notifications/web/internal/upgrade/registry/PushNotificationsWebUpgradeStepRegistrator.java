@@ -14,7 +14,6 @@
 
 package com.liferay.push.notifications.web.internal.upgrade.registry;
 
-import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

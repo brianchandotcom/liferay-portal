@@ -14,7 +14,6 @@
 
 package com.liferay.staging.bar.web.internal.upgrade.registry;
 
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.staging.bar.web.internal.upgrade.v1_0_0.UpgradePortletId;
 

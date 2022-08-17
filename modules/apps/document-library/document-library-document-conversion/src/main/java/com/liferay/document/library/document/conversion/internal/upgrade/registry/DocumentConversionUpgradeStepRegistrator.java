@@ -16,7 +16,6 @@ package com.liferay.document.library.document.conversion.internal.upgrade.regist
 
 import com.liferay.document.library.document.conversion.internal.upgrade.v1_0_0.OpenOfficeConfigurationUpgradeProcess;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

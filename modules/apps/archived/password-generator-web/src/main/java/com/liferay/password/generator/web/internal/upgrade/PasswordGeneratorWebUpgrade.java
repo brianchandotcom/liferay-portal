@@ -16,7 +16,6 @@ package com.liferay.password.generator.web.internal.upgrade;
 
 import com.liferay.password.generator.web.internal.constants.PasswordGeneratorPortletKeys;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

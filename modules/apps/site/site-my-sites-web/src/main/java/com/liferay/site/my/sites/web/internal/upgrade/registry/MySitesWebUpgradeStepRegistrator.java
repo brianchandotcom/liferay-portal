@@ -15,7 +15,6 @@
 package com.liferay.site.my.sites.web.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.site.my.sites.web.internal.constants.MySitesPortletKeys;
 

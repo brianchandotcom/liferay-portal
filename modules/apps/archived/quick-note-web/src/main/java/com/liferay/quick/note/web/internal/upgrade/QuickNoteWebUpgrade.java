@@ -15,7 +15,6 @@
 package com.liferay.quick.note.web.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.quick.note.web.internal.constants.QuickNotePortletKeys;
 

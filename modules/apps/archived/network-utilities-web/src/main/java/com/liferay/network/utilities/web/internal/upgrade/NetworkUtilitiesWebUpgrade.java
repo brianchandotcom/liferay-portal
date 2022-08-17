@@ -16,7 +16,6 @@ package com.liferay.network.utilities.web.internal.upgrade;
 
 import com.liferay.network.utilities.web.internal.constants.NetworkUtilitiesPortletKeys;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

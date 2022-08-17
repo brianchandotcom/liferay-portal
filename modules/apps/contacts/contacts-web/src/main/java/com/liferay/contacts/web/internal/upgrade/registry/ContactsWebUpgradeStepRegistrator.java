@@ -15,7 +15,6 @@
 package com.liferay.contacts.web.internal.upgrade.registry;
 
 import com.liferay.contacts.web.internal.upgrade.v1_0_0.UpgradePortletId;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

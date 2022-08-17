@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.audit.web.internal.upgrade.registry;
 
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.security.audit.web.internal.upgrade.v1_0_0.ResourceActionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 

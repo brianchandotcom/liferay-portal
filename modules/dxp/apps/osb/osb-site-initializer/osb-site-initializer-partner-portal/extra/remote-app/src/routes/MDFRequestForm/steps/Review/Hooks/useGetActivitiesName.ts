@@ -20,7 +20,7 @@ export default function useGetActivitiesName(id: string) {
 	const typeOfActivitiesName = useMemo(
 		() =>
 			typeOfActivities?.items.find(
-				(activitie: TypeActivity) => activitie.id === +id
+				(activitie: TypeActivity) => String(activitie.id) === id
 			),
 		[id, typeOfActivities?.items]
 	);

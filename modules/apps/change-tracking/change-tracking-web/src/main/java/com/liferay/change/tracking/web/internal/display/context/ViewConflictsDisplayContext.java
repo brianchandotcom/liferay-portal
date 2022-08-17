@@ -63,8 +63,8 @@ public class ViewConflictsDisplayContext {
 		Map<Long, List<ConflictInfo>> conflictInfoMap,
 		CTCollection ctCollection,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
-		CTEntryLocalService ctEntryLocalService, Language language,
-		Portal portal, RenderRequest renderRequest,
+		CTEntryLocalService ctEntryLocalService, boolean hasUnapprovedChanges,
+		Language language, Portal portal, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
 		_activeCtCollectionId = activeCtCollectionId;
@@ -72,6 +72,7 @@ public class ViewConflictsDisplayContext {
 		_ctCollection = ctCollection;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
+		_hasUnapprovedChanges = hasUnapprovedChanges;
 		_language = language;
 		_portal = portal;
 		_renderRequest = renderRequest;
@@ -92,23 +93,27 @@ public class ViewConflictsDisplayContext {
 		JSONArray unresolvedConflictsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
-		for (Map.Entry<Long, List<ConflictInfo>> entry :
-				_conflictInfoMap.entrySet()) {
+		if (_conflictInfoMap != null) {
+			for (Map.Entry<Long, List<ConflictInfo>> entry :
+					_conflictInfoMap.entrySet()) {
 
-			for (ConflictInfo conflictInfo : entry.getValue()) {
-				JSONObject jsonObject = _getConflictJSONObject(
-					conflictInfo, entry.getKey());
+				for (ConflictInfo conflictInfo : entry.getValue()) {
+					JSONObject jsonObject = _getConflictJSONObject(
+						conflictInfo, entry.getKey());
 
-				if (conflictInfo.isResolved()) {
-					resolvedConflictsJSONArray.put(jsonObject);
-				}
-				else {
-					unresolvedConflictsJSONArray.put(jsonObject);
+					if (conflictInfo.isResolved()) {
+						resolvedConflictsJSONArray.put(jsonObject);
+					}
+					else {
+						unresolvedConflictsJSONArray.put(jsonObject);
+					}
 				}
 			}
 		}
 
 		return HashMapBuilder.<String, Object>put(
+			"hasUnapprovedChanges", _hasUnapprovedChanges
+		).put(
 			"learnLink",
 			() -> {
 				LearnMessage learnMessage = LearnMessageUtil.getLearnMessage(
@@ -152,38 +157,42 @@ public class ViewConflictsDisplayContext {
 		).put(
 			"showPageOverwriteWarning",
 			() -> {
-				List<ConflictInfo> layoutConflictInfos = _conflictInfoMap.get(
-					_portal.getClassNameId(Layout.class));
-				List<ConflictInfo> layoutPageTemplateStructureRelConflictInfos =
-					_conflictInfoMap.get(
-						_portal.getClassNameId(
-							LayoutPageTemplateStructureRel.class));
+				if (_conflictInfoMap != null) {
+					List<ConflictInfo> layoutConflictInfos =
+						_conflictInfoMap.get(
+							_portal.getClassNameId(Layout.class));
+					List<ConflictInfo>
+						layoutPageTemplateStructureRelConflictInfos =
+							_conflictInfoMap.get(
+								_portal.getClassNameId(
+									LayoutPageTemplateStructureRel.class));
 
-				if ((layoutConflictInfos == null) ||
-					(layoutPageTemplateStructureRelConflictInfos == null)) {
+					if ((layoutConflictInfos == null) ||
+						(layoutPageTemplateStructureRelConflictInfos == null)) {
 
-					return false;
-				}
-
-				boolean hasResolvedLayoutConflict = false;
-
-				for (ConflictInfo conflictInfo : layoutConflictInfos) {
-					if (conflictInfo.isResolved()) {
-						hasResolvedLayoutConflict = true;
-
-						break;
+						return false;
 					}
-				}
 
-				if (!hasResolvedLayoutConflict) {
-					return false;
-				}
+					boolean hasResolvedLayoutConflict = false;
 
-				for (ConflictInfo conflictInfo :
-						layoutPageTemplateStructureRelConflictInfos) {
+					for (ConflictInfo conflictInfo : layoutConflictInfos) {
+						if (conflictInfo.isResolved()) {
+							hasResolvedLayoutConflict = true;
 
-					if (conflictInfo.isResolved()) {
-						return true;
+							break;
+						}
+					}
+
+					if (!hasResolvedLayoutConflict) {
+						return false;
+					}
+
+					for (ConflictInfo conflictInfo :
+							layoutPageTemplateStructureRelConflictInfos) {
+
+						if (conflictInfo.isResolved()) {
+							return true;
+						}
 					}
 				}
 
@@ -413,6 +422,7 @@ public class ViewConflictsDisplayContext {
 	private final CTCollection _ctCollection;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntryLocalService _ctEntryLocalService;
+	private final boolean _hasUnapprovedChanges;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;

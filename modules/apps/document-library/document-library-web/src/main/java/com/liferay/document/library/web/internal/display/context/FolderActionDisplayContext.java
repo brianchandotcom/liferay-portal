@@ -107,10 +107,7 @@ public class FolderActionDisplayContext {
 				).add(
 					() -> isMoveFolderActionVisible(),
 					dropdownItem -> {
-						dropdownItem.putData("action", "move");
-						dropdownItem.putData("parameterName", "rowIdsFolder");
-						dropdownItem.putData(
-							"parameterValue", String.valueOf(_getFolderId()));
+						dropdownItem.setHref(getMoveFolderURL());
 						dropdownItem.setIcon("move-folder");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_httpServletRequest, "move"));

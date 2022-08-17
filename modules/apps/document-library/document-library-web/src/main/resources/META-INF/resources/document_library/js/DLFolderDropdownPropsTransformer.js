@@ -71,10 +71,6 @@ const ACTIONS = {
 		submitForm(document.hrefFm, deleteExpiredTemporaryFileEntriesURL);
 	},
 
-	move({parameterName, parameterValue}, portletNamespace) {
-		window[`${portletNamespace}move`](1, parameterName, parameterValue);
-	},
-
 	permissions({permissionsURL}) {
 		openModal({
 			title: Liferay.Language.get('permissions'),

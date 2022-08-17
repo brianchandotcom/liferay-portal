@@ -198,10 +198,10 @@ definition {
 		}
 
 		var curl = '''
-            ${portalURL}/o/headless-delivery/v1.0/${api} \
-            -u test@liferay.com:test \
-            -H Content-Type: application/json
-        ''';
+			${portalURL}/o/headless-delivery/v1.0/${api} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
 
 		var curl = JSONCurlUtil.get("${curl}");
 

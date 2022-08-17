@@ -6,6 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -23,125 +24,199 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		CustomerPortal.customerPortalApisTearDown();
 
-		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-		PortalInstances.tearDownCP();
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
 	}
 
-	@description = "LPS-145260 - Verify if when user completes the on-boarding flow or skips through it, Get Started page doesn't appears again."
+	@description = "Automation ID: LPS-145260 | Test Summary: Verify if when user completes the on-boarding flow or skips through it, Get Started page doesn't appears again"
 	@priority = "4"
 	test GetStartedDontAppearASecondTime {
-		CustomerPortal.showCPObject(title = "Account Flag");
+		task ("Creating objects") {
+			CustomerPortal.showCPObject(title = "Account Flag");
+		}
 
-		CustomerPortal.changeUserRole(
-			accountName = "Test Account 01",
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnSkipForNowButton();
+		task ("Going through onboardig") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			CustomerPortal.clickOnSkipForNowButton();
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-		CustomerPortal.viewSubcriptionsPage();
+		
+		task ("Go back to Homepage and join a project again") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.deleteCPObject(title = "Account Flag");
+		task ("Assert the Overview page") {
+			CustomerPortal.viewSubcriptionsPage();
+		}
+		
+		task ("Delete the entries and objects created") {
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
+
+			CustomerPortal.deleteCPObject(title = "Account Flag");
+		}
 	}
 
-	@description = "LPS-145256 - Verify if the non-admin user with just one project is redirected to the Project Overview page."
+	@description = "Automation ID: LPS-145256 | Test Summary: Verify if the non-admin user with just one project is redirected to the Project Overview page."
 	@priority = "4"
 	test IfWithOneProjectUserIsRedirectedToProjectOverview {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.viewSubcriptionsPage();
+		task ("Assert the Overview page") {
+			CustomerPortal.viewSubcriptionsPage();
+		}
 	}
 
-	@description = "LPS-143374 - Verify if the button 'Start Project Setup' is present."
+	@description = "Automation ID: LPS-143374 | Test Summary: Verify if the button 'Start Project Setup' is present."
 	@priority = "4"
 	test IsStartProjectButtonPresent {
-		CustomerPortal.showCPObject(title = "Account Flag");
+		task ("Creating objects") {
+			CustomerPortal.showCPObject(title = "Account Flag");
+		}
 
-		CustomerPortal.changeUserRole(
-			accountName = "Test Account 01",
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		CustomerPortal.viewStartProjectSetupButton();
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.deleteCPObject(title = "Account Flag");
+		task ("Assert that the Get Start button appears") {
+			CustomerPortal.viewStartProjectSetupButton();
+		}
+		
+		
+		task ("Delete the entries and objects created") {
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
+
+			CustomerPortal.deleteCPObject(title = "Account Flag");
+		}
 	}
 
-	@description = "LPS-145255 - Verify if the get started page is shown for user when admin profile logs in for the first time."
+	@description = "Automation ID: LPS-145255 | Test Summary: Verify if the get started page is shown for user when admin profile logs in for the first time"
 	@priority = "5"
 	test IsStartProjectShowingInFirstTime {
-		CustomerPortal.showCPObject(title = "Account Flag");
+		task ("Creating objects") {
+			CustomerPortal.showCPObject(title = "Account Flag");
+		}
 
-		CustomerPortal.changeUserRole(
-			accountName = "Test Account 01",
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		CustomerPortal.viewGetStartedModal();
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.deleteCPObject(title = "Account Flag");
+		task ("Assert the Get Start modal") {
+			CustomerPortal.viewGetStartedModal();
+		}
+		
+		task ("Delete the entries and objects created") {
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
+
+			CustomerPortal.deleteCPObject(title = "Account Flag");
+		}
 	}
 
-	@description = "LPS-145259 - Verify that the Get Started button takes the user to the Invite Your Team Members page."
+	@description = "Automation ID: LPS-145259 | Test Summary: Verify that the Get Started button takes the user to the Invite Your Team Members page"
 	@priority = "5"
 	test StartPojectButtonRedirectsToYourTeamMembers {
-		CustomerPortal.showCPObject(title = "Account Flag");
+		task ("Creating objects") {
+			CustomerPortal.showCPObject(title = "Account Flag");
+		}
 
-		CustomerPortal.changeUserRole(
-			accountName = "Test Account 01",
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.viewInviteTeamMembersModalPage();
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
+		task ("Going through onboardig") {
+			CustomerPortal.clickOnStartProjectSetup();
+		}
 
-		CustomerPortal.deleteCPObject(title = "Account Flag");
+		task ("Assert the Invite Team Members modal") {
+			CustomerPortal.viewInviteTeamMembersModalPage();
+		}
+
+		task ("Delete the entries and objects created") {
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
+
+			CustomerPortal.deleteCPObject(title = "Account Flag");
+		}
 	}
 
-	@description = "LPS-145258 - Verify if the non-admin user with more than one project is redirected to the All Projects page."
+	@description = "Automation ID: LPS-145258 | Test Summary: Verify if the non-admin user with more than one project is redirected to the All Projects page"
 	@priority = "4"
 	test WithMoreThanOneProjectIsRedirectedToAllProjects {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-		CustomerPortal.viewAllProjectsTitlePage();
+		task ("Go to CP2.0") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		}
+		
+		task ("Assert the list of projects on the homepage") {
+			CustomerPortal.viewAllProjectsTitlePage();
+		}
 	}
 
 }

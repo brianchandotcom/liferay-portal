@@ -10,6 +10,7 @@
  */
 
 import {Liferay} from '../..';
+import GetTotalBudget from '../../../../../routes/MDFRequestForm/steps/Review/utils/GetTotalBudget';
 import MDFRequest from '../../../../interfaces/mdfRequest';
 import MDFRequestActivity from '../../../../interfaces/mdfRequestActivity';
 import {LiferayAPIs} from '../../common/enums/apis';
@@ -50,9 +51,12 @@ const getDateActivities = (mdfRequest: MDFRequest) => {
 			)
 		);
 
+		const totalCostOfExpense = GetTotalBudget(mdfRequest);
+
 		return {
 			maxDateActivity,
 			minDateActivity,
+			totalCostOfExpense,
 		};
 	}
 };

@@ -17,6 +17,11 @@
 </tr>
 <tr>
 	<td>HOTSPOT</td>
+	<td>//*[@class='lfr-walkthrough-hotspot']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAMPLE_PORTLET_HOTSPOT</td>
 	<td>//div[not(contains(@class,'hide')) and contains(@id, 'tabs')]//*[@class='lfr-walkthrough-hotspot']</td>
 	<td></td>
 </tr>

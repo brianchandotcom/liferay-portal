@@ -51,7 +51,7 @@ definition {
 	@priority = "5"
 	test CanBeClosed {
 		task ("Given click hotspot element") {
-			Click(locator1 = "Walkthrough#HOTSPOT");
+			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
 
 		task ("When Click close icon") {
@@ -59,7 +59,7 @@ definition {
 		}
 
 		task ("Then hotspot element is present") {
-			AssertElementPresent(locator1 = "Walkthrough#HOTSPOT");
+			AssertElementPresent(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
 	}
 
@@ -67,7 +67,7 @@ definition {
 	@priority = "5"
 	test CanDisplayContent {
 		task ("When click hotspot element") {
-			Click(locator1 = "Walkthrough#HOTSPOT");
+			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
 
 		task ("Then content text is present on popover") {
@@ -113,7 +113,7 @@ definition {
 	@priority = "4"
 	test CanDisplayStepNumber {
 		task ("And given click hotspot element") {
-			Click(locator1 = "Walkthrough#HOTSPOT");
+			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
 
 		task ("When click through all primary step buttons") {
@@ -133,7 +133,7 @@ definition {
 	@priority = "5"
 	test CanDisplayTitle {
 		task ("When click hotspot element") {
-			Click(locator1 = "Walkthrough#HOTSPOT");
+			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
 
 		task ("Then title text is present on popover") {
@@ -147,7 +147,7 @@ definition {
 	@priority = "3"
 	test CanHaveADarkBackgroundOverlay {
 		task ("When click hotspot element") {
-			Click(locator1 = "Walkthrough#HOTSPOT");
+			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
 
 		task ("Then outside the element has a dark background overlay") {
@@ -164,7 +164,7 @@ definition {
 	@priority = "2"
 	test CanHaveAShadowAroundElement {
 		task ("When click hotspot element until Step 4") {
-			Click(locator1 = "Walkthrough#HOTSPOT");
+			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 
 			Click(locator1 = "Button#OK");
 
@@ -232,7 +232,7 @@ definition {
 		}
 
 		task ("And Then hotspot element is present on 1st element") {
-			AssertElementPresent(locator1 = "Walkthrough#HOTSPOT");
+			AssertElementPresent(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 
 			WalkthroughPopover.viewCoordinatePositionMatchesElementStep(
 				hotspotElementClass = "lfr-walkthrough-hotspot-inner",
@@ -314,7 +314,7 @@ definition {
 	@priority = "5"
 	test WhenClosedCanTransitionToHotSpotModeOnCurrentStepElement {
 		task ("Given click hotspot element") {
-			Click(locator1 = "Walkthrough#HOTSPOT");
+			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
 
 		task ("Click on next step") {
@@ -326,7 +326,7 @@ definition {
 		}
 
 		task ("Then hotspot element is present on the 2nd element") {
-			AssertElementPresent(locator1 = "Walkthrough#HOTSPOT");
+			AssertElementPresent(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 
 			WalkthroughPopover.viewCoordinatePositionMatchesElementStep(
 				hotspotElementClass = "lfr-walkthrough-hotspot-inner",

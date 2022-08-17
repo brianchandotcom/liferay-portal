@@ -51,7 +51,7 @@ definition {
 	@priority = "5"
 	test WillDisplayPopoverWhenClicked {
 		task ("When click hospot element") {
-			Click(locator1 = "Walkthrough#HOTSPOT");
+			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
 
 		task ("Then popover is present") {
@@ -59,7 +59,7 @@ definition {
 		}
 
 		task ("And then hotspot element is not present") {
-			AssertElementNotPresent(locator1 = "Walkthrough#HOTSPOT");
+			AssertElementNotPresent(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
 	}
 
@@ -67,7 +67,7 @@ definition {
 	@priority = "5"
 	test WillRenderAsInitialState {
 		task ("Then Hotspot element is present") {
-			AssertElementPresent(locator1 = "Walkthrough#HOTSPOT");
+			AssertElementPresent(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
 
 		task ("And then popover element is not present") {

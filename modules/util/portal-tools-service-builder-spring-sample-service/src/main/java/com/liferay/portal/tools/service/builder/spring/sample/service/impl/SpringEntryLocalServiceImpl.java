@@ -14,18 +14,11 @@
 
 package com.liferay.portal.tools.service.builder.spring.sample.service.impl;
 
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.tools.service.builder.spring.sample.service.base.SpringEntryLocalServiceBaseImpl;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	property = "model.class.name=com.liferay.portal.tools.service.builder.spring.sample.model.SpringEntry",
-	service = AopService.class
-)
 public class SpringEntryLocalServiceImpl
 	extends SpringEntryLocalServiceBaseImpl {
 }

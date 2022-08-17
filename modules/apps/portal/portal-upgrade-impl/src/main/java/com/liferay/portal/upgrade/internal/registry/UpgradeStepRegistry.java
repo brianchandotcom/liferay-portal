@@ -43,6 +43,13 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 
 	public List<UpgradeInfo> getUpgradeInfos() {
 		if (_initialization) {
+			if (_upgradeInfos.isEmpty()) {
+				return Arrays.asList(
+					new UpgradeInfo(
+						"0.0.0", "1.0.0", _buildNumber,
+						new DummyUpgradeStep()));
+			}
+
 			return ListUtil.concat(
 				Arrays.asList(
 					new UpgradeInfo(

@@ -16,7 +16,16 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import WidgetService from '../services/WidgetService';
-import {useSelector, useSelectorRef} from './StoreContext';
+import {useDispatch, useSelector, useSelectorRef} from './StoreContext';
+
+const HIGHLIGHTED_CATEGORY_ID = 'root--category-highlighted';
+
+const DEFAULT_HIGHLIGHTED_CATEGORY = {
+	categories: [],
+	path: HIGHLIGHTED_CATEGORY_ID,
+	portlets: [],
+	title: Liferay.Language.get('highlighted'),
+};
 
 const WidgetsContext = React.createContext([]);
 
@@ -28,21 +37,41 @@ export function useWidgets() {
 
 export function useToggleWidgetHighlighted() {
 	const {setWidgets, widgets} = useContext(WidgetsContext);
+	const dispatch = useDispatch();
 
 	return useCallback(
 		(portletId, highlighted) => {
-			const nextWidgets = widgets.map((category) => ({
-				...category,
-				portlets: category.portlets.map((widget) =>
-					widget.portletId === portletId
-						? {...widget, highlighted}
-						: widget
-				),
-			}));
+			WidgetService.toggleWidgetHighlighted({
+				highlighted,
+				onNetworkStatus: dispatch,
+				portletId,
+			}).then(({highlightedPortlets}) => {
+				const nextWidgets = widgets.reduce((categories, category) => {
+					if (category.path !== HIGHLIGHTED_CATEGORY_ID) {
+						categories.push({
+							...category,
+							portlets: category.portlets.map((widget) =>
+								widget.portletId === portletId
+									? {...widget, highlighted}
+									: widget
+							),
+						});
+					}
 
-			setWidgets(nextWidgets);
+					return categories;
+				}, []);
+
+				if (highlightedPortlets.length) {
+					nextWidgets.unshift({
+						...DEFAULT_HIGHLIGHTED_CATEGORY,
+						portlets: highlightedPortlets,
+					});
+				}
+
+				setWidgets(nextWidgets);
+			});
 		},
-		[setWidgets, widgets]
+		[setWidgets, widgets, dispatch]
 	);
 }
 

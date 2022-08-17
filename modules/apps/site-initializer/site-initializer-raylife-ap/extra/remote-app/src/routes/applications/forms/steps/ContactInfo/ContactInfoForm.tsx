@@ -552,7 +552,11 @@ const ContactInfo = () => {
 							aria-label="Select Label"
 							id="mySelectId"
 							onBlur={(event) => {
-								const stateValue = event.target.value;
+								let stateValue = event.target.value;
+								stateValue =
+									stateValue === 'CHOOSE AN OPTION'
+										? ''
+										: stateValue;
 								setHasError({
 									...hasError,
 									state:
@@ -563,7 +567,11 @@ const ContactInfo = () => {
 								});
 							}}
 							onChange={(event) => {
-								const stateValue = event.target.value;
+								let stateValue = event.target.value;
+								stateValue =
+									stateValue === 'CHOOSE AN OPTION'
+										? ''
+										: stateValue;
 								handleChangeField('state', stateValue);
 
 								setHasError({

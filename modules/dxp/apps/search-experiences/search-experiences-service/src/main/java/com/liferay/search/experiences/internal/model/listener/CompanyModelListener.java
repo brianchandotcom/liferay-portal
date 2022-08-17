@@ -72,9 +72,6 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		}
 
 		for (SXPElement sxpElement : _sxpElements) {
-
-			// TODO Should this be en_US or en-US?
-
 			if (titles.contains(
 					MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"))) {
 

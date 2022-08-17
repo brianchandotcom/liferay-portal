@@ -325,7 +325,7 @@ definition {
 		}
 
 		if (isSet(siteName)) {
-			LexiconCard.clickCardTitleLink(card = "${siteName}");
+			LexiconCard.clickCard(card = "${siteName}");
 		}
 
 		if (isSet(depotName)) {
@@ -359,7 +359,7 @@ definition {
 			value1 = "Sites and Libraries");
 
 		if (isSet(siteName)) {
-			LexiconCard.clickCardTitleLink(card = "${siteName}");
+			LexiconCard.clickCard(card = "${siteName}");
 		}
 
 		if (isSet(depotName)) {
@@ -1730,7 +1730,7 @@ definition {
 			value1 = "Sites and Libraries");
 
 		if (isSet(siteName)) {
-			LexiconCard.clickCardTitleLink(card = "${siteName}");
+			LexiconCard.clickCard(card = "${siteName}");
 		}
 
 		if (isSet(depotName)) {

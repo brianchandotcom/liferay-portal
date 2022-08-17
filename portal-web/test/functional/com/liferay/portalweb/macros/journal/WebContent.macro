@@ -63,10 +63,7 @@ definition {
 					LexiconCard.clickCard(card = "${depotName}");
 				}
 				else {
-					AssertClick(
-						key_siteName = "${siteName}",
-						locator1 = "ItemSelector#SITE_SELECTOR",
-						value1 = "${siteName}");
+					LexiconCard.clickCard(card = "${siteName}");
 				}
 
 				if (isSet(folderName)) {

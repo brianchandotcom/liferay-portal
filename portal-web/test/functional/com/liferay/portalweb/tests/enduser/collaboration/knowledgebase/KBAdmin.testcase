@@ -691,7 +691,7 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ViewKBArticleGitHubSourceURL {
-		property test.name.skip.portal.instance = "KBUsecase#ViewKBArticleGitHubSourceURL";
+		property test.name.skip.portal.instance = "KBAdmin#ViewKBArticleGitHubSourceURL";
 
 		Navigator.openURL();
 

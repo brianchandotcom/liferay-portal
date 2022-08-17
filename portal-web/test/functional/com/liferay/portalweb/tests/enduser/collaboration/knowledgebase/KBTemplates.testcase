@@ -33,7 +33,7 @@ definition {
 	@uitest
 	test CanAddArticleWithTemplate {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "KBAdmin#CanAddArticleWithTemplate";
+		property test.name.skip.portal.instance = "KBTemplates#CanAddArticleWithTemplate";
 
 		JSONKnowledgeBase.addkBTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",
@@ -59,7 +59,7 @@ definition {
 	@uitest
 	test CanAddTemplate {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "KBAdmin#CanAddTemplate";
+		property test.name.skip.portal.instance = "KBTemplates#CanAddTemplate";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

@@ -105,7 +105,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewImportedKBArticleWithSourceURLMetadata {
-		property test.name.skip.portal.instance = "KBDisplayWidget#ViewImportedKBArticleWithSourceURLMetadata";
+		property test.name.skip.portal.instance = "KBExportImport#ViewImportedKBArticleWithSourceURLMetadata";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

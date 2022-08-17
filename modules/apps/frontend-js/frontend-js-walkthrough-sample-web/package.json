@@ -1,0 +1,12 @@
+{
+	"dependencies": {
+	},
+	"main": "js/App.es",
+	"name": "@liferay/frontend-js-walkthrough-sample-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.9"
+}

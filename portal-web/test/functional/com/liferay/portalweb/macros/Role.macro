@@ -134,10 +134,14 @@ definition {
 
 	macro definePermissionsCP {
 		Role.definePermissionCmdCP(
+			permissionDefinitionKey = "${permissionDefinitionKey}",
 			permissionDefinitionKeys = "${permissionDefinitionKeys}",
+			permissionNavigationValue = "${permissionNavigationValue}",
+			removeSiteScope = "${removeSiteScope}",
 			roleTitle = "${roleTitle}",
 			roleType = "${roleType}",
-			roleUser = "${roleUser}");
+			roleUser = "${roleUser}",
+			siteNameScope = "${siteNameScope}");
 	}
 
 	macro deleteCP {

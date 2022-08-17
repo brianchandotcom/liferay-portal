@@ -56,8 +56,11 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -114,7 +117,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Entry
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		if (Validator.isNull(name)) {
 			name = url;
@@ -142,7 +145,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(entry, serviceContext);
+		_resourceLocalService.addModelResources(entry, serviceContext);
 
 		// Asset
 
@@ -201,7 +204,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			entry, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		// Asset
@@ -213,7 +216,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		_expandoRowLocalService.deleteRows(
 			entry.getCompanyId(),
-			classNameLocalService.getClassNameId(
+			_classNameLocalService.getClassNameId(
 				BookmarksEntry.class.getName()),
 			entry.getEntryId());
 
@@ -243,7 +246,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		_viewCountManager.deleteViewCount(
 			entry.getCompanyId(),
-			classNameLocalService.getClassNameId(BookmarksEntry.class),
+			_classNameLocalService.getClassNameId(BookmarksEntry.class),
 			entry.getEntryId());
 
 		return entry;
@@ -445,7 +448,7 @@ public class BookmarksEntryLocalServiceImpl
 	public BookmarksEntry openEntry(long userId, BookmarksEntry entry) {
 		_viewCountManager.incrementViewCount(
 			entry.getCompanyId(),
-			classNameLocalService.getClassNameId(BookmarksEntry.class),
+			_classNameLocalService.getClassNameId(BookmarksEntry.class),
 			entry.getEntryId(), 1);
 
 		return entry;
@@ -667,7 +670,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Entry
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		entry.setStatus(status);
 		entry.setStatusByUserId(userId);
@@ -776,7 +779,7 @@ public class BookmarksEntryLocalServiceImpl
 		String statusByUserName = StringPool.BLANK;
 
 		try {
-			User user = userLocalService.getUserById(
+			User user = _userLocalService.getUserById(
 				serviceContext.getGuestOrUserId());
 
 			statusByUserName = user.getFullName();
@@ -895,6 +898,9 @@ public class BookmarksEntryLocalServiceImpl
 	private AssetLinkLocalService _assetLinkLocalService;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
@@ -910,6 +916,9 @@ public class BookmarksEntryLocalServiceImpl
 	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
 	private SocialActivityLocalService _socialActivityLocalService;
 
 	@Reference
@@ -920,6 +929,9 @@ public class BookmarksEntryLocalServiceImpl
 
 	@Reference
 	private TrashVersionLocalService _trashVersionLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private ViewCountManager _viewCountManager;

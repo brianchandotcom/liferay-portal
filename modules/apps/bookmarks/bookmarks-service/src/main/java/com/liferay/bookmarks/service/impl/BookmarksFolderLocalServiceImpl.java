@@ -24,6 +24,7 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.service.base.BookmarksFolderLocalServiceBaseImpl;
+import com.liferay.bookmarks.service.persistence.BookmarksEntryPersistence;
 import com.liferay.bookmarks.util.comparator.FolderIdComparator;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringPool;
@@ -40,7 +41,10 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.tree.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.tree.TreePathUtil;
@@ -85,7 +89,7 @@ public class BookmarksFolderLocalServiceImpl
 
 		// Folder
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -112,7 +116,7 @@ public class BookmarksFolderLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(folder, serviceContext);
+		_resourceLocalService.addModelResources(folder, serviceContext);
 
 		// Asset
 
@@ -164,7 +168,7 @@ public class BookmarksFolderLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			folder, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		// Entries
@@ -181,7 +185,7 @@ public class BookmarksFolderLocalServiceImpl
 
 		_expandoRowLocalService.deleteRows(
 			folder.getCompanyId(),
-			classNameLocalService.getClassNameId(
+			_classNameLocalService.getClassNameId(
 				BookmarksFolder.class.getName()),
 			folder.getFolderId());
 
@@ -674,7 +678,7 @@ public class BookmarksFolderLocalServiceImpl
 
 		// Folder
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		folder.setStatus(status);
 		folder.setStatusByUserId(userId);
@@ -766,14 +770,14 @@ public class BookmarksFolderLocalServiceImpl
 			mergeFolders(folder, toFolderId);
 		}
 
-		List<BookmarksEntry> entries = bookmarksEntryPersistence.findByG_F(
+		List<BookmarksEntry> entries = _bookmarksEntryPersistence.findByG_F(
 			fromFolder.getGroupId(), fromFolder.getFolderId());
 
 		for (BookmarksEntry entry : entries) {
 			entry.setFolderId(toFolderId);
 			entry.setTreePath(entry.buildTreePath());
 
-			entry = bookmarksEntryPersistence.update(entry);
+			entry = _bookmarksEntryPersistence.update(entry);
 
 			Indexer<BookmarksEntry> indexer =
 				IndexerRegistryUtil.nullSafeGetIndexer(BookmarksEntry.class);
@@ -803,7 +807,7 @@ public class BookmarksFolderLocalServiceImpl
 
 				entry.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-				entry = bookmarksEntryPersistence.update(entry);
+				entry = _bookmarksEntryPersistence.update(entry);
 
 				// Trash
 
@@ -906,7 +910,7 @@ public class BookmarksFolderLocalServiceImpl
 
 				entry.setStatus(oldStatus);
 
-				entry = bookmarksEntryPersistence.update(entry);
+				entry = _bookmarksEntryPersistence.update(entry);
 
 				// Trash
 
@@ -1003,10 +1007,19 @@ public class BookmarksFolderLocalServiceImpl
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 	@Reference
+	private BookmarksEntryPersistence _bookmarksEntryPersistence;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private SocialActivityLocalService _socialActivityLocalService;
@@ -1019,5 +1032,8 @@ public class BookmarksFolderLocalServiceImpl
 
 	@Reference
 	private TrashVersionLocalService _trashVersionLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

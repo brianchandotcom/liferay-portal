@@ -48,6 +48,8 @@ import com.liferay.knowledge.base.internal.util.constants.KnowledgeBaseConstants
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.base.KBArticleLocalServiceBaseImpl;
+import com.liferay.knowledge.base.service.persistence.KBCommentPersistence;
+import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
@@ -85,7 +87,9 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -164,7 +168,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// KB article
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		long groupId = serviceContext.getScopeGroupId();
 		urlTitle = normalizeUrlTitle(urlTitle);
@@ -258,7 +262,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			boolean addGuestPermissions)
 		throws PortalException {
 
-		resourceLocalService.addResources(
+		_resourceLocalService.addResources(
 			kbArticle.getCompanyId(), kbArticle.getGroupId(),
 			kbArticle.getUserId(), KBArticle.class.getName(),
 			kbArticle.getResourcePrimKey(), false, addGroupPermissions,
@@ -270,7 +274,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			KBArticle kbArticle, ModelPermissions modelPermissions)
 		throws PortalException {
 
-		resourceLocalService.addModelResources(
+		_resourceLocalService.addModelResources(
 			kbArticle.getCompanyId(), kbArticle.getGroupId(),
 			kbArticle.getUserId(), KBArticle.class.getName(),
 			kbArticle.getResourcePrimKey(), modelPermissions);
@@ -358,7 +362,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			kbArticle.getCompanyId(), KBArticle.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, kbArticle.getResourcePrimKey());
 
@@ -371,7 +375,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		KBCommentUtil.deleteKBComments(
 			KBArticle.class.getName(), _classNameLocalService,
-			kbArticle.getResourcePrimKey(), kbCommentPersistence);
+			kbArticle.getResourcePrimKey(), _kbCommentPersistence);
 
 		// Asset
 
@@ -1123,7 +1127,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// KB article
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		validate(title, content, sourceURL);
 
@@ -1251,7 +1255,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			String[] guestPermissions)
 		throws PortalException {
 
-		resourceLocalService.updateResources(
+		_resourceLocalService.updateResources(
 			kbArticle.getCompanyId(), kbArticle.getGroupId(),
 			KBArticle.class.getName(), kbArticle.getResourcePrimKey(),
 			groupPermissions, guestPermissions);
@@ -1301,7 +1305,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// KB article
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 		boolean main = false;
 		Date date = new Date();
 
@@ -1700,7 +1704,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return uniqueUrlTitle;
 		}
 
-		KBFolder kbFolder = kbFolderPersistence.findByPrimaryKey(kbFolderId);
+		KBFolder kbFolder = _kbFolderPersistence.findByPrimaryKey(kbFolderId);
 
 		int kbArticlesCount = kbArticleFinder.countByUrlTitle(
 			groupId, kbFolder.getUrlTitle(), uniqueUrlTitle, _STATUSES);
@@ -2119,6 +2123,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	private KBArchiveFactory _kbArchiveFactory;
 
 	@Reference
+	private KBCommentPersistence _kbCommentPersistence;
+
+	@Reference
+	private KBFolderPersistence _kbFolderPersistence;
+
+	@Reference
 	private Portal _portal;
 
 	@Reference
@@ -2128,10 +2138,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
 	private SocialActivityLocalService _socialActivityLocalService;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private ViewCountManager _viewCountManager;

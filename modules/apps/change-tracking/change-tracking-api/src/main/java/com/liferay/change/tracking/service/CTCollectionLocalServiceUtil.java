@@ -347,6 +347,12 @@ public class CTCollectionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static boolean hasUnapprovedChanges(long ctCollectionId)
+		throws java.sql.SQLException {
+
+		return getService().hasUnapprovedChanges(ctCollectionId);
+	}
+
 	public static boolean isCTEntryEnclosed(
 		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 

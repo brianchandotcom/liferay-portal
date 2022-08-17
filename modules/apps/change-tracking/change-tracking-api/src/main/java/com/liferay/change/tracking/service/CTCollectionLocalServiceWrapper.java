@@ -397,6 +397,13 @@ public class CTCollectionLocalServiceWrapper
 	}
 
 	@Override
+	public boolean hasUnapprovedChanges(long ctCollectionId)
+		throws java.sql.SQLException {
+
+		return _ctCollectionLocalService.hasUnapprovedChanges(ctCollectionId);
+	}
+
+	@Override
 	public boolean isCTEntryEnclosed(
 		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 

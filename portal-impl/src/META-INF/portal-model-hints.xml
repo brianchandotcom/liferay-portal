@@ -623,14 +623,22 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="a2" type="String" />
-		<field name="a3" type="String" />
+		<field name="a2" type="String">
+			<validator name="required" />
+		</field>
+		<field name="a3" type="String">
+			<validator name="required" />
+		</field>
 		<field name="active" type="boolean" />
 		<field name="billingAllowed" type="boolean" />
 		<field name="groupFilterEnabled" type="boolean" />
 		<field name="idd" type="String" />
-		<field name="name" type="String" />
-		<field name="number" type="String" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="number" type="String">
+			<validator name="required" />
+		</field>
 		<field name="position" type="double">
 			<validator name="number" />
 		</field>

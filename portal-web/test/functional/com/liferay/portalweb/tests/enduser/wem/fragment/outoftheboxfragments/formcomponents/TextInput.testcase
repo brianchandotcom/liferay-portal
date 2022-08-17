@@ -751,7 +751,7 @@ definition {
 			PageEditor.viewFragment(fragmentName = "Form Container");
 
 			for (var fragmentName : list "Container,Text Input") {
-				PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
+				PageEditor.viewFragmentNotVisible(fragmentName = "${fragmentName}");
 			}
 		}
 
@@ -837,7 +837,7 @@ definition {
 			PageEditor.viewFragment(fragmentName = "Form Container");
 
 			for (var fragmentName : list "Grid,Text Input") {
-				PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
+				PageEditor.viewFragmentNotVisible(fragmentName = "${fragmentName}");
 			}
 		}
 

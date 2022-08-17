@@ -13,7 +13,7 @@
  */
 
 export default function getFragmentItem(layoutData, fragmentEntryLinkId) {
-	if (!layoutData) {
+	if (!layoutData || !fragmentEntryLinkId) {
 		return null;
 	}
 

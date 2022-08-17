@@ -72,7 +72,8 @@ public class CalendarUpgradeTestUtil {
 		}
 
 		@Override
-		public void registerInitialUpgradeSteps(UpgradeStep... upgradeSteps) {
+		public void registerInitialDeploymentUpgradeSteps(
+			UpgradeStep... upgradeSteps) {
 		}
 
 		private UpgradeProcess _upgradeStep;

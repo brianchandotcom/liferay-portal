@@ -56,6 +56,7 @@
 		"uiConfiguration": {
 		}
 	},
+	"externalReferenceCode": "STAGING_AWARE",
 	"title_i18n": {
 		"en_US": "Staging Aware"
 	}

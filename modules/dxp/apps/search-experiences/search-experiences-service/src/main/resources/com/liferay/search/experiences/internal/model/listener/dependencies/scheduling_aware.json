@@ -88,6 +88,7 @@
 		"uiConfiguration": {
 		}
 	},
+	"externalReferenceCode": "SCHEDULING_AWARE",
 	"title_i18n": {
 		"en_US": "Scheduling Aware"
 	}

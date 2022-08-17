@@ -179,6 +179,7 @@
 			]
 		}
 	},
+	"externalReferenceCode": "TEXT_MATCH_OVER_MULTIPLE_FIELDS",
 	"title_i18n": {
 		"en_US": "Text Match Over Multiple Fields"
 	}

@@ -74,6 +74,7 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 		Collections.addAll(_initialDeploymentUpgradeSteps, upgradeSteps);
 	}
 
+	@Override
 	public void registerInitialization() {
 		_initialUpgradeInfo = new UpgradeInfo(
 			"0.0.0", null, _buildNumber, new DummyUpgradeStep());

@@ -55,7 +55,7 @@ public class OAuthWebUpgrade implements UpgradeStepRegistrator {
 			throw new RuntimeException(upgradeException);
 		}
 
-		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		registry.register("0.0.1", "1.0.0", new UpgradePortletId());
 	}

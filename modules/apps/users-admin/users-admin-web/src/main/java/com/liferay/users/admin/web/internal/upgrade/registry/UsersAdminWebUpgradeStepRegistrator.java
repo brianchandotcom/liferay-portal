@@ -44,7 +44,7 @@ public class UsersAdminWebUpgradeStepRegistrator
 			_releaseLocalService.updateRelease(release);
 		}
 
-		registry.register("0.0.0", "1.0.1", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		registry.register(
 			"0.0.1", "1.0.0",

@@ -189,6 +189,25 @@ definition {
 		return "${curl}";
 	}
 
+	macro _getStructuredContentFoldersWithDifferentParameters {
+		var portalURL = JSONCompany.getPortalURL();
+		var api = "asset-libraries/${assetLibraryId}/structured-content-folders";
+
+		if (isSet(parameter)) {
+			var api = StringUtil.add("${api}", "?${parameter}=${parameterValue}", "");
+		}
+
+		var curl = '''
+            ${portalURL}/o/headless-delivery/v1.0/${api} \
+            -u test@liferay.com:test \
+            -H Content-Type: application/json
+        ''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _updateStructureContentFolderByErc {
 		Variables.assertDefined(parameterList = "${externalReferenceCode},${name}");
 
@@ -383,6 +402,17 @@ definition {
 		var response = HeadlessWebcontentFolderAPI._getStructuredContentFoldersByErcInAssetLibrary(
 			assetLibraryId = "${assetLibraryId}",
 			externalReferenceCode = "${externalReferenceCode}");
+
+		return "${response}";
+	}
+
+	macro getStructuredContentFoldersWithDifferentParameters {
+		Variables.assertDefined(parameterList = "${assetLibraryId}");
+
+		var response = HeadlessWebcontentFolderAPI._getStructuredContentFoldersWithDifferentParameters(
+			assetLibraryId = "${assetLibraryId}",
+			parameter = "${parameter}",
+			parameterValue = "${parameterValue}");
 
 		return "${response}";
 	}

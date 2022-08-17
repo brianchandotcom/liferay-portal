@@ -1,0 +1,153 @@
+@component-name = "portal-knowledge-base"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Knowledge Base";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			KBArticle.tearDownCP();
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	@refactorneeded
+	test SearchChildArticleViaSearchPortletPG {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Page");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Child");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Knowledge Base Child Article Content",
+			searchAssetTitle = "Knowledge Base Child Article Title",
+			searchAssetType = "Knowledge Base Article");
+	}
+
+	@priority = "3"
+	@refactorneeded
+	test SearchKBArticleInFolderViaSearchPortlet {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page",
+			widgetName = "Knowledge Base Display");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article 2 Content",
+			kbArticleTitle = "Knowledge Base Article 2 Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.configureKBArticleDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbFolderName = "KB Folder");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Knowledge");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Knowledge Base Article 2 Content",
+			searchAssetTitle = "Knowledge Base Article 2 Title",
+			searchAssetType = "Knowledge Base Article");
+	}
+
+	@priority = "4"
+	@refactorneeded
+	test SearchKBArticleViaSearchPortlet {
+		property portal.acceptance = "true";
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Knowledge");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Knowledge Base Article Content",
+			searchAssetTitle = "Knowledge Base Article Title",
+			searchAssetType = "Knowledge Base Article");
+	}
+
+	@priority = "3"
+	@refactorneeded
+	test SearchKBArticleWithSpecialCharactersViaSearchPortletPG {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article's Content",
+			kbArticleFriendlyURL = "knowledge-base-article-s-title",
+			kbArticleTitle = "Knowledge Base Article's Title");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Knowledge Base");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Knowledge Base Article",
+			searchAssetTitle = "Knowledge Base Article",
+			searchAssetType = "Knowledge Base Article");
+	}
+
+}

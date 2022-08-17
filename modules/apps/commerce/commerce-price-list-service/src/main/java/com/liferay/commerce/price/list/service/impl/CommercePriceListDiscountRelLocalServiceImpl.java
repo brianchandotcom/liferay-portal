@@ -58,6 +58,8 @@ public class CommercePriceListDiscountRelLocalServiceImpl
 		commercePriceListDiscountRel.setOrder(order);
 		commercePriceListDiscountRel.setExpandoBridgeAttributes(serviceContext);
 
+		reindexPriceList(commercePriceListId);
+
 		commercePriceListLocalService.cleanPriceListCache();
 
 		return commercePriceListDiscountRelPersistence.update(

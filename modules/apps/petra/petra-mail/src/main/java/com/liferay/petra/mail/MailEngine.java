@@ -22,14 +22,12 @@ import com.liferay.mail.kernel.service.MailServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -80,18 +78,7 @@ import javax.mail.internet.MimeMultipart;
 public class MailEngine {
 
 	public static Session getSession() {
-		Session session = null;
-
-		try {
-			session = MailServiceUtil.getSession();
-		}
-		catch (SystemException systemException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(systemException);
-			}
-
-			session = InfrastructureUtil.getMailSession();
-		}
+		Session session = session = MailServiceUtil.getSession();
 
 		if (_log.isDebugEnabled()) {
 			session.setDebug(true);

@@ -16,7 +16,6 @@ package com.liferay.blogs.recent.bloggers.web.internal.upgrade.registry;
 
 import com.liferay.blogs.recent.bloggers.constants.RecentBloggersPortletKeys;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 

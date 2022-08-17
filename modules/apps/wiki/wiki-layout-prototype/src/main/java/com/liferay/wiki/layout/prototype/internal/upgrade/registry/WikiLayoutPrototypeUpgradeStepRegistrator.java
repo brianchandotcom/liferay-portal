@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.layout.prototype.internal.upgrade.registry;
 
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.wiki.layout.prototype.internal.upgrade.v1_0_0.UpgradeLocalizedColumn;
 

@@ -15,7 +15,6 @@
 package com.liferay.saml.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

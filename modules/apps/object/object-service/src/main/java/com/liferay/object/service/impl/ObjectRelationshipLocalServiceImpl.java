@@ -34,6 +34,7 @@ import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.util.ObjectRelationshipUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -472,15 +473,23 @@ public class ObjectRelationshipLocalServiceImpl
 					"R_", user.getCompanyId(), objectDefinition1.getShortName(),
 					"_", objectDefinition2.getShortName(), "_", name));
 
+			Map<String, String> pkObjectFieldDBColumnNames =
+				ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
+					objectDefinition1, objectDefinition2, false);
+
+			String pkObjectFieldDBColumnName1 = pkObjectFieldDBColumnNames.get(
+				"pkObjectFieldDBColumnName1");
+
+			String pkObjectFieldDBColumnName2 = pkObjectFieldDBColumnNames.get(
+				"pkObjectFieldDBColumnName2");
+
 			runSQL(
 				StringBundler.concat(
 					"create table ", objectRelationship.getDBTableName(), " (",
-					objectDefinition1.getPKObjectFieldDBColumnName(),
-					" LONG not null,",
-					objectDefinition2.getPKObjectFieldDBColumnName(),
-					" LONG not null, primary key (",
-					objectDefinition1.getPKObjectFieldDBColumnName(), ", ",
-					objectDefinition2.getPKObjectFieldDBColumnName(), "))"));
+					pkObjectFieldDBColumnName1, " LONG not null,",
+					pkObjectFieldDBColumnName2, " LONG not null, primary key (",
+					pkObjectFieldDBColumnName1, ", ",
+					pkObjectFieldDBColumnName2, "))"));
 
 			ObjectRelationship reverseObjectRelationship =
 				_addObjectRelationship(

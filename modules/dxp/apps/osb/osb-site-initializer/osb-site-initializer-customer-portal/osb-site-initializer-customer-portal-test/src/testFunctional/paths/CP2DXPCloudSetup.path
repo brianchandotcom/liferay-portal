@@ -26,21 +26,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SETUP_FIELDS</td>
-	<td>xpath=(//*[contains(@class, 'form-control') and contains(@name, '${label}')])[${key_index}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETUP_VALUE</td>
-	<td>//input[contains(@name,'${label}') and contains(@value,'${value}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUBMIT_BUTTON</td>
-	<td>//button[contains(text(), 'Submit')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_ANOTHER_ADMIN</td>
 	<td>//button[contains(@class, 'add-dxp-cloud')]</td>
 	<td></td>
@@ -58,11 +43,6 @@
 <tr>
 	<td>SETUP_DXP_CLOUD_PAGE</td>
 	<td>//h2[contains(@class, 'text-neutral') and contains(.,'Set up DXP Cloud')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FINISH_ACTIVATION</td>
-	<td>//button[contains(@class, 'btn-link') and contains(.,'Finish Activation')]</td>
 	<td></td>
 </tr>
 <tr>

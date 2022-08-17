@@ -134,7 +134,7 @@ public interface CommercePriceListLocalService
 
 	public void checkCommercePriceLists() throws PortalException;
 
-	public void cleanPriceListCache(long companyId);
+	public void cleanPriceListCache();
 
 	/**
 	 * Creates a new commerce price list with the primary key. Does not add the commerce price list to the database.
@@ -375,7 +375,7 @@ public interface CommercePriceListLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Optional<CommercePriceList> getCommercePriceList(
-			long companyId, long groupId, long commerceAccountId,
+			long groupId, long commerceAccountId,
 			long[] commerceAccountGroupIds)
 		throws PortalException;
 

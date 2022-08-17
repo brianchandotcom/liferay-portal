@@ -20,7 +20,7 @@ import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import BudgetResumeCard from '../Activities/Form/components/BudgetBreakdownSection/components/BudgetResumeCard';
 import Body from './components/Body';
-import ActivitiesEntries from './components/Body/components/ActivitiesEntries';
+import ActivityReviewEntry from './components/Body/components/ActivityReviewEntry';
 import GoalsEntries from './components/Body/components/GoalsEntries';
 import Header from './components/Header';
 import GetTotalBudget from './utils/GetTotalBudget';
@@ -55,7 +55,7 @@ const Review = ({
 							key={index}
 							overallCampaign={values.overallCampaign}
 						>
-							<ActivitiesEntries values={value} />
+							<ActivityReviewEntry values={value} />
 						</ActivityPanel>
 					)
 				)}

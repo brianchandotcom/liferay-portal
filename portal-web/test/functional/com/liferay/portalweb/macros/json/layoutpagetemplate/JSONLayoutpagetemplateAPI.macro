@@ -187,7 +187,7 @@ definition {
 	}
 
 	@summary = "Set the layoutPageTemplateEntry as default by using layoutPageTemplateEntryId"
-	macro _setDisplayPageTemplateEntryAsDefault {
+	macro _setLayoutPageTemplateEntryAsDefault {
 		Variables.assertDefined(parameterList = "${layoutPageTemplateEntryId}");
 
 		var portalURL = JSONCompany.getPortalURL();

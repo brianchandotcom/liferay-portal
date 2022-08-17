@@ -48,8 +48,8 @@ String targetType = GetterUtil.getString(layoutTypeSettings.getProperty("targetT
 %>
 
 <aui:select cssClass="propagatable-field" id="targetType" label="target-type" name="TypeSettingsProperties--targetType--">
-	<aui:option label="open-page-in-a-specific-frame" selected='<%= !Objects.equals(targetType, "useNewTab") %>' value="" />
-	<aui:option label="open-page-in-a-new-tab" selected='<%= Objects.equals(targetType, "useNewTab") %>' value="useNewTab" />
+	<aui:option label="specific-frame" selected='<%= !Objects.equals(targetType, "useNewTab") %>' value="" />
+	<aui:option label="new-tab" selected='<%= Objects.equals(targetType, "useNewTab") %>' value="useNewTab" />
 </aui:select>
 
 <aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" id="target" label="target" name="TypeSettingsProperties--target--" size="15" type="text" value='<%= GetterUtil.getString(layoutTypeSettings.getProperty("target")) %>' wrapperCssClass='<%= Objects.equals(targetType, "useNewTab") ? "hide" : "" %>' />

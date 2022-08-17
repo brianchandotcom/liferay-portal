@@ -530,12 +530,120 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify that the translated Picklist item's name will be displayed on Forms"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ViewTranslatedPicklistItemNameOnForms {
+		property portal.upstream = "quarantine";
 
-		// TODO LPS-147730 ViewTranslatedPicklistItemNameOnForms pending implementation
+		task ("Add a Custom Picklist and a Item (via API)") {
+			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "PicklistItemKeyTest",
+				itemName = "Picklist Item Name Test",
+				picklistName = "Picklist Test");
+		}
+
+		task ("Add a Custom Object (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 147730",
+				objectName = "CustomObject147730",
+				pluralLabelName = "Custom Objects 147730");
+		}
+
+		task ("Go to Custom Picklist and add a new language") {
+			Picklist.gotoPicklists();
+
+			Picklist.gotoPicklistView(picklistName = "Picklist Test");
+
+			Picklist.addLanguageOnPicklist(
+				itemName = "Teste na lista",
+				newlanguage = "pt-BR");
+		}
+
+		task ("Go to Picklist Item and add a new language") {
+			Picklist.optionsPicklistItem(
+				itemKey = "PicklistItemKeyTest",
+				picklistItemOption = "View");
+
+			Picklist.addLanguageOnPicklistItem(
+				itemName = "Teste de entrada",
+				newlanguage = "pt-BR");
+
+			Button.clickSave();
+		}
+
+		task ("Go to Custom Object and Fields tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 147730");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Field Picklist",
+				fieldPicklist = "Picklist Test",
+				fieldType = "Picklist");
+		}
+
+		task ("Publish the Custom Object") {
+			Navigator.openURL();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject147730");
+		}
+
+		task ("Change the language") {
+			User.openUsersAdmin();
+
+			User.editDisplaySettingsCP(
+				languageName = "português (Brasil)",
+				userScreenName = "test");
+		}
+
+		task ("Go to Forms and add") {
+			PopulateObjectFormsConfiguration.openForm();
+
+			FormsAdminNavigator.gotoAddForm();
+
+			Form.editName(formName = "Form 1");
+		}
+
+		task ("Mapped the Form with Custom Object") {
+			PopulateObjectFormsConfiguration.openFormSettings();
+
+			PopulateObjectFormsConfiguration.selectObject(label = "Objeto");
+
+			PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 147730");
+		}
+
+		task ("Add field type and select object field") {
+			Form.gotoAddField(
+				fieldType = "Selecionar da lista",
+				localeBasic = "Avançado",
+				localeFields = "Campos");
+
+			AssertClick(
+				key_formObjectField = "Escolha uma Opção",
+				locator1 = "PopulateObjectFormsConfiguration#FORM_OBJECT_FIELD",
+				value1 = "Escolha uma Opção");
+
+			Click(
+				key_fieldLabelName = "Field Picklist",
+				locator1 = "PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
+		}
+
+		task ("Publish and go to published form") {
+			Button.click(button = "Publicar");
+
+			FormsAdminNavigator.gotoPublishedForm();
+		}
+
+		task ("Assert that Picklist Item is translated") {
+			Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
+
+			AssertElementPresent(
+				key_label = "Teste de entrada",
+				locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+		}
 	}
 
 	@description = "LPS-136595 - Verify that the translated Picklist item's name will be displayed on the Object layout"

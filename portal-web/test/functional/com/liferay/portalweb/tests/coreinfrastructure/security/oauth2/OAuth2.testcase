@@ -36,7 +36,7 @@ definition {
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
 					baseURL = "https://localhost:8443",
-					callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
+					callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
 					clientProfile = "Web Application",
@@ -99,7 +99,7 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				checkboxCheckList = "Remember Device",
 				clientId = "abc123",
 				clientProfile = "Web Application",
@@ -139,7 +139,7 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientAuthenticationMethod = "Client Secret JWT",
 				clientId = "abc123",
 				clientProfile = "Web Application",
@@ -252,7 +252,7 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientAuthenticationMethod = "Private Key JWT",
 				clientId = "abc123",
 				clientProfile = "Web Application",
@@ -446,7 +446,7 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default''',
+				callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=default''',
 				clientId = "default",
 				clientProfile = "Web Application",
 				clientSecret = "defaultsecret",
@@ -501,7 +501,7 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default''',
+				callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=default''',
 				checkboxCheckList = "Trusted Application",
 				clientId = "default",
 				clientProfile = "Web Application",
@@ -899,7 +899,7 @@ definition {
 
 			OAuth2.addApplication(
 				applicationName = "Test Expired Application",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientId = "abc123",
 				clientSecret = "abc123",
 				websiteURL = "https://localhost:8443");
@@ -1091,7 +1091,7 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientId = "abc123",
 				clientProfile = "Web Application",
 				clientSecret = "abc123",
@@ -1124,7 +1124,7 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				checkboxCheckList = "Trusted Application",
 				clientId = "abc123",
 				clientProfile = "Web Application",
@@ -1653,7 +1653,7 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				clientId = "abc123",
 				clientProfile = "Web Application",
 				clientSecret = "abc123",
@@ -1693,7 +1693,7 @@ definition {
 
 			OAuth2.addApplication(
 				applicationName = "Remember Device Application",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				checkboxCheckList = "Remember Device",
 				clientProfile = "Web Application",
 				websiteURL = "https://localhost:8443");
@@ -1722,7 +1722,7 @@ definition {
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
 					baseURL = "https://localhost:8443",
-					callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
+					callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
 					clientProfile = "Web Application",
@@ -1782,7 +1782,7 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default''',
+				callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=default''',
 				checkboxCheckList = "Remember Device",
 				clientId = "default",
 				clientProfile = "Web Application",
@@ -1976,7 +1976,7 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/pkce/?url=https://localhost:8443&client_id=pkce''',
+				callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/pkce/?url=https://localhost:8443&client_id=pkce''',
 				checkboxCheckList = "Token Introspection",
 				checkboxUncheckList = "Authorization Code,Client Credentials,JWT_BEARER,Resource Owner Password Credentials",
 				clientAuthenticationMethod = "None",
@@ -2009,7 +2009,7 @@ definition {
 
 			OAuth2.addApplication(
 				applicationName = "Trusted Application",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''https://liferay-appsec.github.io/liferay-oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
 				checkboxCheckList = "Trusted Application",
 				clientProfile = "Web Application",
 				websiteURL = "https://localhost:8443");

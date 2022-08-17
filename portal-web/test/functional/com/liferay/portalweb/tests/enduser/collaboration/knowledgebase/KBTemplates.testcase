@@ -1,0 +1,91 @@
+@component-name = "portal-knowledge-base"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Knowledge Base";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			KBTemplate.tearDownCP();
+
+			KBArticle.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	@refactordone
+	@uitest
+	test CanAddArticleWithTemplate {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "KBAdmin#CanAddArticleWithTemplate";
+
+		JSONKnowledgeBase.addkBTemplate(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleAddViaTemplate = "true",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbTemplateTitle = "Knowledge Base Template Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
+	@priority = "4"
+	@refactordone
+	@uitest
+	test CanAddTemplate {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "KBAdmin#CanAddTemplate";
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBTemplate.addCP(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBTemplate.viewCPViaAddTemplate(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title");
+	}
+
+	@description = "This test covers LPS-120917. It checks that XSS cannot be executed from the KB template name."
+	@priority = "3"
+	test TemplateNameDoesNotExecuteXSS {
+		JSONKnowledgeBase.addkBTemplate(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = '''<script>alert(123)</script>''');
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.viewAddMenuItem(menuItem = '''<script>alert(123)</script>''');
+
+		AssertAlertNotPresent();
+	}
+
+}

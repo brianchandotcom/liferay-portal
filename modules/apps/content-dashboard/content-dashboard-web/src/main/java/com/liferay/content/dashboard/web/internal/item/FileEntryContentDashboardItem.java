@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -46,7 +47,11 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -131,7 +136,7 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public Clipboard getClipboard() {
-		return new Clipboard(_getFileName(), _getClipboardURL());
+		return Clipboard.EMPTY;
 	}
 
 	@Override
@@ -298,7 +303,11 @@ public class FileEntryContentDashboardItem
 		return HashMapBuilder.<String, Object>put(
 			"extension", _getExtension()
 		).put(
+			"latest-version-url", _getLatestVersionURL()
+		).put(
 			"size", _getSize(locale)
+		).put(
+			"web-dav-url", _getWebDAVURL()
 		).build();
 	}
 
@@ -386,7 +395,19 @@ public class FileEntryContentDashboardItem
 		);
 	}
 
-	private String _getClipboardURL() {
+	private String _getExtension() {
+		return FileUtil.getExtension(
+			InfoItemFieldValuesProviderUtil.getStringValue(
+				_fileEntry, _infoItemFieldValuesProvider, "fileName"));
+	}
+
+	private Version _getLastVersion(Locale locale) {
+		List<Version> versions = getVersions(locale);
+
+		return versions.get(versions.size() - 1);
+	}
+
+	private URL _getLatestVersionURL() {
 		return Optional.ofNullable(
 			ServiceContextThreadLocal.getServiceContext()
 		).map(
@@ -402,7 +423,14 @@ public class FileEntryContentDashboardItem
 					ContentDashboardItemAction contentDashboardItemAction =
 						contentDashboardItemActions.get(0);
 
-					return contentDashboardItemAction.getURL();
+					try {
+						return new URL(contentDashboardItemAction.getURL());
+					}
+					catch (MalformedURLException malformedURLException) {
+						_log.error(malformedURLException);
+
+						return null;
+					}
 				}
 
 				return null;
@@ -410,22 +438,6 @@ public class FileEntryContentDashboardItem
 		).orElse(
 			null
 		);
-	}
-
-	private String _getExtension() {
-		return FileUtil.getExtension(
-			InfoItemFieldValuesProviderUtil.getStringValue(
-				_fileEntry, _infoItemFieldValuesProvider, "fileName"));
-	}
-
-	private String _getFileName() {
-		return _fileEntry.getFileName();
-	}
-
-	private Version _getLastVersion(Locale locale) {
-		List<Version> versions = getVersions(locale);
-
-		return versions.get(versions.size() - 1);
 	}
 
 	private String _getPreviewImageURL() {
@@ -480,6 +492,31 @@ public class FileEntryContentDashboardItem
 				}
 				catch (PortalException portalException) {
 					_log.error(portalException);
+
+					return null;
+				}
+			}
+		).orElse(
+			null
+		);
+	}
+
+	private URL _getWebDAVURL() {
+		return Optional.ofNullable(
+			ServiceContextThreadLocal.getServiceContext()
+		).map(
+			ServiceContext::getLiferayPortletRequest
+		).map(
+			portletRequest -> {
+				try {
+					return new URL(
+						_dlURLHelper.getWebDavURL(
+							(ThemeDisplay)portletRequest.getAttribute(
+								WebKeys.THEME_DISPLAY),
+							_fileEntry.getFolder(), _fileEntry));
+				}
+				catch (Exception exception) {
+					_log.error(exception);
 
 					return null;
 				}

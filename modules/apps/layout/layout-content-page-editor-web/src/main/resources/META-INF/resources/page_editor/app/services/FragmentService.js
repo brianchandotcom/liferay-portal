@@ -276,6 +276,31 @@ export default {
 	},
 
 	/**
+	 * Mark a fragment as highlighted if it wasn't, and unmark it if it was
+	 * @param {object} options
+	 * @param {string} options.fragmentEntryKey
+	 * @param {boolean} options.highlighted
+	 * @param {function} options.onNetworkStatus
+	 */
+	toggleFragmentHighlighted({
+		fragmentEntryKey,
+		highlighted,
+		onNetworkStatus,
+	}) {
+		return serviceFetch(
+			config.updateFragmentsHighlightedConfigurationURL,
+			{
+				body: {
+					fragmentEntryKey,
+					highlighted,
+				},
+			},
+			onNetworkStatus,
+			{requestGenerateDraft: true}
+		);
+	},
+
+	/**
 	 * Update configurationValues of the fragmentEntryLink with the given fragmentEntryLinkId
 	 * @param {object} options
 	 * @param {string} options.editableValues

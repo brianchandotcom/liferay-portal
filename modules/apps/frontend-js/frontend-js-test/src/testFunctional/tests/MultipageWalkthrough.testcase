@@ -1,0 +1,91 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property osgi.modules.includes = "frontend-js-walkthrough-sample-web";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Walkthrough";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given walkthrough enabled site-level") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			ApplicationsMenu.gotoSite(site = "Site Name");
+
+			Walkthrough.enableWalkthrough(fileName = "walkthrough_configuration.json");
+		}
+
+		task ("And Given mutiple pages defined") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 1");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 2");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 1",
+				widgetName = "JS Walkthrough Sample");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 2",
+				widgetName = "JS Walkthrough Sample");
+
+			Navigator.openSitePage(
+				pageName = "Walkthrough Page 1",
+				siteName = "Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@description = "LPS-159473. Assert walkthrough can navigate to the next page."
+	@priority = "5"
+	test CanNavigateToNextPage {
+		property portal.acceptance = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("When on step 1") {
+			Walkthrough.enablePopoverMode();
+
+			VerifyElementPresent(
+				key_title = "Step 1 of 2: Click the button",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+
+			AssertLocation(value1 = "${portalURL}/web/site-name/walkthrough-page-1");
+		}
+
+		task ("And When navigate to next step") {
+			Walkthrough.goToNextStep(key_step = "2");
+		}
+
+		task ("Then browser URL ends with /walkthrough-page-2") {
+			AssertLocation(value1 = "${portalURL}/web/site-name/walkthrough-page-2");
+		}
+
+		task ("And Then popover is in step 2") {
+			AssertElementPresent(
+				key_title = "Step 2 of 2: Enter your name",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+	}
+
+}

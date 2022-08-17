@@ -18,7 +18,7 @@ import {
 	STATUS_TAG_TYPE_NAMES,
 } from '../../../../utils/constants';
 
-export default function useGetActivationStatusCardLayout(
+export default function getActivationStatusCardLayout(
 	lxcEnvironment,
 	project,
 	onNotActivatedClick,

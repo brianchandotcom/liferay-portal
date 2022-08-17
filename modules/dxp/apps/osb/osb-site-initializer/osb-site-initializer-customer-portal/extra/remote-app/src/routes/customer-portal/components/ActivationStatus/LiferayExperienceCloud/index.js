@@ -15,8 +15,8 @@ import {STATUS_TAG_TYPE_NAMES} from '../../../utils/constants';
 import ActivationStatusLayout from '../Layout';
 import SetupLiferayExperienceCloudModal from './components/SetupLXCModal';
 import useActivationStatusDate from './hooks/useActivationStatusDate';
-import useGetActivationStatusCardLayout from './hooks/useGetActivationStatusCardLayout';
-import useOnCloseSetupModal from './utils/useOnCloseSetupModal';
+import useOnCloseSetupModal from './hooks/useOnCloseSetupModal';
+import getActivationStatusCardLayout from './utils/getActivationStatusCardLayout';
 
 const ActivationStatusLiferayExperienceCloud = ({
 	lxcEnvironment,
@@ -32,7 +32,7 @@ const ActivationStatusLiferayExperienceCloud = ({
 
 	const {activationStatusDate} = useActivationStatusDate(project);
 
-	const currentActivationStatus = useGetActivationStatusCardLayout(
+	const currentActivationStatus = getActivationStatusCardLayout(
 		lxcEnvironment,
 		project,
 		() => setIsVisibleSetupLxcModal(true),

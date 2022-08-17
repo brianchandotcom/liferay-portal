@@ -29,6 +29,8 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -80,6 +82,7 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 			setStagingControls(getExportControls());
 		}
 		catch (Exception exception) {
+			_log.error(exception);
 		}
 	}
 
@@ -205,6 +208,9 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 		_portletDataHandler.prepareManifestSummary(
 			portletDataContext, portletPreferences);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetCategoryPortletDataHandler.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

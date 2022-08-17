@@ -18,15 +18,18 @@ import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.batch.planner.service.base.BatchPlannerPolicyLocalServiceBaseImpl;
+import com.liferay.batch.planner.service.persistence.BatchPlannerPlanPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -50,7 +53,7 @@ public class BatchPlannerPolicyLocalServiceImpl
 		}
 
 		BatchPlannerPlan batchPlannerPlan =
-			batchPlannerPlanPersistence.findByPrimaryKey(batchPlannerPlanId);
+			_batchPlannerPlanPersistence.findByPrimaryKey(batchPlannerPlanId);
 
 		BatchPlannerPolicy batchPlannerPolicy =
 			batchPlannerPolicyPersistence.create(
@@ -59,7 +62,7 @@ public class BatchPlannerPolicyLocalServiceImpl
 		batchPlannerPolicy.setCompanyId(batchPlannerPlan.getCompanyId());
 		batchPlannerPolicy.setUserId(userId);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		batchPlannerPolicy.setUserName(user.getFullName());
 
@@ -131,5 +134,11 @@ public class BatchPlannerPolicyLocalServiceImpl
 
 		return batchPlannerPolicyPersistence.update(batchPlannerPolicy);
 	}
+
+	@Reference
+	private BatchPlannerPlanPersistence _batchPlannerPlanPersistence;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

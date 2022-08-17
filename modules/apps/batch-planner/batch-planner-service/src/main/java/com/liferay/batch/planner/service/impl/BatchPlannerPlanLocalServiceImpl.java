@@ -22,6 +22,8 @@ import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
 import com.liferay.batch.planner.exception.RequiredBatchPlannerPlanException;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.base.BatchPlannerPlanLocalServiceBaseImpl;
+import com.liferay.batch.planner.service.persistence.BatchPlannerMappingPersistence;
+import com.liferay.batch.planner.service.persistence.BatchPlannerPolicyPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -33,6 +35,8 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,6 +45,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -66,7 +71,7 @@ public class BatchPlannerPlanLocalServiceImpl
 			name = _generateName(internalClassName);
 		}
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		_validateName(0, user.getCompanyId(), name, template);
 
@@ -88,7 +93,7 @@ public class BatchPlannerPlanLocalServiceImpl
 
 		batchPlannerPlan = batchPlannerPlanPersistence.update(batchPlannerPlan);
 
-		resourceLocalService.addResources(
+		_resourceLocalService.addResources(
 			user.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			user.getUserId(), BatchPlannerPlan.class.getName(),
 			batchPlannerPlan.getBatchPlannerPlanId(), false, true, false);
@@ -125,13 +130,13 @@ public class BatchPlannerPlanLocalServiceImpl
 		BatchPlannerPlan batchPlannerPlan = batchPlannerPlanPersistence.remove(
 			batchPlannerPlanId);
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			batchPlannerPlan, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		batchPlannerMappingPersistence.removeByBatchPlannerPlanId(
+		_batchPlannerMappingPersistence.removeByBatchPlannerPlanId(
 			batchPlannerPlanId);
 
-		batchPlannerPolicyPersistence.removeByBatchPlannerPlanId(
+		_batchPlannerPolicyPersistence.removeByBatchPlannerPlanId(
 			batchPlannerPlanId);
 
 		return batchPlannerPlan;
@@ -243,5 +248,17 @@ public class BatchPlannerPlanLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchPlannerPlanLocalServiceImpl.class);
+
+	@Reference
+	private BatchPlannerMappingPersistence _batchPlannerMappingPersistence;
+
+	@Reference
+	private BatchPlannerPolicyPersistence _batchPlannerPolicyPersistence;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -2463,12 +2463,12 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
+		WaitForPageLoad();
+
 		DMDocument.editDocument(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "Document_1.txt");
-
-		WaitForPageLoad();
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
@@ -2519,6 +2519,8 @@ definition {
 		DMNavigator.openToAddEntry(
 			groupName = "Guest",
 			siteURLKey = "guest");
+
+		WaitForPageLoad();
 
 		DMDocument.editDocument(
 			dmDocumentFile = "Document_5.txt",

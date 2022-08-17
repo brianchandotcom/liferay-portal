@@ -12,19 +12,26 @@
  * details.
  */
 
-import {TOGGLE_FRAGMENT_HIGHLIGHTED} from './types';
+import toggleFragmentHighlighted from '../../thunks/toggleFragmentHighlighted';
 
-export default function toggleFragmentHighlighted({
-	fragmentEntryKey,
-	highlighted,
-	highlightedFragments,
-	initiallyHighlighted,
-}) {
-	return {
+function undoAction({action}) {
+	const {fragmentEntryKey, highlighted, initiallyHighlighted} = action;
+
+	return toggleFragmentHighlighted({
 		fragmentEntryKey,
 		highlighted,
-		highlightedFragments,
 		initiallyHighlighted,
-		type: TOGGLE_FRAGMENT_HIGHLIGHTED,
+	});
+}
+
+function getDerivedStateForUndo({action}) {
+	const {fragmentEntryKey, highlighted, initiallyHighlighted} = action;
+
+	return {
+		fragmentEntryKey,
+		highlighted: !highlighted,
+		initiallyHighlighted: initiallyHighlighted || highlighted,
 	};
 }
+
+export {undoAction, getDerivedStateForUndo};

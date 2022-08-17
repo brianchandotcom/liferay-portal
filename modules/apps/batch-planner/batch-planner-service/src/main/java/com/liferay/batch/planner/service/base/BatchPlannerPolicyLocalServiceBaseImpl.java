@@ -17,8 +17,6 @@ package com.liferay.batch.planner.service.base;
 import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.batch.planner.service.BatchPlannerPolicyLocalService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyLocalServiceUtil;
-import com.liferay.batch.planner.service.persistence.BatchPlannerMappingPersistence;
-import com.liferay.batch.planner.service.persistence.BatchPlannerPlanPersistence;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPolicyPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -483,12 +481,6 @@ public abstract class BatchPlannerPolicyLocalServiceBaseImpl
 		}
 	}
 
-	@Reference
-	protected BatchPlannerMappingPersistence batchPlannerMappingPersistence;
-
-	@Reference
-	protected BatchPlannerPlanPersistence batchPlannerPlanPersistence;
-
 	protected BatchPlannerPolicyLocalService batchPlannerPolicyLocalService;
 
 	@Reference
@@ -497,17 +489,5 @@ public abstract class BatchPlannerPolicyLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 }

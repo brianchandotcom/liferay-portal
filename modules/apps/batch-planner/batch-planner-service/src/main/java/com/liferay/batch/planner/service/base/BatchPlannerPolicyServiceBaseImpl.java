@@ -17,8 +17,6 @@ package com.liferay.batch.planner.service.base;
 import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.batch.planner.service.BatchPlannerPolicyService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyServiceUtil;
-import com.liferay.batch.planner.service.persistence.BatchPlannerMappingPersistence;
-import com.liferay.batch.planner.service.persistence.BatchPlannerPlanPersistence;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPolicyPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -136,12 +134,6 @@ public abstract class BatchPlannerPolicyServiceBaseImpl
 	}
 
 	@Reference
-	protected BatchPlannerMappingPersistence batchPlannerMappingPersistence;
-
-	@Reference
-	protected BatchPlannerPlanPersistence batchPlannerPlanPersistence;
-
-	@Reference
 	protected com.liferay.batch.planner.service.BatchPlannerPolicyLocalService
 		batchPlannerPolicyLocalService;
 
@@ -153,24 +145,5 @@ public abstract class BatchPlannerPolicyServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserService userService;
 
 }

@@ -17,11 +17,6 @@ package com.liferay.calendar.service.base;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceService;
 import com.liferay.calendar.service.CalendarResourceServiceUtil;
-import com.liferay.calendar.service.persistence.CalendarBookingFinder;
-import com.liferay.calendar.service.persistence.CalendarBookingPersistence;
-import com.liferay.calendar.service.persistence.CalendarFinder;
-import com.liferay.calendar.service.persistence.CalendarNotificationTemplatePersistence;
-import com.liferay.calendar.service.persistence.CalendarPersistence;
 import com.liferay.calendar.service.persistence.CalendarResourceFinder;
 import com.liferay.calendar.service.persistence.CalendarResourcePersistence;
 import com.liferay.portal.aop.AopService;
@@ -139,22 +134,6 @@ public abstract class CalendarResourceServiceBaseImpl
 	}
 
 	@Reference
-	protected CalendarPersistence calendarPersistence;
-
-	@Reference
-	protected CalendarFinder calendarFinder;
-
-	@Reference
-	protected CalendarBookingPersistence calendarBookingPersistence;
-
-	@Reference
-	protected CalendarBookingFinder calendarBookingFinder;
-
-	@Reference
-	protected CalendarNotificationTemplatePersistence
-		calendarNotificationTemplatePersistence;
-
-	@Reference
 	protected com.liferay.calendar.service.CalendarResourceLocalService
 		calendarResourceLocalService;
 
@@ -169,24 +148,5 @@ public abstract class CalendarResourceServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserService userService;
 
 }

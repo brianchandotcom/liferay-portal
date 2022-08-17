@@ -19,11 +19,6 @@ import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.persistence.CalendarBookingFinder;
 import com.liferay.calendar.service.persistence.CalendarBookingPersistence;
-import com.liferay.calendar.service.persistence.CalendarFinder;
-import com.liferay.calendar.service.persistence.CalendarNotificationTemplatePersistence;
-import com.liferay.calendar.service.persistence.CalendarPersistence;
-import com.liferay.calendar.service.persistence.CalendarResourceFinder;
-import com.liferay.calendar.service.persistence.CalendarResourcePersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -694,12 +689,6 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 		}
 	}
 
-	@Reference
-	protected CalendarPersistence calendarPersistence;
-
-	@Reference
-	protected CalendarFinder calendarFinder;
-
 	protected CalendarBookingLocalService calendarBookingLocalService;
 
 	@Reference
@@ -709,29 +698,7 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 	protected CalendarBookingFinder calendarBookingFinder;
 
 	@Reference
-	protected CalendarNotificationTemplatePersistence
-		calendarNotificationTemplatePersistence;
-
-	@Reference
-	protected CalendarResourcePersistence calendarResourcePersistence;
-
-	@Reference
-	protected CalendarResourceFinder calendarResourceFinder;
-
-	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 }

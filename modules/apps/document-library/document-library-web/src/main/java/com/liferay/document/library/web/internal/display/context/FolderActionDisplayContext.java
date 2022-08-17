@@ -67,7 +67,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -85,7 +84,7 @@ public class FolderActionDisplayContext {
 		_dlRequestHelper = new DLRequestHelper(httpServletRequest);
 	}
 
-	public List<DropdownItem> getActionDropdownItems() throws PortalException {
+	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
 				DropdownItemListBuilder.add(
@@ -508,7 +507,7 @@ public class FolderActionDisplayContext {
 		return _dlRequestHelper.getScopeGroupId();
 	}
 
-	public String getViewSlideShowURL() throws WindowStateException {
+	public String getViewSlideShowURL() {
 		return PortletURLBuilder.createRenderURL(
 			_dlRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
@@ -778,7 +777,7 @@ public class FolderActionDisplayContext {
 		return false;
 	}
 
-	public boolean isTrashEnabled() throws PortalException {
+	public boolean isTrashEnabled() {
 		try {
 			Folder folder = _getFolder();
 

@@ -2025,7 +2025,7 @@ definition {
 	macro gotoMenuItemViaInfoPanel {
 		DMDocument.expandInfo();
 
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		Click(locator1 = "Icon#SIDEBAR_HEADER_ACTION_VERTICAL_ELLIPSIS_BUTTON");
 
 		if (isSet(menuItem)) {
 			Click(

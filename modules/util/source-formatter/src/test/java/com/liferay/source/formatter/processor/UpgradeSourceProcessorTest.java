@@ -27,6 +27,11 @@ import org.junit.Test;
 public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testXMLUpgradeDTDVersionCheck() throws Exception {
+		test("upgrade/GradleUpgradeReleaseDxpCheck.testgradle");
+	}
+
+	@Test
 	public void testGradleUpgradeReleaseDxpCheck() throws Exception {
 		test("upgrade/GradleUpgradeReleaseDxpCheck.testgradle");
 	}

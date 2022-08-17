@@ -28,7 +28,7 @@ export const CREATE_ADMIN_LIFERAY_EXPERIENCE_CLOUD = gql`
 	}
 `;
 
-export function useCreateAdminsLiferayExperienceCloud(variables) {
+export function useCreateAdminLiferayExperienceCloud(variables) {
 	return useMutation(CREATE_ADMIN_LIFERAY_EXPERIENCE_CLOUD, {
 		variables,
 	});

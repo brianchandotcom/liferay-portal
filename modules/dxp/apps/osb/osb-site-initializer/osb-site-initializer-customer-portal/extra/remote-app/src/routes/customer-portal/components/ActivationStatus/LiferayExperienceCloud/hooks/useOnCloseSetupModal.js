@@ -24,17 +24,15 @@ export default function useOnCloseSetupModal(
 
 	const handleSubmitLxcEnvironment = (isSuccess) => {
 		onClose();
-		if (isSuccess) {
-			if (dataSubscriptionGroups) {
-				const items =
-					dataSubscriptionGroups?.c?.accountSubscriptionGroups?.items;
-				dispatch({
-					payload: items,
-					type: actionTypes.UPDATE_SUBSCRIPTION_GROUPS,
-				});
+		if (isSuccess && dataSubscriptionGroups) {
+			const items =
+				dataSubscriptionGroups?.c?.accountSubscriptionGroups?.items;
+			dispatch({
+				payload: items,
+				type: actionTypes.UPDATE_SUBSCRIPTION_GROUPS,
+			});
 
-				setStatusActivation(STATUS_TAG_TYPE_NAMES.inProgress);
-			}
+			setStatusActivation(STATUS_TAG_TYPE_NAMES.inProgress);
 		}
 	};
 

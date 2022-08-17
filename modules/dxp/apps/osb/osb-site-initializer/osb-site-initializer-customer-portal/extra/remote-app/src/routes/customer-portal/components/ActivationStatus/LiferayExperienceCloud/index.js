@@ -40,6 +40,7 @@ const ActivationStatusLiferayExperienceCloud = ({
 	);
 
 	const {data: dataSubscriptionGroups} = useGetAccountSubscriptionGroups({
+		fetchPolicy: 'network-only',
 		filter: `accountKey eq '${project.accountKey}' and hasActivation eq true`,
 	});
 

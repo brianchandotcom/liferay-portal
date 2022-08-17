@@ -12,7 +12,7 @@
 import {useMutation} from '@apollo/client';
 import {useAppPropertiesContext} from '../../../../../../../../../../../../common/contexts/AppPropertiesContext';
 import {
-	useCreateAdminsLiferayExperienceCloud,
+	useCreateAdminLiferayExperienceCloud,
 	useCreateLiferayExperienceCloudEnvironments,
 } from '../../../../../../../../../../../../common/services/liferay/graphql/liferay-experience-cloud-environments';
 import {
@@ -39,7 +39,7 @@ export default function useSubmitLXCEnvironment(
 	);
 	const [
 		createAdminLiferayExperienceCloud,
-	] = useCreateAdminsLiferayExperienceCloud();
+	] = useCreateAdminLiferayExperienceCloud();
 
 	const handleSubmitLxcEnvironment = async () => {
 		const lxcActivationFields = values?.lxc;

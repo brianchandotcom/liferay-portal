@@ -29,15 +29,15 @@ const SetupLiferayExperienceCloudModal = ({
 	);
 	const [formAlreadySubmitted, setFormAlreadySubmitted] = useState(false);
 
-	const handleChangeForm = (isSuccess) => {
-		if (isSuccess) {
-			return setCurrentProcess(LXC_STEPS_TYPES.confirmationForm);
-		}
-		onClose();
-	};
+	const currentModalForm = useMemo(() => {
+		const handleChangeForm = (isSuccess) => {
+			if (isSuccess) {
+				return setCurrentProcess(LXC_STEPS_TYPES.confirmationForm);
+			}
+			onClose();
+		};
 
-	const currentModalForm = useMemo(
-		() => ({
+		return {
 			[LXC_STEPS_TYPES.confirmationForm]: (
 				<ConfirmationMessageModal onClose={onClose} />
 			),
@@ -51,11 +51,8 @@ const SetupLiferayExperienceCloudModal = ({
 					subscriptionGroupLxcId={subscriptionGroupLxcId}
 				/>
 			),
-		}),
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[onClose, project, subscriptionGroupLxcId]
-	);
+		};
+	}, [handleOnLeftButtonClick, onClose, project, subscriptionGroupLxcId]);
 
 	return (
 		<ClayModal center observer={observer}>

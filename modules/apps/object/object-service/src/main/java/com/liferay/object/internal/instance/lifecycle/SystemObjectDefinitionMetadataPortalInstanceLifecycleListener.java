@@ -49,12 +49,14 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
+import com.liferay.portal.util.PropsUtil;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -207,9 +209,13 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 							companyId, systemObjectDefinitionMetadata);
 			}
 
-			_objectRelationshipEndpointsExtension.
-				addSystemObjectRelationshipsEndpoints(
-					systemObjectDefinitionMetadata);
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-153324"))) {
+
+				_objectRelationshipEndpointsExtension.
+					addSystemObjectRelationshipsEndpoints(
+						systemObjectDefinitionMetadata);
+			}
 
 			_bundleContext.registerService(
 				ArgumentsResolver.class,

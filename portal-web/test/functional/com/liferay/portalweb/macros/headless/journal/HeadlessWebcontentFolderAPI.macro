@@ -19,13 +19,13 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/structured-content-folders/${parentStructuredContentFolderId}/structured-content-folders \
-				-u ${userEmailAddress}:${userPassword} \
-				-H accept: application/json \
-				-H Content-Type: application/json \
-				-d {
-                    "externalReferenceCode": "${externalReferenceCode}",
-                    "name": "${name}"
-				}
+			-u ${userEmailAddress}:${userPassword} \
+			-H accept: application/json \
+			-H Content-Type: application/json \
+			-d {
+				"externalReferenceCode": "${externalReferenceCode}",
+				"name": "${name}"
+			}
 		''';
 
 		var response = JSONCurlUtil.post("${curl}");
@@ -59,13 +59,13 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-				-u ${userEmailAddress}:${userPassword} \
-				-H accept: application/json \
-				-H Content-Type: application/json \
-				-d {
-                    "externalReferenceCode": "${externalReferenceCode}",
-                    "name": "${name}"
-				}
+			-u ${userEmailAddress}:${userPassword} \
+			-H accept: application/json \
+			-H Content-Type: application/json \
+			-d {
+				"externalReferenceCode": "${externalReferenceCode}",
+				"name": "${name}"
+			}
 		''';
 
 		var response = JSONCurlUtil.post("${curl}");
@@ -210,9 +210,9 @@ definition {
 			-u test@liferay.com:test \
 			-H Content-Type: application/json \
 			-d {
-  "externalReferenceCode": "${externalReferenceCodeInBody}",
-  "name": "${name}"
-	}
+				"externalReferenceCode": "${externalReferenceCodeInBody}",
+				"name": "${name}"
+			}
 		''';
 
 		var curl = JSONCurlUtil.put("${curl}");

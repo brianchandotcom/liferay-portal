@@ -6,14 +6,14 @@ definition {
 		var size = ${numberOfCommentsToCreate} + 1;
 		var i = "1";
 		var body = '''
-		[
-				''';
+			[
+		''';
 
 		while (("${i}" != "${size}") && (maxIterations = "100")) {
 			var commentBody = '''
-					{
+				{
 					"text": "commentText${i}"
-					}
+				}
 			''';
 			var j = ${i} + 1;
 
@@ -50,8 +50,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}/comments \
- 			 	-u test@liferay.com:test \
-				-H Content-Type: application/json
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
 		''';
 
 		return "${curl}";
@@ -69,11 +69,13 @@ definition {
 		}
 
 		var curl = CommentAPI._curlBlogPostingComments(blogPostingId = "${blogPostingId}");
-		var body = '''-d {
+		var body = '''
+			-d {
 				"externalReferenceCode": "${externalReferenceCode}",
 				"parentCommentId": "${parentCommentId}",
 				"text": "${commentText}"
-				}''';
+			}
+		''';
 
 		var curl = StringUtil.add("${curl}", "${body}", " ");
 

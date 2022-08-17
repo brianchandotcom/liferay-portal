@@ -297,9 +297,7 @@ definition {
 			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 				groupName = "Guest",
 				site = "true");
-			var requestBody = '''{
-                "name": "Vocubulary Name"
-            }''';
+			var requestBody = '''{"name": "Vocubulary Name"}''';
 
 			APIExplorer.executeAPIMethodWithParameters(
 				method = "postSiteTaxonomyVocabulary",
@@ -369,10 +367,12 @@ definition {
 			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 				groupName = "Guest",
 				site = "true");
-			var requestBody = '''{
-                "contentStructureId": ${ddmStructureId},
-                "title": "title of structured content"
-            }''';
+			var requestBody = '''
+				{
+					"contentStructureId": ${ddmStructureId},
+					"title": "title of structured content"
+				}
+			''';
 
 			APIExplorer.executeAPIMethodWithParameters(
 				method = "postSiteStructuredContentDraft",
@@ -442,10 +442,12 @@ definition {
 			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 				groupName = "Guest",
 				site = "true");
-			var requestBody = '''{
-				"contentStructureId": ${ddmStructureId},
-				"title": "title of structured content"
-			}''';
+			var requestBody = '''
+				{
+					"contentStructureId": ${ddmStructureId},
+					"title": "title of structured content"
+				}
+			''';
 
 			APIExplorer.executeAPIMethodWithParameters(
 				method = "postSiteStructuredContent",

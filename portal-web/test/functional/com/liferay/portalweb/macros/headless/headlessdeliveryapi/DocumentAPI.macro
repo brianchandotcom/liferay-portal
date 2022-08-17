@@ -103,7 +103,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
 			-u test@liferay.com:test \
-			''';
+		''';
 		var delimiter = " ";
 
 		if (isSet(filePath)) {

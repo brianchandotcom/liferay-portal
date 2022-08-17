@@ -40,12 +40,11 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/employees \
 			-u test@liferay.com:test \
-			-H Content-Type: application/json
-            -d
-					{	                 
-	"firstname": "${firstname}",
-	"r_supervisor_c_managerId": "${managerId}"
-	}
+			-H Content-Type: application/json \
+			-d {
+				"firstname": "${firstname}",
+				"r_supervisor_c_managerId": "${managerId}"
+			}
 		''';
 
 		var employeeId = JSONCurlUtil.post("${curl}", "$.id");
@@ -59,11 +58,10 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/managers \
 			-u test@liferay.com:test \
-			-H Content-Type: application/json
-            -d
-					{	                 
-	"firstname": "${firstname}"
-	}
+			-H Content-Type: application/json \
+			-d {
+				"firstname": "${firstname}"
+			}
 		''';
 
 		var managerId = JSONCurlUtil.post("${curl}", "$.id");
@@ -79,32 +77,31 @@ definition {
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions \
 			-u test@liferay.com:test \
-			-H Content-Type: application/json
-            -d
-					{	                 
-	"active": true,
-	"label": {
-		"en_US": "${en_US_label}"
-	},
-	"name": "${name}",
-	"objectFields": [{
-		"DBType": "String",
-		"businessType": "Text",
-		"indexed": true,
-		"indexedAsKeyword": true,
-		"label": {
-			"en_US": "${requiredStringFieldName}"
-		},
-		"name": "${requiredStringFieldName}",
-		"required": true,
-		"dbtype": "String"
-	}],
-	"pluralLabel": {
-		"en_US": "${en_US_plural_label}"
-	},
-	"portlet": true,
-	"scope": "company"
-					}
+			-H Content-Type: application/json \
+			-d {
+				"active": true,
+				"label": {
+					"en_US": "${en_US_label}"
+				},
+				"name": "${name}",
+				"objectFields": [{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"label": {
+						"en_US": "${requiredStringFieldName}"
+					},
+					"name": "${requiredStringFieldName}",
+					"required": true,
+					"dbtype": "String"
+				}],
+				"pluralLabel": {
+					"en_US": "${en_US_plural_label}"
+				},
+				"portlet": true,
+				"scope": "company"
+			}
 		''';
 
 		var objectDefinitionId = JSONCurlUtil.post("${curl}", "$.id");
@@ -121,11 +118,10 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/${en_US_plural_label_lowercase} \
 			-u test@liferay.com:test \
-			-H Content-Type: application/json
-            -d
-					{	                 
-	"name": "${name}"
-	}
+			-H Content-Type: application/json \
+			-d {
+				"name": "${name}"
+			}
 		''';
 
 		var objectId = JSONCurlUtil.post("${curl}", "$.id");
@@ -141,17 +137,16 @@ definition {
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId1}/object-relationships \
 			-u test@liferay.com:test \
-			-H Content-Type: application/json
-            -d
-					{	                 
-	"deletionType": "${deletionType}",
-  	"label": {
-    	"en_US": "${en_US_label}"
-    },
-  	"name": "${name}",
-  	"objectDefinitionId2": "${objectDefinitionId2}",
-  	"type": "${type}"
-					}
+			-H Content-Type: application/json \
+			-d {
+				"deletionType": "${deletionType}",
+				"label": {
+					"en_US": "${en_US_label}"
+				},
+				"name": "${name}",
+				"objectDefinitionId2": "${objectDefinitionId2}",
+				"type": "${type}"
+			}
 		''';
 
 		var relationshipId = JSONCurlUtil.post("${curl}", "$.id");
@@ -373,11 +368,10 @@ definition {
         	${portalURL}/o/object-admin/v1.0/object-relationships/${relationshipId} \
 			-u test@liferay.com:test \
 			-H Content-Type: application/json \
-			-H accept: application/json
-			-d
-					{	                 
-	"deletionType": "${deletionType}"
-					}
+			-H accept: application/json \
+			-d {
+				"deletionType": "${deletionType}"
+			}
 		''';
 
 		var relationshipDeletionType = JSONCurlUtil.put("${curl}");
@@ -424,14 +418,12 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/employees/${employeeId} \
 			-u test@liferay.com:test \
-			-H Content-Type: application/json
-
-			-d
-					{	                 
-	"firstname": "${firstname}",
-	"r_supervisor_c_managerId": "${managerId}"
-					}
-	''';
+			-H Content-Type: application/json \
+			-d {
+				"firstname": "${firstname}",
+				"r_supervisor_c_managerId": "${managerId}"
+			}
+		''';
 
 		var response = JSONCurlUtil.put("${curl}");
 

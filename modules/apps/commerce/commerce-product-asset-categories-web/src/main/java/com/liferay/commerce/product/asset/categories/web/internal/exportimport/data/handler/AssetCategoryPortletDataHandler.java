@@ -23,14 +23,13 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -70,20 +69,15 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Activate
-	protected void activate() {
-		try {
-			setDataAlwaysStaged(_portletDataHandler.isDataAlwaysStaged());
-			setDeletionSystemEventStagedModelTypes(
-				_portletDataHandler.getDeletionSystemEventStagedModelTypes());
-			setExportControls(_portletDataHandler.getExportControls());
-			setPublishToLiveByDefault(
-				_portletDataHandler.isPublishToLiveByDefault());
-			setRank(_portletDataHandler.getRank());
-			setStagingControls(getExportControls());
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
+	protected void activate() throws PortletDataException {
+		setDataAlwaysStaged(_portletDataHandler.isDataAlwaysStaged());
+		setDeletionSystemEventStagedModelTypes(
+			_portletDataHandler.getDeletionSystemEventStagedModelTypes());
+		setExportControls(_portletDataHandler.getExportControls());
+		setPublishToLiveByDefault(
+			_portletDataHandler.isPublishToLiveByDefault());
+		setRank(_portletDataHandler.getRank());
+		setStagingControls(getExportControls());
 	}
 
 	@Override
@@ -208,9 +202,6 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 		_portletDataHandler.prepareManifestSummary(
 			portletDataContext, portletPreferences);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetCategoryPortletDataHandler.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

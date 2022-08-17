@@ -2513,7 +2513,7 @@ definition {
 							locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
 							value1 = "Sites and Libraries");
 
-						LexiconCard.clickCardTitleLink(card = "${siteName}");
+						LexiconCard.clickCardTitle(card = "${siteName}");
 					}
 
 					Portlet.expandTree();

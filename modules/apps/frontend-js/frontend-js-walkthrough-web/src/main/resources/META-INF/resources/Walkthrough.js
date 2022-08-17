@@ -188,7 +188,7 @@ const Step = ({
 	const hotspotRef = useRef(null);
 
 	const [popoverVisible, setPopoverVisible] = useLocalStorage(
-		'walkthrough-popover-visible',
+		`${themeDisplay.getUserId()}-walkthrough-popover-visible`,
 		false
 	);
 
@@ -498,8 +498,9 @@ const Walkthrough = ({
 	const [
 		currentStepIndex,
 		setCurrentStepIndex,
-	] = useLocalStorage('walkthrough-current-step', () =>
-		!steps.length ? null : 0
+	] = useLocalStorage(
+		`${themeDisplay.getUserId()}-walkthrough-current-step`,
+		() => (!steps.length ? null : 0)
 	);
 
 	if (currentStepIndex === null) {

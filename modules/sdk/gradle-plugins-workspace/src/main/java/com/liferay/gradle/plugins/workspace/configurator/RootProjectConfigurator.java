@@ -391,14 +391,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				userNameProperty.set(dockerUserName);
 			}
 
-			String dockerAccessToken =
+			String dockerUserAccessToken =
 				workspaceExtension.getDockerUserAccessToken();
 
-			if (Objects.nonNull(dockerAccessToken)) {
+			if (Objects.nonNull(dockerUserAccessToken)) {
 				Property<String> passwordProperty =
 					dockerRegistryCredentials.getPassword();
 
-				passwordProperty.set(dockerAccessToken);
+				passwordProperty.set(dockerUserAccessToken);
 			}
 		}
 
@@ -1229,14 +1229,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			userNameProperty.set(dockerUserName);
 		}
 
-		String dockerAccessToken =
+		String dockerUserAccessToken =
 			workspaceExtension.getDockerUserAccessToken();
 
-		if (Objects.nonNull(dockerAccessToken)) {
+		if (Objects.nonNull(dockerUserAccessToken)) {
 			Property<String> passwordProperty =
 				dockerRegistryCredentials.getPassword();
 
-			passwordProperty.set(dockerAccessToken);
+			passwordProperty.set(dockerUserAccessToken);
 		}
 
 		dockerPullImage.setDescription("Pull the Docker image.");
@@ -1287,14 +1287,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			userNameProperty.set(dockerUserName);
 		}
 
-		String dockerAccessToken =
+		String dockerUserAccessToken =
 			workspaceExtension.getDockerUserAccessToken();
 
-		if (Objects.nonNull(dockerAccessToken)) {
+		if (Objects.nonNull(dockerUserAccessToken)) {
 			Property<String> passwordProperty =
 				dockerRegistryCredentials.getPassword();
 
-			passwordProperty.set(dockerAccessToken);
+			passwordProperty.set(dockerUserAccessToken);
 		}
 
 		return dockerPushImage;

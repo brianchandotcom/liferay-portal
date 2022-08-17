@@ -156,7 +156,7 @@ $h4 liferay.workspace.docker.pull.policy
 Set this to false to pull the user's local Docker cache first. The default value is true.
 
 $h4 liferay.workspace.docker.username
-To avoid conflict with DockerHub, set this property to the registered user name on DockerHub.
+To avoid conflicts with DockerHub, set this property to the registered user name on DockerHub.
 
 $h4 liferay.workspace.docker.user.access.token
 See this page (https://docs.docker.com/docker-hub/access-tokens) on how to generate a Docker access token.

@@ -428,8 +428,8 @@ public class WorkspaceExtension {
 		_dockerPullPolicy = dockerPullPolicy;
 	}
 
-	public void setDockerUserAccessToken(Object dockerAccessToken) {
-		_dockerUserAccessToken = dockerAccessToken;
+	public void setDockerUserAccessToken(Object dockerUserAccessToken) {
+		_dockerUserAccessToken = dockerUserAccessToken;
 	}
 
 	public void setDockerUserName(Object dockerUserName) {

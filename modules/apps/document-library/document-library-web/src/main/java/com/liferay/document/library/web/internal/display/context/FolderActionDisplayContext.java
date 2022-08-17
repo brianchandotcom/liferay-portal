@@ -115,10 +115,7 @@ public class FolderActionDisplayContext {
 				).add(
 					() -> isDeleteExpiredTemporaryFileEntriesActionVisible(),
 					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "deleteExpiredTemporaryFileEntries");
-						dropdownItem.putData(
-							"deleteExpiredTemporaryFileEntriesURL",
+						dropdownItem.setHref(
 							getDeleteExpiredTemporaryFileEntriesURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(

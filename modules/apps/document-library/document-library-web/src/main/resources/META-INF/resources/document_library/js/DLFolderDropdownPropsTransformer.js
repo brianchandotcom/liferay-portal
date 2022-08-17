@@ -67,10 +67,6 @@ const ACTIONS = {
 		});
 	},
 
-	deleteExpiredTemporaryFileEntries({deleteExpiredTemporaryFileEntriesURL}) {
-		submitForm(document.hrefFm, deleteExpiredTemporaryFileEntriesURL);
-	},
-
 	permissions({permissionsURL}) {
 		openModal({
 			title: Liferay.Language.get('permissions'),

@@ -68,11 +68,16 @@ definition {
 			var parentCommentId = "0";
 		}
 
+		if (!(isSet(idComment))) {
+			var idComment = "";
+		}
+
 		var curl = CommentAPI._curlBlogPostingComments(blogPostingId = "${blogPostingId}");
 		var body = '''
 			-d {
 				"externalReferenceCode": "${externalReferenceCode}",
 				"parentCommentId": "${parentCommentId}",
+				"id":"${idComment}",
 				"text": "${commentText}"
 			}
 		''';

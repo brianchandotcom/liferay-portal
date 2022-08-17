@@ -711,17 +711,17 @@ definition {
 					panel = "General");
 			}
 
-			task ("Add a Container inside Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Layout Elements",
-					fragmentName = "Container");
-			}
-
-			task ("Add a Submit Button fragment below Container inside Form Container") {
+			task ("Add a Submit Button inside Form Container") {
 				PageEditor.addFragmentToFormContainer(
 					collectionName = "Form Components",
-					fragmentName = "Submit Button",
-					targetFragmentName = "Container");
+					fragmentName = "Submit Button");
+			}
+
+			task ("Add a Container fragment below Submit Button inside Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Layout Elements",
+					fragmentName = "Container",
+					targetFragmentName = "Submit Button");
 			}
 
 			task ("Mark the Text Input fragment as required after added to Container") {

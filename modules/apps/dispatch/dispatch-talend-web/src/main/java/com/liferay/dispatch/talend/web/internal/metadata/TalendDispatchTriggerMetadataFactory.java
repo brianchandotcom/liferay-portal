@@ -19,8 +19,6 @@ import com.liferay.dispatch.metadata.DispatchTriggerMetadataFactory;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.talend.web.internal.executor.TalendDispatchTaskExecutor;
-import com.liferay.expando.kernel.exception.DuplicateColumnNameException;
-import com.liferay.expando.kernel.exception.DuplicateTableNameException;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
@@ -30,6 +28,7 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import org.osgi.service.component.annotations.Activate;
@@ -92,37 +91,30 @@ public class TalendDispatchTriggerMetadataFactory
 	}
 
 	private void _setupExpando(long companyId) throws Exception {
-		ExpandoTable expandoTable = null;
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+			companyId,
+			_classNameLocalService.getClassNameId(
+				DispatchTrigger.class.getName()),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
-		try {
-			expandoTable = _expandoTableLocalService.addTable(
-				companyId, DispatchTrigger.class.getName(),
-				ExpandoTableConstants.DEFAULT_TABLE_NAME);
-		}
-		catch (DuplicateTableNameException duplicateTableNameException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(duplicateTableNameException);
-			}
-
-			expandoTable = _expandoTableLocalService.getTable(
-				companyId, DispatchTrigger.class.getName(),
-				ExpandoTableConstants.DEFAULT_TABLE_NAME);
+		if (expandoTable != null) {
+			return;
 		}
 
-		try {
-			_expandoColumnLocalService.addColumn(
-				expandoTable.getTableId(), "fileName",
-				ExpandoColumnConstants.STRING);
-		}
-		catch (DuplicateColumnNameException duplicateColumnNameException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(duplicateColumnNameException);
-			}
-		}
+		expandoTable = _expandoTableLocalService.addTable(
+			companyId, DispatchTrigger.class.getName(),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		_expandoColumnLocalService.addColumn(
+			expandoTable.getTableId(), "fileName",
+			ExpandoColumnConstants.STRING);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TalendDispatchTriggerMetadataFactory.class);
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

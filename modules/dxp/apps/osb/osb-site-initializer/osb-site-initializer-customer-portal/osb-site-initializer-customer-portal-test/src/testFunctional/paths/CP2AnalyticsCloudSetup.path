@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>CP2AnalyticsCloudSetup</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CP2AnalyticsCloudSetup</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>SELECT_LOCATION</td>
+	<td>//select[contains(@name, 'dataCenterLocation')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_EXTRA_FIELD</td>
+	<td>//button[contains(@class, 'btn-primary') and contains(text(), 'Add Incident Report Contact')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_REMOVE_EXTRA_FIELD</td>
+	<td>//button[contains(@class, 'btn-secondary') and contains(text(), 'Remove Incident Report Contact')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

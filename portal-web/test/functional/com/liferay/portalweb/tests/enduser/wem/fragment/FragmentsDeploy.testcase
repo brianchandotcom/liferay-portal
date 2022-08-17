@@ -54,7 +54,15 @@ definition {
 		}
 
 		task ("Delete the deployed collection") {
-			Collection.deleteCollection(collectionName = "Imported");
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Delete");
+
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Deleting a fragment set is an action impossible to revert. All the fragments in the set will be removed and it will not be possible to recover them.");
+
+			Click(
+				key_text = "Delete",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
 
 		task ("Assert the deployed collection is not present") {
@@ -91,7 +99,15 @@ definition {
 		}
 
 		task ("Delete the deployed collection") {
-			Collection.deleteCollection(collectionName = "Imported");
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Delete");
+
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Deleting a fragment set is an action impossible to revert. All the fragments in the set will be removed and it will not be possible to recover them.");
+
+			Click(
+				key_text = "Delete",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
 
 		task ("Assert the deployed collection is not present") {
@@ -128,7 +144,15 @@ definition {
 		}
 
 		task ("Delete the deployed collection") {
-			Collection.deleteCollection(collectionName = "Imported");
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Delete");
+
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Deleting a fragment set is an action impossible to revert. All the fragments in the set will be removed and it will not be possible to recover them.");
+
+			Click(
+				key_text = "Delete",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
 
 		task ("Assert the deployed collection is not present") {

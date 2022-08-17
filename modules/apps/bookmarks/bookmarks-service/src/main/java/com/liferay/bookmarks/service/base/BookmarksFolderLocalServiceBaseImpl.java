@@ -17,7 +17,6 @@ package com.liferay.bookmarks.service.base;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.bookmarks.service.persistence.BookmarksEntryPersistence;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderFinder;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -669,9 +668,6 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 		}
 	}
 
-	@Reference
-	protected BookmarksEntryPersistence bookmarksEntryPersistence;
-
 	protected BookmarksFolderLocalService bookmarksFolderLocalService;
 
 	@Reference
@@ -683,17 +679,5 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 }

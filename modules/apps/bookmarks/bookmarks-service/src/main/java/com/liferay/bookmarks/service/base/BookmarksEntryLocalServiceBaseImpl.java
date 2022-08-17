@@ -18,8 +18,6 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.persistence.BookmarksEntryPersistence;
-import com.liferay.bookmarks.service.persistence.BookmarksFolderFinder;
-import com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -669,25 +667,7 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	protected BookmarksEntryPersistence bookmarksEntryPersistence;
 
 	@Reference
-	protected BookmarksFolderPersistence bookmarksFolderPersistence;
-
-	@Reference
-	protected BookmarksFolderFinder bookmarksFolderFinder;
-
-	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 }

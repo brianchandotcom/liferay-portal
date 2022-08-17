@@ -23,8 +23,15 @@ import java.util.List;
 public class SizeIsZero {
 
 	protected void test(String result) {
+		List<String> myList = new ArrayList<>();
+
 		if (result.matches("(APPROVED|SUCCESS)") && (_testList.size() != 0)) {
 			System.out.println("test is not empty");
+			list.add("test");
+		}
+
+		if (myList.size() != 0) {
+			System.out.println("myList is not empty");
 		}
 	}
 

@@ -88,7 +88,7 @@ public class FolderActionDisplayContext {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
 				DropdownItemListBuilder.add(
-					() -> isDownloadFolderActionVisible(),
+					this::isDownloadFolderActionVisible,
 					dropdownItem -> {
 						dropdownItem.setHref(getDownloadFolderURL());
 						dropdownItem.setIcon("download");
@@ -96,7 +96,7 @@ public class FolderActionDisplayContext {
 							LanguageUtil.get(_httpServletRequest, "download"));
 					}
 				).add(
-					() -> isEditFolderActionVisible(),
+					this::isEditFolderActionVisible,
 					dropdownItem -> {
 						dropdownItem.setHref(getEditFolderURL());
 						dropdownItem.setIcon("pencil");
@@ -104,7 +104,7 @@ public class FolderActionDisplayContext {
 							LanguageUtil.get(_httpServletRequest, "edit"));
 					}
 				).add(
-					() -> isMoveFolderActionVisible(),
+					this::isMoveFolderActionVisible,
 					dropdownItem -> {
 						dropdownItem.setHref(getMoveFolderURL());
 						dropdownItem.setIcon("move-folder");
@@ -112,7 +112,7 @@ public class FolderActionDisplayContext {
 							LanguageUtil.get(_httpServletRequest, "move"));
 					}
 				).add(
-					() -> isDeleteExpiredTemporaryFileEntriesActionVisible(),
+					this::isDeleteExpiredTemporaryFileEntriesActionVisible,
 					dropdownItem -> {
 						dropdownItem.setHref(
 							getDeleteExpiredTemporaryFileEntriesURL());
@@ -122,7 +122,7 @@ public class FolderActionDisplayContext {
 								"delete-expired-temporary-files"));
 					}
 				).add(
-					() -> isAddFolderActionVisible(),
+					this::isAddFolderActionVisible,
 					dropdownItem -> {
 						dropdownItem.setHref(getAddFolderURL());
 						dropdownItem.setLabel(
@@ -130,7 +130,7 @@ public class FolderActionDisplayContext {
 								_httpServletRequest, "add-folder"));
 					}
 				).add(
-					() -> isAddRepositoryActionVisible(),
+					this::isAddRepositoryActionVisible,
 					dropdownItem -> {
 						dropdownItem.setHref(getAddRepositoryURL());
 						dropdownItem.setLabel(
@@ -138,7 +138,7 @@ public class FolderActionDisplayContext {
 								_httpServletRequest, "add-repository"));
 					}
 				).add(
-					() -> isAddMediaActionVisible(),
+					this::isAddMediaActionVisible,
 					dropdownItem -> {
 						dropdownItem.setHref(getAddMediaURL());
 						dropdownItem.setLabel(
@@ -159,7 +159,7 @@ public class FolderActionDisplayContext {
 								_httpServletRequest, "multiple-media"));
 					}
 				).add(
-					() -> isViewSlideShowActionVisible(),
+					this::isViewSlideShowActionVisible,
 					dropdownItem -> {
 						dropdownItem.putData("action", "slideShow");
 						dropdownItem.putData(
@@ -169,7 +169,7 @@ public class FolderActionDisplayContext {
 								_httpServletRequest, "view-slide-show"));
 					}
 				).add(
-					() -> isAddFileShortcutActionVisible(),
+					this::isAddFileShortcutActionVisible,
 					dropdownItem -> {
 						dropdownItem.setHref(getAddFileShortcutURL());
 						dropdownItem.setLabel(
@@ -177,7 +177,7 @@ public class FolderActionDisplayContext {
 								_httpServletRequest, "add-shortcut"));
 					}
 				).add(
-					() -> isAccessFromDesktopActionVisible(),
+					this::isAccessFromDesktopActionVisible,
 					dropdownItem -> {
 						dropdownItem.putData("action", "accessFromDesktop");
 
@@ -206,7 +206,7 @@ public class FolderActionDisplayContext {
 								_httpServletRequest, "access-from-desktop"));
 					}
 				).add(
-					() -> isPermissionsActionVisible(),
+					this::isPermissionsActionVisible,
 					dropdownItem -> {
 						dropdownItem.putData("action", "permissions");
 
@@ -225,7 +225,7 @@ public class FolderActionDisplayContext {
 								_httpServletRequest, "permissions"));
 					}
 				).add(
-					() -> isDeleteFolderActionVisible(),
+					this::isDeleteFolderActionVisible,
 					dropdownItem -> {
 						dropdownItem.setHref(getDeleteFolderURL());
 						dropdownItem.setIcon("trash");
@@ -233,7 +233,7 @@ public class FolderActionDisplayContext {
 							LanguageUtil.get(_httpServletRequest, "delete"));
 					}
 				).add(
-					() -> isPublishFolderActionVisible(),
+					this::isPublishFolderActionVisible,
 					dropdownItem -> {
 						dropdownItem.putData("action", "publish");
 						dropdownItem.putData(

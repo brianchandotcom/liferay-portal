@@ -110,6 +110,40 @@ definition {
 	}
 
 	@priority = "4"
+	test CanReceiveCorrectValueWithProfileURLFieldInResponse {
+		property portal.acceptance = "true";
+
+		task ("Given a display page templates of a site") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+		}
+
+		task ("When with curl I request getSiteDisplayPageTemplatesPage with restrictFields equal all fields except title field") {
+			var response = DisplayPageTemplateAPI.getDisplayPageTemplatesWithDifferentParameters(
+				groupName = "Test Site Name",
+				parameter = "nestedFields",
+				parameterValue = "profileURL");
+		}
+
+		task ("Then in a response I receive a with profileURL field values in the creator field have appeared") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$..creator.profileURL");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "/web/test");
+		}
+	}
+
+	@priority = "4"
 	test CanReceiveIdFieldValuesOnlyInResponse {
 		property portal.acceptance = "true";
 

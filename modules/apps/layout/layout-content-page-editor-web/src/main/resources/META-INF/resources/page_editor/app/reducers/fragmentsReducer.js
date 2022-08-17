@@ -17,6 +17,14 @@ import {
 	TOGGLE_FRAGMENT_HIGHLIGHTED,
 } from '../actions/types';
 
+const HIGHLIGHTED_COLLECTION_ID = 'highlighted';
+
+const DEFAULT_HIGHLIGHTED_COLLECTION = {
+	fragmentCollectionId: HIGHLIGHTED_COLLECTION_ID,
+	fragmentEntries: [],
+	name: Liferay.Language.get('favorites'),
+};
+
 export default function fragmentsReducer(fragments = [], action) {
 	switch (action.type) {
 		case ADD_FRAGMENT_COMPOSITION: {
@@ -53,16 +61,41 @@ export default function fragmentsReducer(fragments = [], action) {
 		}
 
 		case TOGGLE_FRAGMENT_HIGHLIGHTED: {
-			const {fragmentEntryKey, highlighted} = action;
+			const {
+				fragmentEntryKey,
+				highlighted,
+				highlightedFragments,
+			} = action;
 
-			const nextFragments = fragments.map((collection) => ({
-				...collection,
-				fragmentEntries: collection.fragmentEntries.map((fragment) =>
-					fragment.fragmentEntryKey === fragmentEntryKey
-						? {...fragment, highlighted}
-						: fragment
-				),
-			}));
+			const nextFragments = fragments.reduce(
+				(collections, collection) => {
+					if (
+						collection.fragmentCollectionId !==
+						HIGHLIGHTED_COLLECTION_ID
+					) {
+						collections.push({
+							...collection,
+							fragmentEntries: collection.fragmentEntries.map(
+								(fragment) =>
+									fragment.fragmentEntryKey ===
+									fragmentEntryKey
+										? {...fragment, highlighted}
+										: fragment
+							),
+						});
+					}
+
+					return collections;
+				},
+				[]
+			);
+
+			if (highlightedFragments.length) {
+				nextFragments.unshift({
+					...DEFAULT_HIGHLIGHTED_COLLECTION,
+					fragmentEntries: highlightedFragments,
+				});
+			}
 
 			return nextFragments;
 		}

@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.registry
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.v1_0_1.KaleoDefinitionVersionUpgradeProcess;
@@ -37,7 +36,7 @@ public class KaleoDesignerWebUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.2", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		registry.register("0.0.1", "1.0.0", new UpgradePortletId());
 

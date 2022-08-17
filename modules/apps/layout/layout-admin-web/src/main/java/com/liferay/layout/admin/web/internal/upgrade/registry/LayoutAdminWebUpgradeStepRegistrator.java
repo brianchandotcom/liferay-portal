@@ -21,7 +21,6 @@ import com.liferay.layout.admin.web.internal.upgrade.v_1_0_2.LayoutSetTypeSettin
 import com.liferay.layout.admin.web.internal.upgrade.v_1_0_3.LayoutTemplateIdUpgradeProcess;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.rmi.registry.Registry;
@@ -38,7 +37,7 @@ public class LayoutAdminWebUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.3", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		registry.register("0.0.1", "1.0.0", new LayoutUpgradeProcess());
 

@@ -41,8 +41,10 @@ public class SamlImplUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		registry.registerInitialization();
+
 		registry.register(
-			"0.0.0", "0.0.1",
+			"0.0.1", "0.0.2",
 			new SamlConfigurationPreferencesUpgradeProcess(
 				_configurationAdmin, _props),
 			new SamlKeyStorePropertiesUpgradeProcess(
@@ -52,7 +54,7 @@ public class SamlImplUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				_samlProviderConfigurationHelper));
 
 		registry.register(
-			"0.0.1", "1.0.0",
+			"0.0.2", "1.0.0",
 			new SamlIdpSsoSessionMaxAgePropertyUpgradeProcess(
 				_configurationAdmin, _props));
 	}

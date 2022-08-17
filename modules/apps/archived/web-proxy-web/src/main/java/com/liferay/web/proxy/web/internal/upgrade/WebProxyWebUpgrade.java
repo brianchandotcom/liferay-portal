@@ -15,7 +15,6 @@
 package com.liferay.web.proxy.web.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.web.proxy.web.internal.constants.WebProxyPortletKeys;
 
@@ -29,7 +28,7 @@ public class WebProxyWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		registry.register(
 			"0.0.1", "1.0.0",

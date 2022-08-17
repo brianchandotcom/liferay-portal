@@ -32,8 +32,10 @@ public class MBModerationUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
+		registry.registerInitialization();
+
 		registry.register(
-			"0.0.0", "1.0.0",
+			"0.0.1", "1.0.0",
 			new MBModerationWorkflowDefinitionUpgradeProcess(
 				_companyLocalService, _workflowDefinitionManager));
 	}

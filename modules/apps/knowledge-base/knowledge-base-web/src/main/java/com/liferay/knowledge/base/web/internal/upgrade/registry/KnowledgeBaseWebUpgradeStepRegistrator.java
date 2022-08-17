@@ -19,7 +19,6 @@ import com.liferay.knowledge.base.web.internal.upgrade.v1_0_0.UpgradePortletSett
 import com.liferay.knowledge.base.web.internal.upgrade.v1_1_0.UpgradePortletPreferences;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,7 +34,7 @@ public class KnowledgeBaseWebUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.2.0", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		registry.register(
 			"0.0.1", "1.0.0", new UpgradePortletId(),

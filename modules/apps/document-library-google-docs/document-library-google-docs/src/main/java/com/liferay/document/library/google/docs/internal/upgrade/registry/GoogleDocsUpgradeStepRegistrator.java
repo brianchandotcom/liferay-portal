@@ -36,8 +36,10 @@ public class GoogleDocsUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
+		registry.registerInitialization();
+
 		registry.register(
-			"0.0.0", "1.0.0",
+			"0.0.1", "1.0.0",
 			new DLFileEntryTypeNameUpgradeProcess(
 				_dlFileEntryTypeLocalService));
 

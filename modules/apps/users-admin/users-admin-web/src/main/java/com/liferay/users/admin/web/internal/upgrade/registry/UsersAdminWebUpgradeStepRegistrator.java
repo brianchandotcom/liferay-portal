@@ -18,7 +18,6 @@ import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgrade
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.web.internal.upgrade.v1_0_0.FileUploadsConfigurationUpgradeProcess;
@@ -44,7 +43,7 @@ public class UsersAdminWebUpgradeStepRegistrator
 			_releaseLocalService.updateRelease(release);
 		}
 
-		registry.register("0.0.0", "1.0.1", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		registry.register(
 			"0.0.1", "1.0.0",

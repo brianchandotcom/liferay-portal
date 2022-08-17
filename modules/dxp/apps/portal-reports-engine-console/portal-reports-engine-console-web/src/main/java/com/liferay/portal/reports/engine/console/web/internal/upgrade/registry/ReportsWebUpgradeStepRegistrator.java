@@ -15,7 +15,6 @@
 package com.liferay.portal.reports.engine.console.web.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.reports.engine.console.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -31,7 +30,7 @@ public class ReportsWebUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		registry.register("0.0.1", "1.0.0", new UpgradePortletId());
 	}

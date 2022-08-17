@@ -17,7 +17,6 @@ package com.liferay.flags.web.internal.upgrade.registry;
 import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
 import com.liferay.flags.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,7 +32,7 @@ public class PageFlagsWebUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.1", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		registry.register("0.0.1", "1.0.0", new UpgradePortletId());
 

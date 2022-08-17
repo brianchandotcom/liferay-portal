@@ -20,14 +20,13 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
@@ -37,7 +36,6 @@ import com.liferay.portal.output.stream.container.constants.OutputStreamContaine
 import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.extender.internal.configuration.VerifyProcessTrackerConfiguration;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
 import java.io.IOException;
@@ -47,15 +45,12 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.felix.service.command.Descriptor;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
@@ -65,8 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	configurationPid = "com.liferay.portal.verify.extender.internal.configuration.VerifyProcessTrackerConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	immediate = true,
 	property = {
 		"osgi.command.function=check", "osgi.command.function=checkAll",
 		"osgi.command.function=execute", "osgi.command.function=executeAll",
@@ -199,19 +193,13 @@ public class VerifyProcessTrackerOSGiCommands {
 
 		_bundleContext = bundleContext;
 
-		_verifyProcessTrackerConfiguration =
-			ConfigurableUtil.createConfigurable(
-				VerifyProcessTrackerConfiguration.class, properties);
-
 		ServiceTrackerMapListener<String, VerifyProcess, List<VerifyProcess>>
 			verifyServiceTrackerMapListener = null;
 
-		if (_verifyProcessTrackerConfiguration.autoVerify()) {
+		if (StartupHelperUtil.isUpgrading()) {
 			verifyServiceTrackerMapListener =
 				new VerifyServiceTrackerMapListener();
 		}
-
-		_serviceRegistrations = new ConcurrentHashMap<>();
 
 		_verifyProcesses = ServiceTrackerMapFactory.openMultiValueMap(
 			_bundleContext, VerifyProcess.class, null,
@@ -224,17 +212,6 @@ public class VerifyProcessTrackerOSGiCommands {
 	@Deactivate
 	protected void deactivate() {
 		_verifyProcesses.close();
-
-		for (Map.Entry<String, ServiceRegistration<Object>>
-				serviceRegistrationEntry : _serviceRegistrations.entrySet()) {
-
-			ServiceRegistration<Object> serviceRegistration =
-				serviceRegistrationEntry.getValue();
-
-			serviceRegistration.unregister();
-		}
-
-		_serviceRegistrations = null;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -293,10 +270,6 @@ public class VerifyProcessTrackerOSGiCommands {
 				verifyProcessName);
 
 			if ((release != null) && !force && release.isVerified()) {
-				if (!_serviceRegistrations.containsKey(verifyProcessName)) {
-					_registerMarkerObject(verifyProcessName);
-				}
-
 				return;
 			}
 
@@ -333,8 +306,6 @@ public class VerifyProcessTrackerOSGiCommands {
 				release.setState(ReleaseConstants.STATE_GOOD);
 
 				releaseLocalService.updateRelease(release);
-
-				_registerMarkerObject(verifyProcessName);
 			}
 			else {
 				release.setVerified(false);
@@ -397,17 +368,6 @@ public class VerifyProcessTrackerOSGiCommands {
 		return verifyProcesses;
 	}
 
-	private void _registerMarkerObject(String verifyProcessName) {
-		ServiceRegistration<Object> serviceRegistration =
-			_bundleContext.registerService(
-				Object.class, new Object(),
-				HashMapDictionaryBuilder.put(
-					"verify.process.name", verifyProcessName
-				).build());
-
-		_serviceRegistrations.put(verifyProcessName, serviceRegistration);
-	}
-
 	private void _runAllVerifiersWithFactory(
 		OutputStreamContainerFactory outputStreamContainerFactory,
 		boolean force) {
@@ -426,10 +386,7 @@ public class VerifyProcessTrackerOSGiCommands {
 		VerifyProcessTrackerOSGiCommands.class);
 
 	private BundleContext _bundleContext;
-	private Map<String, ServiceRegistration<Object>> _serviceRegistrations;
 	private ServiceTrackerMap<String, List<VerifyProcess>> _verifyProcesses;
-	private VerifyProcessTrackerConfiguration
-		_verifyProcessTrackerConfiguration;
 
 	private class AllVerifiersRunnable implements Runnable {
 

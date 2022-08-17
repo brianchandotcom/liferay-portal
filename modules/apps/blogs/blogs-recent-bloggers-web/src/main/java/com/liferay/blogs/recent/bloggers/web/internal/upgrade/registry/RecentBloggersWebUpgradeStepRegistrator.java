@@ -16,7 +16,6 @@ package com.liferay.blogs.recent.bloggers.web.internal.upgrade.registry;
 
 import com.liferay.blogs.recent.bloggers.constants.RecentBloggersPortletKeys;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -31,7 +30,7 @@ public class RecentBloggersWebUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		UpgradeStep upgradePortletId = new BasePortletIdUpgradeProcess() {
 

@@ -35,8 +35,10 @@ public class MonitoringWebUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
+		registry.registerInitialization();
+
 		registry.register(
-			"0.0.0", "1.0.0",
+			"0.0.1", "1.0.0",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.portal.search.elasticsearch6.xpack.monitoring." +
 					"web.internal.configuration.XPackMonitoringConfiguration",

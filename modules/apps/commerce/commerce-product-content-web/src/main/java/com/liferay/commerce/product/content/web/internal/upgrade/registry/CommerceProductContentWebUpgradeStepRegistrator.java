@@ -38,8 +38,10 @@ public class CommerceProductContentWebUpgradeStepRegistrator
 					"started");
 		}
 
+		registry.registerInitialization();
+
 		registry.register(
-			"0.0.0", "1.0.0", new PortletPreferenceValueUpgradeProcess());
+			"0.0.1", "1.0.0", new PortletPreferenceValueUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

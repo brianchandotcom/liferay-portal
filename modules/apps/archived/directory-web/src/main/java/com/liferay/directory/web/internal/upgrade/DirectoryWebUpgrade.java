@@ -15,7 +15,6 @@
 package com.liferay.directory.web.internal.upgrade;
 
 import com.liferay.directory.web.internal.upgrade.v1_0_0.UpgradePortletId;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
@@ -52,7 +51,7 @@ public class DirectoryWebUpgrade implements UpgradeStepRegistrator {
 			throw new RuntimeException(upgradeException);
 		}
 
-		registry.register("0.0.0", "1.0.1", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		registry.register("0.0.1", "1.0.1", new UpgradePortletId());
 

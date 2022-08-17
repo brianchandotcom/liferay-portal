@@ -65,6 +65,8 @@
 		<column method-name="DBTableName" name="dbTableName" type="String" />
 		<column localized="true" name="label" type="String" />
 		<column name="className" type="String" />
+		<column name="enableCategorization" type="boolean" />
+		<column name="enableComments" type="boolean" />
 		<column name="name" type="String" />
 		<column name="panelAppOrder" type="String" />
 		<column name="panelCategoryKey" type="String" />

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -80,10 +81,10 @@ public class MemberRequestLocalServiceImpl
 
 		// Member request
 
-		User user = userLocalService.getUserById(userId);
+		User user = _userLocalService.getUserById(userId);
 
 		try {
-			User receiverUser = userLocalService.getUserByEmailAddress(
+			User receiverUser = _userLocalService.getUserByEmailAddress(
 				serviceContext.getCompanyId(), receiverEmailAddress);
 
 			receiverUserId = receiverUser.getUserId();
@@ -148,7 +149,7 @@ public class MemberRequestLocalServiceImpl
 				continue;
 			}
 
-			User user = userLocalService.getUser(receiverUserId);
+			User user = _userLocalService.getUser(receiverUserId);
 
 			addMemberRequest(
 				userId, groupId, receiverUserId, user.getEmailAddress(),
@@ -238,7 +239,7 @@ public class MemberRequestLocalServiceImpl
 		memberRequest = memberRequestPersistence.update(memberRequest);
 
 		if (status == InviteMembersConstants.STATUS_ACCEPTED) {
-			userLocalService.addGroupUsers(
+			_userLocalService.addGroupUsers(
 				memberRequest.getGroupId(),
 				new long[] {memberRequest.getReceiverUserId()});
 
@@ -250,7 +251,7 @@ public class MemberRequestLocalServiceImpl
 			}
 
 			if (memberRequest.getInvitedTeamId() > 0) {
-				userLocalService.addTeamUsers(
+				_userLocalService.addTeamUsers(
 					memberRequest.getInvitedTeamId(),
 					new long[] {memberRequest.getReceiverUserId()});
 			}
@@ -360,12 +361,12 @@ public class MemberRequestLocalServiceImpl
 
 		Group group = _groupLocalService.getGroup(memberRequest.getGroupId());
 
-		User user = userLocalService.getUser(memberRequest.getUserId());
+		User user = _userLocalService.getUser(memberRequest.getUserId());
 
 		User receiverUser = null;
 
 		if (memberRequest.getReceiverUserId() > 0) {
-			receiverUser = userLocalService.getUser(
+			receiverUser = _userLocalService.getUser(
 				memberRequest.getReceiverUserId());
 		}
 
@@ -492,6 +493,9 @@ public class MemberRequestLocalServiceImpl
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserNotificationEventLocalService

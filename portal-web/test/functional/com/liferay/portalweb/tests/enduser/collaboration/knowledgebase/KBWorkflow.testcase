@@ -85,6 +85,36 @@ definition {
 	}
 
 	@priority = "4"
+	@refactordone
+	@uitest
+	test CanViewPendingContent {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "KBAdmin#CanViewPendingContent";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Knowledge Base Article");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbWorkflowAction = "Submit for Publication");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbWorkflowStatus = "Pending");
+	}
+
+	@priority = "4"
 	@refactorneeded
 	test ViewKBArticleSuggestionsWorkflow {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

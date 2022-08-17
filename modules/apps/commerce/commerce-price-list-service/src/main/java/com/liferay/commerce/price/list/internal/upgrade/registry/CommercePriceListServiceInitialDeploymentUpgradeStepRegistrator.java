@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.security.service.access.policy.internal.upgrade.registry;
+package com.liferay.commerce.price.list.internal.upgrade.registry;
 
+import com.liferay.commerce.price.list.internal.verify.CommercePriceListServiceVerifyProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.security.service.access.policy.internal.verify.SAPServiceVerifyProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -27,23 +27,25 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = true, immediate = true, service = UpgradeStepRegistrator.class
 )
-public class SAPServiceInitialUpgradeStepRegistrator
+public class CommercePriceListServiceInitialDeploymentUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.registerInitialUpgradeSteps(
+		registry.registerInitialDeploymentUpgradeSteps(
 			new UpgradeProcess() {
 
 				@Override
 				protected void doUpgrade() throws Exception {
-					_sapServiceVerifyProcess.verifyDefaultSAPEntry();
+					_commercePriceListServiceVerifyProcess.
+						verifyBasePriceLists();
 				}
 
 			});
 	}
 
 	@Reference
-	private SAPServiceVerifyProcess _sapServiceVerifyProcess;
+	private CommercePriceListServiceVerifyProcess
+		_commercePriceListServiceVerifyProcess;
 
 }

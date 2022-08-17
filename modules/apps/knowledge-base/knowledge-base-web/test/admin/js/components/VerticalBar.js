@@ -23,6 +23,7 @@ import VerticalNavigationBar from '../../../../src/main/resources/META-INF/resou
 const FOLDERS_AND_ARTICLES_TITLE = 'Folders and articles';
 const TEMPLATES_TITLE = 'Templates';
 const SUGGESTIONS_TITLE = 'Suggestions';
+const PARENT_CONTAINER_ID = 'parentContainerId';
 
 jest.mock('frontend-js-web', () => ({
 	navigate: jest.fn(),
@@ -53,12 +54,18 @@ const defaultProps = {
 			title: SUGGESTIONS_TITLE,
 		},
 	],
-	parentContainerId: 'parentContainerId',
+	parentContainerId: PARENT_CONTAINER_ID,
 	productMenuOpen: true,
 };
 
-const renderComponent = (props = defaultProps) =>
-	render(<VerticalNavigationBar {...props} />);
+const renderComponent = (props = defaultProps) => {
+	const container = document.createElement('div');
+	container.id = PARENT_CONTAINER_ID;
+
+	return render(<VerticalNavigationBar {...props} />, {
+		container: document.body.appendChild(container),
+	});
+};
 
 describe('VerticalBar', () => {
 	afterEach(() => {
@@ -78,8 +85,6 @@ describe('VerticalBar', () => {
 		};
 
 		global.Liferay.SideNavigation = {instance: () => productMenu};
-
-		global.document.body.innerHTML = `<div id="parentContainerId"></div>`;
 	});
 
 	it('renders three navigation items', () => {

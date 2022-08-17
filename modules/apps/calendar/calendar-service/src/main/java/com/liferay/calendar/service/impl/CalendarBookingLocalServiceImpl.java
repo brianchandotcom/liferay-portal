@@ -44,6 +44,7 @@ import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.service.base.CalendarBookingLocalServiceBaseImpl;
+import com.liferay.calendar.service.persistence.CalendarPersistence;
 import com.liferay.calendar.social.CalendarActivityKeys;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RecurrenceUtil;
@@ -74,11 +75,14 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -146,8 +150,8 @@ public class CalendarBookingLocalServiceImpl
 
 		// Calendar booking
 
-		User user = userLocalService.getUser(userId);
-		Calendar calendar = calendarPersistence.findByPrimaryKey(calendarId);
+		User user = _userLocalService.getUser(userId);
+		Calendar calendar = _calendarPersistence.findByPrimaryKey(calendarId);
 
 		long calendarBookingId = counterLocalService.increment();
 
@@ -264,7 +268,8 @@ public class CalendarBookingLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(calendarBooking, serviceContext);
+		_resourceLocalService.addModelResources(
+			calendarBooking, serviceContext);
 
 		// Asset
 
@@ -385,7 +390,7 @@ public class CalendarBookingLocalServiceImpl
 
 			// Resources
 
-			resourceLocalService.deleteResource(
+			_resourceLocalService.deleteResource(
 				recurringCalendarBooking, ResourceConstants.SCOPE_INDIVIDUAL);
 
 			// Subscriptions
@@ -1188,7 +1193,7 @@ public class CalendarBookingLocalServiceImpl
 
 		// Calendar booking
 
-		Calendar calendar = calendarPersistence.findByPrimaryKey(calendarId);
+		Calendar calendar = _calendarPersistence.findByPrimaryKey(calendarId);
 		CalendarBooking calendarBooking =
 			calendarBookingPersistence.findByPrimaryKey(calendarBookingId);
 
@@ -1394,7 +1399,7 @@ public class CalendarBookingLocalServiceImpl
 		updatedDescriptionMap.putAll(descriptionMap);
 
 		if (allFollowing) {
-			Calendar calendar = calendarPersistence.findByPrimaryKey(
+			Calendar calendar = _calendarPersistence.findByPrimaryKey(
 				calendarId);
 
 			List<CalendarBooking> recurringCalendarBookings =
@@ -1544,7 +1549,7 @@ public class CalendarBookingLocalServiceImpl
 
 		// Calendar booking
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 		Date date = new Date();
 
 		Date oldModifiedDate = calendarBooking.getModifiedDate();
@@ -1898,7 +1903,7 @@ public class CalendarBookingLocalServiceImpl
 
 			Group stagingGroup = group.getStagingGroup();
 
-			calendar = calendarPersistence.findByUUID_G(
+			calendar = _calendarPersistence.findByUUID_G(
 				calendar.getUuid(), stagingGroup.getGroupId());
 		}
 
@@ -1908,7 +1913,7 @@ public class CalendarBookingLocalServiceImpl
 	protected long getNotLiveCalendarId(long calendarId)
 		throws PortalException {
 
-		Calendar calendar = calendarPersistence.findByPrimaryKey(calendarId);
+		Calendar calendar = _calendarPersistence.findByPrimaryKey(calendarId);
 
 		calendar = getNotLiveCalendar(calendar);
 
@@ -2077,8 +2082,8 @@ public class CalendarBookingLocalServiceImpl
 	protected boolean isCustomCalendarResource(
 		CalendarResource calendarResource) {
 
-		long calendarResourceClassNameId = classNameLocalService.getClassNameId(
-			CalendarResource.class);
+		long calendarResourceClassNameId =
+			_classNameLocalService.getClassNameId(CalendarResource.class);
 
 		if (calendarResource.getClassNameId() == calendarResourceClassNameId) {
 			return true;
@@ -2139,7 +2144,7 @@ public class CalendarBookingLocalServiceImpl
 				return;
 			}
 
-			User sender = userLocalService.fetchUser(
+			User sender = _userLocalService.fetchUser(
 				serviceContext.getUserId());
 
 			NotificationType notificationType =
@@ -2534,16 +2539,16 @@ public class CalendarBookingLocalServiceImpl
 	private User _getDefaultSenderUser(Calendar calendar) throws Exception {
 		CalendarResource calendarResource = calendar.getCalendarResource();
 
-		User user = userLocalService.getUser(calendarResource.getUserId());
+		User user = _userLocalService.getUser(calendarResource.getUserId());
 
 		if (calendarResource.isGroup()) {
 			Group group = _groupLocalService.getGroup(
 				calendarResource.getClassPK());
 
-			user = userLocalService.getUser(group.getCreatorUserId());
+			user = _userLocalService.getUser(group.getCreatorUserId());
 		}
 		else if (calendarResource.isUser()) {
-			user = userLocalService.getUser(calendarResource.getClassPK());
+			user = _userLocalService.getUser(calendarResource.getClassPK());
 		}
 
 		return user;
@@ -2561,10 +2566,10 @@ public class CalendarBookingLocalServiceImpl
 		Set<User> users = new HashSet<>();
 
 		if (calendarBooking.isMasterBooking()) {
-			users.add(userLocalService.fetchUser(calendarBooking.getUserId()));
+			users.add(_userLocalService.fetchUser(calendarBooking.getUserId()));
 		}
 
-		users.add(userLocalService.fetchUser(calendarResource.getUserId()));
+		users.add(_userLocalService.fetchUser(calendarResource.getUserId()));
 
 		for (User user : users) {
 			if (user == null) {
@@ -2722,6 +2727,12 @@ public class CalendarBookingLocalServiceImpl
 	private AssetLinkLocalService _assetLinkLocalService;
 
 	@Reference
+	private CalendarPersistence _calendarPersistence;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
@@ -2737,11 +2748,17 @@ public class CalendarBookingLocalServiceImpl
 	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
 	private SocialActivityCounterLocalService
 		_socialActivityCounterLocalService;
 
 	@Reference
 	private SocialActivityLocalService _socialActivityLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

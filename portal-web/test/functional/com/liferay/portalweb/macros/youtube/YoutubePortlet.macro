@@ -9,7 +9,7 @@ definition {
 	}
 
 	macro assertVideoTitle {
-		SelectFrame.selectFrameNoLoading(locator1 = "YoutubePortlet#VIDEO_IFRAME");
+		SelectFrame(locator1 = "YoutubePortlet#VIDEO_IFRAME");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "YoutubePortlet#VIDEO_TITLE",

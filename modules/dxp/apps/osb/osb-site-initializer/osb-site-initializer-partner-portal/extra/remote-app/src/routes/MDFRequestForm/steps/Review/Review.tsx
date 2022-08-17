@@ -23,7 +23,8 @@ import Body from './components/Body';
 import ActivityReviewEntry from './components/Body/components/ActivityReviewEntry';
 import GoalsEntries from './components/Body/components/GoalsEntries';
 import Header from './components/Header';
-import GetTotalBudget from './utils/GetTotalBudget';
+import useGetCompanyName from './hooks/useGetCompanyName';
+import useTotalBudget from './hooks/useTotalBudget';
 
 const Review = ({
 	onCancel,
@@ -34,28 +35,34 @@ const Review = ({
 		MDFRequest
 	>();
 
-	const totalBudget = GetTotalBudget(values);
+	const companyName = useGetCompanyName(
+		values.r_accountToMDFRequests_accountEntryId
+	);
+
+	const totalBudget = useTotalBudget(values);
 
 	return (
 		<div className="d-flex flex-column">
 			<Header />
 
 			<Body name="Goals" title="Campaign Information">
-				<GoalsEntries values={values} />
+				<GoalsEntries companyName={companyName} mdfRequest={values} />
 			</Body>
 
 			<Body name="Activities" title="Insurance Industry Lead Gen">
 				<div className="border mb-3"></div>
 
 				{values?.activities.map(
-					(value: MDFRequestActivity, index: number) => (
+					(MDFRequestActivity: MDFRequestActivity, index: number) => (
 						<ActivityPanel
-							activity={value}
+							activity={MDFRequestActivity}
 							detail
 							key={index}
 							overallCampaign={values.overallCampaign}
 						>
-							<ActivityReviewEntry values={value} />
+							<ActivityReviewEntry
+								mdfRequestActivity={MDFRequestActivity}
+							/>
 						</ActivityPanel>
 					)
 				)}

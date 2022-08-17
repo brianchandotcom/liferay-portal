@@ -13,8 +13,7 @@ import {TypeActivityExternalReferenceCode} from '../../../../../../../../common/
 import useSelectedTypeActivity from '../../../../../../../../common/hooks/useSelectedTypeActivity';
 import MDFRequestActivity from '../../../../../../../../common/interfaces/mdfRequestActivity';
 import useGetTypeActivities from '../../../../../../../../common/services/liferay/object/type-activities/useGetTypeActivities';
-import useGetActivitiesName from '../../../../Hooks/useGetActivitiesName';
-import useGetTacticsName from '../../../../Hooks/useGetTacticsName';
+import useGetTacticName from '../../../../hooks/useGetTacticName';
 import ActivityContent from './components/ActivityContent';
 import ContentMarket from './components/ContentMarket';
 import DigitalMarket from './components/DigitalMarket';
@@ -22,57 +21,53 @@ import Event from './components/Event';
 import MiscellaneousMarket from './components/MiscellaneousMarket';
 
 interface IProps {
-	values: MDFRequestActivity;
+	mdfRequestActivity: MDFRequestActivity;
 }
 
 type TypeOfActivityComponent = {
 	[key in string]?: JSX.Element;
 };
 
-const ActivityReviewEntry = ({values}: IProps) => {
+const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 	const {data: typeOfActivities} = useGetTypeActivities();
 
 	const selectedTypeActivity = useSelectedTypeActivity(
-		values,
+		mdfRequestActivity,
 		typeOfActivities?.items
 	);
 
-	const typeOfActivitiesName = useGetActivitiesName(
-		values.r_typeActivityToActivities_c_typeActivityId
-	);
-
-	const TacticName = useGetTacticsName(
-		values.r_typeActivityToActivities_c_typeActivityId,
-		values.r_tacticToActivities_c_tacticId
+	const TacticName = useGetTacticName(
+		mdfRequestActivity.r_typeActivityToActivities_c_typeActivityId,
+		mdfRequestActivity.r_tacticToActivities_c_tacticId
 	);
 
 	const typeOfActivityComponents: TypeOfActivityComponent = {
 		[TypeActivityExternalReferenceCode.DIGITAL_MARKETING]: (
 			<DigitalMarket
+				mdfRequestActivity={mdfRequestActivity}
 				tacticName={TacticName}
-				typeOfActivitieName={typeOfActivitiesName}
-				values={values}
+				typeOfActivitieName={selectedTypeActivity?.name}
 			/>
 		),
 		[TypeActivityExternalReferenceCode.CONTENT_MARKETING]: (
 			<ContentMarket
+				mdfRequestActivity={mdfRequestActivity}
 				tacticName={TacticName}
-				typeOfActivitieName={typeOfActivitiesName}
-				values={values}
+				typeOfActivitieName={selectedTypeActivity?.name}
 			/>
 		),
 		[TypeActivityExternalReferenceCode.EVENT]: (
 			<Event
+				mdfRequestActivity={mdfRequestActivity}
 				tacticName={TacticName}
-				typeOfActivitieName={typeOfActivitiesName}
-				values={values}
+				typeOfActivitieName={selectedTypeActivity?.name}
 			/>
 		),
 		[TypeActivityExternalReferenceCode.MISCELLANEOUS_MARKETING]: (
 			<MiscellaneousMarket
+				mdfRequestActivity={mdfRequestActivity}
 				tacticName={TacticName}
-				typeOfActivitieName={typeOfActivitiesName}
-				values={values}
+				typeOfActivitieName={selectedTypeActivity?.name}
 			/>
 		),
 	};
@@ -85,7 +80,7 @@ const ActivityReviewEntry = ({values}: IProps) => {
 				]
 			}
 
-			<ActivityContent values={values} />
+			<ActivityContent mdfRequestActivity={mdfRequestActivity} />
 		</>
 	);
 };

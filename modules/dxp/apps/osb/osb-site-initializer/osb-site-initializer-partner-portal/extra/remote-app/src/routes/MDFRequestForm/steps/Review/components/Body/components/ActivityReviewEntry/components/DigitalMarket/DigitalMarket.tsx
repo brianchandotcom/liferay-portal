@@ -11,22 +11,26 @@
 
 import MDFRequestActivity from '../../../../../../../../../../common/interfaces/mdfRequestActivity';
 import {Liferay} from '../../../../../../../../../../common/services/liferay';
-import GetBooleanValue from '../../../../../../utils/GetBooleanValue';
+import getBooleanValue from '../../../../../../utils/getBooleanValue';
 import Table from '../../../../../Table';
 
 interface IProps {
+	mdfRequestActivity: MDFRequestActivity;
 	tacticName?: string;
 	typeOfActivitieName?: string;
-	values: MDFRequestActivity;
 }
 
-const DigitalMarket = ({tacticName, typeOfActivitieName, values}: IProps) => (
+const DigitalMarket = ({
+	mdfRequestActivity,
+	tacticName,
+	typeOfActivitieName,
+}: IProps) => (
 	<div>
 		<Table
 			items={[
 				{
 					title: 'Activity name',
-					value: values.name,
+					value: mdfRequestActivity.name,
 				},
 				{
 					title: 'Type of Activity',
@@ -38,38 +42,44 @@ const DigitalMarket = ({tacticName, typeOfActivitieName, values}: IProps) => (
 				},
 				{
 					title: 'Overall message, content or CTA',
-					value: values.overallMessageContentCTA,
+					value: mdfRequestActivity.overallMessageContentCTA,
 				},
 				{
 					title: 'Specific sites to be used',
-					value: values.specificSites,
+					value: mdfRequestActivity.specificSites,
 				},
 				{
 					title: 'Keywords for PPC campaigns',
-					value: values.keywordsForPPCCampaigns,
+					value: mdfRequestActivity.keywordsForPPCCampaigns,
 				},
 				{
 					title: 'Ad (any size/type)',
-					value: values.ad,
+					value: mdfRequestActivity.ad,
 				},
 				{
 					title: 'Do you require any assets from Liferay?',
-					value: GetBooleanValue(values.assetsLiferayRequired),
+					value: getBooleanValue(
+						mdfRequestActivity.assetsLiferayRequired
+					),
 				},
 				{
 					title:
 						'How will the Liferay brand be used in the campaign?',
-					value: values.howLiferayBrandUsed,
+					value: mdfRequestActivity.howLiferayBrandUsed,
 				},
 				{
 					title: 'Start Date',
-					value: new Date(values.startDate).toLocaleDateString(
+					value: new Date(
+						mdfRequestActivity.startDate
+					).toLocaleDateString(
 						Liferay.ThemeDisplay.getBCP47LanguageId()
 					),
 				},
 				{
 					title: 'End Date',
-					value: new Date(values.endDate).toLocaleDateString(
+					value: new Date(
+						mdfRequestActivity.endDate
+					).toLocaleDateString(
 						Liferay.ThemeDisplay.getBCP47LanguageId()
 					),
 				},

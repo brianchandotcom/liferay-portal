@@ -14,22 +14,22 @@ import {Liferay} from '../../../../../../../../../../common/services/liferay';
 import Table from '../../../../../Table';
 
 interface IProps {
+	mdfRequestActivity: MDFRequestActivity;
 	tacticName?: string;
 	typeOfActivitieName?: string;
-	values: MDFRequestActivity;
 }
 
 const MiscellaneousMarket = ({
+	mdfRequestActivity,
 	tacticName,
 	typeOfActivitieName,
-	values,
 }: IProps) => (
 	<div>
 		<Table
 			items={[
 				{
 					title: 'Activity name',
-					value: values.name,
+					value: mdfRequestActivity.name,
 				},
 				{
 					title: 'Type of Activity',
@@ -41,17 +41,21 @@ const MiscellaneousMarket = ({
 				},
 				{
 					title: 'Marketing activity',
-					value: values.marketingActivity,
+					value: mdfRequestActivity.marketingActivity,
 				},
 				{
 					title: 'Start Date',
-					value: new Date(values.startDate).toLocaleDateString(
+					value: new Date(
+						mdfRequestActivity.startDate
+					).toLocaleDateString(
 						Liferay.ThemeDisplay.getBCP47LanguageId()
 					),
 				},
 				{
 					title: 'End Date',
-					value: new Date(values.endDate).toLocaleDateString(
+					value: new Date(
+						mdfRequestActivity.endDate
+					).toLocaleDateString(
 						Liferay.ThemeDisplay.getBCP47LanguageId()
 					),
 				},

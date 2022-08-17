@@ -6,6 +6,6 @@
  * distribution rights of the Software.
  */
 
-export default function GetBooleanValue(value: string) {
+export default function getBooleanValue(value: string) {
 	return value === 'true' ? 'Yes' : 'No';
 }

@@ -12,17 +12,17 @@
 import React from 'react';
 
 import MDFRequestActivity from '../../../../../../../../../../common/interfaces/mdfRequestActivity';
-import GetBooleanValue from '../../../../../../utils/GetBooleanValue';
+import getBooleanValue from '../../../../../../utils/getBooleanValue';
 import Table from '../../../../../Table';
 
 interface IProps {
-	values: MDFRequestActivity;
+	mdfRequestActivity: MDFRequestActivity;
 }
 
-const ActivityContent = ({values}: IProps) => (
+const ActivityContent = ({mdfRequestActivity}: IProps) => (
 	<>
 		<Table
-			items={values.budgets.map((budget) => ({
+			items={mdfRequestActivity.budgets.map((budget) => ({
 				title: budget.expense?.name,
 				value: '$' + budget.cost,
 			}))}
@@ -33,19 +33,19 @@ const ActivityContent = ({values}: IProps) => (
 			items={[
 				{
 					title: 'Is a lead list an outcome of this activity?',
-					value: GetBooleanValue(values.leadGenerated),
+					value: getBooleanValue(mdfRequestActivity.leadGenerated),
 				},
 				{
 					title: 'Target # of Leads',
-					value: values.targetofLeads,
+					value: mdfRequestActivity.targetofLeads,
 				},
 				{
 					title: 'Lead Follow Up strategy',
-					value: values.leadFollowUpStrategies.join(', '),
+					value: mdfRequestActivity.leadFollowUpStrategies.join(', '),
 				},
 				{
 					title: 'Details on Lead Follow Up',
-					value: values.detailsLeadFollowUp,
+					value: mdfRequestActivity.detailsLeadFollowUp,
 				},
 			]}
 			title="Lead List"

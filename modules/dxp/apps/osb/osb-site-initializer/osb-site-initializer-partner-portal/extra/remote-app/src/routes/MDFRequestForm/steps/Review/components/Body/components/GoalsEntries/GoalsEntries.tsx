@@ -10,18 +10,14 @@
  */
 
 import MDFRequest from '../../../../../../../../common/interfaces/mdfRequest';
-import useGetCompanyName from '../../../../Hooks/useGetCompanyName';
 import Table from '../../../Table';
 
 interface IProps {
-	values: MDFRequest;
+	companyName?: string;
+	mdfRequest: MDFRequest;
 }
 
-const GoalsEntries = ({values}: IProps) => {
-	const companyName = useGetCompanyName(
-		values.r_accountToMDFRequests_accountEntryId
-	);
-
+const GoalsEntries = ({companyName, mdfRequest}: IProps) => {
 	return (
 		<div>
 			<Table
@@ -32,7 +28,7 @@ const GoalsEntries = ({values}: IProps) => {
 					},
 					{
 						title: 'Region',
-						value: values.country.name,
+						value: mdfRequest.country.name,
 					},
 				]}
 				title="Partner Summary"
@@ -43,11 +39,11 @@ const GoalsEntries = ({values}: IProps) => {
 					{
 						title:
 							'Provide a name and short description of the overall campaign',
-						value: values.overallCampaign,
+						value: mdfRequest.overallCampaign,
 					},
 					{
 						title: 'Liferay business/sales goals',
-						value: values.liferayBusinessSalesGoals.join(', '),
+						value: mdfRequest.liferayBusinessSalesGoals.join(', '),
 					},
 				]}
 				title="Activity Summary"
@@ -57,17 +53,17 @@ const GoalsEntries = ({values}: IProps) => {
 				items={[
 					{
 						title: 'Target Market(s)',
-						value: values.targetMarkets.join(', '),
+						value: mdfRequest.targetMarkets.join(', '),
 					},
 					{
 						title: 'Additional Options',
-						value: values.additionalOption.name
-							? values.additionalOption.name
+						value: mdfRequest.additionalOption.name
+							? mdfRequest.additionalOption.name
 							: 'N/A',
 					},
 					{
 						title: 'Target Audience/Role',
-						value: values.targetAudienceRoles.join(', '),
+						value: mdfRequest.targetAudienceRoles.join(', '),
 					},
 				]}
 				title="Target Market"

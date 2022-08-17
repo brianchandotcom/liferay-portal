@@ -38,14 +38,14 @@ const Table = ({items, title}: IProps) => (
 		</ClayTable.Head>
 
 		<ClayTable.Body>
-			{items?.map((value: ITable, index: number) => (
+			{items?.map((item: ITable, index: number) => (
 				<ClayTable.Row key={index}>
 					<ClayTable.Cell className="border-0 w-50">
-						{value.title}
+						{item.title}
 					</ClayTable.Cell>
 
 					<ClayTable.Cell className="border-0 w-50">
-						{value.value}
+						{item.value}
 					</ClayTable.Cell>
 				</ClayTable.Row>
 			))}

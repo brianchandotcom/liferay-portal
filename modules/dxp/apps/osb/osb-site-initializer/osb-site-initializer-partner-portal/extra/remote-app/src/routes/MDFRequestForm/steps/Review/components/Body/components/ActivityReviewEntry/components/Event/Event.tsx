@@ -14,18 +14,22 @@ import {Liferay} from '../../../../../../../../../../common/services/liferay';
 import Table from '../../../../../Table';
 
 interface IProps {
+	mdfRequestActivity: MDFRequestActivity;
 	tacticName?: string;
 	typeOfActivitieName?: string;
-	values: MDFRequestActivity;
 }
 
-const Event = ({tacticName, typeOfActivitieName, values}: IProps) => (
+const Event = ({
+	mdfRequestActivity,
+	tacticName,
+	typeOfActivitieName,
+}: IProps) => (
 	<div>
 		<Table
 			items={[
 				{
 					title: 'Activity name',
-					value: values.name,
+					value: mdfRequestActivity.name,
 				},
 				{
 					title: 'Type of Activity',
@@ -37,37 +41,41 @@ const Event = ({tacticName, typeOfActivitieName, values}: IProps) => (
 				},
 				{
 					title: 'Activity Description',
-					value: values.description,
+					value: mdfRequestActivity.description,
 				},
 				{
 					title: 'Venue Name',
-					value: values.venueName,
+					value: mdfRequestActivity.venueName,
 				},
 				{
 					title: 'Liferay Branding',
-					value: values.liferayBranding,
+					value: mdfRequestActivity.liferayBranding,
 				},
 				{
 					title: 'Liferay Participation / Requirements',
-					value: values.liferayParticipationRequirements,
+					value: mdfRequestActivity.liferayParticipationRequirements,
 				},
 				{
 					title: 'Source and Size of Invitee List',
-					value: values.sourceAndSizeOfInviteeList,
+					value: mdfRequestActivity.sourceAndSizeOfInviteeList,
 				},
 				{
 					title: 'Activity Promotion',
-					value: values.activityPromotion,
+					value: mdfRequestActivity.activityPromotion,
 				},
 				{
 					title: 'Start Date',
-					value: new Date(values.startDate).toLocaleDateString(
+					value: new Date(
+						mdfRequestActivity.startDate
+					).toLocaleDateString(
 						Liferay.ThemeDisplay.getBCP47LanguageId()
 					),
 				},
 				{
 					title: 'End Date',
-					value: new Date(values.endDate).toLocaleDateString(
+					value: new Date(
+						mdfRequestActivity.endDate
+					).toLocaleDateString(
 						Liferay.ThemeDisplay.getBCP47LanguageId()
 					),
 				},

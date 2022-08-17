@@ -9,17 +9,18 @@
  * distribution rights of the Software.
  */
 
-// import {useMemo} from 'react';
-
 import {useMemo} from 'react';
 
 import useGetTacticsByTypeActivityId from '../../../../../common/services/liferay/object/type-activities/useGetTacticsByTypeActivityId';
 
-export default function useGetTacticsName(TypeActivityId: string, id?: string) {
+export default function useGetTacticName(
+	TypeActivityId: string,
+	id?: string | undefined
+) {
 	const {data: tactics} = useGetTacticsByTypeActivityId(TypeActivityId);
 
 	const TaticName = useMemo(
-		() => tactics?.items.find((tactic) => String(tactic.id) === id),
+		() => tactics?.items.find((tactic) => tactic.id === id),
 		[id, tactics?.items]
 	);
 

@@ -11,22 +11,26 @@
 
 import MDFRequestActivity from '../../../../../../../../../../common/interfaces/mdfRequestActivity';
 import {Liferay} from '../../../../../../../../../../common/services/liferay';
-import GetBooleanValue from '../../../../../../utils/GetBooleanValue';
+import getBooleanValue from '../../../../../../utils/getBooleanValue';
 import Table from '../../../../../Table';
 
 interface IProps {
+	mdfRequestActivity: MDFRequestActivity;
 	tacticName?: string;
 	typeOfActivitieName?: string;
-	values: MDFRequestActivity;
 }
 
-const ContentMarket = ({tacticName, typeOfActivitieName, values}: IProps) => (
+const ContentMarket = ({
+	mdfRequestActivity,
+	tacticName,
+	typeOfActivitieName,
+}: IProps) => (
 	<div>
 		<Table
 			items={[
 				{
 					title: 'Activity name',
-					value: values.name,
+					value: mdfRequestActivity.name,
 				},
 				{
 					title: 'Type of Activity',
@@ -39,31 +43,37 @@ const ContentMarket = ({tacticName, typeOfActivitieName, values}: IProps) => (
 				{
 					title:
 						'Will this content be gated and have a landing page?',
-					value: GetBooleanValue(values.gatedLandingPage),
+					value: getBooleanValue(mdfRequestActivity.gatedLandingPage),
 				},
 				{
 					title: 'Primary theme or message of your content',
-					value: values.primaryThemeOrMessage,
+					value: mdfRequestActivity.primaryThemeOrMessage,
 				},
 
 				{
 					title: 'Goal of Content',
-					value: values.goalOfContent,
+					value: mdfRequestActivity.goalOfContent,
 				},
 				{
 					title:
 						'Are you hiring an outside writer or agency to prepare the content?',
-					value: GetBooleanValue(values.hiringOutsideWriterOrAgency),
+					value: getBooleanValue(
+						mdfRequestActivity.hiringOutsideWriterOrAgency
+					),
 				},
 				{
 					title: 'Start Date',
-					value: new Date(values.startDate).toLocaleDateString(
+					value: new Date(
+						mdfRequestActivity.startDate
+					).toLocaleDateString(
 						Liferay.ThemeDisplay.getBCP47LanguageId()
 					),
 				},
 				{
 					title: 'End Date',
-					value: new Date(values.endDate).toLocaleDateString(
+					value: new Date(
+						mdfRequestActivity.endDate
+					).toLocaleDateString(
 						Liferay.ThemeDisplay.getBCP47LanguageId()
 					),
 				},

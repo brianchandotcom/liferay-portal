@@ -19,121 +19,85 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| ObjectFieldPicklistSetting
 		| ObjectFieldFilterSetting[]
-		| {
-				id: number;
-				objectStates: ObjectState[];
-		  }
 		| undefined;
 	maxLength?:
 		| string
 		| number
 		| boolean
+		| ObjectFieldPicklistSetting
 		| ObjectFieldFilterSetting[]
-		| {
-				id: number;
-				objectStates: ObjectState[];
-		  }
 		| undefined;
 	acceptedFileExtensions?:
 		| string
 		| number
 		| boolean
+		| ObjectFieldPicklistSetting
 		| ObjectFieldFilterSetting[]
-		| {
-				id: number;
-				objectStates: ObjectState[];
-		  }
 		| undefined;
 	fileSource?:
 		| string
 		| number
 		| boolean
+		| ObjectFieldPicklistSetting
 		| ObjectFieldFilterSetting[]
-		| {
-				id: number;
-				objectStates: ObjectState[];
-		  }
 		| undefined;
 	filters?:
 		| string
 		| number
 		| boolean
+		| ObjectFieldPicklistSetting
 		| ObjectFieldFilterSetting[]
-		| {
-				id: number;
-				objectStates: ObjectState[];
-		  }
 		| undefined;
 	maximumFileSize?:
 		| string
 		| number
 		| boolean
+		| ObjectFieldPicklistSetting
 		| ObjectFieldFilterSetting[]
-		| {
-				id: number;
-				objectStates: ObjectState[];
-		  }
 		| undefined;
 	objectFieldName?:
 		| string
 		| number
 		| boolean
+		| ObjectFieldPicklistSetting
 		| ObjectFieldFilterSetting[]
-		| {
-				id: number;
-				objectStates: ObjectState[];
-		  }
 		| undefined;
 	objectRelationshipName?:
 		| string
 		| number
 		| boolean
+		| ObjectFieldPicklistSetting
 		| ObjectFieldFilterSetting[]
-		| {
-				id: number;
-				objectStates: ObjectState[];
-		  }
 		| undefined;
 	showCounter?:
 		| string
 		| number
 		| boolean
+		| ObjectFieldPicklistSetting
 		| ObjectFieldFilterSetting[]
-		| {
-				id: number;
-				objectStates: ObjectState[];
-		  }
 		| undefined;
 	showFilesInDocumentsAndMedia?:
 		| string
 		| number
 		| boolean
+		| ObjectFieldPicklistSetting
 		| ObjectFieldFilterSetting[]
-		| {
-				id: number;
-				objectStates: ObjectState[];
-		  }
 		| undefined;
 	stateFlow?:
 		| string
 		| number
 		| boolean
+		| ObjectFieldPicklistSetting
 		| ObjectFieldFilterSetting[]
-		| {
-				id: number;
-				objectStates: ObjectState[];
-		  }
 		| undefined;
 	storageDLFolderPath?:
 		| string
 		| number
 		| boolean
+		| ObjectFieldPicklistSetting
 		| ObjectFieldFilterSetting[]
-		| {
-				id: number;
-				objectStates: ObjectState[];
-		  }
 		| undefined;
 };
 export declare function updateFieldSettings(

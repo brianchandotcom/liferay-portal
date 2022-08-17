@@ -6,6 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -23,112 +24,153 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		CustomerPortal.customerPortalApisTearDown();
 
-		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-		PortalInstances.tearDownCP();
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
 	}
 
-	@description = "LPS-148483 - Verify if when the user choose the ERC-003 and clicks on the Analytics Cloud product the url follow the respective page."
+	@description = "Automation ID: LPS-148483 | Test Summary: Verify if when the user choose the ERC-003 and clicks on the Analytics Cloud product the url follow the respective page"
 	@priority = "5"
 	test IfAnalyticsCloudUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and navigate to the product activation page") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-003/activation/analytics-cloud");
-
-		AssertElementPresent(
-			locator1 = "CP2NavigationMenu#PRODUCT",
-			product = "Analytics Cloud");
+			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-003/activation/analytics-cloud");
+		}
+		
+		task ("Assert that the URL displays the page of the Analytics Cloud product") {
+			AssertElementPresent(
+				locator1 = "CP2NavigationMenu#PRODUCT",
+				product = "Analytics Cloud");
+		}
 	}
 
-	@description = "LPS-148477 - Verify if when the user choose the ERC-004 and clicks on the Commerce product the url follow the respective page."
+	@description = "Automation ID: LPS-148477 | Test Summary: Verify if when the user choose the ERC-004 and clicks on the Commerce product the url follow the respective page"
 	@priority = "5"
 	test IfCommerceUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and navigate to the product activation page") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-004/activation/commerce");
-
-		AssertElementPresent(
-			locator1 = "CP2NavigationMenu#PRODUCT",
-			product = "Commerce");
+			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-004/activation/commerce");
+		}
+		
+		task ("Assert that the URL displays the page of the Commerce product") {
+			AssertElementPresent(
+				locator1 = "CP2NavigationMenu#PRODUCT",
+				product = "Commerce");
+		}
 	}
 
-	@description = "LPS-148479 - Verify if when the user choose the ERC-001 and clicks on the DXP Cloud product the url follow the respective page."
+	@description = "Automation ID: LPS-148479 | Test Summary: Verify if when the user choose the ERC-001 and clicks on the DXP Cloud product the url follow the respective page"
 	@priority = "5"
 	test IfDXPCloudUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and navigate to the product activation page") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-001/activation/dxp-cloud");
-
-		AssertElementPresent(
-			locator1 = "CP2NavigationMenu#PRODUCT",
-			product = "DXP Cloud");
+			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-001/activation/lxc-sm");
+		}
+		
+		task ("Assert that the URL displays the page of the LXC-SM product") {
+			AssertElementPresent(
+				locator1 = "CP2NavigationMenu#PRODUCT",
+				product = "LXC-SM");
+		}
 	}
 
-	@description = "LPS-148478 - Verify if when the user choose the ERC-007 and clicks on the DXP product the url follow the respective page."
+	@description = "Automation ID: LPS-148478 | Test Summary: Verify if when the user choose the ERC-007 and clicks on the DXP product the url follow the respective page"
 	@priority = "5"
 	test IfDXPUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and navigate to the product activation page") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-007/activation/dxp");
+			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-002/activation/dxp");
 
-		AssertElementPresent(
-			locator1 = "CP2NavigationMenu#PRODUCT",
-			product = "DXP");
+		}
+		
+		task ("Assert that the URL displays the page of the DXP product") {
+			AssertElementPresent(
+				locator1 = "CP2NavigationMenu#PRODUCT",
+				product = "DXP");
+		}
+		
 	}
 
-	@description = "LPS-148481- Verify if when the user choose the Riyad Bank - Corporate Website and clicks on the Enterprise Search product the url follow the respective page."
+	@description = "Automation ID: LPS-148481 | Test Summary: Verify if when the user choose the Riyad Bank - Corporate Website and clicks on the Enterprise Search product the url follow the respective page"
 	@priority = "5"
 	test IfEnterpriseUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and navigate to the product activation page") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-009/activation/enterprise-search");
-
-		AssertElementPresent(
-			locator1 = "CP2NavigationMenu#PRODUCT",
-			product = "Enterprise Search");
+			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-005/activation/enterprise-search");
+		}
+		
+		task ("Assert that the URL displays the page of the Enterprise Search product") {
+			AssertElementPresent(
+				locator1 = "CP2NavigationMenu#PRODUCT",
+				product = "Enterprise Search");
+		}
 	}
 
-	@description = "LPS-148480 - Verify if when the user choose the ERC-002 and clicks on the Partnership product the url follow the respective page."
+	@description = "Automation ID: LPS-148480 | Test Summary: Verify if when the user choose the ERC-002 and clicks on the Partnership product the url follow the respective page"
 	@priority = "5"
 	test IfPartnershipUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and navigate to the product activation page") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-002/activation/partnership");
-
-		AssertElementPresent(
-			locator1 = "CP2NavigationMenu#PRODUCT",
-			product = "Partnership");
+			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-013/activation/partnership");
+		}
+		
+		task ("Assert that the URL displays the page of the Partnership product") {
+			AssertElementPresent(
+				locator1 = "CP2NavigationMenu#PRODUCT",
+				product = "Partnership");
+		}
 	}
 
-	@description = "LPS-148482 - Verify if when the user choose the ERC-005 and clicks on the Portal product the url follow the respective page."
+	@description = "Automation ID: LPS-148482 | Test Summary: Verify if when the user choose the ERC-005 and clicks on the Portal product the url follow the respective page"
 	@priority = "5"
 	test IfPortalUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and navigate to the product activation page") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-005/activation/portal");
-
-		AssertElementPresent(
-			locator1 = "CP2NavigationMenu#PRODUCT",
-			product = "Portal");
+			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-006/activation/portal");
+		}
+		
+		task ("Assert that the URL displays the page of the Portal product") {
+			AssertElementPresent(
+				locator1 = "CP2NavigationMenu#PRODUCT",
+				product = "Portal");
+		}
 	}
 
-	@description = "LPS-148484 - Verify if when the user go back to the Project Listing the URLs get back to normal."
-	@ignore = "true"
+	@description = "Automation ID: LPS-148484 | Test Summary: Verify if when the user go back to the Project Listing the URLs get back to normal"
 	@priority = "4"
 	test IfProjectListingURLStillTheSame {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and navigate to the product activation page") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-007/activation/dxp");
+			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-002/activation/dxp");
+		}
+		
+		task ("Assert that the URL displays the page of the DXP product") {
+			AssertElementPresent(
+				locator1 = "CP2NavigationMenu#PRODUCT",
+				product = "DXP");
+		}
+		
+		task ("Navigate to the homepage and assert that the URL displays the homepage") {
+			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site");
 
-		AssertElementPresent(
-			locator1 = "CP2NavigationMenu#PRODUCT",
-			product = "DXP");
-
-		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site");
-
-		AssertElementPresent(locator1 = "CP2LiferayContact#FIND_A_PROJECT");
+			AssertElementPresent(locator1 = "CP2LiferayContact#FIND_A_PROJECT");
+		}
 	}
 
 }

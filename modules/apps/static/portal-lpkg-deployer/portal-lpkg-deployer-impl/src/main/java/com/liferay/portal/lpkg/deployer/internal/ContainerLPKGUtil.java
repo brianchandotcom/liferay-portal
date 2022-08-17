@@ -32,15 +32,12 @@ import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.osgi.framework.BundleContext;
-
 /**
  * @author Matthew Tambara
  */
 public class ContainerLPKGUtil {
 
-	public static List<File> deploy(
-			File lpkgFile, BundleContext bundleContext, Properties properties)
+	public static List<File> deploy(File lpkgFile, Properties properties)
 		throws IOException {
 
 		Path deployerDirPath = Paths.get(

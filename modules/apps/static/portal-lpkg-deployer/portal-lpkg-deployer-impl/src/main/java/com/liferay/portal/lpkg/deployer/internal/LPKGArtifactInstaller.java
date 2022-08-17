@@ -83,8 +83,7 @@ public class LPKGArtifactInstaller implements FileInstaller {
 
 		Properties properties = new Properties();
 
-		List<File> lpkgFiles = ContainerLPKGUtil.deploy(
-			file, _bundleContext, properties);
+		List<File> lpkgFiles = ContainerLPKGUtil.deploy(file, properties);
 
 		if (lpkgFiles == null) {
 			_install(file, properties);

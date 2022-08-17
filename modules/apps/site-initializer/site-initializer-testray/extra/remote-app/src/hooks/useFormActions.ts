@@ -49,10 +49,16 @@ export type Form = {
 export type FormComponent = Omit<Form, 'forceRefetch'>;
 
 const onError = (error: any) => {
-	console.error(error);
+	let errorMessage = i18n.translate('an-unexpected-error-occurred');
+
+	if (process.env.NODE_ENV === 'development') {
+		console.error(error);
+
+		errorMessage = error.message;
+	}
 
 	Liferay.Util.openToast({
-		message: i18n.translate(error ? error : 'an-unexpected-error-occurred'),
+		message: errorMessage,
 		type: 'danger',
 	});
 };

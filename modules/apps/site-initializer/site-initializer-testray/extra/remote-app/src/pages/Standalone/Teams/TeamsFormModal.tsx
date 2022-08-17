@@ -26,8 +26,8 @@ import yupSchema, {yupResolver} from '../../../schema/yup';
 import {
 	APIResponse,
 	TestrayComponent,
+	assignTeamsToComponents,
 	createTeam,
-	updateComponent,
 	updateTeam,
 } from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
@@ -77,9 +77,9 @@ const SelectComponents: React.FC<SelectComponentsProps> = ({
 			: null
 	);
 
-	const getTeams = useCallback(() => {
-		const unassignedItems = unassigned?.items || [];
+	const getComponentsDualBox = useCallback(() => {
 		const currentItems = current?.items || [];
+		const unassignedItems = unassigned?.items || [];
 
 		return [
 			unassignedItems.map(onMapDefault),
@@ -87,22 +87,18 @@ const SelectComponents: React.FC<SelectComponentsProps> = ({
 		];
 	}, [unassigned, current]);
 
-	const components = getTeams();
+	const componentsDualBox = getComponentsDualBox();
 
 	return (
 		<DualListBox
-			boxes={components}
-			leftLabel={i18n.translate('Unassigned')}
+			boxes={componentsDualBox}
+			leftLabel={i18n.translate('unassigned')}
 			rightLabel={i18n.translate('current')}
 			setValue={setState}
 		/>
 	);
 };
 export type State = Boxes<{teamId: number}>;
-
-export const initialState = {
-	testrayComponents: [],
-};
 
 const TeamFormModal: React.FC<TeamProps> = ({
 	modal: {modalState, observer, onClose, onError, onSave, onSubmit},
@@ -126,27 +122,7 @@ const TeamFormModal: React.FC<TeamProps> = ({
 				update: updateTeam,
 			}
 		)
-			.then(async (response) => {
-				const [unassignedItems = [], currentItems = []] = state;
-
-				for (const unassigned of unassignedItems) {
-					if (unassigned.teamId !== 0) {
-						await updateComponent(Number(unassigned.value), {
-							name: unassigned.label,
-							teamId: '0',
-						});
-					}
-				}
-
-				for (const current of currentItems) {
-					if (current.teamId === 0) {
-						await updateComponent(Number(current.value), {
-							name: current.label,
-							teamId: response?.id,
-						});
-					}
-				}
-			})
+			.then((response) => assignTeamsToComponents(response, state))
 			.then(onSave)
 			.catch(onError);
 	};

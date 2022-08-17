@@ -39,7 +39,9 @@ const useTeamActions = () => {
 					.then((response) => {
 						if (response?.items?.length) {
 							throw new Error(
-								'The team cannot be deleted because it has associated components.'
+								i18n.translate(
+									'the-team-cannot-be-deleted-because-it-has-associated-components'
+								)
 							);
 						}
 						deleteResource(`/teams/${id}`)

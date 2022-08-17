@@ -12,6 +12,7 @@
  * details.
  */
 
+import {State} from '../../pages/Standalone/Teams/TeamsFormModal';
 import yupSchema from '../../schema/yup';
 import {searchUtil} from '../../util/search';
 import fetcher from '../fetcher';
@@ -39,6 +40,28 @@ const nestedFieldsParam = 'nestedFields=project,team';
 
 const componentsResource = `/components?${nestedFieldsParam}`;
 
+const assignTeamsToComponents = async (response: Component, state: State) => {
+	const [unassignedItems = [], currentItems = []] = state;
+
+	for (const unassigned of unassignedItems) {
+		if (unassigned.teamId !== 0) {
+			await updateComponent(Number(unassigned.value), {
+				name: unassigned.label,
+				teamId: '0',
+			});
+		}
+	}
+
+	for (const current of currentItems) {
+		if (current.teamId === 0) {
+			await updateComponent(Number(current.value), {
+				name: current.label,
+				teamId: response?.id,
+			});
+		}
+	}
+};
+
 const getTeamsComponentsQuery = (teamId: number) =>
 	fetcher(`/components?filter=${searchUtil.eq('teamId', teamId)}`);
 
@@ -62,6 +85,7 @@ const getComponentsTransformData = (
 });
 
 export {
+	assignTeamsToComponents,
 	componentsResource,
 	createComponent,
 	updateComponent,

@@ -12,6 +12,7 @@
  * details.
  */
 
+import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
 import {searchUtil} from '../../util/search';
 import fetcher from '../fetcher';
@@ -25,14 +26,12 @@ const adapter = ({name, projectId: r_projectToTeams_c_projectId}: Team) => ({
 });
 
 const createTeam = async (team: Team) => {
-	const data = await fetcher(
+	const response = await fetcher(
 		`/teams?filter=${searchUtil.eq('name', team.name)}`
 	);
 
-	const teams = data?.items;
-
-	if (teams.length) {
-		throw new Error('The team name already exists');
+	if (response?.items.length) {
+		throw new Error(i18n.translate('the-team-name-already-exists'));
 	}
 
 	return fetcher.post('/teams', adapter(team));

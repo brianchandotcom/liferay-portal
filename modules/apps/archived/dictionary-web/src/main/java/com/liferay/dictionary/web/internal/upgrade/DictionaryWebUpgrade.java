@@ -30,7 +30,7 @@ public class DictionaryWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(UpgradeStepRegistrator.Registry registry) {
-		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+		registry.registerInitialization();
 
 		registry.register(
 			"0.0.1", "1.0.0",

@@ -18,8 +18,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+
+import java.nio.file.Files;
 
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -42,6 +43,14 @@ public class XMLDTDVersionCheck extends BaseFileCheck {
 		return content;
 	}
 
+	protected String getLpVersion() {
+		return _releaseProperties.getProperty("lp.version");
+	}
+
+	protected String getLpVersionDTD() {
+		return _releaseProperties.getProperty("lp.version.dtd");
+	}
+
 	private String _checkDTDVersion(String content) throws IOException {
 		Matcher matcher = _doctypePattern.matcher(content);
 
@@ -49,24 +58,19 @@ public class XMLDTDVersionCheck extends BaseFileCheck {
 			return content;
 		}
 
-		File releasePropertiesFile = new File(
-			getPortalDir(), _RELEASE_PROPERTIES_FILE_NAME);
+		_readReleaseProperties();
 
-		if (!releasePropertiesFile.exists()) {
+		if (_releaseProperties == null) {
 			return content;
 		}
 
-		Properties properties = new Properties();
-
-		properties.load(new FileInputStream(releasePropertiesFile));
-
-		String lpVersion = properties.getProperty("lp.version");
+		String lpVersion = getLpVersion();
 
 		if (lpVersion == null) {
 			return content;
 		}
 
-		String lpVersionDTD = properties.getProperty("lp.version.dtd");
+		String lpVersionDTD = getLpVersionDTD();
 
 		if (lpVersionDTD == null) {
 			return content;
@@ -80,6 +84,24 @@ public class XMLDTDVersionCheck extends BaseFileCheck {
 			matcher.start());
 	}
 
+	private void _readReleaseProperties() throws IOException {
+		if (_releaseProperties != null) {
+			return;
+		}
+
+		File releasePropertiesFile = new File(
+			getPortalDir(), _RELEASE_PROPERTIES_FILE_NAME);
+
+		if (!releasePropertiesFile.exists()) {
+			return;
+		}
+
+		_releaseProperties = new Properties();
+
+		_releaseProperties.load(
+			Files.newInputStream(releasePropertiesFile.toPath()));
+	}
+
 	private static final String _RELEASE_PROPERTIES_FILE_NAME =
 		"release.properties";
 
@@ -87,5 +109,7 @@ public class XMLDTDVersionCheck extends BaseFileCheck {
 		"(<!DOCTYPE .+ PUBLIC \"-//Liferay//DTD .+ )" +
 			"([0-9]+\\.[0-9]+\\.[0-9]+)(//EN\" \"http://www.liferay.com/dtd/" +
 				".+_)([0-9]+_[0-9]+_[0-9]+)(\\.dtd\">)");
+
+	private Properties _releaseProperties;
 
 }

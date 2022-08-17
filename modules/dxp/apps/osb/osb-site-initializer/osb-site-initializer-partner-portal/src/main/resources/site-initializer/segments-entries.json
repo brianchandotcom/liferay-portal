@@ -2,86 +2,6 @@
 	{
 		"active": "true",
 		"name_i18n": {
-			"en-US": "Global"
-		},
-		"segmentsEntryKey": "Global",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "US"
-		},
-		"segmentsEntryKey": "US",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "Canada"
-		},
-		"segmentsEntryKey": "Canada",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "Mexico"
-		},
-		"segmentsEntryKey": "Mexico",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "Argentina, Uruguay, Paraguay"
-		},
-		"segmentsEntryKey": "Argentina, Uruguay, Paraguay",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "Chile, Peru"
-		},
-		"segmentsEntryKey": "Chile, Peru",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "Colombia, Ecuador"
-		},
-		"segmentsEntryKey": "Colombia, Ecuador",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "Central America"
-		},
-		"segmentsEntryKey": "Central America",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "Latin America"
-		},
-		"segmentsEntryKey": "Latin America",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "Middle East"
-		},
-		"segmentsEntryKey": "Middle East",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
 			"en-US": "Africa"
 		},
 		"segmentsEntryKey": "Africa",
@@ -98,6 +18,14 @@
 	{
 		"active": "true",
 		"name_i18n": {
+			"en-US": "Argentina, Uruguay, Paraguay"
+		},
+		"segmentsEntryKey": "Argentina, Uruguay, Paraguay",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
 			"en-US": "BENELUX"
 		},
 		"segmentsEntryKey": "BENELUX",
@@ -106,41 +34,17 @@
 	{
 		"active": "true",
 		"name_i18n": {
-			"en-US": "DACH"
+			"en-US": "Canada"
 		},
-		"segmentsEntryKey": "DACH",
+		"segmentsEntryKey": "Canada",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
 		"active": "true",
 		"name_i18n": {
-			"en-US": "UK"
+			"en-US": "Central America"
 		},
-		"segmentsEntryKey": "UK",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "France"
-		},
-		"segmentsEntryKey": "France",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "ItGrCy"
-		},
-		"segmentsEntryKey": "ItGrCy",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "SpainPortugal"
-		},
-		"segmentsEntryKey": "SpainPortugal",
+		"segmentsEntryKey": "Central America",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -154,25 +58,9 @@
 	{
 		"active": "true",
 		"name_i18n": {
-			"en-US": "Nordics"
+			"en-US": "Chile, Peru"
 		},
-		"segmentsEntryKey": "Nordics",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "India"
-		},
-		"segmentsEntryKey": "India",
-		"type": "com.liferay.portal.kernel.model.User"
-	},
-	{
-		"active": "true",
-		"name_i18n": {
-			"en-US": "Singapore"
-		},
-		"segmentsEntryKey": "Singapore",
+		"segmentsEntryKey": "Chile, Peru",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -186,9 +74,121 @@
 	{
 		"active": "true",
 		"name_i18n": {
+			"en-US": "Colombia, Ecuador"
+		},
+		"segmentsEntryKey": "Colombia, Ecuador",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "DACH"
+		},
+		"segmentsEntryKey": "DACH",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "France"
+		},
+		"segmentsEntryKey": "France",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Global"
+		},
+		"segmentsEntryKey": "Global",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "India"
+		},
+		"segmentsEntryKey": "India",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "ItGrCy"
+		},
+		"segmentsEntryKey": "ItGrCy",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
 			"en-US": "Japan"
 		},
 		"segmentsEntryKey": "Japan",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Latin America"
+		},
+		"segmentsEntryKey": "Latin America",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Mexico"
+		},
+		"segmentsEntryKey": "Mexico",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Middle East"
+		},
+		"segmentsEntryKey": "Middle East",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Nordics"
+		},
+		"segmentsEntryKey": "Nordics",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Singapore"
+		},
+		"segmentsEntryKey": "Singapore",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "SpainPortugal"
+		},
+		"segmentsEntryKey": "SpainPortugal",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "UK"
+		},
+		"segmentsEntryKey": "UK",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "US"
+		},
+		"segmentsEntryKey": "US",
 		"type": "com.liferay.portal.kernel.model.User"
 	}
 ]

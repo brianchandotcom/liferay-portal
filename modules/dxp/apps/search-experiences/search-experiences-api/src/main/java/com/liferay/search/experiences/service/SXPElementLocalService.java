@@ -76,6 +76,15 @@ public interface SXPElementLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public SXPElement addSXPElement(
+			long userId, Map<Locale, String> descriptionMap,
+			String elementDefinitionJSON, String externalReferenceCode,
+			boolean readOnly, String schemaVersion,
+			Map<Locale, String> titleMap, int type,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Adds the sxp element to the database. Also notifies the appropriate model listeners.
 	 *

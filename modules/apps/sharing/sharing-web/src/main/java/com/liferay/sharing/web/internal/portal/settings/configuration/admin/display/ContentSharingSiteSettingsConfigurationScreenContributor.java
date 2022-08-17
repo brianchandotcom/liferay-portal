@@ -14,7 +14,7 @@
 
 package com.liferay.sharing.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -51,7 +51,7 @@ public class ContentSharingSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "content-sharing");
+		return _language.get(locale, "content-sharing");
 	}
 
 	@Override
@@ -76,6 +76,9 @@ public class ContentSharingSiteSettingsConfigurationScreenContributor
 
 		return true;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.sharing.web)")
 	private ServletContext _servletContext;

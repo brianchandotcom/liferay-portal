@@ -17,7 +17,7 @@ package com.liferay.server.admin.web.internal.frontend.taglib.servlet.taglib;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.server.admin.web.internal.constants.ServerAdminNavigationEntryConstants;
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class ServerSystemPropertiesScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "system-properties");
+		return _language.get(locale, "system-properties");
 	}
 
 	@Override
@@ -78,5 +78,8 @@ public class ServerSystemPropertiesScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 }

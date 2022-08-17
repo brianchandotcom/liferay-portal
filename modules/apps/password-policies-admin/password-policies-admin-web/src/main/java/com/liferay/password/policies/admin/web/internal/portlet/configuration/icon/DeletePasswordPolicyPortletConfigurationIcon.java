@@ -16,7 +16,7 @@ package com.liferay.password.policies.admin.web.internal.portlet.configuration.i
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -52,7 +52,7 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(getLocale(portletRequest)), "delete");
 	}
 
@@ -120,6 +120,9 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 		return ParamUtil.getLong(
 			_portal.getHttpServletRequest(portletRequest), "passwordPolicyId");
 	}
+
+	@Reference
+	private Language _language;
 
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
 

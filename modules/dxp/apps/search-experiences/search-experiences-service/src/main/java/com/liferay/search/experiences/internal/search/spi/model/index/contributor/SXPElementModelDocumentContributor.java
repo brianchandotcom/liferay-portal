@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.internal.search.spi.model.index.contributor;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -25,6 +25,7 @@ import com.liferay.search.experiences.model.SXPElement;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
@@ -45,7 +46,7 @@ public class SXPElementModelDocumentContributor
 		document.addKeyword("readOnly", sxpElement.isReadOnly());
 
 		for (Locale locale :
-				LanguageUtil.getCompanyAvailableLocales(
+				_language.getCompanyAvailableLocales(
 					sxpElement.getCompanyId())) {
 
 			String languageId = LocaleUtil.toLanguageId(locale);
@@ -68,5 +69,8 @@ public class SXPElementModelDocumentContributor
 				sxpElement.getTitle(locale));
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 }

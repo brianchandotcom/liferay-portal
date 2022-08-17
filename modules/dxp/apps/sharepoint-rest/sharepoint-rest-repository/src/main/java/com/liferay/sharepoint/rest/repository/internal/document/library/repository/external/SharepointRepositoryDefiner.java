@@ -17,7 +17,7 @@ package com.liferay.sharepoint.rest.repository.internal.document.library.reposit
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
 import com.liferay.document.library.repository.authorization.oauth2.TokenStore;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
@@ -71,7 +71,7 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 
 	@Override
 	public String getRepositoryTypeLabel(Locale locale) {
-		String label = LanguageUtil.get(locale, "sharepoint");
+		String label = _language.get(locale, "sharepoint");
 
 		return String.format(
 			"%s (%s)", label, _sharepointRepositoryConfiguration.name());
@@ -124,6 +124,9 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 		_sharepointSearchConfiguration = ConfigurableUtil.createConfigurable(
 			SharepointSearchConfiguration.class, properties);
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PortalCapabilityLocator _portalCapabilityLocator;

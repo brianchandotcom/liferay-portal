@@ -16,7 +16,7 @@ package com.liferay.password.policies.admin.web.internal.portlet.configuration.i
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -49,7 +49,7 @@ public class EditPasswordPolicyPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(getLocale(portletRequest)), "edit");
 	}
 
@@ -95,6 +95,9 @@ public class EditPasswordPolicyPortletConfigurationIcon
 		return ParamUtil.getLong(
 			_portal.getHttpServletRequest(portletRequest), "passwordPolicyId");
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PasswordPolicyPermission _passwordPolicyPermission;

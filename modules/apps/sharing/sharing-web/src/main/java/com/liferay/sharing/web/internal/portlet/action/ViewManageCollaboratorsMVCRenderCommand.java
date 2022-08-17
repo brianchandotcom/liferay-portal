@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -152,7 +152,7 @@ public class ViewManageCollaboratorsMVCRenderCommand
 					Format expirationDateTooltipDateFormat =
 						DateFormatFactoryUtil.getDate(themeDisplay.getLocale());
 
-					expirationDateTooltip = LanguageUtil.format(
+					expirationDateTooltip = _language.format(
 						themeDisplay.getLocale(), "until-x",
 						expirationDateTooltipDateFormat.format(expirationDate));
 				}
@@ -228,6 +228,9 @@ public class ViewManageCollaboratorsMVCRenderCommand
 
 		return sharingEntryPermissionDisplaySelectOptionsJSONArray;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;

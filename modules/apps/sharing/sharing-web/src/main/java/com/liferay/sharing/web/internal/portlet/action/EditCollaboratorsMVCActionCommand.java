@@ -17,7 +17,7 @@ package com.liferay.sharing.web.internal.portlet.action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -112,7 +112,7 @@ public class EditCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 
 			JSONObject jsonObject = JSONUtil.put(
 				"errorMessage",
-				LanguageUtil.get(themeDisplay.getLocale(), errorMessage));
+				_language.get(themeDisplay.getLocale(), errorMessage));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
@@ -272,7 +272,7 @@ public class EditCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONObject jsonObject = JSONUtil.put(
 			"successMessage",
-			LanguageUtil.get(resourceBundle, "permissions-changed"));
+			_language.get(resourceBundle, "permissions-changed"));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
@@ -281,6 +281,9 @@ public class EditCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -115,7 +115,7 @@ public class OrganizationModelDocumentContributor
 	private Set<String> _getLocalizedCountryNames(Country country) {
 		Set<String> countryNames = new HashSet<>();
 
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+		for (Locale locale : _language.getAvailableLocales()) {
 			String countryName = country.getName(locale);
 
 			countryName = StringUtil.toLowerCase(countryName);
@@ -195,6 +195,9 @@ public class OrganizationModelDocumentContributor
 
 	@Reference
 	private CountryService _countryService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

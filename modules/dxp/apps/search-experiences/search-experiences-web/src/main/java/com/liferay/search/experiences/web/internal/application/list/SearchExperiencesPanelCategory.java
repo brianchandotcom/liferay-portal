@@ -17,12 +17,13 @@ package com.liferay.search.experiences.web.internal.application.list;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.search.experiences.constants.SXPPanelCategoryKeys;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kevin Tan
@@ -44,7 +45,10 @@ public class SearchExperiencesPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "search-experiences");
+		return _language.get(locale, "search-experiences");
 	}
+
+	@Reference
+	private Language _language;
 
 }

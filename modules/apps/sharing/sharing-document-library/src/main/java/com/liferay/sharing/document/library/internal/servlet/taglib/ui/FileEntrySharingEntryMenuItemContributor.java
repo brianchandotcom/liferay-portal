@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -77,7 +77,7 @@ public class FileEntrySharingEntryMenuItemContributor
 
 		urlMenuItem.setIcon("download");
 		urlMenuItem.setLabel(
-			LanguageUtil.get(themeDisplay.getLocale(), "download"));
+			_language.get(themeDisplay.getLocale(), "download"));
 
 		AssetRenderer<?> assetRenderer = _getAssetEntryRenderer(sharingEntry);
 
@@ -113,6 +113,9 @@ public class FileEntrySharingEntryMenuItemContributor
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private SharingPermission _sharingPermission;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.portlet.url.builder;
+package com.liferay.portal.kernel.portlet.url.builder;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.SystemException;

@@ -64,13 +64,14 @@ public class UpgradeVersionTreeMapTest {
 
 		treeMap.put(new Version(1, 0, 0), new MultiStepUpgrade());
 
-		Collection<UpgradeStep> upgradeSteps = treeMap.values();
+		Collection<UpgradeProcess> upgradeProcesses = treeMap.values();
 
-		_checkTreeMapValues(treeMap, upgradeSteps.toArray(new UpgradeStep[0]));
+		_checkTreeMapValues(
+			treeMap, upgradeProcesses.toArray(new UpgradeProcess[0]));
 	}
 
 	private void _checkTreeMapValues(
-		UpgradeVersionTreeMap treeMap, UpgradeStep[] upgradeProcesses) {
+		UpgradeVersionTreeMap treeMap, UpgradeProcess[] upgradeProcesses) {
 
 		Assert.assertEquals(
 			treeMap.toString(), upgradeProcesses.length, treeMap.size());
@@ -84,9 +85,9 @@ public class UpgradeVersionTreeMapTest {
 		while (iterator.hasNext()) {
 			Version version = iterator.next();
 
-			UpgradeStep upgradeStep = treeMap.get(version);
+			UpgradeProcess upgradeProcess = treeMap.get(version);
 
-			Assert.assertEquals(upgradeProcesses[i], upgradeStep);
+			Assert.assertEquals(upgradeProcesses[i], upgradeProcess);
 
 			String step = version.getQualifier();
 

@@ -471,32 +471,6 @@ public class FolderActionDisplayContext {
 		).buildString();
 	}
 
-	public String getRandomNamespace() {
-		if (_randomNamespace != null) {
-			return _randomNamespace;
-		}
-
-		String portletName = _dlRequestHelper.getPortletName();
-
-		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
-			String randomKey = PortalUtil.generateRandomKey(
-				_httpServletRequest, "portlet_document_library_folder_action");
-
-			_randomNamespace = randomKey + StringPool.UNDERLINE;
-		}
-		else {
-			String randomKey = PortalUtil.generateRandomKey(
-				_httpServletRequest,
-				"portlet_image_gallery_display_folder_action");
-
-			_randomNamespace = randomKey + StringPool.UNDERLINE;
-		}
-
-		return _randomNamespace;
-	}
-
 	public long getResourcePrimKey() {
 		Folder folder = _getFolder();
 
@@ -1021,7 +995,6 @@ public class FolderActionDisplayContext {
 	private final DLTrashHelper _dlTrashHelper;
 	private Folder _folder;
 	private final HttpServletRequest _httpServletRequest;
-	private String _randomNamespace;
 	private Long _repositoryId;
 	private Integer _status;
 	private Boolean _view;

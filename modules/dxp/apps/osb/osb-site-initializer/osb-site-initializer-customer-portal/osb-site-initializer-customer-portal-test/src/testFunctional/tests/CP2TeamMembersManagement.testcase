@@ -6,6 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -37,58 +38,77 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
+
 	}
 
-	@description = "LPS-146292 - Check if there is a 'Cancel' button if the user wants to leave the process."
+	@description = "Automation ID: LPS-146292 | Test Summary: Check if there is a 'Cancel' button if the user wants to leave the process"
 	@priority = "4"
 	test CancelButtonIsPresent {
-		property portal.upstream = "quarantine";
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.changeUserRole(
-			accountName = "Test Account 01",
-			accountRoleTitle = "Partner Manager",
-			accountUserName = "Test Test");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Partner Manager",
+				accountUserName = "Test Test");
+		}
 
-		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CP2NavigationMenu.goToTeamMembers();
+			CustomerPortal.enterOnProject(projectName = "Test Account LXC-SM");
+		}
 
-		CP2TeamMembers.clickInviteMembers();
+		task ("Go to the Team Members page and open the invitation modal") {
+			CP2NavigationMenu.goToTeamMembers();
 
-		CP2NavigationMenu.cancelTeamMembersInvitation();
+			CP2TeamMembers.clickInviteMembers();
+		}
 
-		CP2TeamMembers.viewTeamMembersPage();
+		task ("Click the Cancel button and assert that the user has returned to the Team Members page") {
+			CP2NavigationMenu.cancelTeamMembersInvitation();
+
+			CP2TeamMembers.viewTeamMembersPage();
+		}
 	}
 
-	@description = "LPS-146292 - Verify if after inviting member, the screen goes back to previous screen (Team Members page)."
+	@description = "Automation ID: LPS-146292 | Test Summary: Verify if after inviting member, the screen goes back to previous screen (Team Members page)"
 	@priority = "4"
 	test CanGoBackOnTeamMembersPage {
-		property portal.upstream = "quarantine";
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.changeUserRole(
-			accountName = "Test Account 01",
-			accountRoleTitle = "Partner Manager",
-			accountUserName = "Test Test");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Partner Manager",
+				accountUserName = "Test Test");
+		}
 
-		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CP2NavigationMenu.goToTeamMembers();
+			CustomerPortal.enterOnProject(projectName = "Test Account LXC-SM");
+		}
 
-		CP2TeamMembers.clickInviteMembers();
+		task ("Go to the invite modal and invite a member to the project") {
+			CP2NavigationMenu.goToTeamMembers();
 
-		CP2TeamMembers.addFieldsTeamMembersExtra(
-			position = "0",
-			positionNumber = "0",
-			rowEmail = "test1@liferay.com",
-			rowRole = "User");
+			CP2TeamMembers.clickInviteMembers();
 
-		CP2TeamMembers.clickTeamMembersSendInvitation();
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				position = "0",
+				positionNumber = "0",
+				rowEmail = "test1@liferay.com",
+				rowRole = "User");
 
-		CP2TeamMembers.viewTeamMembersPage();
+			CP2TeamMembers.clickTeamMembersSendInvitation();
+		}
+
+		task ("Assert that remained on the Team Members page") {
+			CP2TeamMembers.viewTeamMembersPage();
+		}
 	}
 
 }

@@ -10,6 +10,16 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page",
+			widgetName = "Knowledge Base Display");
 	}
 
 	tearDown {
@@ -34,16 +44,6 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ViewKBArticleNoHierarchyInFolder {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Knowledge Base Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Knowledge Base Page",
-			widgetName = "Knowledge Base Display");
-
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.addCP(
@@ -74,7 +74,7 @@ definition {
 
 		KBFolder.selectParentCP(kbFolderName = "Folder 2");
 
-		Navigator.gotoPage(pageName = "Knowledge Base Page");
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		KBArticle.viewNoHierarchyPG(kbArticleTitle = "Article 1 Title");
 	}
@@ -82,16 +82,6 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewKBArticlesHierarchyWithinFolders {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page",
-			widgetName = "Knowledge Base Display");
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder 1 Description",
@@ -182,16 +172,6 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ViewUnchangedKBArticlePriorityAfterEdit {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page",
-			widgetName = "Knowledge Base Display");
-
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(

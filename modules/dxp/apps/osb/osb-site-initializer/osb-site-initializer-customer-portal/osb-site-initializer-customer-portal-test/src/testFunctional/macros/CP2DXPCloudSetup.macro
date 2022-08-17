@@ -1,6 +1,8 @@
 definition {
 
 	macro activeDisasterRecoveryDataCenter {
+		CustomerPortal.showCPObject(title = "Account Subscription");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -32,29 +34,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addCPDXPCloudObject {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
-
-		ObjectPortlet.selectObject(label = "${title}");
-
-		CreateObject.checkToggleActive();
-
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Content & Data");
-
-		CustomerPortal.checkToggleHideWidget();
-
-		CreateObject.saveObject();
-	}
-
-	macro addObjectsForDXPCloud {
-		CustomerPortal.showCPObject(title = "Account Subscription");
-
-		CP2DXPCloudSetup.activeDisasterRecoveryDataCenter();
-	}
-
 	macro assertCardStatusChanged {
 		AssertTextEquals(
 			key_status = "${status}",
@@ -83,20 +62,20 @@ definition {
 		}
 	}
 
-	macro clearDXPCloudInfo {
+	macro clearAndDeleteDXPCloudEntries {
 		CP2DXPCloudSetup.clearActivationStatus(status = "${status}");
 
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CP2DXPCloudSetup.deleteEntryDXPCloudEnvironments(entry = "ERC-001");
+
+		CustomerPortal.deleteCPObject(title = "DXP Cloud Environment");
+
+		CustomerPortal.deleteCPObject(title = "Account Subscription Group");
 	}
 
 	macro clickOnAddAnotherAdminButton {
 		Click(locator1 = "CP2DXPCloudSetup#ADD_ANOTHER_ADMIN");
-	}
-
-	macro clickOnFinishActivationButton {
-		Click(locator1 = "CP2DXPCloudSetup#FINISH_ACTIVATION");
 	}
 
 	macro clickOnProductConsoleLink {
@@ -110,7 +89,7 @@ definition {
 	macro createDXPCloudObjects {
 		CustomerPortal.showCPObject(title = "Account Subscription Group");
 
-		CP2DXPCloudSetup.addCPDXPCloudObject();
+		CustomerPortal.addCPObject(title = "DXP Cloud Environment");
 	}
 
 	macro deactivateDisasterRecoveryDataCenter {
@@ -126,6 +105,8 @@ definition {
 		Click(locator1 = "Button#SAVE");
 
 		Alert.viewSuccessMessage();
+
+		CustomerPortal.deleteCPObject(title = "Account Subscription");
 	}
 
 	macro deleteDXPCloudEnvironments {
@@ -145,12 +126,6 @@ definition {
 		CreateObject.saveObject();
 	}
 
-	macro deleteDXPCloudObject {
-		CP2DXPCloudSetup.deleteDXPCloudEnvironments();
-
-		CustomerPortal.deleteCPObject(title = "Account Subscription Group");
-	}
-
 	macro deleteEntryDXPCloudEnvironments {
 		var key_status = "${entry}";
 
@@ -163,28 +138,22 @@ definition {
 		}
 	}
 
-	macro deleteObjectsForDXPCloud {
-		CP2DXPCloudSetup.deactivateDisasterRecoveryDataCenter();
-
-		CustomerPortal.deleteCPObject(title = "Account Subscription");
-	}
-
 	macro notViewSetupDXPCloufEXtraInfo {
 		AssertElementNotPresent(
 			label = "dxp.admins[1].email",
-			locator1 = "CP2DXPCloudSetup#SETUP_VALUE");
+			locator1 = "CustomerPortalSite#SETUP_VALUE");
 
 		AssertElementNotPresent(
 			label = "dxp.admins[1].firstName",
-			locator1 = "CP2DXPCloudSetup#SETUP_VALUE");
+			locator1 = "CustomerPortalSite#SETUP_VALUE");
 
 		AssertElementNotPresent(
 			label = "dxp.admins[1].lastName",
-			locator1 = "CP2DXPCloudSetup#SETUP_VALUE");
+			locator1 = "CustomerPortalSite#SETUP_VALUE");
 
 		AssertElementNotPresent(
 			label = "dxp.admins[1].github",
-			locator1 = "CP2DXPCloudSetup#SETUP_VALUE");
+			locator1 = "CustomerPortalSite#SETUP_VALUE");
 	}
 
 	macro typeAllSetupDXPCloudInfoFields {
@@ -243,7 +212,7 @@ definition {
 		var key_index = "${position}";
 		
 		Type(
-			locator1 = "CP2DXPCloudSetup#SETUP_FIELDS",
+			locator1 = "CustomerPortalSite#SETUP_FIELDS",
 			value1 = "${value}");
 	}
 
@@ -292,47 +261,47 @@ definition {
 	macro viewSetupDXPCloufEXtraFields {
 		AssertElementPresent(
 			label = "dxp.admins[1].email",
-			locator1 = "CP2DXPCloudSetup#SETUP_FIELDS");
+			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementPresent(
 			label = "dxp.admins[1].firstName",
-			locator1 = "CP2DXPCloudSetup#SETUP_FIELDS");
+			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementPresent(
 			label = "dxp.admins[1].lastName",
-			locator1 = "CP2DXPCloudSetup#SETUP_FIELDS");
+			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementPresent(
 			label = "dxp.admins[1].github",
-			locator1 = "CP2DXPCloudSetup#SETUP_FIELDS");
+			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 	}
 
 	macro viewSetupDXPCloufEXtraInfo {
 		AssertElementPresent(
 			label = "dxp.admins[1].email",
-			locator1 = "CP2DXPCloudSetup#SETUP_VALUE",
+			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "test@liferay.com");
 
 		AssertElementPresent(
 			label = "dxp.admins[1].firstName",
-			locator1 = "CP2DXPCloudSetup#SETUP_VALUE",
+			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "FirstName");
 
 		AssertElementPresent(
 			label = "dxp.admins[1].lastName",
-			locator1 = "CP2DXPCloudSetup#SETUP_VALUE",
+			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "LastName");
 
 		AssertElementPresent(
 			label = "dxp.admins[1].github",
-			locator1 = "CP2DXPCloudSetup#SETUP_VALUE",
+			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "GitHubUser");
 	}
 
 	macro viewSetupDXPCloufInfo {
 		AssertElementPresent(
 			label = "dxp.projectId",
-			locator1 = "CP2DXPCloudSetup#SETUP_VALUE",
+			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "001");
 
 		AssertElementPresent(
@@ -341,22 +310,22 @@ definition {
 
 		AssertElementPresent(
 			label = "dxp.admins[0].email",
-			locator1 = "CP2DXPCloudSetup#SETUP_VALUE",
+			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "test@liferay.com");
 
 		AssertElementPresent(
 			label = "dxp.admins[0].firstName",
-			locator1 = "CP2DXPCloudSetup#SETUP_VALUE",
+			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "FirstName");
 
 		AssertElementPresent(
 			label = "dxp.admins[0].lastName",
-			locator1 = "CP2DXPCloudSetup#SETUP_VALUE",
+			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "LastName");
 
 		AssertElementPresent(
 			label = "dxp.admins[0].github",
-			locator1 = "CP2DXPCloudSetup#SETUP_VALUE",
+			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "GitHubUser");
 	}
 

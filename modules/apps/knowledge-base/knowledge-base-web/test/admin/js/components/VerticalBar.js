@@ -13,6 +13,7 @@
  */
 
 import {cleanup, fireEvent, render} from '@testing-library/react';
+import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -23,10 +24,8 @@ const FOLDERS_AND_ARTICLES_TITLE = 'Folders and articles';
 const TEMPLATES_TITLE = 'Templates';
 const SUGGESTIONS_TITLE = 'Suggestions';
 
-const mockNavigate = jest.fn();
-
 jest.mock('frontend-js-web', () => ({
-	navigate: () => mockNavigate,
+	navigate: jest.fn(),
 }));
 
 const defaultProps = {
@@ -115,7 +114,20 @@ describe('VerticalBar', () => {
 
 		fireEvent.click(foldersAndArticlesButton);
 
-		expect(mockNavigate).toHaveBeenCalledTimes(0);
+		expect(navigate).toHaveBeenCalledTimes(0);
+	});
+
+	it('navigate if user clicks on another panel icon', async () => {
+		const {getAllByRole} = renderComponent({
+			...defaultProps,
+			productMenuOpen: false,
+		});
+
+		const templatesButton = getAllByRole('button')[1];
+
+		fireEvent.click(templatesButton);
+
+		expect(navigate).toHaveBeenCalledTimes(1);
 	});
 
 	it('opens the panel if user clicks on the current panel icon', () => {

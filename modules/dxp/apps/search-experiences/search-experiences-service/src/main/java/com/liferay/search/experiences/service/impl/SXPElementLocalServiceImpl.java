@@ -14,7 +14,6 @@
 
 package com.liferay.search.experiences.service.impl;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -27,8 +26,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.search.experiences.exception.SXPElementElementDefinitionJSONException;
 import com.liferay.search.experiences.exception.SXPElementTitleException;
@@ -62,17 +59,27 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addSXPElement(
+			userId, descriptionMap, elementDefinitionJSON, null, readOnly,
+			schemaVersion, titleMap, type, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public SXPElement addSXPElement(
+			long userId, Map<Locale, String> descriptionMap,
+			String elementDefinitionJSON, String externalReferenceCode,
+			boolean readOnly, String schemaVersion,
+			Map<Locale, String> titleMap, int type,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		_validate(elementDefinitionJSON, titleMap, type, serviceContext);
 
 		SXPElement sxpElement = createSXPElement(
 			counterLocalService.increment(SXPElement.class.getName()));
 
-		if (readOnly) {
-			sxpElement.setExternalReferenceCode(
-				StringUtil.replace(
-					StringUtil.toUpperCase(titleMap.get(LocaleUtil.US)),
-					CharPool.SPACE, CharPool.UNDERLINE));
-		}
+		sxpElement.setExternalReferenceCode(externalReferenceCode);
 
 		User user = _userLocalService.getUser(userId);
 

@@ -260,7 +260,7 @@ definition {
 			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}",
 			type = "${type}");
 
-		JSONLayoutpagetemplateAPI._setDisplayPageTemplateEntryAsDefault(layoutPageTemplateEntryId = "${layoutPageTemplateEntryId}");
+		JSONLayoutpagetemplateAPI._setLayoutPageTemplateEntryAsDefault(layoutPageTemplateEntryId = "${layoutPageTemplateEntryId}");
 	}
 
 }

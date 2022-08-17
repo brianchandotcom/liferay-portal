@@ -678,11 +678,7 @@ definition {
 
 			Pause(locator1 = "60000");
 
-			while (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-				Pause(locator1 = "1000");
-
-				Refresh();
-			}
+			Refresh();
 
 			User.viewLoggedInPG();
 		}
@@ -750,11 +746,7 @@ definition {
 
 			Pause(locator1 = "60000");
 
-			while (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-				Pause(locator1 = "1000");
-
-				Refresh();
-			}
+			Refresh();
 
 			User.viewLoggedInPG();
 		}

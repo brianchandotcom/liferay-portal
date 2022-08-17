@@ -42,19 +42,16 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 	}
 
 	public List<UpgradeInfo> getUpgradeInfos() {
-		if (_initialUpgradeInfo == null) {
-			return _upgradeInfos;
+		if (_initialization) {
+			return ListUtil.concat(
+				Arrays.asList(
+					new UpgradeInfo(
+						"0.0.0", _getFinalSchemaVersion(_upgradeInfos),
+						_buildNumber, new DummyUpgradeStep())),
+				_upgradeInfos);
 		}
 
-		if (_initialUpgradeInfo.getToSchemaVersionString() == null) {
-			_initialUpgradeInfo = new UpgradeInfo(
-				_initialUpgradeInfo.getFromSchemaVersionString(),
-				_getFinalSchemaVersion(_upgradeInfos), _buildNumber,
-				_initialUpgradeInfo.getUpgradeStep());
-		}
-
-		return ListUtil.concat(
-			Arrays.asList(_initialUpgradeInfo), _upgradeInfos);
+		return _upgradeInfos;
 	}
 
 	@Override
@@ -76,8 +73,7 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 
 	@Override
 	public void registerInitialization() {
-		_initialUpgradeInfo = new UpgradeInfo(
-			"0.0.0", null, _buildNumber, new DummyUpgradeStep());
+		_initialization = true;
 	}
 
 	private void _createUpgradeInfos(
@@ -156,7 +152,7 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 	private final int _buildNumber;
 	private final List<UpgradeStep> _initialDeploymentUpgradeSteps =
 		new ArrayList<>();
-	private UpgradeInfo _initialUpgradeInfo;
+	private boolean _initialization;
 	private final List<UpgradeInfo> _upgradeInfos = new ArrayList<>();
 
 }

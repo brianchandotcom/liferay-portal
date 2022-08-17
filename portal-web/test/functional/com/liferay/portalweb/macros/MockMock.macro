@@ -24,6 +24,8 @@ definition {
 
 		if (isSet(recipient)) {
 			var counter = "0";
+
+			var key_counter = "${counter}";
 			var key_recipient = "${recipient}";
 			var maxRetries = "3";
 

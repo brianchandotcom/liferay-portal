@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>MOCKMOCK_SPECIFIC_RECIPIENT_SUBJECT_FIELD_LINK</td>
-	<td>//tr[contains(.,'${key_recipient}')]/td[3]//a</td>
+	<td>//tr['${key_counter}'][contains(.,'${key_recipient}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>

@@ -6,6 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -27,514 +28,666 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		CustomerPortal.customerPortalTearDown();
 
-		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-		PortalInstances.tearDownCP();
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
 	}
 
-	@description = "LPS-144988 - Assert if button 'Add Another Admin' works when clicked"
+	@description = "Automation ID: LPS-144988 | Test Summary: Assert if button 'Add Another Admin' works when clicked"
 	@priority = "4"
 	test CanAddAnotherAdmin {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 
-		CustomerPortal.clickOnStartProjectSetup();
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+		task ("Fill out all the fields in the form") {
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+		}
 
-		CP2DXPCloudSetup.clickOnAddAnotherAdminButton();
+		task ("Assert the new form fields") {
+			CP2DXPCloudSetup.clickOnAddAnotherAdminButton();
 
-		CP2DXPCloudSetup.viewSetupDXPCloufEXtraFields();
+			CP2DXPCloudSetup.viewSetupDXPCloufEXtraFields();
+		}
 	}
 
-	@description = "LPS-144976 - Verify if the user can choose an option at 'Disaster Recovery Data Center Region'"
+	@description = "Automation ID: LPS-144976 | Test Summary: Verify if the user can choose an option at Disaster Recovery Data Center Region"
 	@priority = "5"
 	test CanChooseDisasterRecoveryDataCenter {
-		CP2DXPCloudSetup.addObjectsForDXPCloud();
+		task ("Create and activate object for disaster data center region") {
+			CP2DXPCloudSetup.activeDisasterRecoveryDataCenter();
+		}
+		
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		Accounts.openAccountsAdmin();
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+		
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Going through onboarding to Setup") {
+			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
+		}
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+		task ("Assert the region options from the drop-down") {
+			CP2DXPCloudSetup.viewDisasterRegionList(regionRow = "Oregon, USA,Iowa, USA,London, England,Frankfurt, Germany,Sao Paulo, Brazil,Sydney, Australia,Mumbai, India,Tokyo, Japan,Montreal, Canada,Dubai, UAE,Hamina, Finland");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
-
-		CustomerPortal.clickOnSkipForNowButton();
-
-		CP2DXPCloudSetup.viewDisasterRegionList(regionRow = "Oregon, USA,Iowa, USA,London, England,Frankfurt, Germany,Sao Paulo, Brazil,Sydney, Australia,Mumbai, India,Tokyo, Japan,Montreal, Canada,Dubai, UAE,Hamina, Finland");
-
-		CP2DXPCloudSetup.deleteObjectsForDXPCloud();
+		task ("Deactivating and deleting object for the disaster data center region") {
+			CP2DXPCloudSetup.deactivateDisasterRecoveryDataCenter();
+		}
 	}
 
-	@description = "LPS-144970 - Verify if the user can choose an option at 'Primary Data Center Region"
+	@description = "Automation ID: LPS-144970 | Test Summary: Verify if the user can choose an option at 'Primary Data Center Region"
 	@priority = "5"
 	test CanChoosePrimaryDataCenter {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
+		
+		task ("Going through onboarding to Setup") {
+			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
-
-		CustomerPortal.clickOnSkipForNowButton();
-
-		CP2DXPCloudSetup.viewRegionList(regionList = "Oregon, USA,Iowa, USA,London, England,Frankfurt, Germany,Sao Paulo, Brazil,Sydney, Australia,Mumbai, India,Tokyo, Japan,Montreal, Canada,Dubai, UAE,Hamina, Finland");
+		task ("Assert the drop-down options in primary data center region") {
+			CP2DXPCloudSetup.viewRegionList(regionList = "Oregon, USA,Iowa, USA,London, England,Frankfurt, Germany,Sao Paulo, Brazil,Sydney, Australia,Mumbai, India,Tokyo, Japan,Montreal, Canada,Dubai, UAE,Hamina, Finland");
+		}
 	}
 
-	@description = "LPS-144986 - Verify if Submit button is only enabled when all the fields are filled"
+	@description = "Automation ID: LPS-144986 | Test Summary: Verify if Submit button is only enabled when all the fields are filled"
 	@priority = "5"
 	test CanClickSubmitButtonWithAllFilledIn {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
-
-		CustomerPortal.clickOnStartProjectSetup();
-
-		CustomerPortal.clickOnSkipForNowButton();
-
-		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
-
-		AssertElementPresent(locator1 = "CP2DXPCloudSetup#SUBMIT_BUTTON");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
+		
+		task ("Going through onboarding to Setup") {
+			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
+		}
+		
+		task ("Assert that the submit button is enabled") {
+			AssertElementPresent(locator1 = "CustomerPortalSite#SUBMIT_BUTTON");
+		}
 	}
 
-	@description = "LPS-144990 - If the admin user selects 'Skip for Now' then the user is taken to that project's home page / subscriptions page"
+	@description = "Automation ID: LPS-144990 | Test Summary: If the admin user selects 'Skip for Now' then the user is taken to that project's home page / subscriptions page"
 	@priority = "4"
 	test CanSkipForNowToOverview {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Going through onboardig") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-		AssertElementPresent(locator1 = "CP2NavigationMenu#OVERVIEW");
+		task ("Assert that the user has been taken to the overview page") {
+			AssertElementPresent(locator1 = "CP2NavigationMenu#OVERVIEW");
+		}
 	}
 
-	@description = "LPS-144989 - Verify a success message is shown after finishing setting DXP Cloud up"
+	@description = "Automation ID: LPS-144989 | Test Summary: Verify a success message is shown after finishing setting DXP Cloud up"
 	@priority = "4"
 	test CanViewDXPCloudSetupSuccessMessage {
-		CP2DXPCloudSetup.createDXPCloudObjects();
+		task ("Creating objects for the DXP Cloud ") {
+			CP2DXPCloudSetup.createDXPCloudObjects();
+		}
+		
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		Accounts.openAccountsAdmin();
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+		task ("Going through onboarding to Setup") {
+			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
 
-		CustomerPortal.clickOnStartProjectSetup();
+			Button.click(button = "Submit");
+		}
 
-		CustomerPortal.clickOnSkipForNowButton();
+		task ("Assert the success message when submitting the form") {
+			AssertElementPresent(locator1 = "CustomerPortalSite#SUCCESS_MESSAGE");
+		}
 
-		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
-
-		CustomerPortal.clickOnSubmitButton();
-
-		AssertElementPresent(locator1 = "CustomerPortalSite#SUCCESS_MESSAGE");
-
-		CP2DXPCloudSetup.clearDXPCloudInfo();
-
-		CP2DXPCloudSetup.deleteDXPCloudObject();
+		task ("Delete the entries and objects created") {
+			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries();
+		}
 	}
 
-	@description = "LPS-146684 - Verify if the admin user selects 'Cancel', then the user goes back to the project's Product Activation page"
+	@description = "Automation ID: LPS-146684 | Test Summary: Verify if the admin user selects 'Cancel', then the user goes back to the project's Product Activation page"
 	@priority = "4"
 	test IfSelectsCancelThenTheUserGoesBackPreviousPage {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Going through onboardig") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-		CP2NavigationMenu.goToProductActivation();
+		task ("Go to the product activation page and open the card activation modal") {
+			CP2NavigationMenu.goToProductActivation();
 
-		CP2NavigationMenu.clickOnProductButton(product = "DXP Cloud");
+			CP2NavigationMenu.clickOnProductButton(product = "LXC-SM");
 
-		CP2DXPCloudSetup.clickOnFinishActivationButton();
+			CustomerPortal.clickOnFinishActivationButton();
+		}
 
-		CustomerPortal.clickOnCancelButton();
+		task ("Exit the modal and state that you are back to the project's Product Activation page") {
+			CustomerPortal.clickOnCancelButton();
 
-		AssertElementPresent(locator1 = "CustomerPortalSite#ACTIVATION_STATUS_PAGE");
+			AssertElementPresent(locator1 = "CustomerPortalSite#ACTIVATION_STATUS_PAGE");
+		}
 	}
 
-	@description = "LPS-144977 - Verify message 'This field is required.' on DXP Cloud System Admin's Email Address"
+	@description = "Automation ID: LPS-144977 | Test Summary: Verify message 'This field is required.' on DXP Cloud System Admin's Email Address"
 	@priority = "4"
 	test IsDXPCloudEmailRequired {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Going through onboardig") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].email",
-			value = "test@liferay.com");
+		task ("Filling in and deleting the DXP Cloud System Admin's Email Address field") {
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "email",
+				value = "test@liferay.com");
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].email",
-			value = "");
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "email",
+				value = "");
+			
+			Select(
+				locator1 = "CP2DXPCloudSetup#SELECT_DATA_CENTER_REGION",
+				value1 = "Iowa, USA");
+		}
 
-		Select(
-			locator1 = "CP2DXPCloudSetup#SELECT_DATA_CENTER_REGION",
-			value1 = "Iowa, USA");
-
-		AssertTextEquals(
-			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-			value1 = "This field is required.");
+		task ("Assert the error message") {
+			AssertTextEquals(
+				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+				value1 = "This field is required.");
+		}
 	}
 
-	@description = "LPS-144978 - Verify message 'This field is required.' on DXP Cloud System Admin's Email Address"
+	@description = "Automation ID: LPS-144978 | Test Summary: Verify message 'Please insert a valid e-mail.' on DXP Cloud System Admin's Email Address"
 	@priority = "3"
 	test IsDXPCloudEmailValid {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Going through onboardig") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].email",
-			value = "test.com");
+		task ("Filling in a wrong entry in the DXP Cloud System Admin email address field") {
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "email",
+				value = "test.com");
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.projectId",
-			value = "006");
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "projectId",
+				value = "006");
+		}
 
-		AssertTextEquals(
-			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-			value1 = "Please insert a valid e-mail.");
+		task ("Assert the error message") {
+			AssertTextEquals(
+				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+				value1 = "Please insert a valid e-mail.");
+		}
 	}
 
-	@description = "LPS-144974 - Verify message 'This field is required.' in Project ID field"
+	@description = "Automation ID: LPS-144974 | Test Summary: Verify message 'This field is required.' in Project ID field"
 	@priority = "4"
 	test IsProjectIDRequired {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Going through onboardig") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.projectId",
-			value = "001");
+		task ("Filling and deleting the Project ID field") {
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "projectId",
+				value = "001");
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.projectId",
-			value = "");
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "projectId",
+				value = "");
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].firstName",
-			value = "FirstName");
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "firstName",
+				value = "FirstName");
+		}
 
-		AssertTextEquals(
-			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-			value1 = "This field is required.");
+		task ("Assert the error message") {
+			AssertTextEquals(
+				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+				value1 = "This field is required.");
+		}
 	}
 
-	@description = "LPS-144982 - Verify message 'This field is required.' on System Admin's First Name"
+	@description = "Automation ID: LPS-144982 | Test Summary: Verify message 'This field is required.' on System Admin's First Name"
 	@priority = "4"
 	test IsSystemAdminFirstNameRequired {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Going through onboardig") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].firstName",
-			value = "FirstName");
+		task ("Filling in and deleting the System Admin's First Name field") {
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "firstName",
+				value = "FirstName");
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].firstName",
-			value = "");
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "dxp.admins[0].firstName",
+				value = "");
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].email",
-			value = "test@liferay.com");
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "email",
+				value = "test@liferay.com");
+		}
 
-		AssertTextEquals(
-			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-			value1 = "This field is required.");
+		task ("Assert the error message") {
+			AssertTextEquals(
+				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+				value1 = "This field is required.");
+		}
 	}
 
-	@description = "LPS-144985 - Verify message 'This field is required.' on System Admin's Github Username"
+	@description = "Automation ID: LPS-144985 | Test Summary: Verify message 'This field is required.' on System Admin's Github Username"
 	@priority = "4"
 	test IsSystemAdminGitUserRequired {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Going through onboardig") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].github",
-			value = "GitHubUser");
+		task ("Filling in and deleting the System Admin's Github Username field") {
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "github",
+				value = "GitHubUser");
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].github",
-			value = "");
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "github",
+				value = "");
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].lastName",
-			value = "LastName");
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "lastName",
+				value = "LastName");
+		}
 
-		AssertTextEquals(
-			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-			value1 = "This field is required.");
+		task ("Assert the error message") {
+			AssertTextEquals(
+				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+				value1 = "This field is required.");
+		}
 	}
 
-	@description = "LPS-144984 - Verify message 'This field is required.' on System Admin's Last Name"
+	@description = "Automation ID: LPS-144984 | Test Summary: Verify message 'This field is required.' on System Admin's Last Name"
 	@priority = "4"
 	test IsSystemAdminLastNameRequired {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Going through onboardig") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].lastName",
-			value = "LastName");
+		task ("Filling in and deleting the System Admin's Last Name field") {
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "lastName",
+				value = "LastName");
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].lastName",
-			value = "");
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "lastName",
+				value = "");
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "dxp.admins[0].firstName",
-			value = "FirstName");
+			KeyPress(
+				locator1 = "//body",
+				value1 = "\ESCAPE");
+		}
 
-		AssertTextEquals(
-			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-			value1 = "This field is required.");
+		task ("Assert the error message") {
+			AssertTextEquals(
+				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+				value1 = "This field is required.");
+		}
 	}
 
-	@description = "LPS-146677 - Verify if the project name and version is correct"
+	@description = "Automation ID: LPS-146677 | Test Summary: Verify if the project name and version is correct"
 	@priority = "4"
 	test NameAndVersionOfChosenProject {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Going through onboardig") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
+		}
+	
+		task ("Go to the product activation page and open the card activation modal") {
+			CP2NavigationMenu.goToProductActivation();
 
-		CP2NavigationMenu.goToProductActivation();
+			CP2NavigationMenu.clickOnProductButton(product = "LXC-SM");
 
-		CP2NavigationMenu.clickOnProductButton(product = "DXP Cloud");
-
-		CP2DXPCloudSetup.clickOnFinishActivationButton();
-
-		AssertTextEquals(
-			key_name = "Test Account 01",
-			locator1 = "CP2DXPCloudSetup#PROJECT_NAME_SETUP",
-			value1 = "Test Account 01");
+			CustomerPortal.clickOnFinishActivationButton();
+		}
+		
+		task ("Assert the project name and version") {
+			AssertTextEquals(
+				key_name = "Test Account 01",
+				locator1 = "CP2DXPCloudSetup#PROJECT_NAME_SETUP",
+				value1 = "Test Account 01");
+		}
 	}
 
-	@description = "LPS-146676 - Verify if that when you click 'Finish Activation' the DXP Cloud configuration modal is shown"
+	@description = "Automation ID: LPS-146676 | Test Summary: Verify if that when you click 'Finish Activation' the DXP Cloud configuration modal is shown"
 	@priority = "5"
 	test OpenSetUpModal {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Going through onboardig") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-		CP2NavigationMenu.goToProductActivation();
+		task ("Go to the product activation page and open the card activation modal") {
+			CP2NavigationMenu.goToProductActivation();
 
-		CP2NavigationMenu.clickOnProductButton(product = "DXP Cloud");
+			CP2NavigationMenu.clickOnProductButton(product = "LXC-SM");
 
-		CP2DXPCloudSetup.clickOnFinishActivationButton();
+			CustomerPortal.clickOnFinishActivationButton();
+		}
 
-		AssertElementPresent(locator1 = "CP2DXPCloudSetup#SETUP_DXP_CLOUD_PAGE");
+		task ("Assert modal Setup DXP Cloud") {
+			AssertElementPresent(locator1 = "CP2DXPCloudSetup#SETUP_DXP_CLOUD_PAGE");
+		}
 	}
 
-	@description = "LPS-146686 - Verify if the activation status of the card changes to (In Progress) after filling out the DXP Cloud Set up"
+	@description = "Automation ID: LPS-146686 | Test Summary: Verify if the activation status of the card changes to (In Progress) after filling out the DXP Cloud Set up"
 	@priority = "4"
 	test SeeIfTheCardActivationStatusChanges {
-		CP2DXPCloudSetup.createDXPCloudObjects();
+		task ("Creating objects for the DXP Cloud ") {
+			CP2DXPCloudSetup.createDXPCloudObjects();
+		}
+		
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		Accounts.openAccountsAdmin();
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+		task ("Going through onboardig") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-		CustomerPortal.clickOnStartProjectSetup();
+			CustomerPortal.clickOnSkipForNowButton();
 
-		CustomerPortal.clickOnSkipForNowButton();
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-		CustomerPortal.clickOnSkipForNowButton();
+		task ("Go to the product activation page and open the card activation modal") {
+			CP2NavigationMenu.goToProductActivation();
 
-		CP2NavigationMenu.goToProductActivation();
+			CP2NavigationMenu.clickOnProductButton(product = "LXC-SM");
 
-		CP2NavigationMenu.clickOnProductButton(product = "DXP Cloud");
+			CustomerPortal.clickOnFinishActivationButton();
+		}
 
-		CP2DXPCloudSetup.clickOnFinishActivationButton();
+		task ("Going through onboarding to Setup") {
+			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
 
-		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+			Button.click(button = "Submit");
+		}
 
-		CustomerPortal.clickOnSubmitButton();
+		task ("Assert that the card status has changed") {
+			CP2DXPCloudSetup.assertCardStatusChanged(
+				status = "In Progress",
+				value = "In Progress");
+		}
 
-		CP2DXPCloudSetup.assertCardStatusChanged(
-			status = "In Progress",
-			value = "In Progress");
-
-		CP2DXPCloudSetup.clearDXPCloudInfo();
-
-		CP2DXPCloudSetup.deleteDXPCloudObject();
+		task ("Delete the entries and objects created") {
+			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries();
+		}
 	}
 
 }

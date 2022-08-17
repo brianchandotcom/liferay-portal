@@ -41,6 +41,248 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	@refactorneeded
+	test CanTraverseArticleHierachy {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		for (var articleCount : list "1,2,3") {
+			KBArticle.addCP(
+				kbArticleContent = "Knowledge Base Article Parent Content ${articleCount}",
+				kbArticleTitle = "Knowledge Base Article Parent Title ${articleCount}");
+		}
+
+		for (var articleCount : list "1,2,3") {
+			KBArticle.addChildArticleViaKBAdmin(
+				kbArticleTitle = "Knowledge Base Article Parent Title 1",
+				kbChildArticleContent = "Knowledge Base Article Parent Content 1 Child ${articleCount}",
+				kbChildArticleTitle = "Knowledge Base Article Parent Title 1 Child ${articleCount}");
+		}
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbChildArticleContent = "Knowledge Base Article Parent Content 2 Child 1",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 1");
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbChildArticleContent = "Knowledge Base Article Parent Content 2 Child 2",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Parent Title 3",
+			kbChildArticleContent = "Knowledge Base Article Parent Content 3 Child 1",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 3 Child 1");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 2");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 3");
+
+		KBArticle.gotoKBChildArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 2 Child 2",
+			kbArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
+	}
+
+	@priority = "4"
+	@refactorneeded
+	test CanViewPrioritiesOfImportedArticles {
+		KBArticle.importCP(
+			applyNumericalPrefix = "true",
+			kbZipFile = "KBArticlesWithMarkdown.zip");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1",
+			kbPriority = "1.0");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbPriority = "1.0");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 3",
+			kbPriority = "2.0");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 4",
+			kbPriority = "3.0");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 5",
+			kbPriority = "4.0");
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Parent Title 4");
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "In the last learning path, you built an application using the Model-View-Controller portlet framework.",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 4 Child 1");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Parent Title 5");
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Adding methods to the service layer.",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 5 Child 1");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "true",
+			kbZipFile = "KBArticlesWithMarkdownChangedPriorities.zip");
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Parent Title 4");
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Liferay permissions system is composed of several components.",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 4 Child 1");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Parent Title 5");
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Adding methods to the service layer.",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 5 Child 1");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.selectAllCP();
+
+		KBArticle.deleteCP();
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "false",
+			kbZipFile = "KBArticlesWithMarkdown.zip");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1",
+			kbPriority = "1.0");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbPriority = "2.0");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 3",
+			kbPriority = "3.0");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 4",
+			kbPriority = "4.0");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 5",
+			kbPriority = "5.0");
+
+		KBArticle.selectAllCP();
+
+		KBArticle.deleteCP();
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "false",
+			kbZipFile = "KBArticlesWithNoPriorityPrefix.zip");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1",
+			kbPriority = "1.0");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbPriority = "2.0");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 3",
+			kbPriority = "3.0");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 4",
+			kbPriority = "4.0");
+	}
+
+	@priority = "4"
+	@refactorneeded
+	test ViewImportedKBArticlesInHierarchyWithMarkdownFormat {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "true",
+			kbZipFile = "KBArticlesWithMarkdown.zip");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 2");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 3");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 4");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 5");
+
+		KBArticle.gotoKBChildArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 1");
+
+		KBArticle.viewImageViaContentCmd(
+			kbMarkdownImage = "lds-first-launch-3.png",
+			kbMarkdownImageCaption = "Figure 1: The First Start wizard makes it easy to configure the runtime that ships with Liferay Developer Studio.");
+	}
+
+	@priority = "4"
+	@refactorneeded
+	test ViewImportedKBArticlesWithMultiplePeerHierarchies {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "true",
+			kbZipFile = "KBArticlesWithMarkdown.zip");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 2");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 3");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 4");
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 5");
+	}
+
 	@priority = "3"
 	@refactorneeded
 	test ViewKBArticleNoHierarchyInFolder {
@@ -167,6 +409,168 @@ definition {
 		KBArticle.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Folder 1 Content 1 Grandchild",
 			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1 Grandchild");
+	}
+
+	@priority = "3"
+	@refactorneeded
+	test ViewKBArticlesWithTheSamePriorityViaNavigationLinks {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		for (var kbCount : list "1,2,3") {
+			KBArticle.addCP(
+				kbArticleContent = "Knowledge Base Article Parent Content ${kbCount}",
+				kbArticleTitle = "Knowledge Base Article Parent Title ${kbCount}");
+		}
+
+		for (var kbCount : list "1,2,3") {
+			KBArticle.viewKBArticlePriorityCP(
+				kbArticleTitle = "Knowledge Base Article Parent Title ${kbCount}",
+				kbPriority = "${kbCount}.0");
+		}
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbPriority = "2.0");
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 3",
+			kbPriority = "3.0");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.gotoNextArticlePG(kbDisplayNextArticle = "Knowledge Base Article Parent Title 2");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 2",
+			kbArticleTitle = "Knowledge Base Article Parent Title 2");
+
+		KBArticle.gotoNextArticlePG(kbDisplayNextArticle = "Knowledge Base Article Parent Title 3");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 3",
+			kbArticleTitle = "Knowledge Base Article Parent Title 3");
+
+		KBArticle.gotoPreviousArticle(kbDisplayPreviousArticle = "Knowledge Base Article Parent Title 2");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 2",
+			kbArticleTitle = "Knowledge Base Article Parent Title 2");
+
+		KBArticle.gotoPreviousArticle(kbDisplayPreviousArticle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.gotoNextArticlePG(kbDisplayNextArticle = "Knowledge Base Article Parent Title 2");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 2",
+			kbArticleTitle = "Knowledge Base Article Parent Title 2");
+
+		KBArticle.gotoNextArticlePG(kbDisplayNextArticle = "Knowledge Base Article Parent Title 3");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 3",
+			kbArticleTitle = "Knowledge Base Article Parent Title 3");
+
+		KBArticle.gotoPreviousArticle(kbDisplayPreviousArticle = "Knowledge Base Article Parent Title 2");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 2",
+			kbArticleTitle = "Knowledge Base Article Parent Title 2");
+
+		KBArticle.gotoPreviousArticle(kbDisplayPreviousArticle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1");
+	}
+
+	@priority = "3"
+	@refactorneeded
+	test ViewKBArticleWithTheSameTitleAndPriorityInDifferentFolders {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Root Folder");
+
+		KBFolder.gotoCP(kbFolderName = "KB Root Folder");
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 1",
+			kbFolderName = "KB Folder 1");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content 1",
+			kbArticleTitle = "Knowledge Base Article Title 1");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content 2",
+			kbArticleTitle = "Knowledge Base Article Title 2");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.gotoCP(kbFolderName = "KB Root Folder");
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 2",
+			kbFolderName = "KB Folder 2");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 2");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content 1",
+			kbArticleTitle = "Knowledge Base Article Title 1");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content 2",
+			kbArticleTitle = "Knowledge Base Article Title 2");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.configureKBFolderDisplay(kbFolderName = "KB Root Folder");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Title 1");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content 1",
+			kbArticleTitle = "Knowledge Base Article Title 1");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Title 2");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content 2",
+			kbArticleTitle = "Knowledge Base Article Title 2");
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 2");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content 2",
+			kbArticleTitle = "Knowledge Base Article Title 2");
 	}
 
 	@priority = "3"

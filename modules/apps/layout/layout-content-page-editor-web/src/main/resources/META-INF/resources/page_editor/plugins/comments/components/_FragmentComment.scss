@@ -94,7 +94,11 @@ html#{$cadmin-selector} {
 			}
 
 			+ .page-editor__fragment-comment:not(.page-editor__fragment-comment--reply) {
-				border-top: solid thin $cadmin-secondary-l2;
+				border-top: solid thin $cadmin-gray-300;
+			}
+
+			&__form {
+				border-bottom: 1px solid $cadmin-gray-300;
 			}
 
 			.content {

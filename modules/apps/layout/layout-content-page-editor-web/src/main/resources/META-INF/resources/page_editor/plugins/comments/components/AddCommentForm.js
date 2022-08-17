@@ -70,7 +70,7 @@ export default function AddCommentForm({fragmentEntryLinkId}) {
 	};
 
 	return (
-		<div className="px-3">
+		<div className="page-editor__fragment-comment__form px-3">
 			<CommentForm
 				id={pageEditorCommentEditorId}
 				loading={addingComment}

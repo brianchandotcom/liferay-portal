@@ -529,7 +529,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean locked;
 
-	@Schema(description = "The ID of the Thread's body.")
+	@Schema(description = "The ID of the Thread's message.")
 	public Long getMessageBoardRootMessageId() {
 		return messageBoardRootMessageId;
 	}
@@ -555,7 +555,7 @@ public class MessageBoardThread implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The ID of the Thread's body.")
+	@GraphQLField(description = "The ID of the Thread's message.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long messageBoardRootMessageId;
 

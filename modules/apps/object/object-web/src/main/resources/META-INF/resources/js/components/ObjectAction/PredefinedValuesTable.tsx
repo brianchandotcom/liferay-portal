@@ -48,6 +48,7 @@ function getDataSetProps(items: Item[]) {
 				href: 'deletePredefinedValueField',
 				icon: 'trash',
 				id: 'deletePredefinedValueField',
+				label: Liferay.Language.get('delete'),
 				target: 'event',
 			},
 		],

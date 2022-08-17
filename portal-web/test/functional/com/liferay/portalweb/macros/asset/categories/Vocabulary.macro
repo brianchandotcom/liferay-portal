@@ -236,14 +236,7 @@ definition {
 	macro editCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
-		Click(
-			key_index = "3",
-			key_text = "${vocabularyName}",
-			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		MenuItem.click(menuItem = "Edit");
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
 		if (isSet(vocabularyNameEdit)) {
 			PortletEntry.inputTitle(title = "${vocabularyNameEdit}");

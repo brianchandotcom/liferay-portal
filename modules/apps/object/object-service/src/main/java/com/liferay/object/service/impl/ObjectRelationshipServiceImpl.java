@@ -124,7 +124,7 @@ public class ObjectRelationshipServiceImpl
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinitionId1, ActionKeys.VIEW);
 
-		return objectRelationshipPersistence.findByODI1_N(
+		return objectRelationshipLocalService.getObjectRelationship(
 			objectDefinitionId1, name);
 	}
 

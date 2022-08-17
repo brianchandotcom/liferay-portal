@@ -285,8 +285,22 @@ public class ObjectRelationshipLocalServiceImpl
 			long objectDefinitionId1, String name)
 		throws PortalException {
 
-		return objectRelationshipPersistence.findByODI1_N(
-			objectDefinitionId1, name);
+		List<ObjectRelationship> objectRelationships =
+			objectRelationshipPersistence.findByODI1_N(
+				objectDefinitionId1, name);
+
+		if (objectRelationships.isEmpty()) {
+			return null;
+		}
+		else if (objectRelationships.size() > 1) {
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				if (!objectRelationship.getReverse()) {
+					return objectRelationship;
+				}
+			}
+		}
+
+		return objectRelationships.get(0);
 	}
 
 	@Override
@@ -537,7 +551,7 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		ObjectRelationship objectRelationship =
-			objectRelationshipPersistence.fetchByODI1_N(
+			objectRelationshipLocalService.getObjectRelationship(
 				objectDefinitionId1, name);
 
 		if (objectRelationship != null) {

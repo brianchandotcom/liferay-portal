@@ -220,12 +220,14 @@ public class OAuth2ApplicationLocalServiceWrapper
 	 *
 	 * @param oAuth2Application the o auth2 application
 	 * @return the o auth2 application that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.oauth2.provider.model.OAuth2Application
-		deleteOAuth2Application(
-			com.liferay.oauth2.provider.model.OAuth2Application
-				oAuth2Application) {
+			deleteOAuth2Application(
+				com.liferay.oauth2.provider.model.OAuth2Application
+					oAuth2Application)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuth2ApplicationLocalService.deleteOAuth2Application(
 			oAuth2Application);

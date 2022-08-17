@@ -2973,9 +2973,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.restorePreviousVersion(number = "1");
 
 		Alert.viewSuccessMessageText(successMessage = "Restored to Revision 1");
-		
-
-
 	}
 
 	@description = "LPS-129928 - Verify that when the user clicks on the Source button the Source editor appears"

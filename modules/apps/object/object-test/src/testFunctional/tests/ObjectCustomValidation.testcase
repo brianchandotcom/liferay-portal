@@ -1491,12 +1491,54 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that the message 'There was an unexpected error in fields validation. Please contact support' is displayed when the goovy sintax is incorrect"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewSpecificErrorWhenGroovySintaxIsIncorrect {
+		task ("Create a Custom Object and a Custo Field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 153561",
+				objectName = "CustomObject153561",
+				pluralLabelName = "Custom Objects 153561");
 
-		// TODO LPS-153561 CanViewSpecificErrorWhenGroovySintaxIsIncorrect pending implementation
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject153561");
+		}
 
+		task ("Go to Custom Objects and Validations tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 153561");
+
+			ObjectAdmin.goToValidationsTab();
+		}
+
+		task ("Add a Custom Validation with Groovy Script") {
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Groovy");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+		}
+
+		task ("Write with syntax incorrect on the script") {
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertGroovyScript(groovyScript = "if = (customField == 'Syntax is incorrect')");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that there is an error in syntax") {
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "Syntax Error");
+		}
 	}
 
 	@description = "LPS-144474 - Verify that the Validation tab is available"

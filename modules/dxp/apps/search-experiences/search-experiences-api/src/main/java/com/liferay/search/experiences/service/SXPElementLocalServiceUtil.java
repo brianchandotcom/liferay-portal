@@ -58,6 +58,20 @@ public class SXPElementLocalServiceUtil {
 			schemaVersion, titleMap, type, serviceContext);
 	}
 
+	public static SXPElement addSXPElement(
+			long userId, Map<java.util.Locale, String> descriptionMap,
+			String elementDefinitionJSON, String externalReferenceCode,
+			boolean readOnly, String schemaVersion,
+			Map<java.util.Locale, String> titleMap, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addSXPElement(
+			userId, descriptionMap, elementDefinitionJSON,
+			externalReferenceCode, readOnly, schemaVersion, titleMap, type,
+			serviceContext);
+	}
+
 	/**
 	 * Adds the sxp element to the database. Also notifies the appropriate model listeners.
 	 *

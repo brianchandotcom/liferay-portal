@@ -1385,7 +1385,11 @@ definition {
 
 			var dataSourceName = StringUtil.trim("${dataSourceName}");
 
-			ACUtils.navigateToSitePage(= "AC Page", actionType = "View Blog", documentTitleList = "Blogs AC Title", siteName = "Site Name");
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
 
 			ACUtils.closeAllSessionsAndWait();
 		}

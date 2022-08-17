@@ -225,8 +225,7 @@ public class FolderActionDisplayContext {
 				).add(
 					() -> isDeleteFolderActionVisible(),
 					dropdownItem -> {
-						dropdownItem.putData("action", "delete");
-						dropdownItem.putData("deleteURL", getDeleteFolderURL());
+						dropdownItem.setHref(getDeleteFolderURL());
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_httpServletRequest, "delete"));

@@ -57,16 +57,6 @@ const ACTIONS = {
 		});
 	},
 
-	delete({deleteURL}) {
-		openConfirmModal({
-			message: Liferay.Language.get(
-				'are-you-sure-you-want-to-delete-this'
-			),
-			onConfirm: (isConfirmed) =>
-				isConfirmed && submitForm(document.hrefFm, deleteURL),
-		});
-	},
-
 	permissions({permissionsURL}) {
 		openModal({
 			title: Liferay.Language.get('permissions'),

@@ -17,7 +17,6 @@ package com.liferay.marketplace.service.base;
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.ModuleLocalService;
 import com.liferay.marketplace.service.ModuleLocalServiceUtil;
-import com.liferay.marketplace.service.persistence.AppPersistence;
 import com.liferay.marketplace.service.persistence.ModulePersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -476,9 +475,6 @@ public abstract class ModuleLocalServiceBaseImpl
 		}
 	}
 
-	@Reference
-	protected AppPersistence appPersistence;
-
 	protected ModuleLocalService moduleLocalService;
 
 	@Reference
@@ -487,17 +483,5 @@ public abstract class ModuleLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 }

@@ -18,7 +18,6 @@ import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppService;
 import com.liferay.marketplace.service.AppServiceUtil;
 import com.liferay.marketplace.service.persistence.AppPersistence;
-import com.liferay.marketplace.service.persistence.ModulePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -137,29 +136,7 @@ public abstract class AppServiceBaseImpl
 	protected AppPersistence appPersistence;
 
 	@Reference
-	protected ModulePersistence modulePersistence;
-
-	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserService userService;
 
 }

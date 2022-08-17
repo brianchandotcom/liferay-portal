@@ -22,12 +22,17 @@ $controlMenuHeight: 56px;
 			font-weight: 600;
 		}
 
-		.tbar-light {
-			background-color: $gray-200;
+		.sidebar {
+			border-right: 1px solid $secondary-l3;
+			box-shadow: none;
+
+			.sidebar-header .component-title {
+				font-size: 1rem;
+			}
 		}
 
-		.sidebar-header .component-title {
-			font-size: 1rem;
+		.tbar-light {
+			background-color: $gray-200;
 		}
 	}
 

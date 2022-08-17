@@ -21,6 +21,7 @@ import {
 	DUPLICATE_ITEM,
 	MOVE_ITEM,
 	SWITCH_VIEWPORT_SIZE,
+	TOGGLE_FRAGMENT_HIGHLIGHTED,
 	UPDATE_COLLECTION_DISPLAY_COLLECTION,
 	UPDATE_COL_SIZE,
 	UPDATE_EDITABLE_VALUES,
@@ -106,6 +107,11 @@ export default function getActionLabel(
 						Liferay.Language.get('select-x-viewport'),
 						config.availableViewportSizes[action.size].label
 				  );
+
+		case TOGGLE_FRAGMENT_HIGHLIGHTED:
+			return action.initiallyHighlighted
+				? Liferay.Language.get('add-fragment-to-favorites')
+				: Liferay.Language.get('remove-fragment-from-favorites');
 
 		case UPDATE_COL_SIZE:
 			return Liferay.Language.get('update-column-size');

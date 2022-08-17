@@ -18,6 +18,7 @@ import FragmentService from '../services/FragmentService';
 export default function toggleFragmentHighlighted({
 	fragmentEntryKey,
 	highlighted,
+	initiallyHighlighted,
 }) {
 	return (dispatch) => {
 		return FragmentService.toggleFragmentHighlighted({
@@ -30,6 +31,7 @@ export default function toggleFragmentHighlighted({
 					fragmentEntryKey,
 					highlighted,
 					highlightedFragments,
+					initiallyHighlighted,
 				})
 			);
 		});

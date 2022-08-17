@@ -101,7 +101,7 @@ portletDisplay.setURLBack(backURL);
 			return fields.reduce((obj, field) => {
 				let value = field.value;
 				if (field.type === 'select' && !field.multiple) {
-					value = {key: field.value[0]};
+					value = {key: value.length ? field.value[0] : ''};
 				}
 
 				return Object.assign(obj, {[field.fieldName]: value});

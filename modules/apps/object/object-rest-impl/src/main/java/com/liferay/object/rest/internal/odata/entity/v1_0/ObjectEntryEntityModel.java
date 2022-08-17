@@ -113,7 +113,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 				_getEntityField(
 					objectField
 				).ifPresent(
-					entityField -> _entityFieldsMap.put(
+					entityField -> _entityFieldsMap.putIfAbsent(
 						objectField.getName(), entityField)
 				);
 			}

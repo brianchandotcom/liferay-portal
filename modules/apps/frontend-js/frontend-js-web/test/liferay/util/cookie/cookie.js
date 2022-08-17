@@ -12,7 +12,7 @@
  * details.
  */
 
-import Cookie from '../../../src/main/resources/META-INF/resources/liferay/util/cookie';
+import Cookie from '../../../src/main/resources/META-INF/resources/liferay/util/cookie/cookie';
 
 describe('Liferay.Util.Cookie', () => {
 	const necessaryCookie = 'any-cookie';

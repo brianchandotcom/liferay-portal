@@ -6,6 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -23,109 +24,156 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		CustomerPortal.customerPortalApisTearDown();
 
-		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-		PortalInstances.tearDownCP();
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
 	}
 
-	@description = "LPS-147029 - Verify that the cards Subscriptions displays (Product logo - Subscription - Instance Size - Start Date - End Date)"
+	@description = "Automation ID: LPS-147029 | Test Summary: Verify that the cards Subscriptions displays (Product logo - Subscription - Instance Size - Start Date - End Date)"
 	@priority = "5"
 	test AffirmAllCardInformation {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.viewCardValue();
+		task ("Assert the signature card details") {
+			CustomerPortal.viewCardValue();
+		}
 	}
 
-	@description = "LPS-147027 - Verify if the Active status reflects the dates displayed"
+	@description = "Automation ID: LPS-147027 | Test Summary: Verify if the Active status reflects the dates displayed"
 	@priority = "4"
 	test IfActiveStatusReflectsDate {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
-
-		AssertElementPresent(
-			date = "03/31/2021 - 03/30/2022",
-			locator1 = "CustomerPortalSite#CARD_DATE",
-			status = "Active");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
+		
+		task ("Assert if the Active status reflects the dates") {
+			AssertElementPresent(
+				date = "03/31/2021 - 03/30/2022",
+				locator1 = "CustomerPortalSite#CARD_DATE",
+				status = "Active");
+		 }
 	}
 
-	@description = "LPS-147025 - Verify if the Expired status reflects the dates displayed"
+	@description = "Automation ID: LPS-147025 | Test Summary: Verify if the Expired status reflects the dates displayed"
 	@priority = "4"
 	test IfExpiredStatusReflectsDate {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 02");
+			CustomerPortal.enterOnProject(
+				status = "Expired",
+				title = "Test Account Analyticd Cloud");
+		}
 
-		AssertElementPresent(
-			date = "03/31/2021 - 06/30/2021",
-			locator1 = "CustomerPortalSite#CARD_DATE",
-			status = "Expired");
+		task ("Assert if the Expired status reflects the dates") {
+			AssertElementPresent(
+				date = "03/31/2021 - 06/30/2021",
+				locator1 = "CustomerPortalSite#CARD_DATE",
+				status = "Expired");
+		}
 	}
 
-	@description = "LPS-147026 - Verify if the Future status reflects the dates displayed"
+	@description = "Automation ID: LPS-147026 | Test Summary: Verify if the Future status reflects the dates displayed"
 	@priority = "4"
 	test IfFutureStatusReflectsDate {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 02");
+			CustomerPortal.enterOnProject(
+				status = "Future",
+				title = "Test Account Portal");
+		}
 
-		AssertElementPresent(
-			date = "01/14/2023 - 01/13/2028",
-			locator1 = "CustomerPortalSite#CARD_DATE",
-			status = "Future");
+		task ("Assert if the Future status reflects the dates") {
+			AssertElementPresent(
+				date = "01/14/2023 - 01/13/2028",
+				locator1 = "CustomerPortalSite#CARD_DATE",
+				status = "Future");
+		}
 	}
 
-	@description = "LPS-147021 - Verify if a tab is shown only if there are subscriptions to display on that tab"
+	@description = "Automation ID: LPS-147021 | Test Summary: Verify if a tab is shown only if there are subscriptions to display on that tab"
 	@priority = "5"
 	test IfTabAppearOnlyWithSubscriptions {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(
-			status = "Future",
-			title = "Test Account 05");
+			CustomerPortal.enterOnProject(
+				status = "Future",
+				title = "Test Account Portal");
+		}
 
-		AssertElementNotPresent(locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR1");
+		task ("Assert that the tab is being displayed") {
+			AssertElementNotPresent(locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR1");
+		}
 	}
 
-	@description = "LPS-147034 - Verify if when the project has up to 4 options in the tabs for subscription management, the tabs are listed side by side"
-	@ignore = "true"
+	@description = "Automation ID: LPS-147034 | Test Summary: Verify if when the project has up to 3 options in the tabs for subscription management, the tabs are listed side by side"
 	@priority = "4"
 	test LessThan5TabsAreSideBySide {
-		SetWindowSize(value1 = "1920,1080");
+		task ("Width desktop") {
+			SetWindowSize(value1 = "1920,1080");
+		}
+		
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-		CustomerPortal.enterOnProject(title = "Test Account 06");
-
-		CustomerPortal.viewSubscriptionManagementTab(productTab = "DXP Cloud,Commerce,Enterprise Search");
+			CustomerPortal.enterOnProject(title = "Test Account Commerce");
+		}
+		
+		task ("Assert that the signatures are being displayed in the tab") {
+			CustomerPortal.viewSubscriptionManagementTab(productTab = "LXC-SM,Commerce,Enterprise Search");
+		}
 	}
 
-	@description = "LPS-147022 - Verify if when the user doesn't have a subscription then a tab will not be shown"
+	@description = "Automation ID: LPS-147022 | Test Summary: Verify if when the user doesn't have a subscription then a tab will not be shown"
 	@priority = "4"
 	test TabDontAppearWithoutSubscription {
-		SetWindowSize(value1 = "1920,1080");
+		task ("Width desktop") {
+			SetWindowSize(value1 = "1920,1080");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account Partnership");
+		}
 
-		AssertElementPresent(locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR1");
+		task ("Assert that no tabs are displayed") {
+			AssertElementNotPresent(locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR");
+		}
 	}
 
-	@description = "LPS-147035 - Verify if when a project has at least 5 options in the tabs for subscription management, the tab list turns into a dropdown list"
+	@description = "Automation ID: LPS-147035 | Test Summary: Verify if when a project has at least 5 options in the tabs for subscription management, the tab list turns into a dropdown list"
 	@priority = "4"
 	test Tabs5OrMoreBecamesDropdownList {
-		SetWindowSize(value1 = "1920,1080");
+		task ("Width desktop") {
+			SetWindowSize(value1 = "1920,1080");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 09");
-
-		CustomerPortal.viewSubscriptionManagementList(productList = "Partnership,DXP Cloud,DXP,Analytics Cloud,Commerce,Enterprise Search,Portal,Other");
+			CustomerPortal.enterOnProject(title = "Test Account Others");
+		}
+		
+		task ("Assert the drop-down list") {
+			CustomerPortal.viewSubscriptionManagementList(productList = "LXC-SM,DXP,Analytics Cloud,Commerce,Enterprise Search,Portal,Partnership");
+		}
 	}
 
 }

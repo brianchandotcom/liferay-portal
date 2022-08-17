@@ -152,7 +152,10 @@ const VerticalNavigationBar = ({
 							</div>
 
 							<div className="sidebar-body">
-								<PanelComponent items={item.navigationItems} />
+								<PanelComponent
+										items={item.navigationItems}
+										selectedItemId={item.selectedItemId}
+									/>
 							</div>
 						</VerticalBar.Panel>
 					);

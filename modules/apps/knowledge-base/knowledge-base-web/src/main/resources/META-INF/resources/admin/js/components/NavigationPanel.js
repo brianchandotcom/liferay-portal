@@ -14,6 +14,7 @@
 
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import classnames from 'classnames';
 import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -22,7 +23,6 @@ const ITEM_TYPES_SYMBOL = {
 	article: 'document-text',
 	folder: 'folder',
 };
-
 export default function NavigationPanel({items, selectedItemId}) {
 	const handleClickItem = (event, item) => {
 		event.stopPropagation();
@@ -45,7 +45,12 @@ export default function NavigationPanel({items, selectedItemId}) {
 							handleClickItem(event, item);
 						}}
 					>
-						<ClayTreeView.ItemStack>
+						<ClayTreeView.ItemStack
+							className={classnames({
+								'knowledge-base-navigation-item-active':
+									item.id === selectedItemId,
+							})}
+						>
 							<ClayIcon symbol={ITEM_TYPES_SYMBOL[item.type]} />
 
 							{item.name}

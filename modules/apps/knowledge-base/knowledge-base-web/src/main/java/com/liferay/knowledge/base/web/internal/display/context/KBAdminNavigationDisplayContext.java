@@ -183,6 +183,10 @@ public class KBAdminNavigationDisplayContext {
 				navigationItemsJSONArray = _getKBArticleNavigationJSONArray();
 			}
 
+			long currentResourcePrimKey = ParamUtil.getLong(
+				_httpServletRequest, "parentResourcePrimKey",
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
 			verticalNavigationItems.add(
 				JSONUtil.put(
 					"active", active
@@ -199,6 +203,8 @@ public class KBAdminNavigationDisplayContext {
 					"key", "article"
 				).put(
 					"navigationItems", navigationItemsJSONArray
+				).put(
+					"selectedItemId", currentResourcePrimKey
 				).put(
 					"title",
 					LanguageUtil.get(

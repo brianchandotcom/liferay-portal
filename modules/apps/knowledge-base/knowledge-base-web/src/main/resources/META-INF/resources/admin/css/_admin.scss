@@ -16,6 +16,12 @@ $controlMenuHeight: 56px;
 			border-right: 1px solid $gray-300;
 		}
 
+		.knowledge-base-navigation-item-active {
+			background-color: $gray-200;
+			color: $dark;
+			font-weight: 600;
+		}
+
 		.tbar-light {
 			background-color: $gray-200;
 		}

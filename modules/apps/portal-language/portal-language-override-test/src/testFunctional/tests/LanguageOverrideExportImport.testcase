@@ -178,6 +178,48 @@ this-is-a-language-key=This is a language key''',
 		}
 	}
 
+	@description = "This test asserts that translation is imported based on the language selected in the Import Translations page."
+	@priority = "5"
+	test CanImportTranslations {
+		task ("Given a user has a property file to import in Translations") {
+			Portlet.gotoPortletOptions(portletOption = "Import Translations");
+
+			UploadDependencyFile.uploadFile(fileName = "Language_pt_BR.properties");
+		}
+
+		task ("When a user sets the language to pt-BR") {
+			Select(
+				key_fieldLabel = "Language",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "pt-BR");
+		}
+
+		task ("And saves the import") {
+			Button.clickSave();
+		}
+
+		task ("Then the language key is imported with the pt_BR translation") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "pt-BR");
+
+			Search.searchCP(searchTerm = "this-is-a-new-language-key");
+
+			AssertElementPresent(
+				key_languageKey = "this-is-a-new-language-key",
+				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "this-is-a-new-language-key",
+				listEntrySubtitle = "esta es una nueva clave de idioma");
+
+			AssertElementPresent(
+				key_language = "pt_BR",
+				key_languageKey = "this-is-a-new-language-key",
+				locator1 = "LanguageOverride#BOLD_LANGUAGE_WITH_OVERRIDE");
+		}
+	}
+
 	@description = "This test asserts that the File Upload field is required in Import Translations page."
 	@priority = "4"
 	test CanViewFileUploadFieldIsRequired {

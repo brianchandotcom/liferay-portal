@@ -15,11 +15,12 @@
 package com.liferay.portal.util.mail.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.mail.internal.MailEngine;
 import com.liferay.mail.kernel.model.MailMessage;
+import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.test.ReloadURLClassLoader;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
@@ -58,28 +59,35 @@ public class MailEngineTest {
 			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
 	@Test
-	public void testSendMail() throws Exception {
-		MailEngine.send(
-			new MailMessage(
-				new InternetAddress("from@test.com"),
-				new InternetAddress("to@test.com"), "Hello",
-				"My name is Inigo Montoya.", true));
+	public void testSendMail() throws Throwable {
+		try (TestMailEngine testMailEngine = new TestMailEngine()) {
+			testMailEngine.send(
+				new MailMessage(
+					new InternetAddress("from@test.com"),
+					new InternetAddress("to@test.com"), "Hello",
+					"My name is Inigo Montoya.", true));
 
-		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+			Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 
-		List<com.liferay.portal.test.mail.MailMessage> mailMessages =
-			MailServiceTestUtil.getMailMessages(
-				"Body", "My name is Inigo Montoya.");
+			List<com.liferay.portal.test.mail.MailMessage> mailMessages =
+				MailServiceTestUtil.getMailMessages(
+					"Body", "My name is Inigo Montoya.");
 
-		Assert.assertEquals(mailMessages.toString(), 1, mailMessages.size());
+			Assert.assertEquals(
+				mailMessages.toString(), 1, mailMessages.size());
 
-		mailMessages = MailServiceTestUtil.getMailMessages("Subject", "Hello");
+			mailMessages = MailServiceTestUtil.getMailMessages(
+				"Subject", "Hello");
 
-		Assert.assertEquals(mailMessages.toString(), 1, mailMessages.size());
+			Assert.assertEquals(
+				mailMessages.toString(), 1, mailMessages.size());
 
-		mailMessages = MailServiceTestUtil.getMailMessages("To", "to@test.com");
+			mailMessages = MailServiceTestUtil.getMailMessages(
+				"To", "to@test.com");
 
-		Assert.assertEquals(mailMessages.toString(), 1, mailMessages.size());
+			Assert.assertEquals(
+				mailMessages.toString(), 1, mailMessages.size());
+		}
 	}
 
 	@Test
@@ -89,14 +97,14 @@ public class MailEngineTest {
 			new InternetAddress("to@test.com"), "Hello",
 			"My name is Inigo Montoya.", true);
 
-		try (LimitedMailEngine limitedMailEngine = new LimitedMailEngine(
+		try (TestMailEngine testMailEngine = new TestMailEngine(
 				2L, Time.YEAR / Time.SECOND)) {
 
-			limitedMailEngine.send(mailMessage);
-			limitedMailEngine.send(mailMessage);
+			testMailEngine.send(mailMessage);
+			testMailEngine.send(mailMessage);
 
 			try {
-				limitedMailEngine.send(mailMessage);
+				testMailEngine.send(mailMessage);
 
 				Assert.fail();
 			}
@@ -108,14 +116,14 @@ public class MailEngineTest {
 					throwable.getMessage());
 			}
 
-			limitedMailEngine.setLastResetTime(
+			testMailEngine.setLastResetTime(
 				System.currentTimeMillis() - Time.YEAR - Time.SECOND);
 
-			limitedMailEngine.send(mailMessage);
-			limitedMailEngine.send(mailMessage);
+			testMailEngine.send(mailMessage);
+			testMailEngine.send(mailMessage);
 
 			try {
-				limitedMailEngine.send(mailMessage);
+				testMailEngine.send(mailMessage);
 
 				Assert.fail();
 			}
@@ -129,7 +137,7 @@ public class MailEngineTest {
 		}
 	}
 
-	private static class LimitedMailEngine implements Closeable {
+	private static class TestMailEngine implements Closeable {
 
 		@Override
 		public void close() throws IOException {
@@ -154,7 +162,16 @@ public class MailEngineTest {
 			_lastResetTime.set(lastResetTime);
 		}
 
-		private LimitedMailEngine(
+		private TestMailEngine() throws Exception {
+			this(
+				GetterUtil.getLong(
+					PropsUtil.get(PropsKeys.DATA_LIMIT_MAIL_MESSAGE_MAX_COUNT)),
+				GetterUtil.getLong(
+					PropsUtil.get(
+						PropsKeys.DATA_LIMIT_MAIL_MESSAGE_MAX_PERIOD)));
+		}
+
+		private TestMailEngine(
 				long maxMailMessageCount, long maxMailMessagePeriod)
 			throws Exception {
 
@@ -170,20 +187,28 @@ public class MailEngineTest {
 				PropsKeys.DATA_LIMIT_MAIL_MESSAGE_MAX_PERIOD,
 				String.valueOf(maxMailMessagePeriod));
 
-			Class<?> innerClass = MailEngine.class.getDeclaredClasses()[0];
+			Class<?> clazz = MailService.class;
 
-			ClassLoader classLoader = new ReloadURLClassLoader(
-				MailEngine.class, innerClass);
+			ClassLoader classLoader = clazz.getClassLoader();
 
-			Class<?> clazz = classLoader.loadClass(MailEngine.class.getName());
+			Class<?> mailEngineClass = classLoader.loadClass(
+				"com.liferay.mail.internal.MailEngine");
 
-			classLoader.loadClass(innerClass.getName());
+			Class<?> innerClass = mailEngineClass.getDeclaredClasses()[0];
+
+			ClassLoader reloadURLClassLoader = new ReloadURLClassLoader(
+				mailEngineClass, innerClass);
+
+			reloadURLClassLoader.loadClass(innerClass.getName());
+
+			Class<?> reloadMailEngineClass = reloadURLClassLoader.loadClass(
+				mailEngineClass.getName());
 
 			_sendMethod = ReflectionUtil.getDeclaredMethod(
-				clazz, "send", MailMessage.class);
+				reloadMailEngineClass, "send", MailMessage.class);
 
 			Field field = ReflectionUtil.getDeclaredField(
-				clazz, "_lastResetTime");
+				reloadMailEngineClass, "_lastResetTime");
 
 			_lastResetTime = (AtomicLong)field.get(null);
 		}

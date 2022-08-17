@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -202,6 +203,94 @@ public class LayoutWorkflowHandlerTest {
 			WorkflowConstants.STATUS_PENDING, layout.getStatus());
 
 		_approveUserWorkflowTasks();
+
+		layout = _layoutLocalService.getLayout(layout.getPlid());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, layout.getStatus());
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), layout.getPlid());
+
+		_assertSegmentExperienceFragmentEntryLink(
+			languageId, defaultSegmentsExperienceId,
+			defaultExperienceHeadingText, layoutPageTemplateStructure);
+
+		_assertSegmentExperienceFragmentEntryLink(
+			languageId, segmentsExperience1.getSegmentsExperienceId(),
+			experience1HeadingText, layoutPageTemplateStructure);
+
+		_assertSegmentExperienceFragmentEntryLink(
+			languageId, segmentsExperience2.getSegmentsExperienceId(),
+			experience2HeadingText, layoutPageTemplateStructure);
+	}
+
+	@Test
+	public void testWorkflowHandlerContentLayoutWithSegmentsExperiencesWithoutPrincipalThreadLocalUser()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		String languageId = LocaleUtil.toLanguageId(
+			_portal.getSiteDefaultLocale(_group));
+
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		String defaultExperienceHeadingText = RandomTestUtil.randomString();
+
+		_addHeadingFragmentToLayout(
+			draftLayout, languageId, defaultSegmentsExperienceId,
+			defaultExperienceHeadingText);
+
+		SegmentsExperience segmentsExperience1 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
+				_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		String experience1HeadingText = RandomTestUtil.randomString();
+
+		_addHeadingFragmentToLayout(
+			draftLayout, languageId,
+			segmentsExperience1.getSegmentsExperienceId(),
+			experience1HeadingText);
+
+		SegmentsExperience segmentsExperience2 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
+				_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		String experience2HeadingText = RandomTestUtil.randomString();
+
+		_addHeadingFragmentToLayout(
+			draftLayout, languageId,
+			segmentsExperience2.getSegmentsExperienceId(),
+			experience2HeadingText);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		layout = _layoutLocalService.getLayout(layout.getPlid());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, layout.getStatus());
+
+		long originalUserId = PrincipalThreadLocal.getUserId();
+
+		try {
+			PrincipalThreadLocal.setName(0);
+
+			_approveUserWorkflowTasks();
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalUserId);
+		}
 
 		layout = _layoutLocalService.getLayout(layout.getPlid());
 

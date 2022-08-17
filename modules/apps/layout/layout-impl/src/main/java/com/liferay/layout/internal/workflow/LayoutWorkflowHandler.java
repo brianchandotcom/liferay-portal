@@ -109,9 +109,9 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 
 		long originalUserId = PrincipalThreadLocal.getUserId();
 
-		PrincipalThreadLocal.setName(userId);
-
 		try {
+			PrincipalThreadLocal.setName(userId);
+
 			_layoutCopyHelper.copyLayout(draftLayout, layout);
 		}
 		catch (Exception exception) {

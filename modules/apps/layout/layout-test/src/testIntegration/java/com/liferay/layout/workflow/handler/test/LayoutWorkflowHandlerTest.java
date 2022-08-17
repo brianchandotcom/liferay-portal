@@ -70,6 +70,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -103,6 +104,11 @@ public class LayoutWorkflowHandlerTest {
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			_group.getGroupId(), Layout.class.getName(), 0, 0,
 			"Single Approver@1");
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test

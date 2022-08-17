@@ -675,12 +675,74 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify that the translated Picklist name will be displayed on the Object Admin"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ViewTranslatedPicklistNameOnObjectAdmin {
+		task ("Add a Custom Picklist (via API)") {
+			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
+		}
 
-		// TODO LPS-147728 ViewTranslatedPicklistNameOnObjectAdmin pending implementation
+		task ("Add a Custom Object (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 147728",
+				objectName = "CustomObject147728",
+				pluralLabelName = "Custom Objects 147728");
+		}
 
+		task ("Go to Custom Picklist and add a new language") {
+			Picklist.gotoPicklists();
+
+			Picklist.gotoPicklistView(picklistName = "Picklist Test");
+
+			Picklist.addLanguageOnPicklist(
+				itemName = "Teste na lista",
+				newlanguage = "pt-BR");
+
+			Button.clickSave();
+		}
+
+		task ("Change the language") {
+			User.openUsersAdmin();
+
+			User.editDisplaySettingsCP(
+				languageName = "português (Brasil)",
+				userScreenName = "test");
+		}
+
+		task ("Go to Custom Object and Fields tab") {
+			Navigator.openURL();
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 147728");
+
+			Click(
+				key_tabName = "Campos",
+				locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
+		}
+
+		task ("Add Picklist field and select the Custom Picklist") {
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "ObjectField#LABEL_INPUT",
+				value1 = "Lista de itens");
+
+			ObjectField.selectType(fieldType = "Lista de seleção");
+
+			Select(
+				locator1 = "ObjectAdmin#OBJECT_FIELDS_PICKLIST",
+				value1 = "Teste na lista");
+
+			Button.click(button = "Salvar");
+		}
+
+		task ("Assert that there is Custom Picklist with a new language") {
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Lista de itens",
+				fieldType = "Picklist");
+		}
 	}
 
 	@description = "LPS-136595 - Verify that the updated Picklist item's name will be displayed on the object's portlet"

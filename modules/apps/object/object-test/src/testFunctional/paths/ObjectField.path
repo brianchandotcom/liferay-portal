@@ -109,7 +109,7 @@
 	</tr>
 	<tr>
 		<td>TYPE_FIELD</td>
-		<td>//input[@placeholder='Choose an Option']</td>
+		<td>//input[(@placeholder='Choose an Option' or @placeholder='Escolha uma Opção')]</td>
 		<td></td>
 	</tr>
 	<tr>

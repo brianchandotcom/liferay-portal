@@ -267,7 +267,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_FIELDS_PICKLIST</td>
-		<td>//label[contains(text(),'Picklist')]/following-sibling::select</td>
+		<td>//label[contains(text(),'Picklist') or contains(text(),'Lista de seleção')]/following-sibling::select</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -1,0 +1,178 @@
+@component-name = "portal-knowledge-base"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Knowledge Base";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			KBFolder.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	@refactordone
+	test CanAddFolder {
+		property portal.acceptance = "true";
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
+
+		KBArticle.viewDefaultCP();
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanDeleteFolder {
+		property portal.acceptance = "true";
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.deleteCP(kbFolderName = "KB Folder 1");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanEditFolder {
+		property portal.acceptance = "true";
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.editCP(
+			kbFolderDescription = "KB Folder 1 Description Edited",
+			kbFolderEditedName = "KB Folder 1 Edited",
+			kbFolderName = "KB Folder 1");
+
+		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1 Edited");
+	}
+
+	@priority = "3"
+	@refactordone
+	test CannotAddDuplicateFolder {
+		property test.name.skip.portal.instance = "KBAdmin#CannotAddDuplicateFolder";
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1");
+
+		KBFolder.addCP(
+			kbAddDuplicate = "true",
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1");
+	}
+
+	@priority = "3"
+	@refactorneeded
+	test EditKBFolderWithCustomField {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields");
+
+		CustomFields.addCP(
+			customFieldName = "Date",
+			customFieldType = "Date",
+			resourceName = "Knowledge Base Folder");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Knowledge Base Page",
+			widgetName = "Knowledge Base Display");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.addCP(
+			customField = "01/01/2017",
+			kbFolderDescription = "KB Folder 2017 Description",
+			kbFolderName = "KB Folder 2017 Name");
+
+		KBFolder.addCP(
+			customField = "01/01/2010",
+			kbFolderDescription = "KB Folder 2010 Description",
+			kbFolderName = "KB Folder 2010 Name");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 2017 Name");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base 2017 Article Content",
+			kbArticleTitle = "Knowledge Base 2017 Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 2010 Name");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base 2010 Article Content",
+			kbArticleTitle = "Knowledge Base 2010 Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 2017 Name");
+
+		Refresh();
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base 2017 Article Content",
+			kbArticleTitle = "Knowledge Base 2017 Article Title");
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 2010 Name");
+
+		Refresh();
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base 2010 Article Content",
+			kbArticleTitle = "Knowledge Base 2010 Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		var entries = "2010,2017";
+
+		for (var kbEntry : list "${entries}") {
+			KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${kbEntry}");
+
+			AssertTextEquals(
+				locator1 = "TextInput#CUSTOM_FIELD",
+				value1 = "01/01/${kbEntry}");
+		}
+	}
+
+}

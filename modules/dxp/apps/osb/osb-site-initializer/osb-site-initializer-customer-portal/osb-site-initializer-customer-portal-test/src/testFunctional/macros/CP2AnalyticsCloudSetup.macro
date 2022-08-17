@@ -1,0 +1,67 @@
+definition {
+    macro typeSetupAnalyticsCloudInfoFields {
+		if(!(isSet(position))) {
+			var position = "1";
+		}
+
+		var key_index = "${position}";
+		
+		Type(
+			locator1 = "CustomerPortalSite#SETUP_FIELDS",
+			value1 = "${value}");
+	}
+
+    macro typeAllSetupAnalyticsCloudInfoFields {
+        CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
+            label = "Address",
+            value = "test@liferay.com");
+
+        CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields(
+            label = "workspaceName",
+            value = "Liferay Testing");
+
+		Select(
+			locator1 = "CP2AnalyticsCloudSetup#SELECT_LOCATION",
+			value1 = "Sao Paulo, Brazil");
+
+		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields(
+            label = "workspaceURL",
+            value = "/mytest");
+
+		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields(
+            label = "EmailDomains",
+            value = "@liferay.com");
+
+		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields(
+            label = "timeZone",
+            value = "UTC-08:00");
+
+		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields(
+            label = "email",
+            value = "test@liferay.com");
+    }
+
+	macro typeAllSetupAnalyticsCloufEXtraInfo {
+		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields(
+			label = "email",
+			position = "2",
+			value = "test.user1@liferay.com");
+	}
+
+	macro activeStatus {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Account Subscription Groups");
+
+		CustomerPortal.viewObjectInfo(index = "3");
+
+		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
+			label = "activationStatus",
+			value = "Active");
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+	}
+}

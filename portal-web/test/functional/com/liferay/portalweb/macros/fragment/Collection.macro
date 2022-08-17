@@ -3,12 +3,7 @@ definition {
 	macro deleteCollection {
 		Navigator.gotoNavNested(navNested = "${collectionName}");
 
-		Click(
-			key_index = "4",
-			key_text = "${collectionName}",
-			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
-
-		MenuItem.click(menuItem = "Delete");
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Delete");
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",

@@ -18,7 +18,6 @@ import com.liferay.adaptive.media.web.internal.configuration.AMConfiguration;
 import com.liferay.adaptive.media.web.internal.upgrade.v1_0_0.BlogsEntryDataFileEntryIdUpgradeProcess;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

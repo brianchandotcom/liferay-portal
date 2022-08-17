@@ -15,7 +15,6 @@
 package com.liferay.site.navigation.breadcrumb.web.internal.upgrade.registry;
 
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.site.navigation.breadcrumb.web.internal.configuration.SiteNavigationBreadcrumbPortletInstanceConfiguration;
 import com.liferay.site.navigation.breadcrumb.web.internal.upgrade.v1_0_0.UpgradePortletId;

@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.lists.web.internal.upgrade.v1_0_0.UpgradeDDLDisp
 import com.liferay.dynamic.data.lists.web.internal.upgrade.v1_0_0.UpgradeDDLFormPortletId;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

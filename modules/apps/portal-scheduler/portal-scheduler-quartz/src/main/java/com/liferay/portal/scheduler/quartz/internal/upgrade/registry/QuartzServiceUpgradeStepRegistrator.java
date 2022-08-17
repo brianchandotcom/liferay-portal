@@ -14,7 +14,6 @@
 
 package com.liferay.portal.scheduler.quartz.internal.upgrade.registry;
 
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_0.QuartzUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 

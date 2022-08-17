@@ -19,7 +19,6 @@ import com.liferay.knowledge.base.web.internal.upgrade.v1_0_0.UpgradePortletSett
 import com.liferay.knowledge.base.web.internal.upgrade.v1_1_0.UpgradePortletPreferences;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

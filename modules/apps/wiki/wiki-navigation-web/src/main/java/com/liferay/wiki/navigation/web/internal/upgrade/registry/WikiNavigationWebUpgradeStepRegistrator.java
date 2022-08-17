@@ -15,7 +15,6 @@
 package com.liferay.wiki.navigation.web.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.wiki.navigation.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.wiki.navigation.web.internal.upgrade.v1_0_1.UpgradePortletId;

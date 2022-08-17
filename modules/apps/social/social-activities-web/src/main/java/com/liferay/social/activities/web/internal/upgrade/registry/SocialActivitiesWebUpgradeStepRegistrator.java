@@ -15,7 +15,6 @@
 package com.liferay.social.activities.web.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.BaseReplacePortletId;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.social.activities.constants.SocialActivitiesPortletKeys;

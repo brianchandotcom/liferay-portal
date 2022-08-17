@@ -17,7 +17,6 @@ package com.liferay.journal.image.service.internal.upgrade.registry;
 import com.liferay.image.upgrade.ImageCompanyIdUpgradeProcess;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

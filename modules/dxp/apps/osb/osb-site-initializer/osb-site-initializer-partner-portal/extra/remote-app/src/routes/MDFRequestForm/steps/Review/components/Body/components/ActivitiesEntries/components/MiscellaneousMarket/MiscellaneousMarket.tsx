@@ -14,10 +14,16 @@ import {Liferay} from '../../../../../../../../../../common/services/liferay';
 import Table from '../../../../../Table';
 
 interface IProps {
+	tacticName?: string;
+	typeOfActivitieName?: string;
 	values: MDFRequestActivity;
 }
 
-const MiscellaneousMarket = ({values}: IProps) => (
+const MiscellaneousMarket = ({
+	tacticName,
+	typeOfActivitieName,
+	values,
+}: IProps) => (
 	<div>
 		<Table
 			items={[
@@ -27,11 +33,11 @@ const MiscellaneousMarket = ({values}: IProps) => (
 				},
 				{
 					title: 'Type of Activity',
-					value: values.r_typeActivityToActivities_c_typeActivityId,
+					value: typeOfActivitieName,
 				},
 				{
 					title: 'Tactic',
-					value: values.r_tacticToActivities_c_tacticId,
+					value: tacticName,
 				},
 				{
 					title: 'Marketing activity',

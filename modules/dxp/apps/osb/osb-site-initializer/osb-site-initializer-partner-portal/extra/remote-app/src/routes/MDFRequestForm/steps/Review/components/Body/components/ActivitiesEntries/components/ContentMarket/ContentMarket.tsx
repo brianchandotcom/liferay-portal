@@ -15,10 +15,12 @@ import GetBooleanValue from '../../../../../../utils/GetBooleanValue';
 import Table from '../../../../../Table';
 
 interface IProps {
+	tacticName?: string;
+	typeOfActivitieName?: string;
 	values: MDFRequestActivity;
 }
 
-const ContentMarket = ({values}: IProps) => (
+const ContentMarket = ({tacticName, typeOfActivitieName, values}: IProps) => (
 	<div>
 		<Table
 			items={[
@@ -28,11 +30,11 @@ const ContentMarket = ({values}: IProps) => (
 				},
 				{
 					title: 'Type of Activity',
-					value: values.r_typeActivityToActivities_c_typeActivityId,
+					value: typeOfActivitieName,
 				},
 				{
 					title: 'Tactic',
-					value: values.r_tacticToActivities_c_tacticId,
+					value: tacticName,
 				},
 				{
 					title:

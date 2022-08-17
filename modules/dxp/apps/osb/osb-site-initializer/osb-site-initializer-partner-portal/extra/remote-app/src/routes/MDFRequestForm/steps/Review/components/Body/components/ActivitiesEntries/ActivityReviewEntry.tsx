@@ -13,6 +13,8 @@ import {TypeActivityExternalReferenceCode} from '../../../../../../../../common/
 import useSelectedTypeActivity from '../../../../../../../../common/hooks/useSelectedTypeActivity';
 import MDFRequestActivity from '../../../../../../../../common/interfaces/mdfRequestActivity';
 import useGetTypeActivities from '../../../../../../../../common/services/liferay/object/type-activities/useGetTypeActivities';
+import useGetActivitiesName from '../../../../Hooks/useGetActivitiesName';
+import useGetTacticsName from '../../../../Hooks/useGetTacticsName';
 import ActivityContent from './components/ActivityContent';
 import ContentMarket from './components/ContentMarket';
 import DigitalMarket from './components/DigitalMarket';
@@ -35,16 +37,43 @@ const ActivityReviewEntry = ({values}: IProps) => {
 		typeOfActivities?.items
 	);
 
+	const typeOfActivitiesName = useGetActivitiesName(
+		values.r_typeActivityToActivities_c_typeActivityId
+	);
+
+	const TacticName = useGetTacticsName(
+		values.r_typeActivityToActivities_c_typeActivityId,
+		values.r_tacticToActivities_c_tacticId
+	);
+
 	const typeOfActivityComponents: TypeOfActivityComponent = {
 		[TypeActivityExternalReferenceCode.DIGITAL_MARKETING]: (
-			<DigitalMarket values={values} />
+			<DigitalMarket
+				tacticName={TacticName}
+				typeOfActivitieName={typeOfActivitiesName}
+				values={values}
+			/>
 		),
 		[TypeActivityExternalReferenceCode.CONTENT_MARKETING]: (
-			<ContentMarket values={values} />
+			<ContentMarket
+				tacticName={TacticName}
+				typeOfActivitieName={typeOfActivitiesName}
+				values={values}
+			/>
 		),
-		[TypeActivityExternalReferenceCode.EVENT]: <Event values={values} />,
+		[TypeActivityExternalReferenceCode.EVENT]: (
+			<Event
+				tacticName={TacticName}
+				typeOfActivitieName={typeOfActivitiesName}
+				values={values}
+			/>
+		),
 		[TypeActivityExternalReferenceCode.MISCELLANEOUS_MARKETING]: (
-			<MiscellaneousMarket values={values} />
+			<MiscellaneousMarket
+				tacticName={TacticName}
+				typeOfActivitieName={typeOfActivitiesName}
+				values={values}
+			/>
 		),
 	};
 

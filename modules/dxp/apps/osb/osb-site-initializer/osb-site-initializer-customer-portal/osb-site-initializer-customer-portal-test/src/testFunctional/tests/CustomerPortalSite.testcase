@@ -6,6 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -25,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		CustomerPortal.customerPortalApisTearDown(groupName = "${testSiteName}");
+		CustomerPortal.customerPortalApisTearDown();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -166,7 +167,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-146215 - Verify if Customer Portal can be created"
+	@description = "Automation ID: LPS-146215 | Test Summary: Verify if Customer Portal can be created"
 	@priority = "5"
 	test CanCP20BeCreated {
 		property portal.acceptance = "true";
@@ -182,34 +183,40 @@ definition {
 		}
 	}
 
-	@description = "LPS-146220 - Verify if when Customer Portal is created, Objects will be created for it as well"
+	@description = "Automation ID: LPS-146220 | Test Summary: Verify if when Customer Portal is created, Objects will be created for it as well"
 	@priority = "4"
 	test ObjectsAreCreatedForCP20 {
-		ObjectAdmin.openObjectAdmin();
+		task ("Go to the Objects admin and assert that the objects have been created") {
+			ObjectAdmin.openObjectAdmin();
 
-		AssertElementPresent(
-			locator1 = "CustomerPortalSite#OBJECTS_TABLE",
-			value = "Koroneiki Account");
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#OBJECTS_TABLE",
+				value = "Koroneiki Account");
+		}
 	}
 
-	@description = "LPS-146219 - Verify if when Customer Portal is created, Remote Apps will be created for it as well"
+	@description = "Automation ID: LPS-146219 | Test Summary: Verify if when Customer Portal is created, Remote Apps will be created for it as well"
 	@priority = "4"
 	test RemoteAppsAreCreatedForCP20 {
-		RemoteApps.goToRemoteAppsPortlet();
+		task ("Assert that when the Customer Portal is created, remote applications are also created") {
+			RemoteApps.goToRemoteAppsPortlet();
 
-		AssertElementPresent(
-			locator1 = "CustomerPortalSite#OBJECTS_TABLE",
-			value = "Customer Portal");
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#OBJECTS_TABLE",
+				value = "Customer Portal");
+		}
 	}
 
-	@description = "LPS-146216 - Verify if when Customer Portal is created, Tests Accounts will be created for it as well"
+	@description = "Automation ID: LPS-146216 | Test Summary: Verify if when Customer Portal is created, Tests Accounts will be created for it as well"
 	@priority = "4"
 	test TestsAccountsAreCreatedForCP20 {
-		Accounts.openAccountsAdmin();
+		task ("Assert that after the Customer Portal was created, test accounts were also created") {
+			Accounts.openAccountsAdmin();
 
-		AssertElementPresent(
-			locator1 = "CustomerPortalSite#ACCOUNTS_TABLE",
-			value = "Test Account 01");
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#ACCOUNTS_TABLE",
+				value = "Test Account LXC-SM");
+		}
 	}
 
 }

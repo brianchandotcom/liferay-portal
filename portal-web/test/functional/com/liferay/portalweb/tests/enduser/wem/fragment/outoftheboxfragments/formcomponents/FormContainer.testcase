@@ -320,7 +320,7 @@ definition {
 	@description = "This is a test for LPS-157739. The page creator could map new field to new input fragment after mapping Form Container to object."
 	@priority = "4"
 	test MapNewFieldToNewInputFragmentInMappedFormContainer {
-		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-150277=true";
+		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-157738=true";
 		property test.name.skip.portal.instance = "FormContainer#MapNewFieldToNewInputFragmentInMappedFormContainer";
 
 		task ("Given a page creator has a mapped Form Container on a content page") {
@@ -376,7 +376,7 @@ definition {
 	@description = "This is a test for LPS-157739. The page creator could remove automatically added input fragments and change mapping fields."
 	@priority = "4"
 	test RemoveAutomaticallyAddedInputFragmentsThenChangeMappingField {
-		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-150277=true";
+		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-157738=true";
 		property test.name.skip.portal.instance = "FormContainer#RemoveAutomaticallyAddedInputFragmentsThenChangeMappingField";
 
 		task ("Given a page creator has a Form Container on a content page") {

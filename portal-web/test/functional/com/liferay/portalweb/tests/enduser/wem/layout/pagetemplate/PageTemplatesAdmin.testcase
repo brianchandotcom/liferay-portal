@@ -111,10 +111,7 @@ definition {
 		}
 
 		task ("When the Page Template creator opens the dropdown menu of custom page template set") {
-			Click(
-				key_index = "3",
-				key_text = "Test Page Template Set",
-				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 		}
 
 		task ("Then the Page Template creator can see the new icons on the dropdown menu") {

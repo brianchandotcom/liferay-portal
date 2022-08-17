@@ -130,7 +130,7 @@ export default function ContentsSidebar() {
 				</SidebarPanelHeader>
 			)}
 
-			<div className="d-flex flex-column page-editor__page-contents">
+			<div className="d-flex flex-column page-editor__page-contents pt-3">
 				{view}
 			</div>
 		</>

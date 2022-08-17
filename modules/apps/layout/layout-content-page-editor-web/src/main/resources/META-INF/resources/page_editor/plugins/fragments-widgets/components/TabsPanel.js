@@ -86,7 +86,7 @@ export default function TabsPanel({
 
 	return (
 		<>
-			<ClayTabs className="flex-shrink-0 mb-4 mx-3 page-editor__sidebar__fragments-widgets-panel__tabs">
+			<ClayTabs className="flex-shrink-0 mx-3 page-editor__sidebar__fragments-widgets-panel__tabs">
 				{tabs.map((tab, index) => (
 					<ClayTabs.Item
 						active={tab.id === activeTabId}
@@ -109,7 +109,7 @@ export default function TabsPanel({
 				))}
 			</ClayTabs>
 
-			<div className="overflow-auto px-3" ref={wrapperElementRef}>
+			<div className="overflow-auto pt-4 px-3" ref={wrapperElementRef}>
 				<ClayTabs.Content
 					activeIndex={tabs.findIndex(
 						(tab) => tab.id === activeTabId

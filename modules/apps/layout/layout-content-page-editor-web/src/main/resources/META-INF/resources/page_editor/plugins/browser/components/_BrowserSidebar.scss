@@ -17,7 +17,7 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar__browser {
 		border-bottom: 1px solid $cadmin-gray-300;
 		flex-shrink: 0;
 		font-size: 0.75rem;
-		margin: 0 $tabsBottomMargin $tabsBottomMargin;
+		margin: 0 $tabsBottomMargin;
 	}
 
 	&__tab-content {

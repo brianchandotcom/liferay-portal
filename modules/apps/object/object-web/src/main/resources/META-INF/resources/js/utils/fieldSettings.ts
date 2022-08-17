@@ -21,7 +21,7 @@ export function normalizeFieldSettings(
 			| number
 			| boolean
 			| ObjectFieldFilterSetting[]
-			| {id: number; objectStates: ObjectState[]};
+			| ObjectFieldPicklistSetting;
 	} = {};
 
 	objectFieldSettings?.forEach(({name, value}) => {

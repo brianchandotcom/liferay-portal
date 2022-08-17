@@ -987,7 +987,9 @@ definition {
 				value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 		}
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Checkin");
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Checkin");
 
 		if (IsElementPresent(locator1 = "DocumentsAndMedia#CHECKIN_DIALOG_TITLE")) {
 			if ("${revision}" == "Major") {

@@ -18,7 +18,6 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {AdvancedSelectField} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-configuration-fields/AdvancedSelectField';
-import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 
 const FIELD = {
 	cssProperty: 'font-size',
@@ -78,29 +77,33 @@ const TOKEN_VALUES = {
 const renderAdvancedSelectField = ({
 	field = FIELD,
 	onValueSelect = () => {},
-	state = {
-		permissions: {UPDATE: true},
-	},
+	selectedViewportSize = 'desktop',
 	value = '',
-} = {}) => {
-	const mockDispatch = jest.fn((a) => {
-		if (typeof a === 'function') {
-			return a(mockDispatch, () => state);
-		}
-	});
-
-	return render(
-		<StoreAPIContextProvider dispatch={mockDispatch} getState={() => state}>
-			<AdvancedSelectField
-				field={field}
-				onValueSelect={onValueSelect}
-				options={OPTIONS}
-				tokenValues={TOKEN_VALUES}
-				value={value}
-			/>
-		</StoreAPIContextProvider>
+	canDetachTokenValues = true,
+} = {}) =>
+	render(
+		<AdvancedSelectField
+			canDetachTokenValues={canDetachTokenValues}
+			field={field}
+			onValueSelect={onValueSelect}
+			options={OPTIONS}
+			selectedViewportSize={selectedViewportSize}
+			tokenValues={TOKEN_VALUES}
+			value={value}
+		/>
 	);
-};
+
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({
+		config: {
+			availableViewportSizes: {
+				desktop: {label: 'Desktop'},
+				tablet: {label: 'tablet'},
+			},
+		},
+	})
+);
 
 describe('AdvancedSelectField', () => {
 	it('renders AdvancedSelectField', () => {
@@ -204,13 +207,7 @@ describe('AdvancedSelectField', () => {
 
 	it('does not render the Detach button when user does not have update permission', () => {
 		renderAdvancedSelectField({
-			state: {
-				permissions: {
-					UPDATE: false,
-					UPDATE_LAYOUT_BASIC: true,
-					UPDATE_LAYOUT_LIMITED: true,
-				},
-			},
+			canDetachTokenValues: false,
 			value: 'fontSizeLg',
 		});
 

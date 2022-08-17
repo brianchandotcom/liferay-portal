@@ -82,6 +82,7 @@ const renderComponent = () => {
 						subtype: 'Web Content Article - Basic Web Content',
 					},
 				],
+				permissions: {UPDATE: true},
 				selectedViewportSize: VIEWPORT_SIZES.desktop,
 			}}
 		>

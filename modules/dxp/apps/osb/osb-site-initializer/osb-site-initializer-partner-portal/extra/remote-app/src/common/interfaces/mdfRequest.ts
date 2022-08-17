@@ -19,6 +19,8 @@ export default interface MDFRequest extends Partial<LiferayObject> {
 	additionalOption: LiferayPicklist;
 	country: LiferayPicklist;
 	liferayBusinessSalesGoals: string[];
+	maxDateActivity?: Date;
+	minDateActivity?: Date;
 	overallCampaign: string;
 	r_accountToMDFRequests_accountEntryId: string;
 	requestStatus: RequestStatus;

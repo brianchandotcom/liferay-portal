@@ -6,6 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+	property portal.upstream = "quarantine";
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
@@ -27,46 +28,51 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		CustomerPortal.customerPortalTearDown();
 
-		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-		PortalInstances.tearDownCP();
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
 	}
 
-	@description = "LPS-150058 - Verify if the user is allowed to remove the additional admin(s) added before continuing"
+	@description = "Automation ID: LPS-150058 | Test Summary: Verify if the user is allowed to remove the additional admin(s) added before continuing"
 	@priority = "5"
 	test IfAddedAdminCanBeRemoved {
-		Accounts.openAccountsAdmin();
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+		}
 
-		CustomerPortal.clickOnStartProjectSetup();
+		task ("Going through onboarding to Setup") {
+			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
+		}
 
-		CP2TeamMembers.addFieldsTeamMembersExtra(
-			addMembers = "false",
-			position = "0",
-			positionNumber = "0",
-			rowEmail = "test01@project.com",
-			rowRole = "User");
+		task ("Add new administrators and before submitting remove them") {
+			CP2DXPCloudSetup.clickOnAddAnotherAdminButton();
 
-		CP2TeamMembers.clickTeamMembersSendInvitation();
+			CP2DXPCloudSetup.clickOnRemoveThisAdminButton();
+		}
 
-		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
-
-		CP2DXPCloudSetup.clickOnAddAnotherAdminButton();
-
-		CP2DXPCloudSetup.clickOnRemoveThisAdminButton();
-
-		CP2DXPCloudSetup.notViewSetupDXPCloufEXtraInfo();
+		task ("Assert that the additional admin fields are no longer present in the modal") {
+			CP2DXPCloudSetup.notViewSetupDXPCloufEXtraInfo();
+		}
 	}
 
 }

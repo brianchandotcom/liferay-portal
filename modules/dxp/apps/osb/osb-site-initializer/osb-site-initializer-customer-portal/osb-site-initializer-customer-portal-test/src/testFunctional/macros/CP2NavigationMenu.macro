@@ -40,12 +40,12 @@ definition {
 
 	macro assertActionsOption {
 		Click(
-			locator1 = "Button#ANY",
-			key_text = "Actions");
-		
+			key_text = "Actions",
+			locator1 = "Button#ANY");
+
 		AssertElementPresent(
-			locator1 = "CP2NavigationMenu#ACTIONS_DROPDOWN",
-			key_action = "${key_action}");
+			key_action = "${key_action}",
+			locator1 = "CP2NavigationMenu#ACTIONS_DROPDOWN");
 	}
 
 	macro cancelTeamMembersInvitation {
@@ -82,12 +82,12 @@ definition {
 
 	macro exportAllKeyDetails {
 		Click(
-			locator1 = "Button#ANY",
-			key_text = "Actions");
-		
+			key_text = "Actions",
+			locator1 = "Button#ANY");
+
 		Click(
-			locator1 = "CP2NavigationMenu#ACTIONS_DROPDOWN",
-			key_action = "Export All Key Details (csv)");
+			key_action = "Export All Key Details (csv)",
+			locator1 = "CP2NavigationMenu#ACTIONS_DROPDOWN");
 
 		Alert.viewSuccessMessage();
 	}

@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
-import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -67,7 +67,7 @@ public class ThreadNameCheck extends BaseCheck {
 
 			Matcher matcher = _camelCasePattern.matcher(name);
 
-			String expectedName = SourceUtil.getTitleCase(
+			String expectedName = StringUtil.getTitleCase(
 				matcher.replaceAll("$1 $2"), false);
 
 			if (!name.equals(expectedName)) {

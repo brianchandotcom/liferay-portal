@@ -2555,6 +2555,8 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
+		DDLList.expandCollapsedIcon(classNameList = "General Variables,Data List Record Fields,Util");
+
 		for (var fieldName : list "Device,Company,PermissionChecker") {
 			var key_fieldName = "${fieldName}";
 
@@ -2576,6 +2578,7 @@ definition {
 				value1 = "${fieldName}");
 
 			Close.closeAndSelectWindow(locator1 = "title=New Template for Structure: Contacts - ${siteName}");
+			
 		}
 	}
 

@@ -216,4 +216,29 @@ definition {
 			value1 = "${ddlListName}");
 	}
 
+	macro expandCollapsedIcon {
+		if (isSet(classNameList)) {
+			for (var className : list "${classNameList}") {
+				var key_sectionName = "${className}";
+
+				if (IsElementPresent(key_tab = "${className}", locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_EXPANDED")) {
+					AssertElementPresent(locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_EXPANDED");
+				}
+				else {
+					Click(locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_COLLAPSED");
+				}
+			}
+		}
+		else {
+			var key_sectionName = "${className}";
+			
+			if (IsElementPresent(key_tab = "${className}", locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_EXPANDED")) {
+					AssertElementPresent(locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_EXPANDED");
+				}
+			else{
+				Click(locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_COLLAPSED");
+			}
+		}
+	}
+
 }

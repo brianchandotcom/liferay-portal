@@ -1127,4 +1127,27 @@ definition {
 			status = "New");
 	}
 
+	@description = "This test ensures that the blogs widgets follow W3C accessibility standards."
+	@ignore = "true"
+	@priority = "4"
+	test WidgetsFollowAccessibilityStandards {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+
+		for (var widgetName : list "Knowledge Base Display,Knowledge Base Article,Knowledge Base Search,Knowledge Base Section") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Knowledge Base Display Page",
+				widgetName = "${widgetName}");
+		}
+
+		Navigator.openSitePage(
+			pageName = "Knowledge Base Display Page",
+			siteName = "Guest");
+
+		AssertAccessible();
+	}
+
 }

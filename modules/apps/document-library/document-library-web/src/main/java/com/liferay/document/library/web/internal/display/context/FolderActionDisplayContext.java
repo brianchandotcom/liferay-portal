@@ -88,96 +88,96 @@ public class FolderActionDisplayContext {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
 				DropdownItemListBuilder.add(
-					this::isDownloadFolderActionVisible,
+					this::_isDownloadFolderActionVisible,
 					dropdownItem -> {
-						dropdownItem.setHref(getDownloadFolderURL());
+						dropdownItem.setHref(_getDownloadFolderURL());
 						dropdownItem.setIcon("download");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_httpServletRequest, "download"));
 					}
 				).add(
-					this::isEditFolderActionVisible,
+					this::_isEditFolderActionVisible,
 					dropdownItem -> {
-						dropdownItem.setHref(getEditFolderURL());
+						dropdownItem.setHref(_getEditFolderURL());
 						dropdownItem.setIcon("pencil");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_httpServletRequest, "edit"));
 					}
 				).add(
-					this::isMoveFolderActionVisible,
+					this::_isMoveFolderActionVisible,
 					dropdownItem -> {
-						dropdownItem.setHref(getMoveFolderURL());
+						dropdownItem.setHref(_getMoveFolderURL());
 						dropdownItem.setIcon("move-folder");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_httpServletRequest, "move"));
 					}
 				).add(
-					this::isDeleteExpiredTemporaryFileEntriesActionVisible,
+					this::_isDeleteExpiredTemporaryFileEntriesActionVisible,
 					dropdownItem -> {
 						dropdownItem.setHref(
-							getDeleteExpiredTemporaryFileEntriesURL());
+							_getDeleteExpiredTemporaryFileEntriesURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_httpServletRequest,
 								"delete-expired-temporary-files"));
 					}
 				).add(
-					this::isAddFolderActionVisible,
+					this::_isAddFolderActionVisible,
 					dropdownItem -> {
-						dropdownItem.setHref(getAddFolderURL());
+						dropdownItem.setHref(_getAddFolderURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_httpServletRequest, "add-folder"));
 					}
 				).add(
-					this::isAddRepositoryActionVisible,
+					this::_isAddRepositoryActionVisible,
 					dropdownItem -> {
-						dropdownItem.setHref(getAddRepositoryURL());
+						dropdownItem.setHref(_getAddRepositoryURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_httpServletRequest, "add-repository"));
 					}
 				).add(
-					this::isAddMediaActionVisible,
+					this::_isAddMediaActionVisible,
 					dropdownItem -> {
-						dropdownItem.setHref(getAddMediaURL());
+						dropdownItem.setHref(_getAddMediaURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_httpServletRequest, "add-file-entry"));
 					}
 				).add(
 					() ->
-						isAddMediaActionVisible() &&
-						isMultipleUploadSupported(),
+						_isAddMediaActionVisible() &&
+						_isMultipleUploadSupported(),
 					dropdownItem -> {
 						dropdownItem.put(
 							"class",
 							"dropdown-item hide upload-multiple-documents");
-						dropdownItem.setHref(getAddMultipleMediaURL());
+						dropdownItem.setHref(_getAddMultipleMediaURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_httpServletRequest, "multiple-media"));
 					}
 				).add(
-					this::isViewSlideShowActionVisible,
+					this::_isViewSlideShowActionVisible,
 					dropdownItem -> {
 						dropdownItem.putData("action", "slideShow");
 						dropdownItem.putData(
-							"viewSlideShowURL", getViewSlideShowURL());
+							"viewSlideShowURL", _getViewSlideShowURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_httpServletRequest, "view-slide-show"));
 					}
 				).add(
-					this::isAddFileShortcutActionVisible,
+					this::_isAddFileShortcutActionVisible,
 					dropdownItem -> {
-						dropdownItem.setHref(getAddFileShortcutURL());
+						dropdownItem.setHref(_getAddFileShortcutURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_httpServletRequest, "add-shortcut"));
 					}
 				).add(
-					this::isAccessFromDesktopActionVisible,
+					this::_isAccessFromDesktopActionVisible,
 					dropdownItem -> {
 						dropdownItem.putData("action", "accessFromDesktop");
 
@@ -206,14 +206,14 @@ public class FolderActionDisplayContext {
 								_httpServletRequest, "access-from-desktop"));
 					}
 				).add(
-					this::isPermissionsActionVisible,
+					this::_isPermissionsActionVisible,
 					dropdownItem -> {
 						dropdownItem.putData("action", "permissions");
 
 						String permissionsURL = PermissionsURLTag.doTag(
-							StringPool.BLANK, getModelResource(),
-							HtmlUtil.escape(getModelResourceDescription()),
-							null, String.valueOf(getResourcePrimKey()),
+							StringPool.BLANK, _getModelResource(),
+							HtmlUtil.escape(_getModelResourceDescription()),
+							null, String.valueOf(_getResourcePrimKey()),
 							LiferayWindowState.POP_UP.toString(), null,
 							_httpServletRequest);
 
@@ -225,19 +225,19 @@ public class FolderActionDisplayContext {
 								_httpServletRequest, "permissions"));
 					}
 				).add(
-					this::isDeleteFolderActionVisible,
+					this::_isDeleteFolderActionVisible,
 					dropdownItem -> {
-						dropdownItem.setHref(getDeleteFolderURL());
+						dropdownItem.setHref(_getDeleteFolderURL());
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_httpServletRequest, "delete"));
 					}
 				).add(
-					this::isPublishFolderActionVisible,
+					this::_isPublishFolderActionVisible,
 					dropdownItem -> {
 						dropdownItem.putData("action", "publish");
 						dropdownItem.putData(
-							"publishURL", getPublishFolderURL());
+							"publishURL", _getPublishFolderURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_httpServletRequest, "publish-to-live"));
@@ -246,7 +246,18 @@ public class FolderActionDisplayContext {
 		).build();
 	}
 
-	public String getAddFileShortcutURL() {
+	public boolean isShowActions() {
+		DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper =
+			new DLPortletInstanceSettingsHelper(_dlRequestHelper);
+
+		if (dlPortletInstanceSettingsHelper.isShowActions()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _getAddFileShortcutURL() {
 		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
 
 		return PortletURLBuilder.create(
@@ -265,7 +276,7 @@ public class FolderActionDisplayContext {
 		).buildString();
 	}
 
-	public String getAddFolderURL() {
+	private String _getAddFolderURL() {
 		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
 
 		return PortletURLBuilder.create(
@@ -286,7 +297,7 @@ public class FolderActionDisplayContext {
 		).buildString();
 	}
 
-	public String getAddMediaURL() {
+	private String _getAddMediaURL() {
 		return PortletURLBuilder.createRenderURL(
 			_dlRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
@@ -300,7 +311,7 @@ public class FolderActionDisplayContext {
 		).buildString();
 	}
 
-	public String getAddMultipleMediaURL() {
+	private String _getAddMultipleMediaURL() {
 		return PortletURLBuilder.createRenderURL(
 			_dlRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
@@ -316,7 +327,7 @@ public class FolderActionDisplayContext {
 		).buildString();
 	}
 
-	public String getAddRepositoryURL() {
+	private String _getAddRepositoryURL() {
 		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
 
 		return PortletURLBuilder.create(
@@ -333,7 +344,7 @@ public class FolderActionDisplayContext {
 		).buildString();
 	}
 
-	public String getDeleteExpiredTemporaryFileEntriesURL() {
+	private String _getDeleteExpiredTemporaryFileEntriesURL() {
 		return PortletURLBuilder.createActionURL(
 			_dlRequestHelper.getLiferayPortletResponse()
 		).setActionName(
@@ -347,7 +358,19 @@ public class FolderActionDisplayContext {
 		).buildString();
 	}
 
-	public String getDeleteFolderURL() throws PortalException {
+	private String _getDeleteFolderCommand() throws PortalException {
+		if (DLFolderUtil.isRepositoryRoot(_getFolder())) {
+			return Constants.DELETE;
+		}
+
+		if (_isTrashEnabled()) {
+			return Constants.MOVE_TO_TRASH;
+		}
+
+		return Constants.DELETE;
+	}
+
+	private String _getDeleteFolderURL() throws PortalException {
 		LiferayPortletResponse liferayPortletResponse =
 			_dlRequestHelper.getLiferayPortletResponse();
 
@@ -378,7 +401,7 @@ public class FolderActionDisplayContext {
 		return portletURL.toString();
 	}
 
-	public String getDownloadFolderURL() {
+	private String _getDownloadFolderURL() {
 		LiferayPortletResponse liferayPortletResponse =
 			_dlRequestHelper.getLiferayPortletResponse();
 
@@ -392,7 +415,7 @@ public class FolderActionDisplayContext {
 		return resourceURL.toString();
 	}
 
-	public String getEditFolderURL() {
+	private String _getEditFolderURL() {
 		Folder folder = _getFolder();
 
 		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
@@ -428,383 +451,6 @@ public class FolderActionDisplayContext {
 		return portletURL.toString();
 	}
 
-	public String getModelResource() {
-		Folder folder = _getFolder();
-
-		if (folder != null) {
-			return DLFolderConstants.getClassName();
-		}
-
-		return "com.liferay.document.library";
-	}
-
-	public String getModelResourceDescription() throws PortalException {
-		Folder folder = _getFolder();
-
-		if (folder != null) {
-			return folder.getName();
-		}
-
-		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
-
-		return themeDisplay.getScopeGroupName();
-	}
-
-	public String getMoveFolderURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_dlRequestHelper.getLiferayPortletResponse();
-
-		return StringBundler.concat(
-			"javascript:", liferayPortletResponse.getNamespace(),
-			"move(1, 'rowIdsFolder', ", _getFolderId(), ");");
-	}
-
-	public String getPublishFolderURL() {
-		return PortletURLBuilder.createActionURL(
-			_dlRequestHelper.getLiferayPortletResponse()
-		).setActionName(
-			"/document_library/publish_folder"
-		).setBackURL(
-			_dlRequestHelper.getCurrentURL()
-		).setParameter(
-			"folderId", _getFolderId()
-		).buildString();
-	}
-
-	public long getResourcePrimKey() {
-		Folder folder = _getFolder();
-
-		if (folder != null) {
-			return folder.getFolderId();
-		}
-
-		return _dlRequestHelper.getScopeGroupId();
-	}
-
-	public String getViewSlideShowURL() {
-		return PortletURLBuilder.createRenderURL(
-			_dlRequestHelper.getLiferayPortletResponse()
-		).setMVCRenderCommandName(
-			"/image_gallery_display/view_slide_show"
-		).setParameter(
-			"folderId", _getFolderId()
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
-	}
-
-	public boolean isAccessFromDesktopActionVisible() throws PortalException {
-		PortletDisplay portletDisplay = _dlRequestHelper.getPortletDisplay();
-
-		if (!_hasViewPermission() || !portletDisplay.isWebDAVEnabled()) {
-			return false;
-		}
-
-		Folder folder = _getFolder();
-
-		if ((folder == null) ||
-			(folder.getRepositoryId() == _dlRequestHelper.getScopeGroupId())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isAddFileShortcutActionVisible() throws PortalException {
-		String portletName = _dlRequestHelper.getPortletName();
-
-		if (!portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
-			return false;
-		}
-
-		Folder folder = _getFolder();
-
-		if ((folder != null) &&
-			(folder.isMountPoint() || !folder.isSupportsShortcuts())) {
-
-			return false;
-		}
-
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.ADD_SHORTCUT)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isAddFolderActionVisible() throws PortalException {
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.ADD_FOLDER)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isAddMediaActionVisible() throws PortalException {
-		String portletName = _dlRequestHelper.getPortletName();
-
-		if (!portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
-			return false;
-		}
-
-		Folder folder = _getFolder();
-
-		if ((folder != null) && DLFolderUtil.isRepositoryRoot(folder)) {
-			return false;
-		}
-
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.ADD_DOCUMENT)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isAddRepositoryActionVisible() throws PortalException {
-		Folder folder = _getFolder();
-
-		if (folder != null) {
-			return false;
-		}
-
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.ADD_REPOSITORY)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isDeleteExpiredTemporaryFileEntriesActionVisible() {
-		try {
-			Folder folder = _getFolder();
-
-			if (folder == null) {
-				return false;
-			}
-
-			if (DLFolderUtil.isRepositoryRoot(folder) &&
-				folder.isRepositoryCapabilityProvided(
-					TemporaryFileEntriesCapability.class)) {
-
-				return true;
-			}
-
-			return false;
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			return false;
-		}
-	}
-
-	public boolean isDeleteFolderActionVisible() throws PortalException {
-		Folder folder = _getFolder();
-
-		if (folder == null) {
-			return false;
-		}
-
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.DELETE)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isDownloadFolderActionVisible() throws PortalException {
-		Folder folder = _getFolder();
-
-		if ((folder == null) ||
-			RepositoryUtil.isExternalRepository(_getRepositoryId())) {
-
-			return false;
-		}
-
-		if (_hasViewPermission()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isEditFolderActionVisible() throws PortalException {
-		if (!_isWorkflowEnabled()) {
-			return false;
-		}
-
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.UPDATE)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isMoveFolderActionVisible() throws PortalException {
-		Folder folder = _getFolder();
-
-		if ((folder == null) || DLFolderUtil.isRepositoryRoot(folder)) {
-			return false;
-		}
-
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.UPDATE)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isMultipleUploadSupported() {
-		Folder folder = _getFolder();
-
-		if ((folder == null) || folder.isSupportsMultipleUpload()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isPermissionsActionVisible() throws PortalException {
-		if (!_hasPermissionsPermission()) {
-			return false;
-		}
-
-		Folder folder = _getFolder();
-
-		if ((folder == null) || !DLFolderUtil.isRepositoryRoot(folder)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isPublishFolderActionVisible() throws PortalException {
-		Folder folder = _getFolder();
-
-		if (folder == null) {
-			return false;
-		}
-
-		String portletName = _dlRequestHelper.getPortletName();
-
-		if (!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
-			!GroupPermissionUtil.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(),
-				ActionKeys.EXPORT_IMPORT_PORTLET_INFO)) {
-
-			return false;
-		}
-
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if (!stagingGroupHelper.isStagingGroup(
-				_dlRequestHelper.getScopeGroupId()) ||
-			!stagingGroupHelper.isStagedPortlet(
-				_dlRequestHelper.getScopeGroupId(),
-				DLPortletKeys.DOCUMENT_LIBRARY)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	public boolean isShowActions() {
-		DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper =
-			new DLPortletInstanceSettingsHelper(_dlRequestHelper);
-
-		if (dlPortletInstanceSettingsHelper.isShowActions()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isTrashEnabled() {
-		try {
-			Folder folder = _getFolder();
-
-			if (((folder == null) ||
-				 folder.isRepositoryCapabilityProvided(
-					 TrashCapability.class)) &&
-				_dlTrashHelper.isTrashEnabled(
-					_dlRequestHelper.getScopeGroupId(), _getRepositoryId())) {
-
-				return true;
-			}
-
-			return false;
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			return false;
-		}
-	}
-
-	public boolean isViewSlideShowActionVisible() throws PortalException {
-		String portletName = _dlRequestHelper.getPortletName();
-
-		if (!portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ||
-			!_hasViewPermission()) {
-
-			return false;
-		}
-
-		int fileEntriesAndFileShortcutsCount =
-			DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
-				_getRepositoryId(), _getFolderId(), _getStatus());
-
-		if (fileEntriesAndFileShortcutsCount == 0) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private String _getDeleteFolderCommand() throws PortalException {
-		if (DLFolderUtil.isRepositoryRoot(_getFolder())) {
-			return Constants.DELETE;
-		}
-
-		if (isTrashEnabled()) {
-			return Constants.MOVE_TO_TRASH;
-		}
-
-		return Constants.DELETE;
-	}
-
 	private Folder _getFolder() {
 		if (_folder != null) {
 			return _folder;
@@ -834,6 +480,37 @@ public class FolderActionDisplayContext {
 		}
 
 		return folder.getFolderId();
+	}
+
+	private String _getModelResource() {
+		Folder folder = _getFolder();
+
+		if (folder != null) {
+			return DLFolderConstants.getClassName();
+		}
+
+		return "com.liferay.document.library";
+	}
+
+	private String _getModelResourceDescription() throws PortalException {
+		Folder folder = _getFolder();
+
+		if (folder != null) {
+			return folder.getName();
+		}
+
+		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
+
+		return themeDisplay.getScopeGroupName();
+	}
+
+	private String _getMoveFolderURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			_dlRequestHelper.getLiferayPortletResponse();
+
+		return StringBundler.concat(
+			"javascript:", liferayPortletResponse.getNamespace(),
+			"move(1, 'rowIdsFolder', ", _getFolderId(), ");");
 	}
 
 	private String _getParentFolderURL() {
@@ -880,6 +557,18 @@ public class FolderActionDisplayContext {
 		).buildString();
 	}
 
+	private String _getPublishFolderURL() {
+		return PortletURLBuilder.createActionURL(
+			_dlRequestHelper.getLiferayPortletResponse()
+		).setActionName(
+			"/document_library/publish_folder"
+		).setBackURL(
+			_dlRequestHelper.getCurrentURL()
+		).setParameter(
+			"folderId", _getFolderId()
+		).buildString();
+	}
+
 	private long _getRepositoryId() {
 		if (_repositoryId != null) {
 			return _repositoryId;
@@ -897,6 +586,16 @@ public class FolderActionDisplayContext {
 		}
 
 		return _repositoryId;
+	}
+
+	private long _getResourcePrimKey() {
+		Folder folder = _getFolder();
+
+		if (folder != null) {
+			return folder.getFolderId();
+		}
+
+		return _dlRequestHelper.getScopeGroupId();
 	}
 
 	private int _getStatus() {
@@ -922,6 +621,18 @@ public class FolderActionDisplayContext {
 		return _status;
 	}
 
+	private String _getViewSlideShowURL() {
+		return PortletURLBuilder.createRenderURL(
+			_dlRequestHelper.getLiferayPortletResponse()
+		).setMVCRenderCommandName(
+			"/image_gallery_display/view_slide_show"
+		).setParameter(
+			"folderId", _getFolderId()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
+	}
+
 	private boolean _hasPermissionsPermission() throws PortalException {
 		Folder folder = _getFolder();
 
@@ -941,6 +652,275 @@ public class FolderActionDisplayContext {
 			_dlRequestHelper.getPermissionChecker(),
 			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
 			ActionKeys.VIEW);
+	}
+
+	private boolean _isAccessFromDesktopActionVisible() throws PortalException {
+		PortletDisplay portletDisplay = _dlRequestHelper.getPortletDisplay();
+
+		if (!_hasViewPermission() || !portletDisplay.isWebDAVEnabled()) {
+			return false;
+		}
+
+		Folder folder = _getFolder();
+
+		if ((folder == null) ||
+			(folder.getRepositoryId() == _dlRequestHelper.getScopeGroupId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isAddFileShortcutActionVisible() throws PortalException {
+		String portletName = _dlRequestHelper.getPortletName();
+
+		if (!portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+			return false;
+		}
+
+		Folder folder = _getFolder();
+
+		if ((folder != null) &&
+			(folder.isMountPoint() || !folder.isSupportsShortcuts())) {
+
+			return false;
+		}
+
+		if (DLFolderPermission.contains(
+				_dlRequestHelper.getPermissionChecker(),
+				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+				ActionKeys.ADD_SHORTCUT)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isAddFolderActionVisible() throws PortalException {
+		if (DLFolderPermission.contains(
+				_dlRequestHelper.getPermissionChecker(),
+				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+				ActionKeys.ADD_FOLDER)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isAddMediaActionVisible() throws PortalException {
+		String portletName = _dlRequestHelper.getPortletName();
+
+		if (!portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+			return false;
+		}
+
+		Folder folder = _getFolder();
+
+		if ((folder != null) && DLFolderUtil.isRepositoryRoot(folder)) {
+			return false;
+		}
+
+		if (DLFolderPermission.contains(
+				_dlRequestHelper.getPermissionChecker(),
+				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+				ActionKeys.ADD_DOCUMENT)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isAddRepositoryActionVisible() throws PortalException {
+		Folder folder = _getFolder();
+
+		if (folder != null) {
+			return false;
+		}
+
+		if (DLFolderPermission.contains(
+				_dlRequestHelper.getPermissionChecker(),
+				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+				ActionKeys.ADD_REPOSITORY)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isDeleteExpiredTemporaryFileEntriesActionVisible() {
+		try {
+			Folder folder = _getFolder();
+
+			if (folder == null) {
+				return false;
+			}
+
+			if (DLFolderUtil.isRepositoryRoot(folder) &&
+				folder.isRepositoryCapabilityProvided(
+					TemporaryFileEntriesCapability.class)) {
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			return false;
+		}
+	}
+
+	private boolean _isDeleteFolderActionVisible() throws PortalException {
+		Folder folder = _getFolder();
+
+		if (folder == null) {
+			return false;
+		}
+
+		if (DLFolderPermission.contains(
+				_dlRequestHelper.getPermissionChecker(),
+				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+				ActionKeys.DELETE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isDownloadFolderActionVisible() throws PortalException {
+		Folder folder = _getFolder();
+
+		if ((folder == null) ||
+			RepositoryUtil.isExternalRepository(_getRepositoryId())) {
+
+			return false;
+		}
+
+		if (_hasViewPermission()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isEditFolderActionVisible() throws PortalException {
+		if (!_isWorkflowEnabled()) {
+			return false;
+		}
+
+		if (DLFolderPermission.contains(
+				_dlRequestHelper.getPermissionChecker(),
+				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+				ActionKeys.UPDATE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isMoveFolderActionVisible() throws PortalException {
+		Folder folder = _getFolder();
+
+		if ((folder == null) || DLFolderUtil.isRepositoryRoot(folder)) {
+			return false;
+		}
+
+		if (DLFolderPermission.contains(
+				_dlRequestHelper.getPermissionChecker(),
+				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+				ActionKeys.UPDATE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isMultipleUploadSupported() {
+		Folder folder = _getFolder();
+
+		if ((folder == null) || folder.isSupportsMultipleUpload()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isPermissionsActionVisible() throws PortalException {
+		if (!_hasPermissionsPermission()) {
+			return false;
+		}
+
+		Folder folder = _getFolder();
+
+		if ((folder == null) || !DLFolderUtil.isRepositoryRoot(folder)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isPublishFolderActionVisible() throws PortalException {
+		Folder folder = _getFolder();
+
+		if (folder == null) {
+			return false;
+		}
+
+		String portletName = _dlRequestHelper.getPortletName();
+
+		if (!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
+			!GroupPermissionUtil.contains(
+				_dlRequestHelper.getPermissionChecker(),
+				_dlRequestHelper.getScopeGroupId(),
+				ActionKeys.EXPORT_IMPORT_PORTLET_INFO)) {
+
+			return false;
+		}
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if (!stagingGroupHelper.isStagingGroup(
+				_dlRequestHelper.getScopeGroupId()) ||
+			!stagingGroupHelper.isStagedPortlet(
+				_dlRequestHelper.getScopeGroupId(),
+				DLPortletKeys.DOCUMENT_LIBRARY)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isTrashEnabled() {
+		try {
+			Folder folder = _getFolder();
+
+			if (((folder == null) ||
+				 folder.isRepositoryCapabilityProvided(
+					 TrashCapability.class)) &&
+				_dlTrashHelper.isTrashEnabled(
+					_dlRequestHelper.getScopeGroupId(), _getRepositoryId())) {
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			return false;
+		}
 	}
 
 	private boolean _isView() {
@@ -970,6 +950,26 @@ public class FolderActionDisplayContext {
 		}
 
 		return _view;
+	}
+
+	private boolean _isViewSlideShowActionVisible() throws PortalException {
+		String portletName = _dlRequestHelper.getPortletName();
+
+		if (!portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ||
+			!_hasViewPermission()) {
+
+			return false;
+		}
+
+		int fileEntriesAndFileShortcutsCount =
+			DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
+				_getRepositoryId(), _getFolderId(), _getStatus());
+
+		if (fileEntriesAndFileShortcutsCount == 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isWorkflowEnabled() {

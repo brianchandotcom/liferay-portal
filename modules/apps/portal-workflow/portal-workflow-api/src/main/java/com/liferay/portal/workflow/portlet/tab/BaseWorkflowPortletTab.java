@@ -31,8 +31,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.ServletContext;
-
 /**
  * @author Adam Brandizzi
  */
@@ -59,11 +57,6 @@ public abstract class BaseWorkflowPortletTab
 		).setParameter(
 			"tab", getName()
 		).buildPortletURL();
-	}
-
-	@Override
-	public ServletContext getServletContext() {
-		return _servletContext;
 	}
 
 	@Override
@@ -95,15 +88,7 @@ public abstract class BaseWorkflowPortletTab
 		return _logs.get(clazz);
 	}
 
-	@Override
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-		super.setServletContext(servletContext);
-	}
-
 	private static final Map<Class<? extends BaseWorkflowPortletTab>, Log>
 		_logs = new HashMap<>();
-
-	private ServletContext _servletContext;
 
 }

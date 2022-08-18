@@ -25,7 +25,7 @@
 			<param name="database.postgresql.docker.image" value="postgres:${database.version}" />
 			<param name="database.postgresql.host" value="${database.host}_postgresql" />
 			<param name="database.postgresql.schema" value="lportal" />
-			<param name="database.postgresql.url" value="jdbc:postgresql://localhost:5432/${database.postgresql.schema}" />
+			<param name="database.postgresql.url" value="jdbc:postgresql://localhost:5433/${database.postgresql.schema}" />
 			<param name="database.type" value="postgresql" />
 			<param name="test.class" value="${test.class}" />
 		</antcall>

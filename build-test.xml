@@ -15091,7 +15091,7 @@ url=${short.hostname}:8080</echo>
 
 		<antcall inheritAll="false" target="start-docker-database">
 			<param name="database.postgresql.docker.image" value="postgres:${database.version}" />
-			<param name="database.postgresql.docker.run.options" value="--env=POSTGRES_USER=root --expose=5432 -p 5432:5432 --env=POSTGRES_HOST_AUTH_METHOD=trust" />
+			<param name="database.postgresql.docker.run.options" value="--env=POSTGRES_USER=root -p 5433:5432 --env=POSTGRES_HOST_AUTH_METHOD=trust" />
 			<param name="database.postgresql.host" value="${database.host}_postgresql" />
 			<param name="database.postgresql.name" value="PostgreSQL" />
 			<param name="database.postgresql.version" value="${database.version}" />
@@ -15105,7 +15105,7 @@ url=${short.hostname}:8080</echo>
 			<then>
 				<antcall inheritAll="false" target="prepare-portal-ext-properties">
 					<param name="database.postgresql.schema" value="lportal" />
-					<param name="database.postgresql.url" value="jdbc:postgresql://localhost:5432/${database.postgresql.schema}" />
+					<param name="database.postgresql.url" value="jdbc:postgresql://localhost:5433/${database.postgresql.schema}" />
 					<param name="database.type" value="postgresql" />
 				</antcall>
 			</then>

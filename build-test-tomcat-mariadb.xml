@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<project basedir="." default="test" name="portal-test-tomcat-mariadb" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test-tomcat.xml" />
+	<import file="build-test.xml" />
+
+	<target name="run-selenium-tomcat-mariadb">
+		<if>
+			<not>
+				<isset property="database.version" />
+			</not>
+			<then>
+				<var name="database.version" value="10.6" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${database.version}" arg2="10.2" />
+
+			<then>
+				<var name="database.version" value="10.2.25" />
+			</then>
+
+			<elseif>
+				<equals arg1="${database.version}" arg2="10.4" />
+
+				<then>
+					<var name="database.version" value="10.4.14" />
+				</then>
+			</elseif>
+		</if>
+
+		<get-database-property property.name="database.host" />
+
+		<antcall inheritAll="false" target="start-docker-database-mariadb">
+			<param name="skip.prepare.portal.ext.properties" value="true" />
+			<param name="skip.rebuild.database" value="true" />
+		</antcall>
+
+		<antcall inheritAll="false" target="run-selenium-tomcat">
+			<param name="database.mariadb.docker.image" value="mariadb:${database.version}" />
+			<param name="database.mariadb.host" value="${database.host}_mariadb" />
+			<param name="database.mariadb.schema" value="lportal" />
+			<param name="database.mariadb.url" value="jdbc:mariadb://${database.host}:3308/${database.mariadb.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false" />
+			<param name="database.type" value="mariadb" />
+			<param name="test.class" value="${test.class}" />
+		</antcall>
+	</target>
+</project>

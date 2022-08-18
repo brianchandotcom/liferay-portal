@@ -204,6 +204,7 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SegmentOverviewDistributionFilteredByNumber {
+
 		// AC Refactor: It is not possible to filter the segment distribution by an attribute of type number
 		// AC Refactor ticket: LRAC-9336
 
@@ -220,8 +221,8 @@ definition {
 			CustomFields.addCP(
 				customFieldName = "Age",
 				customFieldType = "Input Field",
-				resourceName = "User",
 				customInputDataType = "Integer",
+				resourceName = "User",
 				startingValue = "21");
 		}
 
@@ -248,10 +249,10 @@ definition {
 			User.gotoEditCP(userScreenName = "user1");
 
 			User.editUserInformation(
-				userCustomFieldLabel = "Age",
-				userCustomField = "50");
+				userCustomField = "50",
+				userCustomFieldLabel = "Age");
 		}
-			
+
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 

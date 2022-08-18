@@ -604,18 +604,17 @@ definition {
 		}
 
 		task ("Delete the Data Source") {
-			ACSettings.deleteDataSource(
-				dataSourceName = "${dataSource}");
+			ACSettings.deleteDataSource(dataSourceName = "${dataSource}");
 		}
 
 		task ("Exit Settings") {
 			ACNavigation.exitSettings();
 		}
 
-		task ("Assert the segment doesn't display under the contact user") {
-			ACNavigation.goToIndividuals();
+		task ("Open the created segment and assert the user is not present") {
+			ACNavigation.goToSegments();
 
-			ACNavigation.switchTab(tabName = "Known Individuals");
+			ACSegments.accessSegment(segmentName = "New Segment Test");
 
 			ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.");
 		}

@@ -38,10 +38,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8849 | Test Summary: Add a CSV data source with an individual whose email matches another individual that already has activities and check that the indiviual details are updated"
+	@ignore = "true"
 	@priority = "5"
 	test AddCSVWithIndividualWhoseEmailMatchesAnotherIndividualAlreadyHasActivitiesCheckIndividualDetailsUpdated {
 		property portal.upstream = "quarantine";
 
+		// CSV data source tests are no longer possible to run due to this ticket LRAC-11651
 		// AC Quarantine reason: CSV data source takes too long to update individual details
 		// AC Quarantine: Maybe it is possible to validate in personas
 
@@ -121,8 +123,12 @@ definition {
 	}
 
 	@description = "Bug: LRAC-11436 | Automation ID: LRAC-11501 | Test Summary: Create a CSV data source"
+	@ignore = "true"
 	@priority = "5"
 	test CreateCSVDataSource {
+
+		// CSV data source tests are no longer possible to run due to this ticket LRAC-11651
+
 		task ("Launch AC and go to settings") {
 			ACUtils.launchAC();
 

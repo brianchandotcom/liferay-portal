@@ -27,8 +27,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8155 | Test Summary: Delete a CSV data source and assert that the details from that data source are removed"
+	@ignore = "true"
 	@priority = "5"
 	test DeleteCSVDataSourceAndAssertDetailsFromDataSourceRemoved {
+
+		// CSV data source tests are no longer possible to run due to this ticket LRAC-11651
+
 		task ("Add a CSV Data Source") {
 			ACSettings.addCSVDataSource(
 				dataSourceName = "CSV Data Source",

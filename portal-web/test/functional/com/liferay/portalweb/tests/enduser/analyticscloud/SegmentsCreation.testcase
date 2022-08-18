@@ -398,12 +398,12 @@ definition {
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-            User.gotoEditCP(userScreenName = "user3");
+			User.gotoEditCP(userScreenName = "user3");
 
-            Select(
-                locator1 = "Select#SELECT_FIELD_LABEL",
-                selectFieldLabel = "User Custom Field",
-                value1 = "False");
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "User Custom Field",
+				value1 = "False");
 		}
 
 		task ("Sync the Contact Data") {
@@ -520,16 +520,15 @@ definition {
 
 		task ("Edit job title field of one of the users") {
 			ApplicationsMenu.gotoPortlet(
-            category = "Users",
-            panel = "Control Panel",
-            portlet = "Users and Organizations");
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
 
-            User.gotoEditCP(userScreenName = "user3");
+			User.gotoEditCP(userScreenName = "user3");
 
 			User.editUserJobTitleCP(
-				userName = "user3 user3",
-				userJobTitle = "Doctor"
-			);
+				userJobTitle = "Doctor",
+				userName = "user3 user3");
 		}
 
 		task ("Sync the Contact Data") {
@@ -990,8 +989,8 @@ definition {
 			CustomFields.addCP(
 				customFieldName = "Age",
 				customFieldType = "Input Field",
-				resourceName = "User",
 				customInputDataType = "Integer",
+				resourceName = "User",
 				startingValue = "21");
 		}
 
@@ -1013,15 +1012,15 @@ definition {
 		task ("Edit the users age") {
 			for (var userName : list "${userScreenNames}") {
 				ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+					category = "Users",
+					panel = "Control Panel",
+					portlet = "Users and Organizations");
 
 				User.gotoEditCP(userScreenName = "${userName}");
 
 				User.editUserInformation(
-					userCustomFieldLabel = "Age",
-					userCustomField = "50");
+					userCustomField = "50",
+					userCustomFieldLabel = "Age");
 			}
 		}
 
@@ -1045,7 +1044,6 @@ definition {
 
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
-
 
 		task ("Add a new dynamic segment") {
 			ACNavigation.goToSegments();

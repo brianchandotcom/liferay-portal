@@ -1,6 +1,9 @@
 definition {
 
 	macro addCSVDataSource {
+
+		// CSV data source tests are no longer possible to run due to this ticket LRAC-11651
+
 		var n = "1";
 
 		if (!(isSet(index))) {

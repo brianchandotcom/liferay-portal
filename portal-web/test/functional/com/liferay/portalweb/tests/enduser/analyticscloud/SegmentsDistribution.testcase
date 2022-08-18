@@ -148,6 +148,7 @@ definition {
 		// AC Refactor: Chart fails to appear when filtering with a number property.
 		// AC Refactor ticket: LRAC-9328
 		// AC Bug ticket: LRAC-9329
+
 		task ("Add a user custom field and sync the data") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -157,8 +158,8 @@ definition {
 			CustomFields.addCP(
 				customFieldName = "Age",
 				customFieldType = "Input Field",
-				resourceName = "User",
 				customInputDataType = "Integer",
+				resourceName = "User",
 				startingValue = "21");
 
 			ACDXPSettings.syncNewUserData(fieldNameList = "Age");
@@ -181,7 +182,6 @@ definition {
 
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
-
 
 		task ("Add a new static segment") {
 			ACNavigation.goToSegments();

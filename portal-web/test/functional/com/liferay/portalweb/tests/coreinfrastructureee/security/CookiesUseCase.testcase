@@ -17,6 +17,7 @@ definition {
 	@description = "This is a use case for LPS-142518. TC-1, TC-2 and TC-3: Verify that Cookie Banner is visible with the options configured by the site admin."
 	@priority = "5"
 	test CookieBannerAndCookieConsentPanelElementsAreVisible {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CookiesUseCase#CookieBannerAndCookieConsentPanelElementsAreVisible";
 
 		task ("Given: Cookie banner and Cookie Consent portlet are present") {
@@ -41,6 +42,7 @@ definition {
 	@description = "This is a use case for LRQA-75234. Verify that cookies are deleted when lifespan is over via simulated delete."
 	@priority = "5"
 	test CookieBannerBecameVisibleWhenCookiesAreRemovedOrExpired {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CookiesUseCase#CookieBannerBecameVisibleWhenCookiesAreRemovedOrExpired";
 
 		task ("Given: Cookie Banner is present on the Site.") {
@@ -64,6 +66,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CookiesLifetimeIsSixMonthsWhenTheyAreSaved {
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CookiesUseCase#CookiesLifetimeIsSixMonthsWhenTheyAreSaved";
 
 		task ("Given: Cookie Banner is present on the Site.") {
@@ -84,6 +87,7 @@ definition {
 	@description = "This is a use case for LPS-159221 TC-1. Verifying that Cookies are not saved until End-User sets them via Cookie Banner."
 	@priority = "5"
 	test VerifyingExplicitCookieWorfklow {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CookiesUseCase#VerifyingExplicitCookieWorfklow";
 
 		task ("Given: Cookie preference handling is saved with Explicit Consent mode enabled.") {
@@ -102,6 +106,7 @@ definition {
 	@description = "This is a use case for LPS-159221 TC-2. Verifying that Cookies are saved beforehand with true as value, and we didn't show the Cookie Banner."
 	@priority = "5"
 	test VerifyingImplicitCookieWorfklow {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CookiesUseCase#VerifyingImplicitCookieWorfklow";
 
 		task ("Given: Cookie preference handling is saved with Explicit Consent mode is disabled.") {

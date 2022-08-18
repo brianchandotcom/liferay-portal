@@ -17,6 +17,7 @@ definition {
 	@description = "This is a use case for LPS-142518. TC-5 When End-User accept selected cookies, only selected cookies are saved."
 	@priority = "5"
 	test CookiesConsentPanelAcceptsOnlySelectedCookies {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelAcceptsOnlySelectedCookies";
 
 		task ("Given: User opens the Cookie Consent portlet from the Cookie Banner via Configuration link") {
@@ -43,6 +44,7 @@ definition {
 	@description = "This is a use case for LPS-142518. TC-7 Verify that Cookie Consent Panel could be added to a Site Page."
 	@priority = "5"
 	test CookiesConsentPanelCouldBeAddedToASitePage {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelCouldBeAddedToASitePage";
 
 		task ("Given: User creates a site page and adds Cookie Consent Configuration widget to it.") {
@@ -59,6 +61,7 @@ definition {
 	@description = "This is a use case for LPS-152844. Combined AC-5, AC-6, AC-7. Verify that Cookie Consent pangel could be enabled and customized."
 	@priority = "5"
 	test CookiesConsentPanelCouldBeEnabledAndCustomized {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelCouldBeEnabledAndCustomized";
 
 		task ("Given: a site configured to show the Banner") {
@@ -81,6 +84,7 @@ definition {
 	@description = "This is a use case for LPS-152844. AC-8. Verify that Cookie Consent panel could be enabled and customized on a Site page."
 	@priority = "5"
 	test CookiesConsentPanelCouldBeEnabledAndCustomizedOnASitePage {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelCouldBeEnabledAndCustomizedOnASitePage";
 
 		task ("Given: a site configured to show the Banner") {
@@ -117,6 +121,7 @@ definition {
 	test CookiesConsentPanelCouldBeEnabledAndCustomizedViaOSGIFile {
 		property osgi.module.configuration.file.names = "com.liferay.cookies.configuration.CookiesBannerConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookiesConsentPanelCouldBeEnabledAndCustomizedViaOSGIFile";
 
 		task ("Given: a site configured to show the Consent Panel via OSGI file") {
@@ -163,6 +168,7 @@ definition {
 	@description = "This is a use case for LPS-142518. TC-6 Verify that Cookie Consent Panel could be used to save Cookie Preferences."
 	@priority = "5"
 	test CookiesConsentPanelCouldSaveCookieSettingsWhenItsOnASitePage {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelCouldSaveCookieSettingsWhenItsOnASitePage";
 
 		task ("Given: User creates a site page and adds Cookie Consent Configuration widget to it.") {
@@ -183,6 +189,7 @@ definition {
 	@description = "This is a use case for LPS-142518. TC-4 Verify that Decline All could be set and cookies are stored with declined values."
 	@priority = "5"
 	test CookiesConsentPanelDeclineAllSelected {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentDeclineAllSelected";
 
 		task ("Given: Use opens the Cookie consent portlet in a popup") {

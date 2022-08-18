@@ -23,6 +23,8 @@ public class CommerceChannelAccountEntryRelConstants {
 
 	public static final int TYPE_DELIVERY_TERM = 0;
 
+	public static final int TYPE_DISCOUNT = 5;
+
 	public static final int TYPE_PAYMENT_TERM = 1;
 
 	public static final int TYPE_PRICE_LIST = 4;

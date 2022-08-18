@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.pricing.web.internal.constants;
 
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 
 /**
@@ -21,6 +22,9 @@ import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
  * @author Alessio Antonio Rendina
  */
 public class CommercePricingFDSNames {
+
+	public static final String ACCOUNT_ENTRY_DISCOUNTS =
+		AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN + "-accountEntryDiscounts";
 
 	public static final String ACCOUNT_ENTRY_PRICE_LISTS =
 		AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN + "-accountEntryPriceLists";

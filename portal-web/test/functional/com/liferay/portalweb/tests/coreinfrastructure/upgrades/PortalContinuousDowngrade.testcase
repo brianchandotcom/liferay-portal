@@ -50,14 +50,6 @@ definition {
 
 		Navigator.openURL();
 
-		// Workaround for LPS-160891
-
-		/*var releaseInfo = StringUtil.replace("${releaseBundleVersion}", ".u", " Update ");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "//*[contains(@class,'component-paragraph') and contains(@data-lfr-editable-id,'element-text')]",
-			value1 = "${releaseInfo}");*/
-
 		User.firstLoginPG();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");

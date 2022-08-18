@@ -226,6 +226,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_FIELD_LABEL</td>
+	<td>//label[normalize-space(text())='${selectFieldLabel}']//following-sibling::select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITES</td>
 	<td>//div[label[contains(.,'Sites')]]/select</td>
 	<td></td>

@@ -11,11 +11,12 @@
 
 import Button from '@clayui/button';
 import {useFormikContext} from 'formik';
+import {useMemo} from 'react';
 
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
-import useTotalBudget from '../../../../common/hooks/useTotalBudget';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
+import getTotalBudget from '../../../../common/utils/getTotalBudget';
 import ActivityPanel from '../../components/ActivityPanel';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
@@ -39,7 +40,9 @@ const Review = ({
 		values.r_accountToMDFRequests_accountEntryId
 	);
 
-	const totalBudget = useTotalBudget(values);
+	const totalBudget = useMemo(() => getTotalBudget(values.activities), [
+		values.activities,
+	]);
 
 	return (
 		<div className="d-flex flex-column">

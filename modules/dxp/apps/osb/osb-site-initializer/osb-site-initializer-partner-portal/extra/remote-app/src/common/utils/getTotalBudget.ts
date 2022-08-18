@@ -9,26 +9,21 @@
  * distribution rights of the Software.
  */
 
-import {useMemo} from 'react';
-
-import MDFRequest from '../interfaces/mdfRequest';
 import MDFRequestActivity from '../interfaces/mdfRequestActivity';
 
-export default function useTotalBudget(mdfRequest: MDFRequest) {
-	return useMemo(
-		() =>
-			mdfRequest.activities.reduce(
-				(previousValue: number, currentValue: MDFRequestActivity) => {
-					const sumBudgets = currentValue.budgets.reduce<number>(
-						(previousValue, currentValue) =>
-							previousValue + +currentValue.cost,
-						0
-					);
-
-					return previousValue + sumBudgets;
-				},
+export default function getTotalBudget(
+	mdfRequestActivities: MDFRequestActivity[]
+) {
+	return mdfRequestActivities.reduce(
+		(previousValue: number, currentValue: MDFRequestActivity) => {
+			const sumBudgets = currentValue.budgets.reduce<number>(
+				(previousValue, currentValue) =>
+					previousValue + +currentValue.cost,
 				0
-			),
-		[mdfRequest.activities]
+			);
+
+			return previousValue + sumBudgets;
+		},
+		0
 	);
 }

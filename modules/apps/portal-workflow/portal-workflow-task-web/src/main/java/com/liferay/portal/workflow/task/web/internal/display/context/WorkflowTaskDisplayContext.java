@@ -188,11 +188,8 @@ public class WorkflowTaskDisplayContext {
 
 		User user = _getUser(workflowLog.getUserId());
 
-		if (user.isMale()) {
-			return "x-assigned-the-task-to-himself";
-		}
-
-		return "x-assigned-the-task-to-herself";
+		return "x-assigned-the-task-to-" +
+			(user.isMale() ? "himself" : "herself");
 	}
 
 	public Object getAssignedTheTaskToMessageArguments(
@@ -286,12 +283,10 @@ public class WorkflowTaskDisplayContext {
 		).build();
 	}
 
-	public String getHeaderTitle(WorkflowTask workflowTask, Locale locale)
+	public String getHeaderTitle(WorkflowTask workflowTask)
 		throws PortalException {
 
-		String taskName = getTaskLabel(workflowTask, locale);
-
-		return taskName + ": " + getAssetTitle(workflowTask);
+		return getTaskLabel(workflowTask) + ": " + getAssetTitle(workflowTask);
 	}
 
 	public Date getLastActivityDate(WorkflowTask workflowTask)
@@ -473,12 +468,12 @@ public class WorkflowTaskDisplayContext {
 		return HtmlUtil.escape(_getActorName(workflowLog));
 	}
 
-	public String getTaskLabel(WorkflowTask workflowTask, Locale locale)
+	public String getTaskLabel(WorkflowTask workflowTask)
 		throws PortalException {
 
 		return HtmlUtil.escape(
 			WorkflowTaskManagerUtil.getWorkflowTaskLabel(
-				workflowTask.getWorkflowTaskId(), locale));
+				workflowTask.getWorkflowTaskId(), getTaskContentLocale()));
 	}
 
 	public String getTaskUpdateMessageArguments(WorkflowLog workflowLog) {

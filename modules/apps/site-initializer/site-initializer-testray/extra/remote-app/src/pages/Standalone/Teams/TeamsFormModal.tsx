@@ -27,8 +27,7 @@ import {
 	APIResponse,
 	TestrayComponent,
 	assignTeamsToComponents,
-	createTeam,
-	updateTeam,
+	testrayTeamRest,
 } from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
 
@@ -118,11 +117,11 @@ const TeamFormModal: React.FC<TeamProps> = ({
 		onSubmit(
 			{id: teamForm.id, name: teamForm.name, projectId},
 			{
-				create: createTeam,
-				update: updateTeam,
+				create: (...params) => testrayTeamRest.create(...params),
+				update: (...params) => testrayTeamRest.update(...params),
 			}
 		)
-			.then((response) => assignTeamsToComponents(response, state))
+			.then((response) => assignTeamsToComponents(response.id, state))
 			.then(onSave)
 			.catch(onError);
 	};

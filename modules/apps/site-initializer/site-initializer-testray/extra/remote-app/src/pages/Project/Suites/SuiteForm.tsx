@@ -30,9 +30,8 @@ import yupSchema, {yupResolver} from '../../../schema/yup';
 import {
 	TestrayCase,
 	TestraySuite,
-	createSuite,
 	createSuiteCaseBatch,
-	updateSuite,
+	testraySuiteRest,
 } from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
 import {CaseListView} from '../Cases';
@@ -86,8 +85,8 @@ const SuiteForm = () => {
 		onSubmit<TestraySuite>(
 			{...form, projectId},
 			{
-				create: createSuite,
-				update: updateSuite,
+				create: (...params) => testraySuiteRest.create(...params),
+				update: (...params) => testraySuiteRest.update(...params),
 			}
 		)
 			.then((response) => {

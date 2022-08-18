@@ -13,7 +13,6 @@
  */
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
@@ -32,8 +31,7 @@ import {
 	TestrayCaseType,
 	TestrayComponent,
 	TestrayProject,
-	createCase,
-	updateCase,
+	testrayCaseRest,
 } from '../../../services/rest';
 import {DescriptionType} from '../../../types';
 
@@ -63,15 +61,15 @@ const CaseForm = () => {
 	const {
 		mutateCase,
 		testrayCase,
-		testrayProject,
 	}: {
 		mutateCase: KeyedMutator<any>;
 		testrayCase: TestrayCase;
 		testrayProject: TestrayProject;
 	} = useOutletContext();
 
-	const {setTabs} = useHeader({
-		shouldUpdate: false,
+	useHeader({
+		timeout: 100,
+		useTabs: [],
 	});
 
 	const {data: testrayComponentsData} = useFetch<
@@ -84,14 +82,6 @@ const CaseForm = () => {
 
 	const testrayCaseTypes = testrayCaseTypesData?.items || [];
 	const testrayComponents = testrayComponentsData?.items || [];
-
-	useEffect(() => {
-		if (testrayProject) {
-			setTimeout(() => {
-				setTabs([]);
-			}, 10);
-		}
-	}, [setTabs, testrayProject]);
 
 	const {
 		form: {onClose, onError, onSave, onSubmit, onSuccess},
@@ -126,8 +116,8 @@ const CaseForm = () => {
 		onSubmit(
 			{...form, projectId},
 			{
-				create: createCase,
-				update: updateCase,
+				create: (...params) => testrayCaseRest.create(...params),
+				update: (...params) => testrayCaseRest.update(...params),
 			}
 		)
 			.then(mutateCase)

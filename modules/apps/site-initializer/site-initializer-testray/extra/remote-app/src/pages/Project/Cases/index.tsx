@@ -20,7 +20,7 @@ import {TableProps} from '../../../components/Table';
 import {FormModal} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';
-import {casesResource, getCasesTransformData} from '../../../services/rest';
+import {testrayCaseRest} from '../../../services/rest';
 import {Action} from '../../../types';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
@@ -54,7 +54,7 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 				filterFields: filters.case as any,
 				title: i18n.translate('cases'),
 			}}
-			resource={casesResource}
+			resource={testrayCaseRest.resource}
 			tableProps={{
 				actions,
 				columns: [
@@ -102,7 +102,9 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 				navigateTo: ({id}) => id?.toString(),
 				...tableProps,
 			}}
-			transformData={getCasesTransformData}
+			transformData={(response) =>
+				testrayCaseRest.transformDataFromList(response)
+			}
 			variables={variables}
 			{...listViewProps}
 		/>

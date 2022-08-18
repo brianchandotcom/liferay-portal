@@ -12,7 +12,6 @@
  * details.
  */
 
-import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
@@ -23,33 +22,27 @@ import {useHeader} from '../../hooks';
 import useFormActions from '../../hooks/useFormActions';
 import i18n from '../../i18n';
 import yupSchema, {yupResolver} from '../../schema/yup';
-import {
-	TestrayProject,
-	createProject,
-	updateProject,
-} from '../../services/rest';
+import {TestrayProject, testrayProjectRest} from '../../services/rest';
 
 type ProjectFormType = typeof yupSchema.project.__outputType;
+
+type OutletContext = {
+	mutateTestrayProject: KeyedMutator<TestrayProject>;
+	testrayProject?: TestrayProject;
+};
 
 const ProjectForm = () => {
 	const {
 		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
 
-	const projectOutlet = useOutletContext<{
-		mutateTestrayProject: KeyedMutator<TestrayProject>;
-		testrayProject?: TestrayProject;
-	}>();
+	const {mutateTestrayProject, testrayProject} =
+		useOutletContext<OutletContext>() || {};
 
-	const testrayProject = projectOutlet?.testrayProject;
-
-	const {setTabs} = useHeader();
-
-	useEffect(() => {
-		if (testrayProject) {
-			setTimeout(() => setTabs([]), 100);
-		}
-	}, [setTabs, testrayProject]);
+	useHeader({
+		timeout: 100,
+		useTabs: [],
+	});
 
 	const {
 		formState: {errors},
@@ -64,14 +57,14 @@ const ProjectForm = () => {
 		resolver: yupResolver(yupSchema.project),
 	});
 
-	const _onSubmit = (form: ProjectFormType) =>
-		onSubmit(form, {
-			create: createProject,
-			update: updateProject,
+	const _onSubmit = (project: ProjectFormType) =>
+		onSubmit(project, {
+			create: (...params) => testrayProjectRest.create(...params),
+			update: (...params) => testrayProjectRest.update(...params),
 		})
 			.then((response) => {
-				if (form.id) {
-					projectOutlet.mutateTestrayProject(response);
+				if (project.id) {
+					mutateTestrayProject(response);
 				}
 			})
 			.then(onSave)

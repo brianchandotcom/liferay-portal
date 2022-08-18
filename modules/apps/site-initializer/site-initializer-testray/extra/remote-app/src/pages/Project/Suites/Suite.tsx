@@ -24,8 +24,8 @@ import {
 	TestrayCase,
 	TestraySuite,
 	TestraySuiteCase,
-	casesResource,
 	suitesCasesResource,
+	testrayCaseRest,
 } from '../../../services/rest';
 import dayjs from '../../../util/date';
 import useSuiteCaseFilter, {getCaseParameters} from './useSuiteCaseFilter';
@@ -164,7 +164,9 @@ const Suite = () => {
 					forceRefetch={suiteCaseActions.formModal.forceRefetch}
 					managementToolbarProps={{visible: false}}
 					resource={
-						isSmartSuite ? casesResource : suitesCasesResource
+						isSmartSuite
+							? testrayCaseRest.resource
+							: suitesCasesResource
 					}
 					tableProps={{
 						actions: suiteCaseActions.actions,

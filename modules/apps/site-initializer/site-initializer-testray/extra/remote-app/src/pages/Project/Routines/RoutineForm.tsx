@@ -26,8 +26,7 @@ import yupSchema, {yupResolver} from '../../../schema/yup';
 import {
 	TestrayProject,
 	TestrayRoutine,
-	createRoutine,
-	updateRoutine,
+	testrayRoutineRest,
 } from '../../../services/rest';
 
 type RoutineFormType = typeof yupSchema.routine.__outputType;
@@ -69,8 +68,8 @@ const RoutineForm = () => {
 				projectId: testrayProject.id,
 			},
 			{
-				create: createRoutine,
-				update: updateRoutine,
+				create: (...params) => testrayRoutineRest.create(...params),
+				update: (...params) => testrayRoutineRest.update(...params),
 			}
 		)
 			.then(mutateTestrayRoutine)

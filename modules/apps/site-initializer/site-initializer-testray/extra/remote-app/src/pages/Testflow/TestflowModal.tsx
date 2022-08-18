@@ -24,8 +24,8 @@ import i18n from '../../i18n';
 import {
 	buildsResource,
 	getBuildsTransformData,
-	getProjectsTransformData,
-	getRoutinesTransformData,
+	testrayProjectRest,
+	testrayRoutineRest,
 } from '../../services/rest';
 
 type TestflowModalProps = {
@@ -62,14 +62,18 @@ const TestflowForm = () => {
 				label="Project"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
 				resource="/projects"
-				transformData={getProjectsTransformData}
+				transformData={(...params) =>
+					testrayProjectRest.transformDataFromList(...params)
+				}
 			/>
 
 			<Form.AutoComplete
 				label="Routine"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
 				resource="/routines"
-				transformData={getRoutinesTransformData}
+				transformData={(...params) =>
+					testrayRoutineRest.transformDataFromList(...params)
+				}
 			/>
 
 			<Form.AutoComplete

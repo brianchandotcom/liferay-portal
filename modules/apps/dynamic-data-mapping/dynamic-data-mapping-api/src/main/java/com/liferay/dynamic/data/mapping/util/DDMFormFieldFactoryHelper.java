@@ -38,8 +38,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Marcellus Tavares
@@ -73,12 +71,7 @@ public class DDMFormFieldFactoryHelper {
 
 			if (value instanceof String[]) {
 				ddmFormField.setProperty(
-					entry.getKey(),
-					Stream.of(
-						(String[])value
-					).map(
-						this::getValue
-					).toArray());
+					entry.getKey(), _getValues((String[])value));
 			}
 			else {
 				ddmFormField.setProperty(entry.getKey(), getValue(value));
@@ -290,12 +283,16 @@ public class DDMFormFieldFactoryHelper {
 	}
 
 	protected Map<String, String[]> getDDMFormFieldProperties() {
-		return Stream.of(
-			_ddmFormField.ddmFormFieldProperties()
-		).collect(
-			Collectors.toMap(
-				DDMFormFieldProperty::name, DDMFormFieldProperty::value)
-		);
+		Map<String, String[]> ddmFormFieldProperties = new HashMap<>();
+
+		for (DDMFormFieldProperty ddmFormFieldProperty :
+				_ddmFormField.ddmFormFieldProperties()) {
+
+			ddmFormFieldProperties.put(
+				ddmFormFieldProperty.name(), ddmFormFieldProperty.value());
+		}
+
+		return ddmFormFieldProperties;
 	}
 
 	protected LocalizedValue getDDMFormFieldTip() {
@@ -505,6 +502,16 @@ public class DDMFormFieldFactoryHelper {
 		}
 
 		return returnType;
+	}
+
+	private Object[] _getValues(String[] values) {
+		Object[] objects = new Object[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			objects[i] = getValue(values[i]);
+		}
+
+		return objects;
 	}
 
 	private Set<Locale> _availableLocales;

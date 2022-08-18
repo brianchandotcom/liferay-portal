@@ -1306,11 +1306,14 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getResult() {
 		if ((_result == null) && (getBuildURL() != null)) {
-			JSONObject resultJSONObject = getBuildJSONObject("result");
+			JSONObject buildJSONObject = getBuildJSONObject("duration,result");
 
-			String result = resultJSONObject.optString("result");
+			long duration = buildJSONObject.optLong("duration");
+			String result = buildJSONObject.optString("result");
 
-			if (result.equals("")) {
+			if ((duration == 0) ||
+				JenkinsResultsParserUtil.isNullOrEmpty(result)) {
+
 				result = null;
 			}
 

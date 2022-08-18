@@ -49,21 +49,33 @@ definition {
 	test CanCreateCommentWithValueInternalIdPreviouslyCreated {
 		property portal.acceptance = "true";
 
-		task ("When with POST request I create a comment with a custom external reference code") {
+		task ("And Given with POST request I create a comment with a custom external reference code") {
 			var blogPostingId = BlogPostingAPI.getBlogPostingsIdList();
 
-			CommentAPI.createCommentInBlogPosting(
+			var response = CommentAPI.createCommentInBlogPosting(
 				blogPostingId = "${blogPostingId}",
 				commentText = "CommentOne",
 				externalReferenceCode = "ercComment");
 		}
 
-		task ("with POST request I create a comment with a custom external reference code with a value of the internal id of the previously created comment") {
-			var response = CommentAPI.createCommentInBlogPosting(
+		task ("When with POST request I create a comment with a custom external reference code with a value of the internal id of the previously created comment") {
+			var idComment = JSONUtil.getWithJSONPath("${response}", "$.id");
+			
+			var response2 = CommentAPI.createCommentInBlogPosting(
 				blogPostingId = "${blogPostingId}",
 				commentText = "CommentTwo",
-				externalReferenceCode = "ercComment2",
+				externalReferenceCode = "${idComment}",
 				idComment = "1");
+		}
+
+		task ("Then another comment with the same external reference code is being created") {
+			var commentsTotalCount = CommentAPI.getFieldValueOfBlogPostingComments(
+				blogPostingId = "${blogPostingId}",
+				fieldName = "totalCount");
+
+			TestUtils.assertEquals(
+				actual = "${commentsTotalCount}",
+				expected = "2");
 		}
 
 		task ("And Then can see the custom external reference code in the body response") {
@@ -73,7 +85,7 @@ definition {
 
 			TestUtils.assertEquals(
 				actual = "${externalReferenceCodes}",
-				expected = "ercComment,ercComment2");
+				expected = "ercComment,${idComment}");
 		}
 	}
 

@@ -20,7 +20,6 @@
 page import="com.liferay.frontend.taglib.internal.display.context.FormNavigatorStepsDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.util.PortalIncludeUtil" %>
 

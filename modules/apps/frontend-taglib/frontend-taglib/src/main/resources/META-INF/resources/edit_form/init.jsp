@@ -18,7 +18,6 @@
 
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.taglib.util.InlineUtil" %>
 
 <%

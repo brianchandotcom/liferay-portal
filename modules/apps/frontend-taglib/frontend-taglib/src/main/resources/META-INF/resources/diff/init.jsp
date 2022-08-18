@@ -17,5 +17,4 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.diff.Diff" %><%@
-page import="com.liferay.diff.DiffResult" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %>
+page import="com.liferay.diff.DiffResult" %>

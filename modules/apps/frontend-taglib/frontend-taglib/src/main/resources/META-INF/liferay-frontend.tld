@@ -1514,6 +1514,36 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>sidebar-toggler-button</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.SidebarTogglerButtonTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>icon</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sidenavId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>typeMobile</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Loads a CSS resource using the AMD loader.</description>
 		<name>stylesheet</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.StylesheetTag</tag-class>

@@ -28,6 +28,47 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153367. The page creator could configure the content page template in a new tab."
+	@priority = "4"
+	test ConfigureContentPageTemplateInANewTab {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("Given a page creator has a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+		}
+
+		task ("When the page creator accesses to the page editor of content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("Then the page creator could configure content page template in a new tab") {
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertElementPresent(
+				key_title = "General",
+				locator1 = "Header#H2_TITLE");
+
+			AssertElementPresent(
+				key_sectionTitle = "Categorization",
+				locator1 = "PagesAdmin#SECTION_TITLE");
+		}
+	}
+
 	@description = "This is a test for LPS-132422 and LPS-154130. The list of actions appear in right order for page templates. The portlet is named Page Templates on a local site."
 	@priority = "3"
 	test ViewOrderOfPageTemplatesActions {

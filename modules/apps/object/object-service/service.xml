@@ -505,6 +505,11 @@
 			<finder-column name="objectDefinitionId2" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="ODI1_DT_R" return-type="Collection">
+			<finder-column name="objectDefinitionId1" />
+			<finder-column name="deletionType" />
+			<finder-column name="reverse" />
+		</finder>
 		<finder name="ODI1_ODI2_N_T" return-type="Collection">
 			<finder-column name="objectDefinitionId1" />
 			<finder-column name="objectDefinitionId2" />

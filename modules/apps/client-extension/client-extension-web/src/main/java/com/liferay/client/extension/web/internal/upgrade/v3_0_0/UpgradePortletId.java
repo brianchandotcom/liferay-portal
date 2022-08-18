@@ -79,18 +79,18 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 
 		try (Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
-				"select externalReferenceCode, clientExtensionEntryId from " +
+				"select clientExtensionEntryId, companyId from " +
 					"ClientExtensionEntry")) {
 
 			while (resultSet.next()) {
-				String externalReferenceCode = resultSet.getString(
-					"externalReferenceCode");
 				long clientExtensionEntryId = resultSet.getLong(
 					"clientExtensionEntryId");
+				long companyId = resultSet.getLong(
+					"companyId");
 
 				portletIds.add(
 					new String[] {
-						portletIdPrefix + externalReferenceCode,
+						portletIdPrefix + companyId,
 						portletIdPrefix + clientExtensionEntryId
 					});
 			}

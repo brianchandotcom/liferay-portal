@@ -14,22 +14,6 @@
 			</then>
 		</if>
 
-		<if>
-			<equals arg1="${database.version}" arg2="10.2" />
-
-			<then>
-				<var name="database.version" value="10.2.25" />
-			</then>
-
-			<elseif>
-				<equals arg1="${database.version}" arg2="10.4" />
-
-				<then>
-					<var name="database.version" value="10.4.14" />
-				</then>
-			</elseif>
-		</if>
-
 		<get-database-property property.name="database.host" />
 
 		<antcall inheritAll="false" target="start-docker-database-mariadb">

@@ -102,6 +102,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanViewPrioritiesOfImportedArticles {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
 			kbZipFile = "KBArticlesWithMarkdown.zip");

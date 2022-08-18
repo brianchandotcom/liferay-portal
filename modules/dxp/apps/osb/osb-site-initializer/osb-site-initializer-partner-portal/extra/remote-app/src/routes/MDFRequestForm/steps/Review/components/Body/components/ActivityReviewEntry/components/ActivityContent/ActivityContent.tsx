@@ -11,8 +11,8 @@
 
 import React from 'react';
 
+import getBooleanValue from '../../../../../../../../../../common/hooks/getBooleanValue';
 import MDFRequestActivity from '../../../../../../../../../../common/interfaces/mdfRequestActivity';
-import getBooleanValue from '../../../../../../utils/getBooleanValue';
 import Table from '../../../../../Table';
 
 interface IProps {

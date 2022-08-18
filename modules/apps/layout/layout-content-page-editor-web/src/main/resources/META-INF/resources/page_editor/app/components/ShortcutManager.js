@@ -28,7 +28,6 @@ import {
 import {MOVE_ITEM_DIRECTIONS} from '../config/constants/moveItemDirections';
 import {useActiveItemId, useSelectItem} from '../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
-import {useWidgets} from '../contexts/WidgetsContext';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
@@ -75,7 +74,7 @@ export default function ShortcutManager() {
 	const selectItem = useSelectItem();
 	const state = useSelector((state) => state);
 	const sidebarHidden = state.sidebar.hidden;
-	const widgets = useWidgets();
+	const {widgets} = state;
 
 	const {fragmentEntryLinks, layoutData, segmentsExperienceId} = state;
 

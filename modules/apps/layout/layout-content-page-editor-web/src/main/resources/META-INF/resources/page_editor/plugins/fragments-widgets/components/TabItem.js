@@ -22,12 +22,12 @@ import React from 'react';
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
-import {useToggleWidgetHighlighted} from '../../../app/contexts/WidgetsContext';
 import selectSegmentsExperienceId from '../../../app/selectors/selectSegmentsExperienceId';
 import addFragment from '../../../app/thunks/addFragment';
 import addItem from '../../../app/thunks/addItem';
 import addWidget from '../../../app/thunks/addWidget';
 import toggleFragmentHighlighted from '../../../app/thunks/toggleFragmentHighlighted';
+import toggleWidgetHighlighted from '../../../app/thunks/toggleWidgetHighlighted';
 import {useDragSymbol} from '../../../app/utils/drag-and-drop/useDragAndDrop';
 
 const ITEM_PROPTYPES_SHAPE = PropTypes.shape({
@@ -43,13 +43,14 @@ export default function TabItem({displayStyle, item}) {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-	const toggleWidgetHighlighted = useToggleWidgetHighlighted();
-
 	const onToggleHighlighted = () => {
-		const nextValue = Boolean(!item.highlighted);
-
 		if (item.data.portletId) {
-			toggleWidgetHighlighted(item.data.portletId, nextValue);
+			dispatch(
+				toggleWidgetHighlighted({
+					highlighted: !item.highlighted,
+					portletId: item.data.portletId,
+				})
+			);
 		}
 		else {
 			dispatch(

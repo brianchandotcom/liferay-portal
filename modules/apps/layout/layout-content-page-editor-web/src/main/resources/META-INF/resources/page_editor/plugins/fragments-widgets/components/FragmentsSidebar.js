@@ -19,7 +19,6 @@ import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsD
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {config} from '../../../app/config/index';
 import {useSelector} from '../../../app/contexts/StoreContext';
-import {useWidgets} from '../../../app/contexts/WidgetsContext';
 import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import {useSessionState} from '../../../core/hooks/useSessionState';
@@ -125,7 +124,7 @@ const normalizeFragmentEntry = (fragmentEntry) => ({
 
 export default function FragmentsSidebar() {
 	const fragments = useSelector((state) => state.fragments);
-	const widgets = useWidgets();
+	const widgets = useSelector((state) => state.widgets);
 
 	const [
 		activeTabId,

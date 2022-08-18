@@ -28,6 +28,7 @@ import selectedViewportSizeReducer from './selectedViewportSizeReducer';
 import showResolvedCommentsReducer from './showResolvedCommentsReducer';
 import sidebarReducer from './sidebarReducer';
 import undoReducer from './undoReducer';
+import widgetsReducer from './widgetsReducer';
 
 const combinedReducer = (state, action) =>
 	Object.entries({
@@ -45,6 +46,7 @@ const combinedReducer = (state, action) =>
 		selectedViewportSize: selectedViewportSizeReducer,
 		showResolvedComments: showResolvedCommentsReducer,
 		sidebar: sidebarReducer,
+		widgets: widgetsReducer,
 	}).reduce(
 		(nextState, [namespace, reducer]) => ({
 			...nextState,

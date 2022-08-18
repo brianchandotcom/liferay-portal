@@ -28,7 +28,6 @@ import {
 	useDispatch,
 	useSelector,
 } from '../../../../../app/contexts/StoreContext';
-import {useWidgets} from '../../../../../app/contexts/WidgetsContext';
 import deleteItem from '../../../../../app/thunks/deleteItem';
 import duplicateItem from '../../../../../app/thunks/duplicateItem';
 import canBeDuplicated from '../../../../../app/utils/canBeDuplicated';
@@ -106,7 +105,7 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.itemId);
 	const selectItem = useSelectItem();
-	const widgets = useWidgets();
+	const widgets = useSelector((state) => state.widgets);
 
 	const {
 		fragmentEntryLinks,

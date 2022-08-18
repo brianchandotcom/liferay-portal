@@ -48,7 +48,9 @@ import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRelTable;
 import com.liferay.commerce.product.model.CommerceChannelRelTable;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -579,51 +581,38 @@ public class CommerceDiscountLocalServiceImpl
 			CommerceDiscount commerceDiscount)
 		throws PortalException {
 
-		// Commerce discount usage entries
-
 		_commerceDiscountUsageEntryLocalService.
 			deleteCommerceUsageEntryByDiscountId(
 				commerceDiscount.getCommerceDiscountId());
 
-		// Commerce discount rels
-
 		_commerceDiscountRelLocalService.deleteCommerceDiscountRels(
 			commerceDiscount.getCommerceDiscountId());
 
-		// Commerce discount rules
-
 		_commerceDiscountRuleLocalService.deleteCommerceDiscountRules(
 			commerceDiscount.getCommerceDiscountId());
-
-		// Commerce discount account groups rels
 
 		_commerceDiscountCommerceAccountGroupRelLocalService.
 			deleteCommerceDiscountCommerceAccountGroupRelsByCommerceDiscountId(
 				commerceDiscount.getCommerceDiscountId());
 
-		// Commerce discount order type rels
-
 		_commerceDiscountOrderTypeRelLocalService.
 			deleteCommerceDiscountOrderTypeRels(
 				commerceDiscount.getCommerceDiscountId());
 
-		// Commerce discount
-
 		commerceDiscountPersistence.remove(commerceDiscount);
 
-		// Resources
+		_commerceChannelAccountEntryRelLocalService.
+			deleteCommerceChannelAccountEntryRels(
+				CommerceDiscount.class.getName(),
+				commerceDiscount.getCommerceDiscountId());
 
 		_resourceLocalService.deleteResource(
 			commerceDiscount.getCompanyId(), CommerceDiscount.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			commerceDiscount.getCommerceDiscountId());
 
-		// Expando
-
 		_expandoRowLocalService.deleteRows(
 			commerceDiscount.getCommerceDiscountId());
-
-		// Workflow
 
 		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			commerceDiscount.getCompanyId(), 0L,
@@ -682,6 +671,27 @@ public class CommerceDiscountLocalServiceImpl
 
 		return commerceDiscountPersistence.fetchByC_ERC(
 			companyId, externalReferenceCode);
+	}
+
+	@Override
+	public CommerceDiscount fetchDefaultCommerceDiscount(
+		long commerceChannelAccountEntryRelId, long cpDefinitionId,
+		long cpInstanceId) {
+
+		List<CommerceDiscount> commerceDiscounts = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceDiscountTable.INSTANCE),
+				commerceChannelAccountEntryRelId, cpDefinitionId, cpInstanceId
+			).limit(
+				0, 1
+			));
+
+		if (commerceDiscounts.isEmpty()) {
+			return null;
+		}
+
+		return commerceDiscounts.get(0);
 	}
 
 	@Override
@@ -963,6 +973,14 @@ public class CommerceDiscountLocalServiceImpl
 		long companyId, String couponCode) {
 
 		return commerceDiscountPersistence.findByC_C(companyId, couponCode);
+	}
+
+	@Override
+	public List<CommerceDiscount> getCommerceDiscounts(
+		long companyId, String level, boolean active, int status) {
+
+		return commerceDiscountPersistence.findByC_L_A_S(
+			companyId, level, active, status);
 	}
 
 	/**
@@ -1694,6 +1712,34 @@ public class CommerceDiscountLocalServiceImpl
 	}
 
 	private GroupByStep _getGroupByStep(
+		FromStep fromStep, long commerceChannelAccountEntryRelId,
+		long cpDefinitionId, long cpInstanceId) {
+
+		JoinStep joinStep = fromStep.from(
+			CommerceDiscountTable.INSTANCE
+		).innerJoinON(
+			CommerceChannelAccountEntryRelTable.INSTANCE,
+			CommerceChannelAccountEntryRelTable.INSTANCE.classPK.eq(
+				CommerceDiscountTable.INSTANCE.commerceDiscountId)
+		).innerJoinON(
+			CommerceDiscountRelTable.INSTANCE,
+			CommerceDiscountRelTable.INSTANCE.commerceDiscountId.eq(
+				CommerceDiscountTable.INSTANCE.commerceDiscountId)
+		);
+
+		Predicate predicate =
+			CommerceChannelAccountEntryRelTable.INSTANCE.
+				commerceChannelAccountEntryRelId.eq(
+					commerceChannelAccountEntryRelId
+				).and(
+					CommerceDiscountTable.INSTANCE.active.eq(true)
+				);
+
+		return joinStep.where(
+			predicate.and(_toTargetPredicate(cpDefinitionId, cpInstanceId)));
+	}
+
+	private GroupByStep _getGroupByStep(
 		FromStep fromStep, Long companyId, Long commerceAccountId,
 		long[] commerceAccountGroupIds, Long commerceChannelId,
 		Long commerceOrderTypeId, Long cpDefinitionId, Long cpInstanceId,
@@ -1975,6 +2021,10 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CommerceChannelAccountEntryRelLocalService
+		_commerceChannelAccountEntryRelLocalService;
 
 	@Reference
 	private CommerceDiscountCommerceAccountGroupRelLocalService

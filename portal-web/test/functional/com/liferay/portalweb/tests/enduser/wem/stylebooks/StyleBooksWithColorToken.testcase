@@ -212,17 +212,22 @@ definition {
 				locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_COLLAPSED");
 		}
 
-		task ("Change the Brand Color 1 to an invalid color token") {
+		task ("Change the Brand Color 2 to an invalid color token") {
 			Type(
 				key_text = "Brand Color 1",
 				locator1 = "TextInput#ANY",
-				value1 = "aaa");
+				value1 = "Brand Color 2");
+
+			Type(
+				key_text = "Brand Color 2",
+				locator1 = "TextInput#ANY",
+				value1 = "Brand Color 1");
 
 			StyleBooks.clickManagementBar();
 
 			AssertVisible(
-				key_alertMessage = "This token does not exist.",
-				key_fieldLabel = "Brand Color 1",
+				key_alertMessage = "Tokens cannot be mutually referenced.",
+				key_fieldLabel = "Brand Color 2",
 				locator1 = "TextInput#ALERT_MESSAGE");
 		}
 
@@ -236,8 +241,8 @@ definition {
 				styleBookName = "Test Style Book Name");
 
 			InputField.viewText(
-				fieldLabel = "Brand Color 1",
-				text = "#0B5FFF");
+				fieldLabel = "Brand Color 2",
+				text = "#6B6C7E");
 		}
 	}
 

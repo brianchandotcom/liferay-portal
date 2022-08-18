@@ -36,6 +36,7 @@ import com.liferay.commerce.price.list.model.CommercePriceListTable;
 import com.liferay.commerce.price.list.service.base.CommercePriceListLocalServiceBaseImpl;
 import com.liferay.commerce.pricing.exception.CommerceUndefinedBasePriceListException;
 import com.liferay.commerce.pricing.service.CommercePriceModifierLocalService;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -435,62 +436,45 @@ public class CommercePriceListLocalServiceImpl
 			CommercePriceList commercePriceList)
 		throws PortalException {
 
-		// Commerce price entries
-
 		commercePriceEntryLocalService.deleteCommercePriceEntries(
 			commercePriceList.getCommercePriceListId());
-
-		// Commerce price list account rels
 
 		commercePriceListAccountRelLocalService.
 			deleteCommercePriceListAccountRels(
 				commercePriceList.getCommercePriceListId());
 
-		// Commerce price list channel rels
-
 		commercePriceListChannelRelLocalService.
 			deleteCommercePriceListChannelRels(
 				commercePriceList.getCommercePriceListId());
-
-		// Commerce price list commerce account group rels
 
 		commercePriceListCommerceAccountGroupRelLocalService.
 			deleteCommercePriceListCommerceAccountGroupRels(
 				commercePriceList.getCommercePriceListId());
 
-		// Commerce price list commerce discount rels
-
 		commercePriceListDiscountRelLocalService.
 			deleteCommercePriceListDiscountRels(
 				commercePriceList.getCommercePriceListId());
-
-		// Commerce price list commerce order type rels
 
 		commercePriceListOrderTypeRelLocalService.
 			deleteCommercePriceListOrderTypeRels(
 				commercePriceList.getCommercePriceListId());
 
-		// Commerce price list commerce price modifier
-
 		_commercePriceModifierLocalService.
 			deleteCommercePriceModifiersByCommercePriceListId(
 				commercePriceList.getCommercePriceListId());
 
-		// Resources
-
 		resourceLocalService.deleteResource(
 			commercePriceList, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		// Commerce price list
-
 		commercePriceListPersistence.remove(commercePriceList);
 
-		// Expando
+		_commerceChannelAccountEntryRelLocalService.
+			deleteCommerceChannelAccountEntryRels(
+				CommercePriceList.class.getName(),
+				commercePriceList.getCommercePriceListId());
 
 		_expandoRowLocalService.deleteRows(
 			commercePriceList.getCommercePriceListId());
-
-		// Workflow
 
 		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			commercePriceList.getCompanyId(), commercePriceList.getGroupId(),
@@ -618,23 +602,21 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceList;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList
 		getCommercePriceListByAccountAndChannelAndOrderTypeId(
 			long groupId, long commerceAccountId, long commerceChannelId,
 			long commerceOrderTypeId, String type) {
 
-		List<CommercePriceList> commercePriceLists = dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListTable.INSTANCE),
-				groupId, commerceAccountId, null, commerceChannelId,
-				commerceOrderTypeId, type
-			).orderBy(
-				CommercePriceListTable.INSTANCE.priority.descending()
-			).limit(
-				0, 1
-			));
+		List<CommercePriceList> commercePriceLists =
+			commercePriceListLocalService.
+				getCommercePriceListsByAccountAndChannelAndOrderTypeId(
+					groupId, commerceAccountId, commerceChannelId,
+					commerceOrderTypeId, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -643,21 +625,19 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceLists.get(0);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByAccountAndChannelId(
 		long groupId, long commerceAccountId, long commerceChannelId,
 		String type) {
 
-		List<CommercePriceList> commercePriceLists = dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListTable.INSTANCE),
-				groupId, commerceAccountId, null, commerceChannelId, null, type
-			).orderBy(
-				CommercePriceListTable.INSTANCE.priority.descending()
-			).limit(
-				0, 1
-			));
+		List<CommercePriceList> commercePriceLists =
+			commercePriceListLocalService.
+				getCommercePriceListsByAccountAndChannelId(
+					groupId, commerceAccountId, commerceChannelId, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -666,22 +646,19 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceLists.get(0);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByAccountAndOrderTypeId(
 		long groupId, long commerceAccountId, long commerceOrderTypeId,
 		String type) {
 
-		List<CommercePriceList> commercePriceLists = dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListTable.INSTANCE),
-				groupId, commerceAccountId, null, null, commerceOrderTypeId,
-				type
-			).orderBy(
-				CommercePriceListTable.INSTANCE.priority.descending()
-			).limit(
-				0, 1
-			));
+		List<CommercePriceList> commercePriceLists =
+			commercePriceListLocalService.
+				getCommercePriceListsByAccountAndOrderTypeId(
+					groupId, commerceAccountId, commerceOrderTypeId, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -690,44 +667,18 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceLists.get(0);
 	}
 
-	@Override
-	public CommercePriceList getCommercePriceListByAccountGroupAndOrderTypeId(
-		long groupId, long[] commerceAccountGroupIds, long commerceOrderTypeId,
-		String type) {
-
-		List<CommercePriceList> commercePriceLists = dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListTable.INSTANCE),
-				groupId, null, commerceAccountGroupIds, null,
-				commerceOrderTypeId, type
-			).orderBy(
-				CommercePriceListTable.INSTANCE.priority.descending()
-			).limit(
-				0, 1
-			));
-
-		if (commercePriceLists.isEmpty()) {
-			return null;
-		}
-
-		return commercePriceLists.get(0);
-	}
-
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByAccountGroupIds(
 		long groupId, long[] commerceAccountGroupIds, String type) {
 
-		List<CommercePriceList> commercePriceLists = dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListTable.INSTANCE),
-				groupId, null, commerceAccountGroupIds, null, null, type
-			).orderBy(
-				CommercePriceListTable.INSTANCE.priority.descending()
-			).limit(
-				0, 1
-			));
+		List<CommercePriceList> commercePriceLists =
+			commercePriceListLocalService.
+				getCommercePriceListsByAccountGroupIds(
+					groupId, commerceAccountGroupIds, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -736,23 +687,21 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceLists.get(0);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList
 		getCommercePriceListByAccountGroupsAndChannelAndOrderTypeId(
 			long groupId, long[] commerceAccountGroupIds,
 			long commerceChannelId, long commerceOrderTypeId, String type) {
 
-		List<CommercePriceList> commercePriceLists = dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListTable.INSTANCE),
-				groupId, null, commerceAccountGroupIds, commerceChannelId,
-				commerceOrderTypeId, type
-			).orderBy(
-				CommercePriceListTable.INSTANCE.priority.descending()
-			).limit(
-				0, 1
-			));
+		List<CommercePriceList> commercePriceLists =
+			commercePriceListLocalService.
+				getCommercePriceListsByAccountGroupsAndChannelAndOrderTypeId(
+					groupId, commerceAccountGroupIds, commerceChannelId,
+					commerceOrderTypeId, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -761,22 +710,19 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceLists.get(0);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByAccountGroupsAndChannelId(
 		long groupId, long[] commerceAccountGroupIds, long commerceChannelId,
 		String type) {
 
-		List<CommercePriceList> commercePriceLists = dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListTable.INSTANCE),
-				groupId, null, commerceAccountGroupIds, commerceChannelId, null,
-				type
-			).orderBy(
-				CommercePriceListTable.INSTANCE.priority.descending()
-			).limit(
-				0, 1
-			));
+		List<CommercePriceList> commercePriceLists =
+			commercePriceListLocalService.
+				getCommercePriceListsByAccountGroupsAndChannelId(
+					groupId, commerceAccountGroupIds, commerceChannelId, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -785,22 +731,20 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceLists.get(0);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByAccountGroupsAndOrderTypeId(
 		long groupId, long[] commerceAccountGroupIds, long commerceOrderTypeId,
 		String type) {
 
-		List<CommercePriceList> commercePriceLists = dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListTable.INSTANCE),
-				groupId, null, commerceAccountGroupIds, null,
-				commerceOrderTypeId, type
-			).orderBy(
-				CommercePriceListTable.INSTANCE.priority.descending()
-			).limit(
-				0, 1
-			));
+		List<CommercePriceList> commercePriceLists =
+			commercePriceListLocalService.
+				getCommercePriceListsByAccountGroupsAndOrderTypeId(
+					groupId, commerceAccountGroupIds, commerceOrderTypeId,
+					type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -809,20 +753,17 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceLists.get(0);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByAccountId(
 		long groupId, long commerceAccountId, String type) {
 
-		List<CommercePriceList> commercePriceLists = dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListTable.INSTANCE),
-				groupId, commerceAccountId, null, null, null, type
-			).orderBy(
-				CommercePriceListTable.INSTANCE.priority.descending()
-			).limit(
-				0, 1
-			));
+		List<CommercePriceList> commercePriceLists =
+			commercePriceListLocalService.getCommercePriceListsByAccountId(
+				groupId, commerceAccountId, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -831,22 +772,19 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceLists.get(0);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByChannelAndOrderTypeId(
 		long groupId, long commerceChannelId, long commerceOrderTypeId,
 		String type) {
 
-		List<CommercePriceList> commercePriceLists = dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListTable.INSTANCE),
-				groupId, null, null, commerceChannelId, commerceOrderTypeId,
-				type
-			).orderBy(
-				CommercePriceListTable.INSTANCE.priority.descending()
-			).limit(
-				0, 1
-			));
+		List<CommercePriceList> commercePriceLists =
+			commercePriceListLocalService.
+				getCommercePriceListsByChannelAndOrderTypeId(
+					groupId, commerceChannelId, commerceOrderTypeId, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -855,20 +793,17 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceLists.get(0);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByChannelId(
 		long groupId, long commerceChannelId, String type) {
 
-		List<CommercePriceList> commercePriceLists = dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListTable.INSTANCE),
-				groupId, null, null, commerceChannelId, null, type
-			).orderBy(
-				CommercePriceListTable.INSTANCE.priority.descending()
-			).limit(
-				0, 1
-			));
+		List<CommercePriceList> commercePriceLists =
+			commercePriceListLocalService.getCommercePriceListsByChannelId(
+				groupId, commerceChannelId, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -906,20 +841,17 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceEntry.getCommercePriceList();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByOrderTypeId(
 		long groupId, long commerceOrderTypeId, String type) {
 
-		List<CommercePriceList> commercePriceLists = dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListTable.INSTANCE),
-				groupId, null, null, null, commerceOrderTypeId, type
-			).orderBy(
-				CommercePriceListTable.INSTANCE.priority.descending()
-			).limit(
-				0, 1
-			));
+		List<CommercePriceList> commercePriceLists =
+			commercePriceListLocalService.getCommercePriceListsByOrderTypeId(
+				groupId, commerceOrderTypeId, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -928,21 +860,17 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceLists.get(0);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByUnqualified(
 		long groupId, String type) {
 
-		List<CommercePriceList> commercePriceLists = dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListTable.INSTANCE),
-				groupId, null, null, null, null, type
-			).orderBy(
-				CommercePriceListTable.INSTANCE.priority.descending(),
-				CommercePriceListTable.INSTANCE.catalogBasePriceList.ascending()
-			).limit(
-				0, 1
-			));
+		List<CommercePriceList> commercePriceLists =
+			commercePriceListLocalService.getCommercePriceListsByUnqualified(
+				groupId, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -980,6 +908,192 @@ public class CommercePriceListLocalServiceImpl
 
 		return commercePriceListPersistence.findByG_C_S(
 			groupIds, companyId, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommercePriceList>
+		getCommercePriceListsByAccountAndChannelAndOrderTypeId(
+			long groupId, long commerceAccountId, long commerceChannelId,
+			long commerceOrderTypeId, String type) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, commerceAccountId, null, commerceChannelId,
+				commerceOrderTypeId, type
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			));
+	}
+
+	@Override
+	public List<CommercePriceList> getCommercePriceListsByAccountAndChannelId(
+		long groupId, long commerceAccountId, long commerceChannelId,
+		String type) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, commerceAccountId, null, commerceChannelId, null, type
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			));
+	}
+
+	@Override
+	public List<CommercePriceList> getCommercePriceListsByAccountAndOrderTypeId(
+		long groupId, long commerceAccountId, long commerceOrderTypeId,
+		String type) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, commerceAccountId, null, null, commerceOrderTypeId,
+				type
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			));
+	}
+
+	@Override
+	public List<CommercePriceList> getCommercePriceListsByAccountGroupIds(
+		long groupId, long[] commerceAccountGroupIds, String type) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, null, commerceAccountGroupIds, null, null, type
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			));
+	}
+
+	@Override
+	public List<CommercePriceList>
+		getCommercePriceListsByAccountGroupsAndChannelAndOrderTypeId(
+			long groupId, long[] commerceAccountGroupIds,
+			long commerceChannelId, long commerceOrderTypeId, String type) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, null, commerceAccountGroupIds, commerceChannelId,
+				commerceOrderTypeId, type
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			));
+	}
+
+	@Override
+	public List<CommercePriceList>
+		getCommercePriceListsByAccountGroupsAndChannelId(
+			long groupId, long[] commerceAccountGroupIds,
+			long commerceChannelId, String type) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, null, commerceAccountGroupIds, commerceChannelId, null,
+				type
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			));
+	}
+
+	@Override
+	public List<CommercePriceList>
+		getCommercePriceListsByAccountGroupsAndOrderTypeId(
+			long groupId, long[] commerceAccountGroupIds,
+			long commerceOrderTypeId, String type) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, null, commerceAccountGroupIds, null,
+				commerceOrderTypeId, type
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			));
+	}
+
+	@Override
+	public List<CommercePriceList> getCommercePriceListsByAccountId(
+		long groupId, long commerceAccountId, String type) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, commerceAccountId, null, null, null, type
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			));
+	}
+
+	@Override
+	public List<CommercePriceList> getCommercePriceListsByChannelAndOrderTypeId(
+		long groupId, long commerceChannelId, long commerceOrderTypeId,
+		String type) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, null, null, commerceChannelId, commerceOrderTypeId,
+				type
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			));
+	}
+
+	@Override
+	public List<CommercePriceList> getCommercePriceListsByChannelId(
+		long groupId, long commerceChannelId, String type) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, null, null, commerceChannelId, null, type
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			));
+	}
+
+	@Override
+	public List<CommercePriceList> getCommercePriceListsByOrderTypeId(
+		long groupId, long commerceOrderTypeId, String type) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, null, null, null, commerceOrderTypeId, type
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			));
+	}
+
+	@Override
+	public List<CommercePriceList> getCommercePriceListsByUnqualified(
+		long groupId, String type) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, null, null, null, null, type
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending(),
+				CommercePriceListTable.INSTANCE.catalogBasePriceList.ascending()
+			));
 	}
 
 	@Override
@@ -1743,6 +1857,10 @@ public class CommercePriceListLocalServiceImpl
 
 	private static final CommercePriceList _dummyCommercePriceList =
 		ProxyFactory.newDummyInstance(CommercePriceList.class);
+
+	@ServiceReference(type = CommerceChannelAccountEntryRelLocalService.class)
+	private CommerceChannelAccountEntryRelLocalService
+		_commerceChannelAccountEntryRelLocalService;
 
 	@ServiceReference(type = CommerceCurrencyLocalService.class)
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;

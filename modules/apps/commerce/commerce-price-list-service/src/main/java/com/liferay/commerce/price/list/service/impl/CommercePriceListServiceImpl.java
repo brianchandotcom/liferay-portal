@@ -249,6 +249,31 @@ public class CommercePriceListServiceImpl
 	}
 
 	@Override
+	public List<CommercePriceList> getCommercePriceLists(
+			long companyId, String type, int status, int start, int end,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws PortalException {
+
+		List<CommerceCatalog> commerceCatalogs = _commerceCatalogService.search(
+			companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
+
+		long[] groupIds = stream.mapToLong(
+			CommerceCatalog::getGroupId
+		).toArray();
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return commercePriceListPersistence.filterFindByG_C_T_NotS(
+				groupIds, companyId, type, WorkflowConstants.STATUS_IN_TRASH,
+				start, end, orderByComparator);
+		}
+
+		return commercePriceListPersistence.filterFindByG_C_T_S(
+			groupIds, companyId, type, status, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getCommercePriceListsCount(long companyId, int status)
 		throws PortalException {
 

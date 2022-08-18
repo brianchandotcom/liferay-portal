@@ -67,7 +67,7 @@ definition {
 			Walkthrough.enablePopoverMode();
 
 			VerifyElementPresent(
-				key_title = "Step 1 of 2: Click the button",
+				key_title = "Step 1 of 2: Click the Button",
 				locator1 = "Walkthrough#POPOVER_TITLE");
 		}
 
@@ -81,7 +81,7 @@ definition {
 
 		task ("And Then popover is in step 2") {
 			AssertElementPresent(
-				key_title = "Step 2 of 2: Enter your name",
+				key_title = "Step 2 of 2: Enter Your Name",
 				locator1 = "Walkthrough#POPOVER_TITLE");
 		}
 	}

@@ -12,28 +12,26 @@
  * details.
  */
 
-import toggleWidgetHighlightedAction from '../actions/toggleWidgetHighlighted';
-import WidgetService from '../services/WidgetService';
+import toggleWidgetHighlighted from '../../thunks/toggleWidgetHighlighted';
 
-export default function toggleWidgetHighlighted({
-	highlighted,
-	initiallyHighlighted,
-	portletId,
-}) {
-	return (dispatch) => {
-		return WidgetService.toggleWidgetHighlighted({
-			highlighted,
-			onNetworkStatus: dispatch,
-			portletId,
-		}).then(({highlightedPortlets}) => {
-			dispatch(
-				toggleWidgetHighlightedAction({
-					highlighted,
-					highlightedPortlets,
-					initiallyHighlighted,
-					portletId,
-				})
-			);
-		});
+function undoAction({action}) {
+	const {highlighted, initiallyHighlighted, portletId} = action;
+
+	return toggleWidgetHighlighted({
+		highlighted,
+		initiallyHighlighted,
+		portletId,
+	});
+}
+
+function getDerivedStateForUndo({action}) {
+	const {highlighted, initiallyHighlighted, portletId} = action;
+
+	return {
+		highlighted: !highlighted,
+		initiallyHighlighted: initiallyHighlighted || highlighted,
+		portletId,
 	};
 }
+
+export {undoAction, getDerivedStateForUndo};

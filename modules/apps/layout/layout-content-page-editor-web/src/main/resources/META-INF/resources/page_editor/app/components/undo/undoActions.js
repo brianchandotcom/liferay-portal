@@ -22,6 +22,7 @@ import {
 	MOVE_ITEM,
 	SWITCH_VIEWPORT_SIZE,
 	TOGGLE_FRAGMENT_HIGHLIGHTED,
+	TOGGLE_WIDGET_HIGHLIGHTED,
 	UPDATE_COLLECTION_DISPLAY_COLLECTION,
 	UPDATE_COL_SIZE,
 	UPDATE_EDITABLE_VALUES,
@@ -42,6 +43,7 @@ import * as undoMoveItem from './undoMoveItem';
 import * as undoSelectExperience from './undoSelectExperience';
 import * as undoSwitchViewportSize from './undoSwitchViewportSize';
 import * as undoToggleFragmentHighlighted from './undoToggleFragmentHighlighted';
+import * as undoToggleWidgetHighlighted from './undoToggleWidgetHighlighted';
 import * as undoUpdateColSize from './undoUpdateColSize';
 import * as undoUpdateCollectionDisplayCollection from './undoUpdateCollectionDisplayCollection';
 import * as undoUpdateEditableValuesAction from './undoUpdateEditableValuesAction';
@@ -62,6 +64,7 @@ const UNDO_ACTIONS = {
 	[SELECT_SEGMENTS_EXPERIENCE]: undoSelectExperience,
 	[SWITCH_VIEWPORT_SIZE]: undoSwitchViewportSize,
 	[TOGGLE_FRAGMENT_HIGHLIGHTED]: undoToggleFragmentHighlighted,
+	[TOGGLE_WIDGET_HIGHLIGHTED]: undoToggleWidgetHighlighted,
 	[UPDATE_COL_SIZE]: undoUpdateColSize,
 	[UPDATE_COLLECTION_DISPLAY_COLLECTION]: undoUpdateCollectionDisplayCollection,
 	[UPDATE_EDITABLE_VALUES]: undoUpdateEditableValuesAction,

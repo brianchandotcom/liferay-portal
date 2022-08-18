@@ -15,6 +15,7 @@
 /*
  * Function to get needed data when you already have a token
  */
+// eslint-disable-next-line no-unused-vars
 function copyModalData(isPKCE) {
 	if ($('#modalForm').valid()) {
 		$('#tokenLiferayUrl').val($('#modalLiferayUrl').val());
@@ -91,6 +92,7 @@ $(document).ready(() => {
 /*
  * Step 2: Obtain OAuth2 Token
  */
+// eslint-disable-next-line no-unused-vars
 function getToken(isPKCE) {
 	if ($('#tokenForm').valid()) {
 		const locationUrl =
@@ -141,7 +143,7 @@ function getToken(isPKCE) {
 /*
  * Function for Introspect the Access or Refresh Token
  */
-
+// eslint-disable-next-line no-unused-vars
 function introspectToken(event, isPKCE, tokenType) {
 	event.preventDefault();
 	if ((tokenType === 'access_token' && $('#token').val().trim() !== '') || (tokenType === 'refresh_token' && $('#refreshToken').val().trim() !== '')) {
@@ -184,6 +186,7 @@ function introspectToken(event, isPKCE, tokenType) {
 /*
  * Refresh Token
  */
+// eslint-disable-next-line no-unused-vars
 function refreshAccessToken(event, isPKCE) {
 	event.preventDefault();
 	if ($('#refreshToken').val().trim() !== '') {
@@ -226,6 +229,7 @@ function refreshAccessToken(event, isPKCE) {
 /*
  * Step 3: Make Request
  */
+// eslint-disable-next-line no-unused-vars
 function request(event) {
 	event.preventDefault();
 	$('#result').html('');
@@ -274,6 +278,7 @@ function request(event) {
 /*
  * Check method type request to print parameters list
  */
+// eslint-disable-next-line no-unused-vars
 function checkMethod(event) {
 	event.preventDefault();
 	const method = $('#methodType').val();

@@ -16,6 +16,7 @@
  * Basic Authorization Code Grand Flow
  * Step 1: Obtain Authorization Code from Liferay Configured Application with ClientID (Callback URL must be this application)
  */
+// eslint-disable-next-line no-unused-vars
 function getAuthorizationCode() {
 	if ($('#authForm').valid()) {
 		const clientId = $('#clientId').val();

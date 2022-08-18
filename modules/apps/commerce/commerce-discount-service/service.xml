@@ -73,6 +73,12 @@
 			<finder-column name="couponCode" />
 			<finder-column name="active" />
 		</finder>
+		<finder name="C_L_A_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="level" />
+			<finder-column name="active" />
+			<finder-column name="status" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceDiscountAccountRel" remote-service="true" uuid="true">
 

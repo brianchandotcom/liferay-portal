@@ -24,39 +24,24 @@ import React, {useCallback, useState} from 'react';
 
 import Sidebar from '../Sidebar';
 import CollapsibleSection from './CollapsibleSection';
-import FileUrlCopyButton from './FileUrlCopyButton';
 import ItemLanguages from './ItemLanguages';
 import ItemVocabularies from './ItemVocabularies';
 import ManageCollaborators from './ManageCollaborators';
 import Preview from './Preview';
 import Share from './Share';
+import SpecificFields from './SpecificFields';
 import Subscribe from './Subscribe';
+import formatDate from './utils/formatDate';
 import {
 	getCategoriesCountFromVocabularies,
 	groupVocabulariesBy,
 } from './utils/taxonomiesUtils';
-
-const formatDate = (date, languageTag) => {
-	return (
-		date &&
-		languageTag &&
-		Intl.DateTimeFormat(languageTag, {
-			day: 'numeric',
-			hour: 'numeric',
-			hour12: true,
-			minute: 'numeric',
-			month: 'short',
-			year: 'numeric',
-		}).format(new Date(date))
-	);
-};
 
 const SidebarPanelInfoView = ({
 	classPK,
 	createDate,
 	description,
 	downloadURL,
-	clipboard,
 	languageTag = 'en',
 	modifiedDate,
 	specificFields = {},
@@ -93,20 +78,8 @@ const SidebarPanelInfoView = ({
 
 	const specificItems = Object.values(specificFields);
 
-	const renderSpecificItem = ({languageTag, type, value}) => {
-		const options = {
-			Date: () => formatDate(value, languageTag),
-			URL: () => <FileUrlCopyButton url={value} />,
-			default: () => value,
-		};
-
-		return (options[type] && options[type]()) || options.default();
-	};
-
 	const showTaxonomies =
 		!!internalCategoriesCount || !!publicCategoriesCount || !!tags?.length;
-
-	const showClipboard = clipboard && Object.keys(clipboard).length !== 0;
 
 	const hasActions = downloadURL || fetchSharingButtonURL;
 
@@ -138,17 +111,6 @@ const SidebarPanelInfoView = ({
 
 				<div className="px-3">
 					<div className="sidebar-section sidebar-section--compress">
-						{showClipboard && (
-							<>
-								<div className="c-mt-1">
-									<FileUrlCopyButton url={clipboard.url} />
-								</div>
-								<p className="c-mb-1 text-secondary">
-									{clipboard.name}
-								</p>
-							</>
-						)}
-
 						<p
 							className="c-mb-1 text-secondary"
 							data-qa-id="assetTypeInfo"
@@ -301,30 +263,10 @@ const SidebarPanelInfoView = ({
 							title={Liferay.Language.get('details')}
 						>
 							<div className="sidebar-section">
-								{!!specificItems.length &&
-									specificItems.map(
-										({title, type, value}) =>
-											title &&
-											value &&
-											type && (
-												<div
-													className="c-mb-4 sidebar-dl sidebar-section"
-													key={title}
-												>
-													<h5 className="c-mb-1 font-weight-semi-bold">
-														{title}
-													</h5>
-
-													<div className="text-secondary">
-														{renderSpecificItem({
-															languageTag,
-															type,
-															value,
-														})}
-													</div>
-												</div>
-											)
-									)}
+								<SpecificFields
+									fields={specificItems}
+									languageTag={languageTag}
+								/>
 
 								<div
 									className="c-mb-4 sidebar-dl sidebar-section"
@@ -384,7 +326,6 @@ SidebarPanelInfoView.defaultProps = {
 
 SidebarPanelInfoView.propTypes = {
 	classPK: PropTypes.string.isRequired,
-	clipboard: PropTypes.object,
 	createDate: PropTypes.string.isRequired,
 	description: PropTypes.string,
 	fetchSharingButtonURL: PropTypes.string,

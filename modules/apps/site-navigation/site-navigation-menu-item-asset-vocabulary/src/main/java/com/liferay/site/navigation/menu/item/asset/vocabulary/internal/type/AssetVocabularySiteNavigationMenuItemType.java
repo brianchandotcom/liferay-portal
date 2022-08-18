@@ -433,13 +433,6 @@ public class AssetVocabularySiteNavigationMenuItemType
 	}
 
 	@Override
-	public void renderAddPage(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-	}
-
-	@Override
 	public void renderEditPage(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,

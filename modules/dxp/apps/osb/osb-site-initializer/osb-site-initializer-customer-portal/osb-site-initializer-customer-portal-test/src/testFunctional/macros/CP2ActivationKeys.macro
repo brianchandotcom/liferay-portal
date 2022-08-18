@@ -28,4 +28,9 @@ definition {
 		CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${fileName}");
 	}
 
+	macro assertDropdownItemIsVisible {
+		var key_dropdownItem = "${dropdownItem}";
+		AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
+	}
+
 }

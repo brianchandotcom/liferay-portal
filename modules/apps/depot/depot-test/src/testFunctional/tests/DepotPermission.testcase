@@ -1380,12 +1380,9 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",

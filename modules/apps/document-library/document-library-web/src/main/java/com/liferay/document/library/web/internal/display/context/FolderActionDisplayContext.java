@@ -151,6 +151,9 @@ public class FolderActionDisplayContext {
 						isAddMediaActionVisible() &&
 						isMultipleUploadSupported(),
 					dropdownItem -> {
+						dropdownItem.put(
+							"class",
+							"dropdown-item hide upload-multiple-documents");
 						dropdownItem.setHref(getAddMultipleMediaURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(

@@ -25,4 +25,14 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 		dropdownItems="<%= folderActionDisplayContext.getActionDropdownItems() %>"
 		propsTransformer="document_library/js/DLFolderDropdownPropsTransformer"
 	/>
+
+	<aui:script use="uploader">
+		if (!A.UA.ios && A.Uploader.TYPE != 'none') {
+			var uploadMultipleDocumentsIcon = A.all(
+				'.upload-multiple-documents:hidden'
+			);
+
+			uploadMultipleDocumentsIcon.show();
+		}
+	</aui:script>
 </c:if>

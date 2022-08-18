@@ -1167,6 +1167,218 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
+	 * Returns all the object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param deletionType the deletion type
+	 * @param reverse the reverse
+	 * @return the matching object relationships
+	 */
+	public static List<ObjectRelationship> findByODI1_DT_R(
+		long objectDefinitionId1, String deletionType, boolean reverse) {
+
+		return getPersistence().findByODI1_DT_R(
+			objectDefinitionId1, deletionType, reverse);
+	}
+
+	/**
+	 * Returns a range of all the object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param deletionType the deletion type
+	 * @param reverse the reverse
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @return the range of matching object relationships
+	 */
+	public static List<ObjectRelationship> findByODI1_DT_R(
+		long objectDefinitionId1, String deletionType, boolean reverse,
+		int start, int end) {
+
+		return getPersistence().findByODI1_DT_R(
+			objectDefinitionId1, deletionType, reverse, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param deletionType the deletion type
+	 * @param reverse the reverse
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object relationships
+	 */
+	public static List<ObjectRelationship> findByODI1_DT_R(
+		long objectDefinitionId1, String deletionType, boolean reverse,
+		int start, int end,
+		OrderByComparator<ObjectRelationship> orderByComparator) {
+
+		return getPersistence().findByODI1_DT_R(
+			objectDefinitionId1, deletionType, reverse, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param deletionType the deletion type
+	 * @param reverse the reverse
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object relationships
+	 */
+	public static List<ObjectRelationship> findByODI1_DT_R(
+		long objectDefinitionId1, String deletionType, boolean reverse,
+		int start, int end,
+		OrderByComparator<ObjectRelationship> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByODI1_DT_R(
+			objectDefinitionId1, deletionType, reverse, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first object relationship in the ordered set where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param deletionType the deletion type
+	 * @param reverse the reverse
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship findByODI1_DT_R_First(
+			long objectDefinitionId1, String deletionType, boolean reverse,
+			OrderByComparator<ObjectRelationship> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().findByODI1_DT_R_First(
+			objectDefinitionId1, deletionType, reverse, orderByComparator);
+	}
+
+	/**
+	 * Returns the first object relationship in the ordered set where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param deletionType the deletion type
+	 * @param reverse the reverse
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByODI1_DT_R_First(
+		long objectDefinitionId1, String deletionType, boolean reverse,
+		OrderByComparator<ObjectRelationship> orderByComparator) {
+
+		return getPersistence().fetchByODI1_DT_R_First(
+			objectDefinitionId1, deletionType, reverse, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param deletionType the deletion type
+	 * @param reverse the reverse
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship findByODI1_DT_R_Last(
+			long objectDefinitionId1, String deletionType, boolean reverse,
+			OrderByComparator<ObjectRelationship> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().findByODI1_DT_R_Last(
+			objectDefinitionId1, deletionType, reverse, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param deletionType the deletion type
+	 * @param reverse the reverse
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByODI1_DT_R_Last(
+		long objectDefinitionId1, String deletionType, boolean reverse,
+		OrderByComparator<ObjectRelationship> orderByComparator) {
+
+		return getPersistence().fetchByODI1_DT_R_Last(
+			objectDefinitionId1, deletionType, reverse, orderByComparator);
+	}
+
+	/**
+	 * Returns the object relationships before and after the current object relationship in the ordered set where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
+	 *
+	 * @param objectRelationshipId the primary key of the current object relationship
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param deletionType the deletion type
+	 * @param reverse the reverse
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object relationship
+	 * @throws NoSuchObjectRelationshipException if a object relationship with the primary key could not be found
+	 */
+	public static ObjectRelationship[] findByODI1_DT_R_PrevAndNext(
+			long objectRelationshipId, long objectDefinitionId1,
+			String deletionType, boolean reverse,
+			OrderByComparator<ObjectRelationship> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().findByODI1_DT_R_PrevAndNext(
+			objectRelationshipId, objectDefinitionId1, deletionType, reverse,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63; from the database.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param deletionType the deletion type
+	 * @param reverse the reverse
+	 */
+	public static void removeByODI1_DT_R(
+		long objectDefinitionId1, String deletionType, boolean reverse) {
+
+		getPersistence().removeByODI1_DT_R(
+			objectDefinitionId1, deletionType, reverse);
+	}
+
+	/**
+	 * Returns the number of object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param deletionType the deletion type
+	 * @param reverse the reverse
+	 * @return the number of matching object relationships
+	 */
+	public static int countByODI1_DT_R(
+		long objectDefinitionId1, String deletionType, boolean reverse) {
+
+		return getPersistence().countByODI1_DT_R(
+			objectDefinitionId1, deletionType, reverse);
+	}
+
+	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63;.
 	 *
 	 * @param objectDefinitionId1 the object definition id1

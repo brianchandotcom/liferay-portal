@@ -381,6 +381,13 @@ public class ObjectRelationshipLocalServiceUtil {
 			objectDefinitionId1, objectDefinition2, type);
 	}
 
+	public static List<ObjectRelationship> getObjectRelationships(
+		long objectDefinitionId1, String deletionType, boolean reverse) {
+
+		return getService().getObjectRelationships(
+			objectDefinitionId1, deletionType, reverse);
+	}
+
 	/**
 	 * Returns the number of object relationships.
 	 *
@@ -406,6 +413,13 @@ public class ObjectRelationshipLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static boolean hasObjectRelationshipByDeletionType(
+		long objectDefinitionId1, String deletionType, boolean reverse) {
+
+		return getService().hasObjectRelationshipByDeletionType(
+			objectDefinitionId1, deletionType, reverse);
 	}
 
 	public static ObjectRelationship updateObjectRelationship(

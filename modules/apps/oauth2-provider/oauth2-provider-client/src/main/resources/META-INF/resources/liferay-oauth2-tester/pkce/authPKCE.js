@@ -1,4 +1,3 @@
-/* eslint-disable */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -13,6 +12,9 @@
  * details.
  */
 
+/*
+ * Step PKCE 1: Obtain Authorization Code from Liferay Configured Application with ClientID (Callback URL must be this application)
+ */
 function authorizePKCE() {
 	if ($('#authFormPKCE').valid()) {
 		const clientId = $('#clientIdPCKE').val();
@@ -54,14 +56,14 @@ function generateCodeChallenge() {
 }
 
 /*
- * Encode Code Challenge as indicated at PKCE specification: BaseURLEncode(SHA256(code-challengue))
+ * Encode Code Challenge as indicated at PKCE specification: BaseURLEncode(SHA256(code-challenge))
  */
 function getEncodedCodeChallenge() {
 	CryptoJS.enc.Base64URL = {
-		parse: CryptoJS.enc.Base64.parse,
-		stringify: CryptoJS.enc.Base64.stringify,
 		_map:
 			'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_',
+		parse: CryptoJS.enc.Base64.parse,
+		stringify: CryptoJS.enc.Base64.stringify,
 	};
 
 	const code = CryptoJS.enc.Utf8.parse($('#codeChallenge').val());
@@ -100,7 +102,7 @@ $(document).ready(() => {
 		const variablesUrl = pageUrl.split('&');
 		for (let i = 0; i < variablesUrl.length; i++) {
 			const parameter = variablesUrl[i].split('=');
-			if (parameter[0] == parameterName) {
+			if (parameter[0] === parameterName) {
 				return parameter[1];
 			}
 		}
@@ -120,8 +122,8 @@ $(document).ready(() => {
 	 * Function to generate parameter fields dynamically
 	 */
 	let parameterCount = 1;
-	$('#addParameter').click((e) => {
-		e.preventDefault();
+	$('#addParameter').click((event) => {
+		event.preventDefault();
 		const addName = 'paramName' + parameterCount;
 		const addValue = 'paramValue' + parameterCount;
 
@@ -155,13 +157,12 @@ function getToken() {
 		const locationUrl =
 			location.protocol + '//' + location.host + location.pathname;
 		$.ajax({
-			url: $('#tokenLiferayUrl').val() + $('#tokenUrl').val(),
-			method: 'POST',
+			contentType: 'application/x-www-form-urlencoded',
 			data: {
 				client_id: $('#tokenClientId').val(),
-				grant_type: 'authorization_code',
-				code_verifier: $('#exchangeCode').val(),
 				code: $('#code').val(),
+				code_verifier: $('#exchangeCode').val(),
+				grant_type: 'authorization_code',
 				redirect_uri:
 					locationUrl +
 					'?url=' +
@@ -169,11 +170,15 @@ function getToken() {
 					'&client_id=' +
 					$('#tokenClientId').val(),
 			},
-			contentType: 'application/x-www-form-urlencoded',
+			dataType: 'json',
+			error(data) {
+				alert("There's a problem with your authorization access");
+				console.log(data);
+			},
 			headers: {
 				Accept: 'application/json',
 			},
-			dataType: 'json',
+			method: 'POST',
 			success(data) {
 				console.log(data);
 				$('#token').val(data.access_token);
@@ -182,10 +187,7 @@ function getToken() {
 				$('#tokenTab > h2 > button').css('color', 'green');
 				$('#collapseThree').show();
 			},
-			error(data) {
-				alert("There's a problem with your authorization access");
-				console.log(data);
-			},
+			url: $('#tokenLiferayUrl').val() + $('#tokenUrl').val(),
 		});
 	}
 }
@@ -193,30 +195,31 @@ function getToken() {
 /*
  * Function for Introspect the Access Token
  */
-function introspectAccessToken(e) {
-	e.preventDefault();
-	if ($('#token').val().trim() != '') {
+function introspectAccessToken(event) {
+	event.preventDefault();
+	if ($('#token').val().trim() !== '') {
 		$.ajax({
-			url: $('#tokenLiferayUrl').val() + '/o/oauth2/introspect',
-			method: 'POST',
+			contentType: 'application/x-www-form-urlencoded',
+			crossDomain: true,
 			data: {
 				client_id: $('#tokenClientId').val(),
 				token: $('#token').val(),
 				token_type_hint: 'access_token',
 			},
-			crossDomain: true,
-			contentType: 'application/x-www-form-urlencoded',
-			headers: {
-				Accept: 'application/json',
-			},
 			dataType: 'json',
-			success(data) {
-				$('#result').html(JSON.stringify(data));
-			},
 			error(data) {
 				alert("There's a problem with your authorization access");
 				console.log(data);
 			},
+			headers: {
+				Accept: 'application/json',
+			},
+			method: 'POST',
+			success(data) {
+				$('#result').html(JSON.stringify(data));
+			},
+
+			url: $('#tokenLiferayUrl').val() + '/o/oauth2/introspect',
 		});
 	}
 	else {
@@ -227,30 +230,30 @@ function introspectAccessToken(e) {
 /*
  * Function for Introspect the Refresh Token
  */
-function introspectRefreshToken(e) {
-	e.preventDefault();
-	if ($('#refreshToken').val().trim() != '') {
+function introspectRefreshToken(event) {
+	event.preventDefault();
+	if ($('#refreshToken').val().trim() !== '') {
 		$.ajax({
-			url: $('#tokenLiferayUrl').val() + '/o/oauth2/introspect',
-			method: 'POST',
+			contentType: 'application/x-www-form-urlencoded',
+			crossDomain: true,
 			data: {
 				client_id: $('#tokenClientId').val(),
 				token: $('#refreshToken').val(),
 				token_type_hint: 'refresh_token',
 			},
-			crossDomain: true,
-			contentType: 'application/x-www-form-urlencoded',
-			headers: {
-				Accept: 'application/json',
-			},
 			dataType: 'json',
-			success(data) {
-				$('#result').html(JSON.stringify(data));
-			},
 			error(data) {
 				alert("There's a problem with your authorization access");
 				console.log(data);
 			},
+			headers: {
+				Accept: 'application/json',
+			},
+			method: 'POST',
+			success(data) {
+				$('#result').html(JSON.stringify(data));
+			},
+			url: $('#tokenLiferayUrl').val() + '/o/oauth2/introspect',
 		});
 	}
 	else {
@@ -261,31 +264,31 @@ function introspectRefreshToken(e) {
 /*
  * Refresh Token
  */
-function refreshAccessToken(e) {
-	e.preventDefault();
-	if ($('#refreshToken').val().trim() != '') {
+function refreshAccessToken(event) {
+	event.preventDefault();
+	if ($('#refreshToken').val().trim() !== '') {
 		$.ajax({
-			url: $('#tokenLiferayUrl').val() + $('#tokenUrl').val(),
-			method: 'POST',
+			contentType: 'application/x-www-form-urlencoded',
+			crossDomain: true,
 			data: {
 				client_id: $('#tokenClientId').val(),
-				refresh_token: $('#refreshToken').val(),
 				grant_type: 'refresh_token',
-			},
-			crossDomain: true,
-			contentType: 'application/x-www-form-urlencoded',
-			headers: {
-				Accept: 'application/json',
+				refresh_token: $('#refreshToken').val(),
 			},
 			dataType: 'json',
-			success(data) {
-				$('#token').val(data.access_token);
-				$('#refreshToken').val(data.refresh_token);
-			},
 			error(data) {
 				alert("There's a problem with your authorization access");
 				console.log(data);
 			},
+			headers: {
+				Accept: 'application/json',
+			},
+			method: 'POST',
+			success(data) {
+				$('#token').val(data.access_token);
+				$('#refreshToken').val(data.refresh_token);
+			},
+			url: $('#tokenLiferayUrl').val() + $('#tokenUrl').val(),
 		});
 	}
 	else {
@@ -296,34 +299,29 @@ function refreshAccessToken(e) {
 /*
  * Step 3: Make Request
  */
-function request(e) {
-	e.preventDefault();
+function request(event) {
+	event.preventDefault();
 	$('#result').html('');
 	const paramsData = getParamsData();
 	const token = $('#token').val();
-	if (token.trim() != '') {
+	if (token.trim() !== '') {
 		$.ajax({
-			url: $('#url').val(),
-			method: $('#methodType').val(),
-			headers: {
-				Authorization: 'Bearer ' + token,
-			},
 			contentType: $('#contentType').val(),
 			crossDomain: true,
 			data: JSON.stringify(paramsData),
 			dataType: 'json',
-			error(jqXHR, exception) {
+			error(jqXHR) {
 				let msg = '';
 				if (jqXHR.status === 403) {
 					msg = '403 - Unauthorized!';
 				}
-				else if (jqXHR.status == 404) {
+				else if (jqXHR.status === 404) {
 					msg = '404 - Not Found';
 				}
-				else if (jqXHR.status == 405) {
+				else if (jqXHR.status === 405) {
 					msg = '405 - Not Allowed';
 				}
-				else if (jqXHR.status == 415) {
+				else if (jqXHR.status === 415) {
 					msg = '415 - Unsupported Media Type';
 				}
 				else {
@@ -331,9 +329,14 @@ function request(e) {
 				}
 				alert(msg);
 			},
+			headers: {
+				Authorization: 'Bearer ' + token,
+			},
+			method: $('#methodType').val(),
 			success(data) {
 				$('#result').html(JSON.stringify(data));
 			},
+			url: $('#url').val(),
 		});
 	}
 	else {
@@ -344,10 +347,10 @@ function request(e) {
 /*
  * Check method type request to print parameters list
  */
-function checkMethod(e) {
-	e.preventDefault();
+function checkMethod(event) {
+	event.preventDefault();
 	const method = $('#methodType').val();
-	if (method != 'GET') {
+	if (method !== 'GET') {
 		$('#parametersList').show();
 		$('#addParameter').show();
 	}
@@ -368,7 +371,7 @@ function getParamsData() {
 		for (let i = 0; i < numParams; i++) {
 			const name = $('#paramName' + i).val();
 			const value = $('#paramValue' + i).val();
-			if (name != '' && value != '') {
+			if (name !== '' && value !== '') {
 				data[name] = value;
 			}
 		}

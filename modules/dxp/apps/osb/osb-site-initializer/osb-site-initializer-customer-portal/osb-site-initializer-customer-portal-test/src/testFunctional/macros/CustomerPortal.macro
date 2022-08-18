@@ -194,7 +194,8 @@ definition {
 	}
 
 	macro clickOnCancelButton {
-		Click(locator1 = "CustomerPortalSite#CANCEL_BUTTON");
+		var key_text = "Cancel";
+		Click(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
 	macro clickOnFinishActivationButton {

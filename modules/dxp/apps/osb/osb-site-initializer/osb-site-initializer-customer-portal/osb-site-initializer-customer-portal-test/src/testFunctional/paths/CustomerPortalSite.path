@@ -211,8 +211,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CANCEL_BUTTON</td>
-	<td>//button[contains(@type, 'button') and contains(.,'Cancel')]</td>
+	<td>ANY_BUTTON</td>
+	<td>//*[contains(@type, 'button') and text()='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>

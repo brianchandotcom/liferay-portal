@@ -63,6 +63,10 @@ public class RedirectProviderImpl
 	public Redirect getRedirect(
 		long groupId, String fullURL, String friendlyURL) {
 
+		if (friendlyURL.contains("/control_panel/manage")) {
+			return null;
+		}
+
 		RedirectEntry redirectEntry =
 			_redirectEntryLocalService.fetchRedirectEntry(
 				groupId, fullURL, false);

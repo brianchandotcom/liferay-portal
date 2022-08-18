@@ -11,7 +11,7 @@
 
 <tbody>
 <tr>
-	<td>CONTEXT_MENU_PROJECTS_ITEM</td>
+	<td>CONTEXT_MENU_PROJECTS_ITEMS</td>
 	<td>//div[contains(@class, 'dropdown-menu show')]//button[contains(@text(), '${menuItem}')]</td>
 	<td></td>
 </tr>
@@ -23,4 +23,4 @@
 </tbody>
 </table>
 </body>
-</html> 
+</html>

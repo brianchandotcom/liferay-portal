@@ -69,13 +69,13 @@ $(document).ready(() => {
 
 		const newName = $(
 			'<div class="col-6"><input type="text" id="' +
-			addName +
-			'" placeholder="Name" class="form-control form-control-sm" /></div>'
+				addName +
+				'" placeholder="Name" class="form-control form-control-sm" /></div>'
 		);
 		const newValue = $(
 			'<div class="col-6"><input type="text" id="' +
-			addValue +
-			'" placeholder="Value" class="form-control form-control-sm" /></div>'
+				addValue +
+				'" placeholder="Value" class="form-control form-control-sm" /></div>'
 		);
 
 		const newSection = $(
@@ -98,20 +98,21 @@ function getToken(isPKCE) {
 		const locationUrl =
 			location.protocol + '//' + location.host + location.pathname;
 		const dataObj = {
-				client_id: $('#tokenClientId').val(),
-				code: $('#code').val(),
-				grant_type: 'authorization_code',
-				redirect_uri:
-					locationUrl +
-					'?url=' +
-					$('#tokenLiferayUrl').val() +
-					'&client_id=' +
-					$('#tokenClientId').val(),
-			};
+			client_id: $('#tokenClientId').val(),
+			code: $('#code').val(),
+			grant_type: 'authorization_code',
+			redirect_uri:
+				locationUrl +
+				'?url=' +
+				$('#tokenLiferayUrl').val() +
+				'&client_id=' +
+				$('#tokenClientId').val(),
+		};
 
 		if (isPKCE) {
 			dataObj.code_verifier = $('#exchangeCode').val();
-		} else {
+		}
+		else {
 			dataObj.client_secret = $('#clientSecretId').val();
 		}
 
@@ -146,7 +147,11 @@ function getToken(isPKCE) {
 // eslint-disable-next-line no-unused-vars
 function introspectToken(event, isPKCE, tokenType) {
 	event.preventDefault();
-	if ((tokenType === 'access_token' && $('#token').val().trim() !== '') || (tokenType === 'refresh_token' && $('#refreshToken').val().trim() !== '')) {
+	if (
+		(tokenType === 'access_token' && $('#token').val().trim() !== '') ||
+		(tokenType === 'refresh_token' &&
+			$('#refreshToken').val().trim() !== '')
+	) {
 		const dataObj = {
 			client_id: $('#tokenClientId').val(),
 			token: $('#token').val(),

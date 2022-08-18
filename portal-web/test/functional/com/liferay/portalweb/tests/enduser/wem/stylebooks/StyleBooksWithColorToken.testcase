@@ -100,12 +100,12 @@ definition {
 			Type(
 				key_text = "Brand Color 1",
 				locator1 = "TextInput#ANY",
-				value1 = "aaa");
+				value1 = "Brand Color 1");
 
 			StyleBooks.clickManagementBar();
 
 			AssertVisible(
-				key_alertMessage = "This token does not exist.",
+				key_alertMessage = "Tokens cannot reference itself.",
 				key_fieldLabel = "Brand Color 1",
 				locator1 = "TextInput#ALERT_MESSAGE");
 		}
@@ -117,7 +117,7 @@ definition {
 		task ("View the invalid color token is still shown in Brand Color 1 field") {
 			InputField.viewText(
 				fieldLabel = "Brand Color 1",
-				text = "aaa");
+				text = "Brand Color 1");
 		}
 
 		task ("Type an valid color token in Brand Color 1 field then publish") {

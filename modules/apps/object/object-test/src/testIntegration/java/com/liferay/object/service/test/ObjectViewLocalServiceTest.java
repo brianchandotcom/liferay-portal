@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectViewFilterColumnConstants;
 import com.liferay.object.exception.DefaultObjectViewException;
 import com.liferay.object.exception.ObjectViewColumnFieldNameException;
@@ -86,7 +87,8 @@ public class ObjectViewLocalServiceTest {
 			Collections.singletonMap(LocaleUtil.US, "Brazil"));
 
 		ObjectField objectField = ObjectFieldUtil.createObjectField(
-			"Picklist", "String", "country");
+			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
+			ObjectFieldConstants.DB_TYPE_STRING, "country");
 
 		objectField.setListTypeDefinitionId(
 			listTypeDefinition.getListTypeDefinitionId());
@@ -95,7 +97,9 @@ public class ObjectViewLocalServiceTest {
 			_objectDefinitionLocalService,
 			Arrays.asList(
 				objectField,
-				ObjectFieldUtil.createObjectField("Text", "String", "name")));
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, "name")));
 	}
 
 	@Test
@@ -348,8 +352,9 @@ public class ObjectViewLocalServiceTest {
 
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), "Text", "String", null,
-			false, false, null,
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(objectFieldLabel), objectFieldName,
 			true, false, Collections.emptyList());
 
@@ -368,7 +373,8 @@ public class ObjectViewLocalServiceTest {
 			Collections.singletonMap(LocaleUtil.US, "Brazil"));
 
 		ObjectField objectField = ObjectFieldUtil.createObjectField(
-			"Picklist", "String", "country");
+			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
+			ObjectFieldConstants.DB_TYPE_STRING, "country");
 
 		objectField.setListTypeDefinitionId(
 			listTypeDefinition.getListTypeDefinitionId());

@@ -17,6 +17,7 @@ package com.liferay.object.rest.internal.vulcan.extension.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -80,17 +81,21 @@ public class ObjectEntryExtensionProviderTest {
 				TestPropsValues.getCompanyId(), User.class.getName());
 
 		_addCustomObjectField(
-			objectDefinition.getObjectDefinitionId(), "Boolean", "Boolean",
-			"boolean", false);
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+			ObjectFieldConstants.DB_TYPE_BOOLEAN, "boolean", false);
 		_addCustomObjectField(
-			objectDefinition.getObjectDefinitionId(), "Date", "Date", "date",
-			true);
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_DATE,
+			ObjectFieldConstants.DB_TYPE_DATE, "date", true);
 		_addCustomObjectField(
-			objectDefinition.getObjectDefinitionId(), "Decimal", "Double",
-			"decimal", false);
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
+			ObjectFieldConstants.DB_TYPE_DOUBLE, "decimal", false);
 		_addCustomObjectField(
-			objectDefinition.getObjectDefinitionId(), "PrecisionDecimal",
-			"BigDecimal", "precisionDecimal", true);
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
+			ObjectFieldConstants.DB_TYPE_BIG_DECIMAL, "precisionDecimal", true);
 
 		_user = UserTestUtil.addUser();
 	}
@@ -139,8 +144,9 @@ public class ObjectEntryExtensionProviderTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

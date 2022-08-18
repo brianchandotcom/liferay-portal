@@ -16,6 +16,7 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -218,8 +219,9 @@ public class ObjectDefinitionServiceTest {
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
-					"Text", "String", RandomTestUtil.randomString(),
-					StringUtil.randomId())));
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING,
+					RandomTestUtil.randomString(), StringUtil.randomId())));
 	}
 
 	private void _setUser(User user) {
@@ -246,7 +248,9 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							"Text", "String", RandomTestUtil.randomString(),
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING,
+							RandomTestUtil.randomString(),
 							StringUtil.randomId())));
 
 			objectDefinition =
@@ -325,7 +329,9 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							"Text", "String", RandomTestUtil.randomString(),
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING,
+							RandomTestUtil.randomString(),
 							StringUtil.randomId())));
 
 			objectDefinition =
@@ -360,7 +366,9 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							"Text", "String", RandomTestUtil.randomString(),
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING,
+							RandomTestUtil.randomString(),
 							StringUtil.randomId())));
 
 			objectDefinition =
@@ -399,14 +407,18 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							"Text", "String", RandomTestUtil.randomString(),
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING,
+							RandomTestUtil.randomString(),
 							StringUtil.randomId())));
 
 			ObjectField objectField =
 				_objectFieldLocalService.addCustomObjectField(
 					ownerUser.getUserId(), 0,
-					objectDefinition.getObjectDefinitionId(), "Text", "String",
-					null, false, false, null,
+					objectDefinition.getObjectDefinitionId(),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, null, false, false,
+					null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					StringUtil.randomId(), false, false,

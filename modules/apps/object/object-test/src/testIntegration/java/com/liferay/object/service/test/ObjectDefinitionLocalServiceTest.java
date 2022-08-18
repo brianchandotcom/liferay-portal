@@ -40,7 +40,6 @@ import com.liferay.object.util.ObjectFieldBuilder;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -211,8 +210,9 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -243,8 +243,9 @@ public class ObjectDefinitionLocalServiceTest {
 				"", ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
 
 			Assert.fail();
 		}
@@ -266,8 +267,9 @@ public class ObjectDefinitionLocalServiceTest {
 				scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
 
 			Assert.fail();
 		}
@@ -289,15 +291,21 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", "Able", "able", false),
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "Able", "able",
+						false),
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", "Baker", "baker", false)));
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "Baker", "baker",
+						false)));
 
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), "Text", "String", null,
-			false, false, null, LocalizedMapUtil.getLocalizedMap("Charlie"),
-			"charlie", true, false, Collections.emptyList());
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+			LocalizedMapUtil.getLocalizedMap("Charlie"), "charlie", true, false,
+			Collections.emptyList());
 
 		// Before publish, database table
 
@@ -341,9 +349,11 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), "Text", "String", null,
-			false, false, null, LocalizedMapUtil.getLocalizedMap("Dog"), "dog",
-			true, false, Collections.emptyList());
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+			LocalizedMapUtil.getLocalizedMap("Dog"), "dog", true, false,
+			Collections.emptyList());
 
 		// After publish, database table
 
@@ -419,14 +429,18 @@ public class ObjectDefinitionLocalServiceTest {
 					public List<ObjectField> getObjectFields() {
 						return Arrays.asList(
 							createObjectField(
-								"Boolean", "Boolean", "Action Required",
-								"actionRequired", true, false),
+								ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+								ObjectFieldConstants.DB_TYPE_BOOLEAN,
+								"Action Required", "actionRequired", true,
+								false),
 							createObjectField(
-								"LongInteger", "Long", "Delivery Type",
-								"deliveryType", false, false),
+								ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+								ObjectFieldConstants.DB_TYPE_LONG,
+								"Delivery Type", "deliveryType", false, false),
 							createObjectField(
-								"Text", "type_", "String", "Type", "type", true,
-								false));
+								ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+								"type_", ObjectFieldConstants.DB_TYPE_STRING,
+								"Type", "type", true, false));
 					}
 
 					@Override
@@ -511,14 +525,17 @@ public class ObjectDefinitionLocalServiceTest {
 					public List<ObjectField> getObjectFields() {
 						return Arrays.asList(
 							createObjectField(
-								"Boolean", "Boolean", "Archived", "archived",
-								true, false),
+								ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+								ObjectFieldConstants.DB_TYPE_BOOLEAN,
+								"Archived", "archived", true, false),
 							createObjectField(
-								"LongInteger", "Long", "Delivery Type",
-								"deliveryType", true, false),
+								ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+								ObjectFieldConstants.DB_TYPE_LONG,
+								"Delivery Type", "deliveryType", true, false),
 							createObjectField(
-								"Text", "type_", "String", "Type", "type",
-								false, false));
+								ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+								"type_", ObjectFieldConstants.DB_TYPE_STRING,
+								"Type", "type", false, false));
 					}
 
 					@Override
@@ -695,8 +712,9 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY, 1,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
 
 		try {
 			_testAddSystemObjectDefinition("Test");
@@ -722,8 +740,9 @@ public class ObjectDefinitionLocalServiceTest {
 				"", 1,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
 
 			Assert.fail();
 		}
@@ -801,9 +820,11 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), "Text", "String", null,
-			false, false, null, LocalizedMapUtil.getLocalizedMap("Able"),
-			"able", true, false, Collections.emptyList());
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+			LocalizedMapUtil.getLocalizedMap("Able"), "able", true, false,
+			Collections.emptyList());
 
 		// Database table
 
@@ -890,8 +911,9 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
@@ -1012,8 +1034,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), "Text", "String", null,
-			false, false, null,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), true, false, Collections.emptyList());
 
@@ -1115,8 +1138,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), "Text", "String", null,
-			false, false, null,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), true, false, Collections.emptyList());
 
@@ -1217,7 +1241,9 @@ public class ObjectDefinitionLocalServiceTest {
 					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							"Text", "String", RandomTestUtil.randomString(),
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING,
+							RandomTestUtil.randomString(),
 							StringUtil.randomId())));
 
 			objectDefinition =
@@ -1252,7 +1278,9 @@ public class ObjectDefinitionLocalServiceTest {
 					ObjectDefinitionConstants.SCOPE_COMPANY, 1,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							"Text", "String", RandomTestUtil.randomString(),
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING,
+							RandomTestUtil.randomString(),
 							StringUtil.randomId())));
 		}
 		finally {
@@ -1305,8 +1333,6 @@ public class ObjectDefinitionLocalServiceTest {
 				dbTableName
 			).dbType(
 				ObjectFieldConstants.DB_TYPE_DATE
-			).defaultValue(
-				StringPool.BLANK
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "create-date"))
@@ -1326,8 +1352,6 @@ public class ObjectDefinitionLocalServiceTest {
 				dbTableName
 			).dbType(
 				ObjectFieldConstants.DB_TYPE_STRING
-			).defaultValue(
-				StringPool.BLANK
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "author"))
@@ -1348,8 +1372,6 @@ public class ObjectDefinitionLocalServiceTest {
 					dbTableName
 				).dbType(
 					ObjectFieldConstants.DB_TYPE_STRING
-				).defaultValue(
-					StringPool.BLANK
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						LanguageUtil.get(
@@ -1371,8 +1393,6 @@ public class ObjectDefinitionLocalServiceTest {
 				dbTableName
 			).dbType(
 				ObjectFieldConstants.DB_TYPE_LONG
-			).defaultValue(
-				StringPool.BLANK
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "id"))
@@ -1392,8 +1412,6 @@ public class ObjectDefinitionLocalServiceTest {
 				dbTableName
 			).dbType(
 				ObjectFieldConstants.DB_TYPE_DATE
-			).defaultValue(
-				StringPool.BLANK
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "modified-date"))
@@ -1413,8 +1431,6 @@ public class ObjectDefinitionLocalServiceTest {
 				dbTableName
 			).dbType(
 				ObjectFieldConstants.DB_TYPE_STRING
-			).defaultValue(
-				StringPool.BLANK
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "status"))
@@ -1436,8 +1452,9 @@ public class ObjectDefinitionLocalServiceTest {
 				_objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
 
 		objectDefinition2 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

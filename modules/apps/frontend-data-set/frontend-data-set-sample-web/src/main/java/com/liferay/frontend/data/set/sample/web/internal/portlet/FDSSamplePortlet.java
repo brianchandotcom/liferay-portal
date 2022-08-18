@@ -18,6 +18,7 @@ import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSamplePort
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleWebKeys;
 import com.liferay.frontend.data.set.sample.web.internal.display.context.FDSSampleDisplayContext;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -124,20 +125,25 @@ public class FDSSamplePortlet extends MVCPortlet {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", true, false, null, "Title", "title",
-						false),
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						"Title", "title", false),
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", true, false, null, "Description",
-						"description", false),
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						"Description", "description", false),
 					ObjectFieldUtil.createObjectField(
-						"Date", "Date", true, false, null, "Date", "date",
-						false),
+						ObjectFieldConstants.BUSINESS_TYPE_DATE,
+						ObjectFieldConstants.DB_TYPE_DATE, true, false, null,
+						"Date", "date", false),
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", true, false, null, "Color", "color",
-						false),
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						"Color", "color", false),
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", true, false, null, "Size", "size",
-						false)));
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						"Size", "size", false)));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

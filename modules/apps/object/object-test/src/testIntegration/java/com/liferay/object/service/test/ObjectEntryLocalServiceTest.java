@@ -31,6 +31,7 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
@@ -143,8 +144,9 @@ public class ObjectEntryLocalServiceTest {
 				_objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
 
 		_irrelevantObjectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -177,52 +179,68 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinitionLocalService,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
-					"LongInteger", "Long", true, false, null, "Age of Death",
-					"ageOfDeath", false),
+					ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
+					"Age of Death", "ageOfDeath", false),
 				ObjectFieldUtil.createObjectField(
-					"Boolean", "Boolean", true, false, null, "Author of Gospel",
-					"authorOfGospel", false),
+					ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+					ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
+					"Author of Gospel", "authorOfGospel", false),
 				ObjectFieldUtil.createObjectField(
-					"Date", "Date", true, false, null, "Birthday", "birthday",
-					false),
+					ObjectFieldConstants.BUSINESS_TYPE_DATE,
+					ObjectFieldConstants.DB_TYPE_DATE, true, false, null,
+					"Birthday", "birthday", false),
 				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null, "Email Address",
-					"emailAddress", false),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+					"Email Address", "emailAddress", false),
 				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 					"Email Address Required", "emailAddressRequired", true),
 				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null, "Email Address Domain",
-					"emailAddressDomain", false),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+					"Email Address Domain", "emailAddressDomain", false),
 				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, false, null, "First Name",
-					"firstName", false),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+					"First Name", "firstName", false),
 				ObjectFieldUtil.createObjectField(
-					"Decimal", "Double", true, false, null, "Height", "height",
-					false),
+					ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
+					ObjectFieldConstants.DB_TYPE_DOUBLE, true, false, null,
+					"Height", "height", false),
 				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, false, null, "Last Name",
-					"lastName", false),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+					"Last Name", "lastName", false),
 				ObjectFieldUtil.createObjectField(
-					_listTypeDefinition.getListTypeDefinitionId(), "Text", null,
-					"String", true, false, null, "List Type Entry Key",
-					"listTypeEntryKey", false, false),
+					_listTypeDefinition.getListTypeDefinitionId(),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT, null,
+					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+					"List Type Entry Key", "listTypeEntryKey", false, false),
 				ObjectFieldUtil.createObjectField(
-					_listTypeDefinition.getListTypeDefinitionId(), "Text", null,
-					"String", true, false, null, "List Type Entry Key Required",
-					"listTypeEntryKeyRequired", true, false),
+					_listTypeDefinition.getListTypeDefinitionId(),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT, null,
+					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+					"List Type Entry Key Required", "listTypeEntryKeyRequired",
+					true, false),
 				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, false, null, "Middle Name",
-					"middleName", false),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+					"Middle Name", "middleName", false),
 				ObjectFieldUtil.createObjectField(
-					"Integer", "Integer", true, false, null,
+					ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+					ObjectFieldConstants.DB_TYPE_INTEGER, true, false, null,
 					"Number of Books Written", "numberOfBooksWritten", false),
 				ObjectFieldUtil.createObjectField(
-					"LargeFile", "Blob", false, false, null, "Portrait",
-					"portrait", false),
+					ObjectFieldConstants.BUSINESS_TYPE_LARGE_FILE,
+					ObjectFieldConstants.DB_TYPE_BLOB, false, false, null,
+					"Portrait", "portrait", false),
 				ObjectFieldUtil.createObjectField(
-					"LongText", "Clob", false, false, null, "Script", "script",
-					false)));
+					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+					ObjectFieldConstants.DB_TYPE_CLOB, false, false, null,
+					"Script", "script", false)));
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -231,24 +249,28 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), "PrecisionDecimal",
-			"BigDecimal", null, true, false, null,
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
+			ObjectFieldConstants.DB_TYPE_BIG_DECIMAL, null, true, false, null,
 			LocalizedMapUtil.getLocalizedMap("Speed"), "speed", false, false,
 			Collections.emptyList());
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), "Attachment", "Long",
-			null, true, false, null, LocalizedMapUtil.getLocalizedMap("Upload"),
-			"upload", false, false,
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+			ObjectFieldConstants.DB_TYPE_LONG, null, true, false, null,
+			LocalizedMapUtil.getLocalizedMap("Upload"), "upload", false, false,
 			Arrays.asList(
 				_createObjectFieldSetting("acceptedFileExtensions", "txt"),
 				_createObjectFieldSetting("fileSource", "userComputer"),
 				_createObjectFieldSetting("maximumFileSize", "100")));
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), "Decimal", "Double",
-			null, true, false, null, LocalizedMapUtil.getLocalizedMap("Weight"),
-			"weight", false, false, Collections.emptyList());
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
+			ObjectFieldConstants.DB_TYPE_DOUBLE, null, true, false, null,
+			LocalizedMapUtil.getLocalizedMap("Weight"), "weight", false, false,
+			Collections.emptyList());
 	}
 
 	@After
@@ -825,7 +847,8 @@ public class ObjectEntryLocalServiceTest {
 				_objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", "text")));
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "text")));
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -1102,14 +1125,18 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), "LongInteger", "Long",
-			null, RandomTestUtil.randomBoolean(),
-			RandomTestUtil.randomBoolean(), null,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+			ObjectFieldConstants.DB_TYPE_LONG, null,
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
+			null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"longField", false, false, Collections.emptyList());
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), "Text", "String", null,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, null,
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
 			null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -2242,8 +2269,9 @@ public class ObjectEntryLocalServiceTest {
 				scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

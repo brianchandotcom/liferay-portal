@@ -245,7 +245,7 @@ public class ObjectFieldLocalServiceTest {
 		for (String businessType : businessTypes) {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
-					businessType, "", "Able", "able",
+					businessType, StringPool.BLANK, "Able", "able",
 					_getObjectFieldSettings(businessType)));
 		}
 
@@ -254,7 +254,7 @@ public class ObjectFieldLocalServiceTest {
 		try {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
-					businessType, "", "Able", "able"));
+					businessType, StringPool.BLANK, "Able", "able"));
 
 			Assert.fail();
 		}
@@ -282,13 +282,14 @@ public class ObjectFieldLocalServiceTest {
 
 		for (String dbType : dbTypes) {
 			_testAddSystemObjectField(
-				ObjectFieldUtil.createObjectField("", dbType, "Able", "able"));
+				ObjectFieldUtil.createObjectField(
+					StringPool.BLANK, dbType, "Able", "able"));
 		}
 
 		try {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
-					"", "STRING", "Able", "able"));
+					StringPool.BLANK, "STRING", "Able", "able"));
 
 			Assert.fail();
 		}

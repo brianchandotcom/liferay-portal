@@ -22,6 +22,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -102,7 +103,8 @@ public class ListTypeDefinitionLocalServiceTest {
 		Assert.assertNotNull(listTypeEntry);
 
 		ObjectField objectField = ObjectFieldUtil.createObjectField(
-			"Text", "String", StringUtil.randomId());
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, StringUtil.randomId());
 
 		objectField.setListTypeDefinitionId(
 			listTypeDefinition.getListTypeDefinitionId());

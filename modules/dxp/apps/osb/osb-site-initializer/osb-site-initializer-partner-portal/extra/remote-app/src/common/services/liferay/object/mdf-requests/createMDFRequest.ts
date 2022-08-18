@@ -10,9 +10,8 @@
  */
 
 import {Liferay} from '../..';
-import GetTotalBudget from '../../../../../routes/MDFRequestForm/steps/Review/utils/GetTotalBudget';
 import MDFRequest from '../../../../interfaces/mdfRequest';
-import MDFRequestActivity from '../../../../interfaces/mdfRequestActivity';
+import getActivitiesData from '../../../../utils/getActivitiesData';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 
@@ -21,53 +20,13 @@ interface DateActivities {
 	startDates: Date[];
 }
 
-const getDateActivities = (mdfRequest: MDFRequest) => {
-	if (mdfRequest.activities.length) {
-		const datesActivities = mdfRequest.activities.reduce(
-			(dateAccumulator: DateActivities, activity: MDFRequestActivity) => {
-				return {
-					endDates: [...dateAccumulator.endDates, activity.endDate],
-					startDates: [
-						...dateAccumulator.startDates,
-						activity.startDate,
-					],
-				};
-			},
-			{endDates: [], startDates: []}
-		);
-
-		const maxDateActivity = new Date(
-			Math.min(
-				Number(
-					...datesActivities.startDates.map((date) => new Date(date))
-				)
-			)
-		);
-		const minDateActivity = new Date(
-			Math.max(
-				Number(
-					...datesActivities.endDates.map((date) => new Date(date))
-				)
-			)
-		);
-
-		const totalCostOfExpense = GetTotalBudget(mdfRequest);
-
-		return {
-			maxDateActivity,
-			minDateActivity,
-			totalCostOfExpense,
-		};
-	}
-};
-
 export default async function createMDFRequest(mdfRequest: MDFRequest) {
 	const dtoMDFRequest = {
 		...mdfRequest,
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals.join(
 			', '
 		),
-		...getDateActivities(mdfRequest),
+		...getActivitiesData(mdfRequest),
 		targetAudienceRoles: mdfRequest.targetAudienceRoles.join(', '),
 		targetMarkets: mdfRequest.targetMarkets.join(', '),
 	};

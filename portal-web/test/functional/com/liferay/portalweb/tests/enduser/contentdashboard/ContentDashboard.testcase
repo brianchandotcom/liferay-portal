@@ -2359,15 +2359,8 @@ definition {
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Document");
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.addWidget(portletName = "Documents and Media");
-
-			PageEditor.publish();
 
 			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
 				groupName = "Test Site Name",
@@ -2462,15 +2455,8 @@ definition {
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Document");
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.addWidget(portletName = "Documents and Media");
-
-			PageEditor.publish();
 
 			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
 				groupName = "Test Site Name",
@@ -2677,15 +2663,8 @@ definition {
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Document");
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.addWidget(portletName = "Documents and Media");
-
-			PageEditor.publish();
 
 			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
 				groupName = "Test Site Name",
@@ -4387,29 +4366,8 @@ definition {
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Web Content");
-		}
-
-		task ("Add mapped heading to Display Page") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-
-			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Heading",
-				id = "element-text");
-
-			Select(
-				locator1 = "PageEditorEditableLink#FIELD",
-				value1 = "Title");
-
-			PageEditor.waitForAutoSave();
-
-			Button.clickPublish();
 
 			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
 				groupName = "Test Site Name",

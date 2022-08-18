@@ -15,7 +15,6 @@
 package com.liferay.client.extension.web.internal.type.deployer;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.CustomElementCET;
 import com.liferay.client.extension.type.IFrameCET;
@@ -118,13 +117,14 @@ public class CETDeployerImpl implements CETDeployer {
 	}
 
 	private String _getPortletId(CET cet) {
-		ClientExtensionEntry clientExtensionEntry =
-			cet.getClientExtensionEntry();
+		String externalReferenceCode = cet.getExternalReferenceCode();
 
 		return StringBundler.concat(
 			"com_liferay_client_extension_web_internal_portlet_",
 			"ClientExtensionEntryPortlet_",
-			clientExtensionEntry.getClientExtensionEntryId());
+			externalReferenceCode.replaceAll(
+				"[^a-zA-Z0-9_]", StringPool.UNDERLINE),
+			StringPool.UNDERLINE, cet.getCompanyId());
 	}
 
 	private ServiceRegistration<ConfigurationAction>

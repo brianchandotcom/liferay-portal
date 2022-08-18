@@ -15,6 +15,7 @@
 package com.liferay.client.extension.web.internal.upgrade.v3_0_0;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
@@ -79,19 +80,20 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 
 		try (Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
-				"select clientExtensionEntryId, companyId from " +
+				"select externalReferenceCode, companyId from " +
 					"ClientExtensionEntry")) {
 
 			while (resultSet.next()) {
-				long clientExtensionEntryId = resultSet.getLong(
-					"clientExtensionEntryId");
-				long companyId = resultSet.getLong(
-					"companyId");
+				long companyId = resultSet.getLong("companyId");
+				String externalReferenceCode = resultSet.getString(
+					"externalReferenceCode");
 
 				portletIds.add(
 					new String[] {
-						portletIdPrefix + companyId,
-						portletIdPrefix + clientExtensionEntryId
+						portletIdPrefix + externalReferenceCode,
+						StringBundler.concat(
+							portletIdPrefix, externalReferenceCode,
+							StringPool.UNDERLINE, companyId)
 					});
 			}
 		}

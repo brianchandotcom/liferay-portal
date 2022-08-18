@@ -14,17 +14,18 @@
 
 package com.liferay.friendly.url.web.internal.servlet.taglib;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.model.RedirectEntry;
@@ -32,7 +33,6 @@ import com.liferay.redirect.service.RedirectEntryLocalService;
 
 import java.io.IOException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Couso
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class RedirectOptionsJSPDynamicInclude extends BaseJSPDynamicInclude {
+public class RedirectOptionsJSPDynamicInclude implements DynamicInclude {
 
 	@Override
 	public void include(
@@ -108,7 +108,22 @@ public class RedirectOptionsJSPDynamicInclude extends BaseJSPDynamicInclude {
 			return;
 		}
 
-		super.include(httpServletRequest, httpServletResponse, key);
+		ScriptData scriptData = new ScriptData();
+
+		String initModuleName = _npmResolver.resolveModuleName(
+			"@liferay/friendly-url-web/index");
+
+		String redirectURL = StringBundler.concat(
+			redirectEntry.getDestinationURL(), "?redirect=",
+			URLCodec.encodeURL(themeDisplay.getURLCurrent()),
+			"&showRedirectOptionsMessage=false");
+
+		scriptData.append(
+			null,
+			"RedirectOptions.default({redirectURL: \"" + redirectURL + "\"})",
+			initModuleName + " as RedirectOptions", ScriptData.ModulesType.ES6);
+
+		scriptData.writeTo(httpServletResponse.getWriter());
 	}
 
 	@Override
@@ -116,25 +131,6 @@ public class RedirectOptionsJSPDynamicInclude extends BaseJSPDynamicInclude {
 		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
 
 		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#pre");
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/dynamic_include/redirect_options.jsp";
-	}
-
-	@Override
-	protected Log getLog() {
-		return _log;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.friendly.url.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private String _normalizeFriendlyURL(String friendlyURL) {
@@ -147,8 +143,8 @@ public class RedirectOptionsJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return friendlyURL;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		RedirectOptionsJSPDynamicInclude.class);
+	@Reference
+	private NPMResolver _npmResolver;
 
 	@Reference
 	private Portal _portal;

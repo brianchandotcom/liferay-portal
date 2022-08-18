@@ -692,7 +692,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					StringBundler.concat(
 						"[$CLIENT_EXTENSION_ENTRY_ID:",
 						jsonObject.getString("clientExtensionEntryKey"), "$]"),
-					jsonObject.getString("externalReferenceCode")));
+					jsonObject.getString("externalReferenceCode") + "_" +
+						serviceContext.getCompanyId()));
 		}
 
 		return clientExtensionEntryIdsStringUtilReplaceValues;

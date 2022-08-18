@@ -514,7 +514,7 @@ definition {
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Access Account Permission",
-			userEmailAddress = "${userEmail}");
+			userEmailAddress = "${userEmailAddress}");
 	}
 
 	macro assignExistingUserToPersonAccount {

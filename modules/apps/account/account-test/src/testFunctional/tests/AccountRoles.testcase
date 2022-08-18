@@ -92,7 +92,7 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "userea1@liferay.com");
 
-			Accounts.assignAccessAccountRoleToUser(userEmail = "userea1@liferay.com");
+			Accounts.assignAccessAccountRoleToUser(userEmailAddress = "userea1@liferay.com");
 
 			task ("And add two accounts") {
 				for (var accountNum : list "1,2") {

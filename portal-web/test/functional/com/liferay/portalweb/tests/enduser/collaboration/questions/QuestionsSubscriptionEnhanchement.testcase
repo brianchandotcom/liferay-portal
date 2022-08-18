@@ -43,18 +43,69 @@ definition {
 	@description = "Validate if the user can create a question with an AL image."
 	@priority = "5"
 	test CanASubscribeAQuestion {
+
+        task("Create a Topic"){
+
+        }
+
+        task("Create a Question"){
+            
+        }
+
+        task("Go to My Subscription"){
+
+        }
+
+        task("Validate the subcribed question"){
+
+        }
 		
 	}
 
 	@description = "Validate if the user can create a question with an AL image."
 	@priority = "5"
 	test CanASubscribeATag {
-		
+
+		task("Create a Topic"){
+
+        }
+
+        task("Create a Question with a tag"){
+            
+        }
+
+        task("Subscribe to Tag"){
+
+        }
+
+        task("Go to My Subscription page"){
+            
+        }
+
+        task("Validate the subcribed tag"){
+            
+        }
 	}
 
     @description = "Validate if the user can create a question with an AL image."
 	@priority = "5"
 	test CanASubscribeATopic {
+
+        task("Create a Topic"){
+
+        }
+
+        task("Enter on a Topic"){
+            
+        }
+
+        task("Subcribe to the Topic"){
+
+        }
+
+        task("Validate the subcribed topic"){
+            
+        }
 		
 	}
 
@@ -62,29 +113,209 @@ definition {
 	@priority = "5"
 	test CanUnsubscribeAQuestion {
 		
+        task("Create a Topic"){
+
+        }
+
+        task("Enter on a Topic"){
+            
+        }
+
+        task("Create a Question"){
+
+        }
+
+        task("Go to my subscription page"){
+
+        }
+
+        task("Validate the subcribed Question"){
+            
+        }
+
+        task("Enter on a Topic"){
+            
+        }
+
+        task("Create a Question"){
+
+        }
+
+        task("Validate the subcribed Question"){
+            
+        }
 	}
 
 	@description = "Validate if the user can create a question with an AL image."
 	@priority = "5"
 	test CanUnsubscribeATag {
-		
+
+		task("Create a Topic"){
+
+        }
+
+        task("Create a Question with a tag"){
+            
+        }
+
+        task("Subscribe to Tag"){
+
+        }
+
+        task("Go to My Subscription page"){
+            
+        }
+
+        task("Validate the subcribed tag"){
+            
+        }
+
+        task("Unsubscribe to Tag"){
+
+        }
+
+        task("Go to My Subscription page"){
+            
+        }
+
+        task("Validate the unsubcribed tag"){
+            
+        }
 	}
 
     @description = "Validate if the user can create a question with an AL image."
 	@priority = "5"
 	test CanUnsubscribeATopic {
 		
+        task("Create a Topic"){
+
+        }
+
+        task("Enter on a Topic"){
+            
+        }
+
+        task("Subcribe to the Topic"){
+
+        }
+
+        task("Validate the subcribed topic"){
+            
+        }
+
+        task("Enter on a Topic"){
+            
+        }
+
+        task("Unsubcribe to the Topic"){
+
+        }
+
+        task("Validate if the unsubcribed topic"){
+            
+        }
 	}
 
     @description = "Validate if the user can create a question with an AL image."
 	@priority = "3"
 	test CanBeNotifiedByAnswer {
+
+        task("Create a Topic"){
+
+        }
+
+        task("Enter on a Topic"){
+            
+        }
+
+        task("Create a Question"){
+
+        }
+
+        task("Create a new User with an Admin Role"){
+            
+        }
+
+        task("Logout from Test test"){
+            
+        }
+
+        task("Login with a new User"){
+            
+        }
+
+        task("Enter on the Question"){
+            
+        }
+
+        task("Answer the Question"){
+            
+        }
 		
+        task("Logout from the new User"){
+            
+        }
+
+        task("Login with Test test"){
+            
+        }
+
+        task("Validate the notifications"){
+            
+        }
 	}
 
 	@description = "Validate if the user can create a question with an AL image."
 	@priority = "3"
 	test CanBeNotifiedByComment {
+
+        task("Create a Topic"){
+
+        }
+
+        task("Enter on a Topic"){
+            
+        }
+
+        task("Create a Question"){
+
+        }
+
+         task("Answer a Question"){
+
+        }
+
+        task("Create a new User with an Admin Role"){
+            
+        }
+
+        task("Logout from Test test"){
+            
+        }
+
+        task("Login with a new User"){
+            
+        }
+
+        task("Enter on the Question"){
+            
+        }
+
+        task("Comment the Answer"){
+            
+        }
+		
+        task("Logout from the new User"){
+            
+        }
+
+        task("Login with Test test"){
+            
+        }
+
+        task("Validate the notifications"){
+            
+        }
 		
 	}
 
@@ -92,6 +323,46 @@ definition {
 	@priority = "3"
 	test CanBeNotifiedByQuestion {
 		
+        task("Create a Topic"){
+
+        }
+
+        task("Subcribe on a Topic"){
+            
+        }
+
+        task("Create a new User with an Admin Role"){
+            
+        }
+
+        task("Logout from Test test"){
+            
+        }
+
+        task("Login with a new User"){
+            
+        }
+
+        task("Enter on the Topic"){
+            
+        }
+
+        task("Create a Question"){
+
+        }
+		
+        task("Logout from the new User"){
+            
+        }
+
+        task("Login with Test test"){
+            
+        }
+
+        task("Validate the notifications"){
+            
+        }
+
 	}
 
 }

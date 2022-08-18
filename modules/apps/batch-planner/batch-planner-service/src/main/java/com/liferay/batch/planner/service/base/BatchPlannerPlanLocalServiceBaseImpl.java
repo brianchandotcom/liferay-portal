@@ -136,11 +136,13 @@ public abstract class BatchPlannerPlanLocalServiceBaseImpl
 	 *
 	 * @param batchPlannerPlan the batch planner plan
 	 * @return the batch planner plan that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public BatchPlannerPlan deleteBatchPlannerPlan(
-		BatchPlannerPlan batchPlannerPlan) {
+			BatchPlannerPlan batchPlannerPlan)
+		throws PortalException {
 
 		return batchPlannerPlanPersistence.remove(batchPlannerPlan);
 	}

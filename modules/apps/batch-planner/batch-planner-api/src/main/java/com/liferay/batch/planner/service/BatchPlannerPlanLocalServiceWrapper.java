@@ -108,11 +108,14 @@ public class BatchPlannerPlanLocalServiceWrapper
 	 *
 	 * @param batchPlannerPlan the batch planner plan
 	 * @return the batch planner plan that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.batch.planner.model.BatchPlannerPlan
-		deleteBatchPlannerPlan(
-			com.liferay.batch.planner.model.BatchPlannerPlan batchPlannerPlan) {
+			deleteBatchPlannerPlan(
+				com.liferay.batch.planner.model.BatchPlannerPlan
+					batchPlannerPlan)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerPlanLocalService.deleteBatchPlannerPlan(
 			batchPlannerPlan);

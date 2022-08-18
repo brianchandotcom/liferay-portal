@@ -108,10 +108,12 @@ public interface BatchPlannerPlanLocalService
 	 *
 	 * @param batchPlannerPlan the batch planner plan
 	 * @return the batch planner plan that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public BatchPlannerPlan deleteBatchPlannerPlan(
-		BatchPlannerPlan batchPlannerPlan);
+			BatchPlannerPlan batchPlannerPlan)
+		throws PortalException;
 
 	/**
 	 * Deletes the batch planner plan with the primary key from the database. Also notifies the appropriate model listeners.

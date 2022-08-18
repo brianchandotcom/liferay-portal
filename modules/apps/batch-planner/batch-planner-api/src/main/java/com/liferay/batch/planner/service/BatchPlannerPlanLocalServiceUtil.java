@@ -107,9 +107,11 @@ public class BatchPlannerPlanLocalServiceUtil {
 	 *
 	 * @param batchPlannerPlan the batch planner plan
 	 * @return the batch planner plan that was removed
+	 * @throws PortalException
 	 */
 	public static BatchPlannerPlan deleteBatchPlannerPlan(
-		BatchPlannerPlan batchPlannerPlan) {
+			BatchPlannerPlan batchPlannerPlan)
+		throws PortalException {
 
 		return getService().deleteBatchPlannerPlan(batchPlannerPlan);
 	}

@@ -33,6 +33,10 @@ $controlMenuHeight: 56px;
 
 		.tbar-light {
 			background-color: $gray-200;
+
+			.active {
+				background-color: $light-d1;
+			}
 		}
 	}
 

@@ -94,20 +94,9 @@ const useFormActions = (): Form => {
 
 		delete form.id;
 
-		try {
-			const fn = data.id
-				? () => update(data.id, form)
-				: () => create(form);
+		const fn = data.id ? () => update(data.id, form) : () => create(form);
 
-			const response = await fn();
-
-			return response;
-		}
-		catch (error) {
-			onError(error);
-
-			throw error;
-		}
+		return fn();
 	};
 
 	const onSubmitAndSave = async (

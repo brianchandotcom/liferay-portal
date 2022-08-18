@@ -12,11 +12,16 @@
  * details.
  */
 
+import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
+import {SearchBuilder} from '../../util/search';
 import fetcher from '../fetcher';
 import {APIResponse, TestrayProductVersion} from './types';
 
-type ProductVersion = typeof yupSchema.team.__outputType;
+type ProductVersion = typeof yupSchema.productVersion.__outputType;
+
+const nestedFieldsParam = 'nestedFields=project';
+const productVersionsResource = `/productversions?${nestedFieldsParam}`;
 
 const adapter = ({
 	name,
@@ -26,18 +31,48 @@ const adapter = ({
 	r_projectToProductVersions_c_projectId,
 });
 
-const createProductVersion = (team: ProductVersion) =>
-	fetcher.post('/productversions', adapter(team));
+const validateProductVersionName = async (
+	productVersion: ProductVersion,
+	productVersionId?: number
+): Promise<void | Error> => {
+	const filter = new SearchBuilder()
+		.eq('name', productVersion.name)
+		.and()
+		.eq('projectId', productVersion.projectId as string)
+		.build();
 
-const updateProductVersion = (id: number, team: ProductVersion) =>
-	fetcher.put(`/productversions/${id}`, adapter(team));
+	const response = await fetcher<APIResponse<TestrayProductVersion>>(
+		`/productversions?filter=${filter}`
+	);
 
-const nestedFieldsParam = 'nestedFields=project';
+	const checkProductVersionId = productVersionId
+		? response?.items[0]?.id !== productVersionId
+		: true;
 
-const productVersionsResource = `/productversions?${nestedFieldsParam}`;
+	if (response?.totalCount && checkProductVersionId) {
+		throw new Error(
+			i18n.sub('the-x-name-already-exists', 'product-version')
+		);
+	}
+};
 
-const getProductVersionQuery = (teamId: number | string) =>
-	`/productversions/${teamId}?${nestedFieldsParam}`;
+const createProductVersion = async (productVersion: ProductVersion) => {
+	await validateProductVersionName(productVersion);
+
+	return fetcher.post('/productversions', adapter(productVersion));
+};
+
+const updateProductVersion = async (
+	id: number,
+	productVersion: ProductVersion
+) => {
+	await validateProductVersionName(productVersion, id);
+
+	return fetcher.put(`/productversions/${id}`, adapter(productVersion));
+};
+
+const getProductVersionQuery = (productVersionId: number | string) =>
+	`/productversions/${productVersionId}?${nestedFieldsParam}`;
 
 const getProductVersionTransformData = (
 	testrayProductVersion: TestrayProductVersion

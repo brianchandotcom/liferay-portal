@@ -269,6 +269,7 @@ export default {
 	'the-team-cannot-be-deleted-because-it-has-associated-components':
 		'The team cannot be deleted because it has associated components',
 	'the-team-name-already-exists': 'The team name already exists',
+	'the-x-name-already-exists': 'The {0} name already exists',
 	'there-are-no-entries-yet': 'There are no entries yet.',
 	'there-are-no-matching-results': 'There are no matching results.',
 	'this-build-has-been-analyzed': 'This build has been analyzed.',

@@ -735,6 +735,11 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setUserId(user.getUserId());
 		objectDefinition.setUserName(user.getFullName());
 		objectDefinition.setActive(system);
+
+		if (!system) {
+			objectDefinition.setEnableCategorization(true);
+		}
+
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setClassName(
 			_getClassName(

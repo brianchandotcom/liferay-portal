@@ -60,7 +60,7 @@ definition {
 
 		task ("When with POST request I create a comment with a custom external reference code with a value of the internal id of the previously created comment") {
 			var idComment = JSONUtil.getWithJSONPath("${response}", "$.id");
-			
+
 			var response2 = CommentAPI.createCommentInBlogPosting(
 				blogPostingId = "${blogPostingId}",
 				commentText = "CommentTwo",

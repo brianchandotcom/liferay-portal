@@ -265,6 +265,26 @@ this-is-a-language-key=This is a language key''',
 		}
 	}
 
+	@description = "This is a use case for LPS-149558. It assert the .properties with wrong format like language key value is empty can not be imported into Language Override Admin."
+	@priority = "4"
+	test CannotImportFileWithWrongDataFormat {
+		task ("Given navigate to the language override Import Translations page") {
+			Portlet.gotoPortletOptions(portletOption = "Import Translations");
+		}
+
+		task ("When import the .properties with no language key value") {
+			UploadDependencyFile.uploadFile(fileName = "LOImportWrongFormat.properties");
+
+			Button.clickSave();
+		}
+
+		task ("Then assert the impport process is failed due to the empty value") {
+			Alert.viewRequestFailedToComplete();
+
+			Alert.viewErrorMessage(errorMessage = "Error:Empty values are not allowed.");
+		}
+	}
+
 	@description = "This test asserts that the File Upload field is required in Import Translations page."
 	@priority = "4"
 	test CanViewFileUploadFieldIsRequired {

@@ -68,18 +68,18 @@ $(document).ready(() => {
 		const addValue = 'paramValue' + parameterCount;
 
 		const newName = $(
-			'<div class="col"><input type="text" id="' +
+			'<div class="col-6"><input type="text" id="' +
 			addName +
 			'" placeholder="Name" class="form-control form-control-sm" /></div>'
 		);
 		const newValue = $(
-			'<div class="col"><input type="text" id="' +
+			'<div class="col-6"><input type="text" id="' +
 			addValue +
 			'" placeholder="Value" class="form-control form-control-sm" /></div>'
 		);
 
 		const newSection = $(
-			'<div class="row" id="param' + parameterCount + '">'
+			'<div class="form-group form-row" id="param' + parameterCount + '">'
 		);
 		newSection.append(newName);
 		newSection.append(newValue);

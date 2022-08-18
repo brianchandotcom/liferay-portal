@@ -189,22 +189,22 @@
 					 	</div>
 					</div>
 
-					<br />
+					<hr />
+
+					<p class="h6">Parameters</p>
 
 					<div id="parametersList">
-						<div class="row" id="param0">
-							<div class="col"><input type="text" id="paramName0" placeholder="Name" class="form-control form-control-sm" /></div>
-							<div class="col"><input type="text" id="paramValue0" placeholder="Value" class="form-control form-control-sm" /></div>
+						<div class="form-group form-row" id="param0">
+							<div class="col-6"><input type="text" id="paramName0" placeholder="Name" class="form-control form-control-sm" /></div>
+							<div class="col-6"><input type="text" id="paramValue0" placeholder="Value" class="form-control form-control-sm" /></div>
 						</div>
 					</div>
 
-					<br />
+					<button id="addParameter" class="btn btn-success btn-sm">Add another parameter</button>
 
-					<button id="addParameter" class="btn btn-success btn-sm">Add another parameter</button><br />
+					<hr />
 
-					<br />
-
-					<button id="getApioCustom" class="btn btn-primary" onclick="request(event, $('#service').val());">Launch Request</button>
+					<button id="sendRequest" class="btn btn-primary" onclick="request(event, $('#service').val());">Launch Request</button>
 				</form>
 
 				<hr />

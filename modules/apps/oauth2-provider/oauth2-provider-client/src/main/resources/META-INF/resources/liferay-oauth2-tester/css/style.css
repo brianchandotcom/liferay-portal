@@ -16,9 +16,6 @@ body {
 	display: none;
 }
 
-#parametersList > div {
-	margin: 1%;
-}
 .message {
 	font-size: 12px;
 }

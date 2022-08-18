@@ -69,8 +69,6 @@ definition {
 			VerifyElementPresent(
 				key_title = "Step 1 of 2: Click the button",
 				locator1 = "Walkthrough#POPOVER_TITLE");
-
-			AssertLocation(value1 = "${portalURL}/web/site-name/walkthrough-page-1");
 		}
 
 		task ("And When navigate to next step") {

@@ -12,44 +12,51 @@
  * details.
  */
 
+import {useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import useFormModal from '../../../hooks/useFormModal';
+import useFormActions from '../../../hooks/useFormActions';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
 import {TestrayCase, deleteResource} from '../../../services/rest';
-import {Action} from '../../../types';
+import {Action, ActionsHookParameter} from '../../../types';
 
-const useCaseActions = () => {
+const useCaseActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
+	const {form} = useFormActions();
 	const {removeItemFromList} = useMutate();
 	const navigate = useNavigate();
-	const formModal = useFormModal();
-	const modal = formModal.modal;
 
-	const actions: Action[] = [
+	const actionsRef = useRef([
 		{
-			action: ({id}: TestrayCase) => navigate(`${id}/update`),
-			name: i18n.translate('edit'),
+			action: (Case: TestrayCase) =>
+				navigate(isHeaderActions ? 'update' : `${Case.id}/update`),
+			icon: 'pencil',
+			name: i18n.translate(isHeaderActions ? 'edit-case' : 'edit'),
 			permission: 'UPDATE',
 		},
 		{
 			action: ({id}: TestrayCase) => navigate(`${id}/requirements`),
+			icon: 'shortcut',
 			name: i18n.translate('link-requirements'),
 		},
 		{
 			action: ({id}: TestrayCase, mutate) =>
 				deleteResource(`/cases/${id}`)
-					?.then(() => removeItemFromList(mutate, id))
-					.then(modal.onSuccess)
-					.catch(modal.onError),
-			name: i18n.translate('delete'),
+					?.then(() => {
+						navigate(-1);
+						removeItemFromList(mutate, id);
+					})
+					.then(form.onSuccess)
+					.catch(form.onError),
+			icon: 'trash',
+			name: i18n.translate(isHeaderActions ? 'delete-case' : 'delete'),
 			permission: 'DELETE',
 		},
-	];
+	] as Action[]);
 
 	return {
-		actions,
-		formModal,
+		actions: actionsRef.current,
+		navigate,
 	};
 };
 

@@ -59,10 +59,10 @@ const descriptionTypes = Object.values(
 
 const CaseForm = () => {
 	const {
-		mutateCase,
+		mutateTestrayCase,
 		testrayCase,
 	}: {
-		mutateCase: KeyedMutator<any>;
+		mutateTestrayCase: KeyedMutator<any>;
 		testrayCase: TestrayCase;
 		testrayProject: TestrayProject;
 	} = useOutletContext();
@@ -120,7 +120,7 @@ const CaseForm = () => {
 				update: (...params) => testrayCaseRest.update(...params),
 			}
 		)
-			.then(mutateCase)
+			.then(mutateTestrayCase)
 			.then(() => {
 				if (addAnother) {
 					onSuccess();

@@ -114,13 +114,12 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 const Cases = () => {
 	const {projectId} = useParams();
 
-	const {actions, formModal} = useCaseActions();
+	const {actions} = useCaseActions();
 
 	return (
 		<Container>
 			<CaseListView
 				actions={actions}
-				formModal={formModal}
 				listViewProps={{
 					initialContext: {
 						columns: {

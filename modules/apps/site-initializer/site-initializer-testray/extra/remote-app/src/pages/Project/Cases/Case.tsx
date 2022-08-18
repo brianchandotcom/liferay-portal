@@ -32,7 +32,7 @@ import useCaseActions from './useCaseActions';
 const Case = () => {
 	const {caseId, projectId} = useParams();
 	const {testrayCase}: {testrayCase: TestrayCase} = useOutletContext();
-	const {actions, formModal} = useCaseActions();
+	const {actions} = useCaseActions();
 
 	return (
 		<>
@@ -83,7 +83,6 @@ const Case = () => {
 
 			<Container className="mt-3">
 				<ListView
-					forceRefetch={formModal.forceRefetch}
 					initialContext={{
 						columns: {
 							caseType: false,

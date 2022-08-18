@@ -53,20 +53,20 @@ type BuildFormType = {
 	categories: {
 		value: string;
 	}[];
-	description: string | undefined;
-	gitHash: string | undefined;
-	id: string | undefined;
+	description?: string;
+	gitHash?: string;
+	id?: string;
 	name: string;
 	productVersionId: string;
-	promoted: boolean | undefined;
+	promoted?: boolean;
 	routineId: string;
-	template: boolean | undefined;
+	template?: boolean;
 };
 
 const BuildForm = () => {
 	const {projectId, routineId} = useParams();
 
-	const {data: factorItemsData} = useFetch<APIResponse<TestrayFactor>>(
+	const {data: factorsData} = useFetch<APIResponse<TestrayFactor>>(
 		`${factorResource}&filter=${searchUtil.eq(
 			'routineId',
 			routineId as string
@@ -122,7 +122,7 @@ const BuildForm = () => {
 		form: {onClose, onSubmit},
 	} = useFormActions();
 
-	const factorItems = factorItemsData?.items || [];
+	const factorItems = factorsData?.items || [];
 
 	const {modal} = useFormModal({
 		onSave: (newCases) =>

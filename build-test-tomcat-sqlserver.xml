@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<project basedir="." default="test" name="portal-test-tomcat-sqlserver" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test-tomcat.xml" />
+	<import file="build-test.xml" />
+
+	<target name="run-selenium-tomcat-sqlserver">
+		<if>
+			<not>
+				<isset property="database.version" />
+			</not>
+			<then>
+				<var name="database.version" value="2019" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${database.version}" arg2="2017" />
+
+			<then>
+				<var name="database.sqlserver.docker.image" value="mcr.microsoft.com/mssql/server:2017-CU19-ubuntu-16.04" />
+			</then>
+
+			<elseif>
+				<equals arg1="${database.version}" arg2="2019" />
+
+				<then>
+					<var name="database.sqlserver.docker.image" value="mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04" />
+				</then>
+			</elseif>
+		</if>
+
+		<get-database-property property.name="database.host" />
+
+		<antcall inheritAll="false" target="start-docker-database-sqlserver">
+			<param name="skip.copy.optional.jars" value="true" />
+			<param name="skip.prepare.portal.ext.properties" value="true" />
+			<param name="skip.rebuild.database" value="true" />
+		</antcall>
+
+		<antcall inheritAll="false" target="run-selenium-tomcat">
+			<param name="database.sqlserver.docker.image" value="${database.sqlserver.docker.image}" />
+			<param name="database.sqlserver.host" value="${database.host}_sqlserver" />
+			<param name="database.sqlserver.password" value="Liferay123" />
+			<param name="database.sqlserver.schema" value="lportal" />
+			<param name="database.sqlserver.url" value="jdbc:sqlserver://${database.host}:1434;databaseName=${database.sqlserver.schema}" />
+			<param name="database.sqlserver.username" value="sa" />
+			<param name="database.sqlserver.version" value="${database.version}" />
+			<param name="database.type" value="sqlserver" />
+			<param name="test.jdbc.drivers.url" value="http://mirrors.lax.liferay.com/files.liferay.com/private/jdbc" />
+			<param name="test.class" value="${test.class}" />
+		</antcall>
+	</target>
+</project>

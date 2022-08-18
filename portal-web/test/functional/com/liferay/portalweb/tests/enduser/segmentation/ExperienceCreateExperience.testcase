@@ -87,20 +87,6 @@ definition {
 				userEmailAddress = "userea3@liferay.com");
 		}
 
-		task ("Uncheck Verify email for strangers") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "User Authentication",
-				configurationName = "General",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-		}
-
 		task ("Create a segment for each user") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",

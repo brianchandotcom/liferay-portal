@@ -29,6 +29,7 @@ import {
 	primaryUsageOptions,
 	yearsOptions,
 } from './SelectOptions';
+import {formValidationTypes} from './types';
 
 type FormVehicleInfoTypes = {
 	form: any[];
@@ -49,6 +50,7 @@ const FormVehicleInfo = ({
 	const [_yearsOptions, setYearsOptions] = useState<any[]>([]);
 	const [_model, setModel] = useState<string>('');
 	const [year, setYear] = useState<string>('');
+	const [yearSearch, setYearSearch] = useState<string>('');
 
 	enum dropdownAlign {
 		topCenter = 0,
@@ -60,15 +62,6 @@ const FormVehicleInfo = ({
 		middleLeft = 6,
 		topLeft = 7,
 	}
-
-	type formValidationTypes = {
-		annualMileage: boolean;
-		make: boolean;
-		model: boolean;
-		ownership: boolean;
-		primaryUsage: boolean;
-		year: boolean;
-	};
 
 	const hasRequiredError: formValidationTypes = {
 		annualMileage: false,
@@ -126,30 +119,37 @@ const FormVehicleInfo = ({
 		dispatch({payload, type: ACTIONS.SET_REMOVE_VEHICLE});
 	};
 
-	useEffect(() => {
-		setMakeOptions(makeOptions);
-
-		const yearOptionsAddClick = yearsOptions.map((yearsOption) => {
+	const yearOptionsAddClick = () => {
+		return yearsOptions.map((yearsOption) => {
 			return {
 				...yearsOption,
+				id,
 				onClick: (event: any) => {
 					let value = event.target.textContent || '';
 
 					value = value === 'Choose an option' ? '' : value;
-
 					setYear(value);
 					handleChangeField('year', value, id);
 					setHasError({
 						...hasError,
-						year: value === '' ? true : false,
+						year: value === '',
 					});
 				},
 			};
 		});
+	};
 
-		setYearsOptions(yearOptionsAddClick);
+	useEffect(() => {
+		setMakeOptions(makeOptions);
+		setYearsOptions(yearOptionsAddClick());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		setYearSearch('');
+		setYearsOptions(yearOptionsAddClick());
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [year]);
 
 	useEffect(() => {
 		setMakeOptions(
@@ -221,13 +221,24 @@ const FormVehicleInfo = ({
 					<ClayDropDownWithItems
 						alignmentByViewport={true}
 						alignmentPosition={dropdownAlign.bottomCenter}
-						items={_yearsOptions.filter((yearOption) => {
-							return yearOption.label.includes(year);
-						})}
-						onSearchValueChange={(value) => {
-							setYear(value);
+						items={_yearsOptions}
+						onSearchValueChange={(value: string) => {
+							const filterOptions = yearOptionsAddClick().filter(
+								(yearOption) => {
+									if (
+										yearOption.label
+											.toLowerCase()
+											.includes(value)
+									) {
+										return yearOption;
+									}
+								}
+							);
+
+							setYearsOptions(filterOptions);
+							setYearSearch(value);
 						}}
-						searchValue={year}
+						searchValue={yearSearch}
 						searchable={true}
 						trigger={
 							<div className="d-flex select-years text-neutral-10">
@@ -240,7 +251,6 @@ const FormVehicleInfo = ({
 									<ClaySelect.Option
 										className="cursor-pointer font-weight-bold py-4 text-brand-primary text-center text-paragraph-sm text-uppercase"
 										label={form[formNumber - 1].year}
-										selected
 										value={form[formNumber - 1].year}
 									/>
 								</ClaySelect>
@@ -285,7 +295,6 @@ const FormVehicleInfo = ({
 								className="font-weight-bold py-6 text-brand-primary text-center text-paragraph-sm text-uppercase"
 								key={index}
 								label={makeOption.name}
-								selected={makeOption.checked}
 								value={makeOption.name}
 							/>
 						))}
@@ -384,7 +393,7 @@ const FormVehicleInfo = ({
 						{
 							'has-error':
 								hasError.annualMileage ||
-								(form[formNumber - 1].annualMileage < 50 &&
+								(form[formNumber - 1].annualMileage <= 50 &&
 									form[formNumber - 1].annualMileage !== ''),
 						}
 					)}
@@ -416,7 +425,7 @@ const FormVehicleInfo = ({
 
 					{hasError.annualMileage && <ErrorMessage />}
 
-					{form[formNumber - 1].annualMileage < 50 &&
+					{form[formNumber - 1].annualMileage <= 50 &&
 						form[formNumber - 1].annualMileage !== '' && (
 							<ErrorMessage text="Please enter a value greater than 50" />
 						)}

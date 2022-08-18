@@ -22,6 +22,9 @@ import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
  */
 public class CommercePricingFDSNames {
 
+	public static final String ACCOUNT_ENTRY_PRICE_LISTS =
+		AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN + "-accountEntryPriceLists";
+
 	public static final String DISCOUNT_CATEGORIES =
 		CommercePricingPortletKeys.COMMERCE_DISCOUNT + "-discountCategories";
 

@@ -186,6 +186,47 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153367. The page creator could preview current experience in a new tab."
+	@priority = "4"
+	test PreviewCurrentExperienceInANewTab {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("Given a page creator has a Heading fragment on a content page with a new experience") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+		}
+
+		task ("When the page creator edits the inline text of Heading in the new experience") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "New editable fragment text");
+		}
+
+		task ("Then the page creator could preview current experience in a new tab") {
+			PageEditor.previewInANewTab();
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "New editable fragment text");
+		}
+	}
+
 	@description = "This is a test for LPS-142290. The user can switch experiences at view mode."
 	@priority = "4"
 	test SwitchExperienceAtViewMode {

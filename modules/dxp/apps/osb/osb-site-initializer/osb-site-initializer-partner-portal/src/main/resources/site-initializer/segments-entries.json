@@ -4,7 +4,7 @@
 		"name_i18n": {
 			"en-US": "Africa"
 		},
-		"segmentsEntryKey": "Africa",
+		"segmentsEntryKey": "AFRICA",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -20,7 +20,7 @@
 		"name_i18n": {
 			"en-US": "Argentina, Uruguay, Paraguay"
 		},
-		"segmentsEntryKey": "Argentina, Uruguay, Paraguay",
+		"segmentsEntryKey": "ARGENTINA-URUGUAY-PARAGUAY",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -36,7 +36,7 @@
 		"name_i18n": {
 			"en-US": "Canada"
 		},
-		"segmentsEntryKey": "Canada",
+		"segmentsEntryKey": "CANADA",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -44,15 +44,15 @@
 		"name_i18n": {
 			"en-US": "Central America"
 		},
-		"segmentsEntryKey": "Central America",
+		"segmentsEntryKey": "CENTRAL-AMERICA",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
 		"active": "true",
 		"name_i18n": {
-			"en-US": "CENTRAL AND EASTERN EUROPE"
+			"en-US": "Central and Eastern Europe"
 		},
-		"segmentsEntryKey": "CENTRAL AND EASTERN EUROPE",
+		"segmentsEntryKey": "CENTRAL-AND-EASTERN-EUROPE",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -60,7 +60,7 @@
 		"name_i18n": {
 			"en-US": "Chile, Peru"
 		},
-		"segmentsEntryKey": "Chile, Peru",
+		"segmentsEntryKey": "CHILE-PERU",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -68,7 +68,7 @@
 		"name_i18n": {
 			"en-US": "China"
 		},
-		"segmentsEntryKey": "China",
+		"segmentsEntryKey": "CHINA",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -76,7 +76,7 @@
 		"name_i18n": {
 			"en-US": "Colombia, Ecuador"
 		},
-		"segmentsEntryKey": "Colombia, Ecuador",
+		"segmentsEntryKey": "COLOMBIA-ECUADOR",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -92,7 +92,7 @@
 		"name_i18n": {
 			"en-US": "France"
 		},
-		"segmentsEntryKey": "France",
+		"segmentsEntryKey": "FRANCE",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -100,7 +100,7 @@
 		"name_i18n": {
 			"en-US": "Global"
 		},
-		"segmentsEntryKey": "Global",
+		"segmentsEntryKey": "GLOBAL",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -108,7 +108,7 @@
 		"name_i18n": {
 			"en-US": "India"
 		},
-		"segmentsEntryKey": "India",
+		"segmentsEntryKey": "INDIA",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -116,7 +116,7 @@
 		"name_i18n": {
 			"en-US": "ItGrCy"
 		},
-		"segmentsEntryKey": "ItGrCy",
+		"segmentsEntryKey": "ITGRCY",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -124,7 +124,7 @@
 		"name_i18n": {
 			"en-US": "Japan"
 		},
-		"segmentsEntryKey": "Japan",
+		"segmentsEntryKey": "JAPAN",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -132,7 +132,7 @@
 		"name_i18n": {
 			"en-US": "Latin America"
 		},
-		"segmentsEntryKey": "Latin America",
+		"segmentsEntryKey": "LATIN-AMERICA",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -140,7 +140,7 @@
 		"name_i18n": {
 			"en-US": "Mexico"
 		},
-		"segmentsEntryKey": "Mexico",
+		"segmentsEntryKey": "MEXICO",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -148,7 +148,7 @@
 		"name_i18n": {
 			"en-US": "Middle East"
 		},
-		"segmentsEntryKey": "Middle East",
+		"segmentsEntryKey": "MIDDLE-EAST",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -156,7 +156,7 @@
 		"name_i18n": {
 			"en-US": "Nordics"
 		},
-		"segmentsEntryKey": "Nordics",
+		"segmentsEntryKey": "NORDICS",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -164,7 +164,7 @@
 		"name_i18n": {
 			"en-US": "Singapore"
 		},
-		"segmentsEntryKey": "Singapore",
+		"segmentsEntryKey": "SINGAPORE",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{
@@ -172,7 +172,7 @@
 		"name_i18n": {
 			"en-US": "SpainPortugal"
 		},
-		"segmentsEntryKey": "SpainPortugal",
+		"segmentsEntryKey": "SPAIN-PORTUGAL",
 		"type": "com.liferay.portal.kernel.model.User"
 	},
 	{

@@ -1058,8 +1058,12 @@ definition {
 	@description = "Documents visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfPreviewsInDM {
-		property portal.acceptance = "true";
+
+		//property portal.acceptance = "true";
+
 		property portal.release = "true";
+
+		// This test can be put back into acceptance after LRAC-11639 is resolved
 
 		var documentNameList = "DM AC Title,DM AC Title";
 

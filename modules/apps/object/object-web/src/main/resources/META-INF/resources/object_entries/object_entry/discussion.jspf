@@ -14,18 +14,29 @@
  */
 --%>
 
-<c:if test="<%= objectEntry != null %>">
-	<liferay-ui:panel
-		markupView="lexicon"
-		title="comments"
-	>
-		<liferay-comment:discussion
-			className="<%= objectDefinition.getClassName() %>"
-			classPK="<%= objectEntry.getId() %>"
-			formName='<%= "fm2" + objectEntry.getId() %>'
-			ratingsEnabled="<%= false %>"
-			redirect="<%= currentURL %>"
-			userId="<%= objectDefinition.getUserId() %>"
-		/>
-	</liferay-ui:panel>
-</c:if>
+<clay:sheet-section
+	cssClass="sheet-lg"
+>
+	<clay:row>
+		<clay:col
+			cssClass="mx-auto"
+			md="12"
+		>
+			<c:if test="<%= objectEntry != null %>">
+				<liferay-ui:panel
+					markupView="lexicon"
+					title="comments"
+				>
+					<liferay-comment:discussion
+						className="<%= objectDefinition.getClassName() %>"
+						classPK="<%= objectEntry.getId() %>"
+						formName='<%= "fm2" + objectEntry.getId() %>'
+						ratingsEnabled="<%= false %>"
+						redirect="<%= currentURL %>"
+						userId="<%= objectDefinition.getUserId() %>"
+					/>
+				</liferay-ui:panel>
+			</c:if>
+		</clay:col>
+	</clay:row>
+</clay:sheet-section>

@@ -453,7 +453,7 @@ public class CommercePriceListLocalServiceUtil {
 		return getService().getCommercePriceList(commercePriceListId);
 	}
 
-	public static java.util.Optional<CommercePriceList> getCommercePriceList(
+	public static CommercePriceList getCommercePriceList(
 			long groupId, long commerceAccountId,
 			long[] commerceAccountGroupIds)
 		throws PortalException {

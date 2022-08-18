@@ -502,7 +502,7 @@ public class CommercePriceListLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Optional<CommercePriceList> getCommercePriceList(
+	public CommercePriceList getCommercePriceList(
 			long groupId, long commerceAccountId,
 			long[] commerceAccountGroupIds)
 		throws com.liferay.portal.kernel.exception.PortalException {

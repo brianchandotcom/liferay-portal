@@ -49,7 +49,6 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -374,7 +373,7 @@ public interface CommercePriceListLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Optional<CommercePriceList> getCommercePriceList(
+	public CommercePriceList getCommercePriceList(
 			long groupId, long commerceAccountId,
 			long[] commerceAccountGroupIds)
 		throws PortalException;

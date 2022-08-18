@@ -77,6 +77,42 @@
 			"name": "targetAudienceRoles",
 			"required": false,
 			"type": "Clob"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Minimum Activity Date"
+			},
+			"name": "minDateActivity",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Maximum Activity Date"
+			},
+			"name": "maxDateActivity",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Total Cost of Expense"
+			},
+			"name": "totalCostOfExpense",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

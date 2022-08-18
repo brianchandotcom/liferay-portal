@@ -114,14 +114,14 @@
 	{
 		"actionId": "MANAGE_AVAILABLE_ACCOUNTS",
 		"primKey": "0",
-		"resourceName": "com.liferay.commerce.account",
+		"resourceName": "com.liferay.portal.kernel.model.Organization",
 		"roleName": "Sales Agent",
 		"scope": "1"
 	},
 	{
 		"actionId": "MANAGE_AVAILABLE_ACCOUNTS",
 		"primKey": "0",
-		"resourceName": "com.liferay.commerce.account",
+		"resourceName": "com.liferay.portal.kernel.model.Organization",
 		"roleName": "Operations Manager",
 		"scope": "1"
 	},

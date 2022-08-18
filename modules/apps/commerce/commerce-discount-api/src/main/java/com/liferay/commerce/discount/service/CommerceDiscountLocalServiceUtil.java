@@ -549,6 +549,14 @@ public class CommerceDiscountLocalServiceUtil {
 			uuid, companyId);
 	}
 
+	public static CommerceDiscount fetchDefaultCommerceDiscount(
+		long commerceChannelAccountEntryRelId, long cpDefinitionId,
+		long cpInstanceId) {
+
+		return getService().fetchDefaultCommerceDiscount(
+			commerceChannelAccountEntryRelId, cpDefinitionId, cpInstanceId);
+	}
+
 	public static List<CommerceDiscount>
 		getAccountAndChannelAndOrderTypeCommerceDiscounts(
 			long commerceAccountId, long commerceChannelId,
@@ -813,6 +821,13 @@ public class CommerceDiscountLocalServiceUtil {
 		long companyId, String couponCode) {
 
 		return getService().getCommerceDiscounts(companyId, couponCode);
+	}
+
+	public static List<CommerceDiscount> getCommerceDiscounts(
+		long companyId, String level, boolean active, int status) {
+
+		return getService().getCommerceDiscounts(
+			companyId, level, active, status);
 	}
 
 	/**

@@ -511,6 +511,10 @@ public class CommercePriceListLocalServiceWrapper
 			groupId, commerceAccountId, commerceAccountGroupIds);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList
 		getCommercePriceListByAccountAndChannelAndOrderTypeId(
@@ -523,6 +527,10 @@ public class CommercePriceListLocalServiceWrapper
 				commerceOrderTypeId, type);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByAccountAndChannelId(
 		long groupId, long commerceAccountId, long commerceChannelId,
@@ -533,6 +541,10 @@ public class CommercePriceListLocalServiceWrapper
 				groupId, commerceAccountId, commerceChannelId, type);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByAccountAndOrderTypeId(
 		long groupId, long commerceAccountId, long commerceOrderTypeId,
@@ -543,16 +555,10 @@ public class CommercePriceListLocalServiceWrapper
 				groupId, commerceAccountId, commerceOrderTypeId, type);
 	}
 
-	@Override
-	public CommercePriceList getCommercePriceListByAccountGroupAndOrderTypeId(
-		long groupId, long[] commerceAccountGroupIds, long commerceOrderTypeId,
-		String type) {
-
-		return _commercePriceListLocalService.
-			getCommercePriceListByAccountGroupAndOrderTypeId(
-				groupId, commerceAccountGroupIds, commerceOrderTypeId, type);
-	}
-
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByAccountGroupIds(
 		long groupId, long[] commerceAccountGroupIds, String type) {
@@ -562,6 +568,10 @@ public class CommercePriceListLocalServiceWrapper
 				groupId, commerceAccountGroupIds, type);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList
 		getCommercePriceListByAccountGroupsAndChannelAndOrderTypeId(
@@ -574,6 +584,10 @@ public class CommercePriceListLocalServiceWrapper
 				commerceOrderTypeId, type);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByAccountGroupsAndChannelId(
 		long groupId, long[] commerceAccountGroupIds, long commerceChannelId,
@@ -584,6 +598,10 @@ public class CommercePriceListLocalServiceWrapper
 				groupId, commerceAccountGroupIds, commerceChannelId, type);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByAccountGroupsAndOrderTypeId(
 		long groupId, long[] commerceAccountGroupIds, long commerceOrderTypeId,
@@ -594,6 +612,10 @@ public class CommercePriceListLocalServiceWrapper
 				groupId, commerceAccountGroupIds, commerceOrderTypeId, type);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByAccountId(
 		long groupId, long commerceAccountId, String type) {
@@ -602,6 +624,10 @@ public class CommercePriceListLocalServiceWrapper
 			groupId, commerceAccountId, type);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByChannelAndOrderTypeId(
 		long groupId, long commerceChannelId, long commerceOrderTypeId,
@@ -612,6 +638,10 @@ public class CommercePriceListLocalServiceWrapper
 				groupId, commerceChannelId, commerceOrderTypeId, type);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByChannelId(
 		long groupId, long commerceChannelId, String type) {
@@ -650,6 +680,10 @@ public class CommercePriceListLocalServiceWrapper
 			commerceChannelId, commerceOrderTypeId, cPInstanceUuid, type);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByOrderTypeId(
 		long groupId, long commerceOrderTypeId, String type) {
@@ -658,6 +692,10 @@ public class CommercePriceListLocalServiceWrapper
 			groupId, commerceOrderTypeId, type);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList getCommercePriceListByUnqualified(
 		long groupId, String type) {
@@ -725,6 +763,128 @@ public class CommercePriceListLocalServiceWrapper
 
 		return _commercePriceListLocalService.getCommercePriceLists(
 			groupIds, companyId, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<CommercePriceList>
+		getCommercePriceListsByAccountAndChannelAndOrderTypeId(
+			long groupId, long commerceAccountId, long commerceChannelId,
+			long commerceOrderTypeId, String type) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListsByAccountAndChannelAndOrderTypeId(
+				groupId, commerceAccountId, commerceChannelId,
+				commerceOrderTypeId, type);
+	}
+
+	@Override
+	public java.util.List<CommercePriceList>
+		getCommercePriceListsByAccountAndChannelId(
+			long groupId, long commerceAccountId, long commerceChannelId,
+			String type) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListsByAccountAndChannelId(
+				groupId, commerceAccountId, commerceChannelId, type);
+	}
+
+	@Override
+	public java.util.List<CommercePriceList>
+		getCommercePriceListsByAccountAndOrderTypeId(
+			long groupId, long commerceAccountId, long commerceOrderTypeId,
+			String type) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListsByAccountAndOrderTypeId(
+				groupId, commerceAccountId, commerceOrderTypeId, type);
+	}
+
+	@Override
+	public java.util.List<CommercePriceList>
+		getCommercePriceListsByAccountGroupIds(
+			long groupId, long[] commerceAccountGroupIds, String type) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListsByAccountGroupIds(
+				groupId, commerceAccountGroupIds, type);
+	}
+
+	@Override
+	public java.util.List<CommercePriceList>
+		getCommercePriceListsByAccountGroupsAndChannelAndOrderTypeId(
+			long groupId, long[] commerceAccountGroupIds,
+			long commerceChannelId, long commerceOrderTypeId, String type) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListsByAccountGroupsAndChannelAndOrderTypeId(
+				groupId, commerceAccountGroupIds, commerceChannelId,
+				commerceOrderTypeId, type);
+	}
+
+	@Override
+	public java.util.List<CommercePriceList>
+		getCommercePriceListsByAccountGroupsAndChannelId(
+			long groupId, long[] commerceAccountGroupIds,
+			long commerceChannelId, String type) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListsByAccountGroupsAndChannelId(
+				groupId, commerceAccountGroupIds, commerceChannelId, type);
+	}
+
+	@Override
+	public java.util.List<CommercePriceList>
+		getCommercePriceListsByAccountGroupsAndOrderTypeId(
+			long groupId, long[] commerceAccountGroupIds,
+			long commerceOrderTypeId, String type) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListsByAccountGroupsAndOrderTypeId(
+				groupId, commerceAccountGroupIds, commerceOrderTypeId, type);
+	}
+
+	@Override
+	public java.util.List<CommercePriceList> getCommercePriceListsByAccountId(
+		long groupId, long commerceAccountId, String type) {
+
+		return _commercePriceListLocalService.getCommercePriceListsByAccountId(
+			groupId, commerceAccountId, type);
+	}
+
+	@Override
+	public java.util.List<CommercePriceList>
+		getCommercePriceListsByChannelAndOrderTypeId(
+			long groupId, long commerceChannelId, long commerceOrderTypeId,
+			String type) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListsByChannelAndOrderTypeId(
+				groupId, commerceChannelId, commerceOrderTypeId, type);
+	}
+
+	@Override
+	public java.util.List<CommercePriceList> getCommercePriceListsByChannelId(
+		long groupId, long commerceChannelId, String type) {
+
+		return _commercePriceListLocalService.getCommercePriceListsByChannelId(
+			groupId, commerceChannelId, type);
+	}
+
+	@Override
+	public java.util.List<CommercePriceList> getCommercePriceListsByOrderTypeId(
+		long groupId, long commerceOrderTypeId, String type) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListsByOrderTypeId(
+				groupId, commerceOrderTypeId, type);
+	}
+
+	@Override
+	public java.util.List<CommercePriceList> getCommercePriceListsByUnqualified(
+		long groupId, String type) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListsByUnqualified(groupId, type);
 	}
 
 	/**

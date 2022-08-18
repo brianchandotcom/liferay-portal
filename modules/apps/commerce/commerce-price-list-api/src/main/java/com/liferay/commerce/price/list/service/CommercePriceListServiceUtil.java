@@ -140,6 +140,15 @@ public class CommercePriceListServiceUtil {
 			companyId, status, start, end, orderByComparator);
 	}
 
+	public static List<CommercePriceList> getCommercePriceLists(
+			long companyId, String type, int status, int start, int end,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws PortalException {
+
+		return getService().getCommercePriceLists(
+			companyId, type, status, start, end, orderByComparator);
+	}
+
 	public static int getCommercePriceListsCount(long companyId, int status)
 		throws PortalException {
 

@@ -338,9 +338,7 @@ definition {
 				locator2 = "color",
 				value1 = "rgba(185, 80, 0, 1)");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a page based on custom master page") {

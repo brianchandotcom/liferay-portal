@@ -116,9 +116,7 @@ definition {
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Export custom master") {
@@ -216,9 +214,7 @@ definition {
 				headingLevel = "h2",
 				textColor = "danger");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Export custom master") {
@@ -292,9 +288,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Export custom master") {
@@ -415,9 +409,7 @@ definition {
 				imageDescription = "This is Document 1 png",
 				imageFileName = "document_1-png");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Export custom master") {
@@ -526,9 +518,7 @@ definition {
 
 			Click(locator1 = "Icon#CLOSE");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Export custom master") {
@@ -590,9 +580,7 @@ definition {
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Change thumbnail of custom master") {
@@ -646,9 +634,7 @@ definition {
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Change thumbnail of custom master") {

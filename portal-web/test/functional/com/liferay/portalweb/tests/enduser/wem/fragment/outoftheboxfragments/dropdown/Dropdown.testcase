@@ -64,9 +64,7 @@ definition {
 				fragmentName = "Menu Display",
 				navTab = "Fragments");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a page based on custom master page") {
@@ -179,9 +177,7 @@ definition {
 				key_position = "1",
 				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a page based on custom master page") {
@@ -443,9 +439,7 @@ definition {
 				fragmentName = "Dropdown",
 				id = "dropdown-text");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a page based on custom master page") {

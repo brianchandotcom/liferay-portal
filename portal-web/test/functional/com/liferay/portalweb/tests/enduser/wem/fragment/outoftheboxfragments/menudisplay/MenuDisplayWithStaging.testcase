@@ -60,9 +60,7 @@ definition {
 				panel = "General",
 				siteMenus = "Navigation Menu Name");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a widget page and add it to navigation menu") {

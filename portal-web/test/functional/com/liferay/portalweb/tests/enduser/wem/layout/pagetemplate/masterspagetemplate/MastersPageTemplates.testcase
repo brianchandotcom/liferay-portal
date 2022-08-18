@@ -77,9 +77,7 @@ definition {
 				backgroundColor = "gray-300",
 				fragmentName = "Button");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Assert custom masters as an option when add a new page") {
@@ -170,9 +168,7 @@ definition {
 				fragmentName = "Footer Nav Dark",
 				scope = "Master");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a content page based on custom master") {
@@ -254,9 +250,7 @@ definition {
 				fragmentName = "Footer Nav Dark",
 				scope = "Master");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a content page based on Blank") {
@@ -391,9 +385,7 @@ definition {
 				fragmentName = "Footer Nav Dark",
 				scope = "Master");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a page template collection") {
@@ -536,9 +528,7 @@ definition {
 		task ("Add a page based on custom master") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -600,9 +590,7 @@ definition {
 				fragmentName = "Footer Nav Dark",
 				scope = "Master");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a display page template based on Blank") {
@@ -743,9 +731,7 @@ definition {
 				fragmentName = "Footer Nav Dark",
 				scope = "Master");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a widget page") {
@@ -877,9 +863,7 @@ definition {
 				fragmentName = "Footer Nav Dark",
 				scope = "Master");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a page template collection") {
@@ -1296,9 +1280,7 @@ definition {
 				fragmentName = "Footer Nav Dark",
 				scope = "Master");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a content page based on custom master") {
@@ -1371,9 +1353,7 @@ definition {
 				fragmentName = "Footer Nav Dark",
 				scope = "Master");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a widget page and Add an Asset Publisher and Web Content Display portlet to page ") {
@@ -1553,9 +1533,7 @@ definition {
 				portletName = "Asset Publisher",
 				scope = "Master");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a content page based on custom master") {
@@ -1633,9 +1611,7 @@ definition {
 				fragmentName = "Heading",
 				index = "1");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a new content page and use created master page") {
@@ -1736,9 +1712,7 @@ definition {
 				portletName = "Asset Publisher",
 				scope = "Master");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Assert elements inherited from custom masters are changeless") {
@@ -1832,9 +1806,7 @@ definition {
 
 			Portlet.saveAndCloseConfig();
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a page based on custom masters") {

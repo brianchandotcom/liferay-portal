@@ -179,9 +179,7 @@ definition {
 				fragmentName = "Heading",
 				scope = "Master");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a content page template based on custom master") {
@@ -247,9 +245,7 @@ definition {
 				fragmentName = "Button",
 				scope = "Master");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Import content page template in new site") {

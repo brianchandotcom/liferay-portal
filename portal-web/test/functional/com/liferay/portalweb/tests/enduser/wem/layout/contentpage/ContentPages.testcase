@@ -1614,9 +1614,7 @@ definition {
 
 			Click(locator1 = "Icon#CLOSE");
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Apply the master page template to page") {

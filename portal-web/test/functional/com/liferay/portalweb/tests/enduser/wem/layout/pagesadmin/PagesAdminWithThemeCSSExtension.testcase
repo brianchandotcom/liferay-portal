@@ -334,9 +334,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("When the site designer adds a content page based on master page") {

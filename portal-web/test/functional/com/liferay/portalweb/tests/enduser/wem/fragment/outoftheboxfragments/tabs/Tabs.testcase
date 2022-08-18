@@ -148,9 +148,7 @@ definition {
 		}
 
 		task ("Assert Publish custom master successfully without NPE") {
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 
 			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 		}
@@ -268,9 +266,7 @@ definition {
 		}
 
 		task ("Publish master") {
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a page basing on custom master") {
@@ -492,9 +488,7 @@ definition {
 		}
 
 		task ("Publish master") {
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("Add a page basing on custom master") {

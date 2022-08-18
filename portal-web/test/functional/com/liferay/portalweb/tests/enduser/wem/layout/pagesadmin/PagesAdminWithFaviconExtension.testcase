@@ -289,9 +289,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 

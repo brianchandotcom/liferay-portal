@@ -849,9 +849,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Button.click(button = "Publish Master");
-
-			Alert.viewSuccessMessage();
+			MastersPageTemplates.publishMaster();
 		}
 
 		task ("When the site designer adds a content page based on master page") {
@@ -1018,9 +1016,7 @@ definition {
 
 				Navigator.gotoBack();
 
-				Button.click(button = "Publish Master");
-
-				Alert.viewSuccessMessage();
+				MastersPageTemplates.publishMaster();
 			}
 
 			task ("Add JavaScript extensions and embedded JavaScript to a content page based on master page") {

@@ -1,0 +1,15 @@
+definition {
+
+	macro clickContextMenuProjects {
+		var key_projectName = "${name}";
+
+		RightClick.rightClick(locator1 = "Testray#PROJECT_NAME");
+	}
+
+	macro selectItemFromProjectsContextMenu {
+		var menuItem = "${item}";
+
+		Click(locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+	}
+
+}

@@ -24,6 +24,20 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	macro addProjectManageBar {
+		TestrayLayout.clickManageOnSidebar();
+
+		SelectFrame(locator1 = "TestrayManage#OPTIONS_MODAL");
+
+		TestrayManage.selectOptionsManage(key_itemValue = "Add Project");
+
+		Testray.createProjectTestray(
+			description = "${description}",
+			key_name = "${name}");
+
+		Click(locator1 = "TestrayManage#CLOSE_MODAL");
+	}
+
 	macro assertName {
 		AssertElementPresent(
 			key_value = "${name}",
@@ -112,7 +126,7 @@ definition {
 
 	macro selectOptionsManage {
 		Click(
-			key_itemvalue = "${itemvalue}",
+			key_itemvalue = "${key_itemValue}",
 			locator1 = "TestrayDropdown#OPTIONS_SIDEBAR");
 	}
 

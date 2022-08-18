@@ -12,6 +12,16 @@ definition {
 			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY");
 	}
 
+	macro createRoutine {
+		Click(locator1 = "Testray#ADD_PROJECT");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${key_value}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+	}
+
 	macro goToRoutine {
 		Click(
 			key_projectName = "${routineName}",

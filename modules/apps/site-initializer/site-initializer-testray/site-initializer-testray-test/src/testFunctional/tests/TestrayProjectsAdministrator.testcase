@@ -1,0 +1,154 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.deleteProject();
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-160539. Verify if as an Administrator I am able to add a Project"
+	@priority = "5"
+	test AdminCanAddProject {
+		task ("Go to Testray and Create Project") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			TestrayManage.addProjectManageBar(
+				description = "Projects_1 Project Description",
+				name = "Projects_1 Project");
+		}
+
+		task ("Check if the project was created") {
+			Testray.assertProjectName(key_name = "Projects_1 Project");
+
+			Testray.assertProjectDescription(value = "Projects_1 Project Description");
+		}
+	}
+
+	@description = "This is a test for LPS-160538. Verify if as an Administrator I am able to delete a Project"
+	@priority = "5"
+	test AdminCanDeleteProject {
+		task ("Go to Testray and Create Project") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_2 Description",
+				key_name = "Projects_2 Project");
+		}
+
+		task ("Delete the project and make sure it is deleted") {
+			TestrayContextMenu.clickContextMenuProjects(projectName = "Projects_2 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(key_menuItem = "Delete");
+
+			Testray.assertProjectNotPresent(key_name = "Projects_2 Project");
+		}
+	}
+
+	@description = "This is a test for LPS-160537. Verify if as an Administrator I am able to edit a Project name and description"
+	@priority = "5"
+	test AdminCanEditProject {
+		task ("Go to Testray and Create Project") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_3 Description",
+				key_name = "Projects_3 Project");
+		}
+
+		task ("Edit Project name and description") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_3 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+
+			Testray.editProjectTestray(
+				description = "Projects_3 Project Description Edited",
+				name = "Projects_3 Project Edited");
+		}
+
+		task ("Check if the name and description has been edited") {
+			TestrayLayout.clickResultsOnSidebar();
+
+			Testray.assertProjectName(key_name = "Projects_3 Project Edited");
+
+			Testray.assertProjectDescription(value = "Projects_3 Project Description Edited");
+		}
+	}
+
+	@description = "This is a test for LPS-160541. Verify if as an Administrator I should not be able to add a duplicate Project"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AdminCanNotAddDuplicateProject {
+
+		// TODO LPS-160541 AdminCanNotAddDuplicateProject pending implementation
+
+	}
+
+	@description = "This is a test for LPS-160536. Verify if as an Administrator I am able to view a Project"
+	@priority = "3"
+	test AdminCanViewProject {
+		task ("Go to Testray and Create Project") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_4 Description",
+				key_name = "Projects_4 Project");
+		}
+
+		task ("stating that I see the project") {
+			TestrayLayout.clickResultsOnSidebar();
+
+			Testray.goToProjectPage(projectName = "Projects_4 Project");
+
+			TestrayDropdown.assertTitleBreadcrumbs(key_projectName = "Projects_4 Project");
+		}
+	}
+
+	@description = "This is a test for LPS-160898. Verify if as an Administrator I should be able to delete a project that contains routines without associated builds"
+	@priority = "5"
+	test CanDeleteProjectsThatContainRoutinesWithoutAssociatedBuilds {
+		task ("Create project and create Routine") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_4 Description",
+				key_name = "Projects_4 Project");
+
+			Testray.goToProjectPage(projectName = "Projects_4 Project");
+
+			TestrayRoutines.createRoutine(key_value = "Projects_4 Routine");
+		}
+	}
+
+	@description = "This is a test for LPS-160897. Verify if as an Administrator I should not be able to delete a project that contains routines with associated builds"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CannotDeleteProjectsThatContainRoutinesWithAssociatedBuilds {
+
+		// TODO LPS-160897 CannotDeleteProjectsThatContainRoutinesWithAssociatedBuilds pending implementation
+
+	}	
+
+}

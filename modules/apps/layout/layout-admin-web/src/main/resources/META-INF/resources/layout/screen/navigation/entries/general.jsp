@@ -231,6 +231,7 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 					</c:if>
 
 					<liferay-frontend:form-navigator
+						fieldSetCssClass="panel-group panel-group-flush"
 						formModelBean="<%= selLayout %>"
 						id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT %>"
 						showButtons="<%= false %>"

@@ -177,6 +177,11 @@ public interface CommerceDiscountService extends BaseService {
 			long companyId, String couponCode)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscount> getCommerceDiscounts(
+			long companyId, String level, boolean active, int status)
+		throws PortalException;
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x)
 	 */

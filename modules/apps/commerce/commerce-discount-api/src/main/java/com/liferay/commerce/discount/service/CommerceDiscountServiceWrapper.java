@@ -271,6 +271,16 @@ public class CommerceDiscountServiceWrapper
 			companyId, couponCode);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.discount.model.CommerceDiscount>
+			getCommerceDiscounts(
+				long companyId, String level, boolean active, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceDiscountService.getCommerceDiscounts(
+			companyId, level, active, status);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x)
 	 */

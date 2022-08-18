@@ -387,6 +387,44 @@ public class CommercePriceListPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_T_S() throws Exception {
+		_persistence.countByG_C_T_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_C_T_S(0L, 0L, "null", 0);
+
+		_persistence.countByG_C_T_S(0L, 0L, (String)null, 0);
+	}
+
+	@Test
+	public void testCountByG_C_T_SArrayable() throws Exception {
+		_persistence.countByG_C_T_S(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.nextLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.nextInt());
+	}
+
+	@Test
+	public void testCountByG_C_T_NotS() throws Exception {
+		_persistence.countByG_C_T_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_C_T_NotS(0L, 0L, "null", 0);
+
+		_persistence.countByG_C_T_NotS(0L, 0L, (String)null, 0);
+	}
+
+	@Test
+	public void testCountByG_C_T_NotSArrayable() throws Exception {
+		_persistence.countByG_C_T_NotS(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.nextLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.nextInt());
+	}
+
+	@Test
 	public void testCountByC_ERC() throws Exception {
 		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
 

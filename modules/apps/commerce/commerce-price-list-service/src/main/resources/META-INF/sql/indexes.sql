@@ -22,6 +22,7 @@ create index IX_C19D1887 on CommercePriceList (groupId, catalogBasePriceList, ct
 create index IX_D432A3EA on CommercePriceList (groupId, catalogBasePriceList, type_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_91B4202E on CommercePriceList (groupId, companyId, ctCollectionId);
 create index IX_1C950314 on CommercePriceList (groupId, companyId, status, ctCollectionId);
+create index IX_2A63E049 on CommercePriceList (groupId, companyId, type_[$COLUMN_LENGTH:75$], status, ctCollectionId);
 create index IX_70864619 on CommercePriceList (parentCommercePriceListId, ctCollectionId);
 create index IX_65A9164 on CommercePriceList (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_27D76E40 on CommercePriceList (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);

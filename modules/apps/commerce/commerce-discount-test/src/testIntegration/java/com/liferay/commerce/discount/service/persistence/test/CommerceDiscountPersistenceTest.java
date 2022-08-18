@@ -366,6 +366,19 @@ public class CommerceDiscountPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_L_A_S() throws Exception {
+		_persistence.countByC_L_A_S(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_L_A_S(
+			0L, "null", RandomTestUtil.randomBoolean(), 0);
+
+		_persistence.countByC_L_A_S(
+			0L, (String)null, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
 	public void testCountByC_ERC() throws Exception {
 		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
 

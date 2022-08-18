@@ -15001,6 +15001,77 @@ url=${short.hostname}:8080</echo>
 		<start-docker-database />
 	</target>
 
+	<target name="start-docker-database-mariadb">
+		<if>
+			<not>
+				<isset property="database.version" />
+			</not>
+			<then>
+				<var name="database.version" value="10.6" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${database.version}" arg2="10.2" />
+
+			<then>
+				<var name="database.version" value="10.2.25" />
+			</then>
+
+			<elseif>
+				<equals arg1="${database.version}" arg2="10.4" />
+
+				<then>
+					<var name="database.version" value="10.4.14" />
+				</then>
+			</elseif>
+		</if>
+
+		<get-database-property property.name="database.host" />
+
+		<antcall target="stop-docker-database">
+			<param name="database.mariadb.host" value="${database.host}_mariadb" />
+			<param name="database.type" value="mariadb" />
+		</antcall>
+
+		<antcall inheritAll="false" target="start-docker-database">
+			<param name="database.mariadb.docker.image" value="mariadb:${database.version}" />
+			<param name="database.mariadb.docker.run.options" value="--env=MYSQL_ALLOW_EMPTY_PASSWORD=yes -p 3308:3306" />
+			<param name="database.mariadb.host" value="${database.host}_mariadb" />
+			<param name="database.mariadb.name" value="MariaDB" />
+			<param name="database.mariadb.version" value="${database.version}" />
+			<param name="database.type" value="mariadb" />
+		</antcall>
+
+		<if>
+			<not>
+				<isset property="skip.prepare.portal.ext.properties" />
+			</not>
+			<then>
+				<antcall inheritAll="false" target="prepare-portal-ext-properties">
+					<param name="database.mariadb.host" value="${database.host}_mariadb" />
+					<param name="database.mariadb.schema" value="lportal" />
+					<param name="database.mariadb.url" value="jdbc:mariadb://${database.host}:3308/${database.mariadb.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false" />
+					<param name="database.type" value="mariadb" />
+				</antcall>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset property="skip.rebuild.database" />
+			</not>
+			<then>
+				<antcall target="rebuild-database">
+					<param name="database.bare.enabled" value="true" />
+					<param name="database.mariadb.docker.image" value="mariadb:${database.version}" />
+					<param name="database.mariadb.host" value="${database.host}_mariadb" />
+					<param name="database.type" value="mariadb" />
+				</antcall>
+			</then>
+		</if>
+	</target>
+
 	<target name="start-docker-database-postgresql">
 		<if>
 			<not>

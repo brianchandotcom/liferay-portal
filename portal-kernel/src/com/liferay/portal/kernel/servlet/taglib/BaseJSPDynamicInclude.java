@@ -61,6 +61,8 @@ public abstract class BaseJSPDynamicInclude extends BaseDynamicInclude {
 
 	protected abstract Log getLog();
 
+	protected abstract ServletContext getServletContext();
+
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}

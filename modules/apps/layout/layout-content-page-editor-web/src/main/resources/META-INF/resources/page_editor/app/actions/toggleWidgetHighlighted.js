@@ -17,11 +17,13 @@ import {TOGGLE_WIDGET_HIGHLIGHTED} from './types';
 export default function toggleWidgetHighlighted({
 	highlighted,
 	highlightedPortlets,
+	initiallyHighlighted,
 	portletId,
 }) {
 	return {
 		highlighted,
 		highlightedPortlets,
+		initiallyHighlighted,
 		portletId,
 		type: TOGGLE_WIDGET_HIGHLIGHTED,
 	};

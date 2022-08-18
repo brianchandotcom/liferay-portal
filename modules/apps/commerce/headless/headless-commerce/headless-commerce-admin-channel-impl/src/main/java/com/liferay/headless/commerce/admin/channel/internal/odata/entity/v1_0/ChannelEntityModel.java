@@ -20,9 +20,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Andrea Sbarra
@@ -30,12 +27,9 @@ import java.util.stream.Stream;
 public class ChannelEntityModel implements EntityModel {
 
 	public ChannelEntityModel() {
-		_entityFieldsMap = Stream.of(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName("name"))
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+				"name", locale -> Field.getSortableFieldName("name")));
 	}
 
 	@Override

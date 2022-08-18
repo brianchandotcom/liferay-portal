@@ -19,9 +19,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Riccardo Alberti
@@ -29,11 +26,8 @@ import java.util.stream.Stream;
 public class ProductGroupEntityModel implements EntityModel {
 
 	public ProductGroupEntityModel() {
-		_entityFieldsMap = Stream.of(
-			new StringEntityField("title", locale -> "title")
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+			new StringEntityField("title", locale -> "title"));
 	}
 
 	@Override

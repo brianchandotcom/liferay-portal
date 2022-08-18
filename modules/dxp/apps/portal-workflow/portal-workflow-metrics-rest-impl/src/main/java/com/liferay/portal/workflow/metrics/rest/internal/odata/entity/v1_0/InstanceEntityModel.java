@@ -22,9 +22,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Rafael Praxedes
@@ -32,7 +29,7 @@ import java.util.stream.Stream;
 public class InstanceEntityModel implements EntityModel {
 
 	public InstanceEntityModel() {
-		_entityFieldsMap = Stream.of(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new StringEntityField(
 				"assetType",
 				locale -> Field.getSortableFieldName(
@@ -43,10 +40,7 @@ public class InstanceEntityModel implements EntityModel {
 			new DateTimeEntityField(
 				"dateOverdue", locale -> "overdueDate",
 				locale -> "overdueDate"),
-			new StringEntityField("userName", locale -> "userName")
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+			new StringEntityField("userName", locale -> "userName"));
 	}
 
 	@Override

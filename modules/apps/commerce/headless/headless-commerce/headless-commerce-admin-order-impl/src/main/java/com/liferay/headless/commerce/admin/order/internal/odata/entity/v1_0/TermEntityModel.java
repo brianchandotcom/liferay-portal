@@ -23,9 +23,6 @@ import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Alessio Antonio Rendina
@@ -33,17 +30,14 @@ import java.util.stream.Stream;
 public class TermEntityModel implements EntityModel {
 
 	public TermEntityModel() {
-		_entityFieldsMap = Stream.of(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new CollectionEntityField(
 				new IntegerEntityField(Field.NAME, locale -> Field.NAME)),
 			new DoubleEntityField(
 				Field.PRIORITY,
 				locale -> Field.getSortableFieldName(
 					Field.PRIORITY + "_Number")),
-			new StringEntityField(Field.TYPE, locale -> Field.TYPE)
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+			new StringEntityField(Field.TYPE, locale -> Field.TYPE));
 	}
 
 	@Override

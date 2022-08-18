@@ -21,9 +21,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Alessio Antonio Rendina
@@ -31,7 +28,7 @@ import java.util.stream.Stream;
 public class WarehouseEntityModel implements EntityModel {
 
 	public WarehouseEntityModel() {
-		_entityFieldsMap = Stream.of(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new BooleanEntityField("active", locale -> "active"),
 			new StringEntityField("city", locale -> "city"),
 			new StringEntityField(
@@ -40,10 +37,7 @@ public class WarehouseEntityModel implements EntityModel {
 			new DoubleEntityField("longitude", locale -> "longitude"),
 			new StringEntityField("name", locale -> "name"),
 			new StringEntityField("regionISOCode", locale -> "regionCode"),
-			new StringEntityField("street1", locale -> "street1")
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+			new StringEntityField("street1", locale -> "street1"));
 	}
 
 	@Override

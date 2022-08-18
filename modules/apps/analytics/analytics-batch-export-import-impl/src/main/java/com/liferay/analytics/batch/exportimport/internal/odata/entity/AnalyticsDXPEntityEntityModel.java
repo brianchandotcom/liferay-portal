@@ -21,9 +21,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Marcos Martins
@@ -31,17 +28,14 @@ import java.util.stream.Stream;
 public class AnalyticsDXPEntityEntityModel implements EntityModel {
 
 	public AnalyticsDXPEntityEntityModel() {
-		_entityFieldsMap = Stream.of(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new DateTimeEntityField(
 				"modifiedDate",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField(
 				Field.getSortableFieldName(Field.MODIFIED_DATE),
-				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE))
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE)));
 	}
 
 	@Override

@@ -48,19 +48,19 @@ export default function deleteItem({itemId, selectItem = () => {}}) {
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
 		})
-			.then(({portletIds = [], layoutData}) => {
+			.then(({portletIds = [], layoutData: nextLayoutData}) => {
 				selectItem(null);
 
 				const fragmentEntryLinkIds = getFragmentEntryLinkIdsFromItemId({
 					itemId,
-					layoutData,
+					layoutData: nextLayoutData,
 				});
 
 				dispatch(
 					deleteItemAction({
 						fragmentEntryLinkIds,
 						itemId,
-						layoutData,
+						layoutData: nextLayoutData,
 						portletIds,
 					})
 				);

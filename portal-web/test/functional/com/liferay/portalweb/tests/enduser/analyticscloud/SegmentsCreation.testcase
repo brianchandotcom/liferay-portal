@@ -365,6 +365,18 @@ definition {
 		var usernameList = "user1,user2,user3";
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
+		task ("Add a user custom field") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "User Custom Field",
+				customFieldType = "True / False",
+				resourceName = "User");
+		}
+
 		task ("Add three more new users") {
 			for (var name : list "${usernameList}") {
 				JSONUser.addUser(
@@ -380,8 +392,22 @@ definition {
 			}
 		}
 
+		task ("Edit the user custom field") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+            User.gotoEditCP(userScreenName = "user3");
+
+            Select(
+                locator1 = "Select#SELECT_FIELD_LABEL",
+                selectFieldLabel = "User Custom Field",
+                value1 = "False");
+		}
+
 		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
+			ACDXPSettings.syncNewUserData(fieldNameList = "User Custom Field");
 		}
 
 		task ("View the page as different users") {
@@ -401,16 +427,6 @@ definition {
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		task ("Add a CSV Data Source") {
-			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Gender",
-				sourceFileName = "contacts_doNotCall.csv");
-		}
-
-		task ("Exit Settings") {
-			ACNavigation.exitSettings();
-		}
-
 		task ("Add a new dynamic segment") {
 			ACNavigation.goToSegments();
 
@@ -419,18 +435,18 @@ definition {
 			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 		}
 
-		task ("Add a jobTitle criteria from Individual Attributes") {
+		task ("Add an email criteria from Individual Attributes") {
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-			ACSegments.addSegmentField(segmentField = "jobTitle");
+			ACSegments.addSegmentField(segmentField = "email");
 
 			ACSegments.selectOperator(operator = "does not contain");
 
-			ACSegments.editTextCriterion(textInput = "Doctor");
+			ACSegments.editTextCriterion(textInput = "testing@liferay.com");
 		}
 
 		task ("Add a male criteria from Individual Attributes") {
-			ACSegments.addSegmentField(segmentField = "doNotCall");
+			ACSegments.addSegmentField(segmentField = "User Custom Field");
 
 			ACSegments.editWebBehaviorCriterion(
 				activitiesOption = "False",
@@ -453,13 +469,13 @@ definition {
 
 		task ("View the segment criteria card") {
 			ACSegments.viewSegmentCriteriaIndividualAttributes(
-				attributeName = "jobTitle",
-				attributeValue = '''"Doctor"''',
+				attributeName = "email",
+				attributeValue = '''"testing@liferay.com"''',
 				condition = "does not contain",
 				conjunction = "AND");
 
 			ACSegments.viewSegmentCriteriaIndividualAttributes(
-				attributeName = "doNotCall",
+				attributeName = "User Custom Field",
 				attributeValue = "FALSE",
 				condition = "is",
 				index = "2");
@@ -469,6 +485,8 @@ definition {
 			ACNavigation.switchTab(tabName = "Membership");
 
 			ACUtils.viewNameList(nameList = "user3 user3");
+
+			ACUtils.viewNameListIsNotPresent(nameList = "user1 user1,user2 user2");
 		}
 	}
 
@@ -484,7 +502,6 @@ definition {
 
 		var usernameList = "user1,user2,user3";
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-		var membershipList = "user1 user1,user3 user3";
 
 		task ("Add three more new users") {
 			for (var name : list "${usernameList}") {
@@ -499,6 +516,20 @@ definition {
 					requireReset = "false",
 					userEmailAddress = "${name}@liferay.com");
 			}
+		}
+
+		task ("Edit job title field of one of the users") {
+			ApplicationsMenu.gotoPortlet(
+            category = "Users",
+            panel = "Control Panel",
+            portlet = "Users and Organizations");
+
+            User.gotoEditCP(userScreenName = "user3");
+
+			User.editUserJobTitleCP(
+				userName = "user3 user3",
+				userJobTitle = "Doctor"
+			);
 		}
 
 		task ("Sync the Contact Data") {
@@ -522,16 +553,6 @@ definition {
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		task ("Add a CSV Data Source") {
-			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Country",
-				sourceFileName = "contacts_country.csv");
-		}
-
-		task ("Exit Settings") {
-			ACNavigation.exitSettings();
-		}
-
 		task ("Add a new dynamic segment") {
 			ACNavigation.goToSegments();
 
@@ -540,18 +561,18 @@ definition {
 			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 		}
 
-		task ("Add the first country criteria from Individual Attributes") {
+		task ("Add the first jobTitle criteria from Individual Attributes") {
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-			ACSegments.addSegmentField(segmentField = "country");
+			ACSegments.addSegmentField(segmentField = "jobTitle");
 
 			ACSegments.selectOperator(operator = "is not");
 
-			ACSegments.editTextCriterion(textInput = "USA");
+			ACSegments.editTextCriterion(textInput = "QA");
 		}
 
-		task ("Add the second country criteria from Individual Attributes") {
-			ACSegments.addSegmentField(segmentField = "country");
+		task ("Add the second jobTitle criteria from Individual Attributes") {
+			ACSegments.addSegmentField(segmentField = "jobTitle");
 
 			ACSegments.editWebBehaviorCriterion(
 				activitiesOption = "is known",
@@ -574,13 +595,13 @@ definition {
 
 		task ("View the segment criteria card") {
 			ACSegments.viewSegmentCriteriaIndividualAttributes(
-				attributeName = "country",
-				attributeValue = '''"USA"''',
+				attributeName = "jobTitle",
+				attributeValue = '''"QA"''',
 				condition = "is not",
 				conjunction = "AND");
 
 			ACSegments.viewSegmentCriteriaIndividualAttributes(
-				attributeName = "country",
+				attributeName = "jobTitle",
 				condition = "is known",
 				index = "2");
 		}
@@ -588,7 +609,9 @@ definition {
 		task ("Switch tab to membership and check the membership list") {
 			ACNavigation.switchTab(tabName = "Membership");
 
-			ACUtils.viewNameList(nameList = "${membershipList}");
+			ACUtils.viewNameList(nameList = "user3 user3");
+
+			ACUtils.viewNameListIsNotPresent(nameList = "user1 user1,user2 user2");
 		}
 	}
 
@@ -956,6 +979,21 @@ definition {
 		var usernameList = "user1,user2,user3";
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var membershipList = "user1 user1,user3 user3";
+		var userScreenNames = "user1,user3";
+
+		task ("Add a user custom field") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "Age",
+				customFieldType = "Input Field",
+				resourceName = "User",
+				customInputDataType = "Integer",
+				startingValue = "21");
+		}
 
 		task ("Add three more new users") {
 			for (var name : list "${usernameList}") {
@@ -972,8 +1010,23 @@ definition {
 			}
 		}
 
+		task ("Edit the users age") {
+			for (var userName : list "${userScreenNames}") {
+				ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+				User.gotoEditCP(userScreenName = "${userName}");
+
+				User.editUserInformation(
+					userCustomFieldLabel = "Age",
+					userCustomField = "50");
+			}
+		}
+
 		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
+			ACDXPSettings.syncNewUserData(fieldNameList = "Age");
 		}
 
 		task ("View the page as different users") {
@@ -993,19 +1046,6 @@ definition {
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		task ("Add a CSV Data Source") {
-			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Age",
-				fieldName = "age",
-				fieldType = "Number",
-				newField = "true",
-				selectAnalyticsCloudField = "true",
-				sourceFileName = "contacts_age.csv");
-		}
-
-		task ("Exit Settings") {
-			ACNavigation.exitSettings();
-		}
 
 		task ("Add a new dynamic segment") {
 			ACNavigation.goToSegments();
@@ -1020,7 +1060,7 @@ definition {
 
 			ACSegments.addSegmentField(segmentField = "age");
 
-			ACSegments.selectOperator(operator = "less than");
+			ACSegments.selectOperator(operator = "greater than");
 
 			ACSegments.editNumberCriterion(numberInput = "40");
 		}
@@ -1043,13 +1083,15 @@ definition {
 			ACSegments.viewSegmentCriteriaIndividualAttributes(
 				attributeName = "age",
 				attributeValue = "40",
-				condition = "less than");
+				condition = "greater than");
 		}
 
 		task ("Switch tab to membership and check the membership list") {
 			ACNavigation.switchTab(tabName = "Membership");
 
 			ACUtils.viewNameList(nameList = "${membershipList}");
+
+			ACUtils.viewNameListIsNotPresent(nameList = "user2 user2");
 		}
 	}
 

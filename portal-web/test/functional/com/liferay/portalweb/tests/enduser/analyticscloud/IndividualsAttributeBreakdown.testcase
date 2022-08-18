@@ -165,23 +165,13 @@ definition {
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		task ("Add a CSV Data Source") {
-			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Data Source",
-				sourceFileName = "jobTitle.csv");
-		}
-
-		task ("Exit Settings") {
-			ACNavigation.exitSettings();
-		}
-
 		task ("Navigate to the Individuals dashboard") {
 			ACNavigation.goToIndividuals();
 		}
 
 		task ("Add a new breakdown") {
 			ACSegments.addBreakdownByAttribute(
-				attribute = "jobTitle",
+				attribute = "email",
 				breakdownName = "Breakdown to Delete");
 		}
 

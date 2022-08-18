@@ -44,6 +44,18 @@ definition {
 		var emailList = "user1@liferay.com,user2@liferay.com";
 		var nameList = "user1 user1,user2 user2";
 
+		task ("Add a user custom field") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "User Custom Field",
+				customFieldType = "True / False",
+				resourceName = "User");
+		}
+
 		task ("Add a new user") {
 			for (var user : list "${users}") {
 				JSONUser.addUser(
@@ -55,7 +67,9 @@ definition {
 		}
 
 		task ("Connect the DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+			ACDXPSettings.syncNewUserData(fieldNameList = "User Custom Field");
 		}
 
 		task ("View AC Page as new user") {
@@ -68,17 +82,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-		}
-
-		task ("Add a CSV Data Source") {
-			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Call List",
-				sourceFileName = "contacts_doNotCall.csv");
-		}
-
-		task ("Exit Settings") {
-			ACNavigation.exitSettings();
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Add a new static segment") {
@@ -105,14 +109,14 @@ definition {
 
 		task ("Filter Attribute by Boolean identifier in Overview") {
 			ACSegments.addBreakdownByAttribute(
-				attribute = "doNotCall",
+				attribute = "User Custom Field",
 				breakdownName = "Segment Overview Test");
 		}
 
 		task ("View Breakdown Chart") {
 			ACIndividualsDashboard.viewBreakdownRecharts(
 				fillColor = "#4B9BFF",
-				tick = "false");
+				tick = "true");
 		}
 	}
 
@@ -200,13 +204,26 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SegmentOverviewDistributionFilteredByNumber {
-
 		// AC Refactor: It is not possible to filter the segment distribution by an attribute of type number
 		// AC Refactor ticket: LRAC-9336
 
 		var users = "user1,user2";
 		var emailList = "user1@liferay.com,user2@liferay.com";
 		var nameList = "user1 user1,user2 user2";
+
+		task ("Add a user custom field") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "Age",
+				customFieldType = "Input Field",
+				resourceName = "User",
+				customInputDataType = "Integer",
+				startingValue = "21");
+		}
 
 		task ("Add a new site with a public widget page") {
 			ACUtils.addSiteAndPage();
@@ -222,8 +239,23 @@ definition {
 			}
 		}
 
+		task ("Edit one of the users age") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.gotoEditCP(userScreenName = "user1");
+
+			User.editUserInformation(
+				userCustomFieldLabel = "Age",
+				userCustomField = "50");
+		}
+			
 		task ("Connect the DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+			ACDXPSettings.syncNewUserData(fieldNameList = "Age");
 		}
 
 		task ("View AC Page as new user") {
@@ -236,17 +268,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-		}
-
-		task ("Add a CSV Data Source") {
-			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Age",
-				fieldName = "age",
-				fieldType = "Number",
-				newField = "true",
-				selectAnalyticsCloudField = "true",
-				sourceFileName = "contacts_age.csv");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Exit Settings") {

@@ -19,6 +19,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.staging.LayoutStaging;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutType;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -43,6 +46,7 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -161,12 +165,39 @@ public class LayoutSiteNavigationMenuItemType
 			renderResponse
 		).setActionName(
 			"/navigation_menu/add_layout_site_navigation_menu_item"
+		).setParameter(
+			"siteNavigationMenuItemType", getType()
 		).buildPortletURL();
 	}
 
 	@Override
 	public String getIcon() {
 		return "page";
+	}
+
+	@Override
+	public String getItemSelectorURL(HttpServletRequest httpServletRequest) {
+		RenderResponse renderResponse =
+			(RenderResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
+			new LayoutItemSelectorCriterion();
+
+		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new UUIDItemSelectorReturnType());
+		layoutItemSelectorCriterion.setShowBreadcrumb(false);
+		layoutItemSelectorCriterion.setShowHiddenPages(true);
+		layoutItemSelectorCriterion.setMultiSelection(true);
+
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				renderResponse.getNamespace() + "selectItem",
+				layoutItemSelectorCriterion)
+		).setParameter(
+			"multipleSelection", isMultiSelection()
+		).buildString();
 	}
 
 	@Override
@@ -430,6 +461,16 @@ public class LayoutSiteNavigationMenuItemType
 	}
 
 	@Override
+	public boolean isItemSelector() {
+		return true;
+	}
+
+	@Override
+	public boolean isMultiSelection() {
+		return true;
+	}
+
+	@Override
 	public boolean isSelected(
 			boolean selectable, SiteNavigationMenuItem siteNavigationMenuItem,
 			Layout curLayout)
@@ -446,21 +487,6 @@ public class LayoutSiteNavigationMenuItemType
 		}
 
 		return false;
-	}
-
-	@Override
-	public void renderAddPage(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		httpServletRequest.setAttribute(
-			SiteNavigationMenuItemTypeLayoutWebKeys.ITEM_SELECTOR,
-			_itemSelector);
-
-		_jspRenderer.renderJSP(
-			_servletContext, httpServletRequest, httpServletResponse,
-			"/add_layout.jsp");
 	}
 
 	@Override

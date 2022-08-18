@@ -25,6 +25,8 @@ import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.internal.petra.sql.dsl.expression.OrderByExpressionUtil;
@@ -41,6 +43,7 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -603,6 +606,35 @@ public class DefaultObjectEntryManagerImpl
 		return ObjectDefinition.class.getName() + "#" + objectDefinitionId;
 	}
 
+	private boolean _hasRelatedObjectEntries(
+			String deletionType, ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws PortalException {
+
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipLocalService.getObjectRelationships(
+					objectDefinition.getObjectDefinitionId(), deletionType,
+					false)) {
+
+			ObjectRelatedModelsProvider objectRelatedModelsProvider =
+				_objectRelatedModelsProviderRegistry.
+					getObjectRelatedModelsProvider(
+						objectDefinition.getClassName(),
+						objectRelationship.getType());
+
+			int count = objectRelatedModelsProvider.getRelatedModelsCount(
+				objectEntry.getGroupId(),
+				objectRelationship.getObjectRelationshipId(),
+				objectEntry.getPrimaryKey());
+
+			if (count > 0) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _processVulcanAggregation(
 		Aggregations aggregations, Queries queries,
 		SearchRequestBuilder searchRequestBuilder,
@@ -686,14 +718,24 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext.isAcceptAllLanguages(),
 				HashMapBuilder.put(
 					"delete",
-					ActionUtil.addAction(
-						ActionKeys.DELETE, ObjectEntryResourceImpl.class,
-						objectEntry.getObjectEntryId(), "deleteObjectEntry",
-						null, objectEntry.getUserId(),
-						_getObjectEntryPermissionName(
-							objectEntry.getObjectDefinitionId()),
-						objectEntry.getGroupId(),
-						dtoConverterContext.getUriInfo())
+					() -> {
+						if (_hasRelatedObjectEntries(
+								ObjectRelationshipConstants.
+									DELETION_TYPE_PREVENT,
+								objectDefinition, objectEntry)) {
+
+							return null;
+						}
+
+						return ActionUtil.addAction(
+							ActionKeys.DELETE, ObjectEntryResourceImpl.class,
+							objectEntry.getObjectEntryId(), "deleteObjectEntry",
+							null, objectEntry.getUserId(),
+							_getObjectEntryPermissionName(
+								objectEntry.getObjectDefinitionId()),
+							objectEntry.getGroupId(),
+							dtoConverterContext.getUriInfo());
+					}
 				).put(
 					"get",
 					ActionUtil.addAction(
@@ -811,6 +853,10 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelatedModelsProviderRegistry
+		_objectRelatedModelsProviderRegistry;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

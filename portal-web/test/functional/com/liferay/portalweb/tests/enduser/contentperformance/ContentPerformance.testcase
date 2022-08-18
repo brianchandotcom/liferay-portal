@@ -851,11 +851,11 @@ definition {
 		}
 
 		task ("Create a default Display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.addDisplayPage(
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
-				displayPageName = "Display Page Name",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Web Content");
 
 			PageEditor.publish();
@@ -963,11 +963,11 @@ definition {
 		}
 
 		task ("Create a DPT and set as Default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.addDisplayPage(
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
-				displayPageName = "Display Page Name",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Web Content");
 
 			PageEditor.publish();
@@ -1055,11 +1055,11 @@ definition {
 		}
 
 		task ("Create a DPT and set as Default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.addDisplayPage(
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
-				displayPageName = "Display Page Name",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Web Content");
 
 			PageEditor.publish();
@@ -1225,11 +1225,11 @@ definition {
 		}
 
 		task ("Create a DPT and set as Default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.addDisplayPage(
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
-				displayPageName = "Display Page Name",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Web Content");
 
 			PageEditor.publish();

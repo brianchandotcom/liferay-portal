@@ -130,6 +130,34 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153367. The page creator could configure the display page template in a new tab."
+	@priority = "4"
+	test ConfigureDisplayPageTemplateInANewTab {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("When the page creator accesses to the page editor of display page template") {
+			AssertVisible(locator1 = "PageEditor#NO_FRAGMENTS_MESSAGE");
+		}
+
+		task ("Then the page creator could configure display page template in a new tab") {
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertElementPresent(
+				key_title = "SEO",
+				locator1 = "Header#H2_TITLE");
+
+			AssertElementPresent(
+				key_title = "General Settings",
+				locator1 = "Header#H4_TITLE");
+
+			AssertElementPresent(
+				key_title = "Sitemap",
+				locator1 = "Header#H4_TITLE");
+		}
+	}
+
 	@description = "This is for LPS-106813. Can set permissions for widgets in display page template."
 	@priority = "5"
 	test ConfigurePermissionsOfAssetPublisher {

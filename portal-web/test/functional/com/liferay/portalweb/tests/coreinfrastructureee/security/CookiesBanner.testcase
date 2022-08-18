@@ -66,11 +66,11 @@ definition {
 
 			OSGiConfig.copyOSGiConfigFile(
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
-				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesBannerConfiguration.scoped~default.config");
+				osgiConfigFileName = "com.liferay.cookies.configuration.banner.CookiesBannerConfiguration.scoped~default.config");
 
 			OSGiConfig.copyOSGiConfigFile(
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
-				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesConsentConfiguration.scoped~default.config");
+				osgiConfigFileName = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration.scoped~default.config");
 
 			var siteId = JSONGroupAPI._getGroupIdByName(
 				groupName = "Guest",

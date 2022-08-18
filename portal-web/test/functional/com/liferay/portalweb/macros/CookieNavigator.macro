@@ -12,11 +12,11 @@ definition {
 		}
 
 		if ("${portlet}" == "Banner") {
-			var portletId = "com.liferay.cookies.configuration.CookiesBannerConfiguration";
+			var portletId = "com.liferay.cookies.configuration.banner.CookiesBannerConfiguration";
 		}
 
 		if ("${portlet}" == "Consent Panel") {
-			var portletId = "com.liferay.cookies.configuration.CookiesConsentConfiguration";
+			var portletId = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration";
 		}
 
 		if ("${portlet}" == "Preference Handling") {
@@ -41,11 +41,11 @@ definition {
 		}
 
 		if ("${portlet}" == "Banner") {
-			var portletId = "com.liferay.cookies.configuration.CookiesBannerConfiguration";
+			var portletId = "com.liferay.cookies.configuration.banner.CookiesBannerConfiguration";
 		}
 
 		if ("${portlet}" == "Consent Panel") {
-			var portletId = "com.liferay.cookies.configuration.CookiesConsentConfiguration";
+			var portletId = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration";
 		}
 
 		if ("${portlet}" == "Preference Handling") {
@@ -69,11 +69,11 @@ definition {
 		}
 
 		if ("${portlet}" == "Banner") {
-			var portletId = "com.liferay.cookies.configuration.CookiesBannerConfiguration";
+			var portletId = "com.liferay.cookies.configuration.banner.CookiesBannerConfiguration";
 		}
 
 		if ("${portlet}" == "Consent Panel") {
-			var portletId = "com.liferay.cookies.configuration.CookiesConsentConfiguration";
+			var portletId = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration";
 		}
 
 		if ("${portlet}" == "Preference Handling") {

@@ -80,7 +80,7 @@ definition {
 	test CanViewAccountRolesWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		task ("Given add a user with permission of access CP") {
+		task ("Given a user is granted permissions to access Account Admin portlet") {
 			JSONUser.addUser(
 				userEmailAddress = "userea1@liferay.com",
 				userFirstName = "userfn1",
@@ -93,17 +93,25 @@ definition {
 				userEmailAddress = "userea1@liferay.com");
 
 			Accounts.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
+		}
 
-			task ("And add two accounts") {
-				for (var accountNum : list "1,2") {
-					JSONAccountEntry.addAccountEntry(
-						accountEntryName = "Account Name ${accountNum}",
-						accountEntryType = "Business");
-				}
+		task ("And he is a member of two business accounts") {
+			for (var accountNum : list "1,2") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Account Name ${accountNum}",
+					accountEntryType = "Business");
+
+				Accounts.openAccountsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "Account Name ${accountNum}");
+
+				Accounts.assignUsers(
+					accountName = "Account Name ${accountNum}",
+					assigneeName = "userfn1");
 			}
 		}
 
-		task ("When add owned account role with UPDATE, VIEW ACCOUNT ROLE permission to account1 userfn1") {
+		task ("When this user is granted permissions to Update account entry and View account roles for Account Name 1") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name 1");
@@ -122,42 +130,34 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name 1");
 
-			Accounts.assignUsers(
-				accountName = "Account Name 1",
-				assigneeName = "userfn1");
-
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Specific Role1",
 				accountUserName = "userfn1 userln1");
-
-			task ("And add owned account role with UPDATE permission to account2 userfn1") {
-				Accounts.openAccountsAdmin();
-
-				LexiconEntry.gotoEntry(rowEntry = "Account Name 2");
-
-				Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role2");
-
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "UPDATE",
-					resourceName = "com.liferay.account.model.AccountEntry",
-					roleTitle = "Account Specific Role2",
-					roleType = "account");
-
-				Accounts.openAccountsAdmin();
-
-				LexiconEntry.gotoEntry(rowEntry = "Account Name 2");
-
-				Accounts.assignUsers(
-					accountName = "Account Name 2",
-					assigneeName = "userfn1");
-
-				Accounts.addAssigneeToRoleViaUsersTab(
-					accountRoleTitle = "Account Specific Role2",
-					accountUserName = "userfn1 userln1");
-			}
 		}
 
-		task ("Then a user with only view account roles permissions for an account can only view account roles, can't add role, can't delete the role.") {
+		task ("And user is granted permissions to only Update an account entry for Account Name 2") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name 2");
+
+			Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role2");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Specific Role2",
+				roleType = "account");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name 2");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Specific Role2",
+				accountUserName = "userfn1 userln1");
+		}
+
+		task ("Then he can view account roles in Account Name 1") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea1@liferay.com",
 				userLoginFullName = "userfn1 userln1");
@@ -169,20 +169,22 @@ definition {
 			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
 
 			LexiconEntry.viewEntryName(rowEntry = "Account Specific Role1");
+		}
 
+		task ("and this user cannot do any other actions to these account roles") {
 			AssertElementNotPresent(locator1 = "Button#PLUS");
 
 			LexiconEntry.viewNoEntryMenu(rowEntry = "Account Specific Role1");
+		}
 
-			task ("And a user with only view account roles permissions only can view for accont1") {
-				Accounts.openAccountsAdmin();
+		task ("and this user cannot view account roles in Account Name 2") {
+			Accounts.openAccountsAdmin();
 
-				LexiconEntry.gotoEntry(rowEntry = "Account Name 2");
+			LexiconEntry.gotoEntry(rowEntry = "Account Name 2");
 
-				AssertElementNotPresent(
-					key_tab = "Roles",
-					locator1 = "NavTab#ACTIVE_TAB_LINK");
-			}
+			AssertElementNotPresent(
+				key_tab = "Roles",
+				locator1 = "NavTab#ACTIVE_TAB_LINK");
 		}
 	}
 

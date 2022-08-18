@@ -359,6 +359,22 @@ public class CommerceDiscountServiceImpl
 			companyId, couponCode);
 	}
 
+	@Override
+	public List<CommerceDiscount> getCommerceDiscounts(
+			long companyId, String level, boolean active, int status)
+		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceDiscountResourcePermission.getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CommerceDiscountActionKeys.VIEW_COMMERCE_DISCOUNTS);
+
+		return commerceDiscountLocalService.getCommerceDiscounts(
+			companyId, level, active, status);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x)
 	 */

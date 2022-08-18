@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-160064."
-	@priority = "3"
+	@priority = "4"
 	test CanAddCompanyWithHeadlessAPI {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddCompanyWithHeadlessAPI";
@@ -351,7 +351,7 @@ definition {
 		DBPartition.validateSchemas(schemaNamePrefix = "testPartition");
 	}
 
-	@priority = "5"
+	@priority = "3"
 	test NewCompanyStillAccessibleAfterRestart {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
 		property test.assert.warning.exceptions = "true";
@@ -397,7 +397,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
-	@priority = "4"
+	@priority = "3"
 	test ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies {
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
 		property osgi.module.configurations = "checkInterval=I&quot;1&quot;";

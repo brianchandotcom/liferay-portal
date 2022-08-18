@@ -75,7 +75,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-142654. This asserts user can view account roles with permissions."
+	@description = "This is a use case for LPS-142654. This asserts user with View Account Roles permissions for an account can only view and cannot do other actions to those roles. It also asserts that a user only has this permissions to the account he has the role in."
 	@priority = "4"
 	test CanViewAccountRolesWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

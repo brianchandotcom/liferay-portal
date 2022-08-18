@@ -1042,11 +1042,11 @@ exports[`SidebarPanelInfoView renders 1`] = `
                       >
                         Display Date
                       </h5>
-                      <p
+                      <div
                         class="text-secondary"
                       >
                         Jul 27, 2020, 10:53 AM
-                      </p>
+                      </div>
                     </div>
                     <div
                       class="c-mb-4 sidebar-dl sidebar-section"
@@ -1056,11 +1056,11 @@ exports[`SidebarPanelInfoView renders 1`] = `
                       >
                         Expiration Date
                       </h5>
-                      <p
+                      <div
                         class="text-secondary"
                       >
                         Jul 28, 2020, 10:00 AM
-                      </p>
+                      </div>
                     </div>
                     <div
                       class="c-mb-4 sidebar-dl sidebar-section"
@@ -1070,11 +1070,11 @@ exports[`SidebarPanelInfoView renders 1`] = `
                       >
                         Review Date
                       </h5>
-                      <p
+                      <div
                         class="text-secondary"
                       >
                         Jul 27, 2020, 2:14 PM
-                      </p>
+                      </div>
                     </div>
                     <div
                       class="c-mb-4 sidebar-dl sidebar-section"

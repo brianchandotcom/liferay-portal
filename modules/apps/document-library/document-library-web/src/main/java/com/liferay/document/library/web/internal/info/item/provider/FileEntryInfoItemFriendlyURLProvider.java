@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -53,10 +55,7 @@ public class FileEntryInfoItemFriendlyURLProvider
 			return String.valueOf(fileEntry.getFileEntryId());
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		long groupId = serviceContext.getScopeGroupId();
+		long groupId = _getGroupId();
 
 		if ((groupId != GroupConstants.DEFAULT_LIVE_GROUP_ID) &&
 			(groupId != mainFriendlyURLEntry.getGroupId())) {
@@ -77,6 +76,29 @@ public class FileEntryInfoItemFriendlyURLProvider
 			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			_friendlyURLEntryLocalizationComparator);
+	}
+
+	private long _getGroupId() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return GroupThreadLocal.getGroupId();
+		}
+
+		if (serviceContext.getThemeDisplay() == null) {
+			return serviceContext.getScopeGroupId();
+		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if (themeDisplay.getSiteGroupId() !=
+				GroupConstants.DEFAULT_LIVE_GROUP_ID) {
+
+			return themeDisplay.getSiteGroupId();
+		}
+
+		return themeDisplay.getScopeGroupId();
 	}
 
 	private final FriendlyURLEntryLocalizationComparator

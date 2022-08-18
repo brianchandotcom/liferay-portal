@@ -74,6 +74,24 @@ const TOKEN_VALUES = {
 	},
 };
 
+const ITEM = {
+	config: {
+		landscapeMobile: {
+			styles: {
+				fontSize: 'fontSizeLg',
+			},
+		},
+		styles: {
+			fontSize: 'fontSizeDesktop',
+		},
+		tablet: {
+			styles: {
+				fontSize: 'fontSizeBase',
+			},
+		},
+	},
+};
+
 const renderAdvancedSelectField = ({
 	field = FIELD,
 	onValueSelect = () => {},
@@ -85,6 +103,7 @@ const renderAdvancedSelectField = ({
 		<AdvancedSelectField
 			canDetachTokenValues={canDetachTokenValues}
 			field={field}
+			item={ITEM}
 			onValueSelect={onValueSelect}
 			options={OPTIONS}
 			selectedViewportSize={selectedViewportSize}
@@ -212,5 +231,32 @@ describe('AdvancedSelectField', () => {
 		});
 
 		expect(screen.queryByTitle('detach-token')).not.toBeInTheDocument();
+	});
+
+	it('clears the value when the "Reset" button is clicked and the viewport is Desktop', () => {
+		renderAdvancedSelectField({
+			value: 'fontSizeLg',
+		});
+
+		userEvent.click(screen.getByTitle('reset-to-initial-value'));
+
+		const select = screen.getByLabelText('font-size');
+
+		expect(select.tagName).toBe('SELECT');
+		expect(select.nextSibling.textContent).toBe('Inherited');
+	});
+
+	it('sets the value of the previous viewport when the "Reset" button is clicked', () => {
+		renderAdvancedSelectField({
+			selectedViewportSize: 'landscapeMobile',
+			value: 'fontSizeSm',
+		});
+
+		userEvent.click(screen.getByTitle('reset-to-tablet-value'));
+
+		const select = screen.getByLabelText('font-size');
+
+		expect(select.tagName).toBe('SELECT');
+		expect(select.nextSibling.textContent).toBe('Font Size Base');
 	});
 });

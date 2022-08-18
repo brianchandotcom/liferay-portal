@@ -25,68 +25,61 @@ const DigitalMarket = ({
 	tacticName,
 	typeOfActivitieName,
 }: IProps) => (
-	<div>
-		<Table
-			items={[
-				{
-					title: 'Activity name',
-					value: mdfRequestActivity.name,
-				},
-				{
-					title: 'Type of Activity',
-					value: typeOfActivitieName,
-				},
-				{
-					title: 'Tactic',
-					value: tacticName,
-				},
-				{
-					title: 'Overall message, content or CTA',
-					value: mdfRequestActivity.overallMessageContentCTA,
-				},
-				{
-					title: 'Specific sites to be used',
-					value: mdfRequestActivity.specificSites,
-				},
-				{
-					title: 'Keywords for PPC campaigns',
-					value: mdfRequestActivity.keywordsForPPCCampaigns,
-				},
-				{
-					title: 'Ad (any size/type)',
-					value: mdfRequestActivity.ad,
-				},
-				{
-					title: 'Do you require any assets from Liferay?',
-					value: getBooleanValue(
-						mdfRequestActivity.assetsLiferayRequired
-					),
-				},
-				{
-					title:
-						'How will the Liferay brand be used in the campaign?',
-					value: mdfRequestActivity.howLiferayBrandUsed,
-				},
-				{
-					title: 'Start Date',
-					value: new Date(
-						mdfRequestActivity.startDate
-					).toLocaleDateString(
-						Liferay.ThemeDisplay.getBCP47LanguageId()
-					),
-				},
-				{
-					title: 'End Date',
-					value: new Date(
-						mdfRequestActivity.endDate
-					).toLocaleDateString(
-						Liferay.ThemeDisplay.getBCP47LanguageId()
-					),
-				},
-			]}
-			title="Campaign Activity"
-		/>
-	</div>
+	<Table
+		items={[
+			{
+				title: 'Activity name',
+				value: mdfRequestActivity.name,
+			},
+			{
+				title: 'Type of Activity',
+				value: typeOfActivitieName,
+			},
+			{
+				title: 'Tactic',
+				value: tacticName,
+			},
+			{
+				title: 'Overall message, content or CTA',
+				value: mdfRequestActivity.overallMessageContentCTA,
+			},
+			{
+				title: 'Specific sites to be used',
+				value: mdfRequestActivity.specificSites,
+			},
+			{
+				title: 'Keywords for PPC campaigns',
+				value: mdfRequestActivity.keywordsForPPCCampaigns,
+			},
+			{
+				title: 'Ad (any size/type)',
+				value: mdfRequestActivity.ad,
+			},
+			{
+				title: 'Do you require any assets from Liferay?',
+				value: getBooleanValue(
+					mdfRequestActivity.assetsLiferayRequired
+				),
+			},
+			{
+				title: 'How will the Liferay brand be used in the campaign?',
+				value: mdfRequestActivity.howLiferayBrandUsed,
+			},
+			{
+				title: 'Start Date',
+				value: new Date(
+					mdfRequestActivity.startDate
+				).toLocaleDateString(Liferay.ThemeDisplay.getBCP47LanguageId()),
+			},
+			{
+				title: 'End Date',
+				value: new Date(mdfRequestActivity.endDate).toLocaleDateString(
+					Liferay.ThemeDisplay.getBCP47LanguageId()
+				),
+			},
+		]}
+		title="Campaign Activity"
+	/>
 );
 
 export default DigitalMarket;

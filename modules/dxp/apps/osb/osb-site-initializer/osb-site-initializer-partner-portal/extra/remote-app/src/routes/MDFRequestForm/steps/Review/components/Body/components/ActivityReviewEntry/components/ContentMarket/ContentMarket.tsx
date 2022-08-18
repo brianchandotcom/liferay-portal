@@ -25,62 +25,55 @@ const ContentMarket = ({
 	tacticName,
 	typeOfActivitieName,
 }: IProps) => (
-	<div>
-		<Table
-			items={[
-				{
-					title: 'Activity name',
-					value: mdfRequestActivity.name,
-				},
-				{
-					title: 'Type of Activity',
-					value: typeOfActivitieName,
-				},
-				{
-					title: 'Tactic',
-					value: tacticName,
-				},
-				{
-					title:
-						'Will this content be gated and have a landing page?',
-					value: getBooleanValue(mdfRequestActivity.gatedLandingPage),
-				},
-				{
-					title: 'Primary theme or message of your content',
-					value: mdfRequestActivity.primaryThemeOrMessage,
-				},
+	<Table
+		items={[
+			{
+				title: 'Activity name',
+				value: mdfRequestActivity.name,
+			},
+			{
+				title: 'Type of Activity',
+				value: typeOfActivitieName,
+			},
+			{
+				title: 'Tactic',
+				value: tacticName,
+			},
+			{
+				title: 'Will this content be gated and have a landing page?',
+				value: getBooleanValue(mdfRequestActivity.gatedLandingPage),
+			},
+			{
+				title: 'Primary theme or message of your content',
+				value: mdfRequestActivity.primaryThemeOrMessage,
+			},
 
-				{
-					title: 'Goal of Content',
-					value: mdfRequestActivity.goalOfContent,
-				},
-				{
-					title:
-						'Are you hiring an outside writer or agency to prepare the content?',
-					value: getBooleanValue(
-						mdfRequestActivity.hiringOutsideWriterOrAgency
-					),
-				},
-				{
-					title: 'Start Date',
-					value: new Date(
-						mdfRequestActivity.startDate
-					).toLocaleDateString(
-						Liferay.ThemeDisplay.getBCP47LanguageId()
-					),
-				},
-				{
-					title: 'End Date',
-					value: new Date(
-						mdfRequestActivity.endDate
-					).toLocaleDateString(
-						Liferay.ThemeDisplay.getBCP47LanguageId()
-					),
-				},
-			]}
-			title="Campaign Activity"
-		/>
-	</div>
+			{
+				title: 'Goal of Content',
+				value: mdfRequestActivity.goalOfContent,
+			},
+			{
+				title:
+					'Are you hiring an outside writer or agency to prepare the content?',
+				value: getBooleanValue(
+					mdfRequestActivity.hiringOutsideWriterOrAgency
+				),
+			},
+			{
+				title: 'Start Date',
+				value: new Date(
+					mdfRequestActivity.startDate
+				).toLocaleDateString(Liferay.ThemeDisplay.getBCP47LanguageId()),
+			},
+			{
+				title: 'End Date',
+				value: new Date(mdfRequestActivity.endDate).toLocaleDateString(
+					Liferay.ThemeDisplay.getBCP47LanguageId()
+				),
+			},
+		]}
+		title="Campaign Activity"
+	/>
 );
 
 export default ContentMarket;

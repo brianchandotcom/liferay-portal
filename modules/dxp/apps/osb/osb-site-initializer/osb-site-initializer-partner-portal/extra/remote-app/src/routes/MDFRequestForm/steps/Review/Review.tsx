@@ -13,6 +13,7 @@ import Button from '@clayui/button';
 import {useFormikContext} from 'formik';
 
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
+import useTotalBudget from '../../../../common/hooks/useTotalBudget';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
 import ActivityPanel from '../../components/ActivityPanel';
@@ -24,7 +25,6 @@ import ActivityReviewEntry from './components/Body/components/ActivityReviewEntr
 import GoalsEntries from './components/Body/components/GoalsEntries';
 import Header from './components/Header';
 import useGetCompanyName from './hooks/useGetCompanyName';
-import useTotalBudget from './hooks/useTotalBudget';
 
 const Review = ({
 	onCancel,

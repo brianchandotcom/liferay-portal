@@ -17,58 +17,56 @@ interface IProps {
 	mdfRequest: MDFRequest;
 }
 
-const GoalsEntries = ({companyName, mdfRequest}: IProps) => {
-	return (
-		<div>
-			<Table
-				items={[
-					{
-						title: 'Company Name',
-						value: companyName,
-					},
-					{
-						title: 'Region',
-						value: mdfRequest.country.name,
-					},
-				]}
-				title="Partner Summary"
-			/>
+const GoalsEntries = ({companyName, mdfRequest}: IProps) => (
+	<div>
+		<Table
+			items={[
+				{
+					title: 'Company Name',
+					value: companyName,
+				},
+				{
+					title: 'Region',
+					value: mdfRequest.country.name,
+				},
+			]}
+			title="Partner Summary"
+		/>
 
-			<Table
-				items={[
-					{
-						title:
-							'Provide a name and short description of the overall campaign',
-						value: mdfRequest.overallCampaign,
-					},
-					{
-						title: 'Liferay business/sales goals',
-						value: mdfRequest.liferayBusinessSalesGoals.join(', '),
-					},
-				]}
-				title="Activity Summary"
-			/>
+		<Table
+			items={[
+				{
+					title:
+						'Provide a name and short description of the overall campaign',
+					value: mdfRequest.overallCampaign,
+				},
+				{
+					title: 'Liferay business/sales goals',
+					value: mdfRequest.liferayBusinessSalesGoals.join(', '),
+				},
+			]}
+			title="Activity Summary"
+		/>
 
-			<Table
-				items={[
-					{
-						title: 'Target Market(s)',
-						value: mdfRequest.targetMarkets.join(', '),
-					},
-					{
-						title: 'Additional Options',
-						value: mdfRequest.additionalOption.name
-							? mdfRequest.additionalOption.name
-							: 'N/A',
-					},
-					{
-						title: 'Target Audience/Role',
-						value: mdfRequest.targetAudienceRoles.join(', '),
-					},
-				]}
-				title="Target Market"
-			/>
-		</div>
-	);
-};
+		<Table
+			items={[
+				{
+					title: 'Target Market(s)',
+					value: mdfRequest.targetMarkets.join(', '),
+				},
+				{
+					title: 'Additional Options',
+					value: mdfRequest.additionalOption.name
+						? mdfRequest.additionalOption.name
+						: 'N/A',
+				},
+				{
+					title: 'Target Audience/Role',
+					value: mdfRequest.targetAudienceRoles.join(', '),
+				},
+			]}
+			title="Target Market"
+		/>
+	</div>
+);
 export default GoalsEntries;

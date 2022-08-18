@@ -24,45 +24,39 @@ const MiscellaneousMarket = ({
 	tacticName,
 	typeOfActivitieName,
 }: IProps) => (
-	<div>
-		<Table
-			items={[
-				{
-					title: 'Activity name',
-					value: mdfRequestActivity.name,
-				},
-				{
-					title: 'Type of Activity',
-					value: typeOfActivitieName,
-				},
-				{
-					title: 'Tactic',
-					value: tacticName,
-				},
-				{
-					title: 'Marketing activity',
-					value: mdfRequestActivity.marketingActivity,
-				},
-				{
-					title: 'Start Date',
-					value: new Date(
-						mdfRequestActivity.startDate
-					).toLocaleDateString(
-						Liferay.ThemeDisplay.getBCP47LanguageId()
-					),
-				},
-				{
-					title: 'End Date',
-					value: new Date(
-						mdfRequestActivity.endDate
-					).toLocaleDateString(
-						Liferay.ThemeDisplay.getBCP47LanguageId()
-					),
-				},
-			]}
-			title="Campaign Activity"
-		/>
-	</div>
+	<Table
+		items={[
+			{
+				title: 'Activity name',
+				value: mdfRequestActivity.name,
+			},
+			{
+				title: 'Type of Activity',
+				value: typeOfActivitieName,
+			},
+			{
+				title: 'Tactic',
+				value: tacticName,
+			},
+			{
+				title: 'Marketing activity',
+				value: mdfRequestActivity.marketingActivity,
+			},
+			{
+				title: 'Start Date',
+				value: new Date(
+					mdfRequestActivity.startDate
+				).toLocaleDateString(Liferay.ThemeDisplay.getBCP47LanguageId()),
+			},
+			{
+				title: 'End Date',
+				value: new Date(mdfRequestActivity.endDate).toLocaleDateString(
+					Liferay.ThemeDisplay.getBCP47LanguageId()
+				),
+			},
+		]}
+		title="Campaign Activity"
+	/>
 );
 
 export default MiscellaneousMarket;

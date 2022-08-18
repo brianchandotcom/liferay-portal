@@ -24,65 +24,59 @@ const Event = ({
 	tacticName,
 	typeOfActivitieName,
 }: IProps) => (
-	<div>
-		<Table
-			items={[
-				{
-					title: 'Activity name',
-					value: mdfRequestActivity.name,
-				},
-				{
-					title: 'Type of Activity',
-					value: typeOfActivitieName,
-				},
-				{
-					title: 'Tactic',
-					value: tacticName,
-				},
-				{
-					title: 'Activity Description',
-					value: mdfRequestActivity.description,
-				},
-				{
-					title: 'Venue Name',
-					value: mdfRequestActivity.venueName,
-				},
-				{
-					title: 'Liferay Branding',
-					value: mdfRequestActivity.liferayBranding,
-				},
-				{
-					title: 'Liferay Participation / Requirements',
-					value: mdfRequestActivity.liferayParticipationRequirements,
-				},
-				{
-					title: 'Source and Size of Invitee List',
-					value: mdfRequestActivity.sourceAndSizeOfInviteeList,
-				},
-				{
-					title: 'Activity Promotion',
-					value: mdfRequestActivity.activityPromotion,
-				},
-				{
-					title: 'Start Date',
-					value: new Date(
-						mdfRequestActivity.startDate
-					).toLocaleDateString(
-						Liferay.ThemeDisplay.getBCP47LanguageId()
-					),
-				},
-				{
-					title: 'End Date',
-					value: new Date(
-						mdfRequestActivity.endDate
-					).toLocaleDateString(
-						Liferay.ThemeDisplay.getBCP47LanguageId()
-					),
-				},
-			]}
-			title="Campaign Activity"
-		/>
-	</div>
+	<Table
+		items={[
+			{
+				title: 'Activity name',
+				value: mdfRequestActivity.name,
+			},
+			{
+				title: 'Type of Activity',
+				value: typeOfActivitieName,
+			},
+			{
+				title: 'Tactic',
+				value: tacticName,
+			},
+			{
+				title: 'Activity Description',
+				value: mdfRequestActivity.description,
+			},
+			{
+				title: 'Venue Name',
+				value: mdfRequestActivity.venueName,
+			},
+			{
+				title: 'Liferay Branding',
+				value: mdfRequestActivity.liferayBranding,
+			},
+			{
+				title: 'Liferay Participation / Requirements',
+				value: mdfRequestActivity.liferayParticipationRequirements,
+			},
+			{
+				title: 'Source and Size of Invitee List',
+				value: mdfRequestActivity.sourceAndSizeOfInviteeList,
+			},
+			{
+				title: 'Activity Promotion',
+				value: mdfRequestActivity.activityPromotion,
+			},
+			{
+				title: 'Start Date',
+				value: new Date(
+					mdfRequestActivity.startDate
+				).toLocaleDateString(Liferay.ThemeDisplay.getBCP47LanguageId()),
+			},
+			{
+				title: 'End Date',
+				value: new Date(mdfRequestActivity.endDate).toLocaleDateString(
+					Liferay.ThemeDisplay.getBCP47LanguageId()
+				),
+			},
+		]}
+		title="Campaign Activity"
+	/>
 );
 
 export default Event;

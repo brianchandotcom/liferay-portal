@@ -12,13 +12,13 @@
 import ClayTable from '@clayui/table';
 
 interface ITable {
-	title?: string;
-	value?: string;
+	title: string | undefined;
+	value: string | undefined;
 }
 
 interface IProps {
 	items: ITable[];
-	title?: string;
+	title: string;
 }
 
 const Table = ({items, title}: IProps) => (

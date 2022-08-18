@@ -13,76 +13,15 @@
  */
 
 /*
- * Step PKCE 1: Obtain Authorization Code from Liferay Configured Application with ClientID (Callback URL must be this application)
- */
-function authorizePKCE() {
-	if ($('#authFormPKCE').valid()) {
-		const clientId = $('#clientIdPCKE').val();
-		const liferayUrl = $('#liferayUrlPKCE').val();
-		const codeChallenge = $('#convertedCodeChallenge').val();
-
-		const redirectUri = encodeURIComponent(
-			window.location.href +
-				'?url=' +
-				liferayUrl +
-				'&client_id=' +
-				clientId
-		);
-		window.location.href =
-			liferayUrl +
-			$('#authorizeUrlPKCE').val() +
-			'?client_id={0}&response_type=code&redirect_uri={1}&code_challenge={2}'
-				.replace('{0}', clientId)
-				.replace('{1}', redirectUri)
-				.replace('{2}', codeChallenge);
-	}
-}
-
-/*
- * Generate random string as Code Challenge
- */
-function generateCodeChallenge() {
-	const length = 12;
-	let randomString = '';
-	const dictionary =
-		'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	for (let i = 0; i < length; i++) {
-		randomString += dictionary.charAt(
-			Math.floor(Math.random() * dictionary.length)
-		);
-	}
-	$('#codeChallenge').val(randomString);
-	getEncodedCodeChallenge();
-}
-
-/*
- * Encode Code Challenge as indicated at PKCE specification: BaseURLEncode(SHA256(code-challenge))
- */
-function getEncodedCodeChallenge() {
-	CryptoJS.enc.Base64URL = {
-		_map:
-			'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_',
-		parse: CryptoJS.enc.Base64.parse,
-		stringify: CryptoJS.enc.Base64.stringify,
-	};
-
-	const code = CryptoJS.enc.Utf8.parse($('#codeChallenge').val());
-	const codeSHA256 = CryptoJS.SHA256(code);
-
-	$('#convertedCodeChallenge').val(
-		CryptoJS.enc.Base64URL.stringify(codeSHA256)
-	);
-
-	$('#getAuthorizationPCKE').prop('disabled', false);
-}
-
-/*
  * Function to get needed data when you already have a token
  */
-function copyModalData() {
+function copyModalData(isPKCE) {
 	if ($('#modalForm').valid()) {
 		$('#tokenLiferayUrl').val($('#modalLiferayUrl').val());
 		$('#tokenClientId').val($('#modalClientId').val());
+		if (!isPKCE) {
+			$('#clientSecretId').val($('#modalClientSecret').val());
+		}
 
 		$('#modal').modal('hide');
 		$('#collapseOne').hide();
@@ -110,7 +49,7 @@ $(document).ready(() => {
 
 	if (urlParams('code')) {
 		$('#collapseOne').hide();
-		$('h2#step1 > button').css('color', 'green');
+		$('#authTab > h2 > button').css('color', 'green');
 		$('#collapseTwo').show();
 
 		$('#code').val(urlParams('code'));
@@ -129,13 +68,13 @@ $(document).ready(() => {
 
 		const newName = $(
 			'<div class="col"><input type="text" id="' +
-				addName +
-				'" placeholder="Name" class="form-control form-control-sm" /></div>'
+			addName +
+			'" placeholder="Name" class="form-control form-control-sm" /></div>'
 		);
 		const newValue = $(
 			'<div class="col"><input type="text" id="' +
-				addValue +
-				'" placeholder="Value" class="form-control form-control-sm" /></div>'
+			addValue +
+			'" placeholder="Value" class="form-control form-control-sm" /></div>'
 		);
 
 		const newSection = $(
@@ -152,16 +91,13 @@ $(document).ready(() => {
 /*
  * Step 2: Obtain OAuth2 Token
  */
-function getToken() {
+function getToken(isPKCE) {
 	if ($('#tokenForm').valid()) {
 		const locationUrl =
 			location.protocol + '//' + location.host + location.pathname;
-		$.ajax({
-			contentType: 'application/x-www-form-urlencoded',
-			data: {
+		const dataObj = {
 				client_id: $('#tokenClientId').val(),
 				code: $('#code').val(),
-				code_verifier: $('#exchangeCode').val(),
 				grant_type: 'authorization_code',
 				redirect_uri:
 					locationUrl +
@@ -169,7 +105,17 @@ function getToken() {
 					$('#tokenLiferayUrl').val() +
 					'&client_id=' +
 					$('#tokenClientId').val(),
-			},
+			};
+
+		if (isPKCE) {
+			dataObj.code_verifier = $('#exchangeCode').val();
+		} else {
+			dataObj.client_secret = $('#clientSecretId').val();
+		}
+
+		$.ajax({
+			contentType: 'application/x-www-form-urlencoded',
+			data: dataObj,
 			dataType: 'json',
 			error(data) {
 				alert("There's a problem with your authorization access");
@@ -180,7 +126,6 @@ function getToken() {
 			},
 			method: 'POST',
 			success(data) {
-				console.log(data);
 				$('#token').val(data.access_token);
 				$('#refreshToken').val(data.refresh_token);
 				$('#collapseTwo').hide();
@@ -193,19 +138,26 @@ function getToken() {
 }
 
 /*
- * Function for Introspect the Access Token
+ * Function for Introspect the Access or Refresh Token
  */
-function introspectAccessToken(event) {
+
+function introspectToken(event, isPKCE, tokenType) {
 	event.preventDefault();
-	if ($('#token').val().trim() !== '') {
+	if ((tokenType === 'access_token' && $('#token').val().trim() !== '') || (tokenType === 'refresh_token' && $('#refreshToken').val().trim() !== '')) {
+		const dataObj = {
+			client_id: $('#tokenClientId').val(),
+			token: $('#token').val(),
+			token_type_hint: tokenType,
+		};
+
+		if (!isPKCE) {
+			dataObj.client_secret = $('#clientSecretId').val();
+		}
+
 		$.ajax({
 			contentType: 'application/x-www-form-urlencoded',
 			crossDomain: true,
-			data: {
-				client_id: $('#tokenClientId').val(),
-				token: $('#token').val(),
-				token_type_hint: 'access_token',
-			},
+			data: dataObj,
 			dataType: 'json',
 			error(data) {
 				alert("There's a problem with your authorization access");
@@ -223,58 +175,30 @@ function introspectAccessToken(event) {
 		});
 	}
 	else {
-		alert('Please, insert a valid Access Token');
-	}
-}
-
-/*
- * Function for Introspect the Refresh Token
- */
-function introspectRefreshToken(event) {
-	event.preventDefault();
-	if ($('#refreshToken').val().trim() !== '') {
-		$.ajax({
-			contentType: 'application/x-www-form-urlencoded',
-			crossDomain: true,
-			data: {
-				client_id: $('#tokenClientId').val(),
-				token: $('#refreshToken').val(),
-				token_type_hint: 'refresh_token',
-			},
-			dataType: 'json',
-			error(data) {
-				alert("There's a problem with your authorization access");
-				console.log(data);
-			},
-			headers: {
-				Accept: 'application/json',
-			},
-			method: 'POST',
-			success(data) {
-				$('#result').html(JSON.stringify(data));
-			},
-			url: $('#tokenLiferayUrl').val() + '/o/oauth2/introspect',
-		});
-	}
-	else {
-		alert('Please, insert a valid Refresh Token');
+		alert('Please, insert a valid ' + tokenType);
 	}
 }
 
 /*
  * Refresh Token
  */
-function refreshAccessToken(event) {
+function refreshAccessToken(event, isPKCE) {
 	event.preventDefault();
 	if ($('#refreshToken').val().trim() !== '') {
+		const dataObj = {
+			client_id: $('#tokenClientId').val(),
+			grant_type: 'refresh_token',
+			refresh_token: $('#refreshToken').val(),
+		};
+
+		if (!isPKCE) {
+			dataObj.client_secret = $('#clientSecretId').val();
+		}
+
 		$.ajax({
 			contentType: 'application/x-www-form-urlencoded',
 			crossDomain: true,
-			data: {
-				client_id: $('#tokenClientId').val(),
-				grant_type: 'refresh_token',
-				refresh_token: $('#refreshToken').val(),
-			},
+			data: dataObj,
 			dataType: 'json',
 			error(data) {
 				alert("There's a problem with your authorization access");

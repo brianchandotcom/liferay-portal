@@ -7,16 +7,23 @@
 	<script crossorigin="anonymous" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
 
-	<script src="js/auth.js" type="text/javascript"></script>
-	<script src="js/authBasic.js" type="text/javascript"></script>
+	<!-- CryptoJS 3.1.2: https://code.google.com/archive/p/crypto-js/ -->
 
-	<title>Liferay - OAuth2 Tester</title>
+	<script crossorigin="anonymous" integrity="sha512-+dBxf6v/8aXdessNMadjvrIwfenw6I4bsRGb5GRYocW+0wR/9NYrfBu0+iJ/BbT1MHnulbx1c6T5fBLiNdf7Vw==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/core-min.js"></script>
+	<script crossorigin="anonymous" integrity="sha512-5nRjmJhl9AuNix4KUZjb2aDleDAylgYmOCqKRDA2oySoZiSJxH3G78Oyw1vpUI1t8O0LJNkajPbW9Z2PYqPaYA==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/enc-base64.js"></script>
+	<script crossorigin="anonymous" integrity="sha512-35oaIr0cULyd8CEjbL9FwlZt69TzIY6nxak2AL1/Wt2ZIEPk/rSk/5jF8V0l9mOU9eJ4nf3nyMidan/dNRBlOA==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/hmac-sha256.js"></script>
+	<script crossorigin="anonymous" integrity="sha512-/61YeH7JgZcmDFNWBjC51id6b/cPbzZxP9mk1wyysu+sFRnYmeVTv1fTOeOKm7IFjpAySFCSi5tlGCxs0WJOSg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/sha256.js"></script>
+
+	<script src="js/auth.js" type="text/javascript"></script>
+	<script src="js/authPKCE.js" type="text/javascript"></script>
+
+	<title>Liferay - OAuth2 Tester PKCE</title>
 </head>
 
 <body>
 	<div class="row">
 		<div class="col-8">
-			<h1>Liferay OAuth2 Tester</h1>
+			<h1>Liferay OAuth2 Tester - PKCE</h1>
 
 			<div class="message">You must configure in your Liferay Portal an OAuth2 Application and set<br />
 				<ul>
@@ -27,7 +34,7 @@
 		</div>
 
 		<div class="col-4">
-			<a href="pkce.html" class="btn btn-info">Use PKCE Authorization Code Grant Flow</a>
+			<a href="index.html" class="btn btn-info">Use Basic Authorization Code Grant Flow</a>
 		</div>
 	</div>
 
@@ -51,18 +58,12 @@
 
 						<input class="form-control" id="modalClientId" name="modalClientId" required="required" type="text" />
 					</div>
-
-					<div class="form-group form-row">
-						<label for="modalClientSecret">Client Secret:</label>
-
-						<input class="form-control" id="modalClientSecret" name="modalClientSecret" required="required" type="password" />
-					</div>
 				</form>
 			</div>
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-				<button type="button" class="btn btn-primary" onclick="copyModalData(false);">Continue</button>
+				<button type="button" class="btn btn-primary" onclick="copyModalData(true);">Continue</button>
 			</div>
 			</div>
 		</div>
@@ -78,36 +79,51 @@
 			</div>
 
 			<div aria-labelledby="authTab" class="collapse show" data-parent="#accordion" id="collapseOne">
-				<form id="authForm">
-					<div class="form-group">
-						<label for="liferayUrl">Liferay Portal URL:</label>
-
-						<input class="form-control" id="liferayUrl" name="liferayUrl" required="required" type="text" value="http://localhost:8080" />
-					</div>
-
+				<form id="authFormPKCE">
 					<div class="form-group form-row">
 						<div class="col-6">
-							<label for="authorizeUrl">OAuth2 Authentication URL:</label>
+							<label for="liferayUrlPKCE">Liferay Portal URL:</label>
 
-							<input class="form-control" id="authorizeUrl" name="authorizeUrl" type="text" value="/o/oauth2/authorize" />
+							<input class="form-control" id="liferayUrlPKCE" name="liferayUrlPKCE" required="required" type="text" value="http://localhost:8080" />
 						</div>
 
 						<div class="col-6">
-							<label for="clientId">Client ID:</label>
+							<label for="authorizeUrlPKCE">OAuth2 Authentication URL:</label>
 
-							<input class="form-control" id="clientId" name="clientId" required="required" type="text" />
+							<input class="form-control" id="authorizeUrlPKCE" name="authorizeUrlPKCE" type="text" value="/o/oauth2/authorize" />
+						</div>
+					</div>
+
+					<div class="form-group form-row">
+						<div class="col-3">
+							<label for="clientIdPCKE">Client ID:</label>
+
+							<input class="form-control" id="clientIdPCKE" name="clientIdPCKE" required="required" type="text" />
+						</div>
+
+						<div class="col-3">
+							<label for="codeChallenge">Code Challenge:</label>
+
+							<input class="form-control" disabled="disabled" id="codeChallenge" name="codeChallenge" required="required" type="text" />
+						</div>
+
+						<div class="col-6">
+							<label for="convertedCodeChallenge">Base64 SHA256 Encoded Code Challenge:</label>
+
+							<input class="form-control" disabled="disabled" id="convertedCodeChallenge" name="convertedCodeChallenge" type="text" />
 						</div>
 					</div>
 				</form>
 
-				<button class="btn btn-primary" id="getAuthorizationCode" onclick="getAuthorizationCode();">Authorize My Application</button>
+				<button class="btn btn-primary" onclick="generateCodeChallenge();">Generate a Code Challenge</button>
+				<button class="btn btn-primary" id="getAuthorizationPCKE" disabled="disabled" onclick="authorizePKCE();">Authorize My Application (PKCE)</button>
 			</div>
 		</div>
 
 		<div class="card">
 			<div class="card-header" id="tokenTab">
 				<h2>
-					<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">2. Obtain OAuth2 Token</button>
+					<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">2. Exchange Code for Access Token</button>
 				</h2>
 			</div>
 
@@ -142,26 +158,26 @@
 					</div>
 
 					<div class="form-group">
-						<label for="clientSecretId">Client Secret ID:</label>
+						<label for="exchangeCode">Code Challenge:</label>
 
-						<input class="form-control" id="clientSecretId" name="clientSecretId" required="required" type="password" />
+						<input class="form-control" id="exchangeCode" name="exchangeCode" required="required" type="text" />
 					</div>
 				</form>
 
-				<button id="getToken" class="btn btn-primary" onclick="getToken(false);">Obtain OAuth2 Access</button>
+				<button id="getToken" class="btn btn-primary" onclick="getToken(true);">Obtain Access Token</button>
 			</div>
 		</div>
 
 		<div class="card">
 			<div class="card-header" id="requestTab">
 				<h2>
-				 	<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">3. Request</button>
+					<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">3. Request</button>
 				</h2>
 			</div>
 
 			<div aria-labelledby="requestTab" class="collapse" data-parent="#accordion" id="collapseThree">
 				<form id="requestForm">
-					<div class="form-row">
+					<div class="form-group form-row">
 						<div class="col-6">
 							<label for="url">URL:</label>
 
@@ -177,7 +193,7 @@
 								<option value="POST">POST</option>
 								<option value="PUT">PUT</option>
 							</select>
-					 	</div>
+						</div>
 
 						<div class="col-4">
 							<label for="contentType">Content-Type:</label>
@@ -186,7 +202,7 @@
 								<option selected="selected" value="application/json">application/json</option>
 								<option value="application/x-www-form-urlencoded">x-www-form-urlencoded</option>
 							</select>
-					 	</div>
+						</div>
 					</div>
 
 					<br />
@@ -217,8 +233,8 @@
 					</div>
 
 					<div class="col-4">
-						<button id="refreshTokenButton" class="btn btn-warning btn-sm" onclick="refreshAccessToken(event, false);">Refresh Token</button>
-						<button id="introspectTokenButton" class="btn btn-warning btn-sm" onclick="introspectToken(event, false, 'access_token');">Introspect Access Token</button>
+						<button id="refreshTokenButton" class="btn btn-warning btn-sm" onclick="refreshAccessToken(event, true);">Refresh Token</button>
+						<button id="introspectTokenButton" class="btn btn-warning btn-sm" onclick="introspectToken(event, true, 'access_token');">Introspect Access Token</button>
 					</div>
 				</div>
 
@@ -230,7 +246,7 @@
 					</div>
 
 					<div class="col-4">
-						<button id="introspectRefreshTokenButton" class="btn btn-warning btn-sm" onclick="introspectToken(event, false, 'refresh_token');">Introspect Refresh Token</button>
+						<button id="introspectRefreshTokenButton" class="btn btn-warning btn-sm" onclick="introspectToken(event, true, 'refresh_token');">Introspect Refresh Token</button>
 					</div>
 				</div>
 

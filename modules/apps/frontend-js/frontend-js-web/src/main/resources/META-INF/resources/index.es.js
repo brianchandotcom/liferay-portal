@@ -29,7 +29,7 @@ export {
 	getCookie,
 	setCookie,
 	removeCookie,
-} from './liferay/util/cookie';
+} from './liferay/util/cookie/cookie';
 
 // Debounce API
 

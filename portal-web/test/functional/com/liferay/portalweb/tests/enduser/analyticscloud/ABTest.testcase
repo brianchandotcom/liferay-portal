@@ -62,13 +62,13 @@ definition {
 		}
 
 		task ("Start an AB test") {
-			ACUtils.createABTest(
-				goalAB = "Bounce Rate",
-				titleAB = "${nameABTest}");
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "${nameABTest}");
 
-			ACUtils.createABVariant(variantAB = "AB Variant");
+			ABTest.createVariant(variantName = "Variant name");
 
-			ACUtils.runABTest();
+			ABTest.runTest();
 		}
 
 		task ("Go to Tests") {
@@ -80,7 +80,7 @@ definition {
 		}
 
 		task ("Assert AB test") {
-			ACUtils.viewABTest(testName = "${nameABTest}");
+			ACUtils.viewGenericText(textValueList = "${nameABTest}");
 		}
 	}
 

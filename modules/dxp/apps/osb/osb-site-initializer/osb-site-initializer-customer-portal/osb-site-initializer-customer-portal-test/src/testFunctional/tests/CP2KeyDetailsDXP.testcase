@@ -40,4 +40,28 @@ definition {
 		}
 	}
 
+    @description = "LPS-148079 - Verify that an activation keys details pop up appears when clicking on a key."
+    @priority = "5"
+    test PopUpShowsFromActivationKey {
+        property portal.upstream = "quarantine";
+
+        // Needs refactor since it depends on example FIFA account
+
+        task ("Given") {
+            CustomerPortal.loginOktaToUpdateCP();
+
+            Navigator.openURL();
+
+            ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+            CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+            CP2NavigationMenu.goToProductActivation();
+
+            CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+            //click on one of them and assert the popup window appears
+        }
+    }
+
 }

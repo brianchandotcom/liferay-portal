@@ -4542,48 +4542,63 @@ public class JenkinsResultsParserUtil {
 			HTTPAuthorization httpAuthorizationHeader, boolean expectResponse)
 		throws IOException {
 
-		for (int i = 0; i < 2; i++) {
-			try (BufferedReader bufferedReader = toBufferedReader(
-					url, checkCache, maxRetries, httpRequestMethod, postContent,
-					retryPeriod, timeout, httpAuthorizationHeader)) {
+		long start = System.currentTimeMillis();
 
-				StringBuilder sb = new StringBuilder();
+		try {
+			for (int i = 0; i < 2; i++) {
+				try (BufferedReader bufferedReader = toBufferedReader(
+						url, checkCache, maxRetries, httpRequestMethod,
+						postContent, retryPeriod, timeout,
+						httpAuthorizationHeader)) {
 
-				String line = bufferedReader.readLine();
+					StringBuilder sb = new StringBuilder();
 
-				while (line != null) {
-					sb.append(line);
-					sb.append("\n");
+					String line = bufferedReader.readLine();
 
-					line = bufferedReader.readLine();
+					while (line != null) {
+						sb.append(line);
+						sb.append("\n");
+
+						line = bufferedReader.readLine();
+					}
+
+					int bytes = sb.length();
+
+					if (expectResponse && (bytes == 0) && (i < 1)) {
+						System.out.println(
+							"Unable to get response, retrying request");
+
+						continue;
+					}
+
+					String content = sb.toString();
+
+					if (checkCache && !url.startsWith("file:") &&
+						(bytes < (3 * 1024 * 1024))) {
+
+						url = fixURL(url);
+
+						String key = url.replace("//", "/");
+
+						saveToCacheFile(_PREFIX_TO_STRING_CACHE + key, content);
+					}
+
+					return content;
 				}
+			}
 
-				int bytes = sb.length();
+			return "";
+		}
+		finally {
+			long duration = System.currentTimeMillis() - start;
 
-				if (expectResponse && (bytes == 0) && (i < 1)) {
-					System.out.println(
-						"Unable to get response, retrying request");
-
-					continue;
-				}
-
-				String content = sb.toString();
-
-				if (checkCache && !url.startsWith("file:") &&
-					(bytes < (3 * 1024 * 1024))) {
-
-					url = fixURL(url);
-
-					String key = url.replace("//", "/");
-
-					saveToCacheFile(_PREFIX_TO_STRING_CACHE + key, content);
-				}
-
-				return content;
+			if (duration > (1000 * 60 * 5)) {
+				System.out.println(
+					combine(
+						"HTTP call took ", toDurationString(duration),
+						". URL: ", url));
 			}
 		}
-
-		return "";
 	}
 
 	public static String toString(

@@ -13,74 +13,54 @@
  */
 
 import yupSchema from '../../schema/yup';
-import fetcher from '../fetcher';
-import {APIResponse, TestrayCase} from './types';
+import Rest from './Rest';
+import {TestrayCase} from './types';
 
 type Case = typeof yupSchema.case.__outputType & {projectId: number};
 
-const adapter = ({
-	caseTypeId: r_caseTypeToCases_c_caseTypeId,
-	componentId: r_componentToCases_c_componentId,
-	description,
-	descriptionType,
-	estimatedDuration,
-	name,
-	priority,
-	projectId: r_projectToCases_c_projectId,
-	steps,
-	stepsType,
-}: Case) => ({
-	description,
-	descriptionType,
-	estimatedDuration,
-	name,
-	priority,
-	r_caseTypeToCases_c_caseTypeId,
-	r_componentToCases_c_componentId,
-	r_projectToCases_c_projectId,
-	steps,
-	stepsType,
-});
+class TestrayCaseRest extends Rest<Case, TestrayCase> {
+	constructor() {
+		super({
+			adapter: ({
+				caseTypeId: r_caseTypeToCases_c_caseTypeId,
+				componentId: r_componentToCases_c_componentId,
+				description,
+				descriptionType,
+				estimatedDuration,
+				name,
+				priority,
+				projectId: r_projectToCases_c_projectId,
+				steps,
+				stepsType,
+			}) => ({
+				description,
+				descriptionType,
+				estimatedDuration,
+				name,
+				priority,
+				r_caseTypeToCases_c_caseTypeId,
+				r_componentToCases_c_componentId,
+				r_projectToCases_c_projectId,
+				steps,
+				stepsType,
+			}),
+			nestedFields:
+				'build.project,build.routine,caseType,component.team&nestedFieldsDepth=3',
+			transformData: (testrayCase) => ({
+				...testrayCase,
+				caseType: testrayCase?.r_caseTypeToCases_c_caseType,
+				component: testrayCase?.r_componentToCases_c_component
+					? {
+							...testrayCase?.r_componentToCases_c_component,
+							team:
+								testrayCase?.r_componentToCases_c_component
+									?.r_teamToComponents_c_team,
+					  }
+					: undefined,
+			}),
+			uri: 'cases',
+		});
+	}
+}
 
-const nestedFieldsParam =
-	'nestedFields=build.project,build.routine,caseType,component.team&nestedFieldsDepth=3';
-
-const casesResource = `/cases?${nestedFieldsParam}`;
-
-const getCaseQuery = (caseId: number | string) =>
-	`/cases/${caseId}?${nestedFieldsParam}`;
-
-const getCaseTransformData = (testrayCase: TestrayCase): TestrayCase => ({
-	...testrayCase,
-	caseType: testrayCase?.r_caseTypeToCases_c_caseType,
-	component: testrayCase?.r_componentToCases_c_component
-		? {
-				...testrayCase?.r_componentToCases_c_component,
-				team:
-					testrayCase?.r_componentToCases_c_component
-						?.r_teamToComponents_c_team,
-		  }
-		: undefined,
-});
-
-const getCasesTransformData = (response: APIResponse<TestrayCase>) => ({
-	...response,
-	items: response?.items?.map(getCaseTransformData),
-});
-
-const createCase = (testrayCase: Case) =>
-	fetcher.post('/cases', adapter(testrayCase));
-
-const updateCase = (id: number, testrayCase: Case) =>
-	fetcher.put(`/cases/${id}`, adapter(testrayCase));
-
-export type {TestrayCase};
-
-export {
-	casesResource,
-	createCase,
-	getCaseQuery,
-	getCasesTransformData,
-	getCaseTransformData,
-	updateCase,
-};
+export const testrayCaseRest = new TestrayCaseRest();

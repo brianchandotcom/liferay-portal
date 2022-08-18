@@ -13,24 +13,18 @@
  */
 
 import yupSchema from '../../schema/yup';
-import fetcher from '../fetcher';
-import {APIResponse, TestrayProject} from './types';
+import Rest from './Rest';
+import {TestrayProject} from './types';
 
 type Project = typeof yupSchema.project.__outputType;
 
-const adapter = ({description, id, name}: Project) => ({description, id, name});
+class TestrayProjectRest extends Rest<Project, TestrayProject> {
+	constructor() {
+		super({
+			uri: 'projects',
+		});
+	}
+}
+const testrayProjectRest = new TestrayProjectRest();
 
-const createProject = (project: Project) =>
-	fetcher.post('/projects', adapter(project));
-
-const updateProject = (id: number, project: Project) =>
-	fetcher.put(`/projects/${id}`, adapter(project));
-
-const getProjectsTransformData = (response: APIResponse<TestrayProject>) => ({
-	...response,
-	items: response?.items,
-});
-
-export type {TestrayProject};
-
-export {createProject, updateProject, getProjectsTransformData};
+export {testrayProjectRest};

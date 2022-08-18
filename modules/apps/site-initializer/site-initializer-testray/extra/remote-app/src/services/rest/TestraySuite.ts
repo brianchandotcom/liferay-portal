@@ -13,31 +13,34 @@
  */
 
 import yupSchema from '../../schema/yup';
-import fetcher from '../fetcher';
+import Rest from './Rest';
+import {TestraySuite} from './types';
 
 type Suite = typeof yupSchema.suite.__outputType & {projectId: number};
 
-const adapter = ({
-	autoanalyze,
-	caseParameters,
-	description,
-	id,
-	name,
-	projectId: r_projectToSuites_c_projectId,
-	smartSuite,
-}: Suite) => ({
-	autoanalyze,
-	caseParameters,
-	description,
-	id,
-	name,
-	r_projectToSuites_c_projectId,
-	smartSuite,
-});
+class TestraySuiteRest extends Rest<Suite, TestraySuite> {
+	constructor() {
+		super({
+			adapter: ({
+				autoanalyze,
+				caseParameters,
+				description,
+				id,
+				name,
+				projectId: r_projectToSuites_c_projectId,
+				smartSuite,
+			}) => ({
+				autoanalyze,
+				caseParameters,
+				description,
+				id,
+				name,
+				r_projectToSuites_c_projectId,
+				smartSuite,
+			}),
+			uri: 'suites',
+		});
+	}
+}
 
-const createSuite = (suite: Suite) => fetcher.post('/suites', adapter(suite));
-
-const updateSuite = (id: number, suite: Suite) =>
-	fetcher.put(`/suites/${id}`, adapter(suite));
-
-export {createSuite, updateSuite};
+export const testraySuiteRest = new TestraySuiteRest();

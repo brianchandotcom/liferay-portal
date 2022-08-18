@@ -13,26 +13,27 @@
  */
 
 import yupSchema from '../../schema/yup';
-import fetcher from '../fetcher';
-import {APIResponse, TestrayRoutine} from './types';
+import Rest from './Rest';
+import {TestrayRoutine} from './types';
 
-type Routine = typeof yupSchema.routine.__outputType & {projectId: number};
+type RoutineFormType = typeof yupSchema.routine.__outputType & {
+	projectId: number;
+};
 
-const adapter = (routine: Routine) => ({
-	autoanalyze: routine.autoanalyze,
-	name: routine.name,
-	r_routineToProjects_c_projectId: routine.projectId,
-});
+class TestrayRoutineRest extends Rest<RoutineFormType, TestrayRoutine> {
+	constructor() {
+		super({
+			adapter: (routine) => ({
+				autoanalyze: routine.autoanalyze,
+				id: routine.id,
+				name: routine.name,
+				r_routineToProjects_c_projectId: routine.projectId,
+			}),
+			uri: 'routines',
+		});
+	}
+}
 
-const createRoutine = (routine: Routine & {projectId: number}) =>
-	fetcher.post('/routines', adapter(routine));
+const testrayRoutineRest = new TestrayRoutineRest();
 
-const updateRoutine = (id: number, routine: Routine) =>
-	fetcher.put(`/routines/${id}`, adapter(routine));
-
-const getRoutinesTransformData = (response: APIResponse<TestrayRoutine>) => ({
-	...response,
-	items: response?.items,
-});
-
-export {createRoutine, updateRoutine, getRoutinesTransformData};
+export {testrayRoutineRest};

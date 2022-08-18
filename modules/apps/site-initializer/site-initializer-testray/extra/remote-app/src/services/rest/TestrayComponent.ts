@@ -40,7 +40,7 @@ const nestedFieldsParam = 'nestedFields=project,team';
 
 const componentsResource = `/components?${nestedFieldsParam}`;
 
-const assignTeamsToComponents = async (response: Component, state: State) => {
+const assignTeamsToComponents = async (teamId: number, state: State) => {
 	const [unassignedItems = [], currentItems = []] = state;
 
 	for (const unassigned of unassignedItems) {
@@ -56,7 +56,7 @@ const assignTeamsToComponents = async (response: Component, state: State) => {
 		if (current.teamId === 0) {
 			await updateComponent(Number(current.value), {
 				name: current.label,
-				teamId: response?.id,
+				teamId: teamId?.toString(),
 			});
 		}
 	}

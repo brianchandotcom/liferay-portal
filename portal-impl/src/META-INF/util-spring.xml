@@ -85,8 +85,9 @@
 	<bean class="com.liferay.portal.kernel.json.JSONFactoryUtil" id="com.liferay.portal.kernel.json.JSONFactoryUtil">
 		<property name="JSONFactory" ref="com.liferay.portal.kernel.json.JSONFactory" />
 	</bean>
+	<bean class="com.liferay.portal.language.LanguageImpl" id="com.liferay.portal.kernel.language.Language" />
 	<bean class="com.liferay.portal.kernel.language.LanguageUtil" id="com.liferay.portal.kernel.language.LanguageUtil">
-		<property name="language" ref="com.liferay.portal.language.LanguageImpl" />
+		<property name="language" ref="com.liferay.portal.kernel.language.Language" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.language.UnicodeLanguageUtil" id="com.liferay.portal.kernel.language.UnicodeLanguageUtil">
 		<property name="unicodeLanguage" ref="com.liferay.portal.language.UnicodeLanguageImpl" />
@@ -296,7 +297,6 @@
 	<bean class="com.liferay.portal.kernel.zip.ZipWriterFactoryUtil" id="com.liferay.portal.kernel.zip.ZipWriterFactoryUtil">
 		<property name="zipWriterFactory" ref="com.liferay.portal.kernel.zip.ZipWriterFactory" />
 	</bean>
-	<bean class="com.liferay.portal.language.LanguageImpl" id="com.liferay.portal.language.LanguageImpl" />
 	<bean class="com.liferay.portal.language.LanguageResources" id="com.liferay.portal.language.LanguageResources" />
 	<bean class="com.liferay.portal.language.UnicodeLanguageImpl" id="com.liferay.portal.language.UnicodeLanguageImpl" />
 	<bean class="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" id="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" />

@@ -16,6 +16,7 @@
  * PKCE Authorization Code Grand Flow
  * Step 1: Obtain Authorization Code from Liferay Configured Application with ClientID (Callback URL must be this application)
  */
+// eslint-disable-next-line no-unused-vars
 function authorizePKCE() {
 	if ($('#authFormPKCE').valid()) {
 		const clientId = $('#clientIdPCKE').val();
@@ -42,6 +43,7 @@ function authorizePKCE() {
 /*
  * Generate random string as Code Challenge
  */
+// eslint-disable-next-line no-unused-vars
 function generateCodeChallenge() {
 	const length = 12;
 	let randomString = '';

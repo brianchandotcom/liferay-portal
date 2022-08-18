@@ -110,17 +110,13 @@ definition {
 
 			Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role1");
 
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.account.model.AccountEntry",
-				roleTitle = "Account Specific Role1",
-				roleType = "account");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_ACCOUNT_ROLES",
-				resourceName = "com.liferay.account.model.AccountEntry",
-				roleTitle = "Account Specific Role1",
-				roleType = "account");
+			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.account.model.AccountEntry",
+					roleTitle = "Account Specific Role1",
+					roleType = "account");
+			}
 
 			Accounts.openAccountsAdmin();
 

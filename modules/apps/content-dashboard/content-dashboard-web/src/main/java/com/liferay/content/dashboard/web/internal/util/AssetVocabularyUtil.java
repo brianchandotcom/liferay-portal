@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -65,6 +66,14 @@ public class AssetVocabularyUtil {
 
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
 			_getAssetVocabularySettingsHelper(assetVocabulary, classNameIds);
+
+		String settings = assetVocabularySettingsHelper.toString();
+
+		if (Objects.equals(settings, assetVocabulary.getSettings()) &&
+			(visibilityType == assetVocabulary.getVisibilityType())) {
+
+			return assetVocabulary;
+		}
 
 		return assetVocabularyLocalService.updateVocabulary(
 			assetVocabulary.getVocabularyId(), assetVocabulary.getTitleMap(),

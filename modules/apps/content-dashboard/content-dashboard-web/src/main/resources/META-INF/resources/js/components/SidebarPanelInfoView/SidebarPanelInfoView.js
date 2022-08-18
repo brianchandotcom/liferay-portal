@@ -91,7 +91,17 @@ const SidebarPanelInfoView = ({
 		publicVocabularies
 	);
 
-	const items = Object.values(specificFields);
+	const specificItems = Object.values(specificFields);
+
+	const renderSpecificItem = ({languageTag, type, value}) => {
+		const options = {
+			Date: () => formatDate(value, languageTag),
+			URL: () => <FileUrlCopyButton url={value} />,
+			default: () => value,
+		};
+
+		return (options[type] && options[type]()) || options.default();
+	};
 
 	const showTaxonomies =
 		!!internalCategoriesCount || !!publicCategoriesCount || !!tags?.length;
@@ -291,8 +301,8 @@ const SidebarPanelInfoView = ({
 							title={Liferay.Language.get('details')}
 						>
 							<div className="sidebar-section">
-								{!!items.length &&
-									items.map(
+								{!!specificItems.length &&
+									specificItems.map(
 										({title, type, value}) =>
 											title &&
 											value &&
@@ -305,14 +315,13 @@ const SidebarPanelInfoView = ({
 														{title}
 													</h5>
 
-													<p className="text-secondary">
-														{type === 'Date'
-															? formatDate(
-																	value,
-																	languageTag
-															  )
-															: value}
-													</p>
+													<div className="text-secondary">
+														{renderSpecificItem({
+															languageTag,
+															type,
+															value,
+														})}
+													</div>
 												</div>
 											)
 									)}

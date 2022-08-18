@@ -20,9 +20,9 @@ definition {
 	}
 
 	@priority = "4"
-	test AddMultipleCompanies {
+	test ExecuteSchemaValidator {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
-		property test.name.skip.portal.instance = "DatabasePartitioning#AddMultipleCompanies";
+		property test.name.skip.portal.instance = "DatabasePartitioning#ExecuteSchemaValidator";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -89,11 +89,11 @@ definition {
 	}
 
 	@priority = "5"
-	test AddNewCompany {
+	test CanAddCompanyWithPortalInstancesAdminUI {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#AddNewCompany";
+		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddCompanyWithPortalInstancesAdminUI";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -130,12 +130,12 @@ definition {
 	}
 
 	@priority = "4"
-	test AddNewCompanyWithCluster {
+	test CanAddCompanyWithCluster {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "DatabasePartitioning#AddNewCompanyWithCluster";
+		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddCompanyWithCluster";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -219,9 +219,9 @@ definition {
 
 	@description = "This is a use case for LPS-160064."
 	@priority = "3"
-	test CanAddVirtualInstanceWithHeadlessAPI {
+	test CanAddCompanyWithHeadlessAPI {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddVirtualInstanceWithHeadlessAPI";
+		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddCompanyWithHeadlessAPI";
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "www.baker.com",
@@ -306,11 +306,11 @@ definition {
 	}
 
 	@priority = "5"
-	test DeleteCompany {
+	test CanDeleteCompany {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#DeleteCompany";
+		property test.name.skip.portal.instance = "DatabasePartitioning#CanDeleteCompany";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -352,10 +352,10 @@ definition {
 	}
 
 	@priority = "5"
-	test RestartPortal {
+	test NewCompanyStillAccessibleAfterRestart {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#RestartPortal";
+		property test.name.skip.portal.instance = "DatabasePartitioning#NewCompanyStillAccessibleAfterRestart";
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "www.able.com",

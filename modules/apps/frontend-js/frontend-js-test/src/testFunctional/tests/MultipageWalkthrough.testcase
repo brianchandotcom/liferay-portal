@@ -86,4 +86,36 @@ definition {
 		}
 	}
 
+	@description = "LPS-159474. Assert walkthrough can navigate back to the previous page."
+	@priority = "5"
+	test CanNavigateToPreviousPage {
+		property portal.acceptance = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("When on step 2") {
+			Walkthrough.enablePopoverMode();
+
+			Walkthrough.goToSpecificStep(key_step = "2");
+
+			VerifyElementPresent(
+				key_title = "Step 2 of 2: Enter Your Name",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+
+		task ("And When navigate to previous step") {
+			Walkthrough.goToPreviousStep(key_step = "1");
+		}
+
+		task ("Then browser URL ends with /walkthrough-page-1") {
+			AssertLocation(value1 = "${portalURL}/web/site-name/walkthrough-page-1");
+		}
+
+		task ("And Then popover is in step 1") {
+			AssertElementPresent(
+				key_title = "Step 1 of 2: Click the Button",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+	}
+
 }

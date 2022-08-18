@@ -3923,6 +3923,12 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		Click(locator1 = "PageEditor#PREVIEW");
 	}
 
+	macro previewInANewTab {
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Preview in a New Tab");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+	}
+
 	macro prioritizeExperience {
 		var key_experienceName = "${experienceName}";
 

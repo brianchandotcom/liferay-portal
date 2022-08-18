@@ -15,11 +15,6 @@ import getActivitiesData from '../../../../utils/getActivitiesData';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 
-interface DateActivities {
-	endDates: Date[];
-	startDates: Date[];
-}
-
 export default async function createMDFRequest(mdfRequest: MDFRequest) {
 	const dtoMDFRequest = {
 		...mdfRequest,

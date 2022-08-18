@@ -219,8 +219,8 @@ definition {
 
 	@description = "This is a use case for LPS-160064."
 	@priority = "3"
-	test CanAddAVirtualInstanceWithDBPartitioningEnabled {
-		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddAVirtualInstanceWithDBPartitioningEnabled";
+	test CanAddVirtualInstanceWithHeadlessAPI {
+		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddVirtualInstanceWithHeadlessAPI";
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "www.baker.com",

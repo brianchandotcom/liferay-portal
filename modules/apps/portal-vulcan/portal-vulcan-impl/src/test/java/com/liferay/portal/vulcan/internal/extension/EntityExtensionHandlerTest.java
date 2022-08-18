@@ -662,7 +662,7 @@ public class EntityExtensionHandlerTest {
 	private static final String _CLASS_NAME =
 		"com.liferay.test.model.TestModel";
 
-	private static final long _COMPANY_ID = 11111;
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private static final Object _OBJECT = new Object();
 

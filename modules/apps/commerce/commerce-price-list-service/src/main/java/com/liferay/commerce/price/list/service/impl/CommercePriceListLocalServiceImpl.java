@@ -96,7 +96,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.LongStream;
 
 /**
@@ -565,7 +564,7 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
-	public Optional<CommercePriceList> getCommercePriceList(
+	public CommercePriceList getCommercePriceList(
 			long groupId, long commerceAccountId,
 			long[] commerceAccountGroupIds)
 		throws PortalException {
@@ -586,10 +585,10 @@ public class CommercePriceListLocalServiceImpl
 		CommercePriceList commercePriceList = _portalCache.get(cacheKey);
 
 		if (commercePriceList == _dummyCommercePriceList) {
-			return Optional.empty();
+			return null;
 		}
 		else if (commercePriceList != null) {
-			return Optional.of(commercePriceList);
+			return commercePriceList;
 		}
 
 		SearchContext searchContext = buildSearchContext(
@@ -606,7 +605,7 @@ public class CommercePriceListLocalServiceImpl
 		if (documents.isEmpty()) {
 			_portalCache.put(cacheKey, _dummyCommercePriceList);
 
-			return Optional.empty();
+			return null;
 		}
 
 		Document document = documents.get(0);
@@ -619,12 +618,12 @@ public class CommercePriceListLocalServiceImpl
 		if (commercePriceList == null) {
 			_portalCache.put(cacheKey, _dummyCommercePriceList);
 
-			return Optional.empty();
+			return null;
 		}
 
 		_portalCache.put(cacheKey, commercePriceList);
 
-		return Optional.of(commercePriceList);
+		return commercePriceList;
 	}
 
 	@Override

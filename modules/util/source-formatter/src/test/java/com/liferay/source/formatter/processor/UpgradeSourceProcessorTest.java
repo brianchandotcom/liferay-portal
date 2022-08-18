@@ -27,11 +27,6 @@ import org.junit.Test;
 public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testXMLUpgradeDTDVersionCheck() throws Exception {
-		test("upgrade/GradleUpgradeReleaseDxpCheck.testgradle");
-	}
-
-	@Test
 	public void testGradleUpgradeReleaseDxpCheck() throws Exception {
 		test("upgrade/GradleUpgradeReleaseDxpCheck.testgradle");
 	}
@@ -41,6 +36,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 		throws Exception {
 
 		test("upgrade/liferay-plugin-package.testproperties");
+	}
+
+	@Test
+	public void testXMLUpgradeDTDVersionCheck() throws Exception {
+		test("upgrade/GradleUpgradeReleaseDxpCheck.testgradle");
 	}
 
 	@Override

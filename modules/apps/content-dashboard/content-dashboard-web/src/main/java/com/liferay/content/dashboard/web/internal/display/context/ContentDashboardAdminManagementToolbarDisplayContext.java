@@ -121,8 +121,6 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			).setParameter(
 				"contentDashboardItemSubtypePayload", (String)null
 			).setParameter(
-				"fileExtension", (String)null
-			).setParameter(
 				"scopeId", (String)null
 			).setParameter(
 				"status", WorkflowConstants.STATUS_ANY
@@ -249,57 +247,6 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			contentDashboardItemSubtypes =
 				_contentDashboardAdminDisplayContext.
 					getContentDashboardItemSubtypes();
-
-		List<ContentDashboardItemFilterProvider>
-			contentDashboardItemFilterProviders =
-				_contentDashboardItemFilterProviderTracker.
-					getContentDashboardItemFilterProviders();
-
-		for (ContentDashboardItemFilterProvider
-				contentDashboardItemFilterProvider :
-					contentDashboardItemFilterProviders) {
-
-			try {
-				ContentDashboardItemFilter contentDashboardItemFilter =
-					contentDashboardItemFilterProvider.
-						getContentDashboardItemFilter(
-							_liferayPortletRequest.getHttpServletRequest());
-
-				List<String> parameterValues =
-					contentDashboardItemFilter.getParameterValues();
-
-				for (String parameterValue : parameterValues) {
-					labelItemListWrapper.add(
-						labelItem -> {
-							labelItem.putData(
-								"removeLabelURL",
-								_getRemoveLabelURL(
-									contentDashboardItemFilter.
-										getParameterName(),
-									() -> {
-										Stream<String> stream =
-											parameterValues.stream();
-
-										return stream.filter(
-											curFileExtension -> !Objects.equals(
-												curFileExtension,
-												parameterValue)
-										).toArray(
-											String[]::new
-										);
-									}));
-							labelItem.setCloseable(true);
-							labelItem.setLabel(
-								_getLabel("extension", parameterValue));
-						});
-				}
-			}
-			catch (ContentDashboardItemActionException
-						contentDashboardItemActionException) {
-
-				_log.error(contentDashboardItemActionException);
-			}
-		}
 
 		for (ContentDashboardItemSubtype contentDashboardItemSubtype :
 				contentDashboardItemSubtypes) {

@@ -283,7 +283,8 @@ public class RegionLocalServiceTest {
 	private Region _addRegion(boolean active, long countryId, String name)
 		throws Exception {
 
-		return _addRegion(active, countryId, name);
+		return _addRegion(
+			active, countryId, name, RandomTestUtil.randomString());
 	}
 
 	private Region _addRegion(

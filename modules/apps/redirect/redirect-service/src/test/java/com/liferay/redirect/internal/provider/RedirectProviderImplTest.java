@@ -61,6 +61,22 @@ public class RedirectProviderImplTest {
 	}
 
 	@Test
+	public void testControlPanelURLs() {
+		_setupPatterns(
+			Collections.singletonMap(
+				Pattern.compile("^.*/control_panel/manage"), "xyz"));
+
+		Assert.assertNull(
+			_getRedirectProviderRedirect("/control_panel/manage"));
+
+		Mockito.verify(
+			_redirectEntryLocalService, Mockito.never()
+		).fetchRedirectEntry(
+			Mockito.anyLong(), Mockito.anyString(), Mockito.anyBoolean()
+		);
+	}
+
+	@Test
 	public void testEmptyPatterns() {
 		_setupPatterns(Collections.emptyMap());
 

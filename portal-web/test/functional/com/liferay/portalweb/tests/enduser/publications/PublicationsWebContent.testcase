@@ -25,6 +25,62 @@ definition {
 		}
 	}
 
+	@description = "This is use case for LPS-159561. Making the changes in the description doesn't yield a missing requirement conflict."
+	@priority = "3"
+	test MakingChangesInDescriptionCannotYieldConflict {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addFields(fieldNameList = "Text,Link to Page");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "site-name");
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text,Link to Page",
+			templateName = "WC Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.addWithStructureCP(webContentText = "This is a edited Text field");
+
+		PortletEntry.publish();
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+	}
+
 	@description = "Manage Conflicting Web Content Folder changes and discard the changes."
 	@priority = "4"
 	test ManageConflictingWebContentFolderChanges {

@@ -27,6 +27,7 @@ import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFor
 import com.liferay.object.internal.language.ObjectResourceBundle;
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermContributor;
 import com.liferay.object.internal.notification.type.ObjectDefinitionNotificationType;
+import com.liferay.object.internal.persistence.ObjectDefinitionTableArgumentsResolver;
 import com.liferay.object.internal.related.models.ObjectEntry1to1ObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.related.models.ObjectEntryMtoMObjectRelatedModelsProviderImpl;
@@ -50,6 +51,7 @@ import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -158,6 +160,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntryPortletResourcePermissionLogic());
 
 		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
+			_bundleContext.registerService(
+				ArgumentsResolver.class,
+				new ObjectDefinitionTableArgumentsResolver(
+					objectDefinition.getDBTableName()),
+				null),
+			_bundleContext.registerService(
+				ArgumentsResolver.class,
+				new ObjectDefinitionTableArgumentsResolver(
+					objectDefinition.getExtensionDBTableName()),
+				null),
 			_bundleContext.registerService(
 				KeywordQueryContributor.class,
 				new ObjectEntryKeywordQueryContributor(

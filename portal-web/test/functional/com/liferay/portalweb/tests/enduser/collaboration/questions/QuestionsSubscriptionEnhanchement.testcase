@@ -1,0 +1,97 @@
+@component-name = "portal-questions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Questions";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Questions Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Questions Page",
+			widgetName = "Questions");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Message Boards");
+
+			if (IsElementPresent(locator1 = "Questions#QUESTIONS_LIST")) {
+				Questions.tearDown();
+			}
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+
+	@description = "Validate if the user can create a question with an AL image."
+	@priority = "5"
+	test CanASubscribeAQuestion {
+		
+	}
+
+	@description = "Validate if the user can create a question with an AL image."
+	@priority = "5"
+	test CanASubscribeATag {
+		
+	}
+
+    @description = "Validate if the user can create a question with an AL image."
+	@priority = "5"
+	test CanASubscribeATopic {
+		
+	}
+
+	@description = "Validate if the user can create a question with an AL image."
+	@priority = "5"
+	test CanUnsubscribeAQuestion {
+		
+	}
+
+	@description = "Validate if the user can create a question with an AL image."
+	@priority = "5"
+	test CanUnsubscribeATag {
+		
+	}
+
+    @description = "Validate if the user can create a question with an AL image."
+	@priority = "5"
+	test CanUnsubscribeATopic {
+		
+	}
+
+    @description = "Validate if the user can create a question with an AL image."
+	@priority = "3"
+	test CanBeNotifiedByAnswer {
+		
+	}
+
+	@description = "Validate if the user can create a question with an AL image."
+	@priority = "3"
+	test CanBeNotifiedByComment {
+		
+	}
+
+	@description = "Validate if the user can create a question with an AL image."
+	@priority = "3"
+	test CanBeNotifiedByQuestion {
+		
+	}
+
+}

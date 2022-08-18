@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.net.URI;
@@ -699,10 +700,12 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 
 		// Title
 
-		User user = UserLocalServiceUtil.getUser(calendarBooking.getUserId());
+		User user = UserLocalServiceUtil.fetchUser(calendarBooking.getUserId());
 
-		Summary summary = new Summary(
-			calendarBooking.getTitle(user.getLocale()));
+		Locale locale =
+			(user != null) ? user.getLocale() : LocaleUtil.getSiteDefault();
+
+		Summary summary = new Summary(calendarBooking.getTitle(locale));
 
 		propertyList.add(summary);
 
@@ -712,7 +715,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 			calendarBooking.getCompanyId());
 
 		String calendarBookingDescription = StringUtil.replace(
-			calendarBooking.getDescription(user.getLocale()),
+			calendarBooking.getDescription(locale),
 			new String[] {"href=\"/", "src=\"/"},
 			new String[] {
 				"href=\"" + company.getPortalURL(calendarBooking.getGroupId()) +
@@ -773,7 +776,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 
 		long firstReminder = calendarBooking.getFirstReminder();
 
-		if (firstReminder > 0) {
+		if ((firstReminder > 0) && (user != null)) {
 			VAlarm vAlarm = _toICalAlarm(
 				calendarBooking.getFirstReminderNotificationType(),
 				firstReminder, user.getEmailAddress());
@@ -783,7 +786,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 
 		long secondReminder = calendarBooking.getSecondReminder();
 
-		if (secondReminder > 0) {
+		if ((secondReminder > 0) && (user != null)) {
 			VAlarm alarm = _toICalAlarm(
 				calendarBooking.getSecondReminderNotificationType(),
 				secondReminder, user.getEmailAddress());

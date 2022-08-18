@@ -228,12 +228,31 @@ definition {
 			portalInstanceId = "www.baker.com",
 			virtualHost = "www.baker.com");
 
-		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
+		SignOut.signOut();
 
-		ContentPages.viewFragmentText(
-			fragmentName = "heading",
-			id = "element-text",
-			text = "Welcome to Liferay");
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.baker.com:8080",
+			userEmailAddress = "test@www.baker.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+
+		SQL.assertDatabaseCount(
+			databaseFilter = "lpartition%",
+			databaseSubstring = "lpartition",
+			expectedCount = "1");
 	}
 
 	@priority = "4"

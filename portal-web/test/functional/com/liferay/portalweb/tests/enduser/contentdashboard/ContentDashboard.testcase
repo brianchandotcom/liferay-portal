@@ -1121,7 +1121,7 @@ definition {
 	test CheckDisplayPageIconofApprovedWebContent {
 		property portal.acceptance = "true";
 
-		task ("Create and Publish a Display Page Template with Fragment") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1187,7 +1187,7 @@ definition {
 	test CheckDisplayPageIconofPendingWebContent {
 		property portal.acceptance = "true";
 
-		task ("Create and Publish a Display Page Template with Fragment") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1680,7 +1680,7 @@ definition {
 	test CheckViewOptionNotDisplayedNotApprovedWCAssiciatedDPT {
 		property portal.acceptance = "true";
 
-		task ("Create and Publish a Display Page Template with Fragment") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1841,7 +1841,7 @@ definition {
 			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 		}
 
-		task ("Create a DPT and set as Default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1949,7 +1949,7 @@ definition {
 			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 		}
 
-		task ("Create a DPT and set as Default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -2093,7 +2093,7 @@ definition {
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 		property portal.acceptance = "true";
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -2188,7 +2188,7 @@ definition {
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 		property portal.acceptance = "true";
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -2354,7 +2354,7 @@ definition {
 			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 		}
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -2450,7 +2450,7 @@ definition {
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property portal.acceptance = "true";
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -2658,7 +2658,7 @@ definition {
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property portal.acceptance = "true";
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -4158,7 +4158,7 @@ definition {
 	test IconInfo {
 		property portal.acceptance = "true";
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -4361,7 +4361,7 @@ definition {
 	test LanguageVersion {
 		property portal.acceptance = "true";
 
-		task ("Add Display Page") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -5224,7 +5224,7 @@ definition {
 	test ShouldExhibitWebContentAssociatedWithDisplayPage {
 		property portal.acceptance = "true";
 
-		task ("Create and Publish a Display Page Template with Fragment") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -5722,7 +5722,7 @@ definition {
 	test WebContentIconView {
 		property portal.acceptance = "true";
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",

@@ -207,7 +207,7 @@ definition {
 				title = "WC Content");
 		}
 
-		task ("Create and Publish a Display Page Template with Fragment") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",

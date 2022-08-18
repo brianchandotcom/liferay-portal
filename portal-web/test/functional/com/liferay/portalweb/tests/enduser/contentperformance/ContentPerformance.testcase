@@ -961,7 +961,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Create a DPT and set as Default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1054,7 +1054,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Create a DPT and set as Default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1135,7 +1135,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Create a DPT and set as Default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1223,7 +1223,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Create a DPT and set as Default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",

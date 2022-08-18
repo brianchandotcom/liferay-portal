@@ -57,7 +57,7 @@ definition {
 	Then the Content Performance panel is closed"
 	@priority = "3"
 	test CloseMetricsPanel {
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -105,7 +105,7 @@ definition {
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 		property portal.acceptance = "true";
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -141,18 +141,13 @@ definition {
 	Then the Content Performance panel is displayed"
 	@priority = "4"
 	test ViewMetricsButtonKebabWhenDocumentHasDPT {
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
 				statusKey = "APPROVED",
 				subType = "Basic Document");
-
-			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
-				groupName = "Test Site Name",
-				layoutPageTemplateEntryName = "Display Page Name",
-				type = "Display Page Template");
 
 			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
 				groupName = "Test Site Name",
@@ -182,7 +177,7 @@ definition {
 	@description = "LPS-152076 Bug: Content Performance Panel is not visible form Content dashboard if the user doesn't have Control Access Permission"
 	@priority = "4"
 	test ViewMetricsButtonUserWithoutControlAccessPermission {
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -313,7 +308,7 @@ definition {
 	Then the Content Performance panel is displayed"
 	@priority = "4"
 	test ViewMetricsButtonWhenDocumentHasDPT {
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",

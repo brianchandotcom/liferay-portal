@@ -185,7 +185,7 @@ definition {
 				title = "Web Content Title");
 		}
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1534,7 +1534,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1619,7 +1619,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1703,7 +1703,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1786,7 +1786,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1863,7 +1863,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1944,7 +1944,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -2021,7 +2021,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -2097,7 +2097,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -3617,7 +3617,7 @@ definition {
 			PageAudit.enableGooglePageSpeed();
 		}
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -3674,7 +3674,7 @@ definition {
 			PageAudit.disableGooglePageSpeed();
 		}
 
-		task ("Add Display Page and mark it as default") {
+		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",

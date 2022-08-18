@@ -9,18 +9,19 @@
  * distribution rights of the Software.
  */
 
-import useTotalBudget from '../hooks/useTotalBudget';
-import MDFRequest from '../interfaces/mdfRequest';
 import MDFRequestActivity from '../interfaces/mdfRequestActivity';
+import getTotalBudget from './getTotalBudget';
 
 interface DateActivities {
 	endDates: Date[];
 	startDates: Date[];
 }
 
-export default function getActivitiesData(mdfRequest: MDFRequest) {
-	if (mdfRequest.activities.length) {
-		const datesActivities = mdfRequest.activities.reduce(
+export default function getSummaryActivities(
+	mdfRequestActivity: MDFRequestActivity[]
+) {
+	if (mdfRequestActivity.length) {
+		const datesActivities = mdfRequestActivity.reduce(
 			(dateAccumulator: DateActivities, activity: MDFRequestActivity) => {
 				return {
 					endDates: [...dateAccumulator.endDates, activity.endDate],
@@ -48,12 +49,10 @@ export default function getActivitiesData(mdfRequest: MDFRequest) {
 			)
 		);
 
-		const totalCostOfExpense = useTotalBudget(mdfRequest);
-
 		return {
 			maxDateActivity,
 			minDateActivity,
-			totalCostOfExpense,
+			totalCostOfExpense: getTotalBudget(mdfRequestActivity),
 		};
 	}
 }

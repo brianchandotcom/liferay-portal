@@ -11,7 +11,7 @@
 
 import {Liferay} from '../..';
 import MDFRequest from '../../../../interfaces/mdfRequest';
-import getActivitiesData from '../../../../utils/getActivitiesData';
+import getSummaryActivities from '../../../../utils/getSummaryActivities';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 
@@ -21,7 +21,7 @@ export default async function createMDFRequest(mdfRequest: MDFRequest) {
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals.join(
 			', '
 		),
-		...getActivitiesData(mdfRequest),
+		...getSummaryActivities(mdfRequest.activities),
 		targetAudienceRoles: mdfRequest.targetAudienceRoles.join(', '),
 		targetMarkets: mdfRequest.targetMarkets.join(', '),
 	};

@@ -124,6 +124,8 @@ public class CommerceDiscountServiceUpgradeStepRegistrator
 
 			});
 
+		registry.register("2.8.0", "2.8.1", new DummyUpgradeStep());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce discount upgrade step registrator finished");
 		}

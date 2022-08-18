@@ -312,6 +312,28 @@ public class ObjectRelationshipLocalServiceImpl
 			objectDefinitionId1, objectDefinition2, type);
 	}
 
+	@Override
+	public List<ObjectRelationship> getObjectRelationships(
+		long objectDefinitionId1, String deletionType, boolean reverse) {
+
+		return objectRelationshipPersistence.findByODI1_DT_R(
+			objectDefinitionId1, deletionType, reverse);
+	}
+
+	@Override
+	public boolean hasObjectRelationshipByDeletionType(
+		long objectDefinitionId1, String deletionType, boolean reverse) {
+
+		int count = objectRelationshipPersistence.countByODI1_DT_R(
+			objectDefinitionId1, deletionType, reverse);
+
+		if (count > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectRelationship updateObjectRelationship(

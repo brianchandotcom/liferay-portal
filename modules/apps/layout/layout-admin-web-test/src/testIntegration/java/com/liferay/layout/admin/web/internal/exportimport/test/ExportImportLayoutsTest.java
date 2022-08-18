@@ -85,7 +85,7 @@ public class ExportImportLayoutsTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testExportImportLayoutsCreatedFromTemplateWithSameName()
+	public void testExportImportLayoutsCreatedFromLayoutPrototypeWithSameName()
 		throws Exception {
 
 		Group group1 = GroupTestUtil.addGroup();
@@ -126,10 +126,10 @@ public class ExportImportLayoutsTest {
 
 		String layoutName = RandomTestUtil.randomString();
 
-		_addLayoutFromTemplateAndChangeFriendlyURL(
+		_addLayoutFromLayoutPrototypeAndChangeFriendlyURL(
 			group1, layoutName, serviceContext);
 
-		_addLayoutFromTemplateAndChangeFriendlyURL(
+		_addLayoutFromLayoutPrototypeAndChangeFriendlyURL(
 			group1, layoutName, serviceContext);
 
 		long[] layoutIds = ListUtil.toLongArray(
@@ -185,7 +185,7 @@ public class ExportImportLayoutsTest {
 		}
 	}
 
-	private Layout _addLayoutFromTemplateAndChangeFriendlyURL(
+	private Layout _addLayoutFromLayoutPrototypeAndChangeFriendlyURL(
 			Group group, String name, ServiceContext serviceContext)
 		throws Exception {
 

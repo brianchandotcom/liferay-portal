@@ -38,9 +38,11 @@ import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalServic
 import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.pricing.modifier.CommercePriceModifierHelper;
+import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -831,6 +833,22 @@ public class CommerceProductPriceCalculationV2Impl
 			long cpInstanceId, CommerceContext commerceContext, String type)
 		throws PortalException {
 
+		long commerceAccountId = CommerceUtil.getCommerceAccountId(
+			commerceContext);
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			commerceChannelAccountEntryRelLocalService.
+				fetchCommerceChannelAccountEntryRel(
+					commerceAccountId, commerceContext.getCommerceChannelId(),
+					CommerceChannelAccountEntryRelConstants.TYPE_PRICE_LIST);
+
+		if ((commerceChannelAccountEntryRel != null) &&
+			commerceChannelAccountEntryRel.isOverrideEligibility()) {
+
+			return _commercePriceListLocalService.getCommercePriceList(
+				commerceChannelAccountEntryRel.getClassPK());
+		}
+
 		CommercePriceListDiscovery commercePriceListDiscovery =
 			_getCommercePriceListDiscovery(type);
 
@@ -850,8 +868,7 @@ public class CommerceProductPriceCalculationV2Impl
 		}
 
 		return commercePriceListDiscovery.getCommercePriceList(
-			cpInstance.getGroupId(),
-			CommerceUtil.getCommerceAccountId(commerceContext),
+			cpInstance.getGroupId(), commerceAccountId,
 			commerceContext.getCommerceChannelId(), commerceOrderTypeId,
 			cpInstance.getCPInstanceUuid(), type);
 	}

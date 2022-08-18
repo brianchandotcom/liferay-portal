@@ -1515,4 +1515,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-158143. The page creator could see success message after mapping the Form Container to object when all OOTB input fragments are available."
+	@priority = "4"
+	test ViewSuccessMessageAfterMappingFormContainerToEntity {
+		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-157738=true";
+		property test.name.skip.portal.instance = "FormContainer#ViewSuccessMessageAfterMappingFormContainerToEntity";
+
+		task ("Given a page creator has a Form Container on a content page") {
+			task ("Add Date and Integer fields to the object") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Integer",
+					fieldLabelName = "Age",
+					fieldName = "age",
+					fieldType = "Integer",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Date",
+					fieldLabelName = "Purchase Date",
+					fieldName = "purchaseDate",
+					fieldType = "Date",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+			}
+
+			task ("Add a Form Container to a content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+		}
+
+		task ("When the page creator maps the Form Container to object") {
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Then the page creator sees the following success message") {
+			Alert.viewSuccessMessageText(successMessage = "Your form has been successfully loaded.");
+		}
+	}
+
 }

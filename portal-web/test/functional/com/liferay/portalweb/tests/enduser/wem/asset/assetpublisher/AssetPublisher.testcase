@@ -258,7 +258,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssetPublisherPortlet.configureAddSiteScopes(otherSite = "Site Name");
+			AssetPublisherPortlet.configureScopePG(otherSite = "Site Name");
 		}
 
 		task ("View both sites in scope") {

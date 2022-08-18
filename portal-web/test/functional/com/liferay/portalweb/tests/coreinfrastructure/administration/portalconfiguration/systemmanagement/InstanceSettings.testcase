@@ -1356,7 +1356,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "AP Test Page");
 
-		AssetPublisherPortlet.configureAddSiteScopes(otherSite = "Site Name");
+		AssetPublisherPortlet.configureScopePG(otherSite = "Site Name");
 
 		Navigator.gotoPage(pageName = "AP Test Page");
 

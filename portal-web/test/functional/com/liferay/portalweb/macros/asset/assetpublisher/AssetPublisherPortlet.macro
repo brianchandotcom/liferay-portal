@@ -59,62 +59,6 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 	}
 
-	macro configureAddSiteScopes {
-		AssetPublisherPortlet.gotoConfigurationPG();
-
-		Navigator.gotoNavTab(navTab = "Asset Selection");
-
-		Panel.expandPanel(panel = "Scope");
-
-		if (isSet(globalSite)) {
-			Click(locator1 = "Configuration#SCOPE_SELECT");
-
-			MenuItem.click(menuItem = "Global");
-		}
-
-		if (isSet(otherSite)) {
-			Click(locator1 = "Configuration#SCOPE_SELECT");
-
-			MenuItem.click(menuItem = "Other Site or Asset Library...");
-
-			SelectFrame(value1 = "relative=top");
-
-			SelectFrame(locator1 = "IFrame#SELECT_SITES");
-
-			Navigator.gotoNavTab(navTab = "Sites That I Administer");
-
-			SiteSelector.selectSite(site = "${otherSite}");
-		}
-
-		if (isSet(depotName)) {
-			Click(locator1 = "Configuration#SCOPE_SELECT");
-
-			MenuItem.click(menuItem = "Other Site or Asset Library...");
-
-			SelectFrame(value1 = "relative=top");
-
-			SelectFrame(locator1 = "IFrame#SELECT_SITES");
-
-			Navigator.gotoNavTab(navTab = "Asset Libraries");
-
-			Click(
-				key_card = "${depotName}",
-				locator1 = "Card#CARD_TITLE");
-		}
-
-		if (isSet(defaultSite)) {
-			Click(locator1 = "Configuration#SCOPE_SELECT");
-
-			MenuItem.click(menuItem = "Current Site");
-		}
-
-		SelectFrameTop();
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro configureAPSelectMoreThanOnePG {
 		AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
 
@@ -601,6 +545,60 @@ definition {
 			value1 = "${paginationType}");
 
 		PortletEntry.save();
+	}
+
+	macro configureScopePG {
+		AssetPublisherPortlet.gotoConfigurationPG();
+
+		Navigator.gotoNavTab(navTab = "Asset Selection");
+
+		Panel.expandPanel(panel = "Scope");
+
+		Click(locator1 = "Configuration#SCOPE_SELECT");
+
+		if (isSet(globalSite)) {
+			MenuItem.click(menuItem = "Global");
+		}
+
+		if (isSet(otherSite)) {
+			MenuItem.click(menuItem = "Other Site or Asset Library...");
+
+			SelectFrame(value1 = "relative=top");
+
+			SelectFrame(locator1 = "IFrame#SELECT_SITES");
+
+			Navigator.gotoNavTab(navTab = "Sites That I Administer");
+
+			SiteSelector.selectSite(site = "${otherSite}");
+		}
+
+		if (isSet(depotName)) {
+			MenuItem.click(menuItem = "Other Site or Asset Library...");
+
+			SelectFrame(value1 = "relative=top");
+
+			SelectFrame(locator1 = "IFrame#SELECT_SITES");
+
+			Navigator.gotoNavTab(navTab = "Asset Libraries");
+
+			Click(
+				key_card = "${depotName}",
+				locator1 = "Card#CARD_TITLE");
+		}
+
+		if (isSet(defaultSite)) {
+			MenuItem.click(menuItem = "Current Site");
+		}
+
+		if (isSet(pageName)) {
+			MenuItem.click(menuItem = "Current Page (${pageName})");
+		}
+
+		SelectFrameTop();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro configureSelectedPG {

@@ -280,8 +280,8 @@ public class KBArticleItemSelectorViewDisplayContext {
 
 			if (Objects.equals(_getOrderByCol(), "id")) {
 				sort = new Sort(
-					Field.getSortableFieldName("kbArticleId"),
-					Sort.STRING_TYPE, !orderByAsc);
+					Field.getSortableFieldName("kbArticleId"), Sort.STRING_TYPE,
+					!orderByAsc);
 			}
 			else if (Objects.equals(_getOrderByCol(), "modified-date")) {
 				sort = new Sort(

@@ -119,6 +119,7 @@ function getToken(isPKCE) {
 			dataType: 'json',
 			error(data) {
 				alert("There's a problem with your authorization access");
+				// eslint-disable-next-line no-console
 				console.log(data);
 			},
 			headers: {
@@ -161,6 +162,7 @@ function introspectToken(event, isPKCE, tokenType) {
 			dataType: 'json',
 			error(data) {
 				alert("There's a problem with your authorization access");
+				// eslint-disable-next-line no-console
 				console.log(data);
 			},
 			headers: {
@@ -202,6 +204,7 @@ function refreshAccessToken(event, isPKCE) {
 			dataType: 'json',
 			error(data) {
 				alert("There's a problem with your authorization access");
+				// eslint-disable-next-line no-console
 				console.log(data);
 			},
 			headers: {

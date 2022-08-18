@@ -164,6 +164,47 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153367. The page creator could preview current localization in a new tab."
+	@priority = "4"
+	test PreviewCurrentLocalizationInANewTab {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("Given a page creator has a Heading fragment on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page creator adds translation to the inline text of Heading") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Ejemplo de encabezado");
+		}
+
+		task ("Then the page creator could preview current localization in a new tab") {
+			PageEditor.previewInANewTab();
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Ejemplo de encabezado");
+		}
+	}
+
 	@description = "This is a test for LPS-139064. Users can preview localized draft for a content page."
 	@priority = "3"
 	test PreviewLocalizedDraftContentPage {

@@ -24,7 +24,6 @@ import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelectItem} from '../../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
-import {useWidgets} from '../../contexts/WidgetsContext';
 import deleteItem from '../../thunks/deleteItem';
 import duplicateItem from '../../thunks/duplicateItem';
 import canBeDuplicated from '../../utils/canBeDuplicated';
@@ -44,7 +43,7 @@ export default function TopperItemActions({item}) {
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.itemId);
 	const selectItem = useSelectItem();
-	const widgets = useWidgets();
+	const widgets = useSelector((state) => state.widgets);
 
 	const {
 		fragmentEntryLinks,

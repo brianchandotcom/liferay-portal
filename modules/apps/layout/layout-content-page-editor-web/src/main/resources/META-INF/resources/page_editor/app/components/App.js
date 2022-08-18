@@ -24,7 +24,7 @@ import {EditableProcessorContextProvider} from '../contexts/EditableProcessorCon
 import {FormValidationContextProvider} from '../contexts/FormValidationContext';
 import {GlobalContextProvider} from '../contexts/GlobalContext';
 import {StoreContextProvider} from '../contexts/StoreContext';
-import {WidgetsContextProvider} from '../contexts/WidgetsContext';
+import WidgetsManager from '../contexts/WidgetsManager';
 import {reducer} from '../reducers/index';
 import {DragAndDropContextProvider} from '../utils/drag-and-drop/useDragAndDrop';
 import CommonStylesManager from './CommonStylesManager';
@@ -49,33 +49,31 @@ export default function App({state}) {
 							<DisplayPagePreviewItemContextProvider>
 								<AppHooks />
 
-								<WidgetsContextProvider>
-									<DisplayPagePreviewItemSelector dark />
+								<DisplayPagePreviewItemSelector dark />
 
-									<DragPreview />
+								<DragPreview />
 
-									<FormValidationContextProvider>
-										<Toolbar />
+								<WidgetsManager />
 
-										<ShortcutManager />
+								<FormValidationContextProvider>
+									<Toolbar />
 
-										<GlobalContextProvider>
-											<CommonStylesManager />
+									<ShortcutManager />
 
-											<LayoutViewport />
+									<GlobalContextProvider>
+										<CommonStylesManager />
 
-											<StyleBookContextProvider>
-												<Sidebar />
+										<LayoutViewport />
 
-												{Liferay.FeatureFlags[
-													'LPS-153452'
-												] && (
-													<ItemConfigurationSidebar />
-												)}
-											</StyleBookContextProvider>
-										</GlobalContextProvider>
-									</FormValidationContextProvider>
-								</WidgetsContextProvider>
+										<StyleBookContextProvider>
+											<Sidebar />
+
+											{Liferay.FeatureFlags[
+												'LPS-153452'
+											] && <ItemConfigurationSidebar />}
+										</StyleBookContextProvider>
+									</GlobalContextProvider>
+								</FormValidationContextProvider>
 							</DisplayPagePreviewItemContextProvider>
 						</EditableProcessorContextProvider>
 					</DragAndDropContextProvider>

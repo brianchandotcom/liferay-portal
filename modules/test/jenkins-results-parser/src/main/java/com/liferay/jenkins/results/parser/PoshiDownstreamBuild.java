@@ -103,7 +103,7 @@ public class PoshiDownstreamBuild extends DownstreamBuild {
 
 			caseJSONObject.put(
 				"className", "com.liferay.poshi.runner.PoshiRunner");
-			caseJSONObject.put("duration", getDuration());
+			caseJSONObject.put("duration", 0);
 			caseJSONObject.put(
 				"errorDetails", "The build failed prior to running the test.");
 			caseJSONObject.put("errorStackTrace", "");

@@ -27,6 +27,7 @@ const useProductVersionActions = () => {
 		{
 			action: (productVersion: TestrayProductVersion) =>
 				modal.open(productVersion),
+			icon: 'pencil',
 			name: i18n.translate('edit'),
 			permission: 'UPDATE',
 		},
@@ -36,6 +37,7 @@ const useProductVersionActions = () => {
 					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),
+			icon: 'trash',
 			name: i18n.translate('delete'),
 			permission: 'DELETE',
 		},

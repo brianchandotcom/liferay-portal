@@ -30,6 +30,7 @@ const useTeamActions = () => {
 	const actions: Action[] = [
 		{
 			action: (item: TestrayTeam) => modal.open(item),
+			icon: 'pencil',
 			name: i18n.translate('edit'),
 			permission: 'UPDATE',
 		},
@@ -51,7 +52,7 @@ const useTeamActions = () => {
 					})
 					.catch(modal.onError);
 			},
-
+			icon: 'trash',
 			name: i18n.translate('delete'),
 			permission: 'DELETE',
 		},

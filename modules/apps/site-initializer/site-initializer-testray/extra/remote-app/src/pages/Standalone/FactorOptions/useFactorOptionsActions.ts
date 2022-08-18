@@ -26,6 +26,7 @@ const useFactorOptionsActions = () => {
 	const actions: Action[] = [
 		{
 			action: (item: TestrayFactorOptions) => modal.open(item),
+			icon: 'pencil',
 			name: i18n.translate('edit'),
 			permission: 'UPDATE',
 		},
@@ -35,6 +36,7 @@ const useFactorOptionsActions = () => {
 					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),
+			icon: 'trash',
 			name: i18n.translate('delete'),
 			permission: 'DELETE',
 		},

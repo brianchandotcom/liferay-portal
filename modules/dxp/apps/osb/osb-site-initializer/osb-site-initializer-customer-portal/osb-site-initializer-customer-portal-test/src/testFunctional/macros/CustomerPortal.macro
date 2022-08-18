@@ -202,6 +202,11 @@ definition {
 		Click(locator1 = "CustomerPortalSite#FINISH_ACTIVATION");
 	}
 
+	macro clickAtButton {
+		var key_text = "${text}";
+		Click(locator1 = "CustomerPortalSite#ANY_BUTTON");
+	}
+
 	macro clickOnSkipForNowButton {
 		Click(locator1 = "CustomerPortalSite#SKIP_FOR_NOW_BUTTON");
 	}

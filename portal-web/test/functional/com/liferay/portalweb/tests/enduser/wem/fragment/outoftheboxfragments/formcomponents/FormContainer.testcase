@@ -1325,6 +1325,84 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-158143. The page creator could see error message after mapping the Form Container to object when multiple OOTB input fragments are unavailable. The page creator could see error message after mapping the Form Container to object when some OOTB input fragments are disabled from master page."
+	@priority = "4"
+	test ViewErrorMessageAfterMappingFormContainerToEntityWhenMultipleInputFragmentsDisabledFromMasterPage {
+		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-157738=true";
+		property test.name.skip.portal.instance = "FormContainer#ViewErrorMessageAfterMappingFormContainerToEntityWhenMultipleInputFragmentsDisabledFromMasterPage";
+
+		task ("Given a page creator has a Form Container on a content page based on a master page") {
+			task ("Add Date and Integer fields to the object") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Integer",
+					fieldLabelName = "Age",
+					fieldName = "age",
+					fieldType = "Integer",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Date",
+					fieldLabelName = "Purchase Date",
+					fieldName = "purchaseDate",
+					fieldType = "Date",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+			}
+
+			task ("Add a master page then remove Text Input, Numeric Input, Date and Submit Button fragments from allowed fragments") {
+				JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+					groupName = "Test Site Name",
+					masterPageTemplateEntryName = "Custom Masters Page Template");
+
+				MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+				MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+				Click(locator1 = "Button#CONFIGURE_ALLOWED_FRAGMENTS");
+
+				MastersPageTemplates.deselectAllowedFragments(fragmentNameList = "Date,Numeric Input,Submit Button,Text Input");
+
+				MastersPageTemplates.publishMaster();
+			}
+
+			task ("Add a Form Container to a content page based on master page") {
+				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+				ContentPages.addPage(
+					masterLayoutName = "Custom Masters Page Template",
+					pageName = "Test Page Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+		}
+
+		task ("When the page creator maps the Form Container to object") {
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Then the page creator sees the following error message") {
+			Alert.viewErrorMessage(errorMessage = "Some fragments are missing. Date, Number, Submit Button and Text fields cannot have an associated fragment or cannot be available in master.");
+
+			AssertVisible(
+				key_fragmentName = "Form Container",
+				key_messageInfo = "Place fragments here.",
+				key_position = "1",
+				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+
+			PageEditor.gotoConfiguration(fragmentName = "Form Container");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Content Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Purchase Order");
+		}
+	}
+
 	@description = "This is a test for LPS-151402. The user could only see the first error message when multiple validation issues happen on submitting a form."
 	@priority = "4"
 	test ViewOnlyTheFirstErrorMessageShownWhenMultipleValidationIssuesHappen {

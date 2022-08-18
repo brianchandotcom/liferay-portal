@@ -48,13 +48,10 @@ definition {
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Web Content");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}

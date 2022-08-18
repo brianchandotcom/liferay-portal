@@ -190,13 +190,10 @@ definition {
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Web Content");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -1540,13 +1537,10 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name");
+				groupName = "Test Site Name",
+				statusKey = "APPROVED");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -1628,13 +1622,10 @@ definition {
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Document");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -1713,13 +1704,10 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name");
+				groupName = "Test Site Name",
+				statusKey = "APPROVED");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -1799,13 +1787,10 @@ definition {
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Web Content");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -1877,13 +1862,10 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name");
+				groupName = "Test Site Name",
+				statusKey = "APPROVED");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -1961,13 +1943,10 @@ definition {
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Document");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -2039,13 +2018,10 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name");
+				groupName = "Test Site Name",
+				statusKey = "APPROVED");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -2118,13 +2094,10 @@ definition {
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Web Content");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -3640,13 +3613,10 @@ definition {
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Web Content");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -3699,13 +3669,10 @@ definition {
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
+				statusKey = "APPROVED",
 				subType = "Basic Web Content");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}

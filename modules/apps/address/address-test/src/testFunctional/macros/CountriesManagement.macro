@@ -72,6 +72,16 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro activateRegion {
+		Search.searchCP(searchTerm = "${regionName}");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Activate",
+			rowEntry = "${regionName}");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addCountry {
 		LexiconEntry.gotoAdd();
 
@@ -157,6 +167,18 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro deactivateRegion {
+		Search.searchCP(searchTerm = "${regionName}");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Deactivate",
+			rowEntry = "${regionName}");
+
+		AssertConfirm(value1 = "Are you sure you want to deactivate this?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteCountry {
 		Search.searchCP(searchTerm = "${countryName}");
 
@@ -231,15 +253,15 @@ definition {
 
 	macro editRegion {
 		LexiconEntry.gotoEntryMenuItemNoError(
-				menuItem = "Edit",
-				rowEntry = "${regionName}");
+			menuItem = "Edit",
+			rowEntry = "${regionName}");
 
 		if (isSet(regionNameEdit)) {
 			PortletEntry.inputText(
 				fieldLabel = "Name",
 				text = "${regionNameEdit}");
 		}
-	
+
 		if (isSet(regionKeyEdit)) {
 			PortletEntry.inputText(
 				fieldLabel = "Key",
@@ -274,16 +296,16 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro openCountriesManagementPortlet {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_address_web_internal_portlet_CountriesManagementAdminPortlet");
-	}
-
 	macro goToRegions {
 		Search.searchCP(searchTerm = "${countryName}");
 
 		LexiconEntry.gotoEntry(rowEntry = "${countryName}");
 
 		Navigator.gotoNavTab(navTab = "Regions");
+	}
+
+	macro openCountriesManagementPortlet {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_address_web_internal_portlet_CountriesManagementAdminPortlet");
 	}
 
 	@description = "Assert values in country table. Need to set countryName, billingAllowed, shippingAllowed, twoLetterISOCode, countryStatus"

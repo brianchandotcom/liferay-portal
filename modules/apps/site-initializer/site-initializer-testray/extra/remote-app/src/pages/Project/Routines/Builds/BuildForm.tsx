@@ -14,8 +14,9 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import {useEffect, useState} from 'react';
-import {useForm} from 'react-hook-form';
+import ClayLayout from '@clayui/layout';
+import {Fragment, useEffect, useState} from 'react';
+import {useFieldArray, useForm} from 'react-hook-form';
 import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 
 import Form from '../../../../components/Form';
@@ -46,6 +47,30 @@ type RoutineBuildData = typeof yupSchema.build.__outputType;
 
 const RoutineBuildForm = () => {
 	const {projectId, routineId} = useParams();
+
+	const {data: factorItemsData} = useFetch<APIResponse<TestrayFactor>>(
+		`${factorResource}&filter=${searchUtil.eq(
+			'routineId',
+			routineId as string
+		)}`,
+		getFactorsTransformData
+	);
+
+	const {data: productVersionsData, mutate} = useFetch<
+		APIResponse<TestrayProductVersion>
+	>(
+		`/productversions?fields=id,name&filter=${searchUtil.eq(
+			'projectId',
+			projectId as string
+		)}`
+	);
+
+	const {data: routinesData} = useFetch<APIResponse<TestrayRoutine>>(
+		`/routines?fields=id,name&filter=${searchUtil.eq(
+			'projectId',
+			projectId as string
+		)}`
+	);
 	const {modal: optionModal} = useFormModal();
 	const {modal: optionSelectModal} = useFormModal();
 	const {modal: newProductVersionModal} = useFormModal({
@@ -77,12 +102,15 @@ const RoutineBuildForm = () => {
 		form: {onClose, onSubmit},
 	} = useFormActions();
 
+	const factorItems = factorItemsData?.items || [];
+
 	const {modal} = useFormModal({
 		onSave: (newCases) =>
 			setCases((prevCases) => [...new Set([...prevCases, ...newCases])]),
 	});
 
 	const {
+		control,
 		formState: {errors},
 		handleSubmit,
 		register,
@@ -91,6 +119,7 @@ const RoutineBuildForm = () => {
 	} = useForm<RoutineBuildData>({
 		defaultValues: testrayBuild
 			? {
+					categories: [{value: ''}],
 					description: testrayBuild.description,
 					gitHash: testrayBuild.gitHash,
 					name: testrayBuild.name,
@@ -99,30 +128,23 @@ const RoutineBuildForm = () => {
 					template: testrayBuild.template,
 			  }
 			: {
+					categories: [{value: ''}],
 					routineId,
 					template: false,
 			  },
 		resolver: yupResolver(yupSchema.build),
 	});
 
+	const {append, fields, remove} = useFieldArray({
+		control,
+		name: 'categories',
+	});
 	useHeader({
 		timeout: 150,
 		useTabs: [],
 	});
 
-	const {data: routinesData} = useFetch<APIResponse<TestrayRoutine>>(
-		`/routines?fields=id,name&filter=${searchUtil.eq(
-			'projectId',
-			projectId as string
-		)}`
-	);
-
-	const {data: productVersionsData} = useFetch<APIResponse<TestrayRoutine>>(
-		`/productversions?fields=id,name&filter=${searchUtil.eq(
-			'projectId',
-			projectId as string
-		)}`
-	);
+	const productVersionId = watch('productVersionId');
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const productVersions = productVersionsData?.items || [];
@@ -200,6 +222,7 @@ const RoutineBuildForm = () => {
 								})
 							)}
 							required
+							value={productVersionId}
 						/>
 					</div>
 
@@ -245,6 +268,57 @@ const RoutineBuildForm = () => {
 						{i18n.translate('select-stacks')}
 					</ClayButton>
 				</ClayButton.Group>
+
+				<ClayLayout.Row>
+					{fields.map((field, index) => (
+						<Fragment key={field.id}>
+							<ClayLayout.Col size={12}>
+								<ClayLayout.Row className="align-items-center d-flex justify-content-space-between">
+									{factorItems.map((factorItem, index) => (
+										<ClayLayout.Col key={index} size={2}>
+											<Form.Select
+												label={
+													factorItem.factorCategory
+														?.name
+												}
+												name="factorOption"
+												options={[
+													{
+														label: factorItem
+															.factorOption
+															?.name as string,
+														value: factorItem
+															.factorOption
+															?.id as number,
+													},
+												]}
+											/>
+										</ClayLayout.Col>
+									))}
+
+									<ClayLayout.Col className="d-flex justify-content-end">
+										<ClayButtonWithIcon
+											displayType="secondary"
+											onClick={() => append({} as any)}
+											symbol="plus"
+										/>
+
+										{index !== 0 && (
+											<ClayButtonWithIcon
+												className="ml-1"
+												displayType="secondary"
+												onClick={() => remove(index)}
+												symbol="hr"
+											/>
+										)}
+									</ClayLayout.Col>
+								</ClayLayout.Row>
+
+								<Form.Divider />
+							</ClayLayout.Col>
+						</Fragment>
+					))}
+				</ClayLayout.Row>
 
 				<h3>{i18n.translate('cases')}</h3>
 
@@ -314,6 +388,8 @@ const RoutineBuildForm = () => {
 				modal={newProductVersionModal}
 				projectId={(projectId as unknown) as number}
 			/>
+			<FactorOptionsFormModal modal={optionModal} />
+
 			<SuiteFormSelectModal modal={modal} type="select-cases" />
 
 			<BuildOptionModal modal={optionModal} />

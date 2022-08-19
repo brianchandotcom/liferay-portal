@@ -105,14 +105,9 @@ public class ImageTypeContentAttributesUpgradeProcess extends UpgradeProcess {
 					"update JournalArticle set content = ? where id_ = ?")) {
 
 			while (resultSet.next()) {
-				String content = resultSet.getString(1);
-				long id = resultSet.getLong(2);
-
-				String newContent = _addImageContentAttributes(content);
-
-				preparedStatement2.setString(1, newContent);
-
-				preparedStatement2.setLong(2, id);
+				preparedStatement2.setString(
+					1, _addImageContentAttributes(resultSet.getString(1)));
+				preparedStatement2.setLong(2, resultSet.getLong(2));
 
 				preparedStatement2.addBatch();
 			}

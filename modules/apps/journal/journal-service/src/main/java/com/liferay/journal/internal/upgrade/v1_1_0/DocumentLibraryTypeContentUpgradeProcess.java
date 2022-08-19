@@ -87,12 +87,9 @@ public class DocumentLibraryTypeContentUpgradeProcess extends UpgradeProcess {
 					"update JournalArticle set content = ? where id_ = ?")) {
 
 			while (resultSet.next()) {
-				String content = resultSet.getString(1);
-				long id = resultSet.getLong(2);
-
-				preparedStatement2.setString(1, _convertContent(content));
-
-				preparedStatement2.setLong(2, id);
+				preparedStatement2.setString(
+					1, _convertContent(resultSet.getString(1)));
+				preparedStatement2.setLong(2, resultSet.getLong(2));
 
 				preparedStatement2.addBatch();
 			}

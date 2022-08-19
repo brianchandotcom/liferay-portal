@@ -243,20 +243,13 @@ public class ContentImagesUpgradeProcess extends UpgradeProcess {
 					"update JournalArticle set content = ? where id_ = ?")) {
 
 			while (resultSet.next()) {
-				long id = resultSet.getLong(1);
-
-				long resourcePrimKey = resultSet.getLong(2);
-				long groupId = resultSet.getLong(3);
-				long companyId = resultSet.getLong(4);
-				long userId = resultSet.getLong(5);
-				String content = resultSet.getString(6);
-
-				String newContent = _convertTypeImageElements(
-					userId, groupId, companyId, content, resourcePrimKey);
-
-				preparedStatement2.setString(1, newContent);
-
-				preparedStatement2.setLong(2, id);
+				preparedStatement2.setString(
+					1,
+					_convertTypeImageElements(
+						resultSet.getLong(5), resultSet.getLong(3),
+						resultSet.getLong(4), resultSet.getString(6),
+						resultSet.getLong(2)));
+				preparedStatement2.setLong(2, resultSet.getLong(1));
 
 				preparedStatement2.addBatch();
 			}

@@ -722,4 +722,9 @@ definition {
 			locator1 = "CustomerPortalSite#WELCOME_PAGE_USER_NAME");
 	}
 
+	macro viewAlert {
+		var key_alertText = "${alertText}";
+		AssertVisible(locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
+	}
+
 }

@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.workflow.DefaultWorkflowNode;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowNode;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.base.WorkflowInstanceLinkLocalServiceBaseImpl;
 
@@ -156,10 +158,13 @@ public class WorkflowInstanceLinkLocalServiceImpl
 			WorkflowInstanceManagerUtil.getWorkflowInstance(
 				companyId, workflowInstanceLink.getWorkflowInstanceId());
 
-		List<String> currentNodeNames = workflowInstance.getCurrentNodeNames();
+		List<WorkflowNode> currentNodes = workflowInstance.getCurrentNodes();
 
-		if (ListUtil.isNotEmpty(currentNodeNames)) {
-			return currentNodeNames.get(0);
+		if (ListUtil.isNotEmpty(currentNodes)) {
+			DefaultWorkflowNode defaultWorkflowNode =
+				(DefaultWorkflowNode)currentNodes.get(0);
+
+			return defaultWorkflowNode.getLabel(LocaleUtil.getDefault());
 		}
 
 		return StringPool.BLANK;

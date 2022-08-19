@@ -258,7 +258,7 @@ public class KaleoWorkflowModelConverterImpl
 			new DefaultWorkflowInstance();
 
 		defaultWorkflowInstance.setActive(kaleoInstance.isActive());
-		defaultWorkflowInstance.setCurrentNodeNames(
+		defaultWorkflowInstance.setCurrentNodes(
 			Stream.of(
 				_kaleoInstanceTokenLocalService.getKaleoInstanceTokens(
 					kaleoInstance.getKaleoInstanceId())
@@ -274,7 +274,7 @@ public class KaleoWorkflowModelConverterImpl
 				kaleoNode -> !Objects.equals(
 					kaleoNode.getType(), NodeType.FORK.name())
 			).map(
-				KaleoNode::getName
+				this::_toWorkflowNode
 			).collect(
 				Collectors.toList()
 			));
@@ -450,29 +450,7 @@ public class KaleoWorkflowModelConverterImpl
 		).flatMap(
 			List::stream
 		).map(
-			kaleoNode -> {
-				DefaultWorkflowNode defaultWorkflowNode =
-					new DefaultWorkflowNode();
-
-				defaultWorkflowNode.setLabelMap(kaleoNode.getLabelMap());
-				defaultWorkflowNode.setName(kaleoNode.getName());
-
-				WorkflowNode.Type workflowNodeType = WorkflowNode.Type.valueOf(
-					kaleoNode.getType());
-
-				if (Objects.equals(workflowNodeType, WorkflowNode.Type.STATE)) {
-					if (kaleoNode.isInitial()) {
-						workflowNodeType = WorkflowNode.Type.INITIAL_STATE;
-					}
-					else if (kaleoNode.isTerminal()) {
-						workflowNodeType = WorkflowNode.Type.TERMINAL_STATE;
-					}
-				}
-
-				defaultWorkflowNode.setType(workflowNodeType);
-
-				return defaultWorkflowNode;
-			}
+			this::_toWorkflowNode
 		).collect(
 			Collectors.toList()
 		);
@@ -505,6 +483,29 @@ public class KaleoWorkflowModelConverterImpl
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	private WorkflowNode _toWorkflowNode(KaleoNode kaleoNode) {
+		DefaultWorkflowNode defaultWorkflowNode = new DefaultWorkflowNode();
+
+		defaultWorkflowNode.setLabelMap(kaleoNode.getLabelMap());
+		defaultWorkflowNode.setName(kaleoNode.getName());
+
+		WorkflowNode.Type workflowNodeType = WorkflowNode.Type.valueOf(
+			kaleoNode.getType());
+
+		if (Objects.equals(workflowNodeType, WorkflowNode.Type.STATE)) {
+			if (kaleoNode.isInitial()) {
+				workflowNodeType = WorkflowNode.Type.INITIAL_STATE;
+			}
+			else if (kaleoNode.isTerminal()) {
+				workflowNodeType = WorkflowNode.Type.TERMINAL_STATE;
+			}
+		}
+
+		defaultWorkflowNode.setType(workflowNodeType);
+
+		return defaultWorkflowNode;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

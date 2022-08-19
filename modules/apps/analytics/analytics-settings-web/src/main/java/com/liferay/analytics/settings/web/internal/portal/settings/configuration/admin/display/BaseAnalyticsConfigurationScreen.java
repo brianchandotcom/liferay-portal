@@ -100,18 +100,16 @@ public abstract class BaseAnalyticsConfigurationScreen
 
 	protected abstract ServletContext getServletContext();
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.analytics.settings.web)(release.schema.version>=1.0.1))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	@Reference
 	protected AnalyticsUsersManager analyticsUsersManager;
 
 	@Reference
 	protected ConfigurationProvider configurationProvider;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.analytics.settings.web)(release.schema.version>=1.0.1))"
+	)
+	protected Release release;
 
 	private void _setHttpServletRequestAttributes(
 			HttpServletRequest httpServletRequest,

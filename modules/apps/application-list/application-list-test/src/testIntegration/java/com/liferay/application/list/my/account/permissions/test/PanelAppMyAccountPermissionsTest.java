@@ -98,7 +98,7 @@ public class PanelAppMyAccountPermissionsTest {
 
 		_testCompany = addCompany();
 
-		_registerTestPortlet(_testPortletId);
+		_registerTestPortlet();
 
 		long defaultCompanyId = TestPropsValues.getCompanyId();
 
@@ -122,7 +122,7 @@ public class PanelAppMyAccountPermissionsTest {
 	public void testPermissionsAddedForPanelAppFromNewCompany()
 		throws Exception {
 
-		_registerTestPortlet(_testPortletId);
+		_registerTestPortlet();
 
 		_registerTestPanelApp();
 
@@ -166,12 +166,12 @@ public class PanelAppMyAccountPermissionsTest {
 				).build()));
 	}
 
-	private void _registerTestPortlet(String portletId) throws Exception {
+	private void _registerTestPortlet() {
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
 				Portlet.class, new TestPortlet(),
 				HashMapDictionaryBuilder.put(
-					"javax.portlet.name", portletId
+					"javax.portlet.name", _testPortletId
 				).build()));
 	}
 

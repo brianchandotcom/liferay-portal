@@ -38,4 +38,9 @@ definition {
 		Click(locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
 	}
 
+	macro selectKeyCheckboxByEnvironmentName {
+		var key_environmentName = "${environmentName}";
+		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX");
+	}
+
 }

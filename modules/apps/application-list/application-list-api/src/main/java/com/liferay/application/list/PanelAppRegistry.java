@@ -112,6 +112,13 @@ public class PanelAppRegistry {
 				Portlet portlet = panelApp.getPortlet();
 
 				if (portlet == null) {
+					portlet = _portletLocalService.getPortletById(
+						panelApp.getPortletId());
+
+					panelApp.setPortlet(portlet);
+				}
+
+				if (portlet == null) {
 					return false;
 				}
 

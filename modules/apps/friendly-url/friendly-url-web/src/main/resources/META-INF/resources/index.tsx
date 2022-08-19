@@ -34,16 +34,16 @@ const getDefaultContainer = () => {
 	return container;
 };
 
-const handleToastClose = (data) => {
-	if (data && data.event) {
-		Liferay.Util.Session.set(IGNORED_REDIRECT_OPTIONS, true, {
-			useHttpSession: true,
-		});
-	}
-};
+const RedirectOptions = ({url}) => {
+	const handleToastClose = (data) => {
+		if (data && data.event) {
+			Liferay.Util.Session.set(IGNORED_REDIRECT_OPTIONS, true, {
+				useHttpSession: true,
+			});
+		}
+	};
 
-export default function RedirectOptions({redirectURL}) {
-	render(
+	return (
 		<ClayAlert.ToastContainer>
 			<ClayAlert
 				autoClose={5000}
@@ -57,13 +57,19 @@ export default function RedirectOptions({redirectURL}) {
 
 				<ClayLink
 					className="d-block"
-					href={redirectURL}
+					href={url}
 					target="_blank"
 				>
 					{Liferay.Language.get('continue-to-the-redirection')}
 				</ClayLink>
 			</ClayAlert>
-		</ClayAlert.ToastContainer>,
+		</ClayAlert.ToastContainer>
+	);
+};
+
+export default function main({redirectURL}) {
+	render(
+		<RedirectOptions url={redirectURL} />,
 		{},
 		getDefaultContainer()
 	);

@@ -12,13 +12,9 @@
  * details.
  */
 
-import {getOpener} from 'frontend-js-web';
 import {ItemSelectorRepositoryEntryBrowser} from 'item-selector-taglib';
+import React from 'react';
 
 export default function (props) {
-	const itemSelector = new ItemSelectorRepositoryEntryBrowser({...props});
-
-	itemSelector.on('selectedItem', (event) => {
-		getOpener().Liferay.fire(props.eventName, event);
-	});
+	return <ItemSelectorRepositoryEntryBrowser {...props} />;
 }

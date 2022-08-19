@@ -115,10 +115,15 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 		/>
 	</c:if>
 
-	<c:if test="<%= showDragAndDropZone && !showSearchInfo %>">
-		<div class="dropzone-wrapper <%= (repositoryEntriesCount == 0) ? "dropzone-wrapper-search-container-empty" : StringPool.BLANK %>">
-			<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
-
+	<c:choose>
+		<c:when test="<%= showDragAndDropZone && !showSearchInfo %>">
+			<div class="dropzone-wrapper <%= (repositoryEntriesCount == 0) ? "dropzone-wrapper-search-container-empty" : StringPool.BLANK %>">
+	<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
+		</c:when>
+		<c:otherwise>
+			<div>
+		</c:otherwise>
+	</c:choose>
 			<react:component
 				data='<%=
 					HashMapBuilder.<String, Object>put(
@@ -133,11 +138,17 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 							return null;
 						}
 					).put(
+						"eventName", itemSelectedEventName // TODO: choose itemSelectedEventName or eventName
+					).put(
 						"itemSelectedEventName", itemSelectedEventName
 					).put(
 						"maxFileSize", maxFileSize
 					).put(
 						"mimeTypeRestriction", mimeTypeRestriction
+					).put(
+						"rootNode", "#itemSelectorUploadContainer" // TODO: rootNode is needed?
+					).put(
+						"uploadEnabled", showDragAndDropZone && !showSearchInfo
 					).put(
 						"uploadItemReturnType", HtmlUtil.escapeAttribute(returnType)
 					).put(
@@ -146,10 +157,9 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 						"validExtensions", StringUtil.merge(extensions)
 					).build()
 				%>'
-				module="item_selector_uploader/js/SingleFileUploader"
+				module="repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser"
 			/>
-		</div>
-	</c:if>
+	</div>
 
 	<c:if test="<%= (existingFileEntryReturnType != null) || (itemSelectorReturnTypeResolver != null) %>">
 		<liferay-ui:search-container
@@ -615,6 +625,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 	<div class="item-selector-preview-container"></div>
 </clay:container-fluid>
 
+<%--
 <aui:script require='<%= npmResolvedPackageName + "/repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser.es as ItemSelectorRepositoryEntryBrowser" %>'>
 	var itemSelector = new ItemSelectorRepositoryEntryBrowser.default({
 		closeCaption: '<%= UnicodeLanguageUtil.get(request, tabName) %>',
@@ -645,3 +656,4 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 		);
 	});
 </aui:script>
+--%>

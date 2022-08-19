@@ -36,48 +36,30 @@ if (Validator.isNotNull(namespace)) {
 	cssClass="lfr-item-viewer"
 	id="itemSelectorUploadContainer"
 >
-	<div class="drop-enabled drop-zone item-selector upload-view">
-		<div id="uploadDescription">
-			<c:if test="<%= !BrowserSnifferUtil.isMobile(request) %>">
-				<p>
-					<strong><liferay-ui:message arguments="<%= itemSelectorUploadViewDisplayContext.getRepositoryName() %>" key="drag-and-drop-to-upload-to-x-or" /></strong>
-				</p>
-			</c:if>
+	<div class="dropzone-wrapper dropzone-wrapper-search-container-empty">
+		<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
 
-			<p>
-				<input accept="<%= ArrayUtil.isEmpty(itemSelectorUploadViewDisplayContext.getExtensions()) ? "*" : StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions()) %>" class="input-file" id="<portlet:namespace />inputFile" type="file" />
-
-				<label class="btn btn-secondary" for="<portlet:namespace />inputFile"><liferay-ui:message key="select-file" /></label>
-			</p>
-		</div>
+		<react:component
+			module="js/index.es"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"closeCaption", itemSelectorUploadViewDisplayContext.getTitle(locale)
+				).put(
+					"editImageURL", uploadURL
+				).put(
+					"eventName", itemSelectorUploadViewDisplayContext.getItemSelectedEventName()
+				).put(
+					"maxFileSize", itemSelectorUploadViewDisplayContext.getMaxFileSize()
+				).put(
+					"rootNode", "#itemSelectorUploadContainer"
+				).put(
+					"uploadItemReturnType", HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName())
+				).put(
+					"uploadItemURL", uploadURL
+				).put(
+					"validExtensions", StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions())
+				).build()
+			%>'
+		/>
 	</div>
-
-	<liferay-ui:drop-here-info
-		message="drop-files-here"
-	/>
-
-	<div class="item-selector-preview-container"></div>
 </clay:container-fluid>
-
-<liferay-frontend:component
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"closeCaption", itemSelectorUploadViewDisplayContext.getTitle(locale)
-		).put(
-			"editImageURL", uploadURL
-		).put(
-			"eventName", itemSelectorUploadViewDisplayContext.getItemSelectedEventName()
-		).put(
-			"maxFileSize", itemSelectorUploadViewDisplayContext.getMaxFileSize()
-		).put(
-			"rootNode", "#itemSelectorUploadContainer"
-		).put(
-			"uploadItemReturnType", HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName())
-		).put(
-			"uploadItemURL", uploadURL
-		).put(
-			"validExtensions", ArrayUtil.isEmpty(itemSelectorUploadViewDisplayContext.getExtensions()) ? "*" : StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions())
-		).build()
-	%>'
-	module="js/index.es"
-/>

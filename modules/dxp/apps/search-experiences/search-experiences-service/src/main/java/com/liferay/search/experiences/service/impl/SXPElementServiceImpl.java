@@ -59,7 +59,7 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 			getPermissionChecker(), null, SXPActionKeys.ADD_SXP_ELEMENT);
 
 		return sxpElementLocalService.addSXPElement(
-			getUserId(), descriptionMap, elementDefinitionJSON, readOnly,
+			null, getUserId(), descriptionMap, elementDefinitionJSON, readOnly,
 			schemaVersion, titleMap, type, serviceContext);
 	}
 

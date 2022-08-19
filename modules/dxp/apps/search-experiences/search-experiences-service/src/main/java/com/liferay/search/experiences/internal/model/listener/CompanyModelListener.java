@@ -81,11 +81,11 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			User user = company.getDefaultUser();
 
 			sxpElementLocalService.addSXPElement(
-				user.getUserId(),
+				sxpElement.getExternalReferenceCode(), user.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(
 					sxpElement.getDescription_i18n()),
-				String.valueOf(sxpElement.getElementDefinition()),
-				sxpElement.getExternalReferenceCode(), true, _SCHEMA_VERSION,
+				String.valueOf(sxpElement.getElementDefinition()), true,
+				_SCHEMA_VERSION,
 				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
 				new ServiceContext() {
 					{

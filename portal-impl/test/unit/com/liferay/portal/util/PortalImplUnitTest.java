@@ -43,13 +43,9 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portlet.ActionRequestFactory;
 import com.liferay.portlet.ActionResponseFactory;
-import com.liferay.portlet.internal.ActionRequestImpl;
-import com.liferay.portlet.internal.ActionResponseImpl;
 import com.liferay.portlet.internal.MutableRenderParametersImpl;
 import com.liferay.portlet.internal.RenderParametersImpl;
 import com.liferay.portlet.test.MockLiferayPortletContext;
-
-import java.io.IOException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -59,19 +55,9 @@ import java.util.logging.Level;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.EventRequest;
-import javax.portlet.EventResponse;
-import javax.portlet.HeaderRequest;
-import javax.portlet.HeaderResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.RenderParameters;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
@@ -771,13 +757,13 @@ public class PortalImplUnitTest {
 			(MutableRenderParametersImpl)actionResponse.getRenderParameters();
 
 		Assert.assertEquals(
-			mutableRenderParametersImpl.getValues(_REDIRECT)[0].toString(),
+			mutableRenderParametersImpl.getValues(_REDIRECT)[0],
 			params.get(_REDIRECT)[0]);
 		Assert.assertEquals(
-			mutableRenderParametersImpl.getValues(_P_U_I_D)[0].toString(),
+			mutableRenderParametersImpl.getValues(_P_U_I_D)[0],
 			params.get(_P_U_I_D)[0]);
 		Assert.assertEquals(
-			mutableRenderParametersImpl.getValues(_PASSWORDRESET)[0].toString(),
+			mutableRenderParametersImpl.getValues(_PASSWORDRESET)[0],
 			params.get(_PASSWORDRESET)[0]);
 		Assert.assertNull(mutableRenderParametersImpl.getValues(_PASSWORD1));
 		Assert.assertNull(mutableRenderParametersImpl.getValues(_PASSWORD2));
@@ -807,7 +793,7 @@ public class PortalImplUnitTest {
 
 		portlet.setPortletApp(new PortletAppImpl("test_servlet_context"));
 
-		return (ActionRequestImpl)ActionRequestFactory.create(
+		return ActionRequestFactory.create(
 			httpServletRequest, portlet,
 			ProxyFactory.newDummyInstance(InvokerPortlet.class),
 			new MockLiferayPortletContext("/path"), WindowState.NORMAL,
@@ -861,7 +847,7 @@ public class PortalImplUnitTest {
 			portletMode
 		).toString();
 
-		return (ActionResponseImpl)ActionResponseFactory.create(
+		return ActionResponseFactory.create(
 			_createActionRequest(portletMode), httpServletResponse,
 			new UserImpl(), new LayoutImpl());
 	}

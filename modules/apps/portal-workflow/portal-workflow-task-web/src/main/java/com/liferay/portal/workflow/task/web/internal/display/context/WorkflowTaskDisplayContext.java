@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -435,15 +436,25 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public Object getTaskCompletionMessageArguments(WorkflowLog workflowLog) {
+		String taskLabel = null;
+
+		if (Validator.isXml(workflowLog.getState())) {
+			taskLabel = LocalizationUtil.getLocalization(
+				workflowLog.getState(),
+				LocaleUtil.toLanguageId(getTaskContentLocale()), true);
+		}
+		else {
+			taskLabel = LanguageUtil.get(
+				_workflowTaskRequestHelper.getRequest(),
+				workflowLog.getState());
+		}
+
 		return new Object[] {
 			HtmlUtil.escape(
 				PortalUtil.getUserName(
 					workflowLog.getAuditUserId(),
 					String.valueOf(workflowLog.getAuditUserId()))),
-			HtmlUtil.escape(
-				LanguageUtil.get(
-					_workflowTaskRequestHelper.getRequest(),
-					workflowLog.getState()))
+			HtmlUtil.escape(taskLabel)
 		};
 	}
 

@@ -316,7 +316,6 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 					markupView="lexicon"
 					title="activities"
 				>
-
 					<%@ include file="/workflow_logs.jspf" %>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>

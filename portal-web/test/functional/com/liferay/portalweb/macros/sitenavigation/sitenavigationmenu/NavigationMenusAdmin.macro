@@ -82,6 +82,8 @@ definition {
 				pageNameList = "${pageNameList}",
 				privacy = "${privacy}");
 
+			SelectFrameTop();
+
 			Button.click(button = "Select");
 		}
 

@@ -113,6 +113,12 @@ export async function getNotificationTemplates() {
 	);
 }
 
+export async function getObjectDefinition(objectDefinitionId: number) {
+	return await fetchJSON<ObjectDefinition>(
+		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`
+	);
+}
+
 export async function getObjectDefinitions() {
 	return await getList<ObjectDefinition>(
 		'/o/object-admin/v1.0/object-definitions?page=-1'

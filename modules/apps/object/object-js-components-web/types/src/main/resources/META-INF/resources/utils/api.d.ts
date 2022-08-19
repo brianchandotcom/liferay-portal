@@ -63,6 +63,9 @@ export declare function getNotificationTemplate(
 export declare function getNotificationTemplates(): Promise<
 	NotificationTemplate[]
 >;
+export declare function getObjectDefinition(
+	objectDefinitionId: number
+): Promise<ObjectDefinition>;
 export declare function getObjectDefinitions(): Promise<ObjectDefinition[]>;
 export declare function getObjectFields(
 	objectDefinitionId: number

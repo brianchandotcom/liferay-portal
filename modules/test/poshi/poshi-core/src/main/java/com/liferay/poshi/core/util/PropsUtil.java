@@ -37,6 +37,10 @@ public class PropsUtil {
 		return _propsUtil._get(key);
 	}
 
+	public static String getEnvironmentVariable(String name) {
+		return System.getenv(name);
+	}
+
 	public static Properties getProperties() {
 		return _propsUtil._props;
 	}

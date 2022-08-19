@@ -113,9 +113,8 @@ export function AdvancedSelectField({
 
 	return (
 		<div
-			className={classNames('page-editor__select-field', {
-				'custom': !isTokenValueOrInherited,
-				'has-value': value,
+			className={classNames('page-editor__select-field d-flex', {
+				custom: !isTokenValueOrInherited,
 			})}
 		>
 			{isTokenValueOrInherited ? (
@@ -147,70 +146,75 @@ export function AdvancedSelectField({
 
 			{value ? (
 				<>
-					{isTokenValueOrInherited && canDetachTokenValues ? (
-						<ClayButtonWithIcon
-							className="border-0 mb-0 page-editor__select-field__action-button"
-							displayType="secondary"
-							onClick={() =>
-								onSetValue({
-									isTokenValue: false,
-									value: tokenValues[value].value,
-								})
-							}
-							small
-							symbol="chain-broken"
-							title={Liferay.Language.get('detach-token')}
-						/>
-					) : (
-						<ClayDropDown
-							active={active}
-							alignmentPosition={Align.BottomRight}
-							menuElementAttrs={{
-								containerProps: {
-									className: 'cadmin',
-								},
-							}}
-							onActiveChange={setActive}
-							trigger={
-								<ClayButtonWithIcon
-									className="border-0"
-									displayType="secondary"
-									id={triggerId}
-									small
-									symbol="theme"
-									title={Liferay.Language.get(
-										'value-from-stylebook'
-									)}
-								/>
-							}
-						>
-							<ClayDropDown.ItemList aria-labelledby={triggerId}>
-								{options.map(({label, value}) => {
-									if (!value) {
-										return;
-									}
+					{canDetachTokenValues ? (
+						isTokenValueOrInherited ? (
+							<ClayButtonWithIcon
+								className="border-0 mb-0 ml-2 page-editor__select-field__action-button"
+								displayType="secondary"
+								onClick={() =>
+									onSetValue({
+										isTokenValue: false,
+										value: tokenValues[value].value,
+									})
+								}
+								small
+								symbol="chain-broken"
+								title={Liferay.Language.get('detach-token')}
+							/>
+						) : (
+							<ClayDropDown
+								active={active}
+								alignmentPosition={Align.BottomRight}
+								className="flex-shrink-0 ml-2"
+								menuElementAttrs={{
+									containerProps: {
+										className: 'cadmin',
+									},
+								}}
+								onActiveChange={setActive}
+								trigger={
+									<ClayButtonWithIcon
+										className="border-0"
+										displayType="secondary"
+										id={triggerId}
+										small
+										symbol="theme"
+										title={Liferay.Language.get(
+											'value-from-stylebook'
+										)}
+									/>
+								}
+							>
+								<ClayDropDown.ItemList
+									aria-labelledby={triggerId}
+								>
+									{options.map(({label, value}) => {
+										if (!value) {
+											return;
+										}
 
-									return (
-										<ClayDropDown.Item
-											key={value}
-											onClick={() => {
-												setActive(false);
-												onSetValue({
-													isTokenValue: true,
-													value,
-												});
-											}}
-										>
-											{label}
-										</ClayDropDown.Item>
-									);
-								})}
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
-					)}
+										return (
+											<ClayDropDown.Item
+												key={value}
+												onClick={() => {
+													setActive(false);
+													onSetValue({
+														isTokenValue: true,
+														value,
+													});
+												}}
+											>
+												{label}
+											</ClayDropDown.Item>
+										);
+									})}
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
+						)
+					) : null}
 
 					<ClayButtonWithIcon
-						className="border-0 mb-0 page-editor__select-field__action-button"
+						className="border-0 mb-0 ml-2 page-editor__select-field__action-button"
 						displayType="secondary"
 						onClick={() =>
 							onSetValue({isTokenValue: true, value: null})
@@ -301,7 +305,7 @@ const SingleSelectWithIcon = ({
 	}, [activeItemId, field.cssProperty, globalContext, value]);
 
 	return (
-		<div className="btn btn-unstyled m-0 p-0 page-editor__single-select-with-icon">
+		<div className="btn btn-unstyled flex-grow-1 m-0 p-0 page-editor__single-select-with-icon">
 			<label
 				className="mb-0 page-editor__single-select-with-icon__label-icon px-1 py-2 text-center"
 				htmlFor={inputId}
@@ -327,7 +331,7 @@ const SingleSelectWithIcon = ({
 
 			<div
 				className={classNames(
-					'page-editor__single-select-with-icon__label pl-2 pr-3 py-2 text-truncate w-100',
+					'page-editor__single-select-with-icon__label p-2 text-truncate w-100',
 					{disabled}
 				)}
 				role="presentation"

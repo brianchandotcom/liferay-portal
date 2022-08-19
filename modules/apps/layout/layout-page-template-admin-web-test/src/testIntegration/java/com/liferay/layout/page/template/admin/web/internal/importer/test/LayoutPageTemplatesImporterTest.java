@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
+package com.liferay.layout.page.template.admin.web.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -81,7 +81,7 @@ import org.junit.runner.RunWith;
  * @author Rubén Pulido
  */
 @RunWith(Arquillian.class)
-public class ExportImportLayoutPageTemplateEntriesTest {
+public class LayoutPageTemplatesImporterTest {
 
 	@ClassRule
 	@Rule
@@ -102,7 +102,7 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
-	public void testExportImportLayoutPageTemplateEntry() throws Exception {
+	public void testImportLayoutPageTemplateEntry() throws Exception {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(

@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_NO_CHANGES</td>
+	<td>//div[contains(@class, 'taglib-empty-result-message')]/div[contains(.,'No changes were found.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLICATIONS_CHANGE_DROPDOWN</td>
 	<td>//li[contains(.,'${key_changeTitle}') and contains(.,'${key_changeCategory}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

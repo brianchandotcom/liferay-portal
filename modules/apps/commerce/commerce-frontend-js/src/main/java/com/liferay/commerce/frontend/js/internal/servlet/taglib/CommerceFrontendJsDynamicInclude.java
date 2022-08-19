@@ -50,7 +50,7 @@ public class CommerceFrontendJsDynamicInclude extends BaseDynamicInclude {
 			StringBundler.concat(
 				"<link href=\"",
 				_portal.getPathProxy() + httpServletRequest.getContextPath(),
-				"/o/commerce-frontend-js/styles/main.css\" rel=\"stylesheet\"",
+				"/o/commerce-frontend-js/styles/main.css\" rel=\"stylesheet\" ",
 				"type=\"text/css\" />"));
 	}
 

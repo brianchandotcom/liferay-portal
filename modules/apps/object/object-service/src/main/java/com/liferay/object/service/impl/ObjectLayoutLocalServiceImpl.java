@@ -587,6 +587,15 @@ public class ObjectLayoutLocalServiceImpl
 						objectLayoutBox.getType(),
 						ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)) {
 
+					if (GetterUtil.getBoolean(
+							PropsUtil.get("feature.flag.LPS-158672")) &&
+						!objectDefinition.isEnableCategorization()) {
+
+						throw new ObjectLayoutBoxCategorizationTypeException(
+							"Categorization layout box must be enabled to be " +
+								"used");
+					}
+
 					if (!objectDefinition.isDefaultStorageType()) {
 						throw new ObjectLayoutBoxCategorizationTypeException(
 							"Categorization layout box only can be used in " +

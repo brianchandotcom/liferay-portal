@@ -1080,6 +1080,85 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-159046. The page creator should see the tags on Asset Publisher filter selector under scoped page."
+	@priority = "3"
+	test FilterAssetsFromPageScopeByTag {
+		task ("Given a page creator has an Asset Publisher and Blogs widget with scoped page") {
+			task ("Add a Blogs widget to page") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Asset Publisher Page",
+					widgetName = "Blogs");
+			}
+
+			task ("Select current page as Scope on Blogs widget") {
+				Navigator.gotoSitePage(
+					pageName = "Asset Publisher Page",
+					siteName = "Test Site Name");
+
+				Portlet.selectScopePG(
+					portletIndex = "2",
+					portletName = "Blogs",
+					scope = "Asset Publisher Page");
+			}
+
+			task ("Select the page as default scope in Content & Data") {
+				ProductMenu.gotoPortlet(
+					category = "Content & Data",
+					portlet = "Blogs");
+
+				Click(
+					key_text = "cog",
+					locator1 = "Icon#ANY");
+
+				MenuItem.click(menuItem = "Asset Publisher Page");
+			}
+
+			task ("Add two Blogs with tag under scoped page") {
+				for (var i : list "1,2") {
+					Blogs.addEntryWithTag(
+						entryContent = "Blogs Entry Content ${i}",
+						entryTitle = "Blogs Entry Title ${i}",
+						tagName = "tagname${i}");
+				}
+			}
+		}
+
+		task ("When the page creator configures the scope and source of Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureScopePG(pageName = "Asset Publisher Page");
+
+			IFrame.closeFrame();
+
+			AssetPublisherPortlet.configureSelectedPG(selectedAsset = "Blogs Entry");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Then the page creator should see both blogs on Asset Publisher") {
+			for (var i : list "1,2") {
+				AssetPublisherPortlet.viewAssetPG(
+					assetContent = "Blogs Entry Content ${i}",
+					assetTitle = "Blogs Entry Title ${i}");
+			}
+		}
+
+		task ("When the page creator selects the first tag on filter panel") {
+			AssetPublisherPortlet.configureTagsFilterPG(tagNameList = "tagname1");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Then the page creator should see only blogs with first tag") {
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "Blogs Entry Title 1");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Blogs Entry Title 2");
+		}
+	}
+
 	@description = "This is a test for LPS-113996. The user could filter documents by field in Asset Publisher."
 	@priority = "4"
 	test FilterDocumentsByField {
@@ -1401,85 +1480,6 @@ definition {
 
 		task ("View the web content shown in new folder") {
 			WebContent.viewTitle(webContentTitle = "Web Content Title");
-		}
-	}
-
-	@description = "This is a test for LPS-159046. The page creator should see the tags on Asset Publisher filter selector under scoped page."
-	@priority = "3"
-	test SelectTagOnAssetPublisherUnderScopedPage {
-		task ("Given a page creator has an Asset Publisher and Blogs widget with scoped page") {
-			task ("Add a Blogs widget to page") {
-				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Asset Publisher Page",
-					widgetName = "Blogs");
-			}
-
-			task ("Select current page as Scope on Blogs widget") {
-				Navigator.gotoSitePage(
-					pageName = "Asset Publisher Page",
-					siteName = "Test Site Name");
-
-				Portlet.selectScopePG(
-					portletIndex = "2",
-					portletName = "Blogs",
-					scope = "Asset Publisher Page");
-			}
-
-			task ("Select the page as default scope in Content & Data") {
-				ProductMenu.gotoPortlet(
-					category = "Content & Data",
-					portlet = "Blogs");
-
-				Click(
-					key_text = "cog",
-					locator1 = "Icon#ANY");
-
-				MenuItem.click(menuItem = "Asset Publisher Page");
-			}
-
-			task ("Add two Blogs with tag under scoped page") {
-				for (var i : list "1,2") {
-					Blogs.addEntryWithTag(
-						entryContent = "Blogs Entry Content ${i}",
-						entryTitle = "Blogs Entry Title ${i}",
-						tagName = "tagname${i}");
-				}
-			}
-		}
-
-		task ("When the page creator configures the scope and source of Asset Publisher") {
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.configureScopePG(pageName = "Asset Publisher Page");
-
-			IFrame.closeFrame();
-
-			AssetPublisherPortlet.configureSelectedPG(selectedAsset = "Blogs Entry");
-
-			IFrame.closeFrame();
-		}
-
-		task ("Then the page creator should see both blogs on Asset Publisher") {
-			for (var i : list "1,2") {
-				AssetPublisherPortlet.viewAssetPG(
-					assetContent = "Blogs Entry Content ${i}",
-					assetTitle = "Blogs Entry Title ${i}");
-			}
-		}
-
-		task ("When the page creator selects the first tag on filter panel") {
-			AssetPublisherPortlet.configureTagsFilterPG(tagNameList = "tagname1");
-
-			IFrame.closeFrame();
-		}
-
-		task ("Then the page creator should see only blogs with first tag") {
-			AssetPublisherPortlet.viewAssetPG(assetTitle = "Blogs Entry Title 1");
-
-			AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Blogs Entry Title 2");
 		}
 	}
 

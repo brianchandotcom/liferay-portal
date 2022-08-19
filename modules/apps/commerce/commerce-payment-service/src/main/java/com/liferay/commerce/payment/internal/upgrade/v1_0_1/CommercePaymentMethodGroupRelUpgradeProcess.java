@@ -15,6 +15,7 @@
 package com.liferay.commerce.payment.internal.upgrade.v1_0_1;
 
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -45,9 +46,12 @@ public class CommercePaymentMethodGroupRelUpgradeProcess
 
 			ResultSet resultSet = s.executeQuery(
 				"select CPaymentMethodGroupRelId, groupId from " +
-					"CommercePaymentMethodGroupRel")) {
-
-			PreparedStatement preparedStatement = null;
+					"CommercePaymentMethodGroupRel");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update CommercePaymentMethodGroupRel set groupId = ? " +
+						"where CPaymentMethodGroupRelId = ?")) {
 
 			while (resultSet.next()) {
 				long groupId = resultSet.getLong("groupId");
@@ -62,15 +66,13 @@ public class CommercePaymentMethodGroupRelUpgradeProcess
 				long cPaymentMethodGroupRelId = resultSet.getLong(
 					"CPaymentMethodGroupRelId");
 
-				preparedStatement = connection.prepareStatement(
-					"update CommercePaymentMethodGroupRel set groupId = ? " +
-						"where CPaymentMethodGroupRelId = ?");
+				preparedStatement2.setLong(1, commerceChannelGroupId);
+				preparedStatement2.setLong(2, cPaymentMethodGroupRelId);
 
-				preparedStatement.setLong(1, commerceChannelGroupId);
-				preparedStatement.setLong(2, cPaymentMethodGroupRelId);
-
-				preparedStatement.executeUpdate();
+				preparedStatement2.addBatch();
 			}
+
+			preparedStatement2.executeBatch();
 		}
 	}
 

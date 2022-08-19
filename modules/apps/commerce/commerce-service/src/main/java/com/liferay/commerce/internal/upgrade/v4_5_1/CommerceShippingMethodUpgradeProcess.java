@@ -15,6 +15,7 @@
 package com.liferay.commerce.internal.upgrade.v4_5_1;
 
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -43,9 +44,12 @@ public class CommerceShippingMethodUpgradeProcess extends UpgradeProcess {
 		try (Statement s = connection.createStatement();
 			ResultSet resultSet = s.executeQuery(
 				"select commerceShippingMethodId, groupId from " +
-					"CommerceShippingMethod")) {
-
-			PreparedStatement preparedStatement = null;
+					"CommerceShippingMethod");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update CommerceShippingMethod set groupId = ? where " +
+						"commerceShippingMethodId = ?")) {
 
 			while (resultSet.next()) {
 				long groupId = resultSet.getLong("groupId");
@@ -60,15 +64,13 @@ public class CommerceShippingMethodUpgradeProcess extends UpgradeProcess {
 				long commerceShippingMethodId = resultSet.getLong(
 					"commerceShippingMethodId");
 
-				preparedStatement = connection.prepareStatement(
-					"update CommerceShippingMethod set groupId = ? where " +
-						"commerceShippingMethodId = ?");
+				preparedStatement2.setLong(1, commerceChannelGroupId);
+				preparedStatement2.setLong(2, commerceShippingMethodId);
 
-				preparedStatement.setLong(1, commerceChannelGroupId);
-				preparedStatement.setLong(2, commerceShippingMethodId);
-
-				preparedStatement.executeUpdate();
+				preparedStatement2.addBatch();
 			}
+
+			preparedStatement2.executeBatch();
 		}
 	}
 

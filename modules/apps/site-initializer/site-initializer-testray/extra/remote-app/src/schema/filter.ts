@@ -200,13 +200,13 @@ const filters = {
 		baseFilters.priority,
 		baseFilters.caseType,
 		{
-			label: 'Case Name',
+			label: i18n.translate('case-name'),
 			name: 'caseName',
 			type: 'text',
 		},
 		baseFilters.team,
 		{
-			label: 'Component',
+			label: i18n.translate('component'),
 			name: 'component',
 			type: 'text',
 		},
@@ -244,23 +244,34 @@ const filters = {
 		baseFilters.priority,
 		baseFilters.caseType,
 		{
-			label: 'Case Name',
+			label: i18n.translate('case-name'),
 			name: 'caseName',
 			type: 'text',
 		},
 		baseFilters.team,
 		{
-			label: 'Component',
+			label: i18n.translate('component'),
 			name: 'component',
 			type: 'text',
 		},
 	],
 	routines: [baseFilters.priority, baseFilters.caseType, baseFilters.team],
+	suites: [
+		{
+			label: i18n.translate('suite-name'),
+			name: 'suiteName',
+			type: 'text',
+		},
+		{
+			label: i18n.translate('description'),
+			name: 'description',
+			type: 'text',
+		},
+	],
 	team: [
 		{
 			label: i18n.translate('team-name'),
 			name: 'team',
-			type: 'text',
 		},
 	],
 };

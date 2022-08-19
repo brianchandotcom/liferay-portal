@@ -230,6 +230,7 @@ export default {
 	'select-options': 'Select Options',
 	'select-requirements': 'Select Requirements',
 	'select-stacks': 'Select Stacks',
+	'select-suites': 'Select Suites',
 	'show': 'Show',
 	'showing-x-to-x-of-x': 'Showing {0} to {1} of {2}',
 	'sign-out': 'Sign Out',

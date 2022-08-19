@@ -15,6 +15,7 @@
 import React from 'react';
 
 import i18n from '../../../../i18n';
+import {filters} from '../../../../schema/filter';
 import {CaseListView} from '../../Cases';
 
 type SelectCaseParametersProps = {
@@ -28,6 +29,7 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 		listViewProps={{
 			managementToolbarProps: {
 				addButton: undefined,
+				filterFields: filters.case as any,
 				title: i18n.translate('cases'),
 			},
 			onContextChange: ({selectedRows}) => setState(selectedRows),

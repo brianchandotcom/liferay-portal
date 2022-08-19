@@ -31,21 +31,39 @@ import {
 	APIResponse,
 	TestrayBuild,
 	TestrayCase,
+	TestrayFactor,
+	TestrayProductVersion,
 	TestrayRoutine,
 	createBuild,
+	factorResource,
+	getFactorsTransformData,
 	updateBuild,
 } from '../../../../services/rest';
 import {searchUtil} from '../../../../util/search';
+import FactorOptionsFormModal from '../../../Standalone/FactorOptions/FactorOptionsFormModal';
+import ProductVersionFormModal from '../../../Standalone/ProductVersions/ProductVersionFormModal';
 import {CaseListView} from '../../Cases';
 import SuiteFormSelectModal from '../../Suites/modal';
-import BuildOptionModal from './BuildOptionModal';
 import BuildSelectOptionsModal from './BuildSelectOptionsModal';
+import BuildSelectSuitesModal from './BuildSelectSuitesModal';
 
 import type {KeyedMutator} from 'swr';
 
-type RoutineBuildData = typeof yupSchema.build.__outputType;
+type BuildFormType = {
+	categories: {
+		value: string;
+	}[];
+	description: string | undefined;
+	gitHash: string | undefined;
+	id: string | undefined;
+	name: string;
+	productVersionId: string;
+	promoted: boolean | undefined;
+	routineId: string;
+	template: boolean | undefined;
+};
 
-const RoutineBuildForm = () => {
+const BuildForm = () => {
 	const {projectId, routineId} = useParams();
 
 	const {data: factorItemsData} = useFetch<APIResponse<TestrayFactor>>(
@@ -71,6 +89,7 @@ const RoutineBuildForm = () => {
 			projectId as string
 		)}`
 	);
+
 	const {modal: optionModal} = useFormModal();
 	const {modal: optionSelectModal} = useFormModal();
 	const {modal: newProductVersionModal} = useFormModal({
@@ -87,9 +106,10 @@ const RoutineBuildForm = () => {
 			});
 		},
 	});
+
+	const {modal: buildSelectSuitesModal} = useFormModal();
 	const navigate = useNavigate();
 	const [cases, setCases] = useState<number[]>([]);
-	const {projectId, routineId} = useParams();
 	const {
 		mutateBuild,
 		testrayBuild,
@@ -116,7 +136,7 @@ const RoutineBuildForm = () => {
 		register,
 		setValue,
 		watch,
-	} = useForm<RoutineBuildData>({
+	} = useForm<BuildFormType>({
 		defaultValues: testrayBuild
 			? {
 					categories: [{value: ''}],
@@ -139,6 +159,7 @@ const RoutineBuildForm = () => {
 		control,
 		name: 'categories',
 	});
+
 	useHeader({
 		timeout: 150,
 		useTabs: [],
@@ -158,7 +179,7 @@ const RoutineBuildForm = () => {
 		register,
 	};
 
-	const _onSubmit = async (data: RoutineBuildData) => {
+	const _onSubmit = async (data: BuildFormType) => {
 		if (testrayBuild) {
 			data.id = testrayBuild.id.toString();
 		}
@@ -332,7 +353,11 @@ const RoutineBuildForm = () => {
 						{i18n.translate('add-cases')}
 					</ClayButton>
 
-					<ClayButton className="ml-1" displayType="secondary">
+					<ClayButton
+						className="ml-1"
+						displayType="secondary"
+						onClick={() => buildSelectSuitesModal.open()}
+					>
 						{i18n.translate('add-suites')}
 					</ClayButton>
 				</ClayButton.Group>
@@ -371,7 +396,9 @@ const RoutineBuildForm = () => {
 									},
 								],
 							},
-							variables: {filter: searchUtil.in('id', cases)},
+							variables: {
+								filter: searchUtil.in('id', cases),
+							},
 						}}
 					/>
 				)}
@@ -388,15 +415,19 @@ const RoutineBuildForm = () => {
 				modal={newProductVersionModal}
 				projectId={(projectId as unknown) as number}
 			/>
+
 			<FactorOptionsFormModal modal={optionModal} />
+
+			<BuildSelectOptionsModal
+				factorItems={factorItems}
+				modal={optionSelectModal}
+			/>
 
 			<SuiteFormSelectModal modal={modal} type="select-cases" />
 
-			<BuildOptionModal modal={optionModal} />
-
-			<BuildSelectOptionsModal modal={optionSelectModal} />
+			<BuildSelectSuitesModal modal={buildSelectSuitesModal} />
 		</Container>
 	);
 };
 
-export default RoutineBuildForm;
+export default BuildForm;

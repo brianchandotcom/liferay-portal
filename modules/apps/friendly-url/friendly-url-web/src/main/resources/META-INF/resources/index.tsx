@@ -58,11 +58,7 @@ const RedirectOptions = ({url}) => {
 					'this-page-has-been-loaded-avoiding-any-redirections'
 				)}
 
-				<ClayLink
-					className="d-block"
-					href={url}
-					target="_blank"
-				>
+				<ClayLink className="d-block" href={url} target="_blank">
 					{Liferay.Language.get('continue-to-the-redirection')}
 				</ClayLink>
 			</ClayAlert>
@@ -71,9 +67,5 @@ const RedirectOptions = ({url}) => {
 };
 
 export default function main({redirectURL}) {
-	render(
-		<RedirectOptions url={redirectURL} />,
-		{},
-		getDefaultContainer()
-	);
+	render(<RedirectOptions url={redirectURL} />, {}, getDefaultContainer());
 }

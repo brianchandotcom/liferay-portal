@@ -46,7 +46,9 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<h3><%= editClientExtensionEntryDisplayContext.getTitle() %></h3>
+			<h3 class="mb-3"><%= editClientExtensionEntryDisplayContext.getTitle() %></h3>
+
+			<p class="text-secondary"><%= editClientExtensionEntryDisplayContext.getHelpLabel() %></p>
 
 			<liferay-ui:panel-container
 				cssClass="panel-group-flush "

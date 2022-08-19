@@ -182,6 +182,36 @@ public class ObjectEntryDisplayContext {
 		return null;
 	}
 
+	public ObjectLayoutBox getCommentsObjectLayoutBox() throws PortalException {
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
+		if (!StringUtil.equals(
+				objectDefinition.getStorageType(),
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+
+			return null;
+		}
+
+		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
+
+		if (objectLayoutTab == null) {
+			return null;
+		}
+
+		for (ObjectLayoutBox objectLayoutBox :
+				objectLayoutTab.getObjectLayoutBoxes()) {
+
+			if (StringUtil.equals(
+					objectLayoutBox.getType(),
+					ObjectLayoutBoxConstants.TYPE_COMMENTS)) {
+
+				return objectLayoutBox;
+			}
+		}
+
+		return null;
+	}
+
 	public List<NavigationItem> getNavigationItems() throws PortalException {
 		ObjectLayout objectLayout = getObjectLayout();
 

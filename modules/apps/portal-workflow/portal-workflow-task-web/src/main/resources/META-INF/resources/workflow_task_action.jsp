@@ -46,9 +46,6 @@ PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 
 				<%
 				for (WorkflowTransition workflowTransition : workflowTaskDisplayContext.getWorkflowTransitions(workflowTask)) {
-					Map<Locale, String> labelMap = workflowTransition.getLabelMap();
-
-					String message = workflowTaskDisplayContext.getTransitionMessage(labelMap.get(locale));
 				%>
 
 					<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/portal_workflow_task/complete_task" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="editURL">
@@ -67,7 +64,7 @@ PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 						cssClass='<%= "workflow-task-" + randomId + " task-change-status-link" %>'
 						data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
 						id='<%= randomId + HtmlUtil.escapeAttribute(workflowTransition.getName()) + "taskChangeStatusLink" %>'
-						message="<%= HtmlUtil.escape(message) %>"
+						message="<%= HtmlUtil.escape(workflowTaskDisplayContext.getWorkflowTransitionLabel(workflowTransition)) %>"
 						method="get"
 						url="<%= editURL %>"
 					/>

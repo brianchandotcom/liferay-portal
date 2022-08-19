@@ -1202,9 +1202,7 @@ definition {
 		}
 
 		task ("Configure Web Content Article workflow to Single Approver") {
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				portlet = "Workflow");
+			Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
 
 			Workflow.configureWorkflow(
 				workflowDefinition = "Single Approver",
@@ -1298,9 +1296,7 @@ definition {
 		}
 
 		task ("Configure Web Content Article workflow to Single Approver") {
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				portlet = "Workflow");
+			Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
 
 			Workflow.configureWorkflow(
 				workflowDefinition = "Single Approver",
@@ -1695,9 +1691,7 @@ definition {
 		}
 
 		task ("Configure Web Content Article workflow to Single Approver") {
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				portlet = "Workflow");
+			Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
 
 			Workflow.configureWorkflow(
 				workflowDefinition = "Single Approver",

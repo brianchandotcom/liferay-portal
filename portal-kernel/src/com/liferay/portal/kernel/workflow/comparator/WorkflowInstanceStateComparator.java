@@ -14,8 +14,10 @@
 
 package com.liferay.portal.kernel.workflow.comparator;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowNode;
 
 import java.util.List;
 
@@ -40,13 +42,13 @@ public class WorkflowInstanceStateComparator
 		WorkflowInstance workflowInstance1,
 		WorkflowInstance workflowInstance2) {
 
-		List<String> currentNodeNames1 =
-			workflowInstance1.getCurrentNodeNames();
+		List<String> currentNodeNames1 = ListUtil.toList(
+			workflowInstance1.getCurrentNodes(), WorkflowNode::getName);
 
 		String currentNodeName1 = currentNodeNames1.get(0);
 
-		List<String> currentNodeNames2 =
-			workflowInstance2.getCurrentNodeNames();
+		List<String> currentNodeNames2 = ListUtil.toList(
+			workflowInstance2.getCurrentNodes(), WorkflowNode::getName);
 
 		String currentNodeName2 = currentNodeNames2.get(0);
 

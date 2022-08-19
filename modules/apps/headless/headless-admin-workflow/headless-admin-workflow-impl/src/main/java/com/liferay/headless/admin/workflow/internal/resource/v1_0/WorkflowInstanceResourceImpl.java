@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.kernel.workflow.WorkflowNode;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -167,9 +168,11 @@ public class WorkflowInstanceResourceImpl
 			{
 				completed = workflowInstance.isComplete();
 				currentNodeNames = Stream.of(
-					workflowInstance.getCurrentNodeNames()
+					workflowInstance.getCurrentNodes()
 				).flatMap(
 					List::stream
+				).map(
+					WorkflowNode::getName
 				).toArray(
 					String[]::new
 				);

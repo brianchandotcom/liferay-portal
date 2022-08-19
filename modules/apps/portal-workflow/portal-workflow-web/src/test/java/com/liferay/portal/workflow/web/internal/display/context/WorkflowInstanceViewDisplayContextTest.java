@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowInstance;
+import com.liferay.portal.kernel.workflow.DefaultWorkflowNode;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
@@ -93,8 +94,16 @@ public class WorkflowInstanceViewDisplayContextTest {
 		DefaultWorkflowInstance defaultWorkflowInstance =
 			new DefaultWorkflowInstance();
 
-		defaultWorkflowInstance.setCurrentNodeNames(
-			Arrays.asList("task1", "task2"));
+		DefaultWorkflowNode defaultWorkflowNode1 = new DefaultWorkflowNode();
+
+		defaultWorkflowNode1.setName("task1");
+
+		DefaultWorkflowNode defaultWorkflowNode2 = new DefaultWorkflowNode();
+
+		defaultWorkflowNode2.setName("task2");
+
+		defaultWorkflowInstance.setCurrentNodes(
+			Arrays.asList(defaultWorkflowNode1, defaultWorkflowNode2));
 
 		Mockito.when(
 			_language.get(
@@ -116,7 +125,8 @@ public class WorkflowInstanceViewDisplayContextTest {
 			_workflowInstanceViewDisplayContext.getStatus(
 				defaultWorkflowInstance));
 
-		defaultWorkflowInstance.setCurrentNodeNames(Arrays.asList("task1"));
+		defaultWorkflowInstance.setCurrentNodes(
+			Arrays.asList(defaultWorkflowNode1));
 
 		Assert.assertEquals(
 			"task1",

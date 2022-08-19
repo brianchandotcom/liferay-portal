@@ -491,6 +491,10 @@ public class ResourceOpenAPIParser {
 			batchOperation.setOperationId(operation.getOperationId() + "Batch");
 		}
 
+		if (operation.isDeprecated()) {
+			batchOperation.setDeprecated(true);
+		}
+
 		batchOperation.setParameters(
 			_getBatchParameters(operation, schemaName));
 		batchOperation.setTags(operation.getTags());

@@ -199,7 +199,8 @@ public class ObjectLayoutBox implements Cloneable, Serializable {
 
 	public static enum Type {
 
-		CATEGORIZATION("categorization"), REGULAR("regular");
+		CATEGORIZATION("categorization"), COMMENTS("comments"),
+		REGULAR("regular");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

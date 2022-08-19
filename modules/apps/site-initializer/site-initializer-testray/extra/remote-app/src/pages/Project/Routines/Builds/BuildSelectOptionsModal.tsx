@@ -23,6 +23,7 @@ import {withVisibleContent} from '../../../../hoc/withVisibleContent';
 import {FormModalComponent} from '../../../../hooks/useFormModal';
 import i18n from '../../../../i18n';
 import yupSchema, {yupResolver} from '../../../../schema/yup';
+import {TestrayFactor} from '../../../../services/rest';
 
 type BuildSelectOptionModalForm = {
 	databases: {
@@ -30,9 +31,9 @@ type BuildSelectOptionModalForm = {
 	}[];
 };
 
-const BuildSelectOptionModal: React.FC<FormModalComponent> = ({
-	modal: {modalState, observer, onClose},
-}) => {
+const BuildSelectOptionModal: React.FC<
+	FormModalComponent & {factorItems: TestrayFactor[]}
+> = ({factorItems, modal: {modalState, observer, onClose}}) => {
 	const [step, setStep] = useState(0);
 
 	const {
@@ -58,6 +59,8 @@ const BuildSelectOptionModal: React.FC<FormModalComponent> = ({
 		console.log(form);
 	};
 
+	const lastStep = step === 1;
+
 	return (
 		<Modal
 			last={
@@ -66,7 +69,7 @@ const BuildSelectOptionModal: React.FC<FormModalComponent> = ({
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
 					primaryButtonTitle={i18n.translate(
-						step === 0 ? 'next' : 'add'
+						lastStep ? 'add' : 'next'
 					)}
 				/>
 			}
@@ -75,60 +78,79 @@ const BuildSelectOptionModal: React.FC<FormModalComponent> = ({
 			title={i18n.translate('select-options')}
 			visible
 		>
-			<Form.Select
-				errors={errors}
-				label={i18n.translate('type')}
-				multiple
-				name="type"
-				options={[
-					{label: 'MySQL 5.77', value: ''},
-					{label: 'MariaDB 5.77', value: ''},
-				]}
-				register={register}
-				required
-			/>
+			{factorItems.map((factorItem, index) => (
+				<Form.Select
+					defaultOption={false}
+					disabled={lastStep}
+					errors={errors}
+					key={index}
+					label={factorItem.factorCategory?.name}
+					multiple={!lastStep}
+					name="type"
+					options={[
+						{
+							label: factorItem.factorOption?.name as string,
+							value: factorItem.factorOption?.id as number,
+						},
+					]}
+					register={register}
+					required
+				/>
+			))}
 
 			<>
 				<hr />
 
-				{fields.map((field, index) => (
-					<ClayLayout.Row key={index}>
-						<ClayLayout.Col size={8}>
-							<Form.Select
-								errors={errors}
-								key={field.id}
-								label={i18n.translate('database')}
-								name={`databases.${index}.value`}
-								options={[
-									{label: 'MySQL 5.77', value: 'MySQL 5.77'},
-									{
-										label: 'MariaDB 5.77',
-										value: 'MariaDB 5.77',
-									},
-								]}
-								register={register}
-								required
-							/>
-						</ClayLayout.Col>
+				{lastStep &&
+					fields.map((field, index) => (
+						<>
+							<ClayLayout.Row key={index}>
+								<ClayLayout.Col size={4}>
+									{factorItems.map((factorItem, index) => (
+										<Form.Select
+											defaultOption={false}
+											errors={errors}
+											key={index}
+											label={
+												factorItem.factorCategory?.name
+											}
+											name="type"
+											options={[
+												{
+													label: factorItem
+														.factorOption
+														?.name as string,
+													value: factorItem
+														.factorOption
+														?.id as number,
+												},
+											]}
+											register={register}
+											required
+										/>
+									))}
+								</ClayLayout.Col>
 
-						<ClayLayout.Col className="mt-5">
-							<ClayButtonWithIcon
-								displayType="secondary"
-								onClick={() => append({} as any)}
-								symbol="plus"
-							/>
+								<ClayLayout.Col className="align-items-end d-flex flex-reverse justify-content-end mb-4">
+									<ClayButtonWithIcon
+										displayType="secondary"
+										onClick={() => append({} as any)}
+										symbol="plus"
+									/>
 
-							{index !== 0 && (
-								<ClayButtonWithIcon
-									className="ml-1"
-									displayType="secondary"
-									onClick={() => remove(index)}
-									symbol="hr"
-								/>
-							)}
-						</ClayLayout.Col>
-					</ClayLayout.Row>
-				))}
+									{index !== 0 && (
+										<ClayButtonWithIcon
+											className="ml-1"
+											displayType="secondary"
+											onClick={() => remove(index)}
+											symbol="hr"
+										/>
+									)}
+								</ClayLayout.Col>
+							</ClayLayout.Row>
+							<Form.Divider />
+						</>
+					))}
 			</>
 		</Modal>
 	);

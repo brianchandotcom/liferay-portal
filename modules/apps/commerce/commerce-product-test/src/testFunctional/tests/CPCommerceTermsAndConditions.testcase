@@ -54,21 +54,15 @@ definition {
 
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
-			AssertClick(
-				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SET_DEFAULT_DELIVERY",
-				value1 = "Set Default Delivery Commerce Terms Entry");
+			Click(
+				key_termType = "Delivery",
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PLUS");
 		}
 
-		task ("Then a dropdown appears with all the delivery term entries we created before, and the entries are sorted alphanumerically by localized name") {
+		task ("Then a dropdown appears with all the delivery term entries we created before, and the entries are sorted by priority") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			LexiconList.viewListEntrySpecific(
-				listEntry = "aa-terms-and-condition-entry",
-				position = "1");
-
-			LexiconList.viewListEntrySpecific(
-				listEntry = "zz-terms-and-condition-entry",
-				position = "2");
+			Accounts.viewDefaultCommerceTermsListByPriority(rowList = "ZZ Terms and Condition Entry:1,AA Terms and Condition Entry:2");
 		}
 
 		task ("When I go into the "Order Defaults" tab inside the Account and click on the Set Default Delivery Commerce Term Entry") {
@@ -80,11 +74,15 @@ definition {
 		}
 
 		task ("Then I can select one single entry") {
-			Accounts.setDefaultDeliveryCommerceTermsEntry(termEntry = "aa-terms-and-condition-entry");
+			Accounts.setDefaultCommerceTermsEntry(
+				termEntry = "AA Terms and Condition Entry",
+				termType = "Delivery");
 
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
-			Accounts.viewDefaultDeliveryCommerceTermsEntry(termEntry = "aa-terms-and-condition-entry");
+			Accounts.viewDefaultDeliveryCommerceTermsEntry(
+				termEntry = "All Channels,AA Terms and Condition Entry,Yes,No",
+				termType = "Delivery");
 		}
 
 		task ("When I go into the "Order Defaults" tab inside the Account") {
@@ -96,17 +94,21 @@ definition {
 		}
 
 		task ("Then the default entry that is already selected is Use Priority Settings") {
-			Accounts.viewDefaultDeliveryCommerceTermsEntry();
+			Accounts.viewDefaultDeliveryCommerceTermsEntry(termType = "Delivery");
 		}
 
 		task ("And when I select one entry") {
-			Accounts.setDefaultDeliveryCommerceTermsEntry(termEntry = "aa-terms-and-condition-entry");
+			Accounts.setDefaultCommerceTermsEntry(
+				termEntry = "AA Terms and Condition Entry",
+				termType = "Delivery");
 		}
 
 		task ("And Remove the default delivery terms, "Use Priority Settings" is displayed instead of the T&C entry") {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
-			Accounts.removeDefaultDeliveryCommerceTerms();
+			Accounts.removeDefaultCommerceTerms(
+				entryDetails = "AA Terms and Condition Entry",
+				termType = "Delivery");
 		}
 	}
 
@@ -150,21 +152,15 @@ definition {
 
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
-			AssertClick(
-				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SET_DEFAULT_PAYMENT",
-				value1 = "Set Default Payment Commerce Terms Entry");
+			Click(
+				key_termType = "Payment",
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PLUS");
 		}
 
-		task ("Then a dropdown appears with all the payment term entries we created before, and the entries are sorted alphanumerically by localized name") {
+		task ("Then a dropdown appears with all the payment term entries we created before, and the entries are sorted by priority") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			LexiconList.viewListEntrySpecific(
-				listEntry = "aa-terms-and-condition-entry",
-				position = "1");
-
-			LexiconList.viewListEntrySpecific(
-				listEntry = "bb-terms-and-condition-entry",
-				position = "2");
+			Accounts.viewDefaultCommerceTermsListByPriority(rowList = "AA Terms and Condition Entry:1,BB Terms and Condition Entry:2");
 		}
 
 		task ("When I go into the "Order Defaults" tab inside the Account and click on the Set Default Payment Commerce Term Entry") {
@@ -176,11 +172,15 @@ definition {
 		}
 
 		task ("Then I can select one single entry") {
-			Accounts.setDefaultPaymentCommerceTermsEntry(termEntry = "bb-terms-and-condition-entry");
+			Accounts.setDefaultCommerceTermsEntry(
+				termEntry = "BB Terms and Condition Entry",
+				termType = "Payment");
 
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
-			Accounts.viewDefaultPaymentCommerceTermsEntry(termEntry = "bb-terms-and-condition-entry");
+			Accounts.viewDefaultDeliveryCommerceTermsEntry(
+				termEntry = "All Channels,BB Terms and Condition Entry,Yes,No",
+				termType = "Payment");
 		}
 
 		task ("When I go into the "Order Defaults" tab inside the Account") {
@@ -192,17 +192,21 @@ definition {
 		}
 
 		task ("Then the default entry that is already selected is Use Priority Settings") {
-			Accounts.viewDefaultPaymentCommerceTermsEntry();
+			Accounts.viewDefaultDeliveryCommerceTermsEntry(termType = "Payment");
 		}
 
 		task ("And when I select one entry") {
-			Accounts.setDefaultPaymentCommerceTermsEntry(termEntry = "aa-terms-and-condition-entry");
+			Accounts.setDefaultCommerceTermsEntry(
+				termEntry = "AA Terms and Condition Entry",
+				termType = "Payment");
 		}
 
 		task ("And Remove the default payment terms, "Use Priority Settings" is displayed instead of the T&C entry") {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
-			Accounts.removeDefaultPaymentCommerceTerms();
+			Accounts.removeDefaultCommerceTerms(
+				entryDetails = "AA Terms and Condition Entry",
+				termType = "Payment");
 		}
 	}
 
@@ -242,11 +246,15 @@ definition {
 
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
-			Accounts.setDefaultDeliveryCommerceTermsEntry(termEntry = "terms-and-condition-entry-1");
+			Accounts.setDefaultCommerceTermsEntry(
+				termEntry = "Terms and Condition Entry 1",
+				termType = "Delivery");
 
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
-			Accounts.viewDefaultDeliveryCommerceTermsEntry(termEntry = "terms-and-condition-entry-1");
+			Accounts.viewDefaultDeliveryCommerceTermsEntry(
+				termEntry = "All Channels,Terms and Condition Entry 1,Yes,No",
+				termType = "Delivery");
 		}
 
 		task ("When I delete the default delivery term that was linked to an account") {
@@ -271,8 +279,12 @@ definition {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 		}
 
-		task ("Then the default payment is changed to "Use Priority Settings".") {
-			Accounts.viewDefaultDeliveryCommerceTermsEntry();
+		task ("Then the default delivery is not present anymore.") {
+			Accounts.viewDefaultDeliveryCommerceTermsEntry(termType = "Delivery");
+
+			AssertElementPresent(
+				key_termType = "Delivery",
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_EMPTY_SEARCH_CONTAINER");
 		}
 	}
 
@@ -312,11 +324,15 @@ definition {
 
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
-			Accounts.setDefaultPaymentCommerceTermsEntry(termEntry = "terms-and-condition-entry-1");
+			Accounts.setDefaultCommerceTermsEntry(
+				termEntry = "Terms and Condition Entry 1",
+				termType = "Payment");
 
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
-			Accounts.viewDefaultPaymentCommerceTermsEntry(termEntry = "terms-and-condition-entry-1");
+			Accounts.viewDefaultDeliveryCommerceTermsEntry(
+				termEntry = "All Channels,Terms and Condition Entry 1,Yes,No",
+				termType = "Payment");
 		}
 
 		task ("When I delete the default payment term that was linked to an account") {
@@ -341,8 +357,12 @@ definition {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 		}
 
-		task ("Then the default payment is changed to "Use Priority Settings".") {
-			Accounts.viewDefaultPaymentCommerceTermsEntry();
+		task ("Then the default payment is not present anymore.") {
+			Accounts.viewDefaultDeliveryCommerceTermsEntry(termType = "Payment");
+
+			AssertElementPresent(
+				key_termType = "Payment",
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_EMPTY_SEARCH_CONTAINER");
 		}
 	}
 
@@ -376,7 +396,9 @@ definition {
 
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
-			Accounts.setDefaultDeliveryCommerceTermsEntry(termEntry = "terms-and-condition-entry-1");
+			Accounts.setDefaultCommerceTermsEntry(
+				termEntry = "Terms and Condition Entry 1",
+				termType = "Delivery");
 		}
 
 		task ("When I set the delivery term that was linked to an account as "inactive".") {
@@ -405,16 +427,10 @@ definition {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 		}
 
-		task ("Then the inactive icon should appear") {
+		task ("Then the Delivery Term is inactive") {
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
-				inactive = "true",
-				termEntry = "terms-and-condition-entry-1");
-		}
-
-		task ("And when I move the mouse over the icon the word "Inactive" should appear.") {
-			MouseOver(
-				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_ENTRY_INACTIVE_ICON",
-				value1 = "Inactive term");
+				termEntry = "All Channels,Terms and Condition Entry 1,No,No",
+				termType = "Delivery");
 		}
 	}
 
@@ -448,7 +464,9 @@ definition {
 
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
-			Accounts.setDefaultPaymentCommerceTermsEntry(termEntry = "terms-and-condition-entry-1");
+			Accounts.setDefaultCommerceTermsEntry(
+				termEntry = "Terms and Condition Entry 1",
+				termType = "Payment");
 		}
 
 		task ("When I set the payment term that was linked to an account as "inactive".") {
@@ -477,16 +495,10 @@ definition {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 		}
 
-		task ("Then the inactive icon should appear") {
-			Accounts.viewDefaultPaymentCommerceTermsEntry(
-				inactive = "true",
-				termEntry = "terms-and-condition-entry-1");
-		}
-
-		task ("And when I move the mouse over the icon the word "Inactive" should appear.") {
-			MouseOver(
-				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_PAYMENT_ENTRY_INACTIVE_ICON",
-				value1 = "Inactive term");
+		task ("Then the Payment Term is inactive") {
+			Accounts.viewDefaultDeliveryCommerceTermsEntry(
+				termEntry = "All Channels,Terms and Condition Entry 1,No,No",
+				termType = "Payment");
 		}
 	}
 

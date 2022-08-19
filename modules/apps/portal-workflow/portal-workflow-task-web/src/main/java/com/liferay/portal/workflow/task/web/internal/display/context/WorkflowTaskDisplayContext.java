@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -105,9 +103,6 @@ public class WorkflowTaskDisplayContext {
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
-
-		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_httpServletRequest);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_liferayPortletRequest.getAttribute(
@@ -489,14 +484,6 @@ public class WorkflowTaskDisplayContext {
 		return workflowTaskSearch.getTotal();
 	}
 
-	public String getTransitionMessage(String transitionName) {
-		if (Validator.isNull(transitionName)) {
-			return "proceed";
-		}
-
-		return HtmlUtil.escape(transitionName);
-	}
-
 	public Object getTransitionMessageArguments(WorkflowLog workflowLog) {
 		return new Object[] {
 			HtmlUtil.escape(
@@ -635,6 +622,25 @@ public class WorkflowTaskDisplayContext {
 	public String getWorkflowTaskUnassignedUserName() {
 		return LanguageUtil.get(
 			_workflowTaskRequestHelper.getRequest(), "nobody");
+	}
+
+	public String getWorkflowTransitionLabel(
+		WorkflowTransition workflowTransition) {
+
+		Map<Locale, String> labelMap = workflowTransition.getLabelMap();
+
+		String label = labelMap.get(getTaskContentLocale());
+
+		if (label != null) {
+			return label;
+		}
+
+		if (workflowTransition.getName() != null) {
+			return workflowTransition.getName();
+		}
+
+		return LanguageUtil.get(
+			_workflowTaskRequestHelper.getRequest(), _PROCEED_KEY);
 	}
 
 	public List<WorkflowTransition> getWorkflowTransitions(
@@ -1048,6 +1054,8 @@ public class WorkflowTaskDisplayContext {
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
+	private static final String _PROCEED_KEY = "proceed";
+
 	private final Format _dateFormatDateTime;
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
@@ -1056,7 +1064,6 @@ public class WorkflowTaskDisplayContext {
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
-	private final PortalPreferences _portalPreferences;
 	private String _portletResource;
 	private final Map<Long, Role> _roles = new HashMap<>();
 	private final Map<Long, User> _users = new HashMap<>();

@@ -61,50 +61,62 @@ export default function ({context, portletNamespace, props}) {
 		}
 	}, [segmentsExperimentPanelToggle, portletNamespace]);
 
-	return isAnalyticsSync ? (
-		<SegmentsExperimentsContext.Provider
-			value={{
-				APIService: APIService({
-					contentPageEditorNamespace:
-						context.contentPageEditorNamespace,
-					endpoints: {
-						calculateSegmentsExperimentEstimatedDurationURL,
-						createSegmentsExperimentURL,
-						createSegmentsVariantURL,
-						deleteSegmentsExperimentURL,
-						deleteSegmentsVariantURL,
-						editSegmentsExperimentStatusURL,
-						editSegmentsExperimentURL,
-						editSegmentsVariantURL,
-						runSegmentsExperimentURL,
-					},
-					namespace: context.namespace,
-				}),
-				editVariantLayoutURL: editSegmentsVariantLayoutURL,
-				imagesPath,
-				page,
-			}}
-		>
-			<div id={`${portletNamespace}-segments-experiment-root`}>
-				<SegmentsExperimentsSidebar
-					initialExperimentHistory={props.historySegmentsExperiments}
-					initialGoals={props.segmentsExperimentGoals}
-					initialSegmentsExperiment={props.segmentsExperiment}
-					initialSegmentsVariants={props.initialSegmentsVariants}
-					initialSelectedSegmentsExperienceId={
-						props.selectedSegmentsExperienceId
+	return (
+		<div id={`${portletNamespace}-segments-experiment-root`}>
+			{isAnalyticsSync ? (
+				<SegmentsExperimentsContext.Provider
+					value={{
+						APIService: APIService({
+							contentPageEditorNamespace:
+								context.contentPageEditorNamespace,
+							endpoints: {
+								calculateSegmentsExperimentEstimatedDurationURL,
+								createSegmentsExperimentURL,
+								createSegmentsVariantURL,
+								deleteSegmentsExperimentURL,
+								deleteSegmentsVariantURL,
+								editSegmentsExperimentStatusURL,
+								editSegmentsExperimentURL,
+								editSegmentsVariantURL,
+								runSegmentsExperimentURL,
+							},
+							namespace: context.namespace,
+						}),
+						editVariantLayoutURL: editSegmentsVariantLayoutURL,
+						imagesPath,
+						page,
+					}}
+				>
+					<div id={`${portletNamespace}-segments-experiment-root`}>
+						<SegmentsExperimentsSidebar
+							initialExperimentHistory={
+								props.historySegmentsExperiments
+							}
+							initialGoals={props.segmentsExperimentGoals}
+							initialSegmentsExperiment={props.segmentsExperiment}
+							initialSegmentsVariants={
+								props.initialSegmentsVariants
+							}
+							initialSelectedSegmentsExperienceId={
+								props.selectedSegmentsExperienceId
+							}
+							winnerSegmentsVariantId={
+								props.winnerSegmentsVariantId
+							}
+						/>
+					</div>
+				</SegmentsExperimentsContext.Provider>
+			) : (
+				<ConnectToAC
+					analyticsCloudTrialURL={props.analyticsData?.cloudTrialURL}
+					analyticsURL={props.analyticsData?.url}
+					hideAnalyticsReportsPanelURL={
+						props.hideSegmentsExperimentPanelURL
 					}
-					winnerSegmentsVariantId={props.winnerSegmentsVariantId}
+					isAnalyticsConnected={props.analyticsData?.isConnected}
+					pathToAssets={props.pathToAssets}
 				/>
-			</div>
-		</SegmentsExperimentsContext.Provider>
-	) : (
-		<ConnectToAC
-			analyticsCloudTrialURL={props.analyticsData?.cloudTrialURL}
-			analyticsURL={props.analyticsData?.url}
-			hideAnalyticsReportsPanelURL={props.hideSegmentsExperimentPanelURL}
-			isAnalyticsConnected={props.analyticsData?.isConnected}
-			pathToAssets={props.pathToAssets}
-		/>
+			)}
+		</div>
 	);
 }

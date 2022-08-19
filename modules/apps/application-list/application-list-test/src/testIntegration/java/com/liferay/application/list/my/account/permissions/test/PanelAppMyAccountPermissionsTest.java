@@ -197,7 +197,7 @@ public class PanelAppMyAccountPermissionsTest {
 
 	private String _testPortletId;
 
-	private class TestPanelApp extends BasePanelApp {
+	private static class TestPanelApp extends BasePanelApp {
 
 		public TestPanelApp(com.liferay.portal.kernel.model.Portlet portlet) {
 			_portlet = portlet;
@@ -216,7 +216,7 @@ public class PanelAppMyAccountPermissionsTest {
 
 	}
 
-	private class TestPortlet extends GenericPortlet {
+	private static class TestPortlet extends GenericPortlet {
 	}
 
 }

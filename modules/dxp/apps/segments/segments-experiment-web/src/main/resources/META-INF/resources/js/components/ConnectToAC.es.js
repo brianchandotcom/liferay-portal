@@ -92,7 +92,7 @@ export default function ConnectToAC({
 }
 
 ConnectToAC.propTypes = {
-	analyticsURL: PropTypes.string.isRequired,
+	analyticsURL: PropTypes.string,
 	hideAnalyticsReportsPanelURL: PropTypes.string.isRequired,
 	isAnalyticsConnected: PropTypes.bool.isRequired,
 	pathToAssets: PropTypes.string.isRequired,

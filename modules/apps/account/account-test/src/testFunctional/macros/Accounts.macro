@@ -1004,12 +1004,19 @@ definition {
 			value1 = "Not Set");
 	}
 
-	macro removeDefaultDeliveryCommerceTerms {
-		Click(locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_REMOVE_DEFAULT_DELIVERY");
+	macro removeDefaultCommerceTerms {
+		Click(
+			key_entryDetails = "${entryDetails}",
+			key_termType = "${termType}",
+			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DROPDOWN");
+
+		Click(
+			key_number = "${number}",
+			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DROPDOWN_REMOVE");
 
 		AssertElementPresent(
-			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_USE_PRIORITY_SETTINGS",
-			value1 = "Use Priority Settings");
+			key_termType = "${termType}",
+			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_EMPTY_SEARCH_CONTAINER");
 	}
 
 	macro removeDefaultPaymentCommerceTerms {
@@ -1171,68 +1178,48 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro setDefaultDeliveryCommerceTermsEntry {
-		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_HEADING");
-
+	macro setDefaultCommerceTermsEntry {
 		AssertElementPresent(
-			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_USE_PRIORITY_SETTINGS",
-			value1 = "Use Priority Settings");
+			key_termType = "${termType}",
+			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_HEADING");
 
-		AssertClick(
-			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SET_DEFAULT_DELIVERY",
-			value1 = "Set Default Delivery Commerce Terms Entry");
+		Click(
+			key_termType = "${termType}",
+			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PLUS");
 
 		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Click(
-			key_termEntry = "${termEntry}",
-			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SELECT_TERM_ENTRY_RADIO");
+		if (isSet(channelEntry) && ("${channelEntry}" != "")) {
+			Select(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+				value1 = "${channelEntry}");
+		}
+		else {
+			Select(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+				value1 = "All Channels");
+		}
 
-		SelectFrameTop();
+		if (isSet(override) && ("${override}" == "true")) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Override Eligibility",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
 
-		AssertClick(
-			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SAVE_BUTTON",
-			value1 = "Save");
-
-		Alert.viewSuccessMessage();
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Details");
-
-		AssertClick(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
-		Alert.viewSuccessMessage();
-	}
-
-	macro setDefaultPaymentCommerceTermsEntry {
-		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_HEADING");
-
-		AssertElementPresent(
-			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_PAYMENT_USE_PRIORITY_SETTINGS",
-			value1 = "Use Priority Settings");
-
-		AssertClick(
-			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SET_DEFAULT_PAYMENT",
-			value1 = "Set Default Payment Commerce Terms Entry");
-
-		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Click(
-			key_termEntry = "${termEntry}",
-			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SELECT_TERM_ENTRY_RADIO");
-
-		SelectFrameTop();
+		Select(
+			key_fieldLabel = "Term",
+			locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+			value1 = "${termEntry}");
 
 		AssertClick(
 			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SAVE_BUTTON",
 			value1 = "Save");
 
-		Alert.viewSuccessMessage();
+		SelectFrameTop();
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Details");
 
@@ -1438,22 +1425,49 @@ definition {
 		}
 	}
 
+	macro viewDefaultCommerceTermsListByPriority {
+		var count = "0";
+
+		for (var rowList : list "${rowList}") {
+			var assertTerm = StringUtil.extractFirst("${rowList}", ":");
+			var row = StringUtil.extractLast("${rowList}", ":");
+
+			var term = selenium.getText("//label[contains(text(),'Term')]/..//select/option[${row}]");
+			var count = ${count} + 1;
+
+			if ("${row}" == "${count}") {
+				if ("${term}" != "${assertTerm}") {
+					fail("The list of the terms are not are sorted by the correct priority");
+				}
+			}
+		}
+	}
+
 	macro viewDefaultDeliveryCommerceTermsEntry {
 		if (isSet(termEntry)) {
-			AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DELIVERY_TEXT");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_ENTRY",
-				value1 = "${termEntry}");
-
-			if ("${inactive}" == "true") {
-				AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_ENTRY_INACTIVE_ICON");
+			if (isSet(row) && ("${row}" != "")) {
+				for (var termEntryDetails : list "${termEntry}") {
+					AssertElementPresent(
+						key_entryDetails = "${termEntryDetails}",
+						key_row = "${row}",
+						key_termType = "${termType}",
+						locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_ENTRY_DETAILS");
+				}
+			}
+			else {
+				for (var termEntryDetails : list "${termEntry}") {
+					AssertElementPresent(
+						key_entryDetails = "${termEntryDetails}",
+						key_row = "1",
+						key_termType = "${termType}",
+						locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_ENTRY_DETAILS");
+				}
 			}
 		}
 		else {
 			AssertElementPresent(
-				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_USE_PRIORITY_SETTINGS",
-				value1 = "Use Priority Settings");
+				key_termType = "${termType}",
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_EMPTY_SEARCH_CONTAINER");
 		}
 	}
 

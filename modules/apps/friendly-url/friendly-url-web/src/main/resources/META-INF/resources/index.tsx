@@ -35,8 +35,8 @@ const getDefaultContainer = () => {
 };
 
 const RedirectOptions = ({url}) => {
-	const handleToastClose = (data) => {
-		if (data && data.event) {
+	const handleToastClose = (event) => {
+		if (event) {
 			Liferay.Util.Session.set(IGNORED_REDIRECT_OPTIONS, true, {
 				useHttpSession: true,
 			});

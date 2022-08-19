@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTransition;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -549,6 +550,10 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			KaleoTask kaleoTask = kaleoTaskInstanceToken.getKaleoTask();
 
 			KaleoNode kaleoNode = kaleoTask.getKaleoNode();
+
+			if (Validator.isNull(kaleoNode.getLabel())) {
+				return kaleoNode.getName();
+			}
 
 			return kaleoNode.getLabel(locale);
 		}

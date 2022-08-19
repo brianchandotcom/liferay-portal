@@ -316,7 +316,7 @@ definition {
 
 	@description = "Can order countries by name in descending and ascending order"
 	@priority = "3"
-	test CanOrderByName {
+	test CanOrderCountryByName {
 		task ("Given countries display in the Countries Management") {
 			CountriesManagement.openCountriesManagementPortlet();
 		}
@@ -344,9 +344,9 @@ definition {
 		}
 	}
 
-	@description = "Can order countries by name in descending and ascending order"
+	@description = "Can order countries by priority in descending and ascending order"
 	@priority = "3"
-	test CanOrderByPriority {
+	test CanOrderCountryByPriority {
 		task ("Given a country is added with a priority higher than 0.0") {
 			CountriesManagement.openCountriesManagementPortlet();
 

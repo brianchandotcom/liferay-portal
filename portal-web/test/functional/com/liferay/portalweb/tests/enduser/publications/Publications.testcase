@@ -235,6 +235,14 @@ definition {
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
 
 		AssertElementPresent(locator1 = "PublicationsChanges#MESSAGE_NO_CHANGES");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		AssertElementPresent(locator1 = "PublicationsChanges#MESSAGE_NO_CHANGES");
 	}
 
 	@description = "This is the use case for LPS-158789. Allow you to change publication via URL parameter"
@@ -910,27 +918,6 @@ definition {
 			userFirstName = "Test",
 			userLastName = "Test",
 			userScreenName = "testscreen");
-	}
-
-	@priority = "4"
-	test NoChangesShouldDisplayAfterNavigatingPersonalAppLayouts {
-		JSONPublications.addPublication(publicationName = "Publication Name");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name");
-
-		PublicationsNavigator.gotoReviewChanges(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Publication Name");
-
-		AssertVisible(locator1 = "Message#EMPTY_INFO_TAGLIB");
-
-		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
-
-		PublicationsNavigator.gotoReviewChanges(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Publication Name");
-
-		AssertVisible(locator1 = "Message#EMPTY_INFO_TAGLIB");
 	}
 
 	@description = "Assert publications changes can search and sort"

@@ -58,24 +58,6 @@ public class AssetListEntryUsageLocalServiceWrapper
 			assetListEntryUsage);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addAssetListEntryUsage(long, long, long, long, long, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public AssetListEntryUsage addAssetListEntryUsage(
-			long userId, long groupId, long assetListEntryId, long classNameId,
-			long classPK, String portletId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _assetListEntryUsageLocalService.addAssetListEntryUsage(
-			userId, groupId, assetListEntryId, classNameId, classPK, portletId,
-			serviceContext);
-	}
-
 	@Override
 	public AssetListEntryUsage addAssetListEntryUsage(
 			long userId, long groupId, long classNameId, String containerKey,
@@ -283,19 +265,6 @@ public class AssetListEntryUsageLocalServiceWrapper
 			assetListEntryUsageId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #getAssetListEntryUsages(String, long, long)}
-	 */
-	@Deprecated
-	@Override
-	public AssetListEntryUsage fetchAssetListEntryUsage(
-		long classNameId, long classPK, String portletId) {
-
-		return _assetListEntryUsageLocalService.fetchAssetListEntryUsage(
-			classNameId, classPK, portletId);
-	}
-
 	@Override
 	public AssetListEntryUsage fetchAssetListEntryUsage(
 		long groupId, long classNameId, String containerKey, long containerType,
@@ -385,64 +354,6 @@ public class AssetListEntryUsageLocalServiceWrapper
 
 		return _assetListEntryUsageLocalService.getAssetListEntryUsages(
 			start, end);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #getAssetListEntryUsages(long, long, String)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<AssetListEntryUsage> getAssetListEntryUsages(
-		long assetListEntryId) {
-
-		return _assetListEntryUsageLocalService.getAssetListEntryUsages(
-			assetListEntryId);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #getAssetListEntryUsages(long, long, String, int, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<AssetListEntryUsage> getAssetListEntryUsages(
-		long assetListEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntryUsage>
-			orderByComparator) {
-
-		return _assetListEntryUsageLocalService.getAssetListEntryUsages(
-			assetListEntryId, start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #getAssetListEntryUsages(long, long, String, int)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<AssetListEntryUsage> getAssetListEntryUsages(
-		long assetListEntryId, long classNameId) {
-
-		return _assetListEntryUsageLocalService.getAssetListEntryUsages(
-			assetListEntryId, classNameId);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #getAssetListEntryUsages(long, long, String, int, int, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<AssetListEntryUsage> getAssetListEntryUsages(
-		long assetListEntryId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntryUsage>
-			orderByComparator) {
-
-		return _assetListEntryUsageLocalService.getAssetListEntryUsages(
-			assetListEntryId, classNameId, start, end, orderByComparator);
 	}
 
 	@Override
@@ -535,30 +446,6 @@ public class AssetListEntryUsageLocalServiceWrapper
 	@Override
 	public int getAssetListEntryUsagesCount() {
 		return _assetListEntryUsageLocalService.getAssetListEntryUsagesCount();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #getAssetListEntryUsagesCount(long, long, String)}
-	 */
-	@Deprecated
-	@Override
-	public int getAssetListEntryUsagesCount(long assetListEntryId) {
-		return _assetListEntryUsageLocalService.getAssetListEntryUsagesCount(
-			assetListEntryId);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #getAssetListEntryUsagesCount(long, long, String, int)}
-	 */
-	@Deprecated
-	@Override
-	public int getAssetListEntryUsagesCount(
-		long assetListEntryId, long classNameId) {
-
-		return _assetListEntryUsageLocalService.getAssetListEntryUsagesCount(
-			assetListEntryId, classNameId);
 	}
 
 	@Override

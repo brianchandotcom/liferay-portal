@@ -354,19 +354,6 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<AssetListEntryAssetEntryRel>
-		getAssetListEntryAssetEntryRels(
-			long assetListEntryId, long[] segmentsEntryIds,
-			long[][] assetCategoryIds, int start, int end) {
-
-		return getService().getAssetListEntryAssetEntryRels(
-			assetListEntryId, segmentsEntryIds, assetCategoryIds, start, end);
-	}
-
-	/**
 	 * Returns all the asset list entry asset entry rels matching the UUID and company.
 	 *
 	 * @param uuid the UUID of the asset list entry asset entry rels
@@ -435,18 +422,6 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 
 		return getService().getAssetListEntryAssetEntryRelsCount(
 			assetListEntryId, segmentsEntryIds);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static int getAssetListEntryAssetEntryRelsCount(
-		long assetListEntryId, long[] segmentsEntryIds,
-		long[][] assetCategoryIds) {
-
-		return getService().getAssetListEntryAssetEntryRelsCount(
-			assetListEntryId, segmentsEntryIds, assetCategoryIds);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

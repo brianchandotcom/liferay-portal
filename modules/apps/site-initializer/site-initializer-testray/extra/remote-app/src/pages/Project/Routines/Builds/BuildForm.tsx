@@ -45,8 +45,23 @@ import type {KeyedMutator} from 'swr';
 type RoutineBuildData = typeof yupSchema.build.__outputType;
 
 const RoutineBuildForm = () => {
+	const {projectId, routineId} = useParams();
 	const {modal: optionModal} = useFormModal();
 	const {modal: optionSelectModal} = useFormModal();
+	const {modal: newProductVersionModal} = useFormModal({
+		onSave: (produtVersion: TestrayProductVersion) => {
+			mutate((productVersionResponse) => {
+				if (!productVersionResponse) {
+					return;
+				}
+
+				return {
+					...productVersionResponse,
+					items: [...productVersionResponse?.items, produtVersion],
+				};
+			});
+		},
+	});
 	const navigate = useNavigate();
 	const [cases, setCases] = useState<number[]>([]);
 	const {projectId, routineId} = useParams();
@@ -191,6 +206,7 @@ const RoutineBuildForm = () => {
 					<ClayButtonWithIcon
 						className="mt-5"
 						displayType="secondary"
+						onClick={() => newProductVersionModal.open()}
 						symbol="plus"
 						title={i18n.translate('add-product-version')}
 					/>
@@ -294,6 +310,10 @@ const RoutineBuildForm = () => {
 				</div>
 			</ClayForm>
 
+			<ProductVersionFormModal
+				modal={newProductVersionModal}
+				projectId={(projectId as unknown) as number}
+			/>
 			<SuiteFormSelectModal modal={modal} type="select-cases" />
 
 			<BuildOptionModal modal={optionModal} />

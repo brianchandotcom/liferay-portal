@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -168,25 +171,33 @@ public class WorkflowInstanceEditDisplayContext
 	}
 
 	public String getTaskCompleted(WorkflowTask workflowTask) {
-		if (workflowTask.isCompleted()) {
-			return LanguageUtil.get(
-				workflowInstanceRequestHelper.getRequest(), "yes");
-		}
-
 		return LanguageUtil.get(
-			workflowInstanceRequestHelper.getRequest(), "no");
+			workflowInstanceRequestHelper.getRequest(),
+			workflowTask.isCompleted() ? "yes" : "no");
 	}
 
 	public Object getTaskCompletionMessageArguments(WorkflowLog workflowLog) {
+		String taskLabel = null;
+
+		if (Validator.isXml(workflowLog.getState())) {
+			taskLabel = LocalizationUtil.getLocalization(
+				workflowLog.getState(),
+				LocaleUtil.toLanguageId(
+					workflowInstanceRequestHelper.getLocale()),
+				true);
+		}
+		else {
+			taskLabel = LanguageUtil.get(
+				workflowInstanceRequestHelper.getLocale(),
+				workflowLog.getState());
+		}
+
 		return new Object[] {
 			HtmlUtil.escape(
 				PortalUtil.getUserName(
 					workflowLog.getAuditUserId(),
 					String.valueOf(workflowLog.getAuditUserId()))),
-			HtmlUtil.escape(
-				LanguageUtil.get(
-					workflowInstanceRequestHelper.getRequest(),
-					workflowLog.getState()))
+			HtmlUtil.escape(taskLabel)
 		};
 	}
 
@@ -215,8 +226,13 @@ public class WorkflowInstanceEditDisplayContext
 		return HtmlUtil.escape(_getActorName(workflowLog));
 	}
 
-	public String getTaskName(WorkflowTask workflowTask) {
-		return HtmlUtil.escape(workflowTask.getName());
+	public String getTaskName(WorkflowTask workflowTask)
+		throws WorkflowException {
+
+		return HtmlUtil.escape(
+			WorkflowTaskManagerUtil.getWorkflowTaskLabel(
+				workflowTask.getWorkflowTaskId(),
+				workflowInstanceRequestHelper.getLocale()));
 	}
 
 	public String getTaskUpdateMessageArguments(WorkflowLog workflowLog) {

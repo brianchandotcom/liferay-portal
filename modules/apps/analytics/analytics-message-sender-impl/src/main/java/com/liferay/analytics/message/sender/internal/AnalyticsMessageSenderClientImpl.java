@@ -106,13 +106,6 @@ public class AnalyticsMessageSenderClientImpl
 		_execute(analyticsConfiguration, companyId, httpUriRequest);
 	}
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.analytics.settings.web)(release.schema.version>=1.0.1))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	private HttpUriRequest _buildHttpUriRequest(
 			String body, String dataSourceId,
 			String faroBackendSecuritySignature, String method,
@@ -290,6 +283,11 @@ public class AnalyticsMessageSenderClientImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsMessageSenderClientImpl.class);
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.analytics.settings.web)(release.schema.version>=1.0.1))"
+	)
+	private Release _release;
 
 	@Reference
 	private SettingsFactory _settingsFactory;

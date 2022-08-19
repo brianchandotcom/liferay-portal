@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import {array, date, object, string} from 'yup';
-import {TypeActivityExternalReferenceCode} from '../enums/typeActivityExternalReferenceCode';
+import {TypeActivityExternalReferenceCode} from '../../../../../../common/enums/typeActivityExternalReferenceCode';
 
 const activitiesSchema = object({
 	activities: array()

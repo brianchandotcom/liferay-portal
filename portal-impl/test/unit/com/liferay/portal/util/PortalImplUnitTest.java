@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LayoutTypePortletFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutImpl;
@@ -756,98 +757,6 @@ public class PortalImplUnitTest {
 				"/web/group/layout", "/group/layout", "/group"));
 	}
 
-	public static class MockInvokerPortlet implements InvokerPortlet {
-
-		@Override
-		public void destroy() {
-		}
-
-		@Override
-		public Integer getExpCache() {
-			return null;
-		}
-
-		@Override
-		public javax.portlet.Portlet getPortlet() {
-			return null;
-		}
-
-		@Override
-		public ClassLoader getPortletClassLoader() {
-			return null;
-		}
-
-		@Override
-		public PortletConfig getPortletConfig() {
-			return null;
-		}
-
-		@Override
-		public PortletContext getPortletContext() {
-			return null;
-		}
-
-		@Override
-		public javax.portlet.Portlet getPortletInstance() {
-			return null;
-		}
-
-		@Override
-		public void init(PortletConfig arg0) throws PortletException {
-		}
-
-		@Override
-		public boolean isCheckAuthToken() {
-			return false;
-		}
-
-		@Override
-		public boolean isFacesPortlet() {
-			return false;
-		}
-
-		@Override
-		public boolean isHeaderPortlet() {
-			return false;
-		}
-
-		@Override
-		public void processAction(
-				ActionRequest actionRequest, ActionResponse actionResponse)
-			throws IOException, PortletException {
-		}
-
-		@Override
-		public void processEvent(
-				EventRequest eventRequest, EventResponse eventResponse)
-			throws IOException, PortletException {
-		}
-
-		@Override
-		public void render(
-				RenderRequest renderRequest, RenderResponse renderResponse)
-			throws IOException, PortletException {
-		}
-
-		@Override
-		public void renderHeaders(
-				HeaderRequest headerRequest, HeaderResponse headerResponse)
-			throws IOException, PortletException {
-		}
-
-		@Override
-		public void serveResource(
-				ResourceRequest resourceRequest,
-				ResourceResponse resourceResponse)
-			throws IOException, PortletException {
-		}
-
-		@Override
-		public void setPortletFilters() throws PortletException {
-		}
-
-	}
-
 	protected HttpServletRequest getWrappedRequest(
 		HttpServletRequest httpServletRequest) {
 
@@ -905,7 +814,8 @@ public class PortalImplUnitTest {
 		portlet.setPortletApp(new PortletAppImpl("test_servlet_context"));
 
 		return (ActionRequestImpl)ActionRequestFactory.create(
-			httpServletRequest, portlet, new MockInvokerPortlet(),
+			httpServletRequest, portlet,
+			ProxyFactory.newDummyInstance(InvokerPortlet.class),
 			new MockLiferayPortletContext("/path"), WindowState.NORMAL,
 			portletMode, new MockPortletPreferences(), 4000L);
 	}

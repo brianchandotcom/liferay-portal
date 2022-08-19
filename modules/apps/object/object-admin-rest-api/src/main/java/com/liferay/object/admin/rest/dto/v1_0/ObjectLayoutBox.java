@@ -353,7 +353,8 @@ public class ObjectLayoutBox implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		CATEGORIZATION("categorization"), REGULAR("regular");
+		CATEGORIZATION("categorization"), COMMENTS("comments"),
+		REGULAR("regular");
 
 		@JsonCreator
 		public static Type create(String value) {

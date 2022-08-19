@@ -199,6 +199,11 @@
 		<field name="nullConvertibleEntryId" type="long" />
 		<field name="name" type="String" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.RenameFinderColumnEntry">
+		<field name="renameFinderColumnEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="columnToRename" type="String" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.UADPartialEntry">
 		<field name="uadPartialEntryId" type="long" />
 		<field name="userId" type="long" />

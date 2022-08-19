@@ -234,6 +234,12 @@ create table NullConvertibleEntry (
 	name VARCHAR(75) null
 );
 
+create table RenameFinderColumnEntry (
+	renameFinderColumnEntryId LONG not null primary key,
+	groupId LONG,
+	columnToRename VARCHAR(75) null
+);
+
 create table UADPartialEntry (
 	uadPartialEntryId LONG not null primary key,
 	userId LONG,

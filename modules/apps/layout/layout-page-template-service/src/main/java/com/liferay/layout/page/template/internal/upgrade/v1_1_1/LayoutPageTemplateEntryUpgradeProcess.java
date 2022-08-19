@@ -68,13 +68,10 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long layoutPageTemplateEntryId = resultSet.getLong(
-					"layoutPageTemplateEntryId");
-				long companyId = resultSet.getLong("companyId");
 				String name = resultSet.getString("name");
-				long layoutPrototypeId = resultSet.getLong("layoutPrototypeId");
 
-				Company company = _companyLocalService.getCompany(companyId);
+				Company company = _companyLocalService.getCompany(
+					resultSet.getLong("companyId"));
 
 				String newName = name;
 
@@ -97,14 +94,16 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 
 				updatePreparedStatement.setLong(1, company.getGroupId());
 				updatePreparedStatement.setString(2, newName);
-				updatePreparedStatement.setLong(3, layoutPageTemplateEntryId);
+				updatePreparedStatement.setLong(
+					3, resultSet.getLong("layoutPageTemplateEntryId"));
 
 				updatePreparedStatement.addBatch();
 
 				deletePreparedStatement.setLong(1, company.getGroupId());
 				deletePreparedStatement.setInt(
 					2, LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE);
-				deletePreparedStatement.setLong(3, layoutPrototypeId);
+				deletePreparedStatement.setLong(
+					3, resultSet.getLong("layoutPrototypeId"));
 
 				deletePreparedStatement.addBatch();
 			}

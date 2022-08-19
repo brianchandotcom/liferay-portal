@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 /**
  * @author Stian Sigvartsen
@@ -65,34 +64,29 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 						connection, sql)) {
 
 				while (resultSet.next()) {
-					int samlIdpSpSessionId = resultSet.getInt(
-						"samlIdpSpSessionId");
-					long companyId = resultSet.getLong("companyId");
-					Timestamp createDate = resultSet.getTimestamp("createDate");
-					long userId = resultSet.getLong("userId");
-					String userName = resultSet.getString("userName");
-					String nameIdFormat = resultSet.getString("nameIdFormat");
-					String nameIdValue = resultSet.getString("nameIdValue");
-					String samlSpEntityId = resultSet.getString(
-						"samlSpEntityId");
-
-					int samlPeerBindingId =
-						samlIdpSpSessionId + -samlIdpSpSessionIdOffset +
-							latestSamlPeerBindingId;
-
-					insertPreparedStatement.setInt(1, samlPeerBindingId);
-
-					insertPreparedStatement.setLong(2, companyId);
-					insertPreparedStatement.setTimestamp(3, createDate);
-					insertPreparedStatement.setLong(4, userId);
-					insertPreparedStatement.setString(5, userName);
+					insertPreparedStatement.setInt(
+						1,
+						resultSet.getInt("samlIdpSpSessionId") +
+							-samlIdpSpSessionIdOffset +
+								latestSamlPeerBindingId);
+					insertPreparedStatement.setLong(
+						2, resultSet.getLong("companyId"));
+					insertPreparedStatement.setTimestamp(
+						3, resultSet.getTimestamp("createDate"));
+					insertPreparedStatement.setLong(
+						4, resultSet.getLong("userId"));
+					insertPreparedStatement.setString(
+						5, resultSet.getString("userName"));
 					insertPreparedStatement.setBoolean(6, false);
-					insertPreparedStatement.setString(7, nameIdFormat);
+					insertPreparedStatement.setString(
+						7, resultSet.getString("nameIdFormat"));
 					insertPreparedStatement.setString(8, null);
 					insertPreparedStatement.setString(9, null);
 					insertPreparedStatement.setString(10, null);
-					insertPreparedStatement.setString(11, nameIdValue);
-					insertPreparedStatement.setString(12, samlSpEntityId);
+					insertPreparedStatement.setString(
+						11, resultSet.getString("nameIdValue"));
+					insertPreparedStatement.setString(
+						12, resultSet.getString("samlSpEntityId"));
 
 					insertPreparedStatement.addBatch();
 				}

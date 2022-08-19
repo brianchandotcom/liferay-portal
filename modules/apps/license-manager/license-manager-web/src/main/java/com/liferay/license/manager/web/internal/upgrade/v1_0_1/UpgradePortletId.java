@@ -66,13 +66,9 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 						"ownerType = ? and plid = ? and portletId = ?")) {
 
 			while (resultSet.next()) {
-				long ownerId = resultSet.getLong(1);
-				int ownerType = resultSet.getInt(2);
-				long plid = resultSet.getLong(3);
-
-				deletePreparedStatement.setLong(1, ownerId);
-				deletePreparedStatement.setInt(2, ownerType);
-				deletePreparedStatement.setLong(3, plid);
+				deletePreparedStatement.setLong(1, resultSet.getLong(1));
+				deletePreparedStatement.setInt(2, resultSet.getInt(2));
+				deletePreparedStatement.setLong(3, resultSet.getLong(3));
 				deletePreparedStatement.setString(
 					4, LicenseManagerPortletKeys.LICENSE_MANAGER);
 
@@ -96,17 +92,12 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 							"?")) {
 
 			while (resultSet.next()) {
-				long companyId = resultSet.getLong(1);
-				int scope = resultSet.getInt(2);
-				String primKey = resultSet.getString(3);
-				long roleId = resultSet.getLong(4);
-
-				deletePreparedStatement.setLong(1, companyId);
+				deletePreparedStatement.setLong(1, resultSet.getLong(1));
 				deletePreparedStatement.setString(
 					2, LicenseManagerPortletKeys.LICENSE_MANAGER);
-				deletePreparedStatement.setInt(3, scope);
-				deletePreparedStatement.setString(4, primKey);
-				deletePreparedStatement.setLong(5, roleId);
+				deletePreparedStatement.setInt(3, resultSet.getInt(2));
+				deletePreparedStatement.setString(4, resultSet.getString(3));
+				deletePreparedStatement.setLong(5, resultSet.getLong(4));
 
 				deletePreparedStatement.addBatch();
 			}

@@ -506,16 +506,6 @@ definition {
 		}
 	}
 
-	macro viewCategoryToVocabularyCP {
-		var key_categoryName = "${categoryName}";
-
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
-
-		AssertClick(
-			locator1 = "Categories#VOCABULARY_CATEGORY",
-			value1 = "${categoryName}");
-	}
-
 	macro viewCategoryViewableByCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 

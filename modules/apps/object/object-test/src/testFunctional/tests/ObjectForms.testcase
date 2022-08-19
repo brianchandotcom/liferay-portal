@@ -163,6 +163,8 @@ definition {
 
 		Button.clickSubmitForPublication();
 
+		WaitForSPARefresh();
+
 		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject151597");

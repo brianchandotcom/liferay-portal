@@ -26,5 +26,8 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 		<span aria-hidden="true" class="loading-animation"></span>
 	</div>
 
-	<react:component module="js/SegmentsExperimentApp.es" props="<%= segmentsExperimentDisplayContext.getData() %>" />
+	<react:component
+		module="js/SegmentsExperimentApp.es"
+		props="<%= segmentsExperimentDisplayContext.getData() %>"
+	/>
 </section>

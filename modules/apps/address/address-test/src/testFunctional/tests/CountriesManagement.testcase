@@ -59,6 +59,60 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that a user can activate an inactive region"
+	@priority = "5"
+	test CanActivateAnInactiveRegion {
+		task ("Given that an inactive region exists") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.addRegion(
+				countryName = "Philippines",
+				regionCode = "06",
+				regionName = "Western Visayas");
+
+			Navigator.gotoBack();
+
+			CountriesManagement.deactivateRegion(regionName = "Western Visayas");
+
+			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+			CountriesManagement.viewRegionsInTable(
+				regionCode = "06",
+				regionName = "Western Visayas",
+				regionStatus = "Inactive");
+		}
+
+		task ("When a user activates this region") {
+			CountriesManagement.activateRegion(regionName = "Western Visayas");
+		}
+
+		task ("Then the country is in active status") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "Philippines");
+
+			CountriesManagement.viewRegionsInTable(
+				regionCode = "06",
+				regionName = "Western Visayas",
+				regionStatus = "Active");
+		}
+
+		task ("and will show up under Active filter") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			ManagementBar.setFilterAndOrder(filterBy = "Active");
+
+			CountriesManagement.goToRegions(countryName = "Philippines");
+
+			Search.searchCP(searchTerm = "Western Visayas");
+
+			CountriesManagement.viewRegionsInTable(
+				regionCode = "06",
+				regionName = "Western Visayas",
+				regionStatus = "Active");
+		}
+	}
+
 	@description = "This test asserts that a user can add a new country and by default this country will have the Active status, will not allow Billing and Shipping, and will not be subject to VAT."
 	@priority = "5"
 	test CanAddCountry {

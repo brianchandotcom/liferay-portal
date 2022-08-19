@@ -23,13 +23,13 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.layout.admin.web.internal.portlet.constants.LayoutAdminWebPortletKeys;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.test.constants.LayoutPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -114,8 +114,7 @@ public class ExportImportLocalServiceTest {
 			layoutPageTemplateEntry.getPlid());
 
 		LayoutTestUtil.addPortletToLayout(
-			templateLayout,
-			LayoutAdminWebPortletKeys.LAYOUT_ADMIN_WEB_TEST_PORTLET);
+			templateLayout, LayoutPortletKeys.LAYOUT_TEST_PORTLET);
 
 		LayoutPrototype layoutPrototype =
 			LayoutPrototypeLocalServiceUtil.getLayoutPrototype(

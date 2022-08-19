@@ -73,6 +73,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.apache.cxf.jaxrs.utils.HttpUtils;
+import org.apache.cxf.rs.security.jose.common.JoseConstants;
 import org.apache.cxf.rs.security.jose.jwk.JwkUtils;
 import org.apache.cxf.rs.security.jose.jws.JwsHeaders;
 import org.apache.cxf.rs.security.jose.jws.JwsUtils;
@@ -667,8 +668,6 @@ public class LiferayOAuthDataProvider
 	protected JwtClaims createJwtAccessToken(
 		ServerAccessToken serverAccessToken) {
 
-		_customizeServerAccessToken(Collections.emptyMap(), serverAccessToken);
-
 		// Override this method to fix a bug in cxf.
 		// Scopes in JWT claim should be a string.
 
@@ -702,15 +701,41 @@ public class LiferayOAuthDataProvider
 	protected ServerAccessToken doCreateAccessToken(
 		AccessTokenRegistration accessTokenRegistration) {
 
-		ServerAccessToken serverAccessToken = super.doCreateAccessToken(
-			accessTokenRegistration);
+		ServerAccessToken serverAccessToken = _createOpaqueAccessToken(
+			accessTokenRegistration.getAudiences(),
+			accessTokenRegistration.getClient(),
+			accessTokenRegistration.getClientCodeVerifier(),
+			accessTokenRegistration.getGrantCode(),
+			accessTokenRegistration.getGrantType(),
+			accessTokenRegistration.getNonce(),
+			accessTokenRegistration.getExtraProperties(),
+			accessTokenRegistration.getResponseType(),
+			convertScopeToPermissions(
+				accessTokenRegistration.getClient(),
+				accessTokenRegistration.getApprovedScope()),
+			accessTokenRegistration.getSubject());
 
-		if (isUseJwtFormatForAccessTokens()) {
-			return serverAccessToken;
+		MessageContext messageContext = getMessageContext();
+
+		if (messageContext != null) {
+			String x509 = (String)messageContext.get(
+				JoseConstants.HEADER_X509_THUMBPRINT_SHA256);
+
+			if (x509 != null) {
+				Map<String, String> extraProperties =
+					serverAccessToken.getExtraProperties();
+
+				extraProperties.put(
+					JoseConstants.HEADER_X509_THUMBPRINT_SHA256, x509);
+			}
 		}
 
 		_customizeServerAccessToken(
 			accessTokenRegistration.getExtraProperties(), serverAccessToken);
+
+		if (isUseJwtFormatForAccessTokens()) {
+			_convertToJWTAccessToken(serverAccessToken);
+		}
 
 		return serverAccessToken;
 	}
@@ -783,14 +808,37 @@ public class LiferayOAuthDataProvider
 		Client client, RefreshToken oldRefreshToken,
 		List<String> restrictedScopes) {
 
-		ServerAccessToken serverAccessToken = super.doRefreshAccessToken(
-			client, oldRefreshToken, restrictedScopes);
+		List<OAuthPermission> scopes = null;
 
-		if (isUseJwtFormatForAccessTokens()) {
-			return serverAccessToken;
+		if (restrictedScopes.isEmpty()) {
+			scopes = (oldRefreshToken.getScopes() != null) ?
+				new ArrayList<>(oldRefreshToken.getScopes()) : null;
+		}
+		else {
+			scopes = convertScopeToPermissions(client, restrictedScopes);
+
+			List<OAuthPermission> originalScopes = oldRefreshToken.getScopes();
+
+			if (!originalScopes.containsAll(scopes)) {
+				throw new OAuthServiceException("Invalid scopes");
+			}
 		}
 
+		List<String> audiences = (oldRefreshToken.getAudiences() != null) ?
+			new ArrayList<>(oldRefreshToken.getAudiences()) : null;
+
+		ServerAccessToken serverAccessToken = _createOpaqueAccessToken(
+			audiences, client, oldRefreshToken.getClientCodeVerifier(),
+			oldRefreshToken.getGrantCode(), oldRefreshToken.getGrantType(),
+			oldRefreshToken.getNonce(), oldRefreshToken.getExtraProperties(),
+			oldRefreshToken.getResponseType(), scopes,
+			oldRefreshToken.getSubject());
+
 		_customizeServerAccessToken(Collections.emptyMap(), serverAccessToken);
+
+		if (isUseJwtFormatForAccessTokens()) {
+			_convertToJWTAccessToken(serverAccessToken);
+		}
 
 		return serverAccessToken;
 	}
@@ -867,6 +915,45 @@ public class LiferayOAuthDataProvider
 						jwtAccessTokenSigningJSONWebKey())));
 
 		super.setJwtAccessTokenProducer(oAuthJoseJwtProducer);
+	}
+
+	private void _convertToJWTAccessToken(ServerAccessToken serverAccessToken) {
+		JwtClaims claims = createJwtAccessToken(serverAccessToken);
+
+		String jose = processJwtAccessToken(claims);
+
+		if (isPersistJwtEncoding()) {
+			serverAccessToken.setTokenKey(jose);
+		}
+		else {
+			serverAccessToken.setEncodedToken(jose);
+		}
+	}
+
+	private ServerAccessToken _createOpaqueAccessToken(
+		List<String> audiences, Client client, String clientCodeVerifier,
+		String grantCode, String grantType, String nonce,
+		Map<String, String> properties, String responseType,
+		List<OAuthPermission> scopes, UserSubject userSubject) {
+
+		ServerAccessToken serverAccessToken = createNewAccessToken(
+			client, userSubject);
+
+		serverAccessToken.setAudiences(audiences);
+		serverAccessToken.setGrantType(grantType);
+		serverAccessToken.setScopes(scopes);
+		serverAccessToken.setSubject(userSubject);
+		serverAccessToken.setClientCodeVerifier(clientCodeVerifier);
+		serverAccessToken.setNonce(nonce);
+		serverAccessToken.setResponseType(responseType);
+		serverAccessToken.setGrantCode(grantCode);
+
+		Map<String, String> extraProperties =
+			serverAccessToken.getExtraProperties();
+
+		extraProperties.putAll(properties);
+
+		return serverAccessToken;
 	}
 
 	private void _customizeServerAccessToken(

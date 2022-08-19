@@ -27,8 +27,7 @@
 			WHERE
 				[$WHERE$]
 				(Group_.groupId = ?) AND
-				(Group_.liveGroupId = 0) AND
-				(Group_.type_ != 4)
+				(Group_.liveGroupId = 0)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.countByC_PG_N_D">
@@ -45,8 +44,7 @@
 				(Group_.liveGroupId = 0) AND
 				(Group_.groupKey != 'Control Panel') AND
 				(LOWER(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(LOWER(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$]) AND
-				(Group_.type_ != 4)
+				(LOWER(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByActiveGroups">
@@ -73,8 +71,7 @@
 			WHERE
 				[$WHERE$]
 				(Group_.companyId = ?) AND
-				(Group_.liveGroupId = 0) AND
-				(Group_.type_ != 4)
+				(Group_.liveGroupId = 0)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByLayouts">
@@ -122,8 +119,9 @@
 					(Group_.companyId = ?) AND
 					(
 						(Group_.groupKey = 'Control Panel') OR
+						(Group_.groupKey = 'Forms') OR
 						(Group_.groupKey = 'Guest') OR
-						(Group_.type_ = 4)
+						(Group_.groupKey = 'User Personal Site')
 					)
 			)
 		]]>
@@ -151,8 +149,7 @@
 			WHERE
 				(Group_.companyId = ?) AND
 				(Group_.liveGroupId = 0) AND
-				(LOWER(Group_.groupKey) = ?) AND
-				(Group_.type_ != 4)
+				(LOWER(Group_.groupKey) = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByC_A">
@@ -193,8 +190,7 @@
 				(Group_.liveGroupId = 0) AND
 				(Group_.groupKey != 'Control Panel') AND
 				(LOWER(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(LOWER(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$]) AND
-				(Group_.type_ != 4)
+				(LOWER(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByActionId">

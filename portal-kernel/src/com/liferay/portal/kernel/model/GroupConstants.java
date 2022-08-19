@@ -71,10 +71,6 @@ public class GroupConstants {
 
 	public static final String TYPE_SITE_RESTRICTED_LABEL = "restricted";
 
-	public static final int TYPE_SITE_SYSTEM = 4;
-
-	public static final String TYPE_SITE_SYSTEM_LABEL = "system";
-
 	public static final String USER_PERSONAL_SITE = "User Personal Site";
 
 	public static final String USER_PERSONAL_SITE_FRIENDLY_URL =
@@ -87,11 +83,8 @@ public class GroupConstants {
 		else if (type == TYPE_SITE_PRIVATE) {
 			return TYPE_SITE_PRIVATE_LABEL;
 		}
-		else if (type == TYPE_SITE_RESTRICTED) {
-			return TYPE_SITE_RESTRICTED_LABEL;
-		}
 
-		return TYPE_SITE_SYSTEM_LABEL;
+		return TYPE_SITE_RESTRICTED_LABEL;
 	}
 
 }

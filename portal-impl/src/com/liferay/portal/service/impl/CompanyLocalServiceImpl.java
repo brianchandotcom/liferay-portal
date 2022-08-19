@@ -967,11 +967,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				Property nameProperty = PropertyFactoryUtil.forName("name");
 
 				dynamicQuery.add(nameProperty.isNotNull());
-
-				Property typeProperty = PropertyFactoryUtil.forName("type");
-
-				dynamicQuery.add(
-					typeProperty.ne(GroupConstants.TYPE_SITE_SYSTEM));
 			});
 		groupActionableDynamicQuery.setCompanyId(user.getCompanyId());
 		groupActionableDynamicQuery.setPerformActionMethod(

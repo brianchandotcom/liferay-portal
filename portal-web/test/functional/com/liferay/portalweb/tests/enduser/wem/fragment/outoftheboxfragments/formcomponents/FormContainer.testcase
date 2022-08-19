@@ -1260,68 +1260,90 @@ definition {
 		}
 
 		task ("Then the page creator could see the created object entry") {
-			ObjectAdmin.goToCustomObject(objectName = "PurchaseOrder");
+			ObjectAdmin.assertObjectEntryFieldValueViaAPI(
+				attribute = "address",
+				attributeValue = "Dalian",
+				expectedValue = "30",
+				fieldName = "age",
+				objectName = "PurchaseOrder");
 
-			ObjectPortlet.viewEntryDetails(entry = "Dalian");
+			ObjectAdmin.assertObjectEntryFieldValueViaAPI(
+				attribute = "address",
+				attributeValue = "Dalian",
+				expectedValue = "100",
+				fieldName = "amount",
+				objectName = "PurchaseOrder");
 
-			AssertTextEquals(
-				key_label = "Address",
-				locator1 = "TextArea#ANY_LABELED",
-				value1 = "Dalian");
+			ObjectAdmin.assertObjectEntryFieldValueViaAPI(
+				attribute = "address",
+				attributeValue = "Dalian",
+				expectedValue = "Document_1.jpg",
+				fieldName = "customAttachmentFromComputer",
+				objectName = "PurchaseOrder",
+				type = "Attachment");
 
-			AssertTextEquals(
-				key_text = "Age",
-				locator1 = "TextInput#ANY",
-				value1 = "30");
+			ObjectAdmin.assertObjectEntryFieldValueViaAPI(
+				attribute = "address",
+				attributeValue = "Dalian",
+				expectedValue = "Document_2.jpg",
+				fieldName = "customAttachmentFromDM",
+				objectName = "PurchaseOrder",
+				type = "Attachment");
 
-			AssertTextEquals(
-				key_text = "Amount",
-				locator1 = "TextInput#ANY",
-				value1 = "100");
+			ObjectAdmin.assertObjectEntryFieldValueViaAPI(
+				attribute = "address",
+				attributeValue = "Dalian",
+				expectedValue = "true",
+				fieldName = "iAcceptTheTermsOfUseAndPrivacyPolicy",
+				objectName = "PurchaseOrder");
 
-			AssertVisible(
-				key_fieldLabel = "Custom Attachment From Computer",
-				key_text = "Document_1.jpg",
-				locator1 = "Button#ANY_WITH_LABEL");
+			ObjectAdmin.assertObjectEntryFieldValueViaAPI(
+				attribute = "address",
+				attributeValue = "Dalian",
+				expectedValue = "3000.0000000000000000",
+				fieldName = "price",
+				objectName = "PurchaseOrder");
 
-			AssertVisible(
-				key_fieldLabel = "Custom Attachment From DM",
-				key_text = "Document_2.jpg",
-				locator1 = "Button#ANY_WITH_LABEL");
+			var favoriteFoodPreferenceId = JSONObject.getObjectEntryId(
+				entryValue = "Fish",
+				fieldName = "foodPreferences",
+				objectName = "Preference");
 
-			AssertChecked.assertCheckedNotVisible(
-				checkboxName = "I accept the terms of use and Privacy Policy",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			ObjectAdmin.assertObjectEntryFieldValueViaAPI(
+				attribute = "address",
+				attributeValue = "Dalian",
+				expectedValue = "${favoriteFoodPreferenceId}",
+				fieldName = "r_favoriteFood_c_preferenceId",
+				objectName = "PurchaseOrder");
 
-			AssertTextEquals(
-				key_text = "Price",
-				locator1 = "TextInput#ANY",
-				value1 = "3000.0000000000000000");
+			ObjectAdmin.assertObjectEntryFieldValueViaAPI(
+				attribute = "address",
+				attributeValue = "Dalian",
+				expectedValue = "2020-08-08T00:00:00Z",
+				fieldName = "purchaseDate",
+				objectName = "PurchaseOrder");
 
-			AssertTextEquals(
-				key_text = "Favorite Food",
-				locator1 = "TextInput#ANY",
-				value1 = "Fish");
+			ObjectAdmin.assertObjectEntryFieldValueViaAPI(
+				attribute = "address",
+				attributeValue = "Dalian",
+				expectedValue = "China",
+				fieldName = "region",
+				objectName = "PurchaseOrder");
 
-			AssertTextEquals(
-				key_text = "Purchase Date",
-				locator1 = "TextInput#ANY",
-				value1 = "08/08/2020");
+			ObjectAdmin.assertObjectEntryFieldValueViaAPI(
+				attribute = "address",
+				attributeValue = "Dalian",
+				expectedValue = "3.0",
+				fieldName = "tax",
+				objectName = "PurchaseOrder");
 
-			AssertTextEquals(
-				key_text = "Region",
-				locator1 = "TextInput#ANY",
-				value1 = "China");
-
-			AssertTextEquals(
-				key_text = "Tax",
-				locator1 = "TextInput#ANY",
-				value1 = "3.0");
-
-			AssertTextEquals(
-				key_fieldFieldLabel = "Type",
-				locator1 = "DDMField#SELECT_FROM_LIST",
-				value1 = "First Class");
+			ObjectAdmin.assertObjectEntryFieldValueViaAPI(
+				attribute = "address",
+				attributeValue = "Dalian",
+				expectedValue = "First Class",
+				fieldName = "type",
+				objectName = "PurchaseOrder",
+				type = "Picklist");
 		}
 	}
 

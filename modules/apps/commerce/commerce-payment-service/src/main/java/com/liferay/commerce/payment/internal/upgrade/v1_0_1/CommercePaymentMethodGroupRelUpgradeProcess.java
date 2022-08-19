@@ -47,7 +47,7 @@ public class CommercePaymentMethodGroupRelUpgradeProcess
 			ResultSet resultSet = s.executeQuery(
 				"select CPaymentMethodGroupRelId, groupId from " +
 					"CommercePaymentMethodGroupRel");
-			PreparedStatement preparedStatement2 =
+			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update CommercePaymentMethodGroupRel set groupId = ? " +
@@ -62,14 +62,14 @@ public class CommercePaymentMethodGroupRelUpgradeProcess
 					continue;
 				}
 
-				preparedStatement2.setLong(1, commerceChannelGroupId);
-				preparedStatement2.setLong(
+				preparedStatement.setLong(1, commerceChannelGroupId);
+				preparedStatement.setLong(
 					2, resultSet.getLong("CPaymentMethodGroupRelId"));
 
-				preparedStatement2.addBatch();
+				preparedStatement.addBatch();
 			}
 
-			preparedStatement2.executeBatch();
+			preparedStatement.executeBatch();
 		}
 	}
 

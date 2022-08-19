@@ -47,7 +47,7 @@ public class CommerceNotificationTemplateGroupIdUpgradeProcess
 			ResultSet resultSet = s.executeQuery(
 				"select commerceNotificationTemplateId, groupId from " +
 					"CommerceNotificationTemplate");
-			PreparedStatement preparedStatement2 =
+			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update CommerceNotificationTemplate set groupId = ? " +
@@ -62,14 +62,14 @@ public class CommerceNotificationTemplateGroupIdUpgradeProcess
 					continue;
 				}
 
-				preparedStatement2.setLong(1, commerceChannelGroupId);
-				preparedStatement2.setLong(
+				preparedStatement.setLong(1, commerceChannelGroupId);
+				preparedStatement.setLong(
 					2, resultSet.getLong("commerceNotificationTemplateId"));
 
-				preparedStatement2.addBatch();
+				preparedStatement.addBatch();
 			}
 
-			preparedStatement2.executeBatch();
+			preparedStatement.executeBatch();
 		}
 	}
 

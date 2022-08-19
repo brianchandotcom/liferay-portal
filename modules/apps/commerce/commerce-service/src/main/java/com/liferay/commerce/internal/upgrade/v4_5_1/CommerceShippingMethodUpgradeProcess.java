@@ -45,7 +45,7 @@ public class CommerceShippingMethodUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = s.executeQuery(
 				"select commerceShippingMethodId, groupId from " +
 					"CommerceShippingMethod");
-			PreparedStatement preparedStatement2 =
+			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update CommerceShippingMethod set groupId = ? where " +
@@ -60,14 +60,14 @@ public class CommerceShippingMethodUpgradeProcess extends UpgradeProcess {
 					continue;
 				}
 
-				preparedStatement2.setLong(1, commerceChannelGroupId);
-				preparedStatement2.setLong(
+				preparedStatement.setLong(1, commerceChannelGroupId);
+				preparedStatement.setLong(
 					2, resultSet.getLong("commerceShippingMethodId"));
 
-				preparedStatement2.addBatch();
+				preparedStatement.addBatch();
 			}
 
-			preparedStatement2.executeBatch();
+			preparedStatement.executeBatch();
 		}
 	}
 

@@ -80,7 +80,7 @@
 					<strong>${htmlUtil.escape(name)}</strong>
 				</div>
 
-				<#assign cosunt = count + 1 />
+				<#assign count = count + 1 />
 
 				<#if count gte 3>
 					</div>

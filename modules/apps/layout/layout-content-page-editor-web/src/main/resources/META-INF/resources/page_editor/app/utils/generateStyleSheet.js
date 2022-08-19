@@ -56,7 +56,7 @@ const TOPPER_STYLES = [
 ];
 
 export default function generateStyleSheet(styles, {itemsWithTopper} = {}) {
-	let css = '';
+	let css = '.lfr-layout-structure-item-row { overflow: hidden; }';
 
 	Object.entries(styles).forEach(([itemId, {customCSS, styles}]) => {
 		let itemCSS = '';

@@ -317,10 +317,6 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 					title="activities"
 				>
 
-					<%
-					List<WorkflowLog> workflowLogs = workflowTaskDisplayContext.getWorkflowLogs(workflowTask);
-					%>
-
 					<%@ include file="/workflow_logs.jspf" %>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>

@@ -42,6 +42,10 @@ function normalizePortlets(portlets, portletIds) {
 }
 
 function normalizeCategories(categories, fragmentEntryLinks) {
+	if (!categories) {
+		return null;
+	}
+
 	return categories.map((category) => {
 		const portletIds = new Set(
 			fragmentEntryLinks.map(({portletId}) => portletId)
@@ -63,7 +67,7 @@ function normalizeCategories(categories, fragmentEntryLinks) {
 	});
 }
 
-export default function widgetsReducer(widgets = [], action) {
+export default function widgetsReducer(widgets = null, action) {
 	switch (action.type) {
 		case TOGGLE_WIDGET_HIGHLIGHTED: {
 			const {highlighted, highlightedPortlets, portletId} = action;

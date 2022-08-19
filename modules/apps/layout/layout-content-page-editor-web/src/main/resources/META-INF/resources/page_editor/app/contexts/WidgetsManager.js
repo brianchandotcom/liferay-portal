@@ -16,6 +16,7 @@ import {useEffect} from 'react';
 
 import updateWidgets from '../actions/updateWidgets';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
+import selectWidgetFragmentEntryLinks from '../selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../thunks/loadWidgets';
 import {useDispatch, useSelector, useSelectorRef} from './StoreContext';
 
@@ -37,25 +38,9 @@ export default function WidgetsManager() {
 			.join(',');
 	});
 
-	const fragmentEntryLinksRef = useSelectorRef((state) => {
-		const nextSegmentsExperienceId = selectSegmentsExperienceId(state);
-
-		return Object.values(state.fragmentEntryLinks).filter(
-			({portletId, removed, ...fragmentEntryLink}) =>
-				portletId &&
-				!removed &&
-				fragmentEntryLink.segmentsExperienceId ===
-					nextSegmentsExperienceId
-		);
-	});
-
-	useEffect(() => {
-		dispatch(
-			loadWidgets({
-				fragmentEntryLinks: fragmentEntryLinksRef.current,
-			})
-		);
-	}, [fragmentEntryLinksRef, dispatch]);
+	const fragmentEntryLinksRef = useSelectorRef(
+		selectWidgetFragmentEntryLinks
+	);
 
 	useEffect(() => {
 		dispatch(

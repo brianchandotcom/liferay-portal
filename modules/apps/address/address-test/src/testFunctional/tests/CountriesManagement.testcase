@@ -162,6 +162,108 @@ definition {
 		}
 	}
 
+	@description = "Can order countries by name in descending and ascending order"
+	@priority = "3"
+	test CanOrderByName {
+		task ("Given countries display in the Countries Management") {
+			CountriesManagement.openCountriesManagementPortlet();
+		}
+
+		task ("When a user orders by name and changes to descending order") {
+			ManagementBar.setFilterAndOrder(orderBy = "Name");
+
+			ManagementBar.toggleViewOrder(order = "up");
+		}
+
+		task ("Then the countries that start with Z display on first page") {
+			LexiconEntry.viewEntryName(rowEntry = "Zimbabwe");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Afghanistan");
+		}
+
+		task ("When a user switches the order") {
+			ManagementBar.toggleViewOrder(order = "down");
+		}
+
+		task ("Then the countries that start with A display on first page") {
+			LexiconEntry.viewEntryName(rowEntry = "Afghanistan");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Zimbabwe");
+		}
+	}
+
+	@description = "Can order countries by name in descending and ascending order"
+	@priority = "3"
+	test CanOrderByPriority {
+		task ("Given a country is added with a priority higher than 0.0") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.addCountry(
+				countryName = "ZZ Test",
+				countryNumber = "01",
+				countryPosition = "5.0",
+				threeLetterISOCode = "ZZZ",
+				twoLetterISOCode = "ZZ");
+		}
+
+		task ("When a user orders by priority and changes to descending order") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			ManagementBar.setFilterAndOrder(orderBy = "Name");
+
+			ManagementBar.toggleViewOrder(order = "up");
+		}
+
+		task ("Then the country with highest priority display on first page") {
+			LexiconEntry.viewEntryName(rowEntry = "ZZ Test");
+		}
+
+		task ("When a user switches the order") {
+			ManagementBar.toggleViewOrder(order = "down");
+		}
+
+		task ("Then the countries with lowest priority display on first page") {
+			LexiconEntry.viewNoEntry(rowEntry = "ZZ Test");
+
+			LexiconEntry.viewEntryName(rowEntry = "Afghanistan");
+		}
+	}
+
+	@description = "Changing the filter to Active will not display countries in Inactive status"
+	@priority = "3"
+	test FilterByActiveWillNotDisplayInactiveCountries {
+		task ("Given an inactive country") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.addCountry(
+				countryName = "AAA Test",
+				countryNumber = "01",
+				countryStatus = "Inactive",
+				threeLetterISOCode = "AAA",
+				twoLetterISOCode = "AA");
+		}
+
+		task ("When a user changes filter to Active") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			ManagementBar.setFilterAndOrder(filterBy = "Active");
+		}
+
+		task ("Then the inactive country will not display") {
+			LexiconEntry.viewNoEntry(rowEntry = "AAA Test");
+		}
+
+		task ("When a user searches for the inactive country in the Active filter") {
+			Search.searchCP(searchTerm = "AAA Test");
+		}
+
+		task ("Then the results will not show the inactive country") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "There are no active countries.");
+		}
+	}
+
 	@description = "This test changes pagination and assert countries display properly."
 	@priority = "3"
 	test PaginationWorksInCountries {

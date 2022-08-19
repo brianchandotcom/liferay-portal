@@ -215,7 +215,7 @@ definition {
 
 		PortletEntry.inputName(name = "${pageName}");
 
-		Button.clickAdd();
+		Button.click(button = "Add");
 
 		SelectFrame.selectFrameTop();
 

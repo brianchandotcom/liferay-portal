@@ -15088,6 +15088,61 @@ url=${short.hostname}:8080</echo>
 		</if>
 	</target>
 
+	<target name="start-docker-database-mysql">
+		<if>
+			<not>
+				<isset property="database.version" />
+			</not>
+			<then>
+				<var name="database.version" value="8.0" />
+			</then>
+		</if>
+
+		<get-database-property property.name="database.host" />
+
+		<antcall target="stop-docker-database">
+			<param name="database.mysql.host" value="${database.host}_mysql" />
+			<param name="database.type" value="mysql" />
+		</antcall>
+
+		<antcall inheritAll="false" target="start-docker-database">
+			<param name="database.mysql.docker.image" value="mysql:${database.version}" />
+			<param name="database.mysql.docker.run.options" value="--env=MYSQL_ALLOW_EMPTY_PASSWORD=yes -p 3307:3306" />
+			<param name="database.mysql.host" value="${database.host}_mysql" />
+			<param name="database.mysql.name" value="MySQL" />
+			<param name="database.mysql.version" value="${database.version}" />
+			<param name="database.type" value="mysql" />
+		</antcall>
+
+		<if>
+			<not>
+				<isset property="skip.prepare.portal.ext.properties" />
+			</not>
+			<then>
+				<antcall inheritAll="false" target="prepare-portal-ext-properties">
+					<param name="database.mysql.schema" value="lportal" />
+					<param name="database.mysql.url" value="jdbc:mysql://${database.host}:3307/${database.mysql.schema}?characterEncoding=UTF-8&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true&amp;serverTimezone=GMT&amp;useFastDateParsing=false&amp;useUnicode=true" />
+					<param name="database.type" value="mysql" />
+				</antcall>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset property="skip.rebuild.database" />
+			</not>
+			<then>
+				<antcall target="rebuild-database">
+					<param name="database.mysql.docker.image" value="mysql:${database.version}" />
+					<param name="database.mysql.host" value="${database.host}_mysql" />
+					<param name="database.type" value="mysql" />
+					<param name="sql.dir" value="sql/create-bare/" />
+					<param name="sql.file" value="create-bare-mysql.sql" />
+				</antcall>
+			</then>
+		</if>
+	</target>
+
 	<target name="start-docker-database-postgresql">
 		<if>
 			<not>

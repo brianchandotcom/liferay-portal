@@ -62,7 +62,9 @@ import java.io.InputStream;
 import java.net.IDN;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -492,10 +494,18 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			TreeMap<String, String> virtualHostnames)
 		throws PortalException {
 
-		for (String curVirtualHostname : virtualHostnames.keySet()) {
+		Set<String> keySet = new HashSet<>(virtualHostnames.keySet());
+
+		for (String curVirtualHostname : keySet) {
 			if (!Validator.isDomain(curVirtualHostname)) {
 				throw new LayoutSetVirtualHostException(
 					"Invalid host name {" + curVirtualHostname + "}");
+			}
+
+			if (!StringUtil.isLowerCase(curVirtualHostname)) {
+				virtualHostnames.putIfAbsent(
+					StringUtil.toLowerCase(curVirtualHostname),
+					virtualHostnames.remove(curVirtualHostname));
 			}
 		}
 

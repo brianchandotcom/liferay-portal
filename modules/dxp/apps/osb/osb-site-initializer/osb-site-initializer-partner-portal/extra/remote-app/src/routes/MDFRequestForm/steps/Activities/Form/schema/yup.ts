@@ -220,12 +220,22 @@ const activitiesSchema = object({
 				),
 				r_tacticToActivities_c_tacticId: string().required('Required'),
 				startDate: date()
-					.test('Year test', 'cannot be today', (value) => {
+					.test('Year test', 'Cannot be today', (value) => {
 						const currentTime = dayjs();
-						const chosenDate = dayjs(value);
+						const startDate = dayjs(value);
 
-						return currentTime.diff(chosenDate) <= 0;
+						return currentTime.diff(startDate) <= 0;
 					})
+					.test(
+						'Year test',
+						'The start date cannot be greater than the end date',
+						(value, testContext) => {
+							const startDate = dayjs(value);
+							const endDate = dayjs(testContext.parent.endDate);
+
+							return startDate.diff(endDate, 'day') <= 0;
+						}
+					)
 					.required('Required'),
 				endDate: date()
 					.test(

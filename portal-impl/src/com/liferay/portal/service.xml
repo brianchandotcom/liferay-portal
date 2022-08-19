@@ -438,9 +438,9 @@
 			<finder-column name="companyId" />
 			<finder-column name="parentGroupId" />
 		</finder>
-		<finder name="C_GK" return-type="Group" unique="true">
+		<finder name="C_GK" return-type="Collection" unique="true">
 			<finder-column name="companyId" />
-			<finder-column name="groupKey" />
+			<finder-column arrayable-operator="OR" name="groupKey" />
 		</finder>
 		<finder name="C_F" return-type="Group" unique="true">
 			<finder-column name="companyId" />

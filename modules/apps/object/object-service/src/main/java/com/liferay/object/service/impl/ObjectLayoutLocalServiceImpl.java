@@ -14,7 +14,6 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.exception.DefaultObjectLayoutException;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
@@ -43,7 +42,9 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -560,6 +561,9 @@ public class ObjectLayoutLocalServiceImpl
 
 		int countObjectLayoutBoxCategorizationType = 0;
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+
 		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
 			List<ObjectLayoutBox> objectLayoutBoxes =
 				objectLayoutTab.getObjectLayoutBoxes();
@@ -572,7 +576,29 @@ public class ObjectLayoutLocalServiceImpl
 
 				if (StringUtil.equals(
 						objectLayoutBox.getType(),
+						ObjectLayoutBoxConstants.TYPE_REGULAR)) {
+
+					continue;
+				}
+
+				if (StringUtil.equals(
+						objectLayoutBox.getType(),
 						ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)) {
+
+					if (GetterUtil.getBoolean(
+							PropsUtil.get("feature.flag.LPS-158672")) &&
+						!objectDefinition.isEnableCategorization()) {
+
+						throw new ObjectLayoutBoxCategorizationTypeException(
+							"Categorization layout box must be enabled to be " +
+								"used");
+					}
+
+					if (!objectDefinition.isDefaultStorageType()) {
+						throw new ObjectLayoutBoxCategorizationTypeException(
+							"Categorization layout box only can be used in " +
+								"object definitions with default storage type");
+					}
 
 					countObjectLayoutBoxCategorizationType++;
 
@@ -591,19 +617,6 @@ public class ObjectLayoutLocalServiceImpl
 					}
 				}
 			}
-		}
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
-
-		if ((countObjectLayoutBoxCategorizationType == 1) &&
-			!StringUtil.equals(
-				objectDefinition.getStorageType(),
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
-
-			throw new ObjectLayoutBoxCategorizationTypeException(
-				"Categorization layout box only can be used in object " +
-					"definitions with default storage type");
 		}
 	}
 

@@ -19,6 +19,8 @@ import {
 	Select,
 } from '../../../../../../../../../../../common/components';
 import Layout from '../../../../../../../../../../../common/containers/setup-forms/Layout';
+import useBannedDomains from '../../../../../../../../../../../common/hooks/useBannedDomains';
+import {isValidEmail} from '../../../../../../../../../../../common/utils/validations.form';
 import getInitialLxcAdmins from '../../utils/getInitialLxcAdmins';
 import AdminInputs from './components/AdminsInput';
 import useGetPrimaryRegionList from './hooks/useGetPrimaryRegionList';
@@ -38,6 +40,10 @@ const SetupLiferayExperienceCloudPage = ({
 	values,
 }) => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
+	const bannedDomains = useBannedDomains(
+		values?.lxc?.incidentManagementEmail,
+		500
+	);
 
 	const primaryRegionList = useGetPrimaryRegionList();
 
@@ -186,6 +192,10 @@ const SetupLiferayExperienceCloudPage = ({
 								name="lxc.incidentManagementEmail"
 								required
 								type="text"
+								validations={[
+									(value) =>
+										isValidEmail(value, bannedDomains),
+								]}
 							/>
 						</ClayForm.Group>
 					</>

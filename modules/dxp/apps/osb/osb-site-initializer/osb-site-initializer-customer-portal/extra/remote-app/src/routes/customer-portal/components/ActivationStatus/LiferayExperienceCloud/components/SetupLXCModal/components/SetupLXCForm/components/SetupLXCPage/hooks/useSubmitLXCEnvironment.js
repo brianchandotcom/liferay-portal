@@ -75,7 +75,7 @@ export default function useSubmitLXCEnvironment(
 						incidentManagementEmailAddress:
 							lxcActivationFields.incidentManagementEmail,
 						incidentManagementFullName:
-							lxcActivationFields.incidentManagementfullName,
+							lxcActivationFields.incidentManagementFullName,
 						primaryRegion: lxcActivationFields.primaryRegion,
 						projectId: lxcActivationFields.projectId,
 					},

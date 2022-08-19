@@ -80,15 +80,15 @@ public class DocumentLibraryTypeContentUpgradeProcess extends UpgradeProcess {
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select content, id_ from JournalArticle where content like " +
 					"'%type=\"document_library\"%'");
-			ResultSet resultSet1 = preparedStatement1.executeQuery();
+			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update JournalArticle set content = ? where id_ = ?")) {
 
-			while (resultSet1.next()) {
-				String content = resultSet1.getString(1);
-				long id = resultSet1.getLong(2);
+			while (resultSet.next()) {
+				String content = resultSet.getString(1);
+				long id = resultSet.getLong(2);
 
 				preparedStatement2.setString(1, _convertContent(content));
 

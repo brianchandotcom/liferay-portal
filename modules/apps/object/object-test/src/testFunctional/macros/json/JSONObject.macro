@@ -543,6 +543,34 @@ definition {
 		return "${objectDefinitionId}";
 	}
 
+	macro getObjectEntryFieldValue {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var objectName = StringUtil.toLowerCase("${objectName}");
+
+		var curl = '''
+			${portalURL}/o/c/${objectName}s \
+			-u ${userEmailAddress}:${userPassword}
+		''';
+
+		if (("${type}" == "Attachment") || ("${type}" == "Picklist")) {
+			var fieldValue = JSONCurlUtil.get("${curl}", "$.items[?(@['${attribute}'] == '${attributeValue}')]['${fieldName}'].name");
+		}
+		else {
+			var fieldValue = JSONCurlUtil.get("${curl}", "$.items[?(@['${attribute}'] == '${attributeValue}')]['${fieldName}']");
+		}
+
+		return "${fieldValue}";
+	}
+
 	macro getObjectEntryId {
 		var portalURL = JSONCompany.getPortalURL();
 

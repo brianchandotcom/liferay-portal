@@ -54,20 +54,17 @@ public class CommerceNotificationTemplateGroupIdUpgradeProcess
 						"where commerceNotificationTemplateId = ?")) {
 
 			while (resultSet.next()) {
-				long groupId = resultSet.getLong("groupId");
-
 				long commerceChannelGroupId =
-					_getCommerceChannelGroupIdBySiteGroupId(groupId);
+					_getCommerceChannelGroupIdBySiteGroupId(
+						resultSet.getLong("groupId"));
 
 				if (commerceChannelGroupId == 0) {
 					continue;
 				}
 
-				long commerceNotificationTemplateId = resultSet.getLong(
-					"commerceNotificationTemplateId");
-
 				preparedStatement2.setLong(1, commerceChannelGroupId);
-				preparedStatement2.setLong(2, commerceNotificationTemplateId);
+				preparedStatement2.setLong(
+					2, resultSet.getLong("commerceNotificationTemplateId"));
 
 				preparedStatement2.addBatch();
 			}

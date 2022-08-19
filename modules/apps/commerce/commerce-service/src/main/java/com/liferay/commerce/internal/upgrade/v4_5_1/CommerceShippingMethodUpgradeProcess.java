@@ -52,20 +52,17 @@ public class CommerceShippingMethodUpgradeProcess extends UpgradeProcess {
 						"commerceShippingMethodId = ?")) {
 
 			while (resultSet.next()) {
-				long groupId = resultSet.getLong("groupId");
-
 				long commerceChannelGroupId =
-					_getCommerceChannelGroupIdBySiteGroupId(groupId);
+					_getCommerceChannelGroupIdBySiteGroupId(
+						resultSet.getLong("groupId"));
 
 				if (commerceChannelGroupId == 0) {
 					continue;
 				}
 
-				long commerceShippingMethodId = resultSet.getLong(
-					"commerceShippingMethodId");
-
 				preparedStatement2.setLong(1, commerceChannelGroupId);
-				preparedStatement2.setLong(2, commerceShippingMethodId);
+				preparedStatement2.setLong(
+					2, resultSet.getLong("commerceShippingMethodId"));
 
 				preparedStatement2.addBatch();
 			}

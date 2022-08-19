@@ -54,20 +54,17 @@ public class CommercePaymentMethodGroupRelUpgradeProcess
 						"where CPaymentMethodGroupRelId = ?")) {
 
 			while (resultSet.next()) {
-				long groupId = resultSet.getLong("groupId");
-
 				long commerceChannelGroupId =
-					_getCommerceChannelGroupIdBySiteGroupId(groupId);
+					_getCommerceChannelGroupIdBySiteGroupId(
+						resultSet.getLong("groupId"));
 
 				if (commerceChannelGroupId == 0) {
 					continue;
 				}
 
-				long cPaymentMethodGroupRelId = resultSet.getLong(
-					"CPaymentMethodGroupRelId");
-
 				preparedStatement2.setLong(1, commerceChannelGroupId);
-				preparedStatement2.setLong(2, cPaymentMethodGroupRelId);
+				preparedStatement2.setLong(
+					2, resultSet.getLong("CPaymentMethodGroupRelId"));
 
 				preparedStatement2.addBatch();
 			}

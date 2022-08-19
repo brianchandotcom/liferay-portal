@@ -96,6 +96,7 @@ const CoverageInfoForm = () => {
 			},
 			type: ACTIONS.SET_COVERAGE_FORM,
 		});
+		dispatch({payload: true, type: ACTIONS.SET_HAS_FORM_CHANGE});
 	};
 
 	const [hasError, setHasError] = useState(hasRequiredError);
@@ -275,6 +276,7 @@ const CoverageInfoForm = () => {
 									collisionValue === 'CHOOSE AN OPTION'
 										? ''
 										: collisionValue;
+
 								setHasError({
 									...hasError,
 									collision:

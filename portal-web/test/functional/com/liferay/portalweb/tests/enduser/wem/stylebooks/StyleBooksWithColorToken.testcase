@@ -212,7 +212,7 @@ definition {
 				locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_COLLAPSED");
 		}
 
-		task ("Change the Brand Color 2 to an invalid color token") {
+		task ("Refer the Brand Color 1 to Brand Color 2 then refer the Branch Color 2 to Branch Color 1") {
 			Type(
 				key_text = "Brand Color 1",
 				locator1 = "TextInput#ANY",
@@ -235,7 +235,7 @@ definition {
 			StyleBooks.clickPublish(publishing = "Continue");
 		}
 
-		task ("View the Brand Color 1 is the #0B5FFF") {
+		task ("View the Brand Color 2 is the #6B6C7E") {
 			StyleBooksAdmin.gotoStyleBookEllipsisItem(
 				item = "Edit",
 				styleBookName = "Test Style Book Name");
@@ -243,6 +243,11 @@ definition {
 			InputField.viewText(
 				fieldLabel = "Brand Color 2",
 				text = "#6B6C7E");
+
+			AssertElementPresent(
+				key_fieldLabel = "Brand Color 1",
+				key_text = "Brand Color 2",
+				locator1 = "Button#ANY_WITH_LABEL");
 		}
 	}
 

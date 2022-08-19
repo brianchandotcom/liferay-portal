@@ -97,7 +97,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 			<ul class="end navbar-nav">
 				<li class="nav-item">
-					<liferay-frontend:management-bar-sidenav-toggler-button
+					<liferay-frontend:sidebar-toggler-button
 						cssClass="btn-secondary"
 						icon="info-circle"
 						label="info"

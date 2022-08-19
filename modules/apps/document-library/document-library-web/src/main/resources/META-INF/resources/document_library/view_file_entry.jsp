@@ -98,7 +98,7 @@ if (portletTitleBasedNavigation) {
 
 			<c:if test="<%= !portletTitleBasedNavigation %>">
 				<div class="file-entry-actions">
-					<liferay-frontend:management-bar-sidenav-toggler-button
+					<liferay-frontend:sidebar-toggler-button
 						label="info"
 						sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId_" + fileEntry.getFileEntryId() %>'
 					/>

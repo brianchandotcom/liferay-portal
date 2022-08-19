@@ -60,7 +60,7 @@ if (portletTitleBasedNavigation) {
 					<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
 				</li>
 				<li class="nav-item">
-					<liferay-frontend:management-bar-sidenav-toggler-button
+					<liferay-frontend:sidebar-toggler-button
 						cssClass="btn-unstyled"
 						icon="info-circle-open"
 						label="info"

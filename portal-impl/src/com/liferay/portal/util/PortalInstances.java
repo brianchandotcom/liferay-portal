@@ -505,62 +505,7 @@ public class PortalInstances {
 			CompanyThreadLocal.setCompanyId(virtualHost.getCompanyId());
 
 			if (virtualHost.getLayoutSetId() != 0) {
-				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-					virtualHost.getLayoutSetId());
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Company ", virtualHost.getCompanyId(),
-							" is associated with layout set ",
-							virtualHost.getLayoutSetId()));
-				}
-
-				httpServletRequest.setAttribute(
-					WebKeys.VIRTUAL_HOST_LAYOUT_SET, layoutSet);
-
-				// Virtual host default locale
-
-				String languageId = virtualHost.getLanguageId();
-
-				if (Validator.isNotNull(languageId) &&
-					LanguageUtil.isAvailableLocale(
-						layoutSet.getGroupId(), languageId)) {
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"Virtual host ", virtualHost.getHostname(),
-								" has default language ", languageId));
-					}
-
-					httpServletRequest.setAttribute(
-						WebKeys.I18N_LANGUAGE_ID, languageId);
-				}
-
-				HttpSession httpSession = httpServletRequest.getSession(false);
-
-				if (httpSession != null) {
-					Locale locale = (Locale)httpSession.getAttribute(
-						WebKeys.LOCALE);
-
-					if (locale != null) {
-						languageId = LanguageUtil.getLanguageId(locale);
-
-						if (Validator.isNotNull(languageId) &&
-							LanguageUtil.isAvailableLocale(languageId)) {
-
-							if (_log.isDebugEnabled()) {
-								_log.debug(
-									"Session has updated language " +
-										languageId);
-							}
-
-							httpServletRequest.setAttribute(
-								WebKeys.I18N_LANGUAGE_ID, languageId);
-						}
-					}
-				}
+				_setAttributes(virtualHost, httpServletRequest);
 			}
 
 			return virtualHost.getCompanyId();
@@ -612,6 +557,66 @@ public class PortalInstances {
 		}
 
 		return false;
+	}
+
+	private static void _setAttributes(
+			VirtualHost virtualHost, HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			virtualHost.getLayoutSetId());
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Company ", virtualHost.getCompanyId(),
+					" is associated with layout set ",
+					virtualHost.getLayoutSetId()));
+		}
+
+		httpServletRequest.setAttribute(
+			WebKeys.VIRTUAL_HOST_LAYOUT_SET, layoutSet);
+
+		// Virtual host default locale
+
+		String languageId = virtualHost.getLanguageId();
+
+		if (Validator.isNotNull(languageId) &&
+			LanguageUtil.isAvailableLocale(
+				layoutSet.getGroupId(), languageId)) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Virtual host ", virtualHost.getHostname(),
+						" has default language ", languageId));
+			}
+
+			httpServletRequest.setAttribute(
+				WebKeys.I18N_LANGUAGE_ID, languageId);
+		}
+
+		HttpSession httpSession = httpServletRequest.getSession(false);
+
+		if (httpSession != null) {
+			Locale locale = (Locale)httpSession.getAttribute(WebKeys.LOCALE);
+
+			if (locale != null) {
+				languageId = LanguageUtil.getLanguageId(locale);
+
+				if (Validator.isNotNull(languageId) &&
+					LanguageUtil.isAvailableLocale(languageId)) {
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Session has updated language " + languageId);
+					}
+
+					httpServletRequest.setAttribute(
+						WebKeys.I18N_LANGUAGE_ID, languageId);
+				}
+			}
+		}
 	}
 
 	private PortalInstances() {

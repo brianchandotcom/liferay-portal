@@ -74,7 +74,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -168,9 +167,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(allInfoFields)
 						).build(),
-						_editPageInfoItemCapability);
-			PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-157738", true)) {
+						_editPageInfoItemCapability)) {
 
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
@@ -223,9 +220,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(_INFO_FIELDS)
 						).build(),
-						_editPageInfoItemCapability);
-			PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-157738", true)) {
+						_editPageInfoItemCapability)) {
 
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
@@ -263,53 +258,6 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	}
 
 	@Test
-	public void testUpdateFormItemConfigMVCActionCommandMappingFormFFDisabled()
-		throws Exception {
-
-		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
-				new ComponentEnablerTemporarySwapper(
-					_BUNDLE_SYMBOLIC_NAME, _COMPONENT_CLASS_NAME, true);
-			MockInfoServiceRegistrationHolder
-				mockInfoServiceRegistrationHolder =
-					new MockInfoServiceRegistrationHolder(
-						InfoFieldSet.builder(
-						).infoFieldSetEntries(
-							ListUtil.fromArray(_INFO_FIELDS)
-						).build(),
-						_editPageInfoItemCapability);
-			PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-157738", false)) {
-
-			JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
-				_layout, "{}", LayoutDataItemTypeConstants.TYPE_FORM,
-				_segmentsExperienceId);
-
-			long classNameId = _portal.getClassNameId(
-				MockObject.class.getName());
-
-			String formItemId = jsonObject.getString("addedItemId");
-
-			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
-				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
-				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				_getMockLiferayPortletActionRequest(
-					JSONUtil.put(
-						"classNameId", classNameId
-					).put(
-						"classTypeId", "0"
-					).toString(),
-					formItemId, _layout),
-				new MockLiferayPortletActionResponse());
-
-			_assertUpdateFormStyledLayoutStructureItemConfigJSONObject(
-				updateFormJSONObject, 0, StringPool.BLANK, StringPool.BLANK, 0);
-
-			_assertFormStyledLayoutStructureItem(
-				classNameId, 0, formItemId, new InfoField<?>[0], true, false);
-		}
-	}
-
-	@Test
 	public void testUpdateFormItemConfigMVCActionCommandMappingFormFFEnabled()
 		throws Exception {
 
@@ -323,9 +271,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(_INFO_FIELDS)
 						).build(),
-						_editPageInfoItemCapability);
-			PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-157738", true)) {
+						_editPageInfoItemCapability)) {
 
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
@@ -412,9 +358,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(allInfoFields)
 						).build(),
-						_editPageInfoItemCapability);
-			PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-157738", true)) {
+						_editPageInfoItemCapability)) {
 
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
@@ -472,9 +416,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(_INFO_FIELDS)
 						).build(),
-						_editPageInfoItemCapability);
-			PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-157738", false)) {
+						_editPageInfoItemCapability)) {
 
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());
@@ -528,9 +470,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(_INFO_FIELDS)
 						).build(),
-						_editPageInfoItemCapability);
-			PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-157738", true)) {
+						_editPageInfoItemCapability)) {
 
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());

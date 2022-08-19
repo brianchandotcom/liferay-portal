@@ -733,23 +733,21 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public void checkSystemGroups(long companyId) throws PortalException {
 		String companyIdHexString = StringUtil.toHexString(companyId);
 
-		for (Group group : groupFinder.findBySystem(companyId)) {
+		String[] systemGroups = PortalUtil.getSystemGroups();
+
+		for (Group group :
+				groupPersistence.findByC_GK(companyId, systemGroups)) {
+
 			_systemGroupsMap.put(
 				companyIdHexString.concat(group.getGroupKey()), group);
 		}
 
 		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
-		String[] systemGroups = PortalUtil.getSystemGroups();
-
 		for (String groupKey : systemGroups) {
 			String groupCacheKey = companyIdHexString.concat(groupKey);
 
 			Group group = _systemGroupsMap.get(groupCacheKey);
-
-			if (group == null) {
-				group = groupPersistence.fetchByC_GK(companyId, groupKey);
-			}
 
 			if (group == null) {
 				String className = null;

@@ -120,8 +120,23 @@
 <!--DEFAULT_ACCOUNT_TERMS_AND_CONDITION-->
 
 <tr>
-	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_ENTRY</td>
-	<td>//a[@data-type='delivery-terms']/../../preceding-sibling::h4</td>
+	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_ENTRY_DETAILS</td>
+	<td>//div[contains(@id,'${key_termType}')]//div[contains(@class,'dnd-tr')]["${key_row}"]//div[contains(.,'${key_entryDetails}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DROPDOWN</td>
+	<td>//div[contains(@id,'${key_termType}')]//div[contains(@class,'dnd-tr')]//div[contains(.,'${key_entryDetails}')]/..//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DROPDOWN_REMOVE</td>
+	<td>//div[contains(@class,'dropdown-menu show')]/ul//li/a[(normalize-space(text())='Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_EMPTY_SEARCH_CONTAINER</td>
+	<td>//div[contains(@id,'${key_termType}')]//div[contains(@class,'empty-state-text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -132,11 +147,6 @@
 <tr>
 	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_USE_PRIORITY_SETTINGS</td>
 	<td>//a[@data-type='delivery-terms']/../../preceding-sibling::span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DELIVERY_TEXT</td>
-	<td>//a[@data-type='delivery-terms']/../../preceding-sibling::div[normalize-space(text())='Delivery']</td>
 	<td></td>
 </tr>
 <tr>
@@ -155,18 +165,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_HEADING</td>
-	<td>//div[contains(@class,'section')]//span[normalize-space(text())='Default Account Terms and Conditions']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PAYMENT_TEXT</td>
 	<td>//a[@data-type='payment-terms']/../../preceding-sibling::div[normalize-space(text())='Payment']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_REMOVE_DEFAULT_DELIVERY</td>
-	<td>//a[@data-type='delivery-terms']/..//following-sibling::span//span[normalize-space(text())='Remove']</td>
+	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PLUS</td>
+	<td>//div[contains(@id,'${key_termType}')]//*[*[name()='svg'][contains(@class,'icon-plus')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_HEADING</td>
+	<td>//div[contains(@class,'section')]//span[normalize-space(text())='${key_termType} Terms and Conditions']</td>
 	<td></td>
 </tr>
 <tr>

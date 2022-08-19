@@ -162,4 +162,42 @@ definition {
 		}
 	}
 
+	@description = "This test changes pagination and assert countries display properly."
+	@priority = "3"
+	test PaginationWorksInCountries {
+		task ("Given 20 is the default pagination set") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			Pagination.viewResults(results = "Showing 1 to 20 of 247 entries.");
+		}
+
+		task ("When pagination is changed to 4") {
+			Pagination.changePagination(itemsPerPage = "4");
+		}
+
+		task ("Then only 4 entries display") {
+			for (var countryName : list "Afghanistan,Aland Islands,Albania,Algeria") {
+				LexiconEntry.viewEntryName(rowEntry = "${countryName}");
+			}
+
+			LexiconEntry.viewNoEntry(rowEntry = "American Samoa");
+
+			Pagination.viewResults(results = "Showing 1 to 4 of 247 entries.");
+		}
+
+		task ("When pagination is changed to 8") {
+			Pagination.changePagination(itemsPerPage = "8");
+		}
+
+		task ("Then 8 entries display") {
+			for (var countryName : list "Afghanistan,Aland Islands,Albania,Algeria,American Samoa,Andorra,Angola,Anguilla") {
+				LexiconEntry.viewEntryName(rowEntry = "${countryName}");
+			}
+
+			LexiconEntry.viewNoEntry(rowEntry = "Antarctica");
+
+			Pagination.viewResults(results = "Showing 1 to 8 of 247 entries.");
+		}
+	}
+
 }

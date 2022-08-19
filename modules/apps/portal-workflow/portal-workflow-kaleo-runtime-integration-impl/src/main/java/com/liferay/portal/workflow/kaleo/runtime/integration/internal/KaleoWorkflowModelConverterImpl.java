@@ -308,7 +308,7 @@ public class KaleoWorkflowModelConverterImpl
 		defaultWorkflowLog.setComment(kaleoLog.getComment());
 		defaultWorkflowLog.setCreateDate(kaleoLog.getCreateDate());
 		defaultWorkflowLog.setPreviousState(
-			kaleoLog.getPreviousKaleoNodeName());
+			_getState(kaleoLog.getPreviousKaleoNodeId()));
 
 		long previousAssigneeClassPK = kaleoLog.getPreviousAssigneeClassPK();
 
@@ -338,7 +338,7 @@ public class KaleoWorkflowModelConverterImpl
 			}
 		}
 
-		defaultWorkflowLog.setState(kaleoLog.getKaleoNodeName());
+		defaultWorkflowLog.setState(_getState(kaleoLog.getKaleoClassPK()));
 		defaultWorkflowLog.setType(KaleoLogUtil.convert(kaleoLog.getType()));
 		defaultWorkflowLog.setWorkflowLogId(kaleoLog.getKaleoLogId());
 		defaultWorkflowLog.setWorkflowTaskId(
@@ -415,6 +415,30 @@ public class KaleoWorkflowModelConverterImpl
 		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
 
 		return versionParts[0];
+	}
+
+	private String _getState(long kaleoNodeId) {
+		if (kaleoNodeId == 0) {
+			return null;
+		}
+
+		try {
+			KaleoNode kaleoNode = _kaleoNodeLocalService.getKaleoNode(
+				kaleoNodeId);
+
+			if (Validator.isNotNull(kaleoNode.getLabel())) {
+				return kaleoNode.getLabel();
+			}
+
+			return kaleoNode.getName();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
 	}
 
 	private List<WorkflowNode> _getWorkflowNodes(

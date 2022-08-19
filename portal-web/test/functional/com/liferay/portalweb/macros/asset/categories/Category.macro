@@ -534,9 +534,7 @@ definition {
 
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
-		AssertTextEquals(
-			locator1 = "Categories#VOCABULARY_CATEGORY",
-			value1 = "${categoryName}");
+		LexiconTable.viewTableEntryTitle(tableEntry = "${categoryName}");
 	}
 
 	macro viewFilterViaCategoriesNavigationPG {

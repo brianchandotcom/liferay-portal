@@ -1,0 +1,39 @@
+@component-name = "portal-service-builder"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Service Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test Smoke {
+		property osgi.modules.includes.jdk11 = "portal-tools-service-builder-test-api";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ServiceBuilderJDK11#Smoke";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		GogoShell.executeCommand(commandName = "headers com.liferay.portal.tools.service.builder.test.api");
+
+		GogoShell.viewOutput(outputContent = "Created-By = 11.");
+	}
+
+}

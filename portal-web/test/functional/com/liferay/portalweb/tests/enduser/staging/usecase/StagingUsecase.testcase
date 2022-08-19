@@ -88,7 +88,7 @@ definition {
 				pageName = "Staging Test Page",
 				siteName = "Site Name");
 
-			AssetPublisherPortlet.configureSiteScopeRemoveSitePG(
+			AssetPublisherPortlet.configureShowMetadataFieldsPG(
 				addMetadata = "true",
 				metadataFieldList = "Priority",
 				portletName = "Asset Publisher");
@@ -106,7 +106,7 @@ definition {
 				pageName = "Second Test Page",
 				siteName = "Site Name");
 
-			AssetPublisherPortlet.configureSiteScopeRemoveSitePG(
+			AssetPublisherPortlet.configureShowMetadataFieldsPG(
 				addMetadata = "true",
 				metadataFieldList = "Priority",
 				portletName = "Asset Publisher");

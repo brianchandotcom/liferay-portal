@@ -433,6 +433,18 @@ export default function FormBuilder() {
 			addObjectFields(dispatch);
 		}
 
+		return () => {
+			const alerts = document.querySelector(
+				'.ddm-form-web__exception-container'
+			);
+
+			if (sidebarOpen && alerts) {
+				alerts.className = classNames(
+					'ddm-form-web__exception-container'
+				);
+			}
+		};
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

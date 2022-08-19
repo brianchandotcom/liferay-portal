@@ -287,6 +287,15 @@ public class GroupPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_GKArrayable() throws Exception {
+		_persistence.countByC_GK(
+			RandomTestUtil.nextLong(),
+			new String[] {
+				RandomTestUtil.randomString(), "", "null", null, null
+			});
+	}
+
+	@Test
 	public void testCountByC_F() throws Exception {
 		_persistence.countByC_F(RandomTestUtil.nextLong(), "");
 

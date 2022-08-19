@@ -3336,8 +3336,236 @@ public class GroupPersistenceImpl
 	private static final String _FINDER_COLUMN_C_P_PARENTGROUPID_2 =
 		"group_.parentGroupId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByC_GK;
+	private FinderPath _finderPathWithoutPaginationFindByC_GK;
 	private FinderPath _finderPathFetchByC_GK;
 	private FinderPath _finderPathCountByC_GK;
+	private FinderPath _finderPathWithPaginationCountByC_GK;
+
+	/**
+	 * Returns all the groups where companyId = &#63; and groupKey = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param groupKeys the group keys
+	 * @return the matching groups
+	 */
+	@Override
+	public List<Group> findByC_GK(long companyId, String[] groupKeys) {
+		return findByC_GK(
+			companyId, groupKeys, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the groups where companyId = &#63; and groupKey = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param groupKeys the group keys
+	 * @param start the lower bound of the range of groups
+	 * @param end the upper bound of the range of groups (not inclusive)
+	 * @return the range of matching groups
+	 */
+	@Override
+	public List<Group> findByC_GK(
+		long companyId, String[] groupKeys, int start, int end) {
+
+		return findByC_GK(companyId, groupKeys, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the groups where companyId = &#63; and groupKey = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param groupKeys the group keys
+	 * @param start the lower bound of the range of groups
+	 * @param end the upper bound of the range of groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching groups
+	 */
+	@Override
+	public List<Group> findByC_GK(
+		long companyId, String[] groupKeys, int start, int end,
+		OrderByComparator<Group> orderByComparator) {
+
+		return findByC_GK(
+			companyId, groupKeys, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the groups where companyId = &#63; and groupKey = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param groupKeys the group keys
+	 * @param start the lower bound of the range of groups
+	 * @param end the upper bound of the range of groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching groups
+	 */
+	@Override
+	public List<Group> findByC_GK(
+		long companyId, String[] groupKeys, int start, int end,
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+
+		if (groupKeys == null) {
+			groupKeys = new String[0];
+		}
+		else if (groupKeys.length > 1) {
+			for (int i = 0; i < groupKeys.length; i++) {
+				groupKeys[i] = Objects.toString(groupKeys[i], "");
+			}
+
+			groupKeys = ArrayUtil.sortedUnique(groupKeys);
+		}
+
+		if (groupKeys.length == 1) {
+			Group group = fetchByC_GK(companyId, groupKeys[0]);
+
+			if (group == null) {
+				return Collections.emptyList();
+			}
+			else {
+				List<Group> list = new ArrayList<Group>(1);
+
+				list.add(group);
+
+				return list;
+			}
+		}
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Group.class);
+
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache && productionMode) {
+				finderArgs = new Object[] {
+					companyId, StringUtil.merge(groupKeys)
+				};
+			}
+		}
+		else if (useFinderCache && productionMode) {
+			finderArgs = new Object[] {
+				companyId, StringUtil.merge(groupKeys), start, end,
+				orderByComparator
+			};
+		}
+
+		List<Group> list = null;
+
+		if (useFinderCache && productionMode) {
+			list = (List<Group>)FinderCacheUtil.getResult(
+				_finderPathWithPaginationFindByC_GK, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Group group : list) {
+					if ((companyId != group.getCompanyId()) ||
+						!ArrayUtil.contains(groupKeys, group.getGroupKey())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = new StringBundler();
+
+			sb.append(_SQL_SELECT_GROUP__WHERE);
+
+			sb.append(_FINDER_COLUMN_C_GK_COMPANYID_2);
+
+			if (groupKeys.length > 0) {
+				sb.append("(");
+
+				for (int i = 0; i < groupKeys.length; i++) {
+					String groupKey = groupKeys[i];
+
+					if (groupKey.isEmpty()) {
+						sb.append(_FINDER_COLUMN_C_GK_GROUPKEY_3);
+					}
+					else {
+						sb.append(_FINDER_COLUMN_C_GK_GROUPKEY_2);
+					}
+
+					if ((i + 1) < groupKeys.length) {
+						sb.append(WHERE_OR);
+					}
+				}
+
+				sb.append(")");
+			}
+
+			sb.setStringAt(
+				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(GroupModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				for (String groupKey : groupKeys) {
+					if ((groupKey != null) && !groupKey.isEmpty()) {
+						queryPos.add(groupKey);
+					}
+				}
+
+				list = (List<Group>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache && productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByC_GK, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
 
 	/**
 	 * Returns the group where companyId = &#63; and groupKey = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
@@ -3577,6 +3805,109 @@ public class GroupPersistenceImpl
 
 				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of groups where companyId = &#63; and groupKey = any &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupKeys the group keys
+	 * @return the number of matching groups
+	 */
+	@Override
+	public int countByC_GK(long companyId, String[] groupKeys) {
+		if (groupKeys == null) {
+			groupKeys = new String[0];
+		}
+		else if (groupKeys.length > 1) {
+			for (int i = 0; i < groupKeys.length; i++) {
+				groupKeys[i] = Objects.toString(groupKeys[i], "");
+			}
+
+			groupKeys = ArrayUtil.sortedUnique(groupKeys);
+		}
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Group.class);
+
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {companyId, StringUtil.merge(groupKeys)};
+
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathWithPaginationCountByC_GK, finderArgs);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler();
+
+			sb.append(_SQL_COUNT_GROUP__WHERE);
+
+			sb.append(_FINDER_COLUMN_C_GK_COMPANYID_2);
+
+			if (groupKeys.length > 0) {
+				sb.append("(");
+
+				for (int i = 0; i < groupKeys.length; i++) {
+					String groupKey = groupKeys[i];
+
+					if (groupKey.isEmpty()) {
+						sb.append(_FINDER_COLUMN_C_GK_GROUPKEY_3);
+					}
+					else {
+						sb.append(_FINDER_COLUMN_C_GK_GROUPKEY_2);
+					}
+
+					if ((i + 1) < groupKeys.length) {
+						sb.append(WHERE_OR);
+					}
+				}
+
+				sb.append(")");
+			}
+
+			sb.setStringAt(
+				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				for (String groupKey : groupKeys) {
+					if ((groupKey != null) && !groupKey.isEmpty()) {
+						queryPos.add(groupKey);
+					}
+				}
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationCountByC_GK, finderArgs,
+						count);
 				}
 			}
 			catch (Exception exception) {
@@ -15454,6 +15785,20 @@ public class GroupPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "parentGroupId"}, false);
 
+		_finderPathWithPaginationFindByC_GK = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_GK",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "groupKey"}, true);
+
+		_finderPathWithoutPaginationFindByC_GK = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_GK",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "groupKey"}, true);
+
 		_finderPathFetchByC_GK = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_GK",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -15461,6 +15806,11 @@ public class GroupPersistenceImpl
 
 		_finderPathCountByC_GK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_GK",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "groupKey"}, false);
+
+		_finderPathWithPaginationCountByC_GK = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_GK",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "groupKey"}, false);
 

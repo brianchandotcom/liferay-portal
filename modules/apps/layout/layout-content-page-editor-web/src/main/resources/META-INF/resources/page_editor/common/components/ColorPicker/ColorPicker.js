@@ -357,7 +357,8 @@ export function ColorPicker({
 							onClick={() => {
 								if (
 									value.toLowerCase() ===
-									field.defaultValue?.toLowerCase()
+										field.defaultValue?.toLowerCase() &&
+									!error.value
 								) {
 									return;
 								}

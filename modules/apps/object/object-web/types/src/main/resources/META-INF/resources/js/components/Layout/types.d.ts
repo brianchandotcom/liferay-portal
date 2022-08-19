@@ -12,7 +12,7 @@
  * details.
  */
 
-export declare type BoxType = 'regular' | 'categorization';
+export declare type BoxType = 'regular' | 'categorization' | 'comments';
 export declare type TName = LocalizedValue<string>;
 export declare type TObjectLayout = {
 	defaultObjectLayout: boolean;

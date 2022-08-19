@@ -221,7 +221,10 @@ const layoutReducer = (state: TState, action: TAction) => {
 				(box) => box.type !== 'regular'
 			);
 
-			if (type === 'regular' && frameworkIndex >= 0) {
+			if (
+				type === 'regular' ||
+				(type === 'categorization' && frameworkIndex >= 0)
+			) {
 				objectLayoutBoxes.splice(frameworkIndex, 0, newBox);
 			}
 			else {

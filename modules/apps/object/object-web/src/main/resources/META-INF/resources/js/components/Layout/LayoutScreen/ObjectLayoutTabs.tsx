@@ -100,6 +100,21 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 														TYPES.ADD_OBJECT_LAYOUT_BOX,
 												});
 											}}
+											addComments={() => {
+												dispatch({
+													payload: {
+														name: {
+															[defaultLanguageId]: Liferay.Language.get(
+																'comments'
+															),
+														},
+														tabIndex,
+														type: 'comments',
+													},
+													type:
+														TYPES.ADD_OBJECT_LAYOUT_BOX,
+												});
+											}}
 											deleteElement={() => {
 												dispatch({
 													payload: {

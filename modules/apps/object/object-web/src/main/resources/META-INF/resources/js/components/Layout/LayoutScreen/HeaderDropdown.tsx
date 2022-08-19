@@ -20,6 +20,7 @@ import LayoutContext from '../context';
 
 const HeaderDropdown: FC<IHeaderDropdown> = ({
 	addCategorization,
+	addComments,
 	deleteElement,
 }) => {
 	const [active, setActive] = useState<boolean>(false);
@@ -65,6 +66,15 @@ const HeaderDropdown: FC<IHeaderDropdown> = ({
 					</ClayDropDown.Item>
 				)}
 
+				{Liferay.FeatureFlags['LPS-158672'] && addComments && (
+					<ClayDropDown.Item
+						disabled={isThereFramework('comments')}
+						onClick={() => handleOnClick(addComments)}
+					>
+						{Liferay.Language.get('add-comments')}
+					</ClayDropDown.Item>
+				)}
+
 				<ClayDropDown.Item
 					disabled={isViewOnly}
 					onClick={() => handleOnClick(deleteElement)}
@@ -78,6 +88,7 @@ const HeaderDropdown: FC<IHeaderDropdown> = ({
 
 interface IHeaderDropdown {
 	addCategorization?: MouseEventHandler;
+	addComments?: MouseEventHandler;
 	deleteElement: MouseEventHandler;
 }
 

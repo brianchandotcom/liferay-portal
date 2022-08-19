@@ -40,6 +40,28 @@ definition {
 		}
 	}
 
+	macro _inputRegionDetails {
+		PortletEntry.inputName(name = "${regionName}");
+
+		if (isSet(regionKey)) {
+			PortletEntry.inputText(
+				fieldLabel = "Key",
+				text = "${regionKey}");
+		}
+
+		if (isSet(regionCode)) {
+			PortletEntry.inputText(
+				fieldLabel = "Region Code",
+				text = "${regionCode}");
+		}
+
+		if (isSet(regionPosition)) {
+			PortletEntry.inputText(
+				fieldLabel = "Position",
+				text = "${regionPosition}");
+		}
+	}
+
 	macro activateCountry {
 		Search.searchCP(searchTerm = "${countryName}");
 
@@ -86,6 +108,33 @@ definition {
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 		else if ("${countryStatus}" == "Active") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Active",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro addRegion {
+		CountriesManagement.goToRegions(countryName = "${countryName}");
+
+		LexiconEntry.gotoAdd();
+
+		CountriesManagement._inputRegionDetails(
+			regionCode = "${regionCode}",
+			regionKey = "${regionKey}",
+			regionName = "${regionName}",
+			regionPosition = "${regionPosition}");
+
+		if ("${regionStatus}" == "Inactive") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Active",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${regionStatus}" == "Active") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Active",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
@@ -144,8 +193,97 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "${countryName}");
 	}
 
+	macro deleteRegion {
+		Search.searchCP(searchTerm = "${regionName}");
+
+		if ("${deleteType}" == "Delete Icon") {
+			LexiconEntry.selectEntry(key_rowEntry = "${regionName}");
+
+			ClickNoError(locator1 = "Icon#DELETE");
+
+			AssertConfirm(value1 = "Are you sure you want to delete the selected regions?");
+
+			Alert.viewSuccessMessage();
+		}
+		else if ("${deleteType}" == "Management Toolbar") {
+			LexiconEntry.selectEntry(key_rowEntry = "${regionName}");
+
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete the selected regions?");
+
+			Alert.viewSuccessMessage();
+		}
+		else {
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Delete",
+				rowEntry = "${regionName}");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+			Alert.viewSuccessMessage();
+		}
+
+		LexiconEntry.viewNoEntry(rowEntry = "${regionName}");
+	}
+
+	macro editRegion {
+		LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Edit",
+				rowEntry = "${regionName}");
+
+		if (isSet(regionNameEdit)) {
+			PortletEntry.inputText(
+				fieldLabel = "Name",
+				text = "${regionNameEdit}");
+		}
+	
+		if (isSet(regionKeyEdit)) {
+			PortletEntry.inputText(
+				fieldLabel = "Key",
+				text = "${regionKeyEdit}");
+		}
+
+		if (isSet(regionCodeEdit)) {
+			PortletEntry.inputText(
+				fieldLabel = "Region Code",
+				text = "${regionCodeEdit}");
+		}
+
+		if (isSet(regionPositionEdit)) {
+			PortletEntry.inputText(
+				fieldLabel = "Position",
+				text = "${regionPositionEdit}");
+		}
+
+		if ("${regionStatusEdit}" == "Inactive") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Active",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${regionStatusEdit}" == "Active") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Active",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro openCountriesManagementPortlet {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_address_web_internal_portlet_CountriesManagementAdminPortlet");
+	}
+
+	macro goToRegions {
+		Search.searchCP(searchTerm = "${countryName}");
+
+		LexiconEntry.gotoEntry(rowEntry = "${countryName}");
+
+		Navigator.gotoNavTab(navTab = "Regions");
 	}
 
 	@description = "Assert values in country table. Need to set countryName, billingAllowed, shippingAllowed, twoLetterISOCode, countryStatus"
@@ -201,6 +339,36 @@ definition {
 				columnName = "priority",
 				tableEntry = "${countryName}",
 				tableEntryInfo = "${countryPriority}");
+		}
+	}
+
+	@description = "Assert values in region table. Need to set regionName, regionCode, and regionStatus"
+	macro viewRegionsInTable {
+		LexiconTable.viewTableEntryTitle(tableEntry = "${regionName}");
+
+		LexiconTable.viewTableEntryInfo(
+			columnName = "region-code",
+			tableEntry = "${regionName}",
+			tableEntryInfo = "${regionCode}");
+
+		if ("${regionStatus}" == "Active") {
+			AssertElementPresent(
+				key_columnName = "active",
+				key_tableEntry = "${regionName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO_CHECK");
+		}
+		else if ("${regionStatus}" == "Inactive") {
+			AssertElementPresent(
+				key_columnName = "active",
+				key_tableEntry = "${regionName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO_TIMES");
+		}
+
+		if (isSet(regionPriority)) {
+			LexiconTable.viewTableEntryInfo(
+				columnName = "priority",
+				tableEntry = "${regionName}",
+				tableEntryInfo = "${regionPriority}");
 		}
 	}
 

@@ -55,7 +55,7 @@
 				/>
 
 				<div class="col-md-4 mb-5">
-					<div class="liferay-online-item mb-3 position-relative" tabindex="0">
+					<div class="liferay-online-item mb-3 position-relative item-${count}" tabindex="0">
 						<div class="aspect-ratio aspect-ratio-16-to-9">
 							<img alt="thumbnail" class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="${htmlUtil.escapeAttribute(image)}">
 						</div>

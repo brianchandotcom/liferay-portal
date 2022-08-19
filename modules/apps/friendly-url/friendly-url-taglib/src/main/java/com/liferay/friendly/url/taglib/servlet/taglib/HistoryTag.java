@@ -141,8 +141,17 @@ public class HistoryTag extends IncludeTag {
 
 		return StringBundler.concat(
 			themeDisplay.getPortalURL(), PortalUtil.getPathContext(),
-			Portal.PATH_MODULE, "/friendly-url/", getClassName(),
+			Portal.PATH_MODULE, "/friendly-url/",
+			_getGroupId(httpServletRequest), StringPool.SLASH, getClassName(),
 			StringPool.SLASH, getClassPK());
+	}
+
+	private long _getGroupId(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getSiteGroupId();
 	}
 
 	private static final String _PAGE = "/history/page.jsp";

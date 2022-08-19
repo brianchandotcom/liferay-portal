@@ -66,6 +66,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LABEL_GENERIC_SELECT</td>
+	<td>//label[contains(text(),'${key_fieldLabel}')]/..//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LABEL_GENERIC_SELECT_POSITION</td>
+	<td>//label[contains(text(),'${key_fieldLabel}')]/..//select/option['${row}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVE_CHECKBOX</td>
 	<td>//input[contains(@id,'active') and (@type='checkbox')]</td>
 	<td></td>

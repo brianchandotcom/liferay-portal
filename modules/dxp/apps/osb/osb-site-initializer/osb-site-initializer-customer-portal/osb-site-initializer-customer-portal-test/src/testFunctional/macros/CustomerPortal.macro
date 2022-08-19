@@ -207,6 +207,11 @@ definition {
 		Click(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
+	macro viewButton {
+		var key_text = "${text}";
+		AssertVisible(locator1 = "CustomerPortalSite#ANY_BUTTON");
+	}
+
 	macro clickOnSkipForNowButton {
 		Click(locator1 = "CustomerPortalSite#SKIP_FOR_NOW_BUTTON");
 	}

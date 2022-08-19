@@ -1146,7 +1146,7 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Site Name A");
 
-		AssetPublisherPortlet.configureScopePG(otherSite = "Site Name B");
+		AssetPublisherPortlet.configureScope(otherSite = "Site Name B");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",

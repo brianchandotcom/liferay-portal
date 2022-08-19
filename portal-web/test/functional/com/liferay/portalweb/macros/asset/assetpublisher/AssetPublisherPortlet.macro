@@ -547,7 +547,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureScopePG {
+	macro configureScope {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");

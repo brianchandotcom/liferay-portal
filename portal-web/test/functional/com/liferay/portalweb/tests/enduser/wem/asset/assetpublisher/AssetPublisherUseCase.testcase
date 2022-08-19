@@ -536,7 +536,7 @@ definition {
 		}
 
 		task ("Add the Global site to Site Scope") {
-			AssetPublisherPortlet.configureScopePG(globalSite = "true");
+			AssetPublisherPortlet.configureScope(globalSite = "true");
 		}
 
 		task ("View the global web content shown in Asset Publisher") {
@@ -1129,7 +1129,7 @@ definition {
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
 
-			AssetPublisherPortlet.configureScopePG(pageName = "Asset Publisher Page");
+			AssetPublisherPortlet.configureScope(pageName = "Asset Publisher Page");
 
 			IFrame.closeFrame();
 
@@ -1689,7 +1689,7 @@ definition {
 		}
 
 		task ("Add the Global site to Site Scope") {
-			AssetPublisherPortlet.configureScopePG(globalSite = "Global");
+			AssetPublisherPortlet.configureScope(globalSite = "Global");
 		}
 
 		task ("View displayed assets in Asset Publisher") {
@@ -1851,7 +1851,7 @@ definition {
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
 
-			AssetPublisherPortlet.configureScopePG(globalSite = "true");
+			AssetPublisherPortlet.configureScope(globalSite = "true");
 		}
 
 		task ("View the global web content shown in Asset Publisher") {

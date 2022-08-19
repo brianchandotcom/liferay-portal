@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayLink from '@clayui/link';
 import {render} from '@liferay/frontend-js-react-web';
 import React from 'react';
+import {unmountComponentAtNode} from 'react-dom';
 
 const DEFAULT_CONTAINER_ID = 'redirectOptionsContainer';
 
@@ -41,6 +42,8 @@ const RedirectOptions = ({url}) => {
 				useHttpSession: true,
 			});
 		}
+
+		unmountComponentAtNode(getDefaultContainer());
 	};
 
 	return (

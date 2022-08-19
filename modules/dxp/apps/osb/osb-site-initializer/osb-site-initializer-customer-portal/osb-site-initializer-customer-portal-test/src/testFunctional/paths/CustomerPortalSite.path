@@ -305,6 +305,11 @@
 	<td>//*[contains(@class, 'cp-search-project')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ALERT_NOTIFICATIONS</td>
+	<td>//*[contains(@class, 'alert-notifications')]//*[text()='${key_alertText}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

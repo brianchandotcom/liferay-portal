@@ -47,21 +47,17 @@ public class AssetListFormNavigatorEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public boolean isVisible(User user, Object object) {
 		if (isAssetListSelection() || _isAssetListProviderSelection()) {
 			return true;
 		}
 
 		return false;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	@Override
@@ -80,5 +76,10 @@ public class AssetListFormNavigatorEntry
 
 		return false;
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)"
+	)
+	private ServletContext _servletContext;
 
 }

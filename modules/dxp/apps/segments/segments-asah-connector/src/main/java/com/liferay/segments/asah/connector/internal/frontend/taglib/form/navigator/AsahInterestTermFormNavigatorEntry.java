@@ -79,6 +79,11 @@ public class AsahInterestTermFormNavigatorEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -131,15 +136,6 @@ public class AsahInterestTermFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.segments.asah.connector)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
 	protected String getJspPath() {
 		return "/interest_terms.jsp";
 	}
@@ -152,5 +148,10 @@ public class AsahInterestTermFormNavigatorEntry
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.segments.asah.connector)"
+	)
+	private ServletContext _servletContext;
 
 }

@@ -37,16 +37,16 @@ public class JournalDDMTemplateSmallImageFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
 	protected String getJspPath() {
 		return "/ddm_template/edit_small_image.jsp";
 	}
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.journal.web)")
+	private ServletContext _servletContext;
 
 }

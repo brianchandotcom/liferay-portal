@@ -64,17 +64,13 @@ public class FilterFormNavigatorEntry extends BaseJSPFormNavigatorEntry<Void> {
 	}
 
 	@Override
-	public boolean isVisible(User user, Void object) {
-		return _isDynamicSelection();
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public boolean isVisible(User user, Void object) {
+		return _isDynamicSelection();
 	}
 
 	@Override
@@ -102,5 +98,10 @@ public class FilterFormNavigatorEntry extends BaseJSPFormNavigatorEntry<Void> {
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)"
+	)
+	private ServletContext _servletContext;
 
 }

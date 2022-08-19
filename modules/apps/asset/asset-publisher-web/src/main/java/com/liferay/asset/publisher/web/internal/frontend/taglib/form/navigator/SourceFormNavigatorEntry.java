@@ -44,22 +44,23 @@ public class SourceFormNavigatorEntry
 	}
 
 	@Override
-	public boolean isVisible(User user, Object object) {
-		return isDynamicAssetSelection();
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public boolean isVisible(User user, Object object) {
+		return isDynamicAssetSelection();
 	}
 
 	@Override
 	protected String getJspPath() {
 		return "/configuration/source.jsp";
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)"
+	)
+	private ServletContext _servletContext;
 
 }

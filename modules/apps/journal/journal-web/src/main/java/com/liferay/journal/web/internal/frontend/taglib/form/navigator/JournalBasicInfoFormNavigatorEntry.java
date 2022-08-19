@@ -37,16 +37,16 @@ public class JournalBasicInfoFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
 	protected String getJspPath() {
 		return "/article/basic_info.jsp";
 	}
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.journal.web)")
+	private ServletContext _servletContext;
 
 }

@@ -60,12 +60,8 @@ public class CategoryCPAttachmentScheduleFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.asset.categories.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -75,5 +71,10 @@ public class CategoryCPAttachmentScheduleFormNavigatorEntry
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.asset.categories.web)"
+	)
+	private ServletContext _servletContext;
 
 }

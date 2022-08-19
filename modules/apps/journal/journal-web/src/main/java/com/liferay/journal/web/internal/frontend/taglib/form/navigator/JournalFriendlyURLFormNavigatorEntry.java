@@ -39,6 +39,11 @@ public class JournalFriendlyURLFormNavigatorEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public boolean isVisible(User user, JournalArticle article) {
 		if (isEditDefaultValues(article) || isGlobalScopeArticle(article)) {
 			return false;
@@ -48,16 +53,11 @@ public class JournalFriendlyURLFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
 	protected String getJspPath() {
 		return "/article/friendly_url.jsp";
 	}
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.journal.web)")
+	private ServletContext _servletContext;
 
 }

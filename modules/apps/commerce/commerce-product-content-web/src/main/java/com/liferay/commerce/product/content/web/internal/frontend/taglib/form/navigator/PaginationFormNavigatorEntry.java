@@ -57,12 +57,8 @@ public class PaginationFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -72,5 +68,10 @@ public class PaginationFormNavigatorEntry
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)"
+	)
+	private ServletContext _servletContext;
 
 }

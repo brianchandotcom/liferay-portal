@@ -45,6 +45,11 @@ public class LayoutSetSitemapFormNavigatorEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public boolean isVisible(User user, LayoutSet layoutSet) {
 		if (layoutSet.isPrivateLayout()) {
 			return false;
@@ -54,17 +59,11 @@ public class LayoutSetSitemapFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
 	protected String getJspPath() {
 		return "/layout_set/sitemap.jsp";
 	}
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
+	private ServletContext _servletContext;
 
 }

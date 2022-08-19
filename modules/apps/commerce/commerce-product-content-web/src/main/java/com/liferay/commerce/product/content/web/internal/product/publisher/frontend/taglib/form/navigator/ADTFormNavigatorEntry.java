@@ -64,17 +64,13 @@ public class ADTFormNavigatorEntry extends BaseJSPFormNavigatorEntry<Void> {
 	}
 
 	@Override
-	public boolean isVisible(User user, Void object) {
-		return _isSelectionStyleADT();
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public boolean isVisible(User user, Void object) {
+		return _isSelectionStyleADT();
 	}
 
 	@Override
@@ -106,5 +102,10 @@ public class ADTFormNavigatorEntry extends BaseJSPFormNavigatorEntry<Void> {
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)"
+	)
+	private ServletContext _servletContext;
 
 }

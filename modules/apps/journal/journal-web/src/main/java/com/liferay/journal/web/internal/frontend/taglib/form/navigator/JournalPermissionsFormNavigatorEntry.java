@@ -47,6 +47,11 @@ public class JournalPermissionsFormNavigatorEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public boolean isVisible(User user, JournalArticle article) {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -70,16 +75,11 @@ public class JournalPermissionsFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
 	protected String getJspPath() {
 		return "/article/permissions.jsp";
 	}
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.journal.web)")
+	private ServletContext _servletContext;
 
 }

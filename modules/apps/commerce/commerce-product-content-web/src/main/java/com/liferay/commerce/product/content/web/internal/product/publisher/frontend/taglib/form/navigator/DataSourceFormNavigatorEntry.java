@@ -65,17 +65,13 @@ public class DataSourceFormNavigatorEntry
 	}
 
 	@Override
-	public boolean isVisible(User user, Void object) {
-		return _isDataSourceSelection();
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public boolean isVisible(User user, Void object) {
+		return _isDataSourceSelection();
 	}
 
 	@Override
@@ -103,5 +99,10 @@ public class DataSourceFormNavigatorEntry
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)"
+	)
+	private ServletContext _servletContext;
 
 }

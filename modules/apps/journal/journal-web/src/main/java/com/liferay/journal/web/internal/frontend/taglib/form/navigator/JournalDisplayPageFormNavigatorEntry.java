@@ -53,6 +53,11 @@ public class JournalDisplayPageFormNavigatorEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public boolean isVisible(User user, JournalArticle article) {
 		if (_isDepotArticle(article) || isGlobalScopeArticle(article) ||
 			_isGlobalStructure(article)) {
@@ -71,14 +76,6 @@ public class JournalDisplayPageFormNavigatorEntry
 	@Reference(target = "(view=public)", unbind = "-")
 	public void setPublicLayoutsItemSelectorView(
 		ItemSelectorView<?> itemSelectorView) {
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	@Override
@@ -173,5 +170,8 @@ public class JournalDisplayPageFormNavigatorEntry
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.journal.web)")
+	private ServletContext _servletContext;
 
 }

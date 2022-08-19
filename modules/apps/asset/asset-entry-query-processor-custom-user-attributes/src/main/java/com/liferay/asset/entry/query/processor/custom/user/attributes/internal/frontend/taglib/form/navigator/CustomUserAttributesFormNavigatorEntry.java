@@ -71,21 +71,17 @@ public class CustomUserAttributesFormNavigatorEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public boolean isVisible(User user, Object object) {
 		if (_isDynamicAssetSelection()) {
 			return true;
 		}
 
 		return false;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.entry.query.processor.custom.user.attributes)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	@Override
@@ -117,5 +113,10 @@ public class CustomUserAttributesFormNavigatorEntry
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.asset.entry.query.processor.custom.user.attributes)"
+	)
+	private ServletContext _servletContext;
 
 }

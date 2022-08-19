@@ -43,17 +43,16 @@ public class LayoutLookAndFeelFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
 	protected String getJspPath() {
 		return "/layout/look_and_feel.jsp";
 	}
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
+	private ServletContext _servletContext;
 
 }

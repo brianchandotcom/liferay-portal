@@ -43,17 +43,18 @@ public class SetAndEnableFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
 	protected String getJspPath() {
 		return "/configuration/set_enable.jsp";
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)"
+	)
+	private ServletContext _servletContext;
 
 }

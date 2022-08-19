@@ -51,6 +51,11 @@ public class LayoutCustomFieldsFormNavigatorEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public boolean isVisible(User user, Layout layout) {
 		boolean hasCustomAttributesAvailable = false;
 
@@ -81,20 +86,14 @@ public class LayoutCustomFieldsFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
 	protected String getJspPath() {
 		return "/layout/custom_fields.jsp";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutCustomFieldsFormNavigatorEntry.class);
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
+	private ServletContext _servletContext;
 
 }

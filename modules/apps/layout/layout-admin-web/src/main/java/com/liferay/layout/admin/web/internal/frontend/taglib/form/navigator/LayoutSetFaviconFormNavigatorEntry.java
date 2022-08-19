@@ -43,17 +43,16 @@ public class LayoutSetFaviconFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
 	protected String getJspPath() {
 		return "/layout_set/favicon.jsp";
 	}
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
+	private ServletContext _servletContext;
 
 }

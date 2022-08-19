@@ -53,6 +53,11 @@ public class ScopeFormNavigatorEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public boolean isVisible(User user, Object object) {
 		if (!isManualSelection() && !isDynamicAssetSelection()) {
 			return false;
@@ -83,20 +88,16 @@ public class ScopeFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
 	protected String getJspPath() {
 		return "/configuration/scope.jsp";
 	}
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)"
+	)
+	private ServletContext _servletContext;
 
 }

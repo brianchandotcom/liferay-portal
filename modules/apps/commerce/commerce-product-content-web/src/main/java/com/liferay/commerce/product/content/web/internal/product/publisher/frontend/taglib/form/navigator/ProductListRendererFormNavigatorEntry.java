@@ -70,17 +70,13 @@ public class ProductListRendererFormNavigatorEntry
 	}
 
 	@Override
-	public boolean isVisible(User user, Void object) {
-		return _isSelectionStyleCustomRenderer();
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public boolean isVisible(User user, Void object) {
+		return _isSelectionStyleCustomRenderer();
 	}
 
 	@Override
@@ -112,5 +108,10 @@ public class ProductListRendererFormNavigatorEntry
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)"
+	)
+	private ServletContext _servletContext;
 
 }

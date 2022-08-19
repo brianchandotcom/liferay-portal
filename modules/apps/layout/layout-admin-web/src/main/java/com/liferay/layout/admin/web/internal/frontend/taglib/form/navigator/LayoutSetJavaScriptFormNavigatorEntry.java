@@ -46,12 +46,8 @@ public class LayoutSetJavaScriptFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Activate
@@ -85,5 +81,8 @@ public class LayoutSetJavaScriptFormNavigatorEntry
 	}
 
 	private ServiceRegistration<FormNavigatorEntry<?>> _serviceRegistration;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
+	private ServletContext _servletContext;
 
 }

@@ -45,6 +45,11 @@ public class JournalCategorizationFormNavigatorEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -55,14 +60,6 @@ public class JournalCategorizationFormNavigatorEntry
 			_getAssetAutoTaggerConfiguration(httpServletRequest));
 
 		super.include(httpServletRequest, httpServletResponse);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	@Override
@@ -84,5 +81,8 @@ public class JournalCategorizationFormNavigatorEntry
 	@Reference
 	private AssetAutoTaggerConfigurationFactory
 		_assetAutoTaggerConfigurationFactory;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.journal.web)")
+	private ServletContext _servletContext;
 
 }

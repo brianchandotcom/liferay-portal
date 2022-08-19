@@ -64,6 +64,11 @@ public class CommerceInventoryWarehouseCustomFieldsFormNavigatorEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public boolean isVisible(
 		User user, CommerceInventoryWarehouse commerceInventoryWarehouse) {
 
@@ -93,15 +98,6 @@ public class CommerceInventoryWarehouseCustomFieldsFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.warehouse.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
 	protected String getJspPath() {
 		return "/commerce_inventory_warehouse/custom_fields.jsp";
 	}
@@ -111,5 +107,10 @@ public class CommerceInventoryWarehouseCustomFieldsFormNavigatorEntry
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.warehouse.web)"
+	)
+	private ServletContext _servletContext;
 
 }

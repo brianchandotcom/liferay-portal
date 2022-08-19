@@ -48,6 +48,11 @@ public class JournalSmallImageFormNavigatorEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -58,14 +63,6 @@ public class JournalSmallImageFormNavigatorEntry
 			_journalFileUploadsConfiguration);
 
 		super.include(httpServletRequest, httpServletResponse);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	@Activate
@@ -82,5 +79,8 @@ public class JournalSmallImageFormNavigatorEntry
 
 	private volatile JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.journal.web)")
+	private ServletContext _servletContext;
 
 }

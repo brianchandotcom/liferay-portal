@@ -37,17 +37,18 @@ public class KaleoProcessDetailsFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.kaleo.forms.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
 	protected String getJspPath() {
 		return "/admin/process/details.jsp";
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.kaleo.forms.web)"
+	)
+	private ServletContext _servletContext;
 
 }

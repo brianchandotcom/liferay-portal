@@ -42,17 +42,18 @@ public class AdvancedStylingFormNavigatorEntry extends BaseFormNavigatorEntry {
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portlet.configuration.css.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
 	protected String getJspPath() {
 		return "/advanced_styling.jsp";
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portlet.configuration.css.web)"
+	)
+	private ServletContext _servletContext;
 
 }

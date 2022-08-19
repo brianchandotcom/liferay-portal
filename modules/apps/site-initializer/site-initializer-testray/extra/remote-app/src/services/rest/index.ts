@@ -30,6 +30,7 @@ export * from './TestrayCaseRequirements';
 export * from './TestrayCaseResult';
 export * from './TestrayCaseTypes';
 export * from './TestrayComponent';
+export * from './TestrayFactor';
 export * from './TestrayFactorCategory';
 export * from './TestrayFactorOptions';
 export * from './TestrayProductVersion';

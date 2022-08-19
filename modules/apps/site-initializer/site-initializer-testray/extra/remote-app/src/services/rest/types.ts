@@ -261,3 +261,13 @@ export type TestrayRoutine = {
 	id: number;
 	name: string;
 };
+
+export type TestrayFactor = {
+	dateCreated: string;
+	dateModified: string;
+	factorCategory?: TestrayFactorCategory;
+	factorOption?: TestrayFactorOptions;
+	id: number;
+	r_factorCategoryToFactors_c_factorCategory?: TestrayFactorCategory;
+	r_factorOptionToFactors_c_factorOption?: TestrayFactorOptions;
+};

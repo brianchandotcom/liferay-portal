@@ -100,12 +100,6 @@ public class GroupFinderUtil {
 		return getFinder().findByLiveGroups();
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Group>
-		findBySystem(long companyId) {
-
-		return getFinder().findBySystem(companyId);
-	}
-
 	public static java.util.List<Long> findByC_P(
 		long companyId, long parentGroupId, long previousGroupId, int size) {
 

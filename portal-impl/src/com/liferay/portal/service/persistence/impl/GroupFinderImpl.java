@@ -90,9 +90,6 @@ public class GroupFinderImpl
 	public static final String FIND_BY_LIVE_GROUPS =
 		GroupFinder.class.getName() + ".findByLiveGroups";
 
-	public static final String FIND_BY_SYSTEM =
-		GroupFinder.class.getName() + ".findBySystem";
-
 	public static final String FIND_BY_C_P =
 		GroupFinder.class.getName() + ".findByC_P";
 
@@ -621,33 +618,6 @@ public class GroupFinderImpl
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
 			sqlQuery.addEntity("Group_", GroupImpl.class);
-
-			return sqlQuery.list(true);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public List<Group> findBySystem(long companyId) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_SYSTEM);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity("Group_", GroupImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
 
 			return sqlQuery.list(true);
 		}

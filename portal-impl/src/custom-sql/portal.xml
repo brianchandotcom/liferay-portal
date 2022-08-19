@@ -108,24 +108,6 @@
 					)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findBySystem">
-		<![CDATA[
-			(
-				SELECT
-					{Group_.*}
-				FROM
-					Group_
-				WHERE
-					(Group_.companyId = ?) AND
-					(
-						(Group_.groupKey = 'Control Panel') OR
-						(Group_.groupKey = 'Forms') OR
-						(Group_.groupKey = 'Guest') OR
-						(Group_.groupKey = 'User Personal Site')
-					)
-			)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByC_P">
 		<![CDATA[
 			SELECT

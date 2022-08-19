@@ -46,13 +46,25 @@ definition {
 		task ("Assert Asset List Entry names and types") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.viewAssetList(
-				assetListTitle = "Manual Asset List Test",
-				type = "Manual");
+			AssertTextEquals.assertPartialText(
+				key_title = "Manual Asset List Test",
+				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE",
+				value1 = "Manual Asset List Test");
 
-			AssetListsAdmin.viewAssetList(
-				assetListTitle = "Dynamic Asset List Test",
-				type = "Dynamic");
+			AssertTextEquals.assertPartialText(
+				key_type = "Manual",
+				locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE",
+				value1 = "Manual");
+
+			AssertTextEquals.assertPartialText(
+				key_title = "Dynamic Asset List Test",
+				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE",
+				value1 = "Dynamic Asset List Test");
+
+			AssertTextEquals.assertPartialText(
+				key_type = "Dynamic",
+				locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE",
+				value1 = "Dynamic");
 		}
 	}
 
@@ -206,7 +218,10 @@ definition {
 
 		task ("Assert that all web contents are displayed") {
 			for (var i : list "1,2,3,4") {
-				AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_${i}");
+				AssertTextEquals(
+					key_assetTitle = "WC_Title_${i}",
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC_Title_${i}");
 			}
 		}
 
@@ -345,13 +360,19 @@ definition {
 
 		task ("Assert that all web contents are displayed") {
 			for (var i : list "3,4") {
-				AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_${i}");
+				AssertTextEquals(
+					key_assetTitle = "WC_Title_${i}",
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC_Title_${i}");
 			}
 
 			Click(locator1 = "Pagination#NEXT_LINK");
 
 			for (var i : list "1,2") {
-				AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_${i}");
+				AssertTextEquals(
+					key_assetTitle = "WC_Title_${i}",
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC_Title_${i}");
 			}
 		}
 
@@ -449,7 +470,10 @@ definition {
 
 		task ("Assert that all web contents are displayed") {
 			for (var i : list "1,2,3,4") {
-				AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_${i}");
+				AssertTextEquals(
+					key_assetTitle = "WC_Title_${i}",
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC_Title_${i}");
 			}
 		}
 
@@ -555,13 +579,19 @@ definition {
 
 		task ("Assert that all web contents are displayed") {
 			for (var i : list "1,2") {
-				AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_${i}");
+				AssertTextEquals(
+					key_assetTitle = "WC_Title_${i}",
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC_Title_${i}");
 			}
 
 			Click(locator1 = "Pagination#NEXT_LINK");
 
 			for (var i : list "3,4") {
-				AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_${i}");
+				AssertTextEquals(
+					key_assetTitle = "WC_Title_${i}",
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC_Title_${i}");
 			}
 		}
 
@@ -763,6 +793,11 @@ definition {
 			AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "WC WebContent Title 1");
 
 			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC WebContent Title 2");
+
+			AssertTextEquals(
+				key_assetTitle = "WC WebContent Title 2",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "WC WebContent Title 2");
 		}
 	}
 
@@ -802,7 +837,11 @@ definition {
 		}
 
 		task ("Check is not possible to delete defualt variation") {
-			AssetListsAdmin.assertDeleteDisabled(variationTitle = "Anyone");
+			AssetListsAdmin.clickDeleteDisabled(variationTitle = "Anyone");
+
+			AssertVisible(
+				key_text = "Delete",
+				locator1 = "Button#ANY_DISABLED");
 		}
 	}
 
@@ -842,7 +881,11 @@ definition {
 		}
 
 		task ("Check is not possible to delete defualt variation") {
-			AssetListsAdmin.assertDeleteDisabled(variationTitle = "Anyone");
+			AssetListsAdmin.clickDeleteDisabled(variationTitle = "Anyone");
+
+			AssertVisible(
+				key_text = "Delete",
+				locator1 = "Button#ANY_DISABLED");
 		}
 	}
 
@@ -1004,7 +1047,11 @@ definition {
 		}
 
 		task ("Assert the deprioritize option is disable") {
-			AssetListsAdmin.assertDepriotirizeDisabled(variationTitle = "First Segment");
+			AssetListsAdmin.clickDepriotirizeDisabled(variationTitle = "First Segment");
+
+			AssertVisible(
+				key_text = "Deprioritize",
+				locator1 = "Button#ANY_DISABLED");
 		}
 	}
 
@@ -1230,7 +1277,10 @@ definition {
 		}
 
 		task ("Assert the correct variation is shown") {
-			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_1");
+			AssertTextEquals(
+				key_assetTitle = "WC_Title_1",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "WC_Title_1");
 		}
 	}
 
@@ -1343,7 +1393,10 @@ definition {
 		}
 
 		task ("Assert the correct variation is shown") {
-			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_2");
+			AssertTextEquals(
+				key_assetTitle = "WC_Title_2",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "WC_Title_2");
 		}
 	}
 
@@ -1459,7 +1512,10 @@ definition {
 		task ("Assert the correct variation is shown") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
 
-			AssetPublisherPortlet.viewAssetPG(assetTitle = "Blog_1");
+			AssertTextEquals(
+				key_assetTitle = "Blog_1",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "Blog_1");
 		}
 	}
 
@@ -1905,6 +1961,10 @@ definition {
 				assetListTitle = "Dynamic Collection",
 				assetTitle = "Web Content Title 1",
 				assetType = "Web Content Article");
+
+			AssertElementNotPresent(locator1 = "AssetLists#ASSET_TITLE_ROW");
+
+			AssertElementNotPresent(locator1 = "AssetLists#ASSET_TYPE_ROW");
 		}
 
 		task ("Delete the global categories") {
@@ -1999,7 +2059,10 @@ definition {
 		}
 
 		task ("Assert the correct variation is shown") {
-			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_1");
+			AssertTextEquals(
+				key_assetTitle = "WC_Title_1",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "WC_Title_1");
 		}
 	}
 
@@ -2084,7 +2147,10 @@ definition {
 		}
 
 		task ("Assert the correct variation is shown") {
-			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_2");
+			AssertTextEquals(
+				key_assetTitle = "WC_Title_2",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "WC_Title_2");
 		}
 	}
 
@@ -2189,7 +2255,10 @@ definition {
 		}
 
 		task ("Assert the correct variation is shown") {
-			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_3");
+			AssertTextEquals(
+				key_assetTitle = "WC_Title_3",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "WC_Title_3");
 		}
 	}
 
@@ -2695,7 +2764,10 @@ definition {
 
 		task ("Assert that only web contents from one segment are displayed") {
 			for (var i : list "1,2") {
-				AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_${i}");
+				AssertTextEquals(
+					key_assetTitle = "WC_Title_${i}",
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC_Title_${i}");
 			}
 		}
 	}
@@ -2788,7 +2860,10 @@ definition {
 
 		task ("Assert that only web contents from one segment are displayed") {
 			for (var i : list "1,2") {
-				AssetPublisherPortlet.viewAssetPG(assetTitle = "WC_Title_${i}");
+				AssertTextEquals(
+					key_assetTitle = "WC_Title_${i}",
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC_Title_${i}");
 			}
 		}
 	}
@@ -2879,7 +2954,11 @@ definition {
 		}
 
 		task ("Check that Prioritize is disabled for first") {
-			AssetListsAdmin.assertPriotirizeDisabled(variationTitle = "Anyone");
+			AssetListsAdmin.clickPriotirizeDisabled(variationTitle = "Anyone");
+
+			AssertVisible(
+				key_text = "Prioritize",
+				locator1 = "Button#ANY_DISABLED");
 		}
 	}
 
@@ -2996,9 +3075,15 @@ definition {
 		}
 
 		task ("Assert that the name of the asset list changed correctly") {
-			AssetListsAdmin.viewAssetList(
-				assetListTitle = "Manual Asset List Edit",
-				type = "Manual");
+			AssertTextEquals.assertPartialText(
+				key_title = "Manual Asset List Edit",
+				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE",
+				value1 = "Manual Asset List Edit");
+
+			AssertTextEquals.assertPartialText(
+				key_type = "Manual",
+				locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE",
+				value1 = "Manual");
 		}
 	}
 
@@ -3505,6 +3590,16 @@ definition {
 				assetListTitle = "Manual Asset List Test",
 				assetTitle = "WC WebContent Title",
 				assetType = "Web Content Article");
+
+			AssertTextEquals(
+				key_assetTitle = "WC WebContent Title",
+				locator1 = "AssetLists#ASSET_TITLE_ROW",
+				value1 = "WC WebContent Title");
+
+			AssertTextEquals(
+				key_assetTitle = "Web Content Article",
+				locator1 = "AssetLists#ASSET_TYPE_ROW",
+				value1 = "Web Content Article");
 		}
 	}
 
@@ -3543,8 +3638,12 @@ definition {
 		task ("Assert the created asset list is used exactly once") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.viewUsages(
+			AssetListsAdmin.gotoEntryMenuItem(
 				assetListTitle = "Manual Asset List Test",
+				item = "View Usages");
+
+			AssertElementPresent(
+				locator1 = "AssetLists#ASSET_LIST_USAGES",
 				usageAmount = "1",
 				usageType = "All");
 		}
@@ -3683,7 +3782,9 @@ definition {
 		}
 
 		task ("Then the Collection creator can see the new icon on the dropdown menu") {
-			DropdownMenuItem.viewIcon(iconList = "view");
+			AssertVisible(
+				key_text = "view",
+				locator1 = "MenuItem#ANY_ICON");
 		}
 
 		task ("When the Collection creator opens the dropdown menu of dynamic collection") {
@@ -3693,7 +3794,11 @@ definition {
 		}
 
 		task ("Then the Collection creator can see the new icons on the dropdown menu") {
-			DropdownMenuItem.viewIcon(iconList = "pencil,list-ul,password-policies,trash");
+			for (var icon : list "pencil,list-ul,password-policies,trash") {
+				AssertVisible(
+					key_text = "${icon}",
+					locator1 = "MenuItem#ANY_ICON");
+			}
 		}
 
 		task ("When the Collection creator opens the dropdown menu of management toolbar after selecting the new collection") {
@@ -3703,7 +3808,9 @@ definition {
 		}
 
 		task ("Then the Collection creator can see the new icon on the dropdown menu") {
-			DropdownMenuItem.viewIcon(iconList = "trash");
+			AssertVisible(
+				key_text = "trash",
+				locator1 = "MenuItem#ANY_ICON");
 		}
 
 		task ("When the Collection creator opens the dropdown menu of any collection providers") {
@@ -3713,7 +3820,9 @@ definition {
 		}
 
 		task ("Then the Collection creator can see the new icon on the dropdown menu") {
-			DropdownMenuItem.viewIcon(iconList = "view");
+			AssertVisible(
+				key_text = "view",
+				locator1 = "MenuItem#ANY_ICON");
 		}
 	}
 

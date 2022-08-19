@@ -194,34 +194,22 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro assertDeleteDisabled {
+	macro clickDeleteDisabled {
 		Click(
 			key_variation = "${variationTitle}",
 			locator1 = "AssetLists#VARIATION_ELLIPSIS");
-
-		AssertVisible(
-			key_text = "Delete",
-			locator1 = "Button#ANY_DISABLED");
 	}
 
-	macro assertDepriotirizeDisabled {
+	macro clickDepriotirizeDisabled {
 		Click(
 			key_variation = "${variationTitle}",
 			locator1 = "AssetLists#VARIATION_ELLIPSIS");
-
-		AssertVisible(
-			key_text = "Deprioritize",
-			locator1 = "Button#ANY_DISABLED");
 	}
 
-	macro assertPriotirizeDisabled {
+	macro clickPriotirizeDisabled {
 		Click(
 			key_variation = "${variationTitle}",
 			locator1 = "AssetLists#VARIATION_ELLIPSIS");
-
-		AssertVisible(
-			key_text = "Prioritize",
-			locator1 = "Button#ANY_DISABLED");
 	}
 
 	macro configureFilterByField {
@@ -753,17 +741,6 @@ definition {
 		AssertElementNotPresent(locator1 = "AssetLists#ASSET_TYPE_ROW");
 
 		IFrame.closeFrame();
-	}
-
-	macro viewUsages {
-		AssetListsAdmin.gotoEntryMenuItem(
-			assetListTitle = "${assetListTitle}",
-			item = "View Usages");
-
-		var usageAmount = "${usageAmount}";
-		var usageType = "${usageType}";
-
-		AssertElementPresent(locator1 = "AssetLists#ASSET_LIST_USAGES");
 	}
 
 }

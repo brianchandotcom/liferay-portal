@@ -155,10 +155,53 @@ public class ObjectLayoutLocalServiceTest {
 					"There can only be one default object layout"));
 		}
 
-		_deleteObjectFields();
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
 
-		_objectLayoutLocalService.deleteObjectLayout(
-			objectLayout.getObjectLayoutId());
+		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService);
+
+		_objectDefinition.setEnableCategorization(false);
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		try {
+			ObjectLayoutTab objectLayoutTab =
+				_objectLayoutTabPersistence.create(0);
+
+			objectLayoutTab.setNameMap(
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString()));
+
+			ObjectLayoutBox objectLayoutBox = _addObjectLayoutBox(
+				ObjectLayoutBoxConstants.TYPE_CATEGORIZATION);
+
+			objectLayoutTab.setObjectLayoutBoxes(
+				Arrays.asList(_addObjectLayoutBox(), objectLayoutBox));
+
+			objectLayoutTab.setPriority(0);
+
+			_objectLayoutLocalService.addObjectLayout(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Collections.singletonList(objectLayoutTab));
+
+			Assert.fail();
+		}
+		catch (ObjectLayoutBoxCategorizationTypeException
+					objectLayoutBoxCategorizationTypeException) {
+
+			Assert.assertEquals(
+				"Categorization layout box must be enabled to be used",
+				objectLayoutBoxCategorizationTypeException.getMessage());
+		}
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
+
+		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService);
 
 		_objectDefinition.setStorageType(RandomTestUtil.randomString());
 
@@ -386,8 +429,8 @@ public class ObjectLayoutLocalServiceTest {
 				objectLayoutBoxCommentsTypeException.getMessage());
 		}
 
-		_objectDefinition.setStorageType(RandomTestUtil.randomString());
 		_objectDefinition.setEnableComments(true);
+		_objectDefinition.setStorageType(RandomTestUtil.randomString());
 
 		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
 

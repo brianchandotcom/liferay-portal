@@ -50,6 +50,7 @@ import javax.portlet.Portlet;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -70,6 +71,14 @@ public class PanelAppMyAccountPermissionsTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() {
+		Bundle bundle = FrameworkUtil.getBundle(
+			PanelAppMyAccountPermissionsTest.class);
+
+		_bundleContext = bundle.getBundleContext();
+	}
 
 	@Before
 	public void setUp() {
@@ -175,19 +184,7 @@ public class PanelAppMyAccountPermissionsTest {
 				).build()));
 	}
 
-	private static final BundleContext _bundleContext;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			PanelAppMyAccountPermissionsTest.class);
-
-		if (bundle == null) {
-			_bundleContext = null;
-		}
-		else {
-			_bundleContext = bundle.getBundleContext();
-		}
-	}
+	private static BundleContext _bundleContext;
 
 	@Inject
 	private PortletLocalService _portletLocalService;

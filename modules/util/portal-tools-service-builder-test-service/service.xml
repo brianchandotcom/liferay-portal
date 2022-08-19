@@ -353,6 +353,23 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="RenameFinderColumnEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="renameFinderColumnEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+		<column name="columnToRename" type="String" />
+
+        <!-- Finders -->
+        <finder name="ColumnToRename" return-type="RenameFinderColumnEntry">
+            <finder-column name="columnToRename"/>
+        </finder>
+	</entity>
 	<entity local-service="true" name="UADPartialEntry" remote-service="false">
 
 		<!-- PK fields -->

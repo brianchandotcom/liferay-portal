@@ -381,6 +381,85 @@ definition {
 		}
 	}
 
+	@description = "Can order regions by name in descending and ascending order"
+	@priority = "3"
+	test CanOrderRegionByName {
+		task ("Given there are regions existing for a country") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "United States");
+		}
+
+		task ("When a user orders by name and changes to descending order") {
+			ManagementBar.setFilterAndOrder(orderBy = "Name");
+
+			ManagementBar.toggleViewOrder(order = "up");
+		}
+
+		task ("Then the regions will display in descending order") {
+			LexiconEntry.viewEntryName(rowEntry = "Wyoming");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Alabama");
+		}
+
+		task ("When a user switches the order") {
+			ManagementBar.toggleViewOrder(order = "down");
+		}
+
+		task ("Then the regions are displayed in ascending order") {
+			LexiconEntry.viewEntryName(rowEntry = "Alabama");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Wyoming");
+		}
+	}
+
+	@description = "Can order regions by priority in descending and ascending order"
+	@priority = "3"
+	test CanOrderRegionByPriority {
+		task ("Given there is a region with higher priority added to a country") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.addRegion(
+				countryName = "China",
+				regionCode = "01",
+				regionName = "A Region",
+				regionPosition = "5.0");
+
+			Navigator.gotoBack();
+		}
+
+		task ("When a user orders by priority and changes to descending order") {
+			ManagementBar.setFilterAndOrder(orderBy = "Priority");
+
+			ManagementBar.toggleViewOrder(order = "up");
+		}
+
+		task ("Then the regions will display priority in descending order") {
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "A Region");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "2",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Anhui Sheng");
+		}
+
+		task ("When a user switches the order") {
+			ManagementBar.toggleViewOrder(order = "down");
+		}
+
+		task ("Then the region priorities are displayed in ascending order") {
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Anhui Sheng");
+
+			LexiconEntry.viewNoEntry(rowEntry = "A Region");
+		}
+	}
+
 	@description = "Changing the filter to Active will not display countries in Inactive status"
 	@priority = "3"
 	test FilterByActiveWillNotDisplayInactiveCountries {

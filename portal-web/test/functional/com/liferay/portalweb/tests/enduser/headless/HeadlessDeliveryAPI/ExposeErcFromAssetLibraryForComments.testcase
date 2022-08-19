@@ -64,8 +64,7 @@ definition {
 			var response2 = CommentAPI.createCommentInBlogPosting(
 				blogPostingId = "${blogPostingId}",
 				commentText = "CommentTwo",
-				externalReferenceCode = "${idComment}",
-				idComment = "1");
+				externalReferenceCode = "${idComment}");
 		}
 
 		task ("Then another comment with the same external reference code is being created") {

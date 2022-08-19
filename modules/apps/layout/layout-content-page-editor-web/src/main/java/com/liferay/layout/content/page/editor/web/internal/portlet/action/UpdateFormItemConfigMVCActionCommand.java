@@ -60,11 +60,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -468,14 +466,12 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 			List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-157738")) &&
-				(!Objects.equals(
+			if (!Objects.equals(
 					formStyledLayoutStructureItem.getClassNameId(),
 					previousClassNameId) ||
-				 !Objects.equals(
-					 formStyledLayoutStructureItem.getClassTypeId(),
-					 previousClassTypeId))) {
+				!Objects.equals(
+					formStyledLayoutStructureItem.getClassTypeId(),
+					previousClassTypeId)) {
 
 				removedLayoutStructureItemsJSONArray =
 					_removeLayoutStructureItemsJSONArray(

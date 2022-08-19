@@ -45,8 +45,8 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 	}
 
 	@Override
-	public List<String> getCurrentNodeNames() {
-		return _currentNodeNames;
+	public List<WorkflowNode> getCurrentNodes() {
+		return _currentNodes;
 	}
 
 	@Override
@@ -117,8 +117,8 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		_childrenWorkflowInstances = childrenWorkflowInstances;
 	}
 
-	public void setCurrentNodeNames(List<String> currentNodeNames) {
-		_currentNodeNames = currentNodeNames;
+	public void setCurrentNodes(List<WorkflowNode> currentNodes) {
+		_currentNodes = currentNodes;
 	}
 
 	public void setEndDate(Date endDate) {
@@ -155,7 +155,7 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 	private boolean _active;
 	private List<WorkflowInstance> _childrenWorkflowInstances =
 		new ArrayList<>();
-	private List<String> _currentNodeNames;
+	private List<WorkflowNode> _currentNodes;
 	private Date _endDate;
 	private WorkflowInstance _parentWorkflowInstance;
 	private Date _startDate;

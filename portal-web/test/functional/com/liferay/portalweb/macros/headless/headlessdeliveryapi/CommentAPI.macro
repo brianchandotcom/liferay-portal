@@ -77,7 +77,6 @@ definition {
 			-d {
 				"externalReferenceCode": "${externalReferenceCode}",
 				"parentCommentId": "${parentCommentId}",
-				"id":"${idComment}",
 				"text": "${commentText}"
 			}
 		''';

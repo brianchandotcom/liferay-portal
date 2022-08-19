@@ -113,6 +113,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -515,6 +516,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					siteNavigationMenuItemSettingsBuilder.build(),
 					taxonomyCategoryIdsStringUtilReplaceValues));
 
+			_invoke(() -> _addWalkthrough(serviceContext));
 			_invoke(() -> _addWorkflowDefinitions(serviceContext));
 		}
 		catch (Exception exception) {
@@ -3586,6 +3588,50 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				_roleLocalService.addUserRoles(user.getUserId(), roles);
 			}
+		}
+	}
+
+	private void _addWalkthrough(ServiceContext serviceContext)
+		throws Exception {
+
+		String walkthroughConfigurationJSON = SiteInitializerUtil.read(
+			"/site-initializer/walkthrough/walkthrough-configuration.json",
+			_servletContext);
+
+		String walkthroughDefinitionJSON = SiteInitializerUtil.read(
+			"/site-initializer/walkthrough/walkthrough-definition.json",
+			_servletContext);
+
+		if ((walkthroughConfigurationJSON == null) &&
+			(walkthroughDefinitionJSON == null)) {
+
+			return;
+		}
+
+		boolean enabled = false;
+
+		JSONObject walkthroughConfigurationJSONObject =
+			JSONFactoryUtil.createJSONObject(walkthroughConfigurationJSON);
+
+		if (walkthroughConfigurationJSONObject.has("enabled")) {
+			enabled = walkthroughConfigurationJSONObject.getBoolean("enabled");
+		}
+
+		try {
+			_configurationProvider.saveGroupConfiguration(
+				serviceContext.getScopeGroupId(),
+				"com.liferay.frontend.js.walkthrough.web.internal." +
+					"configuration.WalkthroughConfiguration",
+				HashMapDictionaryBuilder.<String, Object>put(
+					"enableWalkthrough", enabled
+				).put(
+					"steps", walkthroughDefinitionJSON
+				).build());
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(
+				"Unable to save walkthrough configuration",
+				configurationException);
 		}
 	}
 

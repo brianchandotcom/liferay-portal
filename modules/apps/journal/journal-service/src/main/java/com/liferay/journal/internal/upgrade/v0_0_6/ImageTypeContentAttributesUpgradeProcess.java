@@ -97,32 +97,27 @@ public class ImageTypeContentAttributesUpgradeProcess extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select content, id_ from JournalArticle where content like " +
-					"?")) {
+					"'%type=\"image\"%'");
+			ResultSet resultSet = preparedStatement1.executeQuery();
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update JournalArticle set content = ? where id_ = ?")) {
 
-			preparedStatement1.setString(1, "%type=\"image\"%");
+			while (resultSet.next()) {
+				String content = resultSet.getString(1);
+				long id = resultSet.getLong(2);
 
-			try (ResultSet resultSet = preparedStatement1.executeQuery();
-				PreparedStatement preparedStatement2 =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection,
-						"update JournalArticle set content = ? where id_ = " +
-							"?")) {
+				String newContent = _addImageContentAttributes(content);
 
-				while (resultSet.next()) {
-					String content = resultSet.getString(1);
-					long id = resultSet.getLong(2);
+				preparedStatement2.setString(1, newContent);
 
-					String newContent = _addImageContentAttributes(content);
+				preparedStatement2.setLong(2, id);
 
-					preparedStatement2.setString(1, newContent);
-
-					preparedStatement2.setLong(2, id);
-
-					preparedStatement2.addBatch();
-				}
-
-				preparedStatement2.executeBatch();
+				preparedStatement2.addBatch();
 			}
+
+			preparedStatement2.executeBatch();
 		}
 	}
 

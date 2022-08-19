@@ -129,6 +129,7 @@ public class ObjectDefinitionServiceImpl
 			long objectDefinitionId, long accountEntryRestrictedObjectFieldId,
 			long descriptionObjectFieldId, long titleObjectFieldId,
 			boolean accountEntryRestricted, boolean active,
+			boolean enableCategorization, boolean enableComments,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, boolean portlet,
 			Map<Locale, String> pluralLabelMap, String scope)
@@ -140,8 +141,9 @@ public class ObjectDefinitionServiceImpl
 		return _objectDefinitionLocalService.updateCustomObjectDefinition(
 			objectDefinitionId, accountEntryRestrictedObjectFieldId,
 			descriptionObjectFieldId, titleObjectFieldId,
-			accountEntryRestricted, active, labelMap, name, panelAppOrder,
-			panelCategoryKey, portlet, pluralLabelMap, scope);
+			accountEntryRestricted, active, enableCategorization,
+			enableComments, labelMap, name, panelAppOrder, panelCategoryKey,
+			portlet, pluralLabelMap, scope);
 	}
 
 	@Override

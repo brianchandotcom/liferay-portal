@@ -1,0 +1,49 @@
+@component-name = "portal-service-builder"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Service Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test RenameFinderColumn {
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "ServiceBuilder#RenameFinderColumn";
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "rename-finder-column");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "build-service -Dgradle.file.path=/modules/util/portal-tools-service-builder-test-service");
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/util/portal-tools-service-builder-test-api -DliferayHome=${liferayHome}");
+
+		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.tools.service.builder.test.api_");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/util/portal-tools-service-builder-test-service -DliferayHome=${liferayHome}");
+
+		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.tools.service.builder.test.service_");
+	}
+
+}

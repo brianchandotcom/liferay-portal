@@ -201,6 +201,42 @@ definition {
 		AssertElementNotPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 	}
 
+	@description = "This is the use case for LPS-153276. Browsing in a publication should not cause changes inside the publication."
+	@priority = "4"
+	test BrowsingInPublicationCannotCauseChanges {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		Navigator.gotoNavTab(navTab = "Applications");
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
+
+		AssertElementPresent(locator1 = "PublicationsChanges#MESSAGE_NO_CHANGES");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "File Upload");
+
+		Button.click(button = "Cancel");
+
+		DMNavigator.gotoDocumentType();
+
+		DMNavigator.gotoMetadataSets();
+
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
+
+		AssertElementPresent(locator1 = "PublicationsChanges#MESSAGE_NO_CHANGES");
+	}
+
 	@description = "This is the use case for LPS-158789. Allow you to change publication via URL parameter"
 	@priority = "4"
 	test CanChangePublicationViaURLParameter {

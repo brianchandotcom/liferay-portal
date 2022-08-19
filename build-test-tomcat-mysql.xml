@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<project basedir="." default="test" name="portal-test-tomcat-mysql" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test-tomcat.xml" />
+	<import file="build-test.xml" />
+
+	<target name="run-selenium-tomcat-mysql">
+		<if>
+			<not>
+				<isset property="database.version" />
+			</not>
+			<then>
+				<var name="database.version" value="8.0" />
+			</then>
+		</if>
+
+		<get-database-property property.name="database.host" />
+
+		<antcall inheritAll="false" target="start-docker-database-mysql">
+			<param name="skip.prepare.portal.ext.properties" value="true" />
+			<param name="skip.rebuild.database" value="true" />
+		</antcall>
+
+		<antcall inheritAll="false" target="run-selenium-tomcat">
+			<param name="database.mysql.docker.image" value="mysql:${database.version}" />
+			<param name="database.mysql.host" value="${database.host}_mysql" />
+			<param name="database.mysql.schema" value="lportal" />
+			<param name="database.mysql.url" value="jdbc:mysql://${database.host}:3307/${database.mysql.schema}?characterEncoding=UTF-8&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true&amp;serverTimezone=GMT&amp;useFastDateParsing=false&amp;useUnicode=true" />
+			<param name="database.type" value="mysql" />
+			<param name="test.class" value="${test.class}" />
+		</antcall>
+	</target>
+</project>

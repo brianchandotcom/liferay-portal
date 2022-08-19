@@ -3,10 +3,10 @@ definition {
 	macro _inputCountryDetails {
 		PortletEntry.inputName(name = "${countryName}");
 
-		if (isSet(key)) {
+		if (isSet(countryKey)) {
 			PortletEntry.inputText(
 				fieldLabel = "Key",
-				text = "${key}");
+				text = "${countryKey}");
 		}
 
 		if (isSet(twoLetterISOCode)) {

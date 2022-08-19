@@ -22,6 +22,7 @@ import createMDFRequest from '../../common/services/liferay/object/mdf-requests/
 import liferayNavigate from '../../common/utils/liferayNavigate';
 import {StepType} from './enums/stepType';
 import Activities from './steps/Activities';
+import activitiesSchema from './steps/Activities/Form/schema/yup';
 import Goals from './steps/Goals';
 import goalsSchema from './steps/Goals/schema/yup';
 import Review from './steps/Review/Review';
@@ -126,6 +127,7 @@ const MDFRequestForm = () => {
 				onContinue={onContinue}
 				onPrevious={onPrevious}
 				onSaveAsDraft={onSaveAsDraft}
+				validationSchema={activitiesSchema}
 			/>
 		),
 		[StepType.REVIEW]: (

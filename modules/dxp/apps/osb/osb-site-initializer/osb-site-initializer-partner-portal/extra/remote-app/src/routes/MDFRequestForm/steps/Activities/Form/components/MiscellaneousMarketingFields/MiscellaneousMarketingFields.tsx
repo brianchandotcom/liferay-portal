@@ -21,7 +21,6 @@ const MiscellaneousMarketingFields = ({index}: IProps) => (
 		component={PRMForm.InputText}
 		label="Describe the marketing activity"
 		name={`activities[${index}].marketingActivity`}
-		required
 	/>
 );
 

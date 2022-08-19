@@ -492,6 +492,19 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#DETAILS_PAGE_TITLE");
 	}
 
+	macro assertObjectEntryFieldValueViaAPI {
+		var actualValue = JSONObject.getObjectEntryFieldValue(
+			attribute = "${attribute}",
+			attributeValue = "${attributeValue}",
+			fieldName = "${fieldName}",
+			objectName = "${objectName}",
+			type = "${type}");
+
+		TestUtils.assertEquals(
+			actual = "${actualValue}",
+			expected = "${expectedValue}");
+	}
+
 	macro assertObjectField {
 		var key_fieldLabel = "${fieldLabel}";
 		var key_fieldType = "${fieldType}";

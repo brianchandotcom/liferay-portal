@@ -30,6 +30,12 @@ public class CETLabelUtil {
 			locale, "add-x", _getCETTypeLanguageKey(type));
 	}
 
+	public static String getHelpNameLabel(
+		HttpServletRequest httpServletRequest, String type) {
+
+		return _getLabel(httpServletRequest, "help-", type);
+	}
+
 	public static String getNewLabel(Locale locale, String type) {
 		return LanguageUtil.format(
 			locale, "new-x", _getCETTypeLanguageKey(type));

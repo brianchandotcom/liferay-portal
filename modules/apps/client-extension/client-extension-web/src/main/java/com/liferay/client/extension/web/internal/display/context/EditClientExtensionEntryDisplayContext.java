@@ -82,6 +82,12 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 			_clientExtensionEntry, _portletRequest, "externalReferenceCode");
 	}
 
+	public String getHelpLabel() {
+		return LanguageUtil.get(
+			_getHttpServletRequest(),
+			CETLabelUtil.getHelpNameLabel(_getHttpServletRequest(), getType()));
+	}
+
 	public String getName() {
 		return BeanParamUtil.getString(
 			_clientExtensionEntry, _portletRequest, "name");

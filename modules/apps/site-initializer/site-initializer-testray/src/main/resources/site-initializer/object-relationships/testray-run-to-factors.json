@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Testray Run"
+	},
+	"name": "runToFactors",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Run$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Factor$]",
+	"objectDefinitionName2": "Factor",
+	"type": "oneToMany"
+}

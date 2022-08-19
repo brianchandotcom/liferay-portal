@@ -60,30 +60,36 @@ const Row = React.forwardRef(({children, className, item}, ref) => {
 	}
 
 	const rowContent = (
-		<ClayLayout.Row
+		<div
 			className={classNames(
-				className,
 				getLayoutDataItemClassName(item.type),
 				getLayoutDataItemCssClasses(item),
-				getLayoutDataItemUniqueClassName(item.itemId),
-				{
-					'flex-column-reverse':
-						item.config.numberOfColumns === 2 &&
-						modulesPerRow === 1 &&
-						reverseOrder,
-					'no-gutters': !item.config.gutters,
-				}
+				getLayoutDataItemUniqueClassName(item.itemId)
 			)}
-			id={elementId}
-			ref={ref}
-			style={style}
 		>
-			{backgroundImageValue.mediaQueries ? (
-				<style>{backgroundImageValue.mediaQueries}</style>
-			) : null}
+			<ClayLayout.Row
+				className={classNames(
+					className,
 
-			{children}
-		</ClayLayout.Row>
+					{
+						'flex-column-reverse':
+							item.config.numberOfColumns === 2 &&
+							modulesPerRow === 1 &&
+							reverseOrder,
+						'no-gutters': !item.config.gutters,
+					}
+				)}
+				id={elementId}
+				ref={ref}
+				style={style}
+			>
+				{backgroundImageValue.mediaQueries ? (
+					<style>{backgroundImageValue.mediaQueries}</style>
+				) : null}
+
+				{children}
+			</ClayLayout.Row>
+		</div>
 	);
 
 	const masterLayoutData = useSelector(

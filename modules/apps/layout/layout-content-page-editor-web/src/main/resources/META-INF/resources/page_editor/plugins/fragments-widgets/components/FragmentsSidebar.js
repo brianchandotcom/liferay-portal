@@ -92,7 +92,7 @@ const normalizeWidget = (widget) => {
 	};
 };
 
-const normalizeCollections = (collection) => {
+const normalizeCollection = (collection) => {
 	const normalizedElement = {
 		children: collection.portlets.map(normalizeWidget),
 		collectionId: collection.path,
@@ -101,7 +101,7 @@ const normalizeCollections = (collection) => {
 
 	if (collection.categories?.length) {
 		normalizedElement.collections = collection.categories.map(
-			normalizeCollections
+			normalizeCollection
 		);
 	}
 
@@ -156,9 +156,11 @@ export default function FragmentsSidebar() {
 				label: Liferay.Language.get('fragments'),
 			},
 			{
-				collections: widgets.map((collection) =>
-					normalizeCollections(collection)
-				),
+				collections: widgets
+					? widgets.map((collection) =>
+							normalizeCollection(collection)
+					  )
+					: [],
 				id: COLLECTION_IDS.widgets,
 				label: Liferay.Language.get('widgets'),
 			},

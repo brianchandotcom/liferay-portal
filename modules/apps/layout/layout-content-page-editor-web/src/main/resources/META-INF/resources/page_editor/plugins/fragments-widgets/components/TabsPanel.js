@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayTabs from '@clayui/tabs';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -19,6 +20,13 @@ import React, {useEffect, useLayoutEffect, useRef} from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {config} from '../../../app/config/index';
+import {
+	useDispatch,
+	useSelector,
+	useSelectorRef,
+} from '../../../app/contexts/StoreContext';
+import selectWidgetFragmentEntryLinks from '../../../app/selectors/selectWidgetFragmentEntryLinks';
+import loadWidgets from '../../../app/thunks/loadWidgets';
 import {useId} from '../../../app/utils/useId';
 import {useSessionState} from '../../../core/hooks/useSessionState';
 import {COLLECTION_IDS} from './FragmentsSidebar';
@@ -38,6 +46,12 @@ export default function TabsPanel({
 	const getTabPanelId = (tabId) => `${tabIdNamespace}tabPanel${tabId}`;
 	const wrapperElementRef = useRef(null);
 
+	const dispatch = useDispatch();
+	const widgetFragmentEntryLinksRef = useSelectorRef(
+		selectWidgetFragmentEntryLinks
+	);
+	const widgets = useSelector((state) => state.widgets);
+
 	const [scrollPosition, setScrollPosition] = useSessionState(
 		`${config.portletNamespace}_fragments-sidebar_${activeTabId}_scroll-position`,
 		0,
@@ -48,6 +62,16 @@ export default function TabsPanel({
 
 	const scrollPositionRef = useRef(scrollPosition);
 	scrollPositionRef.current = scrollPosition;
+
+	useEffect(() => {
+		if (activeTabId === COLLECTION_IDS.widgets && !widgets) {
+			dispatch(
+				loadWidgets({
+					fragmentEntryLinks: widgetFragmentEntryLinksRef.current,
+				})
+			);
+		}
+	}, [activeTabId, dispatch, widgetFragmentEntryLinksRef, widgets]);
 
 	useLayoutEffect(() => {
 		const wrapperElement = wrapperElementRef.current;
@@ -124,21 +148,26 @@ export default function TabsPanel({
 							key={index}
 						>
 							<ul className="list-unstyled">
-								{tab.collections.map((collection, index) => (
-									<TabCollection
-										collection={collection}
-										displayStyle={
-											tab.id === COLLECTION_IDS.widgets
-												? FRAGMENTS_DISPLAY_STYLES.LIST
-												: displayStyle
-										}
-										initialOpen={
-											index <
-											INITIAL_EXPANDED_ITEM_COLLECTIONS
-										}
-										key={index}
-									/>
-								))}
+								{tab.collections.length ? (
+									tab.collections.map((collection, index) => (
+										<TabCollection
+											collection={collection}
+											displayStyle={
+												tab.id ===
+												COLLECTION_IDS.widgets
+													? FRAGMENTS_DISPLAY_STYLES.LIST
+													: displayStyle
+											}
+											initialOpen={
+												index <
+												INITIAL_EXPANDED_ITEM_COLLECTIONS
+											}
+											key={index}
+										/>
+									))
+								) : (
+									<ClayLoadingIndicator small />
+								)}
 							</ul>
 						</ClayTabs.TabPane>
 					))}

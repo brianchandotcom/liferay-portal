@@ -58,7 +58,9 @@ public class FileEntryInfoItemFriendlyURLProvider
 		long groupId = _getGroupId();
 
 		if ((groupId != GroupConstants.DEFAULT_LIVE_GROUP_ID) &&
-			(groupId != mainFriendlyURLEntry.getGroupId())) {
+			(groupId != mainFriendlyURLEntry.getGroupId()) &&
+			_isFriendlyURLDuplicateInGroup(
+				groupId, mainFriendlyURLEntry.getUrlTitle())) {
 
 			return String.valueOf(fileEntry.getFileEntryId());
 		}
@@ -99,6 +101,20 @@ public class FileEntryInfoItemFriendlyURLProvider
 		}
 
 		return themeDisplay.getScopeGroupId();
+	}
+
+	private boolean _isFriendlyURLDuplicateInGroup(
+		long groupId, String friendlyURL) {
+
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+				groupId, FileEntry.class, friendlyURL);
+
+		if (friendlyURLEntry == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private final FriendlyURLEntryLocalizationComparator

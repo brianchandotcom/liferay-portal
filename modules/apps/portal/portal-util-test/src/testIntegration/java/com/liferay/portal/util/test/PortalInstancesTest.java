@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -32,12 +33,19 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpSession;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -129,6 +137,77 @@ public class PortalInstancesTest {
 			_nondefaultGroupPublicLayout.getLayoutSet());
 	}
 
+	@Test
+	public void testi18nLanguageIdNotSet() throws Exception {
+		Group group = _initializeGroup();
+
+		String hostname =
+			RandomTestUtil.randomString(6) + "." +
+				RandomTestUtil.randomString(3);
+
+		// No virtualHost language set
+
+		_updateLayoutSetVirtualHostname(
+			group.getPublicLayoutSet(), hostname, StringPool.BLANK);
+
+		// No session
+
+		_testGetI18NLanguageId(hostname, null, null);
+
+		// Unavailable languageId
+
+		_testGetI18NLanguageId(
+			hostname, LanguageUtil.getLocale(_UNAVAILABLE_LANGUAGE_ID), null);
+	}
+
+	@Test
+	public void testi18nLanguageIdSet() throws Exception {
+		Group group = _initializeGroup();
+
+		String hostname =
+			RandomTestUtil.randomString(6) + "." +
+				RandomTestUtil.randomString(3);
+
+		// VirtualHost language set
+
+		_updateLayoutSetVirtualHostname(
+			group.getPublicLayoutSet(), hostname, _SITE_DEFAULT_LANGUAGE_ID);
+
+		_testGetI18NLanguageId(hostname, null, _SITE_DEFAULT_LANGUAGE_ID);
+
+		// Remove virtualHost language to test new changes
+
+		_updateLayoutSetVirtualHostname(
+			group.getPublicLayoutSet(), hostname, StringPool.BLANK);
+
+		// Verify I18NLanguageId is not set without Session and Locale
+
+		_testGetI18NLanguageId(hostname, null, null);
+
+		// Valid Session and Locale
+
+		_testGetI18NLanguageId(
+			hostname, _company.getLocale(),
+			LanguageUtil.getLanguageId(_company.getLocale()));
+	}
+
+	private Group _initializeGroup() throws Exception {
+		Group group = GroupTestUtil.addGroupToCompany(_company.getCompanyId());
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			group.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty(
+			"languageId", _SITE_DEFAULT_LANGUAGE_ID);
+
+		typeSettingsUnicodeProperties.setProperty(
+			PropsKeys.LOCALES, _SITE_DEFAULT_LANGUAGE_ID);
+
+		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+
+		return _groupLocalService.updateGroup(group);
+	}
+
 	private void _testGetCompanyId(
 		String hostname, LayoutSet expectedLayoutSet) {
 
@@ -149,6 +228,33 @@ public class PortalInstancesTest {
 				WebKeys.VIRTUAL_HOST_LAYOUT_SET));
 	}
 
+	private void _testGetI18NLanguageId(
+		String hostname, Locale locale, String expectedLanguageId) {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setServerName(hostname);
+
+		mockHttpServletRequest.addHeader("Host", hostname);
+
+		if (locale != null) {
+			HttpSession httpSession = mockHttpServletRequest.getSession(true);
+
+			httpSession.setAttribute(WebKeys.LOCALE, locale);
+
+			mockHttpServletRequest.setSession(httpSession);
+		}
+
+		Assert.assertEquals(
+			_company.getCompanyId(),
+			PortalInstances.getCompanyId(mockHttpServletRequest));
+
+		Assert.assertEquals(
+			expectedLanguageId,
+			mockHttpServletRequest.getAttribute(WebKeys.I18N_LANGUAGE_ID));
+	}
+
 	private void _updateLayoutSetVirtualHostname(
 		Layout layout, String layoutHostname) {
 
@@ -167,6 +273,10 @@ public class PortalInstancesTest {
 				StringUtil.toLowerCase(layoutHostname), languageId
 			).build());
 	}
+
+	private static final String _SITE_DEFAULT_LANGUAGE_ID = "es_ES";
+
+	private static final String _UNAVAILABLE_LANGUAGE_ID = "vi_VN";
 
 	private Company _company;
 

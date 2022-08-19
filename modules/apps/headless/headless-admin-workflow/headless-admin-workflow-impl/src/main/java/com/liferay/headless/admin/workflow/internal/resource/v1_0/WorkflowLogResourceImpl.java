@@ -23,8 +23,11 @@ import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowLogResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -35,6 +38,7 @@ import com.liferay.portal.workflow.kaleo.definition.util.KaleoLogUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -147,6 +151,21 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 			_userLocalService.fetchUser(role.getUserId()));
 	}
 
+	private String _toState(String state) {
+		if (state == null) {
+			return null;
+		}
+
+		if (!Validator.isXml(state)) {
+			return state;
+		}
+
+		return LocalizationUtil.getLocalization(
+			state,
+			LocaleUtil.toLanguageId(contextAcceptLanguage.getPreferredLocale()),
+			true);
+	}
+
 	private WorkflowLog _toWorkflowLog(
 			com.liferay.portal.kernel.workflow.WorkflowLog workflowLog)
 		throws Exception {
@@ -175,9 +194,9 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 					_userLocalService.fetchUser(
 						workflowLog.getPreviousUserId()));
 				previousRole = _toRole(workflowLog.getPreviousRoleId());
-				previousState = workflowLog.getPreviousState();
+				previousState = _toState(workflowLog.getPreviousState());
 				role = _toRole(workflowLog.getRoleId());
-				state = workflowLog.getState();
+				state = _toState(workflowLog.getState());
 				type = _toWorkflowLogType(
 					KaleoLogUtil.convert(workflowLog.getType()));
 				workflowTaskId = workflowLog.getWorkflowTaskId();
@@ -186,19 +205,19 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 	}
 
 	private WorkflowLog.Type _toWorkflowLogType(String type) {
-		if (type == LogType.NODE_ENTRY.name()) {
+		if (Objects.equals(type, LogType.NODE_ENTRY.name())) {
 			return WorkflowLog.Type.NODE_ENTRY;
 		}
-		else if (type == LogType.NODE_EXIT.name()) {
+		else if (Objects.equals(type, LogType.NODE_EXIT.name())) {
 			return WorkflowLog.Type.TRANSITION;
 		}
-		else if (type == LogType.TASK_ASSIGNMENT.name()) {
+		else if (Objects.equals(type, LogType.TASK_ASSIGNMENT.name())) {
 			return WorkflowLog.Type.TASK_ASSIGN;
 		}
-		else if (type == LogType.TASK_COMPLETION.name()) {
+		else if (Objects.equals(type, LogType.TASK_COMPLETION.name())) {
 			return WorkflowLog.Type.TASK_COMPLETION;
 		}
-		else if (type == LogType.TASK_UPDATE.name()) {
+		else if (Objects.equals(type, LogType.TASK_UPDATE.name())) {
 			return WorkflowLog.Type.TASK_UPDATE;
 		}
 

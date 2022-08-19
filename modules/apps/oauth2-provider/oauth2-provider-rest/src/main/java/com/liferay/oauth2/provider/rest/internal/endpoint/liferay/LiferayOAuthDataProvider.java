@@ -667,7 +667,7 @@ public class LiferayOAuthDataProvider
 	protected JwtClaims createJwtAccessToken(
 		ServerAccessToken serverAccessToken) {
 
-		_enrichServiceAccessToken(Collections.emptyMap(), serverAccessToken);
+		_customizeServerAccessToken(Collections.emptyMap(), serverAccessToken);
 
 		// Override this method to fix a bug in cxf.
 		// Scopes in JWT claim should be a string.
@@ -709,7 +709,7 @@ public class LiferayOAuthDataProvider
 			return serverAccessToken;
 		}
 
-		_enrichServiceAccessToken(
+		_customizeServerAccessToken(
 			accessTokenRegistration.getExtraProperties(), serverAccessToken);
 
 		return serverAccessToken;
@@ -790,7 +790,7 @@ public class LiferayOAuthDataProvider
 			return serverAccessToken;
 		}
 
-		_enrichServiceAccessToken(Collections.emptyMap(), serverAccessToken);
+		_customizeServerAccessToken(Collections.emptyMap(), serverAccessToken);
 
 		return serverAccessToken;
 	}
@@ -869,7 +869,7 @@ public class LiferayOAuthDataProvider
 		super.setJwtAccessTokenProducer(oAuthJoseJwtProducer);
 	}
 
-	private void _enrichServiceAccessToken(
+	private void _customizeServerAccessToken(
 		Map<String, String> extraProperties,
 		ServerAccessToken serverAccessToken) {
 

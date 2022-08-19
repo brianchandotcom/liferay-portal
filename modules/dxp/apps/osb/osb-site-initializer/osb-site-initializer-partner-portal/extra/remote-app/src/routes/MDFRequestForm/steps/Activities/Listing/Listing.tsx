@@ -16,6 +16,7 @@ import {ArrayHelpers} from 'formik';
 
 import MDFRequestActivity from '../../../../../common/interfaces/mdfRequestActivity';
 import ActivityPanel from '../../../components/ActivityPanel';
+import getNewActivity from '../Form/utils/getNewActivity';
 
 interface IProps {
 	activities: MDFRequestActivity[];
@@ -27,8 +28,14 @@ const Listing = ({
 	activities,
 	onAdd,
 	overallCampaign,
+	push,
 	remove,
 }: IProps & ArrayHelpers) => {
+	const handleOnAdd = () => {
+		push(getNewActivity());
+		onAdd();
+	};
+
 	return (
 		<>
 			<div>
@@ -48,7 +55,7 @@ const Listing = ({
 				)}
 			</div>
 
-			<Button className="d-flex" onClick={onAdd} outline small>
+			<Button className="d-flex" onClick={handleOnAdd} outline small>
 				<span className="inline-item inline-item-before">
 					<ClayIcon symbol="plus" />
 				</span>

@@ -876,7 +876,7 @@ definition {
 			License.deployLicenseFile();
 		}
 
-		Navigator.openSpecificURL(url = "http://localhost:8080");
+		Open.openInTheNewTab(locator1 = "http://localhost:8080");
 
 		SignIn.agreeToTermsOfUse();
 
@@ -984,7 +984,7 @@ definition {
 			License.deployLicenseFile();
 		}
 
-		Navigator.openSpecificURL(url = "http://localhost:8080");
+		Open.openInTheNewTab(locator1 = "http://localhost:8080");
 
 		SignIn.agreeToTermsOfUse();
 

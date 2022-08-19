@@ -502,9 +502,14 @@ public class TestHistoryMap {
 			long totalDuration = 0;
 
 			for (TestClassReport testClassReport : _testClassReports) {
+				DownstreamBuildReport downstreamBuildReport =
+					testClassReport.getDownstreamBuildReport();
+
 				long duration = testClassReport.getDuration();
 
-				if (duration > _MAXIMUM_TEST_DURATION) {
+				if ((duration <= 0) || (duration >= _MAXIMUM_TEST_DURATION) ||
+					(duration >= downstreamBuildReport.getDuration())) {
+
 					continue;
 				}
 
@@ -622,9 +627,14 @@ public class TestHistoryMap {
 			long totalDuration = 0;
 
 			for (TestReport testReport : _testReports) {
+				DownstreamBuildReport downstreamBuildReport =
+					testReport.getDownstreamBuildReport();
+
 				long duration = testReport.getDuration();
 
-				if (duration > _MAXIMUM_TEST_DURATION) {
+				if ((duration <= 0) || (duration >= _MAXIMUM_TEST_DURATION) ||
+					(duration >= downstreamBuildReport.getDuration())) {
+
 					continue;
 				}
 

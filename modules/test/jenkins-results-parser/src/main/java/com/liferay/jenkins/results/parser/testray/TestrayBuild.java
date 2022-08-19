@@ -140,9 +140,38 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			return _topLevelBuildReport;
 		}
 
+		URL topLevelBuildReportURL = getTopLevelBuildReportURL();
+
+		if ((topLevelBuildReportURL == null) ||
+			!JenkinsResultsParserUtil.exists(getTopLevelBuildReportURL())) {
+
+			return null;
+		}
+
 		_topLevelBuildReport = BuildReportFactory.newTopLevelBuildReport(this);
 
 		return _topLevelBuildReport;
+	}
+
+	public URL getTopLevelBuildReportURL() {
+		Matcher matcher = _getTestrayAttachmentURLMatcher();
+
+		if (matcher == null) {
+			return null;
+		}
+
+		try {
+			return new URL(
+				JenkinsResultsParserUtil.combine(
+					"https://", matcher.group("topLevelMasterHostname"),
+					".liferay.com/userContent/jobs/",
+					matcher.group("topLevelJobName"), "/builds/",
+					matcher.group("topLevelBuildNumber"),
+					"/build-report.json.gz"));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	public URL getTopLevelBuildURL() {

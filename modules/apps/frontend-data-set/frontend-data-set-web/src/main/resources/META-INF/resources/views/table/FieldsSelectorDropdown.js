@@ -77,18 +77,33 @@ const FieldsSelectorDropdown = ({fields}) => {
 						<ClayDropDown.Item
 							key={fieldName}
 							onClick={() => {
-								dispatch(
-									persistVisibleFieldNames({
-										appURL,
-										id,
-										portletId,
-										visibleFieldNames: {
-											...selectedFieldNames,
-											[fieldName]: !selectedFieldNames[
-												fieldName
-											],
-										},
-									})
+								const newVisibleFieldNames = {
+									...selectedFieldNames,
+									[fieldName]: !selectedFieldNames[fieldName],
+								};
+
+								Object.keys(newVisibleFieldNames).some(
+									(visibleFieldName) => {
+										if (
+											newVisibleFieldNames[
+												visibleFieldName
+											]
+										) {
+											dispatch(
+												persistVisibleFieldNames({
+													appURL,
+													id,
+													portletId,
+													visibleFieldNames: {
+														...selectedFieldNames,
+														[fieldName]: !selectedFieldNames[
+															fieldName
+														],
+													},
+												})
+											);
+										}
+									}
 								);
 							}}
 						>

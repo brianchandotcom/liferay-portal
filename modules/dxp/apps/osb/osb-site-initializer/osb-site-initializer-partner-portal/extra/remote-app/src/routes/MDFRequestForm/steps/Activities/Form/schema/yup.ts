@@ -9,10 +9,11 @@
  * distribution rights of the Software.
  */
 
-import dayjs from 'dayjs';
 import {array, date, object, string} from 'yup';
 
 import {TypeActivityExternalReferenceCode} from '../../../../../../common/enums/typeActivityExternalReferenceCode';
+import {TypeDiff} from '../../../../enums/typeDiff';
+import getDateDiff from '../utils/getDateDiff';
 
 const activitiesSchema = object({
 	activities: array()
@@ -221,19 +222,32 @@ const activitiesSchema = object({
 				r_tacticToActivities_c_tacticId: string().required('Required'),
 				startDate: date()
 					.test('Year test', 'Cannot be today', (value) => {
-						const currentTime = dayjs();
-						const startDate = dayjs(value);
+						if (value) {
+							const currentTime = new Date();
 
-						return currentTime.diff(startDate) <= 0;
+							return (
+								getDateDiff(value, currentTime, TypeDiff.DAY) <=
+								0
+							);
+						}
+
+						return false;
 					})
 					.test(
 						'Year test',
 						'The start date cannot be greater than the end date',
 						(value, testContext) => {
-							const startDate = dayjs(value);
-							const endDate = dayjs(testContext.parent.endDate);
+							if (value) {
+								return (
+									getDateDiff(
+										value,
+										testContext.parent.endDate,
+										TypeDiff.DAY
+									) >= 0
+								);
+							}
 
-							return startDate.diff(endDate, 'day') <= 0;
+							return false;
 						}
 					)
 					.required('Required'),
@@ -242,13 +256,17 @@ const activitiesSchema = object({
 						'Year test',
 						'End date must be less than six month after start date',
 						(value, testContext) => {
-							const startDate = dayjs(
-								testContext.parent.startDate
-							);
+							if (value) {
+								return (
+									getDateDiff(
+										testContext.parent.startDate,
+										value,
+										TypeDiff.MONTH
+									) <= 6
+								);
+							}
 
-							const endDate = dayjs(value);
-
-							return endDate.diff(startDate, 'day') <= 60;
+							return false;
 						}
 					)
 					.required('Required'),

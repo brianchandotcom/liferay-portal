@@ -248,7 +248,7 @@ components:
                     format: int32
                     type: integer
                 type:
-                    enum: [categorization, regular]
+                    enum: [categorization, comments, regular]
                     type: string
         ObjectLayoutColumn:
             properties:

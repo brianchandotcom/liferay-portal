@@ -1,4 +1,5 @@
 import com.liferay.gradle.plugins.patcher.PatchTask
+import com.liferay.gradle.util.FileUtil
 
 apply plugin: "com.liferay.patcher"
 
@@ -9,6 +10,18 @@ dependencies {
 }
 
 patch {
+	doFirst {
+		copy {
+			from FileUtil.get(project, "https://raw.githubusercontent.com/apache/commons-bcel/BCEL_5_0/src/java/org/apache/bcel/classfile/ConstantPool.java")
+			into new File(temporaryDir, "src/org/apache/bcel/classfile")
+		}
+
+		copy {
+			from FileUtil.get(project, "https://raw.githubusercontent.com/apache/commons-bcel/BCEL_5_0/src/java/org/apache/bcel/generic/ConstantPoolGen.java")
+			into new File(temporaryDir, "src/org/apache/bcel/generic")
+		}
+	}
+
 	ext {
 		autoClean = false
 	}

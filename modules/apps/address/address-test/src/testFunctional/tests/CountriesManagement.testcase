@@ -94,6 +94,34 @@ definition {
 		}
 	}
 
+	@description = "Test adding a region to existing country"
+	@priority = "5"
+	test CanAddRegion {
+		task ("Given a country exists") {
+			CountriesManagement.openCountriesManagementPortlet();
+		}
+
+		task ("When a user adds a region to a country") {
+			CountriesManagement.addRegion(
+				countryName = "Philippines",
+				regionCode = "13",
+				regionName = "National Capital Region",
+				regionPosition = "1.0");
+		}
+
+		task ("Then region is successfully saved") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "Philippines");
+
+			CountriesManagement.viewRegionsInTable(
+				regionCode = "13",
+				regionName = "National Capital Region",
+				regionPosition = "1.0",
+				regionStatus = "Active");
+		}
+	}
+
 	@description = "This test asserts that a user can deactivate an active country"
 	@priority = "5"
 	test CanDeactivateAnActiveCountry {
@@ -159,6 +187,76 @@ definition {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "There are no countries.");
+		}
+	}
+
+	@description = "Test deleting a region from country"
+	@priority = "5"
+	test CanDeleteRegion {
+		task ("Given a region exists") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.addRegion(
+				countryName = "Philippines",
+				regionCode = "14",
+				regionName = "Cordillera Administrative Region");
+		}
+
+		task ("When a user deletes this region") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "Philippines");
+
+			CountriesManagement.deleteRegion(regionName = "Cordillera Administrative Region");
+		}
+
+		task ("Then region is successfully deleted") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "Philippines");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "There are no regions.");
+		}
+	}
+
+	@description = "Test editing region fields"
+	@priority = "5"
+	test CanEditRegion {
+		task ("Given a region exists") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.addRegion(
+				countryName = "Philippines",
+				regionCode = "04",
+				regionName = "Calabarzon");
+		}
+
+		task ("When a user edits this region") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "Philippines");
+
+			CountriesManagement.editRegion(
+				regionCodeEdit = "05",
+				regionKeyEdit = "bicol-region",
+				regionName = "Calabarzon",
+				regionNameEdit = "Bicol Region",
+				regionPositionEdit = "2.0",
+				regionStatusEdit = "Inactive");
+		}
+
+		task ("Then region is successfully updated") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "Philippines");
+
+			CountriesManagement.viewRegionsInTable(
+				regionCode = "05",
+				regionName = "Bicol Region",
+				regionPosition = "2.0",
+				regionStatus = "Inactive");
 		}
 	}
 

@@ -168,6 +168,9 @@ public class PortalUpgradeProcessRegistryImpl
 				}
 
 			});
+
+		upgradeVersionTreeMap.put(
+			new Version(16, 1, 1), new UpgradeGroupType());
 	}
 
 }

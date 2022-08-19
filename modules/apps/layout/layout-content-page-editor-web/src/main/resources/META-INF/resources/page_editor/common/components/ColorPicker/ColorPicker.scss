@@ -6,11 +6,7 @@
 html#{$cadmin-selector} {
 	.cadmin {
 		.page-editor__color-picker {
-			&.has-value {
-				display: grid;
-				gap: 8px;
-				grid-template-columns: auto 32px 32px;
-			}
+			display: flex;
 
 			.clay-color > .input-group-item > .input-group-text {
 				border-radius: 4px 0 0 4px;

@@ -124,7 +124,12 @@ export function DropdownColorPicker({
 	}, []);
 
 	return (
-		<div className="page-editor__dropdown-color-picker w-100">
+		<div
+			className={classNames(
+				'flex-grow-1 flex-shrink-0 page-editor__dropdown-color-picker',
+				{'ml-2': !showSelector}
+			)}
+		>
 			{showSelector ? (
 				<ClayButton
 					aria-label={label}

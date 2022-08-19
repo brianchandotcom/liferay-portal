@@ -38,7 +38,8 @@ public class SXPElementLocalServiceWrapper
 
 	@Override
 	public com.liferay.search.experiences.model.SXPElement addSXPElement(
-			long userId, java.util.Map<java.util.Locale, String> descriptionMap,
+			String externalReferenceCode, long userId,
+			java.util.Map<java.util.Locale, String> descriptionMap,
 			String elementDefinitionJSON, boolean readOnly,
 			String schemaVersion,
 			java.util.Map<java.util.Locale, String> titleMap, int type,
@@ -46,22 +47,8 @@ public class SXPElementLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sxpElementLocalService.addSXPElement(
-			userId, descriptionMap, elementDefinitionJSON, readOnly,
-			schemaVersion, titleMap, type, serviceContext);
-	}
-
-	@Override
-	public com.liferay.search.experiences.model.SXPElement addSXPElement(
-			long userId, java.util.Map<java.util.Locale, String> descriptionMap,
-			String elementDefinitionJSON, String externalReferenceCode,
-			boolean readOnly, String schemaVersion,
-			java.util.Map<java.util.Locale, String> titleMap, int type,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _sxpElementLocalService.addSXPElement(
-			userId, descriptionMap, elementDefinitionJSON,
-			externalReferenceCode, readOnly, schemaVersion, titleMap, type,
+			externalReferenceCode, userId, descriptionMap,
+			elementDefinitionJSON, readOnly, schemaVersion, titleMap, type,
 			serviceContext);
 	}
 

@@ -1,0 +1,48 @@
+[
+	{
+		"pid": "com.liferay.frontend.js.walkthrough.web.internal.configuration.WalkthroughConfiguration",
+		"properties": {
+			"enabled": "true",
+			"steps": {
+				"pages": {
+					"/home": [
+						"step-1",
+						"step-2",
+						"step-3",
+						"step-4"
+					]
+				},
+				"steps": [
+					{
+						"content": "<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>",
+						"darkbg": true,
+						"id": "step-1",
+						"nodeToHighlight": ".liferay-online-list",
+						"title": "Available Templates"
+					},
+					{
+						"content": "<span>Suspendisse massa mi, suscipit ut lorem a, ultricies elementum lacus.</span>",
+						"darkbg": true,
+						"id": "step-2",
+						"nodeToHighlight": ".item-0",
+						"title": "Template 1"
+					},
+					{
+						"content": "<span>Integer rhoncus fringilla tellus, sed facilisis libero dapibus auctor.</span>",
+						"darkbg": true,
+						"id": "step-3",
+						"nodeToHighlight": ".item-1",
+						"title": "Template 2"
+					},
+					{
+						"content": "<span>Sed interdum velit at lorem aliquam, a rhoncus ante rhoncus.</span>",
+						"darkbg": true,
+						"id": "step-4",
+						"nodeToHighlight": ".item-2",
+						"title": "Template 3"
+					}
+				]
+			}
+		}
+	}
+]

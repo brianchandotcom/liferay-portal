@@ -64,6 +64,11 @@ public class QuartzTriggerFactory implements TriggerFactory {
 				jobName, groupName, startDate, endDate, (ScheduleBuilder)null);
 		}
 
+		if (startDate == null) {
+			startDate = new Date(
+				System.currentTimeMillis() + timeUnit.toMillis(interval));
+		}
+
 		if (timeUnit == TimeUnit.MILLISECOND) {
 			SimpleScheduleBuilder simpleScheduleBuilder =
 				SimpleScheduleBuilder.simpleSchedule();

@@ -24,10 +24,9 @@ import {useFetch} from '../../../../hooks/useFetch';
 import useHeader from '../../../../hooks/useHeader';
 import i18n from '../../../../i18n';
 import {
-	getBuildQuery,
-	getBuildTransformData,
 	getTasksTransformData,
 	tasksResource,
+	testrayBuildRest,
 } from '../../../../services/rest';
 import BuildAlertBar from './BuildAlertBar';
 import BuildOverview from './BuildOverview';
@@ -44,9 +43,11 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 	const {setHeaderActions, setHeading, setTabs} = useHeader({timeout: 200});
 	const {testrayProject, testrayRoutine}: any = useOutletContext();
 
-	const {data: testrayBuild, mutate: mutateBuild} = useFetch(
-		getBuildQuery(buildId as string),
-		getBuildTransformData
+	const {
+		data: testrayBuild,
+		mutate: mutateBuild,
+	} = useFetch(testrayBuildRest.getResource(buildId as string), (response) =>
+		testrayBuildRest.transformData(response)
 	);
 
 	const {data: testrayTasksData} = useFetch(

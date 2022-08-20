@@ -28,6 +28,7 @@ import {filters} from '../../../schema/filter';
 import {
 	TestrayRequirement,
 	TestrayRequirementCase,
+	getCasesRequerimentsTransformData,
 	requirementsCasesResource,
 } from '../../../services/rest';
 import {DescriptionType} from '../../../types';
@@ -40,7 +41,7 @@ const Requirement = () => {
 	const {
 		testrayRequirement,
 	}: {testrayRequirement: TestrayRequirement} = useOutletContext();
-	const {actions, formModal} = useRequirementCaseActions();
+	const {actions, formModal} = useRequirementCaseActions(testrayRequirement);
 
 	const {context, setHeading, setTabs} = useHeader({shouldUpdate: false});
 
@@ -61,7 +62,7 @@ const Requirement = () => {
 	return (
 		<>
 			<RequirementCaseLinkModal
-				modal={formModal.modal}
+				modal={formModal}
 				projectId={projectId as string}
 			/>
 
@@ -134,7 +135,7 @@ const Requirement = () => {
 							<ClayManagementToolbar.Item>
 								<Button
 									displayType="secondary"
-									onClick={() => formModal.modal.open()}
+									onClick={() => formModal.open()}
 									symbol="list-ul"
 								>
 									{i18n.translate('link-cases')}
@@ -154,7 +155,7 @@ const Requirement = () => {
 								render: (
 									_,
 									requirementCase: TestrayRequirementCase
-								) => requirementCase.case.priority,
+								) => requirementCase?.case?.priority,
 								value: i18n.translate('priority'),
 							},
 							{
@@ -163,7 +164,7 @@ const Requirement = () => {
 								render: (
 									_,
 									requirementCase: TestrayRequirementCase
-								) => requirementCase.case.name,
+								) => requirementCase?.case?.name,
 								value: i18n.translate('case-name'),
 							},
 							{
@@ -172,13 +173,14 @@ const Requirement = () => {
 								render: (
 									_,
 									requirementCase: TestrayRequirementCase
-								) => requirementCase.case.component?.name,
+								) => requirementCase?.case?.component?.name,
 								value: i18n.translate('component'),
 							},
 						],
 						navigateTo: ({case: Case}: TestrayRequirementCase) =>
 							`/project/${projectId}/cases/${Case.id}`,
 					}}
+					transformData={getCasesRequerimentsTransformData}
 					variables={{
 						filter: searchUtil.eq(
 							'requirementId',

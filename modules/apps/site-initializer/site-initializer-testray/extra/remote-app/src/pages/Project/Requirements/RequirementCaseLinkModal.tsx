@@ -27,7 +27,7 @@ type RequirementCaseLinkModalProps = {
 	projectId: string;
 };
 
-export type State = number[];
+type State = {caseId: number}[];
 
 const RequirementCaseLinkModal: React.FC<RequirementCaseLinkModalProps> = ({
 	modal: {observer, onClose, onSave, visible},
@@ -55,7 +55,8 @@ const RequirementCaseLinkModal: React.FC<RequirementCaseLinkModalProps> = ({
 					managementToolbarProps: {
 						title: i18n.translate('cases'),
 					},
-					onContextChange: ({selectedRows}) => setState(selectedRows),
+					onContextChange: ({selectedRows}) =>
+						setState(selectedRows.map((caseId) => ({caseId}))),
 				}}
 				tableProps={{navigateTo: undefined, rowSelectable: true}}
 				variables={{

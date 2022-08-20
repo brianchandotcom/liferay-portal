@@ -22,8 +22,7 @@ import Modal from '../../components/Modal';
 import {FormModalOptions} from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 import {
-	buildsResource,
-	getBuildsTransformData,
+	testrayBuildRest,
 	testrayProjectRest,
 	testrayRoutineRest,
 } from '../../services/rest';
@@ -62,8 +61,8 @@ const TestflowForm = () => {
 				label="Project"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
 				resource="/projects"
-				transformData={(...params) =>
-					testrayProjectRest.transformDataFromList(...params)
+				transformData={(response) =>
+					testrayProjectRest.transformDataFromList(response)
 				}
 			/>
 
@@ -71,16 +70,18 @@ const TestflowForm = () => {
 				label="Routine"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
 				resource="/routines"
-				transformData={(...params) =>
-					testrayRoutineRest.transformDataFromList(...params)
+				transformData={(response) =>
+					testrayRoutineRest.transformDataFromList(response)
 				}
 			/>
 
 			<Form.AutoComplete
 				label="Build"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
-				resource={buildsResource}
-				transformData={getBuildsTransformData}
+				resource={testrayBuildRest.resource}
+				transformData={(response) =>
+					testrayBuildRest.transformDataFromList(response)
+				}
 			/>
 			<Form.Input label="Name" name="name" required />
 

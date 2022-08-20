@@ -34,10 +34,8 @@ import {
 	TestrayFactor,
 	TestrayProductVersion,
 	TestrayRoutine,
-	createBuild,
-	factorResource,
-	getFactorsTransformData,
-	updateBuild,
+	testrayBuildRest,
+	testrayFactorRest,
 } from '../../../../services/rest';
 import {searchUtil} from '../../../../util/search';
 import FactorOptionsFormModal from '../../../Standalone/FactorOptions/FactorOptionsFormModal';
@@ -67,11 +65,11 @@ const BuildForm = () => {
 	const {projectId, routineId} = useParams();
 
 	const {data: factorsData} = useFetch<APIResponse<TestrayFactor>>(
-		`${factorResource}&filter=${searchUtil.eq(
+		`${testrayFactorRest.resource}&filter=${searchUtil.eq(
 			'routineId',
 			routineId as string
 		)}`,
-		getFactorsTransformData
+		(response) => testrayFactorRest.transformDataFromList(response)
 	);
 
 	const {data: productVersionsData, mutate} = useFetch<
@@ -185,8 +183,8 @@ const BuildForm = () => {
 		}
 
 		const response = await onSubmit(data, {
-			create: createBuild,
-			update: updateBuild,
+			create: (...params) => testrayBuildRest.create(...params),
+			update: (...params) => testrayBuildRest.update(...params),
 		});
 
 		if (testrayBuild) {

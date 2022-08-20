@@ -12,26 +12,49 @@
  * details.
  */
 
-import React from 'react';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import React, {Suspense, lazy, useContext} from 'react';
 
 import toDataArray, {sumTotalEntries, toArray} from '../../utils/data';
 import fieldTypes from '../../utils/fieldTypes';
-import MultiBarChart from '../chart/bar/MultiBarChart';
-import SimpleBarChart from '../chart/bar/SimpleBarChart';
-import PieChart from '../chart/pie/PieChart';
 import EmptyState from '../empty-state/EmptyState';
 import List from '../list/List';
+import {SidebarContext} from '../sidebar/SidebarContext';
 import Card from './Card';
 
-const chartFactory = ({
-	field,
-	structure,
-	sumTotalValues,
-	summary,
-	totalEntries,
-	values,
-}) => {
+const lazyLoader = ({dataEngineRequire, path}) => {
+	return lazy(
+		() =>
+			new Promise((resolve, reject) => {
+				Liferay.Loader.require(
+					[`${dataEngineRequire}${path}`],
+					(Component) => resolve(Component),
+					(error) => reject(error)
+				);
+			})
+	);
+};
+
+const chartFactory = (
+	{field, structure, sumTotalValues, summary, totalEntries, values},
+	dataEngineRequire
+) => {
 	const {options, type} = field;
+
+	const MultiBarChart = lazyLoader({
+		dataEngineRequire,
+		path: '/js/custom/form-report/components/chart/bar/MultiBarChart',
+	});
+
+	const PieChart = lazyLoader({
+		dataEngineRequire,
+		path: '/js/custom/form-report/components/chart/pie/PieChart',
+	});
+
+	const SimpleBarChart = lazyLoader({
+		dataEngineRequire,
+		path: '/js/custom/form-report/components/chart/bar/SimpleBarChart',
+	});
 
 	switch (type) {
 		case 'address':
@@ -69,28 +92,34 @@ const chartFactory = ({
 			}
 
 			return (
-				<PieChart
-					data={toDataArray(options, newValues)}
-					totalEntries={sumTotalValues}
-				/>
+				<Suspense fallback={<ClayLoadingIndicator />}>
+					<PieChart
+						data={toDataArray(options, newValues)}
+						totalEntries={sumTotalValues}
+					/>
+				</Suspense>
 			);
 		}
 		case 'checkbox_multiple': {
 			return (
-				<SimpleBarChart
-					data={toDataArray(options, values)}
-					totalEntries={totalEntries}
-				/>
+				<Suspense fallback={<ClayLoadingIndicator />}>
+					<SimpleBarChart
+						data={toDataArray(options, values)}
+						totalEntries={totalEntries}
+					/>
+				</Suspense>
 			);
 		}
 		case 'grid': {
 			return (
-				<MultiBarChart
-					data={values}
-					field={field}
-					structure={structure}
-					totalEntries={sumTotalValues}
-				/>
+				<Suspense fallback={<ClayLoadingIndicator />}>
+					<MultiBarChart
+						data={values}
+						field={field}
+						structure={structure}
+						totalEntries={sumTotalValues}
+					/>
+				</Suspense>
 			);
 		}
 		case 'numeric': {
@@ -112,10 +141,12 @@ const chartFactory = ({
 		case 'radio':
 		case 'select': {
 			return (
-				<PieChart
-					data={toDataArray(options, values)}
-					totalEntries={sumTotalValues}
-				/>
+				<Suspense fallback={<ClayLoadingIndicator />}>
+					<PieChart
+						data={toDataArray(options, values)}
+						totalEntries={sumTotalValues}
+					/>
+				</Suspense>
 			);
 		}
 		default:
@@ -125,6 +156,8 @@ const chartFactory = ({
 
 export default function CardList({data, fields}) {
 	let hasCards = false;
+
+	const {dataEngineRequire} = useContext(SidebarContext);
 
 	const cards = fields.map((field, index) => {
 		const newData =
@@ -151,7 +184,7 @@ export default function CardList({data, fields}) {
 			values,
 		};
 
-		const chart = chartFactory(chartContent);
+		const chart = chartFactory(chartContent, dataEngineRequire);
 
 		if (chart === null) {
 			return null;

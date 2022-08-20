@@ -113,6 +113,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -3109,11 +3110,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
 				"properties");
 
-			_configurationProvider.saveGroupConfiguration(
-				serviceContext.getScopeGroupId(), jsonObject.getString("pid"),
-				HashMapDictionaryBuilder.<String, Object>create(
-					propertiesJSONObject.toMap()
-				).build());
+			try {
+				_configurationProvider.saveGroupConfiguration(
+					serviceContext.getScopeGroupId(),
+					jsonObject.getString("pid"),
+					HashMapDictionaryBuilder.<String, Object>create(
+						propertiesJSONObject.toMap()
+					).build());
+			}
+			catch (ConfigurationException configurationException) {
+				_log.error(
+					"Unable to save configuration", configurationException);
+			}
 		}
 	}
 

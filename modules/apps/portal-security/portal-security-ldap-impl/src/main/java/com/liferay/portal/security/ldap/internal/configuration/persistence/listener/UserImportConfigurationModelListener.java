@@ -34,8 +34,6 @@ import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.security.ldap.internal.constants.LDAPDestinationNames;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Dictionary;
 
 import org.osgi.service.component.annotations.Activate;
@@ -131,17 +129,6 @@ public class UserImportConfigurationModelListener
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
-	private Date _getFutureDate(int interval) {
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.setLenient(true);
-		calendar.setTime(new Date());
-
-		calendar.add(Calendar.MINUTE, interval);
-
-		return calendar.getTime();
-	}
-
 	private long _getLastImportTime() throws Exception {
 		long time =
 			System.currentTimeMillis() - _ldapUserImporter.getLastImportTime();
@@ -200,8 +187,7 @@ public class UserImportConfigurationModelListener
 		String className = clazz.getName();
 
 		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, _getFutureDate(interval), null, interval,
-			TimeUnit.MINUTE);
+			className, className, null, null, interval, TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);

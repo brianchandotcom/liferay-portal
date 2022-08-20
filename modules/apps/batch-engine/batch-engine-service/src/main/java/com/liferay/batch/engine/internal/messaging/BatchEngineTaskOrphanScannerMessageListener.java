@@ -69,9 +69,7 @@ public class BatchEngineTaskOrphanScannerMessageListener
 		int scanInterval = batchEngineTaskConfiguration.orphanScanInterval();
 
 		Trigger trigger = _triggerFactory.createTrigger(
-			className, className,
-			new Date(System.currentTimeMillis() + (scanInterval * Time.MINUTE)),
-			null, scanInterval, TimeUnit.MINUTE);
+			className, className, null, null, scanInterval, TimeUnit.MINUTE);
 
 		_schedulerEngineHelper.register(
 			this, new SchedulerEntryImpl(className, trigger),

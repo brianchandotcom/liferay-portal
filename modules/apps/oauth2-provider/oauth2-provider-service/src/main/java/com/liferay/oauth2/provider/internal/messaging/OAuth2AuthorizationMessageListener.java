@@ -26,9 +26,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 
-import java.util.Calendar;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -55,10 +53,8 @@ public class OAuth2AuthorizationMessageListener extends BaseMessageListener {
 
 		String className = clazz.getName();
 
-		Calendar calendar = CalendarFactoryUtil.getCalendar();
-
 		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, calendar.getTime(), null,
+			className, className, null, null,
 			oAuth2ProviderConfiguration.expiredAuthorizationsCheckInterval(),
 			TimeUnit.MINUTE);
 

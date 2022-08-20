@@ -28,19 +28,19 @@ const useCaseActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 
 	const actionsRef = useRef([
 		{
-			action: (Case: TestrayCase) =>
-				navigate(isHeaderActions ? 'update' : `${Case.id}/update`),
+			action: ({id}) =>
+				navigate(isHeaderActions ? 'update' : `${id}/update`),
 			icon: 'pencil',
 			name: i18n.translate(isHeaderActions ? 'edit-case' : 'edit'),
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}: TestrayCase) => navigate(`${id}/requirements`),
+			action: ({id}) => navigate(`${id}/requirements`),
 			icon: 'shortcut',
 			name: i18n.translate('link-requirements'),
 		},
 		{
-			action: ({id}: TestrayCase, mutate) =>
+			action: ({id}, mutate) =>
 				deleteResource(`/cases/${id}`)
 					?.then(() => {
 						navigate(-1);
@@ -52,7 +52,7 @@ const useCaseActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			name: i18n.translate(isHeaderActions ? 'delete-case' : 'delete'),
 			permission: 'DELETE',
 		},
-	] as Action[]);
+	] as Action<TestrayCase>[]);
 
 	return {
 		actions: actionsRef.current,

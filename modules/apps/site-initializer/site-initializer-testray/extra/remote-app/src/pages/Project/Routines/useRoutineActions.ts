@@ -28,7 +28,7 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 
 	const actionsRef = useRef([
 		{
-			action: (routine: TestrayRoutine) =>
+			action: (routine) =>
 				navigate(isHeaderActions ? 'update' : `${routine.id}/update`),
 			icon: 'pencil',
 			name: i18n.translate(isHeaderActions ? 'edit-routine' : 'edit'),
@@ -40,7 +40,7 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			name: i18n.translate('select-default-environment-factors'),
 		},
 		{
-			action: ({id}: TestrayRoutine, mutate) =>
+			action: ({id}, mutate) =>
 				deleteResource(`/routines/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSuccess)
@@ -49,7 +49,7 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			name: i18n.translate(isHeaderActions ? 'delete-routine' : 'delete'),
 			permission: 'DELETE',
 		},
-	] as Action[]);
+	] as Action<TestrayRoutine>[]);
 
 	return {
 		actions: actionsRef.current,

@@ -23,15 +23,15 @@ const useComponentActions = () => {
 	const formModal = useFormModal();
 	const modal = formModal.modal;
 
-	const actions: Action[] = [
+	const actions: Action<TestrayComponent>[] = [
 		{
-			action: (component: TestrayComponent) => modal.open(component),
+			action: (component) => modal.open(component),
 			icon: 'pencil',
 			name: i18n.translate('edit'),
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}: TestrayComponent, mutate) =>
+			action: ({id}, mutate) =>
 				deleteResource(`/components/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)

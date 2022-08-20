@@ -21,7 +21,7 @@ import i18n from '../../../../i18n';
 import {
 	TestrayBuild,
 	deleteResource,
-	updateBuild,
+	testrayBuildRest,
 } from '../../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../../types';
 
@@ -39,7 +39,7 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			name: i18n.translate('archive'),
 		},
 		{
-			action: (testrayBuild: TestrayBuild) =>
+			action: (testrayBuild) =>
 				navigate(
 					isHeaderActions
 						? 'update'
@@ -50,10 +50,11 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id, promoted}: TestrayBuild, mutate) =>
-				updateBuild(id, {
-					promoted: !promoted,
-				})
+			action: ({id, promoted}, mutate) =>
+				testrayBuildRest
+					.update(id, {
+						promoted: !promoted,
+					})
 					.then(() =>
 						updateItemFromList(mutate, id, {
 							promoted: !promoted,
@@ -66,7 +67,7 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}: TestrayBuild, mutate) =>
+			action: ({id}, mutate) =>
 				deleteResource(`/builds/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
@@ -75,7 +76,7 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			name: i18n.translate(isHeaderActions ? 'delete-build' : 'delete'),
 			permission: 'DELETE',
 		},
-	] as Action[]);
+	] as Action<TestrayBuild>[]);
 
 	return {
 		actions: actionsRef.current,

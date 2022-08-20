@@ -28,14 +28,14 @@ const useSuiteActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 
 	const actionsRef = useRef([
 		{
-			action: (suite: TestraySuite) =>
-				navigate(isHeaderActions ? 'update' : `${suite.id}/update`),
+			action: (suite) =>
+				navigate(isHeaderActions ? 'update' : `${suite}/update`),
 			icon: 'pencil',
 			name: i18n.translate(isHeaderActions ? 'edit-suite' : 'edit'),
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}: TestraySuite, mutate) =>
+			action: ({id}, mutate) =>
 				deleteResource(`/suites/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSuccess)
@@ -44,7 +44,7 @@ const useSuiteActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			name: i18n.translate(isHeaderActions ? 'delete-suite' : 'delete'),
 			permission: 'DELETE',
 		},
-	] as Action[]);
+	] as Action<TestraySuite>[]);
 
 	return {
 		actions: actionsRef.current,

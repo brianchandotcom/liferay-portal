@@ -35,7 +35,7 @@ const CaseRequirement = () => {
 		testrayCase,
 	}: {projectId: number; testrayCase: TestrayCase} = useOutletContext();
 
-	const {formModal} = useCaseRequirementActions(testrayCase);
+	const {formModal} = useCaseRequirementActions({caseId: testrayCase.id});
 
 	return (
 		<Container>

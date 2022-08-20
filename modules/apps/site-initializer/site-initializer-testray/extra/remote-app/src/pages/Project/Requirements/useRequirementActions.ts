@@ -30,16 +30,14 @@ const useRequirementActions = ({
 
 	const actionsRef = useRef([
 		{
-			action: (Requirement: TestrayRequirement) =>
-				navigate(
-					isHeaderActions ? 'update' : `${Requirement.id}/update`
-				),
+			action: ({id}) =>
+				navigate(isHeaderActions ? 'update' : `${id}/update`),
 			icon: 'pencil',
 			name: i18n.translate(isHeaderActions ? 'edit-requirement' : 'edit'),
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}: TestrayRequirement, mutate) =>
+			action: ({id}, mutate) =>
 				deleteResource(`/requirements/${id}`)
 					?.then(() => {
 						navigate(-1);
@@ -54,7 +52,7 @@ const useRequirementActions = ({
 			),
 			permission: 'DELETE',
 		},
-	] as Action[]);
+	] as Action<TestrayRequirement>[]);
 
 	return {
 		actions: actionsRef.current,

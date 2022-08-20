@@ -23,15 +23,15 @@ const useFactorCategoryActions = () => {
 	const formModal = useFormModal();
 	const modal = formModal.modal;
 
-	const actions: Action[] = [
+	const actions: Action<TestrayFactorCategory>[] = [
 		{
-			action: (item: TestrayFactorCategory) => modal.open(item),
+			action: (factorCategory) => modal.open(factorCategory),
 			icon: 'pencil',
 			name: i18n.translate('edit'),
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}: TestrayFactorCategory, mutate) =>
+			action: ({id}, mutate) =>
 				deleteResource(`/factorcategories/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)

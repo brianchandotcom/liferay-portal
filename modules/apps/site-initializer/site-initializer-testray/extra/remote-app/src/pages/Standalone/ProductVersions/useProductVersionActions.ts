@@ -23,16 +23,15 @@ const useProductVersionActions = () => {
 	const formModal = useFormModal();
 	const modal = formModal.modal;
 
-	const actions: Action[] = [
+	const actions: Action<TestrayProductVersion>[] = [
 		{
-			action: (productVersion: TestrayProductVersion) =>
-				modal.open(productVersion),
+			action: (productVersion) => modal.open(productVersion),
 			icon: 'pencil',
 			name: i18n.translate('edit'),
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}: TestrayProductVersion, mutate) =>
+			action: ({id}, mutate) =>
 				deleteResource(`/productversions/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)

@@ -20,22 +20,24 @@ import {Action} from '../../../types';
 
 const useCaseTypeActions = () => {
 	const {removeItemFromList} = useMutate();
-
 	const formModal = useFormModal();
+
 	const modal = formModal.modal;
 
-	const actions: Action[] = [
+	const actions: Action<TestrayCaseType>[] = [
 		{
-			action: (item: TestrayCaseType) => modal.open(item),
+			action: (caseType) => modal.open(caseType),
+			icon: 'pencil',
 			name: i18n.translate('edit'),
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}: TestrayCaseType, mutate) =>
+			action: ({id}, mutate) =>
 				deleteResource(`/casetypes/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),
+			icon: 'trash',
 			name: i18n.translate('delete'),
 			permission: 'DELETE',
 		},

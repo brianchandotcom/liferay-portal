@@ -29,22 +29,24 @@ const useSuiteCasesActions = ({isSmartSuite}: {isSmartSuite: boolean}) => {
 
 	const modal = formModal.modal;
 
-	const actions: Action[] = [
+	const actions: Action<TestraySuiteCase>[] = [
 		{
-			action: (suiteCase: TestraySuiteCase) =>
+			action: (suiteCase) =>
 				navigate(
 					`/project/${projectId}/cases/${suiteCase?.case?.id}/update`
 				),
+			icon: 'pencil',
 			name: i18n.translate('edit'),
 			permission: 'UPDATE',
 		},
 		{
-			action: (suiteCase: TestraySuiteCase, mutate) =>
+			action: (suiteCase, mutate) =>
 				deleteResource(`/suitescaseses/${suiteCase.id}`)
 					?.then(() => removeItemFromList(mutate, suiteCase.id))
 					.then(modal.onSuccess)
 					.catch(modal.onError),
 			disabled: isSmartSuite,
+			icon: 'trash',
 			name: i18n.translate('delete'),
 			permission: 'DELETE',
 		},

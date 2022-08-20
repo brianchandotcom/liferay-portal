@@ -33,7 +33,7 @@ const useProjectActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 
 	const actionsRef = useRef([
 		{
-			action: (project: TestrayProject) =>
+			action: (project) =>
 				onOpenModal({
 					body: <ComponentsModal projectId={project.id} />,
 					size: 'full-screen',
@@ -43,7 +43,7 @@ const useProjectActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			name: i18n.translate('manage-components'),
 		},
 		{
-			action: (project: TestrayProject) =>
+			action: (project) =>
 				onOpenModal({
 					body: <TeamsModal projectId={project.id} />,
 					size: 'full-screen',
@@ -53,7 +53,7 @@ const useProjectActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			name: i18n.translate('manage-teams'),
 		},
 		{
-			action: (project: TestrayProject) =>
+			action: (project) =>
 				onOpenModal({
 					body: <ProductVersionModal projectId={project.id} />,
 					size: 'full-screen',
@@ -65,14 +65,13 @@ const useProjectActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			name: i18n.translate('manage-product-versions'),
 		},
 		{
-			action: (project: TestrayProject) =>
-				navigate(`/project/${project.id}/update`),
+			action: (project) => navigate(`/project/${project.id}/update`),
 			icon: 'pencil',
 			name: i18n.translate(isHeaderActions ? 'edit-project' : 'edit'),
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}: TestrayProject, mutate) =>
+			action: ({id}, mutate) =>
 				deleteResource(`/projects/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSuccess)
@@ -81,7 +80,7 @@ const useProjectActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			name: i18n.translate(isHeaderActions ? 'delete-project' : 'delete'),
 			permission: 'DELETE',
 		},
-	] as Action[]);
+	] as Action<TestrayProject>[]);
 
 	return {
 		actions: actionsRef.current,

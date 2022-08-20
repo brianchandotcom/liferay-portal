@@ -25,7 +25,7 @@ type CaseRequirementLinkModalProps = {
 	modal: FormModalOptions;
 };
 
-export type State = number[];
+export type State = {caseId?: number; requirementId?: number}[];
 
 const CaseRequirementLinkModal: React.FC<CaseRequirementLinkModalProps> = ({
 	modal: {observer, onClose, onSave, visible},
@@ -52,7 +52,12 @@ const CaseRequirementLinkModal: React.FC<CaseRequirementLinkModalProps> = ({
 					managementToolbarProps: {
 						title: i18n.translate('requirements'),
 					},
-					onContextChange: ({selectedRows}) => setState(selectedRows),
+					onContextChange: ({selectedRows}) =>
+						setState(
+							selectedRows.map((requirementId) => ({
+								requirementId,
+							}))
+						),
 				}}
 				tableProps={{navigateTo: undefined, rowSelectable: true}}
 			/>

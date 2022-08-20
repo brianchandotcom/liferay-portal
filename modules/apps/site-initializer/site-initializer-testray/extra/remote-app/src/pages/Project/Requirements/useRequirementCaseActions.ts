@@ -12,39 +12,11 @@
  * details.
  */
 
-import useFormModal from '../../../hooks/useFormModal';
-import useMutate from '../../../hooks/useMutate';
-import i18n from '../../../i18n';
-import {TestrayProject, deleteResource} from '../../../services/rest';
-import {Action} from '../../../types';
+import {TestrayRequirement} from '../../../services/rest';
+import useCaseRequirementActions from '../Cases/useCaseRequirementActions';
 
-const useRequirementCaseActions = () => {
-	const {removeItemFromList} = useMutate();
-
-	const formModal = useFormModal();
-	const modal = formModal.modal;
-
-	const actions: Action[] = [
-		{
-			action: (item: TestrayProject) => modal.open(item),
-			name: i18n.translate('edit'),
-			permission: 'UPDATE',
-		},
-		{
-			action: ({id}: TestrayProject, mutate) =>
-				deleteResource(`/requirements/${id}`)
-					?.then(() => removeItemFromList(mutate, id))
-					.then(modal.onSuccess)
-					.catch(modal.onError),
-			name: i18n.translate('delete'),
-			permission: 'DELETE',
-		},
-	];
-
-	return {
-		actions,
-		formModal,
-	};
+const useRequirementCaseActions = (testrayRequirement: TestrayRequirement) => {
+	return useCaseRequirementActions({requirementId: testrayRequirement.id});
 };
 
 export default useRequirementCaseActions;

@@ -18,7 +18,6 @@ import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
 import {
-	TestrayCase,
 	TestrayRequirementCase,
 	createRequirementCaseBatch,
 	deleteResource,
@@ -26,18 +25,30 @@ import {
 import {Action} from '../../../types';
 import {State} from './CaseRequirementLinkModal';
 
-const useCaseRequirementActions = (testrayCase: TestrayCase) => {
+type UseCaseRequirementActions = {
+	caseId?: number;
+	requirementId?: number;
+};
+
+const useCaseRequirementActions = ({
+	caseId,
+	requirementId,
+}: UseCaseRequirementActions = {}) => {
 	const [forceRefetch, setForceRefetch] = useState(0);
 	const {removeItemFromList} = useMutate();
 
 	const {forceRefetch: modalForceRefetch, modal} = useFormModal({
-		onSave: (requirements: State) => {
-			if (requirements.length) {
+		onSave: (state: State) => {
+			if (state.length) {
 				createRequirementCaseBatch(
-					requirements.map((requirementId) => ({
-						caseId: testrayCase.id,
-						requirementId,
-					}))
+					state.map(
+						(requirementCase) =>
+							({
+								caseId,
+								requirementId,
+								...requirementCase,
+							} as any)
+					)
 				)
 					.then(() => {
 						setTimeout(() => {
@@ -49,13 +60,14 @@ const useCaseRequirementActions = (testrayCase: TestrayCase) => {
 		},
 	});
 
-	const actions: Action[] = [
+	const actions: Action<TestrayRequirementCase>[] = [
 		{
-			action: ({id}: TestrayRequirementCase, mutate) =>
+			action: ({id}, mutate) =>
 				deleteResource(`/requirementscaseses/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(() => modal.onSave())
 					.catch(modal.onError),
+			icon: 'trash',
 			name: i18n.translate('delete'),
 		},
 	];

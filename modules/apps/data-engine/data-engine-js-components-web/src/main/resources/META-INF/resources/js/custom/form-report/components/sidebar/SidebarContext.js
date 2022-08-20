@@ -20,6 +20,7 @@ const SidebarContext = createContext({});
 
 const SidebarContextProvider = ({
 	children,
+	dataEngineModule,
 	formReportRecordsFieldValuesURL,
 	portletNamespace,
 }) => {
@@ -74,6 +75,7 @@ const SidebarContextProvider = ({
 		<SidebarContext.Provider
 			value={{
 				...sidebarState,
+				dataEngineModule,
 				formReportRecordsFieldValuesURL,
 				portletNamespace,
 				toggleSidebar,

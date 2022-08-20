@@ -324,6 +324,10 @@ public class DDMFormAdminDisplayContext {
 		return _ddmFormWebConfiguration.csvExport();
 	}
 
+	public String getDataEngineModule() {
+		return _npmResolver.resolveModuleName("data-engine-js-components-web");
+	}
+
 	public String getDataProviderInstanceParameterSettingsURL()
 		throws PortalException {
 

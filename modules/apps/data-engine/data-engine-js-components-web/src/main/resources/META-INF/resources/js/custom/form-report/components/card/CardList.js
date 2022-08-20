@@ -22,12 +22,12 @@ import List from '../list/List';
 import {SidebarContext} from '../sidebar/SidebarContext';
 import Card from './Card';
 
-const lazyLoader = ({dataEngineRequire, path}) => {
+const lazyLoader = ({dataEngineModule, path}) => {
 	return lazy(
 		() =>
 			new Promise((resolve, reject) => {
 				Liferay.Loader.require(
-					[`${dataEngineRequire}${path}`],
+					[`${dataEngineModule}${path}`],
 					(Component) => resolve(Component),
 					(error) => reject(error)
 				);
@@ -37,22 +37,22 @@ const lazyLoader = ({dataEngineRequire, path}) => {
 
 const chartFactory = (
 	{field, structure, sumTotalValues, summary, totalEntries, values},
-	dataEngineRequire
+	dataEngineModule
 ) => {
 	const {options, type} = field;
 
 	const MultiBarChart = lazyLoader({
-		dataEngineRequire,
+		dataEngineModule,
 		path: '/js/custom/form-report/components/chart/bar/MultiBarChart',
 	});
 
 	const PieChart = lazyLoader({
-		dataEngineRequire,
+		dataEngineModule,
 		path: '/js/custom/form-report/components/chart/pie/PieChart',
 	});
 
 	const SimpleBarChart = lazyLoader({
-		dataEngineRequire,
+		dataEngineModule,
 		path: '/js/custom/form-report/components/chart/bar/SimpleBarChart',
 	});
 
@@ -157,7 +157,7 @@ const chartFactory = (
 export default function CardList({data, fields}) {
 	let hasCards = false;
 
-	const {dataEngineRequire} = useContext(SidebarContext);
+	const {dataEngineModule} = useContext(SidebarContext);
 
 	const cards = fields.map((field, index) => {
 		const newData =
@@ -184,7 +184,7 @@ export default function CardList({data, fields}) {
 			values,
 		};
 
-		const chart = chartFactory(chartContent, dataEngineRequire);
+		const chart = chartFactory(chartContent, dataEngineModule);
 
 		if (chart === null) {
 			return null;

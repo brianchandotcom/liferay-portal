@@ -48,6 +48,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -126,6 +127,7 @@ public class DDMFormDisplayContext {
 		DDMFormWebConfiguration ddmFormWebConfiguration,
 		DDMStorageAdapterTracker ddmStorageAdapterTracker,
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
+		NPMResolver npmResolver,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		Portal portal, RenderRequest renderRequest,
@@ -148,6 +150,7 @@ public class DDMFormDisplayContext {
 		_ddmStorageAdapterTracker = ddmStorageAdapterTracker;
 		_groupLocalService = groupLocalService;
 		_jsonFactory = jsonFactory;
+		_npmResolver = npmResolver;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_portal = portal;
@@ -201,6 +204,10 @@ public class DDMFormDisplayContext {
 
 	public String getContainerId() {
 		return _containerId;
+	}
+
+	public String getDataEngineModule() {
+		return _npmResolver.resolveModuleName("data-engine-js-components-web");
 	}
 
 	public Map<String, Object> getDDMFormContext() throws Exception {
@@ -1126,6 +1133,7 @@ public class DDMFormDisplayContext {
 	private Boolean _hasViewPermission;
 	private final JSONFactory _jsonFactory;
 	private DDMFormInstanceVersion _latestDDMFormInstanceVersion;
+	private final NPMResolver _npmResolver;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;

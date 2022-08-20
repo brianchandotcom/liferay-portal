@@ -54,6 +54,7 @@ export function Container({
 	const [alertDismissed, setAlertDismissed] = useState(false);
 
 	const {
+		dataEngineModule,
 		formReportDataURL,
 		showPartialResultsToRespondents,
 		showSubmitButton,
@@ -110,6 +111,7 @@ export function Container({
 		<>
 			{showReport ? (
 				<PartialResults
+					dataEngineModule={dataEngineModule}
 					onShow={() => setShowReport(false)}
 					reportDataURL={formReportDataURL}
 				/>

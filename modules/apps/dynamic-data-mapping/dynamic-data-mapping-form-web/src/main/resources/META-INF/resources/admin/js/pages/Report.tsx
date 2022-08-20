@@ -21,7 +21,7 @@ import React from 'react';
 import './Report.scss';
 
 export default function Report() {
-	const {formReportDataURL} = useConfig();
+	const {dataEngineModule, formReportDataURL} = useConfig();
 	const {resource} = useResource({link: formReportDataURL});
 	const {
 		data,
@@ -67,6 +67,7 @@ export default function Report() {
 			<div className="container-fluid container-fluid-max-xl lfr-ddm__form-report__cards">
 				<FormReport
 					data={data}
+					dataEngineModule={dataEngineModule}
 					fields={fields}
 					formReportRecordsFieldValuesURL={
 						formReportRecordsFieldValuesURL

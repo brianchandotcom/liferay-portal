@@ -157,6 +157,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					).put(
 						"context", formBuilderContextJSONObject
 					).put(
+						"dataEngineModule", ddmFormAdminDisplayContext.getDataEngineModule()
+					).put(
 						"dataProviderInstanceParameterSettingsURL", dataProviderInstanceParameterSettingsURL
 					).put(
 						"dataProviderInstancesURL", dataProviderInstancesURL

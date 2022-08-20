@@ -17,6 +17,7 @@ import './DefaultPage.scss';
 declare const DefaultPage: React.FC<IProps>;
 export default DefaultPage;
 interface IProps {
+	dataEngineModule: string;
 	formDescription?: string;
 	formReportDataURL?: string;
 	formTitle: string;

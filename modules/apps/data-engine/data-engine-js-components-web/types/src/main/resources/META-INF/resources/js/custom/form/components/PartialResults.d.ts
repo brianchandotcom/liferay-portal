@@ -17,5 +17,6 @@ import './PartialResults.scss';
 declare const PartialResults: React.FC<IProps>;
 export default PartialResults;
 interface IProps {
+	dataEngineModule: string;
 	reportDataURL: string;
 }

@@ -641,7 +641,7 @@ public class DDMFormDisplayContextTest {
 			Mockito.mock(DDMFormValuesMerger.class), _ddmFormWebConfiguration,
 			Mockito.mock(DDMStorageAdapterTracker.class),
 			Mockito.mock(GroupLocalService.class), new JSONFactoryImpl(), null,
-			null, Mockito.mock(Portal.class), renderRequest,
+			null, null, Mockito.mock(Portal.class), renderRequest,
 			new MockRenderResponse(), Mockito.mock(RoleLocalService.class),
 			Mockito.mock(UserLocalService.class),
 			_workflowDefinitionLinkLocalService);

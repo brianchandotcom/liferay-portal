@@ -70,8 +70,11 @@ class Rest<YupModel = any, ObjectModel = any> {
 		return deleteResource(`/${this.uri}/${id}`);
 	}
 
-	public async update(id: number, data: YupModel): Promise<ObjectModel> {
-		await this.beforeUpdate(id, data);
+	public async update(
+		id: number,
+		data: Partial<YupModel>
+	): Promise<ObjectModel> {
+		await this.beforeUpdate(id, data as YupModel);
 
 		return fetcher.patch(`/${this.uri}/${id}`, this.adapter(data));
 	}

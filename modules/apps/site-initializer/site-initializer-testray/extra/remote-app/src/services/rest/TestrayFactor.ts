@@ -12,33 +12,25 @@
  * details.
  */
 
-import {APIResponse, TestrayFactor} from './types';
+import Rest from './Rest';
+import {TestrayFactor} from './types';
 
-const nestedFieldsParam = 'nestedFields=factorOption,factorCategory';
+class TestrayFactorRest extends Rest<any, TestrayFactor> {
+	constructor() {
+		super({
+			nestedFields: 'factorOption,factorCategory',
+			transformData: ({
+				r_factorCategoryToFactors_c_factorCategory: factorCategory,
+				r_factorOptionToFactors_c_factorOption: factorOption,
+				...testrayFactor
+			}) => ({
+				...testrayFactor,
+				factorCategory,
+				factorOption,
+			}),
+			uri: 'factors',
+		});
+	}
+}
 
-const factorResource = `/factors?${nestedFieldsParam}`;
-
-const getFactorQuery = (factorId: number | string) =>
-	`/factors/${factorId}?${nestedFieldsParam}`;
-
-const getFactorTransformData = ({
-	r_factorCategoryToFactors_c_factorCategory: factorCategory,
-	r_factorOptionToFactors_c_factorOption: factorOption,
-	...testrayFactor
-}: TestrayFactor): TestrayFactor => ({
-	...testrayFactor,
-	factorCategory,
-	factorOption,
-});
-
-const getFactorsTransformData = (response: APIResponse<TestrayFactor>) => ({
-	...response,
-	items: response?.items?.map(getFactorTransformData),
-});
-
-export {
-	factorResource,
-	getFactorQuery,
-	getFactorTransformData,
-	getFactorsTransformData,
-};
+export const testrayFactorRest = new TestrayFactorRest();

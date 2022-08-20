@@ -14,10 +14,12 @@
 
 import {KeyedMutator} from 'swr';
 
+import {APIResponse} from '../services/rest';
+
 export type ActionsHookParameter = {isHeaderActions?: boolean};
 
 export type Action<T = any> = {
-	action?: (item: T, mutate: KeyedMutator<any>) => void;
+	action?: (item: T, mutate: KeyedMutator<APIResponse<T> | T>) => void;
 	disabled?: boolean;
 	icon?: string;
 	name: ((item: T) => string) | string;

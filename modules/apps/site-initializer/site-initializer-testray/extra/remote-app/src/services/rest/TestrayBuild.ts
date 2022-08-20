@@ -13,63 +13,44 @@
  */
 
 import yupSchema from '../../schema/yup';
-import fetcher from '../fetcher';
-import {APIResponse} from './types';
+import Rest from './Rest';
 
 import type {TestrayBuild} from './types';
 
 type Build = typeof yupSchema.build.__outputType & {projectId: number};
 
-const adapter = ({
-	description,
-	gitHash,
-	name,
-	productVersionId: r_productVersionToBuilds_c_productVersionId,
-	projectId: r_projectToBuilds_c_projectId,
-	promoted,
-	routineId: r_routineToBuilds_c_routineId,
-	template,
-}: Build) => ({
-	description,
-	gitHash,
-	name,
-	promoted,
-	r_productVersionToBuilds_c_productVersionId,
-	r_projectToBuilds_c_projectId,
-	r_routineToBuilds_c_routineId,
-	template,
-});
+class TestrayBuildRest extends Rest<Build, TestrayBuild> {
+	constructor() {
+		super({
+			adapter: ({
+				description,
+				gitHash,
+				name,
+				productVersionId: r_productVersionToBuilds_c_productVersionId,
+				projectId: r_projectToBuilds_c_projectId,
+				promoted,
+				routineId: r_routineToBuilds_c_routineId,
+				template,
+			}) => ({
+				description,
+				gitHash,
+				name,
+				promoted,
+				r_productVersionToBuilds_c_productVersionId,
+				r_projectToBuilds_c_projectId,
+				r_routineToBuilds_c_routineId,
+				template,
+			}),
+			nestedFields: 'productVersion&nestedFieldsDepth=2',
+			transformData: (testrayBuild) => ({
+				...testrayBuild,
+				creator: testrayBuild?.creator || {},
+				productVersion:
+					testrayBuild?.r_productVersionToBuilds_c_productVersion,
+			}),
+			uri: 'builds',
+		});
+	}
+}
 
-const nestedFieldsParam = 'nestedFields=productVersion&nestedFieldsDepth=2';
-
-const buildsResource = `/builds?${nestedFieldsParam}`;
-
-const getBuildQuery = (buildId: number | string) =>
-	`/builds/${buildId}?${nestedFieldsParam}`;
-
-const getBuildTransformData = (testrayBuild: TestrayBuild): TestrayBuild => {
-	return {
-		...testrayBuild,
-		creator: testrayBuild?.creator || {},
-		productVersion: testrayBuild?.r_productVersionToBuilds_c_productVersion,
-	};
-};
-
-const getBuildsTransformData = (response: APIResponse<TestrayBuild>) => ({
-	...response,
-	items: response?.items?.map((item) => getBuildTransformData(item)),
-});
-
-const createBuild = (build: Build) => fetcher.post('/builds', adapter(build));
-
-const updateBuild = (id: number, build: Partial<Build>) =>
-	fetcher.patch(`/builds/${id}`, adapter(build as Build));
-
-export {
-	buildsResource,
-	createBuild,
-	getBuildQuery,
-	getBuildTransformData,
-	getBuildsTransformData,
-	updateBuild,
-};
+export const testrayBuildRest = new TestrayBuildRest();

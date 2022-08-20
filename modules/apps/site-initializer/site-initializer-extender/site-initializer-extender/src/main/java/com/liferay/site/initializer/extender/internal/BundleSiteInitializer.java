@@ -137,7 +137,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -185,6 +185,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -3109,11 +3110,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
 				"properties");
 
+			Iterator<String> iterator = propertiesJSONObject.keys();
+
+			Dictionary<String, Object> configurationProperties =
+				new HashMapDictionary<>();
+
+			while (iterator.hasNext()) {
+				String key = iterator.next();
+
+				configurationProperties.put(
+					key, propertiesJSONObject.getString(key));
+			}
+
 			_configurationProvider.saveGroupConfiguration(
 				serviceContext.getScopeGroupId(), jsonObject.getString("pid"),
-				HashMapDictionaryBuilder.<String, Object>create(
-					propertiesJSONObject.toMap()
-				).build());
+				configurationProperties);
 		}
 	}
 

@@ -14,9 +14,17 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author Shuyang Zhou
@@ -46,8 +54,8 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 	}
 
 	@Override
-	public String getPreviousState() {
-		return _previousState;
+	public String getPreviousState(Locale locale) {
+		return _toState(_previousState, locale);
 	}
 
 	@Override
@@ -61,8 +69,8 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 	}
 
 	@Override
-	public String getState() {
-		return _state;
+	public String getState(Locale locale) {
+		return _toState(_state, locale);
 	}
 
 	@Override
@@ -131,6 +139,22 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 
 	public void setWorkflowTaskId(long workflowTaskId) {
 		_workflowTaskId = workflowTaskId;
+	}
+
+	private String _toState(String state, Locale locale) {
+		if (state == null) {
+			return null;
+		}
+
+		if (!Validator.isXml(state)) {
+			Language language = LanguageUtil.getLanguage();
+
+			return HtmlUtil.escape(language.get(locale, state));
+		}
+
+		return HtmlUtil.escape(
+			LocalizationUtil.getLocalization(
+				state, LocaleUtil.toLanguageId(locale), true));
 	}
 
 	private long _auditUserId;

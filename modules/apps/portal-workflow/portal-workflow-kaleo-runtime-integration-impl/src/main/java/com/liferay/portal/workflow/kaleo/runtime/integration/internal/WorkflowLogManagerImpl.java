@@ -113,10 +113,8 @@ public class WorkflowLogManagerImpl implements WorkflowLogManager {
 		List<WorkflowLog> workflowLogs = new ArrayList<>(kaleoLogs.size());
 
 		for (KaleoLog kaleoLog : kaleoLogs) {
-			WorkflowLog workflowLog =
-				_kaleoWorkflowModelConverter.toWorkflowLog(kaleoLog);
-
-			workflowLogs.add(workflowLog);
+			workflowLogs.add(
+				_kaleoWorkflowModelConverter.toWorkflowLog(kaleoLog));
 		}
 
 		return workflowLogs;

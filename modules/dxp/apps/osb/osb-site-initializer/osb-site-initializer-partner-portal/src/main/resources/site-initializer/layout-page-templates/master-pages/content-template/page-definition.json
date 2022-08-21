@@ -377,31 +377,18 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "BASIC_COMPONENT-image"
+												"key": "clay-icon-link"
 											},
 											"fragmentConfig": {
-												"imageSize": "w-100"
+												"iconLink": "",
+												"iconName": "caret-bottom"
 											},
 											"fragmentFields": [
-												{
-													"id": "image-square",
-													"value": {
-														"fragmentImage": {
-															"url": {
-																"value_i18n": {
-																}
-															}
-														},
-														"fragmentLink": {
-														}
-													}
-												}
 											],
 											"fragmentStyle": {
-												"height": "3.5%",
-												"paddingLeft": "2",
-												"textAlign": "",
-												"width": "3.5%"
+												"fontSize": "1.125rem",
+												"marginLeft": "1",
+												"textColor": "colorNeutral7"
 											},
 											"indexed": true
 										},

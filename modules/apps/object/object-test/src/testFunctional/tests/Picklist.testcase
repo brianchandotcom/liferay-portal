@@ -12,15 +12,14 @@ definition {
 	}
 
 	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		Picklist.deleteAllPicklistsViaAPI();
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
-		}
-		else {
-			ObjectAdmin.deleteAllCustomObjectsViaAPI();
-
-			Picklist.deleteAllPicklistsViaAPI();
 		}
 	}
 

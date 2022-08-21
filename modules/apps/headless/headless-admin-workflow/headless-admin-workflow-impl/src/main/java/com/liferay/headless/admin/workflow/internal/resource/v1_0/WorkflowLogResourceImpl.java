@@ -23,11 +23,8 @@ import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowLogResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -151,21 +148,6 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 			_userLocalService.fetchUser(role.getUserId()));
 	}
 
-	private String _toState(String state) {
-		if (state == null) {
-			return null;
-		}
-
-		if (!Validator.isXml(state)) {
-			return state;
-		}
-
-		return LocalizationUtil.getLocalization(
-			state,
-			LocaleUtil.toLanguageId(contextAcceptLanguage.getPreferredLocale()),
-			true);
-	}
-
 	private WorkflowLog _toWorkflowLog(
 			com.liferay.portal.kernel.workflow.WorkflowLog workflowLog)
 		throws Exception {
@@ -194,9 +176,11 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 					_userLocalService.fetchUser(
 						workflowLog.getPreviousUserId()));
 				previousRole = _toRole(workflowLog.getPreviousRoleId());
-				previousState = _toState(workflowLog.getPreviousState());
+				previousState = workflowLog.getPreviousState(
+					contextAcceptLanguage.getPreferredLocale());
 				role = _toRole(workflowLog.getRoleId());
-				state = _toState(workflowLog.getState());
+				state = workflowLog.getState(
+					contextAcceptLanguage.getPreferredLocale());
 				type = _toWorkflowLogType(
 					KaleoLogUtil.convert(workflowLog.getType()));
 				workflowTaskId = workflowLog.getWorkflowTaskId();

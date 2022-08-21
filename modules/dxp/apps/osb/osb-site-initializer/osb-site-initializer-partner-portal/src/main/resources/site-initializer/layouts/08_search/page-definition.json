@@ -40,6 +40,7 @@
 									}
 								},
 								"borderWidth": "0",
+								"height": "282px",
 								"textAlign": ""
 							},
 							"indexed": true,
@@ -95,7 +96,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Search Results"
+																"ar_SA": "​​​​​​Search Results",
+																"ca_ES": "​​​​​​Search Results",
+																"de_DE": "​​​​​​Search Results",
+																"en_US": "​​​​​​Search Results",
+																"es_ES": "​​​​​​Search Results",
+																"fi_FI": "​​​​​​Search Results",
+																"fr_FR": "​​​​​​Search Results",
+																"hu_HU": "​​​​​​Search Results",
+																"ja_JP": "​​​​​​Search Results",
+																"nl_NL": "​​​​​​Search Results",
+																"pt_BR": "​​​​​​Search Results",
+																"sv_SE": "​​​​​​Search Results",
+																"zh_CN": "​​​​​​Search Results"
 															}
 														}
 													}
@@ -103,8 +116,6 @@
 											],
 											"fragmentStyle": {
 												"fontWeight": "fontWeightBold",
-												"paddingBottom": "3",
-												"paddingTop": "5",
 												"textAlign": "center",
 												"textColor": "colorNeutral0"
 											},
@@ -115,8 +126,8 @@
 									{
 										"definition": {
 											"fragmentStyle": {
-												"paddingBottom": "5",
-												"paddingTop": "3",
+												"marginTop": "4",
+												"paddingTop": "2",
 												"width": "700px"
 											},
 											"widgetInstance": {

@@ -60,6 +60,7 @@ import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
@@ -352,28 +353,32 @@ public class ObjectDefinitionLocalServiceImpl
 			_dropTable(objectDefinition.getExtensionDBTableName());
 		}
 		else if (objectDefinition.isApproved()) {
-			for (ResourceAction resourceAction :
-					_resourceActionLocalService.getResourceActions(
-						objectDefinition.getClassName())) {
+			try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+					objectDefinition.getCompanyId())) {
 
-				_resourceActionLocalService.deleteResourceAction(
-					resourceAction);
-			}
+				for (ResourceAction resourceAction :
+						_resourceActionLocalService.getResourceActions(
+							objectDefinition.getClassName())) {
 
-			for (ResourceAction resourceAction :
-					_resourceActionLocalService.getResourceActions(
-						objectDefinition.getPortletId())) {
+					_resourceActionLocalService.deleteResourceAction(
+						resourceAction);
+				}
 
-				_resourceActionLocalService.deleteResourceAction(
-					resourceAction);
-			}
+				for (ResourceAction resourceAction :
+						_resourceActionLocalService.getResourceActions(
+							objectDefinition.getPortletId())) {
 
-			for (ResourceAction resourceAction :
-					_resourceActionLocalService.getResourceActions(
-						objectDefinition.getResourceName())) {
+					_resourceActionLocalService.deleteResourceAction(
+						resourceAction);
+				}
 
-				_resourceActionLocalService.deleteResourceAction(
-					resourceAction);
+				for (ResourceAction resourceAction :
+						_resourceActionLocalService.getResourceActions(
+							objectDefinition.getResourceName())) {
+
+					_resourceActionLocalService.deleteResourceAction(
+						resourceAction);
+				}
 			}
 
 			_dropTable(objectDefinition.getDBTableName());

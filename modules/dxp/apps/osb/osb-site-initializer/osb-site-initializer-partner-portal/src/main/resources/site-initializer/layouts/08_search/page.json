@@ -3,6 +3,21 @@
 	"name_i18n": {
 		"en_US": "Search"
 	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 2
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "User",
+			"scope": 2
+		}
+	],
 	"private": false,
 	"system": false,
 	"type": "content"

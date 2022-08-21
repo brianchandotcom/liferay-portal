@@ -1,8 +1,33 @@
 {
+	"friendlyURL_i18n": {
+		"en_US": "/marketing/mdf-requests/create"
+	},
 	"hidden": true,
 	"name_i18n": {
 		"en_US": "Create MDF Request"
 	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "User",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Site Member",
+			"scope": 4
+		}
+	],
 	"private": false,
 	"system": false,
 	"type": "content"

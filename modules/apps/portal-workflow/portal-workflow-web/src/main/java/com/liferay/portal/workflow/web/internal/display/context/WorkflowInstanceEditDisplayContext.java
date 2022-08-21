@@ -31,11 +31,8 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -177,27 +174,12 @@ public class WorkflowInstanceEditDisplayContext
 	}
 
 	public Object getTaskCompletionMessageArguments(WorkflowLog workflowLog) {
-		String taskLabel = null;
-
-		if (Validator.isXml(workflowLog.getState())) {
-			taskLabel = LocalizationUtil.getLocalization(
-				workflowLog.getState(),
-				LocaleUtil.toLanguageId(
-					workflowInstanceRequestHelper.getLocale()),
-				true);
-		}
-		else {
-			taskLabel = LanguageUtil.get(
-				workflowInstanceRequestHelper.getLocale(),
-				workflowLog.getState());
-		}
-
 		return new Object[] {
 			HtmlUtil.escape(
 				PortalUtil.getUserName(
 					workflowLog.getAuditUserId(),
 					String.valueOf(workflowLog.getAuditUserId()))),
-			HtmlUtil.escape(taskLabel)
+			workflowLog.getState(workflowInstanceRequestHelper.getLocale())
 		};
 	}
 
@@ -248,14 +230,9 @@ public class WorkflowInstanceEditDisplayContext
 				PortalUtil.getUserName(
 					workflowLog.getAuditUserId(),
 					String.valueOf(workflowLog.getAuditUserId()))),
-			HtmlUtil.escape(
-				LanguageUtil.get(
-					workflowInstanceRequestHelper.getRequest(),
-					workflowLog.getPreviousState())),
-			HtmlUtil.escape(
-				LanguageUtil.get(
-					workflowInstanceRequestHelper.getRequest(),
-					workflowLog.getState()))
+			workflowLog.getPreviousState(
+				workflowInstanceRequestHelper.getLocale()),
+			workflowLog.getState(workflowInstanceRequestHelper.getLocale())
 		};
 	}
 

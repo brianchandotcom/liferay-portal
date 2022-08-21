@@ -29,7 +29,7 @@ import org.junit.Test;
 /**
  * @author Miguel Pastor
  */
-public class GroovyExecutorTest {
+public class GroovyScriptingExecutorTest {
 
 	@ClassRule
 	@Rule
@@ -78,9 +78,10 @@ public class GroovyExecutorTest {
 			String fileName)
 		throws Exception {
 
-		GroovyExecutor groovyExecutor = new GroovyExecutor();
+		GroovyScriptingExecutor groovyScriptingExecutor =
+			new GroovyScriptingExecutor();
 
-		return groovyExecutor.eval(
+		return groovyScriptingExecutor.eval(
 			null, inputObjects, outputNames,
 			StringUtil.read(
 				getClass().getResourceAsStream(

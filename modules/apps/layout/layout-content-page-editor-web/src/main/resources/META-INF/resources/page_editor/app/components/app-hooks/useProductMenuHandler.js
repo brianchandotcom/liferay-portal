@@ -33,7 +33,13 @@ export default function useProductMenuHandler() {
 			});
 		}
 		else {
-			dispatch(switchSidebarPanel({sidebarOpen: true}));
+			const sideNavigation = Liferay.SideNavigation?.instance(
+				document.querySelector('.product-menu-toggle')
+			);
+
+			if (!sideNavigation?.visible()) {
+				dispatch(switchSidebarPanel({sidebarOpen: true}));
+			}
 		}
 	}, [dispatch]);
 

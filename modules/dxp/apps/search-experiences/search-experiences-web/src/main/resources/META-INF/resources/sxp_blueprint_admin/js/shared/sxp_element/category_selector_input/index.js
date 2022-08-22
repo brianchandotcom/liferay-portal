@@ -15,12 +15,11 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import {fetch} from 'frontend-js-web';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import useDebounceCallback from '../../../hooks/useDebounceCallback';
 import {DEFAULT_HEADERS} from '../../../utils/fetch';
 import {removeDuplicates, toNumber} from '../../../utils/utils';
-import ThemeContext from '../../ThemeContext';
 import CategorySelectorModal from './CategorySelectorModal';
 
 export const FETCH_URLS = {
@@ -40,15 +39,12 @@ export const FETCH_URLS = {
  * categoryTree.
  * @param {String} siteId Site ID to get the name of
  * @param {Object} categoryTree Contains the names and IDs of sites
- * @param {String} locale
  * @returns {String}
  */
-function getSiteName(siteId, categoryTree, locale) {
+function getSiteName(siteId, categoryTree) {
 	const site = categoryTree.find((site) => siteId === site.id);
 
-	return (
-		site.descriptiveName_i18n?.[locale] || site.descriptiveName || site.name
-	);
+	return site.descriptiveName || site.name;
 }
 
 function CategoryMenu({locator, onItemClick = () => {}, sourceItems}) {
@@ -100,8 +96,6 @@ function CategorySelectorInput({
 	setFieldValue,
 	value,
 }) {
-	const {locale} = useContext(ThemeContext);
-
 	const [categoryTree, setCategoryTree] = useState([]);
 
 	const [inputValue, setInputValue] = useState(
@@ -113,7 +107,7 @@ function CategorySelectorInput({
 		setAutocompleteDropdownActive,
 	] = useState(false);
 
-	const _handleSetMatchingCategories = (inputValue, categoryTree, locale) => {
+	const _handleSetMatchingCategories = (inputValue, categoryTree) => {
 		const categories = [];
 		const vocabularyIds = categoryTree
 			.map(
@@ -151,11 +145,9 @@ function CategorySelectorInput({
 					// category's site and vocabulary.
 
 					categories.push({
-						description: `${getSiteName(
-							groupId,
-							categoryTree,
-							locale
-						)} - ${path.split(' > ')?.[0]}`, // First word in path is vocabulary name
+						description: `${getSiteName(groupId, categoryTree)} - ${
+							path.split(' > ')?.[0]
+						}`, // First word in path is vocabulary name
 						id: categoryId,
 						name,
 					});
@@ -171,8 +163,7 @@ function CategorySelectorInput({
 					_handleFetchCategoryFromID(
 						categories,
 						inputValue,
-						categoryTree,
-						locale
+						categoryTree
 					);
 				}
 				else {
@@ -189,8 +180,7 @@ function CategorySelectorInput({
 	const _handleFetchCategoryFromID = (
 		categories = [],
 		currentInputValue,
-		categoryTree,
-		locale
+		categoryTree
 	) => {
 		fetch(FETCH_URLS.getCategory(currentInputValue), {
 			headers: DEFAULT_HEADERS,
@@ -208,8 +198,7 @@ function CategorySelectorInput({
 						{
 							description: `${getSiteName(
 								JSON.stringify(siteId), // Site ID is a number
-								categoryTree,
-								locale
+								categoryTree
 							)} - ${parentTaxonomyVocabulary.name}`,
 							id,
 							name,
@@ -255,11 +244,7 @@ function CategorySelectorInput({
 		setInputValue(newValue);
 
 		if (newValue.trim()) {
-			handleSetMatchingCategoriesDebounced(
-				newValue.trim(),
-				categoryTree,
-				locale
-			);
+			handleSetMatchingCategoriesDebounced(newValue.trim(), categoryTree);
 
 			setFieldValue(
 				name,
@@ -289,11 +274,7 @@ function CategorySelectorInput({
 		setInputValue(newValue);
 
 		if (newValue.trim()) {
-			handleSetMatchingCategoriesDebounced(
-				newValue.trim(),
-				categoryTree,
-				locale
-			);
+			handleSetMatchingCategoriesDebounced(newValue.trim(), categoryTree);
 		}
 		else {
 			setMatchingCategories([]);
@@ -373,7 +354,6 @@ function CategorySelectorInput({
 						.then((response) => response.json())
 						.then((vocabularies) => {
 							tree[siteIndex] = {
-								...site,
 								children: vocabularies.items.map(
 									({
 										id,
@@ -389,13 +369,16 @@ function CategorySelectorInput({
 										numberOfTaxonomyCategories,
 									})
 								),
+								descriptiveName: site.descriptiveName,
 								id: JSON.stringify(site.id),
+								name: site.name,
 							};
 						})
 						.catch(() => {
 							tree[siteIndex] = {
-								...site,
+								descriptiveName: site.descriptiveName,
 								id: JSON.stringify(site.id),
+								name: site.name,
 							};
 						});
 				});

@@ -15,10 +15,9 @@ import {ClayCheckbox, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import getCN from 'classnames';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
 import {fetchData} from '../../../utils/fetch';
-import ThemeContext from '../../ThemeContext';
 import {FETCH_URLS} from './index';
 
 /**
@@ -256,8 +255,6 @@ function CategorySelectorModal({
 	const [currentSite, setCurrentSite] = useState({id: ''});
 	const [selected, setSelected] = useState(value);
 
-	const {locale} = useContext(ThemeContext);
-
 	const _handleChangeCurrentSite = (event) => {
 		const currentSiteIndex = tree.findIndex(
 			(site) => site.id === event.target.value
@@ -330,11 +327,7 @@ function CategorySelectorModal({
 							{tree.map((site) => (
 								<ClaySelect.Option
 									key={site.id}
-									label={
-										site.descriptiveName_i18n?.[locale] ||
-										site.descriptiveName ||
-										site.name
-									}
+									label={site.descriptiveName || site.name}
 									value={site.id}
 								/>
 							))}

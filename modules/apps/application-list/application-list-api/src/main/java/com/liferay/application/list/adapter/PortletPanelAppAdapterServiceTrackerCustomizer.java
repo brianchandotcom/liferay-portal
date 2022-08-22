@@ -59,7 +59,8 @@ public class PortletPanelAppAdapterServiceTrackerCustomizer
 			return null;
 		}
 
-		PanelApp portletPanelAppAdapter = new PortletPanelAppAdapter(portletId);
+		PanelApp portletPanelAppAdapter = new PortletPanelAppAdapter(
+			portletId, _bundleContext.getService(serviceReference));
 
 		ServiceRegistration<PanelApp> serviceRegistration =
 			_bundleContext.registerService(
@@ -89,6 +90,8 @@ public class PortletPanelAppAdapterServiceTrackerCustomizer
 	@Override
 	public void removedService(
 		ServiceReference<Portlet> serviceReference, PanelApp panelApp) {
+
+		_bundleContext.ungetService(serviceReference);
 
 		ServiceRegistration<PanelApp> serviceRegistration =
 			_serviceRegistrations.remove(serviceReference);

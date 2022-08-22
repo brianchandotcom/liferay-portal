@@ -318,6 +318,10 @@ public interface ObjectRelationshipLocalService
 	public List<ObjectRelationship> getObjectRelationships(
 		long objectDefinitionId1, long objectDefinition2, String type);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectRelationship> getObjectRelationships(
+		long objectDefinitionId1, String deletionType, boolean reverse);
+
 	/**
 	 * Returns the number of object relationships.
 	 *

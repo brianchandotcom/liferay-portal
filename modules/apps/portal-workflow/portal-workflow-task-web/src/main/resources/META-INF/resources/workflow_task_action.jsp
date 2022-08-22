@@ -45,7 +45,7 @@ PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 			<c:when test="<%= workflowTaskDisplayContext.isAssignedToUser(workflowTask) %>">
 
 				<%
-				for (WorkflowTransition workflowTransition : workflowTaskDisplayContext.getWorkflowTransitions(workflowTask)) {
+				for (WorkflowTransition workflowTransition : workflowTaskDisplayContext.getWorkflowTaskWorkflowTransitions(workflowTask)) {
 				%>
 
 					<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/portal_workflow_task/complete_task" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="editURL">

@@ -87,10 +87,6 @@ public interface WorkflowTaskManager {
 			long companyId, long userId, long workflowTaskId)
 		throws WorkflowException;
 
-	public List<WorkflowTransition> getNextWorkflowTransitions(
-			long workflowTaskId)
-		throws WorkflowException;
-
 	public WorkflowTask getWorkflowTask(long companyId, long workflowTaskId)
 		throws WorkflowException;
 
@@ -152,6 +148,10 @@ public interface WorkflowTaskManager {
 			long companyId, Long userId, long workflowInstanceId,
 			Boolean completed, int start, int end,
 			OrderByComparator<WorkflowTask> orderByComparator)
+		throws WorkflowException;
+
+	public List<WorkflowTransition> getWorkflowTaskWorkflowTransitions(
+			long workflowTaskId)
 		throws WorkflowException;
 
 	public boolean hasAssignableUsers(long companyId, long workflowTaskId)

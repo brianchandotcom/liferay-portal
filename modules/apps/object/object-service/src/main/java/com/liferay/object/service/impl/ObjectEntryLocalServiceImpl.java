@@ -67,7 +67,6 @@ import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
-import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -78,7 +77,6 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -1926,45 +1924,36 @@ public class ObjectEntryLocalServiceImpl
 	/**
 	 * @see com.liferay.portal.upgrade.util.Table#getValue
 	 */
-	private Object _getValue(ResultSet resultSet, String name, int sqlType)
-		throws SQLException {
-
+	private Object _getValue(Object object, int sqlType) throws SQLException {
 		if (sqlType == Types.BIGINT) {
-			return resultSet.getLong(name);
-		}
-		else if (sqlType == Types.BLOB) {
-			if (PostgreSQLJDBCUtil.isPGStatement(resultSet.getStatement())) {
-				return PostgreSQLJDBCUtil.getLargeObject(resultSet, name);
-			}
-
-			return resultSet.getBytes(name);
+			return GetterUtil.getLong(object);
 		}
 		else if (sqlType == Types.BOOLEAN) {
-			return resultSet.getBoolean(name);
+			return GetterUtil.getBoolean(object);
 		}
 		else if (sqlType == Types.CLOB) {
-			DB db = DBManagerUtil.getDB();
-
-			if (db.getDBType() == DBType.POSTGRESQL) {
-				return resultSet.getString(name);
-			}
-
-			return resultSet.getClob(name);
+			return GetterUtil.getString(object);
 		}
 		else if ((sqlType == Types.DATE) || (sqlType == Types.TIMESTAMP)) {
-			return resultSet.getTimestamp(name);
+			if (object == null) {
+				return null;
+			}
+
+			Date date = (Date)object;
+
+			return new Timestamp(date.getTime());
 		}
 		else if (sqlType == Types.DECIMAL) {
-			return resultSet.getBigDecimal(name);
+			return object;
 		}
 		else if (sqlType == Types.DOUBLE) {
-			return resultSet.getDouble(name);
+			return GetterUtil.getDouble(object);
 		}
 		else if (sqlType == Types.INTEGER) {
-			return resultSet.getInt(name);
+			return GetterUtil.getInteger(object);
 		}
 		else if (sqlType == Types.VARCHAR) {
-			return resultSet.getString(name);
+			return GetterUtil.getString(object, null);
 		}
 		else {
 			throw new IllegalArgumentException(
@@ -2129,84 +2118,49 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private void _list(
-			Connection connection, DSLQuery dslQuery, List<Object[]> results,
-			Expression<?>[] selectExpressions)
-		throws SQLException {
-
-		DefaultASTNodeListener defaultASTNodeListener =
-			new DefaultASTNodeListener();
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				dslQuery.toSQL(defaultASTNodeListener))) {
-
-			List<Object> scalarValues =
-				defaultASTNodeListener.getScalarValues();
-
-			for (int i = 0; i < scalarValues.size(); i++) {
-				preparedStatement.setObject(i + 1, scalarValues.get(i));
-			}
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					results.add(_list(resultSet, selectExpressions));
-				}
-			}
-		}
-	}
-
 	private List<Object[]> _list(
 		DSLQuery dslQuery, Expression<?>[] selectExpressions) {
 
 		List<Object[]> results = new ArrayList<>();
 
-		Session session = objectEntryPersistence.openSession();
+		List<Object[]> entriesValues = objectEntryPersistence.dslQuery(
+			dslQuery);
 
-		try {
-			session.apply(
-				connection -> _list(
-					connection, dslQuery, results, selectExpressions));
-		}
-		finally {
-			objectEntryPersistence.closeSession(session);
+		for (Object[] entryValues : entriesValues) {
+			Object[] result = new Object[selectExpressions.length];
+
+			for (int i = 0; i < selectExpressions.length; i++) {
+				Expression<?> selectExpression = selectExpressions[i];
+
+				try {
+					if (selectExpression instanceof Column) {
+						Column<?, ?> column =
+							(Column<?, ?>)selectExpressions[i];
+
+						result[i] = _getValue(
+							entryValues[i], column.getSQLType());
+					}
+					else if (selectExpression instanceof ScalarDSLQueryAlias) {
+						ScalarDSLQueryAlias scalarDSLQueryAlias =
+							(ScalarDSLQueryAlias)selectExpressions[i];
+
+						result[i] = _getValue(
+							entryValues[i], scalarDSLQueryAlias.getSQLType());
+
+						if (result[i] == null) {
+							result[i] = "0";
+						}
+					}
+				}
+				catch (SQLException sqlException) {
+					throw new SystemException(sqlException);
+				}
+			}
+
+			results.add(result);
 		}
 
 		return results;
-	}
-
-	private Object[] _list(
-			ResultSet resultSet, Expression<?>[] selectExpressions)
-		throws SQLException {
-
-		Object[] result = new Object[selectExpressions.length];
-
-		for (int i = 0; i < selectExpressions.length; i++) {
-			Expression<?> selectExpression = selectExpressions[i];
-
-			if (selectExpression instanceof Column) {
-				Column<?, ?> column = (Column<?, ?>)selectExpressions[i];
-
-				String columnName = column.getName();
-
-				result[i] = _getValue(
-					resultSet, columnName, column.getSQLType());
-			}
-			else if (selectExpression instanceof ScalarDSLQueryAlias) {
-				ScalarDSLQueryAlias scalarDSLQueryAlias =
-					(ScalarDSLQueryAlias)selectExpressions[i];
-
-				String columnName = scalarDSLQueryAlias.getName();
-
-				result[i] = _getValue(
-					resultSet, columnName, scalarDSLQueryAlias.getSQLType());
-
-				if (result[i] == null) {
-					result[i] = "0";
-				}
-			}
-		}
-
-		return result;
 	}
 
 	private void _putValue(

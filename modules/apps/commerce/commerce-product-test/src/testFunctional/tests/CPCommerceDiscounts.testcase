@@ -298,7 +298,7 @@ definition {
 		}
 
 		task ("And Coupon Code Entry widget is deployed on the Checkout page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/checkout");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/checkout");
 
 			CommerceAcceleratorsInitializer.addPortlet(portletName = "Coupon Code Entry");
 		}
@@ -428,7 +428,7 @@ definition {
 		}
 
 		task ("And Coupon Code Entry widget is deployed on the Checkout page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/checkout");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/checkout");
 
 			CommerceAcceleratorsInitializer.addPortlet(portletName = "Coupon Code Entry");
 		}

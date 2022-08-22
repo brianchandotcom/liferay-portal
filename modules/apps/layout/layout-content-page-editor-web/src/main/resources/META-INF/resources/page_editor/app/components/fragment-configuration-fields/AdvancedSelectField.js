@@ -105,6 +105,12 @@ export function AdvancedSelectField({
 		onValueSelect(field.name, value);
 	};
 
+	useEffect(() => {
+		setIsTokenValueOrInherited(
+			!isNullOrUndefined(tokenValues[value]) || !value
+		);
+	}, [selectedViewportSize, tokenValues, value]);
+
 	return (
 		<div
 			className={classNames('page-editor__select-field', {

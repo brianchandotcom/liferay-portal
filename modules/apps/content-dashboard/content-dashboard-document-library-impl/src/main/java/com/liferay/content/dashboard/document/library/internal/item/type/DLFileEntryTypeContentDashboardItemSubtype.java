@@ -38,8 +38,10 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 	implements ContentDashboardItemSubtype<DLFileEntryType> {
 
 	public DLFileEntryTypeContentDashboardItemSubtype(
-		DLFileEntry dlFileEntry, DLFileEntryType dlFileEntryType, Group group) {
+		DLFileEntryType basicDocumentDLFileEntryType, DLFileEntry dlFileEntry,
+		DLFileEntryType dlFileEntryType, Group group) {
 
+		_basicDocumentDLFileEntryType = basicDocumentDLFileEntryType;
 		_dlFileEntry = dlFileEntry;
 		_dlFileEntryType = dlFileEntryType;
 		_group = group;
@@ -124,6 +126,12 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 
 	@Override
 	public String getLabel(Locale locale) {
+		if ((_dlFileEntry != null) &&
+			Objects.equals(_basicDocumentDLFileEntryType, _dlFileEntryType)) {
+
+			return _dlFileEntry.getExtension();
+		}
+
 		return _dlFileEntryType.getName(locale);
 	}
 
@@ -154,6 +162,7 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryTypeContentDashboardItemSubtype.class);
 
+	private final DLFileEntryType _basicDocumentDLFileEntryType;
 	private final DLFileEntry _dlFileEntry;
 	private final DLFileEntryType _dlFileEntryType;
 	private final Group _group;

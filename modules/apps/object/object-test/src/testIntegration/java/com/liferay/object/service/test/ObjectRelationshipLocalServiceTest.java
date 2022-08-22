@@ -425,24 +425,6 @@ public class ObjectRelationshipLocalServiceTest {
 		try {
 			_objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId(),
-				_objectDefinition1.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-		}
-		catch (ObjectRelationshipTypeException
-					objectRelationshipTypeException) {
-
-			Assert.assertEquals(
-				"Many to many self relationships are not allowed",
-				objectRelationshipTypeException.getMessage());
-		}
-
-		try {
-			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
 				_systemObjectDefinition2.getObjectDefinitionId(),
 				_systemObjectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
@@ -454,7 +436,7 @@ public class ObjectRelationshipLocalServiceTest {
 					objectRelationshipTypeException) {
 
 			Assert.assertEquals(
-				"Many to many self relationships are not allowed",
+				"Relationships are not allowed between system objects",
 				objectRelationshipTypeException.getMessage());
 		}
 

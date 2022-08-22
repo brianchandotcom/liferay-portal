@@ -24,7 +24,7 @@ interface CompanyExtender {
 }
 
 export default function useGetCompanyExtenderByAccountEntryId(
-	accountEntryId: string | undefined
+	accountEntryId: number | undefined
 ) {
 	const response = useSWR(
 		accountEntryId

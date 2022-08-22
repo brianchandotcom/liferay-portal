@@ -18,10 +18,10 @@ interface DateActivities {
 }
 
 export default function getSummaryActivities(
-	mdfRequestActivity: MDFRequestActivity[]
+	mdfRequestActivities: MDFRequestActivity[]
 ) {
-	if (mdfRequestActivity.length) {
-		const datesActivities = mdfRequestActivity.reduce(
+	if (mdfRequestActivities.length) {
+		const datesActivities = mdfRequestActivities.reduce(
 			(dateAccumulator: DateActivities, activity: MDFRequestActivity) => {
 				return {
 					endDates: [...dateAccumulator.endDates, activity.endDate],
@@ -34,25 +34,14 @@ export default function getSummaryActivities(
 			{endDates: [], startDates: []}
 		);
 
-		const maxDateActivity = new Date(
-			Math.min(
-				Number(
-					...datesActivities.startDates.map((date) => new Date(date))
-				)
-			)
-		);
-		const minDateActivity = new Date(
-			Math.max(
-				Number(
-					...datesActivities.endDates.map((date) => new Date(date))
-				)
-			)
-		);
-
 		return {
-			maxDateActivity,
-			minDateActivity,
-			totalCostOfExpense: getTotalBudget(mdfRequestActivity),
+			maxDateActivity: new Date(
+				Math.min(Number(...datesActivities.startDates))
+			),
+			minDateActivity: new Date(
+				Math.max(Number(...datesActivities.endDates))
+			),
+			totalCostOfExpense: getTotalBudget(mdfRequestActivities),
 		};
 	}
 }

@@ -9,11 +9,15 @@
  * distribution rights of the Software.
  */
 
-import {array, object, string} from 'yup';
+import {array, number, object, string} from 'yup';
 
 import isObjectEmpty from '../../../utils/isObjectEmpty';
 
 const goalsSchema = object({
+	company: object({
+		id: number(),
+		name: string(),
+	}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 	country: object({
 		key: string(),
 		name: string(),
@@ -24,7 +28,6 @@ const goalsSchema = object({
 	overallCampaign: string()
 		.max(350, 'You have exceeded the character limit')
 		.required('Required'),
-	r_accountToMDFRequests_accountEntryId: string().required('Required'),
 	targetAudienceRoles: array().min(1, 'Required'),
 	targetMarkets: array()
 		.min(1, 'Required')

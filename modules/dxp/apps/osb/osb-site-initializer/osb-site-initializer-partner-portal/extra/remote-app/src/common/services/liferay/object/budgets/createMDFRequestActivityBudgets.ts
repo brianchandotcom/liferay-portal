@@ -11,11 +11,12 @@
 
 import {Liferay} from '../..';
 import MDFRequestBudget from '../../../../interfaces/mdfRequestBudget';
+import getDTOFromMDFRequestBudget from '../../../../utils/dto/mdf-request-budget/getDTOFromMDFRequestBudget';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 
 export default async function createMDFRequestActivityBudgets(
-	activityId: string | undefined,
+	activityId: number,
 	budgets: MDFRequestBudget[]
 ) {
 	return await Promise.all(
@@ -23,10 +24,7 @@ export default async function createMDFRequestActivityBudgets(
 			liferayFetcher.post(
 				`/o/${LiferayAPIs.OBJECT}/budgets`,
 				Liferay.authToken,
-				{
-					...budget,
-					r_activityToBudgets_c_activityId: activityId,
-				}
+				getDTOFromMDFRequestBudget(budget, activityId)
 			)
 		)
 	);

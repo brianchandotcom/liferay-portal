@@ -11,11 +11,12 @@
 
 import {Liferay} from '../..';
 import MDFRequestActivity from '../../../../interfaces/mdfRequestActivity';
+import getDTOFromMDFRequestActivity from '../../../../utils/dto/mdf-request-activity/getDTOFromMDFRequestActivity';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 
 export default async function createMDFRequestActivities(
-	mdfRequestId: string | undefined,
+	mdfRequestId: number,
 	mdfRequestActivities: MDFRequestActivity[]
 ) {
 	return await Promise.all(
@@ -23,13 +24,7 @@ export default async function createMDFRequestActivities(
 			liferayFetcher.post(
 				`/o/${LiferayAPIs.OBJECT}/activities`,
 				Liferay.authToken,
-				{
-					...activity,
-					leadFollowUpStrategies: activity.leadFollowUpStrategies.join(
-						', '
-					),
-					r_mdfRequestToActivities_c_mdfRequestId: mdfRequestId,
-				}
+				getDTOFromMDFRequestActivity(activity, mdfRequestId)
 			)
 		)
 	);

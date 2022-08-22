@@ -11,20 +11,12 @@
 
 import {Liferay} from '../..';
 import MDFRequest from '../../../../interfaces/mdfRequest';
-import getSummaryActivities from '../../../../utils/getSummaryActivities';
+import {getDTOFromMDFRequest} from '../../../../utils/dto/mdf-request/getDTOFromMDFRequest';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 
 export default async function createMDFRequest(mdfRequest: MDFRequest) {
-	const dtoMDFRequest = {
-		...mdfRequest,
-		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals.join(
-			', '
-		),
-		...getSummaryActivities(mdfRequest.activities),
-		targetAudienceRoles: mdfRequest.targetAudienceRoles.join(', '),
-		targetMarkets: mdfRequest.targetMarkets.join(', '),
-	};
+	const dtoMDFRequest = getDTOFromMDFRequest(mdfRequest);
 
 	return await liferayFetcher.post(
 		`/o/${LiferayAPIs.OBJECT}/mdfrequests`,

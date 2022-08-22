@@ -550,13 +550,19 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public String getResult() {
-		if ((result == null) && (getBuildURL() != null)) {
+		if ((this.result == null) && (getBuildURL() != null)) {
 			JSONObject buildJSONObject = getBuildJSONObject("result");
 
-			setResult(buildJSONObject.optString("result"));
+			String result = buildJSONObject.optString("result");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(result)) {
+				result = null;
+			}
+
+			setResult(result);
 		}
 
-		return result;
+		return this.result;
 	}
 
 	@Override

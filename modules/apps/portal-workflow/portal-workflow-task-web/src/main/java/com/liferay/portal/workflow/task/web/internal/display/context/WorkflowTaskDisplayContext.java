@@ -620,25 +620,6 @@ public class WorkflowTaskDisplayContext {
 			workflowTask.getWorkflowTaskId());
 	}
 
-	public String getWorkflowTransitionLabel(
-		WorkflowTransition workflowTransition) {
-
-		Map<Locale, String> labelMap = workflowTransition.getLabelMap();
-
-		String label = labelMap.get(getTaskContentLocale());
-
-		if (label != null) {
-			return label;
-		}
-
-		if (workflowTransition.getName() != null) {
-			return workflowTransition.getName();
-		}
-
-		return LanguageUtil.get(
-			_workflowTaskRequestHelper.getRequest(), _PROCEED_KEY);
-	}
-
 	public boolean hasAssignableUsers(WorkflowTask workflowTask)
 		throws PortalException {
 
@@ -1041,8 +1022,6 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
-
-	private static final String _PROCEED_KEY = "proceed";
 
 	private final Format _dateFormatDateTime;
 	private String _displayStyle;

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.workflow;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.Serializable;
@@ -70,8 +71,16 @@ public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 
 	@Override
 	public String getLabel(Locale locale) {
-		if (MapUtil.isNotEmpty(_labelMap)) {
-			return _labelMap.get(locale);
+		String label = _labelMap.get(locale);
+
+		if (label != null) {
+			return label;
+		}
+
+		label = _labelMap.get(LocaleUtil.getSiteDefault());
+
+		if (label != null) {
+			return label;
 		}
 
 		Language language = LanguageUtil.getLanguage();

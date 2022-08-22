@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -21,6 +25,20 @@ import java.util.Map;
  * @author Feliphe Marinho
  */
 public class DefaultWorkflowTransition implements WorkflowTransition {
+
+	@Override
+	public String getLabel(Locale locale) {
+		String label = _labelMap.get(locale);
+
+		if (label != null) {
+			return HtmlUtil.escape(label);
+		}
+
+		return HtmlUtil.escape(
+			LocalizationUtil.getLocalization(
+				(_name != null) ? _name : _PROCEED_KEY,
+				LocaleUtil.toLanguageId(locale), true));
+	}
 
 	@Override
 	public Map<Locale, String> getLabelMap() {
@@ -57,6 +75,8 @@ public class DefaultWorkflowTransition implements WorkflowTransition {
 	public void setTargetNodeName(String targetNodeName) {
 		_targetNodeName = targetNodeName;
 	}
+
+	private static final String _PROCEED_KEY = "proceed";
 
 	private Map<Locale, String> _labelMap;
 	private String _name;

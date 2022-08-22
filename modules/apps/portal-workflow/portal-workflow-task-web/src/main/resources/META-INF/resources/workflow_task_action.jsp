@@ -64,7 +64,7 @@ PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 						cssClass='<%= "workflow-task-" + randomId + " task-change-status-link" %>'
 						data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
 						id='<%= randomId + HtmlUtil.escapeAttribute(workflowTransition.getName()) + "taskChangeStatusLink" %>'
-						message="<%= HtmlUtil.escape(workflowTaskDisplayContext.getWorkflowTransitionLabel(workflowTransition)) %>"
+						message="<%= workflowTransition.getLabel(workflowTaskDisplayContext.getTaskContentLocale()) %>"
 						method="get"
 						url="<%= editURL %>"
 					/>

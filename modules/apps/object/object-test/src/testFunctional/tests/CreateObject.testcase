@@ -4953,7 +4953,8 @@ definition {
 	@description = "LPS-139803 - Verify it the Object Entry Title of a String type is displayed on the Relationship field when adding an entry"
 	@priority = "5"
 	test CanViewObjectEntryTitleStringOnRelationshipField {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 117",

@@ -9,9 +9,8 @@
  * distribution rights of the Software.
  */
 
-export default interface LiferayObject {
-	dateCreated: Date;
-	dateModified: Date;
-	externalReferenceCode: string;
-	id: number;
+import MDFRequestBudget from '../mdfRequestBudget';
+
+export default interface MDFRequestBudgetDTO extends MDFRequestBudget {
+	r_activityToBudgets_c_activityId?: number;
 }

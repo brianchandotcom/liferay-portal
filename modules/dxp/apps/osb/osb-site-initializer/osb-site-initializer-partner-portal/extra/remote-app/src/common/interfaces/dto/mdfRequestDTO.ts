@@ -9,9 +9,19 @@
  * distribution rights of the Software.
  */
 
-export default interface LiferayObject {
-	dateCreated: Date;
-	dateModified: Date;
-	externalReferenceCode: string;
-	id: number;
+import MDFRequest from '../mdfRequest';
+
+export default interface MDFRequestDTO
+	extends Omit<
+		MDFRequest,
+		| 'activities'
+		| 'liferayBusinessSalesGoals'
+		| 'targetAudienceRoles'
+		| 'targetMarkets'
+		| 'company'
+	> {
+	liferayBusinessSalesGoals?: string;
+	r_accountToMDFRequests_accountEntryId?: number;
+	targetAudienceRoles?: string;
+	targetMarkets?: string;
 }

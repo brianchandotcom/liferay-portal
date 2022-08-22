@@ -10,6 +10,7 @@
  */
 
 import {RequestStatus} from '../enums/requestStatus';
+import LiferayAccountBrief from './liferayAccountBrief';
 import LiferayObject from './liferayObject';
 import LiferayPicklist from './liferayPicklist';
 import MDFRequestActivity from './mdfRequestActivity';
@@ -17,15 +18,15 @@ import MDFRequestActivity from './mdfRequestActivity';
 export default interface MDFRequest extends Partial<LiferayObject> {
 	activities: MDFRequestActivity[];
 	additionalOption: LiferayPicklist;
+	company: LiferayAccountBrief;
 	country: LiferayPicklist;
 	liferayBusinessSalesGoals: string[];
 	maxDateActivity?: Date;
 	minDateActivity?: Date;
-	overallCampaign: string;
-	r_accountToMDFRequests_accountEntryId: string;
-	requestStatus: RequestStatus;
+	overallCampaign?: string;
+	requestStatus?: RequestStatus;
 	targetAudienceRoles: string[];
 	targetMarkets: string[];
-	totalCostOfExpense?: string;
-	totalRequested?: string;
+	totalCostOfExpense?: number;
+	totalRequested?: number;
 }

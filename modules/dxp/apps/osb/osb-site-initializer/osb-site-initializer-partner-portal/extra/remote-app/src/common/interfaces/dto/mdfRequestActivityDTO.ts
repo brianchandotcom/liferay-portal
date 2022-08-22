@@ -9,9 +9,19 @@
  * distribution rights of the Software.
  */
 
-export default interface LiferayObject {
-	dateCreated: Date;
-	dateModified: Date;
-	externalReferenceCode: string;
-	id: number;
+import MDFRequestActivity from '../mdfRequestActivity';
+
+export default interface MDFRequestActivityDTO
+	extends Omit<
+		MDFRequestActivity,
+		| 'budgets'
+		| 'leadFollowUpStrategies'
+		| 'mdfRequestId'
+		| 'tactic'
+		| 'typeofActivity'
+	> {
+	leadFollowUpStrategies?: string;
+	r_mdfRequestToActivities_c_mdfRequestId?: number;
+	r_tacticToActivities_c_tacticId?: number;
+	r_typeActivityToActivities_c_typeActivityId?: number;
 }

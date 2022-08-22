@@ -11,6 +11,6 @@
 
 import LiferayObject from './liferayObject';
 
-export interface TypeActivity extends LiferayObject {
-	name: string;
+export default interface TypeActivity extends LiferayObject {
+	name?: string;
 }

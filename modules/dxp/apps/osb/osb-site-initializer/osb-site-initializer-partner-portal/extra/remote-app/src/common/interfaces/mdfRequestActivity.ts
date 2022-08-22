@@ -11,6 +11,8 @@
 
 import LiferayObject from './liferayObject';
 import MDFRequestBudget from './mdfRequestBudget';
+import Tactic from './tactic';
+import TypeActivity from './typeActivity';
 
 export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	activityPromotion: string;
@@ -35,13 +37,12 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	name: string;
 	overallMessageContentCTA: string;
 	primaryThemeOrMessage: string;
-	r_mdfRequestToActivities_c_mdfRequestId?: string;
-	r_tacticToActivities_c_tacticId: string;
-	r_typeActivityToActivities_c_typeActivityId: string;
 	sourceAndSizeOfInviteeList: string;
 	specificSites: string;
 	startDate: Date;
+	tactic: Tactic;
 	targetofLeads: string;
 	totalCostOfExpense: string;
+	typeofActivity: TypeActivity;
 	venueName: string;
 }

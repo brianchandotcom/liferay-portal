@@ -13,7 +13,6 @@ import LiferayObject from './liferayObject';
 import LiferayPicklist from './liferayPicklist';
 
 export default interface MDFRequestBudget extends Partial<LiferayObject> {
-	cost: string;
-	expense?: LiferayPicklist | {};
-	r_activityToBudgets_c_activityId?: string;
+	cost?: string;
+	expense: LiferayPicklist;
 }

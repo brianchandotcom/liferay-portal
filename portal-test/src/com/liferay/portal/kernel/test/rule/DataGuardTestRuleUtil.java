@@ -138,6 +138,102 @@ public class DataGuardTestRuleUtil {
 			_recordsThreadLocal.get(), null);
 	}
 
+	public static void smartDelete(
+			PersistedModelLocalService persistedModelLocalService,
+			Class<?> modelClass, PersistedModel persistedModel)
+		throws Exception {
+
+		Method deleteMethod = null;
+
+		Class<?> clazz = persistedModelLocalService.getClass();
+
+		Class<?>[] parameterTypes = new Class<?>[] {modelClass};
+
+		for (Method method : clazz.getMethods()) {
+			String methodName = method.getName();
+
+			if (methodName.startsWith("delete") &&
+				Arrays.equals(method.getParameterTypes(), parameterTypes)) {
+
+				if (deleteMethod == null) {
+					deleteMethod = method;
+				}
+				else {
+					String deleteMethodName = deleteMethod.getName();
+
+					if (deleteMethodName.length() > methodName.length()) {
+						deleteMethod = method;
+					}
+				}
+			}
+		}
+
+		try {
+			if (deleteMethod == null) {
+				persistedModelLocalService.deletePersistedModel(persistedModel);
+			}
+			else {
+				deleteMethod.invoke(persistedModelLocalService, persistedModel);
+			}
+		}
+		catch (Throwable throwable1) {
+			ResourcePermissionTestUtil.deleteResourcePermissions(
+				persistedModel);
+
+			BasePersistence<?> basePersistence = _getBasePersistence(
+				persistedModelLocalService);
+
+			Class<?> persistenceClass = basePersistence.getClass();
+
+			try (Closeable closeable1 = _installTransactionExecutor(
+					_getSymbolicName(persistenceClass.getClassLoader()))) {
+
+				TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					() -> {
+						try (Closeable closeable2 =
+								_removeSessionFactoryVerifier(
+									basePersistence)) {
+
+							Session session =
+								basePersistence.getCurrentSession();
+
+							if (session.contains(persistedModel)) {
+								session.delete(persistedModel);
+							}
+							else {
+								BaseModel<?> baseModel =
+									(BaseModel<?>)persistedModel;
+
+								Object refetchedBaseModel = session.get(
+									persistedModel.getClass(),
+									baseModel.getPrimaryKeyObj());
+
+								if (refetchedBaseModel != null) {
+									session.delete(refetchedBaseModel);
+								}
+							}
+
+							return null;
+						}
+					});
+
+				Indexer<PersistedModel> indexer =
+					(Indexer<PersistedModel>)IndexerRegistryUtil.getIndexer(
+						modelClass);
+
+				if (indexer != null) {
+					indexer.delete(persistedModel);
+				}
+			}
+			catch (Throwable throwable2) {
+				throwable2.addSuppressed(throwable1);
+
+				ReflectionUtil.throwException(throwable2);
+			}
+		}
+	}
+
 	public static class DataBag {
 
 		private DataBag(
@@ -288,7 +384,7 @@ public class DataGuardTestRuleUtil {
 						}
 					}
 
-					_smartDelete(
+					smartDelete(
 						persistedModelLocalService, modelClass,
 						(PersistedModel)leftoverBaseModel);
 
@@ -532,102 +628,6 @@ public class DataGuardTestRuleUtil {
 
 		return () -> ReflectionTestUtil.setFieldValue(
 			basePersistence, "_sessionFactory", originalSessionFactory);
-	}
-
-	private static void _smartDelete(
-			PersistedModelLocalService persistedModelLocalService,
-			Class<?> modelClass, PersistedModel persistedModel)
-		throws Throwable {
-
-		Method deleteMethod = null;
-
-		Class<?> clazz = persistedModelLocalService.getClass();
-
-		Class<?>[] parameterTypes = new Class<?>[] {modelClass};
-
-		for (Method method : clazz.getMethods()) {
-			String methodName = method.getName();
-
-			if (methodName.startsWith("delete") &&
-				Arrays.equals(method.getParameterTypes(), parameterTypes)) {
-
-				if (deleteMethod == null) {
-					deleteMethod = method;
-				}
-				else {
-					String deleteMethodName = deleteMethod.getName();
-
-					if (deleteMethodName.length() > methodName.length()) {
-						deleteMethod = method;
-					}
-				}
-			}
-		}
-
-		try {
-			if (deleteMethod == null) {
-				persistedModelLocalService.deletePersistedModel(persistedModel);
-			}
-			else {
-				deleteMethod.invoke(persistedModelLocalService, persistedModel);
-			}
-		}
-		catch (Throwable throwable1) {
-			ResourcePermissionTestUtil.deleteResourcePermissions(
-				persistedModel);
-
-			BasePersistence<?> basePersistence = _getBasePersistence(
-				persistedModelLocalService);
-
-			Class<?> persistenceClass = basePersistence.getClass();
-
-			try (Closeable closeable1 = _installTransactionExecutor(
-					_getSymbolicName(persistenceClass.getClassLoader()))) {
-
-				TransactionInvokerUtil.invoke(
-					_transactionConfig,
-					() -> {
-						try (Closeable closeable2 =
-								_removeSessionFactoryVerifier(
-									basePersistence)) {
-
-							Session session =
-								basePersistence.getCurrentSession();
-
-							if (session.contains(persistedModel)) {
-								session.delete(persistedModel);
-							}
-							else {
-								BaseModel<?> baseModel =
-									(BaseModel<?>)persistedModel;
-
-								Object refetchedBaseModel = session.get(
-									persistedModel.getClass(),
-									baseModel.getPrimaryKeyObj());
-
-								if (refetchedBaseModel != null) {
-									session.delete(refetchedBaseModel);
-								}
-							}
-
-							return null;
-						}
-					});
-
-				Indexer<PersistedModel> indexer =
-					(Indexer<PersistedModel>)IndexerRegistryUtil.getIndexer(
-						modelClass);
-
-				if (indexer != null) {
-					indexer.delete(persistedModel);
-				}
-			}
-			catch (Throwable throwable2) {
-				throwable2.addSuppressed(throwable1);
-
-				ReflectionUtil.throwException(throwable2);
-			}
-		}
 	}
 
 	private static final ThreadLocal<Map<String, Map<Serializable, String>>>

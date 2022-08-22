@@ -107,17 +107,6 @@ public class PanelAppRegistry {
 			panelApp -> {
 				Portlet portlet = panelApp.getPortlet();
 
-				if (portlet == null) {
-					portlet = _portletLocalService.getPortletById(
-						panelApp.getPortletId());
-
-					panelApp.setPortlet(portlet);
-				}
-
-				if (portlet == null) {
-					return false;
-				}
-
 				long portletCompanyId = portlet.getCompanyId();
 
 				if ((portletCompanyId != CompanyConstants.SYSTEM) &&
@@ -365,23 +354,15 @@ public class PanelAppRegistry {
 
 			panelApp.setGroupProvider(_groupProvider);
 
-			Portlet portlet = _portletLocalService.getPortletById(
-				panelApp.getPortletId());
-
-			if (portlet != null) {
-				portlet.setControlPanelEntryCategory(panelCategoryKey);
-
-				panelApp.setPortlet(portlet);
-			}
-			else if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get portlet " + panelApp.getPortletId());
-			}
-
 			if (panelApp instanceof BasePanelApp) {
 				BasePanelApp basePanelApp = (BasePanelApp)panelApp;
 
 				basePanelApp.setPortletLocalService(_portletLocalService);
 			}
+
+			Portlet portlet = panelApp.getPortlet();
+
+			portlet.setControlPanelEntryCategory(panelCategoryKey);
 		}
 
 		@Override

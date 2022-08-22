@@ -19,6 +19,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.exception.DefaultObjectLayoutException;
 import com.liferay.object.exception.ObjectLayoutBoxCategorizationTypeException;
+import com.liferay.object.exception.ObjectLayoutBoxCommentsTypeException;
 import com.liferay.object.exception.ObjectLayoutColumnSizeException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -346,6 +347,178 @@ public class ObjectLayoutLocalServiceTest {
 						"than 12"));
 		}
 
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
+
+		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService);
+
+		_objectDefinition.setEnableComments(false);
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		try {
+			ObjectLayoutTab objectLayoutTab =
+				_objectLayoutTabPersistence.create(0);
+
+			objectLayoutTab.setNameMap(
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString()));
+
+			ObjectLayoutBox objectLayoutBox = _addObjectLayoutBox(
+				ObjectLayoutBoxConstants.TYPE_COMMENTS);
+
+			objectLayoutTab.setObjectLayoutBoxes(
+				Arrays.asList(_addObjectLayoutBox(), objectLayoutBox));
+
+			objectLayoutTab.setPriority(0);
+
+			_objectLayoutLocalService.addObjectLayout(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Collections.singletonList(objectLayoutTab));
+
+			Assert.fail();
+		}
+		catch (ObjectLayoutBoxCategorizationTypeException
+					objectLayoutBoxCategorizationTypeException) {
+
+			Assert.assertEquals(
+				"Comments layout box must be enabled to be used",
+				objectLayoutBoxCategorizationTypeException.getMessage());
+		}
+
+		_deleteObjectFields();
+
+		_objectLayoutLocalService.deleteObjectLayout(
+			objectLayout.getObjectLayoutId());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
+
+		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService);
+
+		_objectDefinition.setStorageType(RandomTestUtil.randomString());
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		try {
+			ObjectLayoutTab objectLayoutTab =
+				_objectLayoutTabPersistence.create(0);
+
+			objectLayoutTab.setNameMap(
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString()));
+
+			ObjectLayoutBox objectLayoutBox = _addObjectLayoutBox(
+				ObjectLayoutBoxConstants.TYPE_COMMENTS);
+
+			objectLayoutTab.setObjectLayoutBoxes(
+				Arrays.asList(_addObjectLayoutBox(), objectLayoutBox));
+
+			objectLayoutTab.setPriority(0);
+
+			_objectLayoutLocalService.addObjectLayout(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Collections.singletonList(objectLayoutTab));
+
+			Assert.fail();
+		}
+		catch (ObjectLayoutBoxCommentsTypeException
+					objectLayoutBoxCommentsTypeException) {
+
+			Assert.assertEquals(
+				"Comments layout box only can be used in object definitions " +
+					"with default storage type",
+				objectLayoutBoxCommentsTypeException.getMessage());
+		}
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
+
+		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService);
+
+		try {
+			ObjectLayoutTab objectLayoutTab =
+				_objectLayoutTabPersistence.create(0);
+
+			objectLayoutTab.setNameMap(
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString()));
+			objectLayoutTab.setPriority(0);
+
+			ObjectLayoutBox objectLayoutBox = _addObjectLayoutBox(
+				ObjectLayoutBoxConstants.TYPE_COMMENTS);
+
+			objectLayoutBox.setObjectLayoutRows(
+				Collections.singletonList(_addObjectLayoutRow()));
+
+			objectLayoutTab.setObjectLayoutBoxes(
+				Arrays.asList(_addObjectLayoutBox(), objectLayoutBox));
+
+			_objectLayoutLocalService.addObjectLayout(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Collections.singletonList(objectLayoutTab));
+
+			Assert.fail();
+		}
+		catch (ObjectLayoutBoxCommentsTypeException
+					objectLayoutBoxCommentsTypeException) {
+
+			Assert.assertEquals(
+				"Comments layout box must not have layout rows",
+				objectLayoutBoxCommentsTypeException.getMessage());
+		}
+
+		try {
+			ObjectLayoutTab objectLayoutTab1 =
+				_objectLayoutTabPersistence.create(0);
+
+			objectLayoutTab1.setNameMap(
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString()));
+			objectLayoutTab1.setPriority(0);
+			objectLayoutTab1.setObjectLayoutBoxes(
+				Arrays.asList(
+					_addObjectLayoutBox(),
+					_addObjectLayoutBox(
+						ObjectLayoutBoxConstants.TYPE_COMMENTS)));
+
+			ObjectLayoutTab objectLayoutTab2 =
+				_objectLayoutTabPersistence.create(0);
+
+			objectLayoutTab2.setNameMap(
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString()));
+			objectLayoutTab2.setObjectLayoutBoxes(
+				Arrays.asList(
+					_addObjectLayoutBox(),
+					_addObjectLayoutBox(
+						ObjectLayoutBoxConstants.TYPE_COMMENTS)));
+
+			_objectLayoutLocalService.addObjectLayout(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Arrays.asList(objectLayoutTab1, objectLayoutTab2));
+
+			Assert.fail();
+		}
+		catch (ObjectLayoutBoxCommentsTypeException
+					objectLayoutBoxCommentsTypeException) {
+
+			Assert.assertEquals(
+				"There can only be one comments layout box per layout",
+				objectLayoutBoxCommentsTypeException.getMessage());
+		}
+
 		objectLayout = _addObjectLayout();
 
 		_assertObjectLayout(objectLayout);
@@ -422,7 +595,8 @@ public class ObjectLayoutLocalServiceTest {
 		objectLayoutBox.setType(type);
 
 		if (!StringUtil.equals(
-				type, ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)) {
+				type, ObjectLayoutBoxConstants.TYPE_CATEGORIZATION) &&
+			!StringUtil.equals(type, ObjectLayoutBoxConstants.TYPE_COMMENTS)) {
 
 			objectLayoutBox.setObjectLayoutRows(
 				Arrays.asList(

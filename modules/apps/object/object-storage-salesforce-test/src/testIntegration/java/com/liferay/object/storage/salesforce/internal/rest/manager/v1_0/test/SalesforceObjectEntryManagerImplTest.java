@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -44,6 +45,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.Collections;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -163,7 +165,28 @@ public class SalesforceObjectEntryManagerImplTest {
 	}
 
 	@Test
-	public void testGetObjectEntry() throws Exception {
+	public void testAddObjectEntry() throws Exception {
+		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
+			_getDTOConverterContext(), _objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"title", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertNotNull(objectEntry.getExternalReferenceCode());
+
+		_objectEntryManager.deleteObjectEntry(
+			objectEntry.getExternalReferenceCode(),
+			TestPropsValues.getCompanyId(), _objectDefinition,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+	}
+
+	@Test
+	public void testAddOrUpdateObjectEntry() throws Exception {
 		DTOConverterContext dtoConverterContext = _getDTOConverterContext();
 
 		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
@@ -177,11 +200,57 @@ public class SalesforceObjectEntryManagerImplTest {
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		Assert.assertNotNull(
-			_objectEntryManager.getObjectEntry(
-				dtoConverterContext, objectEntry.getExternalReferenceCode(),
-				TestPropsValues.getCompanyId(), _objectDefinition,
-				ObjectDefinitionConstants.SCOPE_COMPANY));
+		String expectedTitle = RandomTestUtil.randomString();
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		properties.put("title", expectedTitle);
+
+		objectEntry = _objectEntryManager.addOrUpdateObjectEntry(
+			TestPropsValues.getCompanyId(), dtoConverterContext,
+			objectEntry.getExternalReferenceCode(), _objectDefinition,
+			objectEntry, ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertEquals(
+			expectedTitle,
+			MapUtil.getString(objectEntry.getProperties(), "title"));
+
+		_objectEntryManager.deleteObjectEntry(
+			objectEntry.getExternalReferenceCode(),
+			TestPropsValues.getCompanyId(), _objectDefinition,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+	}
+
+	@Test
+	public void testGetObjectEntry() throws Exception {
+		DTOConverterContext dtoConverterContext = _getDTOConverterContext();
+
+		String expectedTitle = RandomTestUtil.randomString();
+
+		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
+			_getDTOConverterContext(), _objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"title", expectedTitle
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		objectEntry = _objectEntryManager.getObjectEntry(
+			dtoConverterContext, objectEntry.getExternalReferenceCode(),
+			TestPropsValues.getCompanyId(), _objectDefinition,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertEquals(
+			expectedTitle,
+			MapUtil.getString(objectEntry.getProperties(), "title"));
+
+		_objectEntryManager.deleteObjectEntry(
+			objectEntry.getExternalReferenceCode(),
+			TestPropsValues.getCompanyId(), _objectDefinition,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	private DTOConverterContext _getDTOConverterContext() throws Exception {

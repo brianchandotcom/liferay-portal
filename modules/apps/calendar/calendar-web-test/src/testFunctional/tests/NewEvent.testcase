@@ -598,7 +598,6 @@ definition {
 			endOnDate = "10/01/2015",
 			endOnDateSummary = "October 1, 2015",
 			frequency = "Daily");
-			
 
 		CalendarEvent.viewRepeatingEventErrorMessage();
 	}

@@ -750,7 +750,13 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public boolean isItemSelector() {
-		return Validator.isNotNull(getItemSelectorEventName());
+		if (Validator.isNotNull(getItemSelectorEventName()) ||
+			LiferayWindowState.isPopUp(_httpServletRequest)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSaveAndAddNewButtonDisabled() throws Exception {

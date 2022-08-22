@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import java.math.BigDecimal;
 
 import java.sql.Blob;
-import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -246,7 +245,7 @@ public class DynamicObjectDefinitionTable
 		).put(
 			"Boolean", Boolean.class
 		).put(
-			"Clob", Clob.class
+			"Clob", String.class
 		).put(
 			"Date", Date.class
 		).put(

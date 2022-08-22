@@ -17,10 +17,12 @@ import {STATUS_TAG_TYPE_NAMES} from '../../../../utils/constants';
 export default function useOnCloseSetupModal(
 	dataSubscriptionGroups,
 	handleOncloseSetupModal,
-	setStatusActivation
+	setStatusLxcActivation
 ) {
 	const [, dispatch] = useCustomerPortal();
-	const {observer, onClose} = useModal(() => handleOncloseSetupModal());
+	const {observer, onClose} = useModal({
+		onClose: () => handleOncloseSetupModal(),
+	});
 
 	const handleSubmitLxcEnvironment = (isSuccess) => {
 		onClose();
@@ -32,7 +34,7 @@ export default function useOnCloseSetupModal(
 				type: actionTypes.UPDATE_SUBSCRIPTION_GROUPS,
 			});
 
-			setStatusActivation(STATUS_TAG_TYPE_NAMES.inProgress);
+			setStatusLxcActivation(STATUS_TAG_TYPE_NAMES.inProgress);
 		}
 	};
 

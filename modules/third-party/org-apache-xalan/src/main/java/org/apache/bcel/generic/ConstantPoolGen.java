@@ -73,6 +73,7 @@ import java.util.HashMap;
  * @see Constant
  */
 public class ConstantPoolGen {
+  public static final int CONSTANT_POOL_SIZE = 65536;
   protected int        size      = 1024; // Inital size, sufficient in most cases
   protected Constant[] constants = new Constant[size];
   protected int        index     = 1; // First entry (0) used by JVM
@@ -94,7 +95,7 @@ public class ConstantPoolGen {
    */
   public ConstantPoolGen(Constant[] cs) {
     if(cs.length > size) {
-      size      = cs.length;
+      size      = Math.min(cs.length, CONSTANT_POOL_SIZE);
       constants = new Constant[size];
     }
 
@@ -167,10 +168,19 @@ public class ConstantPoolGen {
   /** Resize internal array of constants.
    */
   protected void adjustSize() {
+    // 3 extra spaces are needed as some entries may take 3 slots
+    if (index + 3 >= CONSTANT_POOL_SIZE) {
+      throw new RuntimeException("The number of constants " + (index + 3)
+              + " is over the size of the constant pool: "
+              + (CONSTANT_POOL_SIZE - 1));
+    }
+
     if(index + 3 >= size) {
       Constant[] cs = constants;
 
       size      *= 2;
+      // the constant array shall not exceed the size of the constant pool
+      size = Math.min(size, CONSTANT_POOL_SIZE);
       constants  = new Constant[size];
       System.arraycopy(cs, 0, constants, 0, index);
     }
@@ -780,3 +790,4 @@ public class ConstantPoolGen {
     }
   }
 }
+/* @generated */

@@ -1226,23 +1226,38 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private Map<String, Map<String, Object>> _getDynamicFragments() {
-		Map<String, Map<String, Object>> dynamicFragments =
+		Map<String, Map<String, Object>> dynamicFragmentCollectionsMap =
 			new LinkedHashMap<>();
 
-		Map<String, List<Map<String, Object>>> fragmentCollectionMap =
-			new HashMap<>();
+		for (FragmentRenderer fragmentRenderer :
+				_fragmentRendererTracker.getFragmentRenderers()) {
 
-		List<FragmentRenderer> fragmentRenderers =
-			_fragmentRendererTracker.getFragmentRenderers();
-
-		for (FragmentRenderer fragmentRenderer : fragmentRenderers) {
 			if (!fragmentRenderer.isSelectable(httpServletRequest) ||
 				!_isAllowedFragmentEntryKey(fragmentRenderer.getKey())) {
 
 				continue;
 			}
 
-			Map<String, Object> dynamicFragment =
+			Map<String, Object> dynamicFragmentCollectionMap =
+				dynamicFragmentCollectionsMap.computeIfAbsent(
+					fragmentRenderer.getCollectionKey(),
+					key -> HashMapBuilder.<String, Object>put(
+						"fragmentCollectionId",
+						fragmentRenderer.getCollectionKey()
+					).put(
+						"name",
+						() -> LanguageUtil.get(
+							themeDisplay.getLocale(),
+							"fragment.collection.label." +
+								fragmentRenderer.getCollectionKey())
+					).build());
+
+			List<Map<String, Object>> fragmentEntries =
+				(List<Map<String, Object>>)
+					dynamicFragmentCollectionMap.computeIfAbsent(
+						"fragmentEntries", key -> new LinkedList<>());
+
+			fragmentEntries.add(
 				HashMapBuilder.<String, Object>put(
 					"fragmentEntryKey", fragmentRenderer.getKey()
 				).put(
@@ -1252,46 +1267,10 @@ public class ContentPageEditorDisplayContext {
 					fragmentRenderer.getImagePreviewURL(httpServletRequest)
 				).put(
 					"name", fragmentRenderer.getLabel(themeDisplay.getLocale())
-				).build();
-
-			List<Map<String, Object>> fragmentCollections =
-				fragmentCollectionMap.get(fragmentRenderer.getCollectionKey());
-
-			if (fragmentCollections == null) {
-				List<Map<String, Object>> filteredDynamicFragments =
-					fragmentCollectionMap.computeIfAbsent(
-						fragmentRenderer.getCollectionKey(),
-						key -> new ArrayList<>());
-
-				filteredDynamicFragments.add(dynamicFragment);
-
-				fragmentCollectionMap.put(
-					fragmentRenderer.getCollectionKey(),
-					filteredDynamicFragments);
-			}
-			else {
-				fragmentCollections.add(dynamicFragment);
-			}
-		}
-
-		for (Map.Entry<String, List<Map<String, Object>>> entry :
-				fragmentCollectionMap.entrySet()) {
-
-			dynamicFragments.put(
-				entry.getKey(),
-				HashMapBuilder.<String, Object>put(
-					"fragmentCollectionId", entry.getKey()
-				).put(
-					"fragmentEntries", entry.getValue()
-				).put(
-					"name",
-					() -> LanguageUtil.get(
-						themeDisplay.getLocale(),
-						"fragment.collection.label." + entry.getKey())
 				).build());
 		}
 
-		return dynamicFragments;
+		return dynamicFragmentCollectionsMap;
 	}
 
 	private Map<String, Map<String, Object>>

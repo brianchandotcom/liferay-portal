@@ -16,9 +16,6 @@ import PRMFormik from '../../common/components/PRMFormik';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import {RequestStatus} from '../../common/enums/requestStatus';
 import MDFRequest from '../../common/interfaces/mdfRequest';
-import createMDFRequestActivities from '../../common/services/liferay/object/activity/createMDFRequestActivities';
-import createMDFRequestActivityBudgets from '../../common/services/liferay/object/budgets/createMDFRequestActivityBudgets';
-import createMDFRequest from '../../common/services/liferay/object/mdf-requests/createMDFRequest';
 import liferayNavigate from '../../common/utils/liferayNavigate';
 import {StepType} from './enums/stepType';
 import Activities from './steps/Activities';
@@ -27,14 +24,15 @@ import Goals from './steps/Goals';
 import goalsSchema from './steps/Goals/schema/yup';
 import Review from './steps/Review/Review';
 import isObjectEmpty from './utils/isObjectEmpty';
+import submitForm from './utils/submitForm';
 
 const initialFormValues: MDFRequest = {
 	activities: [],
 	additionalOption: {},
+	company: {},
 	country: {},
 	liferayBusinessSalesGoals: [],
 	overallCampaign: '',
-	r_accountToMDFRequests_accountEntryId: '',
 	requestStatus: RequestStatus.DRAFT,
 	targetAudienceRoles: [],
 	targetMarkets: [],
@@ -44,54 +42,10 @@ type StepComponent = {
 	[key in StepType]?: JSX.Element;
 };
 
-const submitForm = async (
-	values: MDFRequest,
-	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
-) => {
-	formikHelpers.setSubmitting(true);
-
-	const dtoMDFRequest = await createMDFRequest(values);
-
-	if (values.activities.length && dtoMDFRequest) {
-		const dtoMDFRequestActivities = await createMDFRequestActivities(
-			dtoMDFRequest.id,
-			values.activities
-		);
-
-		if (dtoMDFRequestActivities.length) {
-			await Promise.all(
-				values.activities.map(async (activity, index) => {
-					if (
-						activity.budgets.length &&
-						dtoMDFRequestActivities[index]
-					) {
-						return await createMDFRequestActivityBudgets(
-							dtoMDFRequestActivities[index].id,
-							activity.budgets
-						);
-					}
-				})
-			);
-		}
-
-		liferayNavigate(PRMPageRoute.MDF_REQUESTS_LISTING);
-	}
-};
-
-const onSubmit = async (
-	values: MDFRequest,
-	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
-) => submitForm(values, formikHelpers);
-
-const onSaveAsDraft = async (
-	values: MDFRequest,
-	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
-) => submitForm(values, formikHelpers);
-
-const onCancel = () => liferayNavigate(PRMPageRoute.MDF_REQUESTS_LISTING);
-
 const MDFRequestForm = () => {
 	const [step, setStep] = useState<StepType>(StepType.GOALS);
+
+	const onCancel = () => liferayNavigate(PRMPageRoute.MDF_REQUESTS_LISTING);
 
 	const onContinue = async (
 		formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,
@@ -115,7 +69,7 @@ const MDFRequestForm = () => {
 			<Goals
 				onCancel={onCancel}
 				onContinue={onContinue}
-				onSaveAsDraft={onSaveAsDraft}
+				onSaveAsDraft={submitForm}
 				validationSchema={goalsSchema}
 			/>
 		),
@@ -126,7 +80,7 @@ const MDFRequestForm = () => {
 				onCancel={onCancel}
 				onContinue={onContinue}
 				onPrevious={onPrevious}
-				onSaveAsDraft={onSaveAsDraft}
+				onSaveAsDraft={submitForm}
 				validationSchema={activitiesSchema}
 			/>
 		),
@@ -134,13 +88,13 @@ const MDFRequestForm = () => {
 			<Review
 				onCancel={onCancel}
 				onPrevious={onPrevious}
-				onSaveAsDraft={onSaveAsDraft}
+				onSaveAsDraft={submitForm}
 			/>
 		),
 	};
 
 	return (
-		<PRMFormik initialValues={initialFormValues} onSubmit={onSubmit}>
+		<PRMFormik initialValues={initialFormValues} onSubmit={submitForm}>
 			{StepFormComponent[step]}
 		</PRMFormik>
 	);

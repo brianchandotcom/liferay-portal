@@ -11,7 +11,7 @@
 
 import Button from '@clayui/button';
 import {useFormikContext} from 'formik';
-import {useCallback, useEffect} from 'react';
+import {useCallback} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
@@ -20,9 +20,9 @@ import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName'
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
-import useCountryCompanyExtender from './hooks/useCountryCompanyExtender';
+import useCompanyOptions from './hooks/useCompanyOptions';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
-import optionSelection from './utils/optionSelection';
+import getPicklistOptions from './utils/getPicklistOptions';
 
 const Goals = ({
 	onCancel,
@@ -39,36 +39,31 @@ const Goals = ({
 
 	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
 
-	const {setSelectedAccountEntryId} = useCountryCompanyExtender(
-		useCallback((country) => setFieldValue('country', country), [
-			setFieldValue,
-		])
+	const {companyOptions, onCompanySelected} = useCompanyOptions(
+		companiesEntries,
+		useCallback(
+			(country, company) => {
+				setFieldValue('company', company);
+				setFieldValue('country', country);
+			},
+			[setFieldValue]
+		)
 	);
 
-	useEffect(() => {
-		if (values.r_accountToMDFRequests_accountEntryId) {
-			setSelectedAccountEntryId(
-				values.r_accountToMDFRequests_accountEntryId
-			);
-		}
-	}, [
-		setSelectedAccountEntryId,
-		values.r_accountToMDFRequests_accountEntryId,
-	]);
-
-	const countryOptions = fieldEntries[LiferayPicklistName.REGIONS];
-	const onCountrySelected = optionSelection(
-		countryOptions,
-		(countryOptionSelected) =>
-			setFieldValue('country', countryOptionSelected)
+	const {
+		onSelected: onCountrySelected,
+		options: countryOptions,
+	} = getPicklistOptions(
+		fieldEntries[LiferayPicklistName.REGIONS],
+		(selected) => setFieldValue('country', selected)
 	);
 
-	const additionalOptions =
-		fieldEntries[LiferayPicklistName.ADDITIONAL_OPTIONS];
-	const onAdditionalOptionSelected = optionSelection(
-		additionalOptions,
-		(additionalOptionSelected) =>
-			setFieldValue('additionalOption', additionalOptionSelected)
+	const {
+		onSelected: onAdditionalOptionSelected,
+		options: additionalOptions,
+	} = getPicklistOptions(
+		fieldEntries[LiferayPicklistName.ADDITIONAL_OPTIONS],
+		(selected) => setFieldValue('additionalOption', selected)
 	);
 
 	return (
@@ -78,8 +73,9 @@ const Goals = ({
 					<PRMFormik.Field
 						component={PRMForm.Select}
 						label="Company Name"
-						name="r_accountToMDFRequests_accountEntryId"
-						options={companiesEntries}
+						name="company"
+						onChange={onCompanySelected}
+						options={companyOptions}
 						required
 					/>
 
@@ -88,7 +84,7 @@ const Goals = ({
 						label="Country"
 						name="country"
 						onChange={onCountrySelected}
-						options={fieldEntries[LiferayPicklistName.REGIONS]}
+						options={countryOptions}
 						required
 					/>
 				</PRMForm.Group>

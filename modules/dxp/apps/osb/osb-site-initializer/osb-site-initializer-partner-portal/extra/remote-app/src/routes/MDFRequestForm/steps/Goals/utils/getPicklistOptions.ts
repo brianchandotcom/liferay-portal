@@ -11,20 +11,23 @@
 
 import LiferayPicklist from '../../../../../common/interfaces/liferayPicklist';
 
-export default function optionSelection(
+export default function getPicklistOptions(
 	options: React.OptionHTMLAttributes<HTMLOptionElement>[],
-	onSelected: (option: LiferayPicklist | undefined) => void
+	handleSelected: (option: LiferayPicklist) => void
 ) {
-	const onOptionSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const onSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const optionSelected = options.find(
 			(options) => options.value === event.target.value
 		);
 
-		onSelected({
+		handleSelected({
 			key: optionSelected?.value as string,
 			name: optionSelected?.label as string,
 		});
 	};
 
-	return onOptionSelected;
+	return {
+		onSelected,
+		options,
+	};
 }

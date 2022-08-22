@@ -31,7 +31,7 @@ export default function useDynamicFieldEntries() {
 			userAccount?.accountBriefs.map((accountBrief) => ({
 				label: accountBrief.name,
 				value: accountBrief.id,
-			})),
+			})) as React.OptionHTMLAttributes<HTMLOptionElement>[],
 		[userAccount?.accountBriefs]
 	);
 

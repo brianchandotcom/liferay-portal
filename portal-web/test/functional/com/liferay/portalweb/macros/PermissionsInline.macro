@@ -228,7 +228,11 @@ definition {
 
 		Click(locator1 = "Icon#INFO");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Permissions");
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		MenuItem.click(menuItem = "Permissions");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}

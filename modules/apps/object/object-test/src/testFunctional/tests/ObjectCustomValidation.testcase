@@ -1527,7 +1527,7 @@ definition {
 		task ("Write with syntax incorrect on the script") {
 			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-			ObjectCustomValidation.insertGroovyScript(groovyScript = "if = (customField == 'Syntax is incorrect')");
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "if = (customField == 'Syntax is incorrect')");
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
 

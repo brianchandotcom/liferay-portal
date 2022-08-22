@@ -17,9 +17,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 export default function TemplatesPanel({items}) {
-	return items ? (
-		<h1>Templates Panel</h1>
-	) : (
+	return items?.length ? null : (
 		<ClayEmptyState
 			description=""
 			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}

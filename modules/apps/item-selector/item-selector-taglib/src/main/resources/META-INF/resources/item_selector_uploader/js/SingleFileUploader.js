@@ -38,7 +38,7 @@ function SingleFileUploader({
 	mimeTypeRestriction,
 	uploadItemReturnType,
 	uploadItemURL,
-	validExtensions = '*',
+	validExtensions,
 }) {
 	const [abort, setAbort] = useState(null);
 	const [errorAnimation, setErrorAnimation] = useState(false);

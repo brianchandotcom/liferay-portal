@@ -99,17 +99,19 @@ public class SegmentsServicePreAction extends Action {
 				(long[])httpServletRequest.getAttribute(
 					SegmentsWebKeys.SEGMENTS_ENTRY_IDS);
 
-			if (cachedSegmentsEntryIds != null) {
-				return cachedSegmentsEntryIds;
-			}
+			long[] segmentsEntryIds = null;
 
-			long[] segmentsEntryIds =
-				_segmentsEntryRetriever.getSegmentsEntryIds(
+			if (cachedSegmentsEntryIds != null) {
+				segmentsEntryIds = cachedSegmentsEntryIds;
+			}
+			else {
+				segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
 					groupId, userId,
 					_requestContextMapper.map(httpServletRequest),
 					ArrayUtil.toArray(
 						segmentsExperienceIdsSegmentsEntryIds.toArray(
 							new Long[0])));
+			}
 
 			httpServletRequest.setAttribute(
 				SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);

@@ -66,19 +66,23 @@ const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 					],
 					{
 						title: 'Start Date',
-						value: new Date(
-							mdfRequestActivity.startDate
-						).toLocaleDateString(
-							Liferay.ThemeDisplay.getBCP47LanguageId()
-						),
+						value:
+							mdfRequestActivity.startDate &&
+							new Date(
+								mdfRequestActivity.startDate
+							).toLocaleDateString(
+								Liferay.ThemeDisplay.getBCP47LanguageId()
+							),
 					},
 					{
 						title: 'End Date',
-						value: new Date(
-							mdfRequestActivity.endDate
-						).toLocaleDateString(
-							Liferay.ThemeDisplay.getBCP47LanguageId()
-						),
+						value:
+							mdfRequestActivity.endDate &&
+							new Date(
+								mdfRequestActivity.endDate
+							).toLocaleDateString(
+								Liferay.ThemeDisplay.getBCP47LanguageId()
+							),
 					},
 				]}
 				title="Campaign Activity"

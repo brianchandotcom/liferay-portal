@@ -41,7 +41,7 @@ const Select = ({
 	const getValue = () => {
 		if (typeof field.value === 'object') {
 			if (field.value.id) {
-				return String(field.value.id);
+				return String(field.value.id) || '';
 			}
 
 			return field.value.key || '';

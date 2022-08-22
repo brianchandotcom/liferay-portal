@@ -21,17 +21,25 @@ export default function getSummaryActivities(
 	mdfRequestActivities: MDFRequestActivity[]
 ) {
 	if (mdfRequestActivities.length) {
-		const datesActivities = mdfRequestActivities.reduce(
-			(dateAccumulator: DateActivities, activity: MDFRequestActivity) => {
+		const datesActivities = mdfRequestActivities.reduce<DateActivities>(
+			(previousValue, currentValue) => {
+				const endDateAccumulator = previousValue.endDates;
+				const startDateAccumulator = previousValue.startDates;
+
+				if (currentValue.endDate) {
+					endDateAccumulator.push(currentValue.endDate);
+				}
+
+				if (currentValue.startDate) {
+					startDateAccumulator.push(currentValue.startDate);
+				}
+
 				return {
-					endDates: [...dateAccumulator.endDates, activity.endDate],
-					startDates: [
-						...dateAccumulator.startDates,
-						activity.startDate,
-					],
+					endDates: endDateAccumulator,
+					startDates: startDateAccumulator,
 				};
 			},
-			{endDates: [], startDates: []}
+			{endDates: [] as Date[], startDates: [] as Date[]}
 		);
 
 		return {

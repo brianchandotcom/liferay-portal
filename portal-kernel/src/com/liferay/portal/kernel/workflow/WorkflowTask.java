@@ -18,7 +18,6 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -38,8 +37,6 @@ public interface WorkflowTask extends WorkflowModel, WorkflowNode {
 	public String getDescription();
 
 	public Date getDueDate();
-
-	public String getLabel(Locale locale);
 
 	public String getName();
 

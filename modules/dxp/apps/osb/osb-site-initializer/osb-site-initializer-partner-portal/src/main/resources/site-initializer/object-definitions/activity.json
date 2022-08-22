@@ -285,7 +285,7 @@
 			"label": {
 				"en_US": "Target # of Leads"
 			},
-			"name": "targetofLeads",
+			"name": "targetOfLeads",
 			"required": false,
 			"type": "String"
 		},

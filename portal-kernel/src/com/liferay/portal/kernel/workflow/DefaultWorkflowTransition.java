@@ -14,9 +14,10 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -34,10 +35,16 @@ public class DefaultWorkflowTransition implements WorkflowTransition {
 			return HtmlUtil.escape(label);
 		}
 
+		label = _labelMap.get(LocaleUtil.getSiteDefault());
+
+		if (label != null) {
+			return HtmlUtil.escape(label);
+		}
+
+		Language language = LanguageUtil.getLanguage();
+
 		return HtmlUtil.escape(
-			LocalizationUtil.getLocalization(
-				(_name != null) ? _name : _PROCEED_KEY,
-				LocaleUtil.toLanguageId(locale), true));
+			language.get(locale, (_name != null) ? _name : _PROCEED_KEY));
 	}
 
 	@Override

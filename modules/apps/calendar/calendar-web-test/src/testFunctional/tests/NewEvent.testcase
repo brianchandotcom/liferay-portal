@@ -587,6 +587,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-56337."
+	@ignore = "True"
 	@priority = "3"
 	test AddRepeatingWithEndDateBeforeStartDate {
 		CalendarNavigator.gotoAddEvent();
@@ -597,6 +598,7 @@ definition {
 			endOnDate = "10/01/2015",
 			endOnDateSummary = "October 1, 2015",
 			frequency = "Daily");
+			
 
 		CalendarEvent.viewRepeatingEventErrorMessage();
 	}

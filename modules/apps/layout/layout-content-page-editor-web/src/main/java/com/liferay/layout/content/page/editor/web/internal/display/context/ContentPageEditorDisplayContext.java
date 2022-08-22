@@ -1003,7 +1003,23 @@ public class ContentPageEditorDisplayContext {
 			currentCollectionItems.addAll(collectionItems);
 		}
 
-		return new LinkedList<>(fragmentCollectionMap.values());
+		List<Map<String, Object>> systemFragmentCollections =
+			new LinkedList<>();
+
+		for (String collectionKey : _SORTED_FRAGMENT_COLLECTION_KEYS) {
+			Map<String, Object> fragmentCollection =
+				fragmentCollectionMap.remove(collectionKey);
+
+			if (fragmentCollection == null) {
+				continue;
+			}
+
+			systemFragmentCollections.add(fragmentCollection);
+		}
+
+		systemFragmentCollections.addAll(fragmentCollectionMap.values());
+
+		return systemFragmentCollections;
 	}
 
 	private String _getAssetCategoryTreeNodeItemSelectorURL() {
@@ -2254,6 +2270,10 @@ public class ContentPageEditorDisplayContext {
 			return false;
 		}
 	}
+
+	private static final String[] _SORTED_FRAGMENT_COLLECTION_KEYS = {
+		"layout-elements", "BASIC_COMPONENT", "INPUTS", "content-display"
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageEditorDisplayContext.class);

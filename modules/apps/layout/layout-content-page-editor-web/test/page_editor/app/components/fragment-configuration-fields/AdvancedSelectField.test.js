@@ -233,6 +233,17 @@ describe('AdvancedSelectField', () => {
 		expect(screen.queryByTitle('detach-token')).not.toBeInTheDocument();
 	});
 
+	it('does not render the Value from Stylebook button when user does not have update permission', () => {
+		renderAdvancedSelectField({
+			canDetachTokenValues: false,
+			value: 'my size',
+		});
+
+		expect(
+			screen.queryByTitle('value-from-stylebook')
+		).not.toBeInTheDocument();
+	});
+
 	it('clears the value when the "Reset" button is clicked and the viewport is Desktop', () => {
 		renderAdvancedSelectField({
 			value: 'fontSizeLg',

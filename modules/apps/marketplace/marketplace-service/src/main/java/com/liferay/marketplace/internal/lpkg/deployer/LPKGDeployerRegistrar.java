@@ -67,6 +67,10 @@ public class LPKGDeployerRegistrar {
 		Map<Bundle, List<Bundle>> deployedLPKGBundles =
 			_lpkgDeployer.getDeployedLPKGBundles();
 
+		if (deployedLPKGBundles.isEmpty()) {
+			return;
+		}
+
 		Map<Long, App> apps = new HashMap<>();
 
 		for (App app :

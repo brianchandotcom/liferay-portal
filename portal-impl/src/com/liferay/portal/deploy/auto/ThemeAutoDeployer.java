@@ -14,7 +14,6 @@
 
 package com.liferay.portal.deploy.auto;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
@@ -94,25 +93,6 @@ public class ThemeAutoDeployer
 		else {
 			return super.autoDeploy(autoDeploymentContext);
 		}
-	}
-
-	@Override
-	public String getExtraFiltersContent(double webXmlVersion, File srcFile)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(super.getExtraFiltersContent(webXmlVersion, srcFile));
-
-		// Ignore filters
-
-		sb.append(getIgnoreFiltersContent(srcFile));
-
-		// Speed filters
-
-		sb.append(getSpeedFiltersContent(srcFile));
-
-		return sb.toString();
 	}
 
 	@Override

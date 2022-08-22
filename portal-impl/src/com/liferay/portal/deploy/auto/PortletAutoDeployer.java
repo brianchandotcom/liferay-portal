@@ -119,30 +119,6 @@ public class PortletAutoDeployer
 		return sb.toString();
 	}
 
-	@Override
-	public String getExtraFiltersContent(double webXmlVersion, File srcFile)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(super.getExtraFiltersContent(webXmlVersion, srcFile));
-
-		// Ignore filters
-
-		sb.append(getIgnoreFiltersContent(srcFile));
-
-		// Speed filters
-
-		sb.append(getSpeedFiltersContent(srcFile));
-
-		// Servlet context include filters
-
-		sb.append(
-			getServletContextIncludeFiltersContent(webXmlVersion, srcFile));
-
-		return sb.toString();
-	}
-
 	public String getServletContent(File portletXML, File webXML)
 		throws Exception {
 

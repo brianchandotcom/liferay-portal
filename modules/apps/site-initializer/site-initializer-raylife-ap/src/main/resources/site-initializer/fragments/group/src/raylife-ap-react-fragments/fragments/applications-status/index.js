@@ -15,9 +15,8 @@
 import React, {useEffect, useState} from 'react';
 
 import DonutChart from '../../../common/components/donut-chart';
-import {getApplicationsStatus} from '../../../common/services/Application';
+import {getApplicationsStatusTotal} from '../../../common/services/Application';
 import {setFirstLetterUpperCase} from '../../../common/utils';
-import {CONSTANTS} from '../../../common/utils/constants';
 
 export default function () {
 	const [chartTitle, setChartTitle] = useState('');
@@ -40,80 +39,30 @@ export default function () {
 			underwriting: '#B5CDFE',
 		};
 
-		const openStatus = await getApplicationsStatus(CONSTANTS.STATUS.OPEN);
+		getApplicationsStatusTotal().then((response) => {
+			const statuses = response?.data?.facets[0]?.facetValues;
 
-		const incompleteStatus = await getApplicationsStatus(
-			CONSTANTS.STATUS.INCOMPLETE
-		);
+			const columns = statuses?.map((status) => {
+				return [
+					status.term,
+					status.numberOfOccurrences,
+					setFirstLetterUpperCase(status.term),
+				];
+			});
 
-		const quotedStatus = await getApplicationsStatus(
-			CONSTANTS.STATUS.QUOTED
-		);
+			const filteredColumns = columns.filter((column) => column[1] > 0);
 
-		const underwritingStatus = await getApplicationsStatus(
-			CONSTANTS.STATUS.UNDERWRITING
-		);
+			setChartData({...chartData, ...{colors, columns: filteredColumns}});
 
-		const reviewedStatus = await getApplicationsStatus(
-			CONSTANTS.STATUS.REVIEWED
-		);
+			const title = filteredColumns
+				.map((filteredColumn) => filteredColumn[1])
+				.reduce((total, currentValue) => total + currentValue, 0)
+				.toString();
 
-		const rejectedStatus = await getApplicationsStatus(
-			CONSTANTS.STATUS.REJECTED
-		);
+			setChartTitle(title);
 
-		const boundStatus = await getApplicationsStatus(CONSTANTS.STATUS.BOUND);
-
-		const columns = [
-			[
-				CONSTANTS.STATUS.OPEN,
-				openStatus?.data?.totalCount,
-				setFirstLetterUpperCase(CONSTANTS.STATUS.OPEN),
-			],
-			[
-				CONSTANTS.STATUS.INCOMPLETE,
-				incompleteStatus?.data?.totalCount,
-				setFirstLetterUpperCase(CONSTANTS.STATUS.INCOMPLETE),
-			],
-			[
-				CONSTANTS.STATUS.QUOTED,
-				quotedStatus?.data?.totalCount,
-				setFirstLetterUpperCase(CONSTANTS.STATUS.QUOTED),
-			],
-			[
-				CONSTANTS.STATUS.UNDERWRITING,
-				underwritingStatus?.data?.totalCount,
-				setFirstLetterUpperCase(CONSTANTS.STATUS.UNDERWRITING),
-			],
-			[
-				CONSTANTS.STATUS.REVIEWED,
-				reviewedStatus?.data?.totalCount,
-				setFirstLetterUpperCase(CONSTANTS.STATUS.REVIEWED),
-			],
-			[
-				CONSTANTS.STATUS.REJECTED,
-				rejectedStatus?.data?.totalCount,
-				setFirstLetterUpperCase(CONSTANTS.STATUS.REJECTED),
-			],
-			[
-				CONSTANTS.STATUS.BOUND,
-				boundStatus?.data?.totalCount,
-				setFirstLetterUpperCase(CONSTANTS.STATUS.BOUND),
-			],
-		];
-
-		const filteredColumns = columns.filter((column) => column[1] > 0);
-
-		setChartData({...chartData, ...{colors, columns: filteredColumns}});
-
-		const title = filteredColumns
-			.map((array) => array[1])
-			.reduce((sum, i) => sum + i, 0)
-			.toString();
-
-		setChartTitle(title);
-
-		setLoadData(true);
+			setLoadData(true);
+		});
 	};
 
 	useEffect(() => {

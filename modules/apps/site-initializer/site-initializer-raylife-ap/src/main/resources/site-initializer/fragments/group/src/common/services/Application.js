@@ -20,6 +20,10 @@ export function getApplicationsStatus(status) {
 	return axios.get(`${DeliveryAPI}/?filter=applicationStatus eq '${status}'`);
 }
 
+export function getApplicationsStatusTotal() {
+	return axios.get(`${DeliveryAPI}/?aggregationTerms=applicationStatus`);
+}
+
 export function getApplications() {
 	return axios.get(`${DeliveryAPI}/`);
 }

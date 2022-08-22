@@ -208,15 +208,6 @@ public class WorkflowInstanceEditDisplayContext
 		return HtmlUtil.escape(_getActorName(workflowLog));
 	}
 
-	public String getTaskName(WorkflowTask workflowTask)
-		throws WorkflowException {
-
-		return HtmlUtil.escape(
-			WorkflowTaskManagerUtil.getWorkflowTaskLabel(
-				workflowTask.getWorkflowTaskId(),
-				workflowInstanceRequestHelper.getLocale()));
-	}
-
 	public String getTaskUpdateMessageArguments(WorkflowLog workflowLog) {
 		return HtmlUtil.escape(
 			PortalUtil.getUserName(

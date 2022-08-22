@@ -164,7 +164,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		role.setType(RoleConstants.TYPE_REGULAR);
 
 		long[] roleIds = null;
-		String issuerProvider = "issuer Provider";
+		String issuerProvider = RandomTestUtil.randomString();
 
 		_setUpEnvironment(role, roleIds, null);
 		setUpPropsUtil(issuer, roleName);
@@ -272,7 +272,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		role.setType(RoleConstants.TYPE_REGULAR);
 
 		long[] roleIds = null;
-		String issuerProvider = "issuer Provider";
+		String issuerProvider = RandomTestUtil.randomString();
 
 		_setUpEnvironment(role, roleIds, null);
 		setUpPropsUtil(issuer, roleName);
@@ -345,8 +345,10 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		User user = new UserImpl();
 
+		String digest = RandomTestUtil.randomString();
+
 		user.setUserId(_CORRECT_USER_ID);
-		user.setDigest("digest");
+		user.setDigest(digest);
 		user.setScreenName(StringPool.BLANK);
 		user.setEmailAddress(emailAddress);
 		user.setLanguageId("en");
@@ -354,7 +356,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		User userError = new UserImpl();
 
 		userError.setUserId(_INCORRECT_USER_ID);
-		userError.setDigest("digest");
+		userError.setDigest(digest);
 		userError.setScreenName(StringPool.BLANK);
 		userError.setEmailAddress(emailAddress);
 		userError.setLanguageId("en");
@@ -440,9 +442,9 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		locales.put("en", LocaleUtil.ENGLISH);
 	}
 
-	private static final long _COMPANY_ID = 444444;
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
-	private static final String _CORRECT_ROLE_NAME = "Role exist";
+	private static final String _CORRECT_ROLE_NAME = RandomTestUtil.randomString();
 
 	private static final long _CORRECT_USER_ID = 1;
 
@@ -450,7 +452,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 	private static final String _MAIN_PATH = "/c";
 
-	private static final String _PORTAL_URL = "http://localhost:8080";
+	private static final String _PORTAL_URL = RandomTestUtil.randomString();
 
 	private static OpenIdConnectUserInfoProcessorImpl
 		_openIdConnectUserInfoProcessorImpl;

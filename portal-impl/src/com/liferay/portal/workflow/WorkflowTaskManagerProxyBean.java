@@ -27,7 +27,6 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -143,13 +142,6 @@ public class WorkflowTaskManagerProxyBean
 	public int getWorkflowTaskCountByWorkflowInstance(
 		long companyId, Long userId, long workflowInstanceId,
 		Boolean completed) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getWorkflowTaskLabel(long workflowTaskId, Locale locale)
-		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
 	}

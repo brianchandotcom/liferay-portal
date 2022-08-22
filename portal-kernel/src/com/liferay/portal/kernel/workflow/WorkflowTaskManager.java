@@ -25,7 +25,6 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -126,9 +125,6 @@ public interface WorkflowTaskManager {
 	public int getWorkflowTaskCountByWorkflowInstance(
 			long companyId, Long userId, long workflowInstanceId,
 			Boolean completed)
-		throws WorkflowException;
-
-	public String getWorkflowTaskLabel(long workflowTaskId, Locale locale)
 		throws WorkflowException;
 
 	public List<WorkflowTask> getWorkflowTasks(

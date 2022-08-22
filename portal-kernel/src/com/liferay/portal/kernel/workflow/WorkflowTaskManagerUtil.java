@@ -23,7 +23,6 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -174,14 +173,6 @@ public class WorkflowTaskManagerUtil {
 
 		return _workflowTaskManager.getWorkflowTaskCountByWorkflowInstance(
 			companyId, userId, workflowInstanceId, completed);
-	}
-
-	public static String getWorkflowTaskLabel(
-			long workflowTaskId, Locale locale)
-		throws WorkflowException {
-
-		return _workflowTaskManager.getWorkflowTaskLabel(
-			workflowTaskId, locale);
 	}
 
 	public static WorkflowTaskManager getWorkflowTaskManager() {

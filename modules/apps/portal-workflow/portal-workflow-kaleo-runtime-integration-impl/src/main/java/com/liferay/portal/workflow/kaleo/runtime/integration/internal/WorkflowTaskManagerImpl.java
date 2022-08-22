@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTransition;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -81,7 +80,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -532,30 +530,6 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			return _kaleoTaskInstanceTokenLocalService.
 				getKaleoTaskInstanceTokensCount(
 					workflowInstanceId, completed, serviceContext);
-		}
-		catch (Exception exception) {
-			throw new WorkflowException(exception);
-		}
-	}
-
-	@Override
-	public String getWorkflowTaskLabel(long workflowTaskId, Locale locale)
-		throws WorkflowException {
-
-		try {
-			KaleoTaskInstanceToken kaleoTaskInstanceToken =
-				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
-					workflowTaskId);
-
-			KaleoTask kaleoTask = kaleoTaskInstanceToken.getKaleoTask();
-
-			KaleoNode kaleoNode = kaleoTask.getKaleoNode();
-
-			if (Validator.isNull(kaleoNode.getLabel())) {
-				return kaleoNode.getName();
-			}
-
-			return kaleoNode.getLabel(locale);
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);

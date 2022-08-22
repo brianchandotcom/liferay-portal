@@ -18,7 +18,7 @@ export default interface MDFRequestActivityDTO
 		| 'leadFollowUpStrategies'
 		| 'mdfRequestId'
 		| 'tactic'
-		| 'typeofActivity'
+		| 'typeActivity'
 	> {
 	leadFollowUpStrategies?: string;
 	r_mdfRequestToActivities_c_mdfRequestId?: number;

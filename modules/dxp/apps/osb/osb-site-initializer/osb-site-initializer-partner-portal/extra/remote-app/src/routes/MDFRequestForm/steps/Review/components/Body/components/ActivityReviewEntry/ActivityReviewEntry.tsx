@@ -10,75 +10,79 @@
  */
 
 import {TypeActivityExternalReferenceCode} from '../../../../../../../../common/enums/typeActivityExternalReferenceCode';
-import useSelectedTypeActivity from '../../../../../../../../common/hooks/useSelectedTypeActivity';
 import MDFRequestActivity from '../../../../../../../../common/interfaces/mdfRequestActivity';
-import useGetTypeActivities from '../../../../../../../../common/services/liferay/object/type-activities/useGetTypeActivities';
-import useGetTacticName from '../../../../hooks/useGetTacticName';
+import {Liferay} from '../../../../../../../../common/services/liferay';
+import TableItem from '../../../../interfaces/tableItem';
+import Table from '../../../Table';
 import ActivityContent from './components/ActivityContent';
-import ContentMarket from './components/ContentMarket';
-import DigitalMarket from './components/DigitalMarket';
-import Event from './components/Event';
-import MiscellaneousMarket from './components/MiscellaneousMarket';
+import getContentMarketFields from './utils/getContentMarketFields';
+import getDigitalMarketFields from './utils/getDigitalMarketFields';
+import getEventFields from './utils/getEventFields';
+import getMiscellaneousMarketing from './utils/getMiscellaneousMarketing';
 
 interface IProps {
 	mdfRequestActivity: MDFRequestActivity;
 }
 
 type TypeOfActivityComponent = {
-	[key in string]?: JSX.Element;
+	[key in TypeActivityExternalReferenceCode]: TableItem[];
 };
 
 const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
-	const {data: typeOfActivities} = useGetTypeActivities();
-
-	const selectedTypeActivity = useSelectedTypeActivity(
-		mdfRequestActivity,
-		typeOfActivities?.items
-	);
-
-	const TacticName = useGetTacticName(
-		mdfRequestActivity.r_typeActivityToActivities_c_typeActivityId,
-		mdfRequestActivity.r_tacticToActivities_c_tacticId
-	);
-
-	const typeOfActivityComponents: TypeOfActivityComponent = {
-		[TypeActivityExternalReferenceCode.DIGITAL_MARKETING]: (
-			<DigitalMarket
-				mdfRequestActivity={mdfRequestActivity}
-				tacticName={TacticName}
-				typeOfActivitieName={selectedTypeActivity?.name}
-			/>
+	const fieldsByTypeActivity: TypeOfActivityComponent = {
+		[TypeActivityExternalReferenceCode.DIGITAL_MARKETING]: getDigitalMarketFields(
+			mdfRequestActivity
 		),
-		[TypeActivityExternalReferenceCode.CONTENT_MARKETING]: (
-			<ContentMarket
-				mdfRequestActivity={mdfRequestActivity}
-				tacticName={TacticName}
-				typeOfActivitieName={selectedTypeActivity?.name}
-			/>
+		[TypeActivityExternalReferenceCode.CONTENT_MARKETING]: getContentMarketFields(
+			mdfRequestActivity
 		),
-		[TypeActivityExternalReferenceCode.EVENT]: (
-			<Event
-				mdfRequestActivity={mdfRequestActivity}
-				tacticName={TacticName}
-				typeOfActivitieName={selectedTypeActivity?.name}
-			/>
+		[TypeActivityExternalReferenceCode.EVENT]: getEventFields(
+			mdfRequestActivity
 		),
-		[TypeActivityExternalReferenceCode.MISCELLANEOUS_MARKETING]: (
-			<MiscellaneousMarket
-				mdfRequestActivity={mdfRequestActivity}
-				tacticName={TacticName}
-				typeOfActivitieName={selectedTypeActivity?.name}
-			/>
+		[TypeActivityExternalReferenceCode.MISCELLANEOUS_MARKETING]: getMiscellaneousMarketing(
+			mdfRequestActivity
 		),
 	};
 
 	return (
 		<>
-			{
-				typeOfActivityComponents[
-					selectedTypeActivity?.externalReferenceCode || ''
-				]
-			}
+			<Table
+				items={[
+					{
+						title: 'Activity name',
+						value: mdfRequestActivity.name,
+					},
+					{
+						title: 'Type of Activity',
+						value: mdfRequestActivity.typeActivity.name,
+					},
+					{
+						title: 'Tactic',
+						value: mdfRequestActivity.tactic.name,
+					},
+					...fieldsByTypeActivity[
+						mdfRequestActivity.typeActivity
+							.externalReferenceCode as TypeActivityExternalReferenceCode
+					],
+					{
+						title: 'Start Date',
+						value: new Date(
+							mdfRequestActivity.startDate
+						).toLocaleDateString(
+							Liferay.ThemeDisplay.getBCP47LanguageId()
+						),
+					},
+					{
+						title: 'End Date',
+						value: new Date(
+							mdfRequestActivity.endDate
+						).toLocaleDateString(
+							Liferay.ThemeDisplay.getBCP47LanguageId()
+						),
+					},
+				]}
+				title="Campaign Activity"
+			/>
 
 			<ActivityContent mdfRequestActivity={mdfRequestActivity} />
 		</>

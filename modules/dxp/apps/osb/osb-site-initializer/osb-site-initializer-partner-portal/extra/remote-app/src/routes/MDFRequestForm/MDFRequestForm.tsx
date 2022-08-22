@@ -19,7 +19,7 @@ import MDFRequest from '../../common/interfaces/mdfRequest';
 import liferayNavigate from '../../common/utils/liferayNavigate';
 import {StepType} from './enums/stepType';
 import Activities from './steps/Activities';
-import activitiesSchema from './steps/Activities/Form/schema/yup';
+import activitiesSchema from './steps/Activities/schema/yup';
 import Goals from './steps/Goals';
 import goalsSchema from './steps/Goals/schema/yup';
 import Review from './steps/Review/Review';

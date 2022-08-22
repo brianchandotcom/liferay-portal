@@ -21,7 +21,7 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	budgets: MDFRequestBudget[];
 	description: string;
 	detailsLeadFollowUp: string;
-	endDate: Date;
+	endDate?: Date;
 	gatedLandingPage: string;
 	goalOfContent: string;
 	hiringOutsideWriterOrAgency: string;
@@ -33,16 +33,16 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	liferayParticipationRequirements: string;
 	location: string;
 	marketingActivity: string;
-	mdfRequestAmount: string;
+	mdfRequestAmount: number;
 	name: string;
 	overallMessageContentCTA: string;
 	primaryThemeOrMessage: string;
 	sourceAndSizeOfInviteeList: string;
 	specificSites: string;
-	startDate: Date;
+	startDate?: Date;
 	tactic: Tactic;
-	targetofLeads: string;
-	totalCostOfExpense: string;
-	typeofActivity: TypeActivity;
+	targetOfLeads: string;
+	totalCostOfExpense: number;
+	typeActivity: TypeActivity;
 	venueName: string;
 }

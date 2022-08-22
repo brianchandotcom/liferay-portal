@@ -9,21 +9,27 @@
  * distribution rights of the Software.
  */
 
-import LiferayPicklist from '../../../../../common/interfaces/liferayPicklist';
+import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 
-export default function getPicklistOptions(
+export default function getPicklistOptions<T>(
 	options: React.OptionHTMLAttributes<HTMLOptionElement>[],
-	handleSelected: (option: LiferayPicklist) => void
+	handleSelected: (option: LiferayPicklist, optionalValue?: T) => void
 ) {
-	const onSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const onSelected = (
+		event: React.ChangeEvent<HTMLInputElement>,
+		optionalValue?: T
+	) => {
 		const optionSelected = options.find(
-			(options) => options.value === event.target.value
+			(option) => option.value === event.target.value
 		);
 
-		handleSelected({
-			key: optionSelected?.value as string,
-			name: optionSelected?.label as string,
-		});
+		handleSelected(
+			{
+				key: optionSelected?.value as string,
+				name: optionSelected?.label as string,
+			},
+			optionalValue
+		);
 	};
 
 	return {

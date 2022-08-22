@@ -17,7 +17,7 @@ import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 
 interface IProps {
-	onChange: (value: number) => void;
+	onAccept: (value: number) => void;
 }
 
 const InputCurrency = ({
@@ -25,7 +25,7 @@ const InputCurrency = ({
 	field,
 	label,
 	meta,
-	onChange,
+	onAccept,
 	required,
 }: PRMFormFieldProps & PRMFormFieldStateProps<number> & IProps) => (
 	<WrapperInput
@@ -40,7 +40,7 @@ const InputCurrency = ({
 			mask={Number}
 			name={field.name}
 			normalizeZeros
-			onAccept={(value) => onChange(value as number)}
+			onAccept={(value) => onAccept(value as number)}
 			onBlur={(event) =>
 				field.onBlur(event as React.FocusEvent<Element, Element>)
 			}

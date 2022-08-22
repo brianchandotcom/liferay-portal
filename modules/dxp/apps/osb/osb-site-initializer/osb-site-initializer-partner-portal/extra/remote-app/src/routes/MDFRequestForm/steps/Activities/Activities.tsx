@@ -19,8 +19,8 @@ import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfac
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
-import Form from './Form';
-import Listing from './Listing';
+import Form from './components/Form';
+import Listing from './components/Listing';
 
 interface IProps {
 	arrayHelpers: ArrayHelpers;
@@ -40,18 +40,21 @@ const Activities = ({
 		values,
 		...formikHelpers
 	} = useFormikContext<MDFRequest>();
+
 	const [isForm, setIsForm] = useState<boolean>(false);
-	const [currentIndex, setCurrentIndex] = useState<number>(
+	const [currentActivityIndex, setCurrentActivityIndex] = useState<number>(
 		values.activities.length
 	);
 
 	const onAdd = () => {
-		setCurrentIndex(values.activities.length);
+		setCurrentActivityIndex(values.activities.length);
+
 		setIsForm(true);
 	};
 
 	const onPreviousForm = () => {
-		arrayHelpers.remove(currentIndex);
+		arrayHelpers.remove(currentActivityIndex);
+
 		setIsForm(false);
 	};
 
@@ -67,14 +70,15 @@ const Activities = ({
 		>
 			{isForm ? (
 				<Form
-					currentActivity={values.activities[currentIndex]}
-					currentIndex={currentIndex}
+					currentActivity={values.activities[currentActivityIndex]}
+					currentActivityIndex={currentActivityIndex}
 					setFieldValue={setFieldValue}
 				/>
 			) : (
 				<Listing
 					{...arrayHelpers}
 					activities={values.activities}
+					isValid={isValid}
 					onAdd={onAdd}
 					overallCampaign={values.overallCampaign}
 				/>
@@ -85,10 +89,10 @@ const Activities = ({
 					<Button
 						className="mr-4"
 						displayType={null}
-						onClick={
+						onClick={() =>
 							isForm
-								? () => onPreviousForm()
-								: () => onPrevious?.(StepType.GOALS)
+								? onPreviousForm()
+								: onPrevious?.(StepType.GOALS)
 						}
 					>
 						Previous

@@ -20,9 +20,9 @@ import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName'
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
+import getPicklistOptions from '../../utils/getPicklistOptions';
 import useCompanyOptions from './hooks/useCompanyOptions';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
-import getPicklistOptions from './utils/getPicklistOptions';
 
 const Goals = ({
 	onCancel,

@@ -14,6 +14,7 @@ import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
 
 import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
+import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
 
 interface IProps {
 	activity: MDFRequestActivity;
@@ -68,7 +69,11 @@ const ActivityPanel = ({
 							MDF Requested:
 						</div>
 
-						<h5 className="mr-4">{activity.mdfRequestAmount}</h5>
+						<h5 className="mr-4">
+							{getIntlNumberFormat().format(
+								activity.mdfRequestAmount
+							)}
+						</h5>
 					</div>
 				</ClayPanel.Title>
 			}

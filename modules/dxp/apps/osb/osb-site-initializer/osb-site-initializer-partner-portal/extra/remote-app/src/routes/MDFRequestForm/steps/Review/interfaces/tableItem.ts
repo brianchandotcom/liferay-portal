@@ -9,20 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useMemo} from 'react';
-
-import useGetTacticsByTypeActivityId from '../../../../../common/services/liferay/object/type-activities/useGetTacticsByTypeActivityId';
-
-export default function useGetTacticName(
-	TypeActivityId: string,
-	id?: string | undefined
-) {
-	const {data: tactics} = useGetTacticsByTypeActivityId(TypeActivityId);
-
-	const TaticName = useMemo(
-		() => tactics?.items.find((tactic) => tactic.id === id),
-		[id, tactics?.items]
-	);
-
-	return TaticName?.name;
+export default interface TableItem {
+	title?: string;
+	value?: string;
 }

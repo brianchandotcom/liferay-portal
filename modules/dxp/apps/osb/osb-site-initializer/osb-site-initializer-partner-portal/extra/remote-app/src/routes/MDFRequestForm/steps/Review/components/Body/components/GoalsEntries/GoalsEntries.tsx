@@ -13,17 +13,16 @@ import MDFRequest from '../../../../../../../../common/interfaces/mdfRequest';
 import Table from '../../../Table';
 
 interface IProps {
-	companyName?: string;
 	mdfRequest: MDFRequest;
 }
 
-const GoalsEntries = ({companyName, mdfRequest}: IProps) => (
+const GoalsEntries = ({mdfRequest}: IProps) => (
 	<div>
 		<Table
 			items={[
 				{
 					title: 'Company Name',
-					value: companyName,
+					value: mdfRequest.company.name,
 				},
 				{
 					title: 'Region',

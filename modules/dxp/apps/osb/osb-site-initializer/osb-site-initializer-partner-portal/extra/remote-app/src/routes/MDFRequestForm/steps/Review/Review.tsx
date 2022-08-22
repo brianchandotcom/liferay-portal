@@ -16,16 +16,16 @@ import {useMemo} from 'react';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
+import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
 import getTotalBudget from '../../../../common/utils/getTotalBudget';
 import ActivityPanel from '../../components/ActivityPanel';
+import BudgetResumeCard from '../../components/BudgetResumeCard';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
-import BudgetResumeCard from '../Activities/Form/components/BudgetBreakdownSection/components/BudgetResumeCard';
 import Body from './components/Body';
 import ActivityReviewEntry from './components/Body/components/ActivityReviewEntry';
 import GoalsEntries from './components/Body/components/GoalsEntries';
 import Header from './components/Header';
-import useGetCompanyName from './hooks/useGetCompanyName';
 
 const Review = ({
 	onCancel,
@@ -36,10 +36,6 @@ const Review = ({
 		MDFRequest
 	>();
 
-	const companyName = useGetCompanyName(
-		values.r_accountToMDFRequests_accountEntryId
-	);
-
 	const totalBudget = useMemo(() => getTotalBudget(values.activities), [
 		values.activities,
 	]);
@@ -49,22 +45,22 @@ const Review = ({
 			<Header />
 
 			<Body name="Goals" title="Campaign Information">
-				<GoalsEntries companyName={companyName} mdfRequest={values} />
+				<GoalsEntries mdfRequest={values} />
 			</Body>
 
 			<Body name="Activities" title="Insurance Industry Lead Gen">
 				<div className="border mb-3"></div>
 
 				{values?.activities.map(
-					(MDFRequestActivity: MDFRequestActivity, index: number) => (
+					(activity: MDFRequestActivity, index: number) => (
 						<ActivityPanel
-							activity={MDFRequestActivity}
+							activity={activity}
 							detail
 							key={index}
 							overallCampaign={values.overallCampaign}
 						>
 							<ActivityReviewEntry
-								mdfRequestActivity={MDFRequestActivity}
+								mdfRequestActivity={activity}
 							/>
 						</ActivityPanel>
 					)
@@ -76,19 +72,23 @@ const Review = ({
 					<div className="my-3">
 						<BudgetResumeCard
 							leftContent="Total Budget"
-							rightContent={String(totalBudget)}
+							rightContent={getIntlNumberFormat().format(
+								totalBudget
+							)}
 						/>
 
 						<BudgetResumeCard
 							className="mt-3"
 							leftContent="Claim Percent"
-							rightContent="0.5"
+							rightContent={`${0.5 * 100}%`}
 						/>
 
 						<BudgetResumeCard
 							className="mt-3"
 							leftContent="Total MDF Requested Amount"
-							rightContent={String(totalBudget * 0.5)}
+							rightContent={getIntlNumberFormat().format(
+								totalBudget * 0.5
+							)}
 						/>
 					</div>
 

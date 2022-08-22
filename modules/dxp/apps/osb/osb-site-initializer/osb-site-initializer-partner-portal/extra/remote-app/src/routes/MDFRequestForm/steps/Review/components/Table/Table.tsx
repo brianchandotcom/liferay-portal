@@ -11,13 +11,10 @@
 
 import ClayTable from '@clayui/table';
 
-interface ITable {
-	title: string | undefined;
-	value: string | undefined;
-}
+import TableItem from '../../interfaces/tableItem';
 
 interface IProps {
-	items: ITable[];
+	items: TableItem[];
 	title: string;
 }
 
@@ -38,7 +35,7 @@ const Table = ({items, title}: IProps) => (
 		</ClayTable.Head>
 
 		<ClayTable.Body>
-			{items?.map((item: ITable, index: number) => (
+			{items?.map((item: TableItem, index: number) => (
 				<ClayTable.Row key={index}>
 					<ClayTable.Cell className="border-0 w-50">
 						{item.title}

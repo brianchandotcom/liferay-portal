@@ -12,7 +12,7 @@
 import useSWR from 'swr';
 
 import {Liferay} from '../..';
-import {TypeActivity} from '../../../../interfaces/typeActivity';
+import TypeActivity from '../../../../interfaces/typeActivity';
 import {LiferayAPIs} from '../../common/enums/apis';
 import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';

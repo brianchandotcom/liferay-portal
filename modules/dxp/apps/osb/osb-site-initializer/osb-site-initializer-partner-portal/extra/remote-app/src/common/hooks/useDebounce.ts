@@ -9,17 +9,16 @@
  * distribution rights of the Software.
  */
 
-import {useMemo} from 'react';
+import {useEffect, useState} from 'react';
 
-import useGetMyUserAccount from '../../../../../common/services/liferay/user-account/useGetMyUserAccount';
+export default function useDebounce<T>(value: T, delay: number) {
+	const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
-export default function useGetCompanyName(id: string) {
-	const {data: userAccount} = useGetMyUserAccount();
+	useEffect(() => {
+		const handler = setTimeout(() => setDebouncedValue(value), delay);
 
-	const companiesName = useMemo(
-		() => userAccount?.accountBriefs.find((company) => company.id === +id),
-		[id, userAccount?.accountBriefs]
-	);
+		return () => clearTimeout(handler);
+	}, [delay, value]);
 
-	return companiesName?.name;
+	return debouncedValue;
 }

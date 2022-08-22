@@ -9,10 +9,9 @@
  * distribution rights of the Software.
  */
 
-import React from 'react';
-
 import MDFRequestActivity from '../../../../../../../../../../common/interfaces/mdfRequestActivity';
 import getBooleanValue from '../../../../../../../../../../common/utils/getBooleanValue';
+import getIntlNumberFormat from '../../../../../../../../../../common/utils/getIntlNumberFormat';
 import Table from '../../../../../Table';
 
 interface IProps {
@@ -23,8 +22,8 @@ const ActivityContent = ({mdfRequestActivity}: IProps) => (
 	<>
 		<Table
 			items={mdfRequestActivity.budgets.map((budget) => ({
-				title: budget.expense?.name,
-				value: '$' + budget.cost,
+				title: budget.expense.name,
+				value: getIntlNumberFormat().format(budget.cost),
 			}))}
 			title="Budget Breakdown"
 		/>
@@ -37,7 +36,7 @@ const ActivityContent = ({mdfRequestActivity}: IProps) => (
 				},
 				{
 					title: 'Target # of Leads',
-					value: mdfRequestActivity.targetofLeads,
+					value: mdfRequestActivity.targetOfLeads,
 				},
 				{
 					title: 'Lead Follow Up strategy',

@@ -21,10 +21,13 @@ import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
+import com.liferay.knowledge.base.service.KBTemplateServiceUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticleTitleComparator;
 import com.liferay.knowledge.base.util.comparator.KBObjectsPriorityComparator;
+import com.liferay.knowledge.base.util.comparator.KBTemplateTitleComparator;
 import com.liferay.knowledge.base.web.internal.display.context.helper.KBArticleURLHelper;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -237,6 +240,8 @@ public class KBAdminNavigationDisplayContext {
 				).put(
 					"key", "template"
 				).put(
+					"navigationItems", _getTemplatesJSONArray()
+				).put(
 					"title", LanguageUtil.get(_httpServletRequest, "templates")
 				));
 		}
@@ -403,6 +408,35 @@ public class KBAdminNavigationDisplayContext {
 		}
 
 		return articleNavigationJSONArray;
+	}
+
+	private JSONArray _getTemplatesJSONArray() {
+		JSONArray templateNavigationJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		List<KBTemplate> kbTemplates =
+			KBTemplateServiceUtil.getGroupKBTemplates(
+				_themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
+				WorkflowConstants.STATUS_ANY,
+				new KBTemplateTitleComparator(true));
+
+		for (KBTemplate kbTemplate : kbTemplates) {
+			templateNavigationJSONArray.put(
+				JSONUtil.put(
+					"href",
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/admin/common/edit_kb_template.jsp"
+					).setParameter(
+						"kbTemplateId", kbTemplate.getKbTemplateId()
+					).buildString()
+				).put(
+					"name", kbTemplate.getTitle()
+				));
+		}
+
+		return templateNavigationJSONArray;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

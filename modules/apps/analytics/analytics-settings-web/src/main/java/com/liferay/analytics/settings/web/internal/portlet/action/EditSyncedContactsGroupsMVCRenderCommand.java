@@ -17,10 +17,7 @@ package com.liferay.analytics.settings.web.internal.portlet.action;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Francisco Dias
@@ -38,14 +35,6 @@ public class EditSyncedContactsGroupsMVCRenderCommand
 	@Override
 	protected String getDefaultJspPath() {
 		return "/edit_synced_contacts_groups.jsp";
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.analytics.settings.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.servletContext = servletContext;
 	}
 
 }

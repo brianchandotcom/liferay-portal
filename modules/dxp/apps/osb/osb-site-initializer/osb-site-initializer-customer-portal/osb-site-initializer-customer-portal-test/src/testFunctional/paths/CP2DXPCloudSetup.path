@@ -41,48 +41,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SETUP_DXP_CLOUD_PAGE</td>
-	<td>//h2[contains(@class, 'text-neutral') and contains(.,'Set up DXP Cloud')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STATUS_CARD</td>
-	<td>//span[contains(text(),'${key_status}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PROJECT_NAME_SETUP</td>
 	<td>//p[contains(@class, 'project-name') and contains(.,'${key_name}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARD_SUBSCRIPTION</td>
-	<td>//p[contains(@class, 'text-paragraph') and contains(text(), '${title}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_CONSOLE</td>
-	<td>//a[contains(@class, 'text-paragraph') and contains(text(),'Go to Product Console')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARD_TITLE</td>
-	<td>//span[contains(@class, 'text-truncate') and contains(.,'${project}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARD_DATES</td>
-	<td>//p[contains(@class, 'text-paragraph') and contains(.,'${date}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARD_LOGO</td>
-	<td>//img[contains(@class, 'cp-img-activation-status') and contains(@src, '${product}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DND_TABLE_ELEMENT</td>
-	<td>//div[contains(@class, 'dnd-td')]//*[text()='${key_status}']</td>
 	<td></td>
 </tr>
 </tbody>

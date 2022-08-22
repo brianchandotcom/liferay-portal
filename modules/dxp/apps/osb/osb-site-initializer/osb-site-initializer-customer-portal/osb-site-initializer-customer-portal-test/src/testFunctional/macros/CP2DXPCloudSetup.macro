@@ -17,57 +17,19 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro activeStatus {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Account Subscription Groups");
-
-		CustomerPortal.viewCPObjectInfo();
-
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "activationStatus",
-			value = "Active");
-
-		Click(locator1 = "Button#SAVE");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro assertCardStatusChanged {
 		AssertTextEquals(
 			key_status = "${status}",
-			locator1 = "CP2DXPCloudSetup#STATUS_CARD",
+			locator1 = "CustomerPortalSite#STATUS_CARD",
 			value1 = "${value}");
 	}
 
-	macro clearActivationStatus {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Account Subscription Groups");
-
-		var key_status = "${status}";
-
-		if (IsElementPresent(locator1 = "CP2DXPCloudSetup#DND_TABLE_ELEMENT")) {
-			CustomerPortal.viewCPObjectInfo();
-
-			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-				label = "activationStatus",
-				value = "");
-
-			Click(locator1 = "Button#SAVE");
-
-			Alert.viewSuccessMessage();
-		}
-	}
-
 	macro clearAndDeleteDXPCloudEntries {
-		CP2DXPCloudSetup.clearActivationStatus(status = "${status}");
+		CustomerPortal.clearActivationStatus(status = "${status}");
 
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CP2DXPCloudSetup.deleteEntryDXPCloudEnvironments(entry = "ERC-001");
+		CP2DXPCloudSetup.deleteEntryCloudEnvironments(entry = "ERC-001");
 
 		CustomerPortal.deleteCPObject(title = "DXP Cloud Environment");
 
@@ -79,7 +41,7 @@ definition {
 	}
 
 	macro clickOnProductConsoleLink {
-		Click(locator1 = "CP2DXPCloudSetup#PRODUCT_CONSOLE");
+		Click(locator1 = "CustomerPortalSite#PRODUCT_CONSOLE");
 	}
 
 	macro clickOnRemoveThisAdminButton {
@@ -126,13 +88,13 @@ definition {
 		CreateObject.saveObject();
 	}
 
-	macro deleteEntryDXPCloudEnvironments {
+	macro deleteEntryCloudEnvironments {
 		var key_status = "${entry}";
 
-		if (IsElementPresent(locator1 = "CP2DXPCloudSetup#DND_TABLE_ELEMENT")) {
+		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
-				portlet = "DXP Cloud Environments");
+				portlet = "${portlet}");
 
 			ObjectPortlet.deleteEntry(entry = "${entry}");
 		}
@@ -214,28 +176,6 @@ definition {
 		Type(
 			locator1 = "CustomerPortalSite#SETUP_FIELDS",
 			value1 = "${value}");
-	}
-
-	macro viewActivationStatusCardValue {
-		AssertElementPresent(
-			locator1 = "CP2DXPCloudSetup#CARD_SUBSCRIPTION",
-			title = "Almost there! Setup DXP Cloud by finishing the activation form.");
-
-		AssertElementPresent(
-			locator1 = "CP2DXPCloudSetup#CARD_LOGO",
-			product = "dxp_icon");
-
-		AssertElementPresent(
-			locator1 = "CP2DXPCloudSetup#CARD_TITLE",
-			project = "Test Account 01");
-
-		AssertElementPresent(
-			date = "Invalid Date - Invalid Date",
-			locator1 = "CP2DXPCloudSetup#CARD_DATES");
-
-		AssertElementPresent(
-			key_status = "Not Activated",
-			locator1 = "CP2DXPCloudSetup#STATUS_CARD");
 	}
 
 	macro viewDisasterRegionList {

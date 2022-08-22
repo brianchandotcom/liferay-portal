@@ -4,7 +4,6 @@ definition {
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
-	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
@@ -105,7 +104,7 @@ definition {
 		}
 
 		task ("Change the activation card status to Active") {
-			CP2AnalyticsCloudSetup.activeStatus();
+			CustomerPortal.activeStatus();
 		}
 
 		task ("Go back to CP2.0 and enter the project again") {

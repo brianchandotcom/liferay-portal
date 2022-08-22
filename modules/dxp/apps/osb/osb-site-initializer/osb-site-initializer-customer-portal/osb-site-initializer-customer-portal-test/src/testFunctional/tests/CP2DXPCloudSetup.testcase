@@ -4,7 +4,6 @@ definition {
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
-	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
@@ -628,15 +627,17 @@ definition {
 			CustomerPortal.clickOnFinishActivationButton();
 		}
 
-		task ("Assert modal Setup DXP Cloud") {
-			AssertElementPresent(locator1 = "CP2DXPCloudSetup#SETUP_DXP_CLOUD_PAGE");
+		task ("Assert modal Setup LXC-SM") {
+			AssertElementPresent(
+				modal = "Set up LXC-SM",
+				locator1 = "CustomerPortalSite#MODAL_PAGE");
 		}
 	}
 
 	@description = "Automation ID: LPS-146686 | Test Summary: Verify if the activation status of the card changes to (In Progress) after filling out the DXP Cloud Set up"
 	@priority = "4"
 	test SeeIfTheCardActivationStatusChanges {
-		task ("Creating objects for the DXP Cloud ") {
+		task ("Creating objects for the LXC-SM") {
 			CP2DXPCloudSetup.createDXPCloudObjects();
 		}
 

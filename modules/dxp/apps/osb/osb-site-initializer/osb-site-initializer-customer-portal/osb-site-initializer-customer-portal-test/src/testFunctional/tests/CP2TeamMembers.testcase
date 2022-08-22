@@ -4,7 +4,6 @@ definition {
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
-	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
@@ -178,7 +177,9 @@ definition {
 		}
 
 		task ("Assert the LCX-SM Setup page") {
-			AssertElementPresent(locator1 = "CP2DXPCloudSetup#SETUP_DXP_CLOUD_PAGE");
+			AssertElementPresent(
+				modal = "Set up LXC-SM",
+				locator1 = "CustomerPortalSite#MODAL_PAGE");
 		}
 	}
 

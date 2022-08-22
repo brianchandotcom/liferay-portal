@@ -278,6 +278,14 @@ definition {
 		}
 	}
 
+	macro fullOnboardingFlow {
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CustomerPortal.clickOnSkipForNowButton();
+	}
+
 	macro onboardingFlow {
 		CustomerPortal.clickOnStartProjectSetup();
 
@@ -285,6 +293,8 @@ definition {
 
 		if (isSet(cloudEnvironment)) {
 			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+
+			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
 		}
 		else {
 			CustomerPortal.clickOnSkipForNowButton();
@@ -611,6 +621,76 @@ definition {
 		CustomerPortal.viewCPObjectInfo();
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
+	}
+
+	macro viewActivationStatusCardValue {
+		AssertElementPresent(
+			title = "${subtitle}",
+			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION");
+
+		AssertElementPresent(
+			product = "${productIcon}",
+			locator1 = "CustomerPortalSite#CARD_LOGO");
+
+		AssertElementPresent(
+			project = "${project}",
+			locator1 = "CustomerPortalSite#CARD_TITLE");
+
+		AssertElementPresent(
+			date = "${dates}",
+			locator1 = "CustomerPortalSite#CARD_DATES");
+
+		AssertElementPresent(
+			key_status = "${status}",
+			locator1 = "CustomerPortalSite#STATUS_CARD");
+	}
+
+	macro viewActivationStatusCardChange {
+		AssertElementPresent(
+			title = "${subtitle}",
+			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION");
+
+		AssertElementPresent(
+			key_status = "${status}",
+			locator1 = "CustomerPortalSite#STATUS_CARD");
+	}
+
+	macro activeStatus {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Account Subscription Groups");
+
+		CustomerPortal.viewCPObjectInfo();
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "activationStatus",
+			value = "Active");
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro clearActivationStatus {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Account Subscription Groups");
+
+		var key_status = "${status}";
+
+		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
+			CustomerPortal.viewCPObjectInfo();
+
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "activationStatus",
+				value = "");
+
+			Click(locator1 = "Button#SAVE");
+
+			Alert.viewSuccessMessage();
+		}
 	}
 
 }

@@ -4,7 +4,6 @@ definition {
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
-	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
@@ -64,7 +63,7 @@ definition {
 		}
 
 		task ("Going through onboarding") {
-			CustomerPortal.onboardingFlow();
+			CustomerPortal.fullOnboardingFlow();
 		}
 
 		task ("Go to the product activation page, fill out the form and submit it") {
@@ -80,7 +79,7 @@ definition {
 		}
 
 		task ("Change the activation card status to Active") {
-			CP2DXPCloudSetup.activeStatus();
+			CustomerPortal.activeStatus();
 		}
 
 		task ("Go to CP2.0 and join a project") {
@@ -95,7 +94,7 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "LXC-SM");
 
 			AssertElementPresent(
-				locator1 = "CP2DXPCloudSetup#PRODUCT_CONSOLE",
+				locator1 = "CustomerPortalSite#PRODUCT_CONSOLE",
 				value1 = "Go to Product Console");
 		}
 
@@ -134,7 +133,12 @@ definition {
 		}
 
 		task ("View card details") {
-			CP2DXPCloudSetup.viewActivationStatusCardValue();
+			CustomerPortal.viewActivationStatusCardValue(
+				subtitle = "Almost there! Setup LXC-SM by finishing the activation form.",
+                productIcon = "dxp_icon",
+                project = "Test Account LXC-SM",
+                dates = "Invalid Date - Invalid Date",
+                status = "Not Activated");
 		}
 	}
 
@@ -166,7 +170,7 @@ definition {
 		}
 
 		task ("Going through onboarding") {
-			CustomerPortal.onboardingFlow();
+			CustomerPortal.fullOnboardingFlow();
 		}
 
 		task ("Go to the product activation page, fill out the form and submit it") {
@@ -183,7 +187,7 @@ definition {
 
 		task ("Assert the card legend change") {
 			AssertVisible(
-				locator1 = "CP2DXPCloudSetup#CARD_SUBSCRIPTION",
+				locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
 				title = "Your DXP Cloud environments are being set up and will be available soon");
 		}
 

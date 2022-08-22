@@ -66,4 +66,18 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro clearAndDeleteCloudEntries {
+		CustomerPortal.clearActivationStatus(status = "${status}");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+		CP2DXPCloudSetup.deleteEntryCloudEnvironments(
+			portlet = "Analytics Cloud Workspaces",
+			entry = "ERC-003");
+
+		CustomerPortal.deleteCPObject(title = "Analytics Cloud Workspace");
+
+		CustomerPortal.deleteCPObject(title = "Account Subscription Group");
+	}
+
 }

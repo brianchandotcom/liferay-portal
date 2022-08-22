@@ -103,6 +103,12 @@ definition {
 		}
 	}
 
+	macro assertPageTitle {
+		AssertElementPresent(
+			key_title = "${title}",
+			locator1 = "CustomerPortalSite#PAGE_TITLE");
+	}
+
 	macro assertQuickLinksPanelInfo {
 		AssertElementPresent(
 			locator1 = "CP2NavigationMenu#QUICK_LINKS",
@@ -691,6 +697,12 @@ definition {
 		CustomerPortal.viewCPObjectInfo();
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
+	}
+
+	macro waitCP20PageToLoad {
+		WaitForVisible(
+			key_userFirstName = "${userFirstName}",
+			locator1 = "CustomerPortalSite#WELCOME_PAGE_USER_NAME");
 	}
 
 }

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -75,8 +76,8 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 	@Test
 	public void testBothPropertiesDefinedAndCorrectRole() throws Exception {
-		String issuer = "issuer url";
-		String roleName = _ROLE_NAME_EXISTS;
+		String issuer = RandomTestUtil.randomString();
+		String roleName = _CORRECT_ROLE_NAME;
 
 		Role role = new RoleImpl();
 
@@ -91,14 +92,14 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		setUpPropsUtil(issuer, roleName);
 
 		Assert.assertEquals(
-			_USEROK_ID,
+			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
 				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
 
 	@Test
 	public void testBothPropertiesDefinedAndFakeRole() throws Exception {
-		String issuer = "issuer url";
+		String issuer = RandomTestUtil.randomString();
 		String roleName = "Fake Role";
 
 		Role role = null;
@@ -110,7 +111,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		setUpPropsUtil(issuer, roleName);
 
 		Assert.assertEquals(
-			_USEROK_ID,
+			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
 				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
@@ -119,7 +120,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 	public void testBothPropertiesDefinedAndRoleCorrectAndUserAlreadyExists()
 		throws Exception {
 
-		String issuer = "issuer url";
+		String issuer = RandomTestUtil.randomString();
 		String roleName = "Power User";
 
 		Role role = new RoleImpl();
@@ -133,7 +134,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		User userExists = new UserImpl();
 
-		userExists.setUserId(_USEROK_ID);
+		userExists.setUserId(_CORRECT_USER_ID);
 		userExists.setDigest("digest");
 		userExists.setScreenName(StringPool.BLANK);
 		userExists.setEmailAddress(StringPool.BLANK);
@@ -143,7 +144,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		setUpPropsUtil(issuer, roleName);
 
 		Assert.assertEquals(
-			_USEROK_ID,
+			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
 				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
@@ -152,8 +153,8 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 	public void testBothPropertiesDefinedAndRoleExistsButDifferentIssuers()
 		throws Exception {
 
-		String issuer = "issuer url";
-		String roleName = _ROLE_NAME_EXISTS;
+		String issuer = RandomTestUtil.randomString();
+		String roleName = _CORRECT_ROLE_NAME;
 
 		Role role = new RoleImpl();
 
@@ -169,7 +170,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		setUpPropsUtil(issuer, roleName);
 
 		Assert.assertEquals(
-			_USEROK_ID,
+			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
 				_userInfo, _COMPANY_ID, issuerProvider, _MAIN_PATH,
 				_PORTAL_URL));
@@ -179,8 +180,8 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 	public void testBothPropertiesDefinedAndRoleNotRegularType()
 		throws Exception {
 
-		String issuer = "issuer url";
-		String roleName = _ROLE_NAME_EXISTS;
+		String issuer = RandomTestUtil.randomString();
+		String roleName = _CORRECT_ROLE_NAME;
 
 		Role role = new RoleImpl();
 
@@ -196,14 +197,14 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		setUpPropsUtil(issuer, roleName);
 
 		Assert.assertEquals(
-			_USEROK_ID,
+			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
 				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
 
 	@Test
 	public void testBothPropertiesDefinedButRoleNameWrong1() throws Exception {
-		String issuer = "issuer url";
+		String issuer = RandomTestUtil.randomString();
 		String roleName = "Power User=Publications Owner";
 
 		Role role = null;
@@ -215,14 +216,14 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		setUpPropsUtil(issuer, roleName);
 
 		Assert.assertEquals(
-			_USEROK_ID,
+			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
 				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
 
 	@Test
 	public void testBothPropertiesDefinedButRoleNameWrong2() throws Exception {
-		String issuer = "issuer url";
+		String issuer = RandomTestUtil.randomString();
 		String roleName = "Power%20User";
 
 		Role role = null;
@@ -234,14 +235,14 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		setUpPropsUtil(issuer, roleName);
 
 		Assert.assertEquals(
-			_USEROK_ID,
+			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
 				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
 
 	@Test
 	public void testIssuerPropertyDefinedSoRoleNotExists() throws Exception {
-		String issuer = "issuer url";
+		String issuer = RandomTestUtil.randomString();
 		String roleName = null;
 
 		Role role = null;
@@ -253,7 +254,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		setUpPropsUtil(issuer, roleName);
 
 		Assert.assertEquals(
-			_USEROK_ID,
+			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
 				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
 	}
@@ -261,7 +262,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 	@Test
 	public void testRoleNamePropertyDefinedAndRoleExists() throws Exception {
 		String issuer = null;
-		String roleName = _ROLE_NAME_EXISTS;
+		String roleName = _CORRECT_ROLE_NAME;
 
 		Role role = new RoleImpl();
 
@@ -277,7 +278,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		setUpPropsUtil(issuer, roleName);
 
 		Assert.assertEquals(
-			_USEROK_ID,
+			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
 				_userInfo, _COMPANY_ID, issuerProvider, _MAIN_PATH,
 				_PORTAL_URL));
@@ -344,7 +345,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		User user = new UserImpl();
 
-		user.setUserId(_USEROK_ID);
+		user.setUserId(_CORRECT_USER_ID);
 		user.setDigest("digest");
 		user.setScreenName(StringPool.BLANK);
 		user.setEmailAddress(emailAddress);
@@ -352,7 +353,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		User userError = new UserImpl();
 
-		userError.setUserId(_USERERROR_ID);
+		userError.setUserId(_INCORRECT_USER_ID);
 		userError.setDigest("digest");
 		userError.setScreenName(StringPool.BLANK);
 		userError.setEmailAddress(emailAddress);
@@ -372,13 +373,13 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Mockito.when(
 			_roleLocalServiceMock.fetchRole(
 				Mockito.eq(_COMPANY_ID),
-				AdditionalMatchers.not(Mockito.eq(_ROLE_NAME_EXISTS)))
+				AdditionalMatchers.not(Mockito.eq(_CORRECT_ROLE_NAME)))
 		).thenReturn(
 			null
 		);
 		Mockito.when(
 			_roleLocalServiceMock.fetchRole(
-				Mockito.eq(_COMPANY_ID), Mockito.eq(_ROLE_NAME_EXISTS))
+				Mockito.eq(_COMPANY_ID), Mockito.eq(_CORRECT_ROLE_NAME))
 		).thenReturn(
 			role
 		);
@@ -441,15 +442,15 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 	private static final long _COMPANY_ID = 444444;
 
+	private static final String _CORRECT_ROLE_NAME = "Role exist";
+
+	private static final long _CORRECT_USER_ID = 1;
+
+	private static final long _INCORRECT_USER_ID = 0;
+
 	private static final String _MAIN_PATH = "/c";
 
 	private static final String _PORTAL_URL = "http://localhost:8080";
-
-	private static final String _ROLE_NAME_EXISTS = "Role exist";
-
-	private static final long _USERERROR_ID = 0;
-
-	private static final long _USEROK_ID = 1;
 
 	private static OpenIdConnectUserInfoProcessorImpl
 		_openIdConnectUserInfoProcessorImpl;

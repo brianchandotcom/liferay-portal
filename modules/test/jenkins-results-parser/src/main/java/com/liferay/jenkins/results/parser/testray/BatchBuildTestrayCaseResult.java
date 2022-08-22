@@ -302,39 +302,39 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			return null;
 		}
 
-		Callable<File> callable = new Callable<File>() {
+		return uploadTestrayAttachment(
+			name, key,
+			new Callable<File>() {
 
-			@Override
-			public File call() throws Exception {
-				File jenkinsConsoleFile = new File(
-					getTestrayUploadBaseDir(), "jenkins-console.txt");
-				File jenkinsConsoleGzFile = new File(
-					getTestrayUploadBaseDir(), "jenkins-console.txt.gz");
+				@Override
+				public File call() throws Exception {
+					File jenkinsConsoleFile = new File(
+						getTestrayUploadBaseDir(), "jenkins-console.txt");
+					File jenkinsConsoleGzFile = new File(
+						getTestrayUploadBaseDir(), "jenkins-console.txt.gz");
 
-				try {
-					JenkinsResultsParserUtil.write(
-						jenkinsConsoleFile, build.getConsoleText());
+					try {
+						JenkinsResultsParserUtil.write(
+							jenkinsConsoleFile, build.getConsoleText());
 
-					JenkinsResultsParserUtil.gzip(
-						jenkinsConsoleFile, jenkinsConsoleGzFile);
+						JenkinsResultsParserUtil.gzip(
+							jenkinsConsoleFile, jenkinsConsoleGzFile);
+					}
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
+					}
+					finally {
+						JenkinsResultsParserUtil.delete(jenkinsConsoleFile);
+					}
+
+					if (jenkinsConsoleGzFile.exists()) {
+						return jenkinsConsoleGzFile;
+					}
+
+					return null;
 				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
-				finally {
-					JenkinsResultsParserUtil.delete(jenkinsConsoleFile);
-				}
 
-				if (jenkinsConsoleGzFile.exists()) {
-					return jenkinsConsoleGzFile;
-				}
-
-				return null;
-			}
-
-		};
-
-		return uploadTestrayAttachment(name, key, callable);
+			});
 	}
 
 	private JobProperty _getJobProperty(String basePropertyName) {

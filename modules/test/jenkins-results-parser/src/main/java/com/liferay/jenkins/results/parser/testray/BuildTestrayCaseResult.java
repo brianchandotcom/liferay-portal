@@ -126,10 +126,18 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		return _testrayUploadBaseDir;
 	}
 
+	protected String getTopLevelBuildReportKey() {
+		return getTopLevelBuildURLPath() + "/build-report.json.gz";
+	}
+
+	protected String getTopLevelBuildReportName() {
+		return "Build Report (Top Level)";
+	}
+
 	protected TestrayAttachment getTopLevelBuildReportTestrayAttachment() {
 		return getTestrayAttachment(
-			getTopLevelBuild(), "Build Report (Top Level)",
-			getTopLevelBuildURLPath() + "/build-report.json.gz");
+			getTopLevelBuild(), getTopLevelBuildReportName(),
+			getTopLevelBuildReportKey());
 	}
 
 	protected String getTopLevelBuildURLPath() {
@@ -161,22 +169,46 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		return sb.toString();
 	}
 
+	protected String getTopLevelJenkinsConsoleKey() {
+		return getTopLevelBuildURLPath() + "/jenkins-console.txt.gz";
+	}
+
+	protected String getTopLevelJenkinsConsoleName() {
+		return "Jenkins Console (Top Level)";
+	}
+
 	protected TestrayAttachment getTopLevelJenkinsConsoleTestrayAttachment() {
 		return getTestrayAttachment(
-			getTopLevelBuild(), "Jenkins Console (Top Level)",
-			getTopLevelBuildURLPath() + "/jenkins-console.txt.gz");
+			getTopLevelBuild(), getTopLevelJenkinsConsoleName(),
+			getTopLevelJenkinsConsoleKey());
+	}
+
+	protected String getTopLevelJenkinsReportKey() {
+		return getTopLevelBuildURLPath() + "/jenkins-report.html.gz";
+	}
+
+	protected String getTopLevelJenkinsReportName() {
+		return "Jenkins Report (Top Level)";
 	}
 
 	protected TestrayAttachment getTopLevelJenkinsReportTestrayAttachment() {
 		return getTestrayAttachment(
-			getTopLevelBuild(), "Jenkins Report (Top Level)",
-			getTopLevelBuildURLPath() + "/jenkins-report.html.gz");
+			getTopLevelBuild(), getTopLevelJenkinsReportName(),
+			getTopLevelJenkinsReportKey());
+	}
+
+	protected String getTopLevelJobSummaryKey() {
+		return getTopLevelBuildURLPath() + "/job-summary/index.html.gz";
+	}
+
+	protected String getTopLevelJobSummaryName() {
+		return "Job Summary (Top Level)";
 	}
 
 	protected TestrayAttachment getTopLevelJobSummaryTestrayAttachment() {
 		return getTestrayAttachment(
-			getTopLevelBuild(), "Job Summary (Top Level)",
-			getTopLevelBuildURLPath() + "/job-summary/index.html.gz");
+			getTopLevelBuild(), getTopLevelJobSummaryName(),
+			getTopLevelJobSummaryKey());
 	}
 
 	protected TestrayAttachment uploadTestrayAttachment(

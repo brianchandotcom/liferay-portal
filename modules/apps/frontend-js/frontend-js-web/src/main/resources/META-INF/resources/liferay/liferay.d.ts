@@ -327,12 +327,10 @@ declare module Liferay {
 
 		namespace LocalStorage {
 
-			/* Removes all keys stored in localStorage */
+			/* Removes all entries in localStorage */
 			export function clear(): void;
 
-			/**
-			 * Object with cookie consent types as keys
-			 */
+			/* Object with consent types as keys and corresponding cookie names as values */
 			export const TYPES: {[key: string]: TYPE_VALUES};
 
 			export type TYPE_VALUES =
@@ -347,11 +345,8 @@ declare module Liferay {
 				type: TYPE_VALUES
 			): string | undefined;
 
-			/* Returns the value in localStorage for the corresponding index if user has consented to the type of storage */
-			export function key(
-				index: number,
-				type: TYPE_VALUES
-			): string | undefined;
+			/*  Returns the key of the n-th entry in localStorage */
+			export function key(index: number): string | undefined;
 
 			/* Removes the value for the corresponding key in localStorage regardless of consent */
 			export function removeItem(key: string): void;
@@ -372,17 +367,15 @@ declare module Liferay {
 			): boolean;
 
 			/* Returns the number of items in localStorage */
-			export const size: number;
+			export const length: number;
 		}
 
 		namespace SessionStorage {
 
-			/* Removes all keys stored in sessionStorage */
+			/* Removes all entries in sessionStorage */
 			export function clear(): void;
 
-			/**
-			 * Object with cookie consent types as keys
-			 */
+			/* Object with consent types as keys and corresponding cookie names as values */
 			export const TYPES: {[key: string]: TYPE_VALUES};
 
 			export type TYPE_VALUES =
@@ -397,11 +390,8 @@ declare module Liferay {
 				type: TYPE_VALUES
 			): string | undefined;
 
-			/* Returns the value in sessionStorage for the corresponding index if user has consented to the type of storage */
-			export function key(
-				index: number,
-				type: TYPE_VALUES
-			): string | undefined;
+			/* Returns the key of the n-th entry in sessionStorage */
+			export function key(index: number): string | undefined;
 
 			/* Removes the value for the corresponding key in sessionStorage regardless of consent */
 			export function removeItem(key: string): void;
@@ -422,7 +412,7 @@ declare module Liferay {
 			): boolean;
 
 			/* Returns the number of items in sessionStorage */
-			export const size: number;
+			export const length: number;
 		}
 
 		/* Escapes HTML from the given string */

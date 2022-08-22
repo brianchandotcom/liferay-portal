@@ -56,6 +56,98 @@ describe.each([
 		jest.restoreAllMocks();
 	});
 
+	describe(`Liferay.Util.${storageName}.clear`, () => {
+		it('Exists', () => {
+			expect(LiferayStorage.clear).not.toBeUndefined();
+		});
+
+		it('Removes all items from storage', () => {
+			for (let i = 0; i < 3; i++) {
+				storage.setItem(`${anyName}-${i}`, anyValue);
+			}
+
+			expect(storage.length).not.toBe(0);
+
+			LiferayStorage.clear();
+
+			expect(storage.length).toBe(0);
+		});
+	});
+
+	describe(`Liferay.Util.${storageName}.getItem`, () => {
+		it.each(allConsentTypes)(
+			"Returns null if value isn't set and %s enabled",
+			(consentType) => {
+				setConsentCookies(true);
+
+				expect(LiferayStorage.getItem(anyName, consentType)).toBeNull();
+			}
+		);
+
+		it.each(allConsentTypes)(
+			'Returns value as string if the value is set and %s enabled',
+			(consentType) => {
+				setConsentCookies(true);
+
+				storage.setItem(anyName, anyValue);
+
+				expect(LiferayStorage.getItem(anyName, consentType)).toBe(
+					anyValue
+				);
+			}
+		);
+
+		it.each(optionalConsentTypes)(
+			"Returns null if value isn't set and %s disabled",
+			(consentType) => {
+				setConsentCookies(false);
+
+				expect(LiferayStorage.getItem(anyName, consentType)).toBeNull();
+			}
+		);
+
+		it.each(optionalConsentTypes)(
+			'Returns null if the value is set and %s disabled',
+			(consentType) => {
+				setConsentCookies(false);
+
+				storage.setItem(anyName, anyValue);
+
+				expect(storage.getItem(anyName)).not.toBeNull();
+
+				expect(LiferayStorage.getItem(anyName, consentType)).toBeNull();
+			}
+		);
+	});
+
+	describe(`Liferay.Util.${storageName}.key`, () => {
+		it('Exists', () => {
+			expect(LiferayStorage.key).not.toBeUndefined();
+		});
+
+		it('Returns the key at the nth position', () => {
+			for (let i = 0; i < 3; i++) {
+				const name = `${anyName}-${i}`;
+				storage.setItem(name, anyValue);
+				expect(LiferayStorage.key(i)).toBe(name);
+			}
+		});
+	});
+
+	describe(`Liferay.Util.${storageName}.removeItem`, () => {
+		it('Removes value if it exists', () => {
+			storage.setItem(anyName, anyValue);
+
+			LiferayStorage.removeItem(anyName);
+			expect(storage.getItem(anyName)).toBeNull();
+		});
+
+		it("Value still doesn't exist if it didn't exist before removal", () => {
+			LiferayStorage.removeItem(anyName);
+			expect(storage.getItem(anyName)).toBeNull();
+		});
+	});
+
 	describe(`Liferay.Util.${storageName}.setItem`, () => {
 		it('Always allows setting a necessary data', () => {
 			setConsentCookies(false);
@@ -132,69 +224,27 @@ describe.each([
 		);
 	});
 
-	describe(`Liferay.Util.${storageName}.getItem`, () => {
-		it.each(allConsentTypes)(
-			"Returns null if value isn't set and %s enabled",
-			(consentType) => {
-				setConsentCookies(true);
-
-				expect(LiferayStorage.getItem(anyName, consentType)).toBeNull();
-			}
-		);
-
-		it.each(allConsentTypes)(
-			'Returns value as string if the value is set and %s enabled',
-			(consentType) => {
-				setConsentCookies(true);
-
-				storage.setItem(anyName, anyValue);
-
-				expect(LiferayStorage.getItem(anyName, consentType)).toBe(
-					anyValue
-				);
-			}
-		);
-
-		it.each(optionalConsentTypes)(
-			"Returns null if value isn't set and %s disabled",
-			(consentType) => {
-				setConsentCookies(false);
-
-				expect(LiferayStorage.getItem(anyName, consentType)).toBeNull();
-			}
-		);
-
-		it.each(optionalConsentTypes)(
-			'Returns null if the value is set and %s disabled',
-			(consentType) => {
-				setConsentCookies(false);
-
-				storage.setItem(anyName, anyValue);
-
-				expect(storage.getItem(anyName)).not.toBeNull();
-
-				expect(LiferayStorage.getItem(anyName, consentType)).toBeNull();
-			}
-		);
-	});
-
-	describe(`Liferay.Util.${storageName}.removeItem`, () => {
-		it('Removes value if it exists', () => {
-			storage.setItem(anyName, anyValue);
-
-			LiferayStorage.removeItem(anyName);
-			expect(storage.getItem(anyName)).toBeNull();
-		});
-
-		it("Value still doesn't exist if it didn't exist before removal", () => {
-			LiferayStorage.removeItem(anyName);
-			expect(storage.getItem(anyName)).toBeNull();
-		});
-	});
-
 	describe(`Liferay.Util.${storageName}.TYPES`, () => {
 		it('Exists', () => {
 			expect(LiferayStorage.TYPES).not.toBeUndefined();
+		});
+	});
+
+	describe(`Liferay.Util.${storageName}.length`, () => {
+		it('Exists', () => {
+			expect(LiferayStorage.length).not.toBeUndefined();
+		});
+
+		it('Returns 0 if there are no items in storage', () => {
+			expect(LiferayStorage.length).toBe(0);
+		});
+
+		it('Returns the number of items in storage', () => {
+			for (let i = 0; i < 3; i++) {
+				storage.setItem(`${anyName}-${i}`, anyValue);
+
+				expect(LiferayStorage.length).toBe(i + 1);
+			}
 		});
 	});
 });

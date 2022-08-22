@@ -55,8 +55,8 @@ export default class Storage {
 		return true;
 	}
 
-	get size() {
-		return this.storage.size;
+	get length() {
+		return this.storage.length;
 	}
 
 	TYPES = CONSENT_TYPES;

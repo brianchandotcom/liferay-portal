@@ -829,7 +829,7 @@ export function setCookie(
 export function removeCookie(name: string): void;
 
 /**
- * Object with cookie consent types as keys
+ * Object with consent types as keys and corresponding cookie names as values
  */
 export const TYPES: {[key: string]: TYPE_VALUES};
 
@@ -864,7 +864,7 @@ type Storage = {
 
 	TYPES: typeof TYPES;
 
-	size: number;
+	length: number;
 };
 
 export const localStorage: Storage;

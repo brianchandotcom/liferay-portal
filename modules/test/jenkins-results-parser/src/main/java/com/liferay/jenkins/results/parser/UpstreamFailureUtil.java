@@ -319,6 +319,10 @@ public class UpstreamFailureUtil {
 		TopLevelBuildReport topLevelBuildReport =
 			getUpstreamTopLevelBuildReport(topLevelBuild);
 
+		if (topLevelBuildReport == null) {
+			return upstreamFailures;
+		}
+
 		for (DownstreamBuildReport downstreamBuildReport :
 				topLevelBuildReport.getDownstreamBuildReports()) {
 

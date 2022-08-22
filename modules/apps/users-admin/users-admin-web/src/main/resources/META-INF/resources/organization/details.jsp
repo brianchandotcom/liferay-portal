@@ -99,17 +99,28 @@ if (organization != null) {
 		md="5"
 	>
 		<div align="middle">
-			<c:if test="<%= organization != null %>">
-				<label class="control-label"></label>
+			<c:choose>
+				<c:when test="<%= organization != null %>">
+					<label class="control-label"></label>
 
-				<liferay-ui:logo-selector
-					currentLogoURL="<%= organization.getLogoURL() %>"
-					defaultLogo="<%= organization.getLogoId() == 0 %>"
-					defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
-					logoDisplaySelector=".organization-logo"
-					tempImageFileName="<%= String.valueOf(groupId) %>"
-				/>
-			</c:if>
+					<liferay-ui:logo-selector
+						currentLogoURL="<%= organization.getLogoURL() %>"
+						defaultLogo="<%= organization.getLogoId() == 0 %>"
+						defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
+						logoDisplaySelector=".organization-logo"
+						tempImageFileName="<%= String.valueOf(groupId) %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:logo-selector
+						currentLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
+						defaultLogo="<%= true %>"
+						defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
+						logoDisplaySelector=".organization-logo"
+						tempImageFileName="0"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</clay:col>
 </clay:row>

@@ -549,6 +549,17 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
+	public String getResult() {
+		if ((result == null) && (getBuildURL() != null)) {
+			JSONObject buildJSONObject = getBuildJSONObject("result");
+
+			setResult(buildJSONObject.optString("result"));
+		}
+
+		return result;
+	}
+
+	@Override
 	public String getStatusSummary() {
 		long currentTimeMillis =
 			JenkinsResultsParserUtil.getCurrentTimeMillis();

@@ -62,6 +62,9 @@
 						"pageElements": [
 							{
 								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"align": "Center",
@@ -95,7 +98,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Search Results"
+																"ar_SA": "​​​​​​Search Results",
+																"ca_ES": "​​​​​​Search Results",
+																"de_DE": "​​​​​​Search Results",
+																"en_US": "​​​​​​Search Results",
+																"es_ES": "​​​​​​Search Results",
+																"fi_FI": "​​​​​​Search Results",
+																"fr_FR": "​​​​​​Search Results",
+																"hu_HU": "​​​​​​Search Results",
+																"ja_JP": "​​​​​​Search Results",
+																"nl_NL": "​​​​​​Search Results",
+																"pt_BR": "​​​​​​Search Results",
+																"sv_SE": "​​​​​​Search Results",
+																"zh_CN": "​​​​​​Search Results"
 															}
 														}
 													}
@@ -198,6 +213,16 @@
 												"marginRight": "4",
 												"marginTop": "4"
 											},
+											"widgetInstance": {
+												"widgetConfig": {
+												},
+												"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
 												},

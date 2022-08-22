@@ -33,7 +33,10 @@ export default function useCompanyOptions(
 
 	useEffect(() => {
 		if (selectedAccountBrief) {
-			handleSelected(companyExtender?.country, selectedAccountBrief);
+			handleSelected(
+				companyExtender?.country || {},
+				selectedAccountBrief
+			);
 		}
 	}, [companyExtender, handleSelected, selectedAccountBrief]);
 

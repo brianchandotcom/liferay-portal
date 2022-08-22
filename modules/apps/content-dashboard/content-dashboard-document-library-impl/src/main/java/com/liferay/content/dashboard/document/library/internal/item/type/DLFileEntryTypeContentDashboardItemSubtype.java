@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.document.library.internal.item.type;
 
 import com.liferay.content.dashboard.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.lang.HashUtil;
@@ -37,8 +38,9 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 	implements ContentDashboardItemSubtype<DLFileEntryType> {
 
 	public DLFileEntryTypeContentDashboardItemSubtype(
-		DLFileEntryType dlFileEntryType, Group group) {
+		DLFileEntry dlFileEntry, DLFileEntryType dlFileEntryType, Group group) {
 
+		_dlFileEntry = dlFileEntry;
 		_dlFileEntryType = dlFileEntryType;
 		_group = group;
 
@@ -152,6 +154,7 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryTypeContentDashboardItemSubtype.class);
 
+	private final DLFileEntry _dlFileEntry;
 	private final DLFileEntryType _dlFileEntryType;
 	private final Group _group;
 	private final InfoItemReference _infoItemReference;

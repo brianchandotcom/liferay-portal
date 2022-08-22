@@ -29,7 +29,8 @@ public class BlogsEntryContentDashboardItemSubtypeFactory
 	implements ContentDashboardItemSubtypeFactory<BlogsEntry> {
 
 	@Override
-	public ContentDashboardItemSubtype<BlogsEntry> create(long classPK)
+	public ContentDashboardItemSubtype<BlogsEntry> create(
+			long classPK, long entityClassPK)
 		throws PortalException {
 
 		return new BlogsEntryContentDashboardItemSubtype();

@@ -55,6 +55,7 @@ package org.apache.bcel.classfile;
  */
 
 import  org.apache.bcel.Constants;
+import org.apache.bcel.generic.ConstantPoolGen;
 import  java.io.*;
 
 /**
@@ -219,9 +220,17 @@ public class ConstantPool implements Cloneable, Node {
    */
   public void dump(DataOutputStream file) throws IOException
   {
-    file.writeShort(constant_pool_count);
+    /*
+     * Constants over the size of the constant pool shall not be written out.
+     * This is a redundant measure as the ConstantPoolGen should have already
+     * reported an error back in the situation.
+     */
+    int size = constant_pool_count < ConstantPoolGen.CONSTANT_POOL_SIZE - 1 ?
+            constant_pool_count : ConstantPoolGen.CONSTANT_POOL_SIZE - 1;
 
-    for(int i=1; i < constant_pool_count; i++)
+    file.writeShort(size);
+
+    for(int i=1; i < size; i++)
       if(constant_pool[i] != null)
 	constant_pool[i].dump(file);
   }
@@ -367,3 +376,4 @@ public class ConstantPool implements Cloneable, Node {
     return c;
   }
 }
+/* @generated */

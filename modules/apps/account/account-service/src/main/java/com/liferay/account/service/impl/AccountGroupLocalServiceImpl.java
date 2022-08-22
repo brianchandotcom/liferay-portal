@@ -97,13 +97,14 @@ public class AccountGroupLocalServiceImpl
 	public AccountGroup checkGuestAccountGroup(long companyId)
 		throws PortalException {
 
-		if (hasDefaultAccountGroup(companyId)) {
-			return accountGroupPersistence.findByC_D_First(
-				companyId, true, null);
+		AccountGroup accountGroup = accountGroupPersistence.fetchByC_D_First(
+			companyId, true, null);
+
+		if (accountGroup != null) {
+			return accountGroup;
 		}
 
-		AccountGroup accountGroup = createAccountGroup(
-			counterLocalService.increment());
+		accountGroup = createAccountGroup(counterLocalService.increment());
 
 		accountGroup.setCompanyId(companyId);
 
@@ -122,7 +123,7 @@ public class AccountGroupLocalServiceImpl
 			AccountGroup.class.getName(), accountGroup.getAccountGroupId(),
 			false, false, false);
 
-		return accountGroupLocalService.addAccountGroup(accountGroup);
+		return accountGroupPersistence.update(accountGroup);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

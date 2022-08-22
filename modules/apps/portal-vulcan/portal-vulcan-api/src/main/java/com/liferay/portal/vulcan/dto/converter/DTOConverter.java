@@ -17,6 +17,8 @@ package com.liferay.portal.vulcan.dto.converter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import javax.ws.rs.core.UriInfo;
+
 /**
  * @author Rubén Pulido
  * @author Víctor Galán
@@ -44,6 +46,10 @@ public interface DTOConverter<E, D> {
 			return argumentTypes[0].getTypeName();
 		}
 
+		return null;
+	}
+
+	public default String getJaxRsLink(long classPK, UriInfo uriInfo) {
 		return null;
 	}
 

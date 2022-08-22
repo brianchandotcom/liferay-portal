@@ -602,6 +602,550 @@ public class AccountGroupRelPersistenceImpl
 	private static final String _FINDER_COLUMN_ACCOUNTGROUPID_ACCOUNTGROUPID_2 =
 		"accountGroupRel.accountGroupId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByA_C;
+	private FinderPath _finderPathWithoutPaginationFindByA_C;
+	private FinderPath _finderPathCountByA_C;
+
+	/**
+	 * Returns all the account group rels where accountGroupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @return the matching account group rels
+	 */
+	@Override
+	public List<AccountGroupRel> findByA_C(
+		long accountGroupId, long classNameId) {
+
+		return findByA_C(
+			accountGroupId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the account group rels where accountGroupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of account group rels
+	 * @param end the upper bound of the range of account group rels (not inclusive)
+	 * @return the range of matching account group rels
+	 */
+	@Override
+	public List<AccountGroupRel> findByA_C(
+		long accountGroupId, long classNameId, int start, int end) {
+
+		return findByA_C(accountGroupId, classNameId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the account group rels where accountGroupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of account group rels
+	 * @param end the upper bound of the range of account group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account group rels
+	 */
+	@Override
+	public List<AccountGroupRel> findByA_C(
+		long accountGroupId, long classNameId, int start, int end,
+		OrderByComparator<AccountGroupRel> orderByComparator) {
+
+		return findByA_C(
+			accountGroupId, classNameId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the account group rels where accountGroupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of account group rels
+	 * @param end the upper bound of the range of account group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching account group rels
+	 */
+	@Override
+	public List<AccountGroupRel> findByA_C(
+		long accountGroupId, long classNameId, int start, int end,
+		OrderByComparator<AccountGroupRel> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByA_C;
+				finderArgs = new Object[] {accountGroupId, classNameId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByA_C;
+			finderArgs = new Object[] {
+				accountGroupId, classNameId, start, end, orderByComparator
+			};
+		}
+
+		List<AccountGroupRel> list = null;
+
+		if (useFinderCache) {
+			list = (List<AccountGroupRel>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AccountGroupRel accountGroupRel : list) {
+					if ((accountGroupId !=
+							accountGroupRel.getAccountGroupId()) ||
+						(classNameId != accountGroupRel.getClassNameId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_ACCOUNTGROUPREL_WHERE);
+
+			sb.append(_FINDER_COLUMN_A_C_ACCOUNTGROUPID_2);
+
+			sb.append(_FINDER_COLUMN_A_C_CLASSNAMEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(AccountGroupRelModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(accountGroupId);
+
+				queryPos.add(classNameId);
+
+				list = (List<AccountGroupRel>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first account group rel in the ordered set where accountGroupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account group rel
+	 * @throws NoSuchGroupRelException if a matching account group rel could not be found
+	 */
+	@Override
+	public AccountGroupRel findByA_C_First(
+			long accountGroupId, long classNameId,
+			OrderByComparator<AccountGroupRel> orderByComparator)
+		throws NoSuchGroupRelException {
+
+		AccountGroupRel accountGroupRel = fetchByA_C_First(
+			accountGroupId, classNameId, orderByComparator);
+
+		if (accountGroupRel != null) {
+			return accountGroupRel;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("accountGroupId=");
+		sb.append(accountGroupId);
+
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+
+		sb.append("}");
+
+		throw new NoSuchGroupRelException(sb.toString());
+	}
+
+	/**
+	 * Returns the first account group rel in the ordered set where accountGroupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account group rel, or <code>null</code> if a matching account group rel could not be found
+	 */
+	@Override
+	public AccountGroupRel fetchByA_C_First(
+		long accountGroupId, long classNameId,
+		OrderByComparator<AccountGroupRel> orderByComparator) {
+
+		List<AccountGroupRel> list = findByA_C(
+			accountGroupId, classNameId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last account group rel in the ordered set where accountGroupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account group rel
+	 * @throws NoSuchGroupRelException if a matching account group rel could not be found
+	 */
+	@Override
+	public AccountGroupRel findByA_C_Last(
+			long accountGroupId, long classNameId,
+			OrderByComparator<AccountGroupRel> orderByComparator)
+		throws NoSuchGroupRelException {
+
+		AccountGroupRel accountGroupRel = fetchByA_C_Last(
+			accountGroupId, classNameId, orderByComparator);
+
+		if (accountGroupRel != null) {
+			return accountGroupRel;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("accountGroupId=");
+		sb.append(accountGroupId);
+
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+
+		sb.append("}");
+
+		throw new NoSuchGroupRelException(sb.toString());
+	}
+
+	/**
+	 * Returns the last account group rel in the ordered set where accountGroupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account group rel, or <code>null</code> if a matching account group rel could not be found
+	 */
+	@Override
+	public AccountGroupRel fetchByA_C_Last(
+		long accountGroupId, long classNameId,
+		OrderByComparator<AccountGroupRel> orderByComparator) {
+
+		int count = countByA_C(accountGroupId, classNameId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AccountGroupRel> list = findByA_C(
+			accountGroupId, classNameId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the account group rels before and after the current account group rel in the ordered set where accountGroupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param accountGroupRelId the primary key of the current account group rel
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next account group rel
+	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
+	 */
+	@Override
+	public AccountGroupRel[] findByA_C_PrevAndNext(
+			long accountGroupRelId, long accountGroupId, long classNameId,
+			OrderByComparator<AccountGroupRel> orderByComparator)
+		throws NoSuchGroupRelException {
+
+		AccountGroupRel accountGroupRel = findByPrimaryKey(accountGroupRelId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AccountGroupRel[] array = new AccountGroupRelImpl[3];
+
+			array[0] = getByA_C_PrevAndNext(
+				session, accountGroupRel, accountGroupId, classNameId,
+				orderByComparator, true);
+
+			array[1] = accountGroupRel;
+
+			array[2] = getByA_C_PrevAndNext(
+				session, accountGroupRel, accountGroupId, classNameId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AccountGroupRel getByA_C_PrevAndNext(
+		Session session, AccountGroupRel accountGroupRel, long accountGroupId,
+		long classNameId, OrderByComparator<AccountGroupRel> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_ACCOUNTGROUPREL_WHERE);
+
+		sb.append(_FINDER_COLUMN_A_C_ACCOUNTGROUPID_2);
+
+		sb.append(_FINDER_COLUMN_A_C_CLASSNAMEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(AccountGroupRelModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(accountGroupId);
+
+		queryPos.add(classNameId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						accountGroupRel)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<AccountGroupRel> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the account group rels where accountGroupId = &#63; and classNameId = &#63; from the database.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 */
+	@Override
+	public void removeByA_C(long accountGroupId, long classNameId) {
+		for (AccountGroupRel accountGroupRel :
+				findByA_C(
+					accountGroupId, classNameId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(accountGroupRel);
+		}
+	}
+
+	/**
+	 * Returns the number of account group rels where accountGroupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @return the number of matching account group rels
+	 */
+	@Override
+	public int countByA_C(long accountGroupId, long classNameId) {
+		FinderPath finderPath = _finderPathCountByA_C;
+
+		Object[] finderArgs = new Object[] {accountGroupId, classNameId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_ACCOUNTGROUPREL_WHERE);
+
+			sb.append(_FINDER_COLUMN_A_C_ACCOUNTGROUPID_2);
+
+			sb.append(_FINDER_COLUMN_A_C_CLASSNAMEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(accountGroupId);
+
+				queryPos.add(classNameId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_A_C_ACCOUNTGROUPID_2 =
+		"accountGroupRel.accountGroupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_A_C_CLASSNAMEID_2 =
+		"accountGroupRel.classNameId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
 	private FinderPath _finderPathCountByC_C;
@@ -1996,6 +2540,25 @@ public class AccountGroupRelPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountGroupId",
 			new String[] {Long.class.getName()},
 			new String[] {"accountGroupId"}, false);
+
+		_finderPathWithPaginationFindByA_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"accountGroupId", "classNameId"}, true);
+
+		_finderPathWithoutPaginationFindByA_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"accountGroupId", "classNameId"}, true);
+
+		_finderPathCountByA_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"accountGroupId", "classNameId"}, false);
 
 		_finderPathWithPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",

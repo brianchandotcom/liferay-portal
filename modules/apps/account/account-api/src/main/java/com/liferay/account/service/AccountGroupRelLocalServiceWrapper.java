@@ -323,6 +323,14 @@ public class AccountGroupRelLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.account.model.AccountGroupRel>
+		getAccountGroupRels(long accountGroupId, String className) {
+
+		return _accountGroupRelLocalService.getAccountGroupRels(
+			accountGroupId, className);
+	}
+
+	@Override
+	public java.util.List<com.liferay.account.model.AccountGroupRel>
 		getAccountGroupRels(String className, long classPK) {
 
 		return _accountGroupRelLocalService.getAccountGroupRels(

@@ -248,6 +248,10 @@ public interface AccountGroupRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountGroupRel> getAccountGroupRels(
+		long accountGroupId, String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountGroupRel> getAccountGroupRels(
 		String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

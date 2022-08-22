@@ -288,6 +288,12 @@ public class AccountGroupRelLocalServiceUtil {
 	}
 
 	public static List<AccountGroupRel> getAccountGroupRels(
+		long accountGroupId, String className) {
+
+		return getService().getAccountGroupRels(accountGroupId, className);
+	}
+
+	public static List<AccountGroupRel> getAccountGroupRels(
 		String className, long classPK) {
 
 		return getService().getAccountGroupRels(className, classPK);

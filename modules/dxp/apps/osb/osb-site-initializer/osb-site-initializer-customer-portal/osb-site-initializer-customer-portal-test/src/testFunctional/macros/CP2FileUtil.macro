@@ -11,7 +11,7 @@ definition {
 			echo("File named ${downloadedFileName} was downloaded.");
 		}
 		else {
-			fail("Files named ${downloadedFileName} and ${downloadedInvertedFileName} NOT FOUND in folder ${tempDir}!");
+			fail("Files named ${downloadedFileName}  NOT FOUND in folder ${tempDir}!");
 		}
 	}
 

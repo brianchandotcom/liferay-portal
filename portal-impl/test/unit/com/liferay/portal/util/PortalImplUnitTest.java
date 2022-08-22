@@ -94,8 +94,8 @@ public class PortalImplUnitTest {
 
 		ActionRequest actionRequest = _createActionRequest(params);
 
-		MockedStatic<PortalUtil> portalUtilMockStatic = Mockito.mockStatic(
-			PortalUtil.class);
+		MockedStatic<PortalUtil> portalUtilMockStatic =
+			Mockito.mockStatic(PortalUtil.class);
 
 		ActionResponse actionResponse = _createActionResponse(
 			portalUtilMockStatic);
@@ -780,21 +780,6 @@ public class PortalImplUnitTest {
 		Assert.assertEquals(host, _portalImpl.getHost(mockHttpServletRequest));
 	}
 
-	private ActionRequest _createActionRequest(Map<String, String[]> params) {
-		ActionRequest actionRequest = Mockito.mock(ActionRequest.class);
-
-		RenderParameters renderParameters = new RenderParametersImpl(
-			params, null, StringPool.BLANK);
-
-		Mockito.when(
-			actionRequest.getRenderParameters()
-		).thenReturn(
-			renderParameters
-		);
-
-		return actionRequest;
-	}
-
 	private ActionRequest _createActionRequest(PortletMode portletMode) {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -815,6 +800,23 @@ public class PortalImplUnitTest {
 			ProxyFactory.newDummyInstance(InvokerPortlet.class),
 			new MockLiferayPortletContext("/path"), WindowState.NORMAL,
 			portletMode, new MockPortletPreferences(), 4000L);
+	}
+
+	private ActionRequest _createActionRequest(
+		Map<String, String[]> params) {
+
+		ActionRequest actionRequest = Mockito.mock(ActionRequest.class);
+
+		RenderParameters renderParameters = new RenderParametersImpl(
+			params, null, StringPool.BLANK);
+
+		Mockito.when(
+			actionRequest.getRenderParameters()
+		).thenReturn(
+			renderParameters
+		);
+
+		return actionRequest;
 	}
 
 	private ActionResponse _createActionResponse(

@@ -18,7 +18,7 @@
 ObjectLayoutBox categorizationObjectLayoutBox = objectEntryDisplayContext.getObjectLayoutBoxByType(ObjectLayoutBoxConstants.TYPE_CATEGORIZATION);
 %>
 
-<c:if test="<%= categorizationObjectLayoutBox != null %>">
+<c:if test="<%= objectDefinition.isEnableCategorization() && categorizationObjectLayoutBox != null %>">
 
 	<%
 	long classPK = (objectEntry == null) ? 0 : GetterUtil.getLong(objectEntry.getExternalReferenceCode());

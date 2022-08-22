@@ -18,7 +18,7 @@
 ObjectLayoutBox commentsObjectLayoutBox = objectEntryDisplayContext.getObjectLayoutBoxByType(ObjectLayoutBoxConstants.TYPE_COMMENTS);
 %>
 
-<c:if test="<%= commentsObjectLayoutBox != null %>">
+<c:if test="<%= !objectEntryDisplayContext.isReadOnly() && objectDefinition.isEnableComments() && (commentsObjectLayoutBox != null) %>">
 	<clay:sheet-section
 		cssClass="sheet-lg"
 	>

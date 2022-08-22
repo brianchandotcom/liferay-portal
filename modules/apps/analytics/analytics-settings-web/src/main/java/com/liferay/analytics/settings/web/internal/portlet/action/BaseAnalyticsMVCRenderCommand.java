@@ -89,6 +89,9 @@ public abstract class BaseAnalyticsMVCRenderCommand
 	@Reference
 	protected ConfigurationProvider configurationProvider;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.analytics.settings.web)"
+	)
 	protected volatile ServletContext servletContext;
 
 	private void _setHttpServletRequestAttributes(

@@ -282,7 +282,8 @@ public class WorkflowTaskDisplayContext {
 	public String getHeaderTitle(WorkflowTask workflowTask)
 		throws PortalException {
 
-		return getTaskLabel(workflowTask) + ": " + getAssetTitle(workflowTask);
+		return workflowTask.getLabel(getTaskContentLocale()) + ": " +
+			getAssetTitle(workflowTask);
 	}
 
 	public Date getLastActivityDate(WorkflowTask workflowTask)
@@ -459,14 +460,6 @@ public class WorkflowTaskDisplayContext {
 		WorkflowLog workflowLog) {
 
 		return HtmlUtil.escape(_getActorName(workflowLog));
-	}
-
-	public String getTaskLabel(WorkflowTask workflowTask)
-		throws PortalException {
-
-		return HtmlUtil.escape(
-			WorkflowTaskManagerUtil.getWorkflowTaskLabel(
-				workflowTask.getWorkflowTaskId(), getTaskContentLocale()));
 	}
 
 	public String getTaskUpdateMessageArguments(WorkflowLog workflowLog) {

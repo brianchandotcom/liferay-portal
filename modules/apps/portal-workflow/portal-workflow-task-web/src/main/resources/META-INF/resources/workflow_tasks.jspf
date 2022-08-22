@@ -66,7 +66,7 @@
 							<liferay-ui:message key="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>" />
 						</span>
 						<span class="task-name" id="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>">
-							<liferay-ui:message key="<%= workflowTaskDisplayContext.getTaskLabel(workflowTask) %>" />
+							<liferay-ui:message key="<%= workflowTask.getLabel(workflowTaskDisplayContext.getTaskContentLocale()) %>" />
 						</span>
 
 						<c:if test="<%= workflowTaskDisplayContext.getDueDate(workflowTask) != null %>">
@@ -121,7 +121,7 @@
 					name="task"
 				>
 					<span class="task-name" id="<%= workflowTask.getWorkflowTaskId() %>">
-						<liferay-ui:message key="<%= workflowTaskDisplayContext.getTaskLabel(workflowTask) %>" />
+						<liferay-ui:message key="<%= workflowTask.getLabel(workflowTaskDisplayContext.getTaskContentLocale()) %>" />
 					</span>
 				</liferay-ui:search-container-column-text>
 

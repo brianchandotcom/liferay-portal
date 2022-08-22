@@ -499,7 +499,7 @@ definition {
 		task ("Search and return no results") {
 			ACUtils.searchBar(searchItem = "some invalid query");
 
-			ACUtils.viewGenericText(textValueList = "There are no items found.");
+			ACUtils.viewGenericText(textValueList = "There are no results found.");
 		}
 
 		task ("Search for upper case") {

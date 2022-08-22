@@ -12,7 +12,6 @@
 import {ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
 
-import LiferayPicklist from '../../../../../interfaces/liferayPicklist';
 import WrapperInput from '../common/components/WrapperInput';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
@@ -31,7 +30,7 @@ const Select = ({
 	...props
 }: PRMFormFieldProps &
 	React.ComponentProps<typeof ClaySelectWithOption> &
-	PRMFormFieldStateProps<string | LiferayPicklist> &
+	PRMFormFieldStateProps<any> &
 	IProps) => {
 	const defaultOptions = {
 		disabled: true,
@@ -41,6 +40,10 @@ const Select = ({
 
 	const getValue = () => {
 		if (typeof field.value === 'object') {
+			if (field.value.id) {
+				return String(field.value.id);
+			}
+
 			return field.value.key || '';
 		}
 

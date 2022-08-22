@@ -71,15 +71,6 @@ public class SynonymsPanelAppTest {
 				Mockito.mock(Group.class)));
 	}
 
-	@Test
-	public void testSetPortlet() {
-		Portlet portlet = Mockito.mock(Portlet.class);
-
-		_synonymsPanelApp.setPortlet(portlet);
-
-		Assert.assertEquals(portlet, _synonymsPanelApp.getPortlet());
-	}
-
 	private final PortletLocalService _portletLocalService = Mockito.mock(
 		PortletLocalService.class);
 	private SynonymsPanelApp _synonymsPanelApp;

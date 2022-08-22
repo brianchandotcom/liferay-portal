@@ -80,15 +80,6 @@ public class ResultRankingsPanelAppTest {
 				Mockito.mock(Group.class)));
 	}
 
-	@Test
-	public void testSetPortlet() {
-		Portlet portlet = Mockito.mock(Portlet.class);
-
-		_resultRankingsPanelApp.setPortlet(portlet);
-
-		Assert.assertEquals(portlet, _resultRankingsPanelApp.getPortlet());
-	}
-
 	private final PortletLocalService _portletLocalService = Mockito.mock(
 		PortletLocalService.class);
 	private ResultRankingsPanelApp _resultRankingsPanelApp;

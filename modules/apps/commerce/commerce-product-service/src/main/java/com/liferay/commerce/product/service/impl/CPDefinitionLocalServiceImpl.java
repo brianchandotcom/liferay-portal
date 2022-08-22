@@ -73,6 +73,7 @@ import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.util.CPVersionContributor;
 import com.liferay.commerce.product.util.CPVersionContributorRegistryUtil;
+import com.liferay.commerce.product.util.comparator.CPDefinitionVersionComparator;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -123,6 +124,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -136,10 +138,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-
 import java.math.BigDecimal;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -151,10 +152,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
@@ -969,8 +969,6 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition deleteCPDefinition(CPDefinition cpDefinition)
 		throws PortalException {
 
-		// Commerce product
-
 		int cpDefinitionsCount = cpDefinitionPersistence.countByCProductId(
 			cpDefinition.getCProductId());
 
@@ -978,7 +976,51 @@ public class CPDefinitionLocalServiceImpl
 			_cProductLocalService.deleteCProduct(cpDefinition.getCProductId());
 		}
 
-		// Commerce product definition specification option values
+		if (cpDefinitionsCount > 1) {
+			CProduct cProduct = cProductLocalService.getCProduct(
+				cpDefinition.getCProductId());
+
+			long publishedCPDefinitionId =
+				cProduct.getPublishedCPDefinitionId();
+
+			if (publishedCPDefinitionId == cpDefinition.getCPDefinitionId()) {
+				List<CPDefinition> cpDefinitions =
+					cpDefinitionLocalService.getCProductCPDefinitions(
+						cProduct.getCProductId(),
+						WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, new CPDefinitionVersionComparator());
+
+				if (ListUtil.isEmpty(cpDefinitions)) {
+					cProductLocalService.updatePublishedCPDefinitionId(
+						cProduct.getCProductId(), 0);
+				}
+				else {
+					Stream<CPDefinition> cpDefinitionsStream =
+						cpDefinitions.stream();
+
+					List<CPDefinition> lastApprovedCPDefinitions =
+						cpDefinitionsStream.filter(
+							curCPDefinition ->
+								curCPDefinition.getCPDefinitionId() !=
+									cpDefinition.getCPDefinitionId()
+						).collect(
+							Collectors.toList()
+						);
+
+					if (ListUtil.isEmpty(lastApprovedCPDefinitions)) {
+						cProductLocalService.updatePublishedCPDefinitionId(
+							cProduct.getCProductId(), 0);
+					} else {
+						CPDefinition lastApprovedCPDefinition =
+							lastApprovedCPDefinitions.get(0);
+
+						cProductLocalService.updatePublishedCPDefinitionId(
+							cProduct.getCProductId(),
+							lastApprovedCPDefinition.getCPDefinitionId());
+					}
+				}
+			}
+		}
 
 		_cpDefinitionSpecificationOptionValueLocalService.
 			deleteCPDefinitionSpecificationOptionValues(
@@ -1357,11 +1399,27 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public CPDefinition getCProductCPDefinition(long cProductId, int version)
+		throws PortalException {
+
+		return cpDefinitionPersistence.findByC_V(cProductId, version);
+	}
+
+	@Override
 	public List<CPDefinition> getCProductCPDefinitions(
 		long cProductId, int status, int start, int end) {
 
 		return cpDefinitionPersistence.findByC_S(
 			cProductId, status, start, end);
+	}
+
+	@Override
+	public List<CPDefinition> getCProductCPDefinitions(
+		long cProductId, int status, int start, int end,
+		OrderByComparator<CPDefinition> orderByComparator) {
+
+		return cpDefinitionPersistence.findByC_S(
+			cProductId, status, start, end, orderByComparator);
 	}
 
 	@Override

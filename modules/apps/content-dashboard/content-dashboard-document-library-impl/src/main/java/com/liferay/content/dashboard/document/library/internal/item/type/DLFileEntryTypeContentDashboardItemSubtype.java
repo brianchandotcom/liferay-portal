@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -102,21 +103,20 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 
 	@Override
 	public String getFullLabel(Locale locale) {
-		String groupName = StringPool.BLANK;
-
 		if (_group != null) {
 			try {
-				groupName =
-					StringPool.OPEN_PARENTHESIS +
-						_group.getDescriptiveName(locale) +
-							StringPool.CLOSE_PARENTHESIS;
+				return StringBundler.concat(
+					getLabel(locale), StringPool.SPACE,
+					StringPool.OPEN_PARENTHESIS,
+					_group.getDescriptiveName(locale),
+					StringPool.CLOSE_PARENTHESIS);
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException);
 			}
 		}
 
-		return getLabel(locale) + StringPool.SPACE + groupName;
+		return getLabel(locale);
 	}
 
 	@Override

@@ -298,7 +298,7 @@ const SingleSelectWithIcon = ({
 				.getComputedStyle(element)
 				.getPropertyValue(field.cssProperty)
 		);
-	}, [activeItemId, field.cssProperty, globalContext]);
+	}, [activeItemId, field.cssProperty, globalContext, value]);
 
 	return (
 		<div className="btn btn-unstyled m-0 p-0 page-editor__single-select-with-icon">

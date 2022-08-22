@@ -5,6 +5,7 @@ dependencies {
 	testIntegrationCompile project(":apps:asset:asset-test-util")
 	testIntegrationCompile project(":apps:bookmarks:bookmarks-api")
 	testIntegrationCompile project(":apps:bookmarks:bookmarks-test-util")
+	testIntegrationCompile project(":apps:document-library:document-library-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:export-import:export-import-api")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")

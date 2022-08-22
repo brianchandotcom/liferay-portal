@@ -365,6 +365,11 @@ public class KaleoWorkflowModelConverterImpl
 		defaultWorkflowTask.setDescription(kaleoTask.getDescription());
 
 		defaultWorkflowTask.setDueDate(kaleoTaskInstanceToken.getDueDate());
+
+		KaleoNode kaleoNode = kaleoTask.getKaleoNode();
+
+		defaultWorkflowTask.setLabelMap(kaleoNode.getLabelMap());
+
 		defaultWorkflowTask.setName(kaleoTask.getName());
 
 		if (workflowContext != null) {

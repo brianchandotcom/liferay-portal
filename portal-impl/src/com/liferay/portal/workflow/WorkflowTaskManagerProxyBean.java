@@ -85,14 +85,6 @@ public class WorkflowTaskManagerProxyBean
 	}
 
 	@Override
-	public List<WorkflowTransition> getNextWorkflowTransitions(
-			long workflowTaskId)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public WorkflowTask getWorkflowTask(long companyId, long workflowTaskId) {
 		throw new UnsupportedOperationException();
 	}
@@ -190,6 +182,14 @@ public class WorkflowTaskManagerProxyBean
 	public List<WorkflowTask> getWorkflowTasksByWorkflowInstance(
 		long companyId, Long userId, long workflowInstanceId, Boolean completed,
 		int start, int end, OrderByComparator<WorkflowTask> orderByComparator) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<WorkflowTransition> getWorkflowTaskWorkflowTransitions(
+			long workflowTaskId)
+		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
 	}

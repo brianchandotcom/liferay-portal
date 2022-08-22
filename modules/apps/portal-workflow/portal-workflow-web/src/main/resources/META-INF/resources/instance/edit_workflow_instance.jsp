@@ -197,7 +197,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 									name="task"
 								>
 									<span class="task-name" id="<%= workflowTask.getWorkflowTaskId() %>">
-										<liferay-ui:message key="<%= workflowInstanceEditDisplayContext.getTaskName(workflowTask) %>" />
+										<liferay-ui:message key="<%= workflowTask.getLabel(locale) %>" />
 									</span>
 								</liferay-ui:search-container-column-text>
 

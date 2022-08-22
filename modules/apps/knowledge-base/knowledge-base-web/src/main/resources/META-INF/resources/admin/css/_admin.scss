@@ -29,6 +29,11 @@ $controlMenuHeight: 56px;
 			.sidebar-header .component-title {
 				font-size: 1rem;
 			}
+
+			.c-empty-state-title {
+				color: $gray-600;
+				font-weight: normal;
+			}
 		}
 
 		.tbar-light {

@@ -12,10 +12,23 @@
  * details.
  */
 
+import ClayEmptyState from '@clayui/empty-state';
+import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function TemplatesPanel() {
-    return (
-        <h1>Templates Panel</h1>
-    );
+export default function TemplatesPanel({items}) {
+	return items ? (
+		<h1>Templates Panel</h1>
+	) : (
+		<ClayEmptyState
+			description=""
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+			small
+			title={Liferay.Language.get('no-templates-were-found')}
+		/>
+	);
 }
+
+TemplatesPanel.propTypes = {
+	items: PropTypes.array,
+};

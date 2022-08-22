@@ -92,6 +92,12 @@ export default function ({currentURL, namespace, redirect}) {
 		buttons.forEach((button) => footer.appendChild(button));
 	}
 
+	const hideAddCategoryButtons = () => {
+		footer
+			.querySelectorAll('.add-category-toolbar-button')
+			.forEach((button) => button.parentElement.classList.add('hide'));
+	};
+
 	const delegateHandler = delegate(
 		footer,
 		'click',
@@ -99,25 +105,9 @@ export default function ({currentURL, namespace, redirect}) {
 		(event) => {
 			const delegateTarget = event.delegateTarget;
 
-			modalTitle.textContent = initialModalTitle;
-
-			initialModalFooterButtons.forEach((item) => {
-				item.classList.remove('hide');
-			});
-
-			const hideAddCategoryButtons = () => {
-				footer
-					.querySelectorAll('.add-category-toolbar-button')
-					.forEach((button) =>
-						button.parentElement.classList.add('hide')
-					);
-			};
-
 			const action = delegateTarget.dataset.action;
 
 			if (action === 'cancel') {
-				hideAddCategoryButtons();
-
 				navigate(redirect);
 			}
 			else if (action === 'saveAndAddNew') {
@@ -128,14 +118,22 @@ export default function ({currentURL, namespace, redirect}) {
 				submitForm(document.getElementById(`${namespace}fm`));
 			}
 			else if (action === 'save') {
-				hideAddCategoryButtons();
-
 				submitForm(document.getElementById(`${namespace}fm`));
 			}
 		}
 	);
 
 	return {
-		dispose: () => delegateHandler.dispose(),
+		dispose: () => {
+			initialModalFooterButtons.forEach((item) => {
+				item.classList.remove('hide');
+			});
+
+			hideAddCategoryButtons();
+
+			modalTitle.textContent = initialModalTitle;
+
+			delegateHandler.dispose();
+		},
 	};
 }

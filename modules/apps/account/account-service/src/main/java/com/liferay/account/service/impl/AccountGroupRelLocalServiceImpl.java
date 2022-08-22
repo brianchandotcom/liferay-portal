@@ -135,6 +135,14 @@ public class AccountGroupRelLocalServiceImpl
 
 	@Override
 	public List<AccountGroupRel> getAccountGroupRels(
+		long accountGroupId, String className) {
+
+		return accountGroupRelPersistence.findByA_C(
+			accountGroupId, _classNameLocalService.getClassNameId(className));
+	}
+
+	@Override
+	public List<AccountGroupRel> getAccountGroupRels(
 		String className, long classPK) {
 
 		return accountGroupRelPersistence.findByC_C(

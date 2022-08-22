@@ -118,15 +118,14 @@ public class PortalImplUnitTest {
 
 		ActionRequest actionRequest = _createActionRequest(params);
 
-		MockedStatic<PortalUtil> portalUtilMockStatic = Mockito.mockStatic(
+		MockedStatic<PortalUtil> portalUtilMock = Mockito.mockStatic(
 			PortalUtil.class);
 
-		ActionResponse actionResponse = _createActionResponse(
-			portalUtilMockStatic);
+		ActionResponse actionResponse = _createActionResponse(portalUtilMock);
 
 		_portalImpl.copyRequestParameters(actionRequest, actionResponse);
 
-		portalUtilMockStatic.close();
+		portalUtilMock.close();
 
 		_assertActionResponse(actionResponse, params);
 	}

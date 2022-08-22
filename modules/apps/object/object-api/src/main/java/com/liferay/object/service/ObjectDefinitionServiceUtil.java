@@ -107,6 +107,7 @@ public class ObjectDefinitionServiceUtil {
 			long objectDefinitionId, long accountEntryRestrictedObjectFieldId,
 			long descriptionObjectFieldId, long titleObjectFieldId,
 			boolean accountEntryRestricted, boolean active,
+			boolean enableCategorization, boolean enableComments,
 			Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey, boolean portlet,
 			Map<java.util.Locale, String> pluralLabelMap, String scope)
@@ -115,8 +116,9 @@ public class ObjectDefinitionServiceUtil {
 		return getService().updateCustomObjectDefinition(
 			objectDefinitionId, accountEntryRestrictedObjectFieldId,
 			descriptionObjectFieldId, titleObjectFieldId,
-			accountEntryRestricted, active, labelMap, name, panelAppOrder,
-			panelCategoryKey, portlet, pluralLabelMap, scope);
+			accountEntryRestricted, active, enableCategorization,
+			enableComments, labelMap, name, panelAppOrder, panelCategoryKey,
+			portlet, pluralLabelMap, scope);
 	}
 
 	public static ObjectDefinition updateTitleObjectFieldId(

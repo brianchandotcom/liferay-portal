@@ -508,6 +508,7 @@ public class ObjectDefinitionLocalServiceWrapper
 				long accountEntryRestrictedObjectFieldId,
 				long descriptionObjectFieldId, long titleObjectFieldId,
 				boolean accountEntryRestricted, boolean active,
+				boolean enableCategorization, boolean enableComments,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				String panelAppOrder, String panelCategoryKey, boolean portlet,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
@@ -517,8 +518,9 @@ public class ObjectDefinitionLocalServiceWrapper
 		return _objectDefinitionLocalService.updateCustomObjectDefinition(
 			objectDefinitionId, accountEntryRestrictedObjectFieldId,
 			descriptionObjectFieldId, titleObjectFieldId,
-			accountEntryRestricted, active, labelMap, name, panelAppOrder,
-			panelCategoryKey, portlet, pluralLabelMap, scope);
+			accountEntryRestricted, active, enableCategorization,
+			enableComments, labelMap, name, panelAppOrder, panelCategoryKey,
+			portlet, pluralLabelMap, scope);
 	}
 
 	/**

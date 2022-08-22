@@ -1,51 +1,6 @@
 Bundle-Name: Liferay Portal Spring Extender Implementation
 Bundle-SymbolicName: com.liferay.portal.spring.extender.impl
 Bundle-Version: 4.0.28
-Import-Package:\
-	com.liferay.portal.bean,\
-	com.liferay.portal.dao.orm.hibernate,\
-	com.liferay.portal.kernel.bean,\
-	com.liferay.portal.kernel.configuration,\
-	com.liferay.portal.kernel.exception,\
-	com.liferay.portal.kernel.io.unsync,\
-	com.liferay.portal.kernel.log,\
-	com.liferay.portal.kernel.messaging.config,\
-	com.liferay.portal.kernel.service.configuration,\
-	com.liferay.portal.kernel.spring.util,\
-	com.liferay.portal.kernel.util,\
-	com.liferay.portal.security.permission,\
-	com.liferay.portal.spring.configurator,\
-	\
-	javax.servlet,\
-	javax.servlet.http,\
-	\
-	javax.sql,\
-	\
-	org.apache.commons.logging.impl,\
-	\
-	org.hibernate,\
-	\
-	org.osgi.framework,\
-	org.osgi.framework.wiring,\
-	\
-	org.springframework.aop,\
-	org.springframework.aop.config,\
-	org.springframework.aop.framework,\
-	org.springframework.aop.framework.autoproxy,\
-	org.springframework.beans.factory,\
-	org.springframework.beans.factory.config,\
-	org.springframework.beans.factory.xml,\
-	org.springframework.context.config,\
-	org.springframework.context.support,\
-	org.springframework.core.io,\
-	org.springframework.ejb.config,\
-	org.springframework.jdbc.config,\
-	org.springframework.jndi,\
-	org.springframework.scheduling.config,\
-	org.springframework.scripting.config,\
-	org.springframework.transaction.config,\
-	\
-	*
 Provide-Capability:\
 	liferay.extender;\
 		liferay.extender="spring.extender";\

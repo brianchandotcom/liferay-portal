@@ -99,6 +99,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -118,6 +119,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -133,6 +135,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -1044,11 +1047,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			documentsStringUtilReplaceValues.put(
 				"DOCUMENT_JSON:" + key, jsonObject.toString());
 
+			ThemeDisplay themeDisplay = new ThemeDisplay();
+
+			Company company = CompanyLocalServiceUtil.getCompany(
+				serviceContext.getCompanyId());
+
+			themeDisplay.setPortalURL(
+				company.getPortalURL(serviceContext.getScopeGroupId()));
+
 			documentsStringUtilReplaceValues.put(
 				"DOCUMENT_URL:" + key,
 				_dlURLHelper.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), null,
-					StringPool.BLANK, false, false));
+					fileEntry, fileEntry.getFileVersion(), themeDisplay,
+					StringPool.BLANK, false, true));
 
 			long fileEntryTypeId = 0;
 

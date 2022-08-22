@@ -1114,7 +1114,8 @@ public class CommerceOrderItemServiceHttp {
 			updateCommerceOrderItem(
 				HttpPrincipal httpPrincipal, long commerceOrderItemId,
 				long cpMeasurementUnitId, int quantity,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				com.liferay.portal.kernel.service.ServiceContext serviceContext,
+				boolean validateOrder)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1124,7 +1125,7 @@ public class CommerceOrderItemServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderItemId, cpMeasurementUnitId, quantity,
-				serviceContext);
+				serviceContext, validateOrder);
 
 			Object returnObj = null;
 
@@ -1818,7 +1819,8 @@ public class CommerceOrderItemServiceHttp {
 	private static final Class<?>[] _updateCommerceOrderItemParameterTypes25 =
 		new Class[] {
 			long.class, long.class, int.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class,
+			boolean.class
 		};
 	private static final Class<?>[] _updateCommerceOrderItemParameterTypes26 =
 		new Class[] {

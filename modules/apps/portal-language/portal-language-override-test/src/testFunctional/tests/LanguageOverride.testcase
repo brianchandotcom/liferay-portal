@@ -342,7 +342,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "LanguageOverride#LANGUAGE_KEY_OVERRIDDEN_LABEL",
-				value1 = "Languages With Override: es_ES, fr_FR, en_US");
+				value1 = "Languages With Override: en_US, es_ES, fr_FR");
 		}
 	}
 
@@ -379,7 +379,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "LanguageOverride#LANGUAGE_KEY_OVERRIDDEN_LABEL",
-				value1 = "Languages With Override: es_ES, fr_FR, en_US");
+				value1 = "Languages With Override: en_US, es_ES, fr_FR");
 
 			AssertTextNotPresent(
 				key_languageKey = "text-contains-error1",

@@ -9,94 +9,25 @@
  * distribution rights of the Software.
  */
 
-import {Button as ClayButton, DropDown} from '@clayui/core';
-import ClayIcon from '@clayui/icon';
-import React, {useEffect, useRef, useState} from 'react';
-import i18n from '../../../../common/I18n';
-import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
-import {useCustomerPortal} from '../../context';
-
-const SubscriptionDropDownMenu = ({
-	selectedSubscriptionGroup,
-	setSelectedSubscriptionGroup,
-	subscriptionGroups,
-}) => {
-	const [active, setActive] = useState(false);
-
-	return (
-		<div className="align-items-center d-flex mt-4 pb-3">
-			<h6>{i18n.translate('type')}:</h6>
-
-			<DropDown
-				active={active}
-				closeOnClickOutside
-				menuElementAttrs={{
-					className: 'subscription-group-filter',
-				}}
-				onActiveChange={setActive}
-				trigger={
-					<ClayButton
-						className="font-weight-semi-bold ml-2 pb-2 shadow-none text-brand-primary"
-						displayType="unstyled"
-					>
-						{selectedSubscriptionGroup}
-
-						<ClayIcon symbol="caret-bottom" />
-					</ClayButton>
-				}
-			>
-				{subscriptionGroups.map((subscriptionGroup) => (
-					<DropDown.Item
-						key={subscriptionGroup.name}
-						onClick={(event) => {
-							setSelectedSubscriptionGroup(event.target.value);
-							setActive(false);
-						}}
-						symbolRight={
-							subscriptionGroup.name === selectedSubscriptionGroup
-								? 'check'
-								: ''
-						}
-						value={subscriptionGroup.name}
-					>
-						{subscriptionGroup.name}
-					</DropDown.Item>
-				))}
-			</DropDown>
-		</div>
-	);
-};
+import React, {useEffect, useRef} from 'react';
+import RoundedGroupButtons from '../../../../../../../../../common/components/RoundedGroupButtons';
+import SubscriptionsDropDownMenu from './components/SubscriptionsDropdownMenu';
+import useUpdateShowDropDown from './hooks/useUpdateShowDropDown';
 
 const SubscriptionsNavbar = ({
 	selectedSubscriptionGroup,
 	setSelectedSubscriptionGroup,
 	subscriptionGroups,
 }) => {
-	const [showDropDown, setShowDropDown] = useState(false);
-	const [{isQuickLinksExpanded}] = useCustomerPortal();
-
 	const subscriptionNavbarRef = useRef();
+
+	const showDropDown = useUpdateShowDropDown();
 
 	useEffect(() => {
 		setSelectedSubscriptionGroup(subscriptionGroups[0]?.name);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [subscriptionGroups]);
-
-	useEffect(() => {
-		const updateShowDropDown = () => {
-			setShowDropDown(
-				subscriptionNavbarRef?.current &&
-					subscriptionNavbarRef.current.offsetWidth <
-						(isQuickLinksExpanded ? 500 : 570)
-			);
-		};
-
-		updateShowDropDown();
-		window.addEventListener('resize', updateShowDropDown);
-
-		return () => window.removeEventListener('resize', updateShowDropDown);
-	}, [isQuickLinksExpanded]);
 
 	return (
 		<div className="d-flex rounded-pill w-100" ref={subscriptionNavbarRef}>
@@ -115,7 +46,7 @@ const SubscriptionsNavbar = ({
 					subscriptionGroups.length < 5 && (
 						<>
 							{showDropDown && (
-								<SubscriptionDropDownMenu
+								<SubscriptionsDropDownMenu
 									selectedSubscriptionGroup={
 										selectedSubscriptionGroup
 									}
@@ -145,7 +76,7 @@ const SubscriptionsNavbar = ({
 					)}
 
 				{subscriptionGroups.length > 4 && (
-					<SubscriptionDropDownMenu
+					<SubscriptionsDropDownMenu
 						selectedSubscriptionGroup={selectedSubscriptionGroup}
 						setSelectedSubscriptionGroup={
 							setSelectedSubscriptionGroup

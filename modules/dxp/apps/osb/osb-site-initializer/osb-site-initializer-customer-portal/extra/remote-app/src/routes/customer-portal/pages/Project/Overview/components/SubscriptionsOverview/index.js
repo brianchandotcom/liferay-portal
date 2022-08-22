@@ -8,21 +8,4 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-
-import SupportOverview from './components/SupportOverview/';
-import './app.scss';
-import {useCustomerPortal} from '../../../context';
-import SubscriptionsOverview from './components/SubscriptionsOverview';
-
-const Overview = () => {
-	const [{project}] = useCustomerPortal();
-
-	return (
-		<>
-			<SupportOverview koroneikiAccount={project} />
-			<SubscriptionsOverview />
-		</>
-	);
-};
-
-export default Overview;
+export {default} from './SubscriptionsOverview';

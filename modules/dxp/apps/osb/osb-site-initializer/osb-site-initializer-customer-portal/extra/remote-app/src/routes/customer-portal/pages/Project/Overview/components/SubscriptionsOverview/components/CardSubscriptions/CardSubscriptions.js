@@ -11,12 +11,12 @@
 
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
-import i18n from '../../../../common/I18n';
-import {StatusTag} from '../../../../common/components';
-import {useAppPropertiesContext} from '../../../../common/contexts/AppPropertiesContext';
-import {SLA_STATUS_TYPES} from '../../../../common/utils/constants';
-import getDateCustomFormat from '../../../../common/utils/getDateCustomFormat';
-import ModalCardSubscription from '../../containers/ModalCardSubscription';
+import i18n from '../../../../../../../../../common/I18n';
+import {StatusTag} from '../../../../../../../../../common/components';
+import {useAppPropertiesContext} from '../../../../../../../../../common/contexts/AppPropertiesContext';
+import {SLA_STATUS_TYPES} from '../../../../../../../../../common/utils/constants';
+import getDateCustomFormat from '../../../../../../../../../common/utils/getDateCustomFormat';
+import ModalCardSubscriptions from './components/ModalCardSubscriptions/ModalCardSubscriptions';
 
 const dateFormat = {
 	day: '2-digit',
@@ -34,7 +34,7 @@ const SUBSCRIPTION_IMAGE_FILE = {
 	'Portal': 'portal_icon.svg',
 };
 
-const CardSubscription = ({
+const CardSubscriptions = ({
 	cardSubscriptionData,
 	selectedSubscriptionGroup,
 }) => {
@@ -56,7 +56,7 @@ const CardSubscription = ({
 	return (
 		<>
 			{visible && (
-				<ModalCardSubscription
+				<ModalCardSubscriptions
 					accountSubscriptionERC={accountSubscriptionERC}
 					observer={observer}
 					onClose={onClose}
@@ -113,4 +113,4 @@ const CardSubscription = ({
 	);
 };
 
-export default CardSubscription;
+export default CardSubscriptions;

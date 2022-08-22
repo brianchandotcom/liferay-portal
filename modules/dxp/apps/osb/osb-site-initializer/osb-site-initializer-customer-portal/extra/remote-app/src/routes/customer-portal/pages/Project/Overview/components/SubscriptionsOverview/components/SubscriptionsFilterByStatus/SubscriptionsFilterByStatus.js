@@ -13,9 +13,9 @@ import ClayButton from '@clayui/button';
 import {DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
-import i18n from '../../../../common/I18n';
-import getKebabCase from '../../../../common/utils/getKebabCase';
-import {SUBSCRIPTIONS_STATUS} from '../../utils/constants';
+import i18n from '../../../../../../../../../common/I18n';
+import getKebabCase from '../../../../../../../../../common/utils/getKebabCase';
+import {SUBSCRIPTIONS_STATUS} from '../../../../../../../utils/constants';
 
 const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 	const [active, setActive] = useState(false);

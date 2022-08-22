@@ -12,12 +12,16 @@
 import {useQuery} from '@apollo/client';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
-import i18n from '../../../../common/I18n';
-import {Button, StatusTag, Table} from '../../../../common/components';
-import {getCommerceOrderItems} from '../../../../common/services/liferay/graphql/queries';
-import {SLA_STATUS_TYPES} from '../../../../common/utils/constants';
-import getDateCustomFormat from '../../../../common/utils/getDateCustomFormat';
-import getKebabCase from '../../../../common/utils/getKebabCase';
+import i18n from '../../../../../../../../../../../common/I18n';
+import {
+	Button,
+	StatusTag,
+	Table,
+} from '../../../../../../../../../../../common/components';
+import {getCommerceOrderItems} from '../../../../../../../../../../../common/services/liferay/graphql/queries';
+import {SLA_STATUS_TYPES} from '../../../../../../../../../../../common/utils/constants';
+import getDateCustomFormat from '../../../../../../../../../../../common/utils/getDateCustomFormat';
+import getKebabCase from '../../../../../../../../../../../common/utils/getKebabCase';
 
 const dateFormat = {
 	day: '2-digit',
@@ -88,7 +92,7 @@ const columns = [
 	},
 ];
 
-const ModalCardSubscription = ({
+const ModalCardSubscriptions = ({
 	accountSubscriptionERC,
 	observer,
 	onClose,
@@ -200,4 +204,4 @@ const ModalCardSubscription = ({
 	);
 };
 
-export default ModalCardSubscription;
+export default ModalCardSubscriptions;

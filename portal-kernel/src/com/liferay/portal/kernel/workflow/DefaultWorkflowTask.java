@@ -14,11 +14,7 @@
 
 package com.liferay.portal.kernel.workflow;
 
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.Serializable;
 
@@ -27,7 +23,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -35,7 +30,8 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  */
-public class DefaultWorkflowTask implements Serializable, WorkflowTask {
+public class DefaultWorkflowTask
+	extends BaseDefaultWorkflowNode implements Serializable, WorkflowTask {
 
 	@Override
 	public long getAssigneeUserId() {
@@ -67,35 +63,6 @@ public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 	@Override
 	public Date getDueDate() {
 		return _dueDate;
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		String label = _labelMap.get(locale);
-
-		if (label != null) {
-			return label;
-		}
-
-		label = _labelMap.get(LocaleUtil.getSiteDefault());
-
-		if (label != null) {
-			return label;
-		}
-
-		Language language = LanguageUtil.getLanguage();
-
-		return language.get(locale, _name);
-	}
-
-	@Override
-	public Map<Locale, String> getLabelMap() {
-		return _labelMap;
-	}
-
-	@Override
-	public String getName() {
-		return _name;
 	}
 
 	@Override
@@ -191,14 +158,6 @@ public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 		_dueDate = dueDate;
 	}
 
-	public void setLabelMap(Map<Locale, String> labelMap) {
-		_labelMap = labelMap;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
 	public void setOptionalAttributes(
 		Map<String, Serializable> optionalAttributes) {
 
@@ -248,8 +207,6 @@ public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 	private Date _createDate;
 	private String _description;
 	private Date _dueDate;
-	private Map<Locale, String> _labelMap;
-	private String _name;
 	private Map<String, Serializable> _optionalAttributes;
 	private long _workflowDefinitionId;
 	private String _workflowDefinitionName;

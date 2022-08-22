@@ -99,6 +99,13 @@ public class StructuredContentDTOConverter
 	}
 
 	@Override
+	public String getJaxRsLink(long classPK, UriInfo uriInfo) {
+		return JaxRsLinkUtil.getJaxRsLink(
+			"headless-delivery", BaseStructuredContentResourceImpl.class,
+			"getStructuredContent", uriInfo, classPK);
+	}
+
+	@Override
 	public StructuredContent toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 

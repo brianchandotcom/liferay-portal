@@ -387,6 +387,37 @@ definition {
 			dmFolderName2 = "DM Folder2 Name");
 	}
 
+	@description = "This ensures that a folder can be moved to another folder via drag and drop."
+	@priority = "4"
+	test CanMoveFolderToFolderViaDragAndDrop {
+		for (var num : list "1,2") {
+			JSONFolder.addFolder(
+				dmFolderDescription = "DM Folder Description${num}",
+				dmFolderName = "DM Folder Name${num}",
+				groupName = "Guest");
+		}
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DragAndDrop.dragAndDropToObject(
+			key_listEntry = "DM Folder Name1",
+			key_rowEntry = "DM Folder Name2",
+			locator1 = "LexiconList#ANY_LIST",
+			locator2 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			value1 = "DM Folder Name1");
+
+		Alert.viewSuccessMessage();
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Folder Name2",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name1");
+	}
+
 	@description = "This case covers LPS-127681. It ensures that a subfolder cannot be moved to parent folder when they are using same name."
 	@priority = "3"
 	@refactordone

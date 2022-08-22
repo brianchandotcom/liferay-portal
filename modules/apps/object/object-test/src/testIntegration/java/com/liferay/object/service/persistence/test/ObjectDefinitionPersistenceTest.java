@@ -157,6 +157,11 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setClassName(RandomTestUtil.randomString());
 
+		newObjectDefinition.setEnableCategorization(
+			RandomTestUtil.randomBoolean());
+
+		newObjectDefinition.setEnableComments(RandomTestUtil.randomBoolean());
+
 		newObjectDefinition.setName(RandomTestUtil.randomString());
 
 		newObjectDefinition.setPanelAppOrder(RandomTestUtil.randomString());
@@ -234,6 +239,12 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.getClassName(),
 			newObjectDefinition.getClassName());
+		Assert.assertEquals(
+			existingObjectDefinition.isEnableCategorization(),
+			newObjectDefinition.isEnableCategorization());
+		Assert.assertEquals(
+			existingObjectDefinition.isEnableComments(),
+			newObjectDefinition.isEnableComments());
 		Assert.assertEquals(
 			existingObjectDefinition.getName(), newObjectDefinition.getName());
 		Assert.assertEquals(
@@ -380,8 +391,9 @@ public class ObjectDefinitionPersistenceTest {
 			"accountEntryRestrictedObjectFieldId", true,
 			"descriptionObjectFieldId", true, "titleObjectFieldId", true,
 			"accountEntryRestricted", true, "active", true, "dbTableName", true,
-			"label", true, "className", true, "name", true, "panelAppOrder",
-			true, "panelCategoryKey", true, "pkObjectFieldDBColumnName", true,
+			"label", true, "className", true, "enableCategorization", true,
+			"enableComments", true, "name", true, "panelAppOrder", true,
+			"panelCategoryKey", true, "pkObjectFieldDBColumnName", true,
 			"pkObjectFieldName", true, "pluralLabel", true, "portlet", true,
 			"scope", true, "storageType", true, "system", true, "version", true,
 			"status", true);
@@ -715,6 +727,11 @@ public class ObjectDefinitionPersistenceTest {
 		objectDefinition.setLabel(RandomTestUtil.randomString());
 
 		objectDefinition.setClassName(RandomTestUtil.randomString());
+
+		objectDefinition.setEnableCategorization(
+			RandomTestUtil.randomBoolean());
+
+		objectDefinition.setEnableComments(RandomTestUtil.randomBoolean());
 
 		objectDefinition.setName(RandomTestUtil.randomString());
 

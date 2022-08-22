@@ -668,6 +668,16 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			passwordPolicyId, organizationIds);
 	}
 
+	@Override
+	public Organization updateLogo(long organizationId, byte[] logoBytes)
+		throws PortalException {
+
+		OrganizationPermissionUtil.check(
+			getPermissionChecker(), organizationId, ActionKeys.UPDATE);
+
+		return organizationLocalService.updateLogo(organizationId, logoBytes);
+	}
+
 	/**
 	 * Updates the organization with additional parameters.
 	 *

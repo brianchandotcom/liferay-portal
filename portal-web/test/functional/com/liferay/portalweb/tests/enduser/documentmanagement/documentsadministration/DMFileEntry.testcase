@@ -1284,6 +1284,44 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This ensures that the entry can be moved to another folder via drag and drop."
+	@priority = "4"
+	test CanMoveEntryToFolderViaDragAndDrop {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder1 Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DragAndDrop.dragAndDropToObject(
+			key_listEntry = "DM Document Title",
+			key_rowEntry = "DM Folder Name",
+			locator1 = "LexiconList#ANY_LIST",
+			locator2 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			value1 = "DM Document Title");
+
+		Alert.viewSuccessMessage();
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+	}
+
 	@description = "This validates that the location of the document accurately displays after it is moved from one folder to another."
 	@priority = "4"
 	@refactordone

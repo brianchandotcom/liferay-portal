@@ -115,7 +115,9 @@ definition {
 
 			CustomerPortal.deleteCPObject(title = "Account Flag");
 
-			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(status = "Active");
+			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(
+				status = "Active",
+				entry = "ERC-003");
 		}
 	}
 
@@ -175,7 +177,9 @@ definition {
 
 			CustomerPortal.deleteCPObject(title = "Account Flag");
 
-			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(status = "In-Progress");
+			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(
+				status = "In-Progress",
+				entry = "ERC-003");
 		}
 	}
 
@@ -206,7 +210,7 @@ definition {
 
 	@description = "Automation ID: LPS-150163 | Test Summary: Verify if the Activation form link works"
 	@priority = "5"
-	test IfActivationFormLinkWorks {
+	test ActivationFormLinkIsWorking {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 

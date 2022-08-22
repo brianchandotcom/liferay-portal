@@ -77,7 +77,7 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
 		}
 
-		task ("Going through onboardig") {
+		task ("Going through onboarding") {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CustomerPortal.clickOnSkipForNowButton();

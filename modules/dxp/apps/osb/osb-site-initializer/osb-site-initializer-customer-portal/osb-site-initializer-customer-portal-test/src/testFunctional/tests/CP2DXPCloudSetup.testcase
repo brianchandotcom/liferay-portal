@@ -184,7 +184,7 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
 
-		task ("Going through onboardig") {
+		task ("Going through onboarding") {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CustomerPortal.clickOnSkipForNowButton();
@@ -254,7 +254,7 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
 
-		task ("Going through onboardig") {
+		task ("Going through onboarding") {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CustomerPortal.clickOnSkipForNowButton();
@@ -296,7 +296,7 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
 
-		task ("Going through onboardig") {
+		task ("Going through onboarding") {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CustomerPortal.clickOnSkipForNowButton();
@@ -342,7 +342,7 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
 
-		task ("Going through onboardig") {
+		task ("Going through onboarding") {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CustomerPortal.clickOnSkipForNowButton();
@@ -384,7 +384,7 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
 
-		task ("Going through onboardig") {
+		task ("Going through onboarding") {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CustomerPortal.clickOnSkipForNowButton();
@@ -430,7 +430,7 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
 
-		task ("Going through onboardig") {
+		task ("Going through onboarding") {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CustomerPortal.clickOnSkipForNowButton();
@@ -476,7 +476,7 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
 
-		task ("Going through onboardig") {
+		task ("Going through onboarding") {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CustomerPortal.clickOnSkipForNowButton();
@@ -522,7 +522,7 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
 
-		task ("Going through onboardig") {
+		task ("Going through onboarding") {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CustomerPortal.clickOnSkipForNowButton();
@@ -568,7 +568,7 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
 
-		task ("Going through onboardig") {
+		task ("Going through onboarding") {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CustomerPortal.clickOnSkipForNowButton();
@@ -611,7 +611,7 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
 
-		task ("Going through onboardig") {
+		task ("Going through onboarding") {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CustomerPortal.clickOnSkipForNowButton();
@@ -657,7 +657,7 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
 
-		task ("Going through onboardig") {
+		task ("Going through onboarding") {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CustomerPortal.clickOnSkipForNowButton();

@@ -180,6 +180,20 @@
 	<td>//h2[contains(@class,'portlet-title') and contains(.,'${key_portletName}')] | //h1[contains(text(), '${key_portletName}')]</td>
 	<td></td>
 </tr>
+
+<!--PORTLET_SECTION-->
+
+<tr>
+	<td>PORTLET_SECTION</td>
+	<td>//div[@id='main-content']//section[contains(@id,'portlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPECIFIC_PORTLET_SECTION</td>
+	<td>//section[contains(@id,'portlet')][*//div[contains(@class,'portlet-title')][normalize-space()='${key_portletName}']]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

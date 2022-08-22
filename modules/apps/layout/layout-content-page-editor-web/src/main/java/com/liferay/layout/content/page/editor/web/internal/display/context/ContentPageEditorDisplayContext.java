@@ -950,6 +950,62 @@ public class ContentPageEditorDisplayContext {
 	protected final StagingGroupHelper stagingGroupHelper;
 	protected final ThemeDisplay themeDisplay;
 
+	private List<Map<String, Object>> _addLayoutElements(
+		Map<String, Map<String, Object>> fragmentCollectionMap) {
+
+		for (Map.Entry<String, List<Map<String, Object>>> entry :
+				_layoutElementsMap.entrySet()) {
+
+			List<Map<String, Object>> collectionItems = new LinkedList<>();
+
+			for (Map<String, Object> layoutElement : entry.getValue()) {
+				String fragmentEntryKey = (String)layoutElement.get(
+					"fragmentEntryKey");
+
+				if (!_isAllowedFragmentEntryKey(fragmentEntryKey)) {
+					continue;
+				}
+
+				collectionItems.add(
+					HashMapBuilder.create(
+						layoutElement
+					).put(
+						"name",
+						LanguageUtil.get(
+							themeDisplay.getLocale(),
+							(String)layoutElement.get("languageKey"))
+					).build());
+			}
+
+			if (collectionItems.isEmpty()) {
+				continue;
+			}
+
+			String collectionKey = entry.getKey();
+
+			Map<String, Object> fragmentCollection =
+				fragmentCollectionMap.computeIfAbsent(
+					collectionKey,
+					key -> HashMapBuilder.<String, Object>put(
+						"fragmentCollectionId", collectionKey
+					).put(
+						"name",
+						LanguageUtil.get(
+							themeDisplay.getLocale(),
+							"fragment.collection.label." +
+								StringUtil.toLowerCase(collectionKey))
+					).build());
+
+			List<Map<String, Object>> currentCollectionItems =
+				(List<Map<String, Object>>)fragmentCollection.computeIfAbsent(
+					"fragmentEntries", key -> new LinkedList<>());
+
+			currentCollectionItems.addAll(collectionItems);
+		}
+
+		return new LinkedList<>(fragmentCollectionMap.values());
+	}
+
 	private String _getAssetCategoryTreeNodeItemSelectorURL() {
 		ItemSelectorCriterion itemSelectorCriterion =
 			new AssetCategoryTreeNodeItemSelectorCriterion();
@@ -1302,7 +1358,7 @@ public class ContentPageEditorDisplayContext {
 			systemFragmentCollections.putAll(_getDynamicFragments());
 
 			allFragmentCollections.addAll(
-				_getLayoutElements(systemFragmentCollections));
+				_addLayoutElements(systemFragmentCollections));
 		}
 
 		List<FragmentCollection> fragmentCollections =
@@ -1679,62 +1735,6 @@ public class ContentPageEditorDisplayContext {
 				_renderResponse.getNamespace() + "selectImage",
 				_getImageItemSelectorCriterion(),
 				_getURLItemSelectorCriterion()));
-	}
-
-	private List<Map<String, Object>> _getLayoutElements(
-		Map<String, Map<String, Object>> fragmentCollectionMap) {
-
-		for (Map.Entry<String, List<Map<String, Object>>> entry :
-				_layoutElementsMap.entrySet()) {
-
-			List<Map<String, Object>> collectionItems = new LinkedList<>();
-
-			for (Map<String, Object> layoutElement : entry.getValue()) {
-				String fragmentEntryKey = (String)layoutElement.get(
-					"fragmentEntryKey");
-
-				if (!_isAllowedFragmentEntryKey(fragmentEntryKey)) {
-					continue;
-				}
-
-				collectionItems.add(
-					HashMapBuilder.create(
-						layoutElement
-					).put(
-						"name",
-						LanguageUtil.get(
-							themeDisplay.getLocale(),
-							(String)layoutElement.get("languageKey"))
-					).build());
-			}
-
-			if (collectionItems.isEmpty()) {
-				continue;
-			}
-
-			String collectionKey = entry.getKey();
-
-			Map<String, Object> fragmentCollection =
-				fragmentCollectionMap.computeIfAbsent(
-					collectionKey,
-					key -> HashMapBuilder.<String, Object>put(
-						"fragmentCollectionId", collectionKey
-					).put(
-						"name",
-						LanguageUtil.get(
-							themeDisplay.getLocale(),
-							"fragment.collection.label." +
-								StringUtil.toLowerCase(collectionKey))
-					).build());
-
-			List<Map<String, Object>> currentCollectionItems =
-				(List<Map<String, Object>>)fragmentCollection.computeIfAbsent(
-					"fragmentEntries", key -> new LinkedList<>());
-
-			currentCollectionItems.addAll(collectionItems);
-		}
-
-		return new LinkedList<>(fragmentCollectionMap.values());
 	}
 
 	private String _getLayoutItemSelectorURL() {

@@ -15,4 +15,19 @@ definition {
 		}
 	}
 
+	macro assertDownloadedFileIsNotPresent {
+		var tempDir = PropsUtil.get("output.dir.name");
+
+		var downloadedFilePath = "${tempDir}/${downloadedFileName}";
+
+		var fileExists = FileUtil.exists("${downloadedFilePath}");
+
+		if ("${fileExists}" == "false") {
+			echo("File named ${downloadedFileName} was not downloaded.");
+		}
+		else {
+			fail("Files named ${downloadedFileName} FOUND in folder ${tempDir}!");
+		}
+	}
+
 }

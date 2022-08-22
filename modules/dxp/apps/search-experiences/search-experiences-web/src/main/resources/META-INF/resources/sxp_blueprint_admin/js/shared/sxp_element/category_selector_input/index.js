@@ -261,7 +261,12 @@ function CategorySelectorInput({
 				locale
 			);
 
-			setFieldValue(name, [{id: newValue.trim(), name: newValue.trim()}]);
+			setFieldValue(
+				name,
+				typeof toNumber(newValue) === 'number'
+					? [{id: newValue.trim(), name: newValue.trim()}]
+					: []
+			);
 		}
 		else {
 			setMatchingCategories([]);
@@ -298,19 +303,47 @@ function CategorySelectorInput({
 	const _handleMultiItemsChange = (items) => {
 		const uniqueArray = [];
 
-		// Give preference to keeping the duplicate that has a name,
-		// determined from selector.
-
 		removeDuplicates(items, 'id').map(({id, name}) => {
-			if (name === id) {
-				const uniqueItem = items.find(
-					(item) => id === item.id && item.name !== id
-				);
+			if (typeof toNumber(id) === 'number') {
+				if (name === id) {
 
-				uniqueArray.push({id, name: uniqueItem?.name || name});
+					// Case: ID is manually input as a number but does not have
+					// a proper name. Attempt to search for a proper name from
+					// original 'items' and from matching categories. Otherwise,
+					// save as is.
+
+					const uniqueItem =
+						items.find(
+							(item) => id === item.id && item.name !== id
+						) || matchingCategories.find((item) => item.id === id);
+
+					uniqueArray.push({id, name: uniqueItem?.name || name});
+				}
+				else {
+
+					// Case: ID was chosen through selector or autocomplete list
+					// and already has a proper name.
+
+					uniqueArray.push({id, name});
+				}
 			}
 			else {
-				uniqueArray.push({id, name});
+
+				// Case: ID is manually input and is not a valid number. Add the
+				// first item from matchingCategories instead (if available
+				// and not already added).
+
+				if (
+					!!matchingCategories[0] &&
+					!uniqueArray.some(
+						(item) => matchingCategories[0].id === item.id
+					)
+				) {
+					uniqueArray.push({
+						id: matchingCategories[0].id,
+						name: matchingCategories[0].name,
+					});
+				}
 			}
 		});
 

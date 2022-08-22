@@ -23,4 +23,7 @@ export const ERROR_MESSAGES = {
 		'boost-must-be-greater-than-or-equal-to-0'
 	),
 	REQUIRED: Liferay.Language.get('this-field-is-required'),
+	REQUIRED_CATEGORY_SELECTOR: Liferay.Language.get(
+		'this-field-is-required-please-select-from-the-dropdown-list-or-type-in-an-ID-number'
+	),
 };

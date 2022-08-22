@@ -181,6 +181,12 @@ describe('validation', () => {
 			);
 		});
 
+		it('returns error message for empty category selector list', () => {
+			expect(validateRequired([], INPUT_TYPES.CATEGORY_SELECTOR)).toEqual(
+				ERROR_MESSAGES.REQUIRED_CATEGORY_SELECTOR
+			);
+		});
+
 		it('returns error message for empty field', () => {
 			expect(
 				validateRequired(

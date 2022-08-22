@@ -81,6 +81,10 @@ export function validateRequired(
 	}
 
 	if (isEmpty(configValue, type)) {
+		if (type === INPUT_TYPES.CATEGORY_SELECTOR) {
+			return ERROR_MESSAGES.REQUIRED_CATEGORY_SELECTOR;
+		}
+
 		return ERROR_MESSAGES.REQUIRED;
 	}
 }

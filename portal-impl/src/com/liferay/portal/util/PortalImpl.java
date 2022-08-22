@@ -880,9 +880,7 @@ public class PortalImpl implements Portal {
 		RenderParameters renderParameters = actionRequest.getRenderParameters();
 
 		for (String renderParameterName : renderParameters.getNames()) {
-			if (renderParameterName.equals("password1") ||
-				renderParameterName.equals("password2")) {
-
+			if (renderParameterName.equals("password1") || renderParameterName.equals("password2")) {
 				continue;
 			}
 
@@ -891,8 +889,7 @@ public class PortalImpl implements Portal {
 					actionResponse.getNamespace() + renderParameterName);
 
 			if (mutableRenderParametersValues == null) {
-				String[] values = renderParameters.getValues(
-					renderParameterName);
+				String[] values = renderParameters.getValues(renderParameterName);
 
 				if (values == null) {
 					values = new String[0];

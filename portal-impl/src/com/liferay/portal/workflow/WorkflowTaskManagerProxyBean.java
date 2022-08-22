@@ -195,6 +195,14 @@ public class WorkflowTaskManagerProxyBean
 	}
 
 	@Override
+	public List<WorkflowTransition> getWorkflowTaskWorkflowTransitions(
+			long workflowTaskId)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public boolean hasAssignableUsers(long workflowTaskId) {
 		throw new UnsupportedOperationException();
 	}

@@ -158,6 +158,10 @@ public interface WorkflowTaskManager {
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException;
 
+	public List<WorkflowTransition> getWorkflowTaskWorkflowTransitions(
+			long workflowTaskId)
+		throws WorkflowException;
+
 	public boolean hasAssignableUsers(long workflowTaskId)
 		throws WorkflowException;
 

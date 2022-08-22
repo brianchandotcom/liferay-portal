@@ -105,13 +105,6 @@ public class WorkflowTaskManagerUtil {
 		return _workflowTaskManager.getNotifiableUsers(workflowTaskId);
 	}
 
-	public static List<WorkflowTransition> getNextWorkflowTransitions(
-			long workflowTaskId)
-		throws WorkflowException {
-
-		return _workflowTaskManager.getNextWorkflowTransitions(workflowTaskId);
-	}
-
 	public static WorkflowTask getWorkflowTask(
 			long companyId, long workflowTaskId)
 		throws WorkflowException {
@@ -233,6 +226,14 @@ public class WorkflowTaskManagerUtil {
 		return _workflowTaskManager.getWorkflowTasksByWorkflowInstance(
 			companyId, userId, workflowInstanceId, completed, start, end,
 			orderByComparator);
+	}
+
+	public static List<WorkflowTransition> getWorkflowTaskWorkflowTransitions(
+			long workflowTaskId)
+		throws WorkflowException {
+
+		return _workflowTaskManager.getWorkflowTaskWorkflowTransitions(
+			workflowTaskId);
 	}
 
 	public static boolean hasAssignableUsers(

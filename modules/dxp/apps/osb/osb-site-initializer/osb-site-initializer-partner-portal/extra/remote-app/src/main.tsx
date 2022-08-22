@@ -37,6 +37,7 @@ const PartnerPortalApp = ({route}: IProps) => {
 		<SWRConfig
 			value={{
 				onError: (error) => handleError(error),
+				revalidateIfStale: false,
 				revalidateOnFocus: false,
 				revalidateOnReconnect: false,
 				shouldRetryOnError: false,

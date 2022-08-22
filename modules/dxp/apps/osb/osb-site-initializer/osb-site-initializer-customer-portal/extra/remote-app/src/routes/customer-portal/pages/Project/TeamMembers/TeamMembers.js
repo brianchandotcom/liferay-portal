@@ -14,7 +14,7 @@ import {useOutletContext} from 'react-router-dom';
 import i18n from '../../../../../common/I18n';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {useCustomerPortal} from '../../../context';
-import ManageProductUser from './components/ManageProductUsers/ManageProductUsers';
+import ManageProductUsers from './components/ManageProductUsers/ManageProductUsers';
 import TeamMembersTable from './components/TeamMembersTable/TeamMembersTable';
 
 const TeamMembers = () => {
@@ -52,7 +52,7 @@ const TeamMembers = () => {
 			</div>
 
 			<div className="mt-5">
-				<ManageProductUser
+				<ManageProductUsers
 					project={project}
 					subscriptionGroups={subscriptionGroups}
 				/>

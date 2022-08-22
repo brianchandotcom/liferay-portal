@@ -10,7 +10,7 @@
  */
 
 import i18n from '../../../../../../../../../common/I18n';
-import PopoverIconButton from '../../components/Header/components/PopoverIconButton';
+import PopoverIconButton from '../../components/TeamMembersTableHeader/components/PopoverIconButton/PopoverIconButton';
 
 export const COLUMNS = [
 	{

@@ -23,8 +23,8 @@ import {
 	deleteContactRoleNameByEmailByProject,
 } from '../../../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import {ROLE_TYPES} from '../../../../../../../common/utils/constants';
-import TeamMembersTableHeader from './components/Header/TeamMembersTableHeader';
 import RemoveUserModal from './components/RemoveUserModal/RemoveUserModal';
+import TeamMembersTableHeader from './components/TeamMembersTableHeader';
 import useAccountRoles from './hooks/useAccountRoles';
 import useFilters from './hooks/useFilters';
 import useGetAccountUserAccount from './hooks/useGetAccountUserAccounts';

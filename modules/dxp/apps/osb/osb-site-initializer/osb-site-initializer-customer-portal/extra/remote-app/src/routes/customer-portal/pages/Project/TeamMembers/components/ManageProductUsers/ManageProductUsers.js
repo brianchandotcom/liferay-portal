@@ -20,7 +20,7 @@ import {PRODUCT_TYPES} from '../../../../../utils/constants/productTypes';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../../utils/constants/statusTag';
 import ManageProductButton from './components/ManageProductButton/ManageProductButton';
 
-const ManageProductUser = ({project, subscriptionGroups}) => {
+const ManageProductUsers = ({project, subscriptionGroups}) => {
 	const [dxpCloudProjectId, setDxpCloudProjectId] = useState('');
 	const [analyctsCloudGroupId, setAnalyctsCloudGroupId] = useState('');
 	const {client} = useAppPropertiesContext();
@@ -116,4 +116,4 @@ const ManageProductUser = ({project, subscriptionGroups}) => {
 		</>
 	);
 };
-export default ManageProductUser;
+export default ManageProductUsers;

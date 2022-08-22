@@ -118,6 +118,7 @@ page import="com.liferay.knowledge.base.web.internal.servlet.taglib.clay.KBArtic
 page import="com.liferay.knowledge.base.web.internal.social.SocialBookmarksUtil" %><%@
 page import="com.liferay.knowledge.base.web.internal.util.AdminUtil" %><%@
 page import="com.liferay.knowledge.base.web.internal.util.KBArticleAssetEntriesUtil" %><%@
+page import="com.liferay.knowledge.base.web.internal.util.KBDropdownItemsProvider" %><%@
 page import="com.liferay.knowledge.base.web.internal.util.comparator.KBOrderByComparatorAdapter" %><%@
 page import="com.liferay.message.boards.model.MBMessage" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@

@@ -393,7 +393,10 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			JenkinsResultsParserUtil.getProperty(
 				testProperties, "ignoreParents", false, getTestSuiteName()));
 
-		if (ignoreParents) {
+		if (ignoreParents ||
+			parentFile.equals(
+				portalGitWorkingDirectory.getWorkingDirectory())) {
+
 			return concatedPQL;
 		}
 

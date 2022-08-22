@@ -10,7 +10,6 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
-import React from 'react';
 import {Root, createRoot} from 'react-dom/client';
 import {SWRConfig} from 'swr';
 

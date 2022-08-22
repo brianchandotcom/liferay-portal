@@ -138,7 +138,7 @@ AUI.add(
 
 				_clearInputsLocalized(node) {
 					node.all('.language-value').attr('placeholder', '');
-					node.all('.form-text').setHTML('');
+					node.all('.form-text:not(.form-text-repeat)').setHTML('');
 				},
 
 				_createClone(node) {

@@ -42,7 +42,7 @@ CustomElementCET customElementCET = editClientExtensionEntryDisplayContext.getCE
 			<aui:field-wrapper cssClass="form-group">
 				<aui:input ignoreRequestValue="<%= true %>" label="js-url" name="urls" required="<%= true %>" type="text" value="<%= url %>" />
 
-				<div class="form-text">
+				<div class="form-text form-text-repeat">
 					<liferay-ui:message key="enter-individual-urls-for-each-of-your-client-extension-js-files" />
 				</div>
 			</aui:field-wrapper>
@@ -64,7 +64,7 @@ CustomElementCET customElementCET = editClientExtensionEntryDisplayContext.getCE
 			<aui:field-wrapper cssClass="form-group">
 				<aui:input ignoreRequestValue="<%= true %>" label="css-url" name="cssURLs" type="text" value="<%= cssURL %>" />
 
-				<div class="form-text">
+				<div class="form-text form-text-repeat">
 					<liferay-ui:message key="enter-individual-urls-for-each-of-your-client-extension-css-files" />
 				</div>
 			</aui:field-wrapper>

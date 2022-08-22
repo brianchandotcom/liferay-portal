@@ -42,7 +42,8 @@ const toNodes = (collections) => {
 			children: collections
 				.filter(
 					(collection) =>
-						collection.fragmentCollectionId !== 'layout-elements'
+						collection.fragmentCollectionId !== 'layout-elements' &&
+						collection.fragmentCollectionId !== 'highlighted'
 				)
 				.map((collection) => {
 					const children = collection.fragmentEntries

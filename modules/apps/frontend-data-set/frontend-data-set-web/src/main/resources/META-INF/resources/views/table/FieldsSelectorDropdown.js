@@ -82,29 +82,28 @@ const FieldsSelectorDropdown = ({fields}) => {
 									[fieldName]: !selectedFieldNames[fieldName],
 								};
 
-								Object.keys(newVisibleFieldNames).some(
-									(visibleFieldName) => {
-										if (
-											newVisibleFieldNames[
-												visibleFieldName
-											]
-										) {
-											dispatch(
-												persistVisibleFieldNames({
-													appURL,
-													id,
-													portletId,
-													visibleFieldNames: {
-														...selectedFieldNames,
-														[fieldName]: !selectedFieldNames[
-															fieldName
-														],
-													},
-												})
-											);
-										}
-									}
+								const isVisible = Object.keys(
+									newVisibleFieldNames
+								).some(
+									(visibleFieldName) =>
+										newVisibleFieldNames[visibleFieldName]
 								);
+
+								if (isVisible) {
+									dispatch(
+										persistVisibleFieldNames({
+											appURL,
+											id,
+											portletId,
+											visibleFieldNames: {
+												...selectedFieldNames,
+												[fieldName]: !selectedFieldNames[
+													fieldName
+												],
+											},
+										})
+									);
+								}
 							}}
 						>
 							{selectedFieldNames[fieldName] && (

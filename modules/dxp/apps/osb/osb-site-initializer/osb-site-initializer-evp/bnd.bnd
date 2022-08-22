@@ -1,0 +1,6 @@
+Bundle-Name: Liferay OSB Site Initializer EVP
+Bundle-SymbolicName: com.liferay.osb.site.initializer.evp
+Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Name: EVP
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /osb-site-initializer-evp

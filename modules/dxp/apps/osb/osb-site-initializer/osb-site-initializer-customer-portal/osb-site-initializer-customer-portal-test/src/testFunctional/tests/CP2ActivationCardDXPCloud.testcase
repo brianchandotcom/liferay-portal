@@ -134,11 +134,11 @@ definition {
 
 		task ("View card details") {
 			CustomerPortal.viewActivationStatusCardValue(
-				subtitle = "Almost there! Setup LXC-SM by finishing the activation form.",
-                productIcon = "dxp_icon",
-                project = "Test Account LXC-SM",
-                dates = "Invalid Date - Invalid Date",
-                status = "Not Activated");
+				dates = "Invalid Date - Invalid Date",
+				productIcon = "dxp_icon",
+				project = "Test Account LXC-SM",
+				status = "Not Activated",
+				subtitle = "Almost there! Setup LXC-SM by finishing the activation form.");
 		}
 	}
 

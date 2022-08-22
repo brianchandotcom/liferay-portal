@@ -629,8 +629,8 @@ definition {
 
 		task ("Assert modal Setup LXC-SM") {
 			AssertElementPresent(
-				modal = "Set up LXC-SM",
-				locator1 = "CustomerPortalSite#MODAL_PAGE");
+				locator1 = "CustomerPortalSite#MODAL_PAGE",
+				modal = "Set up LXC-SM");
 		}
 	}
 

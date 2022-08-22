@@ -17,6 +17,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro clearAndDeleteCloudEntries {
+		CustomerPortal.clearActivationStatus(status = "${status}");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+		CP2DXPCloudSetup.deleteEntryCloudEnvironments(
+			entry = "ERC-003",
+			portlet = "Analytics Cloud Workspaces");
+
+		CustomerPortal.deleteCPObject(title = "Analytics Cloud Workspace");
+
+		CustomerPortal.deleteCPObject(title = "Account Subscription Group");
+	}
+
 	macro typeAllSetupAnalyticsCloudInfoFields {
 		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 			label = "Address",
@@ -64,20 +78,6 @@ definition {
 		Type(
 			locator1 = "CustomerPortalSite#SETUP_FIELDS",
 			value1 = "${value}");
-	}
-
-	macro clearAndDeleteCloudEntries {
-		CustomerPortal.clearActivationStatus(status = "${status}");
-
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-		CP2DXPCloudSetup.deleteEntryCloudEnvironments(
-			portlet = "Analytics Cloud Workspaces",
-			entry = "ERC-003");
-
-		CustomerPortal.deleteCPObject(title = "Analytics Cloud Workspace");
-
-		CustomerPortal.deleteCPObject(title = "Account Subscription Group");
 	}
 
 }

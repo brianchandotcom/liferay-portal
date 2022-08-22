@@ -19,6 +19,23 @@ definition {
 		Click(locator1 = "Button#SAVE");
 	}
 
+	macro activeStatus {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Account Subscription Groups");
+
+		CustomerPortal.viewCPObjectInfo();
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "activationStatus",
+			value = "Active");
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addCPObject {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -149,6 +166,27 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
+	macro clearActivationStatus {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Account Subscription Groups");
+
+		var key_status = "${status}";
+
+		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
+			CustomerPortal.viewCPObjectInfo();
+
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "activationStatus",
+				value = "");
+
+			Click(locator1 = "Button#SAVE");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	macro clickOnCancelButton {
 		Click(locator1 = "CustomerPortalSite#CANCEL_BUTTON");
 	}
@@ -252,6 +290,14 @@ definition {
 		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
 	}
 
+	macro fullOnboardingFlow {
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CustomerPortal.clickOnSkipForNowButton();
+	}
+
 	macro loginOktaToUpdateCP {
 		var userEmailAddress = "garrettz@mbopartners.com.broken";
 		var userPassword = "q4F63ZEH3njnnA34S761";
@@ -276,14 +322,6 @@ definition {
 				locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
 				value = "${product}");
 		}
-	}
-
-	macro fullOnboardingFlow {
-		CustomerPortal.clickOnStartProjectSetup();
-
-		CustomerPortal.clickOnSkipForNowButton();
-
-		CustomerPortal.clickOnSkipForNowButton();
 	}
 
 	macro onboardingFlow {
@@ -507,6 +545,38 @@ definition {
 		Uncheck.uncheckToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
+	macro viewActivationStatusCardChange {
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
+			title = "${subtitle}");
+
+		AssertElementPresent(
+			key_status = "${status}",
+			locator1 = "CustomerPortalSite#STATUS_CARD");
+	}
+
+	macro viewActivationStatusCardValue {
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
+			title = "${subtitle}");
+
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#CARD_LOGO",
+			product = "${productIcon}");
+
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#CARD_TITLE",
+			project = "${project}");
+
+		AssertElementPresent(
+			date = "${dates}",
+			locator1 = "CustomerPortalSite#CARD_DATES");
+
+		AssertElementPresent(
+			key_status = "${status}",
+			locator1 = "CustomerPortalSite#STATUS_CARD");
+	}
+
 	macro viewAllProjectsTitlePage {
 		AssertElementPresent(locator1 = "CustomerPortalSite#PROJECT_TITLE_MAIN_PAGE");
 	}
@@ -621,76 +691,6 @@ definition {
 		CustomerPortal.viewCPObjectInfo();
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
-	}
-
-	macro viewActivationStatusCardValue {
-		AssertElementPresent(
-			title = "${subtitle}",
-			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION");
-
-		AssertElementPresent(
-			product = "${productIcon}",
-			locator1 = "CustomerPortalSite#CARD_LOGO");
-
-		AssertElementPresent(
-			project = "${project}",
-			locator1 = "CustomerPortalSite#CARD_TITLE");
-
-		AssertElementPresent(
-			date = "${dates}",
-			locator1 = "CustomerPortalSite#CARD_DATES");
-
-		AssertElementPresent(
-			key_status = "${status}",
-			locator1 = "CustomerPortalSite#STATUS_CARD");
-	}
-
-	macro viewActivationStatusCardChange {
-		AssertElementPresent(
-			title = "${subtitle}",
-			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION");
-
-		AssertElementPresent(
-			key_status = "${status}",
-			locator1 = "CustomerPortalSite#STATUS_CARD");
-	}
-
-	macro activeStatus {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Account Subscription Groups");
-
-		CustomerPortal.viewCPObjectInfo();
-
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "activationStatus",
-			value = "Active");
-
-		Click(locator1 = "Button#SAVE");
-
-		Alert.viewSuccessMessage();
-	}
-
-	macro clearActivationStatus {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Account Subscription Groups");
-
-		var key_status = "${status}";
-
-		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
-			CustomerPortal.viewCPObjectInfo();
-
-			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-				label = "activationStatus",
-				value = "");
-
-			Click(locator1 = "Button#SAVE");
-
-			Alert.viewSuccessMessage();
-		}
 	}
 
 }

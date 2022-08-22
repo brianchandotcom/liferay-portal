@@ -239,6 +239,62 @@ public class ObjectDefinition implements Serializable {
 	protected Date dateModified;
 
 	@Schema
+	public Boolean getEnableCategorization() {
+		return enableCategorization;
+	}
+
+	public void setEnableCategorization(Boolean enableCategorization) {
+		this.enableCategorization = enableCategorization;
+	}
+
+	@JsonIgnore
+	public void setEnableCategorization(
+		UnsafeSupplier<Boolean, Exception> enableCategorizationUnsafeSupplier) {
+
+		try {
+			enableCategorization = enableCategorizationUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean enableCategorization;
+
+	@Schema
+	public Boolean getEnableComments() {
+		return enableComments;
+	}
+
+	public void setEnableComments(Boolean enableComments) {
+		this.enableComments = enableComments;
+	}
+
+	@JsonIgnore
+	public void setEnableComments(
+		UnsafeSupplier<Boolean, Exception> enableCommentsUnsafeSupplier) {
+
+		try {
+			enableComments = enableCommentsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean enableComments;
+
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -846,6 +902,26 @@ public class ObjectDefinition implements Serializable {
 			sb.append(liferayToJSONDateFormat.format(dateModified));
 
 			sb.append("\"");
+		}
+
+		if (enableCategorization != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableCategorization\": ");
+
+			sb.append(enableCategorization);
+		}
+
+		if (enableComments != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableComments\": ");
+
+			sb.append(enableComments);
 		}
 
 		if (id != null) {

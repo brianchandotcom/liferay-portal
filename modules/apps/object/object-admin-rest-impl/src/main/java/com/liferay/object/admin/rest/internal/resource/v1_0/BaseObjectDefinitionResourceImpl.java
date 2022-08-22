@@ -131,7 +131,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions' -d $'{"accountEntryRestricted": ___, "accountEntryRestrictedObjectFieldId": ___, "active": ___, "label": ___, "name": ___, "objectActions": ___, "objectFields": ___, "objectLayouts": ___, "objectRelationships": ___, "objectViews": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "portlet": ___, "scope": ___, "storageType": ___, "titleObjectFieldId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions' -d $'{"accountEntryRestricted": ___, "accountEntryRestrictedObjectFieldId": ___, "active": ___, "enableCategorization": ___, "enableComments": ___, "label": ___, "name": ___, "objectActions": ___, "objectFields": ___, "objectLayouts": ___, "objectRelationships": ___, "objectViews": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "portlet": ___, "scope": ___, "storageType": ___, "titleObjectFieldId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -307,7 +307,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}' -d $'{"accountEntryRestricted": ___, "accountEntryRestrictedObjectFieldId": ___, "active": ___, "label": ___, "name": ___, "objectActions": ___, "objectFields": ___, "objectLayouts": ___, "objectRelationships": ___, "objectViews": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "portlet": ___, "scope": ___, "storageType": ___, "titleObjectFieldId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}' -d $'{"accountEntryRestricted": ___, "accountEntryRestrictedObjectFieldId": ___, "active": ___, "enableCategorization": ___, "enableComments": ___, "label": ___, "name": ___, "objectActions": ___, "objectFields": ___, "objectLayouts": ___, "objectRelationships": ___, "objectViews": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "portlet": ___, "scope": ___, "storageType": ___, "titleObjectFieldId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -364,6 +364,16 @@ public abstract class BaseObjectDefinitionResourceImpl
 		if (objectDefinition.getDateModified() != null) {
 			existingObjectDefinition.setDateModified(
 				objectDefinition.getDateModified());
+		}
+
+		if (objectDefinition.getEnableCategorization() != null) {
+			existingObjectDefinition.setEnableCategorization(
+				objectDefinition.getEnableCategorization());
+		}
+
+		if (objectDefinition.getEnableComments() != null) {
+			existingObjectDefinition.setEnableComments(
+				objectDefinition.getEnableComments());
 		}
 
 		if (objectDefinition.getLabel() != null) {
@@ -425,7 +435,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}' -d $'{"accountEntryRestricted": ___, "accountEntryRestrictedObjectFieldId": ___, "active": ___, "label": ___, "name": ___, "objectActions": ___, "objectFields": ___, "objectLayouts": ___, "objectRelationships": ___, "objectViews": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "portlet": ___, "scope": ___, "storageType": ___, "titleObjectFieldId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}' -d $'{"accountEntryRestricted": ___, "accountEntryRestrictedObjectFieldId": ___, "active": ___, "enableCategorization": ___, "enableComments": ___, "label": ___, "name": ___, "objectActions": ___, "objectFields": ___, "objectLayouts": ___, "objectRelationships": ___, "objectViews": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "portlet": ___, "scope": ___, "storageType": ___, "titleObjectFieldId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

@@ -880,9 +880,8 @@ public class PortalImpl implements Portal {
 		while (enumeration.hasMoreElements()) {
 			String param = enumeration.nextElement();
 
-			if ((renderParameters.get(actionResponse.getNamespace() + param) ==
-					null) &&
-				!param.equals("password1") && !param.equals("password2")) {
+			if (renderParameters.get(actionResponse.getNamespace() + param) ==
+					null) {
 
 				String[] values = actionRequest.getParameterValues(param);
 

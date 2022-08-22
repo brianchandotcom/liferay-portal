@@ -74,6 +74,11 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void prepareRender(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
@@ -114,15 +119,6 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.kaleo.designer.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	@Reference(unbind = "-")
@@ -197,6 +193,11 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
 	private KaleoDesignerDisplayContext _kaleoDesignerDisplayContext;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.kaleo.designer.web)"
+	)
+	private ServletContext _servletContext;
 
 	@Reference
 	private UserLocalService _userLocalService;

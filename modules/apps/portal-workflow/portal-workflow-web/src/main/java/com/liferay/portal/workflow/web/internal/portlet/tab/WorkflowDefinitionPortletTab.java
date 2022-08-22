@@ -68,6 +68,11 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void prepareRender(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
@@ -126,15 +131,6 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 		return "/definition/view.jsp";
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	@Reference
 	protected UserLocalService userLocalService;
 
@@ -163,5 +159,10 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 	}
 
 	private volatile boolean _companyAdministratorCanPublish;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)"
+	)
+	private ServletContext _servletContext;
 
 }

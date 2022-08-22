@@ -75,6 +75,11 @@ public class WorkflowInstancePortletTab extends BaseWorkflowPortletTab {
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return servletContext;
+	}
+
+	@Override
 	public void prepareDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
@@ -136,17 +141,13 @@ public class WorkflowInstancePortletTab extends BaseWorkflowPortletTab {
 		return "/instance/view.jsp";
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	@Reference
 	protected Portal portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)"
+	)
+	protected ServletContext servletContext;
 
 	protected volatile WorkflowInstanceWebConfiguration
 		workflowInstanceWebConfiguration;

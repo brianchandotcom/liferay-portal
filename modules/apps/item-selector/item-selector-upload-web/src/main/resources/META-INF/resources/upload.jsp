@@ -32,6 +32,12 @@ if (Validator.isNotNull(namespace)) {
 }
 %>
 
+<liferay-util:html-top
+	outputKey="item_selector_repository_entry_browser"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/item-selector-taglib/repository_entry_browser/css/main.css") %>" rel="stylesheet" />
+</liferay-util:html-top>
+
 <clay:container-fluid
 	cssClass="lfr-item-viewer"
 	id="itemSelectorUploadContainer"

@@ -52,7 +52,9 @@ if (uploadURL != null) {
 }
 %>
 
-<liferay-util:html-top>
+<liferay-util:html-top
+	outputKey="item_selector_repository_entry_browser"
+>
 	<link href="<%= ServletContextUtil.getContextPath() %>/repository_entry_browser/css/main.css" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
@@ -138,7 +140,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 							return null;
 						}
 					).put(
-						"eventName", itemSelectedEventName // TODO: choose itemSelectedEventName or eventName
+						"eventName", itemSelectedEventName
 					).put(
 						"itemSelectedEventName", itemSelectedEventName
 					).put(
@@ -146,7 +148,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 					).put(
 						"mimeTypeRestriction", mimeTypeRestriction
 					).put(
-						"rootNode", "#itemSelectorUploadContainer" // TODO: rootNode is needed?
+						"rootNode", "#" + randomNamespace + "ItemSelectorContainer"
 					).put(
 						"uploadEnabled", showDragAndDropZone && !showSearchInfo
 					).put(

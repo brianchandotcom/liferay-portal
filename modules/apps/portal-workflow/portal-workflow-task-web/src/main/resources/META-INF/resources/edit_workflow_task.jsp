@@ -118,7 +118,7 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 
 					<aui:field-wrapper label="task-name">
 						<aui:fieldset>
-							<%= workflowTaskDisplayContext.getTaskLabel(workflowTask) %>
+							<%= workflowTask.getLabel(workflowTaskDisplayContext.getTaskContentLocale()) %>
 						</aui:fieldset>
 					</aui:field-wrapper>
 				</clay:col>

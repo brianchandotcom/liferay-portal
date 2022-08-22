@@ -532,20 +532,15 @@ definition {
 					portletIndex = "${portletIndex}");
 			}
 			else {
-				MouseOver.waitForMenuToggleJSMouseOver(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+				MouseOver.waitForMenuToggleJSMouseOver(locator1 = "Portlet#SPECIFIC_PORTLET_SECTION");
 
-				if (IsNotVisible(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON")) {
-					Click.javaScriptClick(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
-				}
-				else {
-					Click.waitForMenuToggleJSClick(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
-				}
+				Click.javaScriptClick(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 			}
 		}
 		else {
-			MouseOver.waitForMenuToggleJSMouseOver(locator1 = "Portlet#OPTIONS_ICON");
+			MouseOver.waitForMenuToggleJSMouseOver(locator1 = "Portlet#PORTLET_SECTION");
 
-			Click.waitForMenuToggleJSClick(locator1 = "Portlet#OPTIONS_ICON");
+			Click.javaScriptClick(locator1 = "Portlet#OPTIONS_ICON");
 		}
 
 		if (isSet(portletOption)) {

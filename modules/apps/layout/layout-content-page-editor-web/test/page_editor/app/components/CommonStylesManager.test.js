@@ -185,6 +185,10 @@ describe('CommonStylesManager', () => {
 		renderCommonStylesManager();
 
 		const expected = `
+			.lfr-layout-structure-item-row { 
+				overflow: hidden; 
+			}
+
 			.${getLayoutDataItemUniqueClassName(FRAGMENT_ID)} {
 				background-color: var(--info) !important;
 			}
@@ -216,6 +220,9 @@ describe('CommonStylesManager', () => {
 		renderCommonStylesManager();
 
 		const expected = `
+			.lfr-layout-structure-item-row { 
+				overflow: hidden; 
+			}
 			.${getLayoutDataItemUniqueClassName(MASTER_ITEM_ID)} {
 				background-color: var(--danger) !important;
 				margin-bottom: var(--spacer-3, 1rem) !important;
@@ -238,6 +245,10 @@ describe('CommonStylesManager', () => {
 		});
 
 		const expected = `
+			.lfr-layout-structure-item-row { 
+				overflow: hidden; 
+			}
+			
 			.${getLayoutDataItemUniqueClassName(FRAGMENT_ID)} {
 				background-color: var(--info) !important;
 			}
@@ -277,6 +288,10 @@ describe('CommonStylesManager', () => {
 		});
 
 		const expected = `
+			.lfr-layout-structure-item-row { 
+				overflow: hidden; 
+			}
+			
 			.${getLayoutDataItemUniqueClassName(FRAGMENT_ID)} {
 				background-color: var(--info) !important;
 				margin-bottom: var(--spacer-2, 0.5rem) !important;

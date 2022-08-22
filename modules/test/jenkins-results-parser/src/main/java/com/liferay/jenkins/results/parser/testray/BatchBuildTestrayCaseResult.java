@@ -50,9 +50,9 @@ import org.dom4j.Element;
 /**
  * @author Michael Hashimoto
  */
-public class BatchTestrayCaseResult extends TestrayCaseResult {
+public class BatchBuildTestrayCaseResult extends TestrayCaseResult {
 
-	public BatchTestrayCaseResult(
+	public BatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
 		AxisTestClassGroup axisTestClassGroup) {
 

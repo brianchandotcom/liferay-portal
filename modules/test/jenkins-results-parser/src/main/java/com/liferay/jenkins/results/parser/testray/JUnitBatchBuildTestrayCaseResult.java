@@ -31,9 +31,9 @@ import java.util.Map;
 /**
  * @author Michael Hashimoto
  */
-public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
+public class JUnitBatchBuildTestrayCaseResult extends BatchBuildTestrayCaseResult {
 
-	public JUnitBatchTestrayCaseResult(
+	public JUnitBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 

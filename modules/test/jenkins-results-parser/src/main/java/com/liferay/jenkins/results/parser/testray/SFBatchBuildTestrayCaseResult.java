@@ -21,9 +21,9 @@ import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 /**
  * @author Michael Hashimoto
  */
-public class SFBatchTestrayCaseResult extends BatchTestrayCaseResult {
+public class SFBatchBuildTestrayCaseResult extends BatchBuildTestrayCaseResult {
 
-	public SFBatchTestrayCaseResult(
+	public SFBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
 		AxisTestClassGroup axisTestClassGroup) {
 

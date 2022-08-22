@@ -30,9 +30,9 @@ import java.util.List;
 /**
  * @author Michael Hashimoto
  */
-public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
+public class FunctionalBatchBuildTestrayCaseResult extends BatchBuildTestrayCaseResult {
 
-	public FunctionalBatchTestrayCaseResult(
+	public FunctionalBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 

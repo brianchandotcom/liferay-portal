@@ -110,21 +110,21 @@ public class TestrayFactory {
 
 		if (testClass != null) {
 			if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup) {
-				return new FunctionalBatchTestrayCaseResult(
+				return new FunctionalBatchBuildTestrayCaseResult(
 					testrayBuild, topLevelBuild, axisTestClassGroup, testClass);
 			}
 			else if (axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
-				return new JUnitBatchTestrayCaseResult(
+				return new JUnitBatchBuildTestrayCaseResult(
 					testrayBuild, topLevelBuild, axisTestClassGroup, testClass);
 			}
 		}
 
 		if (topLevelBuild instanceof SourceFormatBuild) {
-			return new SFBatchTestrayCaseResult(
+			return new SFBatchBuildTestrayCaseResult(
 				testrayBuild, topLevelBuild, axisTestClassGroup);
 		}
 
-		return new BatchTestrayCaseResult(
+		return new BatchBuildTestrayCaseResult(
 			testrayBuild, topLevelBuild, axisTestClassGroup);
 	}
 

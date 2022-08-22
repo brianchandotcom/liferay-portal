@@ -2715,7 +2715,7 @@ definition {
 				userLoginFullName = "userfn2 userln2");
 		}
 
-		task ("Go to Custom Object entries and assert that it's possible to view only Public Account") {
+		task ("Go to Custom Object entries and assert that it's possible to view only Private Account") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 			LexiconEntry.gotoAdd();

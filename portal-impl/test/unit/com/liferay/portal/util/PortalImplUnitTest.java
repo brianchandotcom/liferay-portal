@@ -90,19 +90,18 @@ public class PortalImplUnitTest {
 	public void testCopyRequestParametersWithoutPassword1Password2()
 		throws PortletException {
 
-		Map<String, String[]> params = _createParams();
+		Map<String, String[]> params = _createMapParams();
 
 		ActionRequest actionRequest = _createActionRequest(params);
 
-		MockedStatic<PortalUtil> portalUtilMockStatic =
-			Mockito.mockStatic(PortalUtil.class);
+		MockedStatic<PortalUtil> portalUtilMock = Mockito.mockStatic(
+			PortalUtil.class);
 
-		ActionResponse actionResponse = _createActionResponse(
-			portalUtilMockStatic);
+		ActionResponse actionResponse = _createActionResponse(portalUtilMock);
 
 		_portalImpl.copyRequestParameters(actionRequest, actionResponse);
 
-		portalUtilMockStatic.close();
+		portalUtilMock.close();
 
 		_assertActionResponse(actionResponse, params);
 	}
@@ -111,7 +110,7 @@ public class PortalImplUnitTest {
 	public void testCopyRequestParametersWithPassword1Password2()
 		throws PortletException {
 
-		Map<String, String[]> params = _createParams();
+		Map<String, String[]> params = _createMapParams();
 
 		params.put("password1", new String[] {"abc_123"});
 		params.put("password2", new String[] {"def_456"});
@@ -853,7 +852,7 @@ public class PortalImplUnitTest {
 			new UserImpl(), new LayoutImpl());
 	}
 
-	private Map<String, String[]> _createParams() {
+	private Map<String, String[]> _createMapParams() {
 		return HashMapBuilder.put(
 			"p_u_i_d", new String[] {String.valueOf(4200L)}
 		).put(

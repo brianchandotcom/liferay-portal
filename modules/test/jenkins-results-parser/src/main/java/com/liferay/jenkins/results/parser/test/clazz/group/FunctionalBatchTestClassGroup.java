@@ -347,17 +347,15 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		Path parentFilePath = parentFile.toPath();
 
-		if (parentFilePath.equals(modulesBaseDirPath)) {
+		File testPropertiesFile = new File(canonicalFile, "test.properties");
+
+		if (modulesBaseDirPath.equals(parentFilePath) &&
+			!testPropertiesFile.exists()) {
+
 			return concatedPQL;
 		}
 
-		if (!canonicalFile.isDirectory()) {
-			return _concatPQL(parentFile, concatedPQL);
-		}
-
-		File testPropertiesFile = new File(canonicalFile, "test.properties");
-
-		if (!testPropertiesFile.exists()) {
+		if (!canonicalFile.isDirectory() || !testPropertiesFile.exists()) {
 			return _concatPQL(parentFile, concatedPQL);
 		}
 

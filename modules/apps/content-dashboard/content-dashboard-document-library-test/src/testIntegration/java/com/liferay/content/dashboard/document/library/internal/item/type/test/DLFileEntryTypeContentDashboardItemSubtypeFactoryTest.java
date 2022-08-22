@@ -67,7 +67,7 @@ public class DLFileEntryTypeContentDashboardItemSubtypeFactoryTest {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + "." + ContentTypes.IMAGE_JPEG,
+			RandomTestUtil.randomString() + ".jpg",
 			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
 			new byte[0], null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -77,7 +77,7 @@ public class DLFileEntryTypeContentDashboardItemSubtypeFactoryTest {
 
 		ContentDashboardItemSubtype contentDashboardItemSubtype =
 			_contentDashboardItemSubtypeFactory.create(
-				dlFileEntry.getFileEntryTypeId());
+				dlFileEntry.getFileEntryTypeId(), fileEntry.getFileEntryId());
 
 		InfoItemReference infoItemReference =
 			contentDashboardItemSubtype.getInfoItemReference();
@@ -94,11 +94,10 @@ public class DLFileEntryTypeContentDashboardItemSubtypeFactoryTest {
 			classNameClassPKInfoItemIdentifier.getClassName());
 
 		Assert.assertEquals(
-			"Basic Document ",
+			"image/jpeg",
 			contentDashboardItemSubtype.getFullLabel(LocaleUtil.US));
 		Assert.assertEquals(
-			"Basic Document",
-			contentDashboardItemSubtype.getLabel(LocaleUtil.US));
+			"image/jpeg", contentDashboardItemSubtype.getLabel(LocaleUtil.US));
 	}
 
 	@Inject(

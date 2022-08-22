@@ -41,7 +41,12 @@ public class DLFileEntryTypeContentDashboardItemSubtypeFactory
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.getFileEntryType(classPK);
 
+		DLFileEntryType basicDocumentDLFileEntryType =
+			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
 		return new DLFileEntryTypeContentDashboardItemSubtype(
+			basicDocumentDLFileEntryType,
 			_dlFileEntryLocalService.fetchDLFileEntry(entryClassPK),
 			dlFileEntryType,
 			_groupLocalService.fetchGroup(dlFileEntryType.getGroupId()));

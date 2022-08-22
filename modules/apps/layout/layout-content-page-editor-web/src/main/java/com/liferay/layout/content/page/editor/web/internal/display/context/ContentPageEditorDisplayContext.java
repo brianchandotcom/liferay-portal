@@ -1000,7 +1000,7 @@ public class ContentPageEditorDisplayContext {
 				(List<Map<String, Object>>)fragmentCollection.computeIfAbsent(
 					"fragmentEntries", key -> new LinkedList<>());
 
-			currentCollectionItems.addAll(collectionItems);
+			currentCollectionItems.addAll(0, collectionItems);
 		}
 
 		List<Map<String, Object>> systemFragmentCollections =

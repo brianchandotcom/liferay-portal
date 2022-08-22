@@ -288,11 +288,17 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 								</span>
 							</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-jsp
-								align="right"
-								cssClass="entry-action"
-								path="/admin/kb_article_action.jsp"
-							/>
+							<liferay-ui:search-container-column-text>
+
+								<%
+								KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);
+								%>
+
+								<clay:dropdown-actions
+									dropdownItems="<%= kbDropdownItemsProvider.getKBArticleDropdownItems(kbArticle) %>"
+									propsTransformer="admin/js/KBArticleDropdownPropsTransformer"
+								/>
+							</liferay-ui:search-container-column-text>
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:search-container-row>

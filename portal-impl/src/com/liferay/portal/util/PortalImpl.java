@@ -274,7 +274,6 @@ import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
@@ -283,7 +282,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.PreferencesValidator;
-import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.ValidatorException;
@@ -872,21 +870,21 @@ public class PortalImpl implements Portal {
 		StateAwareResponse stateAwareResponse =
 			(StateAwareResponse)liferayPortletResponse;
 
-		MutableRenderParameters mutableRenderParameters =
-			stateAwareResponse.getRenderParameters();
+		Map<String, String[]> renderParameters =
+			stateAwareResponse.getRenderParameterMap();
 
-		mutableRenderParameters.setValue("p_p_lifecycle", "1");
+		actionResponse.setRenderParameter("p_p_lifecycle", "1");
 
-		RenderParameters renderParameters = actionRequest.getRenderParameters();
+		Enumeration<String> enumeration = actionRequest.getParameterNames();
 
-		for (String param : renderParameters.getNames()) {
-			String[] paramValues = mutableRenderParameters.getValues(
-				actionResponse.getNamespace() + param);
+		while (enumeration.hasMoreElements()) {
+			String param = enumeration.nextElement();
 
-			if ((paramValues == null) && !param.equals("password1") &&
-				!param.equals("password2")) {
+			if ((renderParameters.get(actionResponse.getNamespace() + param) ==
+					null) &&
+				!param.equals("password1") && !param.equals("password2")) {
 
-				String[] values = renderParameters.getValues(param);
+				String[] values = actionRequest.getParameterValues(param);
 
 				if (values == null) {
 					values = new String[0];
@@ -903,7 +901,7 @@ public class PortalImpl implements Portal {
 						});
 				}
 
-				mutableRenderParameters.setValues(param, values);
+				actionResponse.setRenderParameter(param, values);
 			}
 		}
 	}

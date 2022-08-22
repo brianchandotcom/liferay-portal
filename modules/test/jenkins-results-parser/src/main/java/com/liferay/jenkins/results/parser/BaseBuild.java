@@ -887,7 +887,7 @@ public abstract class BaseBuild implements Build {
 			i++;
 		}
 
-		if (_result.equals("SUCCESS")) {
+		if (result.equals("SUCCESS")) {
 			return Dom4JUtil.getNewAnchorElement(
 				getBuildURL(), getDisplayName());
 		}
@@ -1305,7 +1305,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getResult() {
-		if ((_result == null) && (getBuildURL() != null)) {
+		if ((result == null) && (getBuildURL() != null)) {
 			JSONObject buildJSONObject = getBuildJSONObject("duration,result");
 
 			long duration = buildJSONObject.optLong("duration");
@@ -1320,7 +1320,7 @@ public abstract class BaseBuild implements Build {
 			setResult(result);
 		}
 
-		return _result;
+		return result;
 	}
 
 	@Override
@@ -3655,9 +3655,9 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setResult(String result) {
-		_result = result;
+		this.result = result;
 
-		if ((_result == null) ||
+		if ((result == null) ||
 			(getDownstreamBuildCount("completed") < getDownstreamBuildCount(
 				null))) {
 
@@ -3755,6 +3755,7 @@ public abstract class BaseBuild implements Build {
 	protected String jobName;
 	protected List<ReinvokeRule> reinvokeRules =
 		ReinvokeRule.getReinvokeRules();
+	protected String result;
 	protected List<SlaveOfflineRule> slaveOfflineRules =
 		SlaveOfflineRule.getSlaveOfflineRules();
 	protected Long startTime;
@@ -4266,7 +4267,6 @@ public abstract class BaseBuild implements Build {
 	private Map<String, String> _parameters = new HashMap<>();
 	private final Build _parentBuild;
 	private String _previousStatus;
-	private String _result;
 	private String _status;
 	private Map<String, TestClassResult> _testClassResults;
 	private List<URL> _testrayAttachmentURLs;

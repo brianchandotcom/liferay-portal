@@ -976,6 +976,24 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"enableCategorization", additionalAssertFieldName)) {
+
+				if (objectDefinition.getEnableCategorization() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("enableComments", additionalAssertFieldName)) {
+				if (objectDefinition.getEnableComments() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("label", additionalAssertFieldName)) {
 				if (objectDefinition.getLabel() == null) {
 					valid = false;
@@ -1279,6 +1297,30 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getDateModified(),
 						objectDefinition2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"enableCategorization", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.getEnableCategorization(),
+						objectDefinition2.getEnableCategorization())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("enableComments", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectDefinition1.getEnableComments(),
+						objectDefinition2.getEnableComments())) {
 
 					return false;
 				}
@@ -1675,6 +1717,16 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("enableCategorization")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("enableComments")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1830,6 +1882,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				active = RandomTestUtil.randomBoolean();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				enableCategorization = RandomTestUtil.randomBoolean();
+				enableComments = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				panelAppOrder = StringUtil.toLowerCase(

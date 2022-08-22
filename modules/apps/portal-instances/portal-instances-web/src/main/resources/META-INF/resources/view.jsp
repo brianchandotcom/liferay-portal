@@ -27,19 +27,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 %>
 
 <clay:management-toolbar
-	creationMenu='<%=
-		new JSPCreationMenu(pageContext) {
-			{
-				addDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/portal_instances/edit_instance", "redirect", PortalUtil.getCurrentURL(httpServletRequest));
-						dropdownItem.setLabel(LanguageUtil.get(httpServletRequest, "add"));
-					});
-			}
-		}
-	%>'
-	selectable="<%= false %>"
-	showSearch="<%= false %>"
+	managementToolbarDisplayContext="<%= new PortalInstancesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse) %>"
 />
 
 <portlet:renderURL var="redirectURL">

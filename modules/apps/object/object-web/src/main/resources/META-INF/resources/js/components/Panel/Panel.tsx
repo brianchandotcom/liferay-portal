@@ -67,6 +67,7 @@ const PanelBody: React.FC<IPanelBodyProps> = ({children, className}) => {
 interface IPanelHeaderProps extends React.HTMLAttributes<HTMLElement> {
 	contentLeft?: React.ReactNode;
 	contentRight?: React.ReactNode;
+	disabled?: boolean;
 	title: string;
 	type: BoxType;
 }
@@ -74,6 +75,7 @@ interface IPanelHeaderProps extends React.HTMLAttributes<HTMLElement> {
 const PanelHeader: React.FC<IPanelHeaderProps> = ({
 	contentLeft,
 	contentRight,
+	disabled = false,
 	title,
 	type,
 }) => {
@@ -86,7 +88,14 @@ const PanelHeader: React.FC<IPanelHeaderProps> = ({
 					expanded && type === 'regular',
 			})}
 		>
-			<div className="object-admin-panel__header__content-left">
+			<div
+				className={classNames(
+					'object-admin-panel__header__content-left',
+					{
+						'object-admin-panel__header__content-left--disabled': disabled,
+					}
+				)}
+			>
 				{type === 'regular' && (
 					<ClayButtonWithIcon displayType="unstyled" symbol="drag" />
 				)}

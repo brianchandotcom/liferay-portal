@@ -29,6 +29,7 @@ import {
 
 type TState = {
 	isViewOnly: boolean;
+	objectDefinition: ObjectDefinition;
 	objectFieldTypes: ObjectFieldType[];
 	objectFields: TObjectField[];
 	objectLayout: TObjectLayout;
@@ -37,6 +38,10 @@ type TState = {
 };
 
 type TAction =
+	| {
+			payload: {objectDefinition: ObjectDefinition};
+			type: TYPES.ADD_OBJECT_DEFINITION;
+	  }
 	| {
 			payload: {objectLayout: TObjectLayout};
 			type: TYPES.ADD_OBJECT_LAYOUT;
@@ -120,6 +125,7 @@ interface ILayoutContextProps extends Array<TState | Function> {
 const LayoutContext = createContext({} as ILayoutContextProps);
 
 export enum TYPES {
+	ADD_OBJECT_DEFINITION = 'ADD_OBJECT_DEFINITION',
 	ADD_OBJECT_FIELDS = 'ADD_OBJECT_FIELDS',
 	ADD_OBJECT_LAYOUT = 'ADD_OBJECT_LAYOUT',
 	ADD_OBJECT_LAYOUT_BOX = 'ADD_OBJECT_LAYOUT_BOX',
@@ -142,6 +148,14 @@ const initialState = {
 
 const layoutReducer = (state: TState, action: TAction) => {
 	switch (action.type) {
+		case TYPES.ADD_OBJECT_DEFINITION: {
+			const {objectDefinition} = action.payload;
+
+			return {
+				...state,
+				objectDefinition,
+			};
+		}
 		case TYPES.ADD_OBJECT_LAYOUT: {
 			const {objectLayout} = action.payload;
 

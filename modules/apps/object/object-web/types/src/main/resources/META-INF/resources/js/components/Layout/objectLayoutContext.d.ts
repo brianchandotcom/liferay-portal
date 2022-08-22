@@ -22,6 +22,7 @@ import {
 } from './types';
 declare type TState = {
 	isViewOnly: boolean;
+	objectDefinition: ObjectDefinition;
 	objectFieldTypes: ObjectFieldType[];
 	objectFields: TObjectField[];
 	objectLayout: TObjectLayout;
@@ -29,6 +30,12 @@ declare type TState = {
 	objectRelationships: TObjectRelationship[];
 };
 declare type TAction =
+	| {
+			payload: {
+				objectDefinition: ObjectDefinition;
+			};
+			type: TYPES.ADD_OBJECT_DEFINITION;
+	  }
 	| {
 			payload: {
 				objectLayout: TObjectLayout;
@@ -122,6 +129,7 @@ interface ILayoutContextProps extends Array<TState | Function> {
 	1: React.Dispatch<React.ReducerAction<React.Reducer<TState, TAction>>>;
 }
 export declare enum TYPES {
+	ADD_OBJECT_DEFINITION = 'ADD_OBJECT_DEFINITION',
 	ADD_OBJECT_FIELDS = 'ADD_OBJECT_FIELDS',
 	ADD_OBJECT_LAYOUT = 'ADD_OBJECT_LAYOUT',
 	ADD_OBJECT_LAYOUT_BOX = 'ADD_OBJECT_LAYOUT_BOX',

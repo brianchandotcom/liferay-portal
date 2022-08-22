@@ -52,6 +52,10 @@ $bgColor: #fff;
 				display: contents;
 			}
 		}
+
+		&__content-left--disabled {
+			opacity: 0.5;
+		}
 	}
 
 	& &__title {

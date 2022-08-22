@@ -103,6 +103,8 @@ interface ObjectDefinition {
 	active: boolean;
 	dateCreated: string;
 	dateModified: string;
+	enabledCategorization: boolean;
+	enabledComments: boolean;
 	id: number;
 	label: LocalizedValue<string>;
 	name: string;

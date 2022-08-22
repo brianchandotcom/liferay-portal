@@ -22,11 +22,13 @@ const HeaderDropdown: FC<IHeaderDropdown> = ({
 	addCategorization,
 	addComments,
 	deleteElement,
+	disabled,
 }) => {
 	const [active, setActive] = useState<boolean>(false);
 	const [
 		{
 			isViewOnly,
+			objectDefinition,
 			objectLayout: {objectLayoutTabs},
 		},
 	] = useLayoutContext();
@@ -51,6 +53,7 @@ const HeaderDropdown: FC<IHeaderDropdown> = ({
 			onActiveChange={setActive}
 			trigger={
 				<ClayButtonWithIcon
+					disabled={disabled}
 					displayType="unstyled"
 					symbol="ellipsis-v"
 				/>
@@ -59,7 +62,11 @@ const HeaderDropdown: FC<IHeaderDropdown> = ({
 			<ClayDropDown.ItemList>
 				{addCategorization && (
 					<ClayDropDown.Item
-						disabled={isThereFramework('categorization')}
+						disabled={
+							isThereFramework('categorization') ||
+							(Liferay.FeatureFlags['LPS-158672'] &&
+								!objectDefinition.enabledCategorization)
+						}
 						onClick={() => handleOnClick(addCategorization)}
 					>
 						{Liferay.Language.get('add-categorization')}
@@ -68,7 +75,10 @@ const HeaderDropdown: FC<IHeaderDropdown> = ({
 
 				{Liferay.FeatureFlags['LPS-158672'] && addComments && (
 					<ClayDropDown.Item
-						disabled={isThereFramework('comments')}
+						disabled={
+							isThereFramework('comments') ||
+							!objectDefinition.enabledComments
+						}
 						onClick={() => handleOnClick(addComments)}
 					>
 						{Liferay.Language.get('add-comments')}
@@ -90,6 +100,7 @@ interface IHeaderDropdown {
 	addCategorization?: MouseEventHandler;
 	addComments?: MouseEventHandler;
 	deleteElement: MouseEventHandler;
+	disabled?: boolean;
 }
 
 export default HeaderDropdown;

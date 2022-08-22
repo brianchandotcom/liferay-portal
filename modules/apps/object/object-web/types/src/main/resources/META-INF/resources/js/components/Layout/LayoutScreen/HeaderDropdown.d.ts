@@ -18,5 +18,6 @@ interface IHeaderDropdown {
 	addCategorization?: MouseEventHandler;
 	addComments?: MouseEventHandler;
 	deleteElement: MouseEventHandler;
+	disabled?: boolean;
 }
 export default HeaderDropdown;

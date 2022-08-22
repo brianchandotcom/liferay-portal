@@ -126,6 +126,10 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				`/o/object-admin/v1.0/object-layouts/${objectLayoutId}`
 			);
 
+			const objectDefinition = await API.getObjectDefinition(
+				objectDefinitionId
+			);
+
 			const objectFields = await API.getObjectFields(objectDefinitionId);
 
 			const objectRelationships = await API.getObjectRelationships(
@@ -149,6 +153,11 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			const filteredObjectFields = objectFields.filter(
 				({system}) => !system
 			);
+
+			dispatch({
+				payload: {objectDefinition},
+				type: TYPES.ADD_OBJECT_DEFINITION,
+			});
 
 			dispatch({
 				payload: {

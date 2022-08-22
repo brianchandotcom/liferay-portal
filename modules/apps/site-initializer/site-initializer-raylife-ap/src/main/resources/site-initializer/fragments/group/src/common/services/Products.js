@@ -16,14 +16,20 @@ import {axios} from './liferay/api';
 
 const headlessAPI = 'o/headless-commerce-delivery-catalog/v1.0';
 
-export async function getProducts() {
-	const channel = await getChannelId('Raylife AP');
+export function getProducts() {
+	const result = getChannelId('Raylife AP').then((response) => {
+		const {
+			data: {items},
+		} = response;
 
-	const channelId = channel.data.items[0].id;
+		const channelId = items[0].id;
 
-	return axios.get(
-		`${headlessAPI}/channels/${channelId}/products?nestedFields=skus,catalog&page=1&pageSize=50`
-	);
+		return axios.get(
+			`${headlessAPI}/channels/${channelId}/products?nestedFields=skus,catalog&page=1&pageSize=50`
+		);
+	});
+
+	return result;
 }
 
 export function getChannelId(channelName) {

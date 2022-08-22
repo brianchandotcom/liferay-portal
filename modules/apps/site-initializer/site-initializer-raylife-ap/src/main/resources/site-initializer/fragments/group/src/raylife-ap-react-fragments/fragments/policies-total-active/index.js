@@ -15,7 +15,7 @@
 import React, {useEffect, useState} from 'react';
 
 import DonutChart from '../../../common/components/donut-chart';
-import {getActivePolicies, getProductQuotes} from '../../../common/services';
+import {getActivePolicies, getProducts} from '../../../common/services';
 
 export default function () {
 	const [chartTitle, setChartTitle] = useState('');
@@ -24,12 +24,22 @@ export default function () {
 	const [columns, setColumns] = useState([]);
 	const [colors, setColors] = useState({});
 
-	const colorsArray = ['#7154E1', '#55C2FF', '#4BC286', '#FF9A24'];
+	const colorsArray = [
+		'#7154E1',
+		'#55C2FF',
+		'#4BC286',
+		'#FF9A24',
+		'#EC676A',
+		'#D9E4FE',
+		'#1F77B4',
+		'#D1D1D9',
+		'#B5CDFE',
+	];
 
 	const MAX_NAME_LENGHT = 15;
 
 	useEffect(() => {
-		Promise.allSettled([getProductQuotes(), getActivePolicies()]).then(
+		Promise.allSettled([getProducts(), getActivePolicies()]).then(
 			(results) => {
 				const [productQuotesResult, policiesResult] = results;
 
@@ -44,15 +54,11 @@ export default function () {
 					(productQuote, index) => {
 						const countActivePolicies = activePolicies?.items.filter(
 							(application) =>
-								Object.values(productQuote.name).toString() ===
-								application.productName
+								productQuote.name === application.productName
 						).length;
 
-						const shortDescription = Object.values(
-							productQuote.shortDescription
-						)[0];
-
-						const [fullName] = Object.values(productQuote.name);
+						const shortDescription = productQuote.shortDescription;
+						const fullName = productQuote.name;
 						let productName = fullName;
 
 						const productAbbrevation = productName

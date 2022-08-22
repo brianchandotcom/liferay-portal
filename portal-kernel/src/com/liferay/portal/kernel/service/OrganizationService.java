@@ -338,6 +338,9 @@ public interface OrganizationService extends BaseService {
 			long passwordPolicyId, long[] organizationIds)
 		throws PortalException;
 
+	public Organization updateLogo(long organizationId, byte[] logoBytes)
+		throws PortalException;
+
 	/**
 	 * Updates the organization with additional parameters.
 	 *

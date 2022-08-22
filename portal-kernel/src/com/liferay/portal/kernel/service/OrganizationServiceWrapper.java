@@ -433,6 +433,13 @@ public class OrganizationServiceWrapper
 			passwordPolicyId, organizationIds);
 	}
 
+	@Override
+	public Organization updateLogo(long organizationId, byte[] logoBytes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _organizationService.updateLogo(organizationId, logoBytes);
+	}
+
 	/**
 	 * Updates the organization with additional parameters.
 	 *

@@ -65,6 +65,7 @@ export default function TabItem({displayStyle, item}) {
 		{
 			fragmentEntryType: item.data.type,
 			icon: item.icon,
+			isWidget: item.data.portletId,
 			label: item.label,
 			type: item.type,
 		},

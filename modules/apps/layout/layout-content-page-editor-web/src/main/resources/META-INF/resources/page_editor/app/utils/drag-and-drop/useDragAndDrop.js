@@ -34,6 +34,7 @@ import {
 } from '../../contexts/CollectionItemContext';
 import {useSelectItem} from '../../contexts/ControlsContext';
 import {useSelectorRef} from '../../contexts/StoreContext';
+import {formIsMapped} from '../formIsMapped';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import {TARGET_POSITIONS} from './constants/targetPositions';
 import defaultComputeHover from './defaultComputeHover';
@@ -133,7 +134,20 @@ export function NotDraggableArea({children}) {
 }
 
 export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
-	const getSourceItem = useCallback(() => sourceItem, [sourceItem]);
+	const fragmentEntryLinksRef = useSelectorRef(
+		(state) => state.fragmentEntryLinks
+	);
+
+	const getSourceItem = useCallback(
+		() => ({
+			...sourceItem,
+			isWidget: sourceItem.isSymbol
+				? sourceItem.isWidget
+				: isWidget(sourceItem, fragmentEntryLinksRef.current),
+		}),
+		[fragmentEntryLinksRef, sourceItem]
+	);
+
 	const {canDrag, dispatch, layoutDataRef, state} = useContext(
 		DragAndDropContext
 	);
@@ -181,7 +195,7 @@ export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 }
 
 export function useDragSymbol(
-	{fragmentEntryType, icon, label, type},
+	{fragmentEntryType, icon, isWidget, label, type},
 	onDragEnd
 ) {
 	const selectItem = useSelectItem();
@@ -191,11 +205,12 @@ export function useDragSymbol(
 			fragmentEntryType,
 			icon,
 			isSymbol: true,
+			isWidget,
 			itemId: label,
 			name: label,
 			type,
 		}),
-		[fragmentEntryType, icon, label, type]
+		[fragmentEntryType, icon, isWidget, label, type]
 	);
 
 	const {handlerRef, isDraggingSource, sourceRef} = useDragItem(
@@ -356,7 +371,10 @@ function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 				'fragments-cannot-be-placed-inside-an-unmapped-collection-display-fragment'
 			);
 		}
-		else if (state.dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.form) {
+		else if (
+			state.dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
+			!formIsMapped(state.dropTargetItem)
+		) {
 			message = Liferay.Language.get(
 				'fragments-cannot-be-placed-inside-an-unmapped-form-container'
 			);
@@ -366,6 +384,11 @@ function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 		) {
 			message = Liferay.Language.get(
 				'form-components-can-only-be-placed-inside-a-mapped-form-container'
+			);
+		}
+		else if (state.dropItem.isWidget) {
+			message = Liferay.Language.get(
+				'widgets-cannot-be-placed-inside-a-form-container'
 			);
 		}
 
@@ -428,4 +451,16 @@ function getSiblingPosition(state, parentItem) {
 	}
 
 	return siblingPosition;
+}
+
+function isWidget(item, fragmentEntryLinks) {
+	const {fragmentEntryLinkId} = item.config;
+
+	if (!fragmentEntryLinkId) {
+		return false;
+	}
+
+	const fragmentEntryLink = fragmentEntryLinks[fragmentEntryLinkId];
+
+	return Boolean(fragmentEntryLink.portletId);
 }

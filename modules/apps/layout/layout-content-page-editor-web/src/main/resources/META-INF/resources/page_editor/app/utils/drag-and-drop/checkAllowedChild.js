@@ -93,6 +93,10 @@ export default function checkAllowedChild(child, parent, layoutDataRef) {
 		) {
 			return false;
 		}
+
+		if (parent.type === LAYOUT_DATA_ITEM_TYPES.form && child.isWidget) {
+			return false;
+		}
 	}
 
 	return LAYOUT_DATA_CHECK_ALLOWED_CHILDREN[parent.type](child, parent);

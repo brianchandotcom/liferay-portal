@@ -142,6 +142,7 @@ public class ProductDTOConverter
 				urls = LanguageUtils.getLanguageIdMap(
 					_cpDefinitionService.getUrlTitleMap(
 						cpDefinition.getCPDefinitionId()));
+				version = cpDefinition.getVersion();
 				workflowStatusInfo = _toStatus(
 					cpDefinition.getStatus(), productStatusLabel,
 					productStatusLabelI18n);

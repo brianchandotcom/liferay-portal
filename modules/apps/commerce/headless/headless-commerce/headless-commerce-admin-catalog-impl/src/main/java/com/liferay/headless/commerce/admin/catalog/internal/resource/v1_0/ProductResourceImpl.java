@@ -27,6 +27,7 @@ import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
@@ -38,6 +39,7 @@ import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValue
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
+import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
@@ -197,6 +199,40 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	}
 
 	@Override
+	public void deleteProductByExternalReferenceCodeByVersion(
+			String externalReferenceCode, Integer version)
+		throws Exception {
+
+		CProduct cProduct =
+			_cProductLocalService.fetchCProductByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (cProduct == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find product with external reference code " +
+					externalReferenceCode);
+		}
+
+		CPDefinition cpDefinition =
+			_cpDefinitionService.getCProductCPDefinition(
+				cProduct.getCProductId(), version);
+
+		_cpDefinitionService.deleteCPDefinition(
+			cpDefinition.getCPDefinitionId());
+	}
+
+	@Override
+	public void deleteProductByVersion(Long id, Integer version)
+		throws Exception {
+
+		CPDefinition cpDefinition =
+			_cpDefinitionService.getCProductCPDefinition(id, version);
+
+		_cpDefinitionService.deleteCPDefinition(
+			cpDefinition.getCPDefinitionId());
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 
@@ -235,6 +271,38 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
+
+		return _toProduct(cpDefinition.getCPDefinitionId());
+	}
+
+	@Override
+	public Product getProductByExternalReferenceCodeByVersion(
+			String externalReferenceCode, Integer version)
+		throws Exception {
+
+		CProduct cProduct =
+			_cProductLocalService.fetchCProductByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (cProduct == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find product with external reference code " +
+					externalReferenceCode);
+		}
+
+		CPDefinition cpDefinition =
+			_cpDefinitionService.getCProductCPDefinition(
+				cProduct.getCProductId(), version);
+
+		return _toProduct(cpDefinition.getCPDefinitionId());
+	}
+
+	@Override
+	public Product getProductByVersion(Long id, Integer version)
+		throws Exception {
+
+		CPDefinition cpDefinition =
+			_cpDefinitionService.getCProductCPDefinition(id, version);
 
 		return _toProduct(cpDefinition.getCPDefinitionId());
 	}
@@ -1279,6 +1347,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private CPOptionService _cpOptionService;
+
+	@Reference
+	private CProductLocalService _cProductLocalService;
 
 	@Reference
 	private CPSpecificationOptionService _cpSpecificationOptionService;

@@ -1,27 +1,50 @@
-.portlet-remote-app-admin .lfr-form-row {
-	border: none;
-	padding: 0 0 30px;
+.portlet-remote-app-admin {
+	.lfr-form-rows {
+		counter-reset: line-number;
+	}
 
-	&:hover {
+	.undomanager {
+		display: none;
+	}
+
+	.lfr-form-row {
 		border: none;
+		counter-increment: line-number;
+		padding: 0;
+
+		&:not(:nth-child(2)) label:after {
+			content: '(' counter(line-number) ')';
+		}
+
+		&:hover {
+			border: none;
+		}
 	}
 
 	.lfr-autorow-controls {
+		bottom: auto;
 		position: absolute;
 		right: 0;
 		top: 0;
+	}
+
+	.toolbar-content {
+		display: flex;
+		gap: 4px;
 
 		button {
 			border-radius: 10px;
 			height: 20px;
-			margin-left: 4px;
 			padding: 0;
 			width: 20px;
 
 			.lexicon-icon {
-				height: 12px;
-				margin-top: -3px;
-				width: 12px;
+				height: 10px;
+				width: 10px;
+			}
+
+			&[disabled] {
+				display: none;
 			}
 		}
 	}

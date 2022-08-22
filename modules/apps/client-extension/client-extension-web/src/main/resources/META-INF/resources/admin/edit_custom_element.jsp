@@ -26,7 +26,7 @@ CustomElementCET customElementCET = editClientExtensionEntryPartDisplayContext.g
 
 <aui:input label="use-esm" name="useESM" type="checkbox" value="<%= customElementCET.isUseESM() %>" />
 
-<div id="<portlet:namespace />_urls_field">
+<div class="lfr-form-rows" id="<portlet:namespace />_urls_field">
 
 	<%
 	for (String url : editClientExtensionEntryPartDisplayContext.getStrings(customElementCET.getURLs())) {
@@ -42,7 +42,7 @@ CustomElementCET customElementCET = editClientExtensionEntryPartDisplayContext.g
 
 </div>
 
-<div id="<portlet:namespace />_cssURLs_field">
+<div class="lfr-form-rows" id="<portlet:namespace />_cssURLs_field">
 
 	<%
 	for (String cssURL : editClientExtensionEntryPartDisplayContext.getStrings(customElementCET.getCSSURLs())) {

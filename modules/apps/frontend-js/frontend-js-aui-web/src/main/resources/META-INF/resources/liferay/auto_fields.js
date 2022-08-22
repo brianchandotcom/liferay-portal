@@ -30,14 +30,14 @@ AUI.add(
 		];
 
 		const TPL_ADD_BUTTON =
-			'<button class="add-row btn btn-icon-only btn-monospaced btn-secondary toolbar-first toolbar-item" title="' +
+			'<button class="add-row btn btn-icon-only btn-monospaced btn-primary toolbar-first toolbar-item" title="' +
 			Liferay.Language.get('add') +
 			'" type="button">' +
 			Liferay.Util.getLexiconIconTpl('plus') +
 			'</button>';
 
 		const TPL_DELETE_BUTTON =
-			'<button class="btn btn-icon-only btn-monospaced btn-secondary delete-row toolbar-item toolbar-last" title="' +
+			'<button class="btn btn-icon-only btn-monospaced btn-primary delete-row toolbar-item toolbar-last" title="' +
 			Liferay.Language.get('remove') +
 			'" type="button">' +
 			Liferay.Util.getLexiconIconTpl('hr') +
@@ -46,8 +46,8 @@ AUI.add(
 		const TPL_AUTOROW_CONTROLS =
 			'<span class="lfr-autorow-controls toolbar toolbar-horizontal">' +
 			'<span class="toolbar-content">' +
-			TPL_ADD_BUTTON +
 			TPL_DELETE_BUTTON +
+			TPL_ADD_BUTTON +
 			'</span>' +
 			'</span>';
 

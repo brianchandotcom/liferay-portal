@@ -98,7 +98,8 @@ public class JournalArticleContentDashboardItemFactory
 			assetEntry.getCategories(), assetEntry.getTags(),
 			_contentDashboardItemActionProviderTracker,
 			contentDashboardItemSubtypeFactory.create(
-				ddmStructure.getStructureId()),
+				ddmStructure.getStructureId(),
+				journalArticle.getResourcePrimKey()),
 			_groupLocalService.fetchGroup(journalArticle.getGroupId()),
 			infoItemFieldValuesProvider, journalArticle, _language,
 			latestApprovedJournalArticle, _portal);

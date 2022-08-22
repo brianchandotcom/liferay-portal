@@ -78,7 +78,7 @@ public class FileEntryContentDashboardItemFactory
 			assetEntry.getCategories(), assetEntry.getTags(),
 			_contentDashboardItemActionProviderTracker,
 			contentDashboardItemSubtypeFactory.create(
-				dlFileEntry.getFileEntryTypeId()),
+				dlFileEntry.getFileEntryTypeId(), dlFileEntry.getFileEntryId()),
 			_dlURLHelper, fileEntry,
 			_groupLocalService.fetchGroup(fileEntry.getGroupId()),
 			infoItemFieldValuesProvider, _language, _portal);

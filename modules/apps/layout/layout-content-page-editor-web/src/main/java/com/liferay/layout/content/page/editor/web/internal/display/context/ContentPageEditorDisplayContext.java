@@ -1293,6 +1293,7 @@ public class ContentPageEditorDisplayContext {
 		if (includeSystem) {
 			allFragmentCollections.addAll(_getFragmentCollectionContributors());
 			allFragmentCollections.addAll(_getDynamicFragments());
+			allFragmentCollections.addAll(_getLayoutElements());
 		}
 
 		List<FragmentCollection> fragmentCollections =
@@ -1669,6 +1670,58 @@ public class ContentPageEditorDisplayContext {
 				_renderResponse.getNamespace() + "selectImage",
 				_getImageItemSelectorCriterion(),
 				_getURLItemSelectorCriterion()));
+	}
+
+	private List<Map<String, Object>> _getLayoutElements() {
+		Map<String, Map<String, Object>> fragmentCollectionMap =
+			new LinkedHashMap<>();
+
+		for (Map.Entry<String, List<Map<String, Object>>> entry :
+				_layoutElementsMap.entrySet()) {
+
+			List<Map<String, Object>> collectionItems = new LinkedList<>();
+
+			for (Map<String, Object> layoutElement : entry.getValue()) {
+				String fragmentEntryKey = (String)layoutElement.get(
+					"fragmentEntryKey");
+
+				if (!_isAllowedFragmentEntryKey(fragmentEntryKey)) {
+					continue;
+				}
+
+				collectionItems.add(
+					HashMapBuilder.create(
+						layoutElement
+					).put(
+						"name",
+						LanguageUtil.get(
+							themeDisplay.getLocale(),
+							(String)layoutElement.get("languageKey"))
+					).build());
+			}
+
+			if (collectionItems.isEmpty()) {
+				continue;
+			}
+
+			String collectionKey = entry.getKey();
+
+			fragmentCollectionMap.put(
+				collectionKey,
+				HashMapBuilder.<String, Object>put(
+					"fragmentCollectionId", collectionKey
+				).put(
+					"fragmentEntries", collectionItems
+				).put(
+					"name",
+					LanguageUtil.get(
+						themeDisplay.getLocale(),
+						"fragment.collection.label." +
+							StringUtil.toLowerCase(collectionKey))
+				).build());
+		}
+
+		return new LinkedList<>(fragmentCollectionMap.values());
 	}
 
 	private String _getLayoutItemSelectorURL() {

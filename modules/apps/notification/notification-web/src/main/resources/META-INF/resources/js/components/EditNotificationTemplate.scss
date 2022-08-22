@@ -20,3 +20,24 @@
 		z-index: 1;
 	}
 }
+
+.lfr-objects__card {
+	margin: 1.5rem 0 0 !important;
+}
+
+@mixin responsiveCards($maxWidth, $margin) {
+	@media (max-width: #{$maxWidth}) {
+		.lfr__notification-template {
+			&-cards {
+				margin-left: #{$margin};
+				margin-right: #{$margin};
+			}
+		}
+	}
+}
+
+@include responsiveCards(3840px, 80rem);
+@include responsiveCards(2160px, 29rem);
+@include responsiveCards(1920px, 21rem);
+@include responsiveCards(1600px, 11rem);
+@include responsiveCards(1280px, 5rem);

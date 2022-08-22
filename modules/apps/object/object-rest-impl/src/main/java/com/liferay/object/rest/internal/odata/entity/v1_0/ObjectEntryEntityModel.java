@@ -18,9 +18,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateEntityField;
@@ -61,17 +59,8 @@ public class ObjectEntryEntityModel implements EntityModel {
 				locale -> "modifiedDate")
 		).put(
 			"externalReferenceCode",
-			() -> {
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-158821"))) {
-
-					return new StringEntityField(
-						"externalReferenceCode",
-						locale -> "externalReferenceCode");
-				}
-
-				return new StringEntityField("id", locale -> "id");
-			}
+			() -> new StringEntityField(
+				"externalReferenceCode", locale -> "externalReferenceCode")
 		).put(
 			"id",
 			new IdEntityField(

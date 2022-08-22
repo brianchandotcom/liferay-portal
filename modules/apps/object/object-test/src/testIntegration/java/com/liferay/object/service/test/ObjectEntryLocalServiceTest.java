@@ -84,7 +84,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -93,7 +92,6 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.io.Serializable;
 
@@ -1732,11 +1730,6 @@ public class ObjectEntryLocalServiceTest {
 
 	@Test
 	public void testUpdateObjectEntry() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158821", "true"
-			).build());
-
 		_assertCount(0);
 
 		ObjectEntry objectEntry = _addObjectEntry(
@@ -2099,14 +2092,7 @@ public class ObjectEntryLocalServiceTest {
 				objectEntryValuesException.getMessage());
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158821"))) {
-			_testUpdateExternalReferenceCode();
-		}
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158821", "false"
-			).build());
+		_testUpdateExternalReferenceCode();
 	}
 
 	@Test

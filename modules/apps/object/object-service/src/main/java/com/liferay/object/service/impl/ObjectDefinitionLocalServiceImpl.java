@@ -801,9 +801,7 @@ public class ObjectDefinitionLocalServiceImpl
 			dbColumnName = pkObjectFieldName;
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158821")) &&
-			!objectDefinition.isSystem()) {
-
+		if (!objectDefinition.isSystem()) {
 			_objectFieldLocalService.addSystemObjectField(
 				userId, objectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,

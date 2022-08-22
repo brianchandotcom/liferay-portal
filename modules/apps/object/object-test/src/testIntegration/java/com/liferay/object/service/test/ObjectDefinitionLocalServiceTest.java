@@ -55,11 +55,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.sql.Connection;
 
@@ -958,11 +956,6 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Test
 	public void testSystemObjectFields() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158821", "true"
-			).build());
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
@@ -989,11 +982,6 @@ public class ObjectDefinitionLocalServiceTest {
 		_testSystemObjectFields(objectDefinition);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158821", "false"
-			).build());
 	}
 
 	@Test

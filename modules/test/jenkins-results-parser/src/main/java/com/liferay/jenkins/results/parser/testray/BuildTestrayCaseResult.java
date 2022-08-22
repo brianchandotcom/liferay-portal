@@ -53,6 +53,21 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			"testray/" + JenkinsResultsParserUtil.getDistinctTimeStamp());
 	}
 
+	@Override
+	public Status getStatus() {
+		Build build = getBuild();
+
+		if (build == null) {
+			return Status.UNTESTED;
+		}
+
+		if (build.isFailing()) {
+			return Status.FAILED;
+		}
+
+		return Status.PASSED;
+	}
+
 	protected abstract Build getBuild();
 
 	protected TestrayAttachment getTestrayAttachment(
@@ -111,6 +126,12 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		return _testrayUploadBaseDir;
 	}
 
+	protected TestrayAttachment getTopLevelBuildReportTestrayAttachment() {
+		return getTestrayAttachment(
+			getTopLevelBuild(), "Build Report (Top Level)",
+			getTopLevelBuildURLPath() + "/build-report.json.gz");
+	}
+
 	protected String getTopLevelBuildURLPath() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
@@ -138,6 +159,24 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		sb.append(topLevelBuild.getBuildNumber());
 
 		return sb.toString();
+	}
+
+	protected TestrayAttachment getTopLevelJenkinsConsoleTestrayAttachment() {
+		return getTestrayAttachment(
+			getTopLevelBuild(), "Jenkins Console (Top Level)",
+			getTopLevelBuildURLPath() + "/jenkins-console.txt.gz");
+	}
+
+	protected TestrayAttachment getTopLevelJenkinsReportTestrayAttachment() {
+		return getTestrayAttachment(
+			getTopLevelBuild(), "Jenkins Report (Top Level)",
+			getTopLevelBuildURLPath() + "/jenkins-report.html.gz");
+	}
+
+	protected TestrayAttachment getTopLevelJobSummaryTestrayAttachment() {
+		return getTestrayAttachment(
+			getTopLevelBuild(), "Job Summary (Top Level)",
+			getTopLevelBuildURLPath() + "/job-summary/index.html.gz");
 	}
 
 	protected TestrayAttachment uploadTestrayAttachment(

@@ -155,21 +155,6 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 	}
 
 	@Override
-	public Status getStatus() {
-		Build build = getBuild();
-
-		if (build == null) {
-			return Status.UNTESTED;
-		}
-
-		if (build.isFailing()) {
-			return Status.FAILED;
-		}
-
-		return Status.PASSED;
-	}
-
-	@Override
 	public String getTeamName() {
 		JobProperty teamNamesJobProperty = _getJobProperty(
 			"testray.team.names");
@@ -223,11 +208,11 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 	public List<TestrayAttachment> getTestrayAttachments() {
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
 
-		testrayAttachments.add(_getBuildReportTopLevelTestrayAttachment());
-		testrayAttachments.add(_getJobSummaryTestrayAttachment());
 		testrayAttachments.add(_getJenkinsConsoleTestrayAttachment());
-		testrayAttachments.add(_getJenkinsConsoleTopLevelTestrayAttachment());
-		testrayAttachments.add(_getJenkinsReportTestrayAttachment());
+		testrayAttachments.add(getTopLevelBuildReportTestrayAttachment());
+		testrayAttachments.add(getTopLevelJenkinsConsoleTestrayAttachment());
+		testrayAttachments.add(getTopLevelJenkinsReportTestrayAttachment());
+		testrayAttachments.add(getTopLevelJobSummaryTestrayAttachment());
 		testrayAttachments.add(_getWarningsTestrayAttachment());
 
 		testrayAttachments.removeAll(Collections.singleton(null));
@@ -300,12 +285,6 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		return _axisTestClassGroup;
 	}
 
-	private TestrayAttachment _getBuildReportTopLevelTestrayAttachment() {
-		return getTestrayAttachment(
-			getTopLevelBuild(), "Build Report (Top Level)",
-			getTopLevelBuildURLPath() + "/build-report.json.gz");
-	}
-
 	private TestrayAttachment _getJenkinsConsoleTestrayAttachment() {
 		String name = "Jenkins Console";
 		String key = getAxisBuildURLPath() + "/jenkins-console.txt.gz";
@@ -358,18 +337,6 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		return uploadTestrayAttachment(name, key, callable);
 	}
 
-	private TestrayAttachment _getJenkinsConsoleTopLevelTestrayAttachment() {
-		return getTestrayAttachment(
-			getTopLevelBuild(), "Jenkins Console (Top Level)",
-			getTopLevelBuildURLPath() + "/jenkins-console.txt.gz");
-	}
-
-	private TestrayAttachment _getJenkinsReportTestrayAttachment() {
-		return getTestrayAttachment(
-			getTopLevelBuild(), "Jenkins Report (Top Level)",
-			getTopLevelBuildURLPath() + "/jenkins-report.html.gz");
-	}
-
 	private JobProperty _getJobProperty(String basePropertyName) {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
@@ -384,12 +351,6 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		}
 
 		return JobPropertyFactory.newJobProperty(basePropertyName, job);
-	}
-
-	private TestrayAttachment _getJobSummaryTestrayAttachment() {
-		return getTestrayAttachment(
-			getTopLevelBuild(), "Job Summary (Top Level)",
-			getTopLevelBuildURLPath() + "/job-summary/index.html.gz");
 	}
 
 	private TestrayAttachment _getWarningsTestrayAttachment() {

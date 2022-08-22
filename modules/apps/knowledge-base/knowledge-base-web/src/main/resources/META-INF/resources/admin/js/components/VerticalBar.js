@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import NavigationPanel from './NavigationPanel';
+import TemplatesPanel from './TemplatesPanel';
 
 const CSS_EXPANDED = 'expanded';
 
@@ -116,7 +117,7 @@ const VerticalNavigationBar = ({
 	const VerticalBarPanels = {
 		article: NavigationPanel,
 		suggestion: NavigationPanel,
-		template: NavigationPanel,
+		template: TemplatesPanel,
 	};
 
 	return (

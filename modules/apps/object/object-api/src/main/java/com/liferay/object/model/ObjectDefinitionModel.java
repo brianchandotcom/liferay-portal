@@ -423,6 +423,48 @@ public interface ObjectDefinitionModel
 	public void setClassName(String className);
 
 	/**
+	 * Returns the enable categorization of this object definition.
+	 *
+	 * @return the enable categorization of this object definition
+	 */
+	public boolean getEnableCategorization();
+
+	/**
+	 * Returns <code>true</code> if this object definition is enable categorization.
+	 *
+	 * @return <code>true</code> if this object definition is enable categorization; <code>false</code> otherwise
+	 */
+	public boolean isEnableCategorization();
+
+	/**
+	 * Sets whether this object definition is enable categorization.
+	 *
+	 * @param enableCategorization the enable categorization of this object definition
+	 */
+	public void setEnableCategorization(boolean enableCategorization);
+
+	/**
+	 * Returns the enable comments of this object definition.
+	 *
+	 * @return the enable comments of this object definition
+	 */
+	public boolean getEnableComments();
+
+	/**
+	 * Returns <code>true</code> if this object definition is enable comments.
+	 *
+	 * @return <code>true</code> if this object definition is enable comments; <code>false</code> otherwise
+	 */
+	public boolean isEnableComments();
+
+	/**
+	 * Sets whether this object definition is enable comments.
+	 *
+	 * @param enableComments the enable comments of this object definition
+	 */
+	public void setEnableComments(boolean enableComments);
+
+	/**
 	 * Returns the name of this object definition.
 	 *
 	 * @return the name of this object definition

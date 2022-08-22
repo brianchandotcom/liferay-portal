@@ -78,7 +78,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -112,6 +112,10 @@ public class ObjectDefinitionCacheModel
 		sb.append(label);
 		sb.append(", className=");
 		sb.append(className);
+		sb.append(", enableCategorization=");
+		sb.append(enableCategorization);
+		sb.append(", enableComments=");
+		sb.append(enableComments);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", panelAppOrder=");
@@ -208,6 +212,9 @@ public class ObjectDefinitionCacheModel
 			objectDefinitionImpl.setClassName(className);
 		}
 
+		objectDefinitionImpl.setEnableCategorization(enableCategorization);
+		objectDefinitionImpl.setEnableComments(enableComments);
+
 		if (name == null) {
 			objectDefinitionImpl.setName("");
 		}
@@ -302,6 +309,10 @@ public class ObjectDefinitionCacheModel
 		dbTableName = objectInput.readUTF();
 		label = objectInput.readUTF();
 		className = objectInput.readUTF();
+
+		enableCategorization = objectInput.readBoolean();
+
+		enableComments = objectInput.readBoolean();
 		name = objectInput.readUTF();
 		panelAppOrder = objectInput.readUTF();
 		panelCategoryKey = objectInput.readUTF();
@@ -377,6 +388,10 @@ public class ObjectDefinitionCacheModel
 		else {
 			objectOutput.writeUTF(className);
 		}
+
+		objectOutput.writeBoolean(enableCategorization);
+
+		objectOutput.writeBoolean(enableComments);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -459,6 +474,8 @@ public class ObjectDefinitionCacheModel
 	public String dbTableName;
 	public String label;
 	public String className;
+	public boolean enableCategorization;
+	public boolean enableComments;
 	public String name;
 	public String panelAppOrder;
 	public String panelCategoryKey;

@@ -62,6 +62,8 @@ public class ObjectDefinitionWrapper
 		attributes.put("dbTableName", getDBTableName());
 		attributes.put("label", getLabel());
 		attributes.put("className", getClassName());
+		attributes.put("enableCategorization", isEnableCategorization());
+		attributes.put("enableComments", isEnableComments());
 		attributes.put("name", getName());
 		attributes.put("panelAppOrder", getPanelAppOrder());
 		attributes.put("panelCategoryKey", getPanelCategoryKey());
@@ -179,6 +181,19 @@ public class ObjectDefinitionWrapper
 
 		if (className != null) {
 			setClassName(className);
+		}
+
+		Boolean enableCategorization = (Boolean)attributes.get(
+			"enableCategorization");
+
+		if (enableCategorization != null) {
+			setEnableCategorization(enableCategorization);
+		}
+
+		Boolean enableComments = (Boolean)attributes.get("enableComments");
+
+		if (enableComments != null) {
+			setEnableComments(enableComments);
 		}
 
 		String name = (String)attributes.get("name");
@@ -353,6 +368,26 @@ public class ObjectDefinitionWrapper
 	@Override
 	public String getDestinationName() {
 		return model.getDestinationName();
+	}
+
+	/**
+	 * Returns the enable categorization of this object definition.
+	 *
+	 * @return the enable categorization of this object definition
+	 */
+	@Override
+	public boolean getEnableCategorization() {
+		return model.getEnableCategorization();
+	}
+
+	/**
+	 * Returns the enable comments of this object definition.
+	 *
+	 * @return the enable comments of this object definition
+	 */
+	@Override
+	public boolean getEnableComments() {
+		return model.getEnableComments();
 	}
 
 	@Override
@@ -763,6 +798,26 @@ public class ObjectDefinitionWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this object definition is enable categorization.
+	 *
+	 * @return <code>true</code> if this object definition is enable categorization; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEnableCategorization() {
+		return model.isEnableCategorization();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object definition is enable comments.
+	 *
+	 * @return <code>true</code> if this object definition is enable comments; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEnableComments() {
+		return model.isEnableComments();
+	}
+
+	/**
 	 * Returns <code>true</code> if this object definition is portlet.
 	 *
 	 * @return <code>true</code> if this object definition is portlet; <code>false</code> otherwise
@@ -883,6 +938,26 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setDescriptionObjectFieldId(long descriptionObjectFieldId) {
 		model.setDescriptionObjectFieldId(descriptionObjectFieldId);
+	}
+
+	/**
+	 * Sets whether this object definition is enable categorization.
+	 *
+	 * @param enableCategorization the enable categorization of this object definition
+	 */
+	@Override
+	public void setEnableCategorization(boolean enableCategorization) {
+		model.setEnableCategorization(enableCategorization);
+	}
+
+	/**
+	 * Sets whether this object definition is enable comments.
+	 *
+	 * @param enableComments the enable comments of this object definition
+	 */
+	@Override
+	public void setEnableComments(boolean enableComments) {
+		model.setEnableComments(enableComments);
 	}
 
 	/**

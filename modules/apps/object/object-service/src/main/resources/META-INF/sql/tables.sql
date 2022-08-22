@@ -35,6 +35,8 @@ create table ObjectDefinition (
 	dbTableName VARCHAR(75) null,
 	label STRING null,
 	className VARCHAR(75) null,
+	enableCategorization BOOLEAN,
+	enableComments BOOLEAN,
 	name VARCHAR(75) null,
 	panelAppOrder VARCHAR(75) null,
 	panelCategoryKey VARCHAR(75) null,

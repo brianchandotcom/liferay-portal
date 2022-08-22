@@ -5,6 +5,7 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "colorNeutral1",
+						"minHeight": "93vh",
 						"paddingBottom": "6",
 						"paddingTop": "4"
 					},
@@ -156,7 +157,7 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"maxWidth": "680px"
+										"width": "680px"
 									},
 									"widgetInstance": {
 										"widgetConfig": {

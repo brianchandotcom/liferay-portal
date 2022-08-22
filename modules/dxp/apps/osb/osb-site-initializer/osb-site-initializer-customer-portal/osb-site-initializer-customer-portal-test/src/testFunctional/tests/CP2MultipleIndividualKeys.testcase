@@ -129,4 +129,46 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-161108 | Test Summary: Verify that projects that does not have Keys shows alert message with the text 'Unable to download key, please try again.' when the user click at 'Export All Key Details (csv)' at Action dropdown button."
+	@priority = "5"
+	test ErrorMessageFromIndividualKeysDownload {
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("When I click at the Actions dropdown button") {
+			CustomerPortal.clickAtButton(text = "Actions");
+		}
+
+		task ("When I click at the download button") {
+			CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Export All Key Details (csv)");
+		}
+
+		task ("Then I assert that the alert with the message 'Unable to download key, please try again.' is visible") {
+			CustomerPortal.viewAlert(alertText = "Unable to download key, please try again.");
+		}
+
+		task ("And I get the expected downloaded file name") {
+			var downloadedFileName = CP2ActivationKeys.formatLicenseFileName(
+				licenseType = "activation-key",
+				product = "${testProduct}",
+				version = "7.4",
+				licenseName = "${testAccount}",
+				fileType = "xml");
+		}
+
+		task ("And I assert that the Activation Key was downloaded") {
+			CP2FileUtil.assertDownloadedFileIsNotPresent(downloadedFileName = "${downloadedFileName}");
+		}
+	}
+
 }

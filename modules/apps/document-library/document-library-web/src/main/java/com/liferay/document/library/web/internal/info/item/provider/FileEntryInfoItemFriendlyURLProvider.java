@@ -19,9 +19,12 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.friendly.url.util.comparator.FriendlyURLEntryLocalizationComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -58,10 +61,10 @@ public class FileEntryInfoItemFriendlyURLProvider
 		long groupId = _getGroupId();
 
 		if ((groupId != GroupConstants.DEFAULT_LIVE_GROUP_ID) &&
-			(groupId != mainFriendlyURLEntry.getGroupId()) &&
-			_hasFriendlyURL(groupId, mainFriendlyURLEntry.getUrlTitle())) {
+			(groupId != mainFriendlyURLEntry.getGroupId())) {
 
-			return String.valueOf(fileEntry.getFileEntryId());
+			return _getGroupFriendlyURL(
+				fileEntry.getFileEntryId(), mainFriendlyURLEntry);
 		}
 
 		return mainFriendlyURLEntry.getUrlTitle();
@@ -77,6 +80,22 @@ public class FileEntryInfoItemFriendlyURLProvider
 			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			_friendlyURLEntryLocalizationComparator);
+	}
+
+	private String _getGroupFriendlyURL(
+		long fileEntryId, FriendlyURLEntry friendlyURLEntry) {
+
+		Group group = _groupLocalService.fetchGroup(
+			friendlyURLEntry.getGroupId());
+
+		if (group == null) {
+			return String.valueOf(fileEntryId);
+		}
+
+		String groupFriendlyURL = group.getFriendlyURL();
+
+		return groupFriendlyURL.replaceFirst(StringPool.SLASH, "") +
+			StringPool.SLASH + friendlyURLEntry.getUrlTitle();
 	}
 
 	private long _getGroupId() {
@@ -102,24 +121,15 @@ public class FileEntryInfoItemFriendlyURLProvider
 		return themeDisplay.getScopeGroupId();
 	}
 
-	private boolean _hasFriendlyURL(long groupId, String friendlyURL) {
-		FriendlyURLEntry friendlyURLEntry =
-			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-				groupId, FileEntry.class, friendlyURL);
-
-		if (friendlyURLEntry == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 	private final FriendlyURLEntryLocalizationComparator
 		_friendlyURLEntryLocalizationComparator =
 			new FriendlyURLEntryLocalizationComparator();
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

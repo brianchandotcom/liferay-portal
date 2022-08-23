@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -916,14 +915,18 @@ public class DefaultObjectEntryManagerImpl
 					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
 					objectField.getBusinessType())) {
 
-				values.put(
-					name,
-					SanitizerUtil.sanitize(
+				String value = String.valueOf(object);
+
+				for (Sanitizer sanitizer : _sanitizers) {
+					value = sanitizer.sanitize(
 						objectField.getCompanyId(), groupId,
 						objectField.getUserId(),
 						objectDefinition.getClassName(), objectEntryId,
-						ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-						String.valueOf(object), null));
+						ContentTypes.TEXT_HTML,
+						new String[] {Sanitizer.MODE_ALL}, value, null);
+				}
+
+				values.put(name, value);
 
 				continue;
 			}
@@ -1000,6 +1003,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private Queries _queries;
+
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;

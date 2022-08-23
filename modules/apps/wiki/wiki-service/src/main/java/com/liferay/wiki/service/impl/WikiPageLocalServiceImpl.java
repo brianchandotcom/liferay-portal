@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -259,9 +259,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		_validateExternalReferenceCode(
 			externalReferenceCode, node.getGroupId());
 
-		content = SanitizerUtil.sanitize(
-			user.getCompanyId(), node.getGroupId(), userId,
-			WikiPage.class.getName(), pageId, "text/" + format, content);
+		for (Sanitizer sanitizer : _sanitizers) {
+			content = sanitizer.sanitize(
+				user.getCompanyId(), node.getGroupId(), userId,
+				WikiPage.class.getName(), pageId, "text/" + format,
+				new String[] {Sanitizer.MODE_ALL}, content, null);
+		}
 
 		title = _normalizeSpace(title);
 
@@ -3304,9 +3307,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			pageId = oldPage.getPageId();
 		}
 
-		content = SanitizerUtil.sanitize(
-			user.getCompanyId(), oldPage.getGroupId(), userId,
-			WikiPage.class.getName(), pageId, "text/" + format, content);
+		for (Sanitizer sanitizer : _sanitizers) {
+			content = sanitizer.sanitize(
+				user.getCompanyId(), oldPage.getGroupId(), userId,
+				WikiPage.class.getName(), pageId, "text/" + format,
+				new String[] {Sanitizer.MODE_ALL}, content, null);
+		}
 
 		long nodeId = oldPage.getNodeId();
 
@@ -3506,6 +3512,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
 
 	private ServiceTrackerMap<String, WikiPageRenameContentProcessor>
 		_serviceTrackerMap;

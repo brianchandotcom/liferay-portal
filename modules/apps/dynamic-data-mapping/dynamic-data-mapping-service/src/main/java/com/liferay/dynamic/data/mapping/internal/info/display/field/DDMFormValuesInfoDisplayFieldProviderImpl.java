@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -246,10 +245,15 @@ public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
 			return jsonObject;
 		}
 
-		return SanitizerUtil.sanitize(
-			t.getCompanyId(), t.getGroupId(), t.getUserId(),
-			t.getModelClassName(), (long)t.getPrimaryKeyObj(),
-			ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, valueString, null);
+		for (Sanitizer sanitizer : _sanitizers) {
+			valueString = sanitizer.sanitize(
+				t.getCompanyId(), t.getGroupId(), t.getUserId(),
+				t.getModelClassName(), (long)t.getPrimaryKeyObj(),
+				ContentTypes.TEXT_HTML, new String[] {Sanitizer.MODE_ALL},
+				valueString, null);
+		}
+
+		return valueString;
 	}
 
 	private String _transformFileEntryURL(String data) {
@@ -286,5 +290,8 @@ public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
 
 }

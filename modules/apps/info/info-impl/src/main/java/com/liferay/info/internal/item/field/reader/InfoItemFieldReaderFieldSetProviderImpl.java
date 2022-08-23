@@ -24,7 +24,6 @@ import com.liferay.info.item.field.reader.InfoItemFieldReaderTracker;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -88,12 +87,15 @@ public class InfoItemFieldReaderFieldSetProviderImpl
 				(value instanceof String)) {
 
 				try {
-					value = SanitizerUtil.sanitize(
-						serviceContext.getCompanyId(),
-						serviceContext.getScopeGroupId(),
-						serviceContext.getUserId(), className, 0,
-						ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-						(String)value, null);
+					for (Sanitizer sanitizer : _sanitizers) {
+						value = sanitizer.sanitize(
+							serviceContext.getCompanyId(),
+							serviceContext.getScopeGroupId(),
+							serviceContext.getUserId(), className, 0,
+							ContentTypes.TEXT_HTML,
+							new String[] {Sanitizer.MODE_ALL}, (String)value,
+							null);
+					}
 				}
 				catch (SanitizerException sanitizerException) {
 					throw new RuntimeException(sanitizerException);
@@ -108,5 +110,8 @@ public class InfoItemFieldReaderFieldSetProviderImpl
 
 	@Reference
 	private InfoItemFieldReaderTracker _infoItemFieldReaderTracker;
+
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
 
 }

@@ -66,7 +66,7 @@ function renderEditSXPBlueprintForm(props) {
 			initialDescription={{}}
 			initialSXPElementInstances={[]}
 			initialTitle={{
-				en_US: 'Test Title',
+				'en-US': 'Test Title',
 			}}
 			sxpBlueprintId="0"
 			{...props}

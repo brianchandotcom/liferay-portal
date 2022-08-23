@@ -23,7 +23,7 @@ import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useRef, useState} from 'react';
 
-import {sub} from '../utils/language';
+import {formatLocaleWithDashes, sub} from '../utils/language';
 import {removeDuplicates} from '../utils/utils';
 import ThemeContext from './ThemeContext';
 
@@ -34,8 +34,8 @@ import ThemeContext from './ThemeContext';
  * @returns {Object}
  */
 const convertLocaleStringToObject = (locale) => ({
-	label: locale,
-	symbol: locale.replace('_', '-').toLocaleLowerCase(),
+	label: formatLocaleWithDashes(locale),
+	symbol: formatLocaleWithDashes(locale).toLocaleLowerCase(),
 });
 
 /**
@@ -50,17 +50,17 @@ const convertLocaleStringToObject = (locale) => ({
  * @returns {string}
  */
 const getDisplayLocale = (title, locale, defaultLocale) => {
-	if (title[locale]) {
-		return locale;
+	if (title[formatLocaleWithDashes(locale)]) {
+		return formatLocaleWithDashes(locale);
 	}
-	if (title[defaultLocale]) {
-		return defaultLocale;
+	if (title[formatLocaleWithDashes(defaultLocale)]) {
+		return formatLocaleWithDashes(defaultLocale);
 	}
 	if (Object.keys(title).length) {
 		return Object.keys(title)[0];
 	}
 
-	return defaultLocale;
+	return formatLocaleWithDashes(defaultLocale);
 };
 
 function EditTitleModal({
@@ -90,6 +90,8 @@ function EditTitleModal({
 		)
 	);
 
+	const defaultLocaleBCP47 = formatLocaleWithDashes(defaultLocale);
+
 	const [description, setDescription] = useState(initialDescription);
 	const [hasError, setHasError] = useState(false);
 	const [title, setTitle] = useState(initialTitle);
@@ -98,11 +100,11 @@ function EditTitleModal({
 	const titleInputRef = useRef();
 
 	const _handleBlur = (event) => {
-		if (selectedLocale.label === defaultLocale) {
+		if (selectedLocale.label === defaultLocaleBCP47) {
 			setHasError(!event.currentTarget.value);
 		}
 		else {
-			setHasError(!title[defaultLocale]);
+			setHasError(!title[defaultLocaleBCP47]);
 		}
 	};
 
@@ -114,7 +116,7 @@ function EditTitleModal({
 	const _handleSubmit = (event) => {
 		event.preventDefault();
 
-		if (!title[defaultLocale]) {
+		if (!title[defaultLocaleBCP47]) {
 			setHasError(true);
 
 			titleInputRef.current.focus();
@@ -130,7 +132,7 @@ function EditTitleModal({
 		<>
 			{Liferay.Language.get('title')}
 
-			{selectedLocale.label === defaultLocale && (
+			{selectedLocale.label === defaultLocaleBCP47 && (
 				<ClayIcon
 					className="ml-1 reference-mark"
 					focusable="false"
@@ -177,7 +179,7 @@ function EditTitleModal({
 										Liferay.Language.get(
 											'please-enter-a-valid-title-for-the-default-language-x'
 										),
-										[defaultLocale]
+										[defaultLocaleBCP47]
 									)}
 								</ClayForm.FeedbackItem>
 							</ClayForm.FeedbackGroup>

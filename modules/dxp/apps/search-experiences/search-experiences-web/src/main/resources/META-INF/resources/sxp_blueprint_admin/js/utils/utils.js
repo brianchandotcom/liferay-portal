@@ -13,7 +13,7 @@ import moment from 'moment';
 
 import {CONFIG_PREFIX, DEFAULT_ERROR} from './constants';
 import {INPUT_TYPES} from './inputTypes';
-import {renameKeys} from './language';
+import {formatLocaleWithUnderscores, renameKeys} from './language';
 
 /**
  * Function to get valid classNames and return them sorted.
@@ -558,8 +558,9 @@ export function getSXPElementJSON(sxpElement, uiConfigurationValues) {
 	const {category, configuration, icon} = elementDefinition;
 
 	return {
-		description_i18n: renameKeys(description_i18n, (str) =>
-			str.replace('-', '_')
+		description_i18n: renameKeys(
+			description_i18n,
+			formatLocaleWithUnderscores
 		),
 		elementDefinition: {
 			category,
@@ -571,7 +572,7 @@ export function getSXPElementJSON(sxpElement, uiConfigurationValues) {
 				: configuration,
 			icon,
 		},
-		title_i18n: renameKeys(title_i18n, (str) => str.replace('-', '_')),
+		title_i18n: renameKeys(title_i18n, formatLocaleWithUnderscores),
 	};
 }
 

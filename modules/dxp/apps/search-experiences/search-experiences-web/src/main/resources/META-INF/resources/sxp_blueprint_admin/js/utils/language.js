@@ -10,6 +10,36 @@
  */
 
 /**
+ * Formats locale from default pattern with underscore to pattern with
+ * dashes (BCP47).
+ *
+ * Example:
+ * formatLocaleWithDashes("en_US")
+ * => "en-US"
+ *
+ * @param {string} locale Language identifier
+ * @returns {string}
+ */
+export function formatLocaleWithDashes(locale) {
+	return locale.replaceAll('_', '-');
+}
+
+/**
+ * Formats locale from pattern with dashes (BCP47) to default pattern
+ * with underscore.
+ *
+ * Example:
+ * formatLocaleWithUnderscore("en-US")
+ * => "en_US"
+ *
+ * @param {string} locale Language identifier
+ * @returns {string}
+ */
+export function formatLocaleWithUnderscores(locale) {
+	return locale.replaceAll('-', '_');
+}
+
+/**
  * Function to return a new object with renamed keys.
  *
  * Example:
@@ -123,8 +153,8 @@ export function getLocalizedText(value, locale) {
 	else if (value[locale]) {
 		return value[locale];
 	}
-	else if (value[locale.replace('_', '-')]) {
-		return value[locale.replace('_', '-')];
+	else if (value[formatLocaleWithDashes(locale)]) {
+		return value[formatLocaleWithDashes(locale)];
 	}
 	else if (typeof value === 'string' || value instanceof String) {
 		return value;

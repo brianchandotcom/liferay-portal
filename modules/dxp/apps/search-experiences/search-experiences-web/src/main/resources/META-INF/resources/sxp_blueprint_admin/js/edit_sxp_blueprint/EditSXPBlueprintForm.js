@@ -33,6 +33,7 @@ import ThemeContext from '../shared/ThemeContext';
 import {DEFAULT_ERROR, SIDEBARS} from '../utils/constants';
 import {fetchData, fetchPreviewSearch} from '../utils/fetch';
 import {INPUT_TYPES} from '../utils/inputTypes';
+import {formatLocaleWithUnderscores, renameKeys} from '../utils/language';
 import {setStorageAddSXPElementSidebar} from '../utils/sessionStorage';
 import {TEST_IDS} from '../utils/testIds';
 import {
@@ -175,9 +176,13 @@ function EditSXPBlueprintForm({
 					{
 						body: JSON.stringify({
 							configuration,
-							description_i18n: formik.values.description,
+							description_i18n: renameKeys(
+								formik.values.description,
+								formatLocaleWithUnderscores
+							),
 							elementInstances,
-							title_i18n: formik.values.title,
+							title_i18n: renameKeys(formik.values.title,
+								formatLocaleWithUnderscores),
 						}),
 						headers: new Headers({
 							'Content-Type': 'application/json',
@@ -200,9 +205,15 @@ function EditSXPBlueprintForm({
 				{
 					body: JSON.stringify({
 						configuration,
-						description_i18n: formik.values.description,
+						description_i18n: renameKeys(
+							formik.values.description,
+							formatLocaleWithUnderscores
+						),
 						elementInstances,
-						title_i18n: formik.values.title,
+						title_i18n: renameKeys(
+							formik.values.title,
+							formatLocaleWithUnderscores
+						),
 					}),
 					headers: new Headers({
 						'Content-Type': 'application/json',

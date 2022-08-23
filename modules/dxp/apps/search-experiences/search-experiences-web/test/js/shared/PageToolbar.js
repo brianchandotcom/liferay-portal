@@ -34,12 +34,12 @@ const context = {
 };
 
 const title = {
-	en_US: 'Title in English',
-	es_ES: 'Titulo en Espanol',
+	'en-US': 'Title in English',
+	'es-ES': 'Titulo en Espanol',
 };
 const description = {
-	en_US: 'Description in English',
-	es_ES: 'Descripcion en Espanol',
+	'en-US': 'Description in English',
+	'es-ES': 'Descripcion en Espanol',
 };
 
 function PageToolbarComponent(props) {
@@ -82,13 +82,13 @@ describe('PageToolbar', () => {
 	it('renders the title', () => {
 		const {getByText} = renderPageToolbar();
 
-		getByText(title.en_US);
+		getByText(title['en-US']);
 	});
 
 	it('calls onChangeTitleAndDescription when updating title', () => {
 		const {getByLabelText, getByText} = renderPageToolbar();
 
-		getByText(title.en_US);
+		getByText(title['en-US']);
 
 		fireEvent.click(getByLabelText('edit-title'));
 
@@ -108,7 +108,7 @@ describe('PageToolbar', () => {
 	it('calls onChangeTitleAndDescription when updating description', () => {
 		const {getByLabelText, getByText} = renderPageToolbar();
 
-		getByText(description.en_US);
+		getByText(description['en-US']);
 
 		fireEvent.click(getByLabelText('edit-description'));
 
@@ -171,8 +171,8 @@ describe('PageToolbar', () => {
 			locale: 'es_ES',
 		});
 
-		getByText(title.es_ES);
-		getByText(description.es_ES);
+		getByText(title['es-ES']);
+		getByText(description['es-ES']);
 	});
 
 	it('switches locales in modal with language selector', () => {
@@ -190,9 +190,9 @@ describe('PageToolbar', () => {
 
 		fireEvent.click(getAllByTitle('Open Localizations')[0]);
 
-		fireEvent.click(getAllByText('es_ES')[0]);
+		fireEvent.click(getAllByText('es-ES')[0]);
 
-		getByDisplayValue(title.es_ES);
-		getByText(description.es_ES);
+		getByDisplayValue(title['es-ES']);
+		getByText(description['es-ES']);
 	});
 });

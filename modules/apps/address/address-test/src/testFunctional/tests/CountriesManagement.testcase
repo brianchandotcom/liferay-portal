@@ -292,7 +292,7 @@ definition {
 			}
 
 			Click(locator1 = "Pagination#NEXT_LINK");
-			
+
 			for (var regionName : list "Bahia,Distrito Federal") {
 				LexiconEntry.selectEntry(rowEntry = "${regionName}");
 			}
@@ -521,6 +521,66 @@ definition {
 				value1 = "Anhui Sheng");
 
 			LexiconEntry.viewNoEntry(rowEntry = "A Region");
+		}
+	}
+
+	@description = "Canceling region creation will not save it"
+	@priority = "3"
+	test ClickingCancelOrBackWillNotSaveRegion {
+		task ("Given a user adding a region") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "China");
+
+			LexiconEntry.gotoAdd();
+
+			AssertTextEquals(
+				locator1 = "Portlet#HEADER",
+				value1 = "Add Region");
+
+			PortletEntry.inputName(name = "Cancel Region Creation");
+		}
+
+		task ("When user clicks on cancel icon") {
+			Button.clickCancel();
+		}
+
+		task ("Then user is navigated back to regions list") {
+			AssertTextEquals(
+				locator1 = "Portlet#HEADER",
+				value1 = "Edit China");
+		}
+
+		task ("Given a user adding a region") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "China");
+
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.inputName(name = "Back Icon");
+		}
+
+		task ("When user clicks on back icon") {
+			Navigator.gotoBack();
+		}
+
+		task ("Then user is navigated back to regions list") {
+			AssertTextEquals(
+				locator1 = "Portlet#HEADER",
+				value1 = "Edit China");
+		}
+
+		task ("and both regions were not saved") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "China");
+
+			for (var regionName : list "Cancel Region Creation,Back Icon") {
+				Search.searchCP(searchTerm = "${regionName}");
+
+				LexiconEntry.viewNoEntry(rowEntry = "${regionName}");
+			}
 		}
 	}
 

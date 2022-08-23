@@ -50,6 +50,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.service.base.ObjectEntryLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
@@ -1768,25 +1769,12 @@ public class ObjectEntryLocalServiceImpl
 			ObjectDefinition objectDefinition =
 				dynamicObjectDefinitionTable.getObjectDefinition();
 
-			List<ObjectRelationship> objectRelationships =
-				_objectRelationshipPersistence.findByODI1_N(
+			ObjectRelationship objectRelationship =
+				ObjectRelationshipLocalServiceUtil.getObjectRelationship(
 					objectDefinition.getObjectDefinitionId(),
 					GetterUtil.getString(
 						objectFieldSettingsValues.get(
 							"objectRelationshipName")));
-
-			ObjectRelationship objectRelationship = null;
-
-			if (objectRelationships.size() == 1) {
-				objectRelationship = objectRelationships.get(0);
-			}
-			else if (objectRelationships.size() > 1) {
-				for (ObjectRelationship item : objectRelationships) {
-					if (!item.getReverse()) {
-						objectRelationship = item;
-					}
-				}
-			}
 
 			ObjectDefinition relatedObjectDefinition =
 				_objectDefinitionPersistence.findByPrimaryKey(

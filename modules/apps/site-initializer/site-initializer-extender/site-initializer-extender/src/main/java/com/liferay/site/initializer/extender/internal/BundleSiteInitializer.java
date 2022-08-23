@@ -1621,8 +1621,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
+		Group group = serviceContext.getScopeGroup();
+
 		json = _replace(
-			json, "[$", "$]", assetListEntryIdsStringUtilReplaceValues,
+			_replace(
+				json,
+				new String[] {
+					"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]", "[$GROUP_KEY$]"
+				},
+				new String[] {
+					group.getFriendlyURL(),
+					String.valueOf(serviceContext.getScopeGroupId()),
+					group.getGroupKey()
+				}), "[$", "$]", assetListEntryIdsStringUtilReplaceValues,
 			clientExtensionEntryIdsStringUtilReplaceValues,
 			ddmStructureEntryIdsStringUtilReplaceValues,
 			documentsStringUtilReplaceValues,

@@ -32,6 +32,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
@@ -242,10 +243,14 @@ public class FileEntryInfoDisplayContributorTest {
 
 			_addAssetDisplayPageEntry(fileEntry);
 
+			Group depotEntryGroup = _depotEntry.getGroup();
+
 			String expectedURL = StringBundler.concat(
 				"/web/", StringUtil.lowerCase(_group.getGroupKey()),
-				FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY,
-				fileEntry.getFileEntryId());
+				FriendlyURLResolverConstants.URL_SEPARATOR_X_FILE_ENTRY,
+				depotEntryGroup.getFriendlyURL(), StringPool.SLASH,
+				_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+					fileEntry.getTitle()));
 
 			Assert.assertEquals(
 				expectedURL,

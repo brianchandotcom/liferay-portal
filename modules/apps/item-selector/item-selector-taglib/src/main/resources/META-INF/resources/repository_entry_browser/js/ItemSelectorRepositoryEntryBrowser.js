@@ -113,14 +113,16 @@ export default function ItemSelectorRepositoryEntryBrowser({
 			)}
 
 			{itemSelectorPreviewOpen && (
-				<ItemSelectorPreview
-					currentIndex={itemSelectorPreviewIndex}
-					handleClose={() => setItemSelectorPreviewOpen(false)}
-					handleSelectedItem={handleSelectedItem}
-					headerTitle={closeCaption}
-					itemSelectedEventName={itemSelectedEventName}
-					items={itemSelectorPreviewItemsRef.current}
-				/>
+				<div className="item-selector-preview-container">
+					<ItemSelectorPreview
+						currentIndex={itemSelectorPreviewIndex}
+						handleClose={() => setItemSelectorPreviewOpen(false)}
+						handleSelectedItem={handleSelectedItem}
+						headerTitle={closeCaption}
+						itemSelectedEventName={itemSelectedEventName}
+						items={itemSelectorPreviewItemsRef.current}
+					/>
+				</div>
 			)}
 		</>
 	);

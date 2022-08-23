@@ -84,4 +84,72 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-7750 | Automation ID: LRAC-11513 | Test Summary: It is possible to delete an AB test"
+	@priority = "5"
+	test CanDeleteABTest {
+		var nameABTest = "Delete AB test";
+
+		task ("Connect DXP to Analytics Cloud") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to Site Page") {
+			ACUtils.launchDXP();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/ac-page");
+		}
+
+		task ("Start an AB test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "${nameABTest}");
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+		}
+
+		task ("Go to Tests") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToTests();
+		}
+
+		task ("Assert AB test Running") {
+			ACUtils.viewGenericText(textValueList = "${nameABTest}");
+
+			ACTests.statusABTest(status = "RUNNING");
+		}
+
+		task ("Terminate AB Test") {
+			ACTests.terminateABTest(testName = "${nameABTest}");
+		}
+
+		task ("Go to Tests") {
+			ACNavigation.goToTests();
+		}
+
+		task ("Assert AB test Terminated") {
+			ACUtils.viewGenericText(textValueList = "${nameABTest}");
+
+			ACTests.statusABTest(status = "TERMINATED");
+		}
+
+		task ("Delete AB Test") {
+			ACTests.deleteABTest(testName = "${nameABTest}");
+		}
+
+		task ("Go to Tests") {
+			ACNavigation.goToTests();
+		}
+
+		task ("Assert AB test Deleted") {
+			AssertElementNotPresent(
+				key_testName = "${nameABTest}",
+				locator1 = "ACTests#AB_TEST_NAME");
+		}
+	}
+
 }

@@ -198,11 +198,33 @@ definition {
 	}
 
 	@description = "Verify that the user can add Multiple Actions to the same node"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddMultipleActions {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddMultipleActions";
 
-		// TODO CanAddMultipleActions pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
+			actionsTemplateValue = "Action Template",
+			name = "Liferay Action",
+			newAction = "true",
+			newSection = "New Action",
+			sectionOptionList = "1,2,3");
+
+		ProcessBuilderKaleoDesignerReact.viewMultipleActionPresent(
+			actionsTemplateValue = "Action Template",
+			name = "Liferay Action",
+			sectionOptionList = "1,2,3");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
+			propertyName = "Actions",
+			propertyValue = "Liferay Action 1,Liferay Action 2,Liferay Action 3");
 
 	}
 

@@ -275,6 +275,44 @@ definition {
 		}
 	}
 
+	@description = "Selecting multiple regions and deleting it via management toolbar will successfully delete them"
+	@priority = "3"
+	test CanDeleteRegionsInBulk {
+		task ("Given a country with regions") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "Brazil");
+
+			Pagination.changePagination(itemsPerPage = "4");
+		}
+
+		task ("When a user selects multiple regions and deletes them") {
+			for (var regionName : list "Acre,Alagoas") {
+				LexiconEntry.selectEntry(rowEntry = "${regionName}");
+			}
+
+			Click(locator1 = "Pagination#NEXT_LINK");
+			
+			for (var regionName : list "Bahia,Distrito Federal") {
+				LexiconEntry.selectEntry(rowEntry = "${regionName}");
+			}
+
+			ClickNoError(locator1 = "Icon#DELETE");
+
+			AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete the selected regions?");
+		}
+
+		task ("Then all selected regions will be deleted") {
+			Alert.viewSuccessMessage();
+
+			for (var regionName : list "Arce,Alagoas,Bahia,Distrito Federal") {
+				Search.searchCP(searchTerm = "${regionName}");
+
+				LexiconEntry.viewNoEntry(rowEntry = "${regionName}");
+			}
+		}
+	}
+
 	@description = "Test editing region fields"
 	@priority = "5"
 	test CanEditRegion {

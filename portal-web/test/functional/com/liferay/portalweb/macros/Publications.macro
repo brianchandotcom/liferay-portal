@@ -425,6 +425,8 @@ definition {
 		AssertElementPresent(
 			key_warningMessage = "${warningMessage}",
 			locator1 = "Message#WARNING_SPECIFIC");
+
+		AssertVisible(locator1 = "Publications#DISABLED_PUBLISH_BUTTON");
 	}
 
 	macro viewNeedsManualResolution {

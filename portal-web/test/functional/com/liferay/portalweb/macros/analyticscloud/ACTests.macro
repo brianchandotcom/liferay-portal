@@ -7,7 +7,7 @@ definition {
 
 		Click(locator1 = "ACTests#AB_ELLIPSIS");
 
-        Click(locator1 = "ACTests#DELETE_TEST");
+		Click(locator1 = "ACTests#DELETE_TEST");
 
 		Button.clickDelete();
 	}

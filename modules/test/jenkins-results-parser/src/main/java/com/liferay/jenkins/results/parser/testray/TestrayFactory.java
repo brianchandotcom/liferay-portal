@@ -92,6 +92,25 @@ public class TestrayFactory {
 		return testrayAttachmentUploader;
 	}
 
+	public static TestrayBuild newTestrayBuild(String testrayBuildURL) {
+		TestrayBuild testrayBuild = _testrayBuilds.get(testrayBuildURL);
+
+		if (testrayBuild != null) {
+			return testrayBuild;
+		}
+
+		try {
+			testrayBuild = new TestrayBuild(new URL(testrayBuildURL));
+
+			_testrayBuilds.put(testrayBuildURL, testrayBuild);
+
+			return testrayBuild;
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+	}
+
 	public static TestrayCaseResult newTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
@@ -161,13 +180,42 @@ public class TestrayFactory {
 		return testrayServer;
 	}
 
+	public static TopLevelBuildTestrayCaseResult
+		newTopLevelBuildTestrayCaseResult(
+			TestrayBuild testrayBuild, TopLevelBuild topLevelBuild) {
+
+		Integer testrayBuildID = testrayBuild.getID();
+
+		if (_topLevelBuildTestrayCaseResults.containsKey(testrayBuildID)) {
+			return _topLevelBuildTestrayCaseResults.get(testrayBuildID);
+		}
+
+		if (testrayBuild == null) {
+			throw new RuntimeException("Please set a Testray build");
+		}
+
+		if (topLevelBuild == null) {
+			throw new RuntimeException("Please set a top level build");
+		}
+
+		_topLevelBuildTestrayCaseResults.put(
+			testrayBuildID,
+			new TopLevelBuildTestrayCaseResult(testrayBuild, topLevelBuild));
+
+		return _topLevelBuildTestrayCaseResults.get(testrayBuildID);
+	}
+
 	private static final Map<Build, TestrayAttachmentRecorder>
 		_testrayAttachmentRecorders = new HashMap<>();
 	private static final Map<String, TestrayAttachmentUploader>
 		_testrayAttachmentUploaders = new HashMap<>();
+	private static final Map<String, TestrayBuild> _testrayBuilds =
+		new HashMap<>();
 	private static final Map<String, TestrayRoutine> _testrayRoutines =
 		new HashMap<>();
 	private static final Map<String, TestrayServer> _testrayServers =
 		new HashMap<>();
+	private static final Map<Integer, TopLevelBuildTestrayCaseResult>
+		_topLevelBuildTestrayCaseResults = new HashMap<>();
 
 }

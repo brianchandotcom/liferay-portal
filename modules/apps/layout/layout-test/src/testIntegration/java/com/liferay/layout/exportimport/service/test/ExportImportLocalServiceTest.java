@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -236,7 +235,7 @@ public class ExportImportLocalServiceTest {
 	}
 
 	private Map<String, String[]> _getExportParameterMap() throws Exception {
-		return LinkedHashMapBuilder.put(
+		return HashMapBuilder.put(
 			Constants.CMD, new String[] {Constants.EXPORT}
 		).put(
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
@@ -272,7 +271,7 @@ public class ExportImportLocalServiceTest {
 	}
 
 	private Map<String, String[]> _getImportParameterMap() throws Exception {
-		return LinkedHashMapBuilder.put(
+		return HashMapBuilder.put(
 			Constants.CMD, new String[] {Constants.IMPORT}
 		).put(
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,

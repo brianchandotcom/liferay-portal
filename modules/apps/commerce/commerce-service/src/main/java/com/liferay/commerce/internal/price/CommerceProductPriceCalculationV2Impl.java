@@ -41,7 +41,6 @@ import com.liferay.commerce.pricing.modifier.CommercePriceModifierHelper;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -154,7 +153,7 @@ public class CommerceProductPriceCalculationV2Impl
 		boolean discountsTargetNetPrice = true;
 
 		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchCommerceChannel(
+			commerceChannelLocalService.fetchCommerceChannel(
 				commerceContext.getCommerceChannelId());
 
 		if (commerceChannel != null) {
@@ -1129,9 +1128,6 @@ public class CommerceProductPriceCalculationV2Impl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceProductPriceCalculationV2Impl.class);
-
-	@Reference
-	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;

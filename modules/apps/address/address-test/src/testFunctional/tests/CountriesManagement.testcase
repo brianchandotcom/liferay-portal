@@ -378,6 +378,36 @@ definition {
 		}
 	}
 
+	@description = "Test that key and region code are required fields"
+	@priority = "3"
+	test CannotAddRegionWithoutKeyAndRegionCode {
+		task ("Given a user adding a region to country") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "United States");
+		}
+
+		task ("When a user attempts to add a region but only inputs position") {
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.inputText(
+				fieldLabel = "Position",
+				text = "1.0");
+
+			Button.clickSave();
+		}
+
+		task ("Then error validation displays for required fields, Key and Region Code") {
+			AssertElementPresent(
+				key_fieldFieldLabel = "Key",
+				locator1 = "Message#ERROR_FIELD_REQUIRED");
+
+			AssertElementPresent(
+				key_fieldFieldLabel = "Region Code",
+				locator1 = "Message#ERROR_FIELD_REQUIRED");
+		}
+	}
+
 	@description = "Can order countries by name in descending and ascending order"
 	@priority = "3"
 	test CanOrderCountryByName {

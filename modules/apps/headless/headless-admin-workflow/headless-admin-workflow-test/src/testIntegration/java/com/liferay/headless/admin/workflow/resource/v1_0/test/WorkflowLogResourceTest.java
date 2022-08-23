@@ -116,7 +116,7 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_portal.getUserName(
 								TestPropsValues.getUserId(), StringPool.BLANK),
 							false);
-						state = "review";
+						state = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}
@@ -131,7 +131,7 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_siteContentReviewerRole.getTitle(
 								LocaleUtil.getDefault()),
 							false);
-						state = "review";
+						state = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}
@@ -175,7 +175,7 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_portal.getUserName(
 								TestPropsValues.getUserId(), StringPool.BLANK),
 							false);
-						state = "review";
+						state = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}
@@ -206,7 +206,7 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_siteContentReviewerRole.getTitle(
 								LocaleUtil.getDefault()),
 							false);
-						state = "review";
+						state = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}
@@ -240,7 +240,7 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_siteContentReviewerRole.getTitle(
 								LocaleUtil.getDefault()),
 							false);
-						state = "review";
+						state = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}
@@ -284,7 +284,7 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_portal.getUserName(
 								TestPropsValues.getUserId(), StringPool.BLANK),
 							false);
-						state = "review";
+						state = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}
@@ -315,7 +315,7 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_siteContentReviewerRole.getTitle(
 								LocaleUtil.getDefault()),
 							false);
-						state = "review";
+						state = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}

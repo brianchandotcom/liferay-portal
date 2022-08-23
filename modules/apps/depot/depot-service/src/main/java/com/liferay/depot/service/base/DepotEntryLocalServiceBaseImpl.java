@@ -139,10 +139,13 @@ public abstract class DepotEntryLocalServiceBaseImpl
 	 *
 	 * @param depotEntry the depot entry
 	 * @return the depot entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public DepotEntry deleteDepotEntry(DepotEntry depotEntry) {
+	public DepotEntry deleteDepotEntry(DepotEntry depotEntry)
+		throws PortalException {
+
 		return depotEntryPersistence.remove(depotEntry);
 	}
 

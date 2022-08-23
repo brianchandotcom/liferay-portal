@@ -106,10 +106,12 @@ public class DepotEntryLocalServiceWrapper
 	 *
 	 * @param depotEntry the depot entry
 	 * @return the depot entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.depot.model.DepotEntry deleteDepotEntry(
-		com.liferay.depot.model.DepotEntry depotEntry) {
+			com.liferay.depot.model.DepotEntry depotEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _depotEntryLocalService.deleteDepotEntry(depotEntry);
 	}

@@ -225,7 +225,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
 			propertyName = "Actions",
 			propertyValue = "Liferay Action 1,Liferay Action 2,Liferay Action 3");
-
 	}
 
 	@description = "Verify that the user can add multiple notifications"

@@ -18,13 +18,13 @@ definition {
 			User.firstLoginPG();
 		}
 
-		/*task ("Create a new Customer Portal Site") {
+		task ("Create a new Customer Portal Site") {
 			Site.openSitesAdmin();
 
 			TeamExtranet.addSiteTemplateCP(
 				siteName = "${testSiteName}",
 				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
-		}*/
+		}
 	}
 
 	tearDown {
@@ -37,34 +37,6 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 
 			CustomerPortal.customerPortalApisTearDown();
-		}
-	}
-
-	@description = "LPS-148079 - Verify that an activation key's details pop up appears when clicking on a key."
-	@priority = "5"
-	test PopUpShowsFromActivationKey {
-		property portal.upstream = "quarantine";
-
-		// Needs refactor since it depends on example FIFA account
-
-		task ("Given a user signs in on OKTA to update Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("When a user selects a project") {
-			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-		}
-
-		task ("Then the user can click an individual key and a modal for the activation key's details will pop up") {
-			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
 		}
 	}
 
@@ -129,8 +101,8 @@ definition {
 
 		task ("Then the modal will show 'Cluster Nodes' on the Server group") {
 			CP2ActivationKeys.assertKeyDetailsServerElements(
-				keyType = "Virtual Cluster",
-				clusterNodes = "1");
+				clusterNodes = "1",
+				keyType = "Virtual Cluster");
 		}
 	}
 
@@ -195,11 +167,11 @@ definition {
 
 		task ("Then the modal will show all elements of the Environment group") {
 			CP2ActivationKeys.assertKeyDetailsEnvironmentElements(
-				product = "DXP",
-				version = "7.0",
 				environmentType = "Backup",
+				instanceSize = "1",
+				product = "DXP",
 				subscriptionType = "Subscription",
-				instanceSize = "1");
+				version = "7.0");
 		}
 	}
 
@@ -230,9 +202,9 @@ definition {
 
 		task ("Then the modal will show the 'Host Name', 'IP Addresses', and 'MAC Addresses' on the Server group") {
 			CP2ActivationKeys.assertKeyDetailsServerElements(
-				keyType = "On-Premise",
 				hostName = "Redacted",
 				ipAddress = "Redacted",
+				keyType = "On-Premise",
 				macAddress = "Redacted");
 		}
 	}
@@ -264,9 +236,37 @@ definition {
 
 		task ("Then the modal will show all elements of the Activation Status group") {
 			CP2ActivationKeys.assertKeyDetailsStatusElements(
-				status = "Activated",
+				expirationDate = "Mar 30, 2023",
 				startDate = "Jun 30, 2021",
-				expirationDate = "Mar 30, 2023");
+				status = "Activated");
+		}
+	}
+
+	@description = "LPS-148079 - Verify that an activation key's details pop up appears when clicking on a key."
+	@priority = "5"
+	test PopUpShowsFromActivationKey {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When a user selects a project") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+
+		task ("Then the user can click an individual key and a modal for the activation key's details will pop up") {
+			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
 		}
 	}
 

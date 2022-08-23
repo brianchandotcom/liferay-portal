@@ -32,6 +32,14 @@ definition {
 		AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN");
 	}
 
+	macro assertInstructionsTable {
+		for (var text : list "${textList}") {
+			var key_text = "${text}";
+
+			AssertVisible(locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+		}
+	}
+
 	macro assertKeyDetailsEnvironmentElements {
 		var key_group = "Environment";
 
@@ -41,28 +49,32 @@ definition {
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
+
 		if (isSet(version)) {
 			var key_label = "Version";
 			var key_value = "${version}";
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
+
 		if (isSet(environmentType)) {
 			var key_label = "Environment Type";
 			var key_value = "${environmentType}";
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
+
 		if (isSet(subscriptionType)) {
 			var key_label = "Environment Type";
-			var	key_value = "${subscriptionType}";
+			var key_value = "${subscriptionType}";
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
+
 		if (isSet(instanceSize)) {
 			var key_label = "Instance Size";
-			var	key_value = "${instanceSize}";
-			
+			var key_value = "${instanceSize}";
+
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
 	}
@@ -76,27 +88,31 @@ definition {
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
+
 		if (isSet(hostName)) {
 			var key_label = "Host Name";
 			var key_value = "${hostName}";
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
+
 		if (isSet(ipAddress)) {
 			var key_label = "IP Addresses";
 			var key_value = "${ipAddress}";
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
+
 		if (isSet(macAddress)) {
 			var key_label = "MAC Addresses";
-			var	key_value = "${macAddress}";
+			var key_value = "${macAddress}";
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
+
 		if (isSet(clusterNodes)) {
 			var key_label = "Cluster Nodes";
-			var	key_value = "${clusterNodes}";
+			var key_value = "${clusterNodes}";
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
@@ -111,25 +127,19 @@ definition {
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
+
 		if (isSet(startDate)) {
 			var key_label = "Start Date";
 			var key_value = "${startDate}";
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
+
 		if (isSet(expirationDate)) {
 			var key_label = "Expiration Date";
 			var key_value = "${expiratonDate}";
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
-		}
-	}
-
-	macro assertInstructionsTable {
-		for (var text : list "${textList}") {
-			var key_text = "${text}";
-
-			AssertVisible(locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
 		}
 	}
 

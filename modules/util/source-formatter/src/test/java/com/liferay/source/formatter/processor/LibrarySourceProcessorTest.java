@@ -53,15 +53,10 @@ public class LibrarySourceProcessorTest extends BaseSourceProcessorTestCase {
 			"build.testgradle",
 			new String[] {
 				StringBundler.concat(
-					"Library 'org.springframework.security:spring-security-",
-					"core:5.6.2' contains known vulnerabilities(Authorization ",
-					"bypass in Spring Security, https://github.com/advisories",
-					"/GHSA-hh32-7344-cg2f)"),
-				StringBundler.concat(
-					"Library 'com.erudika:para-core.security:para-core:",
-					"1.45.10' contains known vulnerabilities(cCross-site ",
-					"Scripting in com.erudika:para-core, https://github.com",
-					"/advisories/GHSA-phvw-r25p-8xv7)"),
+					"Library 'com.erudika:para-core:1.45.10' contains known ",
+					"vulnerabilities(Cross-site Scripting in com.erudika:",
+					"para-core, https://github.com/advisories/GHSA-phvw-r25p-",
+					"8xv7)"),
 				StringBundler.concat(
 					"Library 'com.twelvemonkeys.imageio:imageio-metadata:",
 					"3.7.0' contains known vulnerabilities(External Entity ",
@@ -71,7 +66,12 @@ public class LibrarySourceProcessorTest extends BaseSourceProcessorTestCase {
 					"Library 'org.apache.jena:jena:",
 					"3.1.0' contains known vulnerabilities(XML External ",
 					"Entity Reference in apache jena, https://github.com",
-					"/advisories/GHSA-gchv-364h-r896)")
+					"/advisories/GHSA-gchv-364h-r896)"),
+				StringBundler.concat(
+					"Library 'org.springframework.security:spring-security-",
+					"core:5.6.2' contains known vulnerabilities(Authorization ",
+					"bypass in Spring Security, https://github.com/advisories",
+					"/GHSA-hh32-7344-cg2f)")
 			});
 
 		test(

@@ -269,6 +269,15 @@ public class ObjectDefinitionResourceImpl
 				active = objectDefinition.isActive();
 				dateCreated = objectDefinition.getCreateDate();
 				dateModified = objectDefinition.getModifiedDate();
+
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-158672"))) {
+
+					enableCategorization =
+						objectDefinition.getEnableCategorization();
+					enableComments = objectDefinition.getEnableComments();
+				}
+
 				id = objectDefinition.getObjectDefinitionId();
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getLabelMap());

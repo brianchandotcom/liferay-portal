@@ -54,7 +54,7 @@ definition {
 				widgetPageName = "My Widget Page");
 		}
 
-		task ("Then My Pretty IFrame is displayed correctly") {
+		task ("Then Vanilla Counter is displayed correctly") {
 			Navigator.gotoPage(pageName = "My Widget Page");
 
 			AssertElementPresent(locator1 = "//vanilla-counter[@test-data-user='QAuser']");

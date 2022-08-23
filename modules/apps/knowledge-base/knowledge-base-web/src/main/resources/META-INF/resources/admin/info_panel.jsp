@@ -67,7 +67,15 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 				<div class="autofit-col">
 					<ul class="autofit-padded-no-gutters autofit-row">
 						<li class="autofit-col">
-							<liferay-util:include page="/admin/kb_folder_action.jsp" servletContext="<%= application %>" />
+
+							<%
+							KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);
+							%>
+
+							<clay:dropdown-actions
+								dropdownItems="<%= kbDropdownItemsProvider.getKBFolderDropdownItems(kbFolder) %>"
+								propsTransformer="admin/js/KBFolderDropdownPropsTransformer"
+							/>
 						</li>
 					</ul>
 				</div>

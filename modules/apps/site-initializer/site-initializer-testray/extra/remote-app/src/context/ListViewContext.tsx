@@ -29,6 +29,7 @@ export type Entry = {
 };
 
 export type InitialState = {
+	checkAll: boolean;
 	columns: {
 		[key: string]: boolean;
 	};
@@ -46,6 +47,7 @@ export type InitialState = {
 };
 
 const initialState: InitialState = {
+	checkAll: false,
 	columns: {},
 	filters: {
 		entries: [],
@@ -59,6 +61,7 @@ const initialState: InitialState = {
 };
 
 export enum ListViewTypes {
+	SET_CHECKED_ALL_ROWS = 'SET_CHECKED_ALL_ROWS',
 	SET_CHECKED_ROW = 'SET_CHECKED_ROW',
 	SET_CLEAR = 'SET_CLEAR',
 	SET_COLUMNS = 'SET_COLUMNS',
@@ -71,7 +74,8 @@ export enum ListViewTypes {
 }
 
 type ListViewPayload = {
-	[ListViewTypes.SET_CHECKED_ROW]: number;
+	[ListViewTypes.SET_CHECKED_ALL_ROWS]: boolean;
+	[ListViewTypes.SET_CHECKED_ROW]: number | number[];
 	[ListViewTypes.SET_CLEAR]: null;
 	[ListViewTypes.SET_COLUMNS]: {columns: any};
 	[ListViewTypes.SET_PAGE]: number;
@@ -91,20 +95,37 @@ export const ListViewContext = createContext<
 const reducer = (state: InitialState, action: AppActions) => {
 	switch (action.type) {
 		case ListViewTypes.SET_CHECKED_ROW:
-			const rowId = action.payload;
-			const rowAlreadyInserted = state.selectedRows.includes(rowId);
+			const rowIds = action.payload;
+
 			let selectedRows = [...state.selectedRows];
 
-			if (rowAlreadyInserted) {
-				selectedRows = selectedRows.filter((row) => row !== rowId);
+			if (Array.isArray(rowIds)) {
+				selectedRows = state.checkAll ? [] : rowIds;
+
+				state.checkAll = !state.checkAll;
 			}
 			else {
-				selectedRows = [...selectedRows, rowId];
+				const rowAlreadyInserted = state.selectedRows.includes(
+					rowIds as number
+				);
+
+				if (rowAlreadyInserted) {
+					selectedRows = selectedRows.filter((row) => row !== rowIds);
+				}
+				else {
+					selectedRows = [...selectedRows, rowIds as number];
+				}
 			}
 
 			return {
 				...state,
 				selectedRows,
+			};
+
+		case ListViewTypes.SET_CHECKED_ALL_ROWS:
+			return {
+				...state,
+				checkAll: action.payload,
 			};
 
 		case ListViewTypes.SET_CLEAR:

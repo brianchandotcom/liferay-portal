@@ -38,6 +38,7 @@ type Column<T = any> = {
 
 export type TableProps<T = any> = {
 	actions?: Action[];
+	allRowsChecked?: boolean;
 	columns: Column[];
 	items: T[];
 	mutate: KeyedMutator<T>;
@@ -52,6 +53,7 @@ export type TableProps<T = any> = {
 };
 
 const Table: React.FC<TableProps> = ({
+	allRowsChecked = false,
 	actions,
 	columns,
 	items,
@@ -80,7 +82,6 @@ const Table: React.FC<TableProps> = ({
 	} = useContextMenu(displayActionColumn);
 
 	const [activeRow, setActiveRow] = useState<number | undefined>();
-	const [checked, setChecked] = useState(false);
 	const [sorted, setSorted] = useState<SortDirection>(SortOption.ASC);
 
 	const navigate = useNavigate();
@@ -126,10 +127,9 @@ const Table: React.FC<TableProps> = ({
 						{rowSelectable && (
 							<ClayTable.Cell>
 								<ClayCheckbox
-									checked={checked}
+									checked={allRowsChecked}
 									onChange={() => {
 										onSelectAllRows();
-										setChecked(!checked);
 									}}
 								/>
 							</ClayTable.Cell>
@@ -190,7 +190,9 @@ const Table: React.FC<TableProps> = ({
 											checked={selectedRows.includes(
 												item.id
 											)}
-											onChange={() => onSelectRow(item)}
+											onChange={() =>
+												onSelectRow(item.id)
+											}
 										/>
 									</ClayTable.Cell>
 								)}

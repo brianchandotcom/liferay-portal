@@ -14,6 +14,7 @@
 
 package com.liferay.content.dashboard.document.library.internal.item.type;
 
+import com.liferay.content.dashboard.document.library.internal.item.provider.FileExtensionGroupsProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -21,6 +22,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -48,8 +50,9 @@ public class DLFileEntryTypeContentDashboardItemSubtypeFactory
 		return new DLFileEntryTypeContentDashboardItemSubtype(
 			basicDocumentDLFileEntryType,
 			_dlFileEntryLocalService.fetchDLFileEntry(entryClassPK),
-			dlFileEntryType,
-			_groupLocalService.fetchGroup(dlFileEntryType.getGroupId()));
+			dlFileEntryType, _fileExtensionGroupsProvider,
+			_groupLocalService.fetchGroup(dlFileEntryType.getGroupId()),
+			_language);
 	}
 
 	@Reference
@@ -59,6 +62,12 @@ public class DLFileEntryTypeContentDashboardItemSubtypeFactory
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@Reference
+	private FileExtensionGroupsProvider _fileExtensionGroupsProvider;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 }

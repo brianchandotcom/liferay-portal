@@ -56,6 +56,20 @@ public class FileExtensionGroupsProvider {
 		return _fileExtensionGroups;
 	}
 
+	public String getFileGroupKey(String extension) {
+		Stream<FileExtensionGroup> stream = _fileExtensionGroups.stream();
+
+		return stream.filter(
+			fileExtensionGroup -> fileExtensionGroup.containsExtension(
+				extension)
+		).findFirst(
+		).map(
+			FileExtensionGroup::getKey
+		).orElse(
+			_OTHER
+		);
+	}
+
 	public boolean isOther(String extension) {
 		return !_extensionMimeTypes.containsKey(extension);
 	}
@@ -81,6 +95,14 @@ public class FileExtensionGroupsProvider {
 			}
 
 			return _key.compareTo(fileExtensionGroup.getKey());
+		}
+
+		public boolean containsExtension(String extension) {
+			if (!ArrayUtil.isEmpty(_extensions)) {
+				return ArrayUtil.contains(_extensions, extension);
+			}
+
+			return false;
 		}
 
 		public String getKey() {

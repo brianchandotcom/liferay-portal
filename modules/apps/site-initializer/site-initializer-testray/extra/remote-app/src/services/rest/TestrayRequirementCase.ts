@@ -57,4 +57,22 @@ const createRequirementCaseBatch = (
 	);
 };
 
-export {createRequirementCaseBatch, requirementsCasesResource};
+const deleteRequirementCaseBatch = (requirements: any) => {
+	const requirementsList = requirements.map(({id}: {id: number}) => id);
+
+	if (requirements.length <= 20) {
+		return Promise.allSettled(
+			requirementsList.map((id: number) =>
+				fetcher.delete(`/requirementscaseses/${id}`)
+			)
+		);
+	}
+
+	return fetcher.delete('/requirementscaseses/batch');
+};
+
+export {
+	createRequirementCaseBatch,
+	requirementsCasesResource,
+	deleteRequirementCaseBatch,
+};

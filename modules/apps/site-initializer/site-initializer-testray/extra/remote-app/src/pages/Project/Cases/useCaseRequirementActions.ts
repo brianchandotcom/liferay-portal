@@ -20,6 +20,7 @@ import i18n from '../../../i18n';
 import {
 	TestrayRequirementCase,
 	createRequirementCaseBatch,
+	deleteRequirementCaseBatch,
 	deleteResource,
 } from '../../../services/rest';
 import {Action} from '../../../types';
@@ -38,7 +39,7 @@ const useCaseRequirementActions = ({
 	const {removeItemFromList} = useMutate();
 
 	const {forceRefetch: modalForceRefetch, modal} = useFormModal({
-		onSave: (state: State) => {
+		onSave: ({items, state}: {items: number; state: State}) => {
 			if (state.length) {
 				createRequirementCaseBatch(
 					state.map(
@@ -51,12 +52,24 @@ const useCaseRequirementActions = ({
 					)
 				)
 					.then(() => {
-						setTimeout(() => {
-							setForceRefetch(new Date().getTime());
-						}, 1000);
+						deleteRequirementCaseBatch(items)
+							.then(() => {
+								setTimeout(() => {
+									setForceRefetch(new Date().getTime());
+								}, 100);
+							})
+							.catch(console.error);
 					})
 					.catch(console.error);
 			}
+
+			return deleteRequirementCaseBatch(items)
+				.then(() => {
+					setTimeout(() => {
+						setForceRefetch(new Date().getTime());
+					}, 100);
+				})
+				.catch(console.error);
 		},
 	});
 

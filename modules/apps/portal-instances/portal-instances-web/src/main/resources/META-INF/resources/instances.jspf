@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <liferay-ui:error exception="<%= RequiredCompanyException.class %>" message="the-default-company-is-required" />
 
 <liferay-ui:search-container
@@ -93,9 +95,16 @@
 			value='<%= LanguageUtil.get(request, curCompany.isActive() ? "yes" : "no") %>'
 		/>
 
-		<liferay-ui:search-container-column-jsp
-			path="/instance_actions.jsp"
-		/>
+		<%
+		CompanyActionDropdownItems companyActionDropdownItems = new CompanyActionDropdownItems(curCompany, request, liferayPortletResponse);
+		%>
+
+		<liferay-ui:search-container-column-text>
+			<clay:dropdown-actions
+				dropdownItems="<%= companyActionDropdownItems.getActionDropdownItems() %>"
+				propsTransformer="js/CompanyDropdownDefaultPropsTransformer"
+			/>
+		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator

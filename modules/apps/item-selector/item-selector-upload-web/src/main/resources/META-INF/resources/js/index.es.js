@@ -12,9 +12,23 @@
  * details.
  */
 
-import {ItemSelectorRepositoryEntryBrowser} from 'item-selector-taglib';
+import {getOpener} from 'frontend-js-web';
+import {
+	ItemSelectorRepositoryEntryBrowser,
+	ItemSelectorRepositoryEntryBrowserLegacy,
+} from 'item-selector-taglib';
 import React from 'react';
 
 export default function (props) {
-	return <ItemSelectorRepositoryEntryBrowser {...props} />;
+	if (Liferay.FeatureFlags['LPS-160919']) {
+		return <ItemSelectorRepositoryEntryBrowser {...props} />;
+	}
+
+	const itemSelector = new ItemSelectorRepositoryEntryBrowserLegacy({
+		...props,
+	});
+
+	itemSelector.on('selectedItem', (event) => {
+		getOpener().Liferay.fire(props.eventName, event);
+	});
 }

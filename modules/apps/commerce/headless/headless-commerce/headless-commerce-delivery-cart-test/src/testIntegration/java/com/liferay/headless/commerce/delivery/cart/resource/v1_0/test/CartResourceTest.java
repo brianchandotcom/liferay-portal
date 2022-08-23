@@ -111,8 +111,8 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"http://localhost:8080/o/commerce-payment?groupId=",
-				_commerceChannel.getGroupId(), "&uuid=", cart.getOrderUUID(),
-				"&nextStep=", callbackURL),
+				_commerceChannel.getGroupId(), "&nextStep=", callbackURL,
+				"&uuid=", cart.getOrderUUID()),
 			cartResource.getCartPaymentURL(cart.getId(), callbackURL));
 	}
 

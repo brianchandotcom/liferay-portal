@@ -284,7 +284,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	public List<User> getAssignableUsers(long workflowTaskId)
 		throws WorkflowException {
 
-		return _getAllowedUsers(_TASK_ACTION_ASSIGN, workflowTaskId);
+		return _getUsersWithPermission(_TASK_ACTION_ASSIGN, workflowTaskId);
 	}
 
 	@Override
@@ -326,7 +326,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	public List<User> getNotifiableUsers(long workflowTaskId)
 		throws WorkflowException {
 
-		return _getAllowedUsers(_TASK_ACTION_VIEW_NOTIFICATION, workflowTaskId);
+		return _getUsersWithPermission(
+			_TASK_ACTION_VIEW_NOTIFICATION, workflowTaskId);
 	}
 
 	@Override
@@ -823,7 +824,46 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			kaleoInstanceToken, workflowContext, workflowContextServiceContext);
 	}
 
-	private List<User> _getAllowedUsers(String actionType, long workflowTaskId)
+	private long _getAssignedUserId(long kaleoTaskInstanceTokenId) {
+		return Stream.of(
+			_kaleoTaskAssignmentInstanceLocalService.
+				getKaleoTaskAssignmentInstances(kaleoTaskInstanceTokenId)
+		).flatMap(
+			List::parallelStream
+		).filter(
+			kaleoTaskAssignmentInstance -> {
+				String assigneeClassName =
+					kaleoTaskAssignmentInstance.getAssigneeClassName();
+
+				if (assigneeClassName.equals(User.class.getName())) {
+					return true;
+				}
+
+				return false;
+			}
+		).map(
+			KaleoTaskAssignmentInstance::getAssigneeClassPK
+		).findFirst(
+		).orElseGet(
+			() -> 0L
+		);
+	}
+
+	private Collection<KaleoTaskAssignment> _getKaleoTaskAssignments(
+			KaleoTaskAssignment kaleoTaskAssignment,
+			ExecutionContext executionContext)
+		throws PortalException {
+
+		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector =
+			_kaleoTaskAssignmentSelectorRegistry.getKaleoTaskAssignmentSelector(
+				kaleoTaskAssignment.getAssigneeClassName());
+
+		return kaleoTaskAssignmentSelector.getKaleoTaskAssignments(
+			kaleoTaskAssignment, executionContext);
+	}
+
+	private List<User> _getUsersWithPermission(
+			String actionType, long workflowTaskId)
 		throws WorkflowException {
 
 		try {
@@ -864,44 +904,6 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
 		}
-	}
-
-	private long _getAssignedUserId(long kaleoTaskInstanceTokenId) {
-		return Stream.of(
-			_kaleoTaskAssignmentInstanceLocalService.
-				getKaleoTaskAssignmentInstances(kaleoTaskInstanceTokenId)
-		).flatMap(
-			List::parallelStream
-		).filter(
-			kaleoTaskAssignmentInstance -> {
-				String assigneeClassName =
-					kaleoTaskAssignmentInstance.getAssigneeClassName();
-
-				if (assigneeClassName.equals(User.class.getName())) {
-					return true;
-				}
-
-				return false;
-			}
-		).map(
-			KaleoTaskAssignmentInstance::getAssigneeClassPK
-		).findFirst(
-		).orElseGet(
-			() -> 0L
-		);
-	}
-
-	private Collection<KaleoTaskAssignment> _getKaleoTaskAssignments(
-			KaleoTaskAssignment kaleoTaskAssignment,
-			ExecutionContext executionContext)
-		throws PortalException {
-
-		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector =
-			_kaleoTaskAssignmentSelectorRegistry.getKaleoTaskAssignmentSelector(
-				kaleoTaskAssignment.getAssigneeClassName());
-
-		return kaleoTaskAssignmentSelector.getKaleoTaskAssignments(
-			kaleoTaskAssignment, executionContext);
 	}
 
 	private boolean _hasAssignableUsers(

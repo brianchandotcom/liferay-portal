@@ -24,8 +24,9 @@ type ProductListProps = {
 
 export type ProductCell = {
 	active: boolean;
+	goalValue: number;
+	productExternalReferenceCode: string;
 	productName: string;
-	salesGoal: number;
 	totalSales: number;
 };
 
@@ -47,7 +48,9 @@ const ProductList: React.FC<ProductListProps> = ({onSelect, productList}) => {
 						}
 					)}
 					key={index}
-					onClick={() => onSelect(productCell.productName)}
+					onClick={() =>
+						onSelect(productCell.productExternalReferenceCode)
+					}
 				>
 					<div className="align-items-center col-md-6 d-flex product-container px-0">
 						<img
@@ -69,7 +72,7 @@ const ProductList: React.FC<ProductListProps> = ({onSelect, productList}) => {
 
 						<p className="mb-0 text-paragraph-sm text-right yearly-goal">
 							Yearly Goal:&nbsp;
-							{currencyConversion(productCell.salesGoal)}
+							{currencyConversion(productCell.goalValue)}
 						</p>
 					</div>
 				</div>

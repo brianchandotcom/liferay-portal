@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -47,8 +48,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
 import com.liferay.segments.configuration.SegmentsConfiguration;
 import com.liferay.segments.constants.SegmentsWebKeys;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -285,6 +289,85 @@ public class SegmentsServicePreActionTest {
 		}
 	}
 
+	@Test
+	public void testProcessLifecycleUsesCorrectSegmentsExperienceWithCachedSegmentsEntryId()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					SegmentsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"segmentationEnabled", true
+					).build())) {
+
+			try (CompanyConfigurationTemporarySwapper
+					companyConfigurationTemporarySwapper =
+						new CompanyConfigurationTemporarySwapper(
+							TestPropsValues.getCompanyId(),
+							SegmentsCompanyConfiguration.class.getName(),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"segmentationEnabled", true
+							).build(),
+							SettingsFactoryUtil.getSettingsFactory())) {
+
+				LifecycleAction lifecycleAction = _getLifecycleAction();
+
+				MockHttpServletRequest mockHttpServletRequest =
+					new MockHttpServletRequest();
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId(), TestPropsValues.getUserId());
+
+				Map<Locale, String> nameMap = Collections.singletonMap(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+				Layout layout = _layoutLocalService.addLayout(
+					TestPropsValues.getUserId(), _group.getGroupId(), false,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0, nameMap,
+					nameMap, Collections.emptyMap(), Collections.emptyMap(),
+					Collections.emptyMap(), LayoutConstants.TYPE_COLLECTION,
+					UnicodePropertiesBuilder.put(
+						"published", "true"
+					).buildString(),
+					false, false, Collections.emptyMap(), 0, serviceContext);
+
+				mockHttpServletRequest.setAttribute(
+					WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
+				LifecycleEvent lifecycleEvent = new LifecycleEvent(
+					mockHttpServletRequest, new MockHttpServletResponse());
+
+				mockHttpServletRequest.setAttribute(
+					SegmentsWebKeys.SEGMENTS_ENTRY_IDS, new long[] {0L});
+
+				lifecycleAction.processLifecycleEvent(lifecycleEvent);
+
+				List<SegmentsExperience> segmentsExperiences =
+					_segmentsExperienceLocalService.getSegmentsExperiences(
+						_group.getGroupId(),
+						_portal.getClassNameId(Layout.class.getName()),
+						layout.getPlid());
+
+				long[] expectedSegmentsExperienceIds =
+					new long[segmentsExperiences.size()];
+
+				for (int i = 0; i < segmentsExperiences.size(); i++) {
+					SegmentsExperience segmentsExperience =
+						segmentsExperiences.get(i);
+
+					expectedSegmentsExperienceIds[i] =
+						segmentsExperience.getSegmentsExperienceId();
+				}
+
+				Assert.assertArrayEquals(
+					expectedSegmentsExperienceIds,
+					(long[])mockHttpServletRequest.getAttribute(
+						SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS));
+			}
+		}
+	}
+
 	private LifecycleAction _getLifecycleAction() {
 		Bundle bundle = FrameworkUtil.getBundle(
 			SegmentsServicePreActionTest.class);
@@ -332,5 +415,11 @@ public class SegmentsServicePreActionTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

@@ -878,6 +878,8 @@ definition {
 
 		Open.openInTheNewTab(locator1 = "http://localhost:8080");
 
+		User._clickSignInLink();
+
 		SignIn.agreeToTermsOfUse();
 
 		User.answerPasswordReminder();
@@ -985,6 +987,8 @@ definition {
 		}
 
 		Open.openInTheNewTab(locator1 = "http://localhost:8080");
+
+		User._clickSignInLink();
 
 		SignIn.agreeToTermsOfUse();
 

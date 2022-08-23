@@ -25,6 +25,7 @@ import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.model.ObjectRelationshipModel;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -59,6 +61,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -292,15 +295,20 @@ public class ObjectRelationshipLocalServiceImpl
 		if (objectRelationships.isEmpty()) {
 			return null;
 		}
-		else if (objectRelationships.size() > 1) {
-			for (ObjectRelationship objectRelationship : objectRelationships) {
-				if (!objectRelationship.getReverse()) {
-					return objectRelationship;
-				}
-			}
+
+		if (objectRelationships.size() == 1) {
+			return objectRelationships.get(0);
 		}
 
-		return objectRelationships.get(0);
+		Stream<ObjectRelationship> objectRelationshipsStream =
+			objectRelationships.stream();
+
+		return objectRelationshipsStream.filter(
+			objectRelationship -> !objectRelationship.isReverse()
+		).findFirst(
+		).orElseThrow(
+			ObjectRelationshipReverseException::new
+		);
 	}
 
 	@Override

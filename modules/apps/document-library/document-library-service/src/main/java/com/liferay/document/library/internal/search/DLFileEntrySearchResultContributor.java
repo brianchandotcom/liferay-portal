@@ -90,25 +90,13 @@ public class DLFileEntrySearchResultContributor
 		return DLFileEntryConstants.getClassName();
 	}
 
-	@Reference(unbind = "-")
-	public void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setSummaryFactory(SummaryFactory summaryFactory) {
-		_summaryFactory = summaryFactory;
-	}
-
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private SummaryFactory _summaryFactory;
 
 }

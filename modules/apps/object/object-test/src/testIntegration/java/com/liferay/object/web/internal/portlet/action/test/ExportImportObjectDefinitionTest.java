@@ -74,6 +74,8 @@ public class ExportImportObjectDefinitionTest {
 				"feature.flag.LPS-152677", "true"
 			).setProperty(
 				"feature.flag.LPS-158821", "true"
+			).setProperty(
+				"feature.flag.LPS-158672", "true"
 			).build());
 
 		ObjectDefinition objectDefinition = _importObjectDefinition();
@@ -103,6 +105,8 @@ public class ExportImportObjectDefinitionTest {
 				"feature.flag.LPS-152677", "false"
 			).setProperty(
 				"feature.flag.LPS-158821", "false"
+			).setProperty(
+				"feature.flag.LPS-158672", "false"
 			).build());
 	}
 

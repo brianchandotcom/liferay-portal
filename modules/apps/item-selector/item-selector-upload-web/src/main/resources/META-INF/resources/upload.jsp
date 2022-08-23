@@ -48,7 +48,7 @@ if (Validator.isNotNull(namespace)) {
 				<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
 
 				<react:component
-					module="js/index.es"
+					module="js/ItemSelectorRepositoryEntryBrowser"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
 							"closeCaption", itemSelectorUploadViewDisplayContext.getTitle(locale)
@@ -120,7 +120,7 @@ if (Validator.isNotNull(namespace)) {
 					"validExtensions", ArrayUtil.isEmpty(itemSelectorUploadViewDisplayContext.getExtensions()) ? "*" : StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions())
 				).build()
 			%>'
-			module="js/index.es"
+			module="js/ItemSelectorRepositoryEntryBrowser"
 		/>
 	</c:otherwise>
 </c:choose>

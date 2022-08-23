@@ -1,0 +1,29 @@
+definition {
+
+	macro deleteABTest {
+		var key_testName = "${testName}";
+
+		Click(locator1 = "ACTests#AB_TEST_NAME");
+
+		Click(locator1 = "ACTests#AB_ELLIPSIS");
+
+        Click(locator1 = "ACTests#DELETE_TEST");
+
+		Button.clickDelete();
+	}
+
+	macro statusABTest {
+		AssertTextEquals(
+			locator1 = "ACTests#LABEL_STATUS",
+			value1 = "${status}");
+	}
+
+	macro terminateABTest {
+		var key_testName = "${testName}";
+
+		Click(locator1 = "ACTests#AB_TEST_NAME");
+
+		Button.click(button = "Terminate Test");
+	}
+
+}

@@ -533,4 +533,44 @@ definition {
 		}
 	}
 
+	@description = "This test changes pagination and assert regions display properly."
+	@priority = "3"
+	test PaginationWorksInRegions {
+		task ("Given 20 is the default pagination set") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "United States");
+
+			Pagination.viewResults(results = "Showing 1 to 20 of 52 entries.");
+		}
+
+		task ("When pagination is changed to 4") {
+			Pagination.changePagination(itemsPerPage = "4");
+		}
+
+		task ("Then only 4 entries display") {
+			for (var regionName : list "Alabama,Alaska,Arizona,Arkansas") {
+				LexiconEntry.viewEntryName(rowEntry = "${regionName}");
+			}
+
+			LexiconEntry.viewNoEntry(rowEntry = "California");
+
+			Pagination.viewResults(results = "Showing 1 to 4 of 52 entries.");
+		}
+
+		task ("When pagination is changed to 8") {
+			Pagination.changePagination(itemsPerPage = "8");
+		}
+
+		task ("Then 8 entries display") {
+			for (var regionName : list "Alabama,Alaska,Arizona,Arkansas,California,Colorado,Connecticut,Delaware") {
+				LexiconEntry.viewEntryName(rowEntry = "${regionName}");
+			}
+
+			LexiconEntry.viewNoEntry(rowEntry = "District of Columbia");
+
+			Pagination.viewResults(results = "Showing 1 to 8 of 52 entries.");
+		}
+	}
+
 }

@@ -101,33 +101,6 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		_singleVMPool.removePortalCache(_portalCache.getPortalCacheName());
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private void _addDLRawMetadataStructures(long companyId) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -266,17 +239,25 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		return ddmFormSerializerSerializeResponse.getContent();
 	}
 
+	@Reference
 	private DDM _ddm;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 
 	private volatile DLConfiguration _dlConfiguration;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(ddm.form.serializer.type=json)")
 	private DDMFormSerializer _jsonDDMFormSerializer;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Portal _portal;
@@ -286,6 +267,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	@Reference
 	private SingleVMPool _singleVMPool;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

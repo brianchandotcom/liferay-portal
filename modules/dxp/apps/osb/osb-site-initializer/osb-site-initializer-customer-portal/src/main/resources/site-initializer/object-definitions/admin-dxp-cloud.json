@@ -55,6 +55,7 @@
 			"required": true
 		}
 	],
+	"panelCategoryKey": "site_administration.content",
 	"pluralLabel": {
 		"en_US": "Admins DXP Cloud"
 	},

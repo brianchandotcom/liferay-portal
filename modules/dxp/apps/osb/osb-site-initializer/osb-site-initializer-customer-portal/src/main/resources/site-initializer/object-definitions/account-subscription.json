@@ -97,6 +97,7 @@
 			"required": false
 		}
 	],
+	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "Account Subscriptions"
 	},

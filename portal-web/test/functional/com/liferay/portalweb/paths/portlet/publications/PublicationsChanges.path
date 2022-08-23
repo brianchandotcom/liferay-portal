@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLICATIONS_CHANGE_STATUS</td>
+	<td>//tr[contains(@class,'table-divider') and contains(.,'${key_changeCategory}')]//following-sibling::tr[${changeOrder}]/td[4][contains(.,'${key_changeStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLICATIONS_CHANGE_TITLE</td>
 	<td>//tr[contains(@class,'table-divider') and contains(.,'${key_changeCategory}')]//following-sibling::tr[${changeOrder}]/td[3][contains(.,'${key_changeTitle}')]</td>
 	<td></td>

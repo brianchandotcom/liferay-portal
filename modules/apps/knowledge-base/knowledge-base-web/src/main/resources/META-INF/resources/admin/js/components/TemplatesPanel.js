@@ -12,12 +12,29 @@
  * details.
  */
 
+import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 export default function TemplatesPanel({items}) {
-	return items?.length ? null : (
+	return items?.length ? (
+		<ClayTreeView
+			defaultItems={items}
+			nestedKey="children"
+			showExpanderOnHover={false}
+		>
+			{(item) => {
+				return (
+					<ClayTreeView.Item className="pl-0">
+						<ClayTreeView.ItemStack>
+							{item.name}
+						</ClayTreeView.ItemStack>
+					</ClayTreeView.Item>
+				);
+			}}
+		</ClayTreeView>
+	) : (
 		<ClayEmptyState
 			description=""
 			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}

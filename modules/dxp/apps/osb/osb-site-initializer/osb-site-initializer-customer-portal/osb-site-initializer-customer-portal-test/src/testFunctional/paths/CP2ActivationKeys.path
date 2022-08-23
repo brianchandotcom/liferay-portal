@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLED_DROPDOWN_ITEM_BUTTON</td>
+	<td>//*[contains(@class, 'dropdown-item') and not(@disabled)]//*[text()='${key_dropdownItem}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEY_CHECKBOX</td>
 	<td>//*[contains(@title, '${key_environmentName}')]//parent::*/preceding-sibling::*//*[@type='checkbox']</td>
 	<td></td>
